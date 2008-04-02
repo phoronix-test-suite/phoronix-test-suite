@@ -46,11 +46,12 @@ function memory_mb_capacity()
 		$info = file_get_contents("/proc/meminfo");
 		$info = substr($info, strpos($info, "MemTotal:") + 9);
 		$info = intval(trim(substr($info, 0, strpos($info, "kB"))));
+		$info = floor($info / 1024);
 	}
 	else
 		$info = "Unknown";
 
-	return floor($info / 1024);
+	return $info;
 }
 function current_screen_resolution()
 {
@@ -58,7 +59,7 @@ function current_screen_resolution()
 
 	if(($pos = strrpos($info, "*")) == FALSE)
 	{
-		$info = "Unknown";
+		$info = array("Unknown", "Unknown");
 	}
 	else
 	{
@@ -86,7 +87,7 @@ function parse_lsb_output($desc)
 	{
 		$info = file_get_contents("/etc/lsb-release");
 		$info = substr($info, strpos($info, $desc) + strlen($desc));
-		$info = trim(substr($info, 0, strpos($info, "\n")));
+		$info = str_replace("\"", "", trim(substr($info, 0, strpos($info, "\n"))));
 	}
 	else
 		$info = "Unknown";
