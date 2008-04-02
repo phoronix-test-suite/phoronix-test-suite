@@ -12,7 +12,8 @@ chmod +x etqw-linux.run
 unzip -o etqw-linux.run
 ln data/etqw.x86 etqw-real
 
-echo "#!/bin/sh\n./etqw-real \$@ | grep fps" > etqw
+echo "#!/bin/sh
+./etqw-real \$@ | grep fps" > etqw
 chmod +x etqw
 
 if [ ! -f etqw-demo.tar.bz2 ]

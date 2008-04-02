@@ -47,7 +47,8 @@ make -j $NUM_CPU_JOBS
 make install
 cd ..
 
-echo "#!/bin/sh\n/usr/bin/time -f \"WAV To OGG Encode Time: %e Seconds\" ./vorbis/bin/oggenc --quiet audio.wav -q 10 -o audio.ogg 2>&1" > oggenc
+echo "#!/bin/sh
+/usr/bin/time -f \"WAV To OGG Encode Time: %e Seconds\" ./vorbis/bin/oggenc --quiet audio.wav -q 10 -o audio.ogg 2>&1" > oggenc
 chmod +x oggenc
 
 tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2

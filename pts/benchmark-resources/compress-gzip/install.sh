@@ -15,7 +15,8 @@ do
 cat pts-wav-sample-file.wav >> bigfile-orig
 done
 
-echo "#!/bin/sh\ncp -f bigfile-orig bigfile\n/usr/bin/time -f \"Gzip Compress Time: %e Seconds\" gzip bigfile 2>&1
+echo "#!/bin/sh
+cp -f bigfile-orig bigfile\n/usr/bin/time -f \"Gzip Compress Time: %e Seconds\" gzip bigfile 2>&1
 rm -f bigfile.gz" > compress-gzip
 chmod +x compress-gzip
 

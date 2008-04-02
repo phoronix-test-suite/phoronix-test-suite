@@ -17,7 +17,8 @@ chmod +x quake4-linux.run
 ln bin/Linux/x86/quake4.x86 quake4-real
 chmod +x quake4-real
 
-echo "#!/bin/sh\n./quake4-real \$@ | grep fps" > quake4
+echo "#!/bin/sh
+./quake4-real \$@ | grep fps" > quake4
 chmod +x quake4
 
 tar -jxvf quake4-demo.tar.bz2

@@ -9,6 +9,8 @@ fi
 
 unzip -o nexuiz-24.zip
 
-echo "#!/bin/sh\ncd Nexuiz\n./nexuiz-linux-glx.sh +exec normal.cfg \$@ | grep fps" > nexuiz
+echo "#!/bin/sh
+cd Nexuiz
+./nexuiz-linux-glx.sh +exec normal.cfg \$@ | grep fps" > nexuiz
 chmod +x nexuiz
 

@@ -18,7 +18,8 @@ cd lame-3.97/
 make -j $NUM_CPU_JOBS
 cd ..
 
-echo "#!/bin/sh\n/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame-3.97/frontend/lame --silent -h audio.wav audio.mp3 2>&1" > lame
+echo "#!/bin/sh
+/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame-3.97/frontend/lame --silent -h audio.wav audio.mp3 2>&1" > lame
 chmod +x lame
 
 tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2

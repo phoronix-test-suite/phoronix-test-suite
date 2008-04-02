@@ -18,7 +18,8 @@ cd flac-1.2.1/
 make -j $NUM_CPU_JOBS
 cd ..
 
-echo "#!/bin/sh\n/usr/bin/time -f \"WAV To FLAC Encode Time: %e Seconds\" ./flac-1.2.1/src/flac/flac -s --best audio.wav 2>&1
+echo "#!/bin/sh
+/usr/bin/time -f \"WAV To FLAC Encode Time: %e Seconds\" ./flac-1.2.1/src/flac/flac -s --best audio.wav 2>&1
 rm -f audio.flac" > flac
 chmod +x flac
 

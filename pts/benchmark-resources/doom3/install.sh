@@ -12,7 +12,8 @@ chmod +x doom3-linux.run
 ./doom3-linux.run --noexec --target .
 ln bin/Linux/x86/doom.x86 doom3-real
 
-echo "#!/bin/sh\n./doom3-real \$@ | grep fps" > doom3
+echo "#!/bin/sh
+./doom3-real \$@ | grep fps" > doom3
 chmod +x doom3
 
 echo "Doom 3 Game Files (*.pk4) Must Be Copied Into $1/base"

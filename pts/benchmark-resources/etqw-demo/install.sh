@@ -13,7 +13,8 @@ fi
 
 unzip -o ETQW-demo2-client-full.r1.x86.run
 
-echo "#!/bin/sh\ncd data/\n./etqw.x86 \$@ | grep fps" > etqw
+echo "#!/bin/sh
+cd data/\n./etqw.x86 \$@ | grep fps" > etqw
 chmod +x etqw
 
 tar -jxvf etqw-demo-demo.tar.bz2
