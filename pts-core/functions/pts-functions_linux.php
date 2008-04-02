@@ -7,9 +7,15 @@
 
 function cpu_core_count()
 {
-	$info = file_get_contents("/proc/cpuinfo");
-	$info = substr($info, strrpos($info, "\nprocessor"));
-	$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
+	if(is_file("/proc/cpuinfo"))
+	{
+		$info = file_get_contents("/proc/cpuinfo");
+		$info = substr($info, strrpos($info, "\nprocessor"));
+		$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
+	}
+	else
+		$info = 0;
+
 	return intval($info) + 1;
 }
 function cpu_job_count()
@@ -21,27 +27,45 @@ function processor_string()
 {
 	//TODO: Support Multiple CPUs
 
-	$info = file_get_contents("/proc/cpuinfo");
-	$info = substr($info, strpos($info, "model name"));
-	$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
-	$info = str_replace(array("Corporation ", "Technologies ", "(R)", "(TM)"), "", $info);
+	if(is_file("/proc/cpuinfo"))
+	{
+		$info = file_get_contents("/proc/cpuinfo");
+		$info = substr($info, strpos($info, "model name"));
+		$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
+		$info = str_replace(array("Corporation ", "Technologies ", "(R)", "(TM)"), "", $info);
+	}
+	else
+		$info = "Unknown";
 
 	return $info;
 }
 function memory_mb_capacity()
 {
-	$info = file_get_contents("/proc/meminfo");
-	$info = substr($info, strpos($info, "MemTotal:") + 9);
-	$info = intval(trim(substr($info, 0, strpos($info, "kB"))));
+	if(is_file("/proc/meminfo"))
+	{
+		$info = file_get_contents("/proc/meminfo");
+		$info = substr($info, strpos($info, "MemTotal:") + 9);
+		$info = intval(trim(substr($info, 0, strpos($info, "kB"))));
+	}
+	else
+		$info = "Unknown";
 
 	return floor($info / 1024);
 }
 function current_screen_resolution()
 {
-	$info = shell_exec("xrandr");
-	$info = substr($info, 0, strrpos($info, "*"));
-	$info = trim(substr($info, strrpos($info, "\n")));
-	$info = substr($info, 0, strpos($info, " "));
+	$info = shell_exec("xrandr 2>&1");
+
+	if(($pos = strrpos($info, "*")) == FALSE)
+	{
+		$info = "Unknown";
+	}
+	else
+	{
+		$info = substr($info, 0, $pos);
+		$info = trim(substr($info, strrpos($info, "\n")));
+		$info = substr($info, 0, strpos($info, " "));
+	}
 
 	return explode("x", $info);
 }
@@ -57,12 +81,14 @@ function current_screen_height()
 }
 function parse_lsb_output($desc)
 {
-	$info = file_get_contents("/etc/lsb-release");
-	$info = substr($info, strpos($info, $desc) + strlen($desc));
-	$info = trim(substr($info, 0, strpos($info, "\n")));
-
-	if(empty($info) || strlen($info) > 32)
-		$info = "N/A";
+	if(is_file("/etc/lsb-release"))
+	{
+		$info = file_get_contents("/etc/lsb-release");
+		$info = substr($info, strpos($info, $desc) + strlen($desc));
+		$info = trim(substr($info, 0, strpos($info, "\n")));
+	}
+	else
+		$info = "Unknown";
 
 	return $info;
 }
@@ -92,34 +118,50 @@ function motherboard_chipset_string()
 }
 function parse_lspci_output($desc)
 {
-	$info = shell_exec("lspci");
-	$info = substr($info, strpos($info, $desc) + strlen($desc));
-	$EOL = strpos($info, "\n");
+	$info = shell_exec("lspci 2>&1");
 
-	if(($temp = strpos($info, '/')) < $EOL && $temp > 0)
-		if(($temp = strpos($info, ' ', ($temp + 2))) < $EOL && $temp > 0)
+	if(($pos = strpos($info, $desc)) === FALSE)
+	{
+		$info = "Unknown";
+	}
+	else
+	{
+		$info = substr($info, $pos + strlen($desc));
+		$EOL = strpos($info, "\n");
+
+		if(($temp = strpos($info, '/')) < $EOL && $temp > 0)
+			if(($temp = strpos($info, ' ', ($temp + 2))) < $EOL && $temp > 0)
+				$EOL = $temp;
+
+		if(($temp = strpos($info, '(')) < $EOL && $temp > 0)
 			$EOL = $temp;
 
-	if(($temp = strpos($info, '(')) < $EOL && $temp > 0)
-		$EOL = $temp;
+		if(($temp = strpos($info, '[')) < $EOL && $temp > 0)
+			$EOL = $temp;
 
-	if(($temp = strpos($info, '[')) < $EOL && $temp > 0)
-		$EOL = $temp;
+		$info = trim(substr($info, 0, $EOL));
 
-	$info = trim(substr($info, 0, $EOL));
-
-	if(($strlen = strlen($info)) < 6 || $strlen > 96)
-		$info = "N/A";
-	else
-		$info = str_replace(array("Corporation ", "Technologies ", " Inc ", "processor ", "(R)", "(TM)"), "", $info);
+		if(($strlen = strlen($info)) < 6 || $strlen > 96)
+			$info = "N/A";
+		else
+			$info = str_replace(array("Corporation ", "Technologies ", " Inc ", "processor ", "(R)", "(TM)"), "", $info);
+	}
 
 	return $info;
 }
 function graphics_subsystem_version()
 {
 	$info = shell_exec("X -version 2>&1");
-	$info = trim(substr($info, 0, strrpos($info, "Release Date")));
-	$info = trim(substr($info, strrpos($info, " ")));
+
+	if(($pos = strrpos($info, "Release Date")) === FALSE)
+	{
+		$info = "Unknown";
+	}
+	else
+	{
+		$info = trim(substr($info, 0, $pos));
+		$info = trim(substr($info, strrpos($info, " ")));
+	}
 
 	return $info;
 }
