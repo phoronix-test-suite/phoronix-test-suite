@@ -37,14 +37,10 @@ switch($COMMAND)
 			exit(0);
 		}
 
-		echo "\nUploading: $USE_FILE\n";
-		$TO_UPLOAD = rawurlencode(base64_encode(file_get_contents($USE_FILE)));
+		$upload_url = pts_global_upload_result($USE_FILE);
 
-		$GlobalUser = pts_current_user();
-		$Globalkey = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "");
-
-		$RETURN_RESPONSE = file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$TO_UPLOAD&global_user=$GlobalUser&global_key=$Globalkey"); // Rudimentary, but works
-		echo "Results Uploaded To: " . $RETURN_RESPONSE . "\n\n"; // TODO: Add checks to make sure it did work out
+		if(!empty($upload_url))
+			echo "Results Uploaded To: " . $upload_url . "\n\n"; // TODO: Add checks to make sure it did work out
 
 		break;
 	case "REMOTE_COMPARISON":

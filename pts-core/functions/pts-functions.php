@@ -277,6 +277,15 @@ function pts_request_new_id()
 
 	return $PTS_GLOBAL_ID;
 }
+function pts_global_upload_result($result_file)
+{
+	echo "\nUploading: $result_file\n";
+	$ToUpload = rawurlencode(base64_encode(file_get_contents($result_file)));
+	$GlobalUser = pts_current_user();
+	$Globalkey = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "");
+
+	return file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$ToUpload&global_user=$GlobalUser&global_key=$Globalkey"); // Rudimentary, but works
+}
 function operating_system_release()
 {
 	return os_vendor() . " " . os_version();

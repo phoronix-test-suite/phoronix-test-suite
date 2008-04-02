@@ -1,6 +1,10 @@
 
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (git)
+
+- Prompt to auto upload results after test completion
+
 Phoronix Test Suite 0.1.0
 
 - Initial public release! (April 2, 2008)

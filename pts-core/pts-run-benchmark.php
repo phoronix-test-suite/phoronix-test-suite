@@ -251,6 +251,14 @@ if($SAVE_RESULTS)
 		pts_save_benchmark_file($PROPOSED_FILE_NAME, $RESULTS);
 		echo "Results Saved To: " . SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml\n";
 		display_web_browser(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml");
+
+		echo "\nWould you like to upload these results to PTS Global (Y/n)? ";
+		$upload_results = strtolower(trim(fgets(STDIN)));
+
+		if($upload_results == "y")
+			echo "Results Uploaded To: " . pts_global_upload_result(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml") . "\n";
+
+		echo "\n";
 	}
 }
 
