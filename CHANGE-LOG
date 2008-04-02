@@ -1,0 +1,81 @@
+
+PHORONIX TEST SUITE CHANGE-LOG
+
+Phoronix Test Suite 0.1.0
+
+- Initial public release! (April 2, 2008)
+
+Phoronix Test Suite 0.0.9
+
+- phoronix-test-suite list-tests now displays the profile's status and the license type of software
+- Drop pts-core/pts-results-viewer/text.gif
+- Fix 0.0.8 regression as the zero fix caused no results to be saved
+- Allow "upload" argument to use relative/absolute path instead of just the save name
+
+Phoronix Test Suite 0.0.8
+
+- Save result even if the value is zero
+- Fix merge-results bug when using global ID(s)
+
+Phoronix Test Suite 0.0.7
+
+- Support for benchmark <Global ID> for extracting all arguments from that test.
+- Support for benchmark <Local File> for extracting all arguments from that test.
+- Change list-benchmarks to list-tests
+- A number of end-user input checks and errors if arguments are missing
+- Various bug fixes in path to 0.1
+
+Phoronix Test Suite 0.0.6
+
+- Nexuiz 2.4 Profile
+- Added ImageMagick Build Profile
+- Add Linux Kernel (2.6.25) Build Profile
+- Add Universe Profile (universe). The Universe profile is made up of all Phoronix Test Suite benchmark profiles in a maintained state.
+- Fix compress-gzip profile so results are actually outputted
+- Added Enemy Territory: Quake Wars demo profile... currently seems to hang on start
+- Added (optional) PreRunMessage to benchmarking profiles at PTSBenchmark/Information/PreRunMessage. This just displays a string of information (such as a warning or benchmark limitation) and then when the user hits any key the benchmark will continue.
+- Hdparm profile script now uses gksu (TODO: support other *su)
+- EnvironmentDirectory in user-config.xml now requires an absolute location. Defaults to ~/pts-benchmark-env.
+- Fix list-saved-tests so that it will actually list the saved tests.
+- Introduce pts_save_result. Checks for SAVE_RESULTS_LOCATION and makes it if it doesn't exist and copies over the XSL, CSS, and JavaScript to SAVE_RESULTS_LOCATION/pts-results/viewer for the results viewer.
+- Use profile-check on the global database for checking whether Global ID is valid remotely, instead of attempting fetch directly.
+- Fix bug where if you entered an invalid benchmark/suite name, it would ask if you wanted to save the results before realizing it didn't exist.
+
+Phoronix Test Suite 0.0.5
+
+- Code cleaning
+- More improvements with Phoronix Test Suite Global Database
+
+Phoronix Test Suite 0.0.4-1
+
+- Fix a remote-comparison regression
+
+Phoronix Test Suite 0.0.4
+
+- Support for registered/authenticated uploads to global database
+- Directory for saved results is now exported to user-config.xml
+- New Global Database features
+- Fix X Server 1.3.0 detection
+
+Phoronix Test Suite 0.0.3
+
+- Initial "Global Database" interaction
+- "Do you want to open in your web browser?" CLI dialog
+- Fix Intel Pentium M core detection count (Pentium M's don't have 9 cores)
+- Merge fixes
+
+Phoronix Test Suite 0.0.2
+
+- Initial remote upload support
+- Initial remote comparison support
+- Refined directory structure
+- Separating out Linux-specific hardware/software calls for parsing
+- Support storing/installing benchmarks in different directories
+- A few merging bug fixes
+- Support for suites calling other suites, handled recursively
+- Various bug fixes.
+
+Phoronix Test Suite 0.0.1
+
+- Initial Private Release
+

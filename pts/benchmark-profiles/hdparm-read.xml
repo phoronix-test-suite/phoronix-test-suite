@@ -1,0 +1,44 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Disk</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>UNVERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>hdparm Timed Disk Reads</Title>
+		<Identifier>hdparm-read</Identifier>
+		<Executable>hdparm-su</Executable>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>MB/s</ResultScale>
+		<Description> </Description>
+		<Notes>On most systems, hdparm requires root access</Notes>
+	</Information>
+	<Settings>
+		<Default>
+			<Arguments></Arguments>
+			<PossiblePaths></PossiblePaths>
+		</Default>
+		<Option>
+			<DisplayName>Disk To Read</DisplayName>
+			<Identifier>disk-to-read</Identifier>
+			<ArgumentName>-t </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>First SATA Disk (sda)</Name>
+					<Value>/dev/sda</Value>
+				</Entry>
+				<Entry>
+					<Name>Second SATA Disk (sdb)</Name>
+					<Value>/dev/sdb</Value>
+				</Entry>
+				<Entry>
+					<Name>Third SATA Disk (sdc)</Name>
+					<Value>/dev/sdc</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>

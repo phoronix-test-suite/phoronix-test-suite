@@ -1,0 +1,110 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Game</ApplicationType>
+		<License>NON-FREE</License>
+		<Status>UNKNOWN</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Doom 3 (Demo)</Title>
+		<Version>1.1.1286</Version>
+		<Identifier>doom3-demo</Identifier>
+		<Executable>doom3</Executable>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>FPS</ResultScale>
+		<Description>This test calculates the average frame-rate within the Doom 3 (demo) game.</Description>
+		<Notes> </Notes>
+	</Information>
+	<Settings>
+		<Default>
+			<Arguments>+timedemoquit doom3-pts-demo +set r_mode -1</Arguments>
+			<PossiblePaths></PossiblePaths>
+		</Default>
+		<Option>
+			<DisplayName>Video RAM</DisplayName>
+			<Identifier>video-ram</Identifier>
+			<ArgumentName>+set sys_VideoRam </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>128MB</Name>
+					<Value>128</Value>
+				</Entry>
+				<Entry>
+					<Name>256MB</Name>
+					<Value>256</Value>
+				</Entry>
+				<Entry>
+					<Name>512MB</Name>
+					<Value>512</Value>
+				</Entry>
+				<Entry>
+					<Name>640MB</Name>
+					<Value>640</Value>
+				</Entry>
+				<Entry>
+					<Name>1GB</Name>
+					<Value>1024</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>Resolution (Width)</DisplayName>
+			<Identifier>width-resolution</Identifier>
+			<ArgumentName>+set r_customWidth </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>1024</Name>
+					<Value>1024</Value>
+				</Entry>
+				<Entry>
+					<Name>1280</Name>
+					<Value>1280</Value>
+				</Entry>
+				<Entry>
+					<Name>1680</Name>
+					<Value>1680</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>Resolution (Height)</DisplayName>
+			<Identifier>height-resolution</Identifier>
+			<ArgumentName>+set r_customHeight </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>768</Name>
+					<Value>768</Value>
+				</Entry>
+				<Entry>
+					<Name>1024</Name>
+					<Value>1024</Value>
+				</Entry>
+				<Entry>
+					<Name>1050</Name>
+					<Value>1050</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>In-Game</DisplayName>
+			<Identifier>game-quality</Identifier>
+			<ArgumentName>+set com_machineSpec </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Low Quality</Name>
+					<Value>0</Value>
+				</Entry>
+				<Entry>
+					<Name>High Quality</Name>
+					<Value>2</Value>
+				</Entry>
+				<Entry>
+					<Name>Ultra Quality</Name>
+					<Value>3</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>

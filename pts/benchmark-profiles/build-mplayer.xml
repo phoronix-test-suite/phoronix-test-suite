@@ -1,0 +1,20 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Processor</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Timed MPlayer Compilation</Title>
+		<Version>1.0-rc2</Version>
+		<Identifier>build-mplayer</Identifier>
+		<Executable>time-compile-mplayer</Executable>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Description>This test times how long it takes to build the MPlayer media program.</Description>
+		<Notes> </Notes>
+	</Information>
+</PTSBenchmark>

@@ -1,0 +1,27 @@
+- Rewrite and finish GUI component
+- Clean up / make nice of text output
+- Support multiple possible paths
+	- i.e. /usr/local/games/doom3/ || ~/doom3/
+	- Right now stuck to benchmark-env but can be changed easily
+- Copying Game Files from Discs (id Software Games)
+- Verbose output of all system details, benchmark dumps, etc
+- Improve / clean-up tandem_xml
+- Add More Benchmarks!
+- Provide Warnings For Major Things Possibly Influencing Results
+	- i.e. if EIST / Cool n Quiet are enabled
+- Choice of SH or PHP for all install scripts
+- Defaults values if hardware detection functions fail
+- PossiblePaths to support multiple possible install locations, separated by : delimiter.
+- pts/pts-functions-run.php: Merge common areas of pts_run_benchmark() and run_gtk_benchmark().
+- Use new (larger) Wav file for benchmarks... internal Phoronix WAV file used is copyrighted music. Current PTS One is too small for reliable results.
+- Multiple results from a single benchmark (i.e. ramspeed with add, scale, sub)
+- Improved hardware detection (i.e. recognize multiple graphics cards)
+- Change all the echos to fwrite with using STDOUT or STDERR where relevant
+- Support browsers aside from just Firefox launch. detect what's installed.
+- PTS merge results needs all of the compatibility checks in place
+- "Optimization Tips"
+- More MD5 checks in test scripts
+- Change locking system away from time-based but to PID based
+- A ton of compatibility checks to do with merges and comparisons!
+- Clean up tests scripts
+- Support for WINE tests

@@ -1,0 +1,123 @@
+<?php
+
+require("pts-core/functions/pts-functions.php");
+
+$COMMAND = $argv[1];
+$ARG_1 = $argv[2];
+$ARG_2 = $argv[3];
+
+switch($COMMAND)
+{
+	case "REMOVE_RESULT":
+		if(is_file(SAVE_RESULTS_LOCATION . "$ARG_1.xml"))
+		{
+			unlink(SAVE_RESULTS_LOCATION . "$ARG_1.xml");
+			echo "\nRemoved: $ARG_1.xml\n";
+
+			$i = 1;
+			while(is_file(SAVE_RESULTS_LOCATION . "$ARG_1-$i.xml"))
+			{
+				unlink(SAVE_RESULTS_LOCATION . "$ARG_1-$i.xml");
+				echo "Removed: $ARG_1-$i.xml\n";
+				$i++;
+			}
+		}
+		else
+			echo "\nThis result doesn't exist!\n";
+		break;
+	case "UPLOAD_RESULT":
+
+		if(is_file($ARG_1))
+			$USE_FILE = $ARG_1;
+		else if(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . ".xml"))
+			$USE_FILE = SAVE_RESULTS_LOCATION . $ARG_1 . ".xml";
+		else
+		{
+			echo "\nThis result doesn't exist!\n";
+			exit(0);
+		}
+
+		echo "\nUploading: $USE_FILE\n";
+		$TO_UPLOAD = rawurlencode(base64_encode(file_get_contents($USE_FILE)));
+
+		$GlobalUser = pts_current_user();
+		$Globalkey = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "");
+
+		$RETURN_RESPONSE = file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$TO_UPLOAD&global_user=$GlobalUser&global_key=$Globalkey"); // Rudimentary, but works
+		echo "Results Uploaded To: " . $RETURN_RESPONSE . "\n\n"; // TODO: Add checks to make sure it did work out
+
+		break;
+	case "REMOTE_COMPARISON":
+		echo "Now Use merge-results for remote comparison with integrated Global ID support.";
+		echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets";
+		break;
+	case "LIST_TESTS":
+		echo "\n=================================\n";
+		echo "Phoronix Test Suite - Benchmarks\n";
+		echo "=================================\n\n";
+			foreach(glob(XML_PROFILE_LOCATION . "*.xml") as $benchmark_file)
+			{
+			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+				$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+				$identifier = $xml_parser->getXMLValue("PTSBenchmark/Information/Identifier");
+				$license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
+				$status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
+
+				echo "- $name  ($identifier)\n";
+				echo "\tStatus: $status License: $license\n\n";
+			}
+		echo "\n";
+		break;
+	case "LIST_SUITES":
+		echo "\n=================================\n";
+		echo "Phoronix Test Suite - Suites\n";
+		echo "=================================\n\n";
+		$benchmark_suites = array();
+		foreach(glob(XML_SUITE_LOCATION . "*.xml") as $benchmark_file)
+		{
+		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+			$name = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Title");
+			$identifier = basename($benchmark_file, ".xml");
+
+			echo "- $name  ($identifier)\n";
+		}
+		echo "\n";
+		break;
+	case "LIST_SAVED_TESTS":
+		echo "\n=================================\n";
+		echo "Phoronix Test Suite - Saved Results\n";
+		echo "=================================\n\n";
+		foreach(glob(SAVE_RESULTS_LOCATION . "*.xml") as $benchmark_file)
+		{
+			// TODO: Clean up this check...
+			$bt = substr($benchmark_file, strrpos($benchmark_file, '-') + 1);
+			$bt = intval(substr($bt, 0, strpos($bt, '.')));
+
+			if($bt == 0)
+			{
+		 		$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+				$title = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Title");
+				$suite = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Name");
+				$raw_results = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/Results");
+				$results_xml = new tandem_XmlReader($raw_results[0]);
+				$identifiers = $results_xml->getXMLArrayValues("Group/Entry/Identifier");
+
+				if(!empty($title))
+				{
+					echo "Saved Name: " . basename($benchmark_file, ".xml") . "\n";
+					echo "$title (Test: $suite)\n";
+
+					foreach($identifiers as $id)
+						echo "\t- $id\n";
+
+					echo "\n";
+				}
+			}
+		}
+		echo "\n";
+		break;
+	default:
+		echo "Phoronix Test Suite: Internal Error. Not Recognized Command ($COMMAND).\n";
+}
+
+?>

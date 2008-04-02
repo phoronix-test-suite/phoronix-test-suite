@@ -1,0 +1,25 @@
+<PTSuite>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<Title>Phoronix Test Suite For Gaming</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite consists of benchmarks designed to test your graphics card and display driver.</Description>
+		<Official>1</Official>
+	</PhoronixTestSuite>
+	<PTSBenchmark>
+		<Benchmark>nexuiz</Benchmark>
+		<Arguments>+vid_width 1024 +vid_height 768</Arguments>
+		<Description>1024 x 768</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>doom3</Benchmark>
+		<Arguments>+set r_customWidth 1280 +set r_customHeight 1024 +set com_machineSpec 2</Arguments>
+		<Description>1280 x 1024 - High Quality</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>quake4</Benchmark>
+		<Arguments>+set r_customWidth 1280 +set r_customHeight 1024 +set com_machineSpec 0</Arguments>
+		<Description>1280 x 1024 - Low Quality</Description>
+	</PTSBenchmark>
+</PTSuite>

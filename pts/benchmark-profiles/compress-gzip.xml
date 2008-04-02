@@ -1,0 +1,20 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Processor</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Time Gzip Compression</Title>
+		<Version></Version>
+		<Identifier>compress-gzip</Identifier>
+		<Executable>compress-gzip</Executable>
+		<TimesToRun>5</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Description>Timed Gzip compression benchmarks.</Description>
+		<Notes> </Notes>
+	</Information>
+</PTSBenchmark>

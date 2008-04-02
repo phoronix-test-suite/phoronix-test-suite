@@ -1,0 +1,77 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Game</ApplicationType>
+		<License>NON-FREE</License>
+		<Status>UNKNOWN</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Enemy Territory: Quake Wars</Title>
+		<Version>1.4</Version>
+		<Identifier>etqw</Identifier>
+		<Executable>etqw</Executable>
+		<TimesToRun>3</TimesToRun>
+		<PreRunMessage>Due to a current limitation of Nexuiz, once the benchmark has completed you hit the quit button to leave the game.</PreRunMessage>
+		<ResultScale>FPS</ResultScale>
+		<Description>This test calculates the average frame-rate within the ET:QW game.</Description>
+		<Notes> </Notes>
+	</Information>
+	<Settings>
+		<Default>
+			<Arguments>+timenetdemo pts +set r_mode -1</Arguments>
+			<PossiblePaths></PossiblePaths>
+		</Default>
+		<Option>
+			<DisplayName>Video RAM</DisplayName>
+			<Identifier>video-ram</Identifier>
+			<ArgumentName>+set sys_VideoRam </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>128MB</Name>
+					<Value>128</Value>
+				</Entry>
+				<Entry>
+					<Name>256MB</Name>
+					<Value>256</Value>
+				</Entry>
+				<Entry>
+					<Name>512MB</Name>
+					<Value>512</Value>
+				</Entry>
+				<Entry>
+					<Name>640MB</Name>
+					<Value>640</Value>
+				</Entry>
+				<Entry>
+					<Name>1GB</Name>
+					<Value>1024</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>display-resolution</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>800 x 600</Name>
+					<Value>+set r_customWidth 800 +set r_customHeight 600</Value>
+				</Entry>
+				<Entry>
+					<Name>1024 x 768</Name>
+					<Value>+set r_customWidth 1024 +set r_customHeight 768</Value>
+				</Entry>
+				<Entry>
+					<Name>1280 x 1024</Name>
+					<Value>+set r_customWidth 1280 +set r_customHeight 1024</Value>
+				</Entry>
+				<Entry>
+					<Name>1680 x 1050</Name>
+					<Value>+set r_customWidth 1680 +set r_customHeight 1050</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>

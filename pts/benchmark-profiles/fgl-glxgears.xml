@@ -1,0 +1,44 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Demo</ApplicationType>
+		<License>CLOSED</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>ATI fgl_glxgears</Title>
+		<Identifier>fgl-glxgears</Identifier>
+		<Executable>fgl_glxgears</Executable>
+		<TimesToRun>5</TimesToRun>
+		<ResultScale>FPS</ResultScale>
+		<Description>This test calculates the average frame-rate within the ATI fgl_glxgears test.</Description>
+		<Notes>This is a very poor benchmark.</Notes>
+	</Information>
+	<Settings>
+		<Default>
+			<Arguments></Arguments>
+			<PossiblePaths>/usr/bin/</PossiblePaths>
+		</Default>
+		<Option>
+			<DisplayName>Time To Loop</DisplayName>
+			<Identifier>time-to-loop</Identifier>
+			<ArgumentName>-loop </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>5 Seconds</Name>
+					<Value>5000</Value>
+				</Entry>
+				<Entry>
+					<Name>10 Seconds</Name>
+					<Value>10000</Value>
+				</Entry>
+				<Entry>
+					<Name>30 Seconds</Name>
+					<Value>30000</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>

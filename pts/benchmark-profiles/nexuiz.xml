@@ -1,0 +1,64 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Game</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Nexuiz</Title>
+		<Version>2.4</Version>
+		<Identifier>nexuiz</Identifier>
+		<Executable>nexuiz</Executable>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Average FPS</ResultScale>
+		<Description>This is a benchmark of Nexuiz, a popular open-source first-person shooter.</Description>
+		<Notes> </Notes>
+	</Information>
+	<Settings>
+		<Default>
+			<Arguments>-benchmark demos/demo1</Arguments>
+			<PossiblePaths></PossiblePaths>
+		</Default>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>display-resolution</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>800 x 600</Name>
+					<Value>+vid_width 800 +vid_height 600</Value>
+				</Entry>
+				<Entry>
+					<Name>1024 x 768</Name>
+					<Value>+vid_width 1024 +vid_height 768</Value>
+				</Entry>
+				<Entry>
+					<Name>1280 x 1024</Name>
+					<Value>+vid_width 1280 +vid_height 1024</Value>
+				</Entry>
+				<Entry>
+					<Name>1680 x 1050</Name>
+					<Value>+vid_width 1680 +vid_height 1050</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>High Dynamic Range</DisplayName>
+			<Identifier>hdr-rendering</Identifier>
+			<ArgumentName>+r_hdr </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Yes</Name>
+					<Value>1</Value>
+				</Entry>
+				<Entry>
+					<Name>No</Name>
+					<Value>0</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>

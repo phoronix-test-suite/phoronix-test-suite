@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<GlobalDatabase>
+		<UserName>Default User</UserName>
+		<UploadKey></UploadKey>
+		<AutoUploadResults>FALSE</AutoUploadResults>
+	</GlobalDatabase>
+	<Options>
+		<Results>
+			<BuildGraphsLocally>FALSE</BuildGraphsLocally>
+		</Results>
+		<Benchmarking>
+			<EnvironmentDirectory>~/pts-benchmark-env/</EnvironmentDirectory>
+			<ResultsDirectory>test-results/</ResultsDirectory>
+			<SleepTimeBetweenTests>5</SleepTimeBetweenTests>
+		</Benchmarking>
+	</Options>
+</PhoronixTestSuite>

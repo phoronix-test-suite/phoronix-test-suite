@@ -1,0 +1,25 @@
+<PTSuite>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>System</BenchmarkType>
+		<Title>Audio Encoding Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite consists of benchmarks that measure the amount of time needed to encode a sample WAV file to various audio formats. Among the formats are MP3, Ogg, and FLAC. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
+		<Official>0</Official>
+	</PhoronixTestSuite>
+	<PTSBenchmark>
+		<Benchmark>encode-mp3</Benchmark>
+		<Arguments></Arguments>
+		<Description>time lame -h audio.wav audio.mp3 (45.0MB)</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>encode-ogg</Benchmark>
+		<Arguments></Arguments>
+		<Description>time oggenc audio.wav -q 10 -o audio.ogg (45.0MB)</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>encode-flac</Benchmark>
+		<Arguments></Arguments>
+		<Description>time flac --best audio.wav (45.0MB)</Description>
+	</PTSBenchmark>
+</PTSuite>

@@ -1,0 +1,76 @@
+#!/bin/sh
+
+# Phoronix Test Suite
+# Copyright (C) 2008, Phoronix Media.
+# http://www.phoronix.com/
+# http://www.phoronix-test-suite.com/
+# The Phoronix Test Suite is licensed under the GNU GPLv3. For more information see COPYING
+
+if [ ! -x /usr/bin/php ] && [ ! -x /usr/local/bin/php ]
+then
+	echo "\n\nPHP5 CLI Must Be Installed To Run The Phoronix Test Suite!"
+	echo "Only PHP For The Command Line Is Needed, Not A Full-Blown PHP w/ Web Server"
+	echo "If you are using Ubuntu you must run: sudo apt-get install php5-cli"
+	echo "If you are using Fedora you must run: yum install php-cli"
+	echo "For support visit: http://www.phoronix.com/forums/forumdisplay.php?f=49\n\n"
+fi
+
+task=$1
+
+case "${task}" in
+"gui")
+	php pts-core/pts-main.php
+	;;
+"install")
+	php pts-core/pts-install-benchmark.php $2
+	;;
+"run")
+	php pts-core/pts-run-benchmark.php $2
+	;;
+"benchmark")
+	php pts-core/pts-install-benchmark.php $2
+	php pts-core/pts-run-benchmark.php $2
+	;;
+"merge-results")
+	php pts-core/pts-merge-results.php $2 $3 $4
+	;;
+"remove-result")
+	php pts-core/pts-run-cmd.php REMOVE_RESULT $2
+	;;
+"upload")
+	php pts-core/pts-run-cmd.php UPLOAD_RESULT $2
+	;;
+"list-tests")
+	php pts-core/pts-run-cmd.php LIST_TESTS
+	;;
+"list-suites")
+	php pts-core/pts-run-cmd.php LIST_SUITES
+	;;
+"list-saved-tests")
+	php pts-core/pts-run-cmd.php LIST_SAVED_TESTS
+	;;
+"remote-comparison")
+	php pts-core/pts-run-cmd.php REMOTE_COMPARISON $2 $3
+	;;
+"build-php")
+	echo "TODO: Not Yet Implemented!"
+	;;
+*)
+	echo "\n================================="
+	echo "Phoronix Test Suite Arguments"
+	echo "http://www.phoronix-test-suite.com/"
+	echo "=================================\n"
+	echo "gui: Launch The Phoronix Test Suite GUI"
+	echo "install <suite OR benchmark>: Install or Update The Specified Benchmark(s)"
+	echo "run <suite OR benchmark>: Run The Specified Benchmark/Suite"
+	echo "benchmark <suite OR benchmark OR saved file>: Same as manually running install and then run"
+	echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets"
+	echo "remove-result <Saved File>: Remove this saved result file and associated files"
+	echo "list-tests: List all Phoronix Test Suite Benchmark profiles"
+	echo "list-suites: List all Phoronix Test Suites"
+	echo "list-saved-tests: List all saved results"
+	echo "upload <Saved File>: Upload these results to be shared globally"
+	echo "build-php: Build A Local Copy Of PHP For The Phoronix Test Suite"
+	echo "\n"
+	;;
+esac

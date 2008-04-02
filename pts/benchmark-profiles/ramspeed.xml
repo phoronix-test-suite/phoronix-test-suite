@@ -1,0 +1,60 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Memory</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>RAMspeed</Title>
+		<Version>1.5.0</Version>
+		<Identifier>ramspeed</Identifier>
+		<Executable>ramspeed</Executable>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale> </ResultScale>
+		<Description>This benchmark tests the system memory (RAM) performance.</Description>
+		<Notes> </Notes>
+	</Information>
+	<Settings>
+		<Default>
+			<Arguments></Arguments>
+			<PossiblePaths></PossiblePaths>
+		</Default>
+		<Option>
+			<DisplayName>Benchmark</DisplayName>
+			<Identifier>benchmark</Identifier>
+			<ArgumentName>-b </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Integer</Name>
+					<Value>3</Value>
+				</Entry>
+				<Entry>
+					<Name>Floating Point</Name>
+					<Value>6</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>Length</DisplayName>
+			<Identifier>length</Identifier>
+			<ArgumentName>-l </ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>3 Times</Name>
+					<Value>3</Value>
+				</Entry>
+				<Entry>
+					<Name>10 Times</Name>
+					<Value>10</Value>
+				</Entry>
+				<Entry>
+					<Name>25 Times</Name>
+					<Value>25</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>

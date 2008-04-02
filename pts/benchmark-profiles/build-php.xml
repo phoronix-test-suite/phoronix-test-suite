@@ -1,0 +1,20 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Processor</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Timed PHP Compilation</Title>
+		<Version>5.2.5</Version>
+		<Identifier>build-php</Identifier>
+		<Executable>time-compile-php</Executable>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Description>This test times how long it takes to build PHP 5 with the Zend engine.</Description>
+		<Notes> </Notes>
+	</Information>
+</PTSBenchmark>
