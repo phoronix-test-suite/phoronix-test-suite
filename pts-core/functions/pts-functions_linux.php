@@ -54,7 +54,7 @@ function memory_mb_capacity()
 }
 function current_screen_resolution()
 {
-	$info = shell_exec("xrandr 2>&1");
+	$info = shell_exec("xrandr");
 
 	if(($pos = strrpos($info, "*")) == FALSE)
 	{
@@ -65,9 +65,10 @@ function current_screen_resolution()
 		$info = substr($info, 0, $pos);
 		$info = trim(substr($info, strrpos($info, "\n")));
 		$info = substr($info, 0, strpos($info, " "));
+		$info = explode("x", $info);
 	}
 
-	return explode("x", $info);
+	return $info;
 }
 function current_screen_width()
 {
@@ -118,7 +119,7 @@ function motherboard_chipset_string()
 }
 function parse_lspci_output($desc)
 {
-	$info = shell_exec("lspci 2>&1");
+	$info = shell_exec("lspci");
 
 	if(($pos = strpos($info, $desc)) === FALSE)
 	{
@@ -151,7 +152,7 @@ function parse_lspci_output($desc)
 }
 function graphics_subsystem_version()
 {
-	$info = shell_exec("X -version 2>&1");
+	$info = shell_exec("X -version");
 
 	if(($pos = strrpos($info, "Release Date")) === FALSE)
 	{
@@ -167,7 +168,7 @@ function graphics_subsystem_version()
 }
 function compiler_version()
 {
-	$info = shell_exec("gcc -v 2>&1");
+	$info = shell_exec("gcc -v");
 
 	if(($pos = strpos($info, "gcc version")) === FALSE)
 	{
@@ -177,9 +178,10 @@ function compiler_version()
 	{
 		$info = substr($info, $pos + 11);
 		$info = trim(substr($info, 0, strpos($info, " ", strpos($info, "."))));
+		$info = "GCC " . $info;
 	}
 
-	return "GCC " . $info;
+	return $info;
 }
 
 ?>
