@@ -3,8 +3,12 @@
 require("pts-core/functions/pts-functions.php");
 
 $COMMAND = $argv[1];
-$ARG_1 = $argv[2];
-$ARG_2 = $argv[3];
+
+if(isset($argv[2]))
+	$ARG_1 = $argv[2];
+
+if(isset($argv[3]))
+	$ARG_2 = $argv[3];
 
 switch($COMMAND)
 {

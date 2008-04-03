@@ -172,18 +172,36 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "")
 		$RETURN_STRING .= $result . " $result_scale\n";
 	}
 
-	$AVG_RESULT = explode(".", $TOTAL_RESULT / sizeof($BENCHMARK_RESULTS_ARRAY)); // avoid bcmath dependency
-
-	if(strlen($AVG_RESULT[1]) > 2)
-		$AVG_RESULT[1] = substr($AVG_RESULT[1], 0, 2);
-
-	$AVG_RESULT = $AVG_RESULT[0] . "." . $AVG_RESULT[1];
+	$AVG_RESULT = pts_trim_double($TOTAL_RESULT / sizeof($BENCHMARK_RESULTS_ARRAY), 2);
 
 	$RETURN_STRING .= "\nAverage: $AVG_RESULT $result_scale";
 
 	echo "\n=================================\n$RETURN_STRING\n=================================\n";
 	pts_process_remove($benchmark_identifier);
 	return $AVG_RESULT;
+}
+function pts_trim_double($double, $accuracy = 2)
+{
+	// this function is to avoid using bcmath
+
+	$return = explode(".", $double);
+
+	if(count($return) > 1)
+	{
+		$strlen = strlen($return[1]);
+
+		if($strlen > $accuracy)
+			$return[1] = substr($return[1], 0, $accuracy);
+		else if($strlen < $accuracy)
+			for($i = $strlen; $i < $accuracy; $i++)
+				$return[1] .= "0";
+
+		$return = $return[0] . "." . $return[1];
+	}
+	else
+		$return = $return[0];
+
+	return $return;
 }
 
 ?>

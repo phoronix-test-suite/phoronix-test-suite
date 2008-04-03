@@ -7,6 +7,7 @@ Phoronix Test Suite (git)
 - Improved hardware detection. Unrecognized components will now show as "Unknown" instead of generating error
 - Merge results now creates the test results folder and copies pts-results-viewer, if the folder wasn't previously created
 - Drop the use of bcdiv() (diverted into custom code) so users don't need the php-bcmath module.
+- Introduce Bandwidth profile as a new system memory and Level 2 cache benchmark
 - Other small fixes
 
 Phoronix Test Suite 0.1.0
