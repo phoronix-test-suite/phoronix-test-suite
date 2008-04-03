@@ -12,11 +12,8 @@ tar -xvf ramspeed.tar.gz
 
 echo "#!/bin/sh
 
-if [ ! -f \$THIS_RUN_TIME.result ]
-  then
-	rm -f *.result
-	./ramspeed \$@ > \$THIS_RUN_TIME.result
-fi
+rm -f *.result
+./ramspeed \$@ > \$THIS_RUN_TIME.result
 
 case \"\$1\" in
 \"COPY\")
@@ -39,7 +36,7 @@ esac
 chmod +x ramspeed-benchmark
 
 cd ramspeed-2.5.1/
-cat build.sh | grep -v 'read ANS' > build_pts.sh
+cat build.sh | grep -v "read ANS" > build_pts.sh
 chmod +x build_pts.sh
 ./build_pts.sh
 ln ramspeed ../
