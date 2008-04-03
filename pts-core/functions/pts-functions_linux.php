@@ -86,8 +86,14 @@ function parse_lsb_output($desc)
 	if(is_file("/etc/lsb-release"))
 	{
 		$info = file_get_contents("/etc/lsb-release");
-		$info = substr($info, strpos($info, $desc) + strlen($desc));
-		$info = str_replace("\"", "", trim(substr($info, 0, strpos($info, "\n"))));
+
+		if(($pos = strpos($info, $desc)) == FALSE)
+			$info = "Unknown";
+		else
+		{
+			$info = substr($info, $pos + strlen($desc));
+			$info = str_replace(array("\"", " " ), "", trim(substr($info, 0, strpos($info, "\n"))));
+		}
 	}
 	else
 		$info = "Unknown";
