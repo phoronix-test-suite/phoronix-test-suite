@@ -12,7 +12,7 @@
 		<Version>0.13</Version>
 		<Identifier>memory-bandwidth</Identifier>
 		<Executable>memory-bandwidth</Executable>
-		<TimesToRun>2</TimesToRun>
+		<TimesToRun>1</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Description>This benchmark tests the system memory (RAM) and CPU Level 2 cache performance.</Description>
 		<Notes> </Notes>
@@ -23,7 +23,7 @@
 			<PossiblePaths></PossiblePaths>
 		</Default>
 		<Option>
-			<DisplayName>Memoy Test</DisplayName>
+			<DisplayName>Memory Test</DisplayName>
 			<Identifier>memory-test</Identifier>
 			<ArgumentName>TEST_</ArgumentName>
 			<Menu>

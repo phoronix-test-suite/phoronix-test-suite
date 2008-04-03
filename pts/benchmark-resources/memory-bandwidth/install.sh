@@ -11,20 +11,24 @@ tar -xvf bandwidth-0.13.tar.gz
 
 echo "#!/bin/sh
 
-./bandwidth > dump
+if [ ! -f \$THIS_RUN_TIME.result ]
+  then
+	rm -f *.result
+	./bandwidth > \$THIS_RUN_TIME.result
+fi
 
 case \"\$1\" in
 \"TEST_L2READ\")
-	cat dump | grep \"L2 cache sequential read\"
+	cat \$THIS_RUN_TIME.result | grep \"L2 cache sequential read\"
 	;;
 \"TEST_L2WRITE\")
-	cat dump | grep \"L2 cache sequential write\"
+	cat \$THIS_RUN_TIME.result | grep \"L2 cache sequential write\"
 	;;
 \"TEST_READ\")
-	cat dump | grep \"Main memory sequential read\"
+	cat \$THIS_RUN_TIME.result | grep \"Main memory sequential read\"
 	;;
 \"TEST_WRITE\")
-	cat dump | grep \"Main memory sequential write\"
+	cat \$THIS_RUN_TIME.result | grep \"Main memory sequential write\"
 	;;
 esac
 " > memory-bandwidth

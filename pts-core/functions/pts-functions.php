@@ -293,6 +293,28 @@ function operating_system_release()
 {
 	return os_vendor() . " " . os_version();
 }
+function pts_trim_double($double, $accuracy = 2)
+{
+	// this function is to avoid using bcmath
 
+	$return = explode(".", $double);
+
+	if(count($return) > 1)
+	{
+		$strlen = strlen($return[1]);
+
+		if($strlen > $accuracy)
+			$return[1] = substr($return[1], 0, $accuracy);
+		else if($strlen < $accuracy)
+			for($i = $strlen; $i < $accuracy; $i++)
+				$return[1] .= "0";
+
+		$return = $return[0] . "." . $return[1];
+	}
+	else
+		$return = $return[0];
+
+	return $return;
+}
 
 ?>
