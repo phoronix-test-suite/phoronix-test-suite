@@ -63,8 +63,7 @@ switch($COMMAND)
 				$license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
 				$status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
 
-				echo "- $name  ($identifier)\n";
-				echo "\tStatus: $status License: $license\n\n";
+				printf("%-20ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 			}
 		echo "\n";
 		break;
