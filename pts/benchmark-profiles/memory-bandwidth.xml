@@ -1,0 +1,49 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>Memory</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Bandwidth</Title>
+		<Version>0.13</Version>
+		<Identifier>memory-bandwidth</Identifier>
+		<Executable>memory-bandwidth</Executable>
+		<TimesToRun>2</TimesToRun>
+		<ResultScale>MB/s</ResultScale>
+		<Description>This benchmark tests the system memory (RAM) and CPU Level 2 cache performance.</Description>
+		<Notes> </Notes>
+	</Information>
+	<Settings>
+		<Default>
+			<Arguments></Arguments>
+			<PossiblePaths></PossiblePaths>
+		</Default>
+		<Option>
+			<DisplayName>Memoy Test</DisplayName>
+			<Identifier>memory-test</Identifier>
+			<ArgumentName>TEST_</ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>L2 Cache Sequential Read</Name>
+					<Value>L2READ</Value>
+				</Entry>
+				<Entry>
+					<Name>L2 Cache Sequential Write</Name>
+					<Value>L2WRITE</Value>
+				</Entry>
+				<Entry>
+					<Name>RAM Sequential Read</Name>
+					<Value>READ</Value>
+				</Entry>
+				<Entry>
+					<Name>RAM Sequential Write</Name>
+					<Value>WRITE</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>
