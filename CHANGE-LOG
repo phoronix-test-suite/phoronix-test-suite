@@ -8,6 +8,8 @@ Phoronix Test Suite (git)
 - Merge results now creates the test results folder and copies pts-results-viewer, if the folder wasn't previously created
 - Drop the use of bcdiv() (diverted into custom code) so users don't need the php-bcmath module.
 - Introduce Bandwidth profile as a new system memory and Level 2 cache benchmark
+- Strip "Processor" from the reported CPU output area as it's redundant
+- Improve "RAMspeed" profile. Fix so that results can be saved. Add option whether to record Add, Copy, Save, Triad, or Average. Bump to v0.2.
 - Other small fixes
 
 Phoronix Test Suite 0.1.0

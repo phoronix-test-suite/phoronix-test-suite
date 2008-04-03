@@ -32,7 +32,7 @@ function processor_string()
 		$info = file_get_contents("/proc/cpuinfo");
 		$info = substr($info, strpos($info, "model name"));
 		$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
-		$info = str_replace(array("Corporation ", "Technologies ", "(R)", "(TM)"), "", $info);
+		$info = str_replace(array("Corporation ", "Technologies ", "Processor ", "processor ", "(R)", "(TM)"), "", $info);
 	}
 	else
 		$info = "Unknown";

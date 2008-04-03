@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.1</Version>
+		<Version>0.2</Version>
 		<BenchmarkType>Memory</BenchmarkType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
@@ -9,11 +9,11 @@
 	</PhoronixTestSuite>
 	<Information>
 		<Title>RAMspeed</Title>
-		<Version>1.5.0</Version>
+		<Version>2.5.1</Version>
 		<Identifier>ramspeed</Identifier>
-		<Executable>ramspeed</Executable>
+		<Executable>ramspeed-benchmark</Executable>
 		<TimesToRun>1</TimesToRun>
-		<ResultScale> </ResultScale>
+		<ResultScale>MB/s</ResultScale>
 		<Description>This benchmark tests the system memory (RAM) performance.</Description>
 		<Notes> </Notes>
 	</Information>
@@ -22,6 +22,33 @@
 			<Arguments></Arguments>
 			<PossiblePaths></PossiblePaths>
 		</Default>
+		<Option>
+			<DisplayName>Type</DisplayName>
+			<Identifier>run-type</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Copy</Name>
+					<Value>COPY</Value>
+				</Entry>
+				<Entry>
+					<Name>Scale</Name>
+					<Value>SCALE</Value>
+				</Entry>
+				<Entry>
+					<Name>Add</Name>
+					<Value>ADD</Value>
+				</Entry>
+				<Entry>
+					<Name>Triad</Name>
+					<Value>TRIAD</Value>
+				</Entry>
+				<Entry>
+					<Name>Average</Name>
+					<Value>AVERAGE</Value>
+				</Entry>
+			</Menu>
+		</Option>
 		<Option>
 			<DisplayName>Benchmark</DisplayName>
 			<Identifier>benchmark</Identifier>

@@ -1,5 +1,7 @@
 <?php
 
-echo trim(substr($argv[1], strpos($argv[1], "BatchRun", strpos($argv[1], "BatchRun") + 1)));
+$arg = trim($argv[1]);
+$arg = substr($arg, 0, strrpos($arg, "Mb/s") - 1);
+echo substr($arg, strrpos($arg, ' '));
 
 ?>
