@@ -19,7 +19,7 @@
 */
 
 define("PTS_VERSION", "0.1.0");
-define("PTS_LINE", "PTSV1LD");
+define("PTS_CODENAME", "TRONDHEIM");
 define("PTS_TYPE", "DESKTOP");
 
 define("THIS_RUN_TIME", time());
@@ -195,7 +195,6 @@ function pts_env_variables()
 {
 	return array(
 	"PTS_TYPE" => PTS_TYPE,
-	"PTS_LINE" => PTS_LINE,
 	"PTS_VERSION" => PTS_VERSION,
 	"SYS_CPU_CORES" => cpu_core_count(),
 	"SYS_CPU_JOBS" => cpu_job_count(),
