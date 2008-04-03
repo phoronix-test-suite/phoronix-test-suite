@@ -138,18 +138,21 @@ function pts_benchmark_type($identifier)
 	else
 		return false;
 }
-function pts_save_result($save_to, $save_results)
+function pts_save_result($save_to, $save_results, $directory = null)
 {
-	if(!is_dir(SAVE_RESULTS_LOCATION))
-		mkdir(SAVE_RESULTS_LOCATION);
+	if($directory == null)
+		$directory = SAVE_RESULTS_LOCATION;
 
-	if(!is_dir(SAVE_RESULTS_LOCATION . "pts-results-viewer"))
+	if(!is_dir($directory))
+		mkdir($directory);
+
+	if(!is_dir($directory . "pts-results-viewer"))
 	{
-		mkdir(SAVE_RESULTS_LOCATION . "pts-results-viewer"); // TODO: Clean this up
-		copy("pts-core/pts-results-viewer/phoronix-test-suite.gif", SAVE_RESULTS_LOCATION . "pts-results-viewer/phoronix-test-suite.gif");
-		copy("pts-core/pts-results-viewer/pts.js", SAVE_RESULTS_LOCATION . "pts-results-viewer/pts.js");
-		copy("pts-core/pts-results-viewer/pts-results-viewer.xsl", SAVE_RESULTS_LOCATION . "pts-results-viewer/pts-results-viewer.xsl");
-		copy("pts-core/pts-results-viewer/pts-viewer.css", SAVE_RESULTS_LOCATION . "pts-results-viewer/pts-viewer.css");
+		mkdir($directory . "pts-results-viewer"); // TODO: Clean this up
+		copy("pts-core/pts-results-viewer/phoronix-test-suite.gif", $directory . "pts-results-viewer/phoronix-test-suite.gif");
+		copy("pts-core/pts-results-viewer/pts.js", $directory . "pts-results-viewer/pts.js");
+		copy("pts-core/pts-results-viewer/pts-results-viewer.xsl", $directory . "pts-results-viewer/pts-results-viewer.xsl");
+		copy("pts-core/pts-results-viewer/pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
 	}
 
 	return file_put_contents(SAVE_RESULTS_LOCATION . $save_to, $save_results);

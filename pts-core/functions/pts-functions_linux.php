@@ -159,7 +159,7 @@ function parse_lspci_output($desc)
 }
 function graphics_subsystem_version()
 {
-	$info = shell_exec("X -version");
+	$info = shell_exec("X -version 2>&1");
 
 	if(($pos = strrpos($info, "Release Date")) === FALSE)
 	{
@@ -175,7 +175,7 @@ function graphics_subsystem_version()
 }
 function compiler_version()
 {
-	$info = shell_exec("gcc -v");
+	$info = shell_exec("gcc -v 2>&1");
 
 	if(($pos = strpos($info, "gcc version")) === FALSE)
 	{

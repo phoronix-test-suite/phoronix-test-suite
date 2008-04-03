@@ -172,7 +172,13 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "")
 		$RETURN_STRING .= $result . " $result_scale\n";
 	}
 
-	$AVG_RESULT = bcdiv($TOTAL_RESULT / sizeof($BENCHMARK_RESULTS_ARRAY), 1, 2);
+	$AVG_RESULT = explode(".", $TOTAL_RESULT / sizeof($BENCHMARK_RESULTS_ARRAY)); // avoid bcmath dependency
+
+	if(strlen($AVG_RESULT[1]) > 2)
+		$AVG_RESULT[1] = substr($AVG_RESULT[1], 0, 2);
+
+	$AVG_RESULT = $AVG_RESULT[0] . "." . $AVG_RESULT[1];
+
 	$RETURN_STRING .= "\nAverage: $AVG_RESULT $result_scale";
 
 	echo "\n=================================\n$RETURN_STRING\n=================================\n";

@@ -4,7 +4,10 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (git)
 
 - Prompt to auto upload results after test completion
-- Improved hardware detection. Unrecognized components will now show as "Unknown" instead of generating error.
+- Improved hardware detection. Unrecognized components will now show as "Unknown" instead of generating error
+- Merge results now creates the test results folder and copies pts-results-viewer, if the folder wasn't previously created
+- Drop the use of bcdiv() (diverted into custom code) so users don't need the php-bcmath module.
+- Other small fixes
 
 Phoronix Test Suite 0.1.0
 
