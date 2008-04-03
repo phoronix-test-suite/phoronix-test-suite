@@ -31,6 +31,7 @@ $MERGE_TO = pts_input_correct_results_path($MERGE_TO);
 
 // Merge Results
 $MERGED_RESULTS = pts_merge_benchmarks(file_get_contents($BASE_FILE), file_get_contents($MERGE_FROM_FILE));
+pts_save_result("index", "");
 file_put_contents($MERGE_TO, $MERGED_RESULTS);
 display_web_browser($MERGE_TO);
 
