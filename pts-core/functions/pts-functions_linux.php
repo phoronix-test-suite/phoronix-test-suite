@@ -22,7 +22,6 @@ function cpu_job_count()
 {
 	return cpu_core_count() + 1;
 }
-
 function processor_string()
 {
 	//TODO: Support Multiple CPUs
@@ -32,10 +31,38 @@ function processor_string()
 		$info = file_get_contents("/proc/cpuinfo");
 		$info = substr($info, strpos($info, "model name"));
 		$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
-		$info = str_replace(array("Corporation ", "Technologies ", "Processor ", "processor ", "(R)", "(TM)"), "", $info);
+		$info = str_replace(array("Corporation ", "Technologies ", "Processor ", "processor ", "(R)", "(TM)", "(tm)", "Technology "), "", $info);
 	}
 	else
 		$info = "Unknown";
+
+	if(($freq = processor_frequency()) > 0)
+	{
+		if(($strip_point = strpos($info, '@')) > 0)
+			$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked
+
+		$info .= " @ " . $freq . "GHz";
+	}
+
+	return $info;
+}
+function processor_frequency()
+{
+
+	if(is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+	{
+		$info = trim(file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"));
+		$info = pts_trim_double(intval($info) / 1000000, 2);
+	}
+	else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
+	{
+		$info = file_get_contents("/proc/cpuinfo");
+		$info = substr($info, strpos($info, "\ncpu MHz"));
+		$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
+		$info = pts_trim_double(intval($info) / 1000, 2);
+	}
+	else
+		$info = 0;
 
 	return $info;
 }
