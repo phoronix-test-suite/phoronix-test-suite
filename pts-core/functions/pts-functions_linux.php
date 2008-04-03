@@ -200,6 +200,25 @@ function graphics_subsystem_version()
 
 	return $info;
 }
+function graphics_memory_capacity()
+{
+	// Attempt NVIDIA (Binary Driver) Video RAM detection
+	$info = shell_exec("nvidia-settings --query [gpu:0]/VideoRam");
+	$video_ram = 128;
+
+	if(($pos = strpos($info, "VideoRam")) > 0)
+	{
+		$info = trim(substr($info, strpos($info, "):") + 3));
+		$info = trim(substr($info, 0, strpos($info, "\n"))); // Double check in case the blob drops period or makes other change
+		$info = trim(substr($info, 0, strpos($info, ".")));
+		$video_ram = intval($info) / 1024;
+	}
+
+	// Attempt ATI/AMD (Binary Driver) Video RAM detection
+	// TODO
+
+	return $video_ram;
+}
 function compiler_version()
 {
 	$info = shell_exec("gcc -v 2>&1");
