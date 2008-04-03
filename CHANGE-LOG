@@ -11,6 +11,7 @@ Phoronix Test Suite (git)
 - Strip "Processor" from the reported CPU output area as it's redundant
 - Improve "RAMspeed" profile. Fix so that results can be saved. Add option whether to record Add, Copy, Save, Triad, or Average. Bump to v0.2.
 - Introduce "system-memory" test suite. Tests RAM performance using RAMspeed and Bandwidth (currently).
+- Clean up text output a bit. Add "arguments description" string to text output when showing final results for each test.
 - Other small fixes
 
 Phoronix Test Suite 0.1.0

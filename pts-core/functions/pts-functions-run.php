@@ -16,7 +16,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 		}
 		else
 		{
-			$test_result = pts_run_benchmark($benchmarks_array[$i], $arguments_array[$i]);
+			$test_result = pts_run_benchmark($benchmarks_array[$i], $arguments_array[$i], $arguments_description[$i]);
 
 			if($save_results)
 				pts_save_benchmark_result($tandem_xml, $benchmarks_array[$i], $arguments_array[$i], $results_identifier, $test_result, $arguments_description[$i], pts_request_new_id());
@@ -84,7 +84,7 @@ function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEX
 	}
 	return $REAL_FILE_NAME;
 }
-function pts_run_benchmark($benchmark_identifier, $extra_arguments = "")
+function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $arguments_description = "")
 {
 	if(pts_process_active($benchmark_identifier))
 	{
@@ -163,12 +163,16 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "")
 	}
 
 	// End
-	$RETURN_STRING = "$benchmark_title Results:\n\n";
+	$RETURN_STRING = "$benchmark_title:\n";
+	$RETURN_STRING .= "$arguments_description\n";
+
+	if(!empty($arguments_description))
+		$RETURN_STRING .= "\n";
 
 	$TOTAL_RESULT = 0;
 	foreach($BENCHMARK_RESULTS_ARRAY as $result)
 	{
-		$TOTAL_RESULT += $result;
+		$TOTAL_RESULT += trim($result);
 		$RETURN_STRING .= $result . " $result_scale\n";
 	}
 
