@@ -1,8 +1,5 @@
 - Rewrite and finish GUI component
 - Clean up / make nice of text output
-- Support multiple possible paths
-	- i.e. /usr/local/games/doom3/ || ~/doom3/
-	- Right now stuck to benchmark-env but can be changed easily
 - Verbose output of all system details, benchmark dumps, etc
 - Improve / clean-up tandem_xml
 - Add More Benchmarks!

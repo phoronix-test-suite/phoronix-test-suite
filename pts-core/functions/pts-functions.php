@@ -18,6 +18,10 @@
    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// Load OS-specific functions
+require_once("pts-core/functions/pts-functions_config.php");
+require_once("pts-core/functions/pts-functions_linux.php");
+
 define("PTS_VERSION", "0.1.0");
 define("PTS_CODENAME", "TRONDHEIM");
 define("PTS_TYPE", "DESKTOP");
@@ -27,11 +31,11 @@ define("THIS_RUN_TIME", time());
 define("XML_PROFILE_LOCATION", "pts/benchmark-profiles/");
 define("XML_SUITE_LOCATION", "pts/benchmark-suites/");
 define("BENCHMARK_RESOURCE_LOCATION", "pts/benchmark-resources/");
-define("BENCHMARK_ENVIRONMENT", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/benchmark-env/")));
-define("SAVE_RESULTS_LOCATION", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/ResultsDirectory", "test-results/")));
+define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
 
-// Load OS-specific functions
-require_once("pts-core/functions/pts-functions_linux.php");
+pts_user_config_init();
+define("BENCHMARK_ENVIRONMENT", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/pts-benchmark-env/")));
+define("SAVE_RESULTS_LOCATION", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/pts-test-results/")));
 
 // Etc
 $PTS_GLOBAL_ID = 1;
@@ -50,30 +54,6 @@ function __autoload($to_load)
 }
 
 // Phoronix Test Suite - Functions
-function pts_find_home($path)
-{
-	if(strpos($path, '~') !== FALSE)
-	{
-		$whoami = trim(shell_exec("whoami"));
-
-		if($whoami == "root")
-			$home_path = "/root";
-		else
-			$home_path = "/home/$whoami";
-
-		$path = str_replace('~', $home_path, $path);
-	}
-	return $path;
-}
-function pts_current_user()
-{
-	$pts_user = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UserName", "Default User");
-
-	if($pts_user == "Default User")
-		$pts_user = trim(shell_exec("whoami"));
-
-	return $pts_user;
-}
 function pts_benchmark_names_to_array()
 {
 	$benchmark_names = array();
@@ -261,7 +241,7 @@ function pts_process_active($process)
 }
 function display_web_browser($URL)
 {
-	$view_results = pts_bool_question("Do you want to view the results in your web browser (Y/n)?");
+	$view_results = pts_bool_question("Do you want to view the results in your web browser (y/N)?", false);
 
 	if($view_results)
 		shell_exec("firefox $URL &");
@@ -333,21 +313,6 @@ function pts_variables_export_string($vars = null)
 function pts_exec($exec, $extra_vars = null)
 {
 	return shell_exec(pts_variables_export_string($extra_vars) . "$exec");
-}
-function pts_read_user_config($xml_pointer, $value = null)
-{
-	if(is_file("user-config.xml"))
-		if(($file = file_get_contents("user-config.xml")) != FALSE)
-		{
-			$xml_parser = new tandem_XmlReader($file);
-			unset($file);
-			$temp_value = $xml_parser->getXmlValue($xml_pointer);
-
-			if(!empty($temp_value))
-				$value = $temp_value;
-		}
-
-	return $value;
 }
 function pts_request_new_id()
 {
