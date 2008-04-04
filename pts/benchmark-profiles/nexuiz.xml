@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.1</Version>
+		<Version>0.2</Version>
 		<BenchmarkType>Graphics</BenchmarkType>
 		<ApplicationType>Game</ApplicationType>
 		<License>FREE</License>
@@ -57,6 +57,21 @@
 				<Entry>
 					<Name>No</Name>
 					<Value>0</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>Sound</DisplayName>
+			<Identifier>play-sound</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>On</Name>
+					<Value></Value>
+				</Entry>
+				<Entry>
+					<Name>Off</Name>
+					<Value>-nosound</Value>
 				</Entry>
 			</Menu>
 		</Option>
