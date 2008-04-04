@@ -138,10 +138,15 @@ function pts_benchmark_type($identifier)
 	else
 		return false;
 }
-function pts_save_result($save_to, $save_results, $directory = null)
+function pts_save_result($save_to = null, $save_results = null, $directory = null)
 {
 	if($directory == null)
 		$directory = SAVE_RESULTS_LOCATION;
+
+	if(strpos($save_to, ".xml") === FALSE)
+	{
+		$save_to .= ".xml";
+	}
 
 	if(!is_dir($directory))
 		mkdir($directory);
@@ -155,7 +160,12 @@ function pts_save_result($save_to, $save_results, $directory = null)
 		copy("pts-core/pts-results-viewer/pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
 	}
 
-	return file_put_contents(SAVE_RESULTS_LOCATION . $save_to, $save_results);
+	if($save_to == null || $save_results == null)
+		$bool = true;
+	else
+		$bool = file_put_contents($directory . $save_to, $save_results);
+
+	return $bool;
 }
 function pts_process_register($process)
 {
