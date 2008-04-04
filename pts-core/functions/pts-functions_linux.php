@@ -145,7 +145,20 @@ function kernel_arch()
 }
 function graphics_processor_string()
 {
-	return parse_lspci_output("VGA compatible controller:");
+	$info = shell_exec("glxinfo | grep renderer");
+
+	if(($pos = strpos($info, "renderer string:")) > 0)
+	{
+		$info = substr($info, $pos + 16);
+		$info = trim(substr($info, 0, strpos($info, "\n")));
+	}
+	else
+		$info = "";
+
+	if(empty($info) || $info == "Mesa GLX Indirect")
+		$info = parse_lspci_output("VGA compatible controller:");
+
+	return $info;
 }
 function motherboard_chipset_string()
 {
