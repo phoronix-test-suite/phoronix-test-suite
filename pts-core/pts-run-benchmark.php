@@ -74,23 +74,12 @@ if(!$TO_RUN_TYPE)
 }
 else
 {
-	echo "Would you like to save these benchmark results (Y/n)? ";
-	$SAVE_RESULTS = trim(fgets(STDIN));
+	$SAVE_RESULTS = pts_bool_question("Would you like to save these benchmark results (Y/n)?");
 
-	if(strtolower($SAVE_RESULTS) == "y")
-	{
-		$SAVE_RESULTS = true;
-	}
-	else if(strtolower($SAVE_RESULTS) == "n")
-	{
-		echo "Benchmark results will NOT be saved!\n";
-		$SAVE_RESULTS = false;
-	}
+	if($SAVE_RESULTS)
+		echo "Benchmark results will be saved.\n";
 	else
-	{
-		echo "\nInput not understood. Results will not be saved.\n";
-		$SAVE_RESULTS = false;
-	}
+		echo "Benchmark results will NOT be saved!\n";
 
 	if($SAVE_RESULTS)
 	{
@@ -139,17 +128,18 @@ if($TO_RUN_TYPE == "BENCHMARK")
 			$option_names = $xml_parser->getXMLArrayValues("Entry/Name");
 			$option_values = $xml_parser->getXMLArrayValues("Entry/Value");
 
-			echo "\n";
-			for($i = 0; $i < count($option_names); $i++)
-			{
-				echo ($i + 1) . ": " . $option_names[$i] . "\n";
-			}
-
 			do
 			{
+				echo "\n";
+				for($i = 0; $i < count($option_names); $i++)
+				{
+					echo ($i + 1) . ": " . $option_names[$i] . "\n";
+				}
 				echo "\nPlease Enter Your Choice: ";
 				$bench_choice = strtolower(trim(fgets(STDIN)));
-			}while($bench_choice < 1 || $bench_choice > count($option_names));
+			}
+			while($bench_choice < 1 || $bench_choice > count($option_names));
+
 			$TEXT_ARGS .= "$settings_name[$option_count]: " . $option_names[($bench_choice - 1)];
 			$USER_ARGS .= $settings_argument[$option_count] . $option_values[($bench_choice - 1)] . " ";
 
@@ -252,10 +242,9 @@ if($SAVE_RESULTS)
 		echo "Results Saved To: " . SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml\n";
 		display_web_browser(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml");
 
-		echo "\nWould you like to upload these results to PTS Global (Y/n)? ";
-		$upload_results = strtolower(trim(fgets(STDIN)));
+		$upload_results = pts_bool_question("Would you like to upload these results to PTS Global (y/N)?", false);
 
-		if($upload_results == "y")
+		if($upload_results)
 			echo "Results Uploaded To: " . pts_global_upload_result(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml") . "\n";
 
 		echo "\n";

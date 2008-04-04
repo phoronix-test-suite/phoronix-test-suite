@@ -185,10 +185,9 @@ function pts_process_active($process)
 }
 function display_web_browser($URL)
 {
-	echo "Do you want to view the results in your web browser (Y/n)? ";
-	$VIEW_RESULTS = strtolower(trim(fgets(STDIN)));
+	$view_results = pts_bool_question("Do you want to view the results in your web browser (Y/n)?");
 
-	if($VIEW_RESULTS == "y")
+	if($view_results)
 		shell_exec("firefox $URL &");
 }
 function pts_env_variables()
@@ -316,6 +315,24 @@ function pts_trim_double($double, $accuracy = 2)
 		$return = $return[0];
 
 	return $return;
+}
+function pts_bool_question($question, $default = true)
+{
+	do
+	{
+		echo $question . " ";
+		$input = trim(strtolower(fgets(STDIN)));
+	}
+	while($input != "y" && $input != "n" && $input != "");
+
+	if($input == "y")
+		$answer = true;
+	else if($intput == "n")
+		$answer = false;
+	else
+		$answer = $default;
+
+	return $answer;
 }
 
 ?>
