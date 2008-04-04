@@ -15,6 +15,7 @@ Phoronix Test Suite (git)
 - Improved CPU detection / ensures the frequency is shown. Properly handles the frequency for those overclocking or with power-savings technologies.
 - Added video memory detection support. Currently only NVIDIA binary driver supported. Defaults to 128MB. Video memory capacity (in MB) exported to VIDEO_MEMORY for profiles.
 - Compatibility checks when merging results
+- Add Super PI profile (Thanks to Pekka Panula)
 - Other small fixes
 
 Phoronix Test Suite 0.1.0
