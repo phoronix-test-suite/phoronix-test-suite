@@ -10,7 +10,6 @@
 	- i.e. if EIST / Cool n Quiet are enabled
 - Choice of SH or PHP for all install scripts
 - PossiblePaths to support multiple possible install locations, separated by : delimiter.
-- pts/pts-functions-run.php: Merge common areas of pts_run_benchmark() and run_gtk_benchmark().
 - Use new (larger) Wav file for benchmarks... internal Phoronix WAV file used is copyrighted music. Current PTS One is too small for reliable results.
 - Improved hardware detection (i.e. recognize multiple graphics cards)
 - Change all the echos to fwrite with using STDOUT or STDERR where relevant

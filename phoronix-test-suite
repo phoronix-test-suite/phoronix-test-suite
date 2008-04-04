@@ -57,10 +57,10 @@ case "${task}" in
 	;;
 *)
 	echo "\n================================="
-	echo "Phoronix Test Suite Arguments"
+	echo "Phoronix Test Suite"
 	echo "http://www.phoronix-test-suite.com/"
 	echo "=================================\n"
-	echo "gui: Launch The Phoronix Test Suite GUI"
+#	echo "gui: Launch The Phoronix Test Suite GUI"
 	echo "install <suite OR benchmark>: Install or Update The Specified Benchmark(s)"
 	echo "run <suite OR benchmark>: Run The Specified Benchmark/Suite"
 	echo "benchmark <suite OR benchmark OR saved file>: Same as manually running install and then run"
