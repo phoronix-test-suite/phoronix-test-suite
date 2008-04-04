@@ -17,6 +17,7 @@ Phoronix Test Suite (git)
 - Compatibility checks when merging results
 - Improved video card detection (use GL renderer and use lspci now only for fallback)
 - Add Super PI profile (Thanks to Pekka Panula)
+- Compress-gzip update (Thanks to Kano)
 - Improved distribution detection
 - Other small fixes
 

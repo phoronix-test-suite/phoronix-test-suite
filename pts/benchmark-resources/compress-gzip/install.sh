@@ -10,14 +10,22 @@ fi
 rm -f bigfile
 tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2
 
+rm -f bigfile-orig
 for i in 1 2 3 4 5 6 7 8
 do
 cat pts-wav-sample-file.wav >> bigfile-orig
 done
 
-echo "#!/bin/sh
-cat bigfile-orig > bigfile
-/usr/bin/time -f \"Gzip Compress Time: %e Seconds\" gzip bigfile 2>&1
-rm -f bigfile.gz" > compress-gzip
-chmod +x compress-gzip
+cat > gzip_bigfile <<EOT
+#!/bin/sh
+gzip -c bigfile-orig >/dev/null
+EOT
+chmod +x gzip_bigfile
+
+cat > compress-gzip <<EOT
+#!/bin/sh
+/usr/bin/time -f "Gzip Compress Time: %e Seconds" ./gzip_bigfile 2>&1
+EOT
+chmod +x compress-gzip 
+
 
