@@ -75,7 +75,7 @@ function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEX
 	pts_save_result("$REAL_FILE_NAME.xml", $R_FILE);
 
 	if(!is_file(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml"))
-		pts_save_result("$REAL_FILE_NAME.xml", file_get_contents(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml"));
+		pts_save_result("$PROPOSED_FILE_NAME.xml", file_get_contents(SAVE_RESULTS_LOCATION . "$REAL_FILE_NAME.xml"));
 	else
 	{
 		// Merge Results

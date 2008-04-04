@@ -219,7 +219,7 @@ else
 if($SAVE_RESULTS)
 {
 	$id = pts_request_new_id();
-	$RESULTS->setXslBinding("pts-results-viewer/pts-results-viewer.xsl");
+	$RESULTS->setXslBinding("pts-results-viewer/viewer.xsl");
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Hardware", $id, pts_hw_string());
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Software", $id, pts_sw_string());
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Author", $id, pts_current_user());

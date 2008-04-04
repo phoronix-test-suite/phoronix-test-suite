@@ -104,7 +104,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 
 	$RESULTS = new tandem_XmlWriter();
 
-	$RESULTS->setXslBinding("pts-results-viewer/pts-results-viewer.xsl");
+	$RESULTS->setXslBinding("pts-results-viewer/viewer.xsl");
 
 	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Title", 0, $new_suite_title);
 	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Name", 0, $new_suite_name);

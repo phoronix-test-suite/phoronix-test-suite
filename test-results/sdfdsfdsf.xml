@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="pts-results-viewer/viewer.xsl" ?>
+<!-- Checksum: 346b281ee678a3b3a4adcfe2e76c9db3 -->
+<!-- Generated: 2008-04-04 14:57:53 -->
+<PhoronixTestSuite>
+	<Suite>
+		<Title>sdfdsfdsf</Title>
+		<Name>encode-ogg</Name>
+		<Version>0.1</Version>
+		<Description>This test times how long it takes to encode a sample WAV file to Ogg format.</Description>
+		<Type>Utility</Type>
+		<Maintainer>Michael Larabel</Maintainer>
+	</Suite>
+	<System>
+		<Hardware>Processor: Intel Core2 Duo CPU     T9300 @ 2.50GHz (Total Cores: 2), Motherboard Chipset: Intel Mobile PM965/GM965/GL960, System Memory: 1982MB, Graphics: Quadro NVS 140M/PCI/SSE2, Screen Resolution: 1680x1050 </Hardware>
+		<Software>OS: Ubuntu 8.04, Kernel: 2.6.24-14-generic (x86_64), X.Org Server: 1.4.0.90, OpenGL: 2.1.2 NVIDIA 171.06, Compiler: GCC 4.2.3 </Software>
+		<Author>michael</Author>
+		<TestDate>April 4, 2008 02:57 PM</TestDate>
+		<TestNotes> </TestNotes>
+		<Version>0.1.0</Version>
+		<AssociatedIdentifiers>dssdfsdfsdf,fdsfdsf</AssociatedIdentifiers>
+	</System>
+	<Benchmark>
+		<Name>Ogg Encoding</Name>
+		<Version>1.2.0</Version>
+		<Attributes>Phoronix Test Suite v0.1.0</Attributes>
+		<Scale>Seconds</Scale>
+		<Proportion></Proportion>
+		<TestName>encode-ogg</TestName>
+		<TestArguments></TestArguments>
+		<ResultFormat>BAR_GRAPH</ResultFormat>
+		<Results>
+			<Group>
+				<Entry>
+					<Identifier>dssdfsdfsdf</Identifier>
+					<Value>9.10</Value>
+				</Entry>
+				<Entry>
+					<Identifier>fdsfdsf</Identifier>
+					<Value>9.25</Value>
+				</Entry>
+			</Group>
+		</Results>
+	</Benchmark>
+</PhoronixTestSuite>
