@@ -203,7 +203,7 @@ function graphics_subsystem_version()
 function graphics_memory_capacity()
 {
 	// Attempt NVIDIA (Binary Driver) Video RAM detection
-	$info = shell_exec("nvidia-settings --query [gpu:0]/VideoRam");
+	$info = shell_exec("nvidia-settings --query [gpu:0]/VideoRam 2>&1");
 	$video_ram = 128;
 
 	if(($pos = strpos($info, "VideoRam")) > 0)
@@ -213,9 +213,18 @@ function graphics_memory_capacity()
 		$info = trim(substr($info, 0, strpos($info, ".")));
 		$video_ram = intval($info) / 1024;
 	}
-
-	// Attempt ATI/AMD (Binary Driver) Video RAM detection
-	// TODO
+	else if(is_file("/var/log/Xorg.0.log"))
+	{
+		// Attempt ATI (Binary Driver) Video RAM detection
+		$info = shell_exec("cat /var/log/Xorg.0.log | grep VideoRAM");
+		// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDRX
+		if(($pos = strpos($info, "VideoRAM:")) > 0)
+		{
+			$info = substr($info, $pos + 10);
+			$info = substr($info, 0, strpos($info, ' '));
+			$video_ram = intval($info) / 1024;
+		}
+	}
 
 	return $video_ram;
 }
