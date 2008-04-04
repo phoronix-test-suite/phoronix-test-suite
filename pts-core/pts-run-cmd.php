@@ -82,7 +82,7 @@ switch($COMMAND)
 		}
 		echo "\n";
 		break;
-	case "LIST_SAVED_TESTS":
+	case "LIST_SAVED_RESULTS":
 		echo "\n=================================\n";
 		echo "Phoronix Test Suite - Saved Results\n";
 		echo "=================================\n\n";

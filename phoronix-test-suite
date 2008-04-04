@@ -46,8 +46,8 @@ case "${task}" in
 "list-suites")
 	php pts-core/pts-run-cmd.php LIST_SUITES
 	;;
-"list-saved-tests")
-	php pts-core/pts-run-cmd.php LIST_SAVED_TESTS
+"list-saved-results")
+	php pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
 	;;
 "remote-comparison")
 	php pts-core/pts-run-cmd.php REMOTE_COMPARISON $2 $3
@@ -68,7 +68,7 @@ case "${task}" in
 	echo "remove-result <Saved File>: Remove this saved result file and associated files"
 	echo "list-tests: List all Phoronix Test Suite Benchmark profiles"
 	echo "list-suites: List all Phoronix Test Suites"
-	echo "list-saved-tests: List all saved results"
+	echo "list-saved-results: List all saved results"
 	echo "upload <Saved File>: Upload these results to be shared globally"
 	echo "build-php: Build A Local Copy Of PHP For The Phoronix Test Suite"
 	echo "\n"
