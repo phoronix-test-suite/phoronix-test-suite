@@ -38,6 +38,10 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	$new_suite_type = $new_xml_reader->getXMLValue("PhoronixTestSuite/Suite/Type");
 	$new_suite_maintainer = $new_xml_reader->getXMLValue("PhoronixTestSuite/Suite/Maintainer");
 
+	$new_results_version = $new_xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Version");
+	$new_results_testname = $new_xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestName");
+	$new_results_arguments = $new_xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestArguments");
+
 	$new_results_identifiers = array();
 	$new_results_values = array();
 
@@ -84,6 +88,20 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	}
 	unset($OLD_RESULTS, $original_xml_reader, $original_results_raw);
 
+
+	if($original_suite_name != $new_suite_name)
+	{
+		echo "Merge Failed! The test(s) don't match: $original_suite_name - $new_suite_name\n";
+		exit(0);
+	}
+	if($original_suite_version != $new_suite_version)
+	{
+		echo "Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n";
+		exit(0);
+	}
+
+	// Write the new merge
+
 	$RESULTS = new tandem_XmlWriter();
 
 	$RESULTS->setXslBinding("pts-results-viewer/pts-results-viewer.xsl");
@@ -95,8 +113,8 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Type", 0, $new_suite_type);
 	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Maintainer", 0, $new_suite_maintainer);
 
-	// TODO: ADD MORE COMPATIBILITY CHECKS!!!!
-
+	// Same hardware and software?
+	
 	if(count($original_system_hardware) == 1 && count($new_system_hardware) == 1 && $original_system_hardware[0] == $new_system_hardware[0] && $original_system_software[0] == $new_system_software[0] && $original_pts_version[0] == $new_pts_version[0])
 	{
 		$USE_ID = pts_request_new_id();
@@ -110,6 +128,9 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	}
 	else
 	{
+		if($original_pts_version[0] != $new_pts_version[0]) // TODO: add checks to scan entire pts_version arrays
+			echo "PTS Versions Do Not Match! For accurate results, you should only test against the same version.";
+
 		for($i = 0; $i < count($original_system_hardware); $i++)
 		{
 			$USE_ID = pts_request_new_id();
@@ -152,12 +173,14 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 			$RESULTS->addXmlObject("PhoronixTestSuite/Benchmark/Results/Group/Entry/Value", $USE_ID, $original_results_values[$b][$o], 5, "o-$b-$o");
 		}
 
-		for($o = 0; $o < count($new_results_identifiers[$b]); $o++)
-		{
-			$RESULTS->addXmlObject("PhoronixTestSuite/Benchmark/Results/Group/Entry/Identifier", $USE_ID, $new_results_identifiers[$b][$o], 5, "n-$b-$o");
-			$RESULTS->addXmlObject("PhoronixTestSuite/Benchmark/Results/Group/Entry/Value", $USE_ID, $new_results_values[$b][$o], 5, "n-$b-$o");
-		}
-	}
+
+		if($original_results_testname[$b] == $new_results_testname[$b] && $original_results_arguments[$b] == $new_results_arguments[$b] && $original_results_version[$b] == $new_results_version[$b])
+			for($o = 0; $o < count($new_results_identifiers[$b]); $o++)
+			{
+				$RESULTS->addXmlObject("PhoronixTestSuite/Benchmark/Results/Group/Entry/Identifier", $USE_ID, $new_results_identifiers[$b][$o], 5, "n-$b-$o");
+				$RESULTS->addXmlObject("PhoronixTestSuite/Benchmark/Results/Group/Entry/Value", $USE_ID, $new_results_values[$b][$o], 5, "n-$b-$o");
+			}
+	}	
 
 	return $RESULTS->getXML();
 }

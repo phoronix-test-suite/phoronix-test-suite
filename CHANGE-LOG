@@ -14,6 +14,7 @@ Phoronix Test Suite (git)
 - Clean up text output a bit. Add "arguments description" string to text output when showing final results for each test.
 - Improved CPU detection / ensures the frequency is shown. Properly handles the frequency for those overclocking or with power-savings technologies.
 - Added video memory detection support. Currently only NVIDIA binary driver supported. Defaults to 128MB. Video memory capacity (in MB) exported to VIDEO_MEMORY for profiles.
+- Compatibility checks when merging results
 - Other small fixes
 
 Phoronix Test Suite 0.1.0

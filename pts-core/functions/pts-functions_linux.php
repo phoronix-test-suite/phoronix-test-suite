@@ -114,7 +114,7 @@ function parse_lsb_output($desc)
 	{
 		$info = file_get_contents("/etc/lsb-release");
 
-		if(($pos = strpos($info, $desc)) == FALSE)
+		if(($pos = strpos($info, $desc)) === FALSE)
 			$info = "Unknown";
 		else
 		{
@@ -257,6 +257,7 @@ function opengl_version()
 	{
 		$info = substr($info, $pos + 23);
 		$info = trim(substr($info, 0, strpos($info, "\n")));
+		$info = str_replace(array(" Release"), "", $info);
 	}
 
 	if(str_replace(array("NVIDIA", "ATI", "AMD", "Radeon", "Intel"), "", $info) == $info)
