@@ -1,5 +1,6 @@
 #!/bin/sh
 
+cp -f doom3-pts.cfg $1
 cd $1
 
 if [ ! -f doom3-linux.run ]
@@ -11,6 +12,7 @@ chmod +x doom3-linux.run
 
 ./doom3-linux.run --noexec --target .
 ln bin/Linux/x86/doom.x86 doom3-real
+mv -f doom3-pts.cfg base/doom3-pts.cfg
 
 echo "#!/bin/sh
 ./doom3-real \$@ | grep fps" > doom3

@@ -16,8 +16,12 @@ function pts_user_config_init()
 	$config = new tandem_XmlWriter();
 	$config->addXmlObject("PhoronixTestSuite/GlobalDatabase/UserName", 0, pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UserName", "Default User", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/GlobalDatabase/UploadKey", 0, pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "", $read_config));
+
 	$config->addXmlObject("PhoronixTestSuite/Options/Results/Directory", 1, pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/pts-test-results/", $read_config));
+
 	$config->addXmlObject("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", 2, pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/pts-benchmark-env/", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests", 2, pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests", "5", $read_config));
+
 	$config->addXmlObject("PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests", 2, pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests", "5", $read_config));
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());

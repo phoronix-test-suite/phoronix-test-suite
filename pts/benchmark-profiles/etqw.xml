@@ -13,43 +13,15 @@
 		<Identifier>etqw</Identifier>
 		<Executable>etqw</Executable>
 		<TimesToRun>3</TimesToRun>
-		<PreRunMessage>Due to a current limitation of Nexuiz, once the benchmark has completed you hit the quit button to leave the game.</PreRunMessage>
 		<ResultScale>FPS</ResultScale>
 		<Description>This test calculates the average frame-rate within the ET:QW game.</Description>
 		<Notes> </Notes>
 	</Information>
 	<Settings>
 		<Default>
-			<Arguments>+timenetdemo pts +set r_mode -1</Arguments>
+			<Arguments>+exec etqw-pts.cfg +set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +timenetdemo pts</Arguments>
 			<PossiblePaths></PossiblePaths>
 		</Default>
-		<Option>
-			<DisplayName>Video RAM</DisplayName>
-			<Identifier>video-ram</Identifier>
-			<ArgumentName>+set sys_VideoRam </ArgumentName>
-			<Menu>
-				<Entry>
-					<Name>128MB</Name>
-					<Value>128</Value>
-				</Entry>
-				<Entry>
-					<Name>256MB</Name>
-					<Value>256</Value>
-				</Entry>
-				<Entry>
-					<Name>512MB</Name>
-					<Value>512</Value>
-				</Entry>
-				<Entry>
-					<Name>640MB</Name>
-					<Value>640</Value>
-				</Entry>
-				<Entry>
-					<Name>1GB</Name>
-					<Value>1024</Value>
-				</Entry>
-			</Menu>
-		</Option>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>display-resolution</Identifier>

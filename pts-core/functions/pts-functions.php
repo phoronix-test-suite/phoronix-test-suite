@@ -368,7 +368,7 @@ function pts_bool_question($question, $default = true)
 
 	if($input == "y")
 		$answer = true;
-	else if($intput == "n")
+	else if($input == "n")
 		$answer = false;
 	else
 		$answer = $default;
