@@ -110,30 +110,28 @@ function current_screen_height()
 }
 function parse_lsb_output($desc)
 {
-	if(is_file("/etc/lsb-release"))
-	{
-		$info = file_get_contents("/etc/lsb-release");
 
-		if(($pos = strpos($info, $desc)) === FALSE)
-			$info = "Unknown";
-		else
-		{
-			$info = substr($info, $pos + strlen($desc));
-			$info = str_replace(array("\"", " " ), "", trim(substr($info, 0, strpos($info, "\n"))));
-		}
+	$info = shell_exec("lsb_release -a 2>&1");
+
+	if(($pos = strrpos($info, $desc . ':')) === FALSE)
+	{
+		$info = "Unknown";
 	}
 	else
-		$info = "Unknown";
+	{
+		$info = substr($info, $pos + strlen($desc) + 1);
+		$info = trim(substr($info, 0, strpos($info, "\n")));
+	}
 
 	return $info;
 }
 function os_vendor()
 {
-	return parse_lsb_output("DISTRIB_ID=");
+	return parse_lsb_output("Distributor ID");
 }
 function os_version()
 {
-	return parse_lsb_output("DISTRIB_RELEASE=");
+	return parse_lsb_output("Release");
 }
 function kernel_string()
 {
@@ -145,7 +143,7 @@ function kernel_arch()
 }
 function graphics_processor_string()
 {
-	$info = shell_exec("glxinfo | grep renderer");
+	$info = shell_exec("glxinfo | grep renderer 2>&1");
 
 	if(($pos = strpos($info, "renderer string:")) > 0)
 	{
