@@ -275,7 +275,7 @@ function pts_hw_string()
 }
 function pts_sw_string()
 {
-	$sw_string = "OS: " . operating_system_release() . " (" . kernel_arch() . "), ";
+	$sw_string = "OS: " . operating_system_release() . ", ";
 	$sw_string .= "Kernel: " . kernel_string() . " (" . kernel_arch() . "), ";
 	$sw_string .= "X.Org Server: " . graphics_subsystem_version() . ", ";
 	$sw_string .= "OpenGL: " . opengl_version() . ", ";
