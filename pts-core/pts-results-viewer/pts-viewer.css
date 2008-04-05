@@ -1,69 +1,153 @@
 body
 {
-	text-align: left;
+	text-align: center;
 	margin: 0;
 	padding: 0;
 	font-family: arial, helvetica, sans-serif;
-	font-size: 14px;
-	background-color: #3b433a;
+	font-size: 13px;
+	background-color: #FFF;
+	color: #000;
+}
+a
+{
+	color: #3B433A;
+}
+div#pts_header_top
+{
+	width: 100%;
+	margin: 0;
+	color: #FFF;
+	background-color: #222;
+	border: solid #000;
+	border-width: 0 0 1px;
+}
+div#pts_header_top_center
+{
+	width: 1030px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+div#pts_header_top_title
+{
+	font-size: 42px;
+	font-weight: bold;
+	float: left;
+}
+div#pts_header_top_link_group
+{
+	padding: 14px 0 0;
+	float: right;
+}
+div#pts_header_top_link_group a
+{
+	margin: auto 6px;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 18px;
+	color: #FFF;
+	padding: 4px 8px;
+	border: solid #EEE 1px;
+}
+div#pts_header_top_link_group a:hover
+{
+	color: #000;
+	background-color: #FFF;
 }
 div#pts_container
 {
-	width: 960px;
-	margin: 0 auto;
 	text-align: left;
-	color: #FFF;
+	width: 920px;
+	margin: 0 auto;
 	overflow: hidden;
+	border: solid #EEE;
+	border-width: 0 1px;
+	min-height: 700px;
+}
+div.pts_box
+{
+	text-align: left;
+	border: solid #8B8F7C 1px;
+	margin: 10px 10px 20px;
+	padding: 1px 10px 15px;
+}
+div#pts_header_bottom a
+{
+	color: #FFF;
+}
+div#pts_header_bottom
+{
+	width: 100%;
+	margin: 0;
+	color: #FFF;
 	background-color: #222;
 	border: solid #000;
+	border-width: 1px 0 0;
+}
+div#pts_header_bottom_center
+{
+	margin: 2px auto;
+	padding: 6px 0 10px;
+	width: 970px;
+	overflow: hidden;
+	font-size: 12px;
+	text-align: center;
+}
+div.pts_column_head
+{	
+	font-size: 12px;
+	color: #FFF;
+	text-align: center;
+	margin: 0 3px;
+	background-color: #3B433A;
+	font-weight: bold;
+	float: left;
+	border: solid #3B433A;
+	border-width: 1px;
+}
+div.pts_column_body
+{	
+	font-size: 12px;
+	color: #000;
+	text-align: center;
+	margin: 0 3px;
+	background-color: #f5f5f5;
+	float: left;
+	border: solid #66695B;
 	border-width: 0 1px 1px;
 }
-div#pts_container a
+h1
 {
-	color: #FFF;
-}
-div#pts_logo
-{
-	margin: 0;
-	width: 960px;
-	height: 70px;
-	background: #222 url(phoronix-test-suite.gif) no-repeat;
-	border: solid #000;
-	border-width: 0 0 1px 0;
-}
-div#pts_benchmark_main_header
-{
-	color: #FFF;
-	font-size: 36px;
+	margin-top: 10px;
+	font-size: 21px;
+	color: #3B433A;
 	font-weight: bold;
-	padding: 5px 0 5px 15px;
 }
-div#pts_description_area
+div.pts_chart_box
 {
-	padding: 0 0 5px;
+	width: 95%;
+	overflow: hidden;
+	margin: 5px auto;
+}
+div.pts_chart_box a
+{
+	text-decoration: none;
+	font-weight: bold;
+}
+div.pts_chart_box a:hover
+{
+	text-decoration: underline;
 }
 div#pts_benchmark_area
 {
 	background-color: #FFF;
-	padding: 15px 10px;
+	width: 90%;
+	margin: 5px auto;
 	color: #000;
 	overflow: hidden;
 }
-div.pts_benchmark_descriptor
-{
-	color: #EFEFEF;
-	padding: 5px 20px;
-}
-div.pts_area_box
-{
-	background-color: #66695B;
-	color: #EFEFEF;
-	padding: 1px 5px 0;
-	border: solid #000 1px;
-}
 div.pts_benchmark_bar
 {
-	background-color: #2b6b29;
+	background-color: #40423A;
 	color: #FFF;
 	padding: 4px;
 	border: solid #000 1px;

@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd $1
-rm -f bigfile.gz
+cat ../pts-shared/pts-wav-sample-file.wav > /dev/null

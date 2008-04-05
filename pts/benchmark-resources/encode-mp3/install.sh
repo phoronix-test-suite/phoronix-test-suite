@@ -7,9 +7,11 @@ if [ ! -f lame.tar.gz ]
      wget http://superb-east.dl.sourceforge.net/sourceforge/lame/lame-3.97.tar.gz -O lame.tar.gz
 fi
 
-if [ ! -f ../pts-shared/pts-wav-sample-file.tar.bz2 ]
+if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
   then
      wget http://www.phoronix-test-suite.com/benchmark-files/pts-wav-sample-file.tar.bz2 -O ../pts-shared/pts-wav-sample-file.tar.bz2
+     tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2 -C ../pts-shared/
+     rm -f ../pts-shared/pts-wav-sample-file.tar.bz2
 fi
 
 tar -xvf lame.tar.gz
@@ -19,8 +21,7 @@ make -j $NUM_CPU_JOBS
 cd ..
 
 echo "#!/bin/sh
-/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame-3.97/frontend/lame --silent -h audio.wav audio.mp3 2>&1" > lame
+rm -f audio.mp3
+/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame-3.97/frontend/lame --silent -h ../pts-shared/pts-wav-sample-file.wav audio.mp3 2>&1" > lame
 chmod +x lame
-
-tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2
 

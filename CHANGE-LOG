@@ -18,7 +18,10 @@ Phoronix Test Suite (git)
 - Improved video card detection (use GL renderer and use lspci now only for fallback)
 - Add Super PI profile (Thanks to Pekka Panula)
 - Compress-gzip update (Thanks to Kano)
+- Other updated scripts (Thanks to Kano)
+- Doom 3 profile now working
 - Improved distribution detection
+- New results viewer (work in progress)
 - Other small fixes
 
 Phoronix Test Suite 0.1.0

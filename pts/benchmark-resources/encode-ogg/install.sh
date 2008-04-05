@@ -17,9 +17,11 @@ if [ ! -f vorbis-tools.tar.gz ]
      wget http://downloads.xiph.org/releases/vorbis/vorbis-tools-1.2.0.tar.gz -O vorbis-tools.tar.gz
 fi
 
-if [ ! -f ../pts-shared/pts-wav-sample-file.tar.bz2 ]
+if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
   then
      wget http://www.phoronix-test-suite.com/benchmark-files/pts-wav-sample-file.tar.bz2 -O ../pts-shared/pts-wav-sample-file.tar.bz2
+     tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2 -C ../pts-shared/
+     rm -f ../pts-shared/pts-wav-sample-file.tar.bz2
 fi
 
 THIS_DIR=$(pwd)
@@ -48,7 +50,5 @@ make install
 cd ..
 
 echo "#!/bin/sh
-/usr/bin/time -f \"WAV To OGG Encode Time: %e Seconds\" ./vorbis/bin/oggenc --quiet audio.wav -q 10 -o audio.ogg 2>&1" > oggenc
+/usr/bin/time -f \"WAV To OGG Encode Time: %e Seconds\" ./vorbis/bin/oggenc --quiet ../pts-shared/pts-wav-sample-file.wav -q 10 -o audio.ogg 2>&1" > oggenc
 chmod +x oggenc
-
-tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2
