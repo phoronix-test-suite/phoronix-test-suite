@@ -262,7 +262,27 @@ function operating_system_release()
 	$version = os_version();
 
 	if($vendor == "Unknown" && $version == "Unknown")
+	{
 		$os = "Unknown";
+
+		// Try to detect distro for those not supplying lsb_release
+		$files = glob("/etc/*-release");
+		if(count($files) > 0)
+		{
+			$file = file_get_contents($files[0]);
+			$os = substr($file, 0, strpos($file, "\n"));
+		}
+
+		if($os == "Unknown")
+		{
+			$files = glob("/etc/*-release");
+			if(count($files) > 0)
+			{
+				$file = file_get_contents($files[0]);
+				$os = substr($file, 0, strpos($file, "\n"));
+			}
+		}
+	}
 	else
 		$os = $vendor . " " . $version;
 
