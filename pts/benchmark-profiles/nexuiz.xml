@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.2</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Graphics</BenchmarkType>
 		<ApplicationType>Game</ApplicationType>
 		<License>FREE</License>
