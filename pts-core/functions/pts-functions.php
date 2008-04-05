@@ -275,7 +275,7 @@ function pts_hw_string()
 }
 function pts_sw_string()
 {
-	$sw_string = "OS: " . operating_system_release() . ", ";
+	$sw_string = "OS: " . operating_system_release() . " (" . kernel_arch() . "), ";
 	$sw_string .= "Kernel: " . kernel_string() . " (" . kernel_arch() . "), ";
 	$sw_string .= "X.Org Server: " . graphics_subsystem_version() . ", ";
 	$sw_string .= "OpenGL: " . opengl_version() . ", ";
@@ -329,10 +329,6 @@ function pts_global_upload_result($result_file)
 	$Globalkey = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "");
 
 	return file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$ToUpload&global_user=$GlobalUser&global_key=$Globalkey"); // Rudimentary, but works
-}
-function operating_system_release()
-{
-	return os_vendor() . " " . os_version();
 }
 function pts_trim_double($double, $accuracy = 2)
 {

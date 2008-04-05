@@ -256,6 +256,18 @@ function compiler_version()
 
 	return $info;
 }
+function operating_system_release()
+{
+	$vendor = os_vendor();
+	$version = os_version();
+
+	if($vendor == "Unknown" && $version == "Unknown")
+		$os = "Unknown";
+	else
+		$os = $vendor . " " . $version;
+
+	return $os;
+}
 function opengl_version()
 {
 	$info = shell_exec("glxinfo | grep version");
