@@ -190,7 +190,7 @@ function parse_lspci_output($desc)
 		if(($strlen = strlen($info)) < 6 || $strlen > 96)
 			$info = "N/A";
 		else
-			$info = str_replace(array("Corporation ", "Technologies ", " Inc ", "processor ", "(R)", "(TM)"), "", $info);
+			$info = str_replace(array("Corporation ", "Technologies ", "(R)", "(TM)", "(tm)", "Inc. ", ",", "Technology "), "", $info);
 	}
 
 	return $info;
