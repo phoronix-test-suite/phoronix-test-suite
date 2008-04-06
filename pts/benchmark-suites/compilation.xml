@@ -1,6 +1,6 @@
 <PTSuite>
 	<PhoronixTestSuite>
-		<Version>0.1</Version>
+		<Version>0.2</Version>
 		<BenchmarkType>Processor</BenchmarkType>
 		<Title>Timed Code Compilation Tests</Title>
 		<Maintainer>Michael Larabel</Maintainer>

@@ -1,6 +1,6 @@
 <PTSuite>
 	<PhoronixTestSuite>
-		<Version>0.1</Version>
+		<Version>0.2</Version>
 		<BenchmarkType>System</BenchmarkType>
 		<Title>Universe Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -46,5 +46,15 @@
 		<Benchmark>compress-gzip</Benchmark>
 		<Arguments></Arguments>
 		<Description></Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>ramspeed</Benchmark>
+		<Arguments>ADD -b 3 -l 10</Arguments>
+		<Description>Integer BatchRun Add</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>memory-bandwidth</Benchmark>
+		<Arguments>TEST_READ</Arguments>
+		<Description>RAM Sequential Read</Description>
 	</PTSBenchmark>
 </PTSuite>
