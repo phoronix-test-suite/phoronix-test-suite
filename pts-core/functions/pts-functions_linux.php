@@ -266,7 +266,7 @@ function operating_system_release()
 		$os = "Unknown";
 
 		// Try to detect distro for those not supplying lsb_release
-		$files = glob("/etc/*-release");
+		$files = glob("/etc/*-version");
 		if(count($files) > 0)
 		{
 			$file = file_get_contents($files[0]);

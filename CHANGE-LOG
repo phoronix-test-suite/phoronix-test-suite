@@ -13,7 +13,7 @@ Phoronix Test Suite (git)
 - Introduce "system-memory" test suite. Tests RAM performance using RAMspeed and Bandwidth (currently).
 - Clean up text output a bit. Add "arguments description" string to text output when showing final results for each test.
 - Improved CPU detection / ensures the frequency is shown. Properly handles the frequency for those overclocking or with power-savings technologies.
-- Added video memory detection support. Currently only NVIDIA binary driver supported. Defaults to 128MB. Video memory capacity (in MB) exported to VIDEO_MEMORY for profiles.
+- Added video memory detection support. Defaults to 128MB. Video memory capacity (in MB) exported to VIDEO_MEMORY for profiles.
 - Compatibility checks when merging results
 - Improved video card detection (use GL renderer and use lspci now only for fallback)
 - Add Super PI profile (Thanks to Pekka Panula)
