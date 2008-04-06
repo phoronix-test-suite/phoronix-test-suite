@@ -36,18 +36,21 @@ cd libogg-1.1.3/
 make -j $NUM_CPU_JOBS
 make install
 cd ..
+rm -rf libogg-1.1.3/
 
 cd libvorbis-1.2.0/
 ./configure --prefix=$THIS_DIR/vorbis
 make -j $NUM_CPU_JOBS
 make install
 cd ..
+rm -rf libvorbis-1.2.0/
 
 cd vorbis-tools-1.2.0/
 ./configure --prefix=$THIS_DIR/vorbis
 make -j $NUM_CPU_JOBS
 make install
 cd ..
+rm -rf vorbis-tools-1.2.0/
 
 echo "#!/bin/sh
 /usr/bin/time -f \"WAV To OGG Encode Time: %e Seconds\" ./vorbis/bin/oggenc --quiet ../pts-shared/pts-wav-sample-file.wav -q 10 -o audio.ogg 2>&1" > oggenc

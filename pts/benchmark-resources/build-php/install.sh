@@ -22,7 +22,7 @@ cd libxml2-2.6.31/
 make -j $NUM_CPU_JOBS
 make install
 cd ..
-
+rm -rf libxml2-2.6.31/
 
 echo "#!/bin/sh
 

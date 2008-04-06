@@ -1,4 +1,5 @@
 #!/bin/sh
 
 cd $1
-rm -rf php-5.2.5/
+rm -rf ImageMagick-6.4.0/
+

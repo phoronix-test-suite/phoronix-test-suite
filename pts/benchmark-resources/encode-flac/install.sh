@@ -14,13 +14,18 @@ if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
      rm -f ../pts-shared/pts-wav-sample-file.tar.bz2
 fi
 
+THIS_DIR=$(pwd)
+mkdir $THIS_DIR/flac
+
 tar -xvf flac.tar.gz
 cd flac-1.2.1/
-./configure
+./configure --prefix=$THIS_DIR/flac
 make -j $NUM_CPU_JOBS
+make install
 cd ..
+rm -rf flac-1.2.1/
 
 echo "#!/bin/sh
-/usr/bin/time -f \"WAV To FLAC Encode Time: %e Seconds\" ./flac-1.2.1/src/flac/flac -s --best ../pts-shared/pts-wav-sample-file.wav 2>&1
+/usr/bin/time -f \"WAV To FLAC Encode Time: %e Seconds\" ./flac/bin/flac -s --best ../pts-shared/pts-wav-sample-file.wav 2>&1
 rm -f ../pts-shared/pts-wav-sample-file.flac" > flac
 chmod +x flac

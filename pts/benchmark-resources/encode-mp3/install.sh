@@ -14,14 +14,19 @@ if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
      rm -f ../pts-shared/pts-wav-sample-file.tar.bz2
 fi
 
+THIS_DIR=$(pwd)
+mkdir $THIS_DIR/lame
+
 tar -xvf lame.tar.gz
 cd lame-3.97/
-./configure
+./configure --prefix=$THIS_DIR/lame
 make -j $NUM_CPU_JOBS
+make install
 cd ..
+rm -rf lame-3.97/
 
 echo "#!/bin/sh
 rm -f audio.mp3
-/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame-3.97/frontend/lame --silent -h ../pts-shared/pts-wav-sample-file.wav audio.mp3 2>&1" > lame
+/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame/bin/lame --silent -h ../pts-shared/pts-wav-sample-file.wav audio.mp3 2>&1" > lame
 chmod +x lame
 
