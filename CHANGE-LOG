@@ -1,7 +1,8 @@
 
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (git)
+Phoronix Test Suite 0.2.0
+April 6, 2008
 
 - Prompt to auto upload results after test completion
 - Improved hardware detection. Unrecognized components will now show as "Unknown" instead of generating error
