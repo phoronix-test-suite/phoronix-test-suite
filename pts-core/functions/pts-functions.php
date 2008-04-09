@@ -30,7 +30,7 @@ define("THIS_RUN_TIME", time());
 
 define("XML_PROFILE_LOCATION", "pts/benchmark-profiles/");
 define("XML_SUITE_LOCATION", "pts/benchmark-suites/");
-define("XML_DEPENDENCY_LOCATION", "pts/distribution-dependencies/");
+define("MISC_LOCATION", "pts/misc-files/");
 define("BENCHMARK_RESOURCE_LOCATION", "pts/benchmark-resources/");
 define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
 

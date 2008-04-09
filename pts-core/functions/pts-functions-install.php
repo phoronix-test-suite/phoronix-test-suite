@@ -97,9 +97,9 @@ function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 	$dependencies = explode(", ", $dependencies);
 
 	$dep_match_count = 0;
-	if(is_file(XML_DEPENDENCY_LOCATION . os_vendor() . "-packages.xml"))
+	if(is_file(MISC_LOCATION . "dependencies/" . os_vendor() . "-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DEPENDENCY_LOCATION . os_vendor() . "-packages.xml"));
+		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "dependencies/" . os_vendor() . "-packages.xml"));
 		$generic_package = $xml_parser->getXMLArrayValues("Distribution/Package/GenericName");
 		$distro_package = $xml_parser->getXMLArrayValues("Distribution/Package/PackageName");
 
