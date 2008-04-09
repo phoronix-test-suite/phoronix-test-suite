@@ -22,13 +22,13 @@ case "${task}" in
 	php pts-core/pts-main.php
 	;;
 "install")
-	php pts-core/pts-install-benchmark.php $2
+	php pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
 	;;
 "run")
 	php pts-core/pts-run-benchmark.php $2
 	;;
 "benchmark")
-	php pts-core/pts-install-benchmark.php $2
+	php pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
 	php pts-core/pts-run-benchmark.php $2
 	;;
 "merge-results")

@@ -45,7 +45,20 @@ switch($COMMAND)
 
 		if(!empty($upload_url))
 			echo "Results Uploaded To: " . $upload_url . "\n\n"; // TODO: Add checks to make sure it did work out
+		break;
+	case "INSTALL_BENCHMARK":
+		if(empty($ARG_1))
+		{
+			echo "\nThe benchmark or suite name to install must be supplied.\n";
+			exit;
+		}
 
+		require("pts-core/functions/pts-functions-install.php");
+
+		$ARG_1 = strtolower($ARG_1);
+
+		$install_objects = "";
+		pts_recurse_install_benchmark($ARG_1, $install_objects);
 		break;
 	case "REMOTE_COMPARISON":
 		echo "Now Use merge-results for remote comparison with integrated Global ID support.";
