@@ -114,7 +114,7 @@ function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 
 	if($dep_match_count == 0)
 	{
-		echo "No packages found for your distribution";
+		echo "No packages found for your distribution (" . os_vendor() . ").";
 	}
 }
 

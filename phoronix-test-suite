@@ -24,6 +24,9 @@ case "${task}" in
 "install")
 	php pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
 	;;
+"install-dependencies")
+	php pts-core/pts-run-cmd.php INSTALL_EXTERNAL_DEPENDENCIES $2
+	;;
 "run")
 	php pts-core/pts-run-benchmark.php $2
 	;;
@@ -62,6 +65,7 @@ case "${task}" in
 	echo "=================================\n"
 #	echo "gui: Launch The Phoronix Test Suite GUI"
 	echo "install <suite OR benchmark>: Install or Update The Specified Benchmark(s)"
+	echo "install-dependencies <suite OR benchmark>: Install The External (Distribution) Dependencies For Specified Benchmark(s)"
 	echo "run <suite OR benchmark>: Run The Specified Benchmark/Suite"
 	echo "benchmark <suite OR benchmark OR saved file>: Same as manually running install and then run"
 	echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets"
