@@ -29,6 +29,7 @@ if(empty($TO_INSTALL))
 	exit;
 }
 
-pts_recurse_install_benchmark($TO_INSTALL);
+$install_objects = "";
+pts_recurse_install_benchmark($TO_INSTALL, $install_objects);
 
 ?>

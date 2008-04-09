@@ -1,12 +1,15 @@
 <?php
 
-function pts_recurse_install_benchmark($TO_INSTALL)
+function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 {
 	$type = pts_benchmark_type($TO_INSTALL);
 
 	if($type == "BENCHMARK")
 	{
-		pts_install_benchmark($TO_INSTALL);
+		if(is_array($INSTALL_OBJ))
+			pts_install_external_dependencies($TO_INSTALL, $INSTALL_OBJ);
+		else
+			pts_install_benchmark($TO_INSTALL);
 	}
 	else if($type == "TEST_SUITE")
 	{
@@ -16,7 +19,7 @@ function pts_recurse_install_benchmark($TO_INSTALL)
 		$suite_benchmarks = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
 
 		foreach($suite_benchmarks as $benchmark)
-			pts_recurse_install_benchmark($benchmark);
+			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
 	}
 	else if(is_file(pts_input_correct_results_path($TO_INSTALL)))
 	{
@@ -25,7 +28,7 @@ function pts_recurse_install_benchmark($TO_INSTALL)
 
 		foreach($suite_benchmarks as $benchmark)
 		{
-			pts_recurse_install_benchmark($benchmark);
+			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
 		}
 	}
 	else if(trim(file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_INSTALL")) == "REMOTE_FILE")
@@ -35,7 +38,7 @@ function pts_recurse_install_benchmark($TO_INSTALL)
 
 		foreach($suite_benchmarks as $benchmark)
 		{
-			pts_recurse_install_benchmark($benchmark);
+			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
 		}
 	}
 	else
@@ -76,6 +79,42 @@ function pts_install_benchmark($Benchmark)
 		}
 		else
 			echo ucwords($Benchmark) . " has no installation script, skipping installation routine...\n";
+	}
+}
+
+function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
+{
+	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
+		return;
+
+	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_LOCATION . $Benchmark . ".xml"));
+	$title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+	$dependencies = $xml_parser->getXMLValue("PTSBenchmark/Information/ExternalDependencies");
+
+	if(empty($dependencies))
+		return;
+
+	$dependencies = explode(", ", $dependencies);
+
+	$dep_match_count = 0;
+	if(is_file(XML_DEPENDENCY_LOCATION . os_vendor() . "-packages.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DEPENDENCY_LOCATION . os_vendor() . "-packages.xml"));
+		$generic_package = $xml_parser->getXMLArrayValues("Distribution/Package/GenericName");
+		$distro_package = $xml_parser->getXMLArrayValues("Distribution/Package/PackageName");
+
+		for($i = 0; $i < count($generic_package); $i++)
+			if(in_array($generic_package[$i], $dependencies))
+				if(!in_array($distro_package[$i], $INSTALL_OBJ))
+				{
+					array_push($INSTALL_OBJ, $distro_package[$i]);
+					$dep_match_count++;
+				}
+	}
+
+	if($dep_match_count == 0)
+	{
+		echo "No packages found for your distribution";
 	}
 }
 
