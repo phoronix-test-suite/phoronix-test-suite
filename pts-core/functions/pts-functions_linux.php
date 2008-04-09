@@ -5,6 +5,16 @@
 // SYSTEM RELATED
 //
 
+function pts_posix_username()
+{
+	$userinfo = posix_getpwuid(posix_getuid());
+	return $userinfo["name"];
+}
+function pts_posix_userhome()
+{
+	$userinfo = posix_getpwuid(posix_getuid());
+	return $userinfo["dir"] . '/';
+}
 function cpu_core_count()
 {
 	if(is_file("/proc/cpuinfo"))

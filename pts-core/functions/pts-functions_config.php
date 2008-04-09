@@ -56,13 +56,14 @@ function pts_find_home($path)
 {
 	if(strpos($path, '~') !== FALSE)
 	{
-		$whoami = trim(shell_exec("whoami"));
+	/*	$whoami = trim(shell_exec("whoami"));
 
 		if($whoami == "root")
 			$home_path = "/root";
 		else
-			$home_path = "/home/$whoami";
+			$home_path = "/home/$whoami"; */
 
+		$home_path = pts_posix_userhome();
 		$path = str_replace('~', $home_path, $path);
 	}
 	return $path;
@@ -72,7 +73,7 @@ function pts_current_user()
 	$pts_user = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UserName", "Default User");
 
 	if($pts_user == "Default User")
-		$pts_user = trim(shell_exec("whoami"));
+		$pts_user = pts_posix_username();
 
 	return $pts_user;
 }
