@@ -81,7 +81,33 @@ function pts_install_benchmark($Benchmark)
 			echo ucwords($Benchmark) . " has no installation script, skipping installation routine...\n";
 	}
 }
+function pts_external_dependency_generic($Name)
+{
+	$generic_information = "";
 
+	if(is_file(MISC_LOCATION . "distro-xml/generic-packages.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "distro-xml/generic-packages.xml"));
+		$package_name = $xml_parser->getXMLValue("PhoronixTestSuite/Package/Name");
+		$title = $xml_parser->getXMLValue("PhoronixTestSuite/Package/Title");
+		$description = $xml_parser->getXMLValue("PhoronixTestSuite/Package/Description");
+		$possible_packages = $xml_parser->getXMLValue("PhoronixTestSuite/Package/PossibleNames");
+
+		$selection = -1;
+
+		for($i = 0; $i < count($title); $i++)
+			if($Name == $package_name[$i])
+			{
+				$selection = $i;
+				break;
+			}
+
+		if($selection != -1)
+			$generic_information = $title[$selection] . "\n" . $description[$selection] . "\n\nPossible Package Names: " . $possible_packages[$selection];
+	}
+
+	return $generic_information;
+}
 function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 {
 	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
