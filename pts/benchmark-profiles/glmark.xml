@@ -1,0 +1,21 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.2</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>GLMark</Title>
+		<Version>0.1</Version>
+		<Identifier>glmark</Identifier>
+		<Executable>glmark</Executable>
+		<ExternalDependencies>sdl-development, glut</ExternalDependencies>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>FPS</ResultScale>
+		<Description>This test uses the GLMark benchmark.</Description>
+		<Notes> </Notes>
+	</Information>
+</PTSBenchmark>
