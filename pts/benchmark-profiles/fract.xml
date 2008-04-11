@@ -1,0 +1,20 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.2</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>FRACT</Title>
+		<Version>1.07b</Version>
+		<Identifier>fract</Identifier>
+		<Executable>fract</Executable>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>FPS</ResultScale>
+		<Description>This test uses the FRACT benchmark.</Description>
+		<Notes> </Notes>
+	</Information>
+</PTSBenchmark>
