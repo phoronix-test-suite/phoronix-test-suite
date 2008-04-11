@@ -3,6 +3,9 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (git)
 
 - Add "External Dependencies" support
+- Add GLMark profile
+- Add GtkPerf profile
+- Add FRAC Benchmark profile
 
 Phoronix Test Suite 0.2.0
 April 6, 2008
