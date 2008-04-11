@@ -1,0 +1,26 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.2</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>GtkPerf</Title>
+		<Version>0.40</Version>
+		<Identifier>gtkperf</Identifier>
+		<Executable>gtkperf</Executable>
+		<ExternalDependencies>gtk-development</ExternalDependencies>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>FPS</ResultScale>
+		<Description>This test calculates the average frame-rate in some GTK tests.</Description>
+		<Notes> </Notes>
+	</Information>
+	<Settings>
+		<Default>
+			<Arguments>-a -c 1000</Arguments>
+		</Default>
+	</Settings>
+</PTSBenchmark>
