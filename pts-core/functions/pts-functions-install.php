@@ -123,14 +123,16 @@ function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 	$dependencies = explode(", ", $dependencies);
 
 	$dep_match_count = 0;
-	if(is_file(MISC_LOCATION . "distro-xml/" . os_vendor() . "-packages.xml"))
+	$vendor = strtolower(os_vendor());
+
+	if(is_file(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "distro-xml/" . os_vendor() . "-packages.xml"));
-		$generic_package = $xml_parser->getXMLArrayValues("Distribution/Package/GenericName");
-		$distro_package = $xml_parser->getXMLArrayValues("Distribution/Package/PackageName");
+		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"));
+		$generic_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
+		$distro_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PackageName");
 
 		for($i = 0; $i < count($generic_package); $i++)
-			if(in_array($generic_package[$i], $dependencies))
+			if(!empty($generic_package[$i]) && in_array($generic_package[$i], $dependencies))
 				if(!in_array($distro_package[$i], $INSTALL_OBJ))
 				{
 					array_push($INSTALL_OBJ, $distro_package[$i]);

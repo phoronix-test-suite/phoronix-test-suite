@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<ExternalDependencies>
+		<Package>
+			<GenericName>gtk-development</GenericName>
+			<PackageName>libgtk2.0-dev</PackageName>
+		</Package>
+	</ExternalDependencies>
+</PhoronixTestSuite>

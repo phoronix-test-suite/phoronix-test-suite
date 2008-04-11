@@ -77,7 +77,7 @@ switch($COMMAND)
 		if(!empty($install_objects))
 		{
 			$install_objects = implode(" ", $install_objects);
-			echo pts_exec("cd " . MISC_LOCATION . "distro-scripts/ && sh install-" . os_vendor() . "-packages.sh $install_objects\n");
+			echo pts_exec("cd " . MISC_LOCATION . "distro-scripts/ && sh install-" . strtolower(os_vendor()) . "-packages.sh $install_objects");
 		}
 		break;
 	case "REMOTE_COMPARISON":
