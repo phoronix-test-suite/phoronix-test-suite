@@ -119,6 +119,11 @@ function pts_benchmark_type($identifier)
 	else
 		return false;
 }
+function pts_copy($from, $to)
+{
+	if(!is_file($to) || md5_file($from) != md5_file($to))
+		copy($from, $to);
+}
 function pts_save_result($save_to = null, $save_results = null, $directory = null)
 {
 	if($directory == null)
@@ -135,12 +140,13 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 	if(!is_dir($directory . "pts-results-viewer"))
 	{
 		mkdir($directory . "pts-results-viewer");
-		copy("pts-core/pts-results-viewer/phoronix-test-suite.gif", $directory . "pts-results-viewer/phoronix-test-suite.gif");
-		copy("pts-core/pts-results-viewer/pts.js", $directory . "pts-results-viewer/pts.js");
-		copy("pts-core/pts-results-viewer/viewer.xsl", $directory . "pts-results-viewer/viewer.xsl");
-		copy("pts-core/pts-results-viewer/pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
 	}
 
+	pts_copy("pts-core/pts-results-viewer/phoronix-test-suite.gif", $directory . "pts-results-viewer/phoronix-test-suite.gif");
+	pts_copy("pts-core/pts-results-viewer/pts.js", $directory . "pts-results-viewer/pts.js");
+	pts_copy("pts-core/pts-results-viewer/viewer.xsl", $directory . "pts-results-viewer/viewer.xsl");
+	pts_copy("pts-core/pts-results-viewer/pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
+	
 	if($save_to == null || $save_results == null)
 		$bool = true;
 	else
