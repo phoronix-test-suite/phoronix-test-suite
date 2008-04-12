@@ -19,5 +19,29 @@ cd ..
 rm -rf gtkperf/
 
 echo "#!/bin/sh
-./gtkperf_env/bin/gtkperf \$@" > gtkperf
+
+if [ ! -f \$THIS_RUN_TIME.result ]
+  then
+	rm -f *.result
+	./gtkperf_env/bin/gtkperf -a -c 1000 > \$THIS_RUN_TIME.result
+fi
+
+case \"\$1\" in
+\"COMBOBOX\")
+	cat \$THIS_RUN_TIME.result | grep \"GtkComboBox \"
+	;;
+\"TOGGLE_BUTTON\")
+	cat \$THIS_RUN_TIME.result | grep \"GtkToggleButton \"
+	;;
+\"RADIO_BUTTON\")
+	cat \$THIS_RUN_TIME.result | grep \"GtkRadioButton \"
+	;;
+\"TEXTVIEW_ADD\")
+	cat \$THIS_RUN_TIME.result | grep \"GtkTextView - Add text\"
+	;;
+\"TEXTVIEW_SCROLL\")
+	cat \$THIS_RUN_TIME.result | grep \"GtkTextView - Scroll\"
+	;;
+esac
+" > gtkperf
 chmod +x gtkperf

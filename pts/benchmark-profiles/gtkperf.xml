@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.2</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Graphics</BenchmarkType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
@@ -14,13 +14,37 @@
 		<Executable>gtkperf</Executable>
 		<ExternalDependencies>gtk-development</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
-		<ResultScale>FPS</ResultScale>
+		<ResultScale>Seconds</ResultScale>
 		<Description>This test calculates the average frame-rate in some GTK tests.</Description>
 		<Notes> </Notes>
 	</Information>
 	<Settings>
-		<Default>
-			<Arguments>-a -c 1000</Arguments>
-		</Default>
+		<Option>
+			<DisplayName>GTK Widget</DisplayName>
+			<Identifier>gtk-test</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>GtkComboBox</Name>
+					<Value>COMBOBOX</Value>
+				</Entry>
+				<Entry>
+					<Name>GtkToggleButton</Name>
+					<Value>TOGGLE_BUTTON</Value>
+				</Entry>
+				<Entry>
+					<Name>GtkRadioButton</Name>
+					<Value>RADIO_BUTTON</Value>
+				</Entry>
+				<Entry>
+					<Name>GtkTextView - Add Text</Name>
+					<Value>TEXTVIEW_ADD</Value>
+				</Entry>
+				<Entry>
+					<Name>GtkTextView - Scroll</Name>
+					<Value>TEXTVIEW_SCROLL</Value>
+				</Entry>
+			</Menu>
+		</Option>
 	</Settings>
 </PTSBenchmark>
