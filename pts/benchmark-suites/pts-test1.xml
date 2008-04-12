@@ -1,0 +1,85 @@
+<PTSuite>
+	<PhoronixTestSuite>
+		<Version>0.2</Version>
+		<BenchmarkType>System</BenchmarkType>
+		<Title>PTS Test Suite Test 1</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>Test PTS suite.</Description>
+		<Official>0</Official>
+	</PhoronixTestSuite>
+	<PTSBenchmark>
+		<Benchmark>encode-mp3</Benchmark>
+		<Arguments></Arguments>
+		<Description>time lame -h audio.wav audio.mp3 (45.0MB)</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>encode-ogg</Benchmark>
+		<Arguments></Arguments>
+		<Description>time oggenc audio.wav -q 10 -o audio.ogg (45.0MB)</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>encode-flac</Benchmark>
+		<Arguments></Arguments>
+		<Description>time flac --best audio.wav (45.0MB)</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>build-mplayer</Benchmark>
+		<Arguments></Arguments>
+		<Description>Time To Compile</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>build-php</Benchmark>
+		<Arguments></Arguments>
+		<Description>Time To Compile</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>build-imagemagick</Benchmark>
+		<Arguments></Arguments>
+		<Description>Time To Compile</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>build-linux-kernel</Benchmark>
+		<Arguments></Arguments>
+		<Description>Time To Compile</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>memory-bandwidth</Benchmark>
+		<Arguments>TEST_READ</Arguments>
+		<Description>RAM Sequential Read</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>nexuiz</Benchmark>
+		<Arguments>+vid_width 1280 +vid_height 1024 -nosound</Arguments>
+		<Description>1280 x 1024</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>nexuiz</Benchmark>
+		<Arguments>+vid_width 1680 +vid_height 1050 -nosound</Arguments>
+		<Description>1680 x 1050</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>specviewperf9</Benchmark>
+		<Arguments>3dsmax</Arguments>
+		<Description>3dsmax-04</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>specviewperf9</Benchmark>
+		<Arguments>ensight</Arguments>
+		<Description>ensight-03</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>specviewperf9</Benchmark>
+		<Arguments>ensight</Arguments>
+		<Description>ensight-03</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>specviewperf9</Benchmark>
+		<Arguments>maya</Arguments>
+		<Description>maya-02</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>specviewperf9</Benchmark>
+		<Arguments>proe</Arguments>
+		<Description>proe-04</Description>
+	</PTSBenchmark>
+</PTSuite>
