@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (git)
+Phoronix Test Suite 0.2.1
+April 12, 2008
 
 - Add "External Dependencies" support. Right now Ubuntu is only supported!
 - Add GLMark profile
