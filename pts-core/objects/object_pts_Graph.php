@@ -54,6 +54,8 @@ class pts_Graph
 	var $graph_font_size_sub_heading = 12; // Font size of headers
 	var $graph_font_size_axis_heading = 11; // Font size of axis headers
 	var $graph_watermark_text = "PHORONIX-TEST-SUITE.COM"; // Text for watermark in upper right hand corner. If null, no watermark will display
+	var $graph_version = "";
+	var $graph_proportion = "";
 
 	// CHANGE DIRECTORY FOR TTF FONT LOCATION INSIDE __construct FUNCTION
 
@@ -94,6 +96,17 @@ class pts_Graph
 	public function loadGraphIdentifiers($data_array)
 	{
 		$this->graph_identifiers = $data_array;
+	}
+	public function loadGraphVersion($data)
+	{
+		$this->graph_version = "PTS v" . $data;
+	}
+	public function loadGraphProportion($data)
+	{
+		if($data == "HIB")
+			$this->graph_proportion = "* More is better";
+		else if($data == "LIB")
+			$this->graph_proportion = "* Less is better";
 	}
 	public function loadGraphData($data_array)
 	{
@@ -295,7 +308,6 @@ class pts_Graph
 		imagefilledrectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body);
 		imagerectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_border);
 
-
 		if($this->graph_body_image != FALSE)
 		{
 			imagecopymerge($this->graph_image, $this->graph_body_image, $this->graph_left_start + (($this->graph_left_end - $this->graph_left_start) / 2) - imagesx($this->graph_body_image) / 2, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2) - imagesy($this->graph_body_image) / 2, 0, 0, imagesx($this->graph_body_image), imagesy($this->graph_body_image), 95);
@@ -303,6 +315,7 @@ class pts_Graph
 		}
 		
 		// Text
+		$this->gd_write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 8);
 		$this->gd_write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 6);
 		$this->gd_write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 30);
 		$this->gd_write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 4, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);

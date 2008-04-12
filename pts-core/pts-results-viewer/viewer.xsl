@@ -57,7 +57,7 @@
 								</div>
 							</xsl:for-each>
 						</div>
-						<div class="pts_benchmark_img_area"><img width="580" height="300"><xsl:attribute name="src">http://www.phoronix-test-suite.com/pts-grapher/r/graph-remote.php?t=<xsl:value-of select="Name" />&amp;s=<xsl:value-of select="Attributes"/>&amp;n=<xsl:value-of select="Version"/>&amp;u=<xsl:value-of select="Scale"/>&amp;p=<xsl:value-of select="Proportion"/>&amp;i=<xsl:for-each select="Results/Group"><xsl:for-each select="Entry"><xsl:value-of select="Identifier"/>;</xsl:for-each></xsl:for-each>&amp;v=<xsl:for-each select="Results/Group"><xsl:for-each select="Entry"><xsl:value-of select="Value"/>;</xsl:for-each></xsl:for-each>
+						<div class="pts_benchmark_img_area"><img width="580" height="300"><xsl:attribute name="src">http://www.phoronix-test-suite.com/pts-grapher/r/graph-remote.php?t=<xsl:value-of select="Name" />&amp;s=<xsl:value-of select="Attributes"/>&amp;n=<xsl:value-of select="Version"/>&amp;u=<xsl:value-of select="Scale"/>&amp;p=<xsl:value-of select="Proportion" />&amp;i=<xsl:for-each select="Results/Group"><xsl:for-each select="Entry"><xsl:value-of select="Identifier"/>;</xsl:for-each></xsl:for-each>&amp;v=<xsl:for-each select="Results/Group"><xsl:for-each select="Entry"><xsl:value-of select="Value"/>;</xsl:for-each></xsl:for-each>
 	</xsl:attribute></img></div>
 					</xsl:for-each>
 				</div>

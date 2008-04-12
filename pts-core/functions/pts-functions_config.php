@@ -54,7 +54,7 @@ function pts_read_user_config($xml_pointer, $value = null, $tandem_xml = null)
 }
 function pts_find_home($path)
 {
-	if(strpos($path, '~') !== FALSE)
+	if(strpos($path, "~/") !== FALSE)
 	{
 	/*	$whoami = trim(shell_exec("whoami"));
 
@@ -64,7 +64,7 @@ function pts_find_home($path)
 			$home_path = "/home/$whoami"; */
 
 		$home_path = pts_posix_userhome();
-		$path = str_replace('~', $home_path, $path);
+		$path = str_replace("~/", $home_path, $path);
 	}
 	return $path;
 }
