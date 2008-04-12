@@ -13,6 +13,7 @@
 		<Executable>fgl_glxgears</Executable>
 		<TimesToRun>5</TimesToRun>
 		<ResultScale>FPS</ResultScale>
+		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the ATI fgl_glxgears test.</Description>
 		<Notes>This is a very poor benchmark.</Notes>
 	</Information>

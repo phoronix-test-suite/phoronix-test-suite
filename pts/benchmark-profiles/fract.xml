@@ -14,6 +14,7 @@
 		<Executable>fract</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>FPS</ResultScale>
+		<Proportion>HIB</Proportion>
 		<Description>This test uses the FRACT benchmark.</Description>
 		<Notes> </Notes>
 	</Information>

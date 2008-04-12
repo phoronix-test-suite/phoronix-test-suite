@@ -14,6 +14,7 @@
 		<Executable>ramspeed-benchmark</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
+		<Proportion>HIB</Proportion>
 		<Description>This benchmark tests the system memory (RAM) performance.</Description>
 		<Notes> </Notes>
 	</Information>

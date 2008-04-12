@@ -14,6 +14,7 @@
 		<Executable>memory-bandwidth</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
+		<Proportion>HIB</Proportion>
 		<Description>This benchmark tests the system memory (RAM) and CPU Level 2 cache performance.</Description>
 		<Notes> </Notes>
 	</Information>

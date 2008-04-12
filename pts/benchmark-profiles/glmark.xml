@@ -15,6 +15,7 @@
 		<ExternalDependencies>sdl-development, glut</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>FPS</ResultScale>
+		<Proportion>HIB</Proportion>
 		<Description>This test uses the GLMark benchmark.</Description>
 		<Notes> </Notes>
 	</Information>

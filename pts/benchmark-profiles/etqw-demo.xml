@@ -14,6 +14,7 @@
 		<Executable>etqw</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>FPS</ResultScale>
+		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the demo for the game ET:QW game.</Description>
 		<Notes> </Notes>
 	</Information>

@@ -13,6 +13,7 @@
 		<Executable>hdparm-su</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
+		<Proportion>HIB</Proportion>
 		<Description> </Description>
 		<Notes>On most systems, hdparm requires root access</Notes>
 	</Information>

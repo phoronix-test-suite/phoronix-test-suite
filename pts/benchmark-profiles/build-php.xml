@@ -14,6 +14,7 @@
 		<Executable>time-compile-php</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
 		<Description>This test times how long it takes to build PHP 5 with the Zend engine.</Description>
 		<Notes> </Notes>
 	</Information>

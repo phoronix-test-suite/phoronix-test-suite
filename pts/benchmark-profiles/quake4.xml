@@ -14,6 +14,7 @@
 		<Executable>quake4</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>FPS</ResultScale>
+		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the ET:QW game.</Description>
 		<Notes> </Notes>
 	</Information>
