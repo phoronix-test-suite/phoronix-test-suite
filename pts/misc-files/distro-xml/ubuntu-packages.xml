@@ -12,5 +12,13 @@
 			<GenericName>glut</GenericName>
 			<PackageName>freeglut3 freeglut3-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>csh</GenericName>
+			<PackageName>csh</PackageName>
+		</Package>
+		<Package>
+			<GenericName>libpng-development</GenericName>
+			<PackageName>libpng12-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

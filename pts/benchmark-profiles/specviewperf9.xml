@@ -1,0 +1,67 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.2</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>SPECViewPerf</Title>
+		<Version>9.0.3</Version>
+		<Identifier>specviewperf9</Identifier>
+		<Executable>specviewperf9</Executable>
+		<ExternalDependencies>glut, csh, libpng-development</ExternalDependencies>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Weighted Geometric Mean</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This test runs SPECViewPerf 9.</Description>
+		<Notes> </Notes>
+	</Information>
+	<Settings>
+		<Option>
+			<DisplayName>SPECViewPerf Test</DisplayName>
+			<Identifier>run-test</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>3dsmax-04</Name>
+					<Value>3dsmax</Value>
+				</Entry>
+				<Entry>
+					<Name>catia-02</Name>
+					<Value>catia</Value>
+				</Entry>
+				<Entry>
+					<Name>ensight-03</Name>
+					<Value>ensight</Value>
+				</Entry>
+				<Entry>
+					<Name>light-08</Name>
+					<Value>light</Value>
+				</Entry>
+				<Entry>
+					<Name>maya-02</Name>
+					<Value>maya</Value>
+				</Entry>
+				<Entry>
+					<Name>proe-04</Name>
+					<Value>proe</Value>
+				</Entry>
+				<Entry>
+					<Name>sw-01</Name>
+					<Value>sw</Value>
+				</Entry>
+				<Entry>
+					<Name>ugnx-01</Name>
+					<Value>ugnx</Value>
+				</Entry>
+				<Entry>
+					<Name>tcvis-01</Name>
+					<Value>tcvis</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>
