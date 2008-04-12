@@ -2,10 +2,12 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (git)
 
-- Add "External Dependencies" support
+- Add "External Dependencies" support. Right now Ubuntu is only supported!
 - Add GLMark profile
 - Add GtkPerf profile
 - Add FRAC Benchmark profile
+- Show "Less is better" or "More is better" on PTS graphs
+- Bug fixes
 
 Phoronix Test Suite 0.2.0
 April 6, 2008

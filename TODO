@@ -13,6 +13,5 @@
 - "Optimization Tips"
 - More MD5 checks in test scripts
 - Change locking system away from time-based but to PID based
-- A ton of compatibility checks to do with merges and comparisons!
 - Clean up tests scripts
 - Support for WINE tests
