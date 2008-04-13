@@ -99,14 +99,15 @@ class pts_Graph
 	}
 	public function loadGraphVersion($data)
 	{
-		$this->graph_version = "PTS v" . $data;
+		if(!empty($data))
+			$this->graph_version = "Phoronix Test Suite v" . $data;
 	}
 	public function loadGraphProportion($data)
 	{
-		if($data == "HIB")
-			$this->graph_proportion = "* More is better";
-		else if($data == "LIB")
+		if($data == "LIB")
 			$this->graph_proportion = "* Less is better";
+		//else if($data == "HIB")
+		//	$this->graph_proportion = "* More is better";
 	}
 	public function loadGraphData($data_array)
 	{
@@ -184,6 +185,9 @@ class pts_Graph
 	}
 	protected function gd_write_text_center($String, $Size, $Color, $CenterX, $CenterY, $Rotate = FALSE, $Big = FALSE)
 	{
+		if(empty($String))
+			return;
+
 		$Font = $this->graph_font;
 
 		$ttf_dimensions = $this->return_ttf_string_dimensions(strtoupper($String), $Font, $Size, $Big);
@@ -231,6 +235,9 @@ class pts_Graph
 	}
 	protected function gd_write_text_right($String, $Size, $Color, $RightX, $CenterY, $Rotate = FALSE)
 	{
+		if(empty($String))
+			return;
+
 		$Font = $this->graph_font;
 
 		$ttf_dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
@@ -246,6 +253,9 @@ class pts_Graph
 	}
 	protected function gd_write_text_left($String, $Size, $Color, $LeftX, $CenterY, $Rotate = FALSE)
 	{
+		if(empty($String))
+			return;
+
 		$Font = $this->graph_font;
 
 		$ttf_dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
@@ -315,7 +325,8 @@ class pts_Graph
 		}
 		
 		// Text
-		$this->gd_write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 8);
+		$this->gd_write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 6);
+		$this->gd_write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 2, $this->graph_top_start - 6);
 		$this->gd_write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 6);
 		$this->gd_write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 30);
 		$this->gd_write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 4, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
