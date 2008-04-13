@@ -378,5 +378,11 @@ function pts_bool_question($question, $default = true)
 
 	return $answer;
 }
+function pts_clean_information_string($str)
+{
+	$remove_phrases = array("Corporation ", "Technologies ", "Technology ", "Processor ", "processor ", "Genuine ", "(R)", "(TM)", "(tm)", "Inc. ", "Inc ");
+
+	return str_replace($remove_phrases, "", $str);
+}
 
 ?>

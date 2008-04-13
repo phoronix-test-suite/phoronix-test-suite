@@ -41,7 +41,7 @@ function processor_string()
 		$info = file_get_contents("/proc/cpuinfo");
 		$info = substr($info, strpos($info, "model name"));
 		$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
-		$info = str_replace(array("Corporation ", "Technologies ", "Processor ", "processor ", "(R)", "(TM)", "(tm)", "Technology "), "", $info);
+		$info = pts_clean_information_string($info);
 	}
 	else
 		$info = "Unknown";
@@ -200,7 +200,7 @@ function parse_lspci_output($desc)
 		if(($strlen = strlen($info)) < 6 || $strlen > 96)
 			$info = "N/A";
 		else
-			$info = str_replace(array("Corporation ", "Technologies ", "(R)", "(TM)", "(tm)", "Inc. ", ",", "Technology "), "", $info);
+			$info = pts_clean_information_string($info);
 	}
 
 	return $info;
