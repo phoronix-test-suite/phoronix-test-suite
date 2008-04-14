@@ -90,7 +90,7 @@ function memory_mb_capacity()
 
 	return $info;
 }
-function current_screen_resolution()
+function xrandr_screen_resolution()
 {
 	$info = shell_exec("xrandr");
 
@@ -110,13 +110,22 @@ function current_screen_resolution()
 }
 function current_screen_width()
 {
-	$resolution = current_screen_resolution();
+	$resolution = xrandr_screen_resolution();
 	return $resolution[0];
 }
 function current_screen_height()
 {
-	$resolution = current_screen_resolution();
+	$resolution = xrandr_screen_resolution();
 	return $resolution[1];
+}
+function current_screen_resolution()
+{
+	if(($width = current_screen_width()) != "Unknown" && ($height = current_screen_height()) != "Unknown")
+		$resolution = $width . "x" . $height;
+	else
+		$resolution = "Unknown";
+
+	return $resolution;
 }
 function parse_lsb_output($desc)
 {
