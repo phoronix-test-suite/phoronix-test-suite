@@ -71,10 +71,6 @@ switch($COMMAND)
 
 		pts_install_package_on_distribution($ARG_1);
 		break;
-	case "REMOTE_COMPARISON":
-		echo "Now Use merge-results for remote comparison with integrated Global ID support.";
-		echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets";
-		break;
 	case "LIST_TESTS":
 		echo "\n=================================\n";
 		echo "Phoronix Test Suite - Benchmarks\n";
@@ -143,6 +139,10 @@ switch($COMMAND)
 		if(is_file(PTS_USER_DIR . "user-config.xml"))
 			unlink(PTS_USER_DIR . "user-config.xml");
 		pts_user_config_init();
+		break;
+	case "REMOTE_COMPARISON":
+		echo "Now Use merge-results for remote comparison with integrated Global ID support.";
+		echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets";
 		break;
 	default:
 		echo "Phoronix Test Suite: Internal Error. Not Recognized Command ($COMMAND).\n";
