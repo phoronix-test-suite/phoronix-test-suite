@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (git)
 
 - Add SPECViewPerf 9 profile
+- Add "Total Disk Space" reporting to PTS hardware information
 - Add IOzone profile
 - Pts-Grapher updates
 - Other fixes

@@ -275,6 +275,7 @@ function pts_hw_string()
 	$hw_string = "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . "), ";
 	$hw_string .= "Motherboard Chipset: " . motherboard_chipset_string() . ", ";
 	$hw_string .= "System Memory: " . memory_mb_capacity() . "MB, ";
+	$hw_string .= "Total Disk Space: " . pts_posix_disk_total() . "GB, ";
 	$hw_string .= "Graphics: " . graphics_processor_string() . ", ";
 	$hw_string .= "Screen Resolution: " . current_screen_resolution() . " ";
 

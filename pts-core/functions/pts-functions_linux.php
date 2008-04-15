@@ -15,6 +15,10 @@ function pts_posix_userhome()
 	$userinfo = posix_getpwuid(posix_getuid());
 	return $userinfo["dir"] . '/';
 }
+function pts_posix_disk_total()
+{
+	return ceil(disk_total_space("/") / 1073741824);
+}
 function cpu_core_count()
 {
 	if(is_file("/proc/cpuinfo"))
