@@ -8,6 +8,7 @@ Phoronix Test Suite (git)
 - Report "major" running processes to TestNotes in XML. Currently Firefox and Compiz are reported if they ran while the testing was done.
 - Pts-Grapher updates
 - Initial "Batch Mode" support through using batch-run or batch-benchmark and BatchMode options are through ~/.phoronix-test-suite/user-config.xml
+- Add "initial-config" argument, which overwrites the user-config.xml with a new default template
 - Other fixes
 
 Phoronix Test Suite 0.2.1
