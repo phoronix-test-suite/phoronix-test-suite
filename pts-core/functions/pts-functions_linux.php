@@ -16,7 +16,7 @@ function pts_process_running_string($process)
 }
 function pts_process_running_bool($process)
 {
-	$running = trim(shell_exec("ps -A | grep " . strtolower($process)));
+	$running = trim(shell_exec("ps -C " . strtolower($process)));
 
 	if(!empty($running))
 		$running = true;
