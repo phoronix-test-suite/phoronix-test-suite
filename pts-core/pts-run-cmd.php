@@ -57,6 +57,15 @@ switch($COMMAND)
 
 		$ARG_1 = strtolower($ARG_1);
 
+		// Any external dependencies?
+		pts_install_package_on_distribution($ARG_1);
+
+		if(defined("PTS_MANUAL_SUPPORT"))
+		{
+			pts_bool_question("These dependencies should be installed before proceeding as one or more benchmarks could fail. Press any key when you're ready to continue");
+		}
+
+		// Install benchmarks
 		$install_objects = "";
 		pts_recurse_install_benchmark($ARG_1, $install_objects);
 		break;

@@ -7,7 +7,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 	if($type == "BENCHMARK")
 	{
 		if(is_array($INSTALL_OBJ))
-			pts_install_external_dependencies($TO_INSTALL, $INSTALL_OBJ);
+			pts_install_external_dependencies_list($TO_INSTALL, $INSTALL_OBJ);
 		else
 			pts_install_benchmark($TO_INSTALL);
 	}
@@ -101,7 +101,12 @@ function pts_external_dependency_generic($Name)
 				$selection = $i;
 
 				if(pts_file_missing_check(explode(",", $file_check[$selection])))
+				{
+					if(!defined("PTS_MANUAL_SUPPORT"))
+						define("PTS_MANUAL_SUPPORT", 1);
+
 					$generic_information = "=================================\n" . $title[$selection] . "\n=================================\nPossible Package Names: " . $possible_packages[$selection] . "\n\n";
+				}
 			}
 		}
 	}
@@ -135,7 +140,7 @@ function pts_install_package_on_distribution($distribution)
 		echo pts_exec("cd " . MISC_LOCATION . "distro-scripts/ && sh install-" . strtolower(os_vendor()) . "-packages.sh $install_objects");
 	}
 }
-function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
+function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 {
 	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
 		return;
@@ -171,8 +176,6 @@ function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 					else
 						$add_dependency = true;
 
-					echo $add_dependency;
-
 					if($add_dependency)
 						array_push($INSTALL_OBJ, $distro_package[$i]);
 				}
@@ -187,7 +190,7 @@ function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 		}
 
 		if(!empty($package_string))
-			echo "\nSome additional dependencies are required to run this benchmark, and they could not be installed automatically for your distribution by the Phoronix Test Suite. Below are the software packages that must be installed for this benchmark to run properly.\n\n" . $package_string;
+			echo "\nSome additional dependencies are required to run or more of these benchmarks, and they could not be installed automatically for your distribution by the Phoronix Test Suite. Below are the software packages that must be installed for this benchmark to run properly.\n\n" . $package_string;
 	}
 }
 
