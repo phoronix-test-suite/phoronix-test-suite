@@ -4,6 +4,7 @@ Phoronix Test Suite (git)
 
 - Add SPECViewPerf 9 profile
 - Add "Total Disk Space" reporting to PTS hardware information
+- Report "major" running processes to TestNotes in XML. Currently Firefox and Compiz are reported if they ran while the testing was done.
 - Add IOzone profile
 - Pts-Grapher updates
 - Other fixes
