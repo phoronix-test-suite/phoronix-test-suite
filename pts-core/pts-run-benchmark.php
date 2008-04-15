@@ -221,7 +221,7 @@ else
 
 if($SAVE_RESULTS)
 {
-	$test_notes = pts_process_running_string("Compiz") . pts_process_running_string("Firefox");
+	$test_notes = pts_process_running_string(array("Compiz", "Firefox"));
 
 	$id = pts_request_new_id();
 	$RESULTS->setXslBinding("pts-results-viewer/viewer.xsl");

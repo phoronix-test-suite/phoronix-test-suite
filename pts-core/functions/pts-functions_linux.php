@@ -5,14 +5,41 @@
 // SYSTEM RELATED
 //
 
-function pts_process_running_string($process)
+function pts_process_running_string($process_arr)
 {
-	$p = "";
+	$p = array();
+	$p_string = "";
 
-	if(pts_process_running_bool($process))
-		$p = $process . " was running on this system. ";
+	if(!is_array($process_arr))
+		$process_arr = array($process_arr);
 
-	return $p;
+	foreach($process_arr as $process)
+		if(pts_process_running_bool($process))
+			array_push($p, $process);
+
+	if(($p_count = count($p)) > 0)
+	{
+		for($i = 0; $i < $p_count; $i++)
+		{
+			$p_string .= $p[$i];
+
+			if($i != ($p_count - 1) && $p_count > 2)
+				$p_string .= ",";
+			$p_string .= " ";
+
+			if($i == ($p_count - 2))
+				$p_string .= "and ";
+		}
+
+		if($p_count == 1)
+			$p_string .= "was";
+		else
+			$p_string .= "were";
+
+		$p_string .= " running on this system. ";
+	}
+
+	return $p_string;
 }
 function pts_process_running_bool($process)
 {
