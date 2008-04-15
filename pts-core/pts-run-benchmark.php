@@ -244,7 +244,7 @@ if($SAVE_RESULTS)
 		echo "Results Saved To: " . SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml\n";
 		display_web_browser(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml");
 
-		$upload_results = pts_bool_question("Would you like to upload these results to PTS Global (y/N)?", false);
+		$upload_results = pts_bool_question("Would you like to upload these results to PTS Global (Y/n)?", true);
 
 		if($upload_results)
 			echo "Results Uploaded To: " . pts_global_upload_result(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml") . "\n";
