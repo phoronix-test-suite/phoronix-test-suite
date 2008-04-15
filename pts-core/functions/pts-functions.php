@@ -248,7 +248,7 @@ function pts_process_active($process)
 }
 function display_web_browser($URL)
 {
-	$view_results = pts_bool_question("Do you want to view the results in your web browser (y/N)?", false);
+	$view_results = pts_bool_question("Do you want to view the results in your web browser (y/N)?", false, "OPEN_BROWSER");
 
 	if($view_results)
 		shell_exec("firefox $URL &");
@@ -361,11 +361,27 @@ function pts_trim_double($double, $accuracy = 2)
 
 	return $return;
 }
-function pts_bool_question($question, $default = true)
+function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 {
 	if(defined("PTS_BATCH_MODE"))
 	{
-		$answer = $default;
+		switch($question_id)
+		{
+			case "SAVE_RESULTS":
+				$auto_answer = pts_read_user_config("PhoronixTestSuite/Options/BatchMode/SaveResults", "TRUE");
+				break;
+			case "OPEN_BROWSER":
+				$auto_answer = pts_read_user_config("PhoronixTestSuite/Options/BatchMode/OpenBrowser", "FALSE");
+				break;
+			case "UPLOAD_RESULTS":
+				$auto_answer = pts_read_user_config("PhoronixTestSuite/Options/BatchMode/UploadResults", "TRUE");
+				break;
+		}
+
+		if(isset($auto_answer))
+			$answer = $auto_answer == "TRUE" || $auto_answer == "1";
+		else
+			$answer = $default;
 	}
 	else
 	{
