@@ -17,7 +17,6 @@
 		<ResultScale>Weighted Geometric Mean</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test runs SPECViewPerf 9.</Description>
-		<Notes> </Notes>
 	</Information>
 	<Settings>
 		<Option>

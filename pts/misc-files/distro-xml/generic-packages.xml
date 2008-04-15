@@ -2,27 +2,32 @@
 	<ExternalDependencies>
 		<Package>
 			<GenericName>gtk-development</GenericName>
-			<PackageName>libgtk2.0-dev</PackageName>
+			<Title>GTK Development Files</Title>
+			<PossibleNames>libgtk2.0-dev</PossibleNames>
 			<FileCheck>/usr/include/gtk-2.0</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>libsdl1.2-dev libsdl-gfx1.2-dev libsdl-net1.2-dev libsdl-image1.2-dev</PackageName>
+			<Title>SDL Development Files</Title>
+			<PossibleNames>libsdl1.2-dev</PossibleNames>
 			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
-			<PackageName>freeglut3 freeglut3-dev</PackageName>
+			<Title>OpenGL Utility Kit (GLUT)</Title>
+			<PossibleNames>freeglut3-dev</PossibleNames>
 			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
-			<PackageName>csh</PackageName>
+			<Title>CSH</Title>
+			<PossibleNames>csh</PossibleNames>
 			<FileCheck>/bin/bsd-csh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
-			<PackageName>libpng12-dev</PackageName>
+			<Title>libpng (PNG Image) Development Files</Title>
+			<PossibleNames>libpng12-dev</PossibleNames>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 	</ExternalDependencies>

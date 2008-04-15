@@ -88,25 +88,39 @@ function pts_external_dependency_generic($Name)
 	if(is_file(MISC_LOCATION . "distro-xml/generic-packages.xml"))
 	{
 		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "distro-xml/generic-packages.xml"));
-		$package_name = $xml_parser->getXMLValue("PhoronixTestSuite/Package/Name");
-		$title = $xml_parser->getXMLValue("PhoronixTestSuite/Package/Title");
-		$description = $xml_parser->getXMLValue("PhoronixTestSuite/Package/Description");
-		$possible_packages = $xml_parser->getXMLValue("PhoronixTestSuite/Package/PossibleNames");
+		$package_name = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
+		$title = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/Title");
+		$possible_packages = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PossibleNames");
+		$file_check = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/FileCheck");
 
 		$selection = -1;
-
-		for($i = 0; $i < count($title); $i++)
+		for($i = 0; $i < count($title) && $selection == -1; $i++)
+		{
 			if($Name == $package_name[$i])
 			{
 				$selection = $i;
-				break;
-			}
 
-		if($selection != -1)
-			$generic_information = $title[$selection] . "\n" . $description[$selection] . "\n\nPossible Package Names: " . $possible_packages[$selection];
+				if(pts_file_missing_check(explode(",", $file_check[$selection])))
+					$generic_information = "=================================\n" . $title[$selection] . "\n=================================\nPossible Package Names: " . $possible_packages[$selection] . "\n\n";
+			}
+		}
 	}
 
 	return $generic_information;
+}
+function pts_file_missing_check($file_arr)
+{
+	$file_missing = false;
+
+	foreach($file_arr as $file)
+	{
+		$file = trim($file);
+
+		if(!is_file($file) && !is_dir($file) && !is_link($file))
+			$file_missing = true;
+	}
+
+	return $file_missing;
 }
 function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 {
@@ -122,7 +136,6 @@ function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 
 	$dependencies = explode(", ", $dependencies);
 
-	$dep_match_count = 0;
 	$vendor = strtolower(os_vendor());
 
 	if(is_file(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"))
@@ -130,19 +143,38 @@ function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"));
 		$generic_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
 		$distro_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PackageName");
+		$file_check = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/FileCheck");
 
 		for($i = 0; $i < count($generic_package); $i++)
 			if(!empty($generic_package[$i]) && in_array($generic_package[$i], $dependencies))
+			{
 				if(!in_array($distro_package[$i], $INSTALL_OBJ))
 				{
-					array_push($INSTALL_OBJ, $distro_package[$i]);
-					$dep_match_count++;
-				}
-	}
+					if(!empty($file_check[$i]))
+					{
+						$files = explode(",", $file_check[$i]);
+						$add_dependency = pts_file_missing_check($files);
+					}
+					else
+						$add_dependency = true;
 
-	if($dep_match_count == 0)
+					echo $add_dependency;
+
+					if($add_dependency)
+						array_push($INSTALL_OBJ, $distro_package[$i]);
+				}
+			}
+	}
+	else
 	{
-		echo "No packages found for your distribution (" . os_vendor() . ").";
+		$package_string = "";
+		foreach($dependencies as $dependency)
+		{
+			$package_string .= pts_external_dependency_generic($dependency);
+		}
+
+		if(!empty($package_string))
+			echo "\nSome additional dependencies are required to run this benchmark, and they could not be installed automatically for your distribution by the Phoronix Test Suite. Below are the software packages that must be installed for this benchmark to run properly.\n\n" . $package_string;
 	}
 }
 
