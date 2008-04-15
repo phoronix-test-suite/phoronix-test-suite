@@ -146,7 +146,10 @@ switch($COMMAND)
 		break;
 	case "INITIAL_CONFIG":
 		if(is_file(PTS_USER_DIR . "user-config.xml"))
+		{
+			copy(PTS_USER_DIR . "user-config.xml", PTS_USER_DIR . "user-config.xml.old");
 			unlink(PTS_USER_DIR . "user-config.xml");
+		}
 		pts_user_config_init();
 		break;
 	case "REMOTE_COMPARISON":
@@ -154,7 +157,7 @@ switch($COMMAND)
 		echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets";
 		break;
 	default:
-		echo "Phoronix Test Suite: Internal Error. Not Recognized Command ($COMMAND).\n";
+		echo "Phoronix Test Suite: Internal Error. Command Not Recognized ($COMMAND).\n";
 }
 
 ?>
