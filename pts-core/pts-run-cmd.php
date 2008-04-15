@@ -69,16 +69,7 @@ switch($COMMAND)
 
 		require("pts-core/functions/pts-functions-install.php");
 
-		$ARG_1 = strtolower($ARG_1);
-
-		$install_objects = array();
-		pts_recurse_install_benchmark($ARG_1, $install_objects);
-
-		if(!empty($install_objects))
-		{
-			$install_objects = implode(" ", $install_objects);
-			echo pts_exec("cd " . MISC_LOCATION . "distro-scripts/ && sh install-" . strtolower(os_vendor()) . "-packages.sh $install_objects");
-		}
+		pts_install_package_on_distribution($ARG_1);
 		break;
 	case "REMOTE_COMPARISON":
 		echo "Now Use merge-results for remote comparison with integrated Global ID support.";

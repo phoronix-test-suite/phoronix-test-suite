@@ -122,6 +122,19 @@ function pts_file_missing_check($file_arr)
 
 	return $file_missing;
 }
+function pts_install_package_on_distribution($distribution)
+{
+	$distribution = strtolower($distribution);
+
+	$install_objects = array();
+	pts_recurse_install_benchmark($distribution, $install_objects);
+
+	if(!empty($install_objects))
+	{
+		$install_objects = implode(" ", $install_objects);
+		echo pts_exec("cd " . MISC_LOCATION . "distro-scripts/ && sh install-" . strtolower(os_vendor()) . "-packages.sh $install_objects");
+	}
+}
 function pts_install_external_dependencies($Benchmark, &$INSTALL_OBJ)
 {
 	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
