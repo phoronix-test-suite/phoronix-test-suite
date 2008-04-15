@@ -363,19 +363,26 @@ function pts_trim_double($double, $accuracy = 2)
 }
 function pts_bool_question($question, $default = true)
 {
-	do
+	if(defined("PTS_BATCH_MODE"))
 	{
-		echo $question . " ";
-		$input = trim(strtolower(fgets(STDIN)));
-	}
-	while($input != "y" && $input != "n" && $input != "");
-
-	if($input == "y")
-		$answer = true;
-	else if($input == "n")
-		$answer = false;
-	else
 		$answer = $default;
+	}
+	else
+	{
+		do
+		{
+			echo $question . " ";
+			$input = trim(strtolower(fgets(STDIN)));
+		}
+		while($input != "y" && $input != "n" && $input != "");
+
+		if($input == "y")
+			$answer = true;
+		else if($input == "n")
+			$answer = false;
+		else
+			$answer = $default;
+	}
 
 	return $answer;
 }
