@@ -5,6 +5,26 @@
 // SYSTEM RELATED
 //
 
+function pts_process_running_string($process)
+{
+	$p = "";
+
+	if(pts_process_running_bool($process))
+		$p = $process . " was running on this system. ";
+
+	return $p;
+}
+function pts_process_running_bool($process)
+{
+	$running = trim(shell_exec("ps -A | grep " . strtolower($process)));
+
+	if(!empty($running))
+		$running = true;
+	else
+		$running = false;
+
+	return $running;
+}
 function pts_posix_username()
 {
 	$userinfo = posix_getpwuid(posix_getuid());

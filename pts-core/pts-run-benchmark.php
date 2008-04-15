@@ -218,13 +218,15 @@ else
 
 if($SAVE_RESULTS)
 {
+	$test_notes = pts_process_running_string("Compiz") . pts_process_running_string("Firefox");
+
 	$id = pts_request_new_id();
 	$RESULTS->setXslBinding("pts-results-viewer/viewer.xsl");
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Hardware", $id, pts_hw_string());
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Software", $id, pts_sw_string());
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Author", $id, pts_current_user());
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/TestDate", $id, date("F j, Y h:i A"));
-	$RESULTS->addXmlObject("PhoronixTestSuite/System/TestNotes", $id, " ");
+	$RESULTS->addXmlObject("PhoronixTestSuite/System/TestNotes", $id, trim($test_notes));
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Version", $id, PTS_VERSION);
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/AssociatedIdentifiers", $id, $RESULTS_IDENTIFIER);
 

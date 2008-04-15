@@ -115,7 +115,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 
 	// Same hardware and software?
 	
-	if(count($original_system_hardware) == 1 && count($new_system_hardware) == 1 && $original_system_hardware[0] == $new_system_hardware[0] && $original_system_software[0] == $new_system_software[0] && $original_pts_version[0] == $new_pts_version[0])
+	if(count($original_system_hardware) == 1 && count($new_system_hardware) == 1 && $original_system_hardware[0] == $new_system_hardware[0] && $original_system_software[0] == $new_system_software[0] && $original_pts_version[0] == $new_pts_version[0] && $original_system_notes[0] == $new_system_notes[0])
 	{
 		$USE_ID = pts_request_new_id();
 		$RESULTS->addXmlObject("PhoronixTestSuite/System/Hardware", $USE_ID, $original_system_hardware[0]);
