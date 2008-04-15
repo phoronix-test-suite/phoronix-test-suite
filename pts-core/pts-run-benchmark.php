@@ -26,6 +26,9 @@ $TO_RUN = strtolower($argv[1]);
 $TO_RUN_TYPE = pts_benchmark_type($TO_RUN);
 $BENCHMARK_RAN = false;
 
+if($argv[2] == "BATCH")
+	define("PTS_BATCH_MODE", "1");
+
 if(empty($TO_RUN))
 {
 	echo "\nThe benchmark, suite name, or saved file name must be supplied.\n";

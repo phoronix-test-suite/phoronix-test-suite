@@ -30,9 +30,16 @@ case "${task}" in
 "run")
 	php pts-core/pts-run-benchmark.php $2
 	;;
+"batch-run")
+	php pts-core/pts-run-benchmark.php $2 BATCH
+	;;
 "benchmark")
 	php pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
 	php pts-core/pts-run-benchmark.php $2
+	;;
+"batch-benchmark")
+	php pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
+	php pts-core/pts-run-benchmark.php $2 BATCH
 	;;
 "merge-results")
 	php pts-core/pts-merge-results.php $2 $3 $4
@@ -67,7 +74,9 @@ case "${task}" in
 	echo "install <suite OR benchmark>: Install or Update The Specified Benchmark(s)"
 	echo "install-dependencies <suite OR benchmark>: Install The External (Distribution) Dependencies For Specified Benchmark(s)"
 	echo "run <suite OR benchmark>: Run The Specified Benchmark/Suite"
+	echo "batch-run <suite OR benchmark>: Run The Specified Benchmark/Suite in Batch Mode"
 	echo "benchmark <suite OR benchmark OR saved file>: Same as manually running install and then run"
+	echo "batch-benchmark <suite OR benchmark OR saved file>: Same as manually running install and then run in Batch Mode"
 	echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets"
 	echo "remove-result <Saved File>: Remove this saved result file and associated files"
 	echo "list-tests: List all Phoronix Test Suite Benchmark profiles"
