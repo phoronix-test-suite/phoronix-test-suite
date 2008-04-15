@@ -62,8 +62,8 @@ case "${task}" in
 "remote-comparison")
 	php pts-core/pts-run-cmd.php REMOTE_COMPARISON $2 $3
 	;;
-"build-php")
-	echo "TODO: Not Yet Implemented!"
+"initial-config")
+	php pts-core/pts-run-cmd.php INITIAL_CONFIG
 	;;
 *)
 	echo "\n================================="

@@ -148,6 +148,11 @@ switch($COMMAND)
 		}
 		echo "\n";
 		break;
+	case "INITIAL_CONFIG":
+		if(is_file(PTS_USER_DIR . "user-config.xml"))
+			unlink(PTS_USER_DIR . "user-config.xml");
+		pts_user_config_init();
+		break;
 	default:
 		echo "Phoronix Test Suite: Internal Error. Not Recognized Command ($COMMAND).\n";
 }
