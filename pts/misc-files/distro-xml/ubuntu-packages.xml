@@ -25,5 +25,15 @@
 			<PackageName>libpng12-dev</PackageName>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>php-gd</GenericName>
+			<PackageName>php5-gd</PackageName>
+			<FileCheck>/usr/share/doc/php5-gd</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>build-utilities</GenericName>
+			<PackageName>build-essential</PackageName>
+			<FileCheck>/usr/share/build-essential</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

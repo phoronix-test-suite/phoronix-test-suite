@@ -141,8 +141,10 @@ function pts_install_packages_on_distribution_process($install_objects)
 		$install_objects = implode(" ", $install_objects);
 		$distribution = strtolower(os_vendor());
 
-		if(is_file(MISC_LOCATION . "distro-scripts/ && sh install-" . $distribution . "-packages.sh") || is_link(MISC_LOCATION . "distro-scripts/ && sh install-" . $distribution . "-packages.sh"))
+		if(is_file(MISC_LOCATION . "distro-scripts/install-" . $distribution . "-packages.sh") || is_link(MISC_LOCATION . "distro-scripts/install-" . $distribution . "-packages.sh"))
 			echo pts_exec("cd " . MISC_LOCATION . "distro-scripts/ && sh install-" . $distribution . "-packages.sh $install_objects");
+		else
+			echo "Distribution install script not found!";
 	}
 }
 function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
