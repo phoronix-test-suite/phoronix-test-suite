@@ -1,0 +1,39 @@
+<PhoronixTestSuite>
+	<ExternalDependencies>
+		<Package>
+			<GenericName>gtk-development</GenericName>
+			<PackageName>gtk2-devel</PackageName>
+			<FileCheck>/usr/include/gtk-2.0</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>sdl-development</GenericName>
+			<PackageName>SDL-devel SDL_gfx-devel SDL_image-devel SDL_net-devel SDL_sound-devel</PackageName>
+			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>glut</GenericName>
+			<PackageName>freeglut-devel</PackageName>
+			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>csh</GenericName>
+			<PackageName>tcsh</PackageName>
+			<FileCheck>/usr/bin/csh</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>libpng-development</GenericName>
+			<PackageName>libpng-devel</PackageName>
+			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>php-gd</GenericName>
+			<PackageName>php-gd</PackageName>
+			<FileCheck>/usr/share/doc/php-gd</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>build-utilities</GenericName>
+			<PackageName>gcc</PackageName>
+			<FileCheck>/usr/bin/gcc</FileCheck>
+		</Package>
+	</ExternalDependencies>
+</PhoronixTestSuite>
