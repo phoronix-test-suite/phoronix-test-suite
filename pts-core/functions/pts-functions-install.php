@@ -138,7 +138,9 @@ function pts_install_packages_on_distribution_process($install_objects)
 {
 	if(!empty($install_objects))
 	{
-		$install_objects = implode(" ", $install_objects);
+		if(is_array($install_objects))
+			$install_objects = implode(" ", $install_objects);
+
 		$distribution = strtolower(os_vendor());
 
 		if(is_file(MISC_LOCATION . "distro-scripts/install-" . $distribution . "-packages.sh") || is_link(MISC_LOCATION . "distro-scripts/install-" . $distribution . "-packages.sh"))
