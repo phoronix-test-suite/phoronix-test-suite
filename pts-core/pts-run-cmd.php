@@ -92,7 +92,7 @@ switch($COMMAND)
 				$license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
 				$status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
 
-				printf("%-20ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 			}
 		echo "\n";
 		break;
@@ -105,9 +105,10 @@ switch($COMMAND)
 		{
 		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 			$name = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Title");
+			$benchmark_type = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/BenchmarkType");
 			$identifier = basename($benchmark_file, ".xml");
 
-			echo "- $name  ($identifier)\n";
+			printf("%-16ls - %-32ls [Benchmark Type: %s]\n", $identifier, $name, $benchmark_type);
 		}
 		echo "\n";
 		break;

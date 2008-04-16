@@ -130,7 +130,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_file(BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/pre.sh"))
 	{
-		echo "\n=================================\nExecuting Pre-Benchmark Tasks\n=================================\n";
+		//echo "\n=================================\nExecuting Pre-Benchmark Tasks\n=================================\n";
 		echo shell_exec("sh " . BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENVIRONMENT . "$benchmark_identifier");
 	}
 
@@ -158,7 +158,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_file(BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/post.sh"))
 	{
-		echo "\n=================================\nExecuting Post-Benchmark Tasks\n=================================\n";
+		//echo "\n=================================\nExecuting Post-Benchmark Tasks\n=================================\n";
 		echo pts_exec("sh " . BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/post.sh " . BENCHMARK_ENVIRONMENT . "$benchmark_identifier");
 	}
 
