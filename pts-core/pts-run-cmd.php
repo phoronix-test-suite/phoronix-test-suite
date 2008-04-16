@@ -75,8 +75,17 @@ switch($COMMAND)
 			echo "\nThe benchmark or suite name to install external dependencies for must be supplied.\n";
 			exit;
 		}
-
 		require("pts-core/functions/pts-functions-install.php");
+
+		if($ARG_1 == "phoronix-test-suite" || $ARG_1 == "pts" || $ARG_1 == "trondheim-pts")
+		{
+			$pts_dependencies = array();
+			$packages_to_install = array();
+			$continue_install = pts_package_generic_to_distro_name($packages_to_install, $pts_dependencies);
+
+			if($continue_install)
+				pts_install_packages_on_distribution_process($packages_to_install);
+		}
 
 		pts_install_package_on_distribution($ARG_1);
 		break;
