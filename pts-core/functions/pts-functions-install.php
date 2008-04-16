@@ -127,17 +127,22 @@ function pts_file_missing_check($file_arr)
 
 	return $file_missing;
 }
-function pts_install_package_on_distribution($distribution)
+function pts_install_package_on_distribution($benchmark)
 {
-	$distribution = strtolower($distribution);
-
+	$benchmark = strtolower($benchmark);
 	$install_objects = array();
-	pts_recurse_install_benchmark($distribution, $install_objects);
-
+	pts_recurse_install_benchmark($benchmark, $install_objects);
+	pts_install_package_on_distribution_process($install_objects);
+}
+function pts_install_package_on_distribution_process($install_objects)
+{
 	if(!empty($install_objects))
 	{
 		$install_objects = implode(" ", $install_objects);
-		echo pts_exec("cd " . MISC_LOCATION . "distro-scripts/ && sh install-" . strtolower(os_vendor()) . "-packages.sh $install_objects");
+		$distribution = strtolower(os_vendor());
+
+		if(is_file(MISC_LOCATION . "distro-scripts/ && sh install-" . $distribution . "-packages.sh") || is_link(MISC_LOCATION . "distro-scripts/ && sh install-" . $distribution . "-packages.sh"))
+			echo pts_exec("cd " . MISC_LOCATION . "distro-scripts/ && sh install-" . $distribution . "-packages.sh $install_objects");
 	}
 }
 function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
