@@ -132,9 +132,9 @@ function pts_install_package_on_distribution($benchmark)
 	$benchmark = strtolower($benchmark);
 	$install_objects = array();
 	pts_recurse_install_benchmark($benchmark, $install_objects);
-	pts_install_package_on_distribution_process($install_objects);
+	pts_install_packages_on_distribution_process($install_objects);
 }
-function pts_install_package_on_distribution_process($install_objects)
+function pts_install_packages_on_distribution_process($install_objects)
 {
 	if(!empty($install_objects))
 	{
@@ -161,32 +161,7 @@ function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 
 	$vendor = strtolower(os_vendor());
 
-	if(is_file(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"))
-	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"));
-		$generic_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
-		$distro_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PackageName");
-		$file_check = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/FileCheck");
-
-		for($i = 0; $i < count($generic_package); $i++)
-			if(!empty($generic_package[$i]) && in_array($generic_package[$i], $dependencies))
-			{
-				if(!in_array($distro_package[$i], $INSTALL_OBJ))
-				{
-					if(!empty($file_check[$i]))
-					{
-						$files = explode(",", $file_check[$i]);
-						$add_dependency = pts_file_missing_check($files);
-					}
-					else
-						$add_dependency = true;
-
-					if($add_dependency)
-						array_push($INSTALL_OBJ, $distro_package[$i]);
-				}
-			}
-	}
-	else
+	if(!pts_package_generic_to_distro_name($INSTALL_OBJ, $dependencies))
 	{
 		$package_string = "";
 		foreach($dependencies as $dependency)
@@ -198,5 +173,38 @@ function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 			echo "\nSome additional dependencies are required to run or more of these benchmarks, and they could not be installed automatically for your distribution by the Phoronix Test Suite. Below are the software packages that must be installed for this benchmark to run properly.\n\n" . $package_string;
 	}
 }
+function pts_package_generic_to_distro_name(&$package_install_array, $generic_names)
+{
+	$vendor = strtolower(os_vendor());
+	$generated = false;
 
+	if(is_file(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"));
+		$generic_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
+		$distro_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PackageName");
+		$file_check = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/FileCheck");
+
+		for($i = 0; $i < count($generic_package); $i++)
+			if(!empty($generic_package[$i]) && in_array($generic_package[$i], $generic_names))
+			{
+				if(!in_array($distro_package[$i], $package_install_array))
+				{
+					if(!empty($file_check[$i]))
+					{
+						$files = explode(",", $file_check[$i]);
+						$add_dependency = pts_file_missing_check($files);
+					}
+					else
+						$add_dependency = true;
+
+					if($add_dependency)
+						array_push($package_install_array, $distro_package[$i]);
+				}
+			}
+		$generated = true;
+	}
+
+	return $generated;
+}
 ?>
