@@ -85,9 +85,9 @@ function pts_external_dependency_generic($Name)
 {
 	$generic_information = "";
 
-	if(is_file(MISC_LOCATION . "distro-xml/generic-packages.xml"))
+	if(is_file(DISTRO_XML_LOCATION . "generic-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "distro-xml/generic-packages.xml"));
+		$xml_parser = new tandem_XmlReader(file_get_contents(DISTRO_XML_LOCATION . "generic-packages.xml"));
 		$package_name = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
 		$title = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/Title");
 		$possible_packages = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PossibleNames");
@@ -143,8 +143,8 @@ function pts_install_packages_on_distribution_process($install_objects)
 
 		$distribution = strtolower(os_vendor());
 
-		if(is_file(MISC_LOCATION . "distro-scripts/install-" . $distribution . "-packages.sh") || is_link(MISC_LOCATION . "distro-scripts/install-" . $distribution . "-packages.sh"))
-			echo pts_exec("cd " . MISC_LOCATION . "distro-scripts/ && sh install-" . $distribution . "-packages.sh $install_objects");
+		if(is_file(DISTRO_SCRIPT_LOCATION . "install-" . $distribution . "-packages.sh") || is_link(DISTRO_SCRIPT_LOCATION . "install-" . $distribution . "-packages.sh"))
+			echo pts_exec("cd " . DISTRO_SCRIPT_LOCATION . " && sh install-" . $distribution . "-packages.sh $install_objects");
 		else
 			echo "Distribution install script not found!";
 	}
@@ -182,9 +182,9 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 	$vendor = strtolower(os_vendor());
 	$generated = false;
 
-	if(is_file(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"))
+	if(is_file(DISTRO_XML_LOCATION . $vendor . "-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(MISC_LOCATION . "distro-xml/" . $vendor . "-packages.xml"));
+		$xml_parser = new tandem_XmlReader(file_get_contents(DISTRO_XML_LOCATION . $vendor . "-packages.xml"));
 		$generic_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
 		$distro_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PackageName");
 		$file_check = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/FileCheck");
