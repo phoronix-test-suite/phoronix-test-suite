@@ -3,7 +3,7 @@
 		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>gtk2-devel</PackageName>
-			<FileCheck>/usr/include/gtk-2.0</FileCheck>
+			<FileCheck>/usr/include/gtk-2.0/gtk/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
@@ -13,7 +13,7 @@
 		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>freeglut-devel</PackageName>
-			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
+			<FileCheck>/usr/lib/libglut.so, /usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
@@ -28,7 +28,7 @@
 		<Package>
 			<GenericName>php-gd</GenericName>
 			<PackageName>php-gd</PackageName>
-			<FileCheck>/usr/share/doc/php-gd</FileCheck>
+			<FileCheck>/usr/lib/php/modules/gd.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>

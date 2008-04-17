@@ -2,4 +2,5 @@
 
 # Fedora package installation
 
-su -c 'yum -y install $@'
+su -c "yum -y install $@"
+exit
