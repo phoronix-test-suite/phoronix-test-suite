@@ -10,6 +10,8 @@ Phoronix Test Suite (git)
 - Initial "Batch Mode" support through using batch-run or batch-benchmark and BatchMode options are through ~/.phoronix-test-suite/user-config.xml
 - Add "initial-config" argument, which overwrites the user-config.xml with a new default template
 - Many "External Dependencies" improvements. Needs testing and more distribution profiles!
+- Add "install-dependencies pts" for installing some PTS dependencies for itself, aside from php-cli.
+- Introduce Fedora support for External Dependencies. Only tested with Fedora 8.92.
 - Other fixes
 
 Phoronix Test Suite 0.2.1

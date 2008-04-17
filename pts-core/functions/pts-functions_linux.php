@@ -234,7 +234,7 @@ function motherboard_chipset_string()
 }
 function parse_lspci_output($desc)
 {
-	$info = shell_exec("lspci");
+	$info = shell_exec("lspci 2>&1");
 
 	if(($pos = strpos($info, $desc)) === FALSE)
 	{
