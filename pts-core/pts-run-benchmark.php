@@ -265,7 +265,12 @@ if($SAVE_RESULTS)
 		$upload_results = pts_bool_question("Would you like to upload these results to PTS Global (Y/n)?", true, "UPLOAD_RESULTS");
 
 		if($upload_results)
-			echo "Results Uploaded To: " . pts_global_upload_result(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml") . "\n";
+		{
+			echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual-Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
+			$tags_input = trim(preg_replace("/[^a-zA-Z0-9s, ]/", "", fgets(STDIN)));
+
+			echo "\nResults Uploaded To: " . pts_global_upload_result(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml", $tags_input) . "\n";
+		}
 
 		echo "\n";
 	}

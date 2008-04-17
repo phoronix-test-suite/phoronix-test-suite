@@ -330,14 +330,15 @@ function pts_request_new_id()
 
 	return $PTS_GLOBAL_ID;
 }
-function pts_global_upload_result($result_file)
+function pts_global_upload_result($result_file, $tags = "")
 {
 	echo "\nUploading: $result_file\n";
 	$ToUpload = rawurlencode(base64_encode(file_get_contents($result_file)));
 	$GlobalUser = pts_current_user();
 	$Globalkey = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "");
+	$tags = rawurlencode(base64_encode($tags));
 
-	return file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$ToUpload&global_user=$GlobalUser&global_key=$Globalkey"); // Rudimentary, but works
+	return file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$ToUpload&global_user=$GlobalUser&global_key=$Globalkey&tags=$tags"); // Rudimentary, but works
 }
 function pts_trim_double($double, $accuracy = 2)
 {
