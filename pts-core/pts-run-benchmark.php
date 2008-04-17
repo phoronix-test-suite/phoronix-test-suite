@@ -35,6 +35,15 @@ if(empty($TO_RUN))
 	exit;
 }
 
+// Kill the screensaver
+$screensaver_status = trim(shell_exec("gconftool -g /apps/gnome-screensaver/idle_activation_enabled 2>&1"));
+
+if($screensaver_status == "true")
+{
+	shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1");
+	define("SCREENSAVER_KILLED", 1);
+}
+
 if(!$TO_RUN_TYPE)
 {
 	if(is_file(pts_input_correct_results_path($TO_RUN)))
@@ -255,5 +264,8 @@ if($SAVE_RESULTS)
 		echo "\n";
 	}
 }
+
+if(defined("SCREENSAVER_KILLED"))
+	shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");
 
 ?>
