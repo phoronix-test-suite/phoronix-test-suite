@@ -144,19 +144,18 @@ function memory_mb_capacity()
 }
 function xrandr_screen_resolution()
 {
-	$info = shell_exec("xrandr");
+	$info = shell_exec("xrandr 2>&1");
 
-	if(($pos = strrpos($info, "*")) == FALSE)
-	{
-		$info = array("Unknown", "Unknown");
-	}
-	else
+	if(($pos = strrpos($info, "*")) != FALSE)
 	{
 		$info = substr($info, 0, $pos);
 		$info = trim(substr($info, strrpos($info, "\n")));
 		$info = substr($info, 0, strpos($info, " "));
 		$info = explode("x", $info);
 	}
+
+	if($pos == FALSE || $info == "*0x" || empty($info))
+		$info = array("Unknown", "Unknown");
 
 	return $info;
 }
