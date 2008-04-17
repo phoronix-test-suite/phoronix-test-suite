@@ -276,7 +276,7 @@ function graphics_subsystem_version()
 	else
 	{
 		$info = trim(substr($info, 0, $pos));
-		$info = trim(substr($info, strrpos($info, "Server") + 5));
+		$info = trim(substr($info, strrpos($info, "Server") + 6));
 	}
 
 	return $info;
