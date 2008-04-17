@@ -25,6 +25,7 @@ function pts_user_config_init()
 	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/SaveResults", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/SaveResults", "TRUE", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/OpenBrowser", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/OpenBrowser", "FALSE", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/UploadResults", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/UploadResults", "TRUE", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE", $read_config));
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
 }

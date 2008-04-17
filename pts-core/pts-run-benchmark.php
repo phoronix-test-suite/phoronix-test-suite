@@ -53,11 +53,12 @@ if(!$TO_RUN_TYPE)
 		$PROPOSED_FILE_NAME = $TO_RUN;
 		$RES_NULL = null;
 
-		do
-		{
-			echo "Enter a unique identifier for distinguishing this series of tests: ";
-			$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
-		}while(empty($RESULTS_IDENTIFIER));
+		if(!defined("PTS_BATCH_MODE") || pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE") == "TRUE")
+			do
+			{
+				echo "Enter a unique identifier for distinguishing this series of tests: ";
+				$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
+			}while(empty($RESULTS_IDENTIFIER));
 
 		$RESULTS = new tandem_XmlWriter();
 	}
@@ -70,11 +71,12 @@ if(!$TO_RUN_TYPE)
 
 		pts_save_benchmark_file($PROPOSED_FILE_NAME, $RES_NULL, file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_RUN"));
 
-		do
-		{
-			echo "Enter a unique identifier for distinguishing this series of tests: ";
-			$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
-		}while(empty($RESULTS_IDENTIFIER));
+		if(!defined("PTS_BATCH_MODE") || pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE") == "TRUE")
+			do
+			{
+				echo "Enter a unique identifier for distinguishing this series of tests: ";
+				$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
+			}while(empty($RESULTS_IDENTIFIER));
 
 		$RESULTS = new tandem_XmlWriter();
 	}
@@ -107,17 +109,21 @@ else
 		if(empty($PROPOSED_FILE_NAME))
 			$PROPOSED_FILE_NAME = date("Y-m-d-Hi");
 
-		do
-		{
-			echo "Enter a unique identifier for distinguishing this series of tests: ";
-			$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
-		}while(empty($RESULTS_IDENTIFIER));
+		if(!defined("PTS_BATCH_MODE") || pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE") == "TRUE")
+			do
+			{
+				echo "Enter a unique identifier for distinguishing this series of tests: ";
+				$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
+			}while(empty($RESULTS_IDENTIFIER));
 
 		$RESULTS = new tandem_XmlWriter();
 
 		echo "\nPhoronix Test Suite will record results!\n";
 	}
 }
+
+if(!isset($RESULTS_IDENTIFIER) || empty($RESULTS_IDENTIFIER))
+	$RESULTS_IDENTIFIER = date("Y-m-d H:i");
 
 if($TO_RUN_TYPE == "BENCHMARK")
 {
