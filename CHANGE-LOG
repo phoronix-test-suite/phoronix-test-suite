@@ -12,7 +12,7 @@ Phoronix Test Suite (git)
 - Many "External Dependencies" improvements. Needs testing and more distribution profiles!
 - Add "install-dependencies pts" for installing some PTS dependencies for itself, aside from php-cli.
 - Introduce Fedora support for External Dependencies. Only tested with Fedora 8.92.
-- Other fixes
+- Other fixes and clean ups
 
 Phoronix Test Suite 0.2.1
 April 12, 2008

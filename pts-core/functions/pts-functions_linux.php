@@ -43,7 +43,8 @@ function pts_process_running_string($process_arr)
 }
 function pts_process_running_bool($process)
 {
-	$running = trim(shell_exec("ps -C " . strtolower($process)));
+	$running = shell_exec("ps -C " . strtolower($process));
+	$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
 
 	if(!empty($running))
 		$running = true;
