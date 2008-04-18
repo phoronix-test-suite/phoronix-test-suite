@@ -97,7 +97,7 @@ switch($COMMAND)
 			{
 			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 				$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
-				$identifier = $xml_parser->getXMLValue("PTSBenchmark/Information/Identifier");
+				$identifier = basename($benchmark_file, ".xml");
 				$license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
 				$status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
 

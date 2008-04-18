@@ -40,5 +40,20 @@
 			<PackageName>git-core, curl</PackageName>
 			<FileCheck>/usr/bin/git, /usr/bin/curl</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>xorg-development</GenericName>
+			<PackageName>xserver-xorg-dev</PackageName>
+			<FileCheck>/usr/share/doc/xserver-xorg-dev</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>bison</GenericName>
+			<PackageName>bison</PackageName>
+			<FileCheck>/usr/bin/bison</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>flex</GenericName>
+			<PackageName>flex</PackageName>
+			<FileCheck>/usr/bin/flex</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

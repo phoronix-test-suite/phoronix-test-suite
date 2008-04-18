@@ -146,17 +146,24 @@ if($TO_RUN_TYPE == "BENCHMARK")
 			$option_names = $xml_parser->getXMLArrayValues("Entry/Name");
 			$option_values = $xml_parser->getXMLArrayValues("Entry/Value");
 
-			do
+			if(count($option_values) == 1)
 			{
-				echo "\n";
-				for($i = 0; $i < count($option_names); $i++)
-				{
-					echo ($i + 1) . ": " . $option_names[$i] . "\n";
-				}
-				echo "\nPlease Enter Your Choice: ";
-				$bench_choice = strtolower(trim(fgets(STDIN)));
+				$bench_choice = 1;
 			}
-			while($bench_choice < 1 || $bench_choice > count($option_names));
+			else
+			{
+				do
+				{
+					echo "\n";
+					for($i = 0; $i < count($option_names); $i++)
+					{
+						echo ($i + 1) . ": " . $option_names[$i] . "\n";
+					}
+					echo "\nPlease Enter Your Choice: ";
+					$bench_choice = strtolower(trim(fgets(STDIN)));
+				}
+				while($bench_choice < 1 || $bench_choice > count($option_names));
+			}
 
 			$TEXT_ARGS .= "$settings_name[$option_count]: " . $option_names[($bench_choice - 1)];
 			$USER_ARGS .= $settings_argument[$option_count] . $option_values[($bench_choice - 1)] . " ";

@@ -36,5 +36,23 @@
 			<PossibleNames>git, git-core</PossibleNames>
 			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>xorg-development</GenericName>
+			<Title>X.Org Development Files and Libraries</Title>
+			<PossibleNames>xserver-xorg-development, xorg-devel</PossibleNames>
+			<FileCheck>/usr/include/xorg</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>bison</GenericName>
+			<Title>Bison</Title>
+			<PossibleNames>bison</PossibleNames>
+			<FileCheck>/usr/bin/bison</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>flex</GenericName>
+			<Title>Flex</Title>
+			<PossibleNames>flex</PossibleNames>
+			<FileCheck>/usr/bin/flex</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

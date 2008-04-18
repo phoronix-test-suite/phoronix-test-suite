@@ -86,27 +86,31 @@ function pts_benchmark_name_to_identifier($name)
 {
 	if(empty($name))
 		return false;
+	$identifier = false;
 
 	foreach(glob(XML_PROFILE_LOCATION . "*.xml") as $benchmark_file)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+
 		if($xml_parser->getXMLValue("PTSBenchmark/Information/Title") == $name)
-			return $xml_parser->getXMLValue("PTSBenchmark/Information/Identifier");
+			$identifier = basename($benchmark_file, ".xml");
 	}
-	return false;
+
+	return $identifier;
 }
 function pts_benchmark_identifier_to_name($identifier)
 {
 	if(empty($identifier))
 		return false;
+	$name = false;
 
 	if(is_file(XML_PROFILE_LOCATION . "$identifier.xml"))
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_LOCATION . $identifier . ".xml"));
-		if($xml_parser->getXMLValue("PTSBenchmark/Information/Identifier") == $identifier)
-			return $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+		$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
 	}
-	return false;
+
+	return $name;
 }
 function pts_benchmark_type($identifier)
 {

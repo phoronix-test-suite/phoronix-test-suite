@@ -109,6 +109,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(empty($times_to_run) || !is_int($times_to_run))
 		$times_to_run = 1;
 
+	if(empty($execute_binary))
+		$execute_binary = $benchmark_identifier;
+
 	if(is_file(BENCHMARK_ENVIRONMENT . "$benchmark_identifier/$execute_binary") || is_link(BENCHMARK_ENVIRONMENT . "$benchmark_identifier/$execute_binary"))
 		$to_execute = BENCHMARK_ENVIRONMENT . "$benchmark_identifier/";
 	else if(is_file($execute_path . $execute_binary) || is_link($execute_path . $execute_binary)) //TODO: Support multiple paths in PossiblePaths separated by : delimiter.
