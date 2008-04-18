@@ -268,14 +268,19 @@ function parse_lspci_output($desc)
 function graphics_subsystem_version()
 {
 	$info = shell_exec("X -version 2>&1");
+	$pos = strrpos($info, "Release Date");
+	$info = trim(substr($info, 0, $pos));
 
-	if(($pos = strrpos($info, "Release Date")) === FALSE)
+	if($pos === FALSE)
 	{
 		$info = "Unknown";
 	}
+	else if(($pos = strrpos($info, "(")) === FALSE)
+	{
+		$info = trim(substr($info, strrpos($info, " ")));
+	}
 	else
 	{
-		$info = trim(substr($info, 0, $pos));
 		$info = trim(substr($info, strrpos($info, "Server") + 6));
 	}
 

@@ -30,5 +30,11 @@
 			<PossibleNames>libpng12-dev</PossibleNames>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>git</GenericName>
+			<Title>Git</Title>
+			<PossibleNames>git, git-core</PossibleNames>
+			<FileCheck>/usr/bin/git</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

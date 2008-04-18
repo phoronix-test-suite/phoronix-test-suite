@@ -406,7 +406,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 }
 function pts_clean_information_string($str)
 {
-	$remove_phrases = array("Corporation ", "Technologies ", "Technology ", "Processor ", "processor ", "Genuine ", "(R)", "(TM)", "(tm)", "Inc. ", "Inc ");
+	$remove_phrases = array("Corporation ", "Technologies ", ",", "Technology ", "Processor ", "processor ", "Genuine ", "(R)", "(TM)", "(tm)", "Inc. ", "Inc ");
 
 	return str_replace($remove_phrases, "", $str);
 }

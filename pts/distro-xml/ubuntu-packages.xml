@@ -35,5 +35,10 @@
 			<PackageName>build-essential</PackageName>
 			<FileCheck>/usr/share/build-essential</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>git</GenericName>
+			<PackageName>git-core, curl</PackageName>
+			<FileCheck>/usr/bin/git, /usr/bin/curl</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

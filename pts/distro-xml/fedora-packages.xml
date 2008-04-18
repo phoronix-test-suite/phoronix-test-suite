@@ -35,5 +35,11 @@
 			<PackageName>gcc</PackageName>
 			<FileCheck>/usr/bin/gcc</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>git</GenericName>
+			<Title>Git</Title>
+			<PossibleNames>git</PossibleNames>
+			<FileCheck>/usr/bin/git</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
