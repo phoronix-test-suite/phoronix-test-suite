@@ -1,9 +1,11 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (git)
+Phoronix Test Suite 0.3.0
+April 18, 2008
 
 - Add SPECViewPerf 9 profile
 - Add IOzone profile
+- PTS Global Tagging Support
 - Add "Total Disk Space" reporting to PTS hardware information
 - Report "major" running processes to TestNotes in XML. Currently Firefox and Compiz are reported if they ran while the testing was done.
 - Pts-Grapher updates
