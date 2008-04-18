@@ -1,0 +1,28 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+                <BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Other</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Stefan Doesinger</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Wine Conformance Tests</Title>
+		<ExternalDependencies>glut, libpng-development, git, xorg-development, bison, flex</ExternalDependencies>
+		<Description>This test runs the Wine Direct3D conformance tests.</Description>
+	</Information>
+	<Settings>
+		<Option>
+			<DisplayName>WINE Test</DisplayName>
+			<Identifier>wine-test</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Direct3D 9 Visual Test</Name>
+					<Value>dlls/d3d9/tests/d3d9_test.exe.so visual</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>
