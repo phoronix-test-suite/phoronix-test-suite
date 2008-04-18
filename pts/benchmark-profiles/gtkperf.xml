@@ -10,14 +10,11 @@
 	<Information>
 		<Title>GtkPerf</Title>
 		<Version>0.40</Version>
-		<Identifier>gtkperf</Identifier>
-		<Executable>gtkperf</Executable>
 		<ExternalDependencies>gtk-development</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test calculates the average frame-rate in some GTK tests.</Description>
-		<Notes> </Notes>
 	</Information>
 	<Settings>
 		<Option>

@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.1</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Graphics</BenchmarkType>
 		<ApplicationType>Demo</ApplicationType>
 		<License>CLOSED</License>
@@ -9,7 +9,6 @@
 	</PhoronixTestSuite>
 	<Information>
 		<Title>ATI fgl_glxgears</Title>
-		<Identifier>fgl-glxgears</Identifier>
 		<Executable>fgl_glxgears</Executable>
 		<TimesToRun>5</TimesToRun>
 		<ResultScale>FPS</ResultScale>
@@ -19,7 +18,6 @@
 	</Information>
 	<Settings>
 		<Default>
-			<Arguments></Arguments>
 			<PossiblePaths>/usr/bin/</PossiblePaths>
 		</Default>
 		<Option>

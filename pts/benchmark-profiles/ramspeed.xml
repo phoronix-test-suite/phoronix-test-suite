@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.2</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Memory</BenchmarkType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
@@ -10,19 +10,13 @@
 	<Information>
 		<Title>RAMspeed</Title>
 		<Version>2.5.1</Version>
-		<Identifier>ramspeed</Identifier>
 		<Executable>ramspeed-benchmark</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This benchmark tests the system memory (RAM) performance.</Description>
-		<Notes> </Notes>
 	</Information>
 	<Settings>
-		<Default>
-			<Arguments></Arguments>
-			<PossiblePaths></PossiblePaths>
-		</Default>
 		<Option>
 			<DisplayName>Type</DisplayName>
 			<Identifier>run-type</Identifier>

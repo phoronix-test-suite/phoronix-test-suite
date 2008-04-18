@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.2</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Graphics</BenchmarkType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
@@ -10,13 +10,10 @@
 	<Information>
 		<Title>GLMark</Title>
 		<Version>0.1</Version>
-		<Identifier>glmark</Identifier>
-		<Executable>glmark</Executable>
 		<ExternalDependencies>sdl-development, glut</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>FPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test uses the GLMark benchmark.</Description>
-		<Notes> </Notes>
 	</Information>
 </PTSBenchmark>

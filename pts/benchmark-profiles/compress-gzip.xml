@@ -9,13 +9,9 @@
 	</PhoronixTestSuite>
 	<Information>
 		<Title>Time Gzip Compression</Title>
-		<Version></Version>
-		<Identifier>compress-gzip</Identifier>
-		<Executable>compress-gzip</Executable>
 		<TimesToRun>5</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>Timed Gzip compression benchmarks.</Description>
-		<Notes> </Notes>
 	</Information>
 </PTSBenchmark>

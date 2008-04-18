@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.1</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Graphics</BenchmarkType>
 		<ApplicationType>Game</ApplicationType>
 		<License>NON-FREE</License>
@@ -10,18 +10,15 @@
 	<Information>
 		<Title>Enemy Territory: Quake Wars</Title>
 		<Version>demo2</Version>
-		<Identifier>etqw-demo</Identifier>
 		<Executable>etqw</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>FPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the demo for the game ET:QW game.</Description>
-		<Notes> </Notes>
 	</Information>
 	<Settings>
 		<Default>
 			<Arguments>+timenetdemoquit pts +set r_mode -1</Arguments>
-			<PossiblePaths></PossiblePaths>
 		</Default>
 		<Option>
 			<DisplayName>Video RAM</DisplayName>

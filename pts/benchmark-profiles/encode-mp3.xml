@@ -10,12 +10,10 @@
 	<Information>
 		<Title>LAME MP3 Encoding</Title>
 		<Version>3.97</Version>
-		<Identifier>encode-mp3</Identifier>
 		<Executable>lame</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>LAME is an MP3 encoder licensed under the LGPL. This test measures the time required to encode a WAV file to MP3 format.</Description>
-		<Notes> </Notes>
 	</Information>
 </PTSBenchmark>

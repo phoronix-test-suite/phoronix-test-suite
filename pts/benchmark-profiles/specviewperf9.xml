@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.2</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Graphics</BenchmarkType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
@@ -10,8 +10,6 @@
 	<Information>
 		<Title>SPECViewPerf</Title>
 		<Version>9.0.3</Version>
-		<Identifier>specviewperf9</Identifier>
-		<Executable>specviewperf9</Executable>
 		<ExternalDependencies>glut, csh, libpng-development</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Weighted Geometric Mean</ResultScale>

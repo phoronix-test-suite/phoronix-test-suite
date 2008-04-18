@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.1</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Graphics</BenchmarkType>
 		<ApplicationType>Game</ApplicationType>
 		<License>NON-FREE</License>
@@ -10,13 +10,11 @@
 	<Information>
 		<Title>Doom 3 (Demo)</Title>
 		<Version>1.1.1286</Version>
-		<Identifier>doom3-demo</Identifier>
 		<Executable>doom3</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>FPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the Doom 3 (demo) game.</Description>
-		<Notes> </Notes>
 	</Information>
 	<Settings>
 		<Default>

@@ -10,18 +10,14 @@
 	<Information>
 		<Title>Nexuiz</Title>
 		<Version>2.4</Version>
-		<Identifier>nexuiz</Identifier>
-		<Executable>nexuiz</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a benchmark of Nexuiz, a popular open-source first-person shooter.</Description>
-		<Notes> </Notes>
 	</Information>
 	<Settings>
 		<Default>
 			<Arguments>-benchmark demos/demo1</Arguments>
-			<PossiblePaths></PossiblePaths>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>

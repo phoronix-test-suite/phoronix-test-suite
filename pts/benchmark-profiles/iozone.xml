@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.2</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Hard Disk</BenchmarkType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
@@ -10,13 +10,10 @@
 	<Information>
 		<Title>IOzone</Title>
 		<Version>3.291</Version>
-		<Identifier>iozone</Identifier>
-		<Executable>iozone</Executable>
 		<TimesToRun>2</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>The IOzone benchmark tests your hard disk drive performance.</Description>
-		<Notes></Notes>
 	</Information>
 	<Settings>
 		<Default>

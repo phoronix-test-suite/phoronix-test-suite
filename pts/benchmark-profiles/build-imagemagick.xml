@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.2</Version>
+		<Version>0.3</Version>
 		<BenchmarkType>Processor</BenchmarkType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
@@ -10,7 +10,6 @@
 	<Information>
 		<Title>ImageMagick Compilation</Title>
 		<Version>6.4.0</Version>
-		<Identifier>build-imagemagick</Identifier>
 		<Executable>time-compile-imagemagick</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
