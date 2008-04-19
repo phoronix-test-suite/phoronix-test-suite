@@ -59,6 +59,9 @@ case "${task}" in
 "list-saved-results")
 	php pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
 	;;
+"system-information")
+	php pts-core/pts-run-cmd.php SYS_INFO
+	;;
 "remote-comparison")
 	php pts-core/pts-run-cmd.php REMOTE_COMPARISON $2 $3
 	;;
@@ -82,6 +85,7 @@ case "${task}" in
 	echo "list-tests: List all Phoronix Test Suite Benchmark profiles"
 	echo "list-suites: List all Phoronix Test Suites"
 	echo "list-saved-results: List all saved results"
+	echo "system-information: Dump detected software and hardware information detected by PTS"
 	echo "upload <Saved File>: Upload these results to be shared globally"
 	echo "build-php: Build A Local Copy Of PHP For The Phoronix Test Suite"
 	echo "\n"

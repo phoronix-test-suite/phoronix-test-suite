@@ -162,6 +162,14 @@ switch($COMMAND)
 		}
 		pts_user_config_init();
 		break;
+	case "SYS_INFO":
+		echo "\n=================================\n";
+		echo "Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n";
+		echo "System Information";
+		echo "\n=================================\n\n";
+		echo "Hardware: " . pts_hw_string() . "\n\n";
+		echo "Software: " . pts_sw_string() . "\n\n";
+		break;
 	case "REMOTE_COMPARISON":
 		echo "Now Use merge-results for remote comparison with integrated Global ID support.";
 		echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets";
