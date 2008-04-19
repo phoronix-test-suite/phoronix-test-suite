@@ -55,5 +55,10 @@
 			<PackageName>flex</PackageName>
 			<FileCheck>/usr/bin/flex</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>imlib2-development</GenericName>
+			<PackageName>libimlib2-dev</PackageName>
+			<FileCheck>/usr/lib/imlib2</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
