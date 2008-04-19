@@ -20,5 +20,6 @@ cd ..
 
 echo "#!/bin/sh
 cd wine-git/
+export WINETEST_PLATFORM=wine
 ./wine \$@" > wine
 chmod +x wine
