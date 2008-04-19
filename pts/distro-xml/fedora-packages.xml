@@ -41,5 +41,20 @@
 			<PossibleNames>git</PossibleNames>
 			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>bison</GenericName>
+			<PackageName>bison</PackageName>
+			<FileCheck>/usr/bin/bison</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>flex</GenericName>
+			<PackageName>flex</PackageName>
+			<FileCheck>/usr/bin/flex</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>imlib2-development</GenericName>
+			<PackageName>imlib2-devel</PackageName>
+			<FileCheck>/usr/lib/imlib2</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
