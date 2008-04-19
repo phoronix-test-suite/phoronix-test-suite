@@ -170,6 +170,20 @@ switch($COMMAND)
 		echo "Hardware: " . pts_hw_string() . "\n\n";
 		echo "Software: " . pts_sw_string() . "\n\n";
 		break;
+	case "DIAGNOSTICS_DUMP":
+		echo "\n=================================\n";
+		echo "Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n";
+		echo "Diagnostics Dump";
+		echo "\n=================================\n\n";
+		$pts_defined_constants = get_defined_constants(true);
+			foreach($pts_defined_constants["user"] as $constant => $constant_value)
+				echo $constant . " = " . $constant_value . "\n";
+
+			echo "\nPTS Environmental Variables (accessible via test scripts):\n\n";
+			foreach(pts_env_variables() as $var => $var_value)
+				echo $var . " = " . $var_value . "\n";
+			echo "\n";
+		break;
 	case "REMOTE_COMPARISON":
 		echo "Now Use merge-results for remote comparison with integrated Global ID support.";
 		echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets";

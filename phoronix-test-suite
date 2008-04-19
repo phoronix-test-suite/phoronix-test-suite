@@ -62,6 +62,9 @@ case "${task}" in
 "system-information")
 	php pts-core/pts-run-cmd.php SYS_INFO
 	;;
+"diagnostics")
+	php pts-core/pts-run-cmd.php DIAGNOSTICS_DUMP
+	;;
 "remote-comparison")
 	php pts-core/pts-run-cmd.php REMOTE_COMPARISON $2 $3
 	;;
