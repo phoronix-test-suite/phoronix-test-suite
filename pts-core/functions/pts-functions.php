@@ -263,8 +263,8 @@ function pts_env_variables()
 	return array(
 	"PTS_TYPE" => PTS_TYPE,
 	"PTS_VERSION" => PTS_VERSION,
-	"SYS_CPU_CORES" => cpu_core_count(),
-	"SYS_CPU_JOBS" => cpu_job_count(),
+	"NUM_CPU_CORES" => cpu_core_count(),
+	"NUM_CPU_JOBS" => cpu_job_count(),
 	"SYS_MEMORY" => memory_mb_capacity(),
 	"VIDEO_MEMORY" => graphics_memory_capacity(),
 	"VIDEO_WIDTH" => current_screen_width(),
