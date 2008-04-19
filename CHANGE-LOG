@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite
+
+- Add system-information argument for quickly and easily showing the system's hardware and software information
+- Add diagnostics argument for dumping Phoronix Test Suite information for debugging purposes and showing environmental variables accessible to the test scripts/profiles.
+
 Phoronix Test Suite 0.3.1
 April 19, 2008
 

@@ -167,8 +167,8 @@ switch($COMMAND)
 		echo "Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n";
 		echo "System Information";
 		echo "\n=================================\n\n";
-		echo "Hardware: " . pts_hw_string() . "\n\n";
-		echo "Software: " . pts_sw_string() . "\n\n";
+		echo "Hardware:\n" . pts_hw_string() . "\n\n";
+		echo "Software:\n" . pts_sw_string() . "\n\n";
 		break;
 	case "DIAGNOSTICS_DUMP":
 		echo "\n=================================\n";
@@ -179,7 +179,7 @@ switch($COMMAND)
 			foreach($pts_defined_constants["user"] as $constant => $constant_value)
 				echo $constant . " = " . $constant_value . "\n";
 
-			echo "\nPTS Environmental Variables (accessible via test scripts):\n\n";
+			echo "\nEnvironmental Variables (accessible via test scripts):\n";
 			foreach(pts_env_variables() as $var => $var_value)
 				echo $var . " = " . $var_value . "\n";
 			echo "\n";
