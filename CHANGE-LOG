@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 0.3.1
+April 19, 2008
 
 - Add WINE (Direct3D 9) test profile
 - Add render-bench (X Render: render_bench) profile
