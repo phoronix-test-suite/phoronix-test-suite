@@ -1,7 +1,6 @@
 - Rewrite and finish GUI component
 - Clean up / make nice of text output
 - Verbose output of all system details, benchmark dumps, etc
-- Improve / clean-up tandem_xml
 - Add More Benchmarks!
 - Provide Warnings For Major Things Possibly Influencing Results
 	- i.e. if EIST / Cool n Quiet are enabled
