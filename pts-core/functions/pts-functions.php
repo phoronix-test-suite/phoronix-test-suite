@@ -18,6 +18,12 @@
    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function __autoload($to_load)
+{
+	if(is_file("pts-core/objects/$to_load.php"))
+		require_once("pts-core/objects/$to_load.php");
+}
+
 // Load OS-specific functions
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_linux.php");
@@ -48,12 +54,6 @@ if(pts_process_active("phoronix-test-suite"))
 }
 pts_process_register("phoronix-test-suite");
 register_shutdown_function("pts_process_remove", "phoronix-test-suite");
-
-function __autoload($to_load)
-{
-	if(is_file("pts-core/objects/$to_load.php"))
-		require_once("pts-core/objects/$to_load.php");
-}
 
 // Phoronix Test Suite - Functions
 function pts_benchmark_names_to_array()
