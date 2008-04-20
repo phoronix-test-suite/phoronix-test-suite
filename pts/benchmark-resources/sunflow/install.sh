@@ -1,0 +1,28 @@
+#!/bin/sh
+
+cd $1
+
+if [ ! -f sunflow-bin-v0.07.2.zip ]
+ 
+	then
+     wget http://internap.dl.sourceforge.net/sourceforge/sunflow/sunflow-bin-v0.07.2.zip -O sunflow-bin-v0.07.2.zip
+fi
+
+unzip -o sunflow-bin-v0.07.2.zip
+
+echo "#!/bin/sh
+cd sunflow
+
+if [ \$SYS_MEMORY -ge 1280 ]
+then
+	JAVA_VM_MEMORY=1024M
+elif [ \$SYS_MEMORY -ge 768 ]
+then
+	JAVA_VM_MEMORY=512M
+else
+	JAVA_VM_MEMORY=256M
+fi
+
+java -server -Xmx\$JAVA_VM_MEMORY -jar sunflow.jar -bench
+" > sunflow-benchmark
+chmod +x sunflow-benchmark

@@ -1,0 +1,20 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.3</Version>
+		<BenchmarkType>Rendering</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Sunflow Rendering System</Title>
+		<Version>0.07.2</Version>
+		<Executable>sunflow-benchmark</Executable>
+		<ExternalDependencies>java</ExternalDependencies>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>This test runs benchmarks of the Sunflow Rendering System. The Sunflow Rendering System is an open-source render engine for photo-realistic image synthesis with a ray-tracing core.</Description>
+	</Information>
+</PTSBenchmark>
