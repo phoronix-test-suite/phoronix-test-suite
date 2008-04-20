@@ -60,5 +60,10 @@
 			<PackageName>libimlib2-dev</PackageName>
 			<FileCheck>/usr/lib/imlib2</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>java</GenericName>
+			<PackageName>openjdk-6-jre</PackageName>
+			<FileCheck>/usr/bin/java</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

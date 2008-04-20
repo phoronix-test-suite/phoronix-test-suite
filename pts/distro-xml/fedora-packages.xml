@@ -56,5 +56,10 @@
 			<PackageName>imlib2-devel</PackageName>
 			<FileCheck>/usr/lib/imlib2</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>java</GenericName>
+			<PackageName>java-openjdk</PackageName>
+			<FileCheck>/usr/bin/java</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
