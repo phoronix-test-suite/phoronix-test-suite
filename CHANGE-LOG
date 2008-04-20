@@ -5,6 +5,8 @@ Phoronix Test Suite
 - Add system-information argument for quickly and easily showing the system's hardware and software information
 - Add diagnostics argument for dumping Phoronix Test Suite information for debugging purposes and showing environmental variables accessible to the test scripts/profiles
 - Update build-linux-kernel profile to use Linux 2.6.25 kernel and support both x86 and x86_64 standardized configurations
+- Allow users to log-into their PTS Global account using "phoronix-test-suite login"
+- Add in basic browser detection code
 
 Phoronix Test Suite 0.3.1
 April 19, 2008

@@ -256,7 +256,7 @@ function display_web_browser($URL)
 	$view_results = pts_bool_question("Do you want to view the results in your web browser (y/N)?", false, "OPEN_BROWSER");
 
 	if($view_results)
-		shell_exec("firefox $URL &");
+		shell_exec("./pts/launch-browser.sh $URL &");
 }
 function pts_env_variables()
 {
