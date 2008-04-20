@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.3</Version>
+		<Version>0.4</Version>
 		<BenchmarkType>Processor</BenchmarkType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
@@ -9,7 +9,7 @@
 	</PhoronixTestSuite>
 	<Information>
 		<Title>Timed Linux Kernel Compilation</Title>
-		<Version>2.6.24</Version>
+		<Version>2.6.25</Version>
 		<Executable>time-compile-kernel</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
