@@ -342,7 +342,7 @@ function pts_global_upload_result($result_file, $tags = "")
 	$Globalkey = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "");
 	$tags = rawurlencode(base64_encode($tags));
 
-	return file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$ToUpload&global_user=$GlobalUser&global_key=$Globalkey&tags=$tags"); // Rudimentary, but works
+	return @file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$ToUpload&global_user=$GlobalUser&global_key=$Globalkey&tags=$tags"); // Rudimentary, but works
 }
 function pts_trim_double($double, $accuracy = 2)
 {

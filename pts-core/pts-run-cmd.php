@@ -184,6 +184,22 @@ switch($COMMAND)
 				echo $var . " = " . $var_value . "\n";
 			echo "\n";
 		break;
+	case "LOGIN":
+		echo "\nIf you haven't already registered for your free PTS Global account, you can do so at http://global.phoronix-test-suite.com/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";
+		echo "User-Name: ";
+		$username = trim(strtolower(fgets(STDIN)));
+		echo "Password: ";
+		$password = md5(trim(strtolower(fgets(STDIN))));
+		$uploadkey = @file_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=$username&user_md5_pass=$password");
+
+		if(!empty($uploadkey))
+		{
+			pts_user_config_init($username, $uploadkey);
+			echo "\nAccount: $uploadkey\nAccount information written to user-config.xml.\n\n";
+		}
+		else
+			echo "\nPTS Global Account Not Found.\n";
+		break;
 	case "REMOTE_COMPARISON":
 		echo "Now Use merge-results for remote comparison with integrated Global ID support.";
 		echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets";

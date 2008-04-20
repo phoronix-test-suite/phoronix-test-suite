@@ -7,7 +7,6 @@
 - Choice of SH or PHP for all install scripts
 - Use new (larger) Wav file for benchmarks... internal Phoronix WAV file used is copyrighted music. Current PTS One is too small for reliable results.
 - Improved hardware detection (i.e. recognize multiple graphics cards)
-- Change all the echos to fwrite with using STDOUT or STDERR where relevant
 - Support browsers aside from just Firefox launch. detect what's installed.
 - "Optimization Tips"
 - More MD5 checks in test scripts

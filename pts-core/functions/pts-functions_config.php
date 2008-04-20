@@ -2,7 +2,7 @@
 
 // Phoronix Test Suite - User Config Functions
 
-function pts_user_config_init()
+function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 {
 	if(!is_dir(PTS_USER_DIR))
 		mkdir(PTS_USER_DIR);
@@ -13,9 +13,14 @@ function pts_user_config_init()
 		$file = "";
 	$read_config = new tandem_XmlReader($file);
 
+	if($UserName == NULL)
+		$UserName = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UserName", "Default User", $read_config);
+	if($UploadKey == NULL)
+		$UploadKey = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "", $read_config);
+
 	$config = new tandem_XmlWriter();
-	$config->addXmlObject("PhoronixTestSuite/GlobalDatabase/UserName", 0, pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UserName", "Default User", $read_config));
-	$config->addXmlObject("PhoronixTestSuite/GlobalDatabase/UploadKey", 0, pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/GlobalDatabase/UserName", 0, $UserName);
+	$config->addXmlObject("PhoronixTestSuite/GlobalDatabase/UploadKey", 0, $UploadKey);
 
 	$config->addXmlObject("PhoronixTestSuite/Options/Results/Directory", 1, pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/pts-test-results/", $read_config));
 

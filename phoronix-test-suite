@@ -71,6 +71,9 @@ case "${task}" in
 "initial-config")
 	php pts-core/pts-run-cmd.php INITIAL_CONFIG
 	;;
+"login")
+	php pts-core/pts-run-cmd.php LOGIN
+	;;
 *)
 	echo "\n================================="
 	echo "Phoronix Test Suite"
@@ -90,7 +93,8 @@ case "${task}" in
 	echo "list-saved-results: List all saved results"
 	echo "system-information: Dump detected software and hardware information detected by PTS"
 	echo "upload <Saved File>: Upload these results to be shared globally"
-	echo "build-php: Build A Local Copy Of PHP For The Phoronix Test Suite"
+	echo "login: Enter in your PTS Global log-in information for uploading results"
+#	echo "build-php: Build A Local Copy Of PHP For The Phoronix Test Suite"
 	echo "\n"
 	;;
 esac
