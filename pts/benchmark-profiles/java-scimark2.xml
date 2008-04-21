@@ -1,0 +1,52 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.3</Version>
+		<BenchmarkType>Processor</BenchmarkType>
+		<ApplicationType>Utility</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Java SciMark</Title>
+		<Version>2.0</Version>
+		<ExternalDependencies>java</ExternalDependencies>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Mflops</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This test runs the Java version of SciMark 2.0, which is a benchmark for scientific and numerical computing developed by programmers at the National Institute of Standards and Technology. This benchmark is made up of Fast Foruier Transform, Jacobi Successive Over-relaxation, Monte Carlo, Sparse Matrix Multiply, and dense LU matrix factorization benchmarks.</Description>
+	</Information>
+	<Settings>
+		<Option>
+			<DisplayName>Computational Test</DisplayName>
+			<Identifier>compute-test</Identifier>
+			<ArgumentName>TEST_</ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Composite</Name>
+					<Value>COMPOSITE</Value>
+				</Entry>
+				<Entry>
+					<Name>Fast Fourier Transform</Name>
+					<Value>FFT</Value>
+				</Entry>
+				<Entry>
+					<Name>Jacobi Successive Over-relaxation</Name>
+					<Value>SOR</Value>
+				</Entry>
+				<Entry>
+					<Name>Monte Carlo</Name>
+					<Value>MONTE</Value>
+				</Entry>
+				<Entry>
+					<Name>Sparse Matrix Multiply</Name>
+					<Value>SPARSE</Value>
+				</Entry>
+				<Entry>
+					<Name>Dense LU Matrix Factorization</Name>
+					<Value>DENSE</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</Settings>
+</PTSBenchmark>

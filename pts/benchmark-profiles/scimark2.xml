@@ -10,7 +10,6 @@
 	<Information>
 		<Title>SciMark</Title>
 		<Version>2.0</Version>
-		<ExternalDependencies>java</ExternalDependencies>
 		<TimesToRun>4</TimesToRun>
 		<ResultScale>Mflops</ResultScale>
 		<Proportion>HIB</Proportion>
