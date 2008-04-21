@@ -38,7 +38,6 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		$result_scale = $xml_parser->getXMLValue("PTSBenchmark/Information/ResultScale");
 		$proportion = $xml_parser->getXMLValue("PTSBenchmark/Information/Proportion");
 		$default_arguments = $xml_parser->getXMLValue("PTSBenchmark/Settings/Default/Arguments");
-		unset($xml_parser);
 
 		if(empty($description))
 		{
@@ -51,6 +50,8 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 			else
 				$description = "Phoronix Test Suite v" . PTS_VERSION;
 		}
+
+		unset($xml_parser);
 
 		$tandem_xml->addXmlObject("PhoronixTestSuite/Benchmark/Name", $tandem_id, $benchmark_title);
 		$tandem_xml->addXmlObject("PhoronixTestSuite/Benchmark/Version", $tandem_id, $benchmark_version);
