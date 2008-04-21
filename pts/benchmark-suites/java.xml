@@ -1,0 +1,35 @@
+<PTSuite>
+	<PhoronixTestSuite>
+		<Version>0.1</Version>
+		<BenchmarkType>System</BenchmarkType>
+		<Title>Java Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The Java test suite contains all working Java-based test profiles within the Phoronix Test Suite.</Description>
+		<Official>0</Official>
+	</PhoronixTestSuite>
+	<PTSBenchmark>
+		<Benchmark>sunflow</Benchmark>
+		<Arguments></Arguments>
+		<Description></Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>java-scimark2</Benchmark>
+		<Arguments>TEST_FFT</Arguments>
+		<Description>FFT Performance</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>java-scimark2</Benchmark>
+		<Arguments>TEST_SOR</Arguments>
+		<Description>SOR Performance</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>java-scimark2</Benchmark>
+		<Arguments>TEST_MONTE</Arguments>
+		<Description>Monte Carlo Performance</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>java-scimark2</Benchmark>
+		<Arguments>TEST_COMPOSITE</Arguments>
+		<Description>Composite Performance</Description>
+	</PTSBenchmark>
+</PTSuite>
