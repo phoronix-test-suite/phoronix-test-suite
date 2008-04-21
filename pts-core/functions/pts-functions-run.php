@@ -50,6 +50,12 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 			else
 				$description = "Phoronix Test Suite v" . PTS_VERSION;
 		}
+		if(empty($benchmark_version))
+		{
+			if(is_file(BENCHMARK_ENVIRONMENT . "$benchmark/pts-test-version"))
+				$benchmark_version = @file_get_contents(BENCHMARK_ENVIRONMENT . "$benchmark/pts-test-version");
+
+		}
 
 		unset($xml_parser);
 
