@@ -9,6 +9,8 @@ Phoronix Test Suite
 - Add in basic browser detection code
 - Add scimark2 profile
 - Add java-scimark2 profile
+- Add support for pts-test-description and pts-test-version for benchmark description and benchmark version to be defined outside of the XML schema
+
 
 
 Phoronix Test Suite 0.3.1
