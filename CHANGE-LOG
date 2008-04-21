@@ -7,6 +7,9 @@ Phoronix Test Suite
 - Update build-linux-kernel profile to use Linux 2.6.25 kernel and support both x86 and x86_64 standardized configurations
 - Allow users to log-into their PTS Global account using "phoronix-test-suite login"
 - Add in basic browser detection code
+- Add scimark2 profile
+- Add java-scimark2 profile
+
 
 Phoronix Test Suite 0.3.1
 April 19, 2008

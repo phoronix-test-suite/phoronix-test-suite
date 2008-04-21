@@ -41,7 +41,16 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		unset($xml_parser);
 
 		if(empty($description))
-			$description = "Phoronix Test Suite v" . PTS_VERSION;
+		{
+			$default_test_descriptor = $xml_parser->getXMLValue("PTSBenchmark/Information/TestDescriptor");
+
+			if(!empty($default_test_descriptor))
+				$description = $default_test_descriptor;
+			else if(is_file(BENCHMARK_ENVIRONMENT . "$benchmark/pts-test-description"))
+				$description = @file_get_contents(BENCHMARK_ENVIRONMENT . "$benchmark/pts-test-description");
+			else
+				$description = "Phoronix Test Suite v" . PTS_VERSION;
+		}
 
 		$tandem_xml->addXmlObject("PhoronixTestSuite/Benchmark/Name", $tandem_id, $benchmark_title);
 		$tandem_xml->addXmlObject("PhoronixTestSuite/Benchmark/Version", $tandem_id, $benchmark_version);
