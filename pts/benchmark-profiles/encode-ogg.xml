@@ -15,5 +15,6 @@
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test times how long it takes to encode a sample WAV file to Ogg format.</Description>
+                <ExternalDependencies>build-utilities</ExternalDependencies>
 	</Information>
 </PTSBenchmark>

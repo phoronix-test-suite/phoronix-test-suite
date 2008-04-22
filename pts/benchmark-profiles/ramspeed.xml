@@ -15,6 +15,7 @@
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This benchmark tests the system memory (RAM) performance.</Description>
+                <ExternalDependencies>build-utilities</ExternalDependencies>
 	</Information>
 	<Settings>
 		<Option>
