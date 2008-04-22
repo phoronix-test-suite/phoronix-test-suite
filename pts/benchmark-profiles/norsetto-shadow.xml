@@ -1,0 +1,18 @@
+<PTSBenchmark>
+	<PhoronixTestSuite>
+		<Version>0.3</Version>
+		<BenchmarkType>Graphics</BenchmarkType>
+		<ApplicationType>Game</ApplicationType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</PhoronixTestSuite>
+	<Information>
+		<Title>Norsetto Shadow</Title>
+		<Version></Version>
+		<TimesToRun>2</TimesToRun>
+		<ResultScale>Average FPS</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This is a benchmark of Norsetto Shadow.</Description>
+	</Information>
+</PTSBenchmark>

@@ -13,6 +13,7 @@ Phoronix Test Suite
 - Add "java" suite of Java benchmarks
 - Add External Dependencies support for CentOS (Thanks to Pekka Panula)
 - Add External Dependencies support for Mandriva (Thanks to Stephane Teletchea)
+- Add new OpenGL profile (norsetto-shadow)
 
 Phoronix Test Suite 0.3.1
 April 19, 2008
