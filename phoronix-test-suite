@@ -56,6 +56,9 @@ case "${task}" in
 "list-suites")
 	php pts-core/pts-run-cmd.php LIST_SUITES
 	;;
+"list-results")
+	php pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
+	;;
 "list-saved-results")
 	php pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
 	;;
@@ -90,7 +93,7 @@ case "${task}" in
 	echo "remove-result <Saved File>: Remove this saved result file and associated files"
 	echo "list-tests: List all Phoronix Test Suite test profiles"
 	echo "list-suites: List all Phoronix Test Suites"
-	echo "list-saved-results: List all saved results"
+	echo "list-results: List all saved results"
 	echo "system-information: Dump detected software and hardware information detected by PTS"
 	echo "upload <Saved File>: Upload these results to be shared globally"
 	echo "login: Enter in your PTS Global log-in information for uploading results"
