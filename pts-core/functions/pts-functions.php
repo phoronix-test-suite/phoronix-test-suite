@@ -139,18 +139,26 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 		$save_to .= ".xml";
 	}
 
+	$save_to_dir = dirname($directory . $save_to);
+
 	if(!is_dir($directory))
 		mkdir($directory);
+	if($save_to_dir != '.' && !is_dir($save_to_dir))
+		mkdir($save_to_dir);
+		echo "147: $save_to_dir \n";
 
 	if(!is_dir($directory . "pts-results-viewer"))
 	{
 		mkdir($directory . "pts-results-viewer");
 	}
 
-	pts_copy("pts-core/pts-results-viewer/phoronix-test-suite.gif", $directory . "pts-results-viewer/phoronix-test-suite.gif");
+	//pts_copy("pts-core/pts-results-viewer/phoronix-test-suite.gif", $directory . "pts-results-viewer/phoronix-test-suite.gif");
 	pts_copy("pts-core/pts-results-viewer/pts.js", $directory . "pts-results-viewer/pts.js");
-	pts_copy("pts-core/pts-results-viewer/viewer.xsl", $directory . "pts-results-viewer/viewer.xsl");
+	pts_copy("pts-core/pts-results-viewer/pts-results-viewer.xsl", $directory . "pts-results-viewer/pts-results-viewer.xsl");
 	pts_copy("pts-core/pts-results-viewer/pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
+
+	if(!is_file($save_to_dir . "/pts-results-viewer.xsl") && !is_link($save_to_dir . "/pts-results-viewer.xsl"))
+		link($directory . "pts-results-viewer/pts-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
 	
 	if($save_to == null || $save_results == null)
 		$bool = true;
@@ -215,10 +223,8 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 			}
 
 			unset($xml_reader, $results_name, $results_version, $results_attributes, $results_scale, $results_proportion, $results_result_format, $results_raw, $results_identifiers, $results_values);
-			$save_results = str_replace("pts-results-viewer/viewer.xsl", "pts-results-viewer/local-viewer.xsl", $save_results);
 		}
-		else
-			$save_results = str_replace("pts-results-viewer/local-viewer.xsl", "pts-results-viewer/viewer.xsl", $save_results); */
+		 */
 
 		$bool = file_put_contents($directory . $save_to, $save_results);
 	}

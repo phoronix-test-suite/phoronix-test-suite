@@ -69,7 +69,7 @@ if(!$TO_RUN_TYPE)
 		$PROPOSED_FILE_NAME = $TO_RUN;
 		$RES_NULL = null;
 
-		pts_save_benchmark_file($PROPOSED_FILE_NAME, $RES_NULL, file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_RUN"));
+		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_RUN"));
 
 		if(!defined("PTS_BATCH_MODE") || pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE") == "TRUE")
 			do
@@ -90,9 +90,7 @@ else
 {
 	$SAVE_RESULTS = pts_bool_question("Would you like to save these benchmark results (Y/n)?", true, "SAVE_RESULTS");
 
-	if($SAVE_RESULTS)
-		echo "Benchmark results will be saved.\n";
-	else
+	if(!$SAVE_RESULTS)
 		echo "Benchmark results will NOT be saved!\n";
 
 	if($SAVE_RESULTS)
@@ -117,8 +115,6 @@ else
 			}while(empty($RESULTS_IDENTIFIER));
 
 		$RESULTS = new tandem_XmlWriter();
-
-		echo "\nPhoronix Test Suite will record results!\n";
 	}
 }
 
@@ -222,7 +218,7 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 	echo "Global Comparison Against: " . $TO_RUN;
 	echo "\n=================================\n";
 
-	$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_LOCATION . $TO_RUN . ".xml"));
+	$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_LOCATION . $TO_RUN . "/composite.xml"));
 	$CUSTOM_TITLE = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Title");
 	$test_description = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Description");
 	$test_version = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Version");
@@ -246,7 +242,7 @@ if($SAVE_RESULTS)
 	$test_notes = pts_process_running_string(array("Compiz", "Firefox"));
 
 	$id = pts_request_new_id();
-	$RESULTS->setXslBinding("pts-results-viewer/viewer.xsl");
+	$RESULTS->setXslBinding("pts-results-viewer.xsl");
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Hardware", $id, pts_hw_string());
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Software", $id, pts_sw_string());
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Author", $id, pts_current_user());
@@ -266,8 +262,8 @@ if($SAVE_RESULTS)
 	if($BENCHMARK_RAN)
 	{
 		pts_save_benchmark_file($PROPOSED_FILE_NAME, $RESULTS);
-		echo "Results Saved To: " . SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml\n";
-		display_web_browser(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml");
+		echo "Results Saved To: " . SAVE_RESULTS_LOCATION . $PROPOSED_FILE_NAME . "/composite.xml\n";
+		display_web_browser(SAVE_RESULTS_LOCATION . $PROPOSED_FILE_NAME . "/composite.xml");
 
 		$upload_results = pts_bool_question("Would you like to upload these results to PTS Global (Y/n)?", true, "UPLOAD_RESULTS");
 
@@ -276,7 +272,7 @@ if($SAVE_RESULTS)
 			echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual-Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
 			$tags_input = trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
 
-			echo "\nResults Uploaded To: " . pts_global_upload_result(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml", $tags_input) . "\n";
+			echo "\nResults Uploaded To: " . pts_global_upload_result(SAVE_RESULTS_LOCATION . $PROPOSED_FILE_NAME . "/composite.xml", $tags_input) . "\n";
 		}
 
 		echo "\n";

@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>Phoronix Test Suite - Results Viewer</title>
-		<link href="pts-results-viewer/pts-viewer.css" rel="stylesheet" type="text/css" />
-		<script src="pts-results-viewer/pts.js" type="text/javascript"></script>
+		<link href="../pts-results-viewer/pts-viewer.css" rel="stylesheet" type="text/css" />
+		<script src="../pts-results-viewer/pts.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="pts_header_top">

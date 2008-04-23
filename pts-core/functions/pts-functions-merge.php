@@ -6,8 +6,8 @@ function pts_find_file($file)
 {
 	if(is_file($file))
 		$USE_FILE = $file;
-	else if(is_file(SAVE_RESULTS_LOCATION . "$file.xml"))
-		$USE_FILE = SAVE_RESULTS_LOCATION . "$file.xml";
+	else if(is_file(SAVE_RESULTS_LOCATION . $file . "/composite.xml"))
+		$USE_FILE = SAVE_RESULTS_LOCATION . $file . "/composite.xml";
 	else if(trim(file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$file")) == "REMOTE_FILE")
 		$USE_FILE = "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$file";
 	else
@@ -104,7 +104,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 
 	$RESULTS = new tandem_XmlWriter();
 
-	$RESULTS->setXslBinding("pts-results-viewer/viewer.xsl");
+	$RESULTS->setXslBinding("pts-results-viewer.xsl");
 
 	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Title", 0, $new_suite_title);
 	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Name", 0, $new_suite_name);

@@ -76,10 +76,10 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)
 {
 	$j = 1;
-	while(is_file(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME-$j.xml"))
+	while(is_file(SAVE_RESULTS_LOCATION . $PROPOSED_FILE_NAME . "/test-$j.xml"))
 		$j++;
 
-	$REAL_FILE_NAME = $PROPOSED_FILE_NAME . '-' . $j;
+	$REAL_FILE_NAME = $PROPOSED_FILE_NAME . "/test-" . $j . ".xml";
 
 	if($RESULTS != null)
 		$R_FILE = $RESULTS->getXML();
@@ -88,15 +88,17 @@ function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEX
 	else
 		return false;
 
-	pts_save_result("$REAL_FILE_NAME.xml", $R_FILE);
+	pts_save_result($REAL_FILE_NAME, $R_FILE);
 
-	if(!is_file(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml"))
-		pts_save_result("$PROPOSED_FILE_NAME.xml", file_get_contents(SAVE_RESULTS_LOCATION . "$REAL_FILE_NAME.xml"));
+	if(!is_file(SAVE_RESULTS_LOCATION . $PROPOSED_FILE_NAME . "/composite.xml"))
+	{
+		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", file_get_contents(SAVE_RESULTS_LOCATION . $REAL_FILE_NAME));
+	}
 	else
 	{
 		// Merge Results
-		$MERGED_RESULTS = pts_merge_benchmarks(file_get_contents(SAVE_RESULTS_LOCATION . "$PROPOSED_FILE_NAME.xml"), file_get_contents(SAVE_RESULTS_LOCATION . "$REAL_FILE_NAME.xml"));
-		pts_save_result("$PROPOSED_FILE_NAME.xml", $MERGED_RESULTS);
+		$MERGED_RESULTS = pts_merge_benchmarks(file_get_contents(SAVE_RESULTS_LOCATION . $PROPOSED_FILE_NAME . "/composite.xml"), file_get_contents(SAVE_RESULTS_LOCATION . $REAL_FILE_NAME));
+		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", $MERGED_RESULTS);
 	}
 	return $REAL_FILE_NAME;
 }

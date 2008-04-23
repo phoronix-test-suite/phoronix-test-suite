@@ -13,18 +13,19 @@ if(isset($argv[3]))
 switch($COMMAND)
 {
 	case "REMOVE_RESULT":
-		if(is_file(SAVE_RESULTS_LOCATION . "$ARG_1.xml"))
+		if(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml"))
 		{
-			unlink(SAVE_RESULTS_LOCATION . "$ARG_1.xml");
-			echo "\nRemoved: $ARG_1.xml\n";
+			unlink(SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml");
 
 			$i = 1;
-			while(is_file(SAVE_RESULTS_LOCATION . "$ARG_1-$i.xml"))
+			while(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . "/test-" . "$i.xml"))
 			{
-				unlink(SAVE_RESULTS_LOCATION . "$ARG_1-$i.xml");
-				echo "Removed: $ARG_1-$i.xml\n";
+				unlink(SAVE_RESULTS_LOCATION . $ARG_1 . "/test-" . "$i.xml");
 				$i++;
 			}
+			unlink(SAVE_RESULTS_LOCATION . $ARG_1 . "/pts-results-viewer.xsl");
+			rmdir(SAVE_RESULTS_LOCATION . $ARG_1);
+			echo "\nRemoved: $ARG_1\n";
 		}
 		else
 			echo "\nThis result doesn't exist!\n";
@@ -33,8 +34,8 @@ switch($COMMAND)
 
 		if(is_file($ARG_1))
 			$USE_FILE = $ARG_1;
-		else if(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . ".xml"))
-			$USE_FILE = SAVE_RESULTS_LOCATION . $ARG_1 . ".xml";
+		else if(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml"))
+			$USE_FILE = SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml";
 		else
 		{
 			echo "\nThis result doesn't exist!\n";
@@ -125,34 +126,27 @@ switch($COMMAND)
 		echo "\n=================================\n";
 		echo "Phoronix Test Suite - Saved Results\n";
 		echo "=================================\n\n";
-		foreach(glob(SAVE_RESULTS_LOCATION . "*.xml") as $benchmark_file)
+		foreach(glob(SAVE_RESULTS_LOCATION . "*/composite.xml") as $benchmark_file)
 		{
-			// TODO: Clean up this check...
-			$bt = substr($benchmark_file, strrpos($benchmark_file, '-') + 1);
-			$bt = intval(substr($bt, 0, strpos($bt, '.')));
+			$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+			$title = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Title");
+			$suite = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Name");
+			$raw_results = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/Results");
+			$results_xml = new tandem_XmlReader($raw_results[0]);
+			$identifiers = $results_xml->getXMLArrayValues("Group/Entry/Identifier");
+			$saved_identifier = array_pop(explode('/', dirname($benchmark_file)));
 
-			if($bt == 0)
+			if(!empty($title))
 			{
-		 		$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-				$title = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Title");
-				$suite = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Name");
-				$raw_results = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/Results");
-				$results_xml = new tandem_XmlReader($raw_results[0]);
-				$identifiers = $results_xml->getXMLArrayValues("Group/Entry/Identifier");
+				echo $title . "\n";
+				printf("Saved Name: %-15ls Test: %-18ls \n", $saved_identifier, $suite);
 
-				if(!empty($title))
-				{
-					echo "Saved Name: " . basename($benchmark_file, ".xml") . "\n";
-					echo "$title (Test: $suite)\n";
+				foreach($identifiers as $id)
+					echo "\t- $id\n";
 
-					foreach($identifiers as $id)
-						echo "\t- $id\n";
-
-					echo "\n";
-				}
+				echo "\n\n";
 			}
 		}
-		echo "\n";
 		break;
 	case "INITIAL_CONFIG":
 		if(is_file(PTS_USER_DIR . "user-config.xml"))
