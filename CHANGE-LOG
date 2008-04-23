@@ -16,6 +16,7 @@ Phoronix Test Suite
 - Add new OpenGL profile (norsetto-shadow)
 - Major rework of how results are saved and each set of results now has its own directory. Most regressions in this area should be taken care of.
 - Add show-result <Saved File> argument for opening saved results at a later time in your web browser
+- Test results location now defaults to ~/.phoronix-test-suite/test-results/ and saved benchmarks now defaults to ~/.phoronix-test-suite/installed-tests/
 
 Phoronix Test Suite 0.3.1
 April 19, 2008

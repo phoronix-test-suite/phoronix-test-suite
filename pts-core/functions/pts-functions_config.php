@@ -22,9 +22,9 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 	$config->addXmlObject("PhoronixTestSuite/GlobalDatabase/UserName", 0, $UserName);
 	$config->addXmlObject("PhoronixTestSuite/GlobalDatabase/UploadKey", 0, $UploadKey);
 
-	$config->addXmlObject("PhoronixTestSuite/Options/Results/Directory", 1, pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/pts-test-results/", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Options/Results/Directory", 1, pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/.phoronix-test-suite/test-results/", $read_config));
 
-	$config->addXmlObject("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", 2, pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/pts-benchmark-env/", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", 2, pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/.phoronix-test-suite/installed-tests/", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests", 2, pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests", "5", $read_config));
 
 	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/SaveResults", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/SaveResults", "TRUE", $read_config));

@@ -42,8 +42,8 @@ define("BENCHMARK_RESOURCE_LOCATION", "pts/benchmark-resources/");
 define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
 
 pts_user_config_init();
-define("BENCHMARK_ENVIRONMENT", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/pts-benchmark-env/")));
-define("SAVE_RESULTS_LOCATION", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/pts-test-results/")));
+define("BENCHMARK_ENVIRONMENT", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/.phoronix-test-suite/installed-tests/")));
+define("SAVE_RESULTS_LOCATION", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/.phoronix-test-suite/test-results/")));
 
 // Etc
 $PTS_GLOBAL_ID = 1;
