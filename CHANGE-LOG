@@ -14,6 +14,8 @@ Phoronix Test Suite
 - Add External Dependencies support for CentOS (Thanks to Pekka Panula)
 - Add External Dependencies support for Mandriva (Thanks to Stephane Teletchea)
 - Add new OpenGL profile (norsetto-shadow)
+- Major rework of how results are saved and each set of results now has its own directory. Most regressions in this area should be taken care of.
+- Add show-result <Saved File> argument for opening saved results at a later time in your web browser
 
 Phoronix Test Suite 0.3.1
 April 19, 2008

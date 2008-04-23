@@ -47,6 +47,45 @@ switch($COMMAND)
 		if(!empty($upload_url))
 			echo "Results Uploaded To: " . $upload_url . "\n\n"; // TODO: Add checks to make sure it did work out
 		break;
+	case "LIST_SAVED_RESULTS":
+		echo "\n=================================\n";
+		echo "Phoronix Test Suite - Saved Results\n";
+		echo "=================================\n\n";
+		foreach(glob(SAVE_RESULTS_LOCATION . "*/composite.xml") as $benchmark_file)
+		{
+			$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+			$title = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Title");
+			$suite = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Name");
+			$raw_results = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/Results");
+			$results_xml = new tandem_XmlReader($raw_results[0]);
+			$identifiers = $results_xml->getXMLArrayValues("Group/Entry/Identifier");
+			$saved_identifier = array_pop(explode('/', dirname($benchmark_file)));
+
+			if(!empty($title))
+			{
+				echo $title . "\n";
+				printf("Saved Name: %-15ls Test: %-18ls \n", $saved_identifier, $suite);
+
+				foreach($identifiers as $id)
+					echo "\t- $id\n";
+
+				echo "\n\n";
+			}
+		}
+		break;
+	case "SHOW_RESULT":
+		if(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml"))
+			$URL = SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml";
+		//else if(trim(file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $ARG_1)) == "REMOTE_FILE")
+		//	$URL = "http://global.phoronix-test-suite.com/index.php?k=profile&u=" . trim($ARG_1);
+		else
+			$URL = false;
+
+		if($URL != FALSE)
+			shell_exec("./pts/launch-browser.sh $URL &");
+		else
+			echo "\n$ARG_1 was not found.\n";
+		break;
 	case "INSTALL_BENCHMARK":
 		if(empty($ARG_1))
 		{
@@ -121,32 +160,6 @@ switch($COMMAND)
 			printf("%-16ls - %-32ls [Benchmark Type: %s]\n", $identifier, $name, $benchmark_type);
 		}
 		echo "\n";
-		break;
-	case "LIST_SAVED_RESULTS":
-		echo "\n=================================\n";
-		echo "Phoronix Test Suite - Saved Results\n";
-		echo "=================================\n\n";
-		foreach(glob(SAVE_RESULTS_LOCATION . "*/composite.xml") as $benchmark_file)
-		{
-			$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-			$title = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Title");
-			$suite = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Name");
-			$raw_results = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/Results");
-			$results_xml = new tandem_XmlReader($raw_results[0]);
-			$identifiers = $results_xml->getXMLArrayValues("Group/Entry/Identifier");
-			$saved_identifier = array_pop(explode('/', dirname($benchmark_file)));
-
-			if(!empty($title))
-			{
-				echo $title . "\n";
-				printf("Saved Name: %-15ls Test: %-18ls \n", $saved_identifier, $suite);
-
-				foreach($identifiers as $id)
-					echo "\t- $id\n";
-
-				echo "\n\n";
-			}
-		}
 		break;
 	case "INITIAL_CONFIG":
 		if(is_file(PTS_USER_DIR . "user-config.xml"))

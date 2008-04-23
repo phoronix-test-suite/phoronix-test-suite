@@ -62,6 +62,9 @@ case "${task}" in
 "list-saved-results")
 	php pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
 	;;
+"show-result")
+	php pts-core/pts-run-cmd.php SHOW_RESULT $2
+	;;
 "system-information")
 	php pts-core/pts-run-cmd.php SYS_INFO
 	;;
@@ -96,8 +99,8 @@ case "${task}" in
 	echo "list-results: List all saved results"
 	echo "system-information: Dump detected software and hardware information detected by PTS"
 	echo "upload <Saved File>: Upload these results to be shared globally"
+	echo "show-result <Saved File>: Show this result file in your web browser"
 	echo "login: Enter in your PTS Global log-in information for uploading results"
-#	echo "build-php: Build A Local Copy Of PHP For The Phoronix Test Suite"
 	echo "\n"
 	;;
 esac
