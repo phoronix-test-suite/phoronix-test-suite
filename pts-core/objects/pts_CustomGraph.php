@@ -34,6 +34,9 @@ class pts_CustomGraph extends pts_Graph
 		$this->graph_font_size_sub_heading = pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/SubHeaders", null, $read_config); // Font size of headers
 		$this->graph_font_size_axis_heading = pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/Axis", null, $read_config); // Font size of axis headers
 
+		$this->graph_attr_big_border = pts_read_graph_config("PhoronixTestSuite/Graphs/Other/RenderBorder", null, $read_config); // Border around graph or not
+		$this->graph_attr_marks = pts_read_graph_config("PhoronixTestSuite/Graphs/Other/NumberOfMarks", null, $read_config); // Number of marks to make on vertical axis
+
 		parent::__construct($Title, $SubTitle, $YTitle);
 	}
 }

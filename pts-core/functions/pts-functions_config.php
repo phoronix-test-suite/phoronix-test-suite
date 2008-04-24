@@ -77,6 +77,10 @@ function pts_graph_config_init()
 	// Text Font
 	$config->addXmlObject("PhoronixTestSuite/Graphs/Font/Type", 4, pts_read_graph_config("PhoronixTestSuite/Graphs/Font/Type", "DejaVuSans.ttf", $read_config));
 
+	// Other
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Other/RenderBorder", 4, pts_read_graph_config("PhoronixTestSuite/Graphs/Other/RenderBorder", "FALSE", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Other/NumberOfMarks", 4, pts_read_graph_config("PhoronixTestSuite/Graphs/Other/NumberOfMarks", "6", $read_config));
+
 	file_put_contents(PTS_USER_DIR . "graph-config.xml", $config->getXML());
 }
 function pts_read_user_config($xml_pointer, $value = null, $tandem_xml = null)
