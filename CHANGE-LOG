@@ -2,7 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite
 
-- Add system-information argument for quickly and easily showing the system's hardware and software information
+- Add system-info argument for quickly and easily showing the system's hardware and software information
 - Add diagnostics argument for dumping Phoronix Test Suite information for debugging purposes and showing environmental variables accessible to the test scripts/profiles
 - Update build-linux-kernel profile to use Linux 2.6.25 kernel and support both x86 and x86_64 standardized configurations
 - Allow users to log-into their PTS Global account using "phoronix-test-suite login"
@@ -20,6 +20,8 @@ Phoronix Test Suite
 - All graphs are now rendered locally. This means php-gd/php5-gd (PHP GD library) is a requirement if you wish to see the results!
 - Add support so distribution maintainers can create their own graph theme (color, text size, etc) or others and store the template of graph-config.xml as pts-core/pts-results-viewer/graph-config-template.xml
 - Support for installing the Phoronix Test Suite code and other files into one directory (say /usr/share/phoronix-test-suite/) and installing phoronix-test-suite to /usr/bin/phoronix-test-suite by just adjusting the PTS_DIR environmental variable inside phoronix-test-suite
+- Add suite-info <SUITE NAME> argument for providing more information on suites -- tests in each suite, maintainer, type, etc.
+- Fix motherboard test suite
 - Other bug fixes
 
 Phoronix Test Suite 0.3.1

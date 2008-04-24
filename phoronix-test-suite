@@ -6,6 +6,9 @@
 # http://www.phoronix-test-suite.com/
 # The Phoronix Test Suite is licensed under the GNU GPLv3. For more information see COPYING
 
+# Full path to root directory of the actual Phoronix Test Suite code
+export PTS_DIR=`pwd`
+
 if [ ! -x /usr/bin/php ] && [ ! -x /usr/local/bin/php ]
 then
 	echo "\n\nPHP5 CLI Must Be Installed To Run The Phoronix Test Suite!"
@@ -14,9 +17,6 @@ then
 	echo "To attempt to have the dependencies installed automatically, run: phoronix-test-suite install-dependencies pts"
 	echo "For support visit: http://www.phoronix.com/forums/forumdisplay.php?f=49\n\n"
 fi
-
-# Full path to root directory of the actual Phoronix Test Suite code
-export PTS_DIR=`pwd`
 
 if [ $PTS_DIR != `pwd` ]
 then
@@ -71,7 +71,10 @@ case "$1" in
 "show-result")
 	php pts-core/pts-run-cmd.php SHOW_RESULT $2
 	;;
-"system-information")
+"suite-info")
+	php pts-core/pts-run-cmd.php SUITE_INFO $2
+	;;
+"system-info")
 	php pts-core/pts-run-cmd.php SYS_INFO
 	;;
 "diagnostics")
@@ -103,7 +106,8 @@ case "$1" in
 	echo "list-tests: List all Phoronix Test Suite test profiles"
 	echo "list-suites: List all Phoronix Test Suites"
 	echo "list-results: List all saved results"
-	echo "system-information: Dump detected software and hardware information detected by PTS"
+	echo "suite-info: Show tests in a suite and other information about the suite"
+	echo "system-info: Dump detected software and hardware information detected by PTS"
 	echo "upload <Saved File>: Upload these results to be shared globally"
 	echo "show-result <Saved File>: Show this result file in your web browser"
 	echo "login: Enter in your PTS Global log-in information for uploading results"

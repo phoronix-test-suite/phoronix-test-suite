@@ -158,9 +158,52 @@ switch($COMMAND)
 			$benchmark_type = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/BenchmarkType");
 			$identifier = basename($benchmark_file, ".xml");
 
-			printf("%-16ls - %-32ls [Benchmark Type: %s]\n", $identifier, $name, $benchmark_type);
+			printf("%-16ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);
 		}
 		echo "\n";
+		break;
+	case "SUITE_INFO":
+		if(pts_benchmark_type($ARG_1) == "TEST_SUITE")
+		{
+			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_LOCATION . $ARG_1 . ".xml"));
+			$tests_in_suite = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
+			$suite_name = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Title");
+			$suite_maintainer = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Maintainer");
+			$suite_version = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Version");
+			$suite_type = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/BenchmarkType");
+			$total_tests = count($tests_in_suite);
+			$tests_in_suite = array_unique($tests_in_suite);
+			$unique_tests = count($tests_in_suite);
+
+			echo "\n=================================\n";
+			echo $suite_name . " (" . $ARG_1 . " v" . $suite_version . ")\n";
+			echo "=================================\n\n";
+
+			echo "Maintainer: " . $suite_maintainer . "\n";
+			echo "Suite Type: " . $suite_type . "\n";
+			echo "Total Tests: " . $total_tests . "\n";
+			echo "Unique Tests: " . $unique_tests . "\n";
+			echo "\n";
+
+			foreach($tests_in_suite as $test)
+			{
+				$benchmark_file = XML_PROFILE_LOCATION . $test . ".xml";
+
+			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+				$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+				$identifier = basename($benchmark_file, ".xml");
+				$license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
+				$status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
+
+				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+			}
+		
+			echo "\n";
+		}
+		else
+		{
+			echo "\n$ARG_1 is not a test suite.\n";
+		}
 		break;
 	case "INITIAL_CONFIG":
 		if(is_file(PTS_USER_DIR . "user-config.xml"))

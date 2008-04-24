@@ -1,6 +1,6 @@
 <PTSuite>
 	<PhoronixTestSuite>
-		<Version>0.1</Version>
+		<Version>0.2</Version>
 		<BenchmarkType>Motherboard</BenchmarkType>
 		<Title>Motherboard Tests</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -8,11 +8,11 @@
 		<Official>1</Official>
 	</PhoronixTestSuite>
 	<PTSBenchmark>
-		<Benchmark>lame-mp3</Benchmark>
+		<Benchmark>encode-mp3</Benchmark>
 		<Arguments></Arguments>
 	</PTSBenchmark>
 	<PTSBenchmark>
-		<Benchmark>ogg-encode</Benchmark>
+		<Benchmark>encode-ogg</Benchmark>
 		<Arguments></Arguments>
 	</PTSBenchmark>
 	<PTSBenchmark>
