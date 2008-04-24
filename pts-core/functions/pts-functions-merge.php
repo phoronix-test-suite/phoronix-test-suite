@@ -88,16 +88,18 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	}
 	unset($OLD_RESULTS, $original_xml_reader, $original_results_raw);
 
-
-	if($original_suite_name != $new_suite_name)
+	if(!defined("GLOBAL_COMPARISON"))
 	{
-		echo "Merge Failed! The test(s) don't match: $original_suite_name - $new_suite_name\n";
-		exit(0);
-	}
-	if($original_suite_version != $new_suite_version)
-	{
-		echo "Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n";
-		exit(0);
+		if($original_suite_name != $new_suite_name)
+		{
+			echo "Merge Failed! The test(s) don't match: $original_suite_name - $new_suite_name\n";
+			exit(0);
+		}
+		if($original_suite_version != $new_suite_version)
+		{
+			echo "Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n";
+			exit(0);
+		}
 	}
 
 	// Write the new merge
@@ -124,7 +126,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 		$RESULTS->addXmlObject("PhoronixTestSuite/System/TestDate", $USE_ID, date("F j, Y h:i A"));
 		$RESULTS->addXmlObject("PhoronixTestSuite/System/TestNotes", $USE_ID, $original_system_notes[0]);
 		$RESULTS->addXmlObject("PhoronixTestSuite/System/Version", $USE_ID, $original_pts_version[0]);
-		$RESULTS->addXmlObject("PhoronixTestSuite/System/AssociatedIdentifiers", $USE_ID, $original_associated_identifiers[0] . "," . $new_associated_identifiers[0]);
+		$RESULTS->addXmlObject("PhoronixTestSuite/System/AssociatedIdentifiers", $USE_ID, $original_associated_identifiers[0] . ", " . $new_associated_identifiers[0]);
 	}
 	else
 	{

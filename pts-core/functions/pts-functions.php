@@ -145,7 +145,6 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 		mkdir($directory);
 	if($save_to_dir != '.' && !is_dir($save_to_dir))
 		mkdir($save_to_dir);
-		echo "147: $save_to_dir \n";
 
 	if(!is_dir($directory . "pts-results-viewer"))
 	{
