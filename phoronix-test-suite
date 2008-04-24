@@ -15,9 +15,15 @@ then
 	echo "For support visit: http://www.phoronix.com/forums/forumdisplay.php?f=49\n\n"
 fi
 
-task=$1
+# Full path to root directory of the actual Phoronix Test Suite code
+export PTS_DIR=`pwd`
 
-case "${task}" in
+if [ $PTS_DIR != `pwd` ]
+then
+	cd $PTS_DIR
+fi
+
+case "$1" in
 "gui")
 	php pts-core/pts-main.php
 	;;

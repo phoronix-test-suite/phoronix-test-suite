@@ -18,10 +18,27 @@
    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_directory()
+{
+	$dir = getenv("PTS_DIR");
+
+	if($dir == ".")
+		$dir = "";
+
+	if(!empty($dir))
+	{
+		if(substr($dir, -1) != '/')
+			$dir .= '/';
+	}
+	
+	return $dir;
+}
+define("PTS_DIR", pts_directory());
+
 function __autoload($to_load)
 {
-	if(is_file("pts-core/objects/$to_load.php"))
-		require_once("pts-core/objects/$to_load.php");
+	if(is_file(PTS_DIR . "pts-core/objects/$to_load.php"))
+		require_once(PTS_DIR . "pts-core/objects/$to_load.php");
 }
 
 // Load OS-specific functions
@@ -31,15 +48,14 @@ require_once("pts-core/functions/pts-functions_linux.php");
 define("PTS_VERSION", "0.3.1");
 define("PTS_CODENAME", "TRONDHEIM");
 define("PTS_TYPE", "DESKTOP");
-
 define("THIS_RUN_TIME", time());
 
-define("XML_PROFILE_LOCATION", "pts/benchmark-profiles/");
-define("XML_SUITE_LOCATION", "pts/benchmark-suites/");
-define("DISTRO_XML_LOCATION", "pts/distro-xml/");
-define("DISTRO_SCRIPT_LOCATION", "pts/distro-scripts/");
-define("BENCHMARK_RESOURCE_LOCATION", "pts/benchmark-resources/");
-define("RESULTS_VIEWER_LOCATION", "pts-core/pts-results-viewer/");
+define("XML_PROFILE_LOCATION", PTS_DIR . "pts/benchmark-profiles/");
+define("XML_SUITE_LOCATION", PTS_DIR . "pts/benchmark-suites/");
+define("DISTRO_XML_LOCATION", PTS_DIR . "pts/distro-xml/");
+define("DISTRO_SCRIPT_LOCATION", PTS_DIR . "pts/distro-scripts/");
+define("BENCHMARK_RESOURCE_LOCATION", PTS_DIR . "pts/benchmark-resources/");
+define("RESULTS_VIEWER_LOCATION", PTS_DIR . "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
 //define("FONT_DIRECTORY" "/usr/share/fonts/");
 
