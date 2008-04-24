@@ -59,6 +59,7 @@ function pts_graph_config_init()
 	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Notches", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Notches", "#000000", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Border", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Border", "#000000", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Alternate", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Alternate", "#B0B59E", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/ObjectPaint", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/ObjectPaint", "#3B433A, #BB2413, #FF9933, #006C00, #5028CA", $read_config));
 
 	// Text Colors
 	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Headers", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Headers", "#2b6b29", $read_config));

@@ -18,7 +18,7 @@
    along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_BarGraph extends pts_Graph
+class pts_BarGraph extends pts_CustomGraph
 {
 	public function __construct($Title, $SubTitle, $YTitle)
 	{
