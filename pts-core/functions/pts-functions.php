@@ -175,7 +175,7 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 				}
 				else	*/
 					$gd_available = false;
-					echo "The PHP GD extension must be loaded in order for the graphs to display!";
+					echo "\nThe PHP GD extension must be loaded in order for the graphs to display!\n";
 			}
 			else
 				$gd_available = true;

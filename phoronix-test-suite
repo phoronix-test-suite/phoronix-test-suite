@@ -10,8 +10,8 @@ if [ ! -x /usr/bin/php ] && [ ! -x /usr/local/bin/php ]
 then
 	echo "\n\nPHP5 CLI Must Be Installed To Run The Phoronix Test Suite!"
 	echo "Only PHP For The Command Line Is Needed, Not A Full-Blown PHP w/ Web Server"
-	echo "If you are using Ubuntu you must run: sudo apt-get install php5-cli"
-	echo "If you are using Fedora you must run: yum install php-cli"
+	echo "The PHP CLI package is usually called php-cli or php5-cli. Also required is the PHP GD library (php-gd)"
+	echo "To attempt to have the dependencies installed automatically, run: phoronix-test-suite install-dependencies pts"
 	echo "For support visit: http://www.phoronix.com/forums/forumdisplay.php?f=49\n\n"
 fi
 
