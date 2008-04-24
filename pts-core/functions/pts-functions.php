@@ -42,7 +42,7 @@ define("BENCHMARK_RESOURCE_LOCATION", "pts/benchmark-resources/");
 define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
 //define("FONT_DIRECTORY" "/usr/share/fonts/");
 
-pts_user_config_init();
+pts_config_init();
 define("BENCHMARK_ENVIRONMENT", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/.phoronix-test-suite/installed-tests/")));
 define("SAVE_RESULTS_LOCATION", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/.phoronix-test-suite/test-results/")));
 

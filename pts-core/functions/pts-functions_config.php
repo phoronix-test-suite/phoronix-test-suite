@@ -2,11 +2,16 @@
 
 // Phoronix Test Suite - User Config Functions
 
-function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
+function pts_config_init()
 {
 	if(!is_dir(PTS_USER_DIR))
 		mkdir(PTS_USER_DIR);
 
+	pts_user_config_init();
+	pts_graph_config_init();
+}
+function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
+{
 	if(is_file(PTS_USER_DIR . "user-config.xml"))
 		$file = file_get_contents(PTS_USER_DIR . "user-config.xml");
 	else
@@ -34,10 +39,56 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
 }
+function pts_graph_config_init()
+{
+	if(is_file(PTS_USER_DIR . "graph-config.xml"))
+		$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
+	else
+		$file = "";
+	$read_config = new tandem_XmlReader($file);
 
+	$config = new tandem_XmlWriter();
+
+	// Size of Graph
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Size/Width", 1, pts_read_graph_config("PhoronixTestSuite/Graphs/Size/Width", "580", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Size/Height", 1, pts_read_graph_config("PhoronixTestSuite/Graphs/Size/Height", "300", $read_config));
+
+	// Colors
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Background", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Background", "#FFFFFF", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/GraphBody", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/GraphBody", "#8B8F7C", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Notches", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Notches", "#000000", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Border", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Border", "#000000", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Alternate", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Alternate", "#B0B59E", $read_config));
+
+	// Text Colors
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Headers", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Headers", "#2b6b29", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/MainHeaders", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/MainHeaders", "#2b6b29", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/Text", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/Text", "#000000", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Colors/BodyText", 2, pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/BodyText", "#FFFFFF", $read_config));
+
+	// Text Size
+	$config->addXmlObject("PhoronixTestSuite/Graphs/FontSize/Headers", 3, pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/Headers", "18", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/FontSize/SubHeaders", 3, pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/SubHeaders", "12", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/FontSize/ObjectText", 3, pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/ObjectText", "12", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/FontSize/Identifiers", 3, pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/Identifiers", "11", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/FontSize/Axis", 3, pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/Axis", "11", $read_config));
+
+	// Text Font
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Font/Type", 4, pts_read_graph_config("PhoronixTestSuite/Graphs/Font/Type", "DejaVuSans.ttf", $read_config));
+
+	file_put_contents(PTS_USER_DIR . "graph-config.xml", $config->getXML());
+}
 function pts_read_user_config($xml_pointer, $value = null, $tandem_xml = null)
 {
-	if($tandem_xml != null)
+	return pts_read_config("user-config.xml", $xml_pointer, $value, $tandem_xml);
+}
+function pts_read_graph_config($xml_pointer, $value = null, $tandem_xml = null)
+{
+	return pts_read_config("graph-config.xml", $xml_pointer, $value, $tandem_xml);
+}
+function pts_read_config($config_file, $xml_pointer, $value, $tandem_xml)
+{
+	if(!empty($tandem_xml))
 	{
 		$temp_value = $tandem_xml->getXmlValue($xml_pointer);
 
@@ -46,8 +97,8 @@ function pts_read_user_config($xml_pointer, $value = null, $tandem_xml = null)
 	}
 	else
 	{
-		if(is_file(PTS_USER_DIR . "user-config.xml"))
-			if(($file = file_get_contents(PTS_USER_DIR . "user-config.xml")) != FALSE)
+		if(is_file(PTS_USER_DIR . $config_file))
+			if(($file = file_get_contents(PTS_USER_DIR . $config_file)) != FALSE)
 			{
 				$xml_parser = new tandem_XmlReader($file);
 				unset($file);

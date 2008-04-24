@@ -42,7 +42,7 @@ class pts_Graph
 	var $graph_color_body_text = "#FFFFFF"; // Color of graph body text
 	var $graph_color_body_light = "#B0B59E"; // Color of the border around graph bars (if doing a bar graph)
 
-	var $graph_color_paint = array("#3b433a", "#bb2413", "#ff9933", "#006c00", "#5028ca"); // Colors to use for the bars / lines, one color for each key
+	var $graph_color_paint = array("#3B433A", "#BB2413", "#FF9933", "#006C00", "#5028CA"); // Colors to use for the bars / lines, one color for each key
 
 	// Text
 	var $graph_font = "DejaVuSans.ttf"; // TTF file name
