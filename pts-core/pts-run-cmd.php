@@ -17,13 +17,14 @@ switch($COMMAND)
 		{
 			unlink(SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml");
 
-			$i = 1;
-			while(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . "/test-" . "$i.xml"))
-			{
-				unlink(SAVE_RESULTS_LOCATION . $ARG_1 . "/test-" . "$i.xml");
-				$i++;
-			}
+			foreach(glob(SAVE_RESULTS_LOCATION . $ARG_1 . "/result-graphs/*.png") as $remove_file)
+				unlink($remove_file);
+
+			foreach(glob(SAVE_RESULTS_LOCATION . $ARG_1 . "/test-*.xml") as $remove_file)
+				unlink($remove_file);
+
 			unlink(SAVE_RESULTS_LOCATION . $ARG_1 . "/pts-results-viewer.xsl");
+			rmdir(SAVE_RESULTS_LOCATION . $ARG_1 . "/result-graphs/");
 			rmdir(SAVE_RESULTS_LOCATION . $ARG_1);
 			echo "\nRemoved: $ARG_1\n";
 		}

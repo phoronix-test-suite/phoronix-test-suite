@@ -45,7 +45,7 @@ class pts_Graph
 	var $graph_color_paint = array("#3b433a", "#bb2413", "#ff9933", "#006c00", "#5028ca"); // Colors to use for the bars / lines, one color for each key
 
 	// Text
-	var $graph_font = "dejavu_sans.ttf"; // TTF file name
+	var $graph_font = "DejaVuSans.ttf"; // TTF file name
 	var $graph_font_size_tick_mark = 10; // Tick mark size
 	var $graph_font_size_key = 9; // Size of height for keys
 	var $graph_font_size_heading = 18; // Font size of headings
@@ -86,7 +86,15 @@ class pts_Graph
 		$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
 
 		// Directory for TTF Fonts
-		putenv("GDFONTPATH=" . getcwd()); // The directory where the TTF font files should be. getcwd() will look in the same directory as this file
+		if(!defined("FONT_DIRECTORY"))
+		{
+			putenv("GDFONTPATH=pts-core/pts-results-viewer/");
+			//putenv("GDFONTPATH=" . getcwd()); // The directory where the TTF font files should be. getcwd() will look in the same directory as this file
+		}
+		else
+		{
+			putenv("GDFONTPATH=" . FONT_DIRECTORY);
+		}
 	}
 
 	//
@@ -277,7 +285,7 @@ class pts_Graph
 	protected function render_graph_init()
 	{
 		$this->graph_image = imagecreate($this->graph_attr_width, $this->graph_attr_height);
-		imageantialias($this->graph_image, true);
+		//imageantialias($this->graph_image, true);
 		imageinterlace($this->graph_image, true);
 
 		// Initalize GD Colors
@@ -422,7 +430,7 @@ class pts_Graph
 		Imagepng($this->graph_image, $this->graph_output, 0);
 		ImageDestroy($this->graph_image);
 	}
-	protected function save_graph($file)
+	public function save_graph($file)
 	{
 		$this->graph_output = $file;
 	}

@@ -6,6 +6,8 @@ Phoronix Test Suite is licensed under the GNU GPLv3. See COPYING file for more d
 
 Patches, new profiles, etc welcome. Non-technical support messages can be directed to phoronix [at] phoronix.com.
 
+The default font that ships with the Phoronix Test Suite for the results graphing is from the DejaVu font collection: http://dejavu.sourceforge.net/
+
 LINKS:
 
 Check Out This Link To See What The Phoronix Test Suite Is All About (Guide, Announcement, & More): http://www.phoronix.com/scan.php?page=article&item=phoronix_pts&num=1

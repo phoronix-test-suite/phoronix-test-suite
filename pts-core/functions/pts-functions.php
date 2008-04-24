@@ -40,6 +40,7 @@ define("DISTRO_XML_LOCATION", "pts/distro-xml/");
 define("DISTRO_SCRIPT_LOCATION", "pts/distro-scripts/");
 define("BENCHMARK_RESOURCE_LOCATION", "pts/benchmark-resources/");
 define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
+//define("FONT_DIRECTORY" "/usr/share/fonts/");
 
 pts_user_config_init();
 define("BENCHMARK_ENVIRONMENT", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/.phoronix-test-suite/installed-tests/")));
@@ -151,7 +152,6 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 		mkdir($directory . "pts-results-viewer");
 	}
 
-	//pts_copy("pts-core/pts-results-viewer/phoronix-test-suite.gif", $directory . "pts-results-viewer/phoronix-test-suite.gif");
 	pts_copy("pts-core/pts-results-viewer/pts.js", $directory . "pts-results-viewer/pts.js");
 	pts_copy("pts-core/pts-results-viewer/pts-results-viewer.xsl", $directory . "pts-results-viewer/pts-results-viewer.xsl");
 	pts_copy("pts-core/pts-results-viewer/pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
@@ -163,67 +163,64 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 		$bool = true;
 	else
 	{
-		// Create graphs locally or remotely
+		$save_name = basename($save_to, ".xml");
 
-	/*	if(!extension_loaded("gd"))
+		if($save_name == "composite")
 		{
-			if(dl("gd.so"))
+			if(!extension_loaded("gd"))
 			{
-				$gd_available = true;
+			/*	if(dl("gd.so"))
+				{
+					$gd_available = true;
+				}
+				else	*/
+					$gd_available = false;
+					echo "The PHP GD extension must be loaded in order for the graphs to display!";
 			}
 			else
-				$gd_available = false;
+				$gd_available = true;
+
+			if($gd_available)
+			{
+				if(!is_dir($save_to_dir . "/result-graphs"))
+				{
+					mkdir($save_to_dir . "/result-graphs");
+				}
+
+				$xml_reader = new tandem_XmlReader($save_results);
+				$results_name = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Name");
+				$results_version = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Version");
+				$results_attributes = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Attributes");
+				$results_scale = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Scale");
+				$results_proportion = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Proportion");
+				$results_result_format = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/ResultFormat");
+				$results_raw = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Results");
+
+				$results_identifiers = array();
+				$results_values = array();
+
+				foreach($results_raw as $result_raw)
+				{
+					$xml_results = new tandem_XmlReader($result_raw);
+					array_push($results_identifiers, $xml_results->getXMLArrayValues("Group/Entry/Identifier"));
+					array_push($results_values, $xml_results->getXMLArrayValues("Group/Entry/Value"));
+				}
+
+				for($i = 0; $i < count($results_name); $i++)
+				{
+					if(strlen($results_version[$i]) > 2)
+						$results_name[$i] .= " v" . $results_version[$i];
+
+					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+					$t->loadGraphIdentifiers($results_identifiers[$i]);
+					$t->loadGraphValues($results_values[$i], "#1");
+					$t->save_graph($save_to_dir . "/result-graphs/" . ($i + 1) . ".png");
+					$t->renderGraph();
+				}
+
+				unset($xml_reader, $results_name, $results_version, $results_attributes, $results_scale, $results_proportion, $results_result_format, $results_raw, $results_identifiers, $results_values);
+			}
 		}
-		else
-			$gd_available = true;
-
-		if($gd_available)
-		{
-			if(!is_dir($directory . "result-graphs"))
-			{
-				mkdir($directory . "result-graphs");
-			}
-
-			$basename = basename($save_to, ".xml");
-			if(!is_dir($directory . "result-graphs" . $basename))
-			{
-				mkdir($directory . "result-graphs" . $basename);
-			}
-
-			$xml_reader = new tandem_XmlReader($save_results);
-			$results_name = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Name");
-			$results_version = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Version");
-			$results_attributes = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Attributes");
-			$results_scale = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Scale");
-			$results_proportion = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Proportion");
-			$results_result_format = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/ResultFormat");
-			$results_raw = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Results");
-
-			$results_identifiers = array();
-			$results_values = array();
-
-			foreach($results_raw as $result_raw)
-			{
-				$xml_results = new tandem_XmlReader($result_raw);
-				array_push($results_identifiers, $xml_results->getXMLArrayValues("Group/Entry/Identifier"));
-				array_push($results_values, $xml_results->getXMLArrayValues("Group/Entry/Value"));
-			}
-
-			for($i = 0; $i < count($results_name); $i++)
-			{
-				if(strlen($results_version[$i]) > 2)
-					$results_name[$i] .= " v" . $results_version[$i];
-
-				$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-				$t->loadGraphIdentifiers($results_identifiers[$i]);
-				$t->loadGraphValues($results_values[$i], "#1");
-				$t->save_graph($directory . "result-graphs" . $basename . "/" . ($i + 1) . ".png");
-				$t->renderGraph();
-			}
-
-			unset($xml_reader, $results_name, $results_version, $results_attributes, $results_scale, $results_proportion, $results_result_format, $results_raw, $results_identifiers, $results_values);
-		}
-		 */
 
 		$bool = file_put_contents($directory . $save_to, $save_results);
 	}
