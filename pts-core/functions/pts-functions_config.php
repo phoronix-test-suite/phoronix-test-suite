@@ -43,6 +43,8 @@ function pts_graph_config_init()
 {
 	if(is_file(PTS_USER_DIR . "graph-config.xml"))
 		$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
+	else if(is_file(RESULTS_VIEWER_LOCATION . "graph-config-template.xml"))
+		$file = file_get_contents(RESULTS_VIEWER_LOCATION . "graph-config-template.xml");
 	else
 		$file = "";
 	$read_config = new tandem_XmlReader($file);

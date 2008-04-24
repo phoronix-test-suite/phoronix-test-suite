@@ -18,6 +18,7 @@ Phoronix Test Suite
 - Add show-result <Saved File> argument for opening saved results at a later time in your web browser
 - Test results location now defaults to ~/.phoronix-test-suite/test-results/ and saved benchmarks now defaults to ~/.phoronix-test-suite/installed-tests/
 - All graphs are now rendered locally. This means php-gd/php5-gd (PHP GD library) is a requirement if you wish to see the results!
+- Add support distribution maintainers can create their own graph theme (color, text size, etc) or others and store the template of graph-config.xml as pts-core/pts-results-viewer/graph-config-template.xml
 - Other bug fixes
 
 Phoronix Test Suite 0.3.1
