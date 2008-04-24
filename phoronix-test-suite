@@ -24,9 +24,6 @@ then
 fi
 
 case "$1" in
-"gui")
-	php pts-core/pts-main.php
-	;;
 "install")
 	php pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
 	;;
@@ -62,22 +59,19 @@ case "$1" in
 "list-suites")
 	php pts-core/pts-run-cmd.php LIST_SUITES
 	;;
-"list-results")
-	php pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
-	;;
-"list-saved-results")
+"list-results" | "list-saved-results")
 	php pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
 	;;
 "show-result")
 	php pts-core/pts-run-cmd.php SHOW_RESULT $2
 	;;
-"suite-info")
+"suite-info" | "suite-information")
 	php pts-core/pts-run-cmd.php SUITE_INFO $2
 	;;
-"test-info")
+"test-info" | "test-information")
 	php pts-core/pts-run-cmd.php TEST_INFO $2
 	;;
-"system-info")
+"system-info" | "system-information")
 	php pts-core/pts-run-cmd.php SYS_INFO
 	;;
 "diagnostics")
