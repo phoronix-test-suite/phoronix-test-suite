@@ -352,7 +352,10 @@ function pts_trim_double($double, $accuracy = 2)
 
 	$return = explode(".", $double);
 
-	if(count($return) > 1)
+	if(count($return) == 1)
+		$return[1] = "00";
+
+	if(count($return) == 2)
 	{
 		$strlen = strlen($return[1]);
 
