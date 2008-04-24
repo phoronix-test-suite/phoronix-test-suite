@@ -21,6 +21,7 @@ Phoronix Test Suite
 - Add support so distribution maintainers can create their own graph theme (color, text size, etc) or others and store the template of graph-config.xml as pts-core/pts-results-viewer/graph-config-template.xml
 - Support for installing the Phoronix Test Suite code and other files into one directory (say /usr/share/phoronix-test-suite/) and installing phoronix-test-suite to /usr/bin/phoronix-test-suite by just adjusting the PTS_DIR environmental variable inside phoronix-test-suite
 - Add suite-info <SUITE NAME> argument for providing more information on suites -- tests in each suite, maintainer, type, etc.
+- Add test-info <TEST NAME> argument for providing more information on a test.
 - Fix motherboard test suite
 - Other bug fixes
 

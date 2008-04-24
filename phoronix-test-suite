@@ -74,6 +74,9 @@ case "$1" in
 "suite-info")
 	php pts-core/pts-run-cmd.php SUITE_INFO $2
 	;;
+"test-info")
+	php pts-core/pts-run-cmd.php TEST_INFO $2
+	;;
 "system-info")
 	php pts-core/pts-run-cmd.php SYS_INFO
 	;;
@@ -107,6 +110,7 @@ case "$1" in
 	echo "list-suites: List all Phoronix Test Suites"
 	echo "list-results: List all saved results"
 	echo "suite-info: Show tests in a suite and other information about the suite"
+	echo "test-info: Show information about a test"
 	echo "system-info: Dump detected software and hardware information detected by PTS"
 	echo "upload <Saved File>: Upload these results to be shared globally"
 	echo "show-result <Saved File>: Show this result file in your web browser"

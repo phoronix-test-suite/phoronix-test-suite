@@ -205,6 +205,37 @@ switch($COMMAND)
 			echo "\n$ARG_1 is not a test suite.\n";
 		}
 		break;
+	case "TEST_INFO":
+		if(pts_benchmark_type($ARG_1) == "BENCHMARK")
+		{
+			$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_LOCATION . $ARG_1 . ".xml"));
+
+			$test_title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+
+			$test_version = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Version");
+			$test_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/BenchmarkType");
+			$test_app_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/ApplicationType");
+			$test_license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
+			$test_status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
+			$test_maintainer = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Maintainer");
+
+			echo "\n=================================\n";
+			echo $test_title . " (" . $ARG_1 . " v" . $test_version . ")\n";
+			echo "=================================\n\n";
+
+			echo "Maintainer: " . $test_maintainer . "\n";
+			echo "Test Type: " . $test_type . "\n";
+			echo "Software Type: " . $test_app_type . "\n";
+			echo "License Type: " . $test_license . "\n";
+			echo "Test Status: " . $test_status . "\n";
+		
+			echo "\n";
+		}
+		else
+		{
+			echo "\n$ARG_1 is not a test.\n";
+		}
+		break;
 	case "INITIAL_CONFIG":
 		if(is_file(PTS_USER_DIR . "user-config.xml"))
 		{
