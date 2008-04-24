@@ -214,6 +214,8 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 					$t->loadGraphIdentifiers($results_identifiers[$i]);
 					$t->loadGraphValues($results_values[$i], "#1");
+					$t->loadGraphProportion($results_proportion[$i]);
+					$t->loadGraphVersion(PTS_VERSION);
 					$t->save_graph($save_to_dir . "/result-graphs/" . ($i + 1) . ".png");
 					$t->renderGraph();
 				}
