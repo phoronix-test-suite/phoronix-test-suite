@@ -39,6 +39,7 @@ define("XML_SUITE_LOCATION", "pts/benchmark-suites/");
 define("DISTRO_XML_LOCATION", "pts/distro-xml/");
 define("DISTRO_SCRIPT_LOCATION", "pts/distro-scripts/");
 define("BENCHMARK_RESOURCE_LOCATION", "pts/benchmark-resources/");
+define("RESULTS_VIEWER_LOCATION", "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
 //define("FONT_DIRECTORY" "/usr/share/fonts/");
 
@@ -152,9 +153,9 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 		mkdir($directory . "pts-results-viewer");
 	}
 
-	pts_copy("pts-core/pts-results-viewer/pts.js", $directory . "pts-results-viewer/pts.js");
-	pts_copy("pts-core/pts-results-viewer/pts-results-viewer.xsl", $directory . "pts-results-viewer/pts-results-viewer.xsl");
-	pts_copy("pts-core/pts-results-viewer/pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
+	pts_copy(RESULTS_VIEWER_LOCATION . "pts.js", $directory . "pts-results-viewer/pts.js");
+	pts_copy(RESULTS_VIEWER_LOCATION . "pts-results-viewer.xsl", $directory . "pts-results-viewer/pts-results-viewer.xsl");
+	pts_copy(RESULTS_VIEWER_LOCATION . "pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
 
 	if(!is_file($save_to_dir . "/pts-results-viewer.xsl") && !is_link($save_to_dir . "/pts-results-viewer.xsl"))
 		link($directory . "pts-results-viewer/pts-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");

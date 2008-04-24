@@ -88,7 +88,7 @@ class pts_Graph
 		// Directory for TTF Fonts
 		if(!defined("FONT_DIRECTORY"))
 		{
-			putenv("GDFONTPATH=pts-core/pts-results-viewer/");
+			putenv("GDFONTPATH=" . RESULTS_VIEWER_LOCATION);
 			//putenv("GDFONTPATH=" . getcwd()); // The directory where the TTF font files should be. getcwd() will look in the same directory as this file
 		}
 		else
