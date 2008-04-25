@@ -2,14 +2,9 @@
 
 cd $1
 
-if [ ! -f etqw-linux.run ]
-  then
-     wget ftp://ftp.idsoftware.com/idstuff/etqw/ETQW-client-1.4-full.x86.run -O etqw-linux.run
-fi
+chmod +x ETQW-client-1.4-full.x86.run
 
-chmod +x etqw-linux.run
-
-unzip -o etqw-linux.run
+unzip -o ETQW-client-1.4-full.x86.run
 
 echo "#!/bin/sh
 cd data

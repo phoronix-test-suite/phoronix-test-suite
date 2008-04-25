@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/super_pi.tar.gz</URL>
+			<MD5>92356a09cd05553be2c26f6edfff0fc4</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

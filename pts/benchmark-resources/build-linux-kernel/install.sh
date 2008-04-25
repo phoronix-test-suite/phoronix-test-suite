@@ -5,11 +5,6 @@ cp -f linux-2625-config-x86_64 $1
 
 cd $1
 
-if [ ! -f linux-2.6.25.tar.bz2 ]
-  then
-     wget http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.25.tar.bz2 -O linux-2.6.25.tar.bz2
-fi
-
 echo "#!/bin/sh
 
 if [ ! -f linux-2.6.25.tar.bz2 ]

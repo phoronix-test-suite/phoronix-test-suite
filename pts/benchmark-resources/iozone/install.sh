@@ -2,11 +2,6 @@
 
 cd $1
 
-if [ ! -f iozone3_291.tar ]
-	then
-     wget http://www.iozone.org/src/current/iozone3_291.tar -O iozone3_291.tar
-fi
-
 tar -xvf iozone3_291.tar
 cd iozone3_291/src/current/
 

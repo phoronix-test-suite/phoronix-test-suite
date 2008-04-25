@@ -1,0 +1,12 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>ftp://spec.unipv.it/dist/gpc/opc/viewperf/unix/SPECViewperf9.0.3.tar.gz</URL>
+			<MD5>1651c5c99cbc724bfdbb6cf70220502d</MD5>
+		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/SPECViewPerf9-Configure</URL>
+			<MD5>e01d9e4d7c9245b537ecea327852b8d2</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

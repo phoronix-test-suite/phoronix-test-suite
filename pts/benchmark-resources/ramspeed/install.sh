@@ -2,13 +2,7 @@
 
 cd $1
 
-if [ ! -f ramspeed.tar.gz ]
-  then
-     wget http://www.alasir.com/software/ramspeed/ramspeed-2.5.1.tar.gz -O ramspeed.tar.gz
-fi
-
-tar -xvf ramspeed.tar.gz
-
+tar -xvf ramspeed-2.5.1.tar.gz
 
 echo "#!/bin/sh
 

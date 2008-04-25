@@ -2,12 +2,6 @@
 
 cd $1
 
-if [ ! -f sunflow-bin-v0.07.2.zip ]
- 
-	then
-     wget http://internap.dl.sourceforge.net/sourceforge/sunflow/sunflow-bin-v0.07.2.zip -O sunflow-bin-v0.07.2.zip
-fi
-
 unzip -o sunflow-bin-v0.07.2.zip
 
 echo "#!/bin/sh

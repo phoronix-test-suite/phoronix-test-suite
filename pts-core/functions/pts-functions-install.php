@@ -105,7 +105,7 @@ function pts_install_benchmark($Benchmark)
 						{
 							echo $url = trim(array_pop($urls));
 
-							echo "\nDownloading File: " . $package_filename[$i] . "\n";
+							echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
 							echo shell_exec("cd " . BENCHMARK_ENV_DIR . $Benchmark . "/" . " && wget " . $url . " -O " . $package_filename[$i]);
 
 

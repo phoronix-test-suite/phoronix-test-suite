@@ -2,11 +2,6 @@
 
 cd $1
 
-if [ ! -f norsetto-shadow-01.tar.bz2 ]
-  then
-     wget http://www.phoronix-test-suite.com/benchmark-files/norsetto-shadow-01.tar.bz2 -O norsetto-shadow-01.tar.bz2
-fi
-
 rm -rf shadow/
 tar -xjf norsetto-shadow-01.tar.bz2
 cd shadow/

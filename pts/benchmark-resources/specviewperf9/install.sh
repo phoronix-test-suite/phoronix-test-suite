@@ -2,19 +2,6 @@
 
 cd $1
 
-if [ ! -f SPECViewPerf9-Configure ]
- 
-	then
-     wget http://www.phoronix-test-suite.com/benchmark-files/SPECViewPerf9-Configure -O SPECViewPerf9-Configure
-fi
-
-if [ ! -f SPECViewperf9.0.3.tar.gz ]
- 
-	then
-     wget ftp://spec.unipv.it/dist/gpc/opc/viewperf/unix/SPECViewperf9.0.3.tar.gz -O SPECViewperf9.0.3.tar.gz
-fi
-
-
 tar -xvf SPECViewperf9.0.3.tar.gz
 cp -f SPECViewPerf9-Configure SPECViewperf9.0/src/Configure
 chmod +x SPECViewperf9.0/src/Configure

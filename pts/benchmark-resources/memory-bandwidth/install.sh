@@ -2,11 +2,6 @@
 
 cd $1
 
-if [ ! -f bandwidth-0.13.tar.gz ]
-  then
-     wget http://www.phoronix-test-suite.com/benchmark-files/bandwidth-0.13.tar.gz -O bandwidth-0.13.tar.gz
-fi
-
 tar -xvf bandwidth-0.13.tar.gz
 
 echo "#!/bin/sh

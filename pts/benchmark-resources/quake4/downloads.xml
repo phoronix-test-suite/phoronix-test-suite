@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>ftp://ftp.idsoftware.com/idstuff/quake4/linux/quake4-linux-1.4.2.x86.run</URL>
+			<MD5>bd2cb8164ede4272adcc091f724855ac</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

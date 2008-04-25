@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.25.tar.bz2</URL>
+			<MD5>db95a49a656a3247d4995a797d333153</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

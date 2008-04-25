@@ -2,11 +2,6 @@
 
 cd $1
 
-if [ ! -f gtkperf_0.40.tar.gz ]
-  then
-     wget http://internap.dl.sourceforge.net/sourceforge/gtkperf/gtkperf_0.40.tar.gz -O gtkperf_0.40.tar.gz
-fi
-
 THIS_DIR=$(pwd)
 mkdir $THIS_DIR/gtkperf_env
 

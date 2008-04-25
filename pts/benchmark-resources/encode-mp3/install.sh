@@ -2,11 +2,6 @@
 
 cd $1
 
-if [ ! -f lame.tar.gz ]
-  then
-     wget http://superb-east.dl.sourceforge.net/sourceforge/lame/lame-3.97.tar.gz -O lame.tar.gz
-fi
-
 if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
   then
      wget http://www.phoronix-test-suite.com/benchmark-files/pts-wav-sample-file.tar.bz2 -O ../pts-shared/pts-wav-sample-file.tar.bz2
@@ -17,7 +12,7 @@ fi
 THIS_DIR=$(pwd)
 mkdir $THIS_DIR/lame_
 
-tar -xvf lame.tar.gz
+tar -xvf lame-3.97.tar.gz
 cd lame-3.97/
 ./configure --prefix=$THIS_DIR/lame_
 make -j $NUM_CPU_JOBS

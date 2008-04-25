@@ -2,18 +2,14 @@
 
 cd $1
 
-if [ ! -f quake4-linux.run ]
-  then
-     wget ftp://ftp.idsoftware.com/idstuff/quake4/linux/quake4-linux-1.4.2.x86.run -O quake4-linux.run
-fi
 if [ ! -f quake4-demo.tar.bz2 ]
   then
      wget http://www.phoronix-test-suite.com/benchmark-files/quake4-demo-1.tar.bz2 -O quake4-demo.tar.bz2
 fi
 
-chmod +x quake4-linux.run
+chmod +x quake4-linux-1.4.2.x86.run
 
-./quake4-linux.run --noexec --target .
+./quake4-linux-1.4.2.x86.run --noexec --target .
 ln bin/Linux/x86/quake4.x86 quake4-real
 chmod +x quake4-real
 

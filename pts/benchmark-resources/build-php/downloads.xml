@@ -1,0 +1,13 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>ftp://xmlsoft.org/libxml2/libxml2-2.6.31.tar.gz</URL>
+			<MD5>714b0683b1ec4bdc63bc356d729f9b18</MD5>
+		</Package>
+		<Package>
+			<URL>http://us3.php.net/get/php-5.2.5.tar.bz2/from/us2.php.net/mirror</URL>
+			<MD5>1fe14ca892460b09f06729941a1bb605</MD5>
+			<FileName>php-5.2.5.tar.bz2</FileName>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

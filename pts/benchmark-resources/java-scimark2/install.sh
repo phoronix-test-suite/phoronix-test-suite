@@ -2,12 +2,6 @@
 
 cd $1
 
-if [ ! -f scimark2lib.zip ]
- 
-	then
-     wget http://math.nist.gov/scimark2/scimark2lib.zip -O scimark2lib.zip
-fi
-
 unzip -o scimark2lib.zip
 
 echo "#!/bin/sh

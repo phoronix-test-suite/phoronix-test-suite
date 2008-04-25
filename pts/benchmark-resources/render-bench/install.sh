@@ -2,11 +2,6 @@
 
 cd $1
 
-if [ ! -f render_bench.tar.gz ]
-  then
-     wget http://www.phoronix-test-suite.com/benchmark-files/render_bench.tar.gz -O render_bench.tar.gz
-fi
-
 rm -rf render_bench/
 tar -xvf render_bench.tar.gz
 cd render_bench/

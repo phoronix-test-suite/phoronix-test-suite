@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://math.nist.gov/scimark2/scimark2lib.zip</URL>
+			<MD5>fce68e619b03c815fa56f2637a841fa9</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
