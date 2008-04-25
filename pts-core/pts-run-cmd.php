@@ -75,7 +75,7 @@ switch($COMMAND)
 	case "SHOW_RESULT":
 		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
 			$URL = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml";
-		//else if(trim(file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $ARG_1)) == "REMOTE_FILE")
+		//else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $ARG_1)) == "REMOTE_FILE")
 		//	$URL = "http://global.phoronix-test-suite.com/index.php?k=profile&u=" . trim($ARG_1);
 		else
 			$URL = false;

@@ -31,9 +31,9 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
 		}
 	}
-	else if(trim(file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_INSTALL")) == "REMOTE_FILE")
+	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_INSTALL")) == "REMOTE_FILE")
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_INSTALL"));
+		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_INSTALL"));
 		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestName");
 
 		foreach($suite_benchmarks as $benchmark)

@@ -62,7 +62,7 @@ if(!$TO_RUN_TYPE)
 
 		$RESULTS = new tandem_XmlWriter();
 	}
-	else if(trim(file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_RUN")) == "REMOTE_FILE")
+	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_RUN")) == "REMOTE_FILE")
 	{
 		$SAVE_RESULTS = true;
 		$TO_RUN_TYPE = "GLOBAL_COMPARISON";
@@ -70,7 +70,7 @@ if(!$TO_RUN_TYPE)
 		$RES_NULL = null;
 		define("GLOBAL_COMPARISON", 1);
 
-		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_RUN"));
+		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_RUN"));
 
 		if(!defined("PTS_BATCH_MODE") || pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE") == "TRUE")
 			do
