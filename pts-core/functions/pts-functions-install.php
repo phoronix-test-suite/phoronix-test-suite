@@ -49,13 +49,13 @@ function pts_install_benchmark($Benchmark)
 	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
 		return;
 
-	if(is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"))
+	if(is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && (file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh") || file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php")))
 	{
 		echo ucwords($Benchmark) . " is already installed, skipping installation routine...\n";
 	}
 	else
 	{
-		if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"))
+		if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh") || is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))
 		{
 			if(!is_dir(BENCHMARK_ENV_DIR))
 			{
@@ -71,12 +71,22 @@ function pts_install_benchmark($Benchmark)
 			}
 
 			echo pts_string_header("Installing Benchmark:" . $Benchmark);
-			echo pts_exec("cd " . BENCHMARK_RESOURCE_DIR . "$Benchmark/ && sh install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
 
-			file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"));
+			if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"))
+			{
+				echo pts_exec("cd " . BENCHMARK_RESOURCE_DIR . "$Benchmark/ && sh install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
+				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"));
+			}
+			else if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))
+			{
+				echo pts_exec("cd " . BENCHMARK_RESOURCE_DIR . "$Benchmark/ && php install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
+				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"));
+			}
 		}
 		else
+		{
 			echo ucwords($Benchmark) . " has no installation script, skipping installation routine...\n";
+		}
 	}
 }
 function pts_external_dependency_generic($Name)

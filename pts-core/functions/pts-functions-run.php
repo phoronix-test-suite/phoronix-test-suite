@@ -140,7 +140,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		return;
 	}
 
-	if(is_dir(BENCHMARK_ENV_DIR . "$benchmark_identifier/") && file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != md5_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.sh"))
+	if(is_dir(BENCHMARK_ENV_DIR . "$benchmark_identifier/") && !(file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != @md5_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.sh") || file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != @md5_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.php")))
 	{
 		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the $benchmark_title test should be re-installed.");
 		// Auto reinstall
