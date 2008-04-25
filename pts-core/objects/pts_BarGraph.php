@@ -63,7 +63,7 @@ class pts_BarGraph extends pts_CustomGraph
 
 		$font_size = $this->graph_font_size_bars;
 
-		while($this->return_ttf_string_width(trim_double($this->graph_maximum_value, 3), $this->graph_font, $font_size) > ($bar_width - 6))
+		while($this->return_ttf_string_width($this->trim_double($this->graph_maximum_value, 3), $this->graph_font, $font_size) > ($bar_width - 6))
 			$font_size -= 0.5;
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
@@ -98,7 +98,7 @@ class pts_BarGraph extends pts_CustomGraph
 
 				imagerectangle($this->graph_image, $px_bound_left + $size_diff_left, $value_plot_top - 1, $px_bound_right - $size_diff_right, $this->graph_top_end - 1, $this->graph_color_body_light);
 				imagefilledrectangle($this->graph_image, $px_bound_left + $size_diff_left + 1, $value_plot_top, $px_bound_right - $size_diff_right - 1, $this->graph_top_end - 1, $paint_color);
-				$value = trim_double($value, 2);
+				$value = $this->trim_double($value, 2);
 
 				if($graph_size > 20)
 					$this->gd_write_text_center($this->graph_data[$i_o][$i], $font_size, $this->graph_color_body_text, $px_bound_left + (($px_bound_right - $px_bound_left) / 2), $value_plot_top + 3);
