@@ -74,6 +74,7 @@ function pts_install_benchmark($Benchmark)
 			$package_url = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/URL");
 			$package_md5 = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/MD5");
 			$package_filename = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/FileName");
+			$header_displayed = false;
 
 			for($i = 0; $i < count($package_url); $i++)
 			{
@@ -84,17 +85,71 @@ function pts_install_benchmark($Benchmark)
 
 				if(!is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]))
 				{
-					$urls = explode(",", $package_url[$i]);
-					$url = trim($urls[rand(0, count($urls) - 1)]);
-
-					echo "\nDownloading File: " . $package_filename[$i] . "\n";
-					echo shell_exec("cd " . BENCHMARK_ENV_DIR . $Benchmark . "/" . " && wget " . $url . " -O " . $package_filename[$i]);
-
-
-					if(is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) != $package_md5[$i])
+					if(!$header_displayed)
 					{
-						echo "\nMD5 sums don't match! Removing File!\n";
-						unlink(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]);
+						echo pts_string_header("Downloading Files For: " . $Benchmark);
+						$header_displayed = true;
+					}
+
+					$urls = explode(",", $package_url[$i]);
+
+					if(count($urls) > 1)
+						shuffle($urls);
+
+					$fail_count = 0;
+					$try_again = true;
+
+					if(count($urls) > 0)
+					{
+						do
+						{
+							echo $url = trim(array_pop($urls));
+
+							echo "\nDownloading File: " . $package_filename[$i] . "\n";
+							echo shell_exec("cd " . BENCHMARK_ENV_DIR . $Benchmark . "/" . " && wget " . $url . " -O " . $package_filename[$i]);
+
+
+							if((is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) != $package_md5[$i]) || !is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]))
+							{
+								unlink(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]);
+								$file_downloaded = false;
+								$fail_count++;
+								echo "\nThe MD5 check-sum of the downloaded file is incorrect.\n";
+
+								if($fail_count > 3)
+								{
+									$try_again = false;
+								}
+								else
+								{
+									if(count($urls) > 0)
+									{
+										echo "Attempting to re-download from another mirror...\n";
+									}
+									else
+									{
+										$try_again = pts_bool_question("Would you like to try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN");
+
+										if($try_again)
+											array_push($urls, $url);
+										else
+											$try_again = false;
+									}
+								}
+							}
+							else
+							{
+								$file_downloaded = true;
+								$fail_count = 0;
+							}
+
+							if(!$try_again)
+							{
+								echo "\nDownload of Needed Test Dependencies Failed! Exiting...\n\n";
+								exit(0);
+							}
+
+						}while(!$file_downloaded);
 					}
 				}
 			}
@@ -102,7 +157,7 @@ function pts_install_benchmark($Benchmark)
 
 		if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh") || is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))
 		{
-			echo pts_string_header("Installing Benchmark:" . $Benchmark);
+			echo pts_string_header("Installing Benchmark: " . $Benchmark);
 
 			if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"))
 			{
