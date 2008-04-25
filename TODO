@@ -9,3 +9,4 @@
 - More MD5 checks in test scripts
 - Change locking system away from time-based but to PID based
 - Clean up tests scripts
+- To downloads.xml, try another mirror (if available) when MD5 sum fails or ask user if they want to quit or attempt to continue
