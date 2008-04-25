@@ -118,6 +118,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	$execute_binary = $xml_parser->getXMLValue("PTSBenchmark/Information/Executable");
 	$benchmark_title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
 	$times_to_run = intval($xml_parser->getXMLValue("PTSBenchmark/Information/TimesToRun"));
+	$ignore_first_run = $xml_parser->getXMLValue("PTSBenchmark/Information/IgnoreFirstRun");
 	$pre_run_message = $xml_parser->getXMLValue("PTSBenchmark/Information/PreRunMessage");
 	$result_scale = $xml_parser->getXMLValue("PTSBenchmark/Information/ResultScale");
 	$arg_identifier = $xml_parser->getXMLArrayValues("PTSBenchmark/Settings/Option/Identifier");
@@ -181,11 +182,14 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
 
-		if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
+		if(!($i == 0 && $ignore_first_run == "TRUE" && $times_to_run > 1))
 		{
-			$BENCHMARK_RESULTS = pts_exec("cd " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " parse-results.php \"$BENCHMARK_RESULTS\"");
+			if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
+			{
+				$BENCHMARK_RESULTS = pts_exec("cd " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " parse-results.php \"$BENCHMARK_RESULTS\"");
+			}
+			array_push($BENCHMARK_RESULTS_ARRAY, $BENCHMARK_RESULTS);
 		}
-		array_push($BENCHMARK_RESULTS_ARRAY, $BENCHMARK_RESULTS);
 	}
 
 	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))

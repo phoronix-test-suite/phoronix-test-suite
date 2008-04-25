@@ -9,4 +9,3 @@
 - More MD5 checks in test scripts
 - Change locking system away from time-based but to PID based
 - Clean up tests scripts
-- Add IgnoreFirstRun argument for tests scripts
