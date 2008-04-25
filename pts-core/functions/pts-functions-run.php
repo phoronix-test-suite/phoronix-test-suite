@@ -130,11 +130,18 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(empty($execute_binary))
 		$execute_binary = $benchmark_identifier;
 
-	if(is_file(BENCHMARK_ENV_DIR . "$benchmark_identifier/$execute_binary") || is_link(BENCHMARK_ENV_DIR . "$benchmark_identifier/$execute_binary"))
-		$to_execute = BENCHMARK_ENV_DIR . "$benchmark_identifier/";
-	else if(is_file($execute_path . $execute_binary) || is_link($execute_path . $execute_binary)) //TODO: Support multiple paths in PossiblePaths separated by : delimiter.
-		$to_execute = $execute_path;
+	if(is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . '/' . $execute_binary) || is_link(BENCHMARK_ENV_DIR . $benchmark_identifier . '/' . $execute_binary))
+	{
+		$to_execute = BENCHMARK_ENV_DIR . $benchmark_identifier . '/';
+	}
 	else
+	{
+		foreach(explode(':', $execute_path) as $execute_path_check)
+			 if(is_file($execute_path_check . $execute_binary) || is_link($execute_path_check . $execute_binary))
+				$to_execute = $execute_path_check;
+	}
+
+	if(!isset($to_execute) || empty($to_execute))
 	{
 		echo "This application executable could not be found in " . $execute_path . ". or " . BENCHMARK_ENV_DIR . "$benchmark_identifier/.\nBenchmark terminating.";
 		return;
@@ -153,7 +160,11 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
 	{
-		echo shell_exec("sh " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo pts_exec("sh " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+	}
+	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.php"))
+	{
+		echo pts_exec("php " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	if(!empty($pre_run_message))
@@ -168,7 +179,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		echo pts_string_header($benchmark_title . " Benchmark (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
-		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute; ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
+		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
 
 		if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
 		{
@@ -180,6 +191,10 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{
 		echo pts_exec("sh " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+	}
+	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.php"))
+	{
+		echo pts_exec("php " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	// End

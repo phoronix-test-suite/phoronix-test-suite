@@ -5,7 +5,6 @@
 	- i.e. if EIST / Cool n Quiet are enabled
 - Use new (larger) Wav file for benchmarks... internal Phoronix WAV file used is copyrighted music. Current PTS One is too small for reliable results.
 - Improved hardware detection (i.e. recognize multiple graphics cards)
-- Support browsers aside from just Firefox launch. detect what's installed.
 - "Optimization Tips"
 - More MD5 checks in test scripts
 - Change locking system away from time-based but to PID based

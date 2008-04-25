@@ -46,7 +46,7 @@ switch($COMMAND)
 		$upload_url = pts_global_upload_result($USE_FILE);
 
 		if(!empty($upload_url))
-			echo "Results Uploaded To: " . $upload_url . "\n\n"; // TODO: Add checks to make sure it did work out
+			echo "Results Uploaded To: " . $upload_url . "\n\n";
 		break;
 	case "LIST_SAVED_RESULTS":
 		echo pts_string_header("Phoronix Test Suite - Saved Results");

@@ -86,8 +86,6 @@ function cpu_job_count()
 }
 function processor_string()
 {
-	//TODO: Support Multiple CPUs
-
 	if(is_file("/proc/cpuinfo"))
 	{
 		$info = file_get_contents("/proc/cpuinfo");
