@@ -190,9 +190,7 @@ if($TO_RUN_TYPE == "BENCHMARK")
 }
 else if($TO_RUN_TYPE == "TEST_SUITE")
 {
-	echo "\n=================================\n";
-	echo ucwords($TO_RUN) . " Test Suite";
-	echo "\n=================================\n";
+	echo pts_string_header(ucwords($TO_RUN) . " Test Suite");
 
 	echo "\nRunning Benchmarks For " . ucwords($TO_RUN) . " Test Suite...\n\n";
 
@@ -215,9 +213,7 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 }
 else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE == "LOCAL_COMPARISON"))
 {
-	echo "\n=================================\n";
-	echo "Global Comparison Against: " . $TO_RUN;
-	echo "\n=================================\n";
+	echo pts_string_header("Global Comparison Against: " . $TO_RUN);
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $TO_RUN . "/composite.xml"));
 	$CUSTOM_TITLE = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Title");

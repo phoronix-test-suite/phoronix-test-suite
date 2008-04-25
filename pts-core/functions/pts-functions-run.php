@@ -142,8 +142,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_dir(BENCHMARK_ENV_DIR . "$benchmark_identifier/") && file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != md5_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.sh"))
 	{
-		echo "\n=================================\nNOTE: Your benchmarking installation is out of date!\nFor best results, the $benchmark_title benchmark should be reinstalled.\n=================================\n\n";
-
+		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the $benchmark_title test should be re-installed.");
 		// Auto reinstall
 		//require_once("pts-core/functions/pts-functions-run.php");
 		//pts_install_benchmark($benchmark_identifier);
@@ -154,13 +153,11 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
 	{
-		//echo "\n=================================\nExecuting Pre-Benchmark Tasks\n=================================\n";
 		echo shell_exec("sh " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	if(!empty($pre_run_message))
 	{
-		echo "\n=================================\nPre-Run Message\n=================================\n";
 		echo $pre_run_message . "\n";
 		echo "\nHit Any Key To Continue Benchmarking.\n";
 		fgets(STDIN);
@@ -168,7 +165,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	for($i = 0; $i < $times_to_run; $i++)
 	{
-		echo "\n=================================\n$benchmark_title Benchmark (Run " . ($i + 1) . " of " . $times_to_run . ")\n=================================\n";
+		echo pts_string_header($benchmark_title . " Benchmark (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
 		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute; ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
@@ -182,7 +179,6 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{
-		//echo "\n=================================\nExecuting Post-Benchmark Tasks\n=================================\n";
 		echo pts_exec("sh " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
@@ -206,7 +202,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 		$RETURN_STRING .= "\nAverage: $AVG_RESULT $result_scale";
 
-		echo "\n=================================\n$RETURN_STRING\n=================================\n";
+		echo pts_string_header($RETURN_STRING);
 	}
 	else
 		$AVG_RESULT = -1;

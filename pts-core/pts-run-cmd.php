@@ -49,9 +49,7 @@ switch($COMMAND)
 			echo "Results Uploaded To: " . $upload_url . "\n\n"; // TODO: Add checks to make sure it did work out
 		break;
 	case "LIST_SAVED_RESULTS":
-		echo "\n=================================\n";
-		echo "Phoronix Test Suite - Saved Results\n";
-		echo "=================================\n\n";
+		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $benchmark_file)
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
@@ -131,25 +129,21 @@ switch($COMMAND)
 			pts_install_package_on_distribution($ARG_1);
 		break;
 	case "LIST_TESTS":
-		echo "\n=================================\n";
-		echo "Phoronix Test Suite - Benchmarks\n";
-		echo "=================================\n\n";
-			foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
-			{
-			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-				$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
-				$identifier = basename($benchmark_file, ".xml");
-				$license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
-				$status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
+		echo pts_string_header("Phoronix Test Suite - Benchmarks");
+		foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
+		{
+		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+			$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+			$identifier = basename($benchmark_file, ".xml");
+			$license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
+			$status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
 
-				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
-			}
+			printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+		}
 		echo "\n";
 		break;
 	case "LIST_SUITES":
-		echo "\n=================================\n";
-		echo "Phoronix Test Suite - Suites\n";
-		echo "=================================\n\n";
+		echo pts_string_header("Phoronix Test Suite - Suites");
 		$benchmark_suites = array();
 		foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
 		{
@@ -175,9 +169,7 @@ switch($COMMAND)
 			$tests_in_suite = array_unique($tests_in_suite);
 			$unique_tests = count($tests_in_suite);
 
-			echo "\n=================================\n";
-			echo $suite_name . " (" . $ARG_1 . " v" . $suite_version . ")\n";
-			echo "=================================\n\n";
+			echo pts_string_header($suite_name . " (" . $ARG_1 . " v" . $suite_version . ")");
 
 			echo "Maintainer: " . $suite_maintainer . "\n";
 			echo "Suite Type: " . $suite_type . "\n";
@@ -219,9 +211,7 @@ switch($COMMAND)
 			$test_status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
 			$test_maintainer = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Maintainer");
 
-			echo "\n=================================\n";
-			echo $test_title . " (" . $ARG_1 . " v" . $test_version . ")\n";
-			echo "=================================\n\n";
+			echo pts_string_header($test_title . " (" . $ARG_1 . " v" . $test_version . ")");
 
 			echo "Maintainer: " . $test_maintainer . "\n";
 			echo "Test Type: " . $test_type . "\n";
@@ -245,18 +235,12 @@ switch($COMMAND)
 		pts_user_config_init();
 		break;
 	case "SYS_INFO":
-		echo "\n=================================\n";
-		echo "Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n";
-		echo "System Information";
-		echo "\n=================================\n\n";
+		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n" . "System Information");
 		echo "Hardware:\n" . pts_hw_string() . "\n\n";
 		echo "Software:\n" . pts_sw_string() . "\n\n";
 		break;
 	case "DIAGNOSTICS_DUMP":
-		echo "\n=================================\n";
-		echo "Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n";
-		echo "Diagnostics Dump";
-		echo "\n=================================\n\n";
+		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n" . "Diagnostics Dump");
 		$pts_defined_constants = get_defined_constants(true);
 			foreach($pts_defined_constants["user"] as $constant => $constant_value)
 				echo $constant . " = " . $constant_value . "\n";

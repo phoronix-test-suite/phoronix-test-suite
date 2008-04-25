@@ -442,5 +442,8 @@ function pts_clean_information_string($str)
 
 	return $str;
 }
-
+function pts_string_header($heading)
+{
+	return "\n" . str_repeat('=', 42) . "\n" . $heading . "\n" . str_repeat('=', 42) . "\n\n";
+}
 ?>

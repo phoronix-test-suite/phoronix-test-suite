@@ -70,9 +70,7 @@ function pts_install_benchmark($Benchmark)
 				mkdir(BENCHMARK_ENV_DIR . "pts-shared");
 			}
 
-			echo "\n=================================\n";
-			echo "Installing Benchmark: $Benchmark";
-			echo "\n=================================\n";
+			echo pts_string_header("Installing Benchmark:" . $Benchmark);
 			echo pts_exec("cd " . BENCHMARK_RESOURCE_DIR . "$Benchmark/ && sh install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
 
 			file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"));
@@ -105,7 +103,7 @@ function pts_external_dependency_generic($Name)
 					if(!defined("PTS_MANUAL_SUPPORT"))
 						define("PTS_MANUAL_SUPPORT", 1);
 
-					$generic_information = "=================================\n" . $title[$selection] . "\n=================================\nPossible Package Names: " . $possible_packages[$selection] . "\n\n";
+					echo pts_string_header($title[$selection] . "\nPossible Package Names: " . $possible_packages[$selection]);
 				}
 			}
 		}
