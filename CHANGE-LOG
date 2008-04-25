@@ -9,6 +9,7 @@ Phoronix Test Suite
 - Support multiple possible paths in "PossiblePaths" in test profiles, with each path delimited by a colon
 - Support if binary is named php5 instead of php
 - Add IgnoreFirstRun argument for test profiles
+- Add support for a test profile to have a downloads.xml file inside their resources folder that contains all of the files that need to be downloaded. Phoronix Test Suite then handles the downloading internally as well as verifying the MD5 sums, downloading from a random URL if multiple URLs are specified, etc. Some other features will come about soon for those using downloads.xml for acquiring all needed files.
 
 Phoronix Test Suite 0.4.0
 April 24, 2008

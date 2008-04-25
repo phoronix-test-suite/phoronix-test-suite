@@ -55,21 +55,52 @@ function pts_install_benchmark($Benchmark)
 	}
 	else
 	{
+		if(!is_dir(BENCHMARK_ENV_DIR))
+		{
+			mkdir(BENCHMARK_ENV_DIR);
+		}
+		if(!is_dir(BENCHMARK_ENV_DIR . $Benchmark))
+		{
+			mkdir(BENCHMARK_ENV_DIR . $Benchmark);
+		}
+		if(!is_dir(BENCHMARK_ENV_DIR . "pts-shared"))
+		{
+			mkdir(BENCHMARK_ENV_DIR . "pts-shared");
+		}
+
+		if(is_file(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
+		{
+			$xml_parser = new tandem_XmlReader(file_get_contents(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
+			$package_url = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/URL");
+			$package_filename = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/FileName");
+			$package_md5 = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/MD5");
+
+			for($i = 0; $i < count($package_url); $i++)
+			{
+				if(empty($package_filename[$i]))
+				{
+					$package_filename[$i] = basename($package_url[$i]);
+				}
+
+				if(!is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]))
+				{
+					$urls = explode(",", $package_url[$i]);
+					$url = trim($urls[rand(0, count($urls) - 1)]);
+
+					echo "\nDownloading File: " . $package_filename[$i] . "\n";
+					echo shell_exec("cd " . BENCHMARK_ENV_DIR . $Benchmark . "/" . " && wget " . $url . " -O " . $package_filename[$i]);
+
+
+					if(is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) != $package_md5[$i])
+					{
+						unlink(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]);
+					}
+				}
+			}
+		}
+
 		if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh") || is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))
 		{
-			if(!is_dir(BENCHMARK_ENV_DIR))
-			{
-				mkdir(BENCHMARK_ENV_DIR);
-			}
-			if(!is_dir(BENCHMARK_ENV_DIR . $Benchmark))
-			{
-				mkdir(BENCHMARK_ENV_DIR . $Benchmark);
-			}
-			if(!is_dir(BENCHMARK_ENV_DIR . "pts-shared"))
-			{
-				mkdir(BENCHMARK_ENV_DIR . "pts-shared");
-			}
-
 			echo pts_string_header("Installing Benchmark:" . $Benchmark);
 
 			if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"))
