@@ -79,7 +79,7 @@ function pts_install_benchmark($Benchmark)
 			}
 			else if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))
 			{
-				echo pts_exec("cd " . BENCHMARK_RESOURCE_DIR . "$Benchmark/ && php install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
+				echo pts_exec("cd " . BENCHMARK_RESOURCE_DIR . "$Benchmark/ && " . PHP_BIN . " install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
 				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"));
 			}
 		}

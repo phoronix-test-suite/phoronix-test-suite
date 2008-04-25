@@ -34,6 +34,7 @@ function pts_directory()
 	return $dir;
 }
 define("PTS_DIR", pts_directory());
+define("PHP_BIN", getenv("PHP_BIN"));
 
 function __autoload($to_load)
 {
@@ -285,6 +286,9 @@ function pts_env_variables()
 	return array(
 	"PTS_TYPE" => PTS_TYPE,
 	"PTS_VERSION" => PTS_VERSION,
+	"PTS_CODENAME" => PTS_CODENAME,
+	"PTS_DIR" => PTS_DIR,
+	"PHP_BIN" => PHP_BIN,
 	"NUM_CPU_CORES" => cpu_core_count(),
 	"NUM_CPU_JOBS" => cpu_job_count(),
 	"SYS_MEMORY" => memory_mb_capacity(),

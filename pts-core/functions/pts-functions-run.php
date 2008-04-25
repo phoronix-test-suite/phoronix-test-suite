@@ -164,7 +164,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	}
 	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.php"))
 	{
-		echo pts_exec("php " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo pts_exec(PHP_BIN . " " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	if(!empty($pre_run_message))
@@ -183,7 +183,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 		if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
 		{
-			$BENCHMARK_RESULTS = pts_exec("cd " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/ && php parse-results.php \"$BENCHMARK_RESULTS\"");
+			$BENCHMARK_RESULTS = pts_exec("cd " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " parse-results.php \"$BENCHMARK_RESULTS\"");
 		}
 		array_push($BENCHMARK_RESULTS_ARRAY, $BENCHMARK_RESULTS);
 	}
@@ -194,7 +194,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	}
 	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.php"))
 	{
-		echo pts_exec("php " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo pts_exec(PHP_BIN . " " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	// End

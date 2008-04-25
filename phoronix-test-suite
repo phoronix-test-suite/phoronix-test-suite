@@ -9,7 +9,17 @@
 # Full path to root directory of the actual Phoronix Test Suite code
 export PTS_DIR=`pwd`
 
-if [ ! -x /usr/bin/php ] && [ ! -x /usr/local/bin/php ]
+if [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ]
+then
+	export PHP_BIN="php5"
+elif [ -x /usr/bin/php ] || [ -x /usr/local/bin/php ]
+then
+	export PHP_BIN="php"
+else
+	export PHP_BIN=""
+fi
+
+if [ "X$PHP_BIN" = "X" ]
 then
 	echo "\n\nPHP5 CLI Must Be Installed To Run The Phoronix Test Suite!"
 	echo "Only PHP For The Command Line Is Needed, Not A Full-Blown PHP w/ Web Server"
@@ -25,66 +35,66 @@ fi
 
 case "$1" in
 "install")
-	php pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
+	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
 	;;
 "install-dependencies")
-	php pts-core/pts-run-cmd.php INSTALL_EXTERNAL_DEPENDENCIES $2
+	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_EXTERNAL_DEPENDENCIES $2
 	;;
 "run")
-	php pts-core/pts-run-benchmark.php $2
+	$PHP_BIN pts-core/pts-run-benchmark.php $2
 	;;
 "batch-run")
-	php pts-core/pts-run-benchmark.php $2 BATCH
+	$PHP_BIN pts-core/pts-run-benchmark.php $2 BATCH
 	;;
 "benchmark")
-	php pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
-	php pts-core/pts-run-benchmark.php $2
+	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
+	$PHP_BIN pts-core/pts-run-benchmark.php $2
 	;;
 "batch-benchmark")
-	php pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
-	php pts-core/pts-run-benchmark.php $2 BATCH
+	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
+	$PHP_BIN pts-core/pts-run-benchmark.php $2 BATCH
 	;;
 "merge-results")
-	php pts-core/pts-merge-results.php $2 $3 $4
+	$PHP_BIN pts-core/pts-merge-results.php $2 $3 $4
 	;;
 "remove-result")
-	php pts-core/pts-run-cmd.php REMOVE_RESULT $2
+	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_RESULT $2
 	;;
 "upload")
-	php pts-core/pts-run-cmd.php UPLOAD_RESULT $2
+	$PHP_BIN pts-core/pts-run-cmd.php UPLOAD_RESULT $2
 	;;
 "list-tests")
-	php pts-core/pts-run-cmd.php LIST_TESTS
+	$PHP_BIN pts-core/pts-run-cmd.php LIST_TESTS
 	;;
 "list-suites")
-	php pts-core/pts-run-cmd.php LIST_SUITES
+	$PHP_BIN pts-core/pts-run-cmd.php LIST_SUITES
 	;;
 "list-results" | "list-saved-results")
-	php pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
+	$PHP_BIN pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
 	;;
 "show-result")
-	php pts-core/pts-run-cmd.php SHOW_RESULT $2
+	$PHP_BIN pts-core/pts-run-cmd.php SHOW_RESULT $2
 	;;
 "suite-info" | "suite-information")
-	php pts-core/pts-run-cmd.php SUITE_INFO $2
+	$PHP_BIN pts-core/pts-run-cmd.php SUITE_INFO $2
 	;;
 "test-info" | "test-information")
-	php pts-core/pts-run-cmd.php TEST_INFO $2
+	$PHP_BIN pts-core/pts-run-cmd.php TEST_INFO $2
 	;;
 "system-info" | "system-information")
-	php pts-core/pts-run-cmd.php SYS_INFO
+	$PHP_BIN pts-core/pts-run-cmd.php SYS_INFO
 	;;
 "diagnostics")
-	php pts-core/pts-run-cmd.php DIAGNOSTICS_DUMP
+	$PHP_BIN pts-core/pts-run-cmd.php DIAGNOSTICS_DUMP
 	;;
 "remote-comparison")
-	php pts-core/pts-run-cmd.php REMOTE_COMPARISON $2 $3
+	$PHP_BIN pts-core/pts-run-cmd.php REMOTE_COMPARISON $2 $3
 	;;
 "initial-config")
-	php pts-core/pts-run-cmd.php INITIAL_CONFIG
+	$PHP_BIN pts-core/pts-run-cmd.php INITIAL_CONFIG
 	;;
 "login")
-	php pts-core/pts-run-cmd.php LOGIN
+	$PHP_BIN pts-core/pts-run-cmd.php LOGIN
 	;;
 *)
 	echo "\n================================="
