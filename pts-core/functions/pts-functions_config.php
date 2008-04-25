@@ -14,6 +14,8 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 {
 	if(is_file(PTS_USER_DIR . "user-config.xml"))
 		$file = file_get_contents(PTS_USER_DIR . "user-config.xml");
+	else if(is_file(ETC_DIR . "user-config-template.xml"))
+		$file = file_get_contents(ETC_DIR . "user-config-template.xml");
 	else
 		$file = "";
 	$read_config = new tandem_XmlReader($file);
@@ -43,8 +45,8 @@ function pts_graph_config_init()
 {
 	if(is_file(PTS_USER_DIR . "graph-config.xml"))
 		$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
-	else if(is_file(RESULTS_VIEWER_LOCATION . "graph-config-template.xml"))
-		$file = file_get_contents(RESULTS_VIEWER_LOCATION . "graph-config-template.xml");
+	else if(is_file(RESULTS_VIEWER_DIR . "graph-config-template.xml"))
+		$file = file_get_contents(RESULTS_VIEWER_DIR . "graph-config-template.xml");
 	else
 		$file = "";
 	$read_config = new tandem_XmlReader($file);

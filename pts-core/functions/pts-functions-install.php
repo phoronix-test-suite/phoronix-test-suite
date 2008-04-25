@@ -15,7 +15,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 	{
 		echo "\nInstalling Benchmarks For " . ucwords($TO_INSTALL) . " Test Suite...\n\n";
 
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_LOCATION . "$TO_INSTALL.xml"));
+		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_INSTALL . ".xml"));
 		$suite_benchmarks = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
 
 		foreach($suite_benchmarks as $benchmark)
@@ -49,33 +49,33 @@ function pts_install_benchmark($Benchmark)
 	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
 		return;
 
-	if(is_file(BENCHMARK_ENVIRONMENT . "$Benchmark/pts-install") && file_get_contents(BENCHMARK_ENVIRONMENT . "$Benchmark/pts-install") == md5_file(BENCHMARK_RESOURCE_LOCATION . "$Benchmark/install.sh"))
+	if(is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"))
 	{
 		echo ucwords($Benchmark) . " is already installed, skipping installation routine...\n";
 	}
 	else
 	{
-		if(is_file(BENCHMARK_RESOURCE_LOCATION . "$Benchmark/install.sh"))
+		if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"))
 		{
-			if(!is_dir(BENCHMARK_ENVIRONMENT))
+			if(!is_dir(BENCHMARK_ENV_DIR))
 			{
-				mkdir(BENCHMARK_ENVIRONMENT);
+				mkdir(BENCHMARK_ENV_DIR);
 			}
-			if(!is_dir(BENCHMARK_ENVIRONMENT . $Benchmark))
+			if(!is_dir(BENCHMARK_ENV_DIR . $Benchmark))
 			{
-				mkdir(BENCHMARK_ENVIRONMENT . $Benchmark);
+				mkdir(BENCHMARK_ENV_DIR . $Benchmark);
 			}
-			if(!is_dir(BENCHMARK_ENVIRONMENT . "pts-shared"))
+			if(!is_dir(BENCHMARK_ENV_DIR . "pts-shared"))
 			{
-				mkdir(BENCHMARK_ENVIRONMENT . "pts-shared");
+				mkdir(BENCHMARK_ENV_DIR . "pts-shared");
 			}
 
 			echo "\n=================================\n";
 			echo "Installing Benchmark: $Benchmark";
 			echo "\n=================================\n";
-			echo pts_exec("cd " . BENCHMARK_RESOURCE_LOCATION . "$Benchmark/ && sh install.sh " . BENCHMARK_ENVIRONMENT . $Benchmark) . "\n";
+			echo pts_exec("cd " . BENCHMARK_RESOURCE_DIR . "$Benchmark/ && sh install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
 
-			file_put_contents(BENCHMARK_ENVIRONMENT . "$Benchmark/pts-install", md5_file(BENCHMARK_RESOURCE_LOCATION . "$Benchmark/install.sh"));
+			file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"));
 		}
 		else
 			echo ucwords($Benchmark) . " has no installation script, skipping installation routine...\n";
@@ -85,9 +85,9 @@ function pts_external_dependency_generic($Name)
 {
 	$generic_information = "";
 
-	if(is_file(DISTRO_XML_LOCATION . "generic-packages.xml"))
+	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(DISTRO_XML_LOCATION . "generic-packages.xml"));
+		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DISTRO_DIR . "generic-packages.xml"));
 		$package_name = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
 		$title = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/Title");
 		$possible_packages = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PossibleNames");
@@ -143,8 +143,8 @@ function pts_install_packages_on_distribution_process($install_objects)
 
 		$distribution = strtolower(os_vendor());
 
-		if(is_file(DISTRO_SCRIPT_LOCATION . "install-" . $distribution . "-packages.sh") || is_link(DISTRO_SCRIPT_LOCATION . "install-" . $distribution . "-packages.sh"))
-			echo pts_exec("cd " . DISTRO_SCRIPT_LOCATION . " && sh install-" . $distribution . "-packages.sh $install_objects");
+		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh") || is_link(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
+			echo pts_exec("cd " . SCRIPT_DISTRO_DIR . " && sh install-" . $distribution . "-packages.sh $install_objects");
 		else
 			echo "Distribution install script not found!";
 	}
@@ -154,7 +154,7 @@ function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
 		return;
 
-	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_LOCATION . $Benchmark . ".xml"));
+	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $Benchmark . ".xml"));
 	$title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
 	$dependencies = $xml_parser->getXMLValue("PTSBenchmark/Information/ExternalDependencies");
 
@@ -182,9 +182,9 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 	$vendor = strtolower(os_vendor());
 	$generated = false;
 
-	if(is_file(DISTRO_XML_LOCATION . $vendor . "-packages.xml"))
+	if(is_file(XML_DISTRO_DIR . $vendor . "-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(DISTRO_XML_LOCATION . $vendor . "-packages.xml"));
+		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DISTRO_DIR . $vendor . "-packages.xml"));
 		$generic_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
 		$distro_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PackageName");
 		$file_check = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/FileCheck");

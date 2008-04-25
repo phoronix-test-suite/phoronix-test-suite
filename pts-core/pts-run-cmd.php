@@ -13,19 +13,19 @@ if(isset($argv[3]))
 switch($COMMAND)
 {
 	case "REMOVE_RESULT":
-		if(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml"))
+		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
 		{
-			unlink(SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml");
+			unlink(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");
 
-			foreach(glob(SAVE_RESULTS_LOCATION . $ARG_1 . "/result-graphs/*.png") as $remove_file)
+			foreach(glob(SAVE_RESULTS_DIR . $ARG_1 . "/result-graphs/*.png") as $remove_file)
 				unlink($remove_file);
 
-			foreach(glob(SAVE_RESULTS_LOCATION . $ARG_1 . "/test-*.xml") as $remove_file)
+			foreach(glob(SAVE_RESULTS_DIR . $ARG_1 . "/test-*.xml") as $remove_file)
 				unlink($remove_file);
 
-			unlink(SAVE_RESULTS_LOCATION . $ARG_1 . "/pts-results-viewer.xsl");
-			rmdir(SAVE_RESULTS_LOCATION . $ARG_1 . "/result-graphs/");
-			rmdir(SAVE_RESULTS_LOCATION . $ARG_1);
+			unlink(SAVE_RESULTS_DIR . $ARG_1 . "/pts-results-viewer.xsl");
+			rmdir(SAVE_RESULTS_DIR . $ARG_1 . "/result-graphs/");
+			rmdir(SAVE_RESULTS_DIR . $ARG_1);
 			echo "\nRemoved: $ARG_1\n";
 		}
 		else
@@ -35,8 +35,8 @@ switch($COMMAND)
 
 		if(is_file($ARG_1))
 			$USE_FILE = $ARG_1;
-		else if(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml"))
-			$USE_FILE = SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml";
+		else if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
+			$USE_FILE = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml";
 		else
 		{
 			echo "\nThis result doesn't exist!\n";
@@ -52,7 +52,7 @@ switch($COMMAND)
 		echo "\n=================================\n";
 		echo "Phoronix Test Suite - Saved Results\n";
 		echo "=================================\n\n";
-		foreach(glob(SAVE_RESULTS_LOCATION . "*/composite.xml") as $benchmark_file)
+		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $benchmark_file)
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 			$title = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Title");
@@ -75,8 +75,8 @@ switch($COMMAND)
 		}
 		break;
 	case "SHOW_RESULT":
-		if(is_file(SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml"))
-			$URL = SAVE_RESULTS_LOCATION . $ARG_1 . "/composite.xml";
+		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
+			$URL = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml";
 		//else if(trim(file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $ARG_1)) == "REMOTE_FILE")
 		//	$URL = "http://global.phoronix-test-suite.com/index.php?k=profile&u=" . trim($ARG_1);
 		else
@@ -134,7 +134,7 @@ switch($COMMAND)
 		echo "\n=================================\n";
 		echo "Phoronix Test Suite - Benchmarks\n";
 		echo "=================================\n\n";
-			foreach(glob(XML_PROFILE_LOCATION . "*.xml") as $benchmark_file)
+			foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
 			{
 			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 				$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
@@ -151,7 +151,7 @@ switch($COMMAND)
 		echo "Phoronix Test Suite - Suites\n";
 		echo "=================================\n\n";
 		$benchmark_suites = array();
-		foreach(glob(XML_SUITE_LOCATION . "*.xml") as $benchmark_file)
+		foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
 		{
 		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 			$name = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Title");
@@ -165,7 +165,7 @@ switch($COMMAND)
 	case "SUITE_INFO":
 		if(pts_benchmark_type($ARG_1) == "TEST_SUITE")
 		{
-			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_LOCATION . $ARG_1 . ".xml"));
+			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $ARG_1 . ".xml"));
 			$tests_in_suite = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
 			$suite_name = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Title");
 			$suite_maintainer = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Maintainer");
@@ -187,7 +187,7 @@ switch($COMMAND)
 
 			foreach($tests_in_suite as $test)
 			{
-				$benchmark_file = XML_PROFILE_LOCATION . $test . ".xml";
+				$benchmark_file = XML_PROFILE_DIR . $test . ".xml";
 
 			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 				$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
@@ -208,7 +208,7 @@ switch($COMMAND)
 	case "TEST_INFO":
 		if(pts_benchmark_type($ARG_1) == "BENCHMARK")
 		{
-			$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_LOCATION . $ARG_1 . ".xml"));
+			$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $ARG_1 . ".xml"));
 
 			$test_title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
 

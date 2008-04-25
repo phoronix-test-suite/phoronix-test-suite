@@ -25,7 +25,7 @@ if(empty($MERGE_TO))
 	{
 		$rand_file = rand(1000, 9999);
 		$MERGE_TO = "merge-$rand_file/";
-	}while(is_dir(SAVE_RESULTS_LOCATION . $MERGE_TO));
+	}while(is_dir(SAVE_RESULTS_DIR . $MERGE_TO));
 
 	$MERGE_TO .= "composite.xml";
 }
@@ -33,6 +33,6 @@ if(empty($MERGE_TO))
 // Merge Results
 $MERGED_RESULTS = pts_merge_benchmarks(file_get_contents($BASE_FILE), file_get_contents($MERGE_FROM_FILE));
 pts_save_result($MERGE_TO, $MERGED_RESULTS);
-display_web_browser(SAVE_RESULTS_LOCATION . $MERGE_TO);
+display_web_browser(SAVE_RESULTS_DIR . $MERGE_TO);
 
 ?>

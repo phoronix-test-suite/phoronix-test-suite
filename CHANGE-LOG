@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite
+
+- Add support so distribution vendors / package mantainers can create their own defaults for user configuration options as a template at /pts/etc/user-config-template.xml
+- Clean up all of the *_LOCATION defintions to using *_DIR
+
 Phoronix Test Suite 0.4.0
 April 24, 2008
 

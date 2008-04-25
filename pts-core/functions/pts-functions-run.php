@@ -6,7 +6,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 	{
 		if(pts_benchmark_type($benchmarks_array[$i]) == "TEST_SUITE")
 		{
-			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_LOCATION . $benchmarks_array[$i] . ".xml"));
+			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $benchmarks_array[$i] . ".xml"));
 
 			$sub_suite_benchmarks = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
 			$sub_arguments = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Arguments");
@@ -32,7 +32,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 	{
 		global $BENCHMARK_RAN;
 
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_LOCATION . $benchmark . ".xml"));
+		$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $benchmark . ".xml"));
 		$benchmark_title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
 		$benchmark_version = $xml_parser->getXMLValue("PTSBenchmark/Information/Version");
 		$result_scale = $xml_parser->getXMLValue("PTSBenchmark/Information/ResultScale");
@@ -45,15 +45,15 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 
 			if(!empty($default_test_descriptor))
 				$description = $default_test_descriptor;
-			else if(is_file(BENCHMARK_ENVIRONMENT . "$benchmark/pts-test-description"))
-				$description = @file_get_contents(BENCHMARK_ENVIRONMENT . "$benchmark/pts-test-description");
+			else if(is_file(BENCHMARK_ENV_DIR . "$benchmark/pts-test-description"))
+				$description = @file_get_contents(BENCHMARK_ENV_DIR . "$benchmark/pts-test-description");
 			else
 				$description = "Phoronix Test Suite v" . PTS_VERSION;
 		}
 		if(empty($benchmark_version))
 		{
-			if(is_file(BENCHMARK_ENVIRONMENT . "$benchmark/pts-test-version"))
-				$benchmark_version = @file_get_contents(BENCHMARK_ENVIRONMENT . "$benchmark/pts-test-version");
+			if(is_file(BENCHMARK_ENV_DIR . "$benchmark/pts-test-version"))
+				$benchmark_version = @file_get_contents(BENCHMARK_ENV_DIR . "$benchmark/pts-test-version");
 
 		}
 
@@ -76,7 +76,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)
 {
 	$j = 1;
-	while(is_file(SAVE_RESULTS_LOCATION . $PROPOSED_FILE_NAME . "/test-$j.xml"))
+	while(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/test-$j.xml"))
 		$j++;
 
 	$REAL_FILE_NAME = $PROPOSED_FILE_NAME . "/test-" . $j . ".xml";
@@ -90,14 +90,14 @@ function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEX
 
 	pts_save_result($REAL_FILE_NAME, $R_FILE);
 
-	if(!is_file(SAVE_RESULTS_LOCATION . $PROPOSED_FILE_NAME . "/composite.xml"))
+	if(!is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"))
 	{
-		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", file_get_contents(SAVE_RESULTS_LOCATION . $REAL_FILE_NAME));
+		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $REAL_FILE_NAME));
 	}
 	else
 	{
 		// Merge Results
-		$MERGED_RESULTS = pts_merge_benchmarks(file_get_contents(SAVE_RESULTS_LOCATION . $PROPOSED_FILE_NAME . "/composite.xml"), file_get_contents(SAVE_RESULTS_LOCATION . $REAL_FILE_NAME));
+		$MERGED_RESULTS = pts_merge_benchmarks(file_get_contents(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $REAL_FILE_NAME));
 		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", $MERGED_RESULTS);
 	}
 	return $REAL_FILE_NAME;
@@ -114,7 +114,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	}
 	pts_process_register($benchmark_identifier);
 
-	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_LOCATION . "$benchmark_identifier.xml"));
+	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . "$benchmark_identifier.xml"));
 	$execute_binary = $xml_parser->getXMLValue("PTSBenchmark/Information/Executable");
 	$benchmark_title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
 	$times_to_run = intval($xml_parser->getXMLValue("PTSBenchmark/Information/TimesToRun"));
@@ -130,17 +130,17 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(empty($execute_binary))
 		$execute_binary = $benchmark_identifier;
 
-	if(is_file(BENCHMARK_ENVIRONMENT . "$benchmark_identifier/$execute_binary") || is_link(BENCHMARK_ENVIRONMENT . "$benchmark_identifier/$execute_binary"))
-		$to_execute = BENCHMARK_ENVIRONMENT . "$benchmark_identifier/";
+	if(is_file(BENCHMARK_ENV_DIR . "$benchmark_identifier/$execute_binary") || is_link(BENCHMARK_ENV_DIR . "$benchmark_identifier/$execute_binary"))
+		$to_execute = BENCHMARK_ENV_DIR . "$benchmark_identifier/";
 	else if(is_file($execute_path . $execute_binary) || is_link($execute_path . $execute_binary)) //TODO: Support multiple paths in PossiblePaths separated by : delimiter.
 		$to_execute = $execute_path;
 	else
 	{
-		echo "This application executable could not be found in " . $execute_path . ". or " . BENCHMARK_ENVIRONMENT . "$benchmark_identifier/.\nBenchmark terminating.";
+		echo "This application executable could not be found in " . $execute_path . ". or " . BENCHMARK_ENV_DIR . "$benchmark_identifier/.\nBenchmark terminating.";
 		return;
 	}
 
-	if(is_dir(BENCHMARK_ENVIRONMENT . "$benchmark_identifier/") && file_get_contents(BENCHMARK_ENVIRONMENT . "$benchmark_identifier/pts-install") != md5_file(BENCHMARK_RESOURCE_LOCATION . "$benchmark_identifier/install.sh"))
+	if(is_dir(BENCHMARK_ENV_DIR . "$benchmark_identifier/") && file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != md5_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.sh"))
 	{
 		echo "\n=================================\nNOTE: Your benchmarking installation is out of date!\nFor best results, the $benchmark_title benchmark should be reinstalled.\n=================================\n\n";
 
@@ -152,10 +152,10 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	$PTS_BENCHMARK_ARGUMENTS = trim($default_arguments . " " . $extra_arguments);
 	$BENCHMARK_RESULTS_ARRAY = array();
 
-	if(is_file(BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/pre.sh"))
+	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
 	{
 		//echo "\n=================================\nExecuting Pre-Benchmark Tasks\n=================================\n";
-		echo shell_exec("sh " . BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENVIRONMENT . "$benchmark_identifier");
+		echo shell_exec("sh " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	if(!empty($pre_run_message))
@@ -173,17 +173,17 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute; ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
 
-		if(is_file(BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/parse-results.php"))
+		if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
 		{
-			$BENCHMARK_RESULTS = pts_exec("cd " . BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/ && php parse-results.php \"$BENCHMARK_RESULTS\"");
+			$BENCHMARK_RESULTS = pts_exec("cd " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/ && php parse-results.php \"$BENCHMARK_RESULTS\"");
 		}
 		array_push($BENCHMARK_RESULTS_ARRAY, $BENCHMARK_RESULTS);
 	}
 
-	if(is_file(BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/post.sh"))
+	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{
 		//echo "\n=================================\nExecuting Post-Benchmark Tasks\n=================================\n";
-		echo pts_exec("sh " . BENCHMARK_RESOURCE_LOCATION . $benchmark_identifier . "/post.sh " . BENCHMARK_ENVIRONMENT . "$benchmark_identifier");
+		echo pts_exec("sh " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	// End

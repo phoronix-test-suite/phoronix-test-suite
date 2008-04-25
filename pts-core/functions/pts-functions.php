@@ -50,18 +50,19 @@ define("PTS_CODENAME", "TRONDHEIM");
 define("PTS_TYPE", "DESKTOP");
 define("THIS_RUN_TIME", time());
 
-define("XML_PROFILE_LOCATION", PTS_DIR . "pts/benchmark-profiles/");
-define("XML_SUITE_LOCATION", PTS_DIR . "pts/benchmark-suites/");
-define("DISTRO_XML_LOCATION", PTS_DIR . "pts/distro-xml/");
-define("DISTRO_SCRIPT_LOCATION", PTS_DIR . "pts/distro-scripts/");
-define("BENCHMARK_RESOURCE_LOCATION", PTS_DIR . "pts/benchmark-resources/");
-define("RESULTS_VIEWER_LOCATION", PTS_DIR . "pts-core/pts-results-viewer/");
+define("XML_PROFILE_DIR", PTS_DIR . "pts/benchmark-profiles/");
+define("XML_SUITE_DIR", PTS_DIR . "pts/benchmark-suites/");
+define("XML_DISTRO_DIR", PTS_DIR . "pts/distro-xml/");
+define("SCRIPT_DISTRO_DIR", PTS_DIR . "pts/distro-scripts/");
+define("BENCHMARK_RESOURCE_DIR", PTS_DIR . "pts/benchmark-resources/");
+define("ETC_DIR", PTS_DIR . "pts/etc/");
+define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
 //define("FONT_DIRECTORY" "/usr/share/fonts/");
 
 pts_config_init();
-define("BENCHMARK_ENVIRONMENT", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/.phoronix-test-suite/installed-tests/")));
-define("SAVE_RESULTS_LOCATION", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/.phoronix-test-suite/test-results/")));
+define("BENCHMARK_ENV_DIR", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/.phoronix-test-suite/installed-tests/")));
+define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/.phoronix-test-suite/test-results/")));
 
 // Etc
 $PTS_GLOBAL_ID = 1;
@@ -77,7 +78,7 @@ register_shutdown_function("pts_process_remove", "phoronix-test-suite");
 function pts_benchmark_names_to_array()
 {
 	$benchmark_names = array();
-	foreach(glob(XML_PROFILE_LOCATION . "*.xml") as $benchmark_file)
+	foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 		$benchmark_name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
@@ -90,7 +91,7 @@ function pts_benchmark_names_to_array()
 function pts_suite_names_to_array()
 {
 	$benchmark_suites = array();
-	foreach(glob(XML_SUITE_LOCATION . "*.xml") as $benchmark_file)
+	foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 		$benchmark_name = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Title");
@@ -106,7 +107,7 @@ function pts_benchmark_name_to_identifier($name)
 		return false;
 	$identifier = false;
 
-	foreach(glob(XML_PROFILE_LOCATION . "*.xml") as $benchmark_file)
+	foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 
@@ -122,9 +123,9 @@ function pts_benchmark_identifier_to_name($identifier)
 		return false;
 	$name = false;
 
-	if(is_file(XML_PROFILE_LOCATION . "$identifier.xml"))
+	if(is_file(XML_PROFILE_DIR . "$identifier.xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_LOCATION . $identifier . ".xml"));
+	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
 		$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
 	}
 
@@ -135,9 +136,9 @@ function pts_benchmark_type($identifier)
 	if(empty($identifier))
 		return false;
 
-	if(is_file(XML_PROFILE_LOCATION . $identifier . ".xml"))
+	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 		return "BENCHMARK";
-	else if(is_file(XML_SUITE_LOCATION . $identifier . ".xml"))
+	else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
 		return "TEST_SUITE";
 	else
 		return false;
@@ -150,7 +151,7 @@ function pts_copy($from, $to)
 function pts_save_result($save_to = null, $save_results = null, $directory = null)
 {
 	if($directory == null)
-		$directory = SAVE_RESULTS_LOCATION;
+		$directory = SAVE_RESULTS_DIR;
 
 	if(strpos($save_to, ".xml") === FALSE)
 	{
@@ -169,9 +170,9 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 		mkdir($directory . "pts-results-viewer");
 	}
 
-	pts_copy(RESULTS_VIEWER_LOCATION . "pts.js", $directory . "pts-results-viewer/pts.js");
-	pts_copy(RESULTS_VIEWER_LOCATION . "pts-results-viewer.xsl", $directory . "pts-results-viewer/pts-results-viewer.xsl");
-	pts_copy(RESULTS_VIEWER_LOCATION . "pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
+	pts_copy(RESULTS_VIEWER_DIR . "pts.js", $directory . "pts-results-viewer/pts.js");
+	pts_copy(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl", $directory . "pts-results-viewer/pts-results-viewer.xsl");
+	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
 
 	if(!is_file($save_to_dir . "/pts-results-viewer.xsl") && !is_link($save_to_dir . "/pts-results-viewer.xsl"))
 		link($directory . "pts-results-viewer/pts-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
@@ -248,23 +249,23 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 }
 function pts_process_register($process)
 {
-	if(!is_dir(BENCHMARK_ENVIRONMENT))
-		mkdir(BENCHMARK_ENVIRONMENT);
-	if(!is_dir(BENCHMARK_ENVIRONMENT . ".processes"))
-		mkdir(BENCHMARK_ENVIRONMENT . ".processes");
+	if(!is_dir(BENCHMARK_ENV_DIR))
+		mkdir(BENCHMARK_ENV_DIR);
+	if(!is_dir(BENCHMARK_ENV_DIR . ".processes"))
+		mkdir(BENCHMARK_ENV_DIR . ".processes");
 
-	return file_put_contents(BENCHMARK_ENVIRONMENT . ".processes/$process.p", time());
+	return file_put_contents(BENCHMARK_ENV_DIR . ".processes/$process.p", time());
 }
 function pts_process_remove($process)
 {
-	if(is_file(BENCHMARK_ENVIRONMENT . ".processes/$process.p"))
-		return unlink(BENCHMARK_ENVIRONMENT . ".processes/$process.p");
+	if(is_file(BENCHMARK_ENV_DIR . ".processes/$process.p"))
+		return unlink(BENCHMARK_ENV_DIR . ".processes/$process.p");
 }
 function pts_process_active($process)
 {
-	if(is_file(BENCHMARK_ENVIRONMENT . ".processes/$process.p"))
+	if(is_file(BENCHMARK_ENV_DIR . ".processes/$process.p"))
 	{
-		$process_time = intval(file_get_contents(BENCHMARK_ENVIRONMENT . ".processes/$process.p"));
+		$process_time = intval(file_get_contents(BENCHMARK_ENV_DIR . ".processes/$process.p"));
 
 		if((time() - $process_time) < 30) // TODO: Replace Lock With Pid based instead of time.
 			return true;
@@ -321,7 +322,7 @@ function pts_input_correct_results_path($path)
 {
 	if(strpos($path, '/') === FALSE)
 	{
-		$path = SAVE_RESULTS_LOCATION . $path;
+		$path = SAVE_RESULTS_DIR . $path;
 	}
 	if(strpos($MERGE_TO, ".xml") === FALSE)
 	{
