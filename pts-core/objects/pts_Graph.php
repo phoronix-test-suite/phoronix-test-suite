@@ -125,7 +125,7 @@ class pts_Graph
 	{
 		for($i = 0; $i < count($data_array); $i++)
 			if(is_float($data_array[$i]))
-				$data_array[$i] = bcdiv($data_array[$i], 1, 2);
+				$data_array[$i] = trim_double($data_array[$i], 2);
 
 		array_push($this->graph_data, $data_array);
 		array_push($this->graph_data_title, $data_title);
@@ -365,7 +365,7 @@ class pts_Graph
 						imageline($this->graph_image, $y, $px_from_top, $y += ($this->graph_left_end - $y) - 1, $px_from_top, $this->graph_color_body_light);
 			}
 
-			$display_value += bcdiv($this->graph_maximum_value / $this->graph_attr_marks, 1, 2);
+			$display_value += trim_double($this->graph_maximum_value / $this->graph_attr_marks, 2);
 		}
 	}
 	public function renderGraph()
@@ -433,6 +433,30 @@ class pts_Graph
 	public function save_graph($file)
 	{
 		$this->graph_output = $file;
+	}
+	protected function trim_double($double, $accuracy = 2)
+	{
+		$return = explode(".", $double);
+
+		if(count($return) == 1)
+			$return[1] = "00";
+
+		if(count($return) == 2)
+		{
+			$strlen = strlen($return[1]);
+
+			if($strlen > $accuracy)
+				$return[1] = substr($return[1], 0, $accuracy);
+			else if($strlen < $accuracy)
+				for($i = $strlen; $i < $accuracy; $i++)
+					$return[1] .= "0";
+
+			$return = $return[0] . "." . $return[1];
+		}
+		else
+			$return = $return[0];
+
+		return $return;
 	}
 }
 
