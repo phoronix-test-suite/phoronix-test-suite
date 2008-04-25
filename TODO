@@ -9,3 +9,4 @@
 - More MD5 checks in test scripts
 - Change locking system away from time-based but to PID based
 - Clean up tests scripts
+- Better checks to make sure PTS is actually installed sooner in the run process (using pts_test_installed_check())
