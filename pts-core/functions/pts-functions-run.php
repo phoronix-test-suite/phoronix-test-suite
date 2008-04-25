@@ -229,5 +229,16 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	pts_process_remove($benchmark_identifier);
 	return $AVG_RESULT;
 }
+function pts_test_installed_check($benchmark_identifier)
+{
+	$is_installed = true;
 
+	if(is_dir(BENCHMARK_ENV_DIR . "$benchmark_identifier/") && (is_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.sh") || is_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.php")) && !is_file(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install"))
+	{
+		echo pts_string_header("This test ($benchmark_identifier) is not installed.\nYou must first run: phoronix-test-suite install $benchmark_identifier");
+		$is_installed = false;
+	}
+
+	return $is_installed;
+}
 ?>
