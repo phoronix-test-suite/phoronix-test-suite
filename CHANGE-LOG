@@ -17,6 +17,8 @@ Phoronix Test Suite
 - Drop Official tag from all suites
 - Some code cleaning
 - Improved CPU detection support, especially for multi-processor multi-core environments
+- Improved GPU and related detections support... Now can read the anti-aliasing and anistropic filtering levels for NVIDIA graphics cards as well as the core temperature
+- Add MONITOR= environmental variable. If MONITOR=gpu.temp, the low, average, and high temperatures will be reported at end of test.
 
 Phoronix Test Suite 0.4.0
 April 24, 2008

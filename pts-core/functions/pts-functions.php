@@ -65,8 +65,7 @@ pts_config_init();
 define("BENCHMARK_ENV_DIR", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/.phoronix-test-suite/installed-tests/")));
 define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/.phoronix-test-suite/test-results/")));
 
-// Etc
-$PTS_GLOBAL_ID = 1;
+// Register PTS
 
 if(pts_process_active("phoronix-test-suite"))
 {
@@ -74,6 +73,23 @@ if(pts_process_active("phoronix-test-suite"))
 }
 pts_process_register("phoronix-test-suite");
 register_shutdown_function("pts_process_remove", "phoronix-test-suite");
+
+// Etc
+
+$PTS_GLOBAL_ID = 1;
+
+if(($to_show = getenv("MONITOR")))
+{
+	$to_show = explode(',', $to_show);
+
+	if(in_array("gpu.temp", $to_show))
+	{
+		
+		define("MONITOR_GPU_TEMP", 1);
+		$GPU_DIE_TEMPERATURE = array();
+	}
+	register_shutdown_function("pts_monitor_statistics");
+}
 
 // Phoronix Test Suite - Functions
 function pts_benchmark_names_to_array()
@@ -458,5 +474,35 @@ function pts_string_header($heading)
 			$header_size = $line_length;
 
 	return "\n" . str_repeat('=', $header_size) . "\n" . $heading . "\n" . str_repeat('=', $header_size) . "\n\n";
+}
+function pts_monitor_statistics()
+{
+	if(isset($GLOBALS["GPU_DIE_TEMPERATURE"]))
+	{
+		$device = "GPU";
+		$type = "Thermal";
+		$unit = "°C";
+		$array = $GLOBALS["GPU_DIE_TEMPERATURE"];
+	}
+
+	if(!is_array($array) || empty($array))
+		return;
+
+	$low = 0;
+	$high = 0;
+	$total = 0;
+
+	foreach($array as $temp)
+	{
+		if($temp < $low || $low == 0)
+			$low = $temp;
+		else if($temp > $high)
+			$high = $temp;
+
+		$total += $temp;
+	}
+	$avg = $total / count($array);
+
+	echo pts_string_header($device . " $type Statistics:\n\nLow: " . pts_trim_double($low) . "$unit\nHigh: " . pts_trim_double($high) . "$unit\n\nAverage: " . pts_trim_double($avg) . "$unit");
 }
 ?>

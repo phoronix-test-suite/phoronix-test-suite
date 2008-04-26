@@ -186,6 +186,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	for($i = 0; $i < $times_to_run; $i++)
 	{
+		if(defined("MONITOR_GPU_TEMP"))
+			pts_record_gpu_temperature();
+
 		echo pts_string_header($benchmark_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
@@ -200,6 +203,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			array_push($BENCHMARK_RESULTS_ARRAY, $BENCHMARK_RESULTS);
 		}
 	}
+
+	if(defined("MONITOR_GPU_TEMP"))
+		pts_record_gpu_temperature();
 
 	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{

@@ -16,9 +16,20 @@ function graphics_frequency_string()
 
 	return $freq_string;
 }
+function pts_record_gpu_temperature()
+{
+	global $GPU_DIE_TEMPERATURE;
+	$temp = graphics_processor_temperature();
+
+	if($temp != -1)
+		array_push($GPU_DIE_TEMPERATURE, $temp);
+}
 function graphics_processor_temperature()
 {
 	$temp_c = read_nvidia_extension("GPUCoreTemp");
+
+	if(empty($temp_c))
+		$temp_c = -1;
 
 	return $temp_c;
 }
