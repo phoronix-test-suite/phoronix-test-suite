@@ -215,7 +215,7 @@ function read_linux_sensors($attribute)
 
 		if($this_attribute == $attribute)
 		{
-			$this_remainer = trim(str_replace(array('+', '°'), ' ', $line[1]));
+			$this_remainder = trim(str_replace(array('+', '°'), ' ', $line[1]));
 			$value = substr($this_remainder, 0, strpos($this_remainder, ' '));
 		}
 	}

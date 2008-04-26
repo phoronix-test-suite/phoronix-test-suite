@@ -98,7 +98,7 @@ if(($to_show = getenv("MONITOR")))
 	{
 		
 		define("MONITOR_SYS_TEMP", 1);
-		$CPU_TEMPERATURE = array();
+		$SYS_TEMPERATURE = array();
 	}
 
 	register_shutdown_function("pts_monitor_statistics");
@@ -564,6 +564,8 @@ function pts_monitor_statistics()
 
 		$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . $unit[$i] . "\nHigh: " . pts_trim_double($high) . $unit[$i] . "\n\nAverage: " . pts_trim_double($avg) . $unit[$i];
 	}
-	echo pts_string_header($info_report);
+
+	if(trim($info_report) != "")
+		echo pts_string_header($info_report);
 }
 ?>
