@@ -98,7 +98,6 @@ function read_cpuinfo_values($attribute)
 
 	return $cpuinfo_matches;
 }
-
 function processor_string()
 {
 	$info = "";
