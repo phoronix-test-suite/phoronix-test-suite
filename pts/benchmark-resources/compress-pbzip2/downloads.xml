@@ -1,0 +1,12 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.bzip.org/1.0.5/bzip2-1.0.5.tar.gz</URL>
+			<MD5>3c15a0c8d1d3ee1c46a1634d00617b1a</MD5>
+		</Package>
+		<Package>
+			<URL>http://compression.ca/pbzip2/pbzip2-1.0.2.tar.gz</URL>
+			<MD5>7c959f0554695bc484865b938e791aaf</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
