@@ -233,7 +233,16 @@ else
 
 if($SAVE_RESULTS)
 {
-	$test_notes = pts_process_running_string(array("Compiz", "Firefox"));
+	$test_notes = pts_process_running_string(array("Compiz", "Firefox", "Thunderbird"));
+
+	if(defined("TEST_GRAPHICS"))
+	{
+		$aa_level = graphics_antialiasing_level();
+		$af_level = graphics_anisotropic_level();
+
+		if(!empty($aa_level) && !empty($af_level))
+			$test_notes .= " \nAntialiasing: $aa_level Anisotropic Filtering: $af_level.";
+	}
 
 	$id = pts_request_new_id();
 	$RESULTS->setXslBinding("pts-results-viewer.xsl");
