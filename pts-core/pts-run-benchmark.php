@@ -91,9 +91,6 @@ else
 {
 	$SAVE_RESULTS = pts_bool_question("Would you like to save these benchmark results (Y/n)?", true, "SAVE_RESULTS");
 
-	if(!$SAVE_RESULTS)
-		echo "Benchmark results will NOT be saved!\n";
-
 	if($SAVE_RESULTS)
 	{
 		do
@@ -192,7 +189,7 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 {
 	echo pts_string_header(ucwords($TO_RUN) . " Test Suite");
 
-	echo "\nRunning Benchmarks For " . ucwords($TO_RUN) . " Test Suite...\n\n";
+	echo "\nRunning " . ucwords($TO_RUN) . " Test Suite...\n\n";
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_RUN . ".xml"));
 

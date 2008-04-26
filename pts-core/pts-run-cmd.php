@@ -129,7 +129,7 @@ switch($COMMAND)
 			pts_install_package_on_distribution($ARG_1);
 		break;
 	case "LIST_TESTS":
-		echo pts_string_header("Phoronix Test Suite - Benchmarks");
+		echo pts_string_header("Phoronix Test Suite - Tests");
 		foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
 		{
 		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));

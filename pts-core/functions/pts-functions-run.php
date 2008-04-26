@@ -109,7 +109,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(pts_process_active($benchmark_identifier))
 	{
-		echo "\nThis benchmark ($benchmark_identifier) is already running... Please wait until the first instance is finished.\n";
+		echo "\nThis test ($benchmark_identifier) is already running... Please wait until the first instance is finished.\n";
 		return 0;
 	}
 	pts_process_register($benchmark_identifier);
@@ -144,7 +144,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(!isset($to_execute) || empty($to_execute))
 	{
-		echo "This application executable could not be found in " . $execute_path . ". or " . BENCHMARK_ENV_DIR . "$benchmark_identifier/.\nBenchmark terminating.";
+		echo "This application executable could not be found in " . $execute_path . ". or " . BENCHMARK_ENV_DIR . "$benchmark_identifier/.\nTest terminating.";
 		return;
 	}
 
@@ -177,7 +177,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	for($i = 0; $i < $times_to_run; $i++)
 	{
-		echo pts_string_header($benchmark_title . " Benchmark (Run " . ($i + 1) . " of " . $times_to_run . ")");
+		echo pts_string_header($benchmark_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
 		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
