@@ -11,6 +11,7 @@ Phoronix Test Suite
 - Add IgnoreFirstRun argument for test profiles
 - Add support for a test profile to have a downloads.xml file inside their resources folder that contains all of the files that need to be downloaded. Phoronix Test Suite then handles the downloading internally as well as verifying the MD5 sums, downloading from a random URL if multiple URLs are specified, etc. Some other features will come about soon for those using downloads.xml for acquiring all needed files
 - Drop bcdiv/bcmath dependency for pts_Graph, switch to internal function for trimming doubles
+- Add 7-Zip compression benchmark
 
 Phoronix Test Suite 0.4.0
 April 24, 2008
