@@ -5,7 +5,6 @@
 		<Title>Universe Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Universe Phoronix Test Suite contains all benchmark profiles that are known to be in a working and good overall state. Among the profiles are encoding, compilation, graphics, and other system tests. The Universe test suite may take many minutes to complete.</Description>
-		<Official>0</Official>
 	</PhoronixTestSuite>
 	<PTSBenchmark>
 		<Benchmark>encode-mp3</Benchmark>

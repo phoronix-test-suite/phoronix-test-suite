@@ -13,6 +13,8 @@ Phoronix Test Suite
 - Drop bcdiv/bcmath dependency for pts_Graph, switch to internal function for trimming doubles
 - Add 7-Zip compression test (compress-7zip)
 - Add Parallel BZIP2 compression test (compress-pbzip2)
+- Add Compression test suite (compression)
+- Drop Official tag from all suites
 
 Phoronix Test Suite 0.4.0
 April 24, 2008

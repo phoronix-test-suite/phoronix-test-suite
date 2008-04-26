@@ -5,7 +5,6 @@
 		<Title>Recursion Test Of Audio Encoding</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>Recursion Test For Phoronix Test Suite... Should Produce Identical Design To Audio Encoding suite when running recursion-test.</Description>
-		<Official>0</Official>
 	</PhoronixTestSuite>
 	<PTSBenchmark>
 		<Benchmark>audio-encoding</Benchmark>

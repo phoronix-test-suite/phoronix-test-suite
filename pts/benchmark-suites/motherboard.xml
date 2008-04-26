@@ -5,7 +5,6 @@
 		<Title>Motherboard Tests</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of benchmarks designed to test your motherboard.</Description>
-		<Official>1</Official>
 	</PhoronixTestSuite>
 	<PTSBenchmark>
 		<Benchmark>encode-mp3</Benchmark>

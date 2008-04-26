@@ -5,7 +5,6 @@
 		<Title>Audio Encoding Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of benchmarks that measure the amount of time needed to encode a sample WAV file to various audio formats. Among the formats are MP3, Ogg, and FLAC. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
-		<Official>0</Official>
 	</PhoronixTestSuite>
 	<PTSBenchmark>
 		<Benchmark>encode-mp3</Benchmark>

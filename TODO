@@ -6,7 +6,6 @@
 - Use new (larger) Wav file for benchmarks... internal Phoronix WAV file used is copyrighted music. Current PTS One is too small for reliable results.
 - Improved hardware detection (i.e. recognize multiple graphics cards)
 - "Optimization Tips"
-- More MD5 checks in test scripts
 - Change locking system away from time-based but to PID based
 - Clean up tests scripts
 - Better checks to make sure PTS is actually installed sooner in the run process (using pts_test_installed_check())

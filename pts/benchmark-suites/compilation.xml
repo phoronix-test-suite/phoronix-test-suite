@@ -5,7 +5,6 @@
 		<Title>Timed Code Compilation Tests</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of benchmarks that measure the amount of time needed to build common open-source software packages. These benchmarks will use your default compiler (likely GCC) and will adjust the number of compiling jobs based upon the number of detected CPU cores in your system. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
-		<Official>0</Official>
 	</PhoronixTestSuite>
 	<PTSBenchmark>
 		<Benchmark>build-mplayer</Benchmark>

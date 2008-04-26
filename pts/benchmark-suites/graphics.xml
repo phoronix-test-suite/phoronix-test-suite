@@ -5,7 +5,6 @@
 		<Title>Phoronix Test Suite For Graphics</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of benchmarks designed to test your graphics card and display driver.</Description>
-		<Official>1</Official>
 	</PhoronixTestSuite>
 	<PTSBenchmark>
 		<Benchmark>nexuiz</Benchmark>

@@ -5,7 +5,6 @@
 		<Title>PTS Test Suite Test 1</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>Test PTS suite.</Description>
-		<Official>0</Official>
 	</PhoronixTestSuite>
 	<PTSBenchmark>
 		<Benchmark>encode-mp3</Benchmark>
