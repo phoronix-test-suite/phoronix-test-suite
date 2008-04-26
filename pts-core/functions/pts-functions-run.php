@@ -124,12 +124,21 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	$arg_identifier = $xml_parser->getXMLArrayValues("PTSBenchmark/Settings/Option/Identifier");
 	$execute_path = $xml_parser->getXMLValue("PTSBenchmark/Settings/Default/PossiblePaths");
 	$default_arguments = $xml_parser->getXMLValue("PTSBenchmark/Settings/Default/Arguments");
+	$test_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/BenchmarkType");
 
 	if(empty($times_to_run) || !is_int($times_to_run))
 		$times_to_run = 1;
 
 	if(empty($execute_binary))
 		$execute_binary = $benchmark_identifier;
+
+	if(!empty($test_type))
+	{
+		$test_name = "TEST_" . strtoupper($test_type);
+
+		if(!defined($test_name))
+			define($test_name, 1);
+	}
 
 	if(is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . '/' . $execute_binary) || is_link(BENCHMARK_ENV_DIR . $benchmark_identifier . '/' . $execute_binary))
 	{
