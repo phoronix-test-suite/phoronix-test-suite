@@ -35,8 +35,7 @@ if(empty($TO_RUN))
 	exit;
 }
 
-if(defined("MONITOR_GPU_TEMP"))
-	pts_record_gpu_temperature();
+pts_monitor_update(); // Update sensors, etc
 
 // Kill the screensaver
 $screensaver_status = trim(shell_exec("gconftool -g /apps/gnome-screensaver/idle_activation_enabled 2>&1"));
@@ -284,8 +283,7 @@ if($SAVE_RESULTS)
 		echo "\n";
 	}
 
-	if(defined("MONITOR_GPU_TEMP"))
-		pts_record_gpu_temperature();
+	pts_monitor_update(); // Update sensors, etc
 }
 
 if(defined("SCREENSAVER_KILLED"))

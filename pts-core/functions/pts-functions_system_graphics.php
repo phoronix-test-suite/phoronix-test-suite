@@ -18,11 +18,11 @@ function graphics_frequency_string()
 }
 function pts_record_gpu_temperature()
 {
-	global $GPU_DIE_TEMPERATURE;
+	global $GPU_TEMPERATURE;
 	$temp = graphics_processor_temperature();
 
 	if($temp != -1)
-		array_push($GPU_DIE_TEMPERATURE, $temp);
+		array_push($GPU_TEMPERATURE, $temp);
 }
 function graphics_processor_temperature()
 {

@@ -202,5 +202,42 @@ function operating_system_release()
 
 	return $os;
 }
+function read_linux_sensors($attribute)
+{
+	$value = "";
+	$sensors = shell_exec("sensors -U 2>&1");
+	$sensors_lines = explode("\n", $sensors);
+
+	for($i = 0; $i < count($sensors_lines) && $value == ""; $i++)
+	{
+		$line = explode(": ", $sensors_lines[$i]);
+		$this_attribute = trim($line[0]);
+
+		if($this_attribute == $attribute)
+		{
+			$this_remainer = trim(str_replace(array('+', '°'), ' ', $line[1]));
+			$value = substr($this_remainder, 0, strpos($this_remainder, ' '));
+		}
+	}
+
+	return $value;
+}
+function system_temperature()
+{
+	$temp_c = read_linux_sensors("Sys Temp");
+
+	if(empty($temp_c))
+		$temp_c = -1;
+
+	return $temp_c;
+}
+function pts_record_sys_temperature()
+{
+	global $SYS_TEMPERATURE;
+	$temp = system_temperature();
+
+	if($temp != -1)
+		array_push($SYS_TEMPERATURE, $temp);
+}
 
 ?>

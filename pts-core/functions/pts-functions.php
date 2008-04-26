@@ -86,8 +86,21 @@ if(($to_show = getenv("MONITOR")))
 	{
 		
 		define("MONITOR_GPU_TEMP", 1);
-		$GPU_DIE_TEMPERATURE = array();
+		$GPU_TEMPERATURE = array();
 	}
+	if(in_array("cpu.temp", $to_show))
+	{
+		
+		define("MONITOR_CPU_TEMP", 1);
+		$CPU_TEMPERATURE = array();
+	}
+	if(in_array("sys.temp", $to_show))
+	{
+		
+		define("MONITOR_SYS_TEMP", 1);
+		$CPU_TEMPERATURE = array();
+	}
+
 	register_shutdown_function("pts_monitor_statistics");
 }
 
@@ -475,34 +488,82 @@ function pts_string_header($heading)
 
 	return "\n" . str_repeat('=', $header_size) . "\n" . $heading . "\n" . str_repeat('=', $header_size) . "\n\n";
 }
+function pts_monitor_update()
+{
+	if(defined("MONITOR_GPU_TEMP"))
+		pts_record_gpu_temperature();
+	if(defined("MONITOR_CPU_TEMP"))
+		pts_record_cpu_temperature();
+	if(defined("MONITOR_SYS_TEMP"))
+		pts_record_sys_temperature();
+}
 function pts_monitor_statistics()
 {
-	if(isset($GLOBALS["GPU_DIE_TEMPERATURE"]))
+	$device = array();
+	$type = array();
+	$unit = array();
+	$m_array = array();
+
+	if(isset($GLOBALS["GPU_TEMPERATURE"]))
 	{
-		$device = "GPU";
-		$type = "Thermal";
-		$unit = "°C";
-		$array = $GLOBALS["GPU_DIE_TEMPERATURE"];
+		$this_array = $GLOBALS["GPU_TEMPERATURE"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "GPU");
+			array_push($type, "Thermal");
+			array_push($unit, "°C");
+			array_push($m_array, $this_array);
+		}
+	}
+	if(isset($GLOBALS["CPU_TEMPERATURE"]))
+	{
+		$this_array = $GLOBALS["CPU_TEMPERATURE"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "CPU");
+			array_push($type, "Thermal");
+			array_push($unit, "°C");
+			array_push($m_array, $this_array);
+		}
+	}
+	if(isset($GLOBALS["SYS_TEMPERATURE"]))
+	{
+		$this_array = $GLOBALS["SYS_TEMPERATURE"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "System");
+			array_push($type, "Thermal");
+			array_push($unit, "°C");
+			array_push($m_array, $this_array);
+		}
 	}
 
-	if(!is_array($array) || empty($array))
-		return;
-
-	$low = 0;
-	$high = 0;
-	$total = 0;
-
-	foreach($array as $temp)
+	$info_report = "";
+	for($i = 0; $i < count($m_array); $i++)
 	{
-		if($temp < $low || $low == 0)
-			$low = $temp;
-		else if($temp > $high)
-			$high = $temp;
+		if($i > 0)
+			$info_report .= "\n\n";
 
-		$total += $temp;
+		$low = 0;
+		$high = 0;
+		$total = 0;
+
+		foreach($m_array[$i] as $temp)
+		{
+			if($temp < $low || $low == 0)
+				$low = $temp;
+			else if($temp > $high)
+				$high = $temp;
+
+			$total += $temp;
+		}
+		$avg = $total / count($m_array[$i]);
+
+		$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . $unit[$i] . "\nHigh: " . pts_trim_double($high) . $unit[$i] . "\n\nAverage: " . pts_trim_double($avg) . $unit[$i];
 	}
-	$avg = $total / count($array);
-
-	echo pts_string_header($device . " $type Statistics:\n\nLow: " . pts_trim_double($low) . "$unit\nHigh: " . pts_trim_double($high) . "$unit\n\nAverage: " . pts_trim_double($avg) . "$unit");
+	echo pts_string_header($info_report);
 }
 ?>

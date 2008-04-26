@@ -186,8 +186,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	for($i = 0; $i < $times_to_run; $i++)
 	{
-		if(defined("MONITOR_GPU_TEMP"))
-			pts_record_gpu_temperature();
+		pts_monitor_update(); // Update sensors, etc
 
 		echo pts_string_header($benchmark_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
@@ -204,8 +203,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		}
 	}
 
-	if(defined("MONITOR_GPU_TEMP"))
-		pts_record_gpu_temperature();
+	pts_monitor_update(); // Update sensors, etc
 
 	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{
@@ -244,16 +242,5 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	pts_process_remove($benchmark_identifier);
 	return $AVG_RESULT;
 }
-function pts_test_installed_check($benchmark_identifier)
-{
-	$is_installed = true;
 
-	if(is_dir(BENCHMARK_ENV_DIR . "$benchmark_identifier/") && (is_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.sh") || is_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.php")) && !is_file(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install"))
-	{
-		echo pts_string_header("This test ($benchmark_identifier) is not installed.\nYou must first run: phoronix-test-suite install $benchmark_identifier");
-		$is_installed = false;
-	}
-
-	return $is_installed;
-}
 ?>

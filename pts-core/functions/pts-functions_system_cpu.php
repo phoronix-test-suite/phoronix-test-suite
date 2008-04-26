@@ -121,5 +121,22 @@ function processor_frequency($cpu_core = 0)
 
 	return $info;
 }
+function processor_temperature()
+{
+	$temp_c = read_linux_sensors("CPU Temp");
+
+	if(empty($temp_c))
+		$temp_c = -1;
+
+	return $temp_c;
+}
+function pts_record_cpu_temperature()
+{
+	global $CPU_TEMPERATURE;
+	$temp = processor_temperature();
+
+	if($temp != -1)
+		array_push($CPU_TEMPERATURE, $temp);
+}
 
 ?>
