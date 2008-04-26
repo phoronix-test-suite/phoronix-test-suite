@@ -68,56 +68,119 @@ function pts_posix_disk_total()
 }
 function cpu_core_count()
 {
-	if(is_file("/proc/cpuinfo"))
-	{
-		$info = file_get_contents("/proc/cpuinfo");
-		$info = substr($info, strrpos($info, "\nprocessor"));
-		$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
-	}
-	else
-		$info = 0;
+	$processors = read_cpuinfo_values("processor");
+	$info = count($processors); // or could do array_pop($processors) + 1
 
-	return intval($info) + 1;
+	return $info;
 }
 function cpu_job_count()
 {
 	return cpu_core_count() + 1;
 }
-function processor_string()
+function read_cpuinfo_values($attribute)
 {
+	$cpuinfo_matches = array();
+
 	if(is_file("/proc/cpuinfo"))
 	{
-		$info = file_get_contents("/proc/cpuinfo");
-		$info = substr($info, strpos($info, "model name"));
-		$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
-		$info = pts_clean_information_string($info);
-	}
-	else
-		$info = "Unknown";
+		$cpuinfo_lines = explode("\n", file_get_contents("/proc/cpuinfo"));
 
-	if(($freq = processor_frequency()) > 0)
+		foreach($cpuinfo_lines as $line)
+		{
+			$line = explode(": ", $line);
+			$this_attribute = trim($line[0]);
+			$this_value = trim($line[1]);
+
+			if($this_attribute == $attribute)
+				array_push($cpuinfo_matches, $this_value);
+		}
+	}
+
+	return $cpuinfo_matches;
+}
+
+function processor_string()
+{
+	$info = "";
+
+	if(is_file("/proc/cpuinfo"))
 	{
-		if(($strip_point = strpos($info, '@')) > 0)
-			$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked
+		$physical_cpu_ids = read_cpuinfo_values("physical id");
+		$physical_cpu_count = array_pop($physical_cpu_ids) + 1;
 
-		$info .= " @ " . $freq . "GHz";
+		$cpu_strings = read_cpuinfo_values("model name");
+		$cpu_strings_unique = array_unique($cpu_strings);
+
+		if($physical_cpu_count == 1)
+		{
+			// Just one processor
+			$info = append_processor_frequency(pts_clean_information_string($cpu_strings[0]));
+		}
+		else if($physical_cpu_count > 1 && count($cpu_strings_unique) == 1)
+		{
+			// Multiple processors, same model
+			$info = $physical_cpu_count . " x " . append_processor_frequency(pts_clean_information_string($cpu_strings[0]));
+		}
+		else if($physical_cpu_count > 1 && count($cpu_strings_unique) > 1)
+		{
+			// Multiple processors, different models
+			$current_id = -1;
+			$current_string = $cpu_strings[0];
+			$current_count = 0;
+
+			for($i = 0; $i < count($physical_cpu_ids); $i++)
+			{
+				if($current_string != $cpu_strings[$i] || $i == (count($physical_cpu_ids) - 1))
+				{
+					$info .= $current_count . " x " . append_processor_frequency(pts_clean_information_string($current_string), $i);
+
+					$current_string = $cpu_strings[$i];
+					$current_count = 0;
+				}
+
+				if($physical_cpu_ids[$i] != $current_id)
+				{
+					$current_count++;
+					$current_id = $physical_cpu_ids[$i];
+				}
+			}
+		}
 	}
+
+	if(empty($info))
+		$info = "Unknown";
 
 	return $info;
 }
-function processor_frequency()
+function append_processor_frequency($cpu_string, $cpu_core = 0)
+{
+	if(($freq = processor_frequency($cpu_core)) > 0)
+	{
+		if(($strip_point = strpos($cpu_string, '@')) > 0)
+			$cpu_string = trim(substr($cpu_string, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
+
+		$cpu_string .= " @ " . $freq . "GHz";
+	}
+
+	return $cpu_string;
+}
+function processor_frequency($cpu_core = 0)
 {
 
-	if(is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
 	{
-		$info = trim(file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"));
+		$info = trim(file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"));
 		$info = pts_trim_double(intval($info) / 1000000, 2);
 	}
 	else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
 	{
-		$info = file_get_contents("/proc/cpuinfo");
-		$info = substr($info, strpos($info, "\ncpu MHz"));
-		$info = trim(substr($info, strpos($info, ":") + 1, strpos($info, "\n") - strpos($info, ":")));
+		$cpu_speeds = read_cpuinfo_values("cpu MHz");
+
+		if(count($cpu_speeds) > $cpu_core)
+			$info = $cpu_speeds[$cpu_core];
+		else
+			$info = $cpu_speeds[0];
+
 		$info = pts_trim_double(intval($info) / 1000, 2);
 	}
 	else
