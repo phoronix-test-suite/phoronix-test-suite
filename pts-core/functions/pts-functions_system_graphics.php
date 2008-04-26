@@ -1,5 +1,102 @@
 <?php
 
+function graphics_frequency_string()
+{
+	$freq = graphics_processor_frequency();
+	$freq_string = $freq[0] . '/' . $freq[1];
+
+	if($freq_string == "0/0")
+	{
+		$freq_string = "";
+	}
+	else
+	{
+		$freq_string = " (" . $freq_string . "MHz)";
+	}
+
+	return $freq_string;
+}
+function graphics_processor_temperature()
+{
+	$temp_c = read_nvidia_extension("GPUCoreTemp");
+
+	return $temp_c;
+}
+function graphics_antialiasing_level()
+{
+	$aa_level = "";
+
+	$nvidia_fsaa = read_nvidia_extension("FSAA");
+
+	if(!empty($nvidia_fsaa))
+	{
+		switch($nvidia_fsaa)
+		{
+			case 1:
+				$aa_level = "2x Bilinear";
+				break;
+			case 5:
+				$aa_level = "4x Bilinear";
+				break;
+			case 5:
+				$aa_level = "4x Bilinear";
+				break;
+			case 7:
+				$aa_level = "8x";
+				break;
+			case 8:
+				$aa_level = "16x";
+				break;
+			case 10:
+				$aa_level = "8xQ";
+				break;
+			case 12:
+				$aa_level = "16xQ";
+				break;
+		}
+	}
+	return $aa_level;
+}
+function graphics_anisotropic_level()
+{
+	$aa_level = "";
+
+	$nvidia_fsaa = read_nvidia_extension("LogAniso");
+
+	if(!empty($nvidia_fsaa))
+	{
+		switch($nvidia_fsaa)
+		{
+			case 1:
+				$aa_level = "2x";
+				break;
+			case 2:
+				$aa_level = "4x";
+				break;
+			case 3:
+				$aa_level = "8x";
+				break;
+			case 4:
+				$aa_level = "16x";
+				break;
+		}
+	}
+	return $aa_level;
+}
+function read_nvidia_extension($attribute)
+{
+	$info = shell_exec("nvidia-settings --query $attribute 2>&1");
+	$nv_info = "";
+
+	if(($pos = strpos($info, $attribute)) > 0)
+	{
+		$nv_info = substr($info, strpos($info, "):") + 3);
+		$nv_info = substr($nv_info, 0, strpos($nv_info, "\n"));
+		$nv_info = trim(substr($nv_info, 0, strrpos($nv_info, ".")));
+	}
+
+	return $nv_info;
+}
 function xrandr_screen_resolution()
 {
 	$info = shell_exec("xrandr 2>&1");
@@ -10,10 +107,20 @@ function xrandr_screen_resolution()
 		$info = trim(substr($info, strrpos($info, "\n")));
 		$info = substr($info, 0, strpos($info, " "));
 		$info = explode("x", $info);
+
+		if(count($info) != 2 && !is_int($info[0]) || !is_int($info[1]))
+			$info = "";
 	}
 
-	if($pos == FALSE || $info == "*0x" || empty($info))
-		$info = array("Unknown", "Unknown");
+	if($pos == FALSE || empty($info))
+	{
+		if(($nvidia = read_nvidia_extension("FrontendResolution")) != "")
+		{
+			$info = explode(',', $nvidia);
+		}
+		else
+			$info = array("Unknown", "Unknown");
+	}
 
 	return $info;
 }
@@ -35,6 +142,38 @@ function current_screen_height()
 {
 	$resolution = xrandr_screen_resolution();
 	return $resolution[1];
+}
+function graphics_processor_stock_frequency()
+{
+	$core_freq = 0;
+	$mem_freq = 0;
+
+	$freq = read_nvidia_extension("GPUDefault3DClockFreqs");
+
+	if(!empty($freq)) // NVIDIA GPU
+	{
+		$freq = explode(',', $freq);
+		$core_freq = $freq[0];
+		$mem_freq = $freq[1];
+	}
+
+	return array($core_freq, $mem_freq);
+}
+function graphics_processor_frequency()
+{
+	$core_freq = 0;
+	$mem_freq = 0;
+
+	$freq = read_nvidia_extension("GPUCurrentClockFreqs");
+
+	if(!empty($freq)) // NVIDIA GPU
+	{
+		$freq = explode(',', $freq);
+		$core_freq = $freq[0];
+		$mem_freq = $freq[1];
+	}
+
+	return array($core_freq, $mem_freq);
 }
 function graphics_processor_string()
 {
@@ -76,22 +215,18 @@ function graphics_subsystem_version()
 }
 function graphics_memory_capacity()
 {
-	// Attempt NVIDIA (Binary Driver) Video RAM detection
-	$info = shell_exec("nvidia-settings --query [gpu:0]/VideoRam 2>&1");
 	$video_ram = 128;
 
-	if(($pos = strpos($info, "VideoRam")) > 0)
+	if(($NVIDIA = read_nvidia_extension("VideoRam")) > 0) // NVIDIA blob
 	{
-		$info = trim(substr($info, strpos($info, "):") + 3));
-		$info = trim(substr($info, 0, strpos($info, "\n"))); // Double check in case the blob drops period or makes other change
-		$info = trim(substr($info, 0, strpos($info, ".")));
-		$video_ram = intval($info) / 1024;
+		$video_ram = $NVIDIA / 1024;
 	}
 	else if(is_file("/var/log/Xorg.0.log"))
 	{
 		// Attempt ATI (Binary Driver) Video RAM detection
+		// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
+
 		$info = shell_exec("cat /var/log/Xorg.0.log | grep VideoRAM");
-		// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDRX
 		if(($pos = strpos($info, "VideoRAM:")) > 0)
 		{
 			$info = substr($info, $pos + 10);

@@ -310,7 +310,7 @@ function pts_hw_string()
 	$hw_string .= "Motherboard Chipset: " . motherboard_chipset_string() . ", ";
 	$hw_string .= "System Memory: " . memory_mb_capacity() . "MB, ";
 	$hw_string .= "Disk Space: " . pts_posix_disk_total() . "GB, ";
-	$hw_string .= "Graphics: " . graphics_processor_string() . ", ";
+	$hw_string .= "Graphics: " . graphics_processor_string() . graphics_frequency_string() . ", ";
 	$hw_string .= "Screen Resolution: " . current_screen_resolution() . " ";
 
 	return $hw_string;
