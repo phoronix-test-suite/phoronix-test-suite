@@ -66,5 +66,11 @@
 			<PossibleNames>java-openjdk, icedtea, java, sun-java</PossibleNames>
 			<FileCheck>/usr/bin/java</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>7zip</GenericName>
+			<Title>7zr File Archiver</Title>
+			<PossibleNames>p7zip</PossibleNames>
+			<FileCheck>/usr/bin/7zr</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

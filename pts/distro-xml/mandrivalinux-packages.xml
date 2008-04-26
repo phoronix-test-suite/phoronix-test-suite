@@ -63,5 +63,10 @@
                         <PackageName>java-openjdk</PackageName>
                         <FileCheck>/usr/bin/java</FileCheck>
                 </Package>
+		<Package>
+			<GenericName>7zip</GenericName>
+			<PackageName>p7zip</PackageName>
+			<FileCheck>/usr/bin/7zr</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
