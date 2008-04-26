@@ -70,7 +70,7 @@ $PTS_GLOBAL_ID = 1;
 
 if(pts_process_active("phoronix-test-suite"))
 {
-	echo "\nWARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.\n";
+	pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
 }
 pts_process_register("phoronix-test-suite");
 register_shutdown_function("pts_process_remove", "phoronix-test-suite");
@@ -136,13 +136,16 @@ function pts_benchmark_type($identifier)
 {
 	if(empty($identifier))
 		return false;
+	$test_type = false;
 
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
-		return "BENCHMARK";
+		$test_type = "BENCHMARK";
 	else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
-		return "TEST_SUITE";
+		$test_type = "TEST_SUITE";
 	else
-		return false;
+		$test_type = false;
+
+	return $test_type;
 }
 function pts_copy($from, $to)
 {
@@ -448,6 +451,12 @@ function pts_clean_information_string($str)
 }
 function pts_string_header($heading)
 {
-	return "\n" . str_repeat('=', 42) . "\n" . $heading . "\n" . str_repeat('=', 42) . "\n\n";
+	$header_size = 36;
+
+	foreach(explode("\n", $heading) as $line)
+		if(($line_length = strlen($line)) > $header_size)
+			$header_size = $line_length;
+
+	return "\n" . str_repeat('=', $header_size) . "\n" . $heading . "\n" . str_repeat('=', $header_size) . "\n\n";
 }
 ?>

@@ -124,13 +124,6 @@ function pts_find_home($path)
 {
 	if(strpos($path, "~/") !== FALSE)
 	{
-	/*	$whoami = trim(shell_exec("whoami"));
-
-		if($whoami == "root")
-			$home_path = "/root";
-		else
-			$home_path = "/home/$whoami"; */
-
 		$home_path = pts_posix_userhome();
 		$path = str_replace("~/", $home_path, $path);
 	}

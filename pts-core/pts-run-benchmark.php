@@ -95,7 +95,7 @@ else
 	{
 		do
 		{
-			echo "Enter a name to save (or merge) these results: ";
+			echo "Enter a name to save these results: ";
 			$PROPOSED_FILE_NAME = trim(fgets(STDIN));
 		}while(empty($PROPOSED_FILE_NAME));
 

@@ -1,7 +1,5 @@
 <?php
 
-// TODO: Lots with merging results and validation
-
 function pts_find_file($file)
 {
 	if(is_file($file))
