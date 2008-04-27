@@ -88,6 +88,7 @@ switch($COMMAND)
 		else
 			echo "\n$ARG_1 was not found.\n";
 		break;
+	case "FORCE_INSTALL_BENCHMARK":
 	case "INSTALL_BENCHMARK":
 		if(empty($ARG_1))
 		{
@@ -96,6 +97,9 @@ switch($COMMAND)
 		}
 
 		require("pts-core/functions/pts-functions-install.php");
+
+		if($COMMAND == "FORCE_INSTALL_BENCHMARK")
+			define("PTS_FORCE_INSTALL", 1);
 
 		$ARG_1 = strtolower($ARG_1);
 

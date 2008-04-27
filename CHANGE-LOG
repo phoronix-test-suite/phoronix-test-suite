@@ -24,6 +24,7 @@ Phoronix Test Suite
 - Add remove-all-results option
 - Add in espeak text-to-speech engine test
 - Add in multicore suite of SMP-friendly tests
+- Add force-install option for installing benchmarks already installed
 
 Phoronix Test Suite 0.4.0
 April 24, 2008

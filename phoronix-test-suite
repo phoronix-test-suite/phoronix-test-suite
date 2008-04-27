@@ -37,6 +37,9 @@ case "$1" in
 "install")
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
 	;;
+"force-install")
+	$PHP_BIN pts-core/pts-run-cmd.php FORCE_INSTALL_BENCHMARK $2
+	;;
 "install-dependencies")
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_EXTERNAL_DEPENDENCIES $2
 	;;
