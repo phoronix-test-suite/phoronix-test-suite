@@ -81,7 +81,7 @@ function pts_monitor_statistics()
 		}
 		$avg = $total / count($m_array[$i]);
 
-		$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . $unit[$i] . "\nHigh: " . pts_trim_double($high) . $unit[$i] . "\n\nAverage: " . pts_trim_double($avg) . $unit[$i];
+		$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . $unit[$i] . "\nHigh: " . pts_trim_double($high) . $unit[$i] . "\nAverage: " . pts_trim_double($avg) . $unit[$i];
 	}
 
 	if(trim($info_report) != "")
@@ -115,6 +115,7 @@ function pts_monitor_statistics()
 				$t->loadGraphVersion(PTS_VERSION);
 				$t->save_graph(PTS_USER_DIR . strtolower(PTS_CODENAME) . '/' . THIS_RUN_TIME . '-' . $image_count . ".png");
 				$t->renderGraph();
+				//display_web_browser(PTS_USER_DIR . strtolower(PTS_CODENAME) . '/' . THIS_RUN_TIME . '-' . $image_count . ".png");
 				$image_count++;
 			}
 		}

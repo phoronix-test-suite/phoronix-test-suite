@@ -322,7 +322,7 @@ class pts_Graph
 		if(count($this->graph_data_title) > 1)
 		{
 			$num_key_lines = ceil(count($this->graph_data_title) / 4);
-			$this->graph_top_start = $this->graph_top_start + ($num_key_lines * 10);
+			$this->graph_top_start = $this->graph_top_start + 8 + ($num_key_lines * 11);
 		}
 
 		// Make room for tick markings, left hand side
@@ -401,7 +401,7 @@ class pts_Graph
 			return;
 
 		$key_counter = 0;
-		$component_y = $this->graph_top_start - 11;
+		$component_y = $this->graph_top_start - 20;
 		$this->reset_paint_index();
 
 		for($i = 0; $i < count($this->graph_data_title); $i++)
