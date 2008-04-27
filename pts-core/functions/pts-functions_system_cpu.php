@@ -12,7 +12,11 @@ function read_cpuinfo_values($attribute)
 		{
 			$line = explode(": ", $line);
 			$this_attribute = trim($line[0]);
-			$this_value = trim($line[1]);
+
+			if(count($line) > 1)
+				$this_value = trim($line[1]);
+			else
+				$this_value = "";
 
 			if($this_attribute == $attribute)
 				array_push($cpuinfo_matches, $this_value);
