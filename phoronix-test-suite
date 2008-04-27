@@ -58,7 +58,7 @@ case "$1" in
 	$PHP_BIN pts-core/pts-run-benchmark.php $2 BATCH
 	;;
 "merge-results")
-	$PHP_BIN pts-core/pts-merge-results.php $2 $3 $4
+	$PHP_BIN pts-core/pts-run-cmd.php MERGE_RESULTS $2 $3 $4
 	;;
 "remove-result")
 	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_RESULT $2
