@@ -3,7 +3,6 @@
 - Add More Benchmarks!
 - Provide Warnings For Major Things Possibly Influencing Results
 	- i.e. if EIST / Cool n Quiet are enabled
-- Use new (larger) Wav file for benchmarks... internal Phoronix WAV file used is copyrighted music. Current PTS One is too small for reliable results.
 - "Optimization Tips"
 - Change locking system away from time-based but to PID based
 - Clean up tests scripts

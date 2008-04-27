@@ -74,6 +74,7 @@ function pts_install_benchmark($Benchmark)
 			$package_url = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/URL");
 			$package_md5 = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/MD5");
 			$package_filename = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/FileName");
+			$download_to = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/DownloadTo");
 			$header_displayed = false;
 
 			for($i = 0; $i < count($package_url); $i++)
@@ -106,7 +107,13 @@ function pts_install_benchmark($Benchmark)
 							echo $url = trim(array_pop($urls));
 
 							echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
-							echo shell_exec("cd " . BENCHMARK_ENV_DIR . $Benchmark . "/" . " && wget " . $url . " -O " . $package_filename[$i]);
+
+							if($download_to[$i] == "SHARED")
+								$download_location = BENCHMARK_ENV_DIR . "pts-shared/";
+							else
+								$download_location = BENCHMARK_ENV_DIR . $Benchmark . "/";
+
+							echo shell_exec("cd " . $download_location . " && wget " . $url . " -O " . $package_filename[$i]);
 
 
 							if((is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) != $package_md5[$i]) || !is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]))
