@@ -1,6 +1,7 @@
 <?php
 
 require("pts-core/functions/pts-functions.php");
+require("pts-core/functions/pts-functions-extra.php");
 
 $COMMAND = $argv[1];
 
@@ -12,21 +13,23 @@ if(isset($argv[3]))
 
 switch($COMMAND)
 {
+	case "REMOVE_ALL_RESULTS":
+		$remove_all = pts_bool_question("Are you sure you wish to remove all saved results (Y/n)?", true);
+
+		if($remove_all)
+		{
+			foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $benchmark_file)
+			{
+				$saved_identifier = array_pop(explode('/', dirname($benchmark_file)));
+				pts_remove_saved_result($saved_identifier);
+			}
+		}
+		break;
 	case "REMOVE_RESULT":
 		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
 		{
-			unlink(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");
-
-			foreach(glob(SAVE_RESULTS_DIR . $ARG_1 . "/result-graphs/*.png") as $remove_file)
-				unlink($remove_file);
-
-			foreach(glob(SAVE_RESULTS_DIR . $ARG_1 . "/test-*.xml") as $remove_file)
-				unlink($remove_file);
-
-			unlink(SAVE_RESULTS_DIR . $ARG_1 . "/pts-results-viewer.xsl");
-			rmdir(SAVE_RESULTS_DIR . $ARG_1 . "/result-graphs/");
-			rmdir(SAVE_RESULTS_DIR . $ARG_1);
-			echo "\nRemoved: $ARG_1\n";
+			echo "\n";
+			pts_remove_saved_result($ARG_1);
 		}
 		else
 			echo "\nThis result doesn't exist!\n";
@@ -63,12 +66,12 @@ switch($COMMAND)
 			if(!empty($title))
 			{
 				echo $title . "\n";
-				printf("Saved Name: %-15ls Test: %-18ls \n", $saved_identifier, $suite);
+				printf("Saved Name: %-18ls Test: %-18ls \n", $saved_identifier, $suite);
 
 				foreach($identifiers as $id)
 					echo "\t- $id\n";
 
-				echo "\n\n";
+				echo "\n";
 			}
 		}
 		break;

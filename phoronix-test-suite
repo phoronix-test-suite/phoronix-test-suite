@@ -60,6 +60,9 @@ case "$1" in
 "remove-result")
 	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_RESULT $2
 	;;
+"remove-all-results")
+	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_ALL_RESULTS
+	;;
 "upload")
 	$PHP_BIN pts-core/pts-run-cmd.php UPLOAD_RESULT $2
 	;;
@@ -109,10 +112,11 @@ case "$1" in
 	echo "benchmark <suite OR test OR saved file>: Same as manually running install and then run"
 	echo "batch-benchmark <suite OR test OR saved file>: Same as manually running install and then run in Batch Mode"
 	echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets"
-	echo "remove-result <Saved File>: Remove this saved result file and associated files"
 	echo "list-tests: List all Phoronix Test Suite test profiles"
 	echo "list-suites: List all Phoronix Test Suites"
 	echo "list-results: List all saved results"
+	echo "remove-result <Saved File>: Remove this saved result file and associated files"
+	echo "remove-all-results: Removes all saved results and associated files"
 	echo "suite-info: Show tests in a suite and other information about the suite"
 	echo "test-info: Show information about a test"
 	echo "system-info: Dump detected software and hardware information detected by PTS"

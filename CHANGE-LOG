@@ -21,6 +21,7 @@ Phoronix Test Suite
 - Add MONITOR= environmental variable. If MONITOR=gpu.temp, the low, average, and high temperatures will be reported at end of test
 - Add a lot more sensor and monitoring support... Add MONITOR=sys.temp and MONITOR=cpu.temp. Multiple sensors supported that are delimited by comma (depends upon LM_Sensors)
 - Clean up pts-results-viewer as well as switching to Liberation Sans for the font in graph rendering and clean up graph alignment
+- Add remove-all-results option
 
 Phoronix Test Suite 0.4.0
 April 24, 2008
