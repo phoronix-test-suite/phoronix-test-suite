@@ -22,6 +22,8 @@ Phoronix Test Suite
 - Add a lot more sensor and monitoring support... Add MONITOR=sys.temp and MONITOR=cpu.temp. Multiple sensors supported that are delimited by comma (depends upon LM_Sensors)
 - Clean up pts-results-viewer as well as switching to Liberation Sans for the font in graph rendering and clean up graph alignment
 - Add remove-all-results option
+- Add in espeak text-to-speech engine test
+- Add in multi-core suite of SMP-friendly tests
 
 Phoronix Test Suite 0.4.0
 April 24, 2008

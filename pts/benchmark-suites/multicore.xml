@@ -1,0 +1,33 @@
+<PTSuite>
+	<PhoronixTestSuite>
+		<Version>0.4</Version>
+		<BenchmarkType>Processor</BenchmarkType>
+		<Title>Multi-Core Tests</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite consists of tests that are able to take advantage of multi-core and/or multi-processor systems. This suite can be used on a single core system, however, it's intended for systems with multiple processing cores.</Description>
+	</PhoronixTestSuite>
+	<PTSBenchmark>
+		<Benchmark>build-mplayer</Benchmark>
+		<Description>Time To Compile</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>build-php</Benchmark>
+		<Description>Time To Compile</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>build-imagemagick</Benchmark>
+		<Description>Time To Compile</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>sunflow</Benchmark>
+		<Description>Image Synthesis w/ Raytracing</Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>compress-7zip</Benchmark>
+		<Description></Description>
+	</PTSBenchmark>
+	<PTSBenchmark>
+		<Benchmark>compress-pbzip2</Benchmark>
+		<Description></Description>
+	</PTSBenchmark>
+</PTSuite>
