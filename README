@@ -6,7 +6,7 @@ Phoronix Test Suite is licensed under the GNU GPLv3. See COPYING file for more d
 
 Patches, new profiles, etc welcome. Non-technical support messages can be directed to phoronix [at] phoronix.com.
 
-The default font that ships with the Phoronix Test Suite for the results graphing is from the DejaVu font collection: http://dejavu.sourceforge.net/
+The default font that ships with the Phoronix Test Suite for the results graphing is from the Liberation (GPL Licensed) font collection: https://www.redhat.com/promo/fonts/
 
 Phoronix Test Suite requires PHP 5 to be installed as well as the PHP GD graphics module.
 

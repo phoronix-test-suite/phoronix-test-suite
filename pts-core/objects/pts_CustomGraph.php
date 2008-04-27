@@ -27,7 +27,8 @@ class pts_CustomGraph extends pts_Graph
 		$this->graph_color_paint = explode(", ", pts_read_graph_config("PhoronixTestSuite/Graphs/Colors/ObjectPaint", null, $read_config)); // Colors to use for the bars / lines, one color for each key
 
 		// Text
-		$this->graph_font = pts_read_graph_config("PhoronixTestSuite/Graphs/Font/Type", null, $read_config); // TTF file name
+		$this->graph_watermark_text = pts_read_graph_config("PhoronixTestSuite/Graphs/Other/Watermark", null, $read_config); // watermark
+		$this->graph_font = pts_read_graph_config("PhoronixTestSuite/Graphs/Font/FontType", null, $read_config); // TTF file name
 		$this->graph_font_size_heading = pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/Headers", null, $read_config); // Font size of headings
 		$this->graph_font_size_bars = pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/ObjectText", null, $read_config); // Font size for text on the bars/objects
 		$this->graph_font_size_identifiers = pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/Identifiers", null, $read_config); // Font size of identifiers

@@ -26,9 +26,9 @@ class pts_Graph
 	var $graph_attr_height = 300; // Graph height
 	var $graph_attr_big_border = FALSE; // Border around graph or not
 
-	var $graph_left_start = 27; // Distance in px to start graph from left side
+	var $graph_left_start = 28; // Distance in px to start graph from left side
 	var $graph_left_end_opp = 10; // Distance in px to end graph from right side
-	var $graph_top_start = 59; // Distance in px to start graph from top side
+	var $graph_top_start = 56; // Distance in px to start graph from top side
 	var $graph_top_end_opp = 22; // Distance in px to end graph from bottom side
 
 	// Colors
@@ -45,7 +45,7 @@ class pts_Graph
 	var $graph_color_paint = array("#3B433A", "#BB2413", "#FF9933", "#006C00", "#5028CA"); // Colors to use for the bars / lines, one color for each key
 
 	// Text
-	var $graph_font = "DejaVuSans.ttf"; // TTF file name
+	var $graph_font = "Sans.ttf"; // TTF file name
 	var $graph_font_size_tick_mark = 10; // Tick mark size
 	var $graph_font_size_key = 9; // Size of height for keys
 	var $graph_font_size_heading = 18; // Font size of headings
@@ -333,11 +333,11 @@ class pts_Graph
 		}
 		
 		// Text
-		$this->gd_write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 6);
-		$this->gd_write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 2, $this->graph_top_start - 6);
+		$this->gd_write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 7);
+		$this->gd_write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 1, $this->graph_top_start - 7);
 		$this->gd_write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 6);
-		$this->gd_write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 36);
-		$this->gd_write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 4, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
+		$this->gd_write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 31);
+		$this->gd_write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
 	}
 	protected function render_graph_value_ticks()
 	{
@@ -353,7 +353,7 @@ class pts_Graph
 
 			imageline($this->graph_image, $px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
 
-			$this->gd_write_text_right($display_value, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 3, $px_from_top);
+			$this->gd_write_text_right($display_value, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2);
 
 			if($i != 0 && $this->graph_type == "LINE_GRAPH")
 			{

@@ -50,7 +50,7 @@ class pts_BarGraph extends pts_CustomGraph
 
 			imageline($this->graph_image, $px_bound_right, $px_from_top_start, $px_bound_right, $px_from_top_end, $this->graph_color_notches);
 
-			$this->gd_write_text_center($this->graph_identifiers[$i], $font_size, $this->graph_color_headers, $px_bound_left + ceil($identifier_width / 2), $px_from_top_end - 1, FALSE, TRUE);
+			$this->gd_write_text_center($this->graph_identifiers[$i], $font_size, $this->graph_color_headers, $px_bound_left + ceil($identifier_width / 2), $px_from_top_end - 5, FALSE, TRUE);
 		}
 	}
 	protected function render_graph_bars()

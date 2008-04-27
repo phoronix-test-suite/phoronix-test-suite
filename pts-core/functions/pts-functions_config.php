@@ -79,11 +79,12 @@ function pts_graph_config_init()
 	$config->addXmlObject("PhoronixTestSuite/Graphs/FontSize/Axis", 3, pts_read_graph_config("PhoronixTestSuite/Graphs/FontSize/Axis", "11", $read_config));
 
 	// Text Font
-	$config->addXmlObject("PhoronixTestSuite/Graphs/Font/Type", 4, pts_read_graph_config("PhoronixTestSuite/Graphs/Font/Type", "DejaVuSans.ttf", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Font/FontType", 4, pts_read_graph_config("PhoronixTestSuite/Graphs/Font/FontType", "Sans.ttf", $read_config));
 
 	// Other
 	$config->addXmlObject("PhoronixTestSuite/Graphs/Other/RenderBorder", 4, pts_read_graph_config("PhoronixTestSuite/Graphs/Other/RenderBorder", "FALSE", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Graphs/Other/NumberOfMarks", 4, pts_read_graph_config("PhoronixTestSuite/Graphs/Other/NumberOfMarks", "6", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Graphs/Other/Watermark", 4, pts_read_graph_config("PhoronixTestSuite/Graphs/Other/Watermark", "PHORONIX-TEST-SUITE.COM", $read_config));
 
 	file_put_contents(PTS_USER_DIR . "graph-config.xml", $config->getXML());
 }

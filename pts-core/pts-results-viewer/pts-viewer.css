@@ -5,7 +5,7 @@ body
 	padding: 0;
 	font-family: arial, helvetica, sans-serif;
 	font-size: 13px;
-	background-color: #FFF;
+	background-color: #F9F9F9;
 	color: #000;
 }
 a
@@ -62,6 +62,7 @@ div#pts_container
 	border: solid #EEE;
 	border-width: 0 1px;
 	min-height: 700px;
+	background-color: #FFF;
 }
 div.pts_box
 {
