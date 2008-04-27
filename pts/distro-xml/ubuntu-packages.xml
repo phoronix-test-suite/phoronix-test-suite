@@ -65,5 +65,10 @@
 			<PackageName>openjdk-6-jre</PackageName>
 			<FileCheck>/usr/bin/java</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>portaudio-development</GenericName>
+			<PackageName>libportaudio-dev</PackageName>
+			<FileCheck>/usr/include/portaudio.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

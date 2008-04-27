@@ -66,5 +66,11 @@
 			<PossibleNames>java-openjdk, icedtea, java, sun-java</PossibleNames>
 			<FileCheck>/usr/bin/java</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>portaudio-development</GenericName>
+			<Title>PortAudio Development Files</Title>
+			<PossibleNames>libportaudio-dev</PossibleNames>
+			<FileCheck>/usr/include/portaudio.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
