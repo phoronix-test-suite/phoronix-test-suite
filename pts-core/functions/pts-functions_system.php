@@ -227,6 +227,14 @@ function system_temperature()
 	$temp_c = read_linux_sensors("Sys Temp");
 
 	if(empty($temp_c))
+	{
+		$temp_c = read_acpi_value("/thermal_zone/THM1/temperature", "temperature"); // if it is THM1 that is for the system, in most cases it should be
+
+		if(($end = strpos($temp_c, ' ')) > 0)
+			$temp_c = substr($temp_c, 0, $end);
+	}
+
+	if(empty($temp_c))
 		$temp_c = -1;
 
 	return $temp_c;
@@ -239,5 +247,29 @@ function pts_record_sys_temperature()
 	if($temp != -1)
 		array_push($SYS_TEMPERATURE, $temp);
 }
+function read_acpi_value($point, $match)
+{
+	$value = "";
 
+	if(is_file("/proc/acpi" . $point))
+	{
+		$cpuinfo_lines = explode("\n", file_get_contents("/proc/acpi" . $point));
+
+		for($i = 0; $i < count($cpuinfo_lines) && $value == ""; $i++)
+		{
+			$line = explode(": ", $cpuinfo_lines[$i]);
+			$this_attribute = trim($line[0]);
+
+			if(count($line) > 1)
+				$this_value = trim($line[1]);
+			else
+				$this_value = "";
+
+			if($this_attribute == $match)
+				$value = $this_value;
+		}
+	}
+
+	return $value;
+}
 ?>

@@ -130,6 +130,14 @@ function processor_temperature()
 	$temp_c = read_linux_sensors("CPU Temp");
 
 	if(empty($temp_c))
+	{
+		$temp_c = read_acpi_value("/thermal_zone/THM0/temperature", "temperature"); // if it is THM0 that is for the CPU, in most cases it should be
+
+		if(($end = strpos($temp_c, ' ')) > 0)
+			$temp_c = substr($temp_c, 0, $end);
+	}
+
+	if(empty($temp_c))
 		$temp_c = -1;
 
 	return $temp_c;
@@ -142,5 +150,4 @@ function pts_record_cpu_temperature()
 	if($temp != -1)
 		array_push($CPU_TEMPERATURE, $temp);
 }
-
 ?>
