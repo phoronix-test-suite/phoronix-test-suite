@@ -93,9 +93,6 @@ case "$1" in
 "diagnostics")
 	$PHP_BIN pts-core/pts-run-cmd.php DIAGNOSTICS_DUMP
 	;;
-"remote-comparison")
-	$PHP_BIN pts-core/pts-run-cmd.php REMOTE_COMPARISON $2 $3
-	;;
 "initial-config")
 	$PHP_BIN pts-core/pts-run-cmd.php INITIAL_CONFIG
 	;;
