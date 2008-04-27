@@ -23,7 +23,7 @@ Phoronix Test Suite
 - Clean up pts-results-viewer as well as switching to Liberation Sans for the font in graph rendering and clean up graph alignment
 - Add remove-all-results option
 - Add in espeak text-to-speech engine test
-- Add in multi-core suite of SMP-friendly tests
+- Add in multicore suite of SMP-friendly tests
 
 Phoronix Test Suite 0.4.0
 April 24, 2008

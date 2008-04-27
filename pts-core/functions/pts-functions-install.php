@@ -84,7 +84,7 @@ function pts_install_benchmark($Benchmark)
 					$package_filename[$i] = basename($package_url[$i]);
 				}
 
-				if(!is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]))
+				if((!is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED") || (!is_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED"))
 				{
 					if(!$header_displayed)
 					{
