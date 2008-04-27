@@ -181,6 +181,33 @@ function pts_copy($from, $to)
 	if(!is_file($to) || md5_file($from) != md5_file($to))
 		copy($from, $to);
 }
+function pts_save_user_file($save_name = null, $contents = null)
+{
+	$extension = strtolower(PTS_CODENAME);
+
+	if(!is_dir(PTS_USER_DIR . $extension))
+		mkdir(PTS_USER_DIR . $extension);
+
+	if(!empty($save_name) && !empty($contents))
+		file_put_contents(PTS_USER_DIR . $extension . '/' . $save_name, $contents);
+}
+function is_gd_available()
+{
+	if(!extension_loaded("gd"))
+	{
+	/*	if(dl("gd.so"))
+		{
+			$gd_available = true;
+		}
+		else	*/
+			$gd_available = false;
+			echo "\nThe PHP GD extension must be loaded in order for the graphs to display!\n";
+	}
+	else
+		$gd_available = true;
+
+	return $gd_available;
+}
 function pts_save_result($save_to = null, $save_results = null, $directory = null)
 {
 	if($directory == null)
@@ -218,20 +245,7 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 
 		if($save_name == "composite")
 		{
-			if(!extension_loaded("gd"))
-			{
-			/*	if(dl("gd.so"))
-				{
-					$gd_available = true;
-				}
-				else	*/
-					$gd_available = false;
-					echo "\nThe PHP GD extension must be loaded in order for the graphs to display!\n";
-			}
-			else
-				$gd_available = true;
-
-			if($gd_available)
+			if(is_gd_available())
 			{
 				if(!is_dir($save_to_dir . "/result-graphs"))
 				{
@@ -503,6 +517,8 @@ function pts_monitor_statistics()
 	$type = array();
 	$unit = array();
 	$m_array = array();
+	$type_index = array();
+	$type_index["THERMAL"] = array();
 
 	if(isset($GLOBALS["GPU_TEMPERATURE"]))
 	{
@@ -514,6 +530,7 @@ function pts_monitor_statistics()
 			array_push($type, "Thermal");
 			array_push($unit, "°C");
 			array_push($m_array, $this_array);
+			array_push($type_index["THERMAL"], count($m_array) - 1);
 		}
 	}
 	if(isset($GLOBALS["CPU_TEMPERATURE"]))
@@ -526,6 +543,7 @@ function pts_monitor_statistics()
 			array_push($type, "Thermal");
 			array_push($unit, "°C");
 			array_push($m_array, $this_array);
+			array_push($type_index["THERMAL"], count($m_array) - 1);
 		}
 	}
 	if(isset($GLOBALS["SYS_TEMPERATURE"]))
@@ -538,12 +556,15 @@ function pts_monitor_statistics()
 			array_push($type, "Thermal");
 			array_push($unit, "°C");
 			array_push($m_array, $this_array);
+			array_push($type_index["THERMAL"], count($m_array) - 1);
 		}
 	}
 
 	$info_report = "";
 	for($i = 0; $i < count($m_array); $i++)
 	{
+		// Calculate statistics
+
 		if($i > 0)
 			$info_report .= "\n\n";
 
@@ -566,6 +587,39 @@ function pts_monitor_statistics()
 	}
 
 	if(trim($info_report) != "")
+	{
+		pts_save_user_file();
+		$image_count = 0;
+		foreach($type_index as $key => $sub_array)
+		{
+			$graph_title = $type[$sub_array[0]] . " Monitor";
+			$graph_unit = $unit[$sub_array[0]];
+			$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
+			$sub_title = date("F j, Y - g:i A");
+
+			$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
+
+			$first_run = true;
+			foreach($sub_array as $id_point)
+			{
+				$t->loadGraphValues($m_array[$id_point], $device[$id_point]);
+
+				if($first_run)
+				{
+					$t->loadGraphIdentifiers($m_array[$id_point]);
+					$t->hideGraphIdentifiers();
+					$first_run = false;
+				}
+			}
+
+			$t->loadGraphVersion(PTS_VERSION);
+			$t->save_graph(PTS_USER_DIR . strtolower(PTS_CODENAME) . '/' . THIS_RUN_TIME . '-' . $image_count . ".png");
+			$t->renderGraph();
+			$image_count++;
+		}
+
+		// terminal output
 		echo pts_string_header($info_report);
+	}
 }
 ?>

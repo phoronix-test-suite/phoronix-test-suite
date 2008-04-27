@@ -25,6 +25,7 @@ Phoronix Test Suite
 - Add in espeak text-to-speech engine test
 - Add in multicore suite of SMP-friendly tests
 - Add force-install option for installing benchmarks already installed
+- Add line graphing support of monitor results
 
 Phoronix Test Suite 0.4.0
 April 24, 2008

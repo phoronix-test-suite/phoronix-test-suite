@@ -61,6 +61,7 @@ class pts_Graph
 
 	// Not user-friendly changes below this line
 	var $graph_body_image = FALSE;
+	var $graph_hide_identifiers = FALSE;
 	var $graph_type = "GRAPH";
 	var $graph_image;
 	var $graph_maximum_value;
@@ -104,6 +105,10 @@ class pts_Graph
 	public function loadGraphIdentifiers($data_array)
 	{
 		$this->graph_identifiers = $data_array;
+	}
+	public function hideGraphIdentifiers()
+	{
+		$this->graph_hide_identifiers = true;
 	}
 	public function loadGraphVersion($data)
 	{
@@ -372,7 +377,10 @@ class pts_Graph
 	{
 		$this->render_graph_init();
 		$this->render_graph_base();
-		$this->render_graph_identifiers();
+
+		if(!$this->graph_hide_identifiers)
+			$this->render_graph_identifiers();
+
 		$this->render_graph_value_ticks();
 		$this->render_graph_key();
 		$this->render_graph_result();
