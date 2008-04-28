@@ -179,6 +179,7 @@ function pts_install_benchmark($Benchmark)
 		}
 		else
 		{
+			file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", 0);
 			echo ucwords($Benchmark) . " has no installation script, skipping installation routine...\n";
 		}
 	}

@@ -34,6 +34,8 @@ if(empty($TO_RUN))
 	echo "\nThe benchmark, suite name, or saved file name must be supplied.\n";
 	exit;
 }
+// Make sure tests are installed
+pts_verify_test_installation($TO_RUN);
 
 pts_monitor_update(); // Update sensors, etc
 

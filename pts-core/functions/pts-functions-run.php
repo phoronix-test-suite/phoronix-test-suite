@@ -1,5 +1,67 @@
 <?php
 
+function pts_verify_test_installation($TO_RUN)
+{
+	$needs_installing = array();
+	pts_recurse_verify_installation($TO_RUN, $needs_installing);
+
+	if(count($needs_installing) > 0)
+	{
+		$needs_installing = array_unique($needs_installing);
+	
+		if(count($needs_installing) == 1)
+		{
+			echo pts_string_header(ucwords($needs_installing[0]) . " isn't installed on this system.\nTo install this test, run: phoronix-test-suite install " . $needs_installing[0]);
+		}
+		else
+		{
+			$message = "Multiple tests need to be installed before proceeding:\n\n";
+			foreach($needs_installing as $single_package)
+				$message .= "- " . $single_package . "\n";
+
+			$message .= "\nTo install these tests, run: phoronix-test-suite install " . $TO_RUN;
+
+			echo pts_string_header($message);
+		}
+		exit(0);
+	}
+}
+function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
+{
+	$type = pts_benchmark_type($TO_VERIFY);
+
+	if($type == "BENCHMARK")
+	{
+		if(!is_file(BENCHMARK_ENV_DIR . $TO_VERIFY . "/pts-install"))
+			array_push($NEEDS_INSTALLING, $TO_VERIFY);
+	}
+	else if($type == "TEST_SUITE")
+	{
+		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_VERIFY . ".xml"));
+		$suite_benchmarks = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
+
+		foreach($suite_benchmarks as $benchmark)
+			pts_recurse_verify_installation($benchmark);
+	}
+	else if(is_file(pts_input_correct_results_path($TO_VERIFY)))
+	{
+		$xml_parser = new tandem_XmlReader(file_get_contents(pts_input_correct_results_path($TO_VERIFY)));
+		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestName");
+
+		foreach($suite_benchmarks as $benchmark)
+			pts_recurse_verify_installation($benchmark);
+	}
+	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_VERIFY")) == "REMOTE_FILE")
+	{
+		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_VERIFY"));
+		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestName");
+
+		foreach($suite_benchmarks as $benchmark)
+			pts_recurse_verify_installation($benchmark);
+	}
+	else
+		echo "\nNot recognized: $TO_VERIFY.\n";
+}
 function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
 {
 	for($i = 0; $i < count($benchmarks_array); $i++)
