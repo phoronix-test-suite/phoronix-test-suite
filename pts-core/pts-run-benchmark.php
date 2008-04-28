@@ -274,7 +274,7 @@ if($SAVE_RESULTS)
 
 		if($upload_results)
 		{
-			echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual-Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
+			echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
 			$tags_input = trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
 
 			if(empty($tags_input))
@@ -321,7 +321,13 @@ if($SAVE_RESULTS)
 				$tags_input = implode(", ", $tags_array);
 			}
 
-			echo "\nResults Uploaded To: " . pts_global_upload_result(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml", $tags_input) . "\n";
+			$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml", $tags_input);
+
+			if(!empty($upload_url))
+			{
+				echo "\nResults Uploaded To: " . $upload_url . "\n";
+				display_web_browser($upload_url, "Do you want to launch PTS Global");
+			}
 		}
 
 		echo "\n";
