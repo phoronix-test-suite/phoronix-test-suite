@@ -35,6 +35,7 @@ Phoronix Test Suite
 - Immediate detection when attempting to a run a test to see whether or not it's installed. If it's not, let the user know what to do and exit
 - Report to test notes if Intel EIST or AMD Cool n Quiet / PowerNOW or another CPU power-savings/frequency-scaling technology was in use
 - Report to test notes if the system was running on battery power
+- End-User agreement shows when Phoronix Test Suite runs for the first time or when the agreement has been modified
 - Other bug fixes
 
 Phoronix Test Suite 0.4.0

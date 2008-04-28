@@ -20,6 +20,22 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 		$file = "";
 	$read_config = new tandem_XmlReader($file);
 
+	$UserAgreement = pts_read_user_config("PhoronixTestSuite/Trondheim/UserAgreement", "", $read_config);
+	$UserAgreement_MD5 = md5_file(ETC_DIR . "user-agreement.txt");
+
+	if($UserAgreement != $UserAgreement_MD5)
+	{
+		echo pts_string_header("PHORONIX TEST SUITE - WELCOME MESSAGE");
+		echo wordwrap(file_get_contents(ETC_DIR . "user-agreement.txt"), 65);
+		$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
+
+		if($agree)
+			echo "\n";
+		else
+			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
+	}
+	
+
 	if($UserName == NULL)
 		$UserName = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UserName", "Default User", $read_config);
 	if($UploadKey == NULL)
@@ -38,6 +54,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/OpenBrowser", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/OpenBrowser", "FALSE", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/UploadResults", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/UploadResults", "TRUE", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Trondheim/UserAgreement", 4, $UserAgreement_MD5);
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
 }
