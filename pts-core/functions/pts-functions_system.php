@@ -272,4 +272,14 @@ function read_acpi_value($point, $match)
 
 	return $value;
 }
+function pts_report_power_mode()
+{
+	$power_state = read_acpi_value("/ac_adapter/AC/state", "state");
+	$return_status = "";
+
+	if($power_state == "off-line")
+		$return_status = "This computer was running on battery power.";
+
+	return $return_status;
+}
 ?>

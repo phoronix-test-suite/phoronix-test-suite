@@ -250,10 +250,15 @@ if($SAVE_RESULTS)
 
 	// Power Saving Technologies?
 	$cpu_savings = pts_processor_power_savings_enabled();
-	
 	if(!empty($cpu_savings))
 	{
 		$test_notes .= " \n" . $cpu_savings;
+	}
+
+	$cpu_mode = pts_report_power_mode();
+	if(!empty($cpu_mode))
+	{
+		$test_notes .= " \n" . $cpu_mode;
 	}
 
 	$id = pts_request_new_id();
