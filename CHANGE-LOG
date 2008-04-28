@@ -33,6 +33,7 @@ Phoronix Test Suite
 - Have a pts-monitor-viewer with basic functionality working. Prompt to open pts-monitor-viewer in web browser, if MONITOR results were recorded
 - Add basic auto-tagging support for PTS Global if no tags are supplied
 - Immediate detection when attempting to a run a test to see whether or not it's installed. If it's not, let the user know what to do and exit
+- Report to test notes if Intel EIST or AMD Cool n Quiet / PowerNOW or another CPU power-savings/frequency-scaling technology was in use
 - Other bug fixes
 
 Phoronix Test Suite 0.4.0

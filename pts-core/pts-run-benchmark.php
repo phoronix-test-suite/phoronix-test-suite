@@ -248,6 +248,14 @@ if($SAVE_RESULTS)
 			$test_notes .= " \nAntialiasing: $aa_level Anisotropic Filtering: $af_level.";
 	}
 
+	// Power Saving Technologies?
+	$cpu_savings = pts_processor_power_savings_enabled();
+	
+	if(!empty($cpu_savings))
+	{
+		$test_notes .= " \n" . $cpu_savings;
+	}
+
 	$id = pts_request_new_id();
 	$RESULTS->setXslBinding("pts-results-viewer.xsl");
 	$RESULTS->addXmlObject("PhoronixTestSuite/System/Hardware", $id, pts_hw_string());

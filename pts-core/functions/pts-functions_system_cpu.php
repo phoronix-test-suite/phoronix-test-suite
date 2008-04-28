@@ -150,4 +150,28 @@ function pts_record_cpu_temperature()
 	if($temp != -1)
 		array_push($CPU_TEMPERATURE, $temp);
 }
+function pts_processor_power_savings_enabled()
+{
+	$return_string = "";
+
+	if(is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq") && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"))
+	{
+		sleep(1); // try to get it to drop power levels
+		$cur = trim(file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"));
+		$max = trim(file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"));
+
+		if($cur < $max) // TODO: improved test, since the CPU could already be maxed from other processes running
+		{
+			$cpu = processor_string();
+
+			if(strpos($cpu, "AMD") !== FALSE)
+				$return_string = "AMD Cool 'n' Quiet or PowerNOW! was enabled.";
+			else if(strpos($cpu, "Intel") !== FALSE)
+				$return_string = "Intel SpeedStep Technology was enabled.";
+			else
+				$return_string = "The CPU was in a power-savings mode.";
+		}
+	}
+	return $return_string;
+}
 ?>

@@ -1,7 +1,5 @@
 - Rewrite and finish GUI component
 - Verbose output of all system details, benchmark dumps, etc
 - Add More Benchmarks!
-- Provide Warnings For Major Things Possibly Influencing Results
-	- i.e. if EIST / Cool n Quiet are enabled
 - "Optimization Tips"
 - Change locking system away from time-based but to PID based
