@@ -489,5 +489,10 @@ function pts_string_header($heading)
 
 	return "\n" . str_repeat('=', $header_size) . "\n" . $heading . "\n" . str_repeat('=', $header_size) . "\n\n";
 }
+function pts_exit($string = "")
+{
+	echo $string;
+	exit(0);
+}
 
 ?>

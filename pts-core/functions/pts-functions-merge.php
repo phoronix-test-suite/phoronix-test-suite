@@ -10,8 +10,7 @@ function pts_find_file($file)
 		$USE_FILE = "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$file";
 	else
 	{
-		echo "File: " . $file . " couldn't be found. Exiting...";
-		exit(0);
+		pts_exit("File: " . $file . " couldn't be found. Exiting...");
 	}
 
 	return $USE_FILE;
@@ -90,13 +89,11 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	{
 		if($original_suite_name != $new_suite_name)
 		{
-			echo "Merge Failed! The test(s) don't match: $original_suite_name - $new_suite_name\n";
-			exit(0);
+			pts_exit("Merge Failed! The test(s) don't match: $original_suite_name - $new_suite_name\n");
 		}
 		if($original_suite_version != $new_suite_version)
 		{
-			echo "Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n";
-			exit(0);
+			pts_exit("Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n");
 		}
 	}
 

@@ -23,7 +23,7 @@ function pts_verify_test_installation($TO_RUN)
 
 			echo pts_string_header($message);
 		}
-		exit(0);
+		pts_exit();
 	}
 }
 function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)

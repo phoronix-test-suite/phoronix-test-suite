@@ -46,8 +46,7 @@ switch($COMMAND)
 
 		if(empty($ARG_1))
 		{
-			echo "\nThe benchmark or suite name to install must be supplied.\n";
-			exit;
+			pts_exit("\nThe benchmark or suite name to install must be supplied.\n");
 		}
 
 		if($COMMAND == "FORCE_INSTALL_BENCHMARK")
@@ -72,8 +71,7 @@ switch($COMMAND)
 
 		if(empty($ARG_1))
 		{
-			echo "\nThe benchmark or suite name to install external dependencies for must be supplied.\n";
-			exit;
+			pts_exit("\nThe benchmark or suite name to install external dependencies for must be supplied.\n");
 		}
 
 		if($ARG_1 == "phoronix-test-suite" || $ARG_1 == "pts" || $ARG_1 == "trondheim-pts")
@@ -251,8 +249,7 @@ switch($COMMAND)
 
 		if(empty($BASE_FILE) || empty($MERGE_FROM_FILE))
 		{
-			echo "\nTwo saved result profile names must be supplied.\n";
-			exit;
+			pts_exit("\nTwo saved result profile names must be supplied.\n");
 		}
 
 		if(empty($MERGE_TO))

@@ -42,7 +42,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 		}
 	}
 	else
-		echo "\nNot recognized: $TO_INSTALL.\n";
+		pts_exit("\nNot recognized: $TO_INSTALL.\n");
 }
 function pts_install_benchmark($Benchmark)
 {
@@ -152,8 +152,7 @@ function pts_install_benchmark($Benchmark)
 
 							if(!$try_again)
 							{
-								echo "\nDownload of Needed Test Dependencies Failed! Exiting...\n\n";
-								exit(0);
+								pts_exit("\nDownload of Needed Test Dependencies Failed! Exiting...\n\n");
 							}
 
 						}while(!$file_downloaded);

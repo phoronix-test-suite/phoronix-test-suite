@@ -30,10 +30,8 @@ if(isset($argv[2]) && $argv[2] == "BATCH")
 	define("PTS_BATCH_MODE", "1");
 
 if(empty($TO_RUN))
-{
-	echo "\nThe benchmark, suite name, or saved file name must be supplied.\n";
-	exit;
-}
+	pts_exit("\nThe benchmark, suite name, or saved file name must be supplied.\n");
+
 // Make sure tests are installed
 pts_verify_test_installation($TO_RUN);
 
@@ -87,8 +85,7 @@ if(!$TO_RUN_TYPE)
 	}
 	else
 	{
-		"\n$TO_RUN is not a recognized benchmark, suite, or PTS Global ID. Exiting...\n";
-		exit(0);
+		pts_exit("\n$TO_RUN is not a recognized benchmark, suite, or PTS Global ID. Exiting...\n");
 	}
 }
 else
