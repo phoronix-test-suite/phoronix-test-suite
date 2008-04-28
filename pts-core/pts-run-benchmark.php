@@ -333,6 +333,11 @@ if($SAVE_RESULTS)
 				if(kernel_arch() == "x86_64")
 					array_push($tags_array, "64-bit Linux");
 
+				$os = os_vendor();
+
+				if($os != "Unknown")
+					array_push($tags_array, $os);
+
 				$tags_input = implode(", ", $tags_array);
 			}
 
