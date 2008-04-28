@@ -26,7 +26,11 @@ Phoronix Test Suite
 - Add in multicore suite of SMP-friendly tests
 - Add force-install option for installing benchmarks already installed
 - Add line graphing support of monitor results
-- Basic CPU and system temperature monitoring support through ACPI, if LM_Sensors is not installed and/or reporting information.
+- Basic CPU and system temperature monitoring support through ACPI, if LM_Sensors is not installed and/or reporting information
+- Improved thermal monitoring support
+- Improvements to pts-grapher with alignment
+- Add version argument for showing PTS version and code-name
+- Other bug fixes
 
 Phoronix Test Suite 0.4.0
 April 24, 2008

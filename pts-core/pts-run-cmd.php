@@ -312,6 +312,9 @@ switch($COMMAND)
 		else
 			echo "\nPTS Global Account Not Found.\n";
 		break;
+	case "VERSION":
+		echo "\nPhoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n\n";
+		break;
 	default:
 		echo "Phoronix Test Suite: Internal Error. Command Not Recognized ($COMMAND).\n";
 }
