@@ -30,7 +30,8 @@ Phoronix Test Suite
 - Improved thermal monitoring support
 - Improvements to pts-grapher with alignment
 - Add version argument for showing PTS version and code-name
-- Have a pts-monitor-viewer with basic functionality working. Prompt to open pts-monitor-viewer in web browser, if MONITOR results were recorded.
+- Have a pts-monitor-viewer with basic functionality working. Prompt to open pts-monitor-viewer in web browser, if MONITOR results were recorded
+- Add basic auto-tagging support for PTS Global if no tags are supplied
 - Other bug fixes
 
 Phoronix Test Suite 0.4.0

@@ -277,6 +277,50 @@ if($SAVE_RESULTS)
 			echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual-Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
 			$tags_input = trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
 
+			if(empty($tags_input))
+			{
+				// Auto tagging
+				$tags_array = array();
+				array_push($tags_array, $RESULTS_IDENTIFIER);
+
+				switch(cpu_core_count())
+				{
+					case 1:
+						array_push($tags_array, "Single Core");
+						break;
+					case 2:
+						array_push($tags_array, "Dual Core");
+						break;
+					case 4:
+						array_push($tags_array, "Quad Core");
+						break;
+					case 8:
+						array_push($tags_array, "Octal Core");
+						break;
+				}
+
+				$cpu_type = processor_string();
+
+				if(strpos($cpu_type, "Intel") !== false)
+					array_push($tags_array, "Intel");
+				else if(strpos($cpu_type, "AMD") !== false)
+					array_push($tags_array, "AMD");
+				else if(strpos($cpu_type, "VIA") !== false)
+					array_push($tags_array, "VIA");
+
+				$gpu_type = graphics_processor_string();
+
+				if(strpos($cpu_type, "ATI") !== false)
+					array_push($tags_array, "ATI");
+				else if(strpos($cpu_type, "NVIDIA") !== false)
+					array_push($tags_array, "NVIDIA");
+
+				if(kernel_arch() == "x86_64")
+					array_push($tags_array, "64-bit Linux");
+
+				$tags_input = implode(", ", $tags_array);
+			}
+
 			echo "\nResults Uploaded To: " . pts_global_upload_result(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml", $tags_input) . "\n";
 		}
 

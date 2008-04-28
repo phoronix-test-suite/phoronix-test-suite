@@ -412,7 +412,6 @@ function pts_request_new_id()
 }
 function pts_global_upload_result($result_file, $tags = "")
 {
-	echo "\nUploading: $result_file\n";
 	$ToUpload = rawurlencode(base64_encode(file_get_contents($result_file)));
 	$GlobalUser = pts_current_user();
 	$Globalkey = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "");
