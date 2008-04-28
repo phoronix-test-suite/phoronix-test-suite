@@ -282,4 +282,25 @@ function pts_report_power_mode()
 
 	return $return_status;
 }
+function pts_hw_string()
+{
+	$hw_string = "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . "), ";
+	$hw_string .= "Motherboard Chipset: " . motherboard_chipset_string() . ", ";
+	$hw_string .= "System Memory: " . memory_mb_capacity() . "MB, ";
+	$hw_string .= "Disk Space: " . pts_posix_disk_total() . "GB, ";
+	$hw_string .= "Graphics: " . graphics_processor_string() . graphics_frequency_string() . ", ";
+	$hw_string .= "Screen Resolution: " . current_screen_resolution() . " ";
+
+	return $hw_string;
+}
+function pts_sw_string()
+{
+	$sw_string = "OS: " . operating_system_release() . ", ";
+	$sw_string .= "Kernel: " . kernel_string() . " (" . kernel_arch() . "), ";
+	$sw_string .= "X.Org Server: " . graphics_subsystem_version() . ", ";
+	$sw_string .= "OpenGL: " . opengl_version() . ", ";
+	$sw_string .= "Compiler: " . compiler_version() . " ";
+
+	return $sw_string;
+}
 ?>
