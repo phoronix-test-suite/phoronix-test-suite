@@ -60,6 +60,7 @@ define("BENCHMARK_RESOURCE_DIR", PTS_DIR . "pts/benchmark-resources/");
 define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
+define("PTS_MONITOR_DIR", PTS_USER_DIR . strtolower(PTS_CODENAME) . '/');
 //define("FONT_DIRECTORY" "/usr/share/fonts/");
 
 pts_config_init();
@@ -182,15 +183,17 @@ function pts_copy($from, $to)
 	if(!is_file($to) || md5_file($from) != md5_file($to))
 		copy($from, $to);
 }
-function pts_save_user_file($save_name = null, $contents = null)
+function pts_save_user_file($save_name = null, $contents = null, $directory = '/')
 {
-	$extension = strtolower(PTS_CODENAME);
+	if(!is_dir(PTS_MONITOR_DIR))
+		mkdir(PTS_MONITOR_DIR);
 
-	if(!is_dir(PTS_USER_DIR . $extension))
-		mkdir(PTS_USER_DIR . $extension);
+	if($directory != '/')
+		if(!is_dir(PTS_MONITOR_DIR . $directory))
+			mkdir(PTS_MONITOR_DIR . $directory);
 
 	if(!empty($save_name) && !empty($contents))
-		file_put_contents(PTS_USER_DIR . $extension . '/' . $save_name, $contents);
+		file_put_contents(PTS_USER_DIR . $extension . $directory . $save_name, $contents);
 }
 function pts_gd_available()
 {

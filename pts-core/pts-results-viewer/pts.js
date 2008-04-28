@@ -20,7 +20,7 @@ function setImagesFromURL()
 	var segment;
 	var h = 0;
 	var pf = location.href;
-	pf = pf.substring(pf.search(/?/) + 1);
+	pf = pf.substring(pf.search(/#/) + 1);
 
 	do
 	{
@@ -38,5 +38,5 @@ function setImagesFromURL()
 	}
 	while(h != 2);
 
-	return html;
+	document.getElementById("pts_monitor").innerHTML = html;
 }

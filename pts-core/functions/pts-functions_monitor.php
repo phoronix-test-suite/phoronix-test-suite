@@ -88,7 +88,13 @@ function pts_monitor_statistics()
 	{
 		if(pts_gd_available())
 		{
+			$url = "";
 			pts_save_user_file();
+			pts_save_user_file(null, null, "/pts-monitor-viewer/");
+			pts_copy(RESULTS_VIEWER_DIR . "pts-monitor-viewer.html", PTS_MONITOR_DIR . "pts-monitor-viewer.html");
+			pts_copy(RESULTS_VIEWER_DIR . "pts.js", PTS_MONITOR_DIR . "pts-monitor-viewer/pts.js");
+			pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", PTS_MONITOR_DIR . "pts-monitor-viewer/pts-viewer.css");
+
 			$image_count = 0;
 			foreach($type_index as $key => $sub_array)
 			{
@@ -113,15 +119,22 @@ function pts_monitor_statistics()
 				}
 
 				$t->loadGraphVersion(PTS_VERSION);
-				$t->save_graph(PTS_USER_DIR . strtolower(PTS_CODENAME) . '/' . THIS_RUN_TIME . '-' . $image_count . ".png");
+				$t->save_graph(PTS_MONITOR_DIR . THIS_RUN_TIME . '-' . $image_count . ".png");
 				$t->renderGraph();
-				//display_web_browser(PTS_USER_DIR . strtolower(PTS_CODENAME) . '/' . THIS_RUN_TIME . '-' . $image_count . ".png");
+				$url .= THIS_RUN_TIME . '-' . $image_count . ".png,";
 				$image_count++;
 			}
 		}
 
 		// terminal output
 		echo pts_string_header($info_report);
+
+		if(!empty($url))
+		{
+			file_put_contents(PTS_MONITOR_DIR . "link-latest.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=pts-monitor-viewer.html#$url\"></HEAD><BODY></BODY></HTML>
+");
+			display_web_browser(PTS_MONITOR_DIR . "link-latest.html");
+		}
 	}
 }
 
