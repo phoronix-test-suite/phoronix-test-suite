@@ -309,7 +309,7 @@ switch($COMMAND)
 		else
 			echo "\nPTS Global Account Not Found.\n";
 		break;
-	case "MONITORING_OPTIONS":
+	case "SENSOR_OPTIONS":
 		echo "\nThe Phoronix Test Suite supports monitoring various system hardware sensors through the LM_Sensors and ACPI interfaces. The Phoronix Test Suite will automatically monitor the selected sensors while each test is running and at the end will then provide the low and high thresholds for each sensor as well as the average. In addition, the sensor results are then plotted on line graphs and can be viewed through the PTS Results Viewer.\n";
 		echo "\nMonitoring these sensors are as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). Below are all of the sensors supported by this version of the Phoronix Test Suite.\n\n";
 		echo "Supported Options:\n";
