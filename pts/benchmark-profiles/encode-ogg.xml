@@ -7,7 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 	</TestProfile>
-	<TestTestInformation>
+	<TestInformation>
 		<Title>Ogg Encoding</Title>
 		<Version>1.2.0</Version>
 		<Executable>oggenc</Executable>
@@ -16,5 +16,5 @@
 		<Proportion>LIB</Proportion>
 		<Description>This test times how long it takes to encode a sample WAV file to Ogg format.</Description>
                 <ExternalDependencies>build-utilities</ExternalDependencies>
-	</TestTestInformation>
+	</TestInformation>
 </PhoronixTestSuite>
