@@ -16,7 +16,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 		echo "\nInstalling Software For " . ucwords($TO_INSTALL) . " Test Suite...\n\n";
 
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_INSTALL . ".xml"));
-		$suite_benchmarks = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
+		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Test");
 
 		foreach($suite_benchmarks as $benchmark)
 			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);

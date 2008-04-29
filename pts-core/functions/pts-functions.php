@@ -159,7 +159,7 @@ function pts_suite_names_to_array()
 	foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-		$benchmark_name = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Title");
+		$benchmark_name = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Title");
 
 		if(!empty($benchmark_name))
 			array_push($benchmark_suites, $benchmark_name);

@@ -1,59 +1,59 @@
-<PTSuite>
-	<PhoronixTestSuite>
-		<Version>0.2</Version>
-		<BenchmarkType>System</BenchmarkType>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.5</Version>
+		<TestType>System</TestType>
 		<Title>Universe Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Universe Phoronix Test Suite contains all benchmark profiles that are known to be in a working and good overall state. Among the profiles are encoding, compilation, graphics, and other system tests. The Universe test suite may take many minutes to complete.</Description>
-	</PhoronixTestSuite>
-	<PTSBenchmark>
-		<Benchmark>encode-mp3</Benchmark>
+	</SuiteInformation>
+	<RunTest>
+		<Test>encode-mp3</Test>
 		<Arguments></Arguments>
 		<Description>time lame -h audio.wav audio.mp3 (45.0MB)</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>encode-ogg</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>encode-ogg</Test>
 		<Arguments></Arguments>
 		<Description>time oggenc audio.wav -q 10 -o audio.ogg (45.0MB)</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>encode-flac</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>encode-flac</Test>
 		<Arguments></Arguments>
 		<Description>time flac --best audio.wav (45.0MB)</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>build-mplayer</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>build-mplayer</Test>
 		<Arguments></Arguments>
 		<Description>Time To Compile</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>build-php</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
 		<Arguments></Arguments>
 		<Description>Time To Compile</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>build-imagemagick</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>build-imagemagick</Test>
 		<Arguments></Arguments>
 		<Description>Time To Compile</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>nexuiz</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>nexuiz</Test>
 		<Arguments>+vid_width 1024 +vid_height 768</Arguments>
 		<Description>1024 x 768</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>compress-gzip</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>compress-gzip</Test>
 		<Arguments></Arguments>
 		<Description></Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>ramspeed</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
 		<Arguments>ADD -b 3 -l 10</Arguments>
 		<Description>Integer BatchRun Add</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>memory-bandwidth</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>memory-bandwidth</Test>
 		<Arguments>TEST_READ</Arguments>
 		<Description>RAM Sequential Read</Description>
-	</PTSBenchmark>
-</PTSuite>
+	</RunTest>
+</PhoronixTestSuite>

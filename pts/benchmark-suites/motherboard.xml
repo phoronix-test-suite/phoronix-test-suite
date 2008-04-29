@@ -1,21 +1,21 @@
-<PTSuite>
-	<PhoronixTestSuite>
-		<Version>0.2</Version>
-		<BenchmarkType>Motherboard</BenchmarkType>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.5</Version>
+		<TestType>Motherboard</TestType>
 		<Title>Motherboard Tests</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of benchmarks designed to test your motherboard.</Description>
-	</PhoronixTestSuite>
-	<PTSBenchmark>
-		<Benchmark>encode-mp3</Benchmark>
+	</SuiteInformation>
+	<RunTest>
+		<Test>encode-mp3</Test>
 		<Arguments></Arguments>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>encode-ogg</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>encode-ogg</Test>
 		<Arguments></Arguments>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>ramspeed</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
 		<Arguments>-b 3 -l 2</Arguments>
-	</PTSBenchmark>
-</PTSuite>
+	</RunTest>
+</PhoronixTestSuite>

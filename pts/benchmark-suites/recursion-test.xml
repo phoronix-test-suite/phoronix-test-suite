@@ -1,14 +1,14 @@
-<PTSuite>
-	<PhoronixTestSuite>
-		<Version>0.1</Version>
-		<BenchmarkType>System</BenchmarkType>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.5</Version>
+		<TestType>System</TestType>
 		<Title>Recursion Test Of Audio Encoding</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>Recursion Test For Phoronix Test Suite... Should Produce Identical Design To Audio Encoding suite when running recursion-test.</Description>
-	</PhoronixTestSuite>
-	<PTSBenchmark>
-		<Benchmark>audio-encoding</Benchmark>
+	</SuiteInformation>
+	<RunTest>
+		<Test>audio-encoding</Test>
 		<Arguments></Arguments>
 		<Description>Running The Audio Encoding Suite in PTS.</Description>
-	</PTSBenchmark>
-</PTSuite>
+	</RunTest>
+</PhoronixTestSuite>

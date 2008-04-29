@@ -1,34 +1,34 @@
-<PTSuite>
-	<PhoronixTestSuite>
-		<Version>0.1</Version>
-		<BenchmarkType>System</BenchmarkType>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.5</Version>
+		<TestType>System</TestType>
 		<Title>System Memory Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The system memory test suite consists of tests designed to test the computer's system memory (RAM) performance. Among these tests are RAMspeed and Bandwidth.</Description>
-	</PhoronixTestSuite>
-	<PTSBenchmark>
-		<Benchmark>ramspeed</Benchmark>
+	</SuiteInformation>
+	<RunTest>
+		<Test>ramspeed</Test>
 		<Arguments>COPY -b 3 -l 10</Arguments>
 		<Description>Integer BatchRun Copy</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>ramspeed</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
 		<Arguments>SCALE -b 3 -l 10</Arguments>
 		<Description>Integer BatchRun Scale</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>ramspeed</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
 		<Arguments>ADD -b 3 -l 10</Arguments>
 		<Description>Integer BatchRun Add</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>memory-bandwidth</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>memory-bandwidth</Test>
 		<Arguments>TEST_READ</Arguments>
 		<Description>RAM Sequential Read</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>memory-bandwidth</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>memory-bandwidth</Test>
 		<Arguments>TEST_WRITE</Arguments>
 		<Description>RAM Sequential Write</Description>
-	</PTSBenchmark>
-</PTSuite>
+	</RunTest>
+</PhoronixTestSuite>

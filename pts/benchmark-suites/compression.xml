@@ -1,21 +1,21 @@
-<PTSuite>
-	<PhoronixTestSuite>
-		<Version>0.4</Version>
-		<BenchmarkType>Processor</BenchmarkType>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.5</Version>
+		<TestType>Processor</TestType>
 		<Title>Timed File Compression Tests</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of tests that measure various forms of file compression such as gzip, bzip2, and 7zip. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
-	</PhoronixTestSuite>
-	<PTSBenchmark>
-		<Benchmark>compress-7zip</Benchmark>
+	</SuiteInformation>
+	<RunTest>
+		<Test>compress-7zip</Test>
 		<Description></Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>compress-gzip</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>compress-gzip</Test>
 		<Description></Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>compress-pbzip2</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>compress-pbzip2</Test>
 		<Description></Description>
-	</PTSBenchmark>
-</PTSuite>
+	</RunTest>
+</PhoronixTestSuite>

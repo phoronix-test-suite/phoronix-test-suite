@@ -38,7 +38,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 	else if($type == "TEST_SUITE")
 	{
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_VERIFY . ".xml"));
-		$suite_benchmarks = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
+		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Test");
 
 		foreach($suite_benchmarks as $benchmark)
 			pts_recurse_verify_installation($benchmark, $NEEDS_INSTALLING);
@@ -70,9 +70,9 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $benchmarks_array[$i] . ".xml"));
 
-			$sub_suite_benchmarks = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
-			$sub_arguments = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Arguments");
-			$sub_arguments_description = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Description");
+			$sub_suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Test");
+			$sub_arguments = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Arguments");
+			$sub_arguments_description = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Description");
 
 			pts_recurse_call_benchmark($sub_suite_benchmarks, $sub_arguments, $save_results, $tandem_xml, $results_identifier, $sub_arguments_description);
 		}

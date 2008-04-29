@@ -106,8 +106,8 @@ switch($COMMAND)
 		foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
 		{
 		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-			$name = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Title");
-			$benchmark_type = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/BenchmarkType");
+			$name = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Title");
+			$benchmark_type = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/TestType");
 			$identifier = basename($benchmark_file, ".xml");
 
 			printf("%-16ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);
@@ -118,11 +118,11 @@ switch($COMMAND)
 		if(pts_benchmark_type($ARG_1) == "TEST_SUITE")
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $ARG_1 . ".xml"));
-			$tests_in_suite = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
-			$suite_name = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Title");
-			$suite_maintainer = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Maintainer");
-			$suite_version = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Version");
-			$suite_type = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/BenchmarkType");
+			$tests_in_suite = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Test");
+			$suite_name = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Title");
+			$suite_maintainer = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Maintainer");
+			$suite_version = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Version");
+			$suite_type = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/TestType");
 			$total_tests = count($tests_in_suite);
 			$tests_in_suite = array_unique($tests_in_suite);
 			$unique_tests = count($tests_in_suite);
@@ -163,7 +163,7 @@ switch($COMMAND)
 			$test_title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
 
 			$test_version = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Version");
-			$test_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/BenchmarkType");
+			$test_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/TestType");
 			$test_app_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/ApplicationType");
 			$test_license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
 			$test_status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");

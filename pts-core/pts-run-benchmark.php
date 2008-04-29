@@ -193,15 +193,15 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 
 	if($SAVE_RESULTS)
 	{
-		$test_description = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Description");
-		$test_version = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Version");
-		$test_type = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/BenchmarkType");
-		$test_maintainer = $xml_parser->getXMLValue("PTSuite/PhoronixTestSuite/Maintainer");
+		$test_description = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Description");
+		$test_version = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Version");
+		$test_type = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/TestType");
+		$test_maintainer = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Maintainer");
 	}
 
-	$suite_benchmarks = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
-	$arguments = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Arguments");
-	$arguments_description = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Description");
+	$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Test");
+	$arguments = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Arguments");
+	$arguments_description = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Description");
 	unset($xml_parser);
 
 	pts_recurse_call_benchmark($suite_benchmarks, $arguments, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $arguments_description);

@@ -1,24 +1,24 @@
-<PTSuite>
-	<PhoronixTestSuite>
-		<Version>0.2</Version>
-		<BenchmarkType>Processor</BenchmarkType>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.5</Version>
+		<TestType>Processor</TestType>
 		<Title>Timed Code Compilation Tests</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of benchmarks that measure the amount of time needed to build common open-source software packages. These benchmarks will use your default compiler (likely GCC) and will adjust the number of compiling jobs based upon the number of detected CPU cores in your system. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
-	</PhoronixTestSuite>
-	<PTSBenchmark>
-		<Benchmark>build-mplayer</Benchmark>
+	</SuiteInformation>
+	<RunTest>
+		<Test>build-mplayer</Test>
 		<Arguments></Arguments>
 		<Description>Time To Compile</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>build-php</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
 		<Arguments></Arguments>
 		<Description>Time To Compile</Description>
-	</PTSBenchmark>
-	<PTSBenchmark>
-		<Benchmark>build-imagemagick</Benchmark>
+	</RunTest>
+	<RunTest>
+		<Test>build-imagemagick</Test>
 		<Arguments></Arguments>
 		<Description>Time To Compile</Description>
-	</PTSBenchmark>
-</PTSuite>
+	</RunTest>
+</PhoronixTestSuite>
