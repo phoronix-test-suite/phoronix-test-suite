@@ -34,7 +34,6 @@ if(empty($TO_RUN))
 
 // Make sure tests are installed
 pts_verify_test_installation($TO_RUN);
-
 pts_monitor_update(); // Update sensors, etc
 
 if(!$TO_RUN_TYPE)
@@ -227,7 +226,7 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 }
 else
 {
-	echo "\nUnrecognized option: $TO_RUN_TYPE\n";
+	pts_exit("\nUnrecognized option: $TO_RUN_TYPE\n");
 }
 
 if($SAVE_RESULTS)

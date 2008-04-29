@@ -21,6 +21,9 @@ function pts_monitor_update()
 }
 function pts_monitor_statistics()
 {
+	if(defined("PTS_EXIT"))
+		return;
+
 	$device = array();
 	$type = array();
 	$unit = array();
