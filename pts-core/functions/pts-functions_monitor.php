@@ -10,6 +10,14 @@ function pts_monitor_update()
 		pts_record_sys_temperature();
 	if(defined("MONITOR_BATTERY_POWER"))
 		pts_record_battery_power();
+	if(defined("MONITOR_CPU_VOLTAGE"))
+		pts_record_cpu_voltage();
+	if(defined("MONITOR_V3_VOLTAGE"))
+		pts_record_v3_voltage();
+	if(defined("MONITOR_V5_VOLTAGE"))
+		pts_record_v5_voltage();
+	if(defined("MONITOR_V12_VOLTAGE"))
+		pts_record_v12_voltage();
 }
 function pts_monitor_statistics()
 {
@@ -20,6 +28,7 @@ function pts_monitor_statistics()
 	$type_index = array();
 	$type_index["THERMAL"] = array();
 	$type_index["POWER"] = array();
+	$type_index["VOLTAGE"] = array();
 
 	if(isset($GLOBALS["GPU_TEMPERATURE"]))
 	{
@@ -71,6 +80,58 @@ function pts_monitor_statistics()
 			array_push($unit, "Milliwatts");
 			array_push($m_array, $this_array);
 			array_push($type_index["POWER"], count($m_array) - 1);
+		}
+	}
+	if(isset($GLOBALS["CPU_VOLTAGE"]))
+	{
+		$this_array = $GLOBALS["CPU_VOLTAGE"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "CPU");
+			array_push($type, "Voltage");
+			array_push($unit, "Volts");
+			array_push($m_array, $this_array);
+			array_push($type_index["VOLTAGE"], count($m_array) - 1);
+		}
+	}
+	if(isset($GLOBALS["V3_VOLTAGE"]))
+	{
+		$this_array = $GLOBALS["V3_VOLTAGE"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "+3.33V");
+			array_push($type, "Voltage");
+			array_push($unit, "Volts");
+			array_push($m_array, $this_array);
+			array_push($type_index["VOLTAGE"], count($m_array) - 1);
+		}
+	}
+	if(isset($GLOBALS["V5_VOLTAGE"]))
+	{
+		$this_array = $GLOBALS["V5_VOLTAGE"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "+5.00V");
+			array_push($type, "Voltage");
+			array_push($unit, "Volts");
+			array_push($m_array, $this_array);
+			array_push($type_index["VOLTAGE"], count($m_array) - 1);
+		}
+	}
+	if(isset($GLOBALS["V12_VOLTAGE"]))
+	{
+		$this_array = $GLOBALS["V12_VOLTAGE"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "+12.00V");
+			array_push($type, "Voltage");
+			array_push($unit, "Volts");
+			array_push($m_array, $this_array);
+			array_push($type_index["VOLTAGE"], count($m_array) - 1);
 		}
 	}
 

@@ -37,6 +37,7 @@ Phoronix Test Suite
 - Report to test notes if the system was running on battery power
 - End-User agreement shows when Phoronix Test Suite runs for the first time or when the agreement has been modified
 - Add battery.power option to MONITOR= for reporting battery discharge rate (as reported through ACPI) during tests
+- Add cpu.voltage, v3.voltage, v5.voltage, and v12.voltage options to MONITOR= for reporting line voltages on the CPU and other voltage rails through LM_Sensors
 - Other bug fixes
 
 Phoronix Test Suite 0.4.0

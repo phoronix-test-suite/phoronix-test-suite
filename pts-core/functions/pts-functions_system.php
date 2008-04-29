@@ -205,7 +205,7 @@ function operating_system_release()
 function read_linux_sensors($attribute)
 {
 	$value = "";
-	$sensors = shell_exec("sensors -U 2>&1");
+	$sensors = shell_exec("sensors 2>&1");
 	$sensors_lines = explode("\n", $sensors);
 
 	for($i = 0; $i < count($sensors_lines) && $value == ""; $i++)
@@ -249,6 +249,56 @@ function pts_record_sys_temperature()
 
 	if($temp != -1)
 		array_push($SYS_TEMPERATURE, $temp);
+}
+function system_line_voltage($type)
+{
+	if($type == "CPU")
+		$voltage = read_linux_sensors("VCore");
+	else if($type == "V3")
+		$voltage = read_linux_sensors("V3.3");
+	else if($type == "V5")
+		$voltage = read_linux_sensors("V5");
+	else if($type == "V12")
+		$voltage = read_linux_sensors("V12");
+	else
+		$voltage = "";
+
+	if(empty($voltage))
+		$voltage = -1;
+
+	return $voltage;
+}
+function pts_record_cpu_voltage()
+{
+	global $CPU_VOLTAGE;
+	$voltage = system_line_voltage("CPU");
+
+	if($voltage != -1)
+		array_push($CPU_VOLTAGE, $voltage);
+}
+function pts_record_v3_voltage()
+{
+	global $V3_VOLTAGE;
+	$voltage = system_line_voltage("V3");
+
+	if($voltage != -1)
+		array_push($V3_VOLTAGE, $voltage);
+}
+function pts_record_v5_voltage()
+{
+	global $V5_VOLTAGE;
+	$voltage = system_line_voltage("V5");
+
+	if($voltage != -1)
+		array_push($V5_VOLTAGE, $voltage);
+}
+function pts_record_v12_voltage()
+{
+	global $V12_VOLTAGE;
+	$voltage = system_line_voltage("V12");
+
+	if($voltage != -1)
+		array_push($V12_VOLTAGE, $voltage);
 }
 function pts_record_battery_power()
 {

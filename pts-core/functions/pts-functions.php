@@ -101,12 +101,35 @@ if(($to_show = getenv("MONITOR")))
 		define("MONITOR_SYS_TEMP", 1);
 		$SYS_TEMPERATURE = array();
 	}
-
 	if(in_array("battery.power", $to_show))
 	{
 		
 		define("MONITOR_BATTERY_POWER", 1);
 		$BATTERY_POWER = array();
+	}
+	if(in_array("cpu.voltage", $to_show))
+	{
+		
+		define("MONITOR_CPU_VOLTAGE", 1);
+		$CPU_VOLTAGE = array();
+	}
+	if(in_array("v3.voltage", $to_show))
+	{
+		
+		define("MONITOR_V3_VOLTAGE", 1);
+		$V3_VOLTAGE = array();
+	}
+	if(in_array("v5.voltage", $to_show))
+	{
+		
+		define("MONITOR_V5_VOLTAGE", 1);
+		$V5_VOLTAGE = array();
+	}
+	if(in_array("v12.voltage", $to_show))
+	{
+		
+		define("MONITOR_V12_VOLTAGE", 1);
+		$V12_VOLTAGE = array();
 	}
 
 	register_shutdown_function("pts_monitor_statistics");
