@@ -253,11 +253,14 @@ function pts_record_battery_power()
 	$state = read_acpi_value("/battery/BAT0/state", "charging state");
 	$power = read_acpi_value("/battery/BAT0/state", "present rate");
 
-	if(($end = strpos($power, ' ')) > 0 && $state == "discharging")
-		$power = substr($power, 0, $end);
+	if($state == "discharging")
+	{
+		if(($end = strpos($power, ' ')) > 0)
+			$power = substr($power, 0, $end);
 
-	if(!empty($power))
-		array_push($BATTERY_POWER, $power);
+		if(!empty($power))
+			array_push($BATTERY_POWER, $power);
+	}
 }
 function read_acpi_value($point, $match)
 {
