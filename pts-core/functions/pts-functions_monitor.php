@@ -183,7 +183,12 @@ function pts_monitor_statistics()
 					$graph_title = $type[$sub_array[0]] . " Monitor";
 					$graph_unit = $unit[$sub_array[0]];
 					$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
-					$sub_title = date("F j, Y - g:i A");
+					$sub_title = date("F j, Y") . " - ";
+
+					if(isset($GLOBALS["TO_RUN"]))
+						$sub_title .= $GLOBALS["TO_RUN"];
+					else
+						$sub_title .= date("g:i A");
 
 					$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
 
