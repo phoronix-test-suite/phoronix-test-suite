@@ -1,6 +1,6 @@
 <PTSBenchmark>
 	<PhoronixTestSuite>
-		<Version>0.4</Version>
+		<Version>0.5</Version>
 		<BenchmarkType>Processor</BenchmarkType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>

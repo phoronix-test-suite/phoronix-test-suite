@@ -1,8 +1,8 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.imagemagick.org/pub/ImageMagick/ImageMagick-6.4.0-7.tar.bz2</URL>
-			<MD5>a36b9076c0d4f880daca10c7ab3f5208</MD5>
+			<URL>http://image_magick.veidrodis.com/image_magick/ImageMagick-6.4.0-11.tar.bz2</URL>
+			<MD5>f7b96a073f87e655c8d47d1d3947b0c4</MD5>
 			<FileName>image-magick.tar.bz2</FileName>
 		</Package>
 	</Downloads>
