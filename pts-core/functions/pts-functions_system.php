@@ -227,6 +227,9 @@ function system_temperature()
 	$temp_c = read_linux_sensors("Sys Temp");
 
 	if(empty($temp_c))
+		$temp_c = read_linux_sensors("Board Temp");
+
+	if(empty($temp_c))
 	{
 		$temp_c = read_acpi_value("/thermal_zone/THM1/temperature", "temperature"); // if it is THM1 that is for the system, in most cases it should be
 
