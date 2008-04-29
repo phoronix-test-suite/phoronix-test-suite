@@ -39,6 +39,8 @@ Phoronix Test Suite
 - Add cpu.voltage, v3.voltage, v5.voltage, and v12.voltage options to MONITOR= for reporting line voltages on the CPU and other voltage rails through LM_Sensors
 - Add ToggleScreensaver option to user-config.xml and implement new screensaver toggling mechanism
 - Add monitoring-options argument for more information about system monitoring feature
+- Update XML syntax for test profiles and test suites (Breaks compatibility with previous Phoronix Test Suite versions!)
+- Change benchmark-profiles/, benchmark-resources/, and benchmark-suites/ to test-profiles/, test-resources/, and test-suites/
 - Some code cleaning
 - Other bug fixes
 
