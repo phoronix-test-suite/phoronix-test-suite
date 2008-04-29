@@ -39,6 +39,7 @@ Phoronix Test Suite
 - Add battery.power option to MONITOR= for reporting battery discharge rate (as reported through ACPI) during tests
 - Add cpu.voltage, v3.voltage, v5.voltage, and v12.voltage options to MONITOR= for reporting line voltages on the CPU and other voltage rails through LM_Sensors
 - Add ToggleScreensaver option to user-config.xml and implement new screensaver toggling mechanism
+- Add monitoring-options argument for more information about system monitoring feature
 - Other bug fixes
 
 Phoronix Test Suite 0.4.0

@@ -19,6 +19,10 @@ function pts_monitor_update()
 	if(defined("MONITOR_V12_VOLTAGE"))
 		pts_record_v12_voltage();
 }
+function pts_monitor_arguments()
+{
+	return array("all", "all.temp", "all.power", "all.voltage", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage");
+}
 function pts_monitor_statistics()
 {
 	if(defined("PTS_EXIT"))
