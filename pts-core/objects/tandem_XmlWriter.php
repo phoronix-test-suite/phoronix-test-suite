@@ -13,6 +13,7 @@ class tandem_XmlWriter
 	var $XML_OBJECTS = array();
 	var $XML_STRING_PATHS = array();
 	var $XML_STATEMENTS = array();
+	var $XML_CHECKSUM = false;
 	var $FORMAT_XML;
 	var $XSL_BINDING = null;
 
@@ -26,6 +27,10 @@ class tandem_XmlWriter
 	function setXslBinding($URL)
 	{
 		$this->XSL_BINDING = $URL;
+	}
+	function writeXmlCheckSum()
+	{
+		$this->XML_CHECKSUM = true;
 	}
 	function addXmlObject($XML_LOCATION, $UNIQUE_IDENTIFIER = 0, $XML_VALUE, $STD_STEP = null, $STEP_ID = null)
 	{
@@ -84,7 +89,9 @@ class tandem_XmlWriter
 		$formatted_xml = $this->getXMLBelow($this->XML_OBJECTS, 0);
 
 		$this->addStatement("Generated", date("Y-m-d H:i:s"));
-		$this->addStatement("Checksum", md5($formatted_xml));
+
+		if($this->XML_CHECKSUM)
+			$this->addStatement("Checksum", md5($formatted_xml));
 
 		return "<?xml version=\"1.0\"?>\n" . $this->getXSL() . $this->getXMLStatements() . $formatted_xml;
 	}
