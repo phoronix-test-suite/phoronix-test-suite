@@ -100,6 +100,11 @@ function pts_install_benchmark($Benchmark)
 					$fail_count = 0;
 					$try_again = true;
 
+					if($download_to[$i] == "SHARED")
+						$download_location = BENCHMARK_ENV_DIR . "pts-shared/";
+					else
+						$download_location = BENCHMARK_ENV_DIR . $Benchmark . "/";
+
 					if(count($urls) > 0)
 					{
 						do
@@ -108,17 +113,12 @@ function pts_install_benchmark($Benchmark)
 
 							echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
 
-							if($download_to[$i] == "SHARED")
-								$download_location = BENCHMARK_ENV_DIR . "pts-shared/";
-							else
-								$download_location = BENCHMARK_ENV_DIR . $Benchmark . "/";
-
 							echo shell_exec("cd " . $download_location . " && wget " . $url . " -O " . $package_filename[$i]);
 
 
-							if((is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) != $package_md5[$i]) || !is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]))
+							if((is_file($download_location . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file($download_location . $package_filename[$i]) != $package_md5[$i]) || !is_file($download_location . $package_filename[$i]))
 							{
-								unlink(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]);
+								unlink($download_location . $package_filename[$i]);
 								$file_downloaded = false;
 								$fail_count++;
 								echo "\nThe MD5 check-sum of the downloaded file is incorrect.\n";
