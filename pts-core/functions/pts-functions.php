@@ -74,7 +74,7 @@ if(pts_process_active("phoronix-test-suite"))
 	pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
 }
 pts_process_register("phoronix-test-suite");
-register_shutdown_function("pts_process_remove", "phoronix-test-suite");
+register_shutdown_function("pts_shutdown");
 
 // Etc
 
@@ -522,6 +522,15 @@ function pts_exit($string = "")
 {
 	echo $string;
 	exit(0);
+}
+function pts_shutdown()
+{
+	// Ensure screensaver is back to being enabled
+	if(defined("SCREENSAVER_KILLED"))
+		shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");
+
+	// Remove process
+	pts_process_remove("phoronix-test-suite");
 }
 
 ?>

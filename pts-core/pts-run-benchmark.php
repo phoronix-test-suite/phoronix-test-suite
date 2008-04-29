@@ -37,15 +37,6 @@ pts_verify_test_installation($TO_RUN);
 
 pts_monitor_update(); // Update sensors, etc
 
-// Kill the screensaver
-$screensaver_status = trim(shell_exec("gconftool -g /apps/gnome-screensaver/idle_activation_enabled 2>&1"));
-
-if($screensaver_status == "true")
-{
-	shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1");
-	define("SCREENSAVER_KILLED", 1);
-}
-
 if(!$TO_RUN_TYPE)
 {
 	if(is_file(pts_input_correct_results_path($TO_RUN)))
@@ -119,6 +110,13 @@ else
 
 if(!isset($RESULTS_IDENTIFIER) || empty($RESULTS_IDENTIFIER))
 	$RESULTS_IDENTIFIER = date("Y-m-d H:i");
+
+// Kill the screensaver
+if(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/ToggleScreensaver", "FALSE") == "TRUE")
+{
+	shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1");
+	define("SCREENSAVER_KILLED", 1);
+}
 
 if($TO_RUN_TYPE == "BENCHMARK")
 {
@@ -352,8 +350,5 @@ if($SAVE_RESULTS)
 
 	pts_monitor_update(); // Update sensors, etc
 }
-
-if(defined("SCREENSAVER_KILLED"))
-	shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");
 
 ?>
