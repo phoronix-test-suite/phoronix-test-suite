@@ -86,7 +86,6 @@ if(($to_show = getenv("MONITOR")))
 
 	if(in_array("gpu.temp", $to_show))
 	{
-		
 		define("MONITOR_GPU_TEMP", 1);
 		$GPU_TEMPERATURE = array();
 	}
@@ -101,6 +100,13 @@ if(($to_show = getenv("MONITOR")))
 		
 		define("MONITOR_SYS_TEMP", 1);
 		$SYS_TEMPERATURE = array();
+	}
+
+	if(in_array("battery.power", $to_show))
+	{
+		
+		define("MONITOR_BATTERY_POWER", 1);
+		$BATTERY_POWER = array();
 	}
 
 	register_shutdown_function("pts_monitor_statistics");

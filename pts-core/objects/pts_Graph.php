@@ -87,14 +87,17 @@ class pts_Graph
 		$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
 
 		// Directory for TTF Fonts
-		if(!defined("FONT_DIRECTORY"))
+		if(!defined("FONT_DIRECTORY") && defined("RESULTS_VIEWER_DIR"))
 		{
 			putenv("GDFONTPATH=" . RESULTS_VIEWER_DIR);
-			//putenv("GDFONTPATH=" . getcwd()); // The directory where the TTF font files should be. getcwd() will look in the same directory as this file
+		}
+		else if(defined("FONT_DIRECTORY"))
+		{
+			putenv("GDFONTPATH=" . FONT_DIRECTORY);
 		}
 		else
 		{
-			putenv("GDFONTPATH=" . FONT_DIRECTORY);
+			putenv("GDFONTPATH=" . getcwd());
 		}
 	}
 

@@ -8,6 +8,8 @@ function pts_monitor_update()
 		pts_record_cpu_temperature();
 	if(defined("MONITOR_SYS_TEMP"))
 		pts_record_sys_temperature();
+	if(defined("MONITOR_BATTERY_POWER"))
+		pts_record_battery_power();
 }
 function pts_monitor_statistics()
 {
@@ -17,6 +19,7 @@ function pts_monitor_statistics()
 	$m_array = array();
 	$type_index = array();
 	$type_index["THERMAL"] = array();
+	$type_index["POWER"] = array();
 
 	if(isset($GLOBALS["GPU_TEMPERATURE"]))
 	{
@@ -57,6 +60,19 @@ function pts_monitor_statistics()
 			array_push($type_index["THERMAL"], count($m_array) - 1);
 		}
 	}
+	if(isset($GLOBALS["BATTERY_POWER"]))
+	{
+		$this_array = $GLOBALS["BATTERY_POWER"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "Battery");
+			array_push($type, "Power");
+			array_push($unit, "Milliwatts");
+			array_push($m_array, $this_array);
+			array_push($type_index["POWER"], count($m_array) - 1);
+		}
+	}
 
 	$info_report = "";
 	for($i = 0; $i < count($m_array); $i++)
@@ -81,7 +97,7 @@ function pts_monitor_statistics()
 		}
 		$avg = $total / count($m_array[$i]);
 
-		$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . $unit[$i] . "\nHigh: " . pts_trim_double($high) . $unit[$i] . "\nAverage: " . pts_trim_double($avg) . $unit[$i];
+		$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . ' ' . $unit[$i] . "\nHigh: " . pts_trim_double($high) . ' ' . $unit[$i] . "\nAverage: " . pts_trim_double($avg) . ' ' . $unit[$i];
 	}
 
 	if(trim($info_report) != "")
@@ -98,31 +114,34 @@ function pts_monitor_statistics()
 			$image_count = 0;
 			foreach($type_index as $key => $sub_array)
 			{
-				$graph_title = $type[$sub_array[0]] . " Monitor";
-				$graph_unit = $unit[$sub_array[0]];
-				$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
-				$sub_title = date("F j, Y - g:i A");
-
-				$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
-
-				$first_run = true;
-				foreach($sub_array as $id_point)
+				if(count($sub_array) > 0)
 				{
-					$t->loadGraphValues($m_array[$id_point], $device[$id_point]);
+					$graph_title = $type[$sub_array[0]] . " Monitor";
+					$graph_unit = $unit[$sub_array[0]];
+					$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
+					$sub_title = date("F j, Y - g:i A");
 
-					if($first_run)
+					$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
+
+					$first_run = true;
+					foreach($sub_array as $id_point)
 					{
-						$t->loadGraphIdentifiers($m_array[$id_point]);
-						$t->hideGraphIdentifiers();
-						$first_run = false;
-					}
-				}
+						$t->loadGraphValues($m_array[$id_point], $device[$id_point]);
 
-				$t->loadGraphVersion(PTS_VERSION);
-				$t->save_graph(PTS_MONITOR_DIR . THIS_RUN_TIME . '-' . $image_count . ".png");
-				$t->renderGraph();
-				$url .= THIS_RUN_TIME . '-' . $image_count . ".png,";
-				$image_count++;
+						if($first_run)
+						{
+							$t->loadGraphIdentifiers($m_array[$id_point]);
+							$t->hideGraphIdentifiers();
+							$first_run = false;
+						}
+					}
+
+					$t->loadGraphVersion(PTS_VERSION);
+					$t->save_graph(PTS_MONITOR_DIR . THIS_RUN_TIME . '-' . $image_count . ".png");
+					$t->renderGraph();
+					$url .= THIS_RUN_TIME . '-' . $image_count . ".png,";
+					$image_count++;
+				}
 			}
 		}
 
