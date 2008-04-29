@@ -41,7 +41,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 		$suite_benchmarks = $xml_parser->getXMLArrayValues("PTSuite/PTSBenchmark/Benchmark");
 
 		foreach($suite_benchmarks as $benchmark)
-			pts_recurse_verify_installation($benchmark);
+			pts_recurse_verify_installation($benchmark, $NEEDS_INSTALLING);
 	}
 	else if(is_file(pts_input_correct_results_path($TO_VERIFY)))
 	{
@@ -49,7 +49,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestName");
 
 		foreach($suite_benchmarks as $benchmark)
-			pts_recurse_verify_installation($benchmark);
+			pts_recurse_verify_installation($benchmark, $NEEDS_INSTALLING);
 	}
 	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_VERIFY")) == "REMOTE_FILE")
 	{
@@ -57,7 +57,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestName");
 
 		foreach($suite_benchmarks as $benchmark)
-			pts_recurse_verify_installation($benchmark);
+			pts_recurse_verify_installation($benchmark, $NEEDS_INSTALLING);
 	}
 	else
 		echo "\nNot recognized: $TO_VERIFY.\n";
