@@ -1,10 +1,6 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://superb-east.dl.sourceforge.net/sourceforge/lame/lame-3.97.tar.gz</URL>
-			<MD5>90a4acbb730d150dfe80de145126eef7</MD5>
-		</Package>
-		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-wav-sample-file.tar.bz2</URL>
 			<MD5>e37dd7e5f0b3f65d68d203fccf415933</MD5>
 			<DownloadTo>SHARED</DownloadTo>

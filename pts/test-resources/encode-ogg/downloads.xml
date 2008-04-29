@@ -12,5 +12,10 @@
 			<URL>http://downloads.xiph.org/releases/vorbis/vorbis-tools-1.2.0.tar.gz</URL>
 			<MD5>df976d24e51ef3d87cd462edf747bf9a</MD5>
 		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-wav-sample-file.tar.bz2</URL>
+			<MD5>e37dd7e5f0b3f65d68d203fccf415933</MD5>
+			<DownloadTo>SHARED</DownloadTo>
+		</Package>
 	</Downloads>
 </PhoronixTestSuite>

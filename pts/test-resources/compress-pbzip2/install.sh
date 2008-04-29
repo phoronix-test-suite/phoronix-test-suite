@@ -14,9 +14,7 @@ make pbzip2-static
 
 if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
   then
-     wget http://www.phoronix-test-suite.com/benchmark-files/pts-wav-sample-file.tar.bz2 -O ../pts-shared/pts-wav-sample-file.tar.bz2
      tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2 -C ../pts-shared/
-     rm -f ../pts-shared/pts-wav-sample-file.tar.bz2
 fi
 
 cd ..
