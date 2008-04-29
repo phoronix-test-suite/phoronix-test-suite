@@ -246,7 +246,7 @@ function pts_install_packages_on_distribution_process($install_objects)
 		$distribution = strtolower(os_vendor());
 
 		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh") || is_link(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
-			echo pts_exec("cd " . SCRIPT_DISTRO_DIR . " && sh install-" . $distribution . "-packages.sh $install_objects");
+			echo shell_exec("cd " . SCRIPT_DISTRO_DIR . " && sh install-" . $distribution . "-packages.sh $install_objects");
 		else
 			echo "Distribution install script not found!";
 	}

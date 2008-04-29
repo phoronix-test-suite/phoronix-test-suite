@@ -34,6 +34,17 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 		else
 			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
 	}
+
+	$ToggleScreensaver = pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/ToggleScreensaver", "", $read_config);
+	if(empty($ToggleScreensaver))
+	{
+		$ToggleScreensaver = trim(shell_exec("gconftool -g /apps/gnome-screensaver/idle_activation_enabled 2>&1"));
+
+		if($ToggleScreensaver == "true")
+			$ToggleScreensaver = "TRUE";
+		else
+			$ToggleScreensaver = "FALSE";			
+	}
 	
 
 	if($UserName == NULL)
@@ -49,6 +60,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 
 	$config->addXmlObject("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", 2, pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/.phoronix-test-suite/installed-tests/", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests", 2, pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests", "5", $read_config));
+	$config->addXmlObject("PhoronixTestSuite/Options/Benchmarking/ToggleScreensaver", 2, $ToggleScreensaver);
 
 	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/SaveResults", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/SaveResults", "TRUE", $read_config));
 	$config->addXmlObject("PhoronixTestSuite/Options/BatchMode/OpenBrowser", 3, pts_read_user_config("PhoronixTestSuite/Options/BatchMode/OpenBrowser", "FALSE", $read_config));
