@@ -4,3 +4,5 @@ The Phoronix Test Suite is the most comprehensive testing and benchmarking platf
 
 - The Phoronix Test Suite contains tests, which may stress your system and in some cases could exhibit stability problems of the system's hardware or software configuration. Phoronix Media nor any involved parties provide any warranty for the Phoronix Test Suite.
 
+- If you opt to submit your test results to PTS Global, the final results as well as basic hardware and software details (what is shown in the PTS Results Viewer) will be shared and publicly accessible through http://global.phoronix-test-suite.com/.
+

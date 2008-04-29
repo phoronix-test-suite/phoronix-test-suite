@@ -27,7 +27,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 	{
 		echo pts_string_header("PHORONIX TEST SUITE - WELCOME MESSAGE");
 		echo wordwrap(file_get_contents(ETC_DIR . "user-agreement.txt"), 65);
-		$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
+		$agree = pts_bool_question("Do you wish to proceed (Y/n)?", true);
 
 		if($agree)
 			echo "\n";
