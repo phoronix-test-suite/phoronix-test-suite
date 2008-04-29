@@ -1,17 +1,17 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.4</Version>
-		<BenchmarkType>Processor</BenchmarkType>
-		<ApplicationType>Utility</ApplicationType>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>Parallel BZIP2 Compression</Title>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>The benchmark for Parallel BZIP2 compression.</Description>
-	</Information>
-</PTSBenchmark>
+	</TestInformation>
+</PhoronixTestSuite>

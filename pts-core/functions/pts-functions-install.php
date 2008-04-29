@@ -257,8 +257,8 @@ function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 		return;
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $Benchmark . ".xml"));
-	$title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
-	$dependencies = $xml_parser->getXMLValue("PTSBenchmark/Information/ExternalDependencies");
+	$title = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
+	$dependencies = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/ExternalDependencies");
 
 	if(empty($dependencies))
 		return;

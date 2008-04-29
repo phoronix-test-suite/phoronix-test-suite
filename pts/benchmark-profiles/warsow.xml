@@ -1,13 +1,13 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.3</Version>
-		<BenchmarkType>Graphics</BenchmarkType>
+		<TestType>Graphics</TestType>
 		<ApplicationType>Game</ApplicationType>
 		<License>FREE</License>
 		<Status>BROKEN</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>Warsow</Title>
 		<Version>0.42</Version>
 		<TimesToRun>1</TimesToRun>
@@ -15,10 +15,10 @@
 		<Proportion>HIB</Proportion>
 		<PreRunMessage>Due to a limitation of Warsow, once the benchmark has completed you must manually exit this game so that the Phoronix Test Suite can continue.</PreRunMessage>
 		<Description>This is a benchmark of Warsow, a popular open-source first-person shooter.</Description>
-	</Information>
-	<Settings>
+	</TestInformation>
+	<TestSettings>
 		<Default>
 			<Arguments>+timedemo 1 +demo pts-warsow-04</Arguments>
 		</Default>
-	</Settings>
-</PTSBenchmark>
+	</TestSettings>
+</PhoronixTestSuite>

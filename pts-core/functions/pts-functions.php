@@ -146,7 +146,7 @@ function pts_benchmark_names_to_array()
 	foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-		$benchmark_name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+		$benchmark_name = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
 
 		if(!empty($benchmark_name))
 			array_push($benchmark_names, $benchmark_name);
@@ -176,7 +176,7 @@ function pts_benchmark_name_to_identifier($name)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 
-		if($xml_parser->getXMLValue("PTSBenchmark/Information/Title") == $name)
+		if($xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title") == $name)
 			$identifier = basename($benchmark_file, ".xml");
 	}
 
@@ -191,7 +191,7 @@ function pts_benchmark_identifier_to_name($identifier)
 	if(is_file(XML_PROFILE_DIR . "$identifier.xml"))
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
-		$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+		$name = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
 	}
 
 	return $name;

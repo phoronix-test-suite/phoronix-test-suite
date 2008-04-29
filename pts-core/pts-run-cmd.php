@@ -91,10 +91,10 @@ switch($COMMAND)
 		foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
 		{
 		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-			$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+			$name = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
 			$identifier = basename($benchmark_file, ".xml");
-			$license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
-			$status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
+			$license = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/License");
+			$status = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/Status");
 
 			printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 		}
@@ -140,10 +140,10 @@ switch($COMMAND)
 				$benchmark_file = XML_PROFILE_DIR . $test . ".xml";
 
 			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-				$name = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+				$name = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
 				$identifier = basename($benchmark_file, ".xml");
-				$license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
-				$status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
+				$license = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/License");
+				$status = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/Status");
 
 				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 			}
@@ -160,14 +160,14 @@ switch($COMMAND)
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $ARG_1 . ".xml"));
 
-			$test_title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
+			$test_title = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
 
-			$test_version = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Version");
-			$test_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/TestType");
-			$test_app_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/ApplicationType");
-			$test_license = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/License");
-			$test_status = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Status");
-			$test_maintainer = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Maintainer");
+			$test_version = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/Version");
+			$test_type = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/TestType");
+			$test_app_type = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/SoftwareType");
+			$test_license = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/License");
+			$test_status = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/Status");
+			$test_maintainer = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/Maintainer");
 
 			echo pts_string_header($test_title . " (" . $ARG_1 . " v" . $test_version . ")");
 

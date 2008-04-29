@@ -1,17 +1,17 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.3</Version>
-		<BenchmarkType>Processor</BenchmarkType>
-		<ApplicationType>Utility</ApplicationType>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>Timed Gzip Compression</Title>
 		<TimesToRun>5</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>Timed Gzip compression benchmarks.</Description>
-	</Information>
-</PTSBenchmark>
+	</TestInformation>
+</PhoronixTestSuite>

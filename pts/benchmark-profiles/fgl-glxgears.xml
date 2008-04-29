@@ -1,13 +1,13 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.3</Version>
-		<BenchmarkType>Graphics</BenchmarkType>
-		<ApplicationType>Demo</ApplicationType>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Demo</SoftwareType>
 		<License>CLOSED</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>ATI fgl_glxgears</Title>
 		<Executable>fgl_glxgears</Executable>
 		<TimesToRun>5</TimesToRun>
@@ -15,8 +15,8 @@
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the ATI fgl_glxgears test.</Description>
 		<Notes>This is a very poor benchmark.</Notes>
-	</Information>
-	<Settings>
+	</TestInformation>
+	<TestSettings>
 		<Default>
 			<PossiblePaths>/usr/bin/</PossiblePaths>
 		</Default>
@@ -39,5 +39,5 @@
 				</Entry>
 			</Menu>
 		</Option>
-	</Settings>
-</PTSBenchmark>
+	</TestSettings>
+</PhoronixTestSuite>

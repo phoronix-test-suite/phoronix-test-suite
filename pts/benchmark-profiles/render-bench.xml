@@ -1,18 +1,18 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.1</Version>
-                <BenchmarkType>Graphics</BenchmarkType>
-		<ApplicationType>Other</ApplicationType>
+                <TestType>Graphics</TestType>
+		<SoftwareType>Other</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>Render Bench</Title>
 		<Executable>render-bench-test</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<ExternalDependencies>imlib2-development</ExternalDependencies>
 		<Description>This test runs render_bench, which tests X.Org and driver's RENDER performance.</Description>
-	</Information>
-</PTSBenchmark>
+	</TestInformation>
+</PhoronixTestSuite>

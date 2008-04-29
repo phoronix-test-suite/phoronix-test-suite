@@ -1,17 +1,17 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.4</Version>
-		<BenchmarkType>Processor</BenchmarkType>
-		<ApplicationType>Utility</ApplicationType>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>7-Zip Compression</Title>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average MIPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>The benchmark for 7-Zip provided by p7zip.</Description>
-	</Information>
-</PTSBenchmark>
+	</TestInformation>
+</PhoronixTestSuite>

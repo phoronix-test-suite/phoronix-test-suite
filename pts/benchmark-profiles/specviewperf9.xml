@@ -1,13 +1,13 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.3</Version>
-		<BenchmarkType>Graphics</BenchmarkType>
-		<ApplicationType>Utility</ApplicationType>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>SPECViewPerf</Title>
 		<Version>9.0.3</Version>
 		<ExternalDependencies>glut, csh, libpng-development</ExternalDependencies>
@@ -15,8 +15,8 @@
 		<ResultScale>Weighted Geometric Mean</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test runs SPECViewPerf 9.</Description>
-	</Information>
-	<Settings>
+	</TestInformation>
+	<TestSettings>
 		<Option>
 			<DisplayName>SPECViewPerf Test</DisplayName>
 			<Identifier>run-test</Identifier>
@@ -60,5 +60,5 @@
 				</Entry>
 			</Menu>
 		</Option>
-	</Settings>
-</PTSBenchmark>
+	</TestSettings>
+</PhoronixTestSuite>

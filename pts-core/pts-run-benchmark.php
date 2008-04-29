@@ -120,10 +120,10 @@ if(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/ToggleScreensave
 if($TO_RUN_TYPE == "BENCHMARK")
 {
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . "$TO_RUN.xml"));
-	$settings_name = $xml_parser->getXMLArrayValues("PTSBenchmark/Settings/Option/DisplayName");
-	$settings_argument = $xml_parser->getXMLArrayValues("PTSBenchmark/Settings/Option/ArgumentName");
-	$settings_identifier = $xml_parser->getXMLArrayValues("PTSBenchmark/Settings/Option/Identifier");
-	$settings_menu = $xml_parser->getXMLArrayValues("PTSBenchmark/Settings/Option/Menu");
+	$settings_name = $xml_parser->getXMLArrayValues("PhoronixTestSuite/TestSettings/Option/DisplayName");
+	$settings_argument = $xml_parser->getXMLArrayValues("PhoronixTestSuite/TestSettings/Option/ArgumentName");
+	$settings_identifier = $xml_parser->getXMLArrayValues("PhoronixTestSuite/TestSettings/Option/Identifier");
+	$settings_menu = $xml_parser->getXMLArrayValues("PhoronixTestSuite/TestSettings/Option/Menu");
 
 	$USER_ARGS = "";
 	$TEXT_ARGS = "";
@@ -175,10 +175,10 @@ if($TO_RUN_TYPE == "BENCHMARK")
 	if($SAVE_RESULTS)
 	{
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . "$TO_RUN.xml"));
-		$test_description = $xml_parser->getXMLValue("PTSBenchmark/Information/Description");
-		$test_version = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Version");
-		$test_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/ApplicationType");
-		$test_maintainer = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/Maintainer");
+		$test_description = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Description");
+		$test_version = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/Version");
+		$test_type = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/SoftwareType");
+		$test_maintainer = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/Maintainer");
 		unset($xml_parser);
 	}
 	pts_recurse_call_benchmark(array($TO_RUN), array($USER_ARGS), $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, array($TEXT_ARGS));

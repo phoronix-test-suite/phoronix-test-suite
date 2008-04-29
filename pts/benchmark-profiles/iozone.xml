@@ -1,21 +1,21 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.3</Version>
-		<BenchmarkType>Hard Disk</BenchmarkType>
-		<ApplicationType>Utility</ApplicationType>
+		<TestType>Hard Disk</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>IOzone</Title>
 		<Version>3.291</Version>
 		<TimesToRun>2</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>The IOzone benchmark tests your hard disk drive performance.</Description>
-	</Information>
-	<Settings>
+	</TestInformation>
+	<TestSettings>
 		<Default>
 			<Arguments>-s 904800 -r 1</Arguments>
 		</Default>
@@ -34,5 +34,5 @@
 				</Entry>
 			</Menu>
 		</Option>
-	</Settings>
-</PTSBenchmark>
+	</TestSettings>
+</PhoronixTestSuite>

@@ -1,21 +1,21 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.2</Version>
-		<BenchmarkType>Graphics</BenchmarkType>
-		<ApplicationType>Game</ApplicationType>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
 		<Status>UNKNOWN</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>Doom 3</Title>
 		<Version>1.3.1</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>FPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the Doom 3 game.</Description>
-	</Information>
-	<Settings>
+	</TestInformation>
+	<TestSettings>
 		<Default>
 			<Arguments>+exec doom3-pts.cfg +set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +timedemoquit demo1</Arguments>
 			<PossiblePaths></PossiblePaths>
@@ -62,5 +62,5 @@
 				</Entry>
 			</Menu>
 		</Option>
-	</Settings>
-</PTSBenchmark>
+	</TestSettings>
+</PhoronixTestSuite>

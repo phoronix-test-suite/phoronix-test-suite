@@ -1,13 +1,13 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.3</Version>
-		<BenchmarkType>Memory</BenchmarkType>
-		<ApplicationType>Utility</ApplicationType>
+		<TestType>Memory</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>RAMspeed</Title>
 		<Version>2.5.1</Version>
 		<Executable>ramspeed-benchmark</Executable>
@@ -16,8 +16,8 @@
 		<Proportion>HIB</Proportion>
 		<Description>This benchmark tests the system memory (RAM) performance.</Description>
                 <ExternalDependencies>build-utilities</ExternalDependencies>
-	</Information>
-	<Settings>
+	</TestInformation>
+	<TestSettings>
 		<Option>
 			<DisplayName>Type</DisplayName>
 			<Identifier>run-type</Identifier>
@@ -79,5 +79,5 @@
 				</Entry>
 			</Menu>
 		</Option>
-	</Settings>
-</PTSBenchmark>
+	</TestSettings>
+</PhoronixTestSuite>

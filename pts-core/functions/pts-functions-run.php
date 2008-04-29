@@ -95,15 +95,15 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		global $BENCHMARK_RAN;
 
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $benchmark . ".xml"));
-		$benchmark_title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
-		$benchmark_version = $xml_parser->getXMLValue("PTSBenchmark/Information/Version");
-		$result_scale = $xml_parser->getXMLValue("PTSBenchmark/Information/ResultScale");
-		$proportion = $xml_parser->getXMLValue("PTSBenchmark/Information/Proportion");
-		$default_arguments = $xml_parser->getXMLValue("PTSBenchmark/Settings/Default/Arguments");
+		$benchmark_title = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
+		$benchmark_version = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Version");
+		$result_scale = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/ResultScale");
+		$proportion = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Proportion");
+		$default_arguments = $xml_parser->getXMLValue("PhoronixTestSuite/TestSettings/Default/Arguments");
 
 		if(empty($description))
 		{
-			$default_test_descriptor = $xml_parser->getXMLValue("PTSBenchmark/Information/TestDescriptor");
+			$default_test_descriptor = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/TestDescriptor");
 
 			if(!empty($default_test_descriptor))
 				$description = $default_test_descriptor;
@@ -177,16 +177,16 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	pts_process_register($benchmark_identifier);
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . "$benchmark_identifier.xml"));
-	$execute_binary = $xml_parser->getXMLValue("PTSBenchmark/Information/Executable");
-	$benchmark_title = $xml_parser->getXMLValue("PTSBenchmark/Information/Title");
-	$times_to_run = intval($xml_parser->getXMLValue("PTSBenchmark/Information/TimesToRun"));
-	$ignore_first_run = $xml_parser->getXMLValue("PTSBenchmark/Information/IgnoreFirstRun");
-	$pre_run_message = $xml_parser->getXMLValue("PTSBenchmark/Information/PreRunMessage");
-	$result_scale = $xml_parser->getXMLValue("PTSBenchmark/Information/ResultScale");
-	$arg_identifier = $xml_parser->getXMLArrayValues("PTSBenchmark/Settings/Option/Identifier");
-	$execute_path = $xml_parser->getXMLValue("PTSBenchmark/Settings/Default/PossiblePaths");
-	$default_arguments = $xml_parser->getXMLValue("PTSBenchmark/Settings/Default/Arguments");
-	$test_type = $xml_parser->getXMLValue("PTSBenchmark/PhoronixTestSuite/BenchmarkType");
+	$execute_binary = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Executable");
+	$benchmark_title = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
+	$times_to_run = intval($xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/TimesToRun"));
+	$ignore_first_run = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/IgnoreFirstRun");
+	$pre_run_message = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/PreRunMessage");
+	$result_scale = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/ResultScale");
+	$arg_identifier = $xml_parser->getXMLArrayValues("PhoronixTestSuite/TestSettings/Option/Identifier");
+	$execute_path = $xml_parser->getXMLValue("PhoronixTestSuite/TestSettings/Default/PossiblePaths");
+	$default_arguments = $xml_parser->getXMLValue("PhoronixTestSuite/TestSettings/Default/Arguments");
+	$test_type = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/TestType");
 
 	if(empty($times_to_run) || !is_int($times_to_run))
 		$times_to_run = 1;

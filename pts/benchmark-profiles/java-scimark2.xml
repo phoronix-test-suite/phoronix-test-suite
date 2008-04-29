@@ -1,13 +1,13 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.3</Version>
-		<BenchmarkType>Processor</BenchmarkType>
-		<ApplicationType>Utility</ApplicationType>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>Java SciMark</Title>
 		<Version>2.0</Version>
 		<ExternalDependencies>java</ExternalDependencies>
@@ -15,8 +15,8 @@
 		<ResultScale>Mflops</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test runs the Java version of SciMark 2.0, which is a benchmark for scientific and numerical computing developed by programmers at the National Institute of Standards and Technology. This benchmark is made up of Fast Foruier Transform, Jacobi Successive Over-relaxation, Monte Carlo, Sparse Matrix Multiply, and dense LU matrix factorization benchmarks.</Description>
-	</Information>
-	<Settings>
+	</TestInformation>
+	<TestSettings>
 		<Option>
 			<DisplayName>Computational Test</DisplayName>
 			<Identifier>compute-test</Identifier>
@@ -48,5 +48,5 @@
 				</Entry>
 			</Menu>
 		</Option>
-	</Settings>
-</PTSBenchmark>
+	</TestSettings>
+</PhoronixTestSuite>

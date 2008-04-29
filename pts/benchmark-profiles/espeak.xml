@@ -1,13 +1,13 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.4</Version>
-		<BenchmarkType>Processor</BenchmarkType>
-		<ApplicationType>Utility</ApplicationType>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>eSpeak Speech Synthesis</Title>
 		<Version>1.37</Version>
 		<ExternalDependencies>portaudio-development</ExternalDependencies>
@@ -15,5 +15,5 @@
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test times how long it takes the eSpeak speech synthesizer to read Project Gutenberg's The Outline of Science and output to a WAV file.</Description>
-	</Information>
-</PTSBenchmark>
+	</TestInformation>
+</PhoronixTestSuite>

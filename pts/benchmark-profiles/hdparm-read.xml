@@ -1,13 +1,13 @@
-<PTSBenchmark>
-	<PhoronixTestSuite>
+<PhoronixTestSuite>
+	<TestProfile>
 		<Version>0.3</Version>
-		<BenchmarkType>Disk</BenchmarkType>
-		<ApplicationType>Utility</ApplicationType>
+		<TestType>Disk</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>UNVERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-	</PhoronixTestSuite>
-	<Information>
+	</TestProfile>
+	<TestInformation>
 		<Title>hdparm Timed Disk Reads</Title>
 		<Executable>hdparm-su</Executable>
 		<TimesToRun>3</TimesToRun>
@@ -15,8 +15,8 @@
 		<Proportion>HIB</Proportion>
 		<Description>hdparm is used for benchmarking the system's hard drive.</Description>
 		<Notes>On most systems, hdparm requires root access</Notes>
-	</Information>
-	<Settings>
+	</TestInformation>
+	<TestSettings>
 		<Option>
 			<DisplayName>Disk To Read</DisplayName>
 			<Identifier>disk-to-read</Identifier>
@@ -36,5 +36,5 @@
 				</Entry>
 			</Menu>
 		</Option>
-	</Settings>
-</PTSBenchmark>
+	</TestSettings>
+</PhoronixTestSuite>
