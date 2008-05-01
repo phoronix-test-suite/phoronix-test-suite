@@ -119,7 +119,7 @@ function xrandr_screen_resolution()
 		$info = substr($info, 0, strpos($info, " "));
 		$info = explode("x", $info);
 
-		if(count($info) != 2 && !is_int($info[0]) || !is_int($info[1]))
+		if(count($info) != 2 && (!is_int($info[0]) || !is_int($info[1])))
 			$info = "";
 	}
 
