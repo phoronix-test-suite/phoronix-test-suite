@@ -44,6 +44,99 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 	else
 		pts_exit("\nNot recognized: $TO_INSTALL.\n");
 }
+function pts_download_benchmark_files($Benchmark)
+{
+	if(is_file(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(file_get_contents(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
+		$package_url = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/URL");
+		$package_md5 = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/MD5");
+		$package_filename = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/FileName");
+		$download_to = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/DownloadTo");
+		$header_displayed = false;
+
+		for($i = 0; $i < count($package_url); $i++)
+		{
+			if(empty($package_filename[$i]))
+			{
+				$package_filename[$i] = basename($package_url[$i]);
+			}
+
+			if((!is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED") || (!is_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED"))
+			{
+				if(!$header_displayed)
+				{
+					echo pts_string_header("Downloading Files For: " . $Benchmark);
+					$header_displayed = true;
+				}
+
+				$urls = explode(",", $package_url[$i]);
+
+				if(count($urls) > 1)
+					shuffle($urls);
+
+				$fail_count = 0;
+				$try_again = true;
+
+				if($download_to[$i] == "SHARED")
+					$download_location = BENCHMARK_ENV_DIR . "pts-shared/";
+				else
+					$download_location = BENCHMARK_ENV_DIR . $Benchmark . "/";
+
+				if(count($urls) > 0)
+				{
+					do
+					{
+						echo $url = trim(array_pop($urls));
+						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
+						echo shell_exec("cd " . $download_location . " && wget " . $url . " -O " . $package_filename[$i]);
+
+
+						if((is_file($download_location . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file($download_location . $package_filename[$i]) != $package_md5[$i]) || !is_file($download_location . $package_filename[$i]))
+						{
+							unlink($download_location . $package_filename[$i]);
+							$file_downloaded = false;
+							$fail_count++;
+							echo "\nThe MD5 check-sum of the downloaded file is incorrect.\n";
+
+							if($fail_count > 3)
+							{
+								$try_again = false;
+							}
+							else
+							{
+								if(count($urls) > 0)
+								{
+									echo "Attempting to re-download from another mirror...\n";
+								}
+								else
+								{
+									$try_again = pts_bool_question("Would you like to try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN");
+
+									if($try_again)
+										array_push($urls, $url);
+									else
+										$try_again = false;
+								}
+							}
+						}
+						else
+						{
+							$file_downloaded = true;
+							$fail_count = 0;
+						}
+
+						if(!$try_again)
+						{
+							pts_exit("\nDownload of Needed Test Dependencies Failed! Exiting...\n\n");
+						}
+
+					}while(!$file_downloaded);
+				}
+			}
+		}
+	}
+}
 function pts_install_benchmark($Benchmark)
 {
 	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
@@ -51,6 +144,7 @@ function pts_install_benchmark($Benchmark)
 
 	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && ((is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh")) || (is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))))
 	{
+		// pts_download_benchmark_files($Benchmark);
 		echo ucwords($Benchmark) . " is already installed, skipping installation routine...\n";
 	}
 	else
@@ -68,98 +162,7 @@ function pts_install_benchmark($Benchmark)
 			mkdir(BENCHMARK_ENV_DIR . "pts-shared");
 		}
 
-		if(is_file(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
-		{
-			$xml_parser = new tandem_XmlReader(file_get_contents(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
-			$package_url = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/URL");
-			$package_md5 = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/MD5");
-			$package_filename = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/FileName");
-			$download_to = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/DownloadTo");
-			$header_displayed = false;
-
-			for($i = 0; $i < count($package_url); $i++)
-			{
-				if(empty($package_filename[$i]))
-				{
-					$package_filename[$i] = basename($package_url[$i]);
-				}
-
-				if((!is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED") || (!is_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED"))
-				{
-					if(!$header_displayed)
-					{
-						echo pts_string_header("Downloading Files For: " . $Benchmark);
-						$header_displayed = true;
-					}
-
-					$urls = explode(",", $package_url[$i]);
-
-					if(count($urls) > 1)
-						shuffle($urls);
-
-					$fail_count = 0;
-					$try_again = true;
-
-					if($download_to[$i] == "SHARED")
-						$download_location = BENCHMARK_ENV_DIR . "pts-shared/";
-					else
-						$download_location = BENCHMARK_ENV_DIR . $Benchmark . "/";
-
-					if(count($urls) > 0)
-					{
-						do
-						{
-							echo $url = trim(array_pop($urls));
-
-							echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
-
-							echo shell_exec("cd " . $download_location . " && wget " . $url . " -O " . $package_filename[$i]);
-
-
-							if((is_file($download_location . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file($download_location . $package_filename[$i]) != $package_md5[$i]) || !is_file($download_location . $package_filename[$i]))
-							{
-								unlink($download_location . $package_filename[$i]);
-								$file_downloaded = false;
-								$fail_count++;
-								echo "\nThe MD5 check-sum of the downloaded file is incorrect.\n";
-
-								if($fail_count > 3)
-								{
-									$try_again = false;
-								}
-								else
-								{
-									if(count($urls) > 0)
-									{
-										echo "Attempting to re-download from another mirror...\n";
-									}
-									else
-									{
-										$try_again = pts_bool_question("Would you like to try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN");
-
-										if($try_again)
-											array_push($urls, $url);
-										else
-											$try_again = false;
-									}
-								}
-							}
-							else
-							{
-								$file_downloaded = true;
-								$fail_count = 0;
-							}
-
-							if(!$try_again)
-							{
-								pts_exit("\nDownload of Needed Test Dependencies Failed! Exiting...\n\n");
-							}
-
-						}while(!$file_downloaded);
-					}
-				}
-			}
-		}
+		pts_download_benchmark_files($Benchmark);
 
 		if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh") || is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))
 		{
