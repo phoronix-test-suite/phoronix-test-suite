@@ -255,13 +255,17 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
 
+		echo shell_exec("echo $?") . "\n";
+
 		if(!($i == 0 && $ignore_first_run == "TRUE" && $times_to_run > 1))
 		{
 			if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
 			{
 				$BENCHMARK_RESULTS = pts_exec("cd " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " parse-results.php \"$BENCHMARK_RESULTS\"");
 			}
-			array_push($BENCHMARK_RESULTS_ARRAY, $BENCHMARK_RESULTS);
+
+			if(!empty($BENCHMARK_RESULTS))
+				array_push($BENCHMARK_RESULTS_ARRAY, $BENCHMARK_RESULTS);
 		}
 	}
 

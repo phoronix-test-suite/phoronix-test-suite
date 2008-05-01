@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite
+
+- Don't save results if value is 0, as that means the benchmark didn't work
+
 Phoronix Test Suite 0.5.0
 May 1, 2008
 
