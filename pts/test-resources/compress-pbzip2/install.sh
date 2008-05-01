@@ -2,6 +2,11 @@
 
 cd $1
 
+if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
+  then
+     tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2 -C ../pts-shared/
+fi
+
 tar -xvf bzip2-1.0.5.tar.gz
 tar -xvf pbzip2-1.0.2.tar.gz
 cd bzip2-1.0.5/
@@ -11,11 +16,6 @@ cp -f bzlib.h ../pbzip2-1.0.2
 cd ..
 cd pbzip2-1.0.2/
 make pbzip2-static
-
-if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
-  then
-     tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2 -C ../pts-shared/
-fi
 
 cd ..
 rm -f bigfile
