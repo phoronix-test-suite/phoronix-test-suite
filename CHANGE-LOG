@@ -6,6 +6,7 @@ Phoronix Test Suite
 - Screen resolution detection fix (Thanks to uncle_fungus)
 - Improved process detection for Firefox and Thunderbird if the process name is different (Thanks to uncle_fungus)
 - pts-results-viewer fix for showing author correctly in system details area
+- Add OpenSSL RSA benchmark (openssl)
 
 
 Phoronix Test Suite 0.5.0

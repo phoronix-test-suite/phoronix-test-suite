@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>ftp://ftp.openssl.org/source/openssl-0.9.8g.tar.gz</URL>
+			<MD5>acf70a16359bf3658bdfb74bda1c4419</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,19 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.5</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Game</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</TestProfile>
+	<TestInformation>
+		<Title>OpenSSL</Title>
+		<SubTitle>RSA 4096-bit Performance</SubTitle>
+		<Version>0.9.8g</Version>
+		<TimesToRun>4</TimesToRun>
+		<ResultScale>Signs Per Second</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This is a benchmark of OpenSSL, the open-source toolkit for SSL/TLS.</Description>
+	</TestInformation>
+</PhoronixTestSuite>
