@@ -5,6 +5,7 @@ Phoronix Test Suite
 - Don't save results if value is 0, as that means the benchmark didn't work
 - Screen resolution detection fix (Thanks to uncle_fungus)
 - Improved process detection for Firefox and Thunderbird if the process name is different (Thanks to uncle_fungus)
+- pts-results-viewer fix for showing author correctly in system details area
 
 
 Phoronix Test Suite 0.5.0
