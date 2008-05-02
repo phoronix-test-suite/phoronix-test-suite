@@ -15,9 +15,17 @@ function pts_process_running_string($process_arr)
 	if(!is_array($process_arr))
 		$process_arr = array($process_arr);
 
-	foreach($process_arr as $process)
-		if(pts_process_running_bool($process))
-			array_push($p, $process);
+	foreach($process_arr as $p_name => $p_process)
+	{
+		if(!is_array($p_process))
+			$p_process = array($p_process);
+
+		foreach($p_process as $process)
+			if(pts_process_running_bool($process))
+				array_push($p, $p_name);
+	}
+
+	$p = array_keys(array_flip($p));
 
 	if(($p_count = count($p)) > 0)
 	{

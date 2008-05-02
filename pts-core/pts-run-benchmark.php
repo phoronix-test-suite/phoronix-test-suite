@@ -231,7 +231,13 @@ else
 
 if($SAVE_RESULTS)
 {
-	$test_notes = pts_process_running_string(array("Compiz", "Firefox", "Thunderbird"));
+	$check_processes = array(
+		"Compiz" => array("compiz"),
+		"Firefox" => array("firefox", "mozilla-firefox", "mozilla-firefox-bin"),
+		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin")
+		);
+
+	$test_notes = pts_process_running_string($check_processes);
 
 	if(defined("TEST_GRAPHICS"))
 	{
