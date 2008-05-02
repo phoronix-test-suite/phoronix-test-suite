@@ -44,15 +44,6 @@ if(!$TO_RUN_TYPE)
 		$TO_RUN_TYPE = "LOCAL_COMPARISON";
 		$PROPOSED_FILE_NAME = $TO_RUN;
 		$RES_NULL = null;
-
-		if(!defined("PTS_BATCH_MODE") || pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE") == "TRUE")
-			do
-			{
-				echo "Enter a unique identifier for distinguishing this series of tests: ";
-				$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
-			}while(empty($RESULTS_IDENTIFIER));
-
-		$RESULTS = new tandem_XmlWriter();
 	}
 	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_RUN")) == "REMOTE_FILE")
 	{
@@ -61,17 +52,7 @@ if(!$TO_RUN_TYPE)
 		$PROPOSED_FILE_NAME = $TO_RUN;
 		$RES_NULL = null;
 		define("GLOBAL_COMPARISON", 1);
-
 		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_RUN"));
-
-		if(!defined("PTS_BATCH_MODE") || pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE") == "TRUE")
-			do
-			{
-				echo "Enter a unique identifier for distinguishing this series of tests: ";
-				$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
-			}while(empty($RESULTS_IDENTIFIER));
-
-		$RESULTS = new tandem_XmlWriter();
 	}
 	else
 	{
@@ -95,27 +76,15 @@ else
 
 		if(empty($PROPOSED_FILE_NAME))
 			$PROPOSED_FILE_NAME = date("Y-m-d-Hi");
-
-		if(!defined("PTS_BATCH_MODE") || pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE") == "TRUE")
-			do
-			{
-				echo "Enter a unique identifier for distinguishing this series of tests: ";
-				$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
-			}while(empty($RESULTS_IDENTIFIER));
-
-		$RESULTS = new tandem_XmlWriter();
 	}
 }
 
-if(!isset($RESULTS_IDENTIFIER) || empty($RESULTS_IDENTIFIER))
-	$RESULTS_IDENTIFIER = date("Y-m-d H:i");
+$RESULTS = new tandem_XmlWriter();
 
-// Kill the screensaver
-if(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/ToggleScreensaver", "FALSE") == "TRUE")
-{
-	shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1");
-	define("SCREENSAVER_KILLED", 1);
-}
+if($SAVE_RESULTS)
+	$RESULTS_IDENTIFIER = pts_prompt_results_identifier();
+
+pts_disable_screensaver(); // Kill the screensaver
 
 if($TO_RUN_TYPE == "BENCHMARK")
 {

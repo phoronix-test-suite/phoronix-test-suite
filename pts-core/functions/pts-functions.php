@@ -537,5 +537,23 @@ function pts_shutdown()
 	// Remove process
 	pts_process_remove("phoronix-test-suite");
 }
+function pts_disable_screensaver()
+{
+	if(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/ToggleScreensaver", "FALSE") == "TRUE")
+	{
+		shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled false");
+		define("SCREENSAVER_KILLED", 1);
+	}
+}
+function pts_enable_screensaver()
+{
+	if(defined("SCREENSAVER_KILLED"))
+		shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true");
+}
+function pts_interrupt_screensaver()
+{
+	if(!defined("SCREENSAVER_KILLED"))
+		shell_exec("xdg-screensaver reset");
+}
 
 ?>

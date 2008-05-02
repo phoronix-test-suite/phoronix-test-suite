@@ -1,5 +1,22 @@
 <?php
 
+function pts_prompt_results_identifier()
+{
+	$RESULTS_IDENTIFIER = null;
+
+	if(!defined("PTS_BATCH_MODE") || pts_read_user_config("PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier", "TRUE") == "TRUE")
+		do
+		{
+			echo "Enter a unique identifier for distinguishing this series of tests: ";
+			$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
+		}
+		while(empty($RESULTS_IDENTIFIER));
+
+	if(empty($RESULTS_IDENTIFIER))
+		$RESULTS_IDENTIFIER = date("Y-m-d H:i");
+
+	return $RESULTS_IDENTIFIER;
+}
 function pts_verify_test_installation($TO_RUN)
 {
 	$needs_installing = array();
@@ -66,7 +83,9 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 {
 	for($i = 0; $i < count($benchmarks_array); $i++)
 	{
-		if(pts_benchmark_type($benchmarks_array[$i]) == "TEST_SUITE")
+		$test_type = pts_benchmark_type($benchmarks_array[$i]);
+
+		if($test_type == "TEST_SUITE")
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $benchmarks_array[$i] . ".xml"));
 
@@ -76,7 +95,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 
 			pts_recurse_call_benchmark($sub_suite_benchmarks, $sub_arguments, $save_results, $tandem_xml, $results_identifier, $sub_arguments_description);
 		}
-		else
+		else if($test_type == "BENCHMARK")
 		{
 			$test_result = pts_run_benchmark($benchmarks_array[$i], $arguments_array[$i], $arguments_description[$i]);
 
@@ -166,8 +185,7 @@ function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEX
 }
 function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $arguments_description = "")
 {
-	if(!defined("SCREENSAVER_KILLED"))
-		shell_exec("xdg-screensaver reset 2>&1");
+	pts_interrupt_screensaver();
 
 	if(pts_process_active($benchmark_identifier))
 	{
@@ -254,8 +272,6 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		$result_output = array();
 
 		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
-
-		echo shell_exec("echo $?") . "\n";
 
 		if(!($i == 0 && $ignore_first_run == "TRUE" && $times_to_run > 1))
 		{
