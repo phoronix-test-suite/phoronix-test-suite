@@ -30,4 +30,8 @@
 		<Test>compress-pbzip2</Test>
 		<Description></Description>
 	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+		<Description></Description>
+	</RunTest>
 </PhoronixTestSuite>
