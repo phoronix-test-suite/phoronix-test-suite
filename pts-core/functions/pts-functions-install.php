@@ -2,7 +2,7 @@
 
 function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 {
-	$type = pts_benchmark_type($TO_INSTALL);
+	$type = pts_test_type($TO_INSTALL);
 
 	if($type == "BENCHMARK")
 	{
@@ -139,7 +139,7 @@ function pts_download_benchmark_files($Benchmark)
 }
 function pts_install_benchmark($Benchmark)
 {
-	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
+	if(pts_test_type($Benchmark) != "BENCHMARK")
 		return;
 
 	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && ((is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh")) || (is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))))
@@ -256,7 +256,7 @@ function pts_install_packages_on_distribution_process($install_objects)
 }
 function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 {
-	if(pts_benchmark_type($Benchmark) != "BENCHMARK")
+	if(pts_test_type($Benchmark) != "BENCHMARK")
 		return;
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $Benchmark . ".xml"));

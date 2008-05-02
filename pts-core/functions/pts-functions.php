@@ -196,7 +196,7 @@ function pts_benchmark_identifier_to_name($identifier)
 
 	return $name;
 }
-function pts_benchmark_type($identifier)
+function pts_test_type($identifier)
 {
 	if(empty($identifier))
 		return false;

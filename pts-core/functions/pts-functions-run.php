@@ -45,7 +45,7 @@ function pts_verify_test_installation($TO_RUN)
 }
 function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 {
-	$type = pts_benchmark_type($TO_VERIFY);
+	$type = pts_test_type($TO_VERIFY);
 
 	if($type == "BENCHMARK")
 	{
@@ -83,7 +83,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 {
 	for($i = 0; $i < count($benchmarks_array); $i++)
 	{
-		$test_type = pts_benchmark_type($benchmarks_array[$i]);
+		$test_type = pts_test_type($benchmarks_array[$i]);
 
 		if($test_type == "TEST_SUITE")
 		{

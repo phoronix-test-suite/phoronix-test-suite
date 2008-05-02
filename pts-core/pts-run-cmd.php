@@ -115,7 +115,7 @@ switch($COMMAND)
 		echo "\n";
 		break;
 	case "SUITE_INFO":
-		if(pts_benchmark_type($ARG_1) == "TEST_SUITE")
+		if(pts_test_type($ARG_1) == "TEST_SUITE")
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $ARG_1 . ".xml"));
 			$tests_in_suite = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Test");
@@ -156,7 +156,7 @@ switch($COMMAND)
 		}
 		break;
 	case "TEST_INFO":
-		if(pts_benchmark_type($ARG_1) == "BENCHMARK")
+		if(pts_test_type($ARG_1) == "BENCHMARK")
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $ARG_1 . ".xml"));
 

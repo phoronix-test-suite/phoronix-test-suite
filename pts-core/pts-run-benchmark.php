@@ -23,7 +23,7 @@ require("pts-core/functions/pts-functions-run.php");
 require("pts-core/functions/pts-functions-merge.php");
 
 $TO_RUN = strtolower($argv[1]);
-$TO_RUN_TYPE = pts_benchmark_type($TO_RUN);
+$TO_RUN_TYPE = pts_test_type($TO_RUN);
 $BENCHMARK_RAN = false;
 
 if(isset($argv[2]) && $argv[2] == "BATCH")
