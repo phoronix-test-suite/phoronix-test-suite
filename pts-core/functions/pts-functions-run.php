@@ -103,7 +103,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 
 		if(empty($description))
 		{
-			$default_test_descriptor = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/TestDescriptor");
+			$default_test_descriptor = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/SubTitle");
 
 			if(!empty($default_test_descriptor))
 				$description = $default_test_descriptor;
