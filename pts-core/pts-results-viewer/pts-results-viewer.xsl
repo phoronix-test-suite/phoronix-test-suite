@@ -23,7 +23,7 @@
 				<p id="tsd_show" style="display: none;"><div class="pts_area_box"><p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p><p style="font-size: 11px;"><em>This test is maintained by <xsl:value-of select="PhoronixTestSuite/Suite/Maintainer" />.</em></p><p><a onclick="switchShow('tsd_hidden');switchShow('tsd_show');">&lt;&lt; Hide Test Details</a></p></div></p>
 				<p class="pts_benchmark_descriptor" id="tsd_hidden"><a onclick="switchShow('tsd_hidden');switchShow('tsd_show');hideObject('tips_show');showObject('tips_hidden');">Show Test Details &gt;&gt;</a></p>
 				<xsl:variable name="idcount"><xsl:value-of select="count(PhoronixTestSuite/System)" /></xsl:variable>
-				<xsl:variable name="idwidth"><xsl:value-of select="floor(820 div $idcount) - 1" /></xsl:variable>
+				<xsl:variable name="idwidth"><xsl:value-of select="floor(820 div $idcount) - 3" /></xsl:variable>
 				<h1>System Hardware</h1>
 				<div class="pts_chart_box">
 				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_head"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><xsl:value-of select="AssociatedIdentifiers" /></div></xsl:for-each>

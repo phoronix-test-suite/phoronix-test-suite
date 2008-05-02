@@ -438,8 +438,6 @@ function pts_global_upload_result($result_file, $tags = "")
 }
 function pts_trim_double($double, $accuracy = 2)
 {
-	// this function is to avoid using bcmath
-
 	$return = explode(".", $double);
 
 	if(count($return) == 1)
@@ -527,6 +525,18 @@ function pts_exit($string = "")
 	define("PTS_EXIT", 1);
 	echo $string;
 	exit(0);
+}
+function pts_version_comparable($old, $new)
+{
+	$old = explode('.', $old);
+	$new = explode('.', $new);
+	$compare = true;
+
+	if(count($old) >= 2 && count($new) >= 2)
+		if($old[0] != $new[0] || $old[1] != $new[1])
+			$compare = false;
+
+	return $compare;	
 }
 function pts_shutdown()
 {

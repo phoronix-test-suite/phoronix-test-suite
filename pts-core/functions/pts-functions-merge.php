@@ -125,8 +125,8 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	}
 	else
 	{
-		if($original_pts_version[0] != $new_pts_version[0]) // TODO: add checks to scan entire pts_version arrays
-			echo "PTS Versions Do Not Match! For accurate results, you should only test against the same version.";
+		if(pts_version_comparable($original_pts_version[0], $new_pts_version[0]))
+			echo pts_string_header("PTS Versions Do Not Match! For accurate results, you should only test against the same version!");
 
 		for($i = 0; $i < count($original_system_hardware); $i++)
 		{

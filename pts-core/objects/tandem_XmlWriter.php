@@ -19,9 +19,6 @@ class tandem_XmlWriter
 
 	function __construct($READ_FROM_XML = "", $NOT_IMPLEMENTED = "", $NICE_FORMATTING = TRUE)
 	{
-		// TODOs
-		// $READ_FROM_XML: Convert existing XML into array, to be appended to
-
 		$this->FORMAT_XML = $NICE_FORMATTING;
 	}
 	function setXslBinding($URL)
