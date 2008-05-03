@@ -43,6 +43,7 @@ function __autoload($to_load)
 }
 
 // Load OS-specific functions
+require_once("pts-core/functions/pts-functions_interfaces.php");
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
 require_once("pts-core/functions/pts-functions_monitor.php");
@@ -64,8 +65,8 @@ define("PTS_MONITOR_DIR", PTS_USER_DIR . strtolower(PTS_CODENAME) . '/');
 //define("FONT_DIRECTORY" "/usr/share/fonts/");
 
 pts_config_init();
-define("BENCHMARK_ENV_DIR", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory", "~/.phoronix-test-suite/installed-tests/")));
-define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config("PhoronixTestSuite/Options/Results/Directory", "~/.phoronix-test-suite/test-results/")));
+define("BENCHMARK_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
+define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
 
 // Register PTS
 
@@ -146,7 +147,7 @@ function pts_benchmark_names_to_array()
 	foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-		$benchmark_name = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
+		$benchmark_name = $xml_parser->getXMLValue(P_TEST_TITLE);
 
 		if(!empty($benchmark_name))
 			array_push($benchmark_names, $benchmark_name);
@@ -159,7 +160,7 @@ function pts_suite_names_to_array()
 	foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-		$benchmark_name = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Title");
+		$benchmark_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 
 		if(!empty($benchmark_name))
 			array_push($benchmark_suites, $benchmark_name);
@@ -176,7 +177,7 @@ function pts_benchmark_name_to_identifier($name)
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 
-		if($xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title") == $name)
+		if($xml_parser->getXMLValue(P_TEST_TITLE) == $name)
 			$identifier = basename($benchmark_file, ".xml");
 	}
 
@@ -191,7 +192,7 @@ function pts_benchmark_identifier_to_name($identifier)
 	if(is_file(XML_PROFILE_DIR . "$identifier.xml"))
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
-		$name = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
+		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 	}
 
 	return $name;
@@ -290,13 +291,13 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 				}
 
 				$xml_reader = new tandem_XmlReader($save_results);
-				$results_name = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Name");
-				$results_version = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Version");
-				$results_attributes = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Attributes");
-				$results_scale = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Scale");
-				$results_proportion = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Proportion");
-				$results_result_format = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/ResultFormat");
-				$results_raw = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Benchmark/Results");
+				$results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
+				$results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
+				$results_attributes = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+				$results_scale = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
+				$results_proportion = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
+				$results_result_format = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
+				$results_raw = $xml_reader->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 
 				$results_identifiers = array();
 				$results_values = array();
@@ -304,8 +305,8 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 				foreach($results_raw as $result_raw)
 				{
 					$xml_results = new tandem_XmlReader($result_raw);
-					array_push($results_identifiers, $xml_results->getXMLArrayValues("Group/Entry/Identifier"));
-					array_push($results_values, $xml_results->getXMLArrayValues("Group/Entry/Value"));
+					array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
+					array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
 				}
 
 				for($i = 0; $i < count($results_name); $i++)
@@ -431,7 +432,7 @@ function pts_global_upload_result($result_file, $tags = "")
 {
 	$ToUpload = rawurlencode(base64_encode(file_get_contents($result_file)));
 	$GlobalUser = pts_current_user();
-	$Globalkey = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/UploadKey", "");
+	$Globalkey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "");
 	$tags = rawurlencode(base64_encode($tags));
 
 	return @file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$ToUpload&global_user=$GlobalUser&global_key=$Globalkey&tags=$tags"); // Rudimentary, but works
@@ -467,13 +468,13 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 		switch($question_id)
 		{
 			case "SAVE_RESULTS":
-				$auto_answer = pts_read_user_config("PhoronixTestSuite/Options/BatchMode/SaveResults", "TRUE");
+				$auto_answer = pts_read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE");
 				break;
 			case "OPEN_BROWSER":
-				$auto_answer = pts_read_user_config("PhoronixTestSuite/Options/BatchMode/OpenBrowser", "FALSE");
+				$auto_answer = pts_read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE");
 				break;
 			case "UPLOAD_RESULTS":
-				$auto_answer = pts_read_user_config("PhoronixTestSuite/Options/BatchMode/UploadResults", "TRUE");
+				$auto_answer = pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE");
 				break;
 		}
 
@@ -549,7 +550,7 @@ function pts_shutdown()
 }
 function pts_disable_screensaver()
 {
-	if(pts_read_user_config("PhoronixTestSuite/Options/Benchmarking/ToggleScreensaver", "FALSE") == "TRUE")
+	if(pts_read_user_config(P_OPTION_TEST_SCREENSAVER, "FALSE") == "TRUE")
 	{
 		shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled false");
 		define("SCREENSAVER_KILLED", 1);

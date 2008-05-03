@@ -16,7 +16,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 		echo "\nInstalling Software For " . ucwords($TO_INSTALL) . " Test Suite...\n\n";
 
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_INSTALL . ".xml"));
-		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Test");
+		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 
 		foreach($suite_benchmarks as $benchmark)
 			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
@@ -24,7 +24,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 	else if(is_file(pts_input_correct_results_path($TO_INSTALL)))
 	{
 		$xml_parser = new tandem_XmlReader(file_get_contents(pts_input_correct_results_path($TO_INSTALL)));
-		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestName");
+		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($suite_benchmarks as $benchmark)
 		{
@@ -34,7 +34,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_INSTALL")) == "REMOTE_FILE")
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_INSTALL"));
-		$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestName");
+		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($suite_benchmarks as $benchmark)
 		{
@@ -49,10 +49,10 @@ function pts_download_benchmark_files($Benchmark)
 	if(is_file(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
 	{
 		$xml_parser = new tandem_XmlReader(file_get_contents(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
-		$package_url = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/URL");
-		$package_md5 = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/MD5");
-		$package_filename = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/FileName");
-		$download_to = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Downloads/Package/DownloadTo");
+		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
+		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
+		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
+		$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
 		$header_displayed = false;
 
 		for($i = 0; $i < count($package_url); $i++)
@@ -193,10 +193,10 @@ function pts_external_dependency_generic($Name)
 	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
 	{
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DISTRO_DIR . "generic-packages.xml"));
-		$package_name = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
-		$title = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/Title");
-		$possible_packages = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PossibleNames");
-		$file_check = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/FileCheck");
+		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+		$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
+		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 
 		$selection = -1;
 		for($i = 0; $i < count($title) && $selection == -1; $i++)
@@ -260,8 +260,8 @@ function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 		return;
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $Benchmark . ".xml"));
-	$title = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Title");
-	$dependencies = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/ExternalDependencies");
+	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
+	$dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 
 	if(empty($dependencies))
 		return;
@@ -290,9 +290,9 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 	if(is_file(XML_DISTRO_DIR . $vendor . "-packages.xml"))
 	{
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DISTRO_DIR . $vendor . "-packages.xml"));
-		$generic_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/GenericName");
-		$distro_package = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/PackageName");
-		$file_check = $xml_parser->getXMLArrayValues("PhoronixTestSuite/ExternalDependencies/Package/FileCheck");
+		$generic_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+		$distro_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_SPECIFIC);
+		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 
 		for($i = 0; $i < count($generic_package); $i++)
 			if(!empty($generic_package[$i]) && in_array($generic_package[$i], $generic_names))

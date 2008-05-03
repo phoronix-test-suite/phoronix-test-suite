@@ -89,10 +89,10 @@ pts_disable_screensaver(); // Kill the screensaver
 if($TO_RUN_TYPE == "BENCHMARK")
 {
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . "$TO_RUN.xml"));
-	$settings_name = $xml_parser->getXMLArrayValues("PhoronixTestSuite/TestSettings/Option/DisplayName");
-	$settings_argument = $xml_parser->getXMLArrayValues("PhoronixTestSuite/TestSettings/Option/ArgumentName");
-	$settings_identifier = $xml_parser->getXMLArrayValues("PhoronixTestSuite/TestSettings/Option/Identifier");
-	$settings_menu = $xml_parser->getXMLArrayValues("PhoronixTestSuite/TestSettings/Option/Menu");
+	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
+	$settings_argument = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGUMENTNAME);
+	$settings_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
+	$settings_menu = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
 
 	$USER_ARGS = "";
 	$TEXT_ARGS = "";
@@ -104,8 +104,8 @@ if($TO_RUN_TYPE == "BENCHMARK")
 		if(!empty($settings_menu[$option_count]))
 		{
 			$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
-			$option_names = $xml_parser->getXMLArrayValues("Entry/Name");
-			$option_values = $xml_parser->getXMLArrayValues("Entry/Value");
+			$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
+			$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
 
 			if(count($option_values) == 1)
 			{
@@ -143,11 +143,11 @@ if($TO_RUN_TYPE == "BENCHMARK")
 
 	if($SAVE_RESULTS)
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . "$TO_RUN.xml"));
-		$test_description = $xml_parser->getXMLValue("PhoronixTestSuite/TestInformation/Description");
-		$test_version = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/Version");
-		$test_type = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/SoftwareType");
-		$test_maintainer = $xml_parser->getXMLValue("PhoronixTestSuite/TestProfile/Maintainer");
+		$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $TO_RUN . ".xml"));
+		$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
+		$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
+		$test_type = $xml_parser->getXMLValue(P_TEST_SOFTWARE_TYPE);
+		$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 		unset($xml_parser);
 	}
 	pts_recurse_call_benchmark(array($TO_RUN), array($USER_ARGS), $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, array($TEXT_ARGS));
@@ -162,15 +162,15 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 
 	if($SAVE_RESULTS)
 	{
-		$test_description = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Description");
-		$test_version = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Version");
-		$test_type = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/TestType");
-		$test_maintainer = $xml_parser->getXMLValue("PhoronixTestSuite/SuiteInformation/Maintainer");
+		$test_description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
+		$test_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
+		$test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
+		$test_maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
 	}
 
-	$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Test");
-	$arguments = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Arguments");
-	$arguments_description = $xml_parser->getXMLArrayValues("PhoronixTestSuite/RunTest/Description");
+	$suite_benchmarks = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+	$arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
+	$arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
 	unset($xml_parser);
 
 	pts_recurse_call_benchmark($suite_benchmarks, $arguments, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $arguments_description);
@@ -180,15 +180,14 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 	echo pts_string_header("Global Comparison Against: " . $TO_RUN);
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $TO_RUN . "/composite.xml"));
-	$CUSTOM_TITLE = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Title");
-	$test_description = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Description");
-	$test_version = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Version");
-	$test_type = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Type");
-	$test_maintainer = $xml_parser->getXMLValue("PhoronixTestSuite/Suite/Maintainer");
-
-	$suite_benchmarks = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestName");
-	$arguments = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/TestArguments");
-	$arguments_description = $xml_parser->getXMLArrayValues("PhoronixTestSuite/Benchmark/Attributes");
+	$CUSTOM_TITLE = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
+	$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
+	$test_version = $xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
+	$test_type = $xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
+	$test_maintainer = $xml_parser->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
+	$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+	$arguments = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
+	$arguments_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 	unset($xml_parser);
 
 	pts_recurse_call_benchmark($suite_benchmarks, $arguments, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $arguments_description);
@@ -232,21 +231,21 @@ if($SAVE_RESULTS)
 
 	$id = pts_request_new_id();
 	$RESULTS->setXslBinding("pts-results-viewer.xsl");
-	$RESULTS->addXmlObject("PhoronixTestSuite/System/Hardware", $id, pts_hw_string());
-	$RESULTS->addXmlObject("PhoronixTestSuite/System/Software", $id, pts_sw_string());
-	$RESULTS->addXmlObject("PhoronixTestSuite/System/Author", $id, pts_current_user());
-	$RESULTS->addXmlObject("PhoronixTestSuite/System/TestDate", $id, date("F j, Y h:i A"));
-	$RESULTS->addXmlObject("PhoronixTestSuite/System/TestNotes", $id, trim($test_notes));
-	$RESULTS->addXmlObject("PhoronixTestSuite/System/Version", $id, PTS_VERSION);
-	$RESULTS->addXmlObject("PhoronixTestSuite/System/AssociatedIdentifiers", $id, $RESULTS_IDENTIFIER);
+	$RESULTS->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $id, pts_hw_string());
+	$RESULTS->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $id, pts_sw_string());
+	$RESULTS->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $id, pts_current_user());
+	$RESULTS->addXmlObject(P_RESULTS_SYSTEM_DATE, $id, date("F j, Y h:i A"));
+	$RESULTS->addXmlObject(P_RESULTS_SYSTEM_NOTES, $id, trim($test_notes));
+	$RESULTS->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $id, PTS_VERSION);
+	$RESULTS->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $RESULTS_IDENTIFIER);
 
 	$id = pts_request_new_id();
-	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Title", $id, $CUSTOM_TITLE);
-	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Name", $id, $TO_RUN);
-	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Version", $id, $test_version);
-	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Description", $id, $test_description);
-	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Type", $id, $test_type);
-	$RESULTS->addXmlObject("PhoronixTestSuite/Suite/Maintainer", $id, $test_maintainer);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $CUSTOM_TITLE);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_NAME, $id, $TO_RUN);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_VERSION, $id, $test_version);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_MAINTAINER, $id, $test_maintainer);
 
 	if($BENCHMARK_RAN)
 	{
