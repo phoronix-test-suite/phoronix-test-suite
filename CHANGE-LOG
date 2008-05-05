@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 0.5.1
+May 5, 2008
 
 - Don't save results if value is 0, as that means the benchmark didn't work
 - Screen resolution detection fix (Thanks to uncle_fungus)
@@ -13,7 +14,7 @@ Phoronix Test Suite
 - Clean/fix up some of the test profiles
 - Change the pts-shared sample WAV audio file once again (should be finalized now)
 - Fix uploading large suite results to PTS Global
-- Add in initial pcqs-server-motherboard suite for Phoronix.com server/workstation motherboard testing.
+- Add in initial pcqs-server-motherboard suite for Phoronix.com server/workstation motherboard testing
 
 Phoronix Test Suite 0.5.0
 May 1, 2008

@@ -48,7 +48,7 @@ require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
 require_once("pts-core/functions/pts-functions_monitor.php");
 
-define("PTS_VERSION", "0.5.0");
+define("PTS_VERSION", "0.5.1");
 define("PTS_CODENAME", "TRONDHEIM");
 define("PTS_TYPE", "DESKTOP");
 define("THIS_RUN_TIME", time());
