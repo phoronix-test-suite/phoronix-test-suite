@@ -10,6 +10,8 @@ Phoronix Test Suite
 - Add OpenSSL to multicore suite as the profile is SMP-aware
 - Minor clean-ups in pts-run-benchmark/pts-functions-run
 - Export all XML paths to pts-functions_interfaces
+- Clean/fix up some of the test profiles
+- Change the pts-shared sample WAV audio file once again (should be finalized now)
 
 Phoronix Test Suite 0.5.0
 May 1, 2008

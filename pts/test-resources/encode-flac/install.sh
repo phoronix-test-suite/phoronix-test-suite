@@ -2,9 +2,9 @@
 
 cd $1
 
-if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
+if [ ! -f trondheim-wav-sample.wav ]
   then
-     tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2 -C ../pts-shared/
+     tar -xvf ../pts-shared/trondheim-wav-sample.tar.gz
 fi
 
 THIS_DIR=$(pwd)
@@ -19,6 +19,6 @@ cd ..
 rm -rf flac-1.2.1/
 
 echo "#!/bin/sh
-/usr/bin/time -f \"WAV To FLAC Encode Time: %e Seconds\" ./flac_/bin/flac -s --best ../pts-shared/pts-wav-sample-file.wav 2>&1
-rm -f ../pts-shared/pts-wav-sample-file.flac" > flac
+/usr/bin/time -f \"WAV To FLAC Encode Time: %e Seconds\" ./flac_/bin/flac -s --best trondheim-wav-sample.wav 2>&1
+rm -f trondheim-wav-sample.flac" > flac
 chmod +x flac

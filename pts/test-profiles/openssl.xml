@@ -1,8 +1,8 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.5</Version>
-		<TestType>Graphics</TestType>
-		<SoftwareType>Game</SoftwareType>
+		<Version>0.6</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>

@@ -9,16 +9,16 @@
 	<RunTest>
 		<Test>encode-mp3</Test>
 		<Arguments></Arguments>
-		<Description>time lame -h audio.wav audio.mp3 (45.0MB)</Description>
+		<Description>106MB WAV File Encoding</Description>
 	</RunTest>
 	<RunTest>
 		<Test>encode-ogg</Test>
 		<Arguments></Arguments>
-		<Description>time oggenc audio.wav -q 10 -o audio.ogg (45.0MB)</Description>
+		<Description>106MB WAV File Encoding</Description>
 	</RunTest>
 	<RunTest>
 		<Test>encode-flac</Test>
 		<Arguments></Arguments>
-		<Description>time flac --best audio.wav (45.0MB)</Description>
+		<Description>106MB WAV File Encoding</Description>
 	</RunTest>
 </PhoronixTestSuite>

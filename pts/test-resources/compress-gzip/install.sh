@@ -2,14 +2,14 @@
 
 cd $1
 
-if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
+if [ ! -f ../pts-shared/trondheim-wav-sample.wav ]
   then
-     tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2 -C ../pts-shared/
+     tar -xvf ../pts-shared/trondheim-wav-sample.tar.gz -C ../pts-shared/
 fi
 
 cat > gzip_bigfile <<EOT
 #!/bin/sh
-for i in 1 2 3 4 5 6 7 8; do cat ../pts-shared/pts-wav-sample-file.wav; done|gzip -c >/dev/null
+for i in 1 2 3 4 5 6 7 8; do cat ../pts-shared/trondheim-wav-sample.wav; done|gzip -c >/dev/null
 EOT
 chmod +x gzip_bigfile
 

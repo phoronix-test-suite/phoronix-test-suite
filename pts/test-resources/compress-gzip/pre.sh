@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd $1
-cat ../pts-shared/pts-wav-sample-file.wav > /dev/null
+cat ../pts-shared/trondheim-wav-sample.wav > /dev/null

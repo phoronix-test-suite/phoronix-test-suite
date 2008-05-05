@@ -2,9 +2,9 @@
 
 cd $1
 
-if [ ! -f ../pts-shared/pts-wav-sample-file.wav ]
+if [ ! -f ../pts-shared/trondheim-wav-sample.wav ]
   then
-     tar -jxvf ../pts-shared/pts-wav-sample-file.tar.bz2 -C ../pts-shared/
+     tar -xvf ../pts-shared/trondheim-wav-sample.tar.gz -C ../pts-shared/
 fi
 
 THIS_DIR=$(pwd)
@@ -20,5 +20,5 @@ rm -rf lame-3.97/
 
 echo "#!/bin/sh
 rm -f audio.mp3
-/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame_/bin/lame --silent -h ../pts-shared/pts-wav-sample-file.wav audio.mp3 2>&1" > lame
+/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame_/bin/lame --silent -h ../pts-shared/trondheim-wav-sample.wav audio.mp3 2>&1" > lame
 chmod +x lame
