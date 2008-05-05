@@ -12,6 +12,8 @@ Phoronix Test Suite
 - Export all XML paths to pts-functions_interfaces
 - Clean/fix up some of the test profiles
 - Change the pts-shared sample WAV audio file once again (should be finalized now)
+- Fix uploading large suite results to PTS Global
+- Add in initial pcqs-server-motherboard suite for Phoronix.com server/workstation motherboard testing.
 
 Phoronix Test Suite 0.5.0
 May 1, 2008
