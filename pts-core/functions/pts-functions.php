@@ -430,7 +430,13 @@ function pts_request_new_id()
 }
 function pts_global_upload_result($result_file, $tags = "")
 {
-	$ToUpload = rawurlencode(base64_encode(file_get_contents($result_file)));
+	$benchmark_results = file_get_contents($result_file);
+	$switch_tags = array("Benchmark>" => "B>", "Results>" => "R>", "Group>" => "G>", "Entry>" => "E>", "Identifier>" => "I>", "Value>" => "V>", "System>" => "S>", "Attributes>" => "A>");
+
+	foreach($switch_tags as $f => $t)
+		$benchmark_results = str_replace($f, $t, $benchmark_results);
+
+	$ToUpload = rawurlencode(base64_encode($benchmark_results));
 	$GlobalUser = pts_current_user();
 	$Globalkey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "");
 	$tags = rawurlencode(base64_encode($tags));
