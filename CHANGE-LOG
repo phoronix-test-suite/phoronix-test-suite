@@ -5,6 +5,7 @@ Phoronix Test Suite
 - Define PTS_USER_DIR inside the phoronix-test-suite SH file
 - Define DOWNLOAD_CACHE directory inside the phoronix-test-suite SH file, with support for user-define DOWNLOAD_CACHE=
 - Add make-download-cache option. Running make-download-cache will backup all files downloaded by the Phoronix Test Suite to the DOWNLOAD_CACHE directory, and performs MD5 check-sum comparisons. This is used for easily backing up all your downloaded files so that they can be transfered between test machines
+- Implement the PTS installation functions to automatically use the download cache, if present, instead of downloading the files
 
 Phoronix Test Suite 0.5.1
 May 5, 2008

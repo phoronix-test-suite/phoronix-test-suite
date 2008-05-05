@@ -83,6 +83,14 @@ function pts_download_benchmark_files($Benchmark)
 				else
 					$download_location = BENCHMARK_ENV_DIR . $Benchmark . "/";
 
+				if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && $package_md5[$i] == md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+				{
+					echo "\nTransferring Cached File: " . $package_filename[$i] . "\n";
+
+					if(copy(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $download_location . $package_filename[$i]))
+						$urls = array();
+				}
+
 				if(count($urls) > 0)
 				{
 					do
