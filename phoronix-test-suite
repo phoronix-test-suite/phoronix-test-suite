@@ -9,6 +9,21 @@
 # Full path to root directory of the actual Phoronix Test Suite code
 export PTS_DIR=`pwd`
 
+if [ $PTS_DIR != `pwd` ]
+then
+	cd $PTS_DIR
+fi
+
+# Location to save results, download cache, results viewer, etc. Must have trailing slash.
+export PTS_USER_DIR=$HOME'/.phoronix-test-suite/'
+
+# Set DOWNLOAD_CACHE if it's not set already by the user
+if [ "X$DOWNLOAD_CACHE" = "X" ]
+then
+	export DOWNLOAD_CACHE=$PTS_USER_DIR'download-cache/'
+fi
+
+# Determine PHP binary location
 if [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ]
 then
 	export PHP_BIN="php5"
@@ -19,6 +34,7 @@ else
 	export PHP_BIN=""
 fi
 
+# Make sure PHP is installed
 if [ "X$PHP_BIN" = "X" ]
 then
 	echo "\n\nPHP5 CLI Must Be Installed To Run The Phoronix Test Suite!"
@@ -26,11 +42,6 @@ then
 	echo "The PHP CLI package is usually called php-cli or php5-cli. Also required is the PHP GD library (php-gd)"
 	echo "To attempt to have the dependencies installed automatically, run: phoronix-test-suite install-dependencies pts"
 	echo "For support visit: http://www.phoronix.com/forums/forumdisplay.php?f=49\n\n"
-fi
-
-if [ $PTS_DIR != `pwd` ]
-then
-	cd $PTS_DIR
 fi
 
 case "$1" in
@@ -68,6 +79,9 @@ case "$1" in
 	;;
 "upload")
 	$PHP_BIN pts-core/pts-run-cmd.php UPLOAD_RESULT $2
+	;;
+"make-download-cache")
+	$PHP_BIN pts-core/pts-run-cmd.php MAKE_DOWNLOAD_CACHE
 	;;
 "list-tests")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_TESTS
@@ -110,7 +124,6 @@ case "$1" in
 	echo "Phoronix Test Suite"
 	echo "http://www.phoronix-test-suite.com/"
 	echo "=================================\n"
-#	echo "gui: Launch The Phoronix Test Suite GUI"
 	echo "install <suite OR test>: Install or Update The Specified Test(s)"
 	echo "install-dependencies <suite OR test>: Install The External (Distribution) Dependencies For Specified Test(s)"
 	echo "run <suite OR test>: Run The Specified Test/Suite"
@@ -121,6 +134,7 @@ case "$1" in
 	echo "list-tests: List all Phoronix Test Suite test profiles"
 	echo "list-suites: List all Phoronix Test Suites"
 	echo "list-results: List all saved results"
+	echo "make-download-cache: Backup all saved files to ~/.phoronix-test-suite/download-cache/"
 	echo "remove-result <Saved File>: Remove this saved result file and associated files"
 	echo "remove-all-results: Removes all saved results and associated files"
 	echo "suite-info: Show tests in a suite and other information about the suite"

@@ -33,6 +33,19 @@ function pts_directory()
 	
 	return $dir;
 }
+function pts_download_cache()
+{
+	$dir = getenv("DOWNLOAD_CACHE");
+
+	if(empty($dir))
+		$dir = PTS_USER_DIR . "download-cache/";
+	else
+		if(substr($dir, -1) != '/')
+			$dir .= '/';
+
+	return $dir;
+}
+
 define("PTS_DIR", pts_directory());
 define("PHP_BIN", getenv("PHP_BIN"));
 
@@ -60,7 +73,8 @@ define("SCRIPT_DISTRO_DIR", PTS_DIR . "pts/distro-scripts/");
 define("BENCHMARK_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
 define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
-define("PTS_USER_DIR", pts_find_home("~/.phoronix-test-suite/"));
+define("PTS_USER_DIR", getenv("PTS_USER_DIR"));
+define("PTS_DOWNLOAD_CACHE_DIR", pts_download_cache());
 define("PTS_MONITOR_DIR", PTS_USER_DIR . strtolower(PTS_CODENAME) . '/');
 //define("FONT_DIRECTORY" "/usr/share/fonts/");
 

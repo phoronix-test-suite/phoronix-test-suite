@@ -86,6 +86,58 @@ switch($COMMAND)
 		else
 			pts_install_package_on_distribution($ARG_1);
 		break;
+	case "MAKE_DOWNLOAD_CACHE":
+		echo pts_string_header("Phoronix Test Suite - Making Cache Of Downloads");
+
+		if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
+			mkdir(PTS_DOWNLOAD_CACHE_DIR);
+
+		foreach(glob(BENCHMARK_RESOURCE_DIR . "*/downloads.xml") as $downloads_file)
+		{
+			$test = substr($downloads_file, strlen(BENCHMARK_RESOURCE_DIR), 0 - 14);
+			$xml_parser = new tandem_XmlReader(file_get_contents($downloads_file));
+			$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
+			$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
+			$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
+			$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
+
+			echo "\nChecking Downloads For: " . $test . "\n";
+
+			for($i = 0; $i < count($package_url); $i++)
+			{
+				if(empty($package_filename[$i]))
+				{
+					$package_filename[$i] = basename($package_url[$i]);
+				}
+
+				if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) == $package_md5[$i])
+				{
+					echo "\tPreviously Cached: " . $package_filename[$i] . "\n";
+				}
+				else
+				{
+					if(is_file(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED")
+					{
+						if(md5_file(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i]) == $package_md5[$i])
+						{
+							echo "\tCaching: " . $package_filename[$i] . "\n";
+							copy(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]);
+						}
+
+					}
+					else if(is_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED")
+					{
+						if(md5_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) == $package_md5[$i])
+						{
+							echo "\tCaching: " . $package_filename[$i] . "\n";
+							copy(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]);
+						}
+					}
+				}
+			}
+		}
+		echo "\n";
+		break;
 	case "LIST_TESTS":
 		echo pts_string_header("Phoronix Test Suite - Tests");
 		foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
