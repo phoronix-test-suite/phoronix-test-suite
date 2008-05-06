@@ -92,9 +92,9 @@ switch($COMMAND)
 		if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
 			mkdir(PTS_DOWNLOAD_CACHE_DIR);
 
-		foreach(glob(BENCHMARK_RESOURCE_DIR . "*/downloads.xml") as $downloads_file)
+		foreach(glob(TEST_RESOURCE_DIR . "*/downloads.xml") as $downloads_file)
 		{
-			$test = substr($downloads_file, strlen(BENCHMARK_RESOURCE_DIR), 0 - 14);
+			$test = substr($downloads_file, strlen(TEST_RESOURCE_DIR), 0 - 14);
 			$xml_parser = new tandem_XmlReader(file_get_contents($downloads_file));
 			$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 			$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);

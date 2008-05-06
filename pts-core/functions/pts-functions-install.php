@@ -46,9 +46,9 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 }
 function pts_download_benchmark_files($Benchmark)
 {
-	if(is_file(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
+	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(BENCHMARK_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
+		$xml_parser = new tandem_XmlReader(file_get_contents(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
@@ -150,7 +150,7 @@ function pts_install_benchmark($Benchmark)
 	if(pts_test_type($Benchmark) != "BENCHMARK")
 		return;
 
-	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && ((is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh")) || (is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))))
+	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && ((is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh")) || (is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))))
 	{
 		// pts_download_benchmark_files($Benchmark);
 		echo ucwords($Benchmark) . " is already installed, skipping installation routine...\n";
@@ -172,19 +172,19 @@ function pts_install_benchmark($Benchmark)
 
 		pts_download_benchmark_files($Benchmark);
 
-		if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh") || is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))
+		if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh") || is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))
 		{
 			echo pts_string_header("Installing Benchmark: " . $Benchmark);
 
-			if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"))
+			if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh"))
 			{
-				echo pts_exec("cd " . BENCHMARK_RESOURCE_DIR . "$Benchmark/ && sh install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
-				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.sh"));
+				echo pts_exec("cd " . TEST_RESOURCE_DIR . "$Benchmark/ && sh install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
+				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh"));
 			}
-			else if(is_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"))
+			else if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))
 			{
-				echo pts_exec("cd " . BENCHMARK_RESOURCE_DIR . "$Benchmark/ && " . PHP_BIN . " install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
-				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(BENCHMARK_RESOURCE_DIR . "$Benchmark/install.php"));
+				echo pts_exec("cd " . TEST_RESOURCE_DIR . "$Benchmark/ && " . PHP_BIN . " install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
+				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"));
 			}
 		}
 		else

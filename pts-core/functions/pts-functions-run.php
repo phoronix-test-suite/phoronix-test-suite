@@ -237,7 +237,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		return;
 	}
 
-	if(is_dir(BENCHMARK_ENV_DIR . "$benchmark_identifier/") && !(file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != @md5_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.sh") || file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != @md5_file(BENCHMARK_RESOURCE_DIR . "$benchmark_identifier/install.php")))
+	if(is_dir(BENCHMARK_ENV_DIR . "$benchmark_identifier/") && !(file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != @md5_file(TEST_RESOURCE_DIR . "$benchmark_identifier/install.sh") || file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != @md5_file(TEST_RESOURCE_DIR . "$benchmark_identifier/install.php")))
 	{
 		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the $benchmark_title test should be re-installed.");
 		// Auto reinstall
@@ -248,13 +248,13 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	$PTS_BENCHMARK_ARGUMENTS = trim($default_arguments . " " . $extra_arguments);
 	$BENCHMARK_RESULTS_ARRAY = array();
 
-	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
+	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
 	{
-		echo pts_exec("sh " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
-	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.php"))
+	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php"))
 	{
-		echo pts_exec(PHP_BIN . " " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	if(!empty($pre_run_message))
@@ -275,9 +275,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 		if(!($i == 0 && $ignore_first_run == "TRUE" && $times_to_run > 1))
 		{
-			if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
+			if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
 			{
-				$BENCHMARK_RESULTS = pts_exec("cd " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " parse-results.php \"$BENCHMARK_RESULTS\"");
+				$BENCHMARK_RESULTS = pts_exec("cd " . TEST_RESOURCE_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " parse-results.php \"$BENCHMARK_RESULTS\"");
 			}
 
 			if(!empty($BENCHMARK_RESULTS))
@@ -287,13 +287,13 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	pts_monitor_update(); // Update sensors, etc
 
-	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
+	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{
-		echo pts_exec("sh " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
-	if(is_file(BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.php"))
+	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php"))
 	{
-		echo pts_exec(PHP_BIN . " " . BENCHMARK_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	// End

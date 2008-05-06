@@ -7,6 +7,7 @@ Phoronix Test Suite
 - Add make-download-cache option. Running make-download-cache will backup all files downloaded by the Phoronix Test Suite to the DOWNLOAD_CACHE directory, and performs MD5 check-sum comparisons. This is used for easily backing up all your downloaded files so that they can be transfered between test machines
 - Implement the PTS installation functions to automatically use the download cache, if present, instead of downloading the files
 - Default PTS Global opening web browser to true
+- Change BENCHMARK_RESOURCE_DIR constant to TEST_RESOURCE_DIR
 
 Phoronix Test Suite 0.5.1
 May 5, 2008

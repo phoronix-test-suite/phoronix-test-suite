@@ -70,7 +70,7 @@ define("XML_PROFILE_DIR", PTS_DIR . "pts/test-profiles/");
 define("XML_SUITE_DIR", PTS_DIR . "pts/test-suites/");
 define("XML_DISTRO_DIR", PTS_DIR . "pts/distro-xml/");
 define("SCRIPT_DISTRO_DIR", PTS_DIR . "pts/distro-scripts/");
-define("BENCHMARK_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
+define("TEST_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
 define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", getenv("PTS_USER_DIR"));
