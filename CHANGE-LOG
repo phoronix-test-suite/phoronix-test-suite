@@ -8,6 +8,7 @@ Phoronix Test Suite
 - Implement the PTS installation functions to automatically use the download cache, if present, instead of downloading the files
 - Default PTS Global opening web browser to true
 - Change BENCHMARK_RESOURCE_DIR constant to TEST_RESOURCE_DIR
+- Further compression to PTS Global uploads
 
 Phoronix Test Suite 0.5.1
 May 5, 2008

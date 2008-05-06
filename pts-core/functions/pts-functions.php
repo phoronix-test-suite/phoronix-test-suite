@@ -453,7 +453,10 @@ function pts_global_upload_result($result_file, $tags = "")
 	foreach($switch_tags as $f => $t)
 		$benchmark_results = str_replace($f, $t, $benchmark_results);
 
-	$ToUpload = rawurlencode(base64_encode($benchmark_results));
+	$benchmark_results = str_replace(array("\n", "\t"), "", $benchmark_results);
+
+	echo $ToUpload = rawurlencode(base64_encode($benchmark_results));
+	return;
 	$GlobalUser = pts_current_user();
 	$Globalkey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "");
 	$tags = rawurlencode(base64_encode($tags));
