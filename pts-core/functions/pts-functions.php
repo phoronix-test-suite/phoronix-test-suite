@@ -372,14 +372,17 @@ function pts_process_active($process)
 	}
 	return false;
 }
-function display_web_browser($URL, $alt_text = NULL)
+function display_web_browser($URL, $alt_text = NULL, $default_open = FALSE)
 {
 	if($alt_text == NULL)
 		$text = "Do you want to view the results in your web browser";
 	else
 		$text = $alt_text;
 
-	$view_results = pts_bool_question($text . " (y/N)?", false, "OPEN_BROWSER");
+	if(!$default_open)
+		$view_results = pts_bool_question($text . " (y/N)?", false, "OPEN_BROWSER");
+	else
+		$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
 
 	if($view_results)
 		shell_exec("./pts/launch-browser.sh \"$URL\" &");

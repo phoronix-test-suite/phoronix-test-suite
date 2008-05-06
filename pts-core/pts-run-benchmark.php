@@ -314,7 +314,7 @@ if($SAVE_RESULTS)
 			if(!empty($upload_url))
 			{
 				echo "\nResults Uploaded To: " . $upload_url . "\n";
-				display_web_browser($upload_url, "Do you want to launch PTS Global");
+				display_web_browser($upload_url, "Do you want to launch PTS Global", true);
 			}
 		}
 
