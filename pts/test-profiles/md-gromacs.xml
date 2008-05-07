@@ -1,0 +1,62 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.1</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Scientific</SoftwareType>
+		<License>FREE</License>
+		<Status>UNVERIFIED</Status>
+		<Maintainer>Andrew Schofield</Maintainer>
+	</TestProfile>
+	<TestInformation>
+		<Title>GROMACS MD Benchmark</Title>
+		<SubTitle></SubTitle>
+		<Version>3.3.3</Version>
+		<TimesToRun>3</TimesToRun>
+		<ExternalDependencies>fortran-compiler</ExternalDependencies>
+		<Executable>gromacs</Executable>
+		<ResultScale>Gflops</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This test runs a series of molecular dynamics simulations using the GROMACS MD package. This test is capable of running on multiple cores by using the MPICH2 library, and is similar in configuration to the SMP GROMACS cores (FahCore_a1) used by the Folding@HOME distributed computing project.</Description>
+		<ExxternalDependencies>build-utilities</ExternalDependencies>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Molecule</DisplayName>
+			<Identifier>molecule</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Villin</Name>
+					<Value>villin</Value>
+				</Entry>
+				<Entry>
+					<Name>DPPC</Name>
+					<Value>dppc</Value>
+				</Entry>
+				<Entry>
+					<Name>Lysozyme</Name>
+					<Value>lzm</Value>
+				</Entry>
+				<Entry>
+					<Name>Poly-CH2</Name>
+					<Value>poly-ch2</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>Run-type</DisplayName>
+			<Identifier>runtype</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Single Node (1 thread)</Name>
+					<Value>single-node</Value>
+				</Entry>
+				<Entry>
+					<Name>Parallel (multiple threads)</Name>
+					<Value>mpi</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>
