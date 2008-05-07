@@ -143,90 +143,105 @@ function pts_monitor_statistics()
 	}
 
 	$info_report = "";
-	for($i = 0; $i < count($m_array); $i++)
+
+	if(count($m_array[0]) == 1)
 	{
-		// Calculate statistics
-
-		if($i > 0)
-			$info_report .= "\n\n";
-
-		$low = 0;
-		$high = 0;
-		$total = 0;
-
-		foreach($m_array[$i] as $temp)
+		$info_report .= "Current Sensor Readings:\n\n";
+		for($i = 0; $i < count($m_array); $i++)
 		{
-			if($temp < $low || $low == 0)
-				$low = $temp;
-			else if($temp > $high)
-				$high = $temp;
+			$info_report .= $device[$i] . " " . $type[$i] . " Monitor: " . $m_array[$i][0] . " " .  $unit[$i];
 
-			$total += $temp;
+			if($i < (count($m_array) - 1))
+				$info_report .= "\n";
 		}
-		$avg = $total / count($m_array[$i]);
-
-		$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . ' ' . $unit[$i] . "\nHigh: " . pts_trim_double($high) . ' ' . $unit[$i] . "\nAverage: " . pts_trim_double($avg) . ' ' . $unit[$i];
 	}
-
-	if(trim($info_report) != "")
+	else
 	{
-		if(pts_gd_available())
+		for($i = 0; $i < count($m_array); $i++)
 		{
-			$url = "";
-			pts_save_user_file();
-			pts_save_user_file(null, null, "/pts-monitor-viewer/");
-			pts_copy(RESULTS_VIEWER_DIR . "pts-monitor-viewer.html", PTS_MONITOR_DIR . "pts-monitor-viewer.html");
-			pts_copy(RESULTS_VIEWER_DIR . "pts.js", PTS_MONITOR_DIR . "pts-monitor-viewer/pts.js");
-			pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", PTS_MONITOR_DIR . "pts-monitor-viewer/pts-viewer.css");
+			// Calculate statistics
 
-			$image_count = 0;
-			foreach($type_index as $key => $sub_array)
+			if($i > 0)
+				$info_report .= "\n\n";
+
+			$low = 0;
+			$high = 0;
+			$total = 0;
+
+			foreach($m_array[$i] as $temp)
 			{
-				if(count($sub_array) > 0)
+				if($temp < $low || $low == 0)
+					$low = $temp;
+				else if($temp > $high)
+					$high = $temp;
+
+				$total += $temp;
+			}
+			$avg = $total / count($m_array[$i]);
+
+			$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . ' ' . $unit[$i] . "\nHigh: " . pts_trim_double($high) . ' ' . $unit[$i] . "\nAverage: " . pts_trim_double($avg) . ' ' . $unit[$i];
+		}
+
+		if(trim($info_report) != "")
+		{
+			if(pts_gd_available())
+			{
+				$url = "";
+				pts_save_user_file();
+				pts_save_user_file(null, null, "/pts-monitor-viewer/");
+				pts_copy(RESULTS_VIEWER_DIR . "pts-monitor-viewer.html", PTS_MONITOR_DIR . "pts-monitor-viewer.html");
+				pts_copy(RESULTS_VIEWER_DIR . "pts.js", PTS_MONITOR_DIR . "pts-monitor-viewer/pts.js");
+				pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", PTS_MONITOR_DIR . "pts-monitor-viewer/pts-viewer.css");
+
+				$image_count = 0;
+				foreach($type_index as $key => $sub_array)
 				{
-					$graph_title = $type[$sub_array[0]] . " Monitor";
-					$graph_unit = $unit[$sub_array[0]];
-					$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
-					$sub_title = date("F j, Y") . " - ";
-
-					if(isset($GLOBALS["TO_RUN"]))
-						$sub_title .= $GLOBALS["TO_RUN"];
-					else
-						$sub_title .= date("g:i A");
-
-					$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
-
-					$first_run = true;
-					foreach($sub_array as $id_point)
+					if(count($sub_array) > 0)
 					{
-						$t->loadGraphValues($m_array[$id_point], $device[$id_point]);
+						$graph_title = $type[$sub_array[0]] . " Monitor";
+						$graph_unit = $unit[$sub_array[0]];
+						$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
+						$sub_title = date("F j, Y") . " - ";
 
-						if($first_run)
+						if(isset($GLOBALS["TO_RUN"]))
+							$sub_title .= $GLOBALS["TO_RUN"];
+						else
+							$sub_title .= date("g:i A");
+
+						$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
+
+						$first_run = true;
+						foreach($sub_array as $id_point)
 						{
-							$t->loadGraphIdentifiers($m_array[$id_point]);
-							$t->hideGraphIdentifiers();
-							$first_run = false;
-						}
-					}
+							$t->loadGraphValues($m_array[$id_point], $device[$id_point]);
 
-					$t->loadGraphVersion(PTS_VERSION);
-					$t->save_graph(PTS_MONITOR_DIR . THIS_RUN_TIME . '-' . $image_count . ".png");
-					$t->renderGraph();
-					$url .= THIS_RUN_TIME . '-' . $image_count . ".png,";
-					$image_count++;
+							if($first_run)
+							{
+								$t->loadGraphIdentifiers($m_array[$id_point]);
+								$t->hideGraphIdentifiers();
+								$first_run = false;
+							}
+						}
+
+						$t->loadGraphVersion(PTS_VERSION);
+						$t->save_graph(PTS_MONITOR_DIR . THIS_RUN_TIME . '-' . $image_count . ".png");
+						$t->renderGraph();
+						$url .= THIS_RUN_TIME . '-' . $image_count . ".png,";
+						$image_count++;
+					}
 				}
 			}
 		}
+	}
 
-		// terminal output
-		echo pts_string_header($info_report);
+	// terminal output
+	echo pts_string_header($info_report);
 
-		if(!empty($url))
-		{
-			file_put_contents(PTS_MONITOR_DIR . "link-latest.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=pts-monitor-viewer.html#$url\"></HEAD><BODY></BODY></HTML>
+	if(count($m_array[0]) > 1 && !empty($url))
+	{
+		file_put_contents(PTS_MONITOR_DIR . "link-latest.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=pts-monitor-viewer.html#$url\"></HEAD><BODY></BODY></HTML>
 ");
-			display_web_browser(PTS_MONITOR_DIR . "link-latest.html");
-		}
+		display_web_browser(PTS_MONITOR_DIR . "link-latest.html");
 	}
 }
 

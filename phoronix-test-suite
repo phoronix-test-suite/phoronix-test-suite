@@ -106,7 +106,11 @@ case "$1" in
 "system-info" | "system-information")
 	$PHP_BIN pts-core/pts-run-cmd.php SYS_INFO
 	;;
-"sensors" | "sensor-options")
+"sensors")
+	export MONITOR=all
+	$PHP_BIN pts-core/pts-run-cmd.php SENSORS
+	;;
+"sensor-options")
 	$PHP_BIN pts-core/pts-run-cmd.php SENSOR_OPTIONS
 	;;
 "diagnostics")

@@ -22,6 +22,7 @@ Phoronix Test Suite
 - Clean-up information string parsing a bit
 - When attempting to install a suite, just check if a unique benchmark is installed once, if the test is referenced multiple times
 - Various code clean-ups and miscellaneous fixes
+- Add sensors option to report current sensor readings
 
 Phoronix Test Suite 0.5.1
 May 5, 2008
