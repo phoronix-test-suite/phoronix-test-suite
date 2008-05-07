@@ -61,10 +61,12 @@ case "$1" in
 	$PHP_BIN pts-core/pts-run-benchmark.php $2 BATCH
 	;;
 "benchmark")
+	export SILENT_INSTALL=1
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
 	$PHP_BIN pts-core/pts-run-benchmark.php $2
 	;;
 "batch-benchmark")
+	export SILENT_INSTALL=1
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
 	$PHP_BIN pts-core/pts-run-benchmark.php $2 BATCH
 	;;

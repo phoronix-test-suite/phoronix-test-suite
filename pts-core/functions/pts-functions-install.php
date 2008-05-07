@@ -13,7 +13,8 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 	}
 	else if($type == "TEST_SUITE")
 	{
-		echo "\nInstalling Software For " . ucwords($TO_INSTALL) . " Test Suite...\n\n";
+		if(!getenv("SILENT_INSTALL"))
+			echo "\nInstalling Software For " . ucwords($TO_INSTALL) . " Test Suite...\n\n";
 
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_INSTALL . ".xml"));
 		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
@@ -153,7 +154,9 @@ function pts_install_benchmark($Benchmark)
 	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && ((is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh")) || (is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))))
 	{
 		// pts_download_benchmark_files($Benchmark);
-		echo ucwords($Benchmark) . " is already installed, skipping installation routine...\n";
+
+		if(!getenv("SILENT_INSTALL"))
+			echo $Benchmark . " is already installed, skipping installation routine...\n";
 	}
 	else
 	{

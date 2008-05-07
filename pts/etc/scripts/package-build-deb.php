@@ -46,7 +46,7 @@ $control_file .= "Maintainer: Phoronix Media <trondheim-pts@phoronix-test-suite.
 $control_file .= "Description: The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux and is designed to carry out qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.\n";
 file_put_contents("/tmp/pts-deb-builder/DEBIAN/control", $control_file);
 
-shell_exec("dpkg --build /tmp/pts-deb-builder phoronix-test-suite_" . PTS_VERSION . "_all.deb");
+shell_exec("dpkg --build /tmp/pts-deb-builder ../phoronix-test-suite_" . PTS_VERSION . "_all.deb");
 shell_exec("rm -rf /tmp/pts-deb-builder");
 
 ?>
