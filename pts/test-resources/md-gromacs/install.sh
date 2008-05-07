@@ -71,8 +71,8 @@ esac
 
 case "\$2" in
 \"mpi\")
-	$THIS_DIR/gromacs333_/bin/grompp -np $NUM_CPU_CORES
-	$THIS_DIR/mpich2_/bin/mpiexec -np $NUM_CPU_CORES $THIS_DIR/gromacs333_/bin/mdrun 2>&1
+	$THIS_DIR/gromacs333_/bin/grompp -np \$NUM_CPU_CORES
+	$THIS_DIR/mpich2_/bin/mpiexec -np \$NUM_CPU_CORES $THIS_DIR/gromacs333_/bin/mdrun 2>&1
 	;;
 \"single-node\")
 	$THIS_DIR/gromacs333_/bin/grompp
