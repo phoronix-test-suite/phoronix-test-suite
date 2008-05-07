@@ -18,6 +18,7 @@ Phoronix Test Suite
 - Update latest tests in universe-cli and universe-x suites
 - Define version and codename inside pts-core/functions/pts.php instead of pts-core/functions/pts-functions.php
 - Add pts/etc/scripts/package-build-deb.php and running it from the root PTS directory will generate a Debian package of the Phoronix Test Suite
+- Clean up information string parsing a bit
 
 Phoronix Test Suite 0.5.1
 May 5, 2008

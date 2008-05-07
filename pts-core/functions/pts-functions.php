@@ -530,6 +530,11 @@ function pts_clean_information_string($str)
 	$remove_phrases = array("Corporation ", "Technologies ", ",", "Technology ", "version ", "Processor ", "processor ", "Genuine ", "(R)", "(TM)", "(tm)", "Inc. ", "Inc ");
 	$str = str_replace($remove_phrases, " ", $str);
 
+	$change_phrases = array("Memory Controller Hub" => "MCH", "Advanced Micro Devices" => "AMD");
+
+	foreach($change_phrases as $original_phrase => $new_phrase)
+		$str = str_replace($original_phrase, $new_phrase, $str);
+
 	$str = preg_replace("/\s+/", " ", $str);
 
 	return $str;
