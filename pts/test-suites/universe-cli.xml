@@ -51,10 +51,6 @@
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
-		<Test>super-pi</Test>
-		<Description>1 Million Digit Pi Calculation</Description>
-	</RunTest>
-	<RunTest>
 		<Test>ramspeed</Test>
 		<Arguments>ADD -b 3 -l 10</Arguments>
 		<Description>Integer BatchRun Add</Description>
