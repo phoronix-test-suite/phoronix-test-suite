@@ -44,8 +44,12 @@ if [ -d $THIS_DIR/gmxbench ]
   then
     rm -rf $THIS_DIR/gmxbench/
 fi
+if [ -f $THIS_DIR/flopcount ]
+  then
+    rm -f $THIS_DIR/flopcount
+fi
 mkdir $THIS_DIR/gmxbench
-tar -xvf gmxbench-3.0.tar.gz -C $THIS_DIR/gmxbench/
+tar -xvf gmxbench-3.0.tar.gz -C $THIS_DIR/gmxbench/ &>/dev/null
 
 case "\$1" in
 \"villin\")
@@ -71,17 +75,19 @@ esac
 
 case "\$2" in
 \"mpi\")
-	$THIS_DIR/gromacs333_/bin/grompp -np \$NUM_CPU_CORES
-	$THIS_DIR/mpich2_/bin/mpiexec -np \$NUM_CPU_CORES $THIS_DIR/gromacs333_/bin/mdrun 2>&1
+	$THIS_DIR/gromacs333_/bin/grompp -np \$NUM_CPU_CORES -nov &>/dev/null
+	$THIS_DIR/mpich2_/bin/mpiexec -np \$NUM_CPU_CORES $THIS_DIR/gromacs333_/bin/mdrun &> $THIS_DIR/flopcount
 	;;
 \"single-node\")
-	$THIS_DIR/gromacs333_/bin/grompp
-	$THIS_DIR/gromacs333_/bin/mdrun_single 2>&1
+	$THIS_DIR/gromacs333_/bin/grompp -nov &>/dev/null
+	$THIS_DIR/gromacs333_/bin/mdrun_single &> $THIS_DIR/flopcount
 	;;
 *)
 	exit
 	;;
 esac
+
+grep -C 1 'Performance:' $THIS_DIR/flopcount
 
 cd $THIS_DIR/
 sleep 3" > gromacs
