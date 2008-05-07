@@ -17,6 +17,7 @@ Phoronix Test Suite
 - Split universe test suite into universe-x and universe-cli... Universe test suite is now just a meta suite calling universe-x and universe-cli for calling graphics and non-graphics tests, respectively.
 - Update latest tests in universe-cli and universe-x suites
 - Define version and codename inside pts-core/functions/pts.php instead of pts-core/functions/pts-functions.php
+- Add pts/etc/scripts/package-build-deb.php and running it from the root PTS directory will generate a Debian package of the Phoronix Test Suite
 
 Phoronix Test Suite 0.5.1
 May 5, 2008
