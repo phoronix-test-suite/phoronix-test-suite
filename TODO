@@ -1,5 +1,0 @@
-- Rewrite and finish GUI component
-- Verbose output of all system details, benchmark dumps, etc
-- Add More Benchmarks!
-- "Optimization Tips"
-- Change locking system away from time-based but to PID based
