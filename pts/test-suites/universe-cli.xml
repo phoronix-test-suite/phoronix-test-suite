@@ -1,0 +1,54 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.6</Version>
+		<TestType>System</TestType>
+		<Title>Universe CLI Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The Universe CLI suite contains Phoronix Test Suite tests that are all command-line based / don't require an X server to be running.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>encode-mp3</Test>
+		<Arguments></Arguments>
+		<Description>time lame -h audio.wav audio.mp3 (45.0MB)</Description>
+	</RunTest>
+	<RunTest>
+		<Test>encode-ogg</Test>
+		<Arguments></Arguments>
+		<Description>time oggenc audio.wav -q 10 -o audio.ogg (45.0MB)</Description>
+	</RunTest>
+	<RunTest>
+		<Test>encode-flac</Test>
+		<Arguments></Arguments>
+		<Description>time flac --best audio.wav (45.0MB)</Description>
+	</RunTest>
+	<RunTest>
+		<Test>build-mplayer</Test>
+		<Arguments></Arguments>
+		<Description>Time To Compile</Description>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
+		<Arguments></Arguments>
+		<Description>Time To Compile</Description>
+	</RunTest>
+	<RunTest>
+		<Test>build-imagemagick</Test>
+		<Arguments></Arguments>
+		<Description>Time To Compile</Description>
+	</RunTest>
+	<RunTest>
+		<Test>compress-gzip</Test>
+		<Arguments></Arguments>
+		<Description></Description>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
+		<Arguments>ADD -b 3 -l 10</Arguments>
+		<Description>Integer BatchRun Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>memory-bandwidth</Test>
+		<Arguments>TEST_READ</Arguments>
+		<Description>RAM Sequential Read</Description>
+	</RunTest>
+</PhoronixTestSuite>

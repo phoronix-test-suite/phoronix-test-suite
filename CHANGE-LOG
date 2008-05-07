@@ -14,6 +14,7 @@ Phoronix Test Suite
 - Add md-gromacs test profile (Thanks to uncle_fungus)
 - Add molecular-dynamics test suite (Thanks to uncle_fungus)
 - Allow the test results scale to be defined outside of the XML test profile and inside the test's benchmarking environment directory with the scale being the contents of pts-results-scale file
+- Split universe test suite into universe-x and universe-cli... Universe test suite is now just a meta suite calling universe-x and universe-cli for calling graphics and non-graphics tests, respectively.
 
 Phoronix Test Suite 0.5.1
 May 5, 2008
