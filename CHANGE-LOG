@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite
+
 - Clean up phoronix-test-suite SH file
 - Define PTS_USER_DIR inside the phoronix-test-suite SH file
 - Define DOWNLOAD_CACHE directory inside the phoronix-test-suite SH file, with support for user-define DOWNLOAD_CACHE=
