@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.1</Version>
+		<Version>0.2</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Scientific</SoftwareType>
 		<License>FREE</License>
@@ -12,12 +12,11 @@
 		<SubTitle></SubTitle>
 		<Version>3.3.3</Version>
 		<TimesToRun>3</TimesToRun>
-		<ExternalDependencies>fortran-compiler</ExternalDependencies>
 		<Executable>gromacs</Executable>
 		<ResultScale>Gflops</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test runs a series of molecular dynamics simulations using the GROMACS MD package. This test is capable of running on multiple cores by using the MPICH2 library, and is similar in configuration to the SMP GROMACS cores (FahCore_a1) used by the Folding@HOME distributed computing project.</Description>
-		<ExxternalDependencies>build-utilities</ExternalDependencies>
+		<ExternalDependencies>build-utilities, fortran-compiler</ExternalDependencies>
 	</TestInformation>
 	<TestSettings>
 		<Option>
