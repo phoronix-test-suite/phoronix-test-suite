@@ -72,5 +72,11 @@
 			<PossibleNames>libportaudio-dev</PossibleNames>
 			<FileCheck>/usr/include/portaudio.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>fortran-compiler</GenericName>
+			<Title>Fortran Compiler</Title>
+			<PossibleNames>gfortran, gcc-fortran</PossibleNames>
+			<FileCheck>/usr/bin/gfortran</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
