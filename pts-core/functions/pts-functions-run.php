@@ -137,6 +137,12 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 				$benchmark_version = @file_get_contents(BENCHMARK_ENV_DIR . "$benchmark/pts-test-version");
 
 		}
+		if(empty($result_scale))
+		{
+			if(is_file(BENCHMARK_ENV_DIR . $benchmark . "/pts-results-scale"))
+				$result_scale = trim(@file_get_contents(BENCHMARK_ENV_DIR . $benchmark . "/pts-results-scale"));
+
+		}
 
 		unset($xml_parser);
 
@@ -297,6 +303,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	}
 
 	// End
+	if(empty($result_scale) && is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-results-scale"))
+			$result_scale = trim(@file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-results-scale"));
+
 	if(!empty($result_scale))
 	{
 		$RETURN_STRING = "$benchmark_title:\n";

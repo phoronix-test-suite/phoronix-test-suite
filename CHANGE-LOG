@@ -13,6 +13,7 @@ Phoronix Test Suite
 - Add fortran-compiler package to PTS External Dependencies (currently only Ubuntu gfortran support)
 - Add md-gromacs test profile (Thanks to uncle_fungus)
 - Add molecular-dynamics test suite (Thanks to uncle_fungus)
+- Allow the test results scale to be defined outside of the XML test profile and inside the test's benchmarking environment directory with the scale being the contents of pts-results-scale file
 
 Phoronix Test Suite 0.5.1
 May 5, 2008
