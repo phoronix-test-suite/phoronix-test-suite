@@ -9,6 +9,7 @@ Phoronix Test Suite
 - Default PTS Global opening web browser to true
 - Change BENCHMARK_RESOURCE_DIR constant to TEST_RESOURCE_DIR
 - Further compression to PTS Global uploads
+- Add X-Plane 9 benchmark (Special thanks goes out to Laminar Research and Ben Supnik for creating specialized benchmarking demo and a mirror!)
 
 Phoronix Test Suite 0.5.1
 May 5, 2008
