@@ -324,6 +324,9 @@ function lshal_extract($name, $UDI = NULL)
 		$info = trim(substr($info, 0, strpos($info, "'")));
 	}
 
+	if($info == "empty")
+		$info = "Unknown";
+
 	return $info;
 }
 function lshal_system_extract($name)
