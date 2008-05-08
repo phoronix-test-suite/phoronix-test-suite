@@ -574,6 +574,11 @@ function pts_version_comparable($old, $new)
 
 	return $compare;	
 }
+function pts_beep($times = 1)
+{
+	for($i = 0; $i < $times; $i++)
+		shell_exec("echo -e \"\\a\"");
+}
 function pts_shutdown()
 {
 	// Ensure screensaver is back to being enabled

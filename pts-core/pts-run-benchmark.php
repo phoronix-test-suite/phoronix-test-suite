@@ -197,6 +197,7 @@ else
 	pts_exit("\nUnrecognized option: $TO_RUN_TYPE\n");
 }
 
+pts_beep(2);
 if($SAVE_RESULTS)
 {
 	$check_processes = array(

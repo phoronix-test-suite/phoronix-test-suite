@@ -330,6 +330,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	else
 		$AVG_RESULT = -1;
 
+	pts_beep();
 	pts_process_remove($benchmark_identifier);
 	return $AVG_RESULT;
 }
