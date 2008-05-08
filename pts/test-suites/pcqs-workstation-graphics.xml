@@ -1,0 +1,79 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.1</Version>
+		<TestType>Graphics</TestType>
+		<Title>PCQS: Workstation Graphics</Title>
+		<Maintainer>Phoronix.com</Maintainer>
+		<Description>This test suite is the Phoronix Certification and Qualification Suite designed by Phoronix.com for use in workstation graphics card/driver reviews.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>3dsmax</Arguments>
+		<Description>3DS Max</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>catia</Arguments>
+		<Description>CATIA</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>ensight</Arguments>
+		<Description>EnSight</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>maya</Arguments>
+		<Description>Maya</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>proe</Arguments>
+		<Description>Pro/Engineer</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>sw</Arguments>
+		<Description>SolidWorks</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>maya</Arguments>
+		<Description>Maya</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>ugnx</Arguments>
+		<Description>UGS NX</Description>
+	</RunTest>
+	<RunTest>
+		<Test>xplane9</Test>
+		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=1280 --pref:_y_res_req_ALL=1024 --no_sound</Arguments>
+		<Description>High Quality - 1280 x 1024</Description>
+	</RunTest>
+	<RunTest>
+		<Test>xplane9</Test>
+		<Arguments>--fps_test=3 --pref:_x_res_req_ALL=1280 --pref:_y_res_req_ALL=1024 --no_sound</Arguments>
+		<Description>Ultra Quality - 1280 x 1024</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>COMBOBOX</Arguments>
+		<Description>GtkComboBox</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>RADIO_BUTTON</Arguments>
+		<Description>GtkRadioButton</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>TEXTVIEW_SCROLL</Arguments>
+		<Description>GtkTextView - Scroll</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>DRAWING_PIXBUFS</Arguments>
+		<Description>GtkDrawingArea - Pixbufs</Description>
+	</RunTest>
+</PhoronixTestSuite>
