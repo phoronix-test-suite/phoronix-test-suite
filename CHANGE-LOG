@@ -31,6 +31,10 @@ Phoronix Test Suite
 - Add gui-toolkits suite
 - Fix Phoronix Test Suite when PHP/PHP5 is not found
 - With stdout headers, if width is larger than current terminal width, don't break-up the heading
+- Standardize function naming convention for pts-functions_system_parsing
+- Switch pts_process_* to being pid based instead of time based
+- System beep when a test ends and two beeps when all tests are done
+- Enable PNG compression in pts_Graph
 
 Phoronix Test Suite 0.5.1
 May 5, 2008
@@ -47,10 +51,6 @@ May 5, 2008
 - Change the pts-shared sample WAV audio file once again (should be finalized now)
 - Fix uploading large suite results to PTS Global
 - Add in initial pcqs-server-motherboard suite for Phoronix.com server/workstation motherboard testing
-- Standardize function naming convention for pts-functions_system_parsing
-- Switch pts_process_* to being pid based instead of time based
-- System beep when a test ends and two beeps when all tests are done
-- Enable PNG compression in pts_Graph
 
 Phoronix Test Suite 0.5.0
 May 1, 2008
