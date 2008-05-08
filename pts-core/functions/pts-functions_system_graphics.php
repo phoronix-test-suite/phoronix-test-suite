@@ -94,20 +94,6 @@ function graphics_anisotropic_level()
 	}
 	return $aa_level;
 }
-function read_nvidia_extension($attribute)
-{
-	$info = shell_exec("nvidia-settings --query $attribute 2>&1");
-	$nv_info = "";
-
-	if(($pos = strpos($info, $attribute)) > 0)
-	{
-		$nv_info = substr($info, strpos($info, "):") + 3);
-		$nv_info = substr($nv_info, 0, strpos($nv_info, "\n"));
-		$nv_info = trim(substr($nv_info, 0, strrpos($nv_info, ".")));
-	}
-
-	return $nv_info;
-}
 function xrandr_screen_resolution()
 {
 	$info = shell_exec("xrandr 2>&1");

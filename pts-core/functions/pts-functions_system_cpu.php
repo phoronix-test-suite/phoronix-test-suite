@@ -1,30 +1,5 @@
 <?php
 
-function read_cpuinfo_values($attribute)
-{
-	$cpuinfo_matches = array();
-
-	if(is_file("/proc/cpuinfo"))
-	{
-		$cpuinfo_lines = explode("\n", file_get_contents("/proc/cpuinfo"));
-
-		foreach($cpuinfo_lines as $line)
-		{
-			$line = explode(": ", $line);
-			$this_attribute = trim($line[0]);
-
-			if(count($line) > 1)
-				$this_value = trim($line[1]);
-			else
-				$this_value = "";
-
-			if($this_attribute == $attribute)
-				array_push($cpuinfo_matches, $this_value);
-		}
-	}
-
-	return $cpuinfo_matches;
-}
 function cpu_core_count()
 {
 	$processors = read_cpuinfo_values("processor");
