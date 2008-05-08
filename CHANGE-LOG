@@ -30,6 +30,7 @@ Phoronix Test Suite
 - Move generic system parsing functions to pts-core/functions/pts-functions_system_parsing.php
 - Add gui-toolkits suite
 - Fix Phoronix Test Suite when PHP/PHP5 is not found
+- With stdout headers, if width is larger than current terminal width, don't break-up the heading
 
 Phoronix Test Suite 0.5.1
 May 5, 2008

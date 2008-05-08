@@ -547,6 +547,11 @@ function pts_string_header($heading)
 		if(($line_length = strlen($line)) > $header_size)
 			$header_size = $line_length;
 
+	$terminal_width = trim(shell_exec("tput cols"));
+
+	if($header_size > $terminal_width)
+		$header_size = $terminal_width;
+
 	return "\n" . str_repeat('=', $header_size) . "\n" . $heading . "\n" . str_repeat('=', $header_size) . "\n\n";
 }
 function pts_exit($string = "")
