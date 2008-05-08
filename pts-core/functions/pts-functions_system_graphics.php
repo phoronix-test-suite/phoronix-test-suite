@@ -185,7 +185,7 @@ function graphics_processor_string()
 		$info = "";
 
 	if(empty($info) || strpos($info, "Mesa GLX") !== FALSE || strpos($info, "Mesa DRI") !== FALSE)
-		$info = parse_lspci_output("VGA compatible controller:");
+		$info = read_pci("VGA compatible controller:");
 
 	return $info;
 }

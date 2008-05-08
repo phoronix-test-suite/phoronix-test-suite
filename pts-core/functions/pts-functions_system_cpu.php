@@ -2,7 +2,7 @@
 
 function cpu_core_count()
 {
-	$processors = read_cpuinfo_values("processor");
+	$processors = read_cpuinfo("processor");
 	$info = count($processors); // or could do array_pop($processors) + 1
 
 	return $info;
@@ -17,10 +17,10 @@ function processor_string()
 
 	if(is_file("/proc/cpuinfo"))
 	{
-		$physical_cpu_ids = read_cpuinfo_values("physical id");
+		$physical_cpu_ids = read_cpuinfo("physical id");
 		$physical_cpu_count = array_pop($physical_cpu_ids) + 1;
 
-		$cpu_strings = read_cpuinfo_values("model name");
+		$cpu_strings = read_cpuinfo("model name");
 		$cpu_strings_unique = array_unique($cpu_strings);
 
 		if($physical_cpu_count == 1)
@@ -86,7 +86,7 @@ function processor_frequency($cpu_core = 0)
 	}
 	else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
 	{
-		$cpu_speeds = read_cpuinfo_values("cpu MHz");
+		$cpu_speeds = read_cpuinfo("cpu MHz");
 
 		if(count($cpu_speeds) > $cpu_core)
 			$info = $cpu_speeds[$cpu_core];
@@ -102,11 +102,11 @@ function processor_frequency($cpu_core = 0)
 }
 function processor_temperature()
 {
-	$temp_c = read_linux_sensors("CPU Temp");
+	$temp_c = read_sensors("CPU Temp");
 
 	if(empty($temp_c))
 	{
-		$temp_c = read_acpi_value("/thermal_zone/THM0/temperature", "temperature"); // if it is THM0 that is for the CPU, in most cases it should be
+		$temp_c = read_acpi("/thermal_zone/THM0/temperature", "temperature"); // if it is THM0 that is for the CPU, in most cases it should be
 
 		if(($end = strpos($temp_c, ' ')) > 0)
 			$temp_c = substr($temp_c, 0, $end);

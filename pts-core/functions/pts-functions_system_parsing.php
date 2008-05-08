@@ -1,6 +1,6 @@
 <?php
 
-function read_acpi_value($point, $match)
+function read_acpi($point, $match)
 {
 	$value = "";
 
@@ -25,7 +25,7 @@ function read_acpi_value($point, $match)
 
 	return $value;
 }
-function lshal_extract($name, $UDI = NULL)
+function read_hal($name, $UDI = NULL)
 {
 	if(empty($UDI))
 		$info = shell_exec("lshal | grep \"$name\"");
@@ -47,11 +47,11 @@ function lshal_extract($name, $UDI = NULL)
 
 	return $info;
 }
-function lshal_system_extract($name)
+function readh_system_hal($name)
 {
-	return lshal_extract($name, "/org/freedesktop/Hal/devices/computer");
+	return read_hal($name, "/org/freedesktop/Hal/devices/computer");
 }
-function read_linux_sensors($attribute)
+function read_sensors($attribute)
 {
 	$value = "";
 	$sensors = shell_exec("sensors 2>&1");
@@ -71,7 +71,7 @@ function read_linux_sensors($attribute)
 
 	return $value;
 }
-function parse_lspci_output($desc)
+function read_pci($desc)
 {
 	$info = shell_exec("lspci 2>&1");
 
@@ -104,7 +104,7 @@ function parse_lspci_output($desc)
 
 	return $info;
 }
-function parse_lsb_output($desc)
+function read_lsb($desc)
 {
 	$info = shell_exec("lsb_release -a 2>&1");
 
@@ -120,7 +120,7 @@ function parse_lsb_output($desc)
 
 	return $info;
 }
-function read_cpuinfo_values($attribute)
+function read_cpuinfo($attribute)
 {
 	$cpuinfo_matches = array();
 

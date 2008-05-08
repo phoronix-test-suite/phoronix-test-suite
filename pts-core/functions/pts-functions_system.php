@@ -94,11 +94,11 @@ function memory_mb_capacity()
 }
 function os_vendor()
 {
-	return parse_lsb_output("Distributor ID");
+	return read_lsb("Distributor ID");
 }
 function os_version()
 {
-	return parse_lsb_output("Release");
+	return read_lsb("Release");
 }
 function kernel_string()
 {
@@ -110,7 +110,7 @@ function kernel_arch()
 }
 function motherboard_chipset_string()
 {
-	return parse_lspci_output("Host bridge:");
+	return read_pci("Host bridge:");
 }
 function compiler_version()
 {
@@ -163,14 +163,14 @@ function operating_system_release()
 }
 function system_temperature()
 {
-	$temp_c = read_linux_sensors("Sys Temp");
+	$temp_c = read_sensors("Sys Temp");
 
 	if(empty($temp_c))
-		$temp_c = read_linux_sensors("Board Temp");
+		$temp_c = read_sensors("Board Temp");
 
 	if(empty($temp_c))
 	{
-		$temp_c = read_acpi_value("/thermal_zone/THM1/temperature", "temperature"); // if it is THM1 that is for the system, in most cases it should be
+		$temp_c = read_acpi("/thermal_zone/THM1/temperature", "temperature"); // if it is THM1 that is for the system, in most cases it should be
 
 		if(($end = strpos($temp_c, ' ')) > 0)
 			$temp_c = substr($temp_c, 0, $end);
@@ -192,13 +192,13 @@ function pts_record_sys_temperature()
 function system_line_voltage($type)
 {
 	if($type == "CPU")
-		$voltage = read_linux_sensors("VCore");
+		$voltage = read_sensors("VCore");
 	else if($type == "V3")
-		$voltage = read_linux_sensors("V3.3");
+		$voltage = read_sensors("V3.3");
 	else if($type == "V5")
-		$voltage = read_linux_sensors("V5");
+		$voltage = read_sensors("V5");
 	else if($type == "V12")
-		$voltage = read_linux_sensors("V12");
+		$voltage = read_sensors("V12");
 	else
 		$voltage = "";
 
@@ -241,9 +241,9 @@ function pts_record_v12_voltage()
 }
 function main_system_hardware_string()
 {
-	$vendor = lshal_system_extract("system.hardware.vendor");
-	$product = lshal_system_extract("system.hardware.product");
-	$version = lshal_system_extract("system.hardware.version");
+	$vendor = read_system_hal("system.hardware.vendor");
+	$product = read_system_hal("system.hardware.product");
+	$version = read_system_hal("system.hardware.version");
 
 	if($product == "Unknown" || (strpos($version, '.') === FALSE && $version != "Unknown"))
 		$product = $version;
@@ -262,8 +262,8 @@ function main_system_hardware_string()
 function pts_record_battery_power()
 {
 	global $BATTERY_POWER;
-	$state = read_acpi_value("/battery/BAT0/state", "charging state");
-	$power = read_acpi_value("/battery/BAT0/state", "present rate");
+	$state = read_acpi("/battery/BAT0/state", "charging state");
+	$power = read_acpi("/battery/BAT0/state", "present rate");
 
 	if($state == "discharging")
 	{
@@ -276,7 +276,7 @@ function pts_record_battery_power()
 }
 function pts_report_power_mode()
 {
-	$power_state = read_acpi_value("/ac_adapter/AC/state", "state");
+	$power_state = read_acpi("/ac_adapter/AC/state", "state");
 	$return_status = "";
 
 	if($power_state == "off-line")

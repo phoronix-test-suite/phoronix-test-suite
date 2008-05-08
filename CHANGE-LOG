@@ -47,6 +47,7 @@ May 5, 2008
 - Change the pts-shared sample WAV audio file once again (should be finalized now)
 - Fix uploading large suite results to PTS Global
 - Add in initial pcqs-server-motherboard suite for Phoronix.com server/workstation motherboard testing
+- Standardize function naming convention for pts-functions_system_parsing
 
 Phoronix Test Suite 0.5.0
 May 1, 2008
