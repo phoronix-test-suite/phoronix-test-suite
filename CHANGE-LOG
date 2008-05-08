@@ -23,6 +23,7 @@ Phoronix Test Suite
 - When attempting to install a suite, just check if a unique benchmark is installed once, if the test is referenced multiple times
 - Various code clean-ups and miscellaneous fixes
 - Add sensors option to report current sensor readings
+- Update to gtkperf profile. Change to 2,000 iterations and add additional GtkPerf tests to read.
 
 Phoronix Test Suite 0.5.1
 May 5, 2008

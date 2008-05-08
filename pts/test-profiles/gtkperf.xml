@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.3</Version>
+		<Version>0.6</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -27,8 +27,16 @@
 					<Value>COMBOBOX</Value>
 				</Entry>
 				<Entry>
+					<Name>GtkComboBoxEntry</Name>
+					<Value>COMBOBOX_ENTRY</Value>
+				</Entry>
+				<Entry>
 					<Name>GtkToggleButton</Name>
 					<Value>TOGGLE_BUTTON</Value>
+				</Entry>
+				<Entry>
+					<Name>GtkCheckButton</Name>
+					<Value>CHECK_BUTTON</Value>
 				</Entry>
 				<Entry>
 					<Name>GtkRadioButton</Name>
@@ -41,6 +49,18 @@
 				<Entry>
 					<Name>GtkTextView - Scroll</Name>
 					<Value>TEXTVIEW_SCROLL</Value>
+				</Entry>
+				<Entry>
+					<Name>GtkDrawingArea - Circles</Name>
+					<Value>DRAWING_CIRCLES</Value>
+				</Entry>
+				<Entry>
+					<Name>GtkDrawingArea - Pixbufs</Name>
+					<Value>DRAWING_PIXBUFS</Value>
+				</Entry>
+				<Entry>
+					<Name>Total Time</Name>
+					<Value>TOTAL_TIME</Value>
 				</Entry>
 			</Menu>
 		</Option>

@@ -18,15 +18,21 @@ echo "#!/bin/sh
 if [ ! -f \$THIS_RUN_TIME.result ]
   then
 	rm -f *.result
-	./gtkperf_env/bin/gtkperf -a -c 1000 > \$THIS_RUN_TIME.result
+	./gtkperf_env/bin/gtkperf -a -c 2000 > \$THIS_RUN_TIME.result
 fi
 
 case \"\$1\" in
 \"COMBOBOX\")
 	cat \$THIS_RUN_TIME.result | grep \"GtkComboBox \"
 	;;
+\"COMBOBOX_ENTRY\")
+	cat \$THIS_RUN_TIME.result | grep \"GtkComboBoxEntry \"
+	;;
 \"TOGGLE_BUTTON\")
 	cat \$THIS_RUN_TIME.result | grep \"GtkToggleButton \"
+	;;
+\"CHECK_BUTTON\")
+	cat \$THIS_RUN_TIME.result | grep \"GtkCheckButton \"
 	;;
 \"RADIO_BUTTON\")
 	cat \$THIS_RUN_TIME.result | grep \"GtkRadioButton \"
@@ -36,6 +42,15 @@ case \"\$1\" in
 	;;
 \"TEXTVIEW_SCROLL\")
 	cat \$THIS_RUN_TIME.result | grep \"GtkTextView - Scroll\"
+	;;
+\"DRAWING_CIRCLES\")
+	cat \$THIS_RUN_TIME.result | grep \"GtkDrawingArea - Circles\"
+	;;
+\"DRAWING_PIXBUFS\")
+	cat \$THIS_RUN_TIME.result | grep \"GtkDrawingArea - Pixbufs\"
+	;;
+\"TOTAL_TIME\")
+	cat \$THIS_RUN_TIME.result | grep \"Total\"
 	;;
 esac
 " > gtkperf

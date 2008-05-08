@@ -165,7 +165,7 @@ function pts_processor_power_savings_enabled()
 			$cpu = processor_string();
 
 			if(strpos($cpu, "AMD") !== FALSE)
-				$return_string = "AMD Cool 'n' Quiet or PowerNOW! was enabled.";
+				$return_string = "AMD Cool n Quiet was enabled.";
 			else if(strpos($cpu, "Intel") !== FALSE)
 				$return_string = "Intel SpeedStep Technology was enabled.";
 			else

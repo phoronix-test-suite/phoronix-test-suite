@@ -89,6 +89,5 @@ esac
 
 grep -C 1 'Performance:' $THIS_DIR/flopcount
 
-cd $THIS_DIR/
-sleep 3" > gromacs
+cd $THIS_DIR/" > gromacs
 chmod +x gromacs
