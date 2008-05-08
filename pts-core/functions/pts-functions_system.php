@@ -93,7 +93,6 @@ function memory_mb_capacity()
 }
 function parse_lsb_output($desc)
 {
-
 	$info = shell_exec("lsb_release -a 2>&1");
 
 	if(($pos = strrpos($info, $desc . ':')) === FALSE)
@@ -308,6 +307,49 @@ function pts_record_v12_voltage()
 	if($voltage != -1)
 		array_push($V12_VOLTAGE, $voltage);
 }
+function lshal_extract($name, $UDI = NULL)
+{
+	if(empty($UDI))
+		$info = shell_exec("lshal | grep \"$name\"");
+	else
+		$info = shell_exec("lshal -u $UDI | grep \"$name\"");
+
+	if(($pos = strpos($info, $name . " = '")) === FALSE)
+	{
+		$info = "Unknown";
+	}
+	else
+	{
+		$info = substr($info, $pos + strlen($name . " = '"));
+		$info = trim(substr($info, 0, strpos($info, "'")));
+	}
+
+	return $info;
+}
+function lshal_system_extract($name)
+{
+	return lshal_extract($name, "/org/freedesktop/Hal/devices/computer");
+}
+function main_system_hardware_string()
+{
+	$vendor = lshal_system_extract("system.hardware.vendor");
+	$product = lshal_system_extract("system.hardware.product");
+	$version = lshal_system_extract("system.hardware.version");
+
+	if($product == "Unknown" || (strpos($version, '.') === FALSE && $version != "Unknown"))
+		$product = $version;
+
+	if($vendor == "Unknown")
+	{
+		$info = "Unknown";
+	}
+	else
+	{
+		$info = trim(pts_clean_information_string($vendor . " " . $product));
+	}
+
+	return $info;
+}
 function pts_record_battery_power()
 {
 	global $BATTERY_POWER;
@@ -361,7 +403,8 @@ function pts_report_power_mode()
 function pts_hw_string()
 {
 	$hw_string = "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . "), ";
-	$hw_string .= "Motherboard Chipset: " . motherboard_chipset_string() . ", ";
+	$hw_string .= "Motherboard: " . main_system_hardware_string() . ", ";
+	$hw_string .= "Chipset: " . motherboard_chipset_string() . ", ";
 	$hw_string .= "System Memory: " . memory_mb_capacity() . "MB, ";
 	$hw_string .= "Disk Space: " . pts_posix_disk_total() . "GB, ";
 	$hw_string .= "Graphics: " . graphics_processor_string() . graphics_frequency_string() . ", ";
