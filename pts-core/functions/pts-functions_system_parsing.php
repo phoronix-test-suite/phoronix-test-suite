@@ -47,7 +47,7 @@ function read_hal($name, $UDI = NULL)
 
 	return $info;
 }
-function readh_system_hal($name)
+function read_system_hal($name)
 {
 	return read_hal($name, "/org/freedesktop/Hal/devices/computer");
 }

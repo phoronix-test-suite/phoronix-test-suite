@@ -235,7 +235,8 @@ function pts_monitor_statistics()
 	}
 
 	// terminal output
-	echo pts_string_header($info_report);
+	if(!empty($info_report))
+		echo pts_string_header($info_report);
 
 	if(count($m_array[0]) > 1 && !empty($url))
 	{
