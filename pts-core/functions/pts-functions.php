@@ -84,7 +84,7 @@ define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_D
 
 if(pts_process_active("phoronix-test-suite"))
 {
-	pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
+	echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
 }
 pts_process_register("phoronix-test-suite");
 register_shutdown_function("pts_shutdown");
@@ -351,7 +351,7 @@ function pts_process_register($process)
 	if(!is_dir(BENCHMARK_ENV_DIR . ".processes"))
 		mkdir(BENCHMARK_ENV_DIR . ".processes");
 
-	return file_put_contents(BENCHMARK_ENV_DIR . ".processes/$process.p", time());
+	return file_put_contents(BENCHMARK_ENV_DIR . ".processes/$process.p", getmypid());
 }
 function pts_process_remove($process)
 {
@@ -362,10 +362,12 @@ function pts_process_active($process)
 {
 	if(is_file(BENCHMARK_ENV_DIR . ".processes/$process.p"))
 	{
-		$process_time = intval(file_get_contents(BENCHMARK_ENV_DIR . ".processes/$process.p"));
+		$pid = trim(file_get_contents(BENCHMARK_ENV_DIR . ".processes/$process.p"));
+		$ps = trim(shell_exec("ps -p $pid 2>&1"));
 
-		if((time() - $process_time) < 30) // TODO: Replace Lock With Pid based instead of time.
+		if(strpos($ps, "php") > 0)
 			return true;
+
 		pts_process_remove($process);
 	}
 	return false;
