@@ -1,0 +1,34 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.1</Version>
+		<TestType>Graphics</TestType>
+		<Title>GUI Toolkits</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite is made up of GUI tool-kit test profiles. Currently this suite consists of tests for just GTK.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>COMBOBOX</Arguments>
+		<Description>GtkComboBox</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>RADIO_BUTTON</Arguments>
+		<Description>GtkRadioButton</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>TEXTVIEW_SCROLL</Arguments>
+		<Description>GtkTextView - Scroll</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>DRAWING_PIXBUFS</Arguments>
+		<Description>GtkDrawingArea - Pixbufs</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>TOTAL_TIME</Arguments>
+		<Description>Total Time</Description>
+	</RunTest>
+</PhoronixTestSuite>

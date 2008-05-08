@@ -28,6 +28,7 @@ Phoronix Test Suite
 - Add lshal parsing support
 - Add support to read the system's motherboard vendor / model using HAL
 - Move generic system parsing functions to pts-core/functions/pts-functions_system_parsing.php
+- Add gui-toolkits suite
 
 Phoronix Test Suite 0.5.1
 May 5, 2008
