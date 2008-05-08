@@ -50,6 +50,7 @@ May 5, 2008
 - Standardize function naming convention for pts-functions_system_parsing
 - Switch pts_process_* to being pid based instead of time based
 - System beep when a test ends and two beeps when all tests are done
+- Enable PNG compression in pts_Graph
 
 Phoronix Test Suite 0.5.0
 May 1, 2008
