@@ -1,0 +1,72 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.6</Version>
+		<TestType>Motherboard</TestType>
+		<Title>PCQS: Motherboard</Title>
+		<Maintainer>Phoronix.com</Maintainer>
+		<Description>This test suite is the Phoronix Certification and Qualification Suite designed by Phoronix.com for use in desktop motherboard reviews. There are graphics, compilation, compression, encoding, disk, and processor tests in this suite.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>nexuiz</Test>
+		<Arguments>+vid_width 1280 +vid_height 1024 +r_hdr 0</Arguments>
+		<Description>1280 x 1024</Description>
+	</RunTest>
+	<RunTest>
+		<Test>nexuiz</Test>
+		<Arguments>+vid_width 1280 +vid_height 1024 +r_hdr 1</Arguments>
+		<Description>1280 x 1024 - HDR</Description>
+	</RunTest>
+	<RunTest>
+		<Test>xplane9</Test>
+		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=1280 --pref:_y_res_req_ALL=1024</Arguments>
+		<Description>1280 x 1024 - High Quality</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>TOTAL_TIME</Arguments>
+		<Description>Total Time</Description>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
+		<Description>Time To Compile</Description>
+	</RunTest>
+	<RunTest>
+		<Test>build-mplayer</Test>
+		<Description>Time To Compile</Description>
+	</RunTest>
+	<RunTest>
+		<Test>compress-pbzip2</Test>
+		<Description>Compression Time</Description>
+	</RunTest>
+	<RunTest>
+		<Test>encode-mp3</Test>
+		<Description>106MB WAV File Encoding</Description>
+	</RunTest>
+	<RunTest>
+		<Test>md-gromacs</Test>
+		<Arguments>lzm mpi</Arguments>
+		<Description>Parallel Lysozyme</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-i0</Arguments>
+		<Description>Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
+		<Arguments>COPY -b 3 -l 10</Arguments>
+		<Description>Integer BatchRun Copy</Description>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
+		<Arguments>ADD -b 3 -l 10</Arguments>
+		<Description>Integer BatchRun Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>sunflow</Test>
+		<Description>Image Synthesis w/ Raytracing</Description>
+	</RunTest>
+</PhoronixTestSuite>

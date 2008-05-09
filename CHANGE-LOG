@@ -36,6 +36,8 @@ Phoronix Test Suite
 - System beep when a test ends and two beeps when all tests are done
 - Enable PNG compression in pts_Graph
 - Sunflow results parsing fix (Thanks to uncle_fungus)
+- Switch PTS Global uploader to using $_POST variables instead of $_GET to avoid length issues... PTS Global server-side will continue to support both methods
+- Add initial pcqs-motherboard suite
 
 Phoronix Test Suite 0.5.1
 May 5, 2008
