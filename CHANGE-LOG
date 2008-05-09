@@ -35,6 +35,7 @@ Phoronix Test Suite
 - Switch pts_process_* to being pid based instead of time based
 - System beep when a test ends and two beeps when all tests are done
 - Enable PNG compression in pts_Graph
+- Sunflow results parsing fix (Thanks to uncle_fungus)
 
 Phoronix Test Suite 0.5.1
 May 5, 2008

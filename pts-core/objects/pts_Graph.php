@@ -438,7 +438,7 @@ class pts_Graph
 	}
 	protected function return_graph_image()
 	{
-		Imagepng($this->graph_image, $this->graph_output, 8);
+		Imagepng($this->graph_image, $this->graph_output, 5);
 		ImageDestroy($this->graph_image);
 	}
 	public function save_graph($file)
