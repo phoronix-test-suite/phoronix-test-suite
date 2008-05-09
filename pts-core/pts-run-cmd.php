@@ -265,6 +265,8 @@ switch($COMMAND)
 
 		if(!empty($upload_url))
 			echo "Results Uploaded To: " . $upload_url . "\n\n";
+		else
+			echo "\nResults Failed To Upload.\n";
 		break;
 	case "REMOVE_ALL_RESULTS":
 		$remove_all = pts_bool_question("Are you sure you wish to remove all saved results (Y/n)?", true);
