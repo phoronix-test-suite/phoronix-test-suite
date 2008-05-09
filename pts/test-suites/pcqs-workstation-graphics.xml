@@ -38,11 +38,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>specviewperf9</Test>
-		<Arguments>maya</Arguments>
-		<Description>Maya</Description>
-	</RunTest>
-	<RunTest>
-		<Test>specviewperf9</Test>
 		<Arguments>ugnx</Arguments>
 		<Description>UGS NX</Description>
 	</RunTest>
