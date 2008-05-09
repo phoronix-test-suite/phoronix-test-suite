@@ -448,19 +448,31 @@ function pts_request_new_id()
 function pts_global_upload_result($result_file, $tags = "")
 {
 	$benchmark_results = file_get_contents($result_file);
+	$benchmark_results = str_replace(array("\n", "\t"), "", $benchmark_results);
 	$switch_tags = array("Benchmark>" => "B>", "Results>" => "R>", "Group>" => "G>", "Entry>" => "E>", "Identifier>" => "I>", "Value>" => "V>", "System>" => "S>", "Attributes>" => "A>");
 
 	foreach($switch_tags as $f => $t)
 		$benchmark_results = str_replace($f, $t, $benchmark_results);
 
-	$benchmark_results = str_replace(array("\n", "\t"), "", $benchmark_results);
-
-	$ToUpload = rawurlencode(base64_encode($benchmark_results));
+	$ToUpload = base64_encode($benchmark_results);
 	$GlobalUser = pts_current_user();
-	$Globalkey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "");
-	$tags = rawurlencode(base64_encode($tags));
+	$GlobalKey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "");
+	$tags = base64_encode($tags);
+	$return_stream = "";
 
-	return @file_get_contents("http://www.phoronix-test-suite.com/global/user-upload.php?result_xml=$ToUpload&global_user=$GlobalUser&global_key=$Globalkey&tags=$tags"); // Rudimentary, but works
+	$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags);
+	$upload_data = http_build_query($upload_data);
+
+	$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
+
+	$stream_context = stream_context_create($http_parameters);
+	$opened_url = @fopen("http://www.phoronix-test-suite.com/global/user-upload.php", "rb", FALSE, $stream_context);
+	$response = @stream_get_contents($opened_url);
+
+	if($response !== false)
+		$return_stream = $response;
+
+	return $return_stream;
 }
 function pts_trim_double($double, $accuracy = 2)
 {
