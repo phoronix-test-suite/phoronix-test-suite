@@ -162,7 +162,7 @@ switch($COMMAND)
 			$benchmark_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 			$identifier = basename($benchmark_file, ".xml");
 
-			printf("%-16ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);
+			printf("%-26ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);
 		}
 		echo "\n";
 		break;
