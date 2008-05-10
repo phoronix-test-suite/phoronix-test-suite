@@ -66,13 +66,31 @@ function pts_process_running_bool($process)
 }
 function pts_posix_username()
 {
-	$userinfo = posix_getpwuid(posix_getuid());
-	return $userinfo["name"];
+	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
+	{
+		$userinfo = posix_getpwuid(posix_getuid());
+		$username = $userinfo["name"];
+	}
+	else
+	{
+		$username = getenv("USERNAME");
+	}
+
+	return $username;
 }
 function pts_posix_userhome()
 {
-	$userinfo = posix_getpwuid(posix_getuid());
-	return $userinfo["dir"] . '/';
+	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
+	{
+		$userinfo = posix_getpwuid(posix_getuid());
+		$userhome = $userinfo["dir"];
+	}
+	else
+	{
+		$userhome = getenv("HOME");
+	}
+
+	return $userhome . '/';
 }
 function pts_posix_disk_total()
 {
