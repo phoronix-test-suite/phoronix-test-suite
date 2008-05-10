@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://xorg.freedesktop.org/archive/individual/app/x11perf-1.5.tar.bz2</URL>
+			<MD5>31283bfc3c78718ac1bd71e510d4e774</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
