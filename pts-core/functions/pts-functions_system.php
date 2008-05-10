@@ -64,7 +64,7 @@ function pts_process_running_bool($process)
 
 	return $running;
 }
-function pts_posix_username()
+function pts_user_name()
 {
 	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
 	{
@@ -78,7 +78,7 @@ function pts_posix_username()
 
 	return $username;
 }
-function pts_posix_userhome()
+function pts_user_home()
 {
 	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
 	{
@@ -92,7 +92,7 @@ function pts_posix_userhome()
 
 	return $userhome . '/';
 }
-function pts_posix_disk_total()
+function pts_disk_total()
 {
 	return ceil(disk_total_space("/") / 1073741824);
 }
@@ -308,7 +308,7 @@ function pts_hw_string()
 	$hw_string .= "Motherboard: " . main_system_hardware_string() . ", ";
 	$hw_string .= "Chipset: " . motherboard_chipset_string() . ", ";
 	$hw_string .= "System Memory: " . memory_mb_capacity() . "MB, ";
-	$hw_string .= "Disk Space: " . pts_posix_disk_total() . "GB, ";
+	$hw_string .= "Disk Space: " . pts_disk_total() . "GB, ";
 	$hw_string .= "Graphics: " . graphics_processor_string() . graphics_frequency_string() . ", ";
 	$hw_string .= "Screen Resolution: " . current_screen_resolution() . " ";
 
