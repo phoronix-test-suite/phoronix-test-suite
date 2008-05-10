@@ -323,7 +323,6 @@ if($SAVE_RESULTS)
 
 		echo "\n";
 	}
-
 	pts_monitor_update(); // Update sensors, etc
 }
 

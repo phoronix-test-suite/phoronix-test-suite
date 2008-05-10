@@ -248,7 +248,7 @@ function main_system_hardware_string()
 	if($product == "Unknown" || (strpos($version, '.') === FALSE && $version != "Unknown"))
 		$product = $version;
 
-	if($vendor == "Unknown")
+	if($vendor == "Unknown" || $vendor == "System manufacturer" || $vendor == "To Be Filled By O.E.M.")
 	{
 		$info = "Unknown";
 	}
