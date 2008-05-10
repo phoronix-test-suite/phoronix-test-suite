@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite
+
+- Drop directory argument on pts_save_result() as it's no longer being used
+- Begin work inside pts_save_result() for detecting different "result types"
+
 Phoronix Test Suite 0.6.0
 May 9, 2008
 

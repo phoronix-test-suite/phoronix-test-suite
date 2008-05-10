@@ -258,10 +258,9 @@ function pts_gd_available()
 
 	return $gd_available;
 }
-function pts_save_result($save_to = null, $save_results = null, $directory = null)
+function pts_save_result($save_to = null, $save_results = null)
 {
-	if($directory == null)
-		$directory = SAVE_RESULTS_DIR;
+	$directory = SAVE_RESULTS_DIR;
 
 	if(strpos($save_to, ".xml") === FALSE)
 	{
@@ -313,6 +312,7 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 
 				$results_identifiers = array();
 				$results_values = array();
+				$graph_type = "BAR_GRAPH"; // default graph type
 
 				foreach($results_raw as $result_raw)
 				{
@@ -326,7 +326,11 @@ function pts_save_result($save_to = null, $save_results = null, $directory = nul
 					if(strlen($results_version[$i]) > 2)
 						$results_name[$i] .= " v" . $results_version[$i];
 
-					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+					if($graph_type == "LINE_GRAPH")
+						$t = new pts_LineGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+					else
+						$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+
 					$t->loadGraphIdentifiers($results_identifiers[$i]);
 					$t->loadGraphValues($results_values[$i], "#1");
 					$t->loadGraphProportion($results_proportion[$i]);
