@@ -306,11 +306,13 @@ switch($COMMAND)
 			pts_exit("\nTwo saved result profile names must be supplied.\n");
 		}
 
-		if(empty($MERGE_TO))
-			$MERGE_TO = $OLD_RESULTS;
-
 		$BASE_FILE = pts_find_file($BASE_FILE);
 		$MERGE_FROM_FILE = pts_find_file($MERGE_FROM_FILE);
+
+		if(!empty($MERGE_TO) && !is_dir(SAVE_RESULTS_DIR . $MERGE_TO))
+			$MERGE_TO .= "/composite.xml";
+		else
+			$MERGE_TO = null;
 
 		if(empty($MERGE_TO))
 		{
@@ -326,6 +328,7 @@ switch($COMMAND)
 		// Merge Results
 		$MERGED_RESULTS = pts_merge_benchmarks(file_get_contents($BASE_FILE), file_get_contents($MERGE_FROM_FILE));
 		pts_save_result($MERGE_TO, $MERGED_RESULTS);
+		echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $MERGE_TO . "\n\n";
 		display_web_browser(SAVE_RESULTS_DIR . $MERGE_TO);
 		break;
 	case "DIAGNOSTICS_DUMP":
