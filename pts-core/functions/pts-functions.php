@@ -73,7 +73,7 @@ define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", getenv("PTS_USER_DIR"));
 define("PTS_DOWNLOAD_CACHE_DIR", pts_download_cache());
-define("PTS_MONITOR_DIR", PTS_USER_DIR . strtolower(PTS_CODENAME) . '/');
+define("PTS_MONITOR_DIR", PTS_USER_DIR . "system-monitor" . '/');
 //define("FONT_DIRECTORY" "/usr/share/fonts/");
 
 pts_config_init();
