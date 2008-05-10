@@ -7,6 +7,7 @@ Phoronix Test Suite
 - Improved detection for useless strings in HAL
 - Fixes when merging results
 - Change PTS_MONITOR_DIR to ~/.phoronix-test-suite/system-monitor/ from ~/.phoronix-test-suite/trondheim/
+- Fixes for username and home directory detection when PHP POSIX extension isn't present
 
 Phoronix Test Suite 0.6.0
 May 9, 2008
