@@ -10,6 +10,7 @@ Phoronix Test Suite
 - Fixes for username and home directory detection when PHP POSIX extension isn't present
 - Allow tags to be added when using the upload option, if the user uploads the results at a later time to PTS Global
 - Add initial x11perf test
+- Improved graph formatting
 
 Phoronix Test Suite 0.6.0
 May 9, 2008

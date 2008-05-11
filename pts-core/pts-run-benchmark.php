@@ -96,7 +96,7 @@ if($TO_RUN_TYPE == "BENCHMARK")
 
 	$USER_ARGS = "";
 	$TEXT_ARGS = "";
-	for($option_count = 0; $option_count < sizeof($settings_name); $option_count++)
+	for($option_count = 0; $option_count < count($settings_name); $option_count++)
 	{
 		$this_identifier = $settings_identifier[$option_count];
 		echo "\n$settings_name[$option_count]:\n";
@@ -125,12 +125,18 @@ if($TO_RUN_TYPE == "BENCHMARK")
 				}
 				while($bench_choice < 1 || $bench_choice > count($option_names));
 			}
+			$option_display_name = $option_names[($bench_choice - 1)];
 
-			$TEXT_ARGS .= "$settings_name[$option_count]: " . $option_names[($bench_choice - 1)];
+			if(($cut_point = strpos($option_display_name, '(')) > 1 && strpos($option_display_name, ')') > $cut_point)
+				$option_display_name = substr($option_display_name, 0, $cut_point);
+
+			$TEXT_ARGS .= $option_display_name;
+			//$TEXT_ARGS .= "$settings_name[$option_count]: " . $option_names[($bench_choice - 1)];
+
 			$USER_ARGS .= $settings_argument[$option_count] . $option_values[($bench_choice - 1)] . " ";
 
-			if($option_count < sizeof($settings_name) - 1)
-				$TEXT_ARGS .= "; ";
+			if($option_count < count($settings_name) - 1)
+				$TEXT_ARGS .= " - ";
 		}
 		else
 		{
