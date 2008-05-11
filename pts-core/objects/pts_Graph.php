@@ -28,7 +28,7 @@ class pts_Graph
 
 	var $graph_left_start = 28; // Distance in px to start graph from left side
 	var $graph_left_end_opp = 10; // Distance in px to end graph from right side
-	var $graph_top_start = 56; // Distance in px to start graph from top side
+	var $graph_top_start = 60; // Distance in px to start graph from top side
 	var $graph_top_end_opp = 22; // Distance in px to end graph from bottom side
 
 	// Colors
@@ -332,7 +332,7 @@ class pts_Graph
 		$this->graph_left_start += $this->return_ttf_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
 
 		imagefilledrectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body);
-		imagerectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_border);
+		imagerectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches);
 
 		if($this->graph_body_image != FALSE)
 		{
@@ -344,7 +344,7 @@ class pts_Graph
 		$this->gd_write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 7);
 		$this->gd_write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 1, $this->graph_top_start - 7);
 		$this->gd_write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 6);
-		$this->gd_write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 28);
+		$this->gd_write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 30);
 		$this->gd_write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
 	}
 	protected function render_graph_value_ticks()
