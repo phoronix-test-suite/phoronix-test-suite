@@ -57,7 +57,7 @@ function __autoload($to_load)
 
 // Load OS-specific functions
 require_once("pts-core/functions/pts.php");
-require_once("pts-core/functions/pts-functions_interfaces.php");
+require_once("pts-core/functions/pts-interfaces.php");
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
 require_once("pts-core/functions/pts-functions_monitor.php");
