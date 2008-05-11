@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.3</Version>
+		<Version>0.4</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
@@ -9,7 +9,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Nexuiz</Title>
-		<Version>2.4</Version>
+		<Version>2.4.2</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>

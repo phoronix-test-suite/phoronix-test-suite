@@ -1,8 +1,8 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://internap.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-24.zip</URL>
-			<MD5>7ecf1e683c3db02cdbc8d4514e8e33ce</MD5>
+			<URL>http://superb-west.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-242.zip, http://internap.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-242.zip</URL>
+			<MD5>2ea51368774ca603fd56faebfeac74d7</MD5>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

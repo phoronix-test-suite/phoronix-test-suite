@@ -108,6 +108,7 @@ else
 }
 
 $RESULTS = new tandem_XmlWriter();
+$RESULTS_IDENTIFIER = "";
 
 if($SAVE_RESULTS)
 {
