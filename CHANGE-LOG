@@ -13,6 +13,7 @@ Phoronix Test Suite
 - Improved graph formatting
 - Add detection if when running a test/suite, the saved file already exists but is from a different test/suite, prompt for new name
 - When running a test/suite, if the file already exists, list current test identifiers in file and ensure the new identifer is unique
+- Add refresh-graphs <saved file> option for re-rendering graphs from the PTS Results Viewer (mostly for debugging uses)
 
 Phoronix Test Suite 0.6.0
 May 9, 2008

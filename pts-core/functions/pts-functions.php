@@ -260,31 +260,29 @@ function pts_gd_available()
 }
 function pts_save_result($save_to = null, $save_results = null)
 {
-	$directory = SAVE_RESULTS_DIR;
-
 	if(strpos($save_to, ".xml") === FALSE)
 	{
 		$save_to .= ".xml";
 	}
 
-	$save_to_dir = dirname($directory . $save_to);
+	$save_to_dir = dirname(SAVE_RESULTS_DIR . $save_to);
 
-	if(!is_dir($directory))
-		mkdir($directory);
+	if(!is_dir(SAVE_RESULTS_DIR))
+		mkdir(SAVE_RESULTS_DIR);
 	if($save_to_dir != '.' && !is_dir($save_to_dir))
 		mkdir($save_to_dir);
 
-	if(!is_dir($directory . "pts-results-viewer"))
+	if(!is_dir(SAVE_RESULTS_DIR . "pts-results-viewer"))
 	{
-		mkdir($directory . "pts-results-viewer");
+		mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
 	}
 
-	pts_copy(RESULTS_VIEWER_DIR . "pts.js", $directory . "pts-results-viewer/pts.js");
-	pts_copy(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl", $directory . "pts-results-viewer/pts-results-viewer.xsl");
-	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", $directory . "pts-results-viewer/pts-viewer.css");
+	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
+	pts_copy(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl", SAVE_RESULTS_DIR . "pts-results-viewer/pts-results-viewer.xsl");
+	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
 
 	if(!is_file($save_to_dir . "/pts-results-viewer.xsl") && !is_link($save_to_dir . "/pts-results-viewer.xsl"))
-		link($directory . "pts-results-viewer/pts-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
+		link(SAVE_RESULTS_DIR . "pts-results-viewer/pts-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
 	
 	if($save_to == null || $save_results == null)
 		$bool = true;
@@ -343,7 +341,7 @@ function pts_save_result($save_to = null, $save_results = null)
 			}
 		}
 
-		$bool = file_put_contents($directory . $save_to, $save_results);
+		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 	}
 
 	return $bool;

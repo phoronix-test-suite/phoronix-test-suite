@@ -125,6 +125,9 @@ case "$1" in
 "login")
 	$PHP_BIN pts-core/pts-run-cmd.php LOGIN
 	;;
+"refresh-graph" | "refresh-graphs")
+	$PHP_BIN pts-core/pts-run-cmd.php REFRESH_GRAPHS $2
+	;;
 *)
 	echo "\n================================="
 	echo "Phoronix Test Suite"

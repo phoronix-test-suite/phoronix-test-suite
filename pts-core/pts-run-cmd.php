@@ -249,6 +249,22 @@ switch($COMMAND)
 		else
 			echo "\n$ARG_1 was not found.\n";
 		break;
+	case "REFRESH_GRAPHS":
+		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
+		{
+			$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");
+
+			if(pts_save_result($ARG_1 . "/composite.xml", $composite_xml))
+			{
+				echo "\nThe Phoronix Test Suite Graphs Have Been Re-Rendered.\n";
+				display_web_browser(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");
+			}
+		}
+		else
+		{
+			echo pts_string_header($ARG_1 . " was not found.");
+		}
+		break;
 	case "UPLOAD_RESULT":
 		require("pts-core/functions/pts-functions-run.php");
 
