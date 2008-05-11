@@ -22,5 +22,24 @@ function pts_remove_saved_result($identifier)
 	}
 	return $return_value;
 }
+function pts_tests_in_suite($object)
+{
+	$type = pts_test_type($object);
+	$tests = array();
+
+	if($type == "TEST_SUITE")
+	{
+		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $object . ".xml"));
+		$suite_benchmarks = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+
+		foreach($suite_benchmarks as $benchmark)
+			foreach(pts_tests_in_suite($benchmark) as $sub_test)
+				array_push($tests, $sub_test);
+	}
+	else if($type == "BENCHMARK")
+		return array($object);
+
+	return array_unique($tests);
+}
 
 ?>

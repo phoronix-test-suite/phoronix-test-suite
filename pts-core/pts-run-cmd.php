@@ -170,32 +170,29 @@ switch($COMMAND)
 		if(pts_test_type($ARG_1) == "TEST_SUITE")
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $ARG_1 . ".xml"));
-			$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+			$tests_in_suite = pts_tests_in_suite($ARG_1);
 			$suite_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 			$suite_maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
 			$suite_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
 			$suite_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-			$total_tests = count($tests_in_suite);
-			$tests_in_suite = array_unique($tests_in_suite);
 			$unique_tests = count($tests_in_suite);
 
 			echo pts_string_header($suite_name . " (" . $ARG_1 . " v" . $suite_version . ")");
 
 			echo "Maintainer: " . $suite_maintainer . "\n";
 			echo "Suite Type: " . $suite_type . "\n";
-			echo "Total Tests: " . $total_tests . "\n";
 			echo "Unique Tests: " . $unique_tests . "\n";
 			echo "\n";
 
 			foreach($tests_in_suite as $test)
 			{
-				$benchmark_file = XML_PROFILE_DIR . $test . ".xml";
+				$test_file = XML_PROFILE_DIR . $test . ".xml";
 
-			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+			 	$xml_parser = new tandem_XmlReader(file_get_contents($test_file));
 				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 				$license = $xml_parser->getXMLValue(P_TEST_LICENSE);
 				$status = $xml_parser->getXMLValue(P_TEST_STATUS);
-				$identifier = basename($benchmark_file, ".xml");
+				$identifier = basename($test_file, ".xml");
 
 				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 			}
@@ -221,8 +218,9 @@ switch($COMMAND)
 			$test_status = $xml_parser->getXMLValue(P_TEST_STATUS);
 			$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 
-			echo pts_string_header($test_title . " (" . $ARG_1 . " v" . $test_version . ")");
+			echo pts_string_header($test_title);
 
+			echo "Test Version: " . $test_version . "\n";
 			echo "Maintainer: " . $test_maintainer . "\n";
 			echo "Test Type: " . $test_type . "\n";
 			echo "Software Type: " . $test_app_type . "\n";
