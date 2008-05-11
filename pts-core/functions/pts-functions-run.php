@@ -126,7 +126,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 		{
 			$test_result = pts_run_benchmark($benchmarks_array[$i], $arguments_array[$i], $arguments_description[$i]);
 
-			if($save_results && $test_result != -1 && $test_result > 0)
+			if($save_results && $test_result > 0)
 				pts_record_benchmark_result($tandem_xml, $benchmarks_array[$i], $arguments_array[$i], $results_identifier, $test_result, $arguments_description[$i], pts_request_new_id());
 
 			if($i != (count($benchmarks_array) - 1))
@@ -239,6 +239,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	$ignore_first_run = $xml_parser->getXMLValue(P_TEST_IGNOREFIRSTRUN);
 	$pre_run_message = $xml_parser->getXMLValue(P_TEST_PRERUNMSG);
 	$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
+	$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 	$arg_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
 	$execute_path = $xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS);
 	$default_arguments = $xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
@@ -338,13 +339,47 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(empty($result_scale) && is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-results-scale"))
 			$result_scale = trim(@file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-results-scale"));
 
-	if(!empty($result_scale))
-	{
-		$RETURN_STRING = "$benchmark_title:\n";
-		$RETURN_STRING .= "$arguments_description\n";
+	$RETURN_STRING = "$benchmark_title:\n";
+	$RETURN_STRING .= "$arguments_description\n";
 
-		if(!empty($arguments_description))
-			$RETURN_STRING .= "\n";
+	if(!empty($arguments_description))
+		$RETURN_STRING .= "\n";
+
+	if($result_format == "PASS_FAIL")
+	{
+		$AVG_RESULT = -1;
+		$i = 1;
+
+		foreach($BENCHMARK_RESULTS_ARRAY as $result)
+		{
+			if($result == "FALSE" || $result == "0" || $result == "FAIL")
+			{
+				$this_result = "FAIL";
+
+				if($AVG_RESULT == -1 || $AVG_RESULT == 2)
+					$AVG_RESULT = 1; // 1 == FAIL
+			}
+			else
+			{
+				$this_result = "PASS";
+
+				if($AVG_RESULT == -1)
+					$AVG_RESULT = 2; // 2 == FAIL
+			}
+
+			$RETURN_STRING .= "Trial $i: " . $this_result . "\n";
+		}
+
+		if($AVG_RESULT == 2)
+			$final_result = "PASS";
+		else
+			$final_result = "FAIL";
+
+		$RETURN_STRING .= "\nFinal: " . $final_result . "\n";
+	}
+	else
+	{
+		// Result is of a numerical type
 
 		$TOTAL_RESULT = 0;
 		foreach($BENCHMARK_RESULTS_ARRAY as $result)
@@ -352,15 +387,11 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			$TOTAL_RESULT += trim($result);
 			$RETURN_STRING .= $result . " $result_scale\n";
 		}
-
 		$AVG_RESULT = pts_trim_double($TOTAL_RESULT / sizeof($BENCHMARK_RESULTS_ARRAY), 2);
-
 		$RETURN_STRING .= "\nAverage: $AVG_RESULT $result_scale";
-
-		echo pts_string_header($RETURN_STRING);
 	}
-	else
-		$AVG_RESULT = -1;
+
+	echo pts_string_header($RETURN_STRING);
 
 	pts_beep();
 	pts_process_remove($benchmark_identifier);
