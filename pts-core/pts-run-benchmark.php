@@ -61,28 +61,68 @@ if(!$TO_RUN_TYPE)
 }
 else
 {
+	echo "\n";
 	$SAVE_RESULTS = pts_bool_question("Would you like to save these benchmark results (Y/n)?", true, "SAVE_RESULTS");
 
 	if($SAVE_RESULTS)
 	{
-		do
-		{
-			echo "Enter a name to save these results: ";
-			$PROPOSED_FILE_NAME = trim(fgets(STDIN));
-		}while(empty($PROPOSED_FILE_NAME));
-
-		$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
-		$PROPOSED_FILE_NAME = trim(str_replace(array(' ', '/', '&', '\''), "", strtolower($PROPOSED_FILE_NAME))); // Clean up name
+		$FILE_NAME = pts_prompt_save_file_name();
+		$PROPOSED_FILE_NAME = $FILE_NAME[0];
+		$CUSTOM_TITLE = $FILE_NAME[1];
 
 		if(empty($PROPOSED_FILE_NAME))
 			$PROPOSED_FILE_NAME = date("Y-m-d-Hi");
+
+		do
+		{
+			if(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"))
+			{
+				$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"));
+				$test_suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+
+				if($TO_RUN_TYPE != "GLOBAL_COMPARISON")
+				{
+					if($test_suite != $TO_RUN)
+						$is_validated = false;
+					else
+						$is_validated = true;
+				}
+				else
+					$is_validated = true; //TODO: add type comparison check when doing a global comparison
+			}
+			else
+			{
+				$is_validated = true;
+			}
+
+			if(!$is_validated)
+			{
+				echo pts_string_header("This saved file-name is associated with a different test ($test_suite) from $TO_RUN. Enter a new name for saving the results.");
+				$FILE_NAME = pts_prompt_save_file_name();
+				$PROPOSED_FILE_NAME = $FILE_NAME[0];
+				$CUSTOM_TITLE = $FILE_NAME[1];
+			}
+		}
+		while(!$is_validated);
 	}
 }
 
 $RESULTS = new tandem_XmlWriter();
 
 if($SAVE_RESULTS)
-	$RESULTS_IDENTIFIER = pts_prompt_results_identifier();
+{
+	if(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"));
+		$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+		$results_xml = new tandem_XmlReader($raw_results[0]);
+		$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
+	}
+	else
+		$identifiers = array();
+
+	$RESULTS_IDENTIFIER = pts_prompt_results_identifier($identifiers);
+}
 
 pts_disable_screensaver(); // Kill the screensaver
 
