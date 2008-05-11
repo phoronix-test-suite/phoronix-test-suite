@@ -618,7 +618,7 @@ function pts_enable_screensaver()
 function pts_interrupt_screensaver()
 {
 	if(!defined("SCREENSAVER_KILLED"))
-		shell_exec("xdg-screensaver reset");
+		shell_exec("xdg-screensaver reset 2>&1 > /dev/null");
 }
 
 ?>
