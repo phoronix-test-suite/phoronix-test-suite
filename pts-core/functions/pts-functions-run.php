@@ -144,6 +144,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		$benchmark_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 		$benchmark_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 		$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
+		$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 		$proportion = $xml_parser->getXMLValue(P_TEST_PROPORTION);
 		$default_arguments = $xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
 
@@ -170,6 +171,10 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 				$result_scale = trim(@file_get_contents(BENCHMARK_ENV_DIR . $benchmark . "/pts-results-scale"));
 
 		}
+		if(empty($result_format))
+		{
+			$result_format = "BAR_GRAPH";
+		}
 
 		unset($xml_parser);
 
@@ -178,7 +183,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $description);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result_scale);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $proportion);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, "BAR_GRAPH");
+		$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result_format);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $benchmark);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, trim($default_arguments . " " . $arguments));
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);

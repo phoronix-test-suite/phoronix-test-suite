@@ -7,6 +7,7 @@ define("P_TEST_DESCRIPTION", "PhoronixTestSuite/TestInformation/Description"); /
 define("P_TEST_EXDEP", "PhoronixTestSuite/TestInformation/ExternalDependencies"); // Test description
 define("P_TEST_VERSION", "PhoronixTestSuite/TestInformation/Version"); // Test version
 define("P_TEST_SCALE", "PhoronixTestSuite/TestInformation/ResultScale"); // Result scale
+define("P_TEST_RESULTFORMAT", "PhoronixTestSuite/TestInformation/ResultFormat"); // Result format
 define("P_TEST_PROPORTION", "PhoronixTestSuite/TestInformation/Proportion"); // Proportion
 define("P_TEST_PTSVERSION", "PhoronixTestSuite/TestProfile/Version"); // PTS Test version
 define("P_TEST_HARDWARE_TYPE", "PhoronixTestSuite/TestProfile/TestType"); // Test type

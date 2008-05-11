@@ -310,7 +310,6 @@ function pts_save_result($save_to = null, $save_results = null)
 
 				$results_identifiers = array();
 				$results_values = array();
-				$graph_type = "BAR_GRAPH"; // default graph type
 
 				foreach($results_raw as $result_raw)
 				{
@@ -324,7 +323,7 @@ function pts_save_result($save_to = null, $save_results = null)
 					if(strlen($results_version[$i]) > 2)
 						$results_name[$i] .= " v" . $results_version[$i];
 
-					if($graph_type == "LINE_GRAPH")
+					if($results_result_format == "LINE_GRAPH")
 						$t = new pts_LineGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 					else
 						$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
