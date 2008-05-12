@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd $1
-rm -f trondheim-wav-sample.flac
+rm -f pts-trondheim.flac
