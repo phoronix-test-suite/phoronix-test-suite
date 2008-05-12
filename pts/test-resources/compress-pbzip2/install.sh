@@ -2,9 +2,9 @@
 
 cd $1
 
-if [ ! -f ../pts-shared/trondheim-wav-sample.wav ]
+if [ ! -f ../pts-shared/pts-trondheim.wav ]
   then
-     tar -xvf ../pts-shared/trondheim-wav-sample.tar.gz -C ../pts-shared/
+     tar -xvf ../pts-shared/pts-trondheim-wav.tar.gz -C ../pts-shared/
 fi
 
 tar -xvf bzip2-1.0.5.tar.gz
@@ -21,7 +21,7 @@ cd ..
 rm -f bigfile
 for i in 1 2 3 4 5 6 7 8
 do
-	cat ../pts-shared/trondheim-wav-sample.wav >> bigfile
+	cat ../pts-shared/pts-trondheim.wav >> bigfile
 done
 
 cat > compress-pbzip2 <<EOT

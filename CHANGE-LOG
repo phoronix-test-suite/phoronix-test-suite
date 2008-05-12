@@ -20,6 +20,7 @@ Phoronix Test Suite
 - Update Nexuiz profile against Nexuiz 2.4.2
 - Support abstract results within the Phoronix Test Suite
 - Add in pts_PassFailGraph object for tests that are meant to judge whether the system properly passes the test or fails
+- Change default wav file, again... Hopefully last time!
 
 Phoronix Test Suite 0.6.0
 May 9, 2008
