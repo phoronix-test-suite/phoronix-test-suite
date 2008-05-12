@@ -63,6 +63,7 @@ class pts_Graph
 	var $graph_body_image = FALSE;
 	var $graph_hide_identifiers = FALSE;
 	var $graph_type = "GRAPH";
+	var $graph_value_type = "NUMERICAL";
 	var $graph_image;
 	var $graph_maximum_value;
 
@@ -82,6 +83,9 @@ class pts_Graph
 		$this->graph_title = $Title;
 		$this->graph_sub_title = $SubTitle;
 		$this->graph_y_title = $YTitle;
+
+		if(empty($YTitle))
+			$this->graph_left_start = $this->graph_top_end_opp - 5;
 
 		$this->graph_top_end = $this->graph_attr_height - $this->graph_top_end_opp;
 		$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
@@ -136,7 +140,9 @@ class pts_Graph
 				$data_array[$i] = $this->trim_double($data_array[$i], 2);
 
 		array_push($this->graph_data, $data_array);
-		array_push($this->graph_data_title, $data_title);
+
+		if(!empty($data_title))
+			array_push($this->graph_data_title, $data_title);
 	}
 	public function setGraphBackgroundPNG($File)
 	{
@@ -173,8 +179,11 @@ class pts_Graph
 
 		foreach($this->graph_data as $graph_set)
 			foreach($graph_set as $set_item)
-				if($set_item > $maximum)
+				if((is_numeric($set_item) && $set_item > $maximum) || (!is_numeric($set_item) && strlen($set_item) > strlen($maximum)))
 					$maximum = $set_item;
+
+		if(is_numeric($maximum))
+			$maximum = (floor(round($maximum * 1.35) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
 
 		return $maximum;
 	}
@@ -198,6 +207,11 @@ class pts_Graph
 	{
 		$dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
 		return $dimensions[0];
+	}
+	protected function return_ttf_string_height($String, $Font, $Size)
+	{
+		$dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
+		return $dimensions[1];
 	}
 	protected function gd_write_text_center($String, $Size, $Color, $CenterX, $CenterY, $Rotate = FALSE, $Big = FALSE)
 	{
@@ -318,7 +332,7 @@ class pts_Graph
 			imagerectangle($this->graph_image, 0, 0, $this->graph_attr_width - 1, $this->graph_attr_height - 1, $this->graph_color_border);
 
 		// Etc
-		$this->graph_maximum_value = (floor(round($this->maximum_graph_value() * 1.35) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+		$this->graph_maximum_value = $this->maximum_graph_value();
 	}
 	protected function render_graph_base()
 	{
@@ -329,7 +343,11 @@ class pts_Graph
 		}
 
 		// Make room for tick markings, left hand side
-		$this->graph_left_start += $this->return_ttf_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+		if($this->graph_value_type == "NUMERICAL")
+			$this->graph_left_start += $this->return_ttf_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+
+		if($this->graph_hide_identifiers == TRUE)
+			$this->graph_top_end += $this->graph_top_end_opp / 2;
 
 		imagefilledrectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body);
 		imagerectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches);
@@ -345,7 +363,9 @@ class pts_Graph
 		$this->gd_write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 1, $this->graph_top_start - 7);
 		$this->gd_write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 6);
 		$this->gd_write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 30);
-		$this->gd_write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
+
+		if(!empty($this->graph_y_title))
+			$this->gd_write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
 	}
 	protected function render_graph_value_ticks()
 	{
@@ -384,7 +404,9 @@ class pts_Graph
 		if(!$this->graph_hide_identifiers)
 			$this->render_graph_identifiers();
 
-		$this->render_graph_value_ticks();
+		if($this->graph_value_type == "NUMERICAL")
+			$this->render_graph_value_ticks();
+
 		$this->render_graph_key();
 		$this->render_graph_result();
 		$this->render_graph_watermark();

@@ -126,7 +126,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 		{
 			$test_result = pts_run_benchmark($benchmarks_array[$i], $arguments_array[$i], $arguments_description[$i]);
 
-			if($save_results && is_numeric($test_result) && $test_result > 0)
+			if($save_results && ((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2)))
 				pts_record_benchmark_result($tandem_xml, $benchmarks_array[$i], $arguments_array[$i], $results_identifier, $test_result, $arguments_description[$i], pts_request_new_id());
 
 			if($i != (count($benchmarks_array) - 1))
@@ -136,7 +136,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 }
 function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $identifier, $result, $description, $tandem_id = 128)
 {
-	if($result > -1 && strlen($result) < 12)
+	if((is_numeric($result) && $result > 0) || (!is_numeric($result) && strlen($result) > 2))
 	{
 		global $BENCHMARK_RAN;
 
@@ -356,10 +356,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			{
 				$this_result = "FAIL";
 
-				if($AVG_RESULT == -1 || $AVG_RESULT == 2)
+				if($AVG_RESULT == -1 || $AVG_RESULT == "PASS")
 				{
-					$AVG_RESULT = 1; // 1 == FAIL
-					$avg_string = "FAIL";
+					$AVG_RESULT = "FAIL";
 				}
 			}
 			else
@@ -368,8 +367,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 				if($AVG_RESULT == -1)
 				{
-					$AVG_RESULT = 2; // 2 == PASS
-					$avg_string = "PASS";
+					$AVG_RESULT = "PASS";
 				}
 			}
 
@@ -377,7 +375,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			$i++;
 		}
 
-		$RETURN_STRING .= "\nFinal: " . $avg_string . "\n";
+		$RETURN_STRING .= "\nFinal: " . $AVG_RESULT . "\n";
 	}
 	else
 	{
