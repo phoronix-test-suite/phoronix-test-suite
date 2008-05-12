@@ -126,7 +126,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 		{
 			$test_result = pts_run_benchmark($benchmarks_array[$i], $arguments_array[$i], $arguments_description[$i]);
 
-			if($save_results && ((is_numeric($test_result) && $test_result > 0) || strlen($test_result) > 2))
+			if($save_results && is_numeric($test_result) && $test_result > 0)
 				pts_record_benchmark_result($tandem_xml, $benchmarks_array[$i], $arguments_array[$i], $results_identifier, $test_result, $arguments_description[$i], pts_request_new_id());
 
 			if($i != (count($benchmarks_array) - 1))
@@ -356,27 +356,32 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			{
 				$this_result = "FAIL";
 
-				if($AVG_RESULT == -1 || $AVG_RESULT == "PASS")
-					$AVG_RESULT = "FAIL";
+				if($AVG_RESULT == -1 || $AVG_RESULT == 2)
+				{
+					$AVG_RESULT = 1; // 1 == FAIL
+					$avg_string = "FAIL";
+				}
 			}
 			else
 			{
 				$this_result = "PASS";
 
 				if($AVG_RESULT == -1)
-					$AVG_RESULT = "PASS";
+				{
+					$AVG_RESULT = 2; // 2 == PASS
+					$avg_string = "PASS";
+				}
 			}
 
 			$RETURN_STRING .= "Trial $i: " . $this_result . "\n";
 			$i++;
 		}
 
-		$RETURN_STRING .= "\nFinal: " . $AVG_RESULT . "\n";
+		$RETURN_STRING .= "\nFinal: " . $avg_string . "\n";
 	}
 	else
 	{
-		// Result is of a numerical type
-
+		// Result is of a normal numerical type
 		$TOTAL_RESULT = 0;
 		foreach($BENCHMARK_RESULTS_ARRAY as $result)
 		{

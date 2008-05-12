@@ -17,6 +17,7 @@ Phoronix Test Suite
 - Don't print any information outputted by xdg-screensaver (or if it's not found)
 - Allow test profiles to define a graph type (currently only BAR_GRAPH and LINE_GRAPH are supported). Must be specified inside the profile's TestInformation in a ResultFormat tag. Defaults to BAR_GRAPH.
 - Fix for suite-info to work recursively when listing tests in a suite
+- Update Nexuiz profile against Nexuiz 2.4.2
 
 Phoronix Test Suite 0.6.0
 May 9, 2008
