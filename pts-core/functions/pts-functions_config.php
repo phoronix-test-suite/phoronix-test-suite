@@ -66,6 +66,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 	$config->addXmlObject(P_OPTION_RESULTS_DIRECTORY, 1, pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/", $read_config));
 
 	$config->addXmlObject(P_OPTION_TEST_ENVIRONMENT, 2, pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/", $read_config));
+	$config->addXmlObject(P_OPTION_CACHE_DIRECTORY, 2, pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/", $read_config));
 	$config->addXmlObject(P_OPTION_TEST_SLEEPTIME, 2, pts_read_user_config(P_OPTION_TEST_SLEEPTIME, "5", $read_config));
 	$config->addXmlObject(P_OPTION_TEST_SCREENSAVER, 2, $ToggleScreensaver);
 
@@ -174,6 +175,18 @@ function pts_current_user()
 		$pts_user = pts_user_name();
 
 	return $pts_user;
+}
+function pts_download_cache()
+{
+	$dir = getenv("DOWNLOAD_CACHE");
+
+	if(empty($dir))
+		$dir = pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/");
+
+	if(substr($dir, -1) != '/')
+			$dir .= '/';
+
+	return $dir;
 }
 
 ?>

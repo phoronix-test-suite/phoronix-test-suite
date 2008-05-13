@@ -52,6 +52,7 @@ define("P_OPTION_GLOBAL_UPLOADKEY", "PhoronixTestSuite/GlobalDatabase/UploadKey"
 define("P_OPTION_TEST_SCREENSAVER", "PhoronixTestSuite/Options/Benchmarking/ToggleScreensaver"); // Toggle screensaver?
 define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
 define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory"); // Results save directory
+define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/Benchmarking/CacheDirectory"); // Directory for reading/writing to download cache
 define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/Results/Directory"); // Results save directory
 define("P_OPTION_BATCH_SAVERESULTS", "PhoronixTestSuite/Options/BatchMode/SaveResults"); // Batch mode save results
 define("P_OPTION_BATCH_LAUNCHBROWSER", "PhoronixTestSuite/Options/BatchMode/OpenBrowser"); // Batch mode open browser
