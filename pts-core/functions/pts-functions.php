@@ -1,21 +1,25 @@
 <?php
 
 /*
-   Copyright (C) 2008, Michael Larabel.
-   Copyright (C) 2008, Phoronix Media.
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions.php: General functions required for Phoronix Test Suite operation.
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU General Public License for more details.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
 
-   You should have received a copy of the GNU General Public License
-   along with this program. If not, see <http://www.gnu.org/licenses/>.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 function pts_directory()
@@ -80,7 +84,7 @@ pts_config_init();
 define("BENCHMARK_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
 
-// Register PTS
+// Register PTS Process
 
 if(pts_process_active("phoronix-test-suite"))
 {
@@ -107,32 +111,27 @@ if(($to_show = getenv("MONITOR")))
 		$GPU_TEMPERATURE = array();
 	}
 	if(in_array("cpu.temp", $to_show)  || $monitor_temp)
-	{
-		
+	{	
 		define("MONITOR_CPU_TEMP", 1);
 		$CPU_TEMPERATURE = array();
 	}
 	if(in_array("sys.temp", $to_show)  || $monitor_temp)
-	{
-		
+	{	
 		define("MONITOR_SYS_TEMP", 1);
 		$SYS_TEMPERATURE = array();
 	}
 	if(in_array("battery.power", $to_show) || $monitor_power)
-	{
-		
+	{	
 		define("MONITOR_BATTERY_POWER", 1);
 		$BATTERY_POWER = array();
 	}
 	if(in_array("cpu.voltage", $to_show) || $monitor_voltage)
-	{
-		
+	{	
 		define("MONITOR_CPU_VOLTAGE", 1);
 		$CPU_VOLTAGE = array();
 	}
 	if(in_array("v3.voltage", $to_show) || $monitor_voltage)
 	{
-		
 		define("MONITOR_V3_VOLTAGE", 1);
 		$V3_VOLTAGE = array();
 	}
@@ -183,6 +182,7 @@ function pts_benchmark_name_to_identifier($name)
 {
 	if(empty($name))
 		return false;
+
 	$identifier = false;
 
 	foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
@@ -199,9 +199,10 @@ function pts_benchmark_identifier_to_name($identifier)
 {
 	if(empty($identifier))
 		return false;
+
 	$name = false;
 
-	if(is_file(XML_PROFILE_DIR . "$identifier.xml"))
+	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
 		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
@@ -213,6 +214,7 @@ function pts_test_type($identifier)
 {
 	if(empty($identifier))
 		return false;
+
 	$test_type = false;
 
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
@@ -341,7 +343,6 @@ function pts_save_result($save_to = null, $save_results = null)
 				unset($xml_reader, $results_name, $results_version, $results_attributes, $results_scale, $results_proportion, $results_result_format, $results_raw, $results_identifiers, $results_values);
 			}
 		}
-
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 	}
 
@@ -354,18 +355,18 @@ function pts_process_register($process)
 	if(!is_dir(BENCHMARK_ENV_DIR . ".processes"))
 		mkdir(BENCHMARK_ENV_DIR . ".processes");
 
-	return file_put_contents(BENCHMARK_ENV_DIR . ".processes/$process.p", getmypid());
+	return file_put_contents(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p", getmypid());
 }
 function pts_process_remove($process)
 {
-	if(is_file(BENCHMARK_ENV_DIR . ".processes/$process.p"))
-		return unlink(BENCHMARK_ENV_DIR . ".processes/$process.p");
+	if(is_file(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p"))
+		return unlink(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p");
 }
 function pts_process_active($process)
 {
-	if(is_file(BENCHMARK_ENV_DIR . ".processes/$process.p"))
+	if(is_file(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p"))
 	{
-		$pid = trim(file_get_contents(BENCHMARK_ENV_DIR . ".processes/$process.p"));
+		$pid = trim(file_get_contents(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p"));
 		$ps = trim(shell_exec("ps -p $pid 2>&1"));
 
 		if(strpos($ps, "php") > 0)
@@ -439,7 +440,7 @@ function pts_variables_export_string($vars = null)
 }
 function pts_exec($exec, $extra_vars = null)
 {
-	return shell_exec(pts_variables_export_string($extra_vars) . "$exec");
+	return shell_exec(pts_variables_export_string($extra_vars) . $exec);
 }
 function pts_request_new_id()
 {
@@ -479,7 +480,7 @@ function pts_global_upload_result($result_file, $tags = "")
 }
 function pts_trim_double($double, $accuracy = 2)
 {
-	$return = explode(".", $double);
+	$return = explode('.', $double);
 
 	if(count($return) == 1)
 		$return[1] = "00";
@@ -492,9 +493,9 @@ function pts_trim_double($double, $accuracy = 2)
 			$return[1] = substr($return[1], 0, $accuracy);
 		else if($strlen < $accuracy)
 			for($i = $strlen; $i < $accuracy; $i++)
-				$return[1] .= "0";
+				$return[1] .= '0';
 
-		$return = $return[0] . "." . $return[1];
+		$return = $return[0] . '.' . $return[1];
 	}
 	else
 		$return = $return[0];
@@ -566,7 +567,7 @@ function pts_string_header($heading)
 
 	$terminal_width = trim(shell_exec("tput cols"));
 
-	if($header_size > $terminal_width)
+	if($header_size > $terminal_width && $terminal_width > 1)
 		$header_size = $terminal_width;
 
 	return "\n" . str_repeat('=', $header_size) . "\n" . $heading . "\n" . str_repeat('=', $header_size) . "\n\n";

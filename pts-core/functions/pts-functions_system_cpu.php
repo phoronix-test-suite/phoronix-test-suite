@@ -1,5 +1,13 @@
 <?php
 
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions_system_cpu.php: System functions related to the processor(s).
+*/
+
 function cpu_core_count()
 {
 	$processors = read_cpuinfo("processor");

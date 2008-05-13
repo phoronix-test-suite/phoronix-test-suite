@@ -1,5 +1,13 @@
 <?php
 
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions-run.php: Functions needed for running tests/suites.
+*/
+
 function pts_prompt_results_identifier($current_identifiers = null)
 {
 	$RESULTS_IDENTIFIER = null;
@@ -163,13 +171,11 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		{
 			if(is_file(BENCHMARK_ENV_DIR . "$benchmark/pts-test-version"))
 				$benchmark_version = @file_get_contents(BENCHMARK_ENV_DIR . "$benchmark/pts-test-version");
-
 		}
 		if(empty($result_scale))
 		{
 			if(is_file(BENCHMARK_ENV_DIR . $benchmark . "/pts-results-scale"))
 				$result_scale = trim(@file_get_contents(BENCHMARK_ENV_DIR . $benchmark . "/pts-results-scale"));
-
 		}
 		if(empty($result_format))
 		{
@@ -386,7 +392,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			$TOTAL_RESULT += trim($result);
 			$RETURN_STRING .= $result . " $result_scale\n";
 		}
-		$AVG_RESULT = pts_trim_double($TOTAL_RESULT / sizeof($BENCHMARK_RESULTS_ARRAY), 2);
+		$AVG_RESULT = pts_trim_double($TOTAL_RESULT / count($BENCHMARK_RESULTS_ARRAY), 2);
 		$RETURN_STRING .= "\nAverage: $AVG_RESULT $result_scale";
 	}
 

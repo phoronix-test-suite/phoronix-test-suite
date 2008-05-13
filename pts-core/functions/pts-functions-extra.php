@@ -1,5 +1,13 @@
 <?php
 
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions-extra.php: "Extra" functions needed for some operations.
+*/
+
 function pts_remove_saved_result($identifier)
 {
 	$return_value = false;

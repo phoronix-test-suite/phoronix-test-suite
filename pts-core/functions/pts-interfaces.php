@@ -1,6 +1,12 @@
 <?php
 
-// Phoronix Test Suite - XML Interfaces
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-interfaces.php: The XML interfaces for the Phoronix Test Suite to be used by the Phoronix tandem_Xml.
+*/
 
 define("P_TEST_TITLE", "PhoronixTestSuite/TestInformation/Title"); // Test title shown to end-user
 define("P_TEST_DESCRIPTION", "PhoronixTestSuite/TestInformation/Description"); // Test description

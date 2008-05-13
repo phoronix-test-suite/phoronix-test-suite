@@ -1,8 +1,12 @@
 <?php
 
-//
-// SYSTEM RELATED
-//
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions_system.php: System-level (Linux) functions, includes the parsing of the installed system hardware/software.
+*/
 
 require_once("pts-core/functions/pts-functions_system_parsing.php");
 require_once("pts-core/functions/pts-functions_system_cpu.php");

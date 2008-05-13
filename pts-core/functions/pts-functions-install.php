@@ -1,5 +1,13 @@
 <?php
 
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions-install.php: Functions needed for installing tests and external dependencies for PTS.
+*/
+
 function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 {
 	$type = pts_test_type($TO_INSTALL);
@@ -59,9 +67,7 @@ function pts_download_benchmark_files($Benchmark)
 		for($i = 0; $i < count($package_url); $i++)
 		{
 			if(empty($package_filename[$i]))
-			{
 				$package_filename[$i] = basename($package_url[$i]);
-			}
 
 			if((!is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED") || (!is_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED"))
 			{
@@ -140,7 +146,8 @@ function pts_download_benchmark_files($Benchmark)
 							pts_exit("\nDownload of Needed Test Dependencies Failed! Exiting...\n\n");
 						}
 
-					}while(!$file_downloaded);
+					}
+					while(!$file_downloaded);
 				}
 			}
 		}
@@ -161,17 +168,13 @@ function pts_install_benchmark($Benchmark)
 	else
 	{
 		if(!is_dir(BENCHMARK_ENV_DIR))
-		{
 			mkdir(BENCHMARK_ENV_DIR);
-		}
+
 		if(!is_dir(BENCHMARK_ENV_DIR . $Benchmark))
-		{
 			mkdir(BENCHMARK_ENV_DIR . $Benchmark);
-		}
+
 		if(!is_dir(BENCHMARK_ENV_DIR . "pts-shared"))
-		{
 			mkdir(BENCHMARK_ENV_DIR . "pts-shared");
-		}
 
 		pts_download_benchmark_files($Benchmark);
 

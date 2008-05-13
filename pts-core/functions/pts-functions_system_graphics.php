@@ -1,5 +1,13 @@
 <?php
 
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions_system_graphics.php: System functions related to graphics.
+*/
+
 function graphics_frequency_string()
 {
 	$freq = graphics_processor_frequency();

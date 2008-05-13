@@ -1,6 +1,12 @@
 <?php
 
-// Phoronix Test Suite - User Config Functions
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions_config.php: Functions needed to read/write to the PTS user-configuration files.
+*/
 
 function pts_config_init()
 {
@@ -18,6 +24,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 		$file = file_get_contents(ETC_DIR . "user-config-template.xml");
 	else
 		$file = "";
+
 	$read_config = new tandem_XmlReader($file);
 
 	$UserAgreement = pts_read_user_config(P_OPTION_USER_AGREEMENT, "", $read_config);

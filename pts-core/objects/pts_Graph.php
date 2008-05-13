@@ -1,9 +1,14 @@
 <?php
 
 /*
-   Copyright (C) 2008, Michael Larabel.
-   Copyright (C) 2008, Phoronix Media.
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts_Graph.php: The core graph object that is used by the different graphing objects.
+*/
 
+/*
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; either version 3 of the License, or

@@ -1,5 +1,13 @@
 <?php
 
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions_monitor.php: Functions needed for the system monitoring functionality.
+*/
+
 function pts_monitor_update()
 {
 	if(defined("MONITOR_GPU_TEMP"))

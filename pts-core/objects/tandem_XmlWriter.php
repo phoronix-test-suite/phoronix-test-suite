@@ -1,11 +1,15 @@
 <?php
 
 /*
-	tandem_XmlWriter: A very simple XML writerr with a few extras... Does not support attributes on tags, etc.
-	A work in progress. Was designed for just some select needs in the past. Does support linking to an XSL as 
-	well as whether to format the XML or not, etc. Also provides a MD5 checksum of the XML body.
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2004-2008, Michael Larabel
+	tandem_XmlReader.php: The XML writing object for the Phoronix Test Suite.
 
-	Copyright Michael Larabel (C) 2004 - 2008
+	Additional Notes: A very simple XML writer with a few extras... Does not support attributes on tags, etc.
+	A work in progress. This was originally designed for just some select needs in the past. It does support linking to an XSL as 
+	well as whether to format the XML or not, etc. Also provides a MD5 checksum of the XML body.
 */
 
 class tandem_XmlWriter

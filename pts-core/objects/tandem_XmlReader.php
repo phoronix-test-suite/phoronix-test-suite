@@ -1,10 +1,14 @@
 <?php
 
 /*
-	tandem_XmlReader: A very simple XML parser with a few extras... Does not support attributes on tags, etc.
-	A work in progress. Was designed for just some select needs in the past. No XML validation is done with this parser, etc.
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2004-2008, Michael Larabel
+	tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite.
 
-	Copyright Michael Larabel (C) 2004 - 2008
+	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
+	A work in progress. This was originally designed for just some select needs in the past. No XML validation is done with this parser, etc.
 */
 
 class tandem_XmlReader

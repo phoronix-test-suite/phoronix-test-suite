@@ -1,5 +1,13 @@
 <?php
 
+/*
+	Phoronix Test Suite "Trondheim"
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions_system_parsing.php: System functions that perform the actual system hardware/software parsing on Linux.
+*/
+
 function read_acpi($point, $match)
 {
 	$value = "";
