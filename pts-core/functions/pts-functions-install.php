@@ -64,12 +64,30 @@ function pts_download_benchmark_files($Benchmark)
 		$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
 		$header_displayed = false;
 
+
+		if(PTS_DOWNLOAD_CACHE_DIR != "" && strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != FALSE)
+		{
+			$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
+			$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
+			$dc_md5 = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_MD5);
+		}
+		else
+		{
+			$dc_file = array();
+			$dc_md5 = array();
+		}
+
 		for($i = 0; $i < count($package_url); $i++)
 		{
 			if(empty($package_filename[$i]))
 				$package_filename[$i] = basename($package_url[$i]);
 
-			if((!is_file(BENCHMARK_ENV_DIR . $Benchmark . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED") || (!is_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED"))
+			if($download_to[$i] == "SHARED")
+				$download_location = BENCHMARK_ENV_DIR . "pts-shared/";
+			else
+				$download_location = BENCHMARK_ENV_DIR . $Benchmark . "/";
+
+			if(!is_file($download_location . $package_filename[$i]))
 			{
 				if(!$header_displayed)
 				{
@@ -85,12 +103,25 @@ function pts_download_benchmark_files($Benchmark)
 				$fail_count = 0;
 				$try_again = true;
 
-				if($download_to[$i] == "SHARED")
-					$download_location = BENCHMARK_ENV_DIR . "pts-shared/";
-				else
-					$download_location = BENCHMARK_ENV_DIR . $Benchmark . "/";
+				if(count($dc_file) > 0 && count($dc_md5) > 0)
+				{
+					$cache_search = true;
+					for($f = 0; $f < count($dc_file) && $cache_search; $f++)
+					{
+						if($dc_file[$f] == $package_filename[$i] && $dc_md5[$f] == $package_md5[$i])
+						{
+							echo shell_exec("cd " . $download_location . " && wget " . PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i] . " -O " . $package_filename[$i]);
 
-				if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && $package_md5[$i] == md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+							if(@md5_file($download_location . $package_filename[$i]) != $package_md5[$i])
+								@unlink($download_location . $package_filename[$i]);
+							else
+								$urls = array();
+
+							$cache_search = false;
+						}
+					}
+				}
+				else if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && $package_md5[$i] == md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
 				{
 					echo "\nTransferring Cached File: " . $package_filename[$i] . "\n";
 
