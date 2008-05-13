@@ -11,7 +11,7 @@ cat > nexuiz <<'EOT'
 EOT
 else
 
-unzip -o nexuiz-24.zip
+unzip -o nexuiz-242.zip
 
 echo "#!/bin/sh
 cd Nexuiz
