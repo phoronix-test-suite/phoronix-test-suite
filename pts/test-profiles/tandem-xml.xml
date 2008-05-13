@@ -1,0 +1,35 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.1</Version>
+		<TestType>System</TestType>
+		<SoftwareType>Benchmark</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</TestProfile>
+	<TestInformation>
+		<Title>Tandem XML</Title>
+		<Version>1</Version>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>This is a simple benchmark of tandem_Xml, an XML writer and parser written in PHP by Michael Larabel. This test will read/write to 9,000 XML files. This benchmark mostly is designed to test the system memory, hard disk, and processor. In addition, it can also measure the performance of your PHP installation/optimization.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Type</DisplayName>
+			<Identifier>run-type</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Write</Name>
+					<Value>WRITE</Value>
+				</Entry>
+				<Entry>
+					<Name>Read</Name>
+					<Value>READ</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>

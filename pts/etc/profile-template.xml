@@ -13,6 +13,7 @@
 		<Version></Version>
 		<TimesToRun></TimesToRun>
 		<ResultScale></ResultScale>
+		<ResultType></ResultType>
 		<Proportion></Proportion>
 		<Description></Description>
 	</TestInformation>
