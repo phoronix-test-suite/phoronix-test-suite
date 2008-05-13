@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Nexuiz 2.4.2
+
 cd $1
 
 if [ -x /usr/games/nexuiz -a -r /usr/share/games/nexuiz/data/music20080229.pk3 ]; then
