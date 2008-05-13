@@ -25,6 +25,7 @@ Phoronix Test Suite
 - Generating pts-download-cache.xml manifest when running make-download-cache
 - PTS Download Cache support for reading over protocols such as FTP, HTTP, NFS, SMB either over a LAN or Internet. With this, you could specify a download cache directory on an intranet server in your company for downloading all of the tests from. In user-config.xml CacheDirectory just specify the full URI.
 - Add tandem-xml test profile for testing the XML read/write performance of the tandem_Xml writer and reader
+- Add tandem-xml to universe-cli suite
 
 Phoronix Test Suite 0.6.0
 May 9, 2008
