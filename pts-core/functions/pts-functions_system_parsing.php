@@ -167,5 +167,48 @@ function read_nvidia_extension($attribute)
 
 	return $nv_info;
 }
+function read_ati_extension($attribute)
+{
+	$ati_info = "";
 
+	//mangler to get correct info out of aticonfig
+	if("CoreTemperature" == $attribute)
+	{
+			$info = shell_exec("aticonfig --pplib-cmd \"get temperature 0\" 2>&1");
+			if(($pos = strpos($info, "thermal")) > 0)
+			{
+				$ati_info = substr($info, strpos($info, "is") + 3);
+				$ati_info = substr($ati_info, 0, strpos($ati_info, "\n"));
+				$ati_info = trim(substr($ati_info, 0, strrpos($ati_info, ".")));
+			}
+	}
+	else if("Stock3DFrequencies" == $attribute)
+	{
+			$info = shell_exec("aticonfig --pplib-cmd \"get clock\" 2>&1");
+			if(($pos = strpos($info, "Engine")) > 0)
+			{
+				$core_info = substr($info, strpos($info, "-") + 2);
+				$core_info = substr($core_info, 0, strpos($core_info, " "));
+				$mem_info = substr($info, strpos($info, "Memory Clock"));
+				$mem_info = substr($mem_info, strpos($mem_info, "-") + 2);
+				$mem_info = trim(substr($mem_info, 0, strpos($mem_info, " ")));
+				$ati_info = $core_info . "," . $mem_info;
+			}
+	}
+	else if("Current3DFrequencies" == $attribute)
+	{
+			$info = shell_exec("aticonfig --pplib-cmd \"get activity\" 2>&1");
+			if(($pos = strpos($info, "Activity")) > 0)
+			{
+				$core_info = substr($info, strpos($info, "Core Clock:") + 12);
+				$core_info = substr($core_info, 0, strpos($core_info, "\n"));
+				$core_info = trim(substr($core_info, 0, strrpos($core_info, "MHZ")));
+				$mem_info = substr($info, strpos($info, "Memory Clock:") + 14);
+				$mem_info = substr($mem_info, 0, strpos($mem_info, "\n"));
+				$mem_info = trim(substr($mem_info, 0, strrpos($mem_info, "MHZ")));
+				$ati_info = $core_info . "," . $mem_info;
+			}
+	}
+	return $ati_info;
+}
 ?>

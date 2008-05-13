@@ -34,10 +34,14 @@ function pts_record_gpu_temperature()
 }
 function graphics_processor_temperature()
 {
-	$temp_c = read_nvidia_extension("GPUCoreTemp");
+	$temp_c = -1;
+	$nv_temp_c = read_nvidia_extension("GPUCoreTemp");
+	$ati_temp_c = read_ati_extension("CoreTemperature");
 
-	if(empty($temp_c))
-		$temp_c = -1;
+	if(!empty($nv_temp_c))
+		$temp_c = $nv_temp_c;
+	else if(!empty($ati_temp_c))
+		$temp_c = $ati_temp_c;
 
 	return $temp_c;
 }
@@ -153,13 +157,20 @@ function graphics_processor_stock_frequency()
 	$core_freq = 0;
 	$mem_freq = 0;
 
-	$freq = read_nvidia_extension("GPUDefault3DClockFreqs");
+	$nv_freq = read_nvidia_extension("GPUDefault3DClockFreqs");
+	$ati_freq = read_ati_extension("Stock3DFrequencies");
 
-	if(!empty($freq)) // NVIDIA GPU
+	if(!empty($nv_freq)) // NVIDIA GPU
 	{
-		$freq = explode(',', $freq);
-		$core_freq = $freq[0];
-		$mem_freq = $freq[1];
+		$nv_freq = explode(',', $nv_freq);
+		$core_freq = $nv_freq[0];
+		$mem_freq = $nv_freq[1];
+	}
+	else if(!empty($ati_freq)) // ATI GPU
+	{
+		$ati_freq = explode(',', $ati_freq);
+		$core_freq = $ati_freq[0];
+		$mem_freq = $ati_freq[1];
 	}
 
 	return array($core_freq, $mem_freq);
@@ -169,13 +180,20 @@ function graphics_processor_frequency()
 	$core_freq = 0;
 	$mem_freq = 0;
 
-	$freq = read_nvidia_extension("GPUCurrentClockFreqs");
+	$nv_freq = read_nvidia_extension("GPUCurrentClockFreqs");
+	$ati_freq = read_ati_extension("Current3DFrequencies");
 
-	if(!empty($freq)) // NVIDIA GPU
+	if(!empty($nv_freq)) // NVIDIA GPU
 	{
-		$freq = explode(',', $freq);
-		$core_freq = $freq[0];
-		$mem_freq = $freq[1];
+		$nv_freq = explode(',', $nv_freq);
+		$core_freq = $nv_freq[0];
+		$mem_freq = $nv_freq[1];
+	}
+	else if(!empty($ati_freq)) // ATI GPU
+	{
+		$ati_freq = explode(',', $ati_freq);
+		$core_freq = $ati_freq[0];
+		$mem_freq = $ati_freq[1];
 	}
 
 	return array($core_freq, $mem_freq);
