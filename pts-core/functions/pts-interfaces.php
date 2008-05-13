@@ -123,4 +123,8 @@ define("P_GRAPH_RENDERBORDER", "PhoronixTestSuite/Graphs/Other/RenderBorder"); /
 define("P_GRAPH_MARKCOUNT", "PhoronixTestSuite/Graphs/Other/NumberOfMarks"); // Graph number of marks
 define("P_GRAPH_WATERMARK", "PhoronixTestSuite/Graphs/Other/Watermark"); // Graph watermark
 
+define("P_CACHE_PACKAGE_FILENAME", "PhoronixTestSuite/DownloadCache/Package/FileName"); // Package file-name in download cache
+define("P_CACHE_PACKAGE_MD5", "PhoronixTestSuite/DownloadCache/Package/MD5"); // Package MD5 in download cache
+define("P_CACHE_PTS_VERSION", "PhoronixTestSuite/DownloadCache/PTS/Version"); // PTS version in download cache
+
 ?>

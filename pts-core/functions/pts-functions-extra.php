@@ -49,5 +49,70 @@ function pts_tests_in_suite($object)
 
 	return array_unique($tests);
 }
+function pts_generate_download_cache()
+{
+	if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
+		mkdir(PTS_DOWNLOAD_CACHE_DIR);
 
+	$xml_writer = new tandem_XmlWriter();
+	$xml_writer->addXmlObject(P_CACHE_PTS_VERSION, -1, PTS_VERSION);
+	$file_counter = 0;
+	foreach(glob(TEST_RESOURCE_DIR . "*/downloads.xml") as $downloads_file)
+	{
+		$test = substr($downloads_file, strlen(TEST_RESOURCE_DIR), 0 - 14);
+		$xml_parser = new tandem_XmlReader(file_get_contents($downloads_file));
+		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
+		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
+		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
+		$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
+		$cached = false;
+
+		echo "\nChecking Downloads For: " . $test . "\n";
+
+		for($i = 0; $i < count($package_url); $i++)
+		{
+			if(empty($package_filename[$i]))
+				$package_filename[$i] = basename($package_url[$i]);
+
+			if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) == $package_md5[$i])
+			{
+				echo "\tPreviously Cached: " . $package_filename[$i] . "\n";
+				$cached = true;
+			}
+			else
+			{
+				if(is_file(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED")
+				{
+					if(md5_file(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i]) == $package_md5[$i])
+					{
+						echo "\tCaching: " . $package_filename[$i] . "\n";
+
+						if(copy(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+							$cached = true;
+					}
+				}
+				else if(is_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED")
+				{
+					if(md5_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) == $package_md5[$i])
+					{
+						echo "\tCaching: " . $package_filename[$i] . "\n";
+
+						if(copy(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+							$cached = true;
+					}
+				}
+			}
+
+			if($cached)
+			{
+				$xml_writer->addXmlObject(P_CACHE_PACKAGE_FILENAME, $file_counter, $package_filename[$i]);
+				$xml_writer->addXmlObject(P_CACHE_PACKAGE_MD5, $file_counter, $package_md5[$i]);
+				$file_counter++;
+			}
+		}
+	}
+
+	$cache_xml = $xml_writer->getXML();
+	file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml", $cache_xml);
+}
 ?>
