@@ -1,0 +1,46 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.4</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Game</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+	</TestProfile>
+	<TestInformation>
+		<Title>OpenArena</Title>
+		<Version>0.7.6</Version>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Average FPS</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This is a benchmark of OpenArena, a popular open-source first-person shooter.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<Arguments>+exec pts +set r_mode -1 +set r_fullscreen 1</Arguments>
+		</Default>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>resolution</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>800 x 600</Name>
+					<Value>+set r_customWidth 800 +set r_customHeight 600</Value>
+				</Entry>
+				<Entry>
+					<Name>1024 x 768</Name>
+					<Value>+set r_customWidth 1024 +set r_customHeight 768</Value>
+				</Entry>
+				<Entry>
+					<Name>1280 x 1024</Name>
+					<Value>+set r_customWidth 1280 +set r_customHeight 1024</Value>
+				</Entry>
+				<Entry>
+					<Name>1680 x 1050</Name>
+					<Value>+set r_customWidth 1680 +set r_customHeight 1050</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>

@@ -27,6 +27,7 @@ Phoronix Test Suite
 - Add tandem-xml test profile for testing the XML read/write performance of the tandem_Xml writer and reader
 - Add tandem-xml to universe-cli suite
 - Add experimental read_ati_extension() support for reading fglrx GPU die temperature and current/overclocked frequencies (Thanks to uncle_fungus)
+- Add openarena test profile
 
 Phoronix Test Suite 0.6.0
 May 9, 2008
