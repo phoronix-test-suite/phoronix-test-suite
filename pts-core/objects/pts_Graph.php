@@ -98,7 +98,7 @@ class pts_Graph
 		// Directory for TTF Fonts
 		if(!defined("FONT_DIRECTORY") && defined("RESULTS_VIEWER_DIR"))
 		{
-			putenv("GDFONTPATH=" . RESULTS_VIEWER_DIR);
+			putenv("GDFONTPATH=" . RESULTS_VIEWER_DIR . "fonts/");
 		}
 		else if(defined("FONT_DIRECTORY"))
 		{
