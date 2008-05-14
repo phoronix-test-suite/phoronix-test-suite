@@ -65,7 +65,7 @@ define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", getenv("PTS_USER_DIR"));
 define("PTS_MONITOR_DIR", PTS_USER_DIR . "system-monitor" . '/');
-define("FONT_DIR" RESULTS_VIEWER_DIR . "fonts/");
+define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 pts_config_init();
 define("BENCHMARK_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
