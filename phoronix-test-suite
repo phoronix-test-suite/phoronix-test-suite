@@ -32,12 +32,6 @@ fi
 # Location to save results, download cache, results viewer, etc. Must have trailing slash.
 export PTS_USER_DIR=$HOME'/.phoronix-test-suite/'
 
-# Set DOWNLOAD_CACHE if it's not set already by the user
-if [ "X$DOWNLOAD_CACHE" = "X" ]
-then
-	export DOWNLOAD_CACHE=$PTS_USER_DIR'download-cache/'
-fi
-
 # Determine PHP binary location
 if [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ]
 then
