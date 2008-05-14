@@ -65,7 +65,7 @@ define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", getenv("PTS_USER_DIR"));
 define("PTS_MONITOR_DIR", PTS_USER_DIR . "system-monitor" . '/');
-//define("FONT_DIRECTORY" "/usr/share/fonts/");
+define("FONT_DIR" RESULTS_VIEWER_DIR . "fonts/");
 
 pts_config_init();
 define("BENCHMARK_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
@@ -386,6 +386,7 @@ function pts_env_variables()
 	"PTS_VERSION" => PTS_VERSION,
 	"PTS_CODENAME" => PTS_CODENAME,
 	"PTS_DIR" => PTS_DIR,
+	"FONT_DIR" => FONT_DIR,
 	"PHP_BIN" => PHP_BIN,
 	"NUM_CPU_CORES" => cpu_core_count(),
 	"NUM_CPU_JOBS" => cpu_job_count(),
