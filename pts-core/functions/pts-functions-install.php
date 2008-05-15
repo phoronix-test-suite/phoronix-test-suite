@@ -426,7 +426,7 @@ function pts_test_estimated_download_size($identifier)
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
-		$size = $xml_parser->getXMLValue(DOWNLOADSIZE);
+		$size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
 	}
 
 	return $size;
@@ -438,7 +438,7 @@ function pts_test_estimated_environment_size($identifier)
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 	{
 	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
-		$size = $xml_parser->getXMLValue(ENVIRONMENTSIZE);
+		$size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 	}
 
 	return $size;
