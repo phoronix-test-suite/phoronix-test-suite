@@ -58,7 +58,20 @@ function pts_download_benchmark_files($Benchmark)
 	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
 	{
 		if(($size = pts_test_estimated_download_size($Benchmark)) != "")
+		{
 			echo pts_string_header("The estimated download size of all file(s) are: " . $size . " MB");
+
+			if(ceil(disk_free_space(PTS_TEMP_DIR) / 1048576)) < $size)
+			{
+				echo pts_string_header("There is not enough temporary space (at " . PTS_TEMP_DIR . ") for this test.");
+				pts_exit();
+			}
+			if(ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576)) < $size)
+			{
+				echo pts_string_header("There is not enough space (at " . BENCHMARK_ENV_DIR . ") for this test.");
+				pts_exit();
+			}
+		}
 
 		$xml_parser = new tandem_XmlReader(file_get_contents(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
@@ -66,7 +79,6 @@ function pts_download_benchmark_files($Benchmark)
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
 		$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
 		$header_displayed = false;
-
 
 		if(PTS_DOWNLOAD_CACHE_DIR != "" && strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != FALSE)
 		{
@@ -249,6 +261,12 @@ function pts_install_benchmark($Benchmark)
 				$install_header .= "\n\nThe estimated size of this test installation is: " . $size . " MB";
 
 			echo pts_string_header($install_header);
+
+			if(!empty($size) && ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576)) < $size)
+			{
+				echo pts_string_header("There is not enough space (at " . BENCHMARK_ENV_DIR . ") for this test to be installed.");
+				pts_exit();
+			}
 
 			if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh"))
 			{
