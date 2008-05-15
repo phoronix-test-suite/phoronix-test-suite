@@ -103,6 +103,9 @@ function pts_download_benchmark_files($Benchmark)
 				$fail_count = 0;
 				$try_again = true;
 
+				if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
+					unlink(PTS_TEMP_DIR . $package_filename[$i]);
+
 				if(count($dc_file) > 0 && count($dc_md5) > 0)
 				{
 					$cache_search = true;
@@ -110,12 +113,15 @@ function pts_download_benchmark_files($Benchmark)
 					{
 						if($dc_file[$f] == $package_filename[$i] && $dc_md5[$f] == $package_md5[$i])
 						{
-							echo shell_exec("cd " . $download_location . " && wget " . PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i] . " -O " . $package_filename[$i]);
+							echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i] . " -O " . $package_filename[$i]);
 
-							if(@md5_file($download_location . $package_filename[$i]) != $package_md5[$i])
-								@unlink($download_location . $package_filename[$i]);
+							if(@md5_file(PTS_TEMP_DIR . $package_filename[$i]) != $package_md5[$i])
+								@unlink(PTS_TEMP_DIR . $package_filename[$i]);
 							else
+							{
+								shell_exec("mv " . PTS_TEMP_DIR . $package_filename[$i] . " " . $download_location);
 								$urls = array();
+							}
 
 							$cache_search = false;
 						}
@@ -135,10 +141,10 @@ function pts_download_benchmark_files($Benchmark)
 					{
 						echo $url = trim(array_pop($urls));
 						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
-						echo shell_exec("cd " . $download_location . " && wget " . $url . " -O " . $package_filename[$i]);
+						echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . $url . " -O " . $package_filename[$i]);
 
 
-						if((is_file($download_location . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file($download_location . $package_filename[$i]) != $package_md5[$i]) || !is_file($download_location . $package_filename[$i]))
+						if((is_file(PTS_TEMP_DIR . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file(PTS_TEMP_DIR . $package_filename[$i]) != $package_md5[$i]) || !is_file(PTS_TEMP_DIR . $package_filename[$i]))
 						{
 							unlink($download_location . $package_filename[$i]);
 							$file_downloaded = false;
@@ -168,6 +174,9 @@ function pts_download_benchmark_files($Benchmark)
 						}
 						else
 						{
+							if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
+								shell_exec("mv " . PTS_TEMP_DIR . $package_filename[$i] . " " . $download_location);
+
 							$file_downloaded = true;
 							$fail_count = 0;
 						}

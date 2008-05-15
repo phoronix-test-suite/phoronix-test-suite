@@ -12,6 +12,8 @@ function pts_config_init()
 {
 	if(!is_dir(PTS_USER_DIR))
 		mkdir(PTS_USER_DIR);
+	if(!is_dir(PTS_TEMP_DIR))
+		mkdir(PTS_TEMP_DIR);
 
 	pts_user_config_init();
 	pts_graph_config_init();

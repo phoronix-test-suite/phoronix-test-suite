@@ -39,6 +39,7 @@ function pts_directory()
 }
 
 define("PTS_DIR", pts_directory());
+define("PTS_TEMP_DIR", "/tmp/phoronix-test-suite/");
 define("PHP_BIN", getenv("PHP_BIN"));
 
 function __autoload($to_load)
