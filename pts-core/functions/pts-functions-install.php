@@ -189,7 +189,27 @@ function pts_install_benchmark($Benchmark)
 	if(pts_test_type($Benchmark) != "BENCHMARK")
 		return;
 
-	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && ((is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh")) || (is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))))
+	$custom_validated = true;
+	$custom_validated_output = "";
+
+	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/validate-install.sh"))
+	{
+		$custom_validated_output = pts_exec("sh " . TEST_RESOURCE_DIR . $Benchmark . "/validate-install.sh " . BENCHMARK_ENV_DIR . $Benchmark);
+	}
+	else if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/validate-install.php"))
+	{
+		$custom_validated_output = pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/validate-install.php " . BENCHMARK_ENV_DIR . $Benchmark);
+	}
+
+	if(!empty($custom_validated_output))
+	{
+		$custom_validated_output = trim($custom_validated_output);
+
+		if($custom_validated_output != "1" && strtolower($custom_validated_output) != "true")
+			return false;
+	}
+
+	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && ((is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh")) || (is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))) && $custom_validated)
 	{
 		// pts_download_benchmark_files($Benchmark);
 

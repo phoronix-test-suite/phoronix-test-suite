@@ -31,6 +31,7 @@ Phoronix Test Suite
 - Don't prompt for tags when in batch mode
 - Add option for auto-naming the saved results when running in batch mode
 - Add batch-setup option for configuring batch mode options
+- Add support for test maintainers to have a validate-install.sh or validate-install.php inside their test resources folder. This file is optional and contains checks to verify whether the test is PROPERLY installed and setup (read: all set for benchmark) or whether it still needs to be installed. If the test is properly setup, it should just output TRUE, otherwise the test will be reinstalled.
 
 Phoronix Test Suite 0.6.0
 May 9, 2008
