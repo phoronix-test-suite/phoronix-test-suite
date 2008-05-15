@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Generic Phoronix Test Suite installer
+
+mkdir -p /usr/bin/
+mkdir -p /usr/share/phoronix-test-suite/
+mkdir -p /usr/share/doc/phoronix-test-suite/
+
+cp CHANGE-LOG /usr/share/doc/phoronix-test-suite/
+cp README /usr/share/doc/phoronix-test-suite/
+cp COPYING /usr/share/doc/phoronix-test-suite/
+
+cp LICENSE /usr/share/phoronix-test-suite/
+cp -r pts/ /usr/share/phoronix-test-suite/
+rm -f /usr/share/phoronix-test-suite/pts/etc/scripts/package-build-*
+cp -r pts-core/ /usr/share/phoronix-test-suite/
+
+cp phoronix-test-suite /usr/bin/phoronix-test-suite
+sed -i 's/PTS_DIR=`pwd`/PTS_DIR=\/usr\/share\/phoronix-test-suite\//g' /usr/bin/phoronix-test-suite
+chmod +x /usr/bin/phoronix-test-suite
+
+echo "Phoronix Test Suite Installed: /usr/bin/phoronix-test-suite"

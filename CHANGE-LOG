@@ -37,6 +37,7 @@ Phoronix Test Suite
 - Add support for DownloadSize and EnvironmentSize inside the test profile's TestProfile tag for the estimated size of the files to be downloaded and the estimated size of the setup test environment directory. These tags are optional and if supplied the value must be in megabytes. (Easy help but would be much appreciated: Filling this information in for the existing test profiles)
 - Add in detection code if DownloadSize and EnvironmentSize are supplied, if the free space in the respective directories aren't large enough, quit.
 - Create a basic tree view of all tests/suites contained inside a suite when running suite-info <suite-name>
+- Add a generic (very base) install script for /usr/ installation (named install-sh)
 
 Phoronix Test Suite 0.6.0
 May 9, 2008
