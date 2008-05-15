@@ -134,6 +134,9 @@ case "$1" in
 "login")
 	$PHP_BIN pts-core/pts-run-cmd.php LOGIN
 	;;
+"batch-setup")
+	$PHP_BIN pts-core/pts-run-cmd.php BATCH_SETUP
+	;;
 "refresh-graph" | "refresh-graphs")
 	$PHP_BIN pts-core/pts-run-cmd.php REFRESH_GRAPHS $2
 	;;
@@ -148,6 +151,7 @@ case "$1" in
 	echo "batch-run <suite OR test>: Run The Specified Test/Suite in Batch Mode"
 	echo "benchmark <suite OR test OR saved file>: Same as manually running install and then run"
 	echo "batch-benchmark <suite OR test OR saved file>: Same as manually running install and then run in Batch Mode"
+	echo "batch-setup: Setup the batch mode options"
 	echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets"
 	echo "list-tests: List all Phoronix Test Suite test profiles"
 	echo "list-suites: List all Phoronix Test Suites"

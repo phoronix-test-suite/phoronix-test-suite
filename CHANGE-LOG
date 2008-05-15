@@ -30,6 +30,7 @@ Phoronix Test Suite
 - Add openarena test profile
 - Don't prompt for tags when in batch mode
 - Add option for auto-naming the saved results when running in batch mode
+- Add batch-setup option for configuring batch mode options
 
 Phoronix Test Suite 0.6.0
 May 9, 2008

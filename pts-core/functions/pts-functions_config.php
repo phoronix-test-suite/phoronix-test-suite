@@ -16,7 +16,7 @@ function pts_config_init()
 	pts_user_config_init();
 	pts_graph_config_init();
 }
-function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
+function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions = NULL)
 {
 	if(is_file(PTS_USER_DIR . "user-config.xml"))
 		$file = file_get_contents(PTS_USER_DIR . "user-config.xml");
@@ -51,13 +51,30 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 			$ToggleScreensaver = "TRUE";
 		else
 			$ToggleScreensaver = "FALSE";			
-	}
-	
+	}	
 
 	if($UserName == NULL)
 		$UserName = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User", $read_config);
 	if($UploadKey == NULL)
 		$UploadKey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "", $read_config);
+	if($BatchOptions == NULL || !is_array($BatchOptions))
+	{
+		$BatchOptions = array();
+		$BatchOptions[0] = pts_read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE", $read_config);
+		$BatchOptions[1] = pts_read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE", $read_config);
+		$BatchOptions[2] = pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE", $read_config);
+		$BatchOptions[3] = pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE", $read_config);
+		$BatchOptions[4] = pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "TRUE", $read_config);
+	}
+	else
+	{
+		$BatchOptions[0] = pts_config_bool_to_string($BatchOptions[0]);
+		$BatchOptions[1] = pts_config_bool_to_string($BatchOptions[1]);
+		$BatchOptions[2] = pts_config_bool_to_string($BatchOptions[2]);
+		$BatchOptions[3] = pts_config_bool_to_string($BatchOptions[3]);
+		$BatchOptions[4] = pts_config_bool_to_string($BatchOptions[4]);
+	}
+
 
 	$config = new tandem_XmlWriter();
 	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, $UserName);
@@ -70,14 +87,24 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 	$config->addXmlObject(P_OPTION_TEST_SLEEPTIME, 2, pts_read_user_config(P_OPTION_TEST_SLEEPTIME, "5", $read_config));
 	$config->addXmlObject(P_OPTION_TEST_SCREENSAVER, 2, $ToggleScreensaver);
 
-	$config->addXmlObject(P_OPTION_BATCH_SAVERESULTS, 3, pts_read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE", $read_config));
-	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 3, pts_read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE", $read_config));
-	$config->addXmlObject(P_OPTION_BATCH_UPLOADRESULTS, 3, pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE", $read_config));
-	$config->addXmlObject(P_OPTION_BATCH_PROMPTIDENTIFIER, 3, pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE", $read_config));
-	$config->addXmlObject(P_OPTION_BATCH_PROMPTSAVENAME, 3, pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "TRUE", $read_config));
+	$config->addXmlObject(P_OPTION_BATCH_SAVERESULTS, 3, $BatchOptions[0]);
+	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 3, $BatchOptions[1]);
+	$config->addXmlObject(P_OPTION_BATCH_UPLOADRESULTS, 3, $BatchOptions[2]);
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTIDENTIFIER, 3, $BatchOptions[3]);
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTSAVENAME, 3, $BatchOptions[4]);
+
 	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 4, $UserAgreement_MD5);
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
+}
+function pts_config_bool_to_string($bool)
+{
+	if($bool == true)
+		$bool_return = "TRUE";
+	else
+		$bool_return = "FALSE";
+
+	return $bool_return;
 }
 function pts_graph_config_init()
 {
