@@ -28,6 +28,8 @@ Phoronix Test Suite
 - Add tandem-xml to universe-cli suite
 - Add experimental read_ati_extension() support for reading fglrx GPU die temperature and current/overclocked frequencies (Thanks to uncle_fungus)
 - Add openarena test profile
+- Don't prompt for tags when in batch mode
+- Add option for auto-naming the saved results when running in batch mode
 
 Phoronix Test Suite 0.6.0
 May 9, 2008

@@ -58,6 +58,7 @@ define("P_OPTION_BATCH_SAVERESULTS", "PhoronixTestSuite/Options/BatchMode/SaveRe
 define("P_OPTION_BATCH_LAUNCHBROWSER", "PhoronixTestSuite/Options/BatchMode/OpenBrowser"); // Batch mode open browser
 define("P_OPTION_BATCH_UPLOADRESULTS", "PhoronixTestSuite/Options/BatchMode/UploadResults"); // Batch mode auto-upload to PTS Global
 define("P_OPTION_BATCH_PROMPTIDENTIFIER", "PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier"); // Batch mode prompt for test identifier
+define("P_OPTION_BATCH_PROMPTSAVENAME", "PhoronixTestSuite/Options/BatchMode/PromptSaveName"); // Batch mode prompt for save results name
 define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/Trondheim/UserAgreement"); // PTS user agreement confirmation
 
 define("P_DOWNLOADS_PACKAGE_URL", "PhoronixTestSuite/Downloads/Package/URL"); // URL for PTS to download from

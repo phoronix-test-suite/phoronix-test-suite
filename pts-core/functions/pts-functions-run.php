@@ -12,7 +12,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 {
 	$RESULTS_IDENTIFIER = null;
 
-	if(!defined("PTS_BATCH_MODE") || pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE")
+	if(!defined("PTS_BATCH_MODE") || (defined("PTS_BATCH_MODE") && pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE"))
 	{
 		if(is_array($current_identifiers) && count($current_identifiers) > 0)
 		{
@@ -37,12 +37,17 @@ function pts_prompt_results_identifier($current_identifiers = null)
 }
 function pts_prompt_save_file_name()
 {
-	do
+	if(!defined("PTS_BATCH_MODE") || (defined("PTS_BATCH_MODE") && pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE"))
 	{
-		echo "Enter a name to save these results: ";
-		$PROPOSED_FILE_NAME = trim(fgets(STDIN));
+		do
+		{
+			echo "Enter a name to save these results: ";
+			$PROPOSED_FILE_NAME = trim(fgets(STDIN));
+		}
+		while(empty($PROPOSED_FILE_NAME));
 	}
-	while(empty($PROPOSED_FILE_NAME));
+	else
+		$PROPOSED_FILE_NAME = date("Y-m-d_Hi");
 
 	$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
 	$PROPOSED_FILE_NAME = trim(str_replace(array(' ', '/', '&', '\''), "", strtolower($PROPOSED_FILE_NAME))); // Clean up name

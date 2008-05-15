@@ -74,6 +74,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL)
 	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 3, pts_read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_BATCH_UPLOADRESULTS, 3, pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE", $read_config));
 	$config->addXmlObject(P_OPTION_BATCH_PROMPTIDENTIFIER, 3, pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE", $read_config));
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTSAVENAME, 3, pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "TRUE", $read_config));
 	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 4, $UserAgreement_MD5);
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());

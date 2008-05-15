@@ -308,8 +308,13 @@ if($SAVE_RESULTS)
 
 		if($upload_results)
 		{
-			echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
-			$tags_input = trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
+			$tags_input = "";
+
+			if(!defined("PTS_BATCH_MODE"))
+			{
+				echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
+				$tags_input .= trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
+			}
 
 			if(empty($tags_input))
 				$tags_input = pts_global_auto_tags(array($RESULTS_IDENTIFIER));
