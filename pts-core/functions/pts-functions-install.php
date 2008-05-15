@@ -57,6 +57,9 @@ function pts_download_benchmark_files($Benchmark)
 {
 	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
 	{
+		if(($size = pts_test_estimated_download_size($Benchmark)) != "")
+			echo pts_string_header("The estimated download size of all file(s) are: " . $size . " MB");
+
 		$xml_parser = new tandem_XmlReader(file_get_contents(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
@@ -139,7 +142,7 @@ function pts_download_benchmark_files($Benchmark)
 				{
 					do
 					{
-						echo $url = trim(array_pop($urls));
+						$url = trim(array_pop($urls));
 						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
 						echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . $url . " -O " . $package_filename[$i]);
 
@@ -240,7 +243,12 @@ function pts_install_benchmark($Benchmark)
 
 		if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh") || is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))
 		{
-			echo pts_string_header("Installing Benchmark: " . $Benchmark);
+			$install_header = "Installing Benchmark: " . $Benchmark;
+
+			if(($size = pts_test_estimated_download_size($Benchmark)) != "")
+				$install_header .= "\n\nThe estimated size of this test installation is: " . $size . " MB";
+
+			echo pts_string_header($install_header);
 
 			if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh"))
 			{
@@ -392,5 +400,29 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 	}
 
 	return $generated;
+}
+function pts_test_estimated_download_size($identifier)
+{
+	$size = "";
+
+	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+	{
+	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
+		$size = $xml_parser->getXMLValue(DOWNLOADSIZE);
+	}
+
+	return $size;
+}
+function pts_test_estimated_environment_size($identifier)
+{
+	$size = "";
+
+	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+	{
+	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
+		$size = $xml_parser->getXMLValue(ENVIRONMENTSIZE);
+	}
+
+	return $size;
 }
 ?>

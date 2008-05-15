@@ -34,6 +34,7 @@ Phoronix Test Suite
 - Add support for test maintainers to have a validate-install.sh or validate-install.php inside their test resources folder. This file is optional and contains checks to verify whether the test is PROPERLY installed and setup (read: all set for benchmark) or whether it still needs to be installed. If the test is properly setup, it should just output TRUE, otherwise the test will be reinstalled.
 - Setup PTS_TEMP_DIR (defaults to /tmp/phoronix-test-suite/) as temporary working directory
 - When downloading test files, first download to the PTS_TEMP_DIR and perform all verification in this area. Only move file to the test environment directory once the file is verified. Addresses issues of PTS thinking file is verified if user closes window prematurely.
+- Add support for DownloadSize and EnvironmentSize inside the test profile's TestProfile tag for the estimated size of the files to be downloaded and the estimated size of the setup test environment directory. These tags are optional and if supplied the value must be in megabytes. (Easy help but would be much appreciated: Filling this information in for the existing test profiles)
 
 Phoronix Test Suite 0.6.0
 May 9, 2008
