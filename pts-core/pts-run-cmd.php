@@ -145,12 +145,11 @@ switch($COMMAND)
 		if(pts_test_type($ARG_1) == "TEST_SUITE")
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $ARG_1 . ".xml"));
-			$tests_in_suite = pts_tests_in_suite($ARG_1);
 			$suite_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 			$suite_maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
 			$suite_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
 			$suite_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-			$unique_tests = count($tests_in_suite);
+			$unique_tests = count(pts_tests_in_suite($ARG_1));
 
 			echo pts_string_header($suite_name . " (" . $ARG_1 . " v" . $suite_version . ")");
 
@@ -159,18 +158,7 @@ switch($COMMAND)
 			echo "Unique Tests: " . $unique_tests . "\n";
 			echo "\n";
 
-			foreach($tests_in_suite as $test)
-			{
-				$test_file = XML_PROFILE_DIR . $test . ".xml";
-
-			 	$xml_parser = new tandem_XmlReader(file_get_contents($test_file));
-				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
-				$license = $xml_parser->getXMLValue(P_TEST_LICENSE);
-				$status = $xml_parser->getXMLValue(P_TEST_STATUS);
-				$identifier = basename($test_file, ".xml");
-
-				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
-			}
+			echo pts_print_format_tests($ARG_1);
 		
 			echo "\n";
 		}

@@ -49,32 +49,26 @@ function pts_tests_in_suite($object)
 
 	return array_unique($tests);
 }
-function pts_print_format_tests_in_suite($object, $recurse_call = false)
+function pts_print_format_tests($object, $steps = -1)
 {
-	//TODO: Not yet implemented or finished
-	/*
+	$steps++;
 	if(pts_test_type($object) == "TEST_SUITE")
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents(XML_SUITE_DIR . $object . ".xml"));
 		$suite_benchmarks = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
-		$test_format = array();
-		ZZZ
 
-		do
-		{
-
-
-		}
+		if($steps == 0)
+			echo $object . "\n";
+		else
+			echo str_repeat("  ", $steps) . "+ " . $object . "\n";
 
 		foreach($suite_benchmarks as $benchmark)
 		{
-			foreach(pts_tests_in_suite($benchmark) as $sub_test)
-			{
-				$sub_type = pts_test_type($sub_test);
-					array_push($tests, $sub_test);
-			}
+			echo pts_print_format_tests($benchmark, $steps);
 		}
-	} */
+	}
+	else
+		echo str_repeat("  ", $steps) . "* " . $object . "\n";
 }
 function pts_generate_download_cache()
 {

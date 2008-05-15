@@ -36,6 +36,7 @@ Phoronix Test Suite
 - When downloading test files, first download to the PTS_TEMP_DIR and perform all verification in this area. Only move file to the test environment directory once the file is verified. Addresses issues of PTS thinking file is verified if user closes window prematurely.
 - Add support for DownloadSize and EnvironmentSize inside the test profile's TestProfile tag for the estimated size of the files to be downloaded and the estimated size of the setup test environment directory. These tags are optional and if supplied the value must be in megabytes. (Easy help but would be much appreciated: Filling this information in for the existing test profiles)
 - Add in detection code if DownloadSize and EnvironmentSize are supplied, if the free space in the respective directories aren't large enough, quit.
+- Create a basic tree view of all tests/suites contained inside a suite when running suite-info <suite-name>
 
 Phoronix Test Suite 0.6.0
 May 9, 2008

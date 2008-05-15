@@ -61,12 +61,12 @@ function pts_download_benchmark_files($Benchmark)
 		{
 			echo pts_string_header("The estimated download size of all file(s) are: " . $size . " MB");
 
-			if(ceil(disk_free_space(PTS_TEMP_DIR) / 1048576)) < $size)
+			if(ceil(disk_free_space(PTS_TEMP_DIR) / 1048576) < $size)
 			{
 				echo pts_string_header("There is not enough temporary space (at " . PTS_TEMP_DIR . ") for this test.");
 				pts_exit();
 			}
-			if(ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576)) < $size)
+			if(ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576) < $size)
 			{
 				echo pts_string_header("There is not enough space (at " . BENCHMARK_ENV_DIR . ") for this test.");
 				pts_exit();
@@ -262,7 +262,7 @@ function pts_install_benchmark($Benchmark)
 
 			echo pts_string_header($install_header);
 
-			if(!empty($size) && ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576)) < $size)
+			if(!empty($size) && ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576) < $size)
 			{
 				echo pts_string_header("There is not enough space (at " . BENCHMARK_ENV_DIR . ") for this test to be installed.");
 				pts_exit();
