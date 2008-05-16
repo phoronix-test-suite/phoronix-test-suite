@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 0.7.0
+May 17, 2008
 
 - Drop directory argument on pts_save_result() as it's no longer being used
 - Begin work inside pts_save_result() for detecting different "result types"
@@ -42,6 +43,7 @@ Phoronix Test Suite
 - Advanced merging capability
 - Add SupportedArchitectures tag to TestProfile, if the test is only compatible with select architectures (delimit each architecture by a comma)
 - With list-tests option, don't show tests that are of status PRIVATE or EXPERIMENTAL
+- Code optimizations
 - Add result quantifier option for parsing results... For traditional numerical profiles, the ResultQuantifier tag can have values of MAX and MIN for recording the maximum or minimum values. Other modes can be supported in the future. For numerical results where the tag isn't supplied, it will default to AVG.
 
 Phoronix Test Suite 0.6.0
