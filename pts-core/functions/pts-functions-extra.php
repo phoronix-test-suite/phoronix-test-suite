@@ -159,4 +159,28 @@ function pts_dependency_name($dependency)
 
 	return $return_title;
 }
+function pts_estimated_time_string($time)
+{
+	$strlen_time = strlen($time);
+
+	if(strlen($time_trim = str_replace('~', '', $time)) != $strlen_time)
+		$formatted_string = "About " . $time_trim;
+	else if(strlen($time_trim = str_replace(array('<', 'l'), '', $time)) != $strlen_time)
+		$formatted_string = "Less Than " . $time_trim;
+	else if(strlen($time_trim = str_replace(array('>', 'g'), '', $time)) != $strlen_time)
+		$formatted_string = "Greater Than " . $time_trim;
+	else if(strlen($time_trim = str_replace('-', ", ", $time)) != $strlen_time)
+	{
+		$time_trim = explode(", ", $time_trim);
+
+		if(count($time_trim) == 2)
+			$formatted_string = $time_trim[0] . " to " . $time_trim[1];
+	}
+	else
+		$formatted_string = $time;
+
+	$formatted_string .= " Minutes";
+
+	return $formatted_string;
+}
 ?>

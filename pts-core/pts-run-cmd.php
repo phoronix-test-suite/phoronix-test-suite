@@ -179,6 +179,7 @@ switch($COMMAND)
 			$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 			$test_download_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
 			$test_environment_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
+			$test_estimated_length = $xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
 			$test_dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 
 			if(!empty($test_sw_version))
@@ -197,6 +198,8 @@ switch($COMMAND)
 				echo "Download Size: " . $test_download_size . " MB\n";
 			if(!empty($test_environment_size))
 				echo "Environment Size: " . $test_environment_size . " MB\n";
+			if(!empty($test_estimated_length))
+				echo "Estimated Length: " . pts_estimated_time_string($test_estimated_length) . "\n";
 
 			if(!empty($test_dependencies))
 			{

@@ -5,6 +5,8 @@ Phoronix Test Suite
 - Tweaks to suite-info formatting
 - Merge test-info and suite-info into generic info argument (though the earlier options are still compatible) and auto-detect the type
 - Report software dependencies in test information as well as suites using the given test
+- Add EstimatedLength test profile option for the estimated amount of time (in minutes) it takes the test to run
+- Display EstimatedLength (if supplied) when viewing test information
 
 Phoronix Test Suite 0.7.0
 May 17, 2008
