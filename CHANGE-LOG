@@ -39,6 +39,7 @@ Phoronix Test Suite
 - Create a basic tree view of all tests/suites contained inside a suite when running suite-info <suite-name>
 - Add a generic (very basic) install script for installation (named install-sh). Defaults to /usr/ but if first argument is supplied it will over-ride to that location
 - A number of test profile updates
+- Advanced merging capability
 
 Phoronix Test Suite 0.6.0
 May 9, 2008

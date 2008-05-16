@@ -43,8 +43,8 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	$new_suite_type = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_TYPE);
 	$new_suite_maintainer = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
 
-	$new_results_version = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
 	$new_results_testname = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+	$new_results_version = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
 	$new_results_arguments = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
 
 	$new_results_identifiers = array();
@@ -97,11 +97,11 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	{
 		if($original_suite_name != $new_suite_name)
 		{
-			pts_exit("Merge Failed! The test(s) don't match: $original_suite_name - $new_suite_name\n");
+			echo pts_string_header("Note: The test(s) don't match: " . $original_suite_name . " - " . $new_suite_name . ".\nThis merge will continue, but not all test results may be compatible.");
 		}
 		if($original_suite_version != $new_suite_version)
 		{
-			pts_exit("Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n");
+			//pts_exit("Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n");
 		}
 	}
 
@@ -160,32 +160,43 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 		}
 	}
 
-	for($b = 0; $b < count($original_results_identifiers); $b++)
+	$merge_count = 0;
+	for($r_o = 0; $r_o < count($original_results_identifiers); $r_o++)
 	{
-		$USE_ID = pts_request_new_id();
-		$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$b]);
-		$RESULTS->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $original_results_version[$b]);
-		$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $original_results_attributes[$b]);
-		$RESULTS->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $original_results_scale[$b]);
-		$RESULTS->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $original_results_proportion[$b]);
-		$RESULTS->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $original_results_testname[$b]);
-		$RESULTS->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $original_results_arguments[$b]);
-		$RESULTS->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $original_results_result_format[$b]);
-
-		for($o = 0; $o < count($original_results_identifiers[$b]); $o++)
+		$result_merged = false;
+		for($r_n = 0; $r_n < count($new_results_identifiers) && !$result_merged; $r_n++)
 		{
-			$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $original_results_identifiers[$b][$o], 5, "o-$b-$o");
-			$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $original_results_values[$b][$o], 5, "o-$b-$o");
-		}
-
-
-		if($original_results_testname[$b] == $new_results_testname[$b] && $original_results_arguments[$b] == $new_results_arguments[$b] && $original_results_version[$b] == $new_results_version[$b])
-			for($o = 0; $o < count($new_results_identifiers[$b]); $o++)
+			if($original_results_testname[$r_o] == $new_results_testname[$r_n] && $original_results_arguments[$r_o] == $new_results_arguments[$r_n] && $original_results_version[$r_o] == $new_results_version[$r_n])
 			{
-				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $new_results_identifiers[$b][$o], 5, "n-$b-$o");
-				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$b][$o], 5, "n-$b-$o");
+				$USE_ID = pts_request_new_id();
+				$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$r_o]);
+				$RESULTS->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $original_results_version[$r_o]);
+				$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $original_results_attributes[$r_o]);
+				$RESULTS->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $original_results_scale[$r_o]);
+				$RESULTS->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $original_results_proportion[$r_o]);
+				$RESULTS->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $original_results_testname[$r_o]);
+				$RESULTS->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $original_results_arguments[$r_o]);
+				$RESULTS->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $original_results_result_format[$r_o]);
+
+				for($o = 0; $o < count($original_results_identifiers[$r_o]); $o++)
+				{
+					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $original_results_identifiers[$r_o][$o], 5, "o-$r_o-$o");
+					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $original_results_values[$r_o][$o], 5, "o-$r_o-$o");
+				}
+				for($o = 0; $o < count($new_results_identifiers[$r_n]); $o++)
+				{
+					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $new_results_identifiers[$r_n][$o], 5, "n-$r_n-$o");
+					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$r_n][$o], 5, "n-$r_n-$o");
+				}
+
+				$result_merged = true;
+				$merge_count++;
 			}
-	}	
+		}
+	}
+
+	if($merge_count == 0)
+		pts_exit("No compatible tests found to merge!\n\n");
 
 	return $RESULTS->getXML();
 }
