@@ -152,8 +152,9 @@ switch($COMMAND)
 			$suite_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 			$unique_tests = count(pts_tests_in_suite($ARG_1));
 
-			echo pts_string_header($suite_name . " (" . $ARG_1 . " v" . $suite_version . ")");
+			echo pts_string_header($suite_name);
 
+			echo "Suite Version: " . $suite_version . "\n";
 			echo "Maintainer: " . $suite_maintainer . "\n";
 			echo "Suite Type: " . $suite_type . "\n";
 			echo "Unique Tests: " . $unique_tests . "\n";

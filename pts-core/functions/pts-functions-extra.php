@@ -57,6 +57,9 @@ function pts_print_format_tests($object, $steps = -1)
 		$xml_parser = new tandem_XmlReader(@file_get_contents(XML_SUITE_DIR . $object . ".xml"));
 		$suite_benchmarks = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
+		if($steps > 0)
+			asort($suite_benchmarks);
+
 		if($steps == 0)
 			echo $object . "\n";
 		else
