@@ -6,6 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>2</DownloadSize>
+		<EnvironmentSize>9</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>7-Zip Compression</Title>

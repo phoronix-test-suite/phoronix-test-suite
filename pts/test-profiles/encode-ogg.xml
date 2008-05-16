@@ -6,6 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>3</DownloadSize>
+		<EnvironmentSize>5</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Ogg Encoding</Title>

@@ -6,6 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>1</DownloadSize>
+		<EnvironmentSize>926</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Parallel BZIP2 Compression</Title>

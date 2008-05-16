@@ -6,6 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>9</DownloadSize>
+		<EnvironmentSize>0</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>ImageMagick Compilation</Title>
