@@ -64,7 +64,7 @@ switch($COMMAND)
 		break;
 	case "FORCE_INSTALL_BENCHMARK":
 	case "INSTALL_BENCHMARK":
-		require("pts-core/functions/pts-functions-install.php");
+		require_once("pts-core/functions/pts-functions-install.php");
 
 		if(empty($ARG_1))
 		{
@@ -89,7 +89,7 @@ switch($COMMAND)
 		pts_recurse_install_benchmark($ARG_1, $install_objects);
 		break;
 	case "INSTALL_EXTERNAL_DEPENDENCIES":
-		require("pts-core/functions/pts-functions-install.php");
+		require_once("pts-core/functions/pts-functions-install.php");
 
 		if(empty($ARG_1))
 		{
@@ -170,7 +170,7 @@ switch($COMMAND)
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $ARG_1 . ".xml"));
 
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
-
+			$test_sw_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 			$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 			$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 			$test_app_type = $xml_parser->getXMLValue(P_TEST_SOFTWARE_TYPE);
@@ -179,6 +179,10 @@ switch($COMMAND)
 			$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 			$test_download_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
 			$test_environment_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
+			$test_dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
+
+			if(!empty($test_sw_version))
+				$test_title .= " " . $test_sw_version;
 
 			echo pts_string_header($test_title);
 
@@ -193,7 +197,35 @@ switch($COMMAND)
 				echo "Download Size: " . $test_download_size . " MB\n";
 			if(!empty($test_environment_size))
 				echo "Environment Size: " . $test_environment_size . " MB\n";
-		
+
+			if(!empty($test_dependencies))
+			{
+				echo "\nSoftware Dependencies:\n";
+				foreach(explode(",", $test_dependencies) as $dependency)
+					if(($title = pts_dependency_name(trim($dependency)) )!= "")
+						echo "- " . $title . "\n";
+			}
+
+			$associated_suites = array();
+			foreach(glob(XML_SUITE_DIR . "*.xml") as $suite_file)
+			{
+			 	$xml_parser = new tandem_XmlReader(file_get_contents($suite_file));
+				$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
+				$identifier = basename($suite_file, ".xml");
+				$tests = pts_tests_in_suite($identifier);
+
+				if(in_array($ARG_1, $tests))
+					array_push($associated_suites, $identifier);
+			}
+
+			if(count($associated_suites) > 0)
+			{
+				asort($associated_suites);
+				echo "\nSuites Using This Test:\n";
+				foreach($associated_suites as $suite)
+					echo "- " . $suite . "\n";
+			}
+
 			echo "\n";
 		}
 		else
@@ -231,7 +263,7 @@ switch($COMMAND)
 		}
 		break;
 	case "UPLOAD_RESULT":
-		require("pts-core/functions/pts-functions-run.php");
+		require_once("pts-core/functions/pts-functions-run.php");
 
 		if(is_file($ARG_1))
 			$USE_FILE = $ARG_1;
@@ -284,7 +316,7 @@ switch($COMMAND)
 		echo "Software:\n" . pts_sw_string() . "\n\n";
 		break;
 	case "MERGE_RESULTS":
-		require("pts-core/functions/pts-functions-merge.php");
+		require_once("pts-core/functions/pts-functions-merge.php");
 
 		$BASE_FILE = $ARG_1;
 		$MERGE_FROM_FILE = $ARG_2;

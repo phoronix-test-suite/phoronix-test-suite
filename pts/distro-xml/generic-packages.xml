@@ -78,5 +78,11 @@
 			<PossibleNames>gfortran, gcc-fortran</PossibleNames>
 			<FileCheck>/usr/bin/gfortran</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>build-utilities</GenericName>
+			<Title>GNU Development Utilities / Libraries</Title>
+			<PossibleNames>gcc</PossibleNames>
+			<FileCheck>/usr/bin/gcc</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

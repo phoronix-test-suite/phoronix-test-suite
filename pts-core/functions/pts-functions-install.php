@@ -310,7 +310,6 @@ function pts_external_dependency_generic($Name)
 			if($Name == $package_name[$i])
 			{
 				$selection = $i;
-
 				if(pts_file_missing_check(explode(",", $file_check[$selection])))
 				{
 					if(!defined("PTS_MANUAL_SUPPORT"))
