@@ -180,6 +180,8 @@ switch($COMMAND)
 			$test_license = $xml_parser->getXMLValue(P_TEST_LICENSE);
 			$test_status = $xml_parser->getXMLValue(P_TEST_STATUS);
 			$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
+			$test_download_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
+			$test_environment_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 
 			echo pts_string_header($test_title);
 
@@ -189,6 +191,11 @@ switch($COMMAND)
 			echo "Software Type: " . $test_app_type . "\n";
 			echo "License Type: " . $test_license . "\n";
 			echo "Test Status: " . $test_status . "\n";
+
+			if(!empty($test_download_size))
+				echo "Download Size: " . $test_download_size . " MB\n";
+			if(!empty($test_environment_size))
+				echo "Environment Size: " . $test_environment_size . " MB\n";
 		
 			echo "\n";
 		}
