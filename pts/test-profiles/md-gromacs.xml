@@ -4,8 +4,10 @@
 		<TestType>Processor</TestType>
 		<SoftwareType>Scientific</SoftwareType>
 		<License>FREE</License>
-		<Status>UNVERIFIED</Status>
+		<Status>VERIFIED</Status>
 		<Maintainer>Andrew Schofield</Maintainer>
+		<DownloadSize>30</DownloadSize>
+		<EnvironmentSize>231</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>GROMACS MD Benchmark</Title>
