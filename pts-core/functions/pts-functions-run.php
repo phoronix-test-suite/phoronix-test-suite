@@ -68,7 +68,7 @@ function pts_verify_test_installation($TO_RUN)
 	
 		if(count($needs_installing) == 1)
 		{
-			echo pts_string_header(ucwords($needs_installing[0]) . " isn't installed on this system.\nTo install this test, run: phoronix-test-suite install " . $needs_installing[0]);
+			echo pts_string_header($needs_installing[0] . " isn't installed on this system.\nTo install this test, run: phoronix-test-suite install " . $needs_installing[0]);
 		}
 		else
 		{
@@ -110,7 +110,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 	}
 	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_VERIFY")) == "REMOTE_FILE")
 	{
-		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_VERIFY"));
+		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $TO_VERIFY));
 		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($suite_benchmarks as $benchmark)
@@ -206,7 +206,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)
 {
 	$j = 1;
-	while(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/test-$j.xml"))
+	while(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/test-" . $j . ".xml"))
 		$j++;
 
 	$REAL_FILE_NAME = $PROPOSED_FILE_NAME . "/test-" . $j . ".xml";
@@ -238,7 +238,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(pts_process_active($benchmark_identifier))
 	{
-		echo "\nThis test ($benchmark_identifier) is already running... Please wait until the first instance is finished.\n";
+		echo "\nThis test (" . $benchmark_identifier . ") is already running... Please wait until the first instance is finished.\n";
 		return 0;
 	}
 	pts_process_register($benchmark_identifier);
@@ -294,9 +294,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		return;
 	}
 
-	if(is_dir(BENCHMARK_ENV_DIR . "$benchmark_identifier/") && !(file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != @md5_file(TEST_RESOURCE_DIR . "$benchmark_identifier/install.sh") || file_get_contents(BENCHMARK_ENV_DIR . "$benchmark_identifier/pts-install") != @md5_file(TEST_RESOURCE_DIR . "$benchmark_identifier/install.php")))
+	if(is_dir(BENCHMARK_ENV_DIR . $benchmark_identifier . '/') && !(file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-install") != @md5_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/install.sh") || file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-install") != @md5_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/install.php")))
 	{
-		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the $benchmark_title test should be re-installed.");
+		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the " . $benchmark_title . " test should be re-installed.");
 		// Auto reinstall
 		//require_once("pts-core/functions/pts-functions-run.php");
 		//pts_install_benchmark($benchmark_identifier);
@@ -346,11 +346,11 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{
-		echo pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . $benchmark_identifier);
 	}
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php"))
 	{
-		echo pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . $benchmark_identifier);
 	}
 
 	// End
@@ -441,7 +441,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	echo pts_string_header($RETURN_STRING);
 
-	pts_beep();
+	//pts_beep();
 	pts_process_remove($benchmark_identifier);
 	return $END_RESULT;
 }

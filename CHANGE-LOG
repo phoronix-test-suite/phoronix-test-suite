@@ -12,7 +12,7 @@ Phoronix Test Suite
 - Add initial x11perf test
 - Improved graph formatting
 - Add detection if when running a test/suite, the saved file already exists but is from a different test/suite, prompt for new name
-- When running a test/suite, if the file already exists, list current test identifiers in file and ensure the new identifer is unique
+- When running a test/suite, if the file already exists, list current test identifiers in file and ensure the new identifier is unique
 - Add refresh-graphs <saved file> option for re-rendering graphs from the PTS Results Viewer (mostly for debugging uses)
 - Don't print any information outputted by xdg-screensaver (or if it's not found)
 - Allow test profiles to define a graph type (currently only BAR_GRAPH and LINE_GRAPH are supported). Must be specified inside the profile's TestInformation in a ResultFormat tag. Defaults to BAR_GRAPH.
@@ -41,6 +41,7 @@ Phoronix Test Suite
 - A number of test profile updates
 - Advanced merging capability
 - Add SupportedArchitectures tag to TestProfile, if the test is only compatible with select architectures (delimit each architecture by a comma)
+- With list-tests option, don't show tests that are of status PRIVATE or EXPERIMENTAL
 - Add result quantifier option for parsing results... For traditional numerical profiles, the ResultQuantifier tag can have values of MAX and MIN for recording the maximum or minimum values. Other modes can be supported in the future. For numerical results where the tag isn't supplied, it will default to AVG.
 
 Phoronix Test Suite 0.6.0
