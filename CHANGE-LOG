@@ -41,6 +41,7 @@ Phoronix Test Suite
 - A number of test profile updates
 - Advanced merging capability
 - Add SupportedArchitectures tag to TestProfile, if the test is only compatible with select architectures (delimit each architecture by a comma)
+- Add result quantifier option for parsing results... For traditional numerical profiles, the ResultQuantifier tag can have values of MAX and MIN for recording the maximum or minimum values. Other modes can be supported in the future. For numerical results where the tag isn't supplied, it will default to AVG.
 
 Phoronix Test Suite 0.6.0
 May 9, 2008

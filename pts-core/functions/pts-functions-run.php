@@ -251,6 +251,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	$pre_run_message = $xml_parser->getXMLValue(P_TEST_PRERUNMSG);
 	$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
 	$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
+	$result_quantifier = $xml_parser->getXMLValue(P_TEST_QUANTIFIER);
 	$arg_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
 	$execute_path = $xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS);
 	$default_arguments = $xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
@@ -268,6 +269,12 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 		if(!defined($test_name))
 			define($test_name, 1);
+	}
+
+	if(empty($result_quantifier))
+	{
+		if(is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-result-quantifier"))
+			$result_quantifier = @trim(file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-result-quantifier"));
 	}
 
 	if(is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . '/' . $execute_binary) || is_link(BENCHMARK_ENV_DIR . $benchmark_identifier . '/' . $execute_binary))
@@ -358,7 +365,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if($result_format == "PASS_FAIL")
 	{
-		$AVG_RESULT = -1;
+		$END_RESULT = -1;
 		$i = 1;
 
 		foreach($BENCHMARK_RESULTS_ARRAY as $result)
@@ -367,18 +374,18 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			{
 				$this_result = "FAIL";
 
-				if($AVG_RESULT == -1 || $AVG_RESULT == "PASS")
+				if($END_RESULT == -1 || $END_RESULT == "PASS")
 				{
-					$AVG_RESULT = "FAIL";
+					$END_RESULT = "FAIL";
 				}
 			}
 			else
 			{
 				$this_result = "PASS";
 
-				if($AVG_RESULT == -1)
+				if($END_RESULT == -1)
 				{
-					$AVG_RESULT = "PASS";
+					$END_RESULT = "PASS";
 				}
 			}
 
@@ -386,26 +393,57 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			$i++;
 		}
 
-		$RETURN_STRING .= "\nFinal: " . $AVG_RESULT . "\n";
+		$RETURN_STRING .= "\nFinal: " . $END_RESULT . "\n";
 	}
 	else
 	{
 		// Result is of a normal numerical type
-		$TOTAL_RESULT = 0;
-		foreach($BENCHMARK_RESULTS_ARRAY as $result)
+
+		if($result_quantifier == "MAX")
 		{
-			$TOTAL_RESULT += trim($result);
-			$RETURN_STRING .= $result . " $result_scale\n";
+			$max_value = $BENCHMARK_RESULTS_ARRAY[0];
+			foreach($BENCHMARK_RESULTS_ARRAY as $result)
+			{
+				if($result > $max_value)
+					$max_value = $result;
+
+				$RETURN_STRING .= $result . " " . $result_scale . "\n";
+			}
+			$RETURN_STRING .= "\nMaximum: " . $max_value . " " . $result_scale;
+			$END_RESULT = $max_value;
 		}
-		$AVG_RESULT = pts_trim_double($TOTAL_RESULT / count($BENCHMARK_RESULTS_ARRAY), 2);
-		$RETURN_STRING .= "\nAverage: $AVG_RESULT $result_scale";
+		else if($result_quantifier == "MIN")
+		{
+			$min_value = $BENCHMARK_RESULTS_ARRAY[0];
+			foreach($BENCHMARK_RESULTS_ARRAY as $result)
+			{
+				if($result < $min_value)
+					$min_value = $result;
+
+				$RETURN_STRING .= $result . " " . $result_scale . "\n";
+			}
+			$RETURN_STRING .= "\nMinimum: " . $min_value . " " . $result_scale;
+			$END_RESULT = $min_value;
+		}
+		else
+		{
+			// assume AVG
+			$TOTAL_RESULT = 0;
+			foreach($BENCHMARK_RESULTS_ARRAY as $result)
+			{
+				$TOTAL_RESULT += trim($result);
+				$RETURN_STRING .= $result . " " . $result_scale . "\n";
+			}
+			$END_RESULT = pts_trim_double($TOTAL_RESULT / count($BENCHMARK_RESULTS_ARRAY), 2);
+			$RETURN_STRING .= "\nAverage: " . $END_RESULT . " " . $result_scale;
+		}
 	}
 
 	echo pts_string_header($RETURN_STRING);
 
 	pts_beep();
 	pts_process_remove($benchmark_identifier);
-	return $AVG_RESULT;
+	return $END_RESULT;
 }
 function pts_global_auto_tags($extra_attr = NULL)
 {

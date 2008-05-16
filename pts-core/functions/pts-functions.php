@@ -535,7 +535,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 }
 function pts_clean_information_string($str)
 {
-	$remove_phrases = array("Corporation ", "Technologies ", ",", "Technology ", "version ", "Processor ", "processor ", "Genuine ", "(R)", "(TM)", "(tm)", "Inc. ", "Inc ");
+	$remove_phrases = array("Corporation ", "Technologies ", ",", "Technology ", "version ", "Processor ", "Computer ", "processor ", "Genuine ", "(R)", "(TM)", "(tm)", "Inc. ", "INC. ", "Inc ");
 	$str = str_replace($remove_phrases, " ", $str);
 
 	$change_phrases = array("Memory Controller Hub" => "MCH", "Advanced Micro Devices" => "AMD");

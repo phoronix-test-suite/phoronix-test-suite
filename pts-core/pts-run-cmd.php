@@ -123,7 +123,8 @@ switch($COMMAND)
 			$status = $xml_parser->getXMLValue(P_TEST_STATUS);
 			$identifier = basename($benchmark_file, ".xml");
 
-			printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+			if(!in_array($status, array("PRIVATE", "EXPERIMENTAL")))
+				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 		}
 		echo "\n";
 		break;
