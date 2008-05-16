@@ -142,8 +142,9 @@ switch($COMMAND)
 		}
 		echo "\n";
 		break;
-	case "SUITE_INFO":
-		if(pts_test_type($ARG_1) == "TEST_SUITE")
+	case "INFO":
+		$pts_test_type = pts_test_type($ARG_1);
+		if($pts_test_type == "TEST_SUITE")
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $ARG_1 . ".xml"));
 			$suite_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
@@ -164,13 +165,7 @@ switch($COMMAND)
 		
 			echo "\n";
 		}
-		else
-		{
-			echo "\n$ARG_1 is not a test suite.\n";
-		}
-		break;
-	case "TEST_INFO":
-		if(pts_test_type($ARG_1) == "BENCHMARK")
+		else if($pts_test_type == "BENCHMARK")
 		{
 			$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $ARG_1 . ".xml"));
 
@@ -203,7 +198,7 @@ switch($COMMAND)
 		}
 		else
 		{
-			echo "\n$ARG_1 is not a test.\n";
+			echo "\n$ARG_1 is not recognized.\n";
 		}
 		break;
 	case "SHOW_RESULT":

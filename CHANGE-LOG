@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite
 
 - Tweaks to suite-info formatting
+- Merge test-info and suite-info into generic info argument (though the earlier options are still compatible) and auto-detect the type
 
 Phoronix Test Suite 0.7.0
 May 17, 2008

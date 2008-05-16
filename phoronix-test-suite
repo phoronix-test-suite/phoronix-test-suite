@@ -106,11 +106,8 @@ case "$1" in
 "show-result")
 	$PHP_BIN pts-core/pts-run-cmd.php SHOW_RESULT $2
 	;;
-"suite-info" | "suite-information")
-	$PHP_BIN pts-core/pts-run-cmd.php SUITE_INFO $2
-	;;
-"test-info" | "test-information")
-	$PHP_BIN pts-core/pts-run-cmd.php TEST_INFO $2
+"info" | "suite-info" | "suite-information" | "test-info" | "test-information")
+	$PHP_BIN pts-core/pts-run-cmd.php INFO $2
 	;;
 "system-info" | "system-information")
 	$PHP_BIN pts-core/pts-run-cmd.php SYS_INFO
