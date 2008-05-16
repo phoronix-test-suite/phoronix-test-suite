@@ -21,6 +21,7 @@ define("P_TEST_SOFTWARE_TYPE", "PhoronixTestSuite/TestProfile/SoftwareType"); //
 define("P_TEST_MAINTAINER", "PhoronixTestSuite/TestProfile/Maintainer"); // Test software type
 define("P_TEST_LICENSE", "PhoronixTestSuite/TestProfile/License"); // Test software license
 define("P_TEST_STATUS", "PhoronixTestSuite/TestProfile/Status"); // The status of the test profile
+define("P_TEST_SUPPORTEDARCHS", "PhoronixTestSuite/TestProfile/SupportedArchitectures"); // Estimated size of capacity needed for downloads (in MB)
 define("P_TEST_DOWNLOADSIZE", "PhoronixTestSuite/TestProfile/DownloadSize"); // Estimated size of capacity needed for downloads (in MB)
 define("P_TEST_ENVIRONMENTSIZE", "PhoronixTestSuite/TestProfile/EnvironmentSize"); // Estimated size of capacity needed for testing environment (in MB)
 define("P_TEST_DEFAULTARGUMENTS", "PhoronixTestSuite/TestSettings/Default/Arguments"); // Default arguments

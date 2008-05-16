@@ -213,6 +213,12 @@ function pts_install_benchmark($Benchmark)
 	if(pts_test_type($Benchmark) != "BENCHMARK")
 		return;
 
+	if(!pts_test_architecture_supported($Benchmark))
+	{
+		echo pts_string_header($Benchmark . "is not supported on this platform (" . kernel_arch() . ")");
+		return;
+	}
+
 	$custom_validated = true;
 	$custom_validated_output = "";
 
@@ -418,6 +424,29 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 	}
 
 	return $generated;
+}
+function pts_test_architecture_supported($identifier)
+{
+	$supported = true;
+
+	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+	{
+	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
+		$archs = $xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS);
+
+		if(!empty($archs))
+		{
+			$archs = explode(",", $archs);
+
+			foreach($archs as $key => $value)
+				$archs[$key] = trim($value);
+
+			if(!in_array(kernel_arch(), $archs))
+				$supported = false;
+		}
+	}
+
+	return $supported;
 }
 function pts_test_estimated_download_size($identifier)
 {

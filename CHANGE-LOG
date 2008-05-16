@@ -40,6 +40,7 @@ Phoronix Test Suite
 - Add a generic (very basic) install script for installation (named install-sh). Defaults to /usr/ but if first argument is supplied it will over-ride to that location
 - A number of test profile updates
 - Advanced merging capability
+- Add SupportedArchitectures tag to TestProfile, if the test is only compatible with select architectures (delimit each architecture by a comma)
 
 Phoronix Test Suite 0.6.0
 May 9, 2008
