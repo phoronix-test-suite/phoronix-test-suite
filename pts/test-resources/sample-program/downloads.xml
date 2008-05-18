@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/sample-pi-program.cpp</URL>
+			<MD5>e90fb790df8d1544696a1439c9b5bd8d</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

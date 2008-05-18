@@ -9,6 +9,7 @@ Phoronix Test Suite
 - Display EstimatedLength (if supplied) when viewing test information
 - Add RequiresRoot tag to test profile (though the root operation itself isn't yet added)
 - DOCUMENTATION: Add XML specifications for test profiles, test suites, and test downloads to documentation/ folder
+- Add sample-program as a test profile meant for documentation and demonstration purposes
 
 Phoronix Test Suite 0.7.0
 May 17, 2008

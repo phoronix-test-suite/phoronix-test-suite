@@ -1,0 +1,17 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>EXPERIMENTAL</Status>
+		<Maintainer>Phoronix Media</Maintainer>
+	</TestProfile>
+	<TestInformation>
+		<Title>Sample Pi Program</Title>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>A simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula.</Description>
+	</TestInformation>
+</PhoronixTestSuite>
