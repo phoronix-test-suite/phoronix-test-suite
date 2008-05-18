@@ -13,14 +13,14 @@
 //
 
 define("P_TEST_TITLE", "PhoronixTestSuite/TestInformation/Title"); // Test title shown to end-user
+define("P_TEST_SUBTITLE", "PhoronixTestSuite/TestInformation/SubTitle"); // Subtitle
+define("P_TEST_VERSION", "PhoronixTestSuite/TestInformation/Version"); // Test version
 define("P_TEST_DESCRIPTION", "PhoronixTestSuite/TestInformation/Description"); // Test description
 define("P_TEST_EXDEP", "PhoronixTestSuite/TestInformation/ExternalDependencies"); // Test description
-define("P_TEST_VERSION", "PhoronixTestSuite/TestInformation/Version"); // Test version
 define("P_TEST_SCALE", "PhoronixTestSuite/TestInformation/ResultScale"); // Result scale
 define("P_TEST_QUANTIFIER", "PhoronixTestSuite/TestInformation/ResultQuantifier"); // Result quantifier
 define("P_TEST_RESULTFORMAT", "PhoronixTestSuite/TestInformation/ResultFormat"); // Result format
 define("P_TEST_PROPORTION", "PhoronixTestSuite/TestInformation/Proportion"); // Proportion
-define("P_TEST_SUBTITLE", "PhoronixTestSuite/TestInformation/SubTitle"); // Subtitle
 define("P_TEST_EXECUTABLE", "PhoronixTestSuite/TestInformation/Executable"); // Executable
 define("P_TEST_RUNCOUNT", "PhoronixTestSuite/TestInformation/TimesToRun"); // Run count
 define("P_TEST_IGNOREFIRSTRUN", "PhoronixTestSuite/TestInformation/IgnoreFirstRun"); // Ignore first run?
