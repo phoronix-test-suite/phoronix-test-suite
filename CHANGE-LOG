@@ -13,6 +13,7 @@ Phoronix Test Suite
 - DOCUMENTATION: Add guide-write-test-profile.txt as a simple guide on how to write a test profile, with the guide being based around the sample-program profile
 - Add documentation folder contents to install-sh script with PTS documentation
 - Have the Debian package builder (package-build-deb.php) use install-sh for most of the installation process
+- PTS GLOBAL: The search feature should now be working...
 
 Phoronix Test Suite 0.7.0
 May 17, 2008
