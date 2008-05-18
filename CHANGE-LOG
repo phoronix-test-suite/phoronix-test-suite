@@ -10,6 +10,7 @@ Phoronix Test Suite
 - Add RequiresRoot tag to test profile (though the root operation itself isn't yet added)
 - DOCUMENTATION: Add XML specifications for test profiles, test suites, and test downloads to documentation/ folder
 - Add sample-program as a test profile meant for documentation and demonstration purposes
+- DOCUMENTATION: Add guide-write-test-profile.txt as a simple guide on how to write a test profile, with the guide being based around the sample-program profile
 
 Phoronix Test Suite 0.7.0
 May 17, 2008
