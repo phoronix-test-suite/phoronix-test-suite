@@ -15,13 +15,7 @@ tar -xjf MPlayer-1.0rc2.tar.bz2
 cd MPlayer-1.0rc2/
 ./configure > /dev/null
 sleep 3
-/usr/bin/time -f \"MPlayer Build Time: %e Seconds\" make -s -j \$NUM_CPU_JOBS 2>&1 | grep Seconds
-
-if [ \$? = 2 ]
-	then
-/usr/bin/time -f \"MPlayer Build Time: %e Seconds\" make -s 2>&1 | grep Seconds
-	exit
-fi" > time-compile-mplayer
+/usr/bin/time -f \"MPlayer Build Time: %e Seconds\" make -s -j \$NUM_CPU_JOBS 2>&1 | grep Seconds" > time-compile-mplayer
 
 chmod +x time-compile-mplayer
 

@@ -14,6 +14,7 @@ Phoronix Test Suite
 - Add documentation folder contents to install-sh script with PTS documentation
 - Have the Debian package builder (package-build-deb.php) use install-sh for most of the installation process
 - PTS GLOBAL: The search feature should now be working...
+- Add Phoronix pts-graph test for testing PHP and PHP-GD performance
 
 Phoronix Test Suite 0.7.0
 May 17, 2008
