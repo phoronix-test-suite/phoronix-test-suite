@@ -15,20 +15,8 @@ if(!defined("PTS_VERSION"))
 }
 
 shell_exec("rm -rf /tmp/pts-deb-builder/");
-shell_exec("mkdir /tmp/pts-deb-builder/");
 shell_exec("mkdir -p /tmp/pts-deb-builder/DEBIAN/");
-shell_exec("mkdir -p /tmp/pts-deb-builder/usr/bin/");
-shell_exec("mkdir -p /tmp/pts-deb-builder/usr/share/doc/phoronix-test-suite/");
-shell_exec("mkdir -p /tmp/pts-deb-builder/usr/share/phoronix-test-suite/");
-
-shell_exec("cp -va CHANGE-LOG /tmp/pts-deb-builder/usr/share/doc/phoronix-test-suite/");
-shell_exec("cp -va README /tmp/pts-deb-builder/usr/share/doc/phoronix-test-suite/");
-shell_exec("cp -va COPYING /tmp/pts-deb-builder/usr/share/doc/phoronix-test-suite/");
-
-shell_exec("cp -va LICENSE /tmp/pts-deb-builder/usr/share/phoronix-test-suite/");
-shell_exec("cp -va pts/ /tmp/pts-deb-builder/usr/share/phoronix-test-suite/");
-shell_exec("rm -f /tmp/pts-deb-builder/usr/share/phoronix-test-suite/pts/etc/scripts/package-build-*");
-shell_exec("cp -va pts-core/ /tmp/pts-deb-builder/usr/share/phoronix-test-suite/");
+shell_exec("./install-sh /tmp/pts-deb-builder/usr");
 
 $phoronix_test_suite_bin = file_get_contents("phoronix-test-suite");
 $phoronix_test_suite_bin = str_replace("export PTS_DIR=`pwd`", "export PTS_DIR='/usr/share/phoronix-test-suite/'", $phoronix_test_suite_bin);
