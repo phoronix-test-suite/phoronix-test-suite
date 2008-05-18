@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<TestProfile>
 		<Version>0.3</Version>
-		<TestType>Rendering</TestType>
+		<TestType>System</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>

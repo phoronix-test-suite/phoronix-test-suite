@@ -32,7 +32,8 @@ define("P_TEST_SOFTWARE_TYPE", "PhoronixTestSuite/TestProfile/SoftwareType"); //
 define("P_TEST_MAINTAINER", "PhoronixTestSuite/TestProfile/Maintainer"); // Test software type
 define("P_TEST_LICENSE", "PhoronixTestSuite/TestProfile/License"); // Test software license
 define("P_TEST_STATUS", "PhoronixTestSuite/TestProfile/Status"); // The status of the test profile
-define("P_TEST_SUPPORTEDARCHS", "PhoronixTestSuite/TestProfile/SupportedArchitectures"); // Estimated size of capacity needed for downloads (in MB)
+define("P_TEST_SUPPORTEDARCHS", "PhoronixTestSuite/TestProfile/SupportedArchitectures"); // The system architectures supported by this test
+define("P_TEST_ROOTNEEDED", "PhoronixTestSuite/TestProfile/RequiresRoot"); // Is root access needed? (TODO: Implement RequiresRoot)
 define("P_TEST_DOWNLOADSIZE", "PhoronixTestSuite/TestProfile/DownloadSize"); // Estimated size of capacity needed for downloads (in MB)
 define("P_TEST_ENVIRONMENTSIZE", "PhoronixTestSuite/TestProfile/EnvironmentSize"); // Estimated size of capacity needed for testing environment (in MB)
 define("P_TEST_ESTIMATEDTIME", "PhoronixTestSuite/TestProfile/EstimatedLength"); // Estimated length of time it takes the test to complete (in minutes)
@@ -53,10 +54,10 @@ define("P_TEST_OPTIONS_MENU_GROUP_VALUE", P_TEST_OPTIONS_MENU_GROUP . "/" . S_TE
 //
 
 define("P_SUITE_TITLE", "PhoronixTestSuite/SuiteInformation/Title"); // Suite title shown to end-user
-define("P_SUITE_DESCRIPTION", "PhoronixTestSuite/SuiteInformation/Description"); // Test description
-define("P_SUITE_TYPE", "PhoronixTestSuite/SuiteInformation/TestType"); // Suite Type
-define("P_SUITE_MAINTAINER", "PhoronixTestSuite/SuiteInformation/Maintainer"); // Suite maintainer
 define("P_SUITE_VERSION", "PhoronixTestSuite/SuiteInformation/Version"); // Suite version
+define("P_SUITE_DESCRIPTION", "PhoronixTestSuite/SuiteInformation/Description"); // Test description
+define("P_SUITE_MAINTAINER", "PhoronixTestSuite/SuiteInformation/Maintainer"); // Suite maintainer
+define("P_SUITE_TYPE", "PhoronixTestSuite/SuiteInformation/TestType"); // Suite Type
 
 define("P_SUITE_TEST_NAME", "PhoronixTestSuite/RunTest/Test"); // Names of tests in suite
 define("P_SUITE_TEST_ARGUMENTS", "PhoronixTestSuite/RunTest/Arguments"); // Arguments of tests in suite

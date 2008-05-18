@@ -3,7 +3,7 @@
 		<Version>0.3</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Demo</SoftwareType>
-		<License>CLOSED</License>
+		<License>RESTRICTED</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 	</TestProfile>

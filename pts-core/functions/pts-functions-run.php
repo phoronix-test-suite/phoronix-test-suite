@@ -283,9 +283,13 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	}
 	else
 	{
-		foreach(explode(':', $execute_path) as $execute_path_check)
+		foreach(explode(',', $execute_path) as $execute_path_check)
+		{
+			$execute_path_check = trim($execute_path_check);
+
 			 if(is_file($execute_path_check . $execute_binary) || is_link($execute_path_check . $execute_binary))
 				$to_execute = $execute_path_check;
+		}
 	}
 
 	if(!isset($to_execute) || empty($to_execute))

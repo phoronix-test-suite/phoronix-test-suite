@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<TestProfile>
 		<Version>0.3</Version>
-		<TestType>Hard Disk</TestType>
+		<TestType>Disk</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
