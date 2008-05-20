@@ -616,7 +616,7 @@ function pts_interrupt_screensaver()
 function pts_string_bool($string)
 {
 	$string = strtolower($string);
-	return $string == "true" || $string == "1" || $string == "On";
+	return $string == "true" || $string == "1" || $string == "on";
 }
 
 ?>
