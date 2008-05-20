@@ -317,6 +317,8 @@ function pts_save_result($save_to = null, $save_results = null)
 						$t = new pts_LineGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 					else if($results_result_format[$i] == "PASS_FAIL")
 						$t = new pts_PassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+					else if($results_result_format[$i] == "MULTI_PASS_FAIL")
+						$t = new pts_MultiPassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 					else
 						$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 
@@ -534,7 +536,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 }
 function pts_clean_information_string($str)
 {
-	$remove_phrases = array("Corporation ", "Technologies ", ",", "Technology ", "version ", "Processor ", "Computer ", "processor ", "Genuine ", "(R)", "(TM)", "(tm)", "Inc. ", "INC. ", "Inc ");
+	$remove_phrases = array("Corporation ", "Technologies ", ",", "Technology ", "version ", "Processor ", "Computer ", "processor ", "Genuine ", "Unknown device ", "(R)", "(TM)", "(tm)", "Inc. ", "INC. ", "Inc ");
 	$str = str_replace($remove_phrases, " ", $str);
 
 	$change_phrases = array("Memory Controller Hub" => "MCH", "Advanced Micro Devices" => "AMD");

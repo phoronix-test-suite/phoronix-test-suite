@@ -80,6 +80,7 @@ class pts_Graph
 	var $graph_title;
 	var $graph_sub_title;
 	var $graph_y_title;
+	var $graph_y_title_hide = FALSE;
 	var $graph_top_end;
 	var $graph_left_end;
 
@@ -89,7 +90,7 @@ class pts_Graph
 		$this->graph_sub_title = $SubTitle;
 		$this->graph_y_title = $YTitle;
 
-		if(empty($YTitle))
+		if(empty($YTitle) || $this->graph_y_title_hide)
 			$this->graph_left_start = $this->graph_top_end_opp - 5;
 
 		$this->graph_top_end = $this->graph_attr_height - $this->graph_top_end_opp;
@@ -196,7 +197,7 @@ class pts_Graph
 		$box_width = $box_array[4] - $box_array[6];
 
 		if($Big)
-			$box_array = imagettfbbox($Size, 0, $Font, "AZ@![]()@|");
+			$box_array = imagettfbbox($Size, 0, $Font, "AZ@![]()@|_");
 		$box_height = $box_array[1] - $box_array[7];
 
 		// Width x Height
@@ -363,7 +364,7 @@ class pts_Graph
 		$this->gd_write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 6);
 		$this->gd_write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 26, FALSE, TRUE);
 
-		if(!empty($this->graph_y_title))
+		if(!empty($this->graph_y_title) && !$this->graph_y_title_hide)
 			$this->gd_write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
 	}
 	protected function render_graph_value_ticks()
