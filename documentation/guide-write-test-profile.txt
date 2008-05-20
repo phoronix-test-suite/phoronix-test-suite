@@ -55,7 +55,7 @@ g++ sample-pi-program.cpp -o sample-pi-program
 
 echo "#!/bin/sh
 
-/usr/bin/time -f \"Pi Calculation Time: %e Seconds\" ./sample-pi-program 2>&1 | grep Seconds" > sample-program
+time -f \"Pi Calculation Time: %e Seconds\" ./sample-pi-program 2>&1 | grep Seconds" > sample-program
 chmod +x sample-program
 
 This install file builds the code with GCC, and then creates a small script that is run by the Phoronix Test Suite, which times how long it takes to run the software. Where does the source-code come into play? Well, it needs to be downloaded now from a web server. The Phoronix Test Suite has built-in support for managing downloads from multiple servers in a random over, fall-back support if one mirror is done, and verification of MD5 check-sums. Below is the downloads.xml file for sample-program that covers all of this.

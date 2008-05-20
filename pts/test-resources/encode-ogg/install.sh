@@ -36,5 +36,5 @@ cd ..
 rm -rf vorbis-tools-1.2.0/
 
 echo "#!/bin/sh
-/usr/bin/time -f \"WAV To OGG Encode Time: %e Seconds\" ./vorbis/bin/oggenc --quiet ../pts-shared/pts-trondheim.wav -q 10 -o /dev/null 2>&1" > oggenc
+time -f \"WAV To OGG Encode Time: %e Seconds\" ./vorbis/bin/oggenc --quiet ../pts-shared/pts-trondheim.wav -q 10 -o /dev/null 2>&1" > oggenc
 chmod +x oggenc

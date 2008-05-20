@@ -27,6 +27,6 @@ esac
 
 cd linux-2.6.25/
 sleep 3
-/usr/bin/time -f \"Kernel Build Time: %e Seconds\" make -s -j \$NUM_CPU_JOBS 2>&1 | grep Seconds" > time-compile-kernel
+time -f \"Kernel Build Time: %e Seconds\" make -s -j \$NUM_CPU_JOBS 2>&1 | grep Seconds" > time-compile-kernel
 
 chmod +x time-compile-kernel
