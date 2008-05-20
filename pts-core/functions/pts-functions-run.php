@@ -334,7 +334,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
 
-		if(!($i == 0 && $ignore_first_run == "TRUE" && $times_to_run > 1))
+		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
 			if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
 			{

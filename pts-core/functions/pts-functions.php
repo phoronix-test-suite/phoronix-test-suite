@@ -613,5 +613,10 @@ function pts_interrupt_screensaver()
 	if(!defined("SCREENSAVER_KILLED"))
 		shell_exec("xdg-screensaver reset 2>&1 > /dev/null");
 }
+function pts_string_bool($string)
+{
+	$string = strtolower($string);
+	return $string == "true" || $string == "1" || $string == "On";
+}
 
 ?>
