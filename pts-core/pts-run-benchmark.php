@@ -206,8 +206,6 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 {
 	echo pts_string_header(ucwords($TO_RUN) . " Test Suite");
 
-	echo "\nRunning " . ucwords($TO_RUN) . " Test Suite...\n\n";
-
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_RUN . ".xml"));
 
 	if($SAVE_RESULTS)
