@@ -14,5 +14,6 @@
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a benchmark of Norsetto Shadow.</Description>
+		<ExternalDependencies>build-utilities, glut</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>

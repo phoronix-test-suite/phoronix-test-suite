@@ -15,5 +15,6 @@
 		<ResultScale>Signs Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a benchmark of OpenSSL, the open-source toolkit for SSL/TLS.</Description>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>

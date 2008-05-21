@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.6</Version>
+		<Version>0.7</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -10,7 +10,7 @@
 	<TestInformation>
 		<Title>GtkPerf</Title>
 		<Version>0.40</Version>
-		<ExternalDependencies>gtk-development</ExternalDependencies>
+		<ExternalDependencies>gtk-development, build-utilities</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

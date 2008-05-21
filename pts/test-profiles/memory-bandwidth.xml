@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.4</Version>
+		<Version>0.5</Version>
 		<TestType>Memory</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -14,6 +14,7 @@
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This benchmark tests the system memory (RAM) and CPU Level 2 cache performance.</Description>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 	<TestSettings>
 		<Option>

@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.3</Version>
+		<Version>0.4</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -10,7 +10,7 @@
 	<TestInformation>
 		<Title>SPECViewPerf</Title>
 		<Version>9.0.3</Version>
-		<ExternalDependencies>glut, csh, libpng-development</ExternalDependencies>
+		<ExternalDependencies>build-utilities, glut, csh, libpng-development</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Weighted Geometric Mean</ResultScale>
 		<Proportion>HIB</Proportion>

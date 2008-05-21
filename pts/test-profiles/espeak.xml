@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.7</Version>
+		<Version>0.8</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -10,7 +10,7 @@
 	<TestInformation>
 		<Title>eSpeak Speech Synthesis</Title>
 		<Version>1.37</Version>
-		<ExternalDependencies>portaudio-development</ExternalDependencies>
+		<ExternalDependencies>portaudio-development, build-utilities</ExternalDependencies>
 		<TimesToRun>2</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.3</Version>
+		<Version>0.4</Version>
 		<TestType>Graphics</TestType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
@@ -10,7 +10,7 @@
 	<TestInformation>
 		<Title>GLMark</Title>
 		<Version>0.1</Version>
-		<ExternalDependencies>sdl-development, glut</ExternalDependencies>
+		<ExternalDependencies>sdl-development, glut, build-utilities</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>FPS</ResultScale>
 		<Proportion>HIB</Proportion>
