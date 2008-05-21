@@ -15,6 +15,8 @@ Phoronix Test Suite
 - Have the Debian package builder (package-build-deb.php) use install-sh for most of the installation process
 - PTS GLOBAL: The search feature should now be working...
 - Add Phoronix pts-graph test for testing PHP and PHP-GD performance
+- Various fixes and cleaning (Thanks to uncle_fungus)
+- Warsow profile now works
 
 Phoronix Test Suite 0.7.0
 May 17, 2008
