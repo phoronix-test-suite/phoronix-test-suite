@@ -309,7 +309,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		//pts_install_benchmark($benchmark_identifier);
 	}
 
-	$PTS_BENCHMARK_ARGUMENTS = trim($default_arguments . " " . $extra_arguments);
+	$PTS_BENCHMARK_ARGUMENTS = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
 	$BENCHMARK_RESULTS_ARRAY = array();
 
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
