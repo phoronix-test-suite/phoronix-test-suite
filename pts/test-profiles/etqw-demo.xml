@@ -1,10 +1,10 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.3</Version>
+		<Version>0.4</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
-		<Status>UNKNOWN</Status>
+		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 	</TestProfile>
 	<TestInformation>
@@ -15,10 +15,12 @@
 		<ResultScale>FPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the demo for the game ET:QW game.</Description>
+		<DownloadSize>660</DownloadSize>
+		<EnvironmentSize>763</EnvironmentSize>
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>+timenetdemoquit pts +set r_mode -1</Arguments>
+			<Arguments>+timenetdemo pts +set r_mode -1 +set in_tty 0 +wait 2751 +quit</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Video RAM</DisplayName>

@@ -1,0 +1,12 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>ftp://ftp.idsoftware.com/idstuff/etqw/ETQW-demo2-client-full.r1.x86.run</URL>
+			<MD5>11f5a882127a917b6c8b648ffa22da74</MD5>
+		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/etqw-demo-demo-1.tar.bz2</URL>
+			<MD5>8e34dd23b026e901f56183992cebf222</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
