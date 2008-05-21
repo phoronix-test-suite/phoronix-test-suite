@@ -376,7 +376,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		$i = 1;
 
 		if(count($BENCHMARK_RESULTS_ARRAY) == 1)
-			$END_RESULT = $BENCHMARK_RESULTS_ARRAY;
+			$END_RESULT = $BENCHMARK_RESULTS_ARRAY[0];
 		else
 		{
 			foreach($BENCHMARK_RESULTS_ARRAY as $result)
