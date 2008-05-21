@@ -70,7 +70,7 @@ define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 pts_config_init();
 define("BENCHMARK_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
-define("PTS_DOWNLOAD_CACHE_DIR", pts_download_cache());
+define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
 
 // Register PTS Process
 

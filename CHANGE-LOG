@@ -21,6 +21,7 @@ Phoronix Test Suite
 - Fix ET:QW (retail) profile (Thanks to niackho)
 - Add pts_MultiPassFailGraph (MULTI_PASS_FAIL) graph type
 - Add ogl-versions as a test seeing which versions of OpenGL are supported by the system software / hardware
+- Fix bug in make-download-cache
 
 Phoronix Test Suite 0.7.0
 May 17, 2008
