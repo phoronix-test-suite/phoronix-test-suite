@@ -46,12 +46,17 @@ fi
 # Make sure PHP is installed
 if [ "X$PHP_BIN" = "X" ]
 then
-	echo "\n\nPHP5 CLI Must Be Installed To Run The Phoronix Test Suite!"
-	echo "Only PHP For The Command Line Is Needed, Not A Full-Blown PHP w/ Web Server"
-	echo "The PHP CLI package is usually called php-cli or php5-cli. Also required is the PHP GD library (php-gd)"
-	echo "For support visit: http://www.phoronix.com/forums/forumdisplay.php?f=49\n\n"
-	exit
+	cat <<'EOT'
+
+PHP5 CLI Must Be Installed To Run The Phoronix Test Suite!
+Only PHP For The Command Line Is Needed, Not A Complete PHP w/ Web Server Installation
+The PHP CLI package is usually called php-cli or php5-cli. Also required is the PHP GD library (php-gd)
+For support visit: http://www.phoronix.com/forums/forumdisplay.php?f=49
+
+EOT
+exit
 fi
+
 
 case "$1" in
 "install")
@@ -138,31 +143,35 @@ case "$1" in
 	$PHP_BIN pts-core/pts-run-cmd.php REFRESH_GRAPHS $2
 	;;
 *)
-	echo "\n================================="
-	echo "Phoronix Test Suite"
-	echo "http://www.phoronix-test-suite.com/"
-	echo "=================================\n"
-	echo "install <suite OR test>: Install or Update The Specified Test(s)"
-	echo "install-dependencies <suite OR test>: Install The External (Distribution) Dependencies For Specified Test(s)"
-	echo "run <suite OR test>: Run The Specified Test/Suite"
-	echo "batch-run <suite OR test>: Run The Specified Test/Suite in Batch Mode"
-	echo "benchmark <suite OR test OR saved file>: Same as manually running install and then run"
-	echo "batch-benchmark <suite OR test OR saved file>: Same as manually running install and then run in Batch Mode"
-	echo "batch-setup: Setup the batch mode options"
-	echo "merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets"
-	echo "list-tests: List all Phoronix Test Suite test profiles"
-	echo "list-suites: List all Phoronix Test Suites"
-	echo "list-results: List all saved results"
-	echo "make-download-cache: Backup all saved files to ~/.phoronix-test-suite/download-cache/"
-	echo "remove-result <Saved File>: Remove this saved result file and associated files"
-	echo "remove-all-results: Removes all saved results and associated files"
-	echo "info <suite OR test>: Show detailed information about a test or suite"
-	echo "system-info: Dump detected software and hardware information detected by PTS"
-	echo "sensor-options: Show system sensors that can be monitored through PTS"
-	echo "upload <Saved File>: Upload these results to be shared globally"
-	echo "show-result <Saved File>: Show this result file in your web browser"
-	echo "version: Report the Phoronix Test Suite version and code-name"
-	echo "login: Enter in your PTS Global log-in information for uploading results"
-	echo "\n"
+	cat <<'EOT'
+
+=================================
+Phoronix Test Suite
+http://www.phoronix-test-suite.com/
+=================================
+
+install <suite OR test>: Install or Update The Specified Test(s)
+install-dependencies <suite OR test>: Install The External (Distribution) Dependencies For Specified Test(s)
+run <suite OR test>: Run The Specified Test/Suite
+batch-run <suite OR test>: Run The Specified Test/Suite in Batch Mode
+benchmark <suite OR test OR saved file>: Same as manually running install and then run
+batch-benchmark <suite OR test OR saved file>: Same as manually running install and then run in Batch Mode
+batch-setup: Setup the batch mode options
+merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets
+list-tests: List all Phoronix Test Suite test profiles
+list-suites: List all Phoronix Test Suites
+list-results: List all saved results
+make-download-cache: Backup all saved files to ~/.phoronix-test-suite/download-cache/
+remove-result <Saved File>: Remove this saved result file and associated files
+remove-all-results: Removes all saved results and associated files
+info <suite OR test>: Show detailed information about a test or suite
+system-info: Dump detected software and hardware information detected by PTS
+sensor-options: Show system sensors that can be monitored through PTS
+upload <Saved File>: Upload these results to be shared globally
+show-result <Saved File>: Show this result file in your web browser
+version: Report the Phoronix Test Suite version and code-name
+login: Enter in your PTS Global log-in information for uploading results
+
+EOT
 	;;
 esac
