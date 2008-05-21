@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-1.4.9.tar.gz</URL>
+			<MD5>3537dedea45cc09e8d88d1ef4f774246</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
