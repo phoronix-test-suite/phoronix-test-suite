@@ -17,7 +17,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>+exec etqw-pts.cfg +set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +timenetdemo pts</Arguments>
+			<Arguments>+set in_tty 0 +set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +exec etqw_pts.cfg</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
