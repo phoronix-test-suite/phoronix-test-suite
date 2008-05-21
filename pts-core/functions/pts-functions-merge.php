@@ -133,7 +133,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	}
 	else
 	{
-		if(pts_version_comparable($original_pts_version[0], $new_pts_version[0]))
+		if(!pts_version_comparable($original_pts_version[0], $new_pts_version[0]))
 			echo pts_string_header("PTS Versions Do Not Match! For accurate results, you should only test against the same version!");
 
 		for($i = 0; $i < count($original_system_hardware); $i++)
@@ -166,7 +166,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 		$result_merged = false;
 		for($r_n = 0; $r_n < count($new_results_identifiers) && !$result_merged; $r_n++)
 		{
-			if($original_results_testname[$r_o] == $new_results_testname[$r_n] && $original_results_arguments[$r_o] == $new_results_arguments[$r_n] && $original_results_version[$r_o] == $new_results_version[$r_n])
+			if($original_results_testname[$r_o] == $new_results_testname[$r_n] && $original_results_arguments[$r_o] == $new_results_arguments[$r_n] && pts_version_comparable($original_results_version[$r_o], $new_results_version[$r_n]))
 			{
 				$USE_ID = pts_request_new_id();
 				$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$r_o]);
