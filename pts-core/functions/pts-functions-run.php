@@ -260,6 +260,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(empty($times_to_run) || !is_int($times_to_run))
 		$times_to_run = 1;
 
+	if(strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_") // Currently tests that output multiple results in one run can only be run once
+		$times_to_run = 1;
+
 	if(empty($execute_binary))
 		$execute_binary = $benchmark_identifier;
 
@@ -367,34 +370,39 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(!empty($arguments_description))
 		$RETURN_STRING .= "\n";
 
-	if($result_format == "PASS_FAIL")
+	if($result_format == "PASS_FAIL" || $result_format == "MULTI_PASS_FAIL")
 	{
 		$END_RESULT = -1;
 		$i = 1;
 
-		foreach($BENCHMARK_RESULTS_ARRAY as $result)
+		if(count($BENCHMARK_RESULTS_ARRAY) == 1)
+			$END_RESULT = $BENCHMARK_RESULTS_ARRAY;
+		else
 		{
-			if($result == "FALSE" || $result == "0" || $result == "FAIL")
+			foreach($BENCHMARK_RESULTS_ARRAY as $result)
 			{
-				$this_result = "FAIL";
-
-				if($END_RESULT == -1 || $END_RESULT == "PASS")
+				if($result == "FALSE" || $result == "0" || $result == "FAIL")
 				{
-					$END_RESULT = "FAIL";
-				}
-			}
-			else
-			{
-				$this_result = "PASS";
+					$this_result = "FAIL";
 
-				if($END_RESULT == -1)
+					if($END_RESULT == -1 || $END_RESULT == "PASS")
+					{
+						$END_RESULT = "FAIL";
+					}
+				}
+				else
 				{
-					$END_RESULT = "PASS";
-				}
-			}
+					$this_result = "PASS";
 
-			$RETURN_STRING .= "Trial $i: " . $this_result . "\n";
-			$i++;
+					if($END_RESULT == -1)
+					{
+						$END_RESULT = "PASS";
+					}
+				}
+
+				$RETURN_STRING .= "Trial $i: " . $this_result . "\n";
+				$i++;
+			}
 		}
 
 		$RETURN_STRING .= "\nFinal: " . $END_RESULT . "\n";
