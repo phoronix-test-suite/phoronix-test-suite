@@ -8,6 +8,6 @@ make -j $NUM_CPU_JOBS
 cd ..
 
 echo "#!/bin/sh
-./glew/bin/glewinfo | grep GL_VERSION" > ogl-versions
-chmod +x ogl-versions
+./glew/bin/glewinfo | grep GL_VERSION" > compliance-ogl
+chmod +x compliance-ogl
 

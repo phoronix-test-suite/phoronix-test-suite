@@ -20,7 +20,7 @@ Phoronix Test Suite
 - ET:QW demo profile now works
 - Fix ET:QW (retail) profile (Thanks to niackho)
 - Add pts_MultiPassFailGraph (MULTI_PASS_FAIL) graph type
-- Add ogl-versions as a test seeing which versions of OpenGL are supported by the system software / hardware
+- Add compliance-ogl as a test seeing which versions of OpenGL are supported by the system software / hardware
 - Fix bug in make-download-cache
 - Add gnupg profile for encryption test
 - Add sqlite profile for SQLite testing (right now just SQLite INSERT tests)
