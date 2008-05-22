@@ -450,7 +450,12 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 				$TOTAL_RESULT += trim($result);
 				$RETURN_STRING .= $result . " " . $result_scale . "\n";
 			}
-			$END_RESULT = pts_trim_double($TOTAL_RESULT / count($BENCHMARK_RESULTS_ARRAY), 2);
+
+			if(count($BENCHMARK_RESULTS_ARRAY) > 0)
+				$END_RESULT = pts_trim_double($TOTAL_RESULT / count($BENCHMARK_RESULTS_ARRAY), 2);
+			else
+				$END_RESULT = pts_trim_double($TOTAL_RESULT, 2);
+
 			$RETURN_STRING .= "\nAverage: " . $END_RESULT . " " . $result_scale;
 		}
 	}
