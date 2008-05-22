@@ -119,13 +119,18 @@ if($SAVE_RESULTS)
 	{
 		$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"));
 		$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
-		$results_xml = new tandem_XmlReader($raw_results[0]);
-		$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
+		$result_identifiers = array();
+
+		for($i = 0; $i < count($raw_results); $i++)
+		{
+			$results_xml = new tandem_XmlReader($raw_results[$i]);
+			array_push($result_identifiers, $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
+		}
 	}
 	else
-		$identifiers = array();
+		$result_identifiers = array();
 
-	$RESULTS_IDENTIFIER = pts_prompt_results_identifier($identifiers);
+	$RESULTS_IDENTIFIER = pts_prompt_results_identifier($result_identifiers);
 }
 
 pts_disable_screensaver(); // Kill the screensaver

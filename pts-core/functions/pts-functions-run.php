@@ -11,13 +11,28 @@
 function pts_prompt_results_identifier($current_identifiers = null)
 {
 	$RESULTS_IDENTIFIER = null;
+	$show_identifiers = array();
 
 	if(!defined("PTS_BATCH_MODE") || (defined("PTS_BATCH_MODE") && pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE"))
 	{
 		if(is_array($current_identifiers) && count($current_identifiers) > 0)
 		{
-			echo "\nCurrent Identifiers:\n";
 			foreach($current_identifiers as $identifier)
+			{
+				if(is_array($identifier))
+				{
+					foreach($identifier as $identifier_2)
+						array_push($show_identifiers, $identifier_2);
+				}
+				else
+					array_push($show_identifiers, $identifier);
+			}
+
+			$show_identifiers = array_unique($show_identifiers);
+			sort($show_identifiers);
+
+			echo "\nCurrent Identifiers:\n";
+			foreach($show_identifiers as $identifier)
 				echo "-" . $identifier . "\n";
 			echo "\n";
 		}
@@ -27,7 +42,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 			echo "Enter a unique identifier for distinguishing this series of tests: ";
 			$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
 		}
-		while(empty($RESULTS_IDENTIFIER) || in_array($RESULTS_IDENTIFIER, $current_identifiers));
+		while(empty($RESULTS_IDENTIFIER) || in_array($RESULTS_IDENTIFIER, $show_identifiers));
 	}
 
 	if(empty($RESULTS_IDENTIFIER))
