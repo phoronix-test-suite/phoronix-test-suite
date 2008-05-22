@@ -305,6 +305,8 @@ function pts_external_dependency_generic($Name)
 		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 
 		$selection = -1;
+		$PTS_MANUAL_SUPPORT = 0;
+
 		for($i = 0; $i < count($title) && $selection == -1; $i++)
 		{
 			if($Name == $package_name[$i])
@@ -312,13 +314,16 @@ function pts_external_dependency_generic($Name)
 				$selection = $i;
 				if(pts_file_missing_check(explode(",", $file_check[$selection])))
 				{
-					if(!defined("PTS_MANUAL_SUPPORT"))
-						define("PTS_MANUAL_SUPPORT", 1);
+					if($PTS_MANUAL_SUPPORT == 0)
+						$PTS_MANUAL_SUPPORT = 1;
 
 					echo pts_string_header($title[$selection] . "\nPossible Package Names: " . $possible_packages[$selection]);
 				}
 			}
 		}
+
+		if($PTS_MANUAL_SUPPORT == 1)
+			pts_bool_question("The above dependencies should be installed before proceeding otherwise one or more benchmarks could fail. Press any key when you're ready to continue");
 	}
 
 	return $generic_information;

@@ -79,14 +79,24 @@ switch($COMMAND)
 		// Any external dependencies?
 		pts_install_package_on_distribution($ARG_1);
 
-		if(defined("PTS_MANUAL_SUPPORT"))
-		{
-			pts_bool_question("These dependencies should be installed before proceeding as one or more benchmarks could fail. Press any key when you're ready to continue");
-		}
-
 		// Install benchmarks
 		$install_objects = "";
 		pts_recurse_install_benchmark($ARG_1, $install_objects);
+		break;
+	case "INSTALL_ALL":
+		require_once("pts-core/functions/pts-functions-install.php");
+
+		foreach(glob(TEST_RESOURCE_DIR . "*/downloads.xml") as $downloads_file)
+		{
+			$test = substr($downloads_file, strlen(TEST_RESOURCE_DIR), 0 - 14);
+
+			// Any external dependencies?
+			pts_install_package_on_distribution($test);
+
+			// Install benchmarks
+			$install_objects = "";
+			pts_recurse_install_benchmark($test, $install_objects);
+		}
 		break;
 	case "INSTALL_EXTERNAL_DEPENDENCIES":
 		require_once("pts-core/functions/pts-functions-install.php");

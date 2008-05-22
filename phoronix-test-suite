@@ -68,6 +68,9 @@ case "$1" in
 "install-dependencies")
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_EXTERNAL_DEPENDENCIES $2
 	;;
+"install-all")
+	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_ALL
+	;;
 "run")
 	$PHP_BIN pts-core/pts-run-benchmark.php $2
 	;;
@@ -152,6 +155,7 @@ http://www.phoronix-test-suite.com/
 
 install <suite OR test>: Install or Update The Specified Test(s)
 install-dependencies <suite OR test>: Install The External (Distribution) Dependencies For Specified Test(s)
+install-all: Install or Update all available tests
 run <suite OR test>: Run The Specified Test/Suite
 batch-run <suite OR test>: Run The Specified Test/Suite in Batch Mode
 benchmark <suite OR test OR saved file>: Same as manually running install and then run

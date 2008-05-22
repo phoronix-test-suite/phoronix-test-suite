@@ -28,6 +28,7 @@ Phoronix Test Suite
 - Add build-apache profile for building Apache/HTTPD 2.2
 - Fix divide by zero error when test fails
 - Fix quake4 profile, works now
+- Add install-all option for installing all available tests
 
 Phoronix Test Suite 0.7.0
 May 17, 2008
