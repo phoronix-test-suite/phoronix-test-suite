@@ -7,7 +7,7 @@
 		<Description>This test suite consists of tests that are able to take advantage of multi-core and/or multi-processor systems. This suite can be used on a single core system, however, it's intended for systems with multiple processing cores.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>build-mplayer</Test>
+		<Test>build-apache</Test>
 		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>

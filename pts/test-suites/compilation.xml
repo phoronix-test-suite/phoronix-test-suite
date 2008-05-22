@@ -12,6 +12,11 @@
 		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
+		<Test>build-apache</Test>
+		<Arguments></Arguments>
+		<Description>Time To Compile</Description>
+	</RunTest>
+	<RunTest>
 		<Test>build-php</Test>
 		<Arguments></Arguments>
 		<Description>Time To Compile</Description>

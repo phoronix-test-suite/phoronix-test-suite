@@ -31,7 +31,7 @@
 		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
-		<Test>build-mplayer</Test>
+		<Test>build-apache</Test>
 		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
