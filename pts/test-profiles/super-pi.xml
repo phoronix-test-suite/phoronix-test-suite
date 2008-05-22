@@ -1,11 +1,13 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.4</Version>
+		<Version>0.9.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>UNKNOWN</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Pekka Panula</Maintainer>
+		<DownloadSize>1</DownloadSize>
+		<EnvironmentSize>1</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Super PI</Title>
