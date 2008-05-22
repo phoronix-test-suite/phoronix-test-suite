@@ -25,6 +25,7 @@ Phoronix Test Suite
 - Add gnupg profile for encryption test
 - Add sqlite profile for SQLite testing (right now just SQLite INSERT tests)
 - Add specviewperf10 test profile for SPECViewPerf 10.0. Auto-detects CPU cores for multi-threading, but the multi-sampling setup still needs to be provided as an option... Use multisampleRunAll in viewperf.config.
+- Add build-apache profile for building Apache/HTTPD 2.2
 
 Phoronix Test Suite 0.7.0
 May 17, 2008
