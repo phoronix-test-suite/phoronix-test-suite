@@ -4,7 +4,7 @@
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
-		<Status>UNKNOWN</Status>
+		<Status>BROKEN</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 	</TestProfile>
 	<TestInformation>
