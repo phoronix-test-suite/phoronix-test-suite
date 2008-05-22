@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.6</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
@@ -11,14 +11,14 @@
 		<Title>x11perf</Title>
 		<Version>1.5</Version>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>2</TimesToRun>
 		<ResultScale>Operations / Second</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>x11perf is a regression/basic performance test for X.Org.</Description>
+		<Description>x11perf is a very basic performance/regression test for X.Org.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>-time 20 -repeat 1</Arguments>
+			<Arguments>-time 25 -repeat 1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Test</DisplayName>
