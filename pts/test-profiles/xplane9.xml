@@ -1,11 +1,14 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.6</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Simulator</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>475</DownloadSize>
+		<EnvironmentSize>855</EnvironmentSize>
+		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 	</TestProfile>
 	<TestInformation>
 		<Title>X-Plane</Title>
@@ -13,7 +16,7 @@
 		<TimesToRun>2</TimesToRun>
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This is a benchmark of X-Plane, a realistic multi-platform flight simulator developed by Laminar Research.</Description>
+		<Description>This is a test of X-Plane, a realistic multi-platform flight simulator designed for personal computers. This is commercial closed-source software, but this X-Plane 9.0 benchmark has been kindly made available for free. X-Plane is the product of Austin Meyer and Laminar Research.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>

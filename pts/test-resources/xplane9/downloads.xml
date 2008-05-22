@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://update.x-plane.com/X-Plane_900r3_timedemo.tar.bz2, http://www.phoronix-test-suite.com/benchmark-files/X-Plane_900r3_timedemo.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/X-Plane_900r3_timedemo.tar.bz2</URL>
+			<URL>http://update.x-plane.com/X-Plane_900r3_timedemo.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/X-Plane_900r3_timedemo.tar.bz2</URL>
 			<MD5>6773b1571bb264f0208c664f8bfc9523</MD5>
 		</Package>
 	</Downloads>
