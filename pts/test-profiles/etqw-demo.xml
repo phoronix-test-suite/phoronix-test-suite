@@ -8,8 +8,8 @@
 		<Maintainer>Michael Larabel</Maintainer>
 	</TestProfile>
 	<TestInformation>
-		<Title>Enemy Territory: Quake Wars</Title>
-		<Version>demo2</Version>
+		<Title>ET: Quake Wars Demo</Title>
+		<Version></Version>
 		<Executable>etqw</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>FPS</ResultScale>

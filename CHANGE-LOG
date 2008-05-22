@@ -29,6 +29,7 @@ Phoronix Test Suite
 - Fix divide by zero error when test fails
 - Fix quake4 profile, works now
 - Add install-all option for installing all available tests
+- Update etqw profile against Enemy Territory: Quake Wars v1.5
 
 Phoronix Test Suite 0.7.0
 May 17, 2008

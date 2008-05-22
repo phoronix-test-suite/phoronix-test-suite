@@ -1,8 +1,12 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.idsoftware.com/idstuff/etqw/ETQW-client-1.4-full.x86.run</URL>
-			<MD5>dd2cd05256a080922da33cc6804bc4c2</MD5>
+			<URL>http://ftp.eprison.de/ftp2/etqw/patches/patch_1.0-1.5/ETQW-client-1.5-full.x86.run, ftp://ftp0.uk.multiplay.co.uk/pub/games/fps/enemyterritory_quakewars/patches/linux/ETQW-client-1.5-full.x86.run, http://ftp.4players.de/pub/hosted/wolfenstein/users/etqw/patches/ETQW-client-1.5-full.x86.run</URL>
+			<MD5>28fd825fcd9f6227827230b319e481cf</MD5>
+		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/etqw-pts-demo-2.tar.gz</URL>
+			<MD5>c7708a2702a3f2b58df644d7aaeca0af</MD5>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

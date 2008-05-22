@@ -2,31 +2,24 @@
 
 cd $1
 
-chmod +x ETQW-client-1.4-full.x86.run
-unzip -o ETQW-client-1.4-full.x86.run
+unzip -o ETQW-client-1.5-full.x86.run
 
 echo "#!/bin/sh
 cd data
 ./etqw.x86 \$@ | grep fps" > etqw
 chmod +x etqw
 
-if [ ! -f etqw-demo.tar.bz2 ]
-  then
-     wget http://www.phoronix-test-suite.com/benchmark-files/etqw-demo-1.tar.bz2 -O etqw-demo.tar.bz2
-fi
-tar -jxvf etqw-demo.tar.bz2
+tar -xvf etqw-pts-demo-2.tar.gz
 mkdir data/base/demos
 mv -f pts.ndm data/base/demos/pts.ndm
 
 # etqw_pts.cfg
-# pts.ndm is 2816 frames so we wait a little longer to get the fps
-# AND WE QUIT (the bench blocks otherwise) 
 echo "
 set com_unlockFPS \"1\"
 timenetdemo pts
-wait 2818
+wait 5018
 echo ======================
-echo wait '# of frames + 2'
+echo wait '# of frames + 3'
 echo timenetdemo ended
 echo quit
 echo ======================
@@ -62,19 +55,12 @@ if [ "$ETQW_BASE_MEGAT" != "" ] #  found in '/home/username/'
        exit 0
 fi
 
-ETQW_BASE_MEGAT=`find -P /usr/ -name $GAME_FILES_TYPE_DIR`
-if [ "$ETQW_BASE_MEGAT" != "" ] #  found in '/usr/'
+ETQW_BASE_MEGAT=`find -P /usr/local/games -name $GAME_FILES_TYPE_DIR`
+if [ "$ETQW_BASE_MEGAT" != "" ] #  found in '/usr/local/games'
   then
       CreateSymlinks
       exit 0
 fi
-
-ETQW_BASE_MEGAT=`find -P / -name $GAME_FILES_TYPE_DIR`
-if [ "$ETQW_BASE_MEGAT" != "" ] #  found in '/' so 
-  then
-      CreateSymlinks
-       exit 0
-fi	
            
 echo  "no megatexture found
 copy ET:QW Game Files (*.mega) in bases/megatextures
