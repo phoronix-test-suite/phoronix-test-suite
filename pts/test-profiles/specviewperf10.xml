@@ -1,0 +1,61 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.5</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>585</DownloadSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>SPECViewPerf</Title>
+		<Version>10.0</Version>
+		<ExternalDependencies>build-utilities, glut, csh, libpng-development</ExternalDependencies>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Weighted Geometric Mean</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This test runs SPECViewPerf 10.0.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>SPECViewPerf Test</DisplayName>
+			<Identifier>run-test</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>3dsmax-04</Name>
+					<Value>3dsmax</Value>
+				</Entry>
+				<Entry>
+					<Name>catia-02</Name>
+					<Value>catia</Value>
+				</Entry>
+				<Entry>
+					<Name>ensight-03</Name>
+					<Value>ensight</Value>
+				</Entry>
+				<Entry>
+					<Name>maya-02</Name>
+					<Value>maya</Value>
+				</Entry>
+				<Entry>
+					<Name>proe-04</Name>
+					<Value>proe</Value>
+				</Entry>
+				<Entry>
+					<Name>sw-01</Name>
+					<Value>sw</Value>
+				</Entry>
+				<Entry>
+					<Name>tcvis-01</Name>
+					<Value>tcvis</Value>
+				</Entry>
+				<Entry>
+					<Name>ugnx-01</Name>
+					<Value>ugnx</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>
