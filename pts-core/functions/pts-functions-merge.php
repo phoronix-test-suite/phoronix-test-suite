@@ -43,9 +43,14 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	$new_suite_type = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_TYPE);
 	$new_suite_maintainer = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
 
-	$new_results_testname = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+	$new_results_name = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 	$new_results_version = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
+	$new_results_attributes = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+	$new_results_scale = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
+	$new_results_testname = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 	$new_results_arguments = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
+	$new_results_proportion = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
+	$new_results_result_format = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
 
 	$new_results_identifiers = array();
 	$new_results_values = array();
@@ -160,13 +165,14 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 		}
 	}
 
+	// Merge Results
 	$merge_count = 0;
 	for($r_o = 0; $r_o < count($original_results_identifiers); $r_o++)
 	{
 		$result_merged = false;
 		for($r_n = 0; $r_n < count($new_results_identifiers) && !$result_merged; $r_n++)
 		{
-			if($original_results_testname[$r_o] == $new_results_testname[$r_n] && $original_results_arguments[$r_o] == $new_results_arguments[$r_n] && pts_version_comparable($original_results_version[$r_o], $new_results_version[$r_n]))
+			if(!empty($original_results_identifiers[$r_o]) && !empty($new_results_identifiers[$r_n]) && $original_results_testname[$r_o] == $new_results_testname[$r_n] && $original_results_arguments[$r_o] == $new_results_arguments[$r_n] && pts_version_comparable($original_results_version[$r_o], $new_results_version[$r_n]))
 			{
 				$USE_ID = pts_request_new_id();
 				$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$r_o]);
@@ -189,14 +195,61 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$r_n][$o], 5, "n-$r_n-$o");
 				}
 
+				$original_results_identifiers[$r_o] = "";
+				$new_results_identifiers[$r_n] = "";
 				$result_merged = true;
 				$merge_count++;
 			}
 		}
 	}
 
-	if($merge_count == 0)
-		pts_exit("No compatible tests found to merge!\n\n");
+	// Add other results to bottom
+	for($r_o = 0; $r_o < count($original_results_identifiers); $r_o++)
+	{
+		if(!empty($original_results_identifiers[$r_o]))
+		{
+			$USE_ID = pts_request_new_id();
+			$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$r_o]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $original_results_version[$r_o]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $original_results_attributes[$r_o]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $original_results_scale[$r_o]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $original_results_proportion[$r_o]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $original_results_testname[$r_o]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $original_results_arguments[$r_o]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $original_results_result_format[$r_o]);
+
+			for($o = 0; $o < count($original_results_identifiers[$r_o]); $o++)
+			{
+				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $original_results_identifiers[$r_o][$o], 5, "o-$r_o-$o-s");
+				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $original_results_values[$r_o][$o], 5, "o-$r_o-$o-s");
+			}
+
+			$original_results_identifiers[$r_o] = "";
+		}
+	}
+	for($r_n = 0; $r_n < count($new_results_identifiers); $r_n++)
+	{
+		if(!empty($new_results_identifiers[$r_n]))
+		{
+			$USE_ID = pts_request_new_id();
+			$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $new_results_name[$r_n]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $new_results_version[$r_n]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $new_results_attributes[$r_n]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $new_results_scale[$r_n]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $new_results_proportion[$r_n]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $new_results_testname[$r_n]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $new_results_arguments[$r_n]);
+			$RESULTS->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $new_results_result_format[$r_n]);
+
+			for($o = 0; $o < count($new_results_identifiers[$r_n]); $o++)
+			{
+				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $new_results_identifiers[$r_n][$o], 5, "n-$r_n-$o-s");
+				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$r_n][$o], 5, "n-$r_n-$o-s");
+			}
+
+			$new_results_identifiers[$r_n] = "";
+		}
+	}
 
 	return $RESULTS->getXML();
 }
