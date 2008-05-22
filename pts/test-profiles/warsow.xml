@@ -1,25 +1,52 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.4</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<ApplicationType>Game</ApplicationType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>185</DownloadSize>
+		<EnvironmentSize>195</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Warsow</Title>
 		<Version>0.42</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>2</TimesToRun>
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This is a benchmark of Warsow, a popular open-source first-person shooter.</Description>
-		<DownloadSize>186</DownloadSize>
-		<EnvironmentSize>192</EnvironmentSize>
+		<Description>This is a benchmark of Warsow, a popular open-source first-person shooter. This game uses the QFusion engine.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>+timedemo 1 +demo pts-warsow-04 +next "quit"</Arguments>
+			<Arguments>+exec pts-warsow.cfg +timedemo 1 +demo pts-warsow-04 +next "quit" +r_mode -1</Arguments>
 		</Default>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>resolution</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>800 x 600</Name>
+					<Value>+vid_customwidth 800 +vid_customheight 600 +vid_restart</Value>
+				</Entry>
+				<Entry>
+					<Name>1024 x 768</Name>
+					<Value>+vid_customwidth 1024 +vid_customheight 768 +vid_restart</Value>
+				</Entry>
+				<Entry>
+					<Name>1280 x 1024</Name>
+					<Value>+vid_customwidth 1280 +vid_customheight 1024 +vid_restart</Value>
+				</Entry>
+				<Entry>
+					<Name>1600 x 1200</Name>
+					<Value>+vid_customwidth 1600 +vid_customheight 1200 +vid_restart</Value>
+				</Entry>
+				<Entry>
+					<Name>1680 x 1050</Name>
+					<Value>+vid_customwidth 1680 +vid_customheight 1050 +vid_restart</Value>
+				</Entry>
+			</Menu>
+		</Option>
 	</TestSettings>
 </PhoronixTestSuite>

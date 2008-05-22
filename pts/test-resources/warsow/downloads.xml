@@ -5,8 +5,8 @@
 			<MD5>cba5fe9b8af01b378e685959098fa84f</MD5>
 		</Package>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-warsow-04.wd10</URL>
-			<MD5>26beb08a58d89c39d97dc728461d20de</MD5>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-warsow-1.tar.gz</URL>
+			<MD5>2461da4eeedfa37e3447a4b3ad3f07a4</MD5>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
