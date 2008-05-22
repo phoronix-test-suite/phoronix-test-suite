@@ -194,7 +194,7 @@ function pts_monitor_statistics()
 		{
 			if(pts_gd_available())
 			{
-				$url = "";
+				$image_list = array();
 				pts_save_user_file();
 				pts_save_user_file(null, null, "/pts-monitor-viewer/");
 				pts_copy(RESULTS_VIEWER_DIR . "pts-monitor-viewer.html", PTS_MONITOR_DIR . "pts-monitor-viewer.html");
@@ -234,10 +234,12 @@ function pts_monitor_statistics()
 						$t->loadGraphVersion(PTS_VERSION);
 						$t->save_graph(PTS_MONITOR_DIR . THIS_RUN_TIME . '-' . $image_count . ".png");
 						$t->renderGraph();
-						$url .= THIS_RUN_TIME . '-' . $image_count . ".png,";
+
+						array_push($image_list, THIS_RUN_TIME . '-' . $image_count . ".png");
 						$image_count++;
 					}
 				}
+				$url = implode($image_list, ",");
 			}
 		}
 	}
