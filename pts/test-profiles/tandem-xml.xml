@@ -1,15 +1,17 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.1</Version>
+		<Version>0.9.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>1</DownloadSize>
+		<EnvironmentSize>1</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Tandem XML</Title>
-		<Version>1</Version>
+		<Version>1.0</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

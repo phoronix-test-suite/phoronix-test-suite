@@ -18,3 +18,4 @@ case \"\$1\" in
 esac
 " > tandem-xml
 chmod +x tandem-xml
+
