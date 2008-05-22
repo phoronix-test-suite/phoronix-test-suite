@@ -32,6 +32,7 @@ Phoronix Test Suite
 - Update etqw profile against Enemy Territory: Quake Wars v1.5
 - Few minor improvements to PTS sensor monitoring
 - Enhanced merging support / appending "not-mergable" results at the end of file
+- Add force-install-all option for forcing the install of all available tests
 
 Phoronix Test Suite 0.7.0
 May 17, 2008

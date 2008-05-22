@@ -71,6 +71,9 @@ case "$1" in
 "install-all")
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_ALL
 	;;
+"force-install-all")
+	$PHP_BIN pts-core/pts-run-cmd.php FORCE_INSTALL_ALL
+	;;
 "run")
 	$PHP_BIN pts-core/pts-run-benchmark.php $2
 	;;

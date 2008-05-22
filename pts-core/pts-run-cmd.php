@@ -83,8 +83,12 @@ switch($COMMAND)
 		$install_objects = "";
 		pts_recurse_install_benchmark($ARG_1, $install_objects);
 		break;
+	case "FORCE_INSTALL_ALL":
 	case "INSTALL_ALL":
 		require_once("pts-core/functions/pts-functions-install.php");
+
+		if($COMMAND == "FORCE_INSTALL_ALL")
+			define("PTS_FORCE_INSTALL", 1);
 
 		foreach(glob(TEST_RESOURCE_DIR . "*/downloads.xml") as $downloads_file)
 		{
