@@ -4,19 +4,18 @@
                 <TestType>Graphics</TestType>
 		<SoftwareType>Other</SoftwareType>
 		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<Status>UNVERIFIED</Status>
 		<Maintainer>Stefan Doesinger</Maintainer>
 	</TestProfile>
 	<TestInformation>
 		<Title>Wine Conformance Tests</Title>
-		<ExternalDependencies>glut, libpng-development, git, xorg-development, bison, flex</ExternalDependencies>
+		<ExternalDependencies>glut, libpng-development, git, xorg-development, bison, flex, build-utilities</ExternalDependencies>
 		<Description>This test runs the Wine Direct3D conformance tests.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Option>
 			<DisplayName>WINE Test</DisplayName>
 			<Identifier>wine-test</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>Direct3D 9 Visual Test</Name>
