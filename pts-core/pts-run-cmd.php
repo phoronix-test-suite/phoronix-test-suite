@@ -90,9 +90,9 @@ switch($COMMAND)
 		if($COMMAND == "FORCE_INSTALL_ALL")
 			define("PTS_FORCE_INSTALL", 1);
 
-		foreach(glob(TEST_RESOURCE_DIR . "*/downloads.xml") as $downloads_file)
+		foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
 		{
-			$test = substr($downloads_file, strlen(TEST_RESOURCE_DIR), 0 - 14);
+			$test = basename($benchmark_file, ".xml");
 
 			// Any external dependencies?
 			pts_install_package_on_distribution($test);
