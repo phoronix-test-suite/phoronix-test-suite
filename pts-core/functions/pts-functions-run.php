@@ -139,7 +139,9 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 		{
 			$test_result = pts_run_benchmark($benchmarks_array[$i], $arguments_array[$i], $arguments_description[$i]);
 
-			if($save_results && ((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2)))
+			// test_result[0] == the main result
+
+			if($save_results && count($test_result) > 0 && ((is_numeric($test_result[0]) && $test_result[0] > 0) || (!is_numeric($test_result[0]) && strlen($test_result[0]) > 2)))
 				pts_record_benchmark_result($tandem_xml, $benchmarks_array[$i], $arguments_array[$i], $results_identifier, $test_result, $arguments_description[$i], pts_request_new_id());
 
 			if($i != (count($benchmarks_array) - 1))
@@ -149,7 +151,9 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 }
 function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $identifier, $result, $description, $tandem_id = 128)
 {
-	if((is_numeric($result) && $result > 0) || (!is_numeric($result) && strlen($result) > 2))
+	$test_result = $result[0];
+
+	if((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2))
 	{
 		global $BENCHMARK_RAN;
 
@@ -198,7 +202,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $benchmark);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, trim($default_arguments . " " . $arguments));
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
-		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result, 5);
+		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_result, 5);
 
 		$BENCHMARK_RAN = true;
 	}
@@ -455,7 +459,10 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	//pts_beep();
 	pts_process_remove($benchmark_identifier);
-	return $END_RESULT;
+
+	// 0 = main end result
+
+	return array($END_RESULT);
 }
 function pts_global_auto_tags($extra_attr = NULL)
 {
