@@ -116,8 +116,8 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 		foreach($suite_benchmarks as $benchmark)
 			pts_recurse_verify_installation($benchmark, $NEEDS_INSTALLING);
 	}
-	else
-		echo "\nNot recognized: $TO_VERIFY.\n";
+	//else
+	//	echo "\nNot recognized: $TO_VERIFY.\n";
 }
 function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
 {

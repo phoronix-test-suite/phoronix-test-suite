@@ -445,7 +445,12 @@ function pts_test_architecture_supported($identifier)
 			foreach($archs as $key => $value)
 				$archs[$key] = trim($value);
 
-			if(!in_array(kernel_arch(), $archs))
+			$this_arch = kernel_arch();
+
+			if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
+				$this_arch = "x86";
+
+			if(!in_array($this_arch, $archs))
 				$supported = false;
 		}
 	}
