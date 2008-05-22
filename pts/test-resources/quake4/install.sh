@@ -2,11 +2,6 @@
 
 cd $1
 
-if [ ! -f quake4-demo.tar.bz2 ]
-  then
-     wget http://www.phoronix-test-suite.com/benchmark-files/quake4-demo-1.tar.bz2 -O quake4-demo.tar.bz2
-fi
-
 chmod +x quake4-linux-1.4.2.x86.run
 
 ./quake4-linux-1.4.2.x86.run --noexec --target .
@@ -17,7 +12,7 @@ echo "#!/bin/sh
 ./quake4-real \$@ | grep fps" > quake4
 chmod +x quake4
 
-tar -jxvf quake4-demo.tar.bz2
+tar -xvf quake4-pts-demo-1.tar.gz
 mkdir q4base/demos
 mv -f pts.demo q4base/demos/pts.demo
 

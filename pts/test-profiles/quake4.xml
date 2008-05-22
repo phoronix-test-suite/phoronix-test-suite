@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.3</Version>
+		<Version>0.5</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
@@ -17,88 +17,46 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>+timedemoquit pts +set r_mode -1</Arguments>
+			<Arguments>+set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +timedemoquit pts +set in_tty 0</Arguments>
 		</Default>
 		<Option>
-			<DisplayName>Video RAM</DisplayName>
-			<Identifier>video-ram</Identifier>
-			<ArgumentName>+set sys_VideoRam </ArgumentName>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>resolution</Identifier>
+			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
-					<Name>128MB</Name>
-					<Value>128</Value>
+					<Name>800 x 600</Name>
+					<Value>+set r_customWidth 800 +set r_customHeight 600</Value>
 				</Entry>
 				<Entry>
-					<Name>256MB</Name>
-					<Value>256</Value>
+					<Name>1024 x 768</Name>
+					<Value>+set r_customWidth 1024 +set r_customHeight 768</Value>
 				</Entry>
 				<Entry>
-					<Name>512MB</Name>
-					<Value>512</Value>
+					<Name>1280 x 1024</Name>
+					<Value>+set r_customWidth 1280 +set r_customHeight 1024</Value>
 				</Entry>
 				<Entry>
-					<Name>640MB</Name>
-					<Value>640</Value>
-				</Entry>
-				<Entry>
-					<Name>1GB</Name>
-					<Value>1024</Value>
+					<Name>1680 x 1050</Name>
+					<Value>+set r_customWidth 1680 +set r_customHeight 1050</Value>
 				</Entry>
 			</Menu>
 		</Option>
 		<Option>
-			<DisplayName>Resolution (Width)</DisplayName>
-			<Identifier>width-resolution</Identifier>
-			<ArgumentName>+set r_mode -1 +set r_customWidth </ArgumentName>
-			<Menu>
-				<Entry>
-					<Name>1024</Name>
-					<Value>1024</Value>
-				</Entry>
-				<Entry>
-					<Name>1280</Name>
-					<Value>1280</Value>
-				</Entry>
-				<Entry>
-					<Name>1680</Name>
-					<Value>1680</Value>
-				</Entry>
-			</Menu>
-		</Option>
-		<Option>
-			<DisplayName>Resolution (Height)</DisplayName>
-			<Identifier>height-resolution</Identifier>
-			<ArgumentName>+set r_mode -1 +set r_customHeight </ArgumentName>
-			<Menu>
-				<Entry>
-					<Name>768</Name>
-					<Value>768</Value>
-				</Entry>
-				<Entry>
-					<Name>1024</Name>
-					<Value>1024</Value>
-				</Entry>
-				<Entry>
-					<Name>1050</Name>
-					<Value>1050</Value>
-				</Entry>
-			</Menu>
-		</Option>
-		<Option>
-			<DisplayName>In-Game</DisplayName>
+			<DisplayName>Quality</DisplayName>
 			<Identifier>game-quality</Identifier>
 			<ArgumentName>+set com_machineSpec </ArgumentName>
 			<Menu>
 				<Entry>
-					<Name>Low Quality</Name>
+					<Name>Low</Name>
 					<Value>0</Value>
 				</Entry>
 				<Entry>
-					<Name>High Quality</Name>
+					<Name>High</Name>
 					<Value>2</Value>
 				</Entry>
 				<Entry>
-					<Name>Ultra Quality</Name>
+					<Name>Ultra</Name>
 					<Value>3</Value>
 				</Entry>
 			</Menu>
