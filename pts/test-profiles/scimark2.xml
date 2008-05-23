@@ -1,11 +1,13 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.3</Version>
+		<Version>0.9.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>1</DownloadSize>
+		<EnvironmentSize>1</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>SciMark</Title>
@@ -14,7 +16,7 @@
 		<ResultScale>Mflops</ResultScale>
 		<Proportion>HIB</Proportion>
 		<SubTitle>Composite Score</SubTitle>
-		<Description>This test runs the ANSI C version of SciMark 2.0, which is a benchmark for scientific and numerical computing developed by programmers at the National Institute of Standards and Technology. This benchmark is made up of Fast Foruier Transform, Jacobi Successive Over-relaxation, Monte Carlo, Sparse Matrix Multiply, and dense LU matrix factorization benchmarks.</Description>
+		<Description>This test runs the ANSI C version of SciMark 2.0, which is a benchmark for scientific and numerical computing developed by programmers at the National Institute of Standards and Technology. This test is made up of Fast Foruier Transform, Jacobi Successive Over-relaxation, Monte Carlo, Sparse Matrix Multiply, and dense LU matrix factorization benchmarks.</Description>
                 <ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>
