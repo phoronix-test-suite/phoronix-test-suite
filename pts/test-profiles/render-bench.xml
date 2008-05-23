@@ -1,18 +1,20 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.1</Version>
+		<Version>0.9.0</Version>
                 <TestType>Graphics</TestType>
 		<SoftwareType>Other</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>1</DownloadSize>
+		<EnvironmentSize>1</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Render Bench</Title>
 		<Executable>render-bench-test</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
-		<ExternalDependencies>imlib2-development</ExternalDependencies>
-		<Description>This test runs render_bench, which tests X.Org and driver's RENDER performance.</Description>
+		<ExternalDependencies>build-essential, imlib2-development</ExternalDependencies>
+		<Description>This test runs render_bench, which tests the performance of X.Org and the video driver's RENDER extension.</Description>
 	</TestInformation>
 </PhoronixTestSuite>
