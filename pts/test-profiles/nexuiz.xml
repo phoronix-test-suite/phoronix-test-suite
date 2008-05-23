@@ -42,6 +42,10 @@
 					<Name>1680 x 1050</Name>
 					<Value>+vid_width 1680 +vid_height 1050</Value>
 				</Entry>
+				<Entry>
+					<Name>1600 x 1200</Name>
+					<Value>+vid_width 1600 +vid_height 1200</Value>
+				</Entry>
 			</Menu>
 		</Option>
 		<Option>
