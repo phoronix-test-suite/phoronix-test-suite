@@ -11,5 +11,5 @@ chmod +x etqw
 
 tar -jxvf etqw-demo-files-2.tar.bz2
 mkdir data/base/demos
-mv -f pts-trondheim.ndm data/base/demos/pts-trondheim.ndm
+mv -f pts.ndm data/base/demos/pts.ndm
 mv -f etqw-pts.cfg data/base/etqw-pts.cfg
