@@ -12,9 +12,10 @@
 	<TestInformation>
 		<Title>Sunflow Rendering System</Title>
 		<Version>0.07.2</Version>
+		<SubTitle>Global Illumination + Image Synthesis</SubTitle>
 		<Executable>sunflow-benchmark</Executable>
 		<ExternalDependencies>java</ExternalDependencies>
-		<TimesToRun>3</TimesToRun>
+		<TimesToRun>2</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test runs benchmarks of the Sunflow Rendering System. The Sunflow Rendering System is an open-source render engine for photo-realistic image synthesis with a ray-tracing core.</Description>
