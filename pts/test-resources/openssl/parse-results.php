@@ -19,4 +19,5 @@ foreach(explode(" ", $BENCHMARK_RESULTS) as $item)
 }
 
 echo $BENCHMARK_RESULTS;
+
 ?>

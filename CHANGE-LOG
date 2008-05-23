@@ -33,6 +33,7 @@ Phoronix Test Suite
 - Few minor improvements to PTS sensor monitoring
 - Enhanced merging support / appending "not-mergable" results at the end of file
 - Add force-install-all option for forcing the install of all available tests
+- Many test profile updates... a number of them getting close to being finalized for 1.0 release
 
 Phoronix Test Suite 0.7.0
 May 17, 2008

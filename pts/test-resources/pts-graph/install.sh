@@ -2,7 +2,7 @@
 
 cd $1
 
-tar -xvf pts-graph-benchmark.tar.gz
+tar -xvf pts-graph-benchmark-1.tar.gz
 
 echo "#!/bin/sh
 

@@ -1,19 +1,21 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.4</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>272</DownloadSize>
+		<EnvironmentSize>279</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>OpenArena</Title>
 		<Version>0.7.6</Version>
-		<TimesToRun>3</TimesToRun>
+		<TimesToRun>1</TimesToRun>
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This is a benchmark of OpenArena, a popular open-source first-person shooter.</Description>
+		<Description>This is a test of OpenArena, a popular open-source first-person shooter. This game is based upon ioquake3, which in turn uses the GPL version of id Software's Quake 3 engine.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>
@@ -39,6 +41,10 @@
 				<Entry>
 					<Name>1680 x 1050</Name>
 					<Value>+set r_customWidth 1680 +set r_customHeight 1050</Value>
+				</Entry>
+				<Entry>
+					<Name>1680 x 1050</Name>
+					<Value>+set r_customWidth 1600 +set r_customHeight 1200</Value>
 				</Entry>
 			</Menu>
 		</Option>

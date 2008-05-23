@@ -1,11 +1,13 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.6</Version>
+		<Version>0.9.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>3</DownloadSize>
+		<EnvironmentSize>37</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>OpenSSL</Title>
@@ -14,7 +16,7 @@
 		<TimesToRun>4</TimesToRun>
 		<ResultScale>Signs Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This is a benchmark of OpenSSL, the open-source toolkit for SSL/TLS.</Description>
+		<Description>OpenSSL is an open-source toolkit that implements SSL (Secure Sockets Layer) and TLS (Transport Layer Security) protocols. This test measures the RSA 4096-bit performance of OpenSSL.</Description>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>

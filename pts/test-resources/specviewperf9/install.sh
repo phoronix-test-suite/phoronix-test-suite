@@ -2,7 +2,9 @@
 
 cd $1
 
+tar -xvf SPECViewPerf10-Configure.tar.gz
 tar -xvf SPECViewperf9.0.3.tar.gz
+
 cp -f SPECViewPerf9-Configure SPECViewperf9.0/src/Configure
 chmod +x SPECViewperf9.0/src/Configure
 cd SPECViewperf9.0/src

@@ -1,11 +1,13 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.4</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>363</DownloadSize>
+		<EnvironmentSize>382</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Nexuiz</Title>
@@ -13,7 +15,7 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This is a benchmark of Nexuiz, a popular open-source first-person shooter.</Description>
+		<Description>This is a benchmark of Nexuiz, a popular open-source first-person shooter. Thi sgame uses the DarkPlaces engine, which is a largely modified version of the Quake engine with extra features such as High Dynamic Range rendering and OpenGL 2.0 shaders.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>
