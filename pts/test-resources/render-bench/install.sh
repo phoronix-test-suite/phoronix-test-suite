@@ -10,5 +10,5 @@ cd ..
 
 echo "#!/bin/sh
 cd render_bench/
-time -f \"Total Render Time: %e Seconds\" ./render_bench 2>&1" > render-bench-test
+/usr/bin/time -f \"Total Render Time: %e Seconds\" ./render_bench 2>&1" > render-bench-test
 chmod +x render-bench-test

@@ -27,6 +27,6 @@ tar -xjf php-5.2.5.tar.bz2
 cd php-5.2.5/
 ./configure --with-libxml-dir=$THIS_DIR/libxml2 > /dev/null
 sleep 3
-time -f \"PHP Build Time: %e Seconds\" make -s -j \$NUM_CPU_JOBS 2>&1 | grep Seconds" > time-compile-php
+/usr/bin/time -f \"PHP Build Time: %e Seconds\" make -s -j \$NUM_CPU_JOBS 2>&1 | grep Seconds" > time-compile-php
 
 chmod +x time-compile-php

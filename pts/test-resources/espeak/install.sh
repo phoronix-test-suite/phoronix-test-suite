@@ -13,5 +13,5 @@ rm -rf espeak-1.37-source/
 
 echo "#!/bin/sh
 cd espeak_/bin/
-LD_LIBRARY_PATH=$THIS_DIR/espeak_/lib/:\$LD_LIBRARY_PATH time -f \"eSpeak Synthesis Time: %e Seconds\" ./espeak -f ../../20417-8.txt -w /dev/null 2>&1" > espeak
+LD_LIBRARY_PATH=$THIS_DIR/espeak_/lib/:\$LD_LIBRARY_PATH /usr/bin/time -f \"eSpeak Synthesis Time: %e Seconds\" ./espeak -f ../../20417-8.txt -w /dev/null 2>&1" > espeak
 chmod +x espeak

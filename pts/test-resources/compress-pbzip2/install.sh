@@ -27,7 +27,7 @@ done
 cat > compress-pbzip2 <<EOT
 #!/bin/sh
 cd pbzip2-1.0.2/
-time -f "PBZIP2 Compress Time: %e Seconds" ./pbzip2 -k -f -p\$NUM_CPU_CORES -r -5 ../bigfile 2>&1
+/usr/bin/time -f "PBZIP2 Compress Time: %e Seconds" ./pbzip2 -k -f -p\$NUM_CPU_CORES -r -5 ../bigfile 2>&1
 rm -f bigfile.bz2
 EOT
 chmod +x compress-pbzip2

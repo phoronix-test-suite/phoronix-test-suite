@@ -15,7 +15,7 @@ chmod +x gzip_bigfile
 
 cat > compress-gzip <<EOT
 #!/bin/sh
-time -f "Gzip Compress Time: %e Seconds" ./gzip_bigfile 2>&1
+/usr/bin/time -f "Gzip Compress Time: %e Seconds" ./gzip_bigfile 2>&1
 EOT
 chmod +x compress-gzip 
 

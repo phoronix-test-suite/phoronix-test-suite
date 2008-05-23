@@ -16,5 +16,5 @@ rm -rf gnupg-1.4.9/
 echo trondheim-pts-1234567890 > passphrase
 
 echo "#!/bin/sh
-time -f \"Encryption Time: %e Seconds\" ./gnupg_/bin/gpg -c --no-options --passphrase-file passphrase -o /dev/null 1gbfile 2>&1" > gnupg
+/usr/bin/time -f \"Encryption Time: %e Seconds\" ./gnupg_/bin/gpg -c --no-options --passphrase-file passphrase -o /dev/null 1gbfile 2>&1" > gnupg
 chmod +x gnupg

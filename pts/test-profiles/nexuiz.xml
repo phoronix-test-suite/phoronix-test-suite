@@ -24,7 +24,6 @@
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>display-resolution</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>800 x 600</Name>
@@ -66,7 +65,6 @@
 		<Option>
 			<DisplayName>Sound</DisplayName>
 			<Identifier>play-sound</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>On</Name>
