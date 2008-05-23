@@ -1,12 +1,13 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.5</Version>
+		<Version>0.6</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>585</DownloadSize>
+		<EnvironmentSize>1600</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>SPECViewPerf</Title>
@@ -15,7 +16,7 @@
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Weighted Geometric Mean</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This test runs SPECViewPerf 10.0.</Description>
+		<Description>This test runs SPECViewPerf 10.0, which is made up of real-world OpenGL workstation tests such as 3DS Max, CATIA, Maya, Pro/Engineer, and SolidWorks. SPECViewPerf 10.0 features full-scene anti-aliasing and multi-threading support over SPECViewPerf 9.0.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Option>

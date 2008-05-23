@@ -1,11 +1,13 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.4</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>625</DownloadSize>
+		<EnvironmentSize>1800</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>SPECViewPerf</Title>
@@ -14,7 +16,7 @@
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Weighted Geometric Mean</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This test runs SPECViewPerf 9.</Description>
+		<Description>This test runs SPECViewPerf 9.0, which is made up of real-world OpenGL workstation tests such as 3DS Max, CATIA, Maya, Pro/Engineer, and SolidWorks.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Option>
