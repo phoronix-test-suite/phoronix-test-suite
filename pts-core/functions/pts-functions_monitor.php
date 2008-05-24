@@ -247,10 +247,10 @@ function pts_monitor_statistics()
 	}
 
 	// Elapsed time
-	$time_diff = floor((PTS_END_TIME - PTS_START_TIME) / 60);
+	$time_diff = PTS_END_TIME - PTS_START_TIME;
 
-	if($time_diff > 0 && count($m_array) > 0)
-		$info_report .= "\n\nElapsed Time: " . $time_diff . " Minutes";
+	if($time_diff > 10 && count($m_array) > 0)
+		$info_report .= "\n\nElapsed Time: " . pts_format_time_string($time_diff);
 
 	// terminal output
 	if(!empty($info_report))

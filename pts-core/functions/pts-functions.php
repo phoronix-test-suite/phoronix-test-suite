@@ -619,5 +619,49 @@ function pts_string_bool($string)
 	$string = strtolower($string);
 	return $string == "true" || $string == "1" || $string == "on";
 }
+function pts_format_time_string($time, $format = "SECONDS")
+{
+	if($format == "MINUTES")
+		$time *= 60;
+
+	$formatted_time = array();
+
+	if($time > 0)
+	{
+		$time_hours = floor($time / 3600);
+		$time_minutes = floor(($time - ($time_hours * 3600)) / 60);
+		$time_seconds = $time % 60;
+
+		if($time_hours > 0)
+		{
+			$formatted_part = $time_hours . " Hour";
+
+			if($time_hours > 1)
+				$formatted_part .= "s";
+
+			array_push($formatted_time, $formatted_part);
+		}
+		if($time_minutes > 0)
+		{
+			$formatted_part = $time_minutes . " Minute";
+
+			if($time_minutes > 1)
+				$formatted_part .= "s";
+
+			array_push($formatted_time, $formatted_part);
+		}
+		if($time_seconds > 0)
+		{
+			$formatted_part = $time_seconds . " Second";
+
+			if($time_seconds > 1)
+				$formatted_part .= "s";
+
+			array_push($formatted_time, $formatted_part);
+		}
+	}
+
+	return implode(", ", $formatted_time);
+}
 
 ?>
