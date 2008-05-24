@@ -392,9 +392,9 @@ switch($COMMAND)
 	case "LOGIN":
 		echo "\nIf you haven't already registered for your free PTS Global account, you can do so at http://global.phoronix-test-suite.com/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";
 		echo "User-Name: ";
-		$username = trim(strtolower(fgets(STDIN)));
+		$username = trim(fgets(STDIN));
 		echo "Password: ";
-		$password = md5(trim(strtolower(fgets(STDIN))));
+		$password = md5(trim(fgets(STDIN)));
 		$uploadkey = @file_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=$username&user_md5_pass=$password");
 
 		if(!empty($uploadkey))

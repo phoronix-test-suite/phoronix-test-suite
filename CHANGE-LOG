@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite
 
 - GtkPerf profile update from uncle_fungus
+- Fix log-in bug
 
 Phoronix Test Suite 0.8.0
 May 24, 2008
