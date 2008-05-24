@@ -36,6 +36,8 @@ function pts_monitor_statistics()
 	if(defined("PTS_EXIT"))
 		return;
 
+	define("PTS_END_TIME", time());
+
 	$device = array();
 	$type = array();
 	$unit = array();
@@ -243,6 +245,12 @@ function pts_monitor_statistics()
 			}
 		}
 	}
+
+	// Elapsed time
+	$time_diff = floor((PTS_END_TIME - PTS_START_TIME) / 60);
+
+	if($time_diff > 0 && count($m_array) > 0)
+		$info_report .= "\n\nElapsed Time: " . $time_diff . " Minutes";
 
 	// terminal output
 	if(!empty($info_report))

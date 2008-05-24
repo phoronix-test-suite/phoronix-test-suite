@@ -34,6 +34,7 @@ Phoronix Test Suite
 - Enhanced merging support / appending "not-mergable" results at the end of file
 - Add force-install-all option for forcing the install of all available tests
 - Many test profile updates... a number of them getting close to being finalized for 1.0 release
+- Add "Elapsed Time" to PTS sensor monitoring to show how long PTS was running
 
 Phoronix Test Suite 0.7.0
 May 17, 2008

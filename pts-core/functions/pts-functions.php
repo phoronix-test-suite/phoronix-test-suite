@@ -92,6 +92,7 @@ if(($to_show = getenv("MONITOR")))
 	$monitor_temp = in_array("all.temp", $to_show) || $monitor_all;
 	$monitor_power = in_array("all.power", $to_show) || $monitor_all;
 	$monitor_voltage = in_array("all.voltage", $to_show) || $monitor_all;
+	define("PTS_START_TIME", time());
 
 	if(in_array("gpu.temp", $to_show)  || $monitor_temp)
 	{
