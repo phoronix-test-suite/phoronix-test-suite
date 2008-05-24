@@ -51,11 +51,6 @@
 		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
-		<Test>md-gromacs</Test>
-		<Arguments>lzm mpi</Arguments>
-		<Description>Parallel Lysozyme</Description>
-	</RunTest>
-	<RunTest>
 		<Test>iozone</Test>
 		<Arguments>-i0</Arguments>
 		<Description>Write Performance</Description>
