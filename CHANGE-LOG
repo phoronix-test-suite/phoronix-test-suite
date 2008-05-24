@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 0.8.0
+May 24, 2008
 
 - Tweaks to suite-info formatting
 - Merge test-info and suite-info into generic info argument (though the earlier options are still compatible) and auto-detect the type
