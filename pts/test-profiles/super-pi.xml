@@ -6,8 +6,8 @@
 		<License>UNKNOWN</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Pekka Panula</Maintainer>
-		<DownloadSize>1</DownloadSize>
-		<EnvironmentSize>1</EnvironmentSize>
+		<DownloadSize>0.07</DownloadSize>
+		<EnvironmentSize>1.4</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Super PI</Title>

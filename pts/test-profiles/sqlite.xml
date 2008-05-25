@@ -6,8 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>2</DownloadSize>
-		<EnvironmentSize>20</EnvironmentSize>
+		<DownloadSize>2.1</DownloadSize>
+		<EnvironmentSize>18.4</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>SQLite</Title>

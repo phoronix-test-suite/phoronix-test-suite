@@ -6,8 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>1</DownloadSize>
-		<EnvironmentSize>2</EnvironmentSize>
+		<DownloadSize>1.2</DownloadSize>
+		<EnvironmentSize>1.3</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Sunflow Rendering System</Title>

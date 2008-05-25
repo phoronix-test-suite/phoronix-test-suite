@@ -6,8 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>8</DownloadSize>
-		<EnvironmentSize>16</EnvironmentSize>
+		<DownloadSize>16.4</DownloadSize>
+		<EnvironmentSize>49.3</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed PHP Compilation</Title>

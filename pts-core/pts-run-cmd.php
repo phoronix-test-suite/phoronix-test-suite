@@ -140,8 +140,10 @@ switch($COMMAND)
 			if(defined("PTS_DEBUG_MODE"))
 			{
 				$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
+				$test_download_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
+				$test_environment_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 
-				printf("%-18ls %-6ls %-12ls %-12ls\n", $identifier, $version, $status, $license);
+				printf("%-18ls %-6ls %-12ls %-12ls %-4ls %-4ls\n", $identifier, $version, $status, $license, $test_download_size, $test_environment_size);
 			}
 			else
 				if(!in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL")))

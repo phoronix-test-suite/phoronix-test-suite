@@ -7,7 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Andrew Schofield</Maintainer>
 		<DownloadSize>30</DownloadSize>
-		<EnvironmentSize>231</EnvironmentSize>
+		<EnvironmentSize>247</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>GROMACS MD Benchmark</Title>

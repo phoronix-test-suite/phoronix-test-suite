@@ -6,6 +6,8 @@
 		<License>FREE</License>
 		<Status>BROKEN</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>0.58</DownloadSize>
+		<EnvironmentSize>3.2</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>FRACT</Title>

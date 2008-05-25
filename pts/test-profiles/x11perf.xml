@@ -6,8 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>1</DownloadSize>
-		<EnvironmentSize>2</EnvironmentSize>
+		<DownloadSize>0.13</DownloadSize>
+		<EnvironmentSize>1.7</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>x11perf</Title>

@@ -7,6 +7,8 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>275</DownloadSize>
+		<EnvironmentSize>2868</EnvironmentSize>
+		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 	</TestProfile>
 	<TestInformation>
 		<Title>Quake 4</Title>

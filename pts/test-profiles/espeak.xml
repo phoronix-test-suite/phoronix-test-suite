@@ -6,6 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>1.2</DownloadSize>
+		<EnvironmentSize>2.2</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>eSpeak Speech Engine</Title>

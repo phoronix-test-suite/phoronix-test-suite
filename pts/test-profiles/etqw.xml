@@ -6,6 +6,9 @@
 		<License>NON-FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>531</DownloadSize>
+		<EnvironmentSize>566</EnvironmentSize>
+		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 	</TestProfile>
 	<TestInformation>
 		<Title>ET: Quake Wars</Title>

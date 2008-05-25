@@ -6,8 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>1</DownloadSize>
-		<EnvironmentSize>1</EnvironmentSize>
+		<DownloadSize>0.01</DownloadSize>
+		<EnvironmentSize>0.05</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Bandwidth</Title>

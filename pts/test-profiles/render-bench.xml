@@ -6,8 +6,8 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>1</DownloadSize>
-		<EnvironmentSize>1</EnvironmentSize>
+		<DownloadSize>0.02</DownloadSize>
+		<EnvironmentSize>0.12</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Render Bench</Title>
