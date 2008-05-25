@@ -5,7 +5,7 @@ cd $1
 tar -xvf iozone3_291.tar
 cd iozone3_291/src/current/
 
-case `uname -m` in
+case $OS_ARCH in
 	"x86_64" )
 	make linux-AMD64
 	;;

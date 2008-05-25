@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.5</Version>
+		<Version>0.9.0</Version>
 		<TestType>Disk</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -13,7 +13,7 @@
 		<TimesToRun>2</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>The IOzone benchmark tests your hard disk drive performance.</Description>
+		<Description>The IOzone benchmark tests your hard disk drive / file-system performance.</Description>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 	<TestSettings>
@@ -26,11 +26,11 @@
 			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
-					<Name>Write</Name>
+					<Name>Write Performance</Name>
 					<Value>-i0</Value>
 				</Entry>
 				<Entry>
-					<Name>Read</Name>
+					<Name>Read Performance</Name>
 					<Value>-i0 -i1</Value>
 				</Entry>
 			</Menu>
