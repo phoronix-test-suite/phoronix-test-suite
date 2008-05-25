@@ -11,8 +11,9 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Parallel BZIP2 Compression</Title>
-		<TimesToRun>3</TimesToRun>
+		<Version>1.0.2</Version>
 		<SubTitle>512MB File Compression</SubTitle>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test measures the time needed to compress a single 512MB file using BZIP2 compression.</Description>

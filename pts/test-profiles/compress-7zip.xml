@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.4</Version>
+		<Version>0.9.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -14,6 +14,6 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average MIPS</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>The benchmark for 7-Zip provided by p7zip.</Description>
+		<Description>This is a test of 7-Zip using p7zip with the integrated benchmark option.</Description>
 	</TestInformation>
 </PhoronixTestSuite>
