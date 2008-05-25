@@ -1,11 +1,12 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.6</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>275</DownloadSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>Quake 4</Title>
@@ -39,6 +40,10 @@
 				<Entry>
 					<Name>1680 x 1050</Name>
 					<Value>+set r_customWidth 1680 +set r_customHeight 1050</Value>
+				</Entry>
+				<Entry>
+					<Name>1600 x 1200</Name>
+					<Value>+set r_customWidth 1600 +set r_customHeight 1200</Value>
 				</Entry>
 			</Menu>
 		</Option>
