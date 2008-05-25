@@ -164,10 +164,8 @@ switch($COMMAND)
 			{
 			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
 				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
-				$license = $xml_parser->getXMLValue(P_TEST_LICENSE);
-				$status = $xml_parser->getXMLValue(P_TEST_STATUS);
 
-				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+				printf("%-18ls - %-30ls\n", $identifier, $name);
 			}
 		}
 		echo "\n";
