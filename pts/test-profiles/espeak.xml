@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.8</Version>
+		<Version>0.9.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -8,8 +8,9 @@
 		<Maintainer>Michael Larabel</Maintainer>
 	</TestProfile>
 	<TestInformation>
-		<Title>eSpeak Speech Synthesis</Title>
+		<Title>eSpeak Speech Engine</Title>
 		<Version>1.37</Version>
+		<SubTitle>Text-To-Speech Synthesis</SubTitle>
 		<ExternalDependencies>portaudio-development, build-utilities</ExternalDependencies>
 		<TimesToRun>2</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

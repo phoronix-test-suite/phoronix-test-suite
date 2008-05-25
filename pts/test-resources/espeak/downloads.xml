@@ -5,7 +5,7 @@
 			<MD5>418a00ff21617b2eb39c2a0717f35a30</MD5>
 		</Package>
 		<Package>
-			<URL>http://kent.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip</URL>
+			<URL>http://kent.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip, http://superb-west.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip, http://superb-east.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip</URL>
 			<MD5>5c7b292d0537232868b4ac1317d76c02</MD5>
 		</Package>
 	</Downloads>

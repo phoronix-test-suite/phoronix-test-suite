@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.idsoftware.com/idstuff/etqw/ETQW-demo2-client-full.r1.x86.run</URL>
+			<URL>ftp://ftp.idsoftware.com/idstuff/etqw/ETQW-demo2-client-full.r1.x86.run, ftp://ftp0.uk.multiplay.co.uk/pub/games/fps/enemyterritory_quakewars/demo/linux/ETQW-demo2-client-full.r1.x86.run</URL>
 			<MD5>11f5a882127a917b6c8b648ffa22da74</MD5>
 		</Package>
 		<Package>
