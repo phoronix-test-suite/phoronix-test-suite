@@ -2,11 +2,6 @@
 
 cd $1
 
-if [ ! -f ../pts-shared/pts-trondheim.wav ]
-  then
-     tar -xvf ../pts-shared/pts-trondheim-wav.tar.gz -C ../pts-shared/
-fi
-
 tar -xvf bzip2-1.0.5.tar.gz
 tar -xvf pbzip2-1.0.2.tar.gz
 cd bzip2-1.0.5/
@@ -17,17 +12,10 @@ cd ..
 cd pbzip2-1.0.2/
 make pbzip2-static
 
-cd ..
-rm -f bigfile
-for i in 1 2 3 4 5 6 7 8
-do
-	cat ../pts-shared/pts-trondheim.wav >> bigfile
-done
-
 cat > compress-pbzip2 <<EOT
 #!/bin/sh
 cd pbzip2-1.0.2/
-/usr/bin/time -f "PBZIP2 Compress Time: %e Seconds" ./pbzip2 -k -f -p\$NUM_CPU_CORES -r -5 ../bigfile 2>&1
-rm -f bigfile.bz2
+/usr/bin/time -f "PBZIP2 Compress Time: %e Seconds" ./pbzip2 -k -f -p\$NUM_CPU_CORES -r -5 ../compressfile 2>&1
+rm -f compressfile.bz2
 EOT
 chmod +x compress-pbzip2

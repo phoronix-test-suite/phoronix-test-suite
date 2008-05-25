@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.7</Version>
+		<Version>0.9.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -12,8 +12,9 @@
 	<TestInformation>
 		<Title>Parallel BZIP2 Compression</Title>
 		<TimesToRun>3</TimesToRun>
+		<SubTitle>512MB File Compression</SubTitle>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>The benchmark for Parallel BZIP2 compression.</Description>
+		<Description>This test measures the time needed to compress a single 512MB file using BZIP2 compression.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

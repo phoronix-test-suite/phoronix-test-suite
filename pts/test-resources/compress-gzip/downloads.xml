@@ -1,9 +1,0 @@
-<PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-trondheim-wav.tar.gz</URL>
-			<MD5>0e81dd50b98ae73579189352cccce3e5</MD5>
-			<DownloadTo>SHARED</DownloadTo>
-		</Package>
-	</Downloads>
-</PhoronixTestSuite>

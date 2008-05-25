@@ -8,10 +8,5 @@
 			<URL>http://compression.ca/pbzip2/pbzip2-1.0.2.tar.gz</URL>
 			<MD5>7c959f0554695bc484865b938e791aaf</MD5>
 		</Package>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-trondheim-wav.tar.gz</URL>
-			<MD5>0e81dd50b98ae73579189352cccce3e5</MD5>
-			<DownloadTo>SHARED</DownloadTo>
-		</Package>
 	</Downloads>
 </PhoronixTestSuite>
