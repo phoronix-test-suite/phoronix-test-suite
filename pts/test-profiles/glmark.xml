@@ -1,19 +1,78 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.4</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<ApplicationType>Utility</ApplicationType>
 		<License>FREE</License>
-		<Status>BROKEN</Status>
+		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 	</TestProfile>
 	<TestInformation>
 		<Title>GLMark</Title>
-		<Version>0.1</Version>
-		<ExternalDependencies>sdl-development, glut, build-utilities</ExternalDependencies>
+		<Version>0.5.2</Version>
+		<ExternalDependencies>sdl-development, glut, build-utilities, glew</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
-		<ResultScale>FPS</ResultScale>
+		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of GLMark, an open-source OpenGL benchmark.</Description>
 	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>resolution</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>800 x 600</Name>
+					<Value>800 600</Value>
+				</Entry>
+				<Entry>
+					<Name>1024 x 768</Name>
+					<Value>1024 768</Value>
+				</Entry>
+				<Entry>
+					<Name>1280 x 1024</Name>
+					<Value>1280 1024</Value>
+				</Entry>
+				<Entry>
+					<Name>1680 x 1050</Name>
+					<Value>1680 1050</Value>
+				</Entry>
+				<Entry>
+					<Name>1600 x 1200</Name>
+					<Value>1600 1200</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>Test</DisplayName>
+			<Identifier>test</Identifier>
+			<Menu>
+				<Entry>
+					<Name>Vertex Array</Name>
+					<Value>VERTEX_ARRAY</Value>
+				</Entry>
+				<Entry>
+					<Name>Vertex Buffer Object</Name>
+					<Value>VERTEX_BUFFER_OBJ</Value>
+				</Entry>
+				<Entry>
+					<Name>Texture Filtering - Linear</Name>
+					<Value>TEXTURE_LINEAR</Value>
+				</Entry>
+				<Entry>
+					<Name>Texture Filtering - Mipmapped</Name>
+					<Value>TEXTURE_MIPMAPPED</Value>
+				</Entry>
+				<Entry>
+					<Name>GLSL Per Vertex Lighting</Name>
+					<Value>GLSL_PER_VERTEX</Value>
+				</Entry>
+				<Entry>
+					<Name>GLSL Per Pixel Lighting</Name>
+					<Value>GLSL_PER_PIXEL</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
 </PhoronixTestSuite>
