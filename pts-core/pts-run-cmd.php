@@ -137,8 +137,15 @@ switch($COMMAND)
 			$status = $xml_parser->getXMLValue(P_TEST_STATUS);
 			$identifier = basename($benchmark_file, ".xml");
 
-			if(!in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL")))
-				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+			if(defined("PTS_DEBUG_MODE"))
+			{
+				$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
+
+				printf("%-18ls %-6ls %-12ls %-12ls\n", $identifier, $version, $status, $license);
+			}
+			else
+				if(!in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL")))
+					printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 		}
 		echo "\n";
 		break;
