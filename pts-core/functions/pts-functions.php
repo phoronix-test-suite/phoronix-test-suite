@@ -41,6 +41,9 @@ define("PTS_DIR", pts_directory());
 define("PTS_TEMP_DIR", "/tmp/phoronix-test-suite/");
 define("PHP_BIN", getenv("PHP_BIN"));
 
+if(getenv("DEBUG") == "1")
+	define("PTS_DEBUG_MODE", 1);
+
 function __autoload($to_load)
 {
 	if(is_file(PTS_DIR . "pts-core/objects/$to_load.php"))

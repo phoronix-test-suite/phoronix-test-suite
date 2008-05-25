@@ -3,7 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite
 
 - GtkPerf profile update from uncle_fungus
-- Fix log-in bug
+- Fix log-in bug for PTS Global
+- Add debugging mode support (PTS_DEBUG_MODE)
 
 Phoronix Test Suite 0.8.0
 May 24, 2008
