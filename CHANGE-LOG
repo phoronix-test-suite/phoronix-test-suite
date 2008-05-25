@@ -5,6 +5,8 @@ Phoronix Test Suite
 - GtkPerf profile update from uncle_fungus
 - Fix log-in bug for PTS Global
 - Add debugging mode support (PTS_DEBUG_MODE)
+- Add list-installed-tests option for listing tests that are installed on the local system
+- Many (all) test profiles updated/fixed/finalized.
 
 Phoronix Test Suite 0.8.0
 May 24, 2008

@@ -108,6 +108,9 @@ case "$1" in
 "list-tests")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_TESTS
 	;;
+"list-installed-tests")
+	$PHP_BIN pts-core/pts-run-cmd.php LIST_INSTALLED_TESTS
+	;;
 "list-suites")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_SUITES
 	;;
@@ -165,7 +168,8 @@ benchmark <suite OR test OR saved file>: Same as manually running install and th
 batch-benchmark <suite OR test OR saved file>: Same as manually running install and then run in Batch Mode
 batch-setup: Setup the batch mode options
 merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets
-list-tests: List all Phoronix Test Suite test profiles
+list-tests: List all Phoronix Test Suite tests
+list-installed-tests: List all Phoronix Test Suite tests that are installed
 list-suites: List all Phoronix Test Suites
 list-results: List all saved results
 make-download-cache: Backup all saved files to ~/.phoronix-test-suite/download-cache/

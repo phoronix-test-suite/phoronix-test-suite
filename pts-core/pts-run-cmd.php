@@ -151,6 +151,27 @@ switch($COMMAND)
 		}
 		echo "\n";
 		break;
+	case "LIST_INSTALLED_TESTS":
+		echo pts_string_header("Phoronix Test Suite - Installed Tests");
+		foreach(glob(BENCHMARK_ENV_DIR . "*/pts-install") as $install_file)
+		{
+			$install_file_arr = explode("/", $install_file);
+			$identifier = $install_file_arr[count($install_file_arr) - 2];
+
+			$benchmark_file = XML_PROFILE_DIR . $identifier . ".xml";
+
+			if(is_file($benchmark_file))
+			{
+			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
+				$license = $xml_parser->getXMLValue(P_TEST_LICENSE);
+				$status = $xml_parser->getXMLValue(P_TEST_STATUS);
+
+				printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+			}
+		}
+		echo "\n";
+		break;
 	case "LIST_SUITES":
 		echo pts_string_header("Phoronix Test Suite - Suites");
 		$benchmark_suites = array();
