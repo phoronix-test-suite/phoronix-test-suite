@@ -75,5 +75,10 @@
 			<PackageName>gfortran</PackageName>
 			<FileCheck>/usr/bin/gfortran</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>glew</GenericName>
+			<PackageName>libglew1.5-dev</PackageName>
+			<FileCheck>/usr/include/GL/glew.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

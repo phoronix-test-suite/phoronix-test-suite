@@ -66,5 +66,10 @@
 			<PackageName>portaudio-devel</PackageName>
 			<FileCheck>/usr/include/portaudio.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>glew</GenericName>
+			<PackageName>glew-devel</PackageName>
+			<FileCheck>/usr/include/GL/glew.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

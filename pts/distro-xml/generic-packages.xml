@@ -84,5 +84,11 @@
 			<PossibleNames>gcc</PossibleNames>
 			<FileCheck>/usr/bin/gcc</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>glew</GenericName>
+			<Title>OpenGL Extension Wrangler</Title>
+			<PossibleNames>libglew, libglew1.5-dev, glew-devel</PossibleNames>
+			<FileCheck>/usr/include/GL/glew.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
