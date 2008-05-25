@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.8</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -14,7 +14,7 @@
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>This test calculates the average frame-rate in some GTK tests.</Description>
+		<Description>This test calculates the average frame-rate from several different GTK operations.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Option>
