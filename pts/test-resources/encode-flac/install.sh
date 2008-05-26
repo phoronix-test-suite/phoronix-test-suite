@@ -2,9 +2,9 @@
 
 cd $1
 
-if [ ! -f ../pts-shared/pts-trondheim.wav ]
+if [ ! -f ../pts-shared/pts-trondheim-2.wav ]
   then
-     tar -xvf ../pts-shared/pts-trondheim-wav.tar.gz -C ../pts-shared/
+     tar -xvf ../pts-shared/pts-trondheim-wav-2.tar.gz -C ../pts-shared/
 fi
 
 THIS_DIR=$(pwd)

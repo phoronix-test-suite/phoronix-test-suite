@@ -12,6 +12,7 @@
 	<TestInformation>
 		<Title>FLAC Audio Encoding</Title>
 		<Version>1.2.1</Version>
+		<SubTitle>78MB WAV File To FLAC</SubTitle>
 		<Executable>flac</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

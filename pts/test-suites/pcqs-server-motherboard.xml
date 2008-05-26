@@ -24,7 +24,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>encode-mp3</Test>
-		<Description>106MB WAV File Encoding</Description>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>

@@ -8,17 +8,11 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>encode-mp3</Test>
-		<Arguments></Arguments>
-		<Description>106MB WAV File Encoding</Description>
 	</RunTest>
 	<RunTest>
 		<Test>encode-ogg</Test>
-		<Arguments></Arguments>
-		<Description>106MB WAV File Encoding</Description>
 	</RunTest>
 	<RunTest>
 		<Test>encode-flac</Test>
-		<Arguments></Arguments>
-		<Description>106MB WAV File Encoding</Description>
 	</RunTest>
 </PhoronixTestSuite>

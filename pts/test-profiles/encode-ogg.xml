@@ -12,6 +12,7 @@
 	<TestInformation>
 		<Title>Ogg Encoding</Title>
 		<Version>1.2.0</Version>
+		<SubTitle>78MB WAV File To Ogg</SubTitle>
 		<Executable>oggenc</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

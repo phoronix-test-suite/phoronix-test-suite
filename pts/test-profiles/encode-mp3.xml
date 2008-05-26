@@ -12,6 +12,7 @@
 	<TestInformation>
 		<Title>LAME MP3 Encoding</Title>
 		<Version>3.97</Version>
+		<SubTitle>78MB WAV File To MP3</SubTitle>
 		<Executable>lame</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
