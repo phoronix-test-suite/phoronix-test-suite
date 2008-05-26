@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.1</Version>
+		<Version>0.9.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>

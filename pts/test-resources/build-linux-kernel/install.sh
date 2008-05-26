@@ -1,9 +1,8 @@
 #!/bin/sh
 
-cp -f linux-2625-config-x86 $1
-cp -f linux-2625-config-x86_64 $1
-
 cd $1
+
+tar -xvf linux-2625-config.tar.gz
 
 echo "#!/bin/sh
 
@@ -16,7 +15,7 @@ fi
 rm -rf linux-2.6.25/
 tar -xjf linux-2.6.25.tar.bz2
 
-case \`uname -m\` in
+case \$OS_ARCH in
 	\"x86_64\" )
 	cp -f linux-2625-config-x86_64 linux-2.6.25/.config
 	;;

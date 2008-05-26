@@ -4,5 +4,9 @@
 			<URL>http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.25.tar.bz2</URL>
 			<MD5>db95a49a656a3247d4995a797d333153</MD5>
 		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/linux-2625-config.tar.gz</URL>
+			<MD5>1329cc6432b3f130039ed443c6d7f9e5</MD5>
+		</Package>
 	</Downloads>
 </PhoronixTestSuite>
