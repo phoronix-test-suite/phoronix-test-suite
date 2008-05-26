@@ -146,8 +146,10 @@ switch($COMMAND)
 				printf("%-18ls %-6ls %-12ls %-12ls %-4ls %-4ls\n", $identifier, $version, $status, $license, $test_download_size, $test_environment_size);
 			}
 			else
+			{
 				if(!in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL")))
 					printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+			}
 		}
 		echo "\n";
 		break;
@@ -180,7 +182,14 @@ switch($COMMAND)
 			$benchmark_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 			$identifier = basename($benchmark_file, ".xml");
 
-			printf("%-26ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);
+			if(defined("PTS_DEBUG_MODE"))
+			{
+				$version = $xml_parser->getXMLValue(P_SUITE_VERSION);
+
+				printf("%-26ls - %-32ls %-4ls\n", $identifier, $name, $version);
+			}
+			else
+				printf("%-26ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);
 		}
 		echo "\n";
 		break;
