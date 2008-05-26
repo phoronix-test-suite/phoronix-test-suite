@@ -333,11 +333,13 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
 	{
-		echo pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo "\nRunning Pre-Test Scripts...\n";
+		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php"))
 	{
-		echo pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		echo "\nRunning Pre-Test Scripts...\n";
+		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
 	}
 
 	if(!empty($pre_run_message))
@@ -372,11 +374,11 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{
-		echo pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . $benchmark_identifier);
+		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . $benchmark_identifier);
 	}
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php"))
 	{
-		echo pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . $benchmark_identifier);
+		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . $benchmark_identifier);
 	}
 
 	// End
