@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf SPECViewPerf10-Configure.tar.gz
+tar -xvf SPECViewPerf9-Configure.tar.gz
 tar -xvf SPECViewperf9.0.3.tar.gz
 
 cp -f SPECViewPerf9-Configure SPECViewperf9.0/src/Configure
