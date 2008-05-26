@@ -293,12 +293,12 @@ function pts_install_benchmark($Benchmark)
 
 			if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh"))
 			{
-				echo pts_exec("cd " . TEST_RESOURCE_DIR . "$Benchmark/ && sh install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
+				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && sh " . TEST_RESOURCE_DIR . $Benchmark . "/install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
 				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh"));
 			}
 			else if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))
 			{
-				echo pts_exec("cd " . TEST_RESOURCE_DIR . "$Benchmark/ && " . PHP_BIN . " install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
+				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
 				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"));
 			}
 		}
