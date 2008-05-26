@@ -184,9 +184,6 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		{
 			$default_test_descriptor = $xml_parser->getXMLValue(P_TEST_SUBTITLE);
 
-			foreach(pts_env_variables() as $key => $value)
-				$default_test_descriptor = str_replace("$" . $key, $value, $default_test_descriptor);
-
 			if(!empty($default_test_descriptor))
 				$description = $default_test_descriptor;
 			else if(is_file(BENCHMARK_ENV_DIR . "$benchmark/pts-test-description"))
@@ -210,6 +207,13 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		}
 
 		unset($xml_parser);
+		$arguments_string = trim($default_arguments . " " . $arguments);
+
+		foreach(pts_env_variables() as $key => $value)
+			$description = str_replace("$" . $key, $value, $description);
+
+		foreach(pts_env_variables() as $key => $value)
+			$arguments_string = str_replace("$" . $key, $value, $arguments_string);
 
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $benchmark_title);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $benchmark_version);
@@ -218,7 +222,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $proportion);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result_format);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $benchmark);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, trim($default_arguments . " " . $arguments));
+		$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $arguments_string);
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_result, 5);
 
@@ -387,6 +391,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	// End
 	if(empty($result_scale) && is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-results-scale"))
 			$result_scale = trim(@file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-results-scale"));
+
+	foreach(pts_env_variables() as $key => $value)
+		$arguments_description = str_replace("$" . $key, $value, $arguments_description);
 
 	$RETURN_STRING = "$benchmark_title:\n";
 	$RETURN_STRING .= "$arguments_description\n";
