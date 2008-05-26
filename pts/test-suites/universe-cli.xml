@@ -17,31 +17,24 @@
 	</RunTest>
 	<RunTest>
 		<Test>build-mplayer</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>build-apache</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>build-php</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>build-imagemagick</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>compress-gzip</Test>
-		<Description>Timed Compression</Description>
 	</RunTest>
 	<RunTest>
 		<Test>compress-7zip</Test>
-		<Description>Timed Compression</Description>
 	</RunTest>
 	<RunTest>
 		<Test>compress-pbzip2</Test>
-		<Description>Timed Compression</Description>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>

@@ -8,8 +8,6 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>sunflow</Test>
-		<Arguments></Arguments>
-		<Description></Description>
 	</RunTest>
 	<RunTest>
 		<Test>java-scimark2</Test>

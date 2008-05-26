@@ -8,14 +8,11 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>compress-7zip</Test>
-		<Description></Description>
 	</RunTest>
 	<RunTest>
 		<Test>compress-gzip</Test>
-		<Description></Description>
 	</RunTest>
 	<RunTest>
 		<Test>compress-pbzip2</Test>
-		<Description></Description>
 	</RunTest>
 </PhoronixTestSuite>

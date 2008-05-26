@@ -11,6 +11,7 @@
 	<TestInformation>
 		<Title>ImageMagick Compilation</Title>
 		<Version>6.4.0</Version>
+		<SubTitle>Time To Compile</SubTitle>
 		<Executable>time-compile-imagemagick</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ExternalDependencies>build-utilities</ExternalDependencies>

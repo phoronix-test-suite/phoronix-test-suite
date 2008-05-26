@@ -11,6 +11,7 @@
 	<TestInformation>
 		<Title>Timed Linux Kernel Compilation</Title>
 		<Version>2.6.25</Version>
+		<SubTitle>Time To Compile</SubTitle>
 		<Executable>time-compile-kernel</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

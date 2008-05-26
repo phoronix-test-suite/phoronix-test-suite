@@ -11,6 +11,7 @@
 	<TestInformation>
 		<Title>Timed Apache Compilation</Title>
 		<Version>2.2.8</Version>
+		<SubTitle>Time To Compile</SubTitle>
 		<Executable>time-compile-apache</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ExternalDependencies>build-utilities</ExternalDependencies>

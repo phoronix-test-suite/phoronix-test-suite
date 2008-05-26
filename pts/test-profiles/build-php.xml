@@ -12,6 +12,7 @@
 	<TestInformation>
 		<Title>Timed PHP Compilation</Title>
 		<Version>5.2.5</Version>
+		<SubTitle>Time To Compile</SubTitle>
 		<Executable>time-compile-php</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ExternalDependencies>build-utilities</ExternalDependencies>

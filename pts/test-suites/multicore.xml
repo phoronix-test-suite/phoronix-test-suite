@@ -8,15 +8,12 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>build-apache</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>build-php</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>build-imagemagick</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>sunflow</Test>
@@ -24,14 +21,11 @@
 	</RunTest>
 	<RunTest>
 		<Test>compress-7zip</Test>
-		<Description></Description>
 	</RunTest>
 	<RunTest>
 		<Test>compress-pbzip2</Test>
-		<Description></Description>
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
-		<Description></Description>
 	</RunTest>
 </PhoronixTestSuite>
