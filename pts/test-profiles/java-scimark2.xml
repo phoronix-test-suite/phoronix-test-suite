@@ -33,7 +33,7 @@
 					<Value>FFT</Value>
 				</Entry>
 				<Entry>
-					<Name>Jacobi Successive Over-relaxation</Name>
+					<Name>Jacobi Successive Over-Relaxation</Name>
 					<Value>SOR</Value>
 				</Entry>
 				<Entry>

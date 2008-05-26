@@ -1,10 +1,10 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.5</Version>
+		<Version>0.9.0</Version>
 		<TestType>Processor</TestType>
-		<Title>Timed Code Compilation Tests</Title>
+		<Title>Timed Code Compilation</Title>
 		<Maintainer>Michael Larabel</Maintainer>
-		<Description>This test suite consists of benchmarks that measure the amount of time needed to build common open-source software packages. These benchmarks will use your default compiler (likely GCC) and will adjust the number of compiling jobs based upon the number of detected CPU cores in your system. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
+		<Description>This test suite consists of tests that measure the amount of time needed to build common open-source software packages. These tests will use your default compiler (likely GCC) and will adjust the number of compiling jobs based upon the number of detected CPU cores in your system. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
 	</SuiteInformation>
 	<RunTest>
 		<Test>build-mplayer</Test>
@@ -17,5 +17,8 @@
 	</RunTest>
 	<RunTest>
 		<Test>build-imagemagick</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-linux-kernel</Test>
 	</RunTest>
 </PhoronixTestSuite>

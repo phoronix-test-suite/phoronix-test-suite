@@ -8,5 +8,28 @@ cd ..
 echo "#!/bin/sh
 cd scimark2_files/
 
-./scimark2 -large" > scimark2
+rm -f *.result
+
+./scimark2 -large  > \$THIS_RUN_TIME.result
+
+case \"\$1\" in
+\"TEST_COMPOSITE\")
+	cat \$THIS_RUN_TIME.result | grep \"Composite Score\"
+	;;
+\"TEST_FFT\")
+	cat \$THIS_RUN_TIME.result | grep \"FFT\"
+	;;
+\"TEST_SOR\")
+	cat \$THIS_RUN_TIME.result | grep \"SOR\"
+	;;
+\"TEST_MONTE\")
+	cat \$THIS_RUN_TIME.result | grep \"MonteCarlo\"
+	;;
+\"TEST_SPARSE\")
+	cat \$THIS_RUN_TIME.result | grep \"Sparse matmult\"
+	;;
+\"TEST_DENSE\")
+	cat \$THIS_RUN_TIME.result | grep \"LU\"
+	;;
+esac" > scimark2
 chmod +x scimark2

@@ -353,6 +353,7 @@ switch($COMMAND)
 				$saved_identifier = array_pop(explode('/', dirname($benchmark_file)));
 				pts_remove_saved_result($saved_identifier);
 			}
+			echo "\n";
 		}
 		break;
 	case "REMOVE_RESULT":

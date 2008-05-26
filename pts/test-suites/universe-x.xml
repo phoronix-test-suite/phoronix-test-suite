@@ -1,18 +1,47 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.6</Version>
+		<Version>0.9.0</Version>
 		<TestType>System</TestType>
 		<Title>Universe Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Universe CLI suite contains Phoronix Test Suite tests that require an active X server / tests that are graphics-based.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>nexuiz</Test>
-		<Arguments>+vid_width 1024 +vid_height 768</Arguments>
-		<Description>1024 x 768</Description>
+		<Test>compliance-ogl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gui-toolkits</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gaming</Test>
+	</RunTest>
+	<RunTest>
+		<Test>glmark</Test>
+		<Arguments>1024 768 VERTEX_ARRAY</Arguments>
+		<Description>1024 x 768 - Vertex Array</Description>
+	</RunTest>
+	<RunTest>
+		<Test>glmark</Test>
+		<Arguments>1024 768 GLSL_PER_PIXEL</Arguments>
+		<Description>1024 x 768 - GLSL Per Pixel Lighting</Description>
+	</RunTest>
+	<RunTest>
+		<Test>x11perf</Test>
+		<Arguments>-comppixwin500</Arguments>
+		<Description>500px Compositing From Pixmap To Window</Description>
 	</RunTest>
 	<RunTest>
 		<Test>norsetto-shadow</Test>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>3dsmax</Arguments>
+		<Description>3DS Max</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf10</Test>
+		<Arguments>maya</Arguments>
+		<Description>Maya</Description>
 	</RunTest>
 	<RunTest>
 		<Test>xplane9</Test>

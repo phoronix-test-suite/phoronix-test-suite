@@ -1,0 +1,15 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.9.0</Version>
+		<TestType>System</TestType>
+		<Title>Gaming</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The gaming test suite is made up of all game tests -- both open-source and closed-source.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>gaming-free</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gaming-closed</Test>
+	</RunTest>
+</PhoronixTestSuite>

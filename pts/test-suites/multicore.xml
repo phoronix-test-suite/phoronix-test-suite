@@ -1,10 +1,10 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.5</Version>
+		<Version>0.9.0</Version>
 		<TestType>Processor</TestType>
-		<Title>Multi-Core Tests</Title>
+		<Title>Multi-Core</Title>
 		<Maintainer>Michael Larabel</Maintainer>
-		<Description>This test suite consists of tests that are able to take advantage of multi-core and/or multi-processor systems. This suite can be used on a single core system, however, it's intended for systems with multiple processing cores.</Description>
+		<Description>This test suite consists of tests that are able to take advantage of multi-core and/or multi-processor systems. This suite can be used on a single core system, however, it's intended for systems with multiple processing cores. Among the tests in this suite are encoding, compilation, and rendering tests.</Description>
 	</SuiteInformation>
 	<RunTest>
 		<Test>build-apache</Test>

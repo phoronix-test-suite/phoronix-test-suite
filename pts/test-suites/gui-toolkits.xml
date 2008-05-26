@@ -1,10 +1,10 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.1</Version>
+		<Version>0.9.0</Version>
 		<TestType>Graphics</TestType>
 		<Title>GUI Toolkits</Title>
 		<Maintainer>Michael Larabel</Maintainer>
-		<Description>This test suite is made up of GUI tool-kit test profiles. Currently this suite consists of tests for just GTK.</Description>
+		<Description>This test suite is made up of GUI tool-kit test profiles. Currently this suite consists of tests for different GTK operations. This test suite is designed for testing your graphics card, processor (in some circumstances), and the graphics driver.</Description>
 	</SuiteInformation>
 	<RunTest>
 		<Test>gtkperf</Test>

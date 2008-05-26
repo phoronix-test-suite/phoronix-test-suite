@@ -1,6 +1,10 @@
 <?php
 
-$BENCHMARK_RESULTS = substr($argv[1], strpos($argv[1], "Composite Score:") + 16);
-echo trim(substr($BENCHMARK_RESULTS, 0, strpos($BENCHMARK_RESULTS, "\n")));
+$BENCHMARK_RESULTS = trim(substr($argv[1], strrpos($argv[1], ":") + 1));
+
+	if(($space_pos = strpos($BENCHMARK_RESULTS, " ")) > 0)
+		$BENCHMARK_RESULTS = trim(substr($BENCHMARK_RESULTS, 0, $space_pos));
+
+echo $BENCHMARK_RESULTS;
 
 ?>

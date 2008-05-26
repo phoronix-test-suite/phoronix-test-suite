@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.6</Version>
+		<Version>0.9.0</Version>
 		<TestType>Motherboard</TestType>
 		<Title>PCQS: Server Motherboard</Title>
 		<Maintainer>Phoronix.com</Maintainer>
@@ -8,19 +8,15 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>build-imagemagick</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>build-apache</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>build-php</Test>
-		<Description>Time To Compile</Description>
 	</RunTest>
 	<RunTest>
 		<Test>compress-pbzip2</Test>
-		<Description>Compression Time</Description>
 	</RunTest>
 	<RunTest>
 		<Test>encode-mp3</Test>
@@ -29,6 +25,9 @@
 		<Test>iozone</Test>
 		<Arguments>-i0</Arguments>
 		<Description>Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
@@ -45,7 +44,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>sunflow</Test>
-		<Description>Image Synthesis w/ Raytracing</Description>
 	</RunTest>
 	<RunTest>
 		<Test>specviewperf9</Test>

@@ -1,0 +1,24 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.9.0</Version>
+		<TestType>System</TestType>
+		<Title>Free Software Gaming</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The gaming test suite is made up of all game tests that are open-source.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>nexuiz</Test>
+		<Arguments>+vid_width 1024 +vid_height 768</Arguments>
+		<Description>1024 x 768</Description>
+	</RunTest>
+	<RunTest>
+		<Test>warsow</Test>
+		<Arguments>+vid_customwidth 1024 +vid_customheight 768 +vid_restart</Arguments>
+		<Description>1024 x 768</Description>
+	</RunTest>
+	<RunTest>
+		<Test>openarena</Test>
+		<Arguments>+set r_customWidth 1024 +set r_customHeight 768</Arguments>
+		<Description>1024 x 768</Description>
+	</RunTest>
+</PhoronixTestSuite>

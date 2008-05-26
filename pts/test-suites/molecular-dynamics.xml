@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.1</Version>
+		<Version>0.9.0</Version>
 		<TestType>Processor</TestType>
 		<Title>Molecular Dynamics Test Suite</Title>
 		<Maintainer>Andrew Schofield</Maintainer>

@@ -1,40 +1,22 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.6</Version>
+		<Version>0.9.0</Version>
 		<TestType>System</TestType>
 		<Title>Universe CLI Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Universe CLI suite contains Phoronix Test Suite tests that are all command-line based / don't require an X server to be running.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>encode-mp3</Test>
+		<Test>audio-encoding</Test>
 	</RunTest>
 	<RunTest>
-		<Test>encode-ogg</Test>
+		<Test>compilation</Test>
 	</RunTest>
 	<RunTest>
-		<Test>encode-flac</Test>
+		<Test>compression</Test>
 	</RunTest>
 	<RunTest>
-		<Test>build-mplayer</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-apache</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-php</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-imagemagick</Test>
-	</RunTest>
-	<RunTest>
-		<Test>compress-gzip</Test>
-	</RunTest>
-	<RunTest>
-		<Test>compress-7zip</Test>
-	</RunTest>
-	<RunTest>
-		<Test>compress-pbzip2</Test>
+		<Test>espeak</Test>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
@@ -42,7 +24,27 @@
 		<Description>Write Performance</Description>
 	</RunTest>
 	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>super-pi</Test>
+	</RunTest>
+	<RunTest>
 		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pts-graph</Test>
+	</RunTest>
+	<RunTest>
+		<Test>tandem-xml</Test>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>COMPOSITE</Arguments>
+		<Description>Composite</Description>
 	</RunTest>
 	<RunTest>
 		<Test>ramspeed</Test>
