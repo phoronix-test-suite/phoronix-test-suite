@@ -1,5 +1,5 @@
 #!/bin/sh
-cd $1
+
 g++ sample-pi-program.cpp -o sample-pi-program
 
 echo "#!/bin/sh

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 echo "#!/bin/sh
 echo \"Root permission needed to run hdparm benchmark.\"
 gksudo -w hdparm \$@" > hdparm-su

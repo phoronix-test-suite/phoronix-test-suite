@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf linux-2625-config.tar.gz
 
 echo "#!/bin/sh

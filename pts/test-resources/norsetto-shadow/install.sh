@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 rm -rf shadow/
 tar -xjf norsetto-shadow-01.tar.bz2
 cd shadow/

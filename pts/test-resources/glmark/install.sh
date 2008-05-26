@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf GLMark-0.5.2.tar.gz
 cd GLMark-0.5.2/
 

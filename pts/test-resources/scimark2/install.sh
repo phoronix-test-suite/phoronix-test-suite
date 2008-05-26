@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 unzip -o scimark2_1c.zip -d scimark2_files
 cd scimark2_files/
 g++ -o scimark2 -O *.c

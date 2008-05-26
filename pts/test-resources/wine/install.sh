@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 if [ ! -f wine-git ]
   then
      git clone git://source.winehq.org/git/wine.git wine-git

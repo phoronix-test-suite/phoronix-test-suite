@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 chmod +x quake4-linux-1.4.2.x86.run
 
 ./quake4-linux-1.4.2.x86.run --noexec --target .

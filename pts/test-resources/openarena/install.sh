@@ -1,6 +1,5 @@
 #!/bin/sh
 
-cd $1
 unzip -o oa076.zip
 cd openarena-0.7.6/baseoa
 tar -xvf ../../openarena-benchmark-files-2.tar.gz

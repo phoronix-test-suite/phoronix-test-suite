@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 echo "#!/bin/sh
 
 if [ ! -f MPlayer-1.0rc2.tar.bz2 ]

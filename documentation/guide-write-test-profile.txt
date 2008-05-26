@@ -49,7 +49,7 @@ This XML profile is what interfaces with the Phoronix Test Suite and provides al
 The next step is to write the install.sh file, which once called by the Phoronix Test Suite is intended to install the test locally for benchmarking purposes. The install.sh file is technically optional, but is generally used by all tests. Alternatively, the file may be named install.php if you wish to write the install script in PHP instead of a shell script. Note: The first argument supplied to the install script is the directory that the test needs to be installed to. The install.sh file (in our instance) is to be placed inside pts/test-resources/sample-program. Below is the install.sh for the sample-program. 
 
 #!/bin/sh
-cd $1
+
 tar -xjf sample-pi-program-1.tar.bz2
 g++ sample-pi-program.cpp -o sample-pi-program
 

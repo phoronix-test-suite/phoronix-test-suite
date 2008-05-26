@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 unzip -o scimark2lib.zip
 
 echo "#!/bin/sh

@@ -1,6 +1,5 @@
 #!/bin/sh
 
-cd $1
 tar -xjf x11perf-1.5.tar.bz2
 cd x11perf-1.5/
 ./configure

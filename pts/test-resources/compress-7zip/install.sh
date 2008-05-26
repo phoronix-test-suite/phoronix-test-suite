@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xjf p7zip_4.57_src_all.tar.bz2
 cd p7zip_4.57/
 make -j $NUM_CPU_JOBS

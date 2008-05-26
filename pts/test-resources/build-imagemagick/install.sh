@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 echo "#!/bin/sh
 
 if [ ! -f image-magick.tar.bz2 ]

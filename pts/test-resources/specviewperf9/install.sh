@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf SPECViewPerf10-Configure.tar.gz
 tar -xvf SPECViewperf9.0.3.tar.gz
 

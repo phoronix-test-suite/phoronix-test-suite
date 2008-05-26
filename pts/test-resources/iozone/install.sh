@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf iozone3_291.tar
 cd iozone3_291/src/current/
 

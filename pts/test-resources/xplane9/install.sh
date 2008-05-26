@@ -1,6 +1,5 @@
 #!/bin/sh
 
-cd $1
 tar -xjf X-Plane_900r3_timedemo.tar.bz2
 
 echo "#!/bin/sh

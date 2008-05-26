@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 echo "#!/bin/sh
 rm -rf httpd-2.2.8/
 tar -xvf httpd-2.2.8.tar.gz

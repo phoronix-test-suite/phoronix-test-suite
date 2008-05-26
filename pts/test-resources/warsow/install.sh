@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf pts-warsow-1.tar.gz
 unzip -o warsow_0.42_unified.zip
 cp -f pts-warsow-04.wd10 warsow_0.42_unified/basewsw/demos

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 rm -rf render_bench/
 tar -xvf render_bench.tar.gz
 cd render_bench/

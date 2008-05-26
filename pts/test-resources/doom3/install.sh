@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 # Config File
 cat > doom3-pts.cfg <<'EOT'
 unbindall

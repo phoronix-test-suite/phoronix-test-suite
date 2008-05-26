@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 if [ ! -f ../pts-shared/pts-trondheim-2.wav ]
   then
      tar -xvf ../pts-shared/pts-trondheim-wav-2.tar.gz -C ../pts-shared/

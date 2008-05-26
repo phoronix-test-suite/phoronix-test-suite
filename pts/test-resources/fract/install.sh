@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -jxvf fract-1.07b.tar.bz2
 cp fract-scene.h.patch fract-1.07b/
 cd fract-1.07b/

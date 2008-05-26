@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 cat > gzip_process <<EOT
 #!/bin/sh
 cat compressfile | gzip -c > /dev/null

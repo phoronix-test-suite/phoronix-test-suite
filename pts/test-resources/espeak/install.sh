@@ -1,6 +1,5 @@
 #!/bin/sh
 
-cd $1
 THIS_DIR=$(pwd)
 unzip -o espeak-1.37-source.zip
 cd espeak-1.37-source/src/

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf openssl-0.9.8g.tar.gz
 cd openssl-0.9.8g/
 ./config no-zlib

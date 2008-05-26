@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf pts-sqlite-tests-1.tar.gz
 tar -xvf sqlite-3.5.9.tar.gz
 

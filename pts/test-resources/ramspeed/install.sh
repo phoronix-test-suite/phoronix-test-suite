@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf ramspeed-2.5.1.tar.gz
 
 echo "#!/bin/sh

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 rm -rf bandwidth-0.13/
 
 tar -xvf bandwidth-0.13.tar.gz

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf bzip2-1.0.5.tar.gz
 tar -xvf pbzip2-1.0.2.tar.gz
 cd bzip2-1.0.5/

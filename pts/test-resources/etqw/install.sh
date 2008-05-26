@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 unzip -o ETQW-client-1.5-full.x86.run
 
 echo "#!/bin/sh

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 THIS_DIR=$(pwd)
 mkdir $THIS_DIR/libxml2
 

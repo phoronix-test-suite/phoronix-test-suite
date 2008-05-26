@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 unzip -o sunflow-bin-v0.07.2.zip
 
 echo "#!/bin/sh

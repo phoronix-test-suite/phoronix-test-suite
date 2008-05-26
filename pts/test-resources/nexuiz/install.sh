@@ -2,8 +2,6 @@
 
 # Nexuiz 2.4.2
 
-cd $1
-
 if [ -x /usr/games/nexuiz -a -r /usr/share/games/nexuiz/data/music.pk3 ]; then
 cat > nexuiz <<'EOT'
 #!/bin/sh

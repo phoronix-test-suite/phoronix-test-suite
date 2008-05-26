@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd $1
-
 tar -xvf pts-graph-benchmark-1.tar.gz
 
 echo "#!/bin/sh
