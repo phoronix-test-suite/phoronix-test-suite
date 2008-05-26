@@ -13,6 +13,7 @@ Phoronix Test Suite
 - All test suites updated against latest available tests
 - Add (missing) options to scimark2
 - Allow environmental variables to be used in the SubTitle tag and within test suite profiles
+- Add pcqs-graphics suite
 
 Phoronix Test Suite 0.8.0
 May 24, 2008

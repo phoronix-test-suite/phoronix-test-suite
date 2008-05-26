@@ -1,0 +1,57 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.9.0</Version>
+		<TestType>System</TestType>
+		<Title>PCQS: Graphics</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite is the Phoronix Certification and Qualification Suite designed by Phoronix.com for use in consumer graphics card/driver reviews.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>nexuiz</Test>
+		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT -nosound</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>nexuiz</Test>
+		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +r_hdr 1 -nosound</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT w/ HDR</Description>
+	</RunTest>
+	<RunTest>
+		<Test>warsow</Test>
+		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>openarena</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>doom3</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT +set com_machineSpec 3</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - Ultra Quality</Description>
+	</RunTest>
+	<RunTest>
+		<Test>quake4</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT +set com_machineSpec 2</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>
+	</RunTest>
+	<RunTest>
+		<Test>quake4</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT +set com_machineSpec 3</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - Ultra Quality</Description>
+	</RunTest>
+	<RunTest>
+		<Test>etqw</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>xplane9</Test>
+		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=1280 --pref:_y_res_req_ALL=1024 --no_sound</Arguments>
+		<Description>1280 x 1024 - High Quality</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gui-toolkits</Test>
+	</RunTest>
+</PhoronixTestSuite>
