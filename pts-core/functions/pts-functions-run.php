@@ -184,6 +184,9 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		{
 			$default_test_descriptor = $xml_parser->getXMLValue(P_TEST_SUBTITLE);
 
+			foreach(pts_env_variables() as $key => $value)
+				$default_test_descriptor = str_replace("$" . $key, $value, $default_test_descriptor);
+
 			if(!empty($default_test_descriptor))
 				$description = $default_test_descriptor;
 			else if(is_file(BENCHMARK_ENV_DIR . "$benchmark/pts-test-description"))
