@@ -8,6 +8,7 @@ Phoronix Test Suite
 - Add list-installed-tests option for listing tests that are installed on the local system
 - Many (all) test profiles updated/fixed/finalized.
 - Switch pts-trondheim.wav default audio file... NOW FINALIZED.
+- Add support so phoronix-test-suite benchmark <Saved File Name> can be used to run the same tests found in an existing PTS saved file. Similar to running phoronix-test-suite benchmark <Test or Suite> and then entering the same saved file name to save the results into an existing file. This support has also been added for the install and run options.
 
 Phoronix Test Suite 0.8.0
 May 24, 2008

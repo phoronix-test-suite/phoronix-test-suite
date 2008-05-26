@@ -40,6 +40,16 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
 		}
 	}
+	else if(is_file(SAVE_RESULTS_DIR . $TO_INSTALL . "/composite.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $TO_INSTALL . "/composite.xml"));
+		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+
+		foreach($suite_benchmarks as $benchmark)
+		{
+			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
+		}
+	}
 	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_INSTALL")) == "REMOTE_FILE")
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_INSTALL"));
@@ -51,7 +61,14 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 		}
 	}
 	else
-		pts_exit("\nNot recognized: $TO_INSTALL.\n");
+	{
+		$exit_message = "";
+
+		if(!getenv("SILENT_INSTALL"))
+			$exit_message = "\nNot recognized: $TO_INSTALL\n";
+
+		pts_exit($exit_message);
+	}
 }
 function pts_download_benchmark_files($Benchmark)
 {

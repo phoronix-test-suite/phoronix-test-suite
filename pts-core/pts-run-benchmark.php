@@ -41,7 +41,14 @@ pts_monitor_update(); // Update sensors, etc
 
 if(!$TO_RUN_TYPE)
 {
-	if(is_file(pts_input_correct_results_path($TO_RUN)))
+	if(is_file(SAVE_RESULTS_DIR . $TO_RUN . "/composite.xml"))
+	{
+		$SAVE_RESULTS = true;
+		$TO_RUN_TYPE = "LOCAL_COMPARISON";
+		$PROPOSED_FILE_NAME = $TO_RUN;
+		$RES_NULL = null;
+	}
+	else if(is_file(pts_input_correct_results_path($TO_RUN)))
 	{
 		$SAVE_RESULTS = true;
 		$TO_RUN_TYPE = "LOCAL_COMPARISON";
@@ -59,7 +66,7 @@ if(!$TO_RUN_TYPE)
 	}
 	else
 	{
-		pts_exit("\n$TO_RUN is not a recognized benchmark, suite, or PTS Global ID. Exiting...\n");
+		pts_exit("\nNot Recognized: $TO_RUN \n\n");
 	}
 }
 else
@@ -230,7 +237,7 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 }
 else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE == "LOCAL_COMPARISON"))
 {
-	echo pts_string_header("Global Comparison Against: " . $TO_RUN);
+	echo pts_string_header("PTS Comparison Against: " . $TO_RUN);
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $TO_RUN . "/composite.xml"));
 	$CUSTOM_TITLE = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
