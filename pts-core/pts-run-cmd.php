@@ -185,8 +185,9 @@ switch($COMMAND)
 			if(defined("PTS_DEBUG_MODE"))
 			{
 				$version = $xml_parser->getXMLValue(P_SUITE_VERSION);
+				$type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 
-				printf("%-26ls - %-32ls %-4ls\n", $identifier, $name, $version);
+				printf("%-26ls - %-32ls %-4ls  %-12ls\n", $identifier, $name, $version, $type);
 			}
 			else
 				printf("%-26ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);

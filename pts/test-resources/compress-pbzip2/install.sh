@@ -10,6 +10,8 @@ cd ..
 cd pbzip2-1.0.2/
 make pbzip2-static
 
+cd ..
+
 cat > compress-pbzip2 <<EOT
 #!/bin/sh
 cd pbzip2-1.0.2/

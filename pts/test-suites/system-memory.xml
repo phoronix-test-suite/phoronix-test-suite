@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Version>0.9.0</Version>
-		<TestType>System</TestType>
+		<TestType>Memory</TestType>
 		<Title>System Memory</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The system memory test suite consists of tests designed to test the computer's system memory (RAM) performance. Among these tests are RAMspeed and Bandwidth.</Description>
