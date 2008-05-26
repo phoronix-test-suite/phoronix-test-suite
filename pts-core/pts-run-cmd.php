@@ -147,7 +147,7 @@ switch($COMMAND)
 			}
 			else
 			{
-				if(!in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL")))
+				if(!in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED")))
 					printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 			}
 		}
