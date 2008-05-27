@@ -27,3 +27,14 @@ function setImagesFromURL()
 
 	document.getElementById("pts_monitor").innerHTML = html;
 }
+function boldBodyComponents()
+{
+	var el = document.getElementsByName('pts_column_body');
+
+	for(var i = 0; i < el.length; i++)
+	{
+		el[i].innerHTML = el[i].innerHTML.replace(/:/, ":</strong>");
+		el[i].innerHTML = el[i].innerHTML.replace(/,/, ", <strong>");
+		el[i].innerHTML = "<strong>" + el[i].innerHTML;
+	}
+}
