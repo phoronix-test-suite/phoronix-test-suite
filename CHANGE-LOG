@@ -15,6 +15,7 @@ Phoronix Test Suite
 - Allow environmental variables to be used in the SubTitle tag and within test suite profiles
 - Add pcqs-graphics suite
 - Add file-system detection to Phoronix Test Suite
+- When running in batch mode and running a single test, instead of prompt for options, run ALL available options.
 
 Phoronix Test Suite 0.8.0
 May 24, 2008

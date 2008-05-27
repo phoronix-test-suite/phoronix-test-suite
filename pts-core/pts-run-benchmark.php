@@ -144,64 +144,117 @@ pts_disable_screensaver(); // Kill the screensaver
 
 if($TO_RUN_TYPE == "BENCHMARK")
 {
-	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . "$TO_RUN.xml"));
+	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $TO_RUN . ".xml"));
 	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
 	$settings_argument = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGUMENTNAME);
 	$settings_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
 	$settings_menu = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
 
-	$USER_ARGS = "";
-	$TEXT_ARGS = "";
-	for($option_count = 0; $option_count < count($settings_name); $option_count++)
+	if(!defined("PTS_BATCH_MODE"))
 	{
-		$this_identifier = $settings_identifier[$option_count];
-		echo "\n$settings_name[$option_count]:\n";
-
-		if(!empty($settings_menu[$option_count]))
+		$USER_ARGS = "";
+		$TEXT_ARGS = "";
+		for($option_count = 0; $option_count < count($settings_name); $option_count++)
 		{
-			$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
-			$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
-			$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
+			// $this_identifier = $settings_identifier[$option_count];
+			echo "\n$settings_name[$option_count]:\n";
 
-			if(count($option_values) == 1)
+			if(!empty($settings_menu[$option_count]))
 			{
-				$bench_choice = 1;
+				$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
+				$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
+				$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
+
+				if(count($option_values) == 1)
+				{
+					$bench_choice = 1;
+				}
+				else
+				{
+					do
+					{
+						echo "\n";
+						for($i = 0; $i < count($option_names); $i++)
+						{
+							echo ($i + 1) . ": " . $option_names[$i] . "\n";
+						}
+						echo "\nPlease Enter Your Choice: ";
+						$bench_choice = strtolower(trim(fgets(STDIN)));
+					}
+					while($bench_choice < 1 || $bench_choice > count($option_names));
+				}
+				$option_display_name = $option_names[($bench_choice - 1)];
+
+				if(($cut_point = strpos($option_display_name, '(')) > 1 && strpos($option_display_name, ')') > $cut_point)
+					$option_display_name = substr($option_display_name, 0, $cut_point);
+
+				$TEXT_ARGS .= $option_display_name;
+				//$TEXT_ARGS .= "$settings_name[$option_count]: " . $option_names[($bench_choice - 1)];
+
+				$USER_ARGS .= $settings_argument[$option_count] . $option_values[($bench_choice - 1)] . " ";
+
+				if($option_count < count($settings_name) - 1)
+					$TEXT_ARGS .= " - ";
 			}
 			else
 			{
-				do
-				{
-					echo "\n";
-					for($i = 0; $i < count($option_names); $i++)
-					{
-						echo ($i + 1) . ": " . $option_names[$i] . "\n";
-					}
-					echo "\nPlease Enter Your Choice: ";
-					$bench_choice = strtolower(trim(fgets(STDIN)));
-				}
-				while($bench_choice < 1 || $bench_choice > count($option_names));
+				echo "\nEnter Value: ";
+				$value = strtolower(trim(fgets(STDIN)));
+				$USER_ARGS .= $settings_argument[$option_count] . $value;
 			}
-			$option_display_name = $option_names[($bench_choice - 1)];
-
-			if(($cut_point = strpos($option_display_name, '(')) > 1 && strpos($option_display_name, ')') > $cut_point)
-				$option_display_name = substr($option_display_name, 0, $cut_point);
-
-			$TEXT_ARGS .= $option_display_name;
-			//$TEXT_ARGS .= "$settings_name[$option_count]: " . $option_names[($bench_choice - 1)];
-
-			$USER_ARGS .= $settings_argument[$option_count] . $option_values[($bench_choice - 1)] . " ";
-
-			if($option_count < count($settings_name) - 1)
-				$TEXT_ARGS .= " - ";
 		}
-		else
-		{
-			echo "\nEnter Value: ";
-			$value = strtolower(trim(fgets(STDIN)));
-			$USER_ARGS .= $settings_argument[$option_count] . $value;
-		}
+		$TEST_RUN = array($TO_RUN);
+		$TEST_ARGS = array($USER_ARGS);
+		$TEST_ARGS_DESCRIPTION = array($TEXT_ARGS);
 	}
-	unset($xml_parser);
+	else
+	{
+		// Batch mode for single test
+		$all_args_real = array();
+		$all_args_description = array();
+		$description_separate = " ";
+
+		for($option_count = 0; $option_count < count($settings_name); $option_count++)
+		{
+			if(!empty($settings_menu[$option_count]))
+			{
+				$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
+				$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
+				$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
+				$option_args = array();
+				$option_args_description = array();
+
+				for($i = 0; $i < count($option_names) && $i < count($option_values); $i++)
+				{
+					// A bit redundant processing, but will ensure against malformed XML problems and extra stuff added
+					$this_arg = $settings_argument[$option_count] . $option_values[$i];
+					$this_arg_description = $option_names[$i];
+
+					if(($cut_point = strpos($this_arg_description, '(')) > 1 && strpos($this_arg_description, ')') > $cut_point)
+						$this_arg_description = substr($this_arg_description, 0, $cut_point);
+
+					array_push($option_args, $this_arg);
+					array_push($option_args_description, $this_arg_description);
+				}
+
+				if($i > 1)
+					$description_separate = " - ";
+
+				array_push($all_args_real, $option_args);
+				array_push($all_args_description, $option_args_description);
+			}
+		}
+
+		$TEST_ARGS = array();
+		pts_all_combos($TEST_ARGS, "", $all_args_real, 0);
+
+		$TEST_ARGS_DESCRIPTION = array();
+		pts_all_combos($TEST_ARGS_DESCRIPTION, "", $all_args_description, 0, $description_separate);
+
+		$TEST_RUN = array();
+		for($i = 0; $i < count($TEST_ARGS); $i++) // needed at this time to fill up the array same size as the number of options present
+			array_push($TEST_RUN, $TO_RUN);
+	}
 
 	if($SAVE_RESULTS)
 	{
@@ -212,7 +265,8 @@ if($TO_RUN_TYPE == "BENCHMARK")
 		$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 		unset($xml_parser);
 	}
-	pts_recurse_call_benchmark(array($TO_RUN), array($USER_ARGS), $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, array($TEXT_ARGS));
+
+	pts_recurse_call_benchmark($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
 }
 else if($TO_RUN_TYPE == "TEST_SUITE")
 {

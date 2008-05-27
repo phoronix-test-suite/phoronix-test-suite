@@ -544,4 +544,25 @@ function pts_global_auto_tags($extra_attr = NULL)
 
 	return implode(", ", $tags_array);
 }
+function pts_all_combos(&$return_arr, $current_string, $options, $counter, $delimiter = " ")
+{
+	if(count($options) <= $counter)
+	{
+		array_push($return_arr, trim($current_string));
+	}
+	else
+        {
+		foreach($options[$counter] as $single_option)
+		{
+			$new_current_string = $current_string;
+
+			if(strlen($new_current_string) > 0)
+				$new_current_string .= $delimiter;
+
+			$new_current_string .= $single_option;
+
+			pts_all_combos($return_arr, $new_current_string, $options, $counter + 1, $delimiter);
+		}
+	}
+}
 ?>
