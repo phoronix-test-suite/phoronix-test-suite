@@ -5,7 +5,8 @@ cd glew/
 make -j $NUM_CPU_JOBS
 cd ..
 
-echo "#!/bin/sh
-./glew/bin/glewinfo | grep GL_VERSION" > compliance-ogl
+cat > compliance-ogl << 'EOT'
+#!/bin/sh
+LD_LIBRARY_PATH=glew/lib:$LD_LIBRARY_PATH ./glew/bin/glewinfo | grep GL_VERSION
+EOT
 chmod +x compliance-ogl
-

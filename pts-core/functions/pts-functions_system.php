@@ -306,6 +306,15 @@ function pts_report_power_mode()
 
 	return $return_status;
 }
+function filesystem_type()
+{
+	$fs = shell_exec("stat " . BENCHMARK_ENV_DIR . " -L -f -c %T 2> /dev/null");
+
+	if("" == $fs)
+		return "Unknown";
+
+	return $fs;
+}
 function pts_hw_string()
 {
 	$hw_string = "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . "), ";
@@ -324,7 +333,8 @@ function pts_sw_string()
 	$sw_string .= "Kernel: " . kernel_string() . " (" . kernel_arch() . "), ";
 	$sw_string .= "X.Org Server: " . graphics_subsystem_version() . ", ";
 	$sw_string .= "OpenGL: " . opengl_version() . ", ";
-	$sw_string .= "Compiler: " . compiler_version() . " ";
+	$sw_string .= "Compiler: " . compiler_version() . ", ";
+	$sw_string .= "File-System: " . filesystem_type() . " ";
 
 	return $sw_string;
 }

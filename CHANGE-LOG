@@ -14,6 +14,7 @@ Phoronix Test Suite
 - Add (missing) options to scimark2
 - Allow environmental variables to be used in the SubTitle tag and within test suite profiles
 - Add pcqs-graphics suite
+- Add file-system detection to Phoronix Test Suite
 
 Phoronix Test Suite 0.8.0
 May 24, 2008
