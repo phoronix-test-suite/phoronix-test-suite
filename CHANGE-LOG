@@ -18,6 +18,7 @@ Phoronix Test Suite
 - When running in batch mode and running a single test, instead of prompt for options, run ALL available options.
 - Add mencoder test profile for mencoder LAVC encoding test profile
 - Add ffmpeg test profile
+- Add video-encoding test suite
 
 Phoronix Test Suite 0.8.0
 May 24, 2008

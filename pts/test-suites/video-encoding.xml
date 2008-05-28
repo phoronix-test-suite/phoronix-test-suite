@@ -1,0 +1,15 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.9.0</Version>
+		<TestType>System</TestType>
+		<Title>Video Encoding</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite consists of video encoding tests. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>mencoder</Test>
+	</RunTest>
+	<RunTest>
+		<Test>ffmpeg</Test>
+	</RunTest>
+</PhoronixTestSuite>
