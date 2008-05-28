@@ -34,7 +34,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 
 	if($UserAgreement != $UserAgreement_MD5)
 	{
-		echo pts_string_header("PHORONIX TEST SUITE - WELCOME MESSAGE");
+		echo pts_string_header("PHORONIX TEST SUITE - WELCOME");
 		echo wordwrap(file_get_contents(ETC_DIR . "user-agreement.txt"), 65);
 		$agree = pts_bool_question("Do you wish to proceed (Y/n)?", true);
 

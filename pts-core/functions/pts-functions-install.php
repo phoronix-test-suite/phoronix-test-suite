@@ -74,22 +74,6 @@ function pts_download_benchmark_files($Benchmark)
 {
 	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
 	{
-		if(($size = pts_test_estimated_download_size($Benchmark)) != "")
-		{
-			echo pts_string_header("The estimated download size of all file(s) are: " . $size . " MB");
-
-			if(ceil(disk_free_space(PTS_TEMP_DIR) / 1048576) < $size)
-			{
-				echo pts_string_header("There is not enough temporary space (at " . PTS_TEMP_DIR . ") for this test.");
-				pts_exit();
-			}
-			if(ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576) < $size)
-			{
-				echo pts_string_header("There is not enough space (at " . BENCHMARK_ENV_DIR . ") for this test.");
-				pts_exit();
-			}
-		}
-
 		$xml_parser = new tandem_XmlReader(file_get_contents(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
@@ -123,7 +107,24 @@ function pts_download_benchmark_files($Benchmark)
 			{
 				if(!$header_displayed)
 				{
-					echo pts_string_header("Downloading Files For: " . $Benchmark);
+					$download_append = "";
+					if(($size = pts_test_estimated_download_size($Benchmark)) != "")
+					{
+						$download_append = "\nEstimated Download Size: " . $size . " MB";
+
+						if(ceil(disk_free_space(PTS_TEMP_DIR) / 1048576) < $size)
+						{
+							echo pts_string_header("There is not enough temporary space (at " . PTS_TEMP_DIR . ") for this test.");
+							pts_exit();
+						}
+						if(ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576) < $size)
+						{
+							echo pts_string_header("There is not enough space (at " . BENCHMARK_ENV_DIR . ") for this test.");
+							pts_exit();
+						}
+					}
+					echo pts_string_header("Downloading Files For: " . $Benchmark . $download_append);
+
 					$header_displayed = true;
 				}
 
@@ -161,7 +162,7 @@ function pts_download_benchmark_files($Benchmark)
 				}
 				else if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && (empty($package_md5[$i]) || $package_md5[$i] == md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i])))
 				{
-					echo "\nTransferring Cached File: " . $package_filename[$i] . "\n";
+					echo "Transferring Cached File: " . $package_filename[$i] . "\n";
 
 					if(copy(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $download_location . $package_filename[$i]))
 						$urls = array();
@@ -236,7 +237,7 @@ function pts_install_benchmark($Benchmark)
 
 	if(!pts_test_architecture_supported($Benchmark))
 	{
-		echo pts_string_header($Benchmark . "is not supported on this platform (" . kernel_arch() . ")");
+		echo pts_string_header($Benchmark . "is not supported on this platform (" . kernel_arch() . ").");
 		return;
 	}
 
@@ -285,7 +286,7 @@ function pts_install_benchmark($Benchmark)
 			$install_header = "Installing Benchmark: " . $Benchmark;
 
 			if(($size = pts_test_estimated_download_size($Benchmark)) != "")
-				$install_header .= "\n\nThe estimated size of this test installation is: " . $size . " MB";
+				$install_header .= "\nEstimated Install Size: " . $size . " MB";
 
 			echo pts_string_header($install_header);
 

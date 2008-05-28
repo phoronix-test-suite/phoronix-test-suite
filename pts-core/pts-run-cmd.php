@@ -123,7 +123,7 @@ switch($COMMAND)
 			pts_install_package_on_distribution($ARG_1);
 		break;
 	case "MAKE_DOWNLOAD_CACHE":
-		echo pts_string_header("Phoronix Test Suite - Making Cache Of Downloads");
+		echo pts_string_header("Phoronix Test Suite - Generating Download Cache");
 		pts_generate_download_cache();
 		echo "\n";
 		break;
@@ -367,7 +367,7 @@ switch($COMMAND)
 			echo "\nThis result doesn't exist!\n";
 		break;
 	case "SYS_INFO":
-		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n" . "System Information");
+		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\nSystem Information");
 		echo "Hardware:\n" . pts_hw_string() . "\n\n";
 		echo "Software:\n" . pts_sw_string() . "\n\n";
 		break;
@@ -482,7 +482,7 @@ switch($COMMAND)
 		echo "\nPhoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n\n";
 		break;
 	default:
-		echo "Phoronix Test Suite: Internal Error. Command Not Recognized ($COMMAND).\n";
+		echo "Phoronix Test Suite: Internal Error.\nCommand Not Recognized ($COMMAND).\n";
 }
 
 ?>

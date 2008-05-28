@@ -102,7 +102,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	{
 		if($original_suite_name != $new_suite_name)
 		{
-			echo pts_string_header("Note: The test(s) don't match: " . $original_suite_name . " - " . $new_suite_name . ".\nThis merge will continue, but not all test results may be compatible.");
+			echo pts_string_header("Note: The test(s) don't match: " . $original_suite_name . " - " . $new_suite_name . ".\nNot all test results may be compatible.");
 		}
 		if($original_suite_version != $new_suite_version)
 		{

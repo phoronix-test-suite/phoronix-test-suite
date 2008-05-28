@@ -72,7 +72,7 @@ if(!$TO_RUN_TYPE)
 else
 {
 	echo "\n";
-	$SAVE_RESULTS = pts_bool_question("Would you like to save these benchmark results (Y/n)?", true, "SAVE_RESULTS");
+	$SAVE_RESULTS = pts_bool_question("Would you like to save these test results (Y/n)?", true, "SAVE_RESULTS");
 
 	if($SAVE_RESULTS)
 	{
@@ -270,7 +270,7 @@ if($TO_RUN_TYPE == "BENCHMARK")
 }
 else if($TO_RUN_TYPE == "TEST_SUITE")
 {
-	echo pts_string_header(ucwords($TO_RUN) . " Test Suite");
+	echo pts_string_header("Test Suite: " . $TO_RUN);
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_RUN . ".xml"));
 
@@ -291,7 +291,7 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 }
 else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE == "LOCAL_COMPARISON"))
 {
-	echo pts_string_header("PTS Comparison Against: " . $TO_RUN);
+	echo pts_string_header("PTS Comparison: " . $TO_RUN);
 
 	$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $TO_RUN . "/composite.xml"));
 	$CUSTOM_TITLE = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);

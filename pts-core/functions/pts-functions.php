@@ -79,7 +79,7 @@ define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
 
 if(pts_process_active("phoronix-test-suite"))
 {
-	echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
+	echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running...\nFor proper results, only run one instance at a time.");
 }
 pts_process_register("phoronix-test-suite");
 register_shutdown_function("pts_shutdown");
@@ -552,7 +552,7 @@ function pts_clean_information_string($str)
 
 	return $str;
 }
-function pts_string_header($heading)
+function pts_string_header($heading, $char = '=')
 {
 	$header_size = 36;
 
@@ -565,7 +565,7 @@ function pts_string_header($heading)
 	if($header_size > $terminal_width && $terminal_width > 1)
 		$header_size = $terminal_width;
 
-	return "\n" . str_repeat('=', $header_size) . "\n" . $heading . "\n" . str_repeat('=', $header_size) . "\n\n";
+	return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";
 }
 function pts_exit($string = "")
 {

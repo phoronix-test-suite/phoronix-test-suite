@@ -323,7 +323,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(!isset($to_execute) || empty($to_execute))
 	{
-		echo "This application executable could not be found in " . $execute_path . ". or " . BENCHMARK_ENV_DIR . "$benchmark_identifier/.\nTest terminating.";
+		echo "The test executable could not be found... Test terminating.";
 		return;
 	}
 
@@ -487,7 +487,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		}
 	}
 
-	echo pts_string_header($RETURN_STRING);
+	echo pts_string_header($RETURN_STRING, '#');
 
 	//pts_beep();
 	pts_process_remove($benchmark_identifier);
