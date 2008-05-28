@@ -1,0 +1,13 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www3.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc2.tar.bz2</URL>
+			<MD5>7e27e535c2d267637df34898f1b91707</MD5>
+		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-trondheim-avi.tar.bz2</URL>
+			<MD5>c91aa7b412f32c0f2b616ebfe2f261ad</MD5>
+			<DownloadTo>SHARED</DownloadTo>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

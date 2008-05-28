@@ -1,0 +1,22 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.9.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>95</DownloadSize>
+		<EnvironmentSize>16</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>Mencoder</Title>
+		<Version>1.0-rc2</Version>
+		<SubTitle>89MB AVI To LAVC Encoding</SubTitle>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>This test uses mplayer's mencoder utility and FFmpeg's libavcodec family for testing the system's audio/video encoding performance.</Description>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestInformation>
+</PhoronixTestSuite>
