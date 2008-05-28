@@ -98,7 +98,7 @@ function pts_generate_download_cache()
 			if(empty($package_filename[$i]))
 				$package_filename[$i] = basename($package_url[$i]);
 
-			if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) == $package_md5[$i])
+			if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && (empty($package_md5[$i]) || md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) == $package_md5[$i]))
 			{
 				echo "\tPreviously Cached: " . $package_filename[$i] . "\n";
 				$cached = true;
@@ -107,7 +107,7 @@ function pts_generate_download_cache()
 			{
 				if(is_file(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED")
 				{
-					if(md5_file(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i]) == $package_md5[$i])
+					if(empty($package_md5[$i]) || md5_file(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i]) == $package_md5[$i])
 					{
 						echo "\tCaching: " . $package_filename[$i] . "\n";
 
@@ -117,7 +117,7 @@ function pts_generate_download_cache()
 				}
 				else if(is_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED")
 				{
-					if(md5_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) == $package_md5[$i])
+					if(empty($package_md5[$i]) || md5_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) == $package_md5[$i])
 					{
 						echo "\tCaching: " . $package_filename[$i] . "\n";
 
