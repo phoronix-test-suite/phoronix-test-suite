@@ -27,9 +27,24 @@ $sensors = array();
 $sensor_results = array();
 
 array_push($sensors, read_sensors("VCore"));
-array_push($sensors, read_sensors("CPU Fan"));
-array_push($sensors, read_sensors("CPU Temp"));
-array_push($sensors, read_sensors("Sys Temp"));
+array_push($sensors, read_sensors("+3.3V"));
+array_push($sensors, read_sensors("+5V"));
+array_push($sensors, read_sensors("+12V"));
+
+$cpu_fan = read_sensors("CPU Fan");
+if(empty($cpu_fan))
+	$cpu_fan = read_sensors("fan1");
+array_push($sensors, $cpu_fan);
+
+$cpu_temp = read_sensors("CPU Temp");
+if(empty($cpu_temp))
+	$cpu_temp = read_sensors("temp1");
+array_push($sensors, $cpu_temp);
+
+$sys_temp = read_sensors("Sys Temp");
+if(empty($sys_temp))
+	$sys_temp = read_sensors("temp2");
+array_push($sensors, $sys_temp);
 
 foreach($sensors as $single_sensor)
 {
