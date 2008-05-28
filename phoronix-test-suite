@@ -156,33 +156,42 @@ case "$1" in
 
 =================================
 Phoronix Test Suite
-http://www.phoronix-test-suite.com/
+URL: http://www.phoronix-test-suite.com/
 =================================
 
-install <suite OR test>: Install or Update The Specified Test(s)
-install-dependencies <suite OR test>: Install The External (Distribution) Dependencies For Specified Test(s)
-install-all: Install or Update all available tests
-run <suite OR test>: Run The Specified Test/Suite
-batch-run <suite OR test>: Run The Specified Test/Suite in Batch Mode
-benchmark <suite OR test OR saved file>: Same as manually running install and then run
-batch-benchmark <suite OR test OR saved file>: Same as manually running install and then run in Batch Mode
-batch-setup: Setup the batch mode options
-merge-results <Saved File 1 OR Global ID> <Saved File 2 OR Global ID> <Save To>: Merge two saved result sets
-list-tests: List all Phoronix Test Suite tests
-list-installed-tests: List all Phoronix Test Suite tests that are installed
-list-suites: List all Phoronix Test Suites
-list-results: List all saved results
-make-download-cache: Backup all saved files to ~/.phoronix-test-suite/download-cache/
-remove-result <Saved File>: Remove this saved result file and associated files
-remove-all-results: Removes all saved results and associated files
-info <suite OR test>: Show detailed information about a test or suite
-system-info: Dump detected software and hardware information detected by PTS
-sensor-options: Show system sensors that can be monitored through PTS
-upload <Saved File>: Upload these results to be shared globally
-show-result <Saved File>: Show this result file in your web browser
-version: Report the Phoronix Test Suite version and code-name
-login: Enter in your PTS Global log-in information for uploading results
+Installation Options:
+	install <suite / test>: Install or update the specified suite/test(s)
+	install-dependencies <suite / test>: Install the external (distribution-level) dependencies
+	install-all: Install or update all available tests
+	list-installed-tests: List all tests that are installed
 
+Testing Options:
+	benchmark <suite / test / saved file / Global ID>: Install and then run the test(s)
+	run <suite / test / saved file / Global ID>: Run the specified test(s)
+	list-tests: List all tests and relevant information
+	list-suites: List all suites and relevant information
+
+Batch Testing Options:
+	batch-run <suite OR test>: Run the specified test(s) in batch mode
+	batch-benchmark <suite OR test OR saved file>: Install and run the test(s) in batch mode
+	batch-setup: Setup the batch mode options
+
+Result Viewing Options:
+	merge-results <saved Name 1 / Global ID> <saved Name 2 / Global ID> <save name>: Merge two sets of results
+	list-results: List all saved results
+	show-result <saved name>: Show this result file in your web browser
+	remove-result <saved name>: Remove this saved result file
+	remove-all-results: Removes all saved results
+	upload <saved name>: Upload a saved set of results to PTS Global
+	login: Enter your PTS Global log-in information for uploading results
+
+Miscellaneous Options:
+	make-download-cache: Backup all downloaded test files to ~/.phoronix-test-suite/download-cache/
+	info <suite / test>: Show detailed information about a test or suite
+	system-info: Show detected software and hardware information
+	sensor-options: Show system sensors that can be monitored
+	diagnostics: Useful information when reporting a bug or problem
+	version: Print the Phoronix Test Suite version and code-name
 EOT
 	;;
 esac
