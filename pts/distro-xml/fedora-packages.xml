@@ -37,9 +37,13 @@
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
-			<Title>Git</Title>
-			<PossibleNames>git</PossibleNames>
+			<PackageName>git</PackageName>
 			<FileCheck>/usr/bin/git</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>xorg-development</GenericName>
+			<PackageName>xorg-x11-server-devel</PackageName>
+			<FileCheck>/usr/include/xorg</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
@@ -65,6 +69,11 @@
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>portaudio-devel</PackageName>
 			<FileCheck>/usr/include/portaudio.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>fortran-compiler</GenericName>
+			<PackageName>gcc-gfortran</PackageName>
+			<FileCheck>/usr/bin/gfortran</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glew</GenericName>

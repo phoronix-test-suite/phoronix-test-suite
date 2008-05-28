@@ -7,8 +7,8 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>SDL-devel</PackageName>
-			<FileCheck>/usr/include/SDL/SDL.h</FileCheck>
+			<PackageName>SDL-devel SDL_gfx-devel SDL_image-devel SDL_net-devel SDL_sound-devel SDL_ttf-devel</PackageName>
+			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h, /usr/include/SDL/SDL_ttf.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
@@ -34,6 +34,11 @@
 			<GenericName>build-utilities</GenericName>
 			<PackageName>gcc</PackageName>
 			<FileCheck>/usr/bin/gcc</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>git</GenericName>
+			<PackageName>git</PackageName>
+			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>

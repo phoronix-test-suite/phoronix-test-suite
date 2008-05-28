@@ -15,7 +15,7 @@
 		<Package>
 			<GenericName>glut</GenericName>
 			<Title>OpenGL Utility Kit (GLUT)</Title>
-			<PossibleNames>freeglut3-dev</PossibleNames>
+			<PossibleNames>freeglut3-dev, freeglut-devel</PossibleNames>
 			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
@@ -29,6 +29,18 @@
 			<Title>libpng (PNG Image) Development Files</Title>
 			<PossibleNames>libpng12-dev</PossibleNames>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>php-gd</GenericName>
+			<Title>PHP GD Module</Title>
+			<PossibleNames>php5-gd, php-gd</PossibleNames>
+			<FileCheck>/usr/share/doc/php5-gd</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>build-utilities</GenericName>
+			<Title>GNU Development Utilities / Libraries</Title>
+			<PossibleNames>gcc</PossibleNames>
+			<FileCheck>/usr/bin/gcc</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
@@ -69,7 +81,7 @@
 		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<Title>PortAudio Development Files</Title>
-			<PossibleNames>libportaudio-dev</PossibleNames>
+			<PossibleNames>libportaudio-dev, portaudio-devel</PossibleNames>
 			<FileCheck>/usr/include/portaudio.h</FileCheck>
 		</Package>
 		<Package>
@@ -77,12 +89,6 @@
 			<Title>Fortran Compiler</Title>
 			<PossibleNames>gfortran, gcc-fortran</PossibleNames>
 			<FileCheck>/usr/bin/gfortran</FileCheck>
-		</Package>
-		<Package>
-			<GenericName>build-utilities</GenericName>
-			<Title>GNU Development Utilities / Libraries</Title>
-			<PossibleNames>gcc</PossibleNames>
-			<FileCheck>/usr/bin/gcc</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glew</GenericName>

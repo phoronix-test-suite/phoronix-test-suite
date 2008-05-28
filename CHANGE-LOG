@@ -19,6 +19,7 @@ Phoronix Test Suite
 - Add mencoder test profile for mencoder LAVC encoding test profile
 - Add ffmpeg test profile
 - Add video-encoding test suite
+- Update PTS External Dependencies with some profiles previously missing some packages, etc. (CentOS maintainer needs to update centos-packages.xml still)
 
 Phoronix Test Suite 0.8.0
 May 24, 2008

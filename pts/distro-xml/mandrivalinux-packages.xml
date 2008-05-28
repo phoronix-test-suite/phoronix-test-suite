@@ -7,7 +7,7 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>SDL-devel SDL_gfx-devel SDL_image-devel SDL_net-devel SDL_sound-devel</PackageName>
+			<PackageName>SDL-devel SDL_gfx-devel SDL_image-devel SDL_net-devel SDL_sound-devel SDL_ttf-devel</PackageName>
 			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
@@ -33,9 +33,13 @@
 		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>gcc</PackageName>
-			<FileCheck>/usr/bin/gcc</FileCheck>
 			<PackageName>gcc-c++/<PackageName>
-			<FileCheck>/usr/bin/g++</FileCheck>
+			<FileCheck>/usr/bin/gcc</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>xorg-development</GenericName>
+			<PackageName>xorg-x11-devel</PackageName>
+			<FileCheck>/usr/include/xorg</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
@@ -63,5 +67,20 @@
                         <PackageName>java-openjdk</PackageName>
                         <FileCheck>/usr/bin/java</FileCheck>
                 </Package>
+		<Package>
+			<GenericName>portaudio-development</GenericName>
+			<PackageName>portaudio-devel</PackageName>
+			<FileCheck>/usr/include/portaudio.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>fortran-compiler</GenericName>
+			<PackageName>gcc-gfortran</PackageName>
+			<FileCheck>/usr/bin/gfortran</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>glew</GenericName>
+			<PackageName>libglew-devel</PackageName>
+			<FileCheck>/usr/include/GL/glew.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

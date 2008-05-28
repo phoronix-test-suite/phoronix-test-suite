@@ -12,7 +12,7 @@
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
-			<PackageName>freeglut3 freeglut3-dev</PackageName>
+			<PackageName>freeglut3-dev</PackageName>
 			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
