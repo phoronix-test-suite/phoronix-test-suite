@@ -1,0 +1,18 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.9.0</Version>
+		<TestType>System</TestType>
+		<SoftwareType>Benchmark</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>0.01</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>LM Sensors</Title>
+		<SubTitle>Sensor Detection</SubTitle>
+		<ResultScale>VCore, CPU Fan, CPU Temp, Sys Temp</ResultScale>
+		<Description>This is a test checking if the system has LM_Sensors properly configured and whether some important sensors are properly detected.</Description>
+		<ResultFormat>MULTI_PASS_FAIL</ResultFormat>
+	</TestInformation>
+</PhoronixTestSuite>
