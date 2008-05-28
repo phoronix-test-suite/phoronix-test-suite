@@ -1,0 +1,21 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.9.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>88</DownloadSize>
+		<EnvironmentSize>16</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>FFmpeg</Title>
+		<SubTitle>89MB AVI To NTSC VCD</SubTitle>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>This test uses FFmpeg and the libavcodec family for testing the system's audio/video encoding performance.</Description>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestInformation>
+</PhoronixTestSuite>
