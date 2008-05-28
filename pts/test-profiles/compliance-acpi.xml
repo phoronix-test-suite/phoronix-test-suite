@@ -1,0 +1,18 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.9.0</Version>
+		<TestType>System</TestType>
+		<SoftwareType>Benchmark</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>0.01</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>Advanced Configuration and Power Interface</Title>
+		<SubTitle>ACPI Compliance</SubTitle>
+		<ResultScale>Brightness Control, CPU Power Management, Thermal Zones, Suspend</ResultScale>
+		<Description>This is a test checking if what ACPI (Advanced Configuration and Power Interface) features are supported by the system.</Description>
+		<ResultFormat>MULTI_PASS_FAIL</ResultFormat>
+	</TestInformation>
+</PhoronixTestSuite>

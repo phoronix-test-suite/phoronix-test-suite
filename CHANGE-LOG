@@ -22,6 +22,7 @@ Phoronix Test Suite
 - Update PTS External Dependencies with some profiles previously missing some packages, etc. (CentOS maintainer needs to update centos-packages.xml still)
 - Rename pcqs-graphics to pcqs-desktop-graphics... pcqs-graphics is now a composite suite of both pcqs-desktop-graphics and pcqs-workstation-graphics
 - Add compliance-sensors test for checking if some important LM_Sensors sensors are properly detected and working
+- Add compliance-acpi test for checking if some ACPI features are working on the test system
 - Many bug fixes
 
 Phoronix Test Suite 0.8.0
