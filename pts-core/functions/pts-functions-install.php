@@ -127,13 +127,13 @@ function pts_download_benchmark_files($Benchmark)
 					$header_displayed = true;
 				}
 
-				$urls = explode(",", $package_url[$i]);
+				if($package_url[$i] == $package_filename[$i])
+					$urls = array();
+				else
+					$urls = explode(",", $package_url[$i]);
 
 				if(count($urls) > 1)
 					shuffle($urls);
-
-				$fail_count = 0;
-				$try_again = true;
 
 				if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
 					unlink(PTS_TEMP_DIR . $package_filename[$i]);
@@ -169,6 +169,9 @@ function pts_download_benchmark_files($Benchmark)
 
 				if(count($urls) > 0)
 				{
+					$fail_count = 0;
+					$try_again = true;
+
 					do
 					{
 						$url = trim(array_pop($urls));
@@ -219,7 +222,6 @@ function pts_download_benchmark_files($Benchmark)
 						{
 							pts_exit("\nDownload of Needed Test Dependencies Failed! Exiting...\n\n");
 						}
-
 					}
 					while(!$file_downloaded);
 				}
