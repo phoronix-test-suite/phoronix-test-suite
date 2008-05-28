@@ -14,11 +14,11 @@ function read_acpi($point, $match)
 
 	if(is_file("/proc/acpi" . $point))
 	{
-		$cpuinfo_lines = explode("\n", file_get_contents("/proc/acpi" . $point));
+		$acpi_lines = explode("\n", file_get_contents("/proc/acpi" . $point));
 
-		for($i = 0; $i < count($cpuinfo_lines) && $value == ""; $i++)
+		for($i = 0; $i < count($acpi_lines) && $value == ""; $i++)
 		{
-			$line = explode(": ", $cpuinfo_lines[$i]);
+			$line = explode(": ", $acpi_lines[$i]);
 			$this_attribute = trim($line[0]);
 
 			if(count($line) > 1)

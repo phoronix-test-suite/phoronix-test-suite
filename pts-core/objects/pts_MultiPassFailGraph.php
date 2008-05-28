@@ -45,7 +45,7 @@ class pts_MultiPassFailGraph extends pts_CustomGraph
 		$headings = explode(",", $this->graph_y_title);
 		$identifiers_width = floor($identifiers_total_width / count($headings));
 		$headings_font_size = $this->graph_font_size_bars;
-		while(($this->return_ttf_string_width($this->find_longest_string($headings), $this->graph_font, $headings_font_size) > ($identifiers_width - 20)) || $this->return_ttf_string_height($this->graph_maximum_value, $this->graph_font, $headings_font_size) > ($line_height - 4))
+		while(($this->return_ttf_string_width($this->find_longest_string($headings), $this->graph_font, $headings_font_size) > ($identifiers_width - 2)) || $this->return_ttf_string_height($this->graph_maximum_value, $this->graph_font, $headings_font_size) > ($line_height - 4))
 			$headings_font_size -= 0.5;
 
 		for($j = 0; $j < count($this->graph_data[0]); $j++)
