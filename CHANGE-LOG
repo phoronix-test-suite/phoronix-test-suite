@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 0.9.0
+May 28, 2008
 
 - GtkPerf profile update from uncle_fungus
 - Fix log-in bug for PTS Global
