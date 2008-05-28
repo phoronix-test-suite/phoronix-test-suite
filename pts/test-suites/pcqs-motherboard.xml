@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.9.0</Version>
+		<Version>0.9.1</Version>
 		<TestType>Motherboard</TestType>
 		<Title>PCQS: Motherboard</Title>
 		<Maintainer>Phoronix.com</Maintainer>
@@ -25,11 +25,6 @@
 		<Test>xplane9</Test>
 		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=1280 --pref:_y_res_req_ALL=1024</Arguments>
 		<Description>1280 x 1024 - High Quality</Description>
-	</RunTest>
-	<RunTest>
-		<Test>gtkperf</Test>
-		<Arguments>TOTAL_TIME</Arguments>
-		<Description>Total Time</Description>
 	</RunTest>
 	<RunTest>
 		<Test>build-php</Test>
