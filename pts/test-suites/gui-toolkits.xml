@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.9.0</Version>
+		<Version>0.9.1</Version>
 		<TestType>Graphics</TestType>
 		<Title>GUI Toolkits</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -20,15 +20,5 @@
 		<Test>gtkperf</Test>
 		<Arguments>TEXTVIEW_SCROLL</Arguments>
 		<Description>GtkTextView - Scroll</Description>
-	</RunTest>
-	<RunTest>
-		<Test>gtkperf</Test>
-		<Arguments>DRAWING_PIXBUFS</Arguments>
-		<Description>GtkDrawingArea - Pixbufs</Description>
-	</RunTest>
-	<RunTest>
-		<Test>gtkperf</Test>
-		<Arguments>TOTAL_TIME</Arguments>
-		<Description>Total Time</Description>
 	</RunTest>
 </PhoronixTestSuite>
