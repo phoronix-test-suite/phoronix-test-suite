@@ -403,6 +403,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if($result_format == "PASS_FAIL" || $result_format == "MULTI_PASS_FAIL")
 	{
+		$RETURN_STRING .= "(" . $result_scale . ")\n";
 		$END_RESULT = -1;
 		$i = 1;
 
@@ -493,7 +494,6 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	pts_process_remove($benchmark_identifier);
 
 	// 0 = main end result
-
 	return array($END_RESULT);
 }
 function pts_global_auto_tags($extra_attr = NULL)

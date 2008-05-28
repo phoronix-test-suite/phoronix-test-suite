@@ -67,7 +67,7 @@ div#pts_container
 div.pts_box
 {
 	text-align: left;
-	border: solid #8B8F7C 1px;
+	border: solid #969696 1px;
 	margin: 10px 10px 20px;
 	padding: 1px 10px 15px;
 }
@@ -95,7 +95,7 @@ div#pts_header_bottom_center
 }
 div.pts_column_head
 {	
-	font-size: 12px;
+	font-size: 13px;
 	color: #FFF;
 	text-align: center;
 	margin: 0 3px;
@@ -111,7 +111,7 @@ div.pts_column_body
 	color: #000;
 	text-align: center;
 	margin: 0 3px;
-	background-color: #f5f5f5;
+	background-color: #F8F8F8;
 	float: left;
 	border: solid #66695B;
 	border-width: 0 1px 1px;
@@ -120,7 +120,7 @@ h1
 {
 	margin-top: 10px;
 	font-size: 21px;
-	color: #3B433A;
+	color: #000;
 	font-weight: bold;
 }
 div.pts_chart_box
@@ -141,8 +141,8 @@ div.pts_chart_box a:hover
 div#pts_benchmark_area
 {
 	background-color: #FFF;
-	width: 96%;
-	margin: 5px auto;
+	width: 95%;
+	margin: 10px auto;
 	color: #000;
 	overflow: hidden;
 }
