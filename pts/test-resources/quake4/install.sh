@@ -14,5 +14,11 @@ tar -xvf quake4-pts-demo-1.tar.gz
 mkdir q4base/demos
 mv -f pts.demo q4base/demos/pts.demo
 
+if [ -f quake4-game-files.tar ]
+  then
+     tar -k -C $1/q4base -xvf $1/quake4-game-files.tar
+fi
+
 echo "Quake 4 Game Files (*.pk4) Must Be Copied Into $1/q4base"
 echo "Also Copy Your Game Key File To ~/.quake4/q4base/quake4key (If Not Already There)"
+

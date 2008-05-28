@@ -4,5 +4,9 @@
 			<URL>ftp://ftp.idsoftware.com/idstuff/doom3/linux/doom3-linux-1.3.1.1304.x86.run</URL>
 			<MD5>6325f0936f59420d33668754032141cb</MD5>
 		</Package>
+		<Package>
+			<URL>doom3-game-files.tar</URL>
+			<FileName>doom3-game-files.tar</FileName>
+		</Package>
 	</Downloads>
 </PhoronixTestSuite>

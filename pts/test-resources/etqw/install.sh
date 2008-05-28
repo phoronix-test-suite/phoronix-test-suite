@@ -59,8 +59,11 @@ if [ "$ETQW_BASE_MEGAT" != "" ] #  found in '/usr/local/games'
       CreateSymlinks
       exit 0
 fi
-           
-echo  "no megatexture found
-copy ET:QW Game Files (*.mega) in bases/megatextures
+
+if [ -f etqw-game-files.tar ]
+  then
+     tar -k -C $1/data/base -xvf $1/etqw-game-files.tar
+fi
+echo  "copy ET:QW Game Files (*.mega) in bases/megatextures
 copy ET:QW Game Files(*.pk4) in bases"
 

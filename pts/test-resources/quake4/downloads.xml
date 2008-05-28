@@ -8,5 +8,9 @@
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/quake4-pts-demo-1.tar.gz</URL>
 			<MD5>b278d8229d84553baab727baaea2d7a6</MD5>
 		</Package>
+		<Package>
+			<URL>quake4-game-files.tar</URL>
+			<FileName>quake4-game-files.tar</FileName>
+		</Package>
 	</Downloads>
 </PhoronixTestSuite>

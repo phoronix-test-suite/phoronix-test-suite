@@ -8,5 +8,9 @@
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/etqw-pts-demo-2.tar.gz</URL>
 			<MD5>c7708a2702a3f2b58df644d7aaeca0af</MD5>
 		</Package>
+		<Package>
+			<URL>etqw-game-files.tar</URL>
+			<FileName>etqw-game-files.tar</FileName>
+		</Package>
 	</Downloads>
 </PhoronixTestSuite>
