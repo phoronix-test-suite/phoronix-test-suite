@@ -159,7 +159,7 @@ function pts_download_benchmark_files($Benchmark)
 						}
 					}
 				}
-				else if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && $package_md5[$i] == md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+				else if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && (empty($package_md5[$i]) || $package_md5[$i] == md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i])))
 				{
 					echo "\nTransferring Cached File: " . $package_filename[$i] . "\n";
 
