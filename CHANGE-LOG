@@ -23,6 +23,7 @@ Phoronix Test Suite
 - Rename pcqs-graphics to pcqs-desktop-graphics... pcqs-graphics is now a composite suite of both pcqs-desktop-graphics and pcqs-workstation-graphics
 - Add compliance-sensors test for checking if some important LM_Sensors sensors are properly detected and working
 - Add compliance-acpi test for checking if some ACPI features are working on the test system
+- Add system-compliance test suite of compliance-* tests
 - Many bug fixes
 
 Phoronix Test Suite 0.8.0

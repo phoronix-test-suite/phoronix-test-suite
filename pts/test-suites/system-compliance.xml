@@ -1,0 +1,18 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.9.0</Version>
+		<TestType>System</TestType>
+		<Title>System Compliance</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite runs all of the system-level compliance tests within the Phoronix Test Suite for checking such things as thermal sensors, ACPI compatibility, and OpenGL versions supported by the video driver.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>compliance-sensors</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compliance-acpi</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compliance-ogl</Test>
+	</RunTest>
+</PhoronixTestSuite>
