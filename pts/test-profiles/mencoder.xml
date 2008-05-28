@@ -16,7 +16,7 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>This test uses mplayer's mencoder utility and FFmpeg's libavcodec family for testing the system's audio/video encoding performance.</Description>
+		<Description>This test uses mplayer's mencoder utility and the libavcodec family for testing the system's audio/video encoding performance.</Description>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>

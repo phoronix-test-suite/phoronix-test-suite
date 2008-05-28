@@ -178,7 +178,9 @@ function pts_download_benchmark_files($Benchmark)
 
 						if((is_file(PTS_TEMP_DIR . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file(PTS_TEMP_DIR . $package_filename[$i]) != $package_md5[$i]) || !is_file(PTS_TEMP_DIR . $package_filename[$i]))
 						{
-							unlink($download_location . $package_filename[$i]);
+							if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
+								unlink(PTS_TEMP_DIR . $package_filename[$i]);
+
 							$file_downloaded = false;
 							$fail_count++;
 							echo "\nThe MD5 check-sum of the downloaded file is incorrect.\n";

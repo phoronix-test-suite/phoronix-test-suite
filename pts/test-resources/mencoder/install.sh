@@ -10,8 +10,6 @@ tar -xjf MPlayer-1.0rc2.tar.bz2
 THIS_DIR=$(pwd)
 mkdir $THIS_DIR/mplayer_
 
-tar -xjf pts-trondheim-avi.tar.bz2
-
 cd MPlayer-1.0rc2/
 ./configure --prefix=$THIS_DIR/mplayer_ > /dev/null
 make -j $NUM_CPU_JOBS
