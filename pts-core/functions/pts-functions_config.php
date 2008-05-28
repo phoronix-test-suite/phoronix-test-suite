@@ -86,7 +86,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 
 	$config->addXmlObject(P_OPTION_TEST_ENVIRONMENT, 2, pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/", $read_config));
 	$config->addXmlObject(P_OPTION_CACHE_DIRECTORY, 2, pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/", $read_config));
-	$config->addXmlObject(P_OPTION_TEST_SLEEPTIME, 2, pts_read_user_config(P_OPTION_TEST_SLEEPTIME, "5", $read_config));
+	$config->addXmlObject(P_OPTION_TEST_SLEEPTIME, 2, pts_read_user_config(P_OPTION_TEST_SLEEPTIME, "8", $read_config));
 	$config->addXmlObject(P_OPTION_TEST_SCREENSAVER, 2, $ToggleScreensaver);
 
 	$config->addXmlObject(P_OPTION_BATCH_SAVERESULTS, 3, $BatchOptions[0]);

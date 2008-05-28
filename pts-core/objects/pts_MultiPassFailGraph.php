@@ -31,7 +31,7 @@ class pts_MultiPassFailGraph extends pts_CustomGraph
 		$pass_color = $this->next_paint_color();
 		$fail_color = $this->next_paint_color();
 
-		$main_width = floor($graph_width * .3);
+		$main_width = floor($graph_width * .24);
 		$main_font_size = $this->graph_font_size_bars;
 		$main_greatest_length = $this->find_longest_string($this->graph_identifiers);
 		while(($this->return_ttf_string_width($main_greatest_length, $this->graph_font, $main_font_size) > ($main_width - 8)) || $this->return_ttf_string_height($main_greatest_length, $this->graph_font, $main_font_size) > ($line_height - 4))
