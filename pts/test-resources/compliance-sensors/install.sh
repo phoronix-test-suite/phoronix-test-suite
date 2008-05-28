@@ -33,7 +33,7 @@ array_push($sensors, read_sensors("Sys Temp"));
 
 foreach($sensors as $single_sensor)
 {
-	if(is_numeric($sensors) && $sensors > 1)
+	if(is_numeric($single_sensor) && $single_sensor > 1)
 		array_push($sensor_results, "PASS");
 	else
 		array_push($sensor_results, "FAIL");
