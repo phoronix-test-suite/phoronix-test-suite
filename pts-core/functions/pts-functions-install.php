@@ -345,7 +345,10 @@ function pts_external_dependency_generic($Name)
 		}
 
 		if($PTS_MANUAL_SUPPORT == 1)
-			pts_bool_question("The above dependencies should be installed before proceeding otherwise one or more tests could fail. Press any key when you're ready to continue");
+		{
+			echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
+			fgets(STDIN);
+		}
 	}
 
 	return $generic_information;
