@@ -41,8 +41,16 @@ define("PTS_DIR", pts_directory());
 define("PTS_TEMP_DIR", "/tmp/phoronix-test-suite/");
 define("PHP_BIN", getenv("PHP_BIN"));
 
-if(getenv("DEBUG") == "1")
+if(getenv("DEBUG") == "1" || ($debug_file = getenv("DEBUG_FILE")) != FALSE)
+{
 	define("PTS_DEBUG_MODE", 1);
+
+	if($debug_file != FALSE)
+	{
+		define("PTS_DEBUG_FILE", $debug_file);
+		$DEBUG_CONTENTS = "";
+	}
+}
 
 function __autoload($to_load)
 {
@@ -596,6 +604,15 @@ function pts_shutdown()
 	if(defined("SCREENSAVER_KILLED"))
 		shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");
 
+	if(defined("PTS_DEBUG_MODE") && defined("PTS_DEBUG_FILE"))
+	{
+		if(!is_dir(PTS_USER_DIR . "debug-messages/"))
+			mkdir(PTS_USER_DIR . "debug-messages/");
+
+		if(file_put_contents(PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE, $GLOBALS["DEBUG_CONTENTS"]))
+			echo "\nDebug Message Saved To: " . PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE . "\n";
+	}
+
 	// Remove process
 	pts_process_remove("phoronix-test-suite");
 }
@@ -665,6 +682,20 @@ function pts_format_time_string($time, $format = "SECONDS")
 	}
 
 	return implode(", ", $formatted_time);
+}
+function pts_debug_message($message)
+{
+	if(defined("PTS_DEBUG_MODE"))
+	{
+		if(strpos($message, "$") > 0)
+			foreach(pts_env_variables() as $key => $value)
+				$message = str_replace("$" . $key, $value, $message);
+
+		echo "DEBUG: " . ($output = $message . "\n");
+
+		if(defined("PTS_DEBUG_FILE"))
+			$GLOBALS["DEBUG_CONTENTS"] = $output;
+	}
 }
 
 ?>

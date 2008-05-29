@@ -269,7 +269,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	}
 	pts_process_register($benchmark_identifier);
 
-	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . "$benchmark_identifier.xml"));
+	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $benchmark_identifier . ".xml"));
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
 	$benchmark_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));
@@ -356,6 +356,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		fgets(STDIN);
 	}
 
+	pts_debug_message("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
 	for($i = 0; $i < $times_to_run; $i++)
 	{
 		pts_monitor_update(); // Update sensors, etc
