@@ -19,7 +19,8 @@ class pts_CustomGraph extends pts_Graph
 		$read_config = new tandem_XmlReader($file);
 
 		$this->graph_attr_width = pts_read_graph_config(P_GRAPH_SIZE_WIDTH, null, $read_config); // Graph width
-		$this->graph_attr_height = pts_read_graph_config(P_GRAPH_SIZE_HEIGHT, null, $read_config);; // Graph height
+		$this->graph_attr_height = pts_read_graph_config(P_GRAPH_SIZE_HEIGHT, null, $read_config); // Graph height
+		$this->graph_attr_big_border = pts_read_graph_config(P_GRAPH_BORDER, null, $read_config) == "TRUE"; // Graph border
 
 		// Colors
 		$this->graph_color_notches = pts_read_graph_config(P_GRAPH_COLOR_NOTCHES, null, $read_config); // Color for notches

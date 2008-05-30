@@ -172,5 +172,6 @@ define("P_GRAPH_FONT_SIZE_AXIS", "PhoronixTestSuite/Graphs/FontSize/Axis"); // G
 define("P_GRAPH_RENDERBORDER", "PhoronixTestSuite/Graphs/Other/RenderBorder"); // Graph render border
 define("P_GRAPH_MARKCOUNT", "PhoronixTestSuite/Graphs/Other/NumberOfMarks"); // Graph number of marks
 define("P_GRAPH_WATERMARK", "PhoronixTestSuite/Graphs/Other/Watermark"); // Graph watermark
+define("P_GRAPH_BORDER", "PhoronixTestSuite/Graphs/Other/Border"); // Graph border bool
 
 ?>

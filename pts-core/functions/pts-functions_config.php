@@ -152,6 +152,7 @@ function pts_graph_config_init()
 	$config->addXmlObject(P_GRAPH_RENDERBORDER, 4, pts_read_graph_config(P_GRAPH_RENDERBORDER, "FALSE", $read_config));
 	$config->addXmlObject(P_GRAPH_MARKCOUNT, 4, pts_read_graph_config(P_GRAPH_MARKCOUNT, "6", $read_config));
 	$config->addXmlObject(P_GRAPH_WATERMARK, 4, pts_read_graph_config(P_GRAPH_WATERMARK, "PHORONIX-TEST-SUITE.COM", $read_config));
+	$config->addXmlObject(P_GRAPH_BORDER, 4, pts_read_graph_config(P_GRAPH_BORDER, "FALSE", $read_config));
 
 	file_put_contents(PTS_USER_DIR . "graph-config.xml", $config->getXML());
 }

@@ -15,7 +15,6 @@ mkdir -p $INSTALL_PREFIX/share/doc/phoronix-test-suite/
 
 cp CHANGE-LOG $INSTALL_PREFIX/share/doc/phoronix-test-suite/
 cp README $INSTALL_PREFIX/share/doc/phoronix-test-suite/
-cp COPYING $INSTALL_PREFIX/share/doc/phoronix-test-suite/
 cp LICENSE $INSTALL_PREFIX/share/doc/phoronix-test-suite/
 
 cd documentation/
