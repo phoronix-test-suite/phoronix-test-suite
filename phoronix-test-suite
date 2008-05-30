@@ -172,16 +172,16 @@ Testing Options:
 	list-suites: List all suites and relevant information
 
 Batch Testing Options:
+	batch-setup: Setup the batch mode options
 	batch-run <suite OR test>: Run the specified test(s) in batch mode
 	batch-benchmark <suite OR test OR saved file>: Install and run the test(s) in batch mode
-	batch-setup: Setup the batch mode options
 
 Result Viewing Options:
-	merge-results <saved Name 1 / Global ID> <saved Name 2 / Global ID> <save name>: Merge two sets of results
 	list-results: List all saved results
 	show-result <saved name>: Show this result file in your web browser
 	remove-result <saved name>: Remove this saved result file
 	remove-all-results: Removes all saved results
+	merge-results <saved Name 1 / Global ID> <saved Name 2 / Global ID> <save name>: Merge two sets of results
 	upload <saved name>: Upload a saved set of results to PTS Global
 	login: Enter your PTS Global log-in information for uploading results
 

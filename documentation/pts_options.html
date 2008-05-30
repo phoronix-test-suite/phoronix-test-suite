@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<Title>Phoronix Test Suite - Phoronix Test Suite Options</Title>
+<link href="includes/pts-documentation.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="pts_doc_header"><div class="pts_doc_fixed"><div id="pts_doc_logo"></div></div></div>
+<div class="pts_doc_fixed">
+<div class="pts_doc_notice"><div style="float: left"><a href="index.html">&lt;&lt; Documentation Home</a></div><div style="float: right;">Phoronix Test Suite Options</div></div>
+<div class="pts_doc_main">
+<!-- PTS AREA -->
+<h1>Phoronix Test Suite Options</h1>
+<h2>Installation Options</h2> 
+<p><strong>install &lt;To Install&gt;</strong></p>
+<p>This option will install the selected test(s) inside the testing environment 
+directory (defaults to ~/.phoronix-test-suite/installed-tests). The install process 
+from downloading of the test files to the installation is fully automated. The 
+install option needs to be supplied with the test name or suite as an argument. 
+Optionally, a PTS Global ID or the name of a saved results file can be supplied 
+as well and the test(s) to install will automatically be extracted from that information. 
+If the test is already installed and was ran by the latest version of the installation 
+process, no action will be taken.</p>
+<p><strong>install-dependencies &lt;To Install&gt;</strong></p>
+<p>This option will install the external dependencies needed by the selected test(s) 
+using the distribution's package management system. For example, some tests depend 
+upon GCC for compiling code. If GCC is not detected on the system, the Phoronix 
+Test Suite will attempt to install GCC using the distribution's package management 
+system. If you're running this command as a local user, you may be prompted for 
+the root password while the process is running. The distributions supported at 
+this time are CentOS, Fedora, Mandriva Linux, and Ubuntu. For unsupported distributions, 
+the dependency names will be displayed along with common names for the package. 
+The install-dependencies option needs to be supplied with the test name or suite 
+as an argument. Optionally, a PTS Global ID or the name of a saved results file 
+can be supplied as well and the external dependencies will automatically be extracted 
+from that information. The install-dependencies option will only install the dependencies 
+on tests that utilize this feature. When using the install option, the external 
+dependencies are automatically checked.</p>
+<p><strong>install-all</strong></p>
+<p>This option will install all available test(s) inside the testing environment 
+directory (defaults to ~/.phoronix-test-suite/installed-tests). The install process 
+from downloading of the test files to the installation is fully automated.</p>
+<p><strong>list-installed-tests</strong></p>
+<p>This option will list all tests that have been installed by the Phoronix Test 
+Suite.</p>
+<h2>Testing Options</h2>
+<p><strong>benchmark &lt;To Run&gt;</strong></p>
+<p>This option will install the selected test(s) (if needed) and will proceed 
+to run the test(s). This option is equivalent to running phoronix-test-suite with 
+the install option followed by the run option. The name of the test or suite must 
+be supplied or the PTS Global ID or saved local file name.</p>
+<p><strong>run &lt;To Run&gt;</strong></p>
+<p>This option will run the selected test(s). The name of the test or suite must 
+be supplied or the PTS Global ID or saved local file name.</p>
+<p><strong>list-tests</strong></p>
+<p>This option will list all available tests. The name, title, status, and license 
+are displayed for each test.</p>
+<p><strong>list-suites</strong></p>
+<p>This option will list all available test suites. The name, title, and type 
+are displayed for each suite.</p>
+<h2>Batch Testing Options</h2>
+<p><strong>batch-setup</strong></p>
+<p>This option is used to configure the batch mode options for the Phoronix Test 
+Suite, which is subsequently written to the user configuration file. Among the 
+options are whether to automatically upload the test results to PTS Global and 
+prompting for the saved file name.</p>
+<p><strong>batch-run &lt;To Run&gt;</strong></p>
+<p>This option and its arguments are equivalent to the run option, but the process 
+will be ran in the Phoronix Test Suite batch mode.</p>
+<p><strong>batch-benchmark &lt;To Run&gt;</strong></p>
+<p>This option and its arguments are equivalent to the benchmark option, but the 
+process will be ran in the Phoronix Test Suite batch mode.</p>
+<h2>Result Viewing Options</h2>
+<p><strong>list-results</strong></p>
+<p>This option will list all saved results. The file name, title, test(s) performed, 
+and result identifiers are displayed.</p>
+<p><strong>show-result &lt;To Show&gt;</strong></p>
+<p>This option will show the test results of the selected file (set as the first 
+argument) in the default web browser.</p>
+<p><strong>remove-result &lt;To Remove&gt;</strong></p>
+<p>This option will permanently remove the saved file reset that is set as the 
+first argument.</p>
+<p><strong>remove-all-results</strong></p>
+<p>This option will permanently remove all saved results.</p>
+<p><strong>merge-results &lt;To Merge&gt; &lt;To Merge&gt; &lt;To Save As&gt;</strong></p>
+<p>This option will manually merge two sets of test results generated by the Phoronix 
+Test Suite. The merged results will then be saved to a new file if the targeted 
+save name is specified as the third argument otherwise the results will be re-saved 
+to first file. For the first two arguments, the name of the test or suite must 
+be supplied or the PTS Global ID or saved local file name.</p>
+<p><strong>upload &lt;To Upload&gt;</strong></p>
+<p>This option allows you to upload a saved result to PTS Global.</p>
+<p><strong>login</strong></p>
+<p>This option allows you to log-in to your PTS Global account and will store 
+this information automatically. A new PTS Global account can be created (for free) 
+at http://global.phoronix-test-suite.com/.</p>
+<h2>Miscellaneous Options</h2>
+<p><strong>make-download-cache</strong></p>
+<p>This option will backup all files that were automatically downloaded by the 
+Phoronix Test Suite during the installation of tests. These files are automatically 
+backed up by default to ~/.phoronix-test-suite/download-cache/. By backing up 
+these files, one can easily transfer these files to another system running the 
+Phoronix Test Suite thereby conserving bandwidth and reducing time. Through modifying 
+the user configuration file, the download cache location can be adjusted. The 
+Phoronix Test Suite supports reading from download caches over the network and 
+on remote file-systems.</p>
+<p><strong>info &lt;To Show&gt;</strong></p>
+<p>This option will show details about the test or suite that's supplied as the 
+first argument to this option. When supplying the name of a test, the version, 
+maintainer, type, download size, license information, and suites using this test 
+are displayed. When supplying the name of a suite, the version, maintainer, type, 
+and tests that make up the suite are displayed.</p>
+<p><strong>system-info</strong></p>
+<p>This option will show installed system hardware and software that has been 
+detected by the Phoronix Test Suite.</p>
+<p><strong>sensor-options</strong></p>
+<p>This option will show system sensors that can be monitored through the Phoronix 
+Test Suite.</p>
+<p><strong>diagnostics</strong></p>
+<p>This option will print informaiton that is useful to developers when debugging 
+problems with the Phoronix Test Suite.</p>
+<p><strong>version</strong></p>
+<p>This option will print the Phoronix Test Suite version.</p>
+<h2>Other Options</h2>
+<p><strong>force-install &lt;To Install&gt;</strong></p>
+<p>This option will force the installation (or re-installation) of a test or suite. 
+The arguments and process is similar to the install option but even if the test 
+is installed, the entire installation process will automatically be executed. 
+This option should only be used when debugging a test installation problem.</p>
+<p><strong>force-install-all</strong></p>
+<p>This option will force the installation (or re-installation) of all tests. 
+The process is similar to the install-all option but even if a test is installed, 
+the entire installation process will automatically be executed. This option should 
+only be used when debugging a test installation problem.</p>
+<p><strong>refresh-graphs &lt;Saved Name&gt;</strong></p>
+<p>This option will re-render and save all result graphs within a saved file. 
+This option can be used when making modifications to the graphing code or its 
+color/option configuration file and testing the changes.</p>
+<p><strong>initial-config</strong></p>
+<p>This option will generate a new user configuration (user-config.xml) file.</p>
+<!-- END OF PTS AREA -->
+</div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 by <a href="http://www.phoronixmedia.com/">Phoronix Media</a>.</div></div></div>
+</body>
+</html>

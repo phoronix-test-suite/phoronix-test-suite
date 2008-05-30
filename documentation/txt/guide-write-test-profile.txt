@@ -1,0 +1,83 @@
+========================================
+A Quick Guide To Writing A Test Profile
+========================================
+
+Writing a test profile for the Phoronix Test Suite is a relatively quick and easy process for anyone familiar with common Linux commands and the basics of XML. To help you understand the design of the Phoronix Test Suite, this guide covers the steps needed to write a testing profile for a very simple application.
+
+The first step in the profile writing process is to, well, have a piece of software you'd like to use with the Phoronix Test Suite. This software can be closed-source or open-source and be virtually anything as long as it is compatible with the Linux operating system.
+
+For this guide, the piece of software being used for demonstration is just a simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula. Below is this sample piece of software intended just for demonstration purposes.
+
+#include <iostream>
+#include <math.h>
+
+int main()
+{
+    double pi = 0;
+
+    for(long int i = 1; i <= 87654321; i++)
+        pi += (double) pow(-1, i + 1) / (2 * i - 1);
+
+    pi *= 4;
+    std::cout << "Done Calculating Pi..." << endl;
+    return 0;
+}
+
+The first step in the actual profile writing process is to name it. If you're looking to ultimately push this profile to be included in the Phoronix Test Suite, its name must be all lower case and consist of just alpha-numeric characters, but can contain dashes (-). For this sample profile, we're calling it sample-program and the file-name would be sample-program.xml. Our (very basic) profile is showcased below.
+
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>PRIVATE</Status>
+		<Maintainer>Phoronix Media</Maintainer>
+	</TestProfile>
+	<TestInformation>
+		<Title>Sample Pi Program</Title>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>A simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula.</Description>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestInformation>
+</PhoronixTestSuite>
+
+This XML profile is what interfaces with the Phoronix Test Suite and provides all the needed information about the test as well as other attributes. For a complete listing of all the supported profile options, look at the specification files in the documentation folder. In the case of sample-program, it lets the Phoronix Test Suite know that it's composed of free software, is designed to test the processor, is intended for private use only, and this profile is maintained by Phoronix Media. In addition, it tells the Phoronix Test Suite to execute this program three times and as no result quantifier is set, the average of the three runs will be taken. This profile also tells the Phoronix Test Suite that the generic build-utilities package is needed, which will attempt to ensure that GCC and the standard development utilities/libraries are installed on your Linux distribution. This is needed as the C++ source-code will need to be built from source.
+
+The next step is to write the install.sh file, which once called by the Phoronix Test Suite is intended to install the test locally for benchmarking purposes. The install.sh file is technically optional, but is generally used by all tests. Alternatively, the file may be named install.php if you wish to write the install script in PHP instead of a shell script. Note: The first argument supplied to the install script is the directory that the test needs to be installed to. The install.sh file (in our instance) is to be placed inside pts/test-resources/sample-program. Below is the install.sh for the sample-program. 
+
+#!/bin/sh
+
+tar -xjf sample-pi-program-1.tar.bz2
+g++ sample-pi-program.cpp -o sample-pi-program
+
+echo "#!/bin/sh
+
+time -f \"Pi Calculation Time: %e Seconds\" ./sample-pi-program 2>&1 | grep Seconds" > sample-program
+chmod +x sample-program
+
+This install file builds the code with GCC, and then creates a small script that is run by the Phoronix Test Suite, which times how long it takes to run the software. Where does the source-code come into play? Well, it needs to be downloaded now from a web server. The Phoronix Test Suite has built-in support for managing downloads from multiple servers in a random over, fall-back support if one mirror is done, and verification of MD5 check-sums. Below is the downloads.xml file for sample-program that covers all of this.
+
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/sample-pi-program.cpp</URL>
+			<MD5>e90fb790df8d1544696a1439c9b5bd8d</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
+
+The final step in the profile writing process is to write a parser to strip all information but the reported result from the standard output. The standard output is submitted to parse-results.sh/parse-results.php as the first argument in quotes. In the case of sample-program, all that's done inside parse-results.php is:
+
+<?php
+$BENCHMARK_RESULTS = substr($argv[1], strrpos($argv[1], "Pi Calculation Time:") + 20);
+echo trim(substr($BENCHMARK_RESULTS, 0, strpos($BENCHMARK_RESULTS, "Seconds")));
+?>
+
+After that, with all the files in their correct locations, just run: phoronix-test-suite benchmark sample-program. The Phoronix Test Suite should now handle the rest by installing the test, running the test, and recording the results (if you so choose). There is no additional work that needs to be done for the results to be recorded in the PTS Results Viewer or even reporting the results to PTS Global.
+
+For more information, visit http://www.phoronix-test-suite.com/ and its resources.
+
+Notice: This guide covers the PTS 1.0 specification for writing test profiles, which is compatible with all Phoronix Test Suite releases from 0.8.0 onwards.

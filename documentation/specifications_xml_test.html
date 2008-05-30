@@ -1,0 +1,220 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<Title>Phoronix Test Suite - XML Test Syntax</Title>
+<link href="includes/pts-documentation.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="pts_doc_header"><div class="pts_doc_fixed"><div id="pts_doc_logo"></div></div></div>
+<div class="pts_doc_fixed">
+<div class="pts_doc_notice"><div style="float: left"><a href="index.html">&lt;&lt; Documentation Home</a></div><div style="float: right;">PTS Test Specification</div></div>
+<div class="pts_doc_main">
+<!-- PTS AREA -->
+<h1>Phoronix Test Suite 1.0 Test Specification</h1>
+<p>This document describes the XML tags for writing a test profile.</p>
+<h2>PhoronixTestSuite/TestProfile/</h2>
+<p><strong>Tag:</strong> Version<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_PTSVERSION<br>
+<strong>Required:</strong> Yes<br>
+<strong>Description:</strong> The version of the test profile itself, not dependent upon the main 
+Phoronix Test Suite version or the version of the software package itself.<br>
+<strong>Supported Values:</strong> ( Formatted: x.x.x )</p>
+<p><strong>Tag:</strong> TestType<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_HARDWARE_TYPE<br>
+<strong>Required:</strong> Recommended<br>
+<strong>Description:</strong> The hardware area of the system that this test is designed to stress.<br>
+<strong>Supported Values:</strong> System, Processor, Graphics, Disk, Memory, Motherboard</p>
+<p><strong>Tag:</strong> SoftwareType<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_SOFTWARE_TYPE<br>
+<strong>Required:</strong> Recommended<br>
+<strong>Description:</strong> The type of software that this test consists of.<br>
+<strong>Supported Values:</strong> Game, Utility, Simulator, Other</p>
+<p><strong>Tag:</strong> Maintainer<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_MAINTAINER<br>
+<strong>Required:</strong> Yes<br>
+<strong>Description:</strong> The name of this profile's maintainer.</p>
+<p><strong>Tag:</strong> License<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_LICENSE<br>
+<strong>Required:</strong> Yes<br>
+<strong>Description:</strong> The license of the software itself.<br>
+<strong>Supported Values:</strong> FREE, NON-FREE, RESTRICTED (Will only work with certain hardware 
+configurations), UNKNOWN</p>
+<p><strong>Tag:</strong> Status<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_STATUS<br>
+<strong>Required:</strong> Yes<br>
+<strong>Description:</strong> The status of the test profile itself.<br>
+<strong>Supported Values:</strong> VERIFIED, UNVERIFIED, BROKEN</p>
+<p><strong>Tag:</strong> SupportedArchitectures<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_SUPPORTEDARCHS<br>
+<strong>Required:</strong> No - Defaults to assume all architectures are supported<br>
+<strong>Description:</strong> If the test software is limited to running on select system architectures, 
+list them in this tag with each architecture delimited by a comma.<br>
+<strong>Supported Values:</strong> ( Examples: x86, x86_64 )</p>
+<p><strong>Tag:</strong> RequiresRoot<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_ROOTNEEDED<br>
+<strong>Required:</strong> No - Defaults to assume false<br>
+<strong>Description:</strong> If root access is needed by the software encapsulated by this profile, 
+the value of this tag should be 1.<br>
+<strong>Supported Values:</strong> 0, 1</p>
+<p><strong>Tag:</strong> DownloadSize<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_DOWNLOADSIZE<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The estimated size (in megabytes) that this test takes up in files 
+downloaded.<br>
+<strong>Supported Values:</strong> ( Values must be in MB )</p>
+<p><strong>Tag:</strong> EnvironmentSize<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_ENVIRONMENTSIZE<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The estimated size (in megabytes) that this test takes up in its 
+environment directory when downloaded files have been extracted, etc.<br>
+<strong>Supported Values:</strong> ( Values must be in MB )</p>
+<p><strong>Tag:</strong> EstimatedLength<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_ESTIMATEDTIME<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The estimated length (in minutes) that it takes this benchmark to 
+run in total.<br>
+<strong>Supported Values:</strong> ( Values must be in minutes )</p>
+<h2>PhoronixTestSuite/TestInformation/</h2>
+<p><strong>Tag:</strong> Title<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_TITLE<br>
+<strong>Required:</strong> Yes<br>
+<strong>Description:</strong> The string title of the test, used for display purposes.</p>
+<p><strong>Tag:</strong> SubTitle<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_SUBTITLE<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If a value is supplied, this is a static sub-title when rendering 
+the graph results. Otherwise the test options (if applicable) are displayed.</p>
+<p><strong>Tag:</strong> Version<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_VERSION<br>
+<strong>Required:</strong> Recommended<br>
+<strong>Description:</strong> The version of the software game/application/program itself</p>
+<p><strong>Tag:</strong> Description<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_DESCRIPTION<br>
+<strong>Required:</strong> Recommended<br>
+<strong>Description:</strong> A few sentence description of the test.</p>
+<p><strong>Tag:</strong> ExternalDependencies<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_EXDEP<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The external dependencies needed for the test. Multiple dependencies 
+need to be delimited by a comma.<br>
+<strong>Supported Values:</strong> ( See pts/distro-xml/generic-packages.xml for a list of currently 
+supported external dependencies. )</p>
+<p><strong>Tag:</strong> ResultScale<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_SCALE<br>
+<strong>Required:</strong> Yes<br>
+<strong>Description:</strong> The scale the results are reported in.<br>
+<strong>Supported Values:</strong> ( Examples: Seconds, Average FPS, Mflops )</p>
+<p><strong>Tag:</strong> ResultQuantifier<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_QUANTIFIER<br>
+<strong>Required:</strong> No - Defaults to AVG<br>
+<strong>Description:</strong> When running a test multiple times, how should the final result be 
+calculated.<br>
+<strong>Supported Values:</strong> AVG (Average), MAX (Maximum), MIN (Minimum)</p>
+<p><strong>Tag:</strong> ResultFormat<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_RESULTFORMAT<br>
+<strong>Required:</strong> No - Defaults to BAR_GRAPH<br>
+<strong>Description:</strong> The type of graph/visual representation to be used when viewing the 
+test results.<br>
+<strong>Supported Values:</strong> BAR_GRAPH (Bar Graph), LINE_GRAPH (Line Graph), PASS_FAIL (Pass-Fail 
+Graph)</p>
+<p><strong>Tag:</strong> Proportion<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_PROPORTION<br>
+<strong>Required:</strong> No - Defaults to HIB<br>
+<strong>Description:</strong> The scale for the test, whether lower or higher results yield better 
+performance.<br>
+<strong>Supported Values:</strong> LIB (Lower Is Better), HIB (Higher Is Better)</p>
+<p><strong>Tag:</strong> Executable<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_EXECUTABLE<br>
+<strong>Required:</strong> No - Defaults to name (identifier) of test<br>
+<strong>Description:</strong> When looking for the test to execute in the path directory or the 
+benchmarking environment directory, this is the string of the file-name.</p>
+<p><strong>Tag:</strong> TimesToRun<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_RUNCOUNT<br>
+<strong>Required:</strong> No - Defaults to 1<br>
+<strong>Description:</strong> The number of times to run the test.<br>
+<strong>Supported Values:</strong> ( Integer Values )</p>
+<p><strong>Tag:</strong> IgnoreFirstRun<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_IGNOREFIRSTRUN<br>
+<strong>Required:</strong> No - Defaults to 0<br>
+<strong>Description:</strong> If the test is being run multiple times, should the first value be 
+ignored. If the value is set to 1, the first result will be void.<br>
+<strong>Supported Values:</strong> 0, 1</p>
+<p><strong>Tag:</strong> PreRunMessage<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_PRERUNMSG<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If the user needs to be alerted about something dealing with this 
+test, this tag can contain a string that will be shown to the user before the 
+test begins.</p>
+<h2>PhoronixTestSuite/TestSettings/Default/</h2>
+<p><strong>Tag:</strong> Arguments<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Default/<br>
+<strong>Internal Reference:</strong> P_TEST_DEFAULTARGUMENTS<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> Any arguments to supply to the test executable by default each and 
+every time.</p>
+<p><strong>Tag:</strong> PossiblePaths<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Default/<br>
+<strong>Internal Reference:</strong> P_TEST_POSSIBLEPATHS<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> As an alternative to using the testing environment directory, this 
+tag can containe different paths to check for the test executable. Multiple paths 
+need to be separated by a comma.</p>
+<h2>PhoronixTestSuite/TestSettings/Option/<br>
+NOTE: Multiple instances of these tags are allowed for multiple options in the 
+test</h2>
+<p><strong>Tag:</strong> DisplayName<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Option/<br>
+<strong>Internal Reference:</strong> P_TEST_OPTIONS_DISPLAYNAME<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If the end-user is presented with options for this test, this tag 
+is the full string shown to the user to describe this option.</p>
+<p><strong>Tag:</strong> ArgumentName<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Option/<br>
+<strong>Internal Reference:</strong> P_TEST_OPTIONS_ARGUMENTNAME<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The argument that will be appended to the Arguments tag and is pre-fixed 
+to the Identifier tag selected by the user.</p>
+<p><strong>Tag:</strong> Identifier<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Option/<br>
+<strong>Internal Reference:</strong> P_TEST_OPTIONS_IDENTIFIER<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The internal ID to describe this option.</p>
+<p><strong>Tag:</strong> Name<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Option/Menu/<br>
+<strong>Internal Reference:</strong> P_TEST_OPTIONS_MENU_GROUP_NAME<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The string shown to the user to describe one of the available options 
+within the option.</p>
+<p><strong>Tag:</strong> Value<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Option/Menu/<br>
+<strong>Internal Reference:</strong> P_TEST_OPTIONS_MENU_GROUP_VALUE<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The string post-fixed to the ArgumentName tag and appended to the 
+end of the Arguments tag, which is then supplied to the executable binary as arguments.</p>
+<!-- END OF PTS AREA -->
+</div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 by <a href="http://www.phoronixmedia.com/">Phoronix Media</a>.</div></div></div>
+</body>
+</html>

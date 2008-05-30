@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<Title>Phoronix Test Suite - XML Suite Syntax</Title>
+<link href="includes/pts-documentation.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="pts_doc_header"><div class="pts_doc_fixed"><div id="pts_doc_logo"></div></div></div>
+<div class="pts_doc_fixed">
+<div class="pts_doc_notice"><div style="float: left"><a href="index.html">&lt;&lt; Documentation Home</a></div><div style="float: right;">PTS Suite Specification</div></div>
+<div class="pts_doc_main">
+<!-- PTS AREA -->
+<h1>Phoronix Test Suite 1.0 Suite Specification</h1>
+<p>This document describes the XML tags for writing a test suite.</p>
+<h2>PhoronixTestSuite/SuiteInformation/</h2>
+<p><strong>Tag:</strong> Title<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_SUITE_TITLE<br>
+<strong>Required:</strong> Yes<br>
+<strong>Description:</strong> The full string title of the suite.</p>
+<p><strong>Tag:</strong> Version<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_SUITE_VERSION<br>
+<strong>Required:</strong> Yes<br>
+<strong>Description:</strong> The version of the test suite.<br>
+<strong>Supported Values:</strong> ( Formatted: x.x.x )</p>
+<p><strong>Tag:</strong> Description<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_SUITE_DESCRIPTION<br>
+<strong>Required:</strong> Recommended<br>
+<strong>Description:</strong> A short description of the test suite.</p>
+<p><strong>Tag:</strong> TestType<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_SUITE_TYPE<br>
+<strong>Required:</strong> Recommended<br>
+<strong>Description:</strong> The hardware area of the system that this suite is designed to stress.<br>
+<strong>Supported Values:</strong> System, Processor, Graphics, Disk, Memory, Motherboard</p>
+<p><strong>Tag:</strong> Maintainer<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_SUITE_MAINTAINER<br>
+<strong>Required:</strong> Recommended<br>
+<strong>Description:</strong> The name of the maintainer of this suite.</p>
+<h2>PhoronixTestSuite/RunTest/<br>
+NOTE: Multiple instances of these tags are allowed for multiple tests in a suite</h2>
+<p><strong>Tag:</strong> Test<br>
+<strong>Location:</strong> PhoronixTestSuite/RunTest/<br>
+<strong>Internal Reference:</strong> P_SUITE_TEST_NAME<br>
+<strong>Required:</strong> Yes<br>
+<strong>Description:</strong> The name (identifier) of the test to run.</p>
+<p><strong>Tag:</strong> Arguments<br>
+<strong>Location:</strong> PhoronixTestSuite/RunTest/<br>
+<strong>Internal Reference:</strong> P_SUITE_TEST_ARGUMENTS<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> Only the default arguments are extracted from the test profile. All 
+other arguments you wish to supply (as the end-user isn't prompted of any options 
+when running a suite) should be supplied as a value in this tag.</p>
+<p><strong>Tag:</strong> Description<br>
+<strong>Location:</strong> PhoronixTestSuite/RunTest/<br>
+<strong>Internal Reference:</strong> P_SUITE_TEST_DESCRIPTION<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> A short description describing this test and its options, which is 
+displayed on the graph in the PTS Results Viewer.</p>
+<!-- END OF PTS AREA -->
+</div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 by <a href="http://www.phoronixmedia.com/">Phoronix Media</a>.</div></div></div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+body
+{
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 13px;
+	background-color: #F9F9F9;
+	color: #000;
+}
+a
+{
+	color: #3B433A;
+}
+div#pts_doc_header
+{
+	width: 100%;
+	margin: 0;
+	background-color: #000;
+}
+div#pts_doc_logo
+{
+	width: 255px;
+	height: 70px;
+	padding: 1px;
+	background: #000 url(pts-documentation.png) no-repeat;
+	position: relative;
+	left: 452px;
+}
+div.pts_doc_fixed
+{
+	width: 700px;
+	margin: 0 auto;
+}
+div.pts_doc_main
+{
+	border: solid #737373;
+	border-width: 0 1px;
+	text-align: left;
+	padding: 30px 20px;
+	min-height: 670px;
+}
+div.pts_doc_notice
+{
+	border: solid #737373;
+	border-width: 0 1px;
+	background-color: #4e4e4e;
+	text-align: left;
+	overflow: hidden;
+	padding: 4px 8px;
+	color: #FFF;
+	font-weight: bold;
+}
+div.pts_doc_bottom
+{
+	background-color: #000;
+	color: #FFF;
+	text-align: left;
+	padding: 3px 8px;
+	font-size: 12px;
+	overflow: hidden;
+}
+div.pts_doc_bottom a, div.pts_doc_notice a
+{
+	color: #FFF;
+	text-decoration: none;
+}
+h3
+{
+	text-indent: 30px;
+}
+h3 a
+{
+	text-decoration: none;
+}
+div.pts_doc_bottom a:hover, div.pts_doc_notice a:hover, h3 a:hover
+{
+	text-decoration: underline;
+}
+h1
+{
+	font-size: 22px;
+}
+h2
+{
+	font-size: 18px;
+}
+h3
+{
+	font-size: 15px;
+}
