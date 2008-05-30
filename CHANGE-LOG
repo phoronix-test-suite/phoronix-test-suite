@@ -5,6 +5,8 @@ Phoronix Test Suite
 - Improved formatting when showing all available options
 - Tweaks to PTS Results Viewer
 - Improve debugging support with additional debugging messages and adding a DEBUG_FILE= environmental variable for specifying name of file to save debug messages to inside ~/.phoronix-test-suite/debug-messages/
+- Add HTML documentation covering the README, credits, installation, specifications, sensor monitoring, writing a test profile, and random tips & tricks.
+- If PTS_MERGE environmental variable is set to "custom", don't perform compatibility checks when merging / allow anything to happen.
 
 Phoronix Test Suite 0.9.0
 May 28, 2008

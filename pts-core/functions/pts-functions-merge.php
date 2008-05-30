@@ -98,7 +98,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	}
 	unset($OLD_RESULTS, $original_xml_reader, $original_results_raw);
 
-	if(!defined("GLOBAL_COMPARISON"))
+	if(!defined("GLOBAL_COMPARISON") && getenv("PTS_MERGE") != "custom")
 	{
 		if($original_suite_name != $new_suite_name)
 		{
@@ -138,7 +138,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	}
 	else
 	{
-		if(!pts_version_comparable($original_pts_version[0], $new_pts_version[0]))
+		if(!pts_version_comparable($original_pts_version[0], $new_pts_version[0]) && getenv("PTS_MERGE") != "custom")
 			echo pts_string_header("PTS Versions Do Not Match! For accurate results, you should only test against the same version!");
 
 		for($i = 0; $i < count($original_system_hardware); $i++)
