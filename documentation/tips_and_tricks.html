@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<Title>Phoronix Test Suite - Tips &amp; Tricks</Title>
+<link href="includes/pts-documentation.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="pts_doc_header"><div class="pts_doc_fixed"><div id="pts_doc_logo"></div></div></div>
+<div class="pts_doc_fixed">
+<div class="pts_doc_notice"><div style="float: left"><a href="index.html">&lt;&lt; Documentation Home</a></div><div style="float: right;">Tips &amp; Tricks</div></div>
+<div class="pts_doc_main">
+<!-- PTS AREA -->
+<h1>Tips &amp; Tricks</h1>
+<p>This page shares some tips and tricks about the Phoronix Test Suite as well 
+as some random information that some users may find useful.</p>
+<h2>General</h2>
+<p>- If running within a GNOME desktop, the screensaver will automatically be 
+shutdown when a test is running and will be restored to its previous state upon 
+the test's completion. If the using a different desktop environment, it will attempt 
+to interrupt the screensaver using an XDG command.</p>
+<p>- When running a test in batch mode (through the use of the <em>batch-run</em> 
+or <em>batch-benchmark</em> options) that normally has end-user options (such 
+as the sub-test to run or resolution), the Phoronix Test Suite will run the test 
+with each unique combination of options possible.</p>
+<p>- Phoronix Test Suite support for Mac OS X and OpenSolaris may be added in 
+the future.</p>
+<p>- The Phoronix Test Suite really appreciates and welcomes independent code 
+contributions, patches, new tests/suites, etc... :)</p>
+<p>- If you're just an individual user that enjoys the Phoronix Test Suite, and 
+not a ISV/IHV interested in submitting products for review at <a href="http://www.phoronix.com/">Phoronix.com</a> 
+or a company interested in professional/enterprise support of the Phoronix Test 
+Suite by Phoronix Media, another way to support this project is by becoming a 
+Phoronix Premium subscriber @ <a href="http://www.phoronix.com/scan.php?page=phoronix_premium">http://www.phoronix.com/scan.php?page=phoronix_premium</a>. 
+You may also contact us (phoronix [at] phoronix.com) for additional information 
+or ideas.</p>
+<p>- If the environmental variable <em>PTS_MERGE=custom</em> is set, no compatibility 
+checks will be performed when merging results and it will allow you to form custom 
+suites very easily, etc. Though the preferred method to create a suite is by writing 
+a formal suite.</p>
+<h2>Download Caches</h2>
+<p>- If you're a company or simply own multiple computers, the download caching support of the Phoronix Test Suite can work quite well. This feature allows you to very simply setup a local (or network-wide) repository for the Phoronix Test Suite of all the files the different tests use. After you've installed the tests on one system that you normally use (or have ran <em>phoronix-test-suite install-all</em>) running <em>phoronix-test-suite make-download-cache</em> will cache all of the files that each test downloaded. The location of this cache is <em>~/.phoronix-test-suite/download-cache/</em>. Once the cache has been created, you can copy this folder to other systems and place the files in the same location. Then when the Phoronix Test Suite needs to download a file for a test, before downloading it from the Internet it will first check this cache for the file(s). If the files are there and the MD5 check-sums have been verified, it will simply copy the file -- thereby saving bandwidth and time. The download cache location can be downloaded in <em>~/.phoronix-test-suite/user-config.xml</em>. By adjusting the download cache, you could setup the cache folder to be on an FTP or NFS share (as an example) on a server that's accessible via your LAN. Configure your test systems to use this local repository and you'll be saving time and bandwidth.</p>
+<h2>Configuration</h2>
+<p>- The user configuration options for the Phoronix Test Suite are stored in 
+<em>~/.phoronix-test-suite/user-config.xml</em>. The batch mode options are also 
+stored within this file and those can be adjusted by running <em>phoronix-test-suite 
+batch-setup</em>.</p>
+<p>- The colors, size, and other attributes for the graphs found within the PTS 
+Results Viewer can be modified via the file <em>~/.phoronix-test-suite/graph-config.xml</em>. 
+A description of the XML tags can be found by looking at the comments within <em>pts-core/functions/pts-interfaces.php</em> 
+and <em>pts-core/objects/pts_CustomGraph.php</em>. No matter the graph type, the 
+same generic <em>graph-config.xml</em> configuration is used.</p>
+<h2>Test / Suite Writing</h2>
+<p>- The Phoronix Test Suite recursively determins tests/suites and allows a suite 
+to call another suite.</p>
+<p>- One of the quickest and easiest ways to understand how to write a profile 
+is by just looking at the some of the existing profiles within the <em>pts/ </em>folder.</p>
+<p>- The XML syntax for all file specifications are defined within <em>pts-core/functions/pts-interfaces.php</em> 
+and trailing each defintion is a comment describing its purpose / value.</p>
+<h2>Debugging</h2>
+<p>- Setting <em>DEBUG=1</em> as an environmental variable prior to running the 
+Phoronix Test Suite will put it in a diagnostics mode. In this mode, additional 
+information may be printed to the standard output to help developers or test maintainers 
+debug problems. In the case of using the <em>list-tests</em> or <em>list-suites</em> 
+in the diagnostics mode, different information will be outputted that's more relevant 
+to Phoronix Test Suite developers.</p>
+<p>- To save the debugging output, set <em>DEBUG_FILE=name-of-file</em> as an 
+environmental variable and the results will be saved to <em>~/.phoronix-test-suite/debug-messages/name-of-file</em>.</p>
+<!-- END OF PTS AREA -->
+</div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 by <a href="http://www.phoronixmedia.com/">Phoronix Media</a>.</div></div></div>
+</body>
+</html>
