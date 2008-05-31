@@ -8,6 +8,7 @@ cd ..
 
 echo "#!/bin/sh
 cd openssl-0.9.8g/
-./apps/openssl speed rsa -multi \$NUM_CPU_CORES" > openssl
+./apps/openssl speed rsa4096 -multi \$NUM_CPU_CORES" > openssl
 chmod +x openssl
+
 
