@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www3.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc2.tar.bz2</URL>
+			<URL>http://www3.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc2.tar.bz2, http://ftp.kaist.ac.kr/pub/MPlayer/releases/MPlayer-1.0rc2.tar.bz2</URL>
 			<MD5>7e27e535c2d267637df34898f1b91707</MD5>
 		</Package>
 	</Downloads>

@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://internap.dl.sourceforge.net/sourceforge/gtkperf/gtkperf_0.40.tar.gz</URL>
+			<URL>http://internap.dl.sourceforge.net/sourceforge/gtkperf/gtkperf_0.40.tar.gz, http://dfn.dl.sourceforge.net/sourceforge/gtkperf/gtkperf_0.40.tar.gz, http://voxel.dl.sourceforge.net/sourceforge/gtkperf/gtkperf_0.40.tar.gz</URL>
 			<MD5>4331dde4bb83865e15482885fcb0cc53</MD5>
 		</Package>
 	</Downloads>
