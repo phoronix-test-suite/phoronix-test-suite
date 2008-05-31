@@ -10,6 +10,7 @@ Phoronix Test Suite
 - PTS GLOBAL: Add RSS support
 - OpenSSL avoid doing useless bits that aren't being tested
 - Add many more download mirrors to all of the test profiles
+- Add cryptography suite
 
 Phoronix Test Suite 0.9.0
 May 28, 2008

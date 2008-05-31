@@ -1,0 +1,15 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>0.9.0</Version>
+		<TestType>Processor</TestType>
+		<Title>Cryptography</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite consists of cryptography tests such as OpenSSL and GnuPG.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+</PhoronixTestSuite>
