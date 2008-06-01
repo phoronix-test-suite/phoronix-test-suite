@@ -136,12 +136,15 @@ function motherboard_chipset_string()
 }
 function compiler_version()
 {
-	$info = shell_exec("gcc -v 2>&1 | grep version 2> /dev/null");
+	$info = shell_exec("gcc -v 2>&1 | grep -i version 2> /dev/null");
 	$gcc_info = "N/A";
 
-	if(($pos = strpos($info, "gcc version")) !== FALSE)
+	if(($pos = strpos($info, "version")) !== FALSE || ($pos_1 = strpos($info, "Version")) !== FALSE)
 	{
-		$info = substr($info, $pos + 11);
+		if($pos == FALSE && $pos_1 !== FALSE)
+			$pos = $pos_1;
+			
+		$info = substr($info, $pos + 7);
 		$info = trim(substr($info, 0, strpos($info, " ", strpos($info, "."))));
 
 		if(!empty($info))
