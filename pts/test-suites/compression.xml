@@ -15,4 +15,7 @@
 	<RunTest>
 		<Test>compress-pbzip2</Test>
 	</RunTest>
+	<RunTest>
+		<Test>compress-lzma</Test>
+	</RunTest>
 </PhoronixTestSuite>
