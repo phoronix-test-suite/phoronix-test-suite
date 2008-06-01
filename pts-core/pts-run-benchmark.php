@@ -316,8 +316,8 @@ if($SAVE_RESULTS)
 {
 	$check_processes = array(
 		"Compiz" => array("compiz"),
-		"Firefox" => array("firefox", "mozilla-firefox", "mozilla-firefox-bin"),
-		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin")
+		"Firefox" => array("firefox", "mozilla-firefox", "mozilla-firefox-bin", "firefox-bin"),
+		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin", "thunderbird-bin")
 		);
 
 	$test_notes = pts_process_running_string($check_processes);

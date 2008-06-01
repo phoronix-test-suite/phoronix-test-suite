@@ -1,0 +1,12 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://align.bmr.kyushu-u.ac.jp/mafft/software/mafft-6.240-src.tgz</URL>
+			<MD5>e603c1dbef35913d46286d5b98b601a3</MD5>
+		</Package>
+		<Package>
+			<URL>http://fire-salamander.co.uk/pts-tests/pyruvate_decarboxylase.fasta.bz2</URL>
+			<MD5>22cd5efc1199a72fbb3f19960f56010d</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

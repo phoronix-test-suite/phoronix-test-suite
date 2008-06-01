@@ -1,0 +1,21 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.3</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Scientific</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Andrew Schofield</Maintainer>
+	</TestProfile>
+	<TestInformation>
+		<Title>Timed MAFFT Alignment</Title>
+		<Version>6.240</Version>
+		<SubTitle>Multiple Sequence Alignment</SubTitle>
+		<ResultScale>Seconds</ResultScale>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<TimesToRun>3</TimesToRun>
+		<Description>This test performs an alignment of 100 pyruvate decarboxylase sequences.</Description>
+		<Proportion>LIB</Proportion>
+	</TestInformation>
+</PhoronixTestSuite>
+
