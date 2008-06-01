@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.9.0</Version>
+		<Version>0.9.1</Version>
 		<TestType>System</TestType>
 		<Title>Audio Encoding</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -14,5 +14,11 @@
 	</RunTest>
 	<RunTest>
 		<Test>encode-flac</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-ape</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-wavpack</Test>
 	</RunTest>
 </PhoronixTestSuite>
