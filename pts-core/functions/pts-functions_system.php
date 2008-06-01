@@ -306,6 +306,20 @@ function pts_report_power_mode()
 
 	return $return_status;
 }
+function pts_report_virtualized_mode()
+{
+	$virtualized = "";
+
+	if(strpos(processor_string(), "QEMU") !== FALSE)
+		$virtualized = "QEMU";
+	else if(strpos(graphics_processor_string(), "VMware") !== FALSE)
+		$virtualized = "VMware";
+
+	if(!empty($virtualized))
+		$virtualized = "This system is using " . $virtualized . " virtualization.";
+
+	return $virtualized;
+}
 function filesystem_type()
 {
 	$fs = shell_exec("stat " . BENCHMARK_ENV_DIR . " -L -f -c %T 2> /dev/null");

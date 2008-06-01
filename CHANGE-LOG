@@ -13,6 +13,7 @@ Phoronix Test Suite
 - Add cryptography suite
 - User agreement update
 - Add hmmer test profile
+- Add detection if system is running within a virtualized environment (QEMU or VMware) and report to test notes area.
 
 Phoronix Test Suite 0.9.0
 May 28, 2008

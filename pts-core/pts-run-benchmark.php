@@ -344,6 +344,10 @@ if($SAVE_RESULTS)
 		$test_notes .= " \n" . $cpu_mode;
 	}
 
+	$virtualized = pts_report_virtualized_mode();
+	if(!empty($virtualized))
+		$test_notes .= " \n" . $virtualized;
+
 	$id = pts_request_new_id();
 	$RESULTS->setXslBinding("pts-results-viewer.xsl");
 	$RESULTS->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $id, pts_hw_string());
