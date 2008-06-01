@@ -82,29 +82,29 @@ function graphics_antialiasing_level()
 }
 function graphics_anisotropic_level()
 {
-	$aa_level = "";
+	$af_level = "";
 
-	$nvidia_fsaa = read_nvidia_extension("LogAniso");
+	$nvidia_af = read_nvidia_extension("LogAniso");
 
-	if(!empty($nvidia_fsaa))
+	if(!empty($nvidia_af))
 	{
-		switch($nvidia_fsaa)
+		switch($nvidia_af)
 		{
 			case 1:
-				$aa_level = "2x";
+				$af_level = "2x";
 				break;
 			case 2:
-				$aa_level = "4x";
+				$af_level = "4x";
 				break;
 			case 3:
-				$aa_level = "8x";
+				$af_level = "8x";
 				break;
 			case 4:
-				$aa_level = "16x";
+				$af_level = "16x";
 				break;
 		}
 	}
-	return $aa_level;
+	return $af_level;
 }
 function xrandr_screen_resolution()
 {

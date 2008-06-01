@@ -322,7 +322,7 @@ if($SAVE_RESULTS)
 
 	$test_notes = pts_process_running_string($check_processes);
 
-	if(defined("TEST_GRAPHICS"))
+	if($test_type == "Graphics" || $test_type == "System")
 	{
 		$aa_level = graphics_antialiasing_level();
 		$af_level = graphics_anisotropic_level();
@@ -397,7 +397,6 @@ if($SAVE_RESULTS)
 			else
 				echo "\nResults Failed To Upload.\n";
 		}
-
 		echo "\n";
 	}
 	pts_monitor_update(); // Update sensors, etc
