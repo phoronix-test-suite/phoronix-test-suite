@@ -19,6 +19,7 @@ Phoronix Test Suite
 - Add encode-wavpack test profile for WavPack codec
 - Strip WAV metadata information from trondheim-pts-X.wav
 - Add encode-ape and encode-wavpack to audio-encoding test suite
+- UTF-8 character bug fix for problem reported by copper
 
 - Miscellaneous fixes and other improvements
 
