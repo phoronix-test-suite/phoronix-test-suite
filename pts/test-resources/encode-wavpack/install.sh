@@ -10,7 +10,7 @@ mkdir $THIS_DIR/wavpack_
 
 tar -xjf wavpack-4.41.0.tar.bz2
 cd wavpack-4.41.0
-./configure --prefix=$THIS_DIR/wavpack_ --enable-mmx
+./configure --prefix=$THIS_DIR/wavpack_
 make -j $NUM_CPU_JOBS
 make install
 cd ..
