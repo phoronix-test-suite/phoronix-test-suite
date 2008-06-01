@@ -17,6 +17,7 @@ Phoronix Test Suite
 - Fix padding around commas with dependency parsing, don't require a space with the delimiter and parse out extra spaces if present
 - Miscellaneous fixes and other improvements
 - Add encode-ape test profile for encoding to Monkey's Audio Encoding
+- Add encode-wavpack test profile for WavPack codec
 
 Phoronix Test Suite 0.9.0
 May 28, 2008
