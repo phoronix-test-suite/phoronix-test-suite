@@ -26,6 +26,8 @@ Phoronix Test Suite
 - Add more screen resolutions to all relevant tests
 - Add mafft test profile: a computational biology tools for aligning biological sequence data
 - Add computational-biology test suite
+- Move launch-browser.sh from pts/ to pts-core/scripts/
+- Debian package generator now at pts-core/scripts/build-package-deb.php
 
 - Miscellaneous fixes and other improvements
 

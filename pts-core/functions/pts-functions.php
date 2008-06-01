@@ -391,7 +391,7 @@ function display_web_browser($URL, $alt_text = NULL, $default_open = FALSE)
 		$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
 
 	if($view_results)
-		shell_exec("./pts/launch-browser.sh \"$URL\" &");
+		shell_exec("sh pts-core/scripts/launch-browser.sh \"$URL\" &");
 }
 function pts_env_variables()
 {

@@ -298,7 +298,7 @@ switch($COMMAND)
 			$URL = false;
 
 		if($URL != FALSE)
-			shell_exec("./pts/launch-browser.sh $URL &");
+			shell_exec("sh pts-core/scripts/launch-browser.sh $URL &");
 		else
 			echo "\n$ARG_1 was not found.\n";
 		break;
