@@ -18,6 +18,7 @@ Phoronix Test Suite
 - Miscellaneous fixes and other improvements
 - Add encode-ape test profile for encoding to Monkey's Audio Encoding
 - Add encode-wavpack test profile for WavPack codec
+- Strip WAV metadata information from trondheim-pts-X.wav
 
 Phoronix Test Suite 0.9.0
 May 28, 2008

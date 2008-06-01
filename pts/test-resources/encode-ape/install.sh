@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if [ ! -f ../pts-shared/pts-trondheim-2.wav ]
+if [ ! -f ../pts-shared/pts-trondheim-3.wav ]
   then
-     tar -xvf ../pts-shared/pts-trondheim-wav-2.tar.gz -C ../pts-shared/
+     tar -xvf ../pts-shared/pts-trondheim-wav-3.tar.gz -C ../pts-shared/
 fi
 
 THIS_DIR=$(pwd)
@@ -17,7 +17,7 @@ cd ..
 rm -rf mac-3.99-u4-b5-s4/
 
 echo "#!/bin/sh
-./ape_/bin/mac ../pts-shared/pts-trondheim-2.wav /dev/null -c4000 1>/dev/null 2>/dev/null
+./ape_/bin/mac ../pts-shared/pts-trondheim-3.wav /dev/null -c4000 1>/dev/null 2>/dev/null
 exit 0" > ape_process
 chmod +x ape_process
 

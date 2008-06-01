@@ -25,7 +25,8 @@ behind the use of PHP 5 for is the portability across platforms for this languag
 low impact on the overall system, a lower entrance barrier for new developers, 
 and low number (if any) dependencies that PHP5 CLI requires. The PHP GD library 
 is used for rendering the graphs within the PTS Results Viewer.</p>
-<p>Note: you may need to modify the <em>php.ini</em> file on your system in order to support uploading results to PTS Global or logging into your PTS Global account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration and curl must be supported by the PHP installation. <a href="http://www.phoronix.com/forums/showpost.php?p=32484&postcount=4">Additional information</a>.
+<p>Notice #1: Depending upon your distribution's package configuration, you may also need <em>php-posix</em> package for providing the POSIX functions.</p>
+<p>Notice #2: You may need to modify the <em>php.ini</em> file on your system in order to support uploading results to PTS Global or logging into your PTS Global account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration and curl must be supported by the PHP installation. <a href="http://www.phoronix.com/forums/showpost.php?p=32484&postcount=4">Additional information</a>.
 <p>While PHP and PHP GD are the only required dependencies, many of the test profiles 
 do require the standard Linux development tools/libraries (GCC, etc). On a clean 
 Ubuntu installation, it's as easy as first running <em>sudo apt-get install build-essential 

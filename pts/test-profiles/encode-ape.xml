@@ -10,7 +10,7 @@
 		<EnvironmentSize>5</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
-		<Title>Monkey's Audio Encoding</Title>
+		<Title>Monkey Audio Encoding</Title>
 		<Version>3.99u4b5</Version>
 		<SubTitle>78MB WAV File To APE</SubTitle>
 		<Executable>encode-ape</Executable>

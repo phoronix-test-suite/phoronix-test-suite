@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if [ ! -f ../pts-shared/pts-trondheim-2.wav ]
+if [ ! -f ../pts-shared/pts-trondheim-3.wav ]
   then
-     tar -xvf ../pts-shared/pts-trondheim-wav-2.tar.gz -C ../pts-shared/
+     tar -xvf ../pts-shared/pts-trondheim-wav-3.tar.gz -C ../pts-shared/
 fi
 
 THIS_DIR=$(pwd)
@@ -34,5 +34,5 @@ cd ..
 rm -rf vorbis-tools-1.2.0/
 
 echo "#!/bin/sh
-/usr/bin/time -f \"WAV To OGG Encode Time: %e Seconds\" ./vorbis/bin/oggenc --quiet ../pts-shared/pts-trondheim-2.wav -q 10 -o /dev/null 2>&1" > oggenc
+/usr/bin/time -f \"WAV To OGG Encode Time: %e Seconds\" ./vorbis/bin/oggenc --quiet ../pts-shared/pts-trondheim-3.wav -q 10 -o /dev/null 2>&1" > oggenc
 chmod +x oggenc

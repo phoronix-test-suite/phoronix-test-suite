@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if [ ! -f ../pts-shared/pts-trondheim-2.wav ]
+if [ ! -f ../pts-shared/pts-trondheim-3.wav ]
   then
-     tar -xvf ../pts-shared/pts-trondheim-wav-2.tar.gz -C ../pts-shared/
+     tar -xvf ../pts-shared/pts-trondheim-wav-3.tar.gz -C ../pts-shared/
 fi
 
 THIS_DIR=$(pwd)
@@ -17,5 +17,5 @@ cd ..
 rm -rf lame-3.97/
 
 echo "#!/bin/sh
-/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame_/bin/lame --silent -h ../pts-shared/pts-trondheim-2.wav /dev/null 2>&1" > lame
+/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame_/bin/lame --silent -h ../pts-shared/pts-trondheim-3.wav /dev/null 2>&1" > lame
 chmod +x lame
