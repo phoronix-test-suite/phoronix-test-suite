@@ -267,10 +267,10 @@ function main_system_hardware_string()
 	$product = read_system_hal("system.hardware.product");
 	$version = read_system_hal("system.hardware.version");
 
-	if($product == "Unknown" || (strpos($version, '.') === FALSE && $version != "Unknown"))
+	if($product == "Unknown" || $product == "Not Applicable" || (strpos($version, '.') === FALSE && $version != "Unknown"))
 		$product = $version;
 
-	if($vendor == "Unknown" || $vendor == "System manufacturer" || $vendor == "To Be Filled By O.E.M.")
+	if($vendor == "Unknown" || $vendor == "System manufacturer" || $vendor == "To Be Filled By O.E.M." || $vendor == "Not Applicable")
 	{
 		$info = "Unknown";
 	}
