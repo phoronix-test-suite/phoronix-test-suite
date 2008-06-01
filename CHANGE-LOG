@@ -25,6 +25,7 @@ Phoronix Test Suite
 - Add mrbayes test profile for additional computational biology testing
 - Add more screen resolutions to all relevant tests
 - Add mafft test profile: a computational biology tools for aligning biological sequence data
+- Add computational-biology test suite
 
 - Miscellaneous fixes and other improvements
 
