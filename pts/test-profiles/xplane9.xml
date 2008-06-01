@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.9.0</Version>
+		<Version>0.9.1</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Simulator</SoftwareType>
 		<License>FREE</License>
@@ -48,6 +48,18 @@
 				<Entry>
 					<Name>1280 x 1024</Name>
 					<Value>--pref:_x_res_req_ALL=1280 --pref:_y_res_req_ALL=1024</Value>
+				</Entry>
+				<Entry>
+					<Name>1680 x 1050</Name>
+					<Value>--pref:_x_res_req_ALL=1680 --pref:_y_res_req_ALL=1050</Value>
+				</Entry>
+				<Entry>
+					<Name>1600 x 1200</Name>
+					<Value>--pref:_x_res_req_ALL=1600 --pref:_y_res_req_ALL=1200</Value>
+				</Entry>
+				<Entry>
+					<Name>1920 x 1200</Name>
+					<Value>--pref:_x_res_req_ALL=1920 --pref:_y_res_req_ALL=1200</Value>
 				</Entry>
 			</Menu>
 		</Option>

@@ -23,6 +23,7 @@ Phoronix Test Suite
 - Improve GCC detection
 - Add compress-lzma test profile for LZMA compression testing. Also add this test to the compression suite.
 - Add mrbayes test profile for additional computational biology testing
+- Add more screen resolutions to all relevant tests
 
 - Miscellaneous fixes and other improvements
 

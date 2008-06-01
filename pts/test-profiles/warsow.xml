@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.9.0</Version>
+		<Version>0.9.1</Version>
 		<TestType>Graphics</TestType>
 		<ApplicationType>Game</ApplicationType>
 		<License>FREE</License>
@@ -46,6 +46,10 @@
 				<Entry>
 					<Name>1680 x 1050</Name>
 					<Value>+vid_customwidth 1680 +vid_customheight 1050 +vid_restart</Value>
+				</Entry>
+				<Entry>
+					<Name>1920 x 1200</Name>
+					<Value>+vid_customwidth 1920 +vid_customheight 1200 +vid_restart</Value>
 				</Entry>
 			</Menu>
 		</Option>
