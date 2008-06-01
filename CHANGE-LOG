@@ -20,7 +20,7 @@ Phoronix Test Suite
 - Strip WAV metadata information from trondheim-pts-X.wav
 - Add encode-ape and encode-wavpack to audio-encoding test suite
 - UTF-8 character bug fix for problem reported by copper
-
+- Improve GCC detection
 - Miscellaneous fixes and other improvements
 
 Phoronix Test Suite 0.9.0
