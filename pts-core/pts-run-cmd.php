@@ -56,7 +56,7 @@ switch($COMMAND)
 				printf("Saved Name: %-18ls Test: %-18ls \n", $saved_identifier, $suite);
 
 				foreach($identifiers as $id)
-					echo "\t- $id\n";
+					echo "\t- " . $id . "\n";
 
 				echo "\n";
 			}
@@ -107,7 +107,7 @@ switch($COMMAND)
 
 		if(empty($ARG_1))
 		{
-			pts_exit("\nThe benchmark or suite name to install external dependencies for must be supplied.\n");
+			pts_exit("\nThe test or suite name to install external dependencies for must be supplied.\n");
 		}
 
 		if($ARG_1 == "phoronix-test-suite" || $ARG_1 == "pts" || $ARG_1 == "trondheim-pts")
@@ -257,7 +257,7 @@ switch($COMMAND)
 			if(!empty($test_dependencies))
 			{
 				echo "\nSoftware Dependencies:\n";
-				foreach(explode(",", $test_dependencies) as $dependency)
+				foreach(explode(',', $test_dependencies) as $dependency)
 					if(($title = pts_dependency_name(trim($dependency)) )!= "")
 						echo "- " . $title . "\n";
 			}
@@ -286,7 +286,7 @@ switch($COMMAND)
 		}
 		else
 		{
-			echo "\n$ARG_1 is not recognized.\n";
+			echo "\n" . $ARG_1 . " is not recognized.\n";
 		}
 		break;
 	case "SHOW_RESULT":
@@ -397,8 +397,9 @@ switch($COMMAND)
 			do
 			{
 				$rand_file = rand(1000, 9999);
-				$MERGE_TO = "merge-$rand_file/";
-			}while(is_dir(SAVE_RESULTS_DIR . $MERGE_TO));
+				$MERGE_TO = "merge-" . $rand_file . '/';
+			}
+			while(is_dir(SAVE_RESULTS_DIR . $MERGE_TO));
 
 			$MERGE_TO .= "composite.xml";
 		}
@@ -440,7 +441,7 @@ switch($COMMAND)
 		if(!empty($uploadkey))
 		{
 			pts_user_config_init($username, $uploadkey);
-			echo "\nAccount: $uploadkey\nAccount information written to user-config.xml.\n\n";
+			echo "\nAccount: " . $uploadkey . "\nAccount information written to user-config.xml.\n\n";
 		}
 		else
 			echo "\nPTS Global Account Not Found.\n";
@@ -483,7 +484,7 @@ switch($COMMAND)
 		echo "\nPhoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n\n";
 		break;
 	default:
-		echo "Phoronix Test Suite: Internal Error.\nCommand Not Recognized ($COMMAND).\n";
+		echo "Phoronix Test Suite: Internal Error.\nCommand Not Recognized (" . $COMMAND . ").\n";
 }
 
 ?>

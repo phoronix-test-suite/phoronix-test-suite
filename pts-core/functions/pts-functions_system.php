@@ -324,7 +324,7 @@ function filesystem_type()
 {
 	$fs = shell_exec("stat " . BENCHMARK_ENV_DIR . " -L -f -c %T 2> /dev/null");
 
-	if("" == $fs)
+	if(empty($fs))
 		return "Unknown";
 
 	return $fs;

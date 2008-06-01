@@ -171,7 +171,10 @@ function pts_estimated_time_string($time)
 		$formatted_string = "Greater Than " . $time_trim;
 	else if(strlen($time_trim = str_replace('-', ", ", $time)) != $strlen_time)
 	{
-		$time_trim = explode(", ", $time_trim);
+		$time_trim = explode(",", $time_trim);
+
+		for($i = 0; $i < count($time_trim); $i++)
+			$time_trim[$i] = trim($time_trim[$i]);
 
 		if(count($time_trim) == 2)
 			$formatted_string = $time_trim[0] . " to " . $time_trim[1];

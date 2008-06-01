@@ -186,15 +186,15 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 
 			if(!empty($default_test_descriptor))
 				$description = $default_test_descriptor;
-			else if(is_file(BENCHMARK_ENV_DIR . "$benchmark/pts-test-description"))
-				$description = @file_get_contents(BENCHMARK_ENV_DIR . "$benchmark/pts-test-description");
+			else if(is_file(BENCHMARK_ENV_DIR . $benchmark . "/pts-test-description"))
+				$description = @file_get_contents(BENCHMARK_ENV_DIR . $benchmark . "/pts-test-description");
 			else
 				$description = "Phoronix Test Suite v" . PTS_VERSION;
 		}
 		if(empty($benchmark_version))
 		{
-			if(is_file(BENCHMARK_ENV_DIR . "$benchmark/pts-test-version"))
-				$benchmark_version = @file_get_contents(BENCHMARK_ENV_DIR . "$benchmark/pts-test-version");
+			if(is_file(BENCHMARK_ENV_DIR . $benchmark . "/pts-test-version"))
+				$benchmark_version = @file_get_contents(BENCHMARK_ENV_DIR . $benchmark . "/pts-test-version");
 		}
 		if(empty($result_scale))
 		{
@@ -341,12 +341,12 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . $benchmark_identifier);
 	}
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . "$benchmark_identifier");
+		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . $benchmark_identifier);
 	}
 
 	if(!empty($pre_run_message))
@@ -364,13 +364,13 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		echo pts_string_header($benchmark_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
-		echo $BENCHMARK_RESULTS = pts_exec("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
+		echo $BENCHMARK_RESULTS = pts_exec("cd " . $to_execute . " && ./$execute_binary " . $PTS_BENCHMARK_ARGUMENTS);
 
 		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
 			if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
 			{
-				$BENCHMARK_RESULTS = pts_exec("cd " . TEST_RESOURCE_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " parse-results.php \"$BENCHMARK_RESULTS\"");
+				$BENCHMARK_RESULTS = pts_exec("cd " . TEST_RESOURCE_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " parse-results.php \"" . $BENCHMARK_RESULTS . "\"");
 			}
 
 			if(!empty($BENCHMARK_RESULTS))

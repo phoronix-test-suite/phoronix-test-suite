@@ -420,7 +420,7 @@ function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 		}
 
 		if(!empty($package_string))
-			echo "\nSome additional dependencies are required to run or more of these benchmarks, and they could not be installed automatically for your distribution by the Phoronix Test Suite. Below are the software packages that must be installed for this benchmark to run properly.\n\n" . $package_string;
+			echo "\nSome additional dependencies are required to run or more of these tests, and they could not be installed automatically for your distribution. Below are the software packages that must be installed for the test(s) to run properly.\n\n" . $package_string;
 	}
 }
 function pts_package_generic_to_distro_name(&$package_install_array, $generic_names)

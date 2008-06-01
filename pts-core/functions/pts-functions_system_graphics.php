@@ -276,12 +276,14 @@ function opengl_version()
 	}
 
 	if(str_replace(array("NVIDIA", "ATI", "AMD", "Radeon", "Intel"), "", $info) == $info)
+	{
 		if(is_file("/proc/dri/0/name"))
 		{
 			$driver_info = file_get_contents("/proc/dri/0/name");
 			$driver_info = substr($driver_info, 0, strpos($driver_info, ' '));
 			$info .= " ($driver_info)";
 		}
+	}
 
 	return $info;
 }
