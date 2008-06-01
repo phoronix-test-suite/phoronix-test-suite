@@ -1,0 +1,23 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.4</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Scientific</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Andrew Schofield</Maintainer>
+		<DownloadSize>17</DownloadSize>
+		<EnvironmentSize>22</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>Timed MrBayes Analysis</Title>
+		<Version>3.1</Version>
+		<SubTitle>Primate Phylogeny Analysis</SubTitle>
+		<ResultScale>Seconds</ResultScale>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<TimesToRun>3</TimesToRun>
+		<Description>This test performs a bayesian analysis of a set of primate genome sequences in order to estimate their phylogeny.</Description>
+		<Proportion>LIB</Proportion>
+	</TestInformation>
+</PhoronixTestSuite>
+

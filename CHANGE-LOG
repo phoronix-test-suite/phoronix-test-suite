@@ -21,8 +21,10 @@ Phoronix Test Suite
 - Add encode-ape and encode-wavpack to audio-encoding test suite
 - UTF-8 character bug fix for problem reported by copper
 - Improve GCC detection
-- Miscellaneous fixes and other improvements
 - Add compress-lzma test profile for LZMA compression testing. Also add this test to the compression suite.
+- Add mrbayes test profile for additional computational biology testing
+
+- Miscellaneous fixes and other improvements
 
 Phoronix Test Suite 0.9.0
 May 28, 2008
