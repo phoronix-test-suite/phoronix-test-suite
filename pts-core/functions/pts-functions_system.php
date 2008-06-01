@@ -136,7 +136,7 @@ function motherboard_chipset_string()
 }
 function compiler_version()
 {
-	$info = shell_exec("gcc -v 2>&1");
+	$info = shell_exec("gcc -v 2>&1 | grep version 2> /dev/null");
 
 	if(($pos = strpos($info, "gcc version")) === FALSE)
 	{
