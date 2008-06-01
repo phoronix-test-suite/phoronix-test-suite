@@ -14,6 +14,7 @@ Phoronix Test Suite
 - User agreement update
 - Add hmmer test profile
 - Add detection if system is running within a virtualized environment (QEMU or VMware) and report to test notes area.
+- Fix padding around commas with dependency parsing, don't require a space with the delimiter and parse out extra spaces if present
 
 Phoronix Test Suite 0.9.0
 May 28, 2008
