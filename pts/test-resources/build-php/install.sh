@@ -6,8 +6,8 @@ mkdir $THIS_DIR/libxml2
 tar -xvf libxml2-2.6.31.tar.gz
 
 cd libxml2-2.6.31/
-./configure --prefix=$THIS_DIR/libxml2
-make -j $NUM_CPU_JOBS
+./configure --prefix=$THIS_DIR/libxml2 > /dev/null
+make -s -j $NUM_CPU_JOBS
 make install
 cd ..
 rm -rf libxml2-2.6.31/

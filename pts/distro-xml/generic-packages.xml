@@ -96,5 +96,11 @@
 			<PossibleNames>libglew, libglew1.5-dev, glew-devel</PossibleNames>
 			<FileCheck>/usr/include/GL/glew.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>scons</GenericName>
+			<Title>SCons</Title>
+			<PossibleNames>scons</PossibleNames>
+			<FileCheck>/usr/bin/scons</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -82,5 +82,10 @@
 			<PackageName>libglew-devel</PackageName>
 			<FileCheck>/usr/include/GL/glew.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>scons</GenericName>
+			<PackageName>scons</PackageName>
+			<FileCheck>/usr/bin/scons</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
