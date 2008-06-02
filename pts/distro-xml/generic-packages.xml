@@ -21,7 +21,7 @@
 		<Package>
 			<GenericName>csh</GenericName>
 			<Title>CSH</Title>
-			<PossibleNames>csh</PossibleNames>
+			<PossibleNames>csh, tcsh</PossibleNames>
 			<FileCheck>/bin/bsd-csh</FileCheck>
 		</Package>
 		<Package>
