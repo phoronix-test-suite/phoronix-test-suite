@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>0.9.1</Version>
+		<Version>0.9.2</Version>
 		<TestType>System</TestType>
 		<Title>Universe CLI Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -40,9 +40,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>pts-graph</Test>
-	</RunTest>
-	<RunTest>
-		<Test>tandem-xml</Test>
 	</RunTest>
 	<RunTest>
 		<Test>scimark2</Test>

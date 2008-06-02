@@ -28,6 +28,7 @@ Phoronix Test Suite
 - Add computational-biology test suite
 - Move launch-browser.sh from pts/ to pts-core/scripts/
 - Debian package generator now at pts-core/scripts/build-package-deb.php
+- Move user-agreement.txt to pts-core/
 
 - Miscellaneous fixes and other improvements
 

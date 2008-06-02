@@ -23,6 +23,12 @@ as the sub-test to run or resolution), the Phoronix Test Suite will run the test
 with each unique combination of options possible.</p>
 <p>- Phoronix Test Suite support for Mac OS X and OpenSolaris may be added in 
 the future.</p>
+<p>- If the environmental variable <em>PTS_MERGE=custom</em> is set, no compatibility 
+checks will be performed when merging results and it will allow you to form custom 
+suites very easily, etc. Though the preferred method to create a suite is by writing 
+a formal suite.</p>
+<p>- How do I find tests that are in a suite? Run <em>phoronix-test-suite info NAME-OF-SUITE</em> and (along with other information) a tree will be displayed that recursively shows the tests (along with any sub-suites) inside. To find suites that utilize a particular test, run <em>phoronix-test-suite info NAME-OF-TEST</em> and it will show that information too.</p>
+<h2>Support</h2>
 <p>- The Phoronix Test Suite really appreciates and welcomes independent code 
 contributions, patches, new tests/suites, etc... :)</p>
 <p>- If you're just an individual user that enjoys the Phoronix Test Suite, and 
@@ -32,10 +38,6 @@ Suite by Phoronix Media, another way to support this project is by becoming a
 Phoronix Premium subscriber @ <a href="http://www.phoronix.com/scan.php?page=phoronix_premium">http://www.phoronix.com/scan.php?page=phoronix_premium</a>. 
 You may also contact us (phoronix [at] phoronix.com) for additional information 
 or ideas.</p>
-<p>- If the environmental variable <em>PTS_MERGE=custom</em> is set, no compatibility 
-checks will be performed when merging results and it will allow you to form custom 
-suites very easily, etc. Though the preferred method to create a suite is by writing 
-a formal suite.</p>
 <h2>Download Caches</h2>
 <p>- If you're a company or simply own multiple computers, the download caching support of the Phoronix Test Suite can work quite well. This feature allows you to very simply setup a local (or network-wide) repository for the Phoronix Test Suite of all the files the different tests use. After you've installed the tests on one system that you normally use (or have ran <em>phoronix-test-suite install-all</em>) running <em>phoronix-test-suite make-download-cache</em> will cache all of the files that each test downloaded. The location of this cache is <em>~/.phoronix-test-suite/download-cache/</em>. Once the cache has been created, you can copy this folder to other systems and place the files in the same location. Then when the Phoronix Test Suite needs to download a file for a test, before downloading it from the Internet it will first check this cache for the file(s). If the files are there and the MD5 check-sums have been verified, it will simply copy the file -- thereby saving bandwidth and time. The download cache location can be downloaded in <em>~/.phoronix-test-suite/user-config.xml</em>. By adjusting the download cache, you could setup the cache folder to be on an FTP or NFS share (as an example) on a server that's accessible via your LAN. Configure your test systems to use this local repository and you'll be saving time and bandwidth.</p>
 <h2>Configuration</h2>
