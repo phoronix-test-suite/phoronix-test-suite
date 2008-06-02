@@ -181,7 +181,7 @@ function graphics_processor_frequency()
 	$mem_freq = 0;
 
 	$nv_freq = read_nvidia_extension("GPUCurrentClockFreqs");
-	$ati_freq = read_ati_extension("Current3DFrequencies");
+	$ati_freq = read_ati_extension("Stock3DFrequencies");
 
 	if(!empty($nv_freq)) // NVIDIA GPU
 	{
