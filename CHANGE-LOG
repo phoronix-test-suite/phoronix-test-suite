@@ -30,6 +30,7 @@ Phoronix Test Suite
 - Debian package generator now at pts-core/scripts/build-package-deb.php
 - Move user-agreement.txt to pts-core/
 - Add SCons to external dependencies support
+- Add yafray test profile for open-source ray-tracing
 
 - Miscellaneous fixes and other improvements
 

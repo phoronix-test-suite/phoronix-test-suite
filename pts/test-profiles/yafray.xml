@@ -1,0 +1,23 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.9.0</Version>
+		<TestType>System</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>2.9</DownloadSize>
+		<EnvironmentSize>28.9</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>YafRay</Title>
+		<Version>0.0.9</Version>
+		<SubTitle>Open-Source Ray Tracing Render</SubTitle>
+		<Executable>yafray-run</Executable>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>YaFray (Yet Another Free Raytracer) is an open-source raytracing program. Most notably, this engine has been integrated into the Blender 3D software and uses an XML scene description language. This test measures how long it takes YaFray to render a scene.</Description>
+		<ExternalDependencies>build-utilities, scons</ExternalDependencies>
+	</TestInformation>
+</PhoronixTestSuite>
