@@ -420,7 +420,7 @@ function pts_input_correct_results_path($path)
 	{
 		$path = SAVE_RESULTS_DIR . $path;
 	}
-	if(strpos($MERGE_TO, ".xml") === FALSE)
+	if(strpos($path, ".xml") === FALSE)
 	{
 		$path = $path . ".xml";
 	}
@@ -548,7 +548,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 }
 function pts_clean_information_string($str)
 {
-	$remove_phrases = array("Corporation ", "Technologies ", ",", "Technology ", "version ", "Processor ", "Computer ", "processor ", "Genuine ", "Unknown device ", "(R)", "(TM)", "(tm)", "Inc. ", "INC. ", "Inc ", " inc.");
+	$remove_phrases = array("Corporation ", "Technologies ", ",", "Technology ", "version ", "Processor ", "Computer ", "processor ", "Genuine ", "Unknown device ", "(R)", "(TM)", "(tm)", "Inc. ", "INC. ", "Inc ", " inc.", "/PCI/SSE2 ");
 	$str = str_replace($remove_phrases, " ", $str);
 
 	$change_phrases = array("Memory Controller Hub" => "MCH", "Advanced Micro Devices" => "AMD", "Integrated Graphics Controller" => "IGP");
