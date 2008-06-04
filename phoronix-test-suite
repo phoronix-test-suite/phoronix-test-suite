@@ -108,11 +108,14 @@ case "$1" in
 "list-tests")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_TESTS
 	;;
-"list-installed-tests")
-	$PHP_BIN pts-core/pts-run-cmd.php LIST_INSTALLED_TESTS
-	;;
 "list-suites")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_SUITES
+	;;
+"list-possible-dependencies")
+	$PHP_BIN pts-core/pts-run-cmd.php LIST_POSSIBLE_EXTERNAL_DEPENDENCIES
+	;;
+"list-installed-tests")
+	$PHP_BIN pts-core/pts-run-cmd.php LIST_INSTALLED_TESTS
 	;;
 "list-results" | "list-saved-results")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_SAVED_RESULTS

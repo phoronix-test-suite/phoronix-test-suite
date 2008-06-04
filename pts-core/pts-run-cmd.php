@@ -154,25 +154,6 @@ switch($COMMAND)
 		}
 		echo "\n";
 		break;
-	case "LIST_INSTALLED_TESTS":
-		echo pts_string_header("Phoronix Test Suite - Installed Tests");
-		foreach(glob(BENCHMARK_ENV_DIR . "*/pts-install") as $install_file)
-		{
-			$install_file_arr = explode("/", $install_file);
-			$identifier = $install_file_arr[count($install_file_arr) - 2];
-
-			$benchmark_file = XML_PROFILE_DIR . $identifier . ".xml";
-
-			if(is_file($benchmark_file))
-			{
-			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
-				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
-
-				printf("%-18ls - %-30ls\n", $identifier, $name);
-			}
-		}
-		echo "\n";
-		break;
 	case "LIST_SUITES":
 		echo pts_string_header("Phoronix Test Suite - Suites");
 		$benchmark_suites = array();
@@ -194,6 +175,38 @@ switch($COMMAND)
 				printf("%-26ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);
 		}
 		echo "\n";
+		break;
+	case "LIST_INSTALLED_TESTS":
+		echo pts_string_header("Phoronix Test Suite - Installed Tests");
+		foreach(glob(BENCHMARK_ENV_DIR . "*/pts-install") as $install_file)
+		{
+			$install_file_arr = explode("/", $install_file);
+			$identifier = $install_file_arr[count($install_file_arr) - 2];
+
+			$benchmark_file = XML_PROFILE_DIR . $identifier . ".xml";
+
+			if(is_file($benchmark_file))
+			{
+			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
+
+				printf("%-18ls - %-30ls\n", $identifier, $name);
+			}
+		}
+		echo "\n";
+		break;
+	case "LIST_POSSIBLE_EXTERNAL_DEPENDENCIES":
+		echo pts_string_header("Phoronix Test Suite - Possible External Dependencies");
+		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DISTRO_DIR . "generic-packages.xml"));
+		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+
+		for($i = 0; $i < count($title); $i++)
+		{
+			echo "- " . $title[$i] . "\n";
+		}
+		echo "\n";
+
 		break;
 	case "INFO":
 		$pts_test_type = pts_test_type($ARG_1);
