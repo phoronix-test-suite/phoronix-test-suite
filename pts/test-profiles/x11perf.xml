@@ -12,7 +12,7 @@
 	<TestInformation>
 		<Title>x11perf</Title>
 		<Version>1.5</Version>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ExternalDependencies>glut, build-utilities, xorg-development</ExternalDependencies>
 		<TimesToRun>2</TimesToRun>
 		<ResultScale>Operations / Second</ResultScale>
 		<Proportion>HIB</Proportion>

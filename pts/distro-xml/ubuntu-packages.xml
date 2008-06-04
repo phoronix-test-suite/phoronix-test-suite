@@ -42,8 +42,8 @@
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
-			<PackageName>xserver-xorg-dev</PackageName>
-			<FileCheck>/usr/share/doc/xserver-xorg-dev</FileCheck>
+			<PackageName>xserver-xorg-dev libxmu-dev libxmuu-dev</PackageName>
+			<FileCheck>/usr/share/doc/xserver-xorg-dev, /usr/lib/libXmu.so, /usr/lib/libXmuu.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
