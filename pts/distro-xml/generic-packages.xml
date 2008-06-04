@@ -108,5 +108,11 @@
 			<PossibleNames>zlib1-devel, zlib-devel, zlib1g-dev</PossibleNames>
 			<FileCheck>/usr/include/zlib.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>jpeg-devel</GenericName>
+			<Title>Development Files For IJG JPEG Library</Title>
+			<PossibleNames>libjpeg62-devel, libjpeg62-dev, libjpeg-devel</PossibleNames>
+			<FileCheck>/usr/include/jpeglib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

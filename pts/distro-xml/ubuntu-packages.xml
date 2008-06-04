@@ -90,5 +90,10 @@
 			<PackageName>zlib1g-dev</PackageName>
 			<FileCheck>/usr/include/zlib.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>jpeg-devel</GenericName>
+			<PackageName>libjpeg62-dev</PackageName>
+			<FileCheck>/usr/include/jpeglib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
