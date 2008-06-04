@@ -298,12 +298,12 @@ function pts_install_benchmark($Benchmark)
 			if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"))
 			{
 				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && sh " . TEST_RESOURCE_DIR . $Benchmark . "/install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
-				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh"));
+				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"));
 			}
 			else if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))
 			{
 				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
-				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"));
+				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"));
 			}
 		}
 		else
@@ -385,7 +385,7 @@ function pts_install_packages_on_distribution_process($install_objects)
 		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh") || is_link(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
 		{
 			echo "This process may take several minutes...\n";
-			echo shell_exec("cd " . SCRIPT_DISTRO_DIR . " && sh install-" . $distribution . "-packages.sh $install_objects");
+			echo shell_exec("cd " . SCRIPT_DISTRO_DIR . " && sh install-" . $distribution . "-packages.sh " . $install_objects);
 		}
 		else
 			echo "Distribution install script not found!";
