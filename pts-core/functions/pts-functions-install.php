@@ -22,7 +22,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 	else if($type == "TEST_SUITE")
 	{
 		if(!getenv("SILENT_INSTALL"))
-			echo "\nInstalling Software For " . ucwords($TO_INSTALL) . " Test Suite...\n\n";
+			echo "\nInstalling Test Suite: " . $TO_INSTALL . "\n\n";
 
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_INSTALL . ".xml"));
 		$suite_benchmarks = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
@@ -252,7 +252,6 @@ function pts_install_benchmark($Benchmark)
 	{
 		$custom_validated_output = pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/validate-install.php " . BENCHMARK_ENV_DIR . $Benchmark);
 	}
-
 	if(!empty($custom_validated_output))
 	{
 		$custom_validated_output = trim($custom_validated_output);
@@ -296,12 +295,12 @@ function pts_install_benchmark($Benchmark)
 				pts_exit();
 			}
 
-			if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh"))
+			if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"))
 			{
 				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && sh " . TEST_RESOURCE_DIR . $Benchmark . "/install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
 				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh"));
 			}
-			else if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))
+			else if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))
 			{
 				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
 				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"));
@@ -309,8 +308,8 @@ function pts_install_benchmark($Benchmark)
 		}
 		else
 		{
-			file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", 0);
-			echo ucwords($Benchmark) . " has no installation script, skipping installation routine...\n";
+			file_put_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install", 0);
+			echo "Installation script missing for " . $Benchmark . "\n";
 		}
 	}
 }
