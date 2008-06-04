@@ -135,6 +135,7 @@ define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Benchmarking/SleepT
 define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory"); // Results save directory
 define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/Benchmarking/CacheDirectory"); // Directory for reading/writing to download cache
 
+define("P_OPTION_BATCH_CONFIGURED", "PhoronixTestSuite/Options/BatchMode/Configured"); // Batch mode has been configured
 define("P_OPTION_BATCH_SAVERESULTS", "PhoronixTestSuite/Options/BatchMode/SaveResults"); // Batch mode save results
 define("P_OPTION_BATCH_LAUNCHBROWSER", "PhoronixTestSuite/Options/BatchMode/OpenBrowser"); // Batch mode open browser
 define("P_OPTION_BATCH_UPLOADRESULTS", "PhoronixTestSuite/Options/BatchMode/UploadResults"); // Batch mode auto-upload to PTS Global
