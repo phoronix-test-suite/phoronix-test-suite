@@ -9,8 +9,8 @@
 		<Package>
 			<GenericName>sdl-development</GenericName>
 			<Title>SDL Development Files</Title>
-			<PossibleNames>libsdl1.2-dev</PossibleNames>
-			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
+			<PossibleNames>libsdl1.2-dev, sdl-net, sdl-image</PossibleNames>
+			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
@@ -101,6 +101,12 @@
 			<Title>SCons</Title>
 			<PossibleNames>scons</PossibleNames>
 			<FileCheck>/usr/bin/scons</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>zlib</GenericName>
+			<Title>Zlib Compression Library</Title>
+			<PossibleNames>zlib1-devel, zlib-devel, zlib1g-dev</PossibleNames>
+			<FileCheck>/usr/include/zlib.h</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -87,5 +87,10 @@
 			<PackageName>scons</PackageName>
 			<FileCheck>/usr/bin/scons</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>zlib</GenericName>
+			<PackageName>zlib1-devel</PackageName>
+			<FileCheck>/usr/include/zlib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

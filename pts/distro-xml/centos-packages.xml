@@ -50,5 +50,10 @@
 			<PackageName>flex</PackageName>
 			<FileCheck>/usr/bin/flex</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>zlib</GenericName>
+			<PackageName>zlib-devel</PackageName>
+			<FileCheck>/usr/include/zlib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
