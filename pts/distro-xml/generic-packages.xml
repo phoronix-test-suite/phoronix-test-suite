@@ -22,7 +22,7 @@
 			<GenericName>csh</GenericName>
 			<Title>CSH</Title>
 			<PossibleNames>csh, tcsh</PossibleNames>
-			<FileCheck>/bin/bsd-csh</FileCheck>
+			<FileCheck>/bin/csh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
