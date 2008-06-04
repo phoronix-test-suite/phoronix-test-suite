@@ -10,6 +10,7 @@
 <div class="pts_doc_main">
 <!-- PTS AREA -->
 <h1>Phoronix Test Suite Installation</h1>
+<p>A majority of the Phoronix Test Suite development and testing are done on Ubuntu and Fedora Linux, but this testing software should run virtually unmodified on any Linux distribution. The only distribution-specific bits deal with the external dependencies support feature. For instance, if you're not running one of the supported distributions (Ubuntu, Fedora, Mandriva, CentOS) you may need to install a package manually in order for a test to run. For example, the OpenGL Utility Toolkit may need to be installed manually by the user to support the OpenGL source tests.</p>
 <h2>Running Locally</h2>
 <p>The Phoronix Test Suite can be simply extracted from the downloaded <em>.tar.gz</em> 
 file or it can also be installed system-wide. If you just wish to run the Phoronix 
@@ -25,8 +26,8 @@ behind the use of PHP 5 for is the portability across platforms for this languag
 low impact on the overall system, a lower entrance barrier for new developers, 
 and low number (if any) dependencies that PHP5 CLI requires. The PHP GD library 
 is used for rendering the graphs within the PTS Results Viewer.</p>
-<p>Notice #1: Depending upon your distribution's package configuration, you may also need <em>php-posix</em> package for providing the POSIX functions.</p>
-<p>Notice #2: You may need to modify the <em>php.ini</em> file on your system in order to support uploading results to PTS Global or logging into your PTS Global account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration and curl must be supported by the PHP installation. <a href="http://www.phoronix.com/forums/showpost.php?p=32484&postcount=4">Additional information</a>.
+<p>Note #1: Depending upon your distribution's package configuration, you may also need <em>php-posix</em> package for providing the POSIX functions.</p>
+<p>Note #2: You may need to modify the <em>php.ini</em> file on your system in order to support uploading results to PTS Global or logging into your PTS Global account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration and curl must be supported by the PHP installation. <a href="http://www.phoronix.com/forums/showpost.php?p=32484&postcount=4">Additional information</a>.
 <p>While PHP and PHP GD are the only required dependencies, many of the test profiles 
 do require the standard Linux development tools/libraries (GCC, etc). On a clean 
 Ubuntu installation, it's as easy as first running <em>sudo apt-get install build-essential 
@@ -48,7 +49,7 @@ Suite.</p>
 <h2>Generic Installation</h2>
 <p>Running install-sh from the root directory of the Phoronix Test Suite will 
 install the software for system-wide access. By default the <em>phoronix-test-suite</em> 
-exectable is in <em>/usr/bin/</em>, the Phoronix Test Suite files in <em>/usr/share/phoronix-test-suite/</em>, 
+executable is in <em>/usr/bin/</em>, the Phoronix Test Suite files in <em>/usr/share/phoronix-test-suite/</em>, 
 and the documentation in /<em>usr/share/doc/phoronix-test-suite/</em>. Root access 
 is required. The default installation prefix is /usr/ but can be adjusted as the 
 first argument (example: install-sh /home/user-name/ to install the Phoronix Test 
@@ -58,7 +59,7 @@ Suite in your home directory).</p>
 or optionally can generate their own Debian package. If <em>dpkg-dev</em> is installed, 
 run <em>php pts-core/scripts/build-package-deb.php</em> and a Debian package will 
 be generated which can be subsequently installed. This package contains the <em>phoronix-test-suite</em> 
-exectable in /usr/bin/, the Phoronix Test Suite files in <em>/usr/share/phoronix-test-suite/</em>, 
+executable in /usr/bin/, the Phoronix Test Suite files in <em>/usr/share/phoronix-test-suite/</em>, 
 and the documentation in <em>/usr/share/doc/phoronix-test-suite/</em>.</p>
 <h2>Gentoo Installation</h2>
 <p>Gentoo ebuild's for the Phoronix Test Suite have been created by users and can be currently found in the <a href="http://bugs.gentoo.org/show_bug.cgi?id=216656">Gentoo BugZilla</a>.</p>
