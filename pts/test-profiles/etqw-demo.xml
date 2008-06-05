@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.9.1</Version>
+		<Version>1.0.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
@@ -12,12 +12,11 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>ET: Quake Wars Demo</Title>
-		<Version></Version>
 		<Executable>etqw</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>FPS</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This test calculates the average frame-rate within the demo for the game ET:QW game.</Description>
+		<Description>This test calculates the average frame-rate within the demo for the game Enemy Territory: Quake Wars demo game.</Description>
 		<DownloadSize>660</DownloadSize>
 		<EnvironmentSize>763</EnvironmentSize>
 	</TestInformation>
@@ -28,7 +27,6 @@
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>display-resolution</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>800 x 600</Name>

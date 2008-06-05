@@ -31,6 +31,8 @@ Phoronix Test Suite
 - Move user-agreement.txt to pts-core/
 - Add SCons to external dependencies support
 - Add yafray test profile for open-source ray-tracing
+- Add zlib-devel, jpeg-devel to External Dependencies
+- Require batch-setup when running in batch mode for the first time
 - Miscellaneous fixes and other improvements
 
 Phoronix Test Suite 0.9.0

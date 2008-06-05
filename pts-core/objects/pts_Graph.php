@@ -120,7 +120,7 @@ class pts_Graph
 	public function loadGraphVersion($data)
 	{
 		if(!empty($data))
-			$this->graph_version = "Phoronix Test Suite v" . $data;
+			$this->graph_version = "Phoronix Test Suite " . $data;
 	}
 	public function loadGraphProportion($data)
 	{

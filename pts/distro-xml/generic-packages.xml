@@ -103,7 +103,7 @@
 			<FileCheck>/usr/bin/scons</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>zlib</GenericName>
+			<GenericName>zlib-devel</GenericName>
 			<Title>Zlib Compression Library</Title>
 			<PossibleNames>zlib1-devel, zlib-devel, zlib1g-dev</PossibleNames>
 			<FileCheck>/usr/include/zlib.h</FileCheck>

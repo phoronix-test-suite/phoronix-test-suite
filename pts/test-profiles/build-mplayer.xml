@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.9.0</Version>
+		<Version>1.0.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -17,6 +17,6 @@
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>This test times how long it takes to build the MPlayer media program.</Description>
+		<Description>This test times how long it takes to build the MPlayer media player program.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

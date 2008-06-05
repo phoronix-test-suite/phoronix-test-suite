@@ -51,7 +51,7 @@
 			<FileCheck>/usr/bin/flex</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>zlib</GenericName>
+			<GenericName>zlib-devel</GenericName>
 			<PackageName>zlib-devel</PackageName>
 			<FileCheck>/usr/include/zlib.h</FileCheck>
 		</Package>

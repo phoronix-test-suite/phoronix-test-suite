@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.9.2</Version>
+		<Version>1.0.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
@@ -16,7 +16,7 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This test calculates the average frame-rate within the ET:QW game.</Description>
+		<Description>This test calculates the average frame-rate within the Quake 4 game from id Software.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>
@@ -25,7 +25,6 @@
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>resolution</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>800 x 600</Name>

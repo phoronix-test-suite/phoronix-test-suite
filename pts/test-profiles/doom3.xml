@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.9.3</Version>
+		<Version>1.0.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
@@ -24,7 +24,6 @@
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>resolution</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>800 x 600</Name>
