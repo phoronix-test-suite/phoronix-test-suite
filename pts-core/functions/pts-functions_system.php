@@ -128,7 +128,12 @@ function kernel_string()
 }
 function kernel_arch()
 {
-	return trim(shell_exec("uname -m"));
+	$kernel_arch = trim(shell_exec("uname -m"));
+
+	if($kernel_arch == "X86-64")
+		$kernel_arch = "x86_64";
+
+	return $kernel_arch;
 }
 function motherboard_chipset_string()
 {
