@@ -307,11 +307,14 @@ function pts_report_power_mode()
 function pts_report_virtualized_mode()
 {
 	$virtualized = "";
+	$gpu = graphics_processor_string();
 
 	if(strpos(processor_string(), "QEMU") !== FALSE)
 		$virtualized = "QEMU";
-	else if(strpos(graphics_processor_string(), "VMware") !== FALSE)
+	else if(strpos($gpu, "VMware") !== FALSE)
 		$virtualized = "VMware";
+	else if(strpos($gpu, "VirtualBox") !== FALSE)
+		$virtualized = "VirtualBox";
 
 	if(!empty($virtualized))
 		$virtualized = "This system is using " . $virtualized . " virtualization.";

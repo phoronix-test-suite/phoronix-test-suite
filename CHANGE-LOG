@@ -33,6 +33,7 @@ Phoronix Test Suite
 - Add yafray test profile for open-source ray-tracing
 - Add zlib-devel, jpeg-devel to External Dependencies
 - Require batch-setup when running in batch mode for the first time
+- Add VirtualBox detection support
 - Miscellaneous fixes and other improvements
 
 Phoronix Test Suite 0.9.0
