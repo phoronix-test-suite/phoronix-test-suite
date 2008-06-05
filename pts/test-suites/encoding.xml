@@ -1,0 +1,15 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<Title>Encoding</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite is made up of all the encoding test suites, such as for audio and video.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>audio-encoding</Test>
+	</RunTest>
+	<RunTest>
+		<Test>video-encoding</Test>
+	</RunTest>
+</PhoronixTestSuite>
