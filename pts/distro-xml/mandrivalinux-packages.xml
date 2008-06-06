@@ -13,12 +13,12 @@
 		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>mesaglut-devel</PackageName>
-			<FileCheck>/usr/lib/libglut.so, /usr/include/GL/glut.h</FileCheck>
+			<FileCheck>/usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>tcsh</PackageName>
-			<FileCheck>/usr/bin/tcsh</FileCheck>
+			<FileCheck>/bin/tcsh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
@@ -60,7 +60,7 @@
 		<Package>
 			<GenericName>imlib2-development</GenericName>
 			<PackageName>imlib2-devel</PackageName>
-			<FileCheck>/usr/lib/imlib2</FileCheck>
+			<FileCheck>/usr/include/Imlib2.h</FileCheck>
 		</Package>
                 <Package>
                         <GenericName>java</GenericName>
