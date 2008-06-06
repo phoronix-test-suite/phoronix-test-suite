@@ -27,13 +27,10 @@
 		<Description>Write Performance</Description>
 	</RunTest>
 	<RunTest>
-		<Test>gnupg</Test>
+		<Test>cryptography</Test>
 	</RunTest>
 	<RunTest>
 		<Test>super-pi</Test>
-	</RunTest>
-	<RunTest>
-		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
 		<Test>sqlite</Test>
@@ -65,5 +62,8 @@
 		<Test>tandem-xml</Test>
 		<Arguments>READ</Arguments>
 		<Description>Read Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>java</Test>
 	</RunTest>
 </PhoronixTestSuite>

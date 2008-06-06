@@ -10,9 +10,6 @@
 		<Test>universe-cli</Test>
 	</RunTest>
 	<RunTest>
-		<Test>java</Test>
-	</RunTest>
-	<RunTest>
 		<Test>universe-x</Test>
 	</RunTest>
 </PhoronixTestSuite>
