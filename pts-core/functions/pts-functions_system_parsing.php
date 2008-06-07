@@ -50,7 +50,7 @@ function read_hal($name, $UDI = NULL)
 		$info = trim(substr($info, 0, strpos($info, "'")));
 	}
 
-	if(empty($info) || $info == "empty" || $info == "Unknow")
+	if(empty($info) || $info == "empty" || $info == "Unknow" || $info == "System Manufacturer" || $info == "System Version")
 		$info = "Unknown";
 
 	return $info;
