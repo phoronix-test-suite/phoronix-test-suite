@@ -2,5 +2,5 @@
  
 # Gentoo package installation
  
-su root -c "emerge -av $@"
+su root -c "emerge -v $@"
 exit
