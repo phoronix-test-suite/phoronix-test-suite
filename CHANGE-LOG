@@ -6,6 +6,7 @@ Phoronix Test Suite
 - Updates to mandrivalinux-packages.xml
 - Add Gentoo External Dependencies support
 - Add pts-core/scripts/build-package-rpm.php by Andrew Schofield for building RPM package of Phoronix Test Suite
+- Add VIDEO_MEMORY environmental variable for overriding video memory capacity
 
 Phoronix Test Suite 1.0.0
 June 5, 2008

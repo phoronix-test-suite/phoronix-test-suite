@@ -240,21 +240,28 @@ function graphics_memory_capacity()
 {
 	$video_ram = 128;
 
-	if(($NVIDIA = read_nvidia_extension("VideoRam")) > 0) // NVIDIA blob
+	if(($vram = getenv("VIDEO_MEMORY")) != FALSE && is_numeric($vram) && $vram > 128)
 	{
-		$video_ram = $NVIDIA / 1024;
+		$video_ram = $vram;
 	}
-	else if(is_file("/var/log/Xorg.0.log"))
+	else
 	{
-		// Attempt ATI (Binary Driver) Video RAM detection
-		// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
-
-		$info = shell_exec("cat /var/log/Xorg.0.log | grep VideoRAM");
-		if(($pos = strpos($info, "VideoRAM:")) > 0)
+		if(($NVIDIA = read_nvidia_extension("VideoRam")) > 0) // NVIDIA blob
 		{
-			$info = substr($info, $pos + 10);
-			$info = substr($info, 0, strpos($info, ' '));
-			$video_ram = intval($info) / 1024;
+			$video_ram = $NVIDIA / 1024;
+		}
+		else if(is_file("/var/log/Xorg.0.log"))
+		{
+			// Attempt ATI (Binary Driver) Video RAM detection
+			// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
+
+			$info = shell_exec("cat /var/log/Xorg.0.log | grep VideoRAM");
+			if(($pos = strpos($info, "VideoRAM:")) > 0)
+			{
+				$info = substr($info, $pos + 10);
+				$info = substr($info, 0, strpos($info, ' '));
+				$video_ram = intval($info) / 1024;
+			}
 		}
 	}
 
