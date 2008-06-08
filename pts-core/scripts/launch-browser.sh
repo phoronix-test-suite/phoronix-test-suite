@@ -1,9 +1,6 @@
 #!/bin/sh
 
-if [ pts`which konqueror` != pts ]
-then
-	konqueror "$1"
-elif [ pts`which epiphany` != pts ]
+if [ pts`which epiphany` != pts ]
 then
 	epiphany "$1"
 elif [ pts`which firefox` != pts ]

@@ -7,6 +7,8 @@ Phoronix Test Suite
 - Add Gentoo External Dependencies support
 - Add pts-core/scripts/build-package-rpm.php by Andrew Schofield for building RPM package of Phoronix Test Suite
 - Add VIDEO_MEMORY environmental variable for overriding video memory capacity
+- Drop KDE konqueror from web browser detection
+- Initial PTS module (plug-in) framework support
 
 Phoronix Test Suite 1.0.0
 June 5, 2008
