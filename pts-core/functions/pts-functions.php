@@ -63,6 +63,7 @@ require_once("pts-core/functions/pts.php");
 require_once("pts-core/functions/pts-interfaces.php");
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
+require_once("pts-core/functions/pts-functions_modules.php");
 require_once("pts-core/functions/pts-functions_monitor.php");
 
 define("THIS_RUN_TIME", time());
@@ -73,6 +74,7 @@ define("XML_DISTRO_DIR", PTS_DIR . "pts/distro-xml/");
 define("SCRIPT_DISTRO_DIR", PTS_DIR . "pts/distro-scripts/");
 define("TEST_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
 define("ETC_DIR", PTS_DIR . "pts/etc/");
+define("MODULE_DIR", PTS_DIR . "pts-core/modules/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", getenv("PTS_USER_DIR"));
 define("PTS_MONITOR_DIR", PTS_USER_DIR . "system-monitor" . '/');
@@ -95,6 +97,13 @@ register_shutdown_function("pts_shutdown");
 // Etc
 
 $PTS_GLOBAL_ID = 1;
+
+// PTS Modules Support
+
+$PTS_MODULES = array();
+pts_load_modules($PTS_MODULES);
+pts_module_process("__startup");
+register_shutdown_function("pts_module_process", "__shutdown");
 
 if(($to_show = getenv("MONITOR")))
 {

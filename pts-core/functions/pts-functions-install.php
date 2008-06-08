@@ -282,6 +282,7 @@ function pts_install_benchmark($Benchmark)
 
 		if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh") || is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))
 		{
+			pts_module_process("__pre_test_install");
 			$install_header = "Installing Benchmark: " . $Benchmark;
 
 			if(($size = pts_test_estimated_download_size($Benchmark)) != "")
@@ -305,6 +306,7 @@ function pts_install_benchmark($Benchmark)
 				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
 				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"));
 			}
+			pts_module_process("__post_test_install");
 		}
 		else
 		{

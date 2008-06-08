@@ -146,6 +146,7 @@ if($SAVE_RESULTS)
 }
 
 pts_disable_screensaver(); // Kill the screensaver
+pts_module_process("__pre_run_process");
 
 if($TO_RUN_TYPE == "BENCHMARK")
 {
@@ -317,6 +318,7 @@ else
 }
 
 pts_beep(2);
+pts_module_process("__post_run_process");
 if($SAVE_RESULTS)
 {
 	$check_processes = array(

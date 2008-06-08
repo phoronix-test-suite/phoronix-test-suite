@@ -76,12 +76,15 @@ switch($COMMAND)
 
 		$ARG_1 = strtolower($ARG_1);
 
+		pts_module_process("__pre_install_process");
+
 		// Any external dependencies?
 		pts_install_package_on_distribution($ARG_1);
 
 		// Install benchmarks
 		$install_objects = "";
 		pts_recurse_install_benchmark($ARG_1, $install_objects);
+		pts_module_process("__post_install_process");
 		break;
 	case "FORCE_INSTALL_ALL":
 	case "INSTALL_ALL":

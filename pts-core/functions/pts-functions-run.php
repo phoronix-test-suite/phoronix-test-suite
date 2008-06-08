@@ -269,6 +269,8 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	}
 	pts_process_register($benchmark_identifier);
 
+	pts_module_process("__pre_test_run");
+
 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $benchmark_identifier . ".xml"));
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
 	$benchmark_title = $xml_parser->getXMLValue(P_TEST_TITLE);
@@ -376,6 +378,8 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			if(!empty($BENCHMARK_RESULTS))
 				array_push($BENCHMARK_RESULTS_ARRAY, $BENCHMARK_RESULTS);
 		}
+		if($times_to_run > 1 && $i < ($times_to_run - 1))
+			pts_module_process("__interim_test_run");
 	}
 
 	pts_monitor_update(); // Update sensors, etc
@@ -493,6 +497,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	//pts_beep();
 	pts_process_remove($benchmark_identifier);
+	pts_module_process("__post_test_run");
 
 	// 0 = main end result
 	return array($END_RESULT);
