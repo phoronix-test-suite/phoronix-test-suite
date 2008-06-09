@@ -101,6 +101,7 @@ $PTS_GLOBAL_ID = 1;
 // PTS Modules Support
 
 $PTS_MODULES = array();
+$PTS_MODULE_CURRENT = FALSE;
 pts_load_modules($PTS_MODULES);
 pts_module_process("__startup");
 register_shutdown_function("pts_module_process", "__shutdown");
@@ -112,6 +113,7 @@ if(($to_show = getenv("MONITOR")))
 	$monitor_temp = in_array("all.temp", $to_show) || $monitor_all;
 	$monitor_power = in_array("all.power", $to_show) || $monitor_all;
 	$monitor_voltage = in_array("all.voltage", $to_show) || $monitor_all;
+	$monitor_freq = in_array("all.freq", $to_show) || $monitor_all;
 	define("PTS_START_TIME", time());
 
 	if(in_array("gpu.temp", $to_show)  || $monitor_temp)
@@ -155,6 +157,11 @@ if(($to_show = getenv("MONITOR")))
 		
 		define("MONITOR_V12_VOLTAGE", 1);
 		$V12_VOLTAGE = array();
+	}
+	if(in_array("cpu.freq", $to_show) || $monitor_freq)
+	{
+		define("MONITOR_CPU_FREQ", 1);
+		$CPU_FREQ = array();
 	}
 
 	register_shutdown_function("pts_monitor_statistics");

@@ -26,10 +26,12 @@ function pts_monitor_update()
 		pts_record_v5_voltage();
 	if(defined("MONITOR_V12_VOLTAGE"))
 		pts_record_v12_voltage();
+	if(defined("MONITOR_CPU_FREQ"))
+		pts_record_cpu_frequency();
 }
 function pts_monitor_arguments()
 {
-	return array("all", "all.temp", "all.power", "all.voltage", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage");
+	return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq");
 }
 function pts_monitor_statistics()
 {
@@ -46,6 +48,7 @@ function pts_monitor_statistics()
 	$type_index["THERMAL"] = array();
 	$type_index["POWER"] = array();
 	$type_index["VOLTAGE"] = array();
+	$type_index["FREQUENCY"] = array();
 
 	if(isset($GLOBALS["GPU_TEMPERATURE"]))
 	{
@@ -149,6 +152,19 @@ function pts_monitor_statistics()
 			array_push($unit, "Volts");
 			array_push($m_array, $this_array);
 			array_push($type_index["VOLTAGE"], count($m_array) - 1);
+		}
+	}
+	if(isset($GLOBALS["CPU_FREQ"]))
+	{
+		$this_array = $GLOBALS["CPU_FREQ"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "CPU");
+			array_push($type, "Frequency");
+			array_push($unit, "MHz");
+			array_push($m_array, $this_array);
+			array_push($type_index["FREQUENCY"], count($m_array) - 1);
 		}
 	}
 

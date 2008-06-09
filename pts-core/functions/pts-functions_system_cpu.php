@@ -157,4 +157,36 @@ function pts_processor_power_savings_enabled()
 	}
 	return $return_string;
 }
+function current_processor_frequency($cpu_core = 0)
+{
+
+	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+	{
+		$info = trim(file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"));
+		$info = pts_trim_double(intval($info) / 1000, 2);
+	}
+	else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
+	{
+		$cpu_speeds = read_cpuinfo("cpu MHz");
+
+		if(count($cpu_speeds) > $cpu_core)
+			$info = $cpu_speeds[$cpu_core];
+		else
+			$info = $cpu_speeds[0];
+		
+		        $info = pts_trim_double(intval($info), 2);
+	}
+	else
+		$info = 0;
+
+	return $info;
+}
+function pts_record_cpu_frequency()
+{
+	global $CPU_FREQ;
+	$speed = current_processor_frequency();
+
+	if($speed > 0)
+		array_push($CPU_FREQ, $speed);
+}
 ?>
