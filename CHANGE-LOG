@@ -9,6 +9,8 @@ Phoronix Test Suite
 - Add VIDEO_MEMORY environmental variable for overriding video memory capacity
 - Drop KDE konqueror from web browser detection
 - Initial PTS module (plug-in) framework support
+- Add CPU frequency monitoring support (MONITOR=cpu.freq)
+- Add stresscpu2 test profile for CPU stressing
 
 Phoronix Test Suite 1.0.0
 June 5, 2008
