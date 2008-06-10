@@ -13,6 +13,7 @@ Phoronix Test Suite
 - Add stresscpu2 test profile for CPU stressing
 - Allow SuperPi to calculate Pi to sizes other than a million digits
 - Add GPU usage monitoring support to PTS (currently limited to those using recent fglrx driver)
+- Improve CPU physical processor count detection
 
 Phoronix Test Suite 1.0.0
 June 5, 2008

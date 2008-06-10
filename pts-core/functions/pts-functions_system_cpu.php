@@ -26,7 +26,7 @@ function processor_string()
 	if(is_file("/proc/cpuinfo"))
 	{
 		$physical_cpu_ids = read_cpuinfo("physical id");
-		$physical_cpu_count = array_pop($physical_cpu_ids) + 1;
+		$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
 		$cpu_strings = read_cpuinfo("model name");
 		$cpu_strings_unique = array_unique($cpu_strings);
