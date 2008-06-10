@@ -11,6 +11,7 @@ Phoronix Test Suite
 - Initial PTS module (plug-in) framework support
 - Add CPU frequency monitoring support (MONITOR=cpu.freq)
 - Add stresscpu2 test profile for CPU stressing
+- Allow SuperPi to calculate Pi to sizes other than a million digits
 
 Phoronix Test Suite 1.0.0
 June 5, 2008

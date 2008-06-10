@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>System</TestType>
 		<Title>Universe CLI Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -31,6 +31,8 @@
 	</RunTest>
 	<RunTest>
 		<Test>super-pi</Test>
+		<Arguments>20</Arguments>
+		<Description>1 Million Digits</Description>
 	</RunTest>
 	<RunTest>
 		<Test>sqlite</Test>

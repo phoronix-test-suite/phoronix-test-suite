@@ -23,7 +23,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Option>
-			<DisplayName>Run-time</DisplayName>
+			<DisplayName>Run-Time</DisplayName>
 			<Identifier>runtime</Identifier>
 			<ArgumentName></ArgumentName>
 			<Menu>
