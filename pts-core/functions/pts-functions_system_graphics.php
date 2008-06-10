@@ -267,6 +267,14 @@ function graphics_memory_capacity()
 
 	return $video_ram;
 }
+function pts_record_gpu_usage()
+{
+	global $GPU_USAGE;
+	$usage = graphics_gpu_usage();
+
+	if($usage != "")
+		array_push($GPU_USAGE, $usage);
+}
 function opengl_version()
 {
 	$info = shell_exec("glxinfo | grep version");
@@ -293,6 +301,10 @@ function opengl_version()
 	}
 
 	return $info;
+}
+function graphics_gpu_usage()
+{
+	return read_ati_extension("GPUActivity");
 }
 
 ?>

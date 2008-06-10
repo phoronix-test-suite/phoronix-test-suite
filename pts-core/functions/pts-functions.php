@@ -114,6 +114,7 @@ if(($to_show = getenv("MONITOR")))
 	$monitor_power = in_array("all.power", $to_show) || $monitor_all;
 	$monitor_voltage = in_array("all.voltage", $to_show) || $monitor_all;
 	$monitor_freq = in_array("all.freq", $to_show) || $monitor_all;
+	$monitor_usage = in_array("all.usage", $to_show) || $monitor_all;
 	define("PTS_START_TIME", time());
 
 	if(in_array("gpu.temp", $to_show)  || $monitor_temp)
@@ -162,6 +163,11 @@ if(($to_show = getenv("MONITOR")))
 	{
 		define("MONITOR_CPU_FREQ", 1);
 		$CPU_FREQ = array();
+	}
+	if(in_array("gpu.usage", $to_show) || $monitor_usage)
+	{
+		define("MONITOR_GPU_USAGE", 1);
+		$GPU_USAGE = array();
 	}
 
 	register_shutdown_function("pts_monitor_statistics");

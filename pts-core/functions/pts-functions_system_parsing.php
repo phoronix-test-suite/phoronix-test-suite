@@ -209,6 +209,17 @@ function read_ati_extension($attribute)
 				$ati_info = $core_info . "," . $mem_info;
 			}
 	}
+	else if("GPUActivity" == $attribute)
+	{
+		$info = shell_exec("aticonfig --pplib-cmd \"get activity\" 2>&1");
+		if(($pos = strpos($info, "Activity")) > 0)
+		{
+			$activity_info = substr($info, strpos($info, "Activity:") + 8);
+			$activity_info = trim(substr($activity_info, 0, strpos($activity_info, "percent\n")));
+			$ati_info = $activity_info;
+		}
+	}
+
 	return $ati_info;
 }
 ?>

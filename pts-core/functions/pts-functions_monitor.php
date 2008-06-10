@@ -28,10 +28,12 @@ function pts_monitor_update()
 		pts_record_v12_voltage();
 	if(defined("MONITOR_CPU_FREQ"))
 		pts_record_cpu_frequency();
+	if(defined("MONITOR_GPU_USAGE"))
+		pts_record_gpu_usage();
 }
 function pts_monitor_arguments()
 {
-	return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq");
+	return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.usage");
 }
 function pts_monitor_statistics()
 {
@@ -49,6 +51,7 @@ function pts_monitor_statistics()
 	$type_index["POWER"] = array();
 	$type_index["VOLTAGE"] = array();
 	$type_index["FREQUENCY"] = array();
+	$type_index["USAGE"] = array();
 
 	if(isset($GLOBALS["GPU_TEMPERATURE"]))
 	{
@@ -165,6 +168,19 @@ function pts_monitor_statistics()
 			array_push($unit, "MHz");
 			array_push($m_array, $this_array);
 			array_push($type_index["FREQUENCY"], count($m_array) - 1);
+		}
+	}
+	if(isset($GLOBALS["GPU_USAGE"]))
+	{
+		$this_array = $GLOBALS["GPU_USAGE"];
+
+		if(is_array($this_array) && !empty($this_array[0]))
+		{
+			array_push($device, "GPU");
+			array_push($type, "Usage");
+			array_push($unit, "Percent");
+			array_push($m_array, $this_array);
+			array_push($type_index["USAGE"], count($m_array) - 1);
 		}
 	}
 
