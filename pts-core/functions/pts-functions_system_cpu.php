@@ -11,7 +11,7 @@
 function cpu_core_count()
 {
 	$processors = read_cpuinfo("processor");
-	$info = count($processors); // or could do array_pop($processors) + 1
+	$info = count($processors);
 
 	return $info;
 }
