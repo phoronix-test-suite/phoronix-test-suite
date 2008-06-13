@@ -14,6 +14,7 @@ Phoronix Test Suite
 - Allow SuperPi to calculate Pi to sizes other than a million digits
 - Add GPU usage monitoring support to PTS (currently limited to those using recent fglrx driver)
 - Improve CPU physical processor count detection
+- Add clone option for saving a local copy of a result from PTS Global
 
 Phoronix Test Suite 1.0.0
 June 5, 2008

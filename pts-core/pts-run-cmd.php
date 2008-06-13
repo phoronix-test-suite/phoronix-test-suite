@@ -485,6 +485,24 @@ switch($COMMAND)
 		pts_user_config_init(null, null, $batch_options);
 		echo "\nBatch settings saved.\n\n";
 		break;
+	case "CLONE":
+		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
+		{
+			echo "A saved result already exists with the same name.\n\n";
+		}
+		else
+		{
+			if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $ARG_1)) == "REMOTE_FILE")
+			{
+				pts_save_result($ARG_1 . "/composite.xml", @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $ARG_1));
+				// TODO: re-render the XML file and generate the graphs through that save
+				echo "Result Saved To: " . SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml\n\n";
+				//display_web_browser(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");
+			}
+			else
+				echo $ARG_1 . " is an unrecognized PTS Global ID.\n\n";
+		}
+		break;
 	case "SENSORS":
 		pts_monitor_update();
 		break;

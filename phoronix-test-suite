@@ -139,6 +139,9 @@ case "$1" in
 "diagnostics")
 	$PHP_BIN pts-core/pts-run-cmd.php DIAGNOSTICS_DUMP
 	;;
+"clone")
+	$PHP_BIN pts-core/pts-run-cmd.php CLONE $2
+	;;
 "initial-config")
 	$PHP_BIN pts-core/pts-run-cmd.php INITIAL_CONFIG
 	;;
