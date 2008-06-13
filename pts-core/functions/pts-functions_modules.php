@@ -37,7 +37,7 @@ function pts_module_process($process)
 	foreach($GLOBALS["PTS_MODULES"] as $module)
 	{
 		$GLOBALS["PTS_MODULE_CURRENT"] = $module;
-		eval("$module::$process();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+		eval($module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 	}
 	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
 }

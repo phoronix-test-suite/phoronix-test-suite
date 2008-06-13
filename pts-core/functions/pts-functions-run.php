@@ -33,14 +33,14 @@ function pts_prompt_results_identifier($current_identifiers = null)
 
 			echo "\nCurrent Identifiers:\n";
 			foreach($show_identifiers as $identifier)
-				echo "-" . $identifier . "\n";
+				echo "- " . $identifier . "\n";
 			echo "\n";
 		}
 
 		do
 		{
 			echo "Enter a unique identifier for distinguishing this series of tests: ";
-			$RESULTS_IDENTIFIER = trim(str_replace(array('/'), '', fgets(STDIN)));
+			$RESULTS_IDENTIFIER = trim(str_replace(array("/"), "", fgets(STDIN)));
 		}
 		while(empty($RESULTS_IDENTIFIER) || in_array($RESULTS_IDENTIFIER, $show_identifiers));
 	}
@@ -366,7 +366,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		echo pts_string_header($benchmark_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
-		echo $BENCHMARK_RESULTS = pts_exec("cd " . $to_execute . " && ./$execute_binary " . $PTS_BENCHMARK_ARGUMENTS);
+		echo $BENCHMARK_RESULTS = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $PTS_BENCHMARK_ARGUMENTS);
 
 		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
@@ -400,8 +400,8 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	foreach(pts_env_variables() as $key => $value)
 		$arguments_description = str_replace("$" . $key, $value, $arguments_description);
 
-	$RETURN_STRING = "$benchmark_title:\n";
-	$RETURN_STRING .= "$arguments_description\n";
+	$RETURN_STRING = $benchmark_title . ":\n";
+	$RETURN_STRING .= $arguments_description . "\n";
 
 	if(!empty($arguments_description))
 		$RETURN_STRING .= "\n";

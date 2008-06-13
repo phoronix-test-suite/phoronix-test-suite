@@ -50,9 +50,9 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
 		}
 	}
-	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_INSTALL")) == "REMOTE_FILE")
+	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $TO_INSTALL)) == "REMOTE_FILE")
 	{
-		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_INSTALL"));
+		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $TO_INSTALL));
 		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($suite_benchmarks as $benchmark)
@@ -162,7 +162,7 @@ function pts_download_benchmark_files($Benchmark)
 				}
 				else if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && (empty($package_md5[$i]) || $package_md5[$i] == md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i])))
 				{
-					echo "Transferring Cached File: " . $package_filename[$i] . "\n";
+					echo "Copying Cached File: " . $package_filename[$i] . "\n";
 
 					if(copy(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $download_location . $package_filename[$i]))
 						$urls = array();
@@ -237,7 +237,7 @@ function pts_install_benchmark($Benchmark)
 
 	if(!pts_test_architecture_supported($Benchmark))
 	{
-		echo pts_string_header($Benchmark . "is not supported on this platform (" . kernel_arch() . ").");
+		echo pts_string_header($Benchmark . " is not supported on this platform (" . kernel_arch() . ").");
 		return;
 	}
 
@@ -260,7 +260,7 @@ function pts_install_benchmark($Benchmark)
 			return false;
 	}
 
-	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") && ((is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh")) || (is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php") && file_get_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install") == @md5_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))) && $custom_validated)
+	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install") && ((is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install") == @md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh")) || (is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php") && file_get_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install") == @md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))) && $custom_validated)
 	{
 		// pts_download_benchmark_files($Benchmark);
 
@@ -280,7 +280,7 @@ function pts_install_benchmark($Benchmark)
 
 		pts_download_benchmark_files($Benchmark);
 
-		if(is_file(TEST_RESOURCE_DIR . "$Benchmark/install.sh") || is_file(TEST_RESOURCE_DIR . "$Benchmark/install.php"))
+		if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh") || is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))
 		{
 			pts_module_process("__pre_test_install");
 			$install_header = "Installing Benchmark: " . $Benchmark;
@@ -299,12 +299,12 @@ function pts_install_benchmark($Benchmark)
 			if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"))
 			{
 				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && sh " . TEST_RESOURCE_DIR . $Benchmark . "/install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
-				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"));
+				file_put_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install", md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"));
 			}
 			else if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))
 			{
 				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
-				file_put_contents(BENCHMARK_ENV_DIR . "$Benchmark/pts-install", md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"));
+				file_put_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install", md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"));
 			}
 			pts_module_process("__post_test_install");
 		}

@@ -452,7 +452,7 @@ switch($COMMAND)
 		$username = trim(fgets(STDIN));
 		echo "Password: ";
 		$password = md5(trim(fgets(STDIN)));
-		$uploadkey = @file_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=$username&user_md5_pass=$password");
+		$uploadkey = @file_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=" . $username . "&user_md5_pass=" . $password);
 
 		if(!empty($uploadkey))
 		{

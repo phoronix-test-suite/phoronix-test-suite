@@ -60,14 +60,14 @@ if(!$TO_RUN_TYPE)
 		$PROPOSED_FILE_NAME = $TO_RUN;
 		$RES_NULL = null;
 	}
-	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=$TO_RUN")) == "REMOTE_FILE")
+	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $TO_RUN)) == "REMOTE_FILE")
 	{
 		$SAVE_RESULTS = true;
 		$TO_RUN_TYPE = "GLOBAL_COMPARISON";
 		$PROPOSED_FILE_NAME = $TO_RUN;
 		$RES_NULL = null;
 		define("GLOBAL_COMPARISON", 1);
-		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=$TO_RUN"));
+		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $TO_RUN));
 	}
 	else
 	{
@@ -163,7 +163,7 @@ if($TO_RUN_TYPE == "BENCHMARK")
 		for($option_count = 0; $option_count < count($settings_name); $option_count++)
 		{
 			// $this_identifier = $settings_identifier[$option_count];
-			echo "\n$settings_name[$option_count]:\n";
+			echo "\n" . $settings_name[$option_count] . ":\n";
 
 			if(!empty($settings_menu[$option_count]))
 			{
@@ -317,12 +317,12 @@ else
 	pts_exit("\nUnrecognized option: $TO_RUN_TYPE\n");
 }
 
-pts_beep(2);
+//pts_beep(2);
 pts_module_process("__post_run_process");
 if($SAVE_RESULTS)
 {
 	$check_processes = array(
-		"Compiz" => array("compiz"),
+		"Compiz" => array("compiz", "compiz.real"),
 		"Firefox" => array("firefox", "mozilla-firefox", "mozilla-firefox-bin", "firefox-bin"),
 		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin", "thunderbird-bin")
 		);
@@ -406,7 +406,6 @@ if($SAVE_RESULTS)
 		}
 		echo "\n";
 	}
-	pts_monitor_update(); // Update sensors, etc
 }
 
 ?>

@@ -36,9 +36,9 @@ function read_acpi($point, $match)
 function read_hal($name, $UDI = NULL)
 {
 	if(empty($UDI))
-		$info = shell_exec("lshal | grep \"$name\"");
+		$info = shell_exec("lshal | grep \"" . $name . "\"");
 	else
-		$info = shell_exec("lshal -u $UDI | grep \"$name\"");
+		$info = shell_exec("lshal -u $UDI | grep \"" . $name . "\"");
 
 	if(($pos = strpos($info, $name . " = '")) === FALSE)
 	{
@@ -155,7 +155,7 @@ function read_cpuinfo($attribute)
 }
 function read_nvidia_extension($attribute)
 {
-	$info = shell_exec("nvidia-settings --query $attribute 2>&1");
+	$info = shell_exec("nvidia-settings --query " . $attribute . " 2>&1");
 	$nv_info = "";
 
 	if(($pos = strpos($info, $attribute)) > 0)

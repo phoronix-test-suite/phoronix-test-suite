@@ -54,8 +54,8 @@ if(getenv("DEBUG") == "1" || ($debug_file = getenv("DEBUG_FILE")) != FALSE)
 
 function __autoload($to_load)
 {
-	if(is_file(PTS_DIR . "pts-core/objects/$to_load.php"))
-		require_once(PTS_DIR . "pts-core/objects/$to_load.php");
+	if(is_file(PTS_DIR . "pts-core/objects/" . $to_load . ".php"))
+		require_once(PTS_DIR . "pts-core/objects/" . $to_load . ".php");
 }
 
 // Load OS-specific functions
@@ -413,7 +413,7 @@ function display_web_browser($URL, $alt_text = NULL, $default_open = FALSE)
 		$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
 
 	if($view_results)
-		shell_exec("sh pts-core/scripts/launch-browser.sh \"$URL\" &");
+		shell_exec("sh pts-core/scripts/launch-browser.sh \"" . $URL . "\" &");
 }
 function pts_env_variables()
 {
@@ -438,7 +438,7 @@ function pts_env_variables()
 }
 function pts_input_correct_results_path($path)
 {
-	if(strpos($path, '/') === FALSE)
+	if(strpos($path, "/") === FALSE)
 	{
 		$path = SAVE_RESULTS_DIR . $path;
 	}
@@ -459,7 +459,7 @@ function pts_variables_export_string($vars = null)
 
 	foreach($vars as $name => $var)
 	{
-		$return_string .= "export $name=$var;";
+		$return_string .= "export " . $name . "=" . $var . ";";
 	}
 	return $return_string . " ";
 }
