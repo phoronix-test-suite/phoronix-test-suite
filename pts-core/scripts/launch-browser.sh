@@ -1,6 +1,9 @@
 #!/bin/sh
 
-if [ pts`which epiphany` != pts ]
+if [ pts`which xdg-open` != pts ]
+then
+	xdg-open "$1"
+elif [ pts`which epiphany` != pts ]
 then
 	epiphany "$1"
 elif [ pts`which firefox` != pts ]
