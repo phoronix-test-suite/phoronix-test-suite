@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>Graphics</TestType>
 		<Title>GUI Toolkits</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -13,12 +13,12 @@
 	</RunTest>
 	<RunTest>
 		<Test>gtkperf</Test>
-		<Arguments>RADIO_BUTTON</Arguments>
-		<Description>GtkRadioButton</Description>
+		<Arguments>DRAWING_PIXBUFS</Arguments>
+		<Description>GtkDrawingArea - Pixbufs</Description>
 	</RunTest>
 	<RunTest>
 		<Test>gtkperf</Test>
-		<Arguments>TEXTVIEW_SCROLL</Arguments>
-		<Description>GtkTextView - Scroll</Description>
+		<Arguments>RADIO_BUTTON</Arguments>
+		<Description>GtkRadioButton</Description>
 	</RunTest>
 </PhoronixTestSuite>

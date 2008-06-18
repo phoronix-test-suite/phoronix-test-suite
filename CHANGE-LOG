@@ -18,6 +18,7 @@ Phoronix Test Suite
 - Trivial code cleaning of pts-core
 - Add xdg-open to launch-browser.sh and try that first
 - Fix for scimark2 in universe-cli
+- Update pcqs-desktop-graphics and gui-toolkits test suites
 
 Phoronix Test Suite 1.0.0
 June 5, 2008

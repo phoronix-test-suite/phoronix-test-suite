@@ -163,13 +163,13 @@ function pts_estimated_time_string($time)
 {
 	$strlen_time = strlen($time);
 
-	if(strlen($time_trim = str_replace('~', '', $time)) != $strlen_time)
+	if(strlen($time_trim = str_replace("~", "", $time)) != $strlen_time)
 		$formatted_string = "Approximately " . $time_trim;
 	else if(strlen($time_trim = str_replace(array('l'), '', $time)) != $strlen_time)
 		$formatted_string = "Less Than " . $time_trim;
 	else if(strlen($time_trim = str_replace(array('g'), '', $time)) != $strlen_time)
 		$formatted_string = "Greater Than " . $time_trim;
-	else if(strlen($time_trim = str_replace('-', ", ", $time)) != $strlen_time)
+	else if(strlen($time_trim = str_replace("-", ", ", $time)) != $strlen_time)
 	{
 		$time_trim = explode(",", $time_trim);
 
