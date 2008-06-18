@@ -17,6 +17,7 @@ Phoronix Test Suite
 - Add clone option for saving a local copy of a result from PTS Global
 - Trivial code cleaning of pts-core
 - Add xdg-open to launch-browser.sh and try that first
+- Fix for scimark2 in universe-cli
 
 Phoronix Test Suite 1.0.0
 June 5, 2008
