@@ -8,7 +8,7 @@
 	pts.php: Version information for the Phoronix Test Suite.
 */
 
-define("PTS_VERSION", "1.0.0");
+define("PTS_VERSION", "1.0.1");
 define("PTS_CODENAME", "TRONDHEIM");
 define("PTS_TYPE", "DESKTOP");
 
