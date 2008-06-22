@@ -570,7 +570,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 }
 function pts_clean_information_string($str)
 {
-	$remove_phrases = array("Corporation ", " Technologies", ",", "Technology ", "version ", "Processor ", "Computer ", "processor ", "Genuine ", "Unknown device ", "(R)", "(TM)", "(tm)", "Inc. ", "INC. ", "Inc ", " inc.", "/PCI/SSE2", "CO. LTD ");
+	$remove_phrases = array("Corporation ", " Technologies", ",", "Technology ", "version ", "Processor ", "Computer ", "processor ", "Genuine ", "Unknown device ", "(R)", "(TM)", "(tm)", "Inc. ", "INC. ", "Inc ", " inc.", "/PCI/SSE2/3DNOW!", "/PCI/SSE2", "CO. LTD ", "Co. Ltd. ");
 	$str = str_replace($remove_phrases, " ", $str);
 
 	$change_phrases = array("Memory Controller Hub" => "MCH", "Advanced Micro Devices" => "AMD", "MICRO-STAR INTERNATIONAL" => "MSI", "Silicon Integrated Systems" => "SiS", "Integrated Graphics Controller" => "IGP");
