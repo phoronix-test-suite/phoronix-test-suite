@@ -10,6 +10,19 @@
 	Additional Notes: A very simple XML writer with a few extras... Does not support attributes on tags, etc.
 	A work in progress. This was originally designed for just some select needs in the past. It does support linking to an XSL as 
 	well as whether to format the XML or not, etc. Also provides a MD5 checksum of the XML body.
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 class tandem_XmlWriter

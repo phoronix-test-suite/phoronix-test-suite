@@ -1,3 +1,4 @@
+
 function switchShow(i)
 {
 	if(document.getElementById(i).style.display == "none")
