@@ -99,7 +99,7 @@ case "$1" in
 "remove-all-results")
 	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_ALL_RESULTS
 	;;
-"upload" | "upload-result")
+"upload" | "upload-result" | "upload-saved-result")
 	$PHP_BIN pts-core/pts-run-cmd.php UPLOAD_RESULT $2
 	;;
 "make-download-cache")
@@ -117,7 +117,7 @@ case "$1" in
 "list-installed-tests")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_INSTALLED_TESTS
 	;;
-"list-results" | "list-saved-results")
+"list-results" | "list-saved-results" | "list-results")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
 	;;
 "show-result" | "show-results" | "view-result" | "view-results")
@@ -154,7 +154,7 @@ case "$1" in
 "batch-setup")
 	$PHP_BIN pts-core/pts-run-cmd.php BATCH_SETUP
 	;;
-"refresh-graph" | "refresh-graphs")
+"refresh-graph" | "refresh-graphs" | "refresh-result")
 	$PHP_BIN pts-core/pts-run-cmd.php REFRESH_GRAPHS $2
 	;;
 *)
