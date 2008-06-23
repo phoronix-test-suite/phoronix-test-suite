@@ -64,7 +64,6 @@ require_once("pts-core/functions/pts-interfaces.php");
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
 require_once("pts-core/functions/pts-functions_modules.php");
-require_once("pts-core/functions/pts-functions_monitor.php");
 
 define("THIS_RUN_TIME", time());
 
