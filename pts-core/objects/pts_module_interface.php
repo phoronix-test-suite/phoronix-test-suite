@@ -28,6 +28,11 @@ class pts_module_interface
 	const module_description = "A description of the module.";
 	const module_author = "Module Creator";
 
+	public static function module_info()
+	{
+
+	}
+
 	//
 	// General Functions
 	//

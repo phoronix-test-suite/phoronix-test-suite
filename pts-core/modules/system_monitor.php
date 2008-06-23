@@ -25,8 +25,20 @@ class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
 	const module_version = "1.0.0";
-	const module_description = "This module contains the sensor monitoring support for the Phoronix Test Suite.";
+	const module_description = "This module contains the sensor monitoring support.";
 	const module_author = "Michael Larabel";
+
+	public static function module_info()
+	{
+		$info = "";
+
+		$info .= "\nMonitoring these sensors are as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). Below are all of the sensors supported by this version of the Phoronix Test Suite.\n\n";
+		$info .= "Supported Options:\n";
+		foreach(self::pts_monitor_arguments() as $arg)
+			$info .= "  - " . $arg . "\n";
+
+		return $info;
+	}
 
 	//
 	// General Functions

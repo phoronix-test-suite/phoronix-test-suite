@@ -319,6 +319,35 @@ switch($COMMAND)
 			echo "\n" . $ARG_1 . " is not recognized.\n";
 		}
 		break;
+	case "MODULE_INFO":
+		$ARG_1 = strtolower($ARG_1);
+		if(is_file(MODULE_DIR . $ARG_1 . ".php"))
+		{
+		 	$module = $ARG_1;
+			include(MODULE_DIR . $module . ".php");
+
+			eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+			eval("\$module_version = " . $module . "::module_version;");
+			eval("\$module_author = " . $module . "::module_author;");
+			eval("\$module_description = " . $module . "::module_description;");
+			eval("\$module_information = " . $module . "::module_info();");
+
+			echo pts_string_header("Module: " . $module_name);
+
+			echo "Version: " . $module_version . "\n";
+			echo "Author: " . $module_author . "\n";
+			echo "Description: " . $module_description . "\n";
+
+			if(!empty($module_information))
+				echo $module_information . "\n";
+
+			echo "\n";
+		}
+		else
+		{
+			echo "\n" . $ARG_1 . " is not recognized.\n";
+		}
+		break;
 	case "SHOW_RESULT":
 		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
 			$URL = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml";
@@ -517,9 +546,6 @@ switch($COMMAND)
 				echo $ARG_1 . " is an unrecognized PTS Global ID.\n\n";
 		}
 		break;
-	case "SENSORS":
-		echo "\nThis option was dropped in Phoronix Test Suite 1.2. For more information, view the latest documentation.\n\n";
-		break;
 	case "SENSOR_OPTIONS":
 		//echo "\nThe Phoronix Test Suite supports monitoring various system hardware sensors through the LM_Sensors and ACPI interfaces. The Phoronix Test Suite will automatically monitor the selected sensors while each test is running and at the end will then provide the low and high thresholds for each sensor as well as the average. In addition, the sensor results are then plotted on line graphs and can be viewed through the PTS Results Viewer.\n";
 		echo "\nMonitoring these sensors are as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). Below are all of the sensors supported by this version of the Phoronix Test Suite.\n\n";
@@ -530,6 +556,9 @@ switch($COMMAND)
 		break;
 	case "VERSION":
 		echo "\nPhoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n\n";
+		break;
+	case "SENSORS":
+		echo "\nThis option was dropped from the Phoronix Test Suite. For more information and the replacement option, view the latest documentation.\n\n";
 		break;
 	default:
 		echo "Phoronix Test Suite: Internal Error.\nCommand Not Recognized (" . $COMMAND . ").\n";

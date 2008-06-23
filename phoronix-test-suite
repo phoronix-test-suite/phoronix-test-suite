@@ -129,6 +129,9 @@ case "$1" in
 "info" | "suite-info" | "suite-information" | "test-info" | "test-information")
 	$PHP_BIN pts-core/pts-run-cmd.php INFO $2
 	;;
+"module-info")
+	$PHP_BIN pts-core/pts-run-cmd.php MODULE_INFO $2
+	;;
 "system-info" | "system-information")
 	$PHP_BIN pts-core/pts-run-cmd.php SYS_INFO
 	;;
@@ -196,6 +199,7 @@ Result Viewing Options:
 
 Module Options:
 	list-modules: List all installed/available PTS modules
+	module-info: Show detailed information on a PTS module
 
 Miscellaneous Options:
 	make-download-cache: Backup all downloaded test files to ~/.phoronix-test-suite/download-cache/
