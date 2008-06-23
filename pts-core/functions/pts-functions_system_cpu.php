@@ -138,14 +138,6 @@ function processor_temperature()
 
 	return $temp_c;
 }
-function pts_record_cpu_temperature()
-{
-	global $CPU_TEMPERATURE;
-	$temp = processor_temperature();
-
-	if($temp != -1)
-		array_push($CPU_TEMPERATURE, $temp);
-}
 function pts_processor_power_savings_enabled()
 {
 	$return_string = "";
@@ -193,13 +185,5 @@ function current_processor_frequency($cpu_core = 0)
 		$info = 0;
 
 	return $info;
-}
-function pts_record_cpu_frequency()
-{
-	global $CPU_FREQ;
-	$speed = current_processor_frequency();
-
-	if($speed > 0)
-		array_push($CPU_FREQ, $speed);
 }
 ?>

@@ -37,14 +37,6 @@ function graphics_frequency_string()
 
 	return $freq_string;
 }
-function pts_record_gpu_temperature()
-{
-	global $GPU_TEMPERATURE;
-	$temp = graphics_processor_temperature();
-
-	if($temp != -1)
-		array_push($GPU_TEMPERATURE, $temp);
-}
 function graphics_processor_temperature()
 {
 	$temp_c = -1;
@@ -279,14 +271,6 @@ function graphics_memory_capacity()
 	}
 
 	return $video_ram;
-}
-function pts_record_gpu_usage()
-{
-	global $GPU_USAGE;
-	$usage = graphics_gpu_usage();
-
-	if($usage != "")
-		array_push($GPU_USAGE, $usage);
 }
 function opengl_version()
 {

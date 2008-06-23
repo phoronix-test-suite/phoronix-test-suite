@@ -40,6 +40,7 @@ function pts_directory()
 define("PTS_DIR", pts_directory());
 define("PTS_TEMP_DIR", "/tmp/phoronix-test-suite/");
 define("PHP_BIN", getenv("PHP_BIN"));
+define("PTS_START_TIME", time());
 
 if(getenv("DEBUG") == "1" || ($debug_file = getenv("DEBUG_FILE")) != FALSE)
 {
@@ -555,6 +556,8 @@ function pts_beep($times = 1)
 }
 function pts_shutdown()
 {
+	define("PTS_END_TIME", time());
+
 	// Ensure screensaver is back to being enabled
 	if(defined("SCREENSAVER_KILLED"))
 		shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");

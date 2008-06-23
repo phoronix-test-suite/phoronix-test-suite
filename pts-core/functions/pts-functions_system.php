@@ -228,14 +228,6 @@ function system_temperature()
 
 	return $temp_c;
 }
-function pts_record_sys_temperature()
-{
-	global $SYS_TEMPERATURE;
-	$temp = system_temperature();
-
-	if($temp != -1)
-		array_push($SYS_TEMPERATURE, $temp);
-}
 function system_line_voltage($type)
 {
 	if($type == "CPU")
@@ -253,38 +245,6 @@ function system_line_voltage($type)
 		$voltage = -1;
 
 	return $voltage;
-}
-function pts_record_cpu_voltage()
-{
-	global $CPU_VOLTAGE;
-	$voltage = system_line_voltage("CPU");
-
-	if($voltage != -1)
-		array_push($CPU_VOLTAGE, $voltage);
-}
-function pts_record_v3_voltage()
-{
-	global $V3_VOLTAGE;
-	$voltage = system_line_voltage("V3");
-
-	if($voltage != -1)
-		array_push($V3_VOLTAGE, $voltage);
-}
-function pts_record_v5_voltage()
-{
-	global $V5_VOLTAGE;
-	$voltage = system_line_voltage("V5");
-
-	if($voltage != -1)
-		array_push($V5_VOLTAGE, $voltage);
-}
-function pts_record_v12_voltage()
-{
-	global $V12_VOLTAGE;
-	$voltage = system_line_voltage("V12");
-
-	if($voltage != -1)
-		array_push($V12_VOLTAGE, $voltage);
 }
 function main_system_hardware_string()
 {
@@ -305,21 +265,6 @@ function main_system_hardware_string()
 	}
 
 	return $info;
-}
-function pts_record_battery_power()
-{
-	global $BATTERY_POWER;
-	$state = read_acpi("/battery/BAT0/state", "charging state");
-	$power = read_acpi("/battery/BAT0/state", "present rate");
-
-	if($state == "discharging")
-	{
-		if(($end = strpos($power, ' ')) > 0)
-			$power = substr($power, 0, $end);
-
-		if(!empty($power))
-			array_push($BATTERY_POWER, $power);
-	}
 }
 function pts_report_power_mode()
 {

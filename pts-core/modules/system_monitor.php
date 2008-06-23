@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.0.0";
+	const module_version = "1.1.0";
 	const module_description = "This module contains the sensor monitoring support.";
 	const module_author = "Michael Larabel";
 
@@ -55,7 +55,6 @@ class system_monitor extends pts_module_interface
 		$monitor_voltage = in_array("all.voltage", $to_show) || $monitor_all;
 		$monitor_freq = in_array("all.freq", $to_show) || $monitor_all;
 		$monitor_usage = in_array("all.usage", $to_show) || $monitor_all;
-		define("PTS_START_TIME", time());
 
 		if(in_array("gpu.temp", $to_show)  || $monitor_temp)
 		{
@@ -112,8 +111,6 @@ class system_monitor extends pts_module_interface
 	{
 		if(defined("PTS_EXIT"))
 			return;
-
-		define("PTS_END_TIME", time());
 
 		$device = array();
 		$type = array();
@@ -370,27 +367,6 @@ class system_monitor extends pts_module_interface
 	}
 
 	//
-	// Installation Functions
-	//
-
-	public static function __pre_install_process($obj = NULL)
-	{
-		return;
-	}
-	public static function __pre_test_install($obj = NULL)
-	{
-		return;
-	}
-	public static function __post_test_install($obj = NULL)
-	{
-		return;
-	}
-	public static function __post_install_process($obj = NULL)
-	{
-		return;
-	}
-
-	//
 	// Run Functions
 	//
 
@@ -414,25 +390,82 @@ class system_monitor extends pts_module_interface
 	private function pts_monitor_update()
 	{
 		if(defined("MONITOR_GPU_TEMP"))
-			pts_record_gpu_temperature();
+		{
+			$temp = graphics_processor_temperature();
+
+			if($temp != -1)
+				array_push($GLOBALS["GPU_TEMPERATURE"], $temp);
+		}
 		if(defined("MONITOR_CPU_TEMP"))
-			pts_record_cpu_temperature();
+		{
+			$temp = processor_temperature();
+
+			if($temp != -1)
+				array_push($GLOBALS["CPU_TEMPERATURE"], $temp);
+		}
 		if(defined("MONITOR_SYS_TEMP"))
-			pts_record_sys_temperature();
+		{
+			$temp = system_temperature();
+
+			if($temp != -1)
+				array_push($GLOBALS["SYS_TEMPERATURE"], $temp);
+		}
 		if(defined("MONITOR_BATTERY_POWER"))
-			pts_record_battery_power();
+		{
+			$state = read_acpi("/battery/BAT0/state", "charging state");
+			$power = read_acpi("/battery/BAT0/state", "present rate");
+
+			if($state == "discharging")
+			{
+				if(($end = strpos($power, ' ')) > 0)
+					$power = substr($power, 0, $end);
+
+				if(!empty($power))
+					array_push($GLOBALS["BATTERY_POWER"], $power);
+			}
+		}
 		if(defined("MONITOR_CPU_VOLTAGE"))
-			pts_record_cpu_voltage();
+		{
+			$voltage = system_line_voltage("CPU");
+
+			if($voltage != -1)
+				array_push($GLOBALS["CPU_VOLTAGE"], $voltage);
+		}
 		if(defined("MONITOR_V3_VOLTAGE"))
-			pts_record_v3_voltage();
+		{
+			$voltage = system_line_voltage("V3");
+
+			if($voltage != -1)
+				array_push($GLOBALS["V3_VOLTAGE"], $voltage);
+		}
 		if(defined("MONITOR_V5_VOLTAGE"))
-			pts_record_v5_voltage();
+		{
+			$voltage = system_line_voltage("V5");
+
+			if($voltage != -1)
+				array_push($GLOBALS["V5_VOLTAGE"], $voltage);
+		}
 		if(defined("MONITOR_V12_VOLTAGE"))
-			pts_record_v12_voltage();
+		{
+			$voltage = system_line_voltage("V12");
+
+			if($voltage != -1)
+				array_push($GLOBALS["V12_VOLTAGE"], $voltage);
+		}
 		if(defined("MONITOR_CPU_FREQ"))
-			pts_record_cpu_frequency();
+		{
+			$speed = current_processor_frequency();
+
+			if($speed > 0)
+				array_push($GLOBALS["CPU_FREQ"], $speed);
+		}
 		if(defined("MONITOR_GPU_USAGE"))
-			pts_record_gpu_usage();
+		{
+			$usage = graphics_gpu_usage();
+
+			if($usage != "")
+				array_push($GLOBALS["GPU_USAGE"], $usage);
+		}
 	}
 	private function pts_monitor_arguments()
 	{
