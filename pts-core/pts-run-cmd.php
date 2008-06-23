@@ -159,7 +159,6 @@ switch($COMMAND)
 		break;
 	case "LIST_SUITES":
 		echo pts_string_header("Phoronix Test Suite - Suites");
-		$benchmark_suites = array();
 		foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
 		{
 		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
@@ -176,6 +175,21 @@ switch($COMMAND)
 			}
 			else
 				printf("%-26ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);
+		}
+		echo "\n";
+		break;
+	case "LIST_MODULES":
+		echo pts_string_header("Phoronix Test Suite - Modules");
+		foreach(glob(MODULE_DIR . "*.php") as $module_file)
+		{
+			include($module_file);
+		 	$module = basename($module_file, ".php");
+
+			eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+			eval("\$module_version = " . $module . "::module_version;");
+			eval("\$module_author = " . $module . "::module_author;");
+
+			printf("%-16ls - %-24ls [Developed By: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
 		}
 		echo "\n";
 		break;

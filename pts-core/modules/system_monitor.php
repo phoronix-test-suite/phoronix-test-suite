@@ -26,7 +26,7 @@ class system_monitor extends pts_module_interface
 	const module_name = "System Monitor";
 	const module_version = "1.0.0";
 	const module_description = "This module contains the sensor monitoring support for the Phoronix Test Suite.";
-	const module_author = "Module Creator";
+	const module_author = "Michael Larabel";
 
 	//
 	// General Functions

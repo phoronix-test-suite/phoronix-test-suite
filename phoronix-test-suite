@@ -111,6 +111,9 @@ case "$1" in
 "list-suites")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_SUITES
 	;;
+"list-modules")
+	$PHP_BIN pts-core/pts-run-cmd.php LIST_MODULES
+	;;
 "list-possible-dependencies")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_POSSIBLE_EXTERNAL_DEPENDENCIES
 	;;
@@ -190,6 +193,9 @@ Result Viewing Options:
 	merge-results <saved Name 1 / Global ID> <saved Name 2 / Global ID> <save name>: Merge two sets of results
 	upload <saved name>: Upload a saved set of results to PTS Global
 	login: Enter your PTS Global log-in information for uploading results
+
+Module Options:
+	list-modules: List all installed/available PTS modules
 
 Miscellaneous Options:
 	make-download-cache: Backup all downloaded test files to ~/.phoronix-test-suite/download-cache/

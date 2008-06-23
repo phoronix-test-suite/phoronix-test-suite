@@ -1,2 +1,3 @@
 - Implement PTS modules support
 - Move sensor monitoring support from pts-core to a new module called system_monitor
+- Add list-modules option for listing all available/installed modules
