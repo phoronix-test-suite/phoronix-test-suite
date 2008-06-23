@@ -99,7 +99,7 @@ case "$1" in
 "remove-all-results")
 	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_ALL_RESULTS
 	;;
-"upload")
+"upload" | "upload-result")
 	$PHP_BIN pts-core/pts-run-cmd.php UPLOAD_RESULT $2
 	;;
 "make-download-cache")
