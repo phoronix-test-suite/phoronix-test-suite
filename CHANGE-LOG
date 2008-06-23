@@ -6,6 +6,7 @@ Phoronix Test Suite
 - Add GPLv3 header to some source files missing the license
 - Add AUTHORS file with contributors
 - pts_clean_information_string() now uses case-insensitive search
+- Add tremulous test profile for Tremulous open-source game
 
 Phoronix Test Suite 1.0.1
 June 19, 2008

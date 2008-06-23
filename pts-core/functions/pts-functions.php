@@ -30,8 +30,8 @@ function pts_directory()
 
 	if(!empty($dir))
 	{
-		if(substr($dir, -1) != '/')
-			$dir .= '/';
+		if(substr($dir, -1) != "/")
+			$dir .= "/";
 	}
 	
 	return $dir;
