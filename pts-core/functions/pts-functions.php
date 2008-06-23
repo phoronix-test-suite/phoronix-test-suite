@@ -77,7 +77,6 @@ define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("MODULE_DIR", PTS_DIR . "pts-core/modules/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
 define("PTS_USER_DIR", getenv("PTS_USER_DIR"));
-define("PTS_MONITOR_DIR", PTS_USER_DIR . "system-monitor" . '/');
 define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 pts_config_init();
@@ -102,7 +101,6 @@ $PTS_GLOBAL_ID = 1;
 
 $PTS_MODULES = array();
 $PTS_MODULE_CURRENT = FALSE;
-pts_auto_modules_ready($PTS_MODULES);
 pts_load_modules($PTS_MODULES);
 pts_module_process("__startup");
 register_shutdown_function("pts_module_process", "__shutdown");
@@ -186,18 +184,6 @@ function pts_copy($from, $to)
 {
 	if(!is_file($to) || md5_file($from) != md5_file($to))
 		copy($from, $to);
-}
-function pts_save_user_file($save_name = null, $contents = null, $directory = '/')
-{
-	if(!is_dir(PTS_MONITOR_DIR))
-		mkdir(PTS_MONITOR_DIR);
-
-	if($directory != '/')
-		if(!is_dir(PTS_MONITOR_DIR . $directory))
-			mkdir(PTS_MONITOR_DIR . $directory);
-
-	if(!empty($save_name) && !empty($contents))
-		file_put_contents(PTS_USER_DIR . $extension . $directory . $save_name, $contents);
 }
 function pts_gd_available()
 {

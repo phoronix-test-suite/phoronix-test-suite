@@ -299,11 +299,9 @@ class system_monitor extends pts_module_interface
 				if(pts_gd_available())
 				{
 					$image_list = array();
-					pts_save_user_file();
-					pts_save_user_file(null, null, "/pts-monitor-viewer/");
-					pts_copy(RESULTS_VIEWER_DIR . "pts-monitor-viewer.html", PTS_MONITOR_DIR . "pts-monitor-viewer.html");
-					pts_copy(RESULTS_VIEWER_DIR . "pts.js", PTS_MONITOR_DIR . "pts-monitor-viewer/pts.js");
-					pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", PTS_MONITOR_DIR . "pts-monitor-viewer/pts-viewer.css");
+					pts_module::copy_file(RESULTS_VIEWER_DIR . "pts-monitor-viewer.html", "pts-monitor-viewer.html");
+					pts_module::copy_file(RESULTS_VIEWER_DIR . "pts.js", "pts-monitor-viewer/pts.js");
+					pts_module::copy_file(RESULTS_VIEWER_DIR . "pts-viewer.css", "pts-monitor-viewer/pts-viewer.css");
 
 					$image_count = 0;
 					foreach($type_index as $key => $sub_array)
@@ -334,9 +332,8 @@ class system_monitor extends pts_module_interface
 									$first_run = false;
 								}
 							}
-
 							$t->loadGraphVersion(PTS_VERSION);
-							$t->save_graph(PTS_MONITOR_DIR . THIS_RUN_TIME . '-' . $image_count . ".png");
+							$t->save_graph(pts_module::save_dir() . THIS_RUN_TIME . '-' . $image_count . ".png");
 							$t->renderGraph();
 
 							array_push($image_list, THIS_RUN_TIME . '-' . $image_count . ".png");
@@ -360,9 +357,10 @@ class system_monitor extends pts_module_interface
 
 		if(count($m_array[0]) > 1 && !empty($url))
 		{
-			file_put_contents(PTS_MONITOR_DIR . "link-latest.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=pts-monitor-viewer.html#$url\"></HEAD><BODY></BODY></HTML>
+			$file = pts_module::save_file("link-latest.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=pts-monitor-viewer.html#$url\"></HEAD><BODY></BODY></HTML>
 	");
-			display_web_browser(PTS_MONITOR_DIR . "link-latest.html");
+			if($file != FALSE)
+				display_web_browser($file);
 		}
 	}
 

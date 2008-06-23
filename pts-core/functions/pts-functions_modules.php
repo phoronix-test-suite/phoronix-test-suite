@@ -37,8 +37,8 @@ function pts_auto_modules_ready(&$modules_list)
 }
 function pts_load_modules(&$modules_list)
 {
-	// TODO: Detect other modules to load
-	// pts_auto_modules_ready($modules_list);
+	pts_auto_modules_ready($modules_list);
+	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
 
 	// Clean-up modules list
 	array_unique($modules_list);

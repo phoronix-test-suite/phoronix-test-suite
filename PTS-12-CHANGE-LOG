@@ -3,3 +3,4 @@
 - Add list-modules option for listing all available/installed modules
 - Add module-info option for viewing information on a module
 - Drop pts-functions_monitor.php now that it's all modulized.
+- Drop PTS_MONITOR_DIR environmental variable and pts_save_user_file() function from pts-core
