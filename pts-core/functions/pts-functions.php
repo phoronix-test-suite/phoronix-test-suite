@@ -102,76 +102,10 @@ $PTS_GLOBAL_ID = 1;
 
 $PTS_MODULES = array();
 $PTS_MODULE_CURRENT = FALSE;
+pts_auto_modules_ready($PTS_MODULES);
 pts_load_modules($PTS_MODULES);
 pts_module_process("__startup");
 register_shutdown_function("pts_module_process", "__shutdown");
-
-if(($to_show = getenv("MONITOR")))
-{
-	$to_show = explode(',', $to_show);
-	$monitor_all = in_array("all", $to_show);
-	$monitor_temp = in_array("all.temp", $to_show) || $monitor_all;
-	$monitor_power = in_array("all.power", $to_show) || $monitor_all;
-	$monitor_voltage = in_array("all.voltage", $to_show) || $monitor_all;
-	$monitor_freq = in_array("all.freq", $to_show) || $monitor_all;
-	$monitor_usage = in_array("all.usage", $to_show) || $monitor_all;
-	define("PTS_START_TIME", time());
-
-	if(in_array("gpu.temp", $to_show)  || $monitor_temp)
-	{
-		define("MONITOR_GPU_TEMP", 1);
-		$GPU_TEMPERATURE = array();
-	}
-	if(in_array("cpu.temp", $to_show)  || $monitor_temp)
-	{	
-		define("MONITOR_CPU_TEMP", 1);
-		$CPU_TEMPERATURE = array();
-	}
-	if(in_array("sys.temp", $to_show)  || $monitor_temp)
-	{	
-		define("MONITOR_SYS_TEMP", 1);
-		$SYS_TEMPERATURE = array();
-	}
-	if(in_array("battery.power", $to_show) || $monitor_power)
-	{	
-		define("MONITOR_BATTERY_POWER", 1);
-		$BATTERY_POWER = array();
-	}
-	if(in_array("cpu.voltage", $to_show) || $monitor_voltage)
-	{	
-		define("MONITOR_CPU_VOLTAGE", 1);
-		$CPU_VOLTAGE = array();
-	}
-	if(in_array("v3.voltage", $to_show) || $monitor_voltage)
-	{
-		define("MONITOR_V3_VOLTAGE", 1);
-		$V3_VOLTAGE = array();
-	}
-	if(in_array("v5.voltage", $to_show) || $monitor_voltage)
-	{
-		
-		define("MONITOR_V5_VOLTAGE", 1);
-		$V5_VOLTAGE = array();
-	}
-	if(in_array("v12.voltage", $to_show) || $monitor_voltage)
-	{
-		
-		define("MONITOR_V12_VOLTAGE", 1);
-		$V12_VOLTAGE = array();
-	}
-	if(in_array("cpu.freq", $to_show) || $monitor_freq)
-	{
-		define("MONITOR_CPU_FREQ", 1);
-		$CPU_FREQ = array();
-	}
-	if(in_array("gpu.usage", $to_show) || $monitor_usage)
-	{
-		define("MONITOR_GPU_USAGE", 1);
-		$GPU_USAGE = array();
-	}
-
-	register_shutdown_function("pts_monitor_statistics");
-}
 
 // Phoronix Test Suite - Functions
 function pts_benchmark_names_to_array()

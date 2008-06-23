@@ -28,7 +28,12 @@ function pts_auto_modules_ready(&$modules_list)
 
 	foreach($modules_assoc as $env_var => $module)
 		if(!in_array($module, $modules_list) && ($e = getenv($env_var)) != FALSE && !empty($e))
+		{
+			if(defined("PTS_DEBUG_MODE"))
+				echo "Attempting To Add Module: " . $module . "\n";
+
 			array_push($modules_list, $module);
+		}
 }
 function pts_load_modules(&$modules_list)
 {

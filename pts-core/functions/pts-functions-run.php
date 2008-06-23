@@ -374,8 +374,6 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	pts_debug_message("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
 	for($i = 0; $i < $times_to_run; $i++)
 	{
-		pts_monitor_update(); // Update sensors, etc
-
 		echo pts_string_header($benchmark_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
@@ -394,8 +392,6 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		if($times_to_run > 1 && $i < ($times_to_run - 1))
 			pts_module_process("__interim_test_run");
 	}
-
-	pts_monitor_update(); // Update sensors, etc
 
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{

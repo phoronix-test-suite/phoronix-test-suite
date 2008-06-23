@@ -42,7 +42,6 @@ if(empty($TO_RUN))
 
 // Make sure tests are installed
 pts_verify_test_installation($TO_RUN);
-pts_monitor_update(); // Update sensors, etc
 
 if(!$TO_RUN_TYPE)
 {
