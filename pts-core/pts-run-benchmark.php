@@ -317,6 +317,7 @@ else
 }
 
 //pts_beep(2);
+define("PTS_TESTING_DONE", 1);
 pts_module_process("__post_run_process");
 if($SAVE_RESULTS)
 {
