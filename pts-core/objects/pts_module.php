@@ -84,7 +84,6 @@ class pts_module
 		if(($extra_dir = dirname($to_file)) != "." && !is_dir($save_base_dir . $extra_dir))
 			mkdir($save_base_dir . $extra_dir);
 
-
 		if(is_file($from_file) && (!is_file($save_base_dir . $to_file) || md5_file($from_file) != md5_file($save_base_dir . $to_file)))
 			if(copy($from_file, $save_base_dir . $to_file))
 				return $save_base_dir . $to_file;
@@ -93,7 +92,7 @@ class pts_module
 	}
 	public static function pts_timed_function($time, $function)
 	{
-		if($time < 15 || $time > 300)
+		if($time < 5 || $time > 300)
 			return;
 
 		$pid = pcntl_fork();

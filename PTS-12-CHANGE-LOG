@@ -8,3 +8,4 @@
 - system_monitor: Poll sensors every 30 seconds during testing
 - Add CPU usage monitoring support to pts-core
 - system_monitor: Add cpu.usage to MONITOR, fix some bugs as well
+- pts_LineGraph: Don't display the pointers if there are too many points on the graph
