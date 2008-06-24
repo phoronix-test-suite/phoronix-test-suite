@@ -106,6 +106,11 @@ class system_monitor extends pts_module_interface
 			define("MONITOR_GPU_USAGE", 1);
 			pts_module::save_file(".s/GPU_USAGE");
 		}
+		if(in_array("cpu.usage", $to_show) || $monitor_usage)
+		{
+			define("MONITOR_CPU_USAGE", 1);
+			pts_module::save_file(".s/CPU_USAGE");
+		}
 
 		pts_module::pts_timed_function(30, "pts_monitor_update");
 	}
@@ -249,6 +254,19 @@ class system_monitor extends pts_module_interface
 			if(is_array($this_array) && !empty($this_array[0]))
 			{
 				array_push($device, "GPU");
+				array_push($type, "Usage");
+				array_push($unit, "Percent");
+				array_push($m_array, $this_array);
+				array_push($type_index["USAGE"], count($m_array) - 1);
+			}
+		}
+		if(defined("MONITOR_CPU_USAGE"))
+		{
+			$this_array = self::parse_monitor_log(".s/CPU_USAGE");
+
+			if(is_array($this_array) && !empty($this_array[0]))
+			{
+				array_push($device, "CPU");
 				array_push($type, "Usage");
 				array_push($unit, "Percent");
 				array_push($m_array, $this_array);
@@ -404,7 +422,7 @@ class system_monitor extends pts_module_interface
 					$power = substr($power, 0, $end);
 
 				if(!empty($power))
-					pts_module::save_file(".s/BATTERY_POWER", $temp, true);
+					pts_module::save_file(".s/BATTERY_POWER", $power, true);
 			}
 		}
 		if(defined("MONITOR_CPU_VOLTAGE"))
@@ -412,28 +430,28 @@ class system_monitor extends pts_module_interface
 			$voltage = system_line_voltage("CPU");
 
 			if($voltage != -1)
-				pts_module::save_file(".s/GPU_VOLTAGE", $temp, true);
+				pts_module::save_file(".s/GPU_VOLTAGE", $voltage, true);
 		}
 		if(defined("MONITOR_V3_VOLTAGE"))
 		{
 			$voltage = system_line_voltage("V3");
 
 			if($voltage != -1)
-				pts_module::save_file(".s/V3_VOLTAGE", $temp, true);
+				pts_module::save_file(".s/V3_VOLTAGE", $voltage, true);
 		}
 		if(defined("MONITOR_V5_VOLTAGE"))
 		{
 			$voltage = system_line_voltage("V5");
 
 			if($voltage != -1)
-				pts_module::save_file(".s/V5_VOLTAGE", $temp, true);
+				pts_module::save_file(".s/V5_VOLTAGE", $voltage, true);
 		}
 		if(defined("MONITOR_V12_VOLTAGE"))
 		{
 			$voltage = system_line_voltage("V12");
 
 			if($voltage != -1)
-				pts_module::save_file(".s/V12_VOLTAGE", $temp, true);
+				pts_module::save_file(".s/V12_VOLTAGE", $voltage, true);
 		}
 		if(defined("MONITOR_CPU_FREQ"))
 		{
@@ -447,7 +465,14 @@ class system_monitor extends pts_module_interface
 			$usage = graphics_gpu_usage();
 
 			if($usage != "")
-				pts_module::save_file(".s/GPU_FREQ", $temp, true);
+				pts_module::save_file(".s/GPU_USAGE", $usage, true);
+		}
+		if(defined("MONITOR_CPU_USAGE"))
+		{
+			$usage = current_processor_usage();
+
+			if($usage != -1)
+				pts_module::save_file(".s/CPU_USAGE", $usage, true);
 		}
 	}
 	private function parse_monitor_log($log_file)
@@ -468,7 +493,7 @@ class system_monitor extends pts_module_interface
 	}
 	private function monitor_arguments()
 	{
-		return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.usage");
+		return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.usage", "cpu.usage");
 	}
 }
 

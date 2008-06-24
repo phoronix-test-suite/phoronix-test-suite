@@ -5,3 +5,6 @@
 - Drop pts-functions_monitor.php now that it's all modulized.
 - Drop PTS_MONITOR_DIR environmental variable and pts_save_user_file() function from pts-core
 - Add pts_module object for providing some common functions to use by PTS modules
+- system_monitor: Poll sensors every 30 seconds during testing
+- Add CPU usage monitoring support to pts-core
+- system_monitor: Add cpu.usage to MONITOR, fix some bugs as well

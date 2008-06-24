@@ -186,4 +186,34 @@ function current_processor_frequency($cpu_core = 0)
 
 	return $info;
 }
+function cpu_load_array()
+{
+	$stat = @file_get_contents("/proc/stat");
+	$stat = substr($stat, 0, strpos($stat, "\n"));
+	$stat_break = explode(" ", $stat);
+
+	$load = array();
+	for($i = 1; $i < 6; $i++)
+		array_push($load, $stat_break[$i]);
+
+	return $load;
+}
+function current_processor_usage()
+{
+	$start_load = cpu_load_array();
+	sleep(1);
+	$end_load = cpu_load_array();
+
+	for($i = 0; $i < count($end_load); $i++)
+	{
+		$end_load[$i] -= $start_load[$i];
+	}
+
+	$percent = 100 - (($end_load[(count($end_load) - 1)] * 100) / array_sum($end_load));
+
+	if(!is_numeric($percent) || $percent < 0 || $percent > 100)
+		$percent = -1;
+
+	return pts_trim_double($percent);
+}
 ?>
