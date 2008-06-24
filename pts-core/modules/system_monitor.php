@@ -320,7 +320,7 @@ class system_monitor extends pts_module_interface
 
 				foreach($m_array[$i] as $temp)
 				{
-					if($temp < $low || $low == 0)
+					if($temp < $low || ($low == 0 && $type[$i] <> "Usage"))
 						$low = $temp;
 					else if($temp > $high)
 						$high = $temp;
