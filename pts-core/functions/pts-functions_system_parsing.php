@@ -201,12 +201,12 @@ function read_ati_extension($attribute)
 	else if("Stock3DFrequencies" == $attribute)
 	{
 			$info = shell_exec("aticonfig --pplib-cmd \"get clock\" 2>&1");
-			if(($pos = strpos($info, "Engine")) > 0)
+			if(($pos = strpos($info, "ngine")) > 0)
 			{
-				$core_info = substr($info, strpos($info, "-") + 2);
+				$core_info = substr($info, strpos($info, "-") + 1);
 				$core_info = substr($core_info, 0, strpos($core_info, " "));
 				$mem_info = substr($info, strpos($info, "Memory Clock"));
-				$mem_info = substr($mem_info, strpos($mem_info, "-") + 2);
+				$mem_info = substr($mem_info, strpos($mem_info, "-") + 1);
 				$mem_info = trim(substr($mem_info, 0, strpos($mem_info, " ")));
 				$ati_info = $core_info . "," . $mem_info;
 			}
