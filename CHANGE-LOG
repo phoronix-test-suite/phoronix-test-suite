@@ -8,6 +8,7 @@ Phoronix Test Suite
 - pts_clean_information_string() now uses case-insensitive search
 - Add tremulous test profile for Tremulous open-source game
 - Add tremulous to gaming-free suite
+- Fix for ATI GPU usage monitoring
 
 Phoronix Test Suite 1.0.1
 June 19, 2008
