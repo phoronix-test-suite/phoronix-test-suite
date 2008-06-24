@@ -92,27 +92,32 @@ class pts_module
 	}
 	public static function pts_timed_function($time, $function)
 	{
-		if($time < 5 || $time > 300)
+		if($time < 15 || $time > 300)
 			return;
 
-		$pid = pcntl_fork();
-
-		if($pid != -1)
+		if(function_exists("pcntl_fork"))
 		{
-			if($pid)
+			$pid = pcntl_fork();
+
+			if($pid != -1)
 			{
-				return $pid;
-			}
-			else
-			{
-				while(!defined("PTS_TESTING_DONE") && !defined("PTS_END_TIME") && pts_process_active("phoronix-test-suite"))
+				if($pid)
 				{
-					eval(self::module_name() . "::" . $function . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
-					sleep($time);
+					return $pid;
 				}
-				exit(0);
+				else
+				{
+					while(!defined("PTS_TESTING_DONE") && !defined("PTS_END_TIME") && pts_process_active("phoronix-test-suite"))
+					{
+						eval(self::module_name() . "::" . $function . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+						sleep($time);
+					}
+					exit(0);
+				}
 			}
 		}
+		else
+			echo pts_string_header("NOTICE: php-pcntl must be installed for the " . self::module_name() . " module.");
 	}
 	private static function module_name()
 	{

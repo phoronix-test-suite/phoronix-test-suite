@@ -305,8 +305,11 @@ class pts_Graph
 	protected function render_graph_init()
 	{
 		$this->graph_image = imagecreate($this->graph_attr_width, $this->graph_attr_height);
-		//imageantialias($this->graph_image, true);
+
 		imageinterlace($this->graph_image, true);
+
+		if(function_exists("imageantialias"))
+			imageantialias($this->graph_image, true);
 
 		// Initalize GD Colors
 
@@ -334,7 +337,7 @@ class pts_Graph
 	}
 	protected function render_graph_base()
 	{
-		if(count($this->graph_data_title) > 1)
+		if(count($this->graph_data_title) > 1 || $this->graph_type == "LINE_GRAPH")
 		{
 			$num_key_lines = ceil(count($this->graph_data_title) / 4);
 			$this->graph_top_start = $this->graph_top_start + 8 + ($num_key_lines * 11);
@@ -420,7 +423,7 @@ class pts_Graph
 	}
 	protected function render_graph_key()
 	{
-		if(count($this->graph_data_title) < 2)
+		if(count($this->graph_data_title) < 2 && $this->graph_type != "LINE_GRAPH")
 			return;
 
 		$key_counter = 0;

@@ -112,7 +112,7 @@ class system_monitor extends pts_module_interface
 			pts_module::save_file(".s/CPU_USAGE");
 		}
 
-		pts_module::pts_timed_function(5, "pts_monitor_update");
+		pts_module::pts_timed_function(15, "pts_monitor_update");
 	}
 	public static function __shutdown($obj = NULL)
 	{

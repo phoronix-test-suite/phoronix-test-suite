@@ -9,3 +9,6 @@
 - Add CPU usage monitoring support to pts-core
 - system_monitor: Add cpu.usage to MONITOR, fix some bugs as well
 - pts_LineGraph: Don't display the pointers if there are too many points on the graph
+- pts_Graph: Always show key/legend if it's a single-type line graph
+- pts_Graph: Use image antialiasing if it's available on the system
+- pts_module: If pcntl isn't present, don't thread and warn the user
