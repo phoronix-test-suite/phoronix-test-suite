@@ -16,7 +16,7 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This is a benchmark of Nexuiz, a popular open-source first-person shooter. Thi sgame uses the DarkPlaces engine, which is a largely modified version of the Quake engine with extra features such as High Dynamic Range rendering and OpenGL 2.0 shaders.</Description>
+		<Description>This is a benchmark of Nexuiz, a popular open-source first-person shooter. This game uses the DarkPlaces engine, which is a largely modified version of the Quake engine with extra features such as High Dynamic Range rendering and OpenGL 2.0 shaders.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>
