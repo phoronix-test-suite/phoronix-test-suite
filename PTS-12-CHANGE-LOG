@@ -12,3 +12,4 @@
 - pts_Graph: Always show key/legend if it's a single-type line graph
 - pts_Graph: Use image antialiasing if it's available on the system
 - pts_module: If pcntl isn't present, don't thread and warn the user
+- system_monitor: Add gpu.freq to MONITOR

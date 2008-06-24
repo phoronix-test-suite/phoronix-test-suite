@@ -101,6 +101,11 @@ class system_monitor extends pts_module_interface
 			define("MONITOR_CPU_FREQ", 1);
 			pts_module::save_file(".s/CPU_FREQ");
 		}
+		if(in_array("gpu.freq", $to_show) || $monitor_freq)
+		{
+			define("MONITOR_GPU_FREQ", 1);
+			pts_module::save_file(".s/GPU_FREQ");
+		}
 		if(in_array("gpu.usage", $to_show) || $monitor_usage)
 		{
 			define("MONITOR_GPU_USAGE", 1);
@@ -241,6 +246,19 @@ class system_monitor extends pts_module_interface
 			if(is_array($this_array) && !empty($this_array[0]))
 			{
 				array_push($device, "CPU");
+				array_push($type, "Frequency");
+				array_push($unit, "MHz");
+				array_push($m_array, $this_array);
+				array_push($type_index["FREQUENCY"], count($m_array) - 1);
+			}
+		}
+		if(defined("MONITOR_GPU_FREQ"))
+		{
+			$this_array = self::parse_monitor_log(".s/GPU_FREQ");
+
+			if(is_array($this_array) && !empty($this_array[0]))
+			{
+				array_push($device, "GPU");
 				array_push($type, "Frequency");
 				array_push($unit, "MHz");
 				array_push($m_array, $this_array);
@@ -460,6 +478,13 @@ class system_monitor extends pts_module_interface
 			if($speed > 0)
 				pts_module::save_file(".s/CPU_FREQ", $speed, true);
 		}
+		if(defined("MONITOR_GPU_FREQ"))
+		{
+			$speed = graphics_processor_frequency();
+
+			if(!empty($speed[0]))
+				pts_module::save_file(".s/GPU_FREQ", $speed[0], true);
+		}
 		if(defined("MONITOR_GPU_USAGE"))
 		{
 			$usage = graphics_gpu_usage();
@@ -493,7 +518,7 @@ class system_monitor extends pts_module_interface
 	}
 	private function monitor_arguments()
 	{
-		return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.usage", "cpu.usage");
+		return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.freq", "gpu.usage", "cpu.usage");
 	}
 }
 
