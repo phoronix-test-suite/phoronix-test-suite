@@ -191,7 +191,6 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
 		$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 		$proportion = $xml_parser->getXMLValue(P_TEST_PROPORTION);
-		$default_arguments = $xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
 
 		if(empty($description))
 		{
@@ -220,13 +219,14 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		}
 
 		unset($xml_parser);
-		$arguments_string = trim($default_arguments . " " . $arguments);
+		$pts_vars = pts_env_variables();
 
-		foreach(pts_env_variables() as $key => $value)
+		foreach($pts_vars as $key => $value)
 			$description = str_replace("$" . $key, $value, $description);
 
-		foreach(pts_env_variables() as $key => $value)
-			$arguments_string = str_replace("$" . $key, $value, $arguments_string);
+		foreach($pts_vars as $key => $value)
+			if($key != "VIDEO_MEMORY" && $key != "NUM_CPU_CORES" && $key != "NUM_CPU_JOBS")
+				$arguments = str_replace("$" . $key, $value, $arguments);
 
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $benchmark_title);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $benchmark_version);
@@ -235,7 +235,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $proportion);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result_format);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $benchmark);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $arguments_string);
+		$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $arguments);
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_result, 5);
 
