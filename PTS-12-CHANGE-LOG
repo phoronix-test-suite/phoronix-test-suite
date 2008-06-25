@@ -14,3 +14,4 @@
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - system_monitor: Add gpu.freq to MONITOR
 - Fixes for PTS results merging and recording of arguments
+- Clear up test file versus unique identifier / test run text

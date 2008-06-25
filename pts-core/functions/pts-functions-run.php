@@ -44,7 +44,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 			$show_identifiers = array_unique($show_identifiers);
 			sort($show_identifiers);
 
-			echo "\nCurrent Identifiers:\n";
+			echo "\nCurrent Test Runs:\n";
 			foreach($show_identifiers as $identifier)
 				echo "- " . $identifier . "\n";
 			echo "\n";
@@ -52,7 +52,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 
 		do
 		{
-			echo "Enter a unique identifier for distinguishing this series of tests: ";
+			echo "Enter a unique name for this test run: ";
 			$RESULTS_IDENTIFIER = trim(str_replace(array("/"), "", fgets(STDIN)));
 		}
 		while(empty($RESULTS_IDENTIFIER) || in_array($RESULTS_IDENTIFIER, $show_identifiers));
