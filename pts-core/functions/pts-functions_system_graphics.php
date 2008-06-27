@@ -66,9 +66,6 @@ function graphics_antialiasing_level()
 			case 5:
 				$aa_level = "4x Bilinear";
 				break;
-			case 5:
-				$aa_level = "4x Bilinear";
-				break;
 			case 7:
 				$aa_level = "8x";
 				break;
@@ -110,6 +107,10 @@ function graphics_anisotropic_level()
 		}
 	}
 	return $af_level;
+}
+function set_nvidia_extension($attribute, $value)
+{
+	$info = shell_exec("nvidia-settings --assign " . $attribute . "=" . $value);
 }
 function xrandr_screen_resolution()
 {
