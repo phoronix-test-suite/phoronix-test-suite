@@ -11,6 +11,7 @@ Phoronix Test Suite
 - Fix for ATI GPU usage monitoring
 - Add pcqs-processor suite
 - Update httpd 2.2.8 download link in build-apache
+- Add urbanterror test profile for Urban Terror FPS game
 
 Phoronix Test Suite 1.0.1
 June 19, 2008
@@ -443,5 +444,4 @@ Phoronix Test Suite 0.0.2
 Phoronix Test Suite 0.0.1
 
 - Initial Private Release
-
 
