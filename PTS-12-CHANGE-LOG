@@ -15,3 +15,4 @@
 - system_monitor: Add gpu.freq to MONITOR
 - Fixes for PTS results merging and recording of arguments
 - Clear up test file versus unique identifier / test run text
+- Add graphics_override module for having FORCE_AA and FORCE_AF options for overriding anti-aliasing and anisotropic filtering levels with supported drivers

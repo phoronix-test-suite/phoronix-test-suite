@@ -24,7 +24,7 @@
 
 function pts_auto_modules_ready(&$modules_list)
 {
-	$modules_assoc = array("MONITOR" => "system_monitor");
+	$modules_assoc = array("MONITOR" => "system_monitor", "FORCE_AA" => "graphics_override", "FORCE_AF" => "graphics_override");
 
 	foreach($modules_assoc as $env_var => $module)
 		if(!in_array($module, $modules_list) && ($e = getenv($env_var)) != FALSE && !empty($e))
