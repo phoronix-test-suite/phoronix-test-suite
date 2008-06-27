@@ -10,6 +10,7 @@ Phoronix Test Suite
 - Add tremulous to gaming-free suite
 - Fix for ATI GPU usage monitoring
 - Add pcqs-processor suite
+- Update httpd 2.2.8 download link in build-apache
 
 Phoronix Test Suite 1.0.1
 June 19, 2008

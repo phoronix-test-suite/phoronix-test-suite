@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.apache.org/dist/httpd/httpd-2.2.8.tar.gz, http://www.alliedquotes.com/mirrors/apache/httpd/httpd-2.2.8.tar.gz, http://apache.oregonstate.edu/httpd/httpd-2.2.8.tar.gz, http://apache.mirror.facebook.com/httpd/httpd-2.2.8.tar.gz</URL>
+			<URL>http://archive.apache.org/dist/httpd/httpd-2.2.8.tar.gz</URL>
 			<MD5>39a755eb0f584c279336387b321e3dfc</MD5>
 		</Package>
 	</Downloads>
