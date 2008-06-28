@@ -101,9 +101,7 @@ $PTS_GLOBAL_ID = 1;
 
 $PTS_MODULES = array();
 $PTS_MODULE_CURRENT = FALSE;
-pts_load_modules($PTS_MODULES);
-pts_module_process("__startup");
-register_shutdown_function("pts_module_process", "__shutdown");
+pts_module_start_process($PTS_MODULES);
 
 // Phoronix Test Suite - Functions
 function pts_benchmark_names_to_array()

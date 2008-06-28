@@ -22,7 +22,13 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_auto_modules_ready(&$modules_list)
+function pts_module_start_process(&$PTS_MODULES)
+{
+	pts_load_modules($PTS_MODULES);
+	pts_module_process("__startup");
+	register_shutdown_function("pts_module_process", "__shutdown");
+}
+function pts_auto_detect_modules(&$modules_list)
 {
 	$modules_assoc = array("MONITOR" => "system_monitor", "FORCE_AA" => "graphics_override", "FORCE_AF" => "graphics_override");
 
@@ -37,8 +43,13 @@ function pts_auto_modules_ready(&$modules_list)
 }
 function pts_load_modules(&$modules_list)
 {
-	pts_auto_modules_ready($modules_list);
-	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
+	// Check for modules to load manually in PTS_MODULES
+	if(($load_modules = getenv("PTS_MODULES")) !== FALSE)
+		foreach(explode(",", $load_modules) as $module)
+			array_push($modules_list, trim($module));
+
+	// Detect modules to load automatically
+	pts_auto_detect_modules($modules_list);
 
 	// Clean-up modules list
 	array_unique($modules_list);
@@ -46,9 +57,12 @@ function pts_load_modules(&$modules_list)
 		if(!is_file(MODULE_DIR . $modules_list[$i] . ".php"))
 			unset($modules_list[$i]);
 
+	// Reset counter
+	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
+
 	// Load the modules
 	foreach($modules_list as $module)
-		include(MODULE_DIR . $module . ".php");
+		@include(MODULE_DIR . $module . ".php");
 }
 function pts_module_process($process)
 {
