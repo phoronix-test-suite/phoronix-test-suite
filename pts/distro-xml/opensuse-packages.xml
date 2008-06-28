@@ -32,8 +32,8 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc make</PackageName>
-			<FileCheck>/usr/bin/gcc, /usr/bin/make</FileCheck>
+			<PackageName>gcc gcc-c++ make autoconf</PackageName>
+			<FileCheck>/usr/bin/gcc, /usr/bin/g++, /usr/bin/make, /usr/bin/autoconf</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
