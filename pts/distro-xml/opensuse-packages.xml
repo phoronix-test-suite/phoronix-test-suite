@@ -32,8 +32,8 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc</PackageName>
-			<FileCheck>/usr/bin/gcc</FileCheck>
+			<PackageName>gcc make</PackageName>
+			<FileCheck>/usr/bin/gcc, /usr/bin/make</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
@@ -67,7 +67,7 @@
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
-			<PackageName>portaudio-devel-19</PackageName>
+			<PackageName>portaudio-devel</PackageName>
 			<FileCheck>/usr/include/portaudio.h</FileCheck>
 		</Package>
 		<Package>
