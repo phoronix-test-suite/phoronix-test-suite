@@ -112,6 +112,15 @@ function set_nvidia_extension($attribute, $value)
 {
 	$info = shell_exec("nvidia-settings --assign " . $attribute . "=" . $value);
 }
+function set_amd_pcsdb($attribute, $value)
+{
+	if(!empty($value))
+	{
+		$DISPLAY = substr(getenv("DISPLAY"), 1, 1);
+		
+		$info = shell_exec("DISPLAY=:$DISPLAY aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
+	}
+}
 function xrandr_screen_resolution()
 {
 	$info = shell_exec("xrandr 2>&1");

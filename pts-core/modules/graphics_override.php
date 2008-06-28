@@ -31,8 +31,8 @@ class graphics_override extends pts_module_interface
 	static $graphics_driver = FALSE;
 	static $preset_aa = FALSE;
 	static $preset_af = FALSE;
-	static $preset_aa_app_control = FALSE;
-	static $preset_af_app_control = FALSE;
+	static $preset_aa_control = FALSE;
+	static $preset_af_control = FALSE;
 
 	static $supported_aa_levels = array(0, 2, 4, 8, 16);
 	static $supported_af_levels = array(0, 2, 4, 8, 16);
@@ -62,7 +62,7 @@ class graphics_override extends pts_module_interface
 				if(self::$graphics_driver == "NVIDIA")
 				{
 					self::$preset_aa = read_nvidia_extension("FSAA");
-					self::$preset_aa_app_control = read_nvidia_extension("FSAAAppControlled");
+					self::$preset_aa_control = read_nvidia_extension("FSAAAppControlled");
 
 					switch($force_aa)
 					{
@@ -92,7 +92,7 @@ class graphics_override extends pts_module_interface
 				if(self::$graphics_driver == "NVIDIA")
 				{
 					self::$preset_af = read_nvidia_extension("LogAniso");
-					self::$preset_af_app_control = read_nvidia_extension("LogAnisoAppControlled");
+					self::$preset_af_control = read_nvidia_extension("LogAnisoAppControlled");
 
 					switch($force_af)
 					{
@@ -125,12 +125,12 @@ class graphics_override extends pts_module_interface
 			if(self::$preset_aa !== FALSE)
 			{
 				set_nvidia_extension("FSAA", self::$preset_aa);
-				set_nvidia_extension("FSAAAppControlled", self::$preset_aa_app_control);
+				set_nvidia_extension("FSAAAppControlled", self::$preset_aa_control);
 			}
 			if(self::$preset_af !== FALSE)
 			{
 				set_nvidia_extension("LogAniso", self::$preset_af);
-				set_nvidia_extension("LogAnisoAppControlled", self::$preset_af_app_control);
+				set_nvidia_extension("LogAnisoAppControlled", self::$preset_af_control);
 			}
 		}
 

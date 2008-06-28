@@ -183,6 +183,19 @@ function read_nvidia_extension($attribute)
 
 	return $nv_info;
 }
+function read_amd_pcsdb($attribute)
+{
+	$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
+	$ati_info = "";
+
+	if(($pos = strpos($info, "):")) > 0)
+	{
+		$ati_info = substr($info, $pos + 3);
+		$ati_info = substr($ati_info, 0, strpos($ati_info, " "));
+	}
+
+	return $ati_info;
+}
 function read_ati_extension($attribute)
 {
 	$ati_info = "";
