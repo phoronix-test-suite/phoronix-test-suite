@@ -40,7 +40,7 @@ cp -r * $INSTALL_PREFIX/share/doc/phoronix-test-suite/
 cd ..
 rm -rf $INSTALL_PREFIX/share/doc/phoronix-test-suite/man-pages/
 
-cp documentation/man-pages/*.1.gz $INSTALL_PREFIX/share/man/man1/  
+cp documentation/man-pages/*.1 $INSTALL_PREFIX/share/man/man1/  
 
 cp -r pts/ $INSTALL_PREFIX/share/phoronix-test-suite/
 rm -f $INSTALL_PREFIX/share/phoronix-test-suite/pts/etc/scripts/package-build-*
