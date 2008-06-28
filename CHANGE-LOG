@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 1.0.2
+June 28, 2008
 
 - Add man page for phoronix-test-suite. Man pages found in documentation/man-pages/
 - Add GPLv3 header to some source files missing the license
