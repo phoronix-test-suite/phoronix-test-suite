@@ -24,7 +24,7 @@
 class graphics_override extends pts_module_interface
 {
 	const module_name = "Graphics Override";
-	const module_version = "1.0.0";
+	const module_version = "1.0.1";
 	const module_description = "This module allows you to override some graphics rendering settings for the ATI and NVIDIA drivers while running the Phoronix Test Suite.";
 	const module_author = "Michael Larabel";
 
@@ -54,109 +54,104 @@ class graphics_override extends pts_module_interface
 		$force_aa = trim(getenv("FORCE_AA"));
 		$force_af = trim(getenv("FORCE_AF"));
 
-		if($force_aa !== FALSE)
+		if($force_aa !== FALSE && in_array($force_aa, self::$supported_aa_levels))
 		{
-			if(in_array($force_aa, self::$supported_aa_levels))
+			// First backup any existing override, then set the new value
+			if(self::$graphics_driver == "NVIDIA")
 			{
-				// First backup any existing override, then set the new value
-				if(self::$graphics_driver == "NVIDIA")
-				{
-					self::$preset_aa = read_nvidia_extension("FSAA");
-					self::$preset_aa_control = read_nvidia_extension("FSAAAppControlled");
+				self::$preset_aa = read_nvidia_extension("FSAA");
+				self::$preset_aa_control = read_nvidia_extension("FSAAAppControlled");
 
-					switch($force_aa)
-					{
-						case 2:
-							$nvidia_aa = 2;
-							break;
-						case 4:
-							$nvidia_aa = 5;
-							break;
-						case 8:
-							$nvidia_aa = 7;
-							break;
-						case 16:
-							$nvidia_aa = 8;
-							break;
-					}
-					set_nvidia_extension("FSAA", $nvidia_aa);
-					set_nvidia_extension("FSAAAppControlled", 0);
-				}
-				else if(self::$graphics_driver == "fglrx")
+				switch($force_aa)
 				{
-					self::$preset_aa = read_amd_pcsdb("OpenGL,AntiAliasSamples");
-					self::$preset_aa_control = read_amd_pcsdb("OpenGL,AAF");
-
-					switch($force_aa)
-					{
-						case 2:
-							$ati_aa = "0x00000002";
-							break;
-						case 4:
-							$ati_aa = "0x00000004";
-							break;
-						case 8:
-							$ati_aa = "0x00000008";
-							break;
-						case 16:
-							echo "\nThe ATI fglrx driver currently doesn't support 16x AA! Defaulting to 8x AA!\n";
-							$ati_aa = "0x00000008";
-							break;
-					}
-					set_amd_pcsdb("OpenGL,AntiAliasSamples", $ati_aa);
-					set_amd_pcsdb("OpenGL,AAF", "0x00000000");
+					case 2:
+						$nvidia_aa = 2;
+						break;
+					case 4:
+						$nvidia_aa = 5;
+						break;
+					case 8:
+						$nvidia_aa = 7;
+						break;
+					case 16:
+						$nvidia_aa = 8;
+						break;
 				}
+				set_nvidia_extension("FSAA", $nvidia_aa);
+				set_nvidia_extension("FSAAAppControlled", 0);
+			}
+			else if(self::$graphics_driver == "fglrx")
+			{
+				self::$preset_aa = read_amd_pcsdb("OpenGL,AntiAliasSamples");
+				self::$preset_aa_control = read_amd_pcsdb("OpenGL,AAF");
+
+				switch($force_aa)
+				{
+					case 2:
+						$ati_aa = "0x00000002";
+						break;
+					case 4:
+						$ati_aa = "0x00000004";
+						break;
+					case 8:
+						$ati_aa = "0x00000008";
+						break;
+					case 16:
+						echo "\nThe ATI fglrx driver currently doesn't support 16x AA! Defaulting to 8x AA!\n";
+						$ati_aa = "0x00000008";
+						break;
+				}
+				set_amd_pcsdb("OpenGL,AntiAliasSamples", $ati_aa);
+				set_amd_pcsdb("OpenGL,AAF", "0x00000000");
 			}
 		}
-		if($force_af !== FALSE)
+
+		if($force_af !== FALSE && in_array($force_af, self::$supported_af_levels))
 		{
-			if(in_array($force_af, self::$supported_af_levels))
+			// First backup any existing override, then set the new value
+			if(self::$graphics_driver == "NVIDIA")
 			{
-				// First backup any existing override, then set the new value
-				if(self::$graphics_driver == "NVIDIA")
-				{
-					self::$preset_af = read_nvidia_extension("LogAniso");
-					self::$preset_af_control = read_nvidia_extension("LogAnisoAppControlled");
+				self::$preset_af = read_nvidia_extension("LogAniso");
+				self::$preset_af_control = read_nvidia_extension("LogAnisoAppControlled");
 
-					switch($force_af)
-					{
-						case 2:
-							$nvidia_af = 1;
-							break;
-						case 4:
-							$nvidia_af = 2;
-							break;
-						case 8:
-							$nvidia_af = 3;
-							break;
-						case 16:
-							$nvidia_af = 4;
-							break;
-					}
-					set_nvidia_extension("LogAniso", $nvidia_af);
-					set_nvidia_extension("LogAnisoAppControlled", 0);
-				}
-				else if(self::$graphics_driver == "fglrx")
+				switch($force_af)
 				{
-					self::$preset_af = read_amd_pcsdb("OpenGL,AnisoDegree");
-
-					switch($force_af)
-					{
-						case 2:
-							$ati_af = "0x00000002";
-							break;
-						case 4:
-							$ati_af = "0x00000004";
-							break;
-						case 8:
-							$ati_af = "0x00000008";
-							break;
-						case 16:
-							$ati_af = "0x00000010";
-							break;
-					}
-					set_amd_pcsdb("OpenGL,AnisoDegree", $ati_af);
+					case 2:
+						$nvidia_af = 1;
+						break;
+					case 4:
+						$nvidia_af = 2;
+						break;
+					case 8:
+						$nvidia_af = 3;
+						break;
+					case 16:
+						$nvidia_af = 4;
+						break;
 				}
+				set_nvidia_extension("LogAniso", $nvidia_af);
+				set_nvidia_extension("LogAnisoAppControlled", 0);
+			}
+			else if(self::$graphics_driver == "fglrx")
+			{
+				self::$preset_af = read_amd_pcsdb("OpenGL,AnisoDegree");
+
+				switch($force_af)
+				{
+					case 2:
+						$ati_af = "0x00000002";
+						break;
+					case 4:
+						$ati_af = "0x00000004";
+						break;
+					case 8:
+						$ati_af = "0x00000008";
+						break;
+					case 16:
+						$ati_af = "0x00000010";
+						break;
+				}
+				set_amd_pcsdb("OpenGL,AnisoDegree", $ati_af);
 			}
 		}
 	}
@@ -190,7 +185,6 @@ class graphics_override extends pts_module_interface
 				set_amd_pcsdb("OpenGL,AnisoDegree", self::$preset_af);
 			}
 		}
-
 	}
 }
 
