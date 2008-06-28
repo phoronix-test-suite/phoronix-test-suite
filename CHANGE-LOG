@@ -7,12 +7,13 @@ Phoronix Test Suite
 - Add AUTHORS file with contributors
 - pts_clean_information_string() now uses case-insensitive search
 - Add tremulous test profile for Tremulous open-source game
-- Add tremulous to gaming-free suite
 - Fix for ATI GPU usage monitoring
 - Add pcqs-processor suite
 - Update httpd 2.2.8 download link in build-apache
 - Add urbanterror test profile for Urban Terror FPS game
 - Add ioquake3-games suite as a collection for all ioquake3 engine games
+- Add tremulous, urbanterror to gaming-free suite
+- Add Wolfenstein: Enemy Territory test profile (named et)
 
 Phoronix Test Suite 1.0.1
 June 19, 2008
