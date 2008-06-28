@@ -14,6 +14,7 @@ Phoronix Test Suite
 - Add ioquake3-games suite as a collection for all ioquake3 engine games
 - Add tremulous, urbanterror to gaming-free suite
 - Add Wolfenstein: Enemy Territory test profile (named et)
+- Add OpenSuSE External Dependencies support
 
 Phoronix Test Suite 1.0.1
 June 19, 2008
