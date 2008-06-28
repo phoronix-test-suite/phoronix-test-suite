@@ -17,18 +17,6 @@
 		<Description>1024 x 768</Description>
 	</RunTest>
 	<RunTest>
-		<Test>tremulous</Test>
-		<Arguments>+set r_customwidth 1024 +set r_customheight 768</Arguments>
-		<Description>1024 x 768</Description>
-	</RunTest>
-	<RunTest>
-		<Test>openarena</Test>
-		<Arguments>+set r_customWidth 1024 +set r_customHeight 768</Arguments>
-		<Description>1024 x 768</Description>
-	</RunTest>
-	<RunTest>
-		<Test>urbanterror</Test>
-		<Arguments>+set r_customwidth 1024 +set r_customheight 768</Arguments>
-		<Description>1024 x 768</Description>
+		<Test>ioquake3-games</Test>
 	</RunTest>
 </PhoronixTestSuite>

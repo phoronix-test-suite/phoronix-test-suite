@@ -1,0 +1,24 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<Title>Games Using The ioquake3 Engine</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The gaming test suite is made up of all games that use ioquake3, which is a GPL version of the id Software Quake 3 (id Tech 3) software engine.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>tremulous</Test>
+		<Arguments>+set r_customwidth 1024 +set r_customheight 768</Arguments>
+		<Description>1024 x 768</Description>
+	</RunTest>
+	<RunTest>
+		<Test>openarena</Test>
+		<Arguments>+set r_customWidth 1024 +set r_customHeight 768</Arguments>
+		<Description>1024 x 768</Description>
+	</RunTest>
+	<RunTest>
+		<Test>urbanterror</Test>
+		<Arguments>+set r_customwidth 1024 +set r_customheight 768</Arguments>
+		<Description>1024 x 768</Description>
+	</RunTest>
+</PhoronixTestSuite>

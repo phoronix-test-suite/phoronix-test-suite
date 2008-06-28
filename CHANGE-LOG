@@ -12,6 +12,7 @@ Phoronix Test Suite
 - Add pcqs-processor suite
 - Update httpd 2.2.8 download link in build-apache
 - Add urbanterror test profile for Urban Terror FPS game
+- Add ioquake3-games suite as a collection for all ioquake3 engine games
 
 Phoronix Test Suite 1.0.1
 June 19, 2008
