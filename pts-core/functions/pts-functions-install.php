@@ -395,7 +395,7 @@ function pts_install_packages_on_distribution_process($install_objects)
 		if(is_array($install_objects))
 			$install_objects = implode(" ", $install_objects);
 
-		$distribution = strtolower(os_vendor());
+		$distribution = pts_vendor_identifier();
 
 		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh") || is_link(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
 		{
@@ -423,7 +423,7 @@ function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 	for($i = 0; $i < count($dependencies); $i++)
 		$dependencies[$i] = trim($dependencies[$i]);
 
-	$vendor = strtolower(os_vendor());
+	$vendor = pts_vendor_identifier();
 
 	if(!pts_package_generic_to_distro_name($INSTALL_OBJ, $dependencies))
 	{
@@ -439,7 +439,7 @@ function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 }
 function pts_package_generic_to_distro_name(&$package_install_array, $generic_names)
 {
-	$vendor = strtolower(os_vendor());
+	$vendor = pts_vendor_identifier();
 	$generated = false;
 
 	if(is_file(XML_DISTRO_DIR . $vendor . "-packages.xml"))

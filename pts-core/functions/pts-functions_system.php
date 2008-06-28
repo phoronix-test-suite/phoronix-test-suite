@@ -194,6 +194,20 @@ function operating_system_release()
 
 	return $os;
 }
+function pts_vendor_identifier()
+{
+	$vendor = os_vendor();
+
+	if($vendor == "Unknown")
+	{
+		$vendor = operating_system_release();
+
+		if(($spos = strpos($vendor, " ")) > 1)
+			$vendor = substr($vendor, 0, $spos);
+	}
+
+	return strtolower($vendor);
+}
 function system_temperature()
 {
 	$temp_c = read_sensors("Sys Temp");

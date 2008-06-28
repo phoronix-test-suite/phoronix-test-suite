@@ -15,6 +15,7 @@ Phoronix Test Suite
 - Add tremulous, urbanterror to gaming-free suite
 - Add Wolfenstein: Enemy Territory test profile (named et)
 - Add OpenSuSE External Dependencies support
+- Support PTS External Dependencies on non-LSB distributions
 
 Phoronix Test Suite 1.0.1
 June 19, 2008
