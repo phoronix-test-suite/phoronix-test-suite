@@ -43,8 +43,8 @@ class graphics_override extends pts_module_interface
 
 		if(strpos($opengl_driver, "NVIDIA") != FALSE)
 			self::$graphics_driver = "NVIDIA";
-		//else if(strpos($opengl_driver, "fglrx") != FALSE)
-		//	self::$graphics_driver = "fglrx";
+		else if(strpos($opengl_driver, "fglrx") != FALSE)
+			self::$graphics_driver = "fglrx";
 		else
 			echo "\nNo supported driver found for graphics_override module!\n";
 
@@ -82,6 +82,30 @@ class graphics_override extends pts_module_interface
 					set_nvidia_extension("FSAA", $nvidia_aa);
 					set_nvidia_extension("FSAAAppControlled", 0);
 				}
+				else if(self::$graphics_driver == "fglrx")
+				{
+					self::$preset_aa = read_amd_pcsdb("OpenGL,AntiAliasSamples");
+					self::$preset_aa_control = read_amd_pcsdb("OpenGL,AAF");
+
+					switch($force_aa)
+					{
+						case 2:
+							$ati_aa = "0x00000002";
+							break;
+						case 4:
+							$ati_aa = "0x00000004";
+							break;
+						case 8:
+							$ati_aa = "0x00000008";
+							break;
+						case 16:
+							echo "\nThe ATI fglrx driver currently doesn't support 16x AA! Defaulting to 8x AA!\n";
+							$ati_aa = "0x00000008";
+							break;
+					}
+					set_amd_pcsdb("OpenGL,AntiAliasSamples", $ati_aa);
+					set_amd_pcsdb("OpenGL,AAF", "0x00000000");
+				}
 			}
 		}
 		if($force_af !== FALSE)
@@ -112,6 +136,27 @@ class graphics_override extends pts_module_interface
 					set_nvidia_extension("LogAniso", $nvidia_af);
 					set_nvidia_extension("LogAnisoAppControlled", 0);
 				}
+				else if(self::$graphics_driver == "fglrx")
+				{
+					self::$preset_af = read_amd_pcsdb("OpenGL,AnisoDegree");
+
+					switch($force_af)
+					{
+						case 2:
+							$ati_af = "0x00000002";
+							break;
+						case 4:
+							$ati_af = "0x00000004";
+							break;
+						case 8:
+							$ati_af = "0x00000008";
+							break;
+						case 16:
+							$ati_af = "0x00000010";
+							break;
+					}
+					set_amd_pcsdb("OpenGL,AnisoDegree", $ati_af);
+				}
 			}
 		}
 	}
@@ -131,6 +176,18 @@ class graphics_override extends pts_module_interface
 			{
 				set_nvidia_extension("LogAniso", self::$preset_af);
 				set_nvidia_extension("LogAnisoAppControlled", self::$preset_af_control);
+			}
+		}
+		else if(self::$graphics_driver == "fglrx")
+		{
+			if(self::$preset_aa !== FALSE)
+			{
+				set_amd_pcsdb("OpenGL,AntiAliasSamples", self::$preset_aa);
+				set_amd_pcsdb("OpenGL,AAF", self::$preset_aa_control);
+			}
+			if(self::$preset_af !== FALSE)
+			{
+				set_amd_pcsdb("OpenGL,AnisoDegree", self::$preset_af);
 			}
 		}
 
