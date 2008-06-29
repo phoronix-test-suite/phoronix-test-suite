@@ -27,6 +27,7 @@ require("pts-core/functions/pts-functions-merge.php");
 
 $TO_RUN = strtolower($argv[1]);
 $TO_RUN_TYPE = pts_test_type($TO_RUN);
+$MODULE_STORE = implode(";", $GLOBALS["PTS_MODULE_VAR_STORE"]);
 $BENCHMARK_RAN = false;
 
 if(isset($argv[2]) && $argv[2] == "BATCH")
@@ -145,7 +146,6 @@ if($SAVE_RESULTS)
 }
 
 pts_disable_screensaver(); // Kill the screensaver
-pts_module_process("__pre_run_process");
 
 if($TO_RUN_TYPE == "BENCHMARK")
 {
@@ -301,6 +301,7 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 	$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $TO_RUN . "/composite.xml"));
 	$CUSTOM_TITLE = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 	$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
+	$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
 	$test_version = $xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
 	$test_type = $xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
 	$test_maintainer = $xml_parser->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
@@ -309,6 +310,7 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 	$arguments_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 	unset($xml_parser);
 
+	pts_module_process_extensions($test_extensions);
 	pts_recurse_call_benchmark($suite_benchmarks, $arguments, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $arguments_description);
 }
 else
@@ -374,6 +376,7 @@ if($SAVE_RESULTS)
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_MAINTAINER, $id, $test_maintainer);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $MODULE_STORE);
 
 	if($BENCHMARK_RAN)
 	{

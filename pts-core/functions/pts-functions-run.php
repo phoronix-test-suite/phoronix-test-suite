@@ -149,6 +149,12 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 }
 function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
 {
+	if(!defined("PTS_RECURSE_CALL"))
+	{
+		pts_module_process("__pre_run_process");
+		define("PTS_RECURSE_CALL", 1);
+	}
+
 	for($i = 0; $i < count($benchmarks_array); $i++)
 	{
 		$test_type = pts_test_type($benchmarks_array[$i]);

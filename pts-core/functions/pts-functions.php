@@ -98,10 +98,8 @@ register_shutdown_function("pts_shutdown");
 $PTS_GLOBAL_ID = 1;
 
 // PTS Modules Support
-
-$PTS_MODULES = array();
-$PTS_MODULE_CURRENT = FALSE;
-pts_module_start_process($PTS_MODULES);
+if(function_exists("pts_module_start_process"))
+	pts_module_start_process();
 
 // Phoronix Test Suite - Functions
 function pts_benchmark_names_to_array()

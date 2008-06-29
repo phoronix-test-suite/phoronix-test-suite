@@ -17,3 +17,4 @@
 - Clear up test file versus unique identifier / test run text
 - Add graphics_override module for having FORCE_AA and FORCE_AF options for overriding anti-aliasing and anisotropic filtering levels with supported drivers
 - Allow support for loading modules manually by setting each module name in the PTS_MODULES environmental variable and separating multiple modules via comma
+- Add Extensions tag to results file

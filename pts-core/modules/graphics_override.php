@@ -24,7 +24,7 @@
 class graphics_override extends pts_module_interface
 {
 	const module_name = "Graphics Override";
-	const module_version = "1.0.1";
+	const module_version = "1.0.2";
 	const module_description = "This module allows you to override some graphics rendering settings for the ATI and NVIDIA drivers while running the Phoronix Test Suite.";
 	const module_author = "Michael Larabel";
 
