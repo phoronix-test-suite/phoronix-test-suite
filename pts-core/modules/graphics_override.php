@@ -157,7 +157,7 @@ class graphics_override extends pts_module_interface
 			}
 		}
 	}
-	public static function __post_run_process()
+	public static function __shutdown()
 	{
 		if(self::$graphics_driver == FALSE)
 			return; // Not using a supported graphics driver

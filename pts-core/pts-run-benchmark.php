@@ -318,6 +318,7 @@ else
 
 //pts_beep(2);
 define("PTS_TESTING_DONE", 1);
+pts_module_process("__post_run_process");
 
 if($SAVE_RESULTS)
 {
@@ -355,8 +356,6 @@ if($SAVE_RESULTS)
 		if(!empty($aa_level) && !empty($af_level))
 			$test_notes .= " \nAntialiasing: $aa_level Anisotropic Filtering: $af_level.";
 	}
-
-	pts_module_process("__post_run_process");
 
 	$id = pts_request_new_id();
 	$RESULTS->setXslBinding("pts-results-viewer.xsl");
@@ -409,10 +408,6 @@ if($SAVE_RESULTS)
 		}
 		echo "\n";
 	}
-}
-else
-{
-	pts_module_process("__post_run_process");
 }
 
 ?>
