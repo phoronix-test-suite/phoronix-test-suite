@@ -26,11 +26,40 @@
 
 class tandem_XmlReader
 {
-	var $XML_DATA;
+	var $XML_DATA = "";
+	var $XML_FILE_TIME = NULL;
+	var $XML_FILE_NAME = NULL;
+
+	var $XML_CACHE_FILE = FALSE;
+	var $XML_CACHE_TAGS = TRUE;
 
 	function __construct($XML)
 	{
-		$this->XML_DATA = $XML;
+		if(is_file($XML))
+		{
+			// If you're going to be banging XML files hard through the course of the script, you'll want to flush the PHP file cache
+			// clearstatcache();
+
+			$this->XML_FILE_TIME = filemtime($XML);
+			$this->XML_FILE_NAME = $XML;
+
+			if($this->XML_CACHE_FILE == TRUE && isset($GLOBALS["XML_CACHE"]["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME]))
+				$this->XML_DATA = $GLOBALS["XML_CACHE"]["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME];
+
+			if(empty($this->XML_DATA))
+			{
+				$this->XML_DATA = file_get_contents($XML);
+
+				if($this->XML_CACHE_FILE == TRUE)
+					$GLOBALS["XML_CACHE"]["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME] = $this->XML_DATA;
+			}
+		}
+		else
+		{
+			$this->XML_CACHE_FILE = FALSE;
+			$this->XML_CACHE_TAGS = FALSE;
+			$this->XML_DATA = $XML;
+		}
 	}
 	function getStatement($STATEMENT_NAME)
 	{
@@ -67,16 +96,26 @@ class tandem_XmlReader
 	{
 		return $this->getValue($XML_TAG, $this->XML_DATA);
 	}
-	function getValue($XML_TAG, $XML_MATCH)
+	function getValue($XML_TAG, $XML_MATCH, $DO_CACHE = TRUE)
 	{
-		foreach(explode('/', $XML_TAG) as $xml_step)
+		if($this->XML_CACHE_TAGS == TRUE && $DO_CACHE && isset($GLOBALS["XML_CACHE"]["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG]))
 		{
-			preg_match("'<$xml_step>(.*?)</$xml_step>'si", $XML_MATCH, $new_match);
+			$XML_MATCH = $GLOBALS["XML_CACHE"]["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG];
+		}
+		else
+		{
+			foreach(explode("/", $XML_TAG) as $xml_step)
+			{
+				preg_match("'<$xml_step>(.*?)</$xml_step>'si", $XML_MATCH, $new_match);
 
-			if(count($new_match) > 1)
-				$XML_MATCH = $new_match[1];
-			else
-				$XML_MATCH = null;
+				if(count($new_match) > 1)
+					$XML_MATCH = $new_match[1];
+				else
+					$XML_MATCH = null;
+			}
+
+			if($this->XML_CACHE_TAGS == TRUE && $DO_CACHE)
+				$GLOBALS["XML_CACHE"]["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG] = $XML_MATCH;
 		}
 
 		return $XML_MATCH;
@@ -91,11 +130,11 @@ class tandem_XmlReader
 	}
 	function getArrayValues($XML_TAG, $XML_MATCH)
 	{
-		$xml_steps = explode('/', $XML_TAG);
+		$xml_steps = explode("/", $XML_TAG);
 		$this_xml = $XML_MATCH;
 
 		for($i = 0; $i < count($xml_steps) - 2; $i++)
-			$this_xml = $this->getValue($xml_steps[$i], $this_xml);
+			$this_xml = $this->getValue($xml_steps[$i], $this_xml, FALSE);
 
 		$next_xml_step = $xml_steps[count($xml_steps) - 2];
 		preg_match_all("'<$next_xml_step>(.*?)</$next_xml_step>'si", $this_xml, $xml_matches);
@@ -108,7 +147,7 @@ class tandem_XmlReader
 		{
 			if($extraction_tags_count == 1)
 			{
-				$this_item = $this->getValue($extraction_tags[0], $xml_matches[1][$i]);
+				$this_item = $this->getValue($extraction_tags[0], $xml_matches[1][$i], FALSE);
 				array_push($return_array, $this_item);
 			}
 			else
@@ -120,7 +159,7 @@ class tandem_XmlReader
 				}
 				foreach($extraction_tags as $extract)
 				{
-					$this_item = $this->getValue($extract, $xml_matches[1][$i]);
+					$this_item = $this->getValue($extract, $xml_matches[1][$i], FALSE);
 					array_push($return_array[$extract], $this_item);
 				}
 			}

@@ -16,7 +16,7 @@ $data = array(
 array('<b>gtkperf</b> <span color="#737373">(test)       Result name: <b>gtk2</b>, test run name: <b>run 1</b>\n</span><span color="#999999"><small>GtkPerf<small><sup>v0.40</sup></small>: <b>931.06s</b></small></span>'),
 array('<b>audio-encoding</b> <span color="#737373">(suite)       Result name: <b>testingaudio</b>, test run name: <b>test1</b>\n</span><span color="#999999"><small><b><span color="#737373">test1</span></b>: LAME MP3 Encoding<small><sup>v3.97</sup></small>: <b>35.75s</b>, Ogg Encoding<small><sup>v1.2.0</sup></small>: <b>18.57s</b>, FLAC Audio Encoding<small><sup>v1.2.1</sup></small>: <b>17.43s</b></small></span>'));
 
-$field_header = array('Name');
+$field_header = array("Name");
 
 if(defined("GObject::TYPE_STRING"))
 {
