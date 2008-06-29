@@ -30,8 +30,8 @@ class tandem_XmlReader
 	var $XML_FILE_TIME = NULL;
 	var $XML_FILE_NAME = NULL;
 
-	var $XML_CACHE_FILE = FALSE;
-	var $XML_CACHE_TAGS = TRUE;
+	var $XML_CACHE_FILE = FALSE; // Cache the entire XML file being parsed
+	var $XML_CACHE_TAGS = TRUE; // Cache the tags that are being called
 
 	function __construct($XML)
 	{

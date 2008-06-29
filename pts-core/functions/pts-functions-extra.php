@@ -97,7 +97,7 @@ function pts_generate_download_cache()
 	foreach(glob(TEST_RESOURCE_DIR . "*/downloads.xml") as $downloads_file)
 	{
 		$test = substr($downloads_file, strlen(TEST_RESOURCE_DIR), 0 - 14);
-		$xml_parser = new tandem_XmlReader(file_get_contents($downloads_file));
+		$xml_parser = new tandem_XmlReader($downloads_file);
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
@@ -157,7 +157,7 @@ function pts_dependency_name($dependency)
 	$return_title = "";
 	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DISTRO_DIR . "generic-packages.xml"));
+		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
 		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 

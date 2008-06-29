@@ -122,7 +122,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 	}
 	else if($type == "TEST_SUITE")
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_VERIFY . ".xml"));
+		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_VERIFY . ".xml");
 		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 
 		foreach($suite_benchmarks as $benchmark)
@@ -130,7 +130,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 	}
 	else if(is_file(pts_input_correct_results_path($TO_VERIFY)))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(pts_input_correct_results_path($TO_VERIFY)));
+		$xml_parser = new tandem_XmlReader(pts_input_correct_results_path($TO_VERIFY));
 		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($suite_benchmarks as $benchmark)
@@ -161,7 +161,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 
 		if($test_type == "TEST_SUITE")
 		{
-			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $benchmarks_array[$i] . ".xml"));
+			$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $benchmarks_array[$i] . ".xml");
 
 			$sub_suite_benchmarks = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 			$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
@@ -191,7 +191,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 	{
 		global $BENCHMARK_RAN;
 
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $benchmark . ".xml"));
+		$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $benchmark . ".xml");
 		$benchmark_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 		$benchmark_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 		$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
@@ -290,7 +290,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	pts_module_process("__pre_test_run");
 
-	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $benchmark_identifier . ".xml"));
+	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $benchmark_identifier . ".xml");
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
 	$benchmark_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));

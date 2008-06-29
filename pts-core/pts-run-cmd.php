@@ -42,7 +42,7 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $benchmark_file)
 		{
-			$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+			$xml_parser = new tandem_XmlReader($benchmark_file);
 			$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 			$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
 			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
@@ -134,7 +134,7 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite - Tests");
 		foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
 		{
-		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+		 	$xml_parser = new tandem_XmlReader($benchmark_file);
 			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 			$license = $xml_parser->getXMLValue(P_TEST_LICENSE);
 			$status = $xml_parser->getXMLValue(P_TEST_STATUS);
@@ -161,7 +161,7 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite - Suites");
 		foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
 		{
-		 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+		 	$xml_parser = new tandem_XmlReader($benchmark_file);
 			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 			$benchmark_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 			$identifier = basename($benchmark_file, ".xml");
@@ -204,7 +204,7 @@ switch($COMMAND)
 
 			if(is_file($benchmark_file))
 			{
-			 	$xml_parser = new tandem_XmlReader(file_get_contents($benchmark_file));
+			 	$xml_parser = new tandem_XmlReader($benchmark_file);
 				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 
 				printf("%-18ls - %-30ls\n", $identifier, $name);
@@ -214,7 +214,7 @@ switch($COMMAND)
 		break;
 	case "LIST_POSSIBLE_EXTERNAL_DEPENDENCIES":
 		echo pts_string_header("Phoronix Test Suite - Possible External Dependencies");
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DISTRO_DIR . "generic-packages.xml"));
+		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
 		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 
@@ -229,7 +229,7 @@ switch($COMMAND)
 		$pts_test_type = pts_test_type($ARG_1);
 		if($pts_test_type == "TEST_SUITE")
 		{
-			$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $ARG_1 . ".xml"));
+			$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $ARG_1 . ".xml");
 			$suite_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 			$suite_maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
 			$suite_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
@@ -250,7 +250,7 @@ switch($COMMAND)
 		}
 		else if($pts_test_type == "BENCHMARK")
 		{
-			$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $ARG_1 . ".xml"));
+			$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $ARG_1 . ".xml");
 
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 			$test_sw_version = $xml_parser->getXMLValue(P_TEST_VERSION);
@@ -295,7 +295,7 @@ switch($COMMAND)
 			$associated_suites = array();
 			foreach(glob(XML_SUITE_DIR . "*.xml") as $suite_file)
 			{
-			 	$xml_parser = new tandem_XmlReader(file_get_contents($suite_file));
+			 	$xml_parser = new tandem_XmlReader($suite_file);
 				$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 				$identifier = basename($suite_file, ".xml");
 				$tests = pts_tests_in_suite($identifier);

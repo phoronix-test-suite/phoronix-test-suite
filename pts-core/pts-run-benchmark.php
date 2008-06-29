@@ -92,7 +92,7 @@ else
 		{
 			if(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"))
 			{
-				$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"));
+				$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml");
 				$test_suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
 
 				if($TO_RUN_TYPE != "GLOBAL_COMPARISON")
@@ -129,7 +129,7 @@ if($SAVE_RESULTS)
 {
 	if(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"));
+		$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml");
 		$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 		$result_identifiers = array();
 
@@ -149,7 +149,7 @@ pts_disable_screensaver(); // Kill the screensaver
 
 if($TO_RUN_TYPE == "BENCHMARK")
 {
-	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $TO_RUN . ".xml"));
+	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
 	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
 	$settings_argument = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGUMENTNAME);
 	$settings_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
@@ -263,7 +263,7 @@ if($TO_RUN_TYPE == "BENCHMARK")
 
 	if($SAVE_RESULTS)
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $TO_RUN . ".xml"));
+		$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
 		$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 		$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 		$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
@@ -277,7 +277,7 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 {
 	echo pts_string_header("Test Suite: " . $TO_RUN);
 
-	$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_RUN . ".xml"));
+	$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_RUN . ".xml");
 
 	if($SAVE_RESULTS)
 	{
@@ -298,7 +298,7 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 {
 	echo pts_string_header("PTS Comparison: " . $TO_RUN);
 
-	$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $TO_RUN . "/composite.xml"));
+	$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $TO_RUN . "/composite.xml");
 	$CUSTOM_TITLE = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 	$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
 	$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);

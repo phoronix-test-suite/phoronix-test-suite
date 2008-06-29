@@ -37,7 +37,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 		if(!getenv("SILENT_INSTALL"))
 			echo "\nInstalling Test Suite: " . $TO_INSTALL . "\n\n";
 
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_SUITE_DIR . $TO_INSTALL . ".xml"));
+		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_INSTALL . ".xml");
 		$suite_benchmarks = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 		foreach($suite_benchmarks as $benchmark)
@@ -45,7 +45,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 	}
 	else if(is_file(pts_input_correct_results_path($TO_INSTALL)))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(pts_input_correct_results_path($TO_INSTALL)));
+		$xml_parser = new tandem_XmlReader(pts_input_correct_results_path($TO_INSTALL));
 		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($suite_benchmarks as $benchmark)
@@ -55,7 +55,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 	}
 	else if(is_file(SAVE_RESULTS_DIR . $TO_INSTALL . "/composite.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(SAVE_RESULTS_DIR . $TO_INSTALL . "/composite.xml"));
+		$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $TO_INSTALL . "/composite.xml");
 		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($suite_benchmarks as $benchmark)
@@ -87,7 +87,7 @@ function pts_download_benchmark_files($Benchmark)
 {
 	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"));
+		$xml_parser = new tandem_XmlReader(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml");
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
@@ -334,7 +334,7 @@ function pts_external_dependency_generic($Name)
 
 	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DISTRO_DIR . "generic-packages.xml"));
+		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
 		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 		$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
@@ -411,7 +411,7 @@ function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 	if(pts_test_type($Benchmark) != "BENCHMARK")
 		return;
 
-	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $Benchmark . ".xml"));
+	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $Benchmark . ".xml");
 	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 
@@ -444,7 +444,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 
 	if(is_file(XML_DISTRO_DIR . $vendor . "-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(file_get_contents(XML_DISTRO_DIR . $vendor . "-packages.xml"));
+		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . $vendor . "-packages.xml");
 		$generic_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$distro_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_SPECIFIC);
 		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
@@ -477,7 +477,7 @@ function pts_test_architecture_supported($identifier)
 
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
+	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
 		$archs = $xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS);
 
 		if(!empty($archs))
@@ -505,7 +505,7 @@ function pts_test_estimated_download_size($identifier)
 
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
+	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
 		$size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
 	}
 
@@ -517,7 +517,7 @@ function pts_test_estimated_environment_size($identifier)
 
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $identifier . ".xml"));
+	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
 		$size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 	}
 
