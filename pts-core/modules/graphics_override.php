@@ -28,6 +28,8 @@ class graphics_override extends pts_module_interface
 	const module_description = "This module allows you to override some graphics rendering settings for the ATI and NVIDIA drivers while running the Phoronix Test Suite.";
 	const module_author = "Michael Larabel";
 
+	public static $module_store_vars = array("FORCE_AA", "FORCE_AF");
+
 	static $graphics_driver = FALSE;
 	static $preset_aa = FALSE;
 	static $preset_af = FALSE;
@@ -37,7 +39,7 @@ class graphics_override extends pts_module_interface
 	static $supported_aa_levels = array(0, 2, 4, 8, 16);
 	static $supported_af_levels = array(0, 2, 4, 8, 16);
 
-	public static function __startup()
+	public static function __pre_run_process()
 	{
 		$opengl_driver = opengl_version();
 
@@ -155,7 +157,7 @@ class graphics_override extends pts_module_interface
 			}
 		}
 	}
-	public static function __shutdown()
+	public static function __post_run_process()
 	{
 		if(self::$graphics_driver == FALSE)
 			return; // Not using a supported graphics driver

@@ -80,6 +80,27 @@ function graphics_antialiasing_level()
 				break;
 		}
 	}
+	else
+	{
+		$ati_fsaa = read_amd_pcsdb("OpenGL,AntiAliasSamples");
+
+		if(!empty($ati_fsaa))
+		{
+			switch($ati_fsaa)
+			{
+				case "0x00000002":
+					$aa_level = 2;
+					break;
+				case "0x00000004":
+					$aa_level = 4;
+					break;
+				case "0x00000008":
+					$aa_level = 8;
+					break;
+			}
+		}
+	}
+
 	return $aa_level;
 }
 function graphics_anisotropic_level()
@@ -106,6 +127,30 @@ function graphics_anisotropic_level()
 				break;
 		}
 	}
+	else
+	{
+		$ati_af = read_amd_pcsdb("OpenGL,AnisoDegree");
+
+		if(!empty($ati_af))
+		{
+			switch($ati_af)
+			{
+				case "0x00000002":
+					$af_level = 2;
+					break;
+				case "0x00000004":
+					$af_level = 4;
+					break;
+				case "0x00000008":
+					$af_level = 8;
+					break;
+				case "0x00000010":
+					$af_level = 16;
+					break;
+			}
+		}
+	}
+
 	return $af_level;
 }
 function set_nvidia_extension($attribute, $value)

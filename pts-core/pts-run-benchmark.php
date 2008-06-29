@@ -266,7 +266,7 @@ if($TO_RUN_TYPE == "BENCHMARK")
 		$xml_parser = new tandem_XmlReader(file_get_contents(XML_PROFILE_DIR . $TO_RUN . ".xml"));
 		$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 		$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
-		$test_type = $xml_parser->getXMLValue(P_TEST_SOFTWARE_TYPE);
+		$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 		$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 		unset($xml_parser);
 	}
@@ -318,7 +318,7 @@ else
 
 //pts_beep(2);
 define("PTS_TESTING_DONE", 1);
-pts_module_process("__post_run_process");
+
 if($SAVE_RESULTS)
 {
 	$check_processes = array(
@@ -329,15 +329,6 @@ if($SAVE_RESULTS)
 		);
 
 	$test_notes = pts_process_running_string($check_processes);
-
-	if($test_type == "Graphics" || $test_type == "System")
-	{
-		$aa_level = graphics_antialiasing_level();
-		$af_level = graphics_anisotropic_level();
-
-		if(!empty($aa_level) && !empty($af_level))
-			$test_notes .= " \nAntialiasing: $aa_level Anisotropic Filtering: $af_level.";
-	}
 
 	// Power Saving Technologies?
 	$cpu_savings = pts_processor_power_savings_enabled();
@@ -355,6 +346,17 @@ if($SAVE_RESULTS)
 	$virtualized = pts_report_virtualized_mode();
 	if(!empty($virtualized))
 		$test_notes .= " \n" . $virtualized;
+
+	if($test_type == "Graphics" || $test_type == "System")
+	{
+		$aa_level = graphics_antialiasing_level();
+		$af_level = graphics_anisotropic_level();
+
+		if(!empty($aa_level) && !empty($af_level))
+			$test_notes .= " \nAntialiasing: $aa_level Anisotropic Filtering: $af_level.";
+	}
+
+	pts_module_process("__post_run_process");
 
 	$id = pts_request_new_id();
 	$RESULTS->setXslBinding("pts-results-viewer.xsl");
@@ -407,6 +409,10 @@ if($SAVE_RESULTS)
 		}
 		echo "\n";
 	}
+}
+else
+{
+	pts_module_process("__post_run_process");
 }
 
 ?>
