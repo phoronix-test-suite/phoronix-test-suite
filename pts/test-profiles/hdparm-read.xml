@@ -6,6 +6,7 @@
 		<License>FREE</License>
 		<Status>UNVERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<ProjectURL>http://sourceforge.net/projects/hdparm/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>hdparm Timed Disk Reads</Title>

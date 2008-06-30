@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>1.2</DownloadSize>
 		<EnvironmentSize>2.2</EnvironmentSize>
+		<ProjectURL>http://espeak.sourceforge.net/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>eSpeak Speech Engine</Title>

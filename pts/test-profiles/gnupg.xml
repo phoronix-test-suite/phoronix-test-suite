@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>4.4</DownloadSize>
 		<EnvironmentSize>8.4</EnvironmentSize>
+		<ProjectURL>http://www.gnupg.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>GnuPG</Title>

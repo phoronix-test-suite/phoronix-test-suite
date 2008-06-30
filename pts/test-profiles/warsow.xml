@@ -9,6 +9,7 @@
 		<DownloadSize>185</DownloadSize>
 		<EnvironmentSize>195</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.warsow.net/?page=home</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Warsow</Title>

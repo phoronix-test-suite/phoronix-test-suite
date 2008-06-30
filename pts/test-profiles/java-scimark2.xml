@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>0.03</DownloadSize>
 		<EnvironmentSize>0.05</EnvironmentSize>
+		<ProjectURL>http://math.nist.gov/scimark2/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Java SciMark</Title>

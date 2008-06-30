@@ -9,6 +9,7 @@
 		<DownloadSize>275</DownloadSize>
 		<EnvironmentSize>2868</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.quake4game.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Quake 4</Title>

@@ -8,6 +8,7 @@
 		<Maintainer>apaige</Maintainer>
 		<DownloadSize>0.3</DownloadSize>
 		<EnvironmentSize>5</EnvironmentSize>
+		<ProjectURL>http://www.wavpack.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>WavPack Audio Encoding</Title>

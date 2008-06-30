@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>2.8</DownloadSize>
 		<EnvironmentSize>6</EnvironmentSize>
+		<ProjectURL>http://www.vorbis.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Ogg Encoding</Title>

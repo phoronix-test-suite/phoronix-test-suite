@@ -8,6 +8,7 @@
 		<Maintainer>Andrew Schofield</Maintainer>
 		<DownloadSize>30</DownloadSize>
 		<EnvironmentSize>247</EnvironmentSize>
+		<ProjectURL>http://www.gromacs.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>GROMACS MD Benchmark</Title>

@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>585</DownloadSize>
 		<EnvironmentSize>1600</EnvironmentSize>
+		<ProjectURL>http://www.spec.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>SPECViewPerf</Title>

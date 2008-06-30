@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>2.9</DownloadSize>
 		<EnvironmentSize>28.9</EnvironmentSize>
+		<ProjectURL>http://www.yafray.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>YafRay</Title>

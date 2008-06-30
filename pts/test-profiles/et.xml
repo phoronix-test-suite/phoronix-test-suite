@@ -9,6 +9,7 @@
 		<DownloadSize>260</DownloadSize>
 		<EnvironmentSize>273</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.idsoftware.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Enemy Territory</Title>

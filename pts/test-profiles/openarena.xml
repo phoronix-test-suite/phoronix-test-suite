@@ -9,6 +9,7 @@
 		<DownloadSize>272</DownloadSize>
 		<EnvironmentSize>279</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://openarena.ws/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>OpenArena</Title>

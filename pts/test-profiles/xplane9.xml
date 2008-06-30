@@ -9,6 +9,7 @@
 		<DownloadSize>475</DownloadSize>
 		<EnvironmentSize>855</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.x-plane.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>X-Plane</Title>

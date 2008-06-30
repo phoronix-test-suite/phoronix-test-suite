@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>95</DownloadSize>
 		<EnvironmentSize>16</EnvironmentSize>
+		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Mencoder</Title>

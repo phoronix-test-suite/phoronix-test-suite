@@ -9,6 +9,7 @@
 		<DownloadSize>376</DownloadSize>
 		<EnvironmentSize>746</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.nexuiz.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Nexuiz</Title>

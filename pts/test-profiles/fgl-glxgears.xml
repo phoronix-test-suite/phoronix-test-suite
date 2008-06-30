@@ -6,6 +6,7 @@
 		<License>RESTRICTED</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<ProjectURL>http://ati.amd.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>ATI fgl_glxgears</Title>

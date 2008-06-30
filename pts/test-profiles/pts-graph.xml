@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>0.01</DownloadSize>
 		<EnvironmentSize>0.02</EnvironmentSize>
+		<ProjectURL>http://www.phoronix-test-suite.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>PTS Grapher</Title>

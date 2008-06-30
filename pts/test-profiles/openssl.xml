@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>3.2</DownloadSize>
 		<EnvironmentSize>37</EnvironmentSize>
+		<ProjectURL>http://www.openssl.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>OpenSSL</Title>

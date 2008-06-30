@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>0.02</DownloadSize>
 		<EnvironmentSize>0.12</EnvironmentSize>
+		<ProjectURL>http://www.freedesktop.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Render Bench</Title>

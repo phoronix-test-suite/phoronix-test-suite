@@ -9,6 +9,7 @@
 		<DownloadSize>660</DownloadSize>
 		<EnvironmentSize>765</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.enemyterritory.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>ET: Quake Wars Demo</Title>

@@ -6,6 +6,7 @@
 		<License>FREE</License>
 		<Status>EXPERIMENTAL</Status>
 		<Maintainer>Phoronix Media</Maintainer>
+		<ProjectURL>http://www.phoronix-test-suite.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Sample Pi Program</Title>

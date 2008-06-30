@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>1.3</DownloadSize>
 		<EnvironmentSize>1.7</EnvironmentSize>
+		<ProjectURL>http://lame.sourceforge.net/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>LAME MP3 Encoding</Title>

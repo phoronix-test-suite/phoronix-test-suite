@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>88</DownloadSize>
 		<EnvironmentSize>16</EnvironmentSize>
+		<ProjectURL>http://ffmpeg.mplayerhq.hu/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>FFmpeg</Title>

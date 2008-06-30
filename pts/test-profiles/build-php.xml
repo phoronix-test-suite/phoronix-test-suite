@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>16.4</DownloadSize>
 		<EnvironmentSize>49.3</EnvironmentSize>
+		<ProjectURL>http://www.php.net/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed PHP Compilation</Title>

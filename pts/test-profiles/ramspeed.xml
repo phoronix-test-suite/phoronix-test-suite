@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>0.06</DownloadSize>
 		<EnvironmentSize>0.72</EnvironmentSize>
+		<ProjectURL>http://www.alasir.com/software/ramspeed/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>RAMspeed</Title>

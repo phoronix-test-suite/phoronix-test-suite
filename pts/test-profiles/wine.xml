@@ -6,6 +6,7 @@
 		<License>FREE</License>
 		<Status>UNVERIFIED</Status>
 		<Maintainer>Stefan Doesinger</Maintainer>
+		<ProjectURL>http://www.winehq.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Wine Conformance Tests</Title>

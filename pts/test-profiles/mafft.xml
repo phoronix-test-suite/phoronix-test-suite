@@ -6,6 +6,7 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Andrew Schofield</Maintainer>
+		<ProjectURL>http://align.bmr.kyushu-u.ac.jp/mafft/software/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed MAFFT Alignment</Title>

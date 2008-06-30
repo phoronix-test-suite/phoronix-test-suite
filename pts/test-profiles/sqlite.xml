@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>2.1</DownloadSize>
 		<EnvironmentSize>18.4</EnvironmentSize>
+		<ProjectURL>http://www.sqlite.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>SQLite</Title>
