@@ -85,6 +85,9 @@ switch($COMMAND)
 		$install_objects = "";
 		pts_recurse_install_benchmark($ARG_1, $install_objects);
 		pts_module_process("__post_install_process");
+
+		if(getenv("SILENT_INSTALL") !== FALSE)
+			define("PTS_EXIT", 1);
 		break;
 	case "FORCE_INSTALL_ALL":
 	case "INSTALL_ALL":
