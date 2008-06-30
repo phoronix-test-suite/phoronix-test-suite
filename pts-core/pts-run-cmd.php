@@ -267,6 +267,7 @@ switch($COMMAND)
 			$test_environment_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 			$test_estimated_length = $xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
 			$test_dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
+			$test_projecturl = $xml_parser->getXMLValue(P_TEST_PROJECTURL);
 
 			if(!empty($test_sw_version))
 				$test_title .= " " . $test_sw_version;
@@ -279,6 +280,7 @@ switch($COMMAND)
 			echo "Software Type: " . $test_app_type . "\n";
 			echo "License Type: " . $test_license . "\n";
 			echo "Test Status: " . $test_status . "\n";
+			echo "Project Web-Site: " . $test_projecturl . "\n";
 
 			if(!empty($test_download_size))
 				echo "Download Size: " . $test_download_size . " MB\n";
