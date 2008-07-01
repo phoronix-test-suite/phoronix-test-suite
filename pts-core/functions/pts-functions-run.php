@@ -61,6 +61,9 @@ function pts_prompt_results_identifier($current_identifiers = null)
 	if(empty($RESULTS_IDENTIFIER))
 		$RESULTS_IDENTIFIER = date("Y-m-d H:i");
 
+	if(!defined("TEST_RESULTS_IDENTIFIER"))
+		define("TEST_RESULTS_IDENTIFIER", $RESULTS_IDENTIFIER);
+
 	return $RESULTS_IDENTIFIER;
 }
 function pts_prompt_save_file_name()

@@ -279,8 +279,6 @@ function pts_save_result($save_to = null, $save_results = null)
 					$t->save_graph($save_to_dir . "/result-graphs/" . ($i + 1) . ".png");
 					$t->renderGraph();
 				}
-
-				unset($xml_reader, $results_name, $results_version, $results_attributes, $results_scale, $results_proportion, $results_result_format, $results_raw, $results_identifiers, $results_values);
 			}
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
