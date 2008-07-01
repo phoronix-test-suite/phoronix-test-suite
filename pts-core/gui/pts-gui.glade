@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Mon Jun 30 22:07:09 2008 -->
+<!--Generated with glade3 3.4.5 on Mon Jun 30 22:14:21 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="pts_main_window">
     <property name="title" translatable="yes">Phoronix Testing Suite</property>
@@ -3370,9 +3370,7 @@ Diagnostics Information&lt;/b&gt;</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="tooltip" translatable="yes">Select to enter the new result name, or pick an existing result to compare against</property>
-                <property name="items" translatable="yes">New result
-audio test1
-video test2</property>
+                <property name="items" translatable="yes">New result</property>
               </widget>
               <packing>
                 <property name="left_attach">1</property>
