@@ -282,6 +282,8 @@ function pts_save_result($save_to = null, $save_results = null)
 			}
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
+
+		//if(defined("TEST_RESULTS_IDENTIFIER"))
 	}
 
 	return $bool;
