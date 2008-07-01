@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite
+
+- Run the results parser from within the test's environment directory
+
 Phoronix Test Suite 1.0.2
 June 28, 2008
 

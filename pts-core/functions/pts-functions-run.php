@@ -385,7 +385,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		{
 			if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
 			{
-				$BENCHMARK_RESULTS = pts_exec("cd " . TEST_RESOURCE_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " parse-results.php \"" . $BENCHMARK_RESULTS . "\"");
+				$BENCHMARK_RESULTS = pts_exec("cd " .  BENCHMARK_ENV_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php \"" . $BENCHMARK_RESULTS . "\"");
 			}
 
 			if(!empty($BENCHMARK_RESULTS))
