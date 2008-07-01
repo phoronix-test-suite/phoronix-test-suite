@@ -1,0 +1,55 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Disk</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>0.1</DownloadSize>
+		<EnvironmentSize>0.1</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>Bonnie++</Title>
+		<Version>1.03a</Version>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Operations / Second</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This benchmark tests the system's hard disk.</Description>
+                <ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Type</DisplayName>
+			<Identifier>run-type</Identifier>
+			<ArgumentName></ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Sequential Create</Name>
+					<Value>SEQ_CREATE</Value>
+				</Entry>
+				<Entry>
+					<Name>Sequential Read</Name>
+					<Value>SEQ_READ</Value>
+				</Entry>
+				<Entry>
+					<Name>Sequential Delete</Name>
+					<Value>SEQ_DELETE</Value>
+				</Entry>
+				<Entry>
+					<Name>Random Create</Name>
+					<Value>RAND_CREATE</Value>
+				</Entry>
+				<Entry>
+					<Name>Random Read</Name>
+					<Value>RAND_READ</Value>
+				</Entry>
+				<Entry>
+					<Name>Random Delete</Name>
+					<Value>RAND_DELETE</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>
