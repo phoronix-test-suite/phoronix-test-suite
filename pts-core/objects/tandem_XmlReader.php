@@ -33,10 +33,16 @@ class tandem_XmlReader
 	var $XML_CACHE_FILE = FALSE; // Cache the entire XML file being parsed
 	var $XML_CACHE_TAGS = TRUE; // Cache the tags that are being called
 
-	function __construct($XML)
+	function __construct($XML, $DO_CACHE = TRUE)
 	{
 		if(is_file($XML))
 		{
+			if(!$DO_CACHE)
+			{
+				$this->XML_CACHE_FILE = FALSE;
+				$this->XML_CACHE_TAGS = FALSE;
+			}
+
 			// If you're going to be banging XML files hard through the course of the script, you'll want to flush the PHP file cache
 			// clearstatcache();
 
@@ -164,8 +170,20 @@ class tandem_XmlReader
 				}
 			}
 		}
-
 		return $return_array;
+	}
+	function setFileCaching($BOOL)
+	{
+		$this->XML_CACHE_FILE = ($BOOL == TRUE);
+	}
+	function setTagCaching($BOOL)
+	{
+		$this->XML_CACHE_TAGS = ($BOOL == TRUE);
+	}
+	function setCaching($BOOL)
+	{
+		$this->setFileCaching($BOOL);
+		$this->setTagCaching($BOOL);
 	}
 }
 ?>

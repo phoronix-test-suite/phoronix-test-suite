@@ -19,4 +19,5 @@
 - Allow support for loading modules manually by setting each module name in the PTS_MODULES environmental variable and separating multiple modules via comma
 - Add Extensions tag to results file
 - tandem_Xml: Add a caching engine to the XML parsing/reading portion
+- tandem_Xml: Add setFileCaching(), setTagCaching(), and setCaching() options
 - Add ProjectURL tag to available test profiles
