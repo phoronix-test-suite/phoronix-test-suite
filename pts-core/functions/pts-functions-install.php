@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
+function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
 {
 	$type = pts_test_type($TO_INSTALL);
 
@@ -38,39 +38,39 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 			echo "\nInstalling Test Suite: " . $TO_INSTALL . "\n\n";
 
 		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_INSTALL . ".xml");
-		$suite_benchmarks = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+		$suite_tests = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
-		foreach($suite_benchmarks as $benchmark)
-			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
+		foreach($suite_tests as $test)
+			pts_recurse_install_test($test, $INSTALL_OBJ);
 	}
 	else if(is_file(pts_input_correct_results_path($TO_INSTALL)))
 	{
 		$xml_parser = new tandem_XmlReader(pts_input_correct_results_path($TO_INSTALL));
-		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+		$suite_tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
-		foreach($suite_benchmarks as $benchmark)
+		foreach($suite_tests as $test)
 		{
-			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
+			pts_recurse_install_test($test, $INSTALL_OBJ);
 		}
 	}
 	else if(is_file(SAVE_RESULTS_DIR . $TO_INSTALL . "/composite.xml"))
 	{
 		$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $TO_INSTALL . "/composite.xml");
-		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+		$suite_tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
-		foreach($suite_benchmarks as $benchmark)
+		foreach($suite_tests as $test)
 		{
-			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
+			pts_recurse_install_test($test, $INSTALL_OBJ);
 		}
 	}
 	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $TO_INSTALL)) == "REMOTE_FILE")
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $TO_INSTALL));
-		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+		$suite_tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
-		foreach($suite_benchmarks as $benchmark)
+		foreach($suite_tests as $test)
 		{
-			pts_recurse_install_benchmark($benchmark, $INSTALL_OBJ);
+			pts_recurse_install_test($test, $INSTALL_OBJ);
 		}
 	}
 	else
@@ -83,11 +83,11 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 		pts_exit($exit_message);
 	}
 }
-function pts_download_benchmark_files($Benchmark)
+function pts_download_test_files($identifier)
 {
-	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml"))
+	if(is_file(TEST_RESOURCE_DIR . $identifier . "/downloads.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(TEST_RESOURCE_DIR . $Benchmark . "/downloads.xml");
+		$xml_parser = new tandem_XmlReader(TEST_RESOURCE_DIR . $identifier . "/downloads.xml");
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
@@ -114,14 +114,14 @@ function pts_download_benchmark_files($Benchmark)
 			if($download_to[$i] == "SHARED")
 				$download_location = TEST_ENV_DIR . "pts-shared/";
 			else
-				$download_location = TEST_ENV_DIR . $Benchmark . "/";
+				$download_location = TEST_ENV_DIR . $identifier . "/";
 
 			if(!is_file($download_location . $package_filename[$i]))
 			{
 				if(!$header_displayed)
 				{
 					$download_append = "";
-					if(($size = pts_test_estimated_download_size($Benchmark)) != "")
+					if(($size = pts_test_estimated_download_size($identifier)) != "")
 					{
 						$download_append = "\nEstimated Download Size: " . $size . " MB";
 
@@ -136,7 +136,7 @@ function pts_download_benchmark_files($Benchmark)
 							pts_exit();
 						}
 					}
-					echo pts_string_header("Downloading Files For: " . $Benchmark . $download_append);
+					echo pts_string_header("Downloading Files For: " . $identifier . $download_append);
 
 					$header_displayed = true;
 				}
@@ -243,26 +243,26 @@ function pts_download_benchmark_files($Benchmark)
 		}
 	}
 }
-function pts_install_benchmark($Benchmark)
+function pts_install_benchmark($identifier)
 {
-	if(pts_test_type($Benchmark) != "TEST")
+	if(pts_test_type($identifier) != "TEST")
 		return;
 
-	if(!pts_test_architecture_supported($Benchmark))
+	if(!pts_test_architecture_supported($identifier))
 	{
-		echo pts_string_header($Benchmark . " is not supported on this platform (" . kernel_arch() . ").");
+		echo pts_string_header($identifier . " is not supported on this platform (" . kernel_arch() . ").");
 		return;
 	}
 
 	$custom_validated_output = "";
 
-	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/validate-install.sh"))
+	if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.sh"))
 	{
-		$custom_validated_output = pts_exec("sh " . TEST_RESOURCE_DIR . $Benchmark . "/validate-install.sh " . TEST_ENV_DIR . $Benchmark);
+		$custom_validated_output = pts_exec("sh " . TEST_RESOURCE_DIR . $identifier . "/validate-install.sh " . TEST_ENV_DIR . $identifier);
 	}
-	else if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/validate-install.php"))
+	else if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.php"))
 	{
-		$custom_validated_output = pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/validate-install.php " . TEST_ENV_DIR . $Benchmark);
+		$custom_validated_output = pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/validate-install.php " . TEST_ENV_DIR . $identifier);
 	}
 	if(!empty($custom_validated_output))
 	{
@@ -272,25 +272,25 @@ function pts_install_benchmark($Benchmark)
 			return false;
 	}
 
-	if(pts_test_needs_updated_install($Benchmark) || defined("PTS_FORCE_INSTALL"))
+	if(pts_test_needs_updated_install($identifier) || defined("PTS_FORCE_INSTALL"))
 	{
 		if(!is_dir(TEST_ENV_DIR))
 			mkdir(TEST_ENV_DIR);
 
-		if(!is_dir(TEST_ENV_DIR . $Benchmark))
-			mkdir(TEST_ENV_DIR . $Benchmark);
+		if(!is_dir(TEST_ENV_DIR . $identifier))
+			mkdir(TEST_ENV_DIR . $identifier);
 
 		if(!is_dir(TEST_ENV_DIR . "pts-shared"))
 			mkdir(TEST_ENV_DIR . "pts-shared");
 
-		pts_download_benchmark_files($Benchmark);
+		pts_download_test_files($identifier);
 
-		if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh") || is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))
+		if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh") || is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
 		{
 			pts_module_process("__pre_test_install");
-			$install_header = "Installing Benchmark: " . $Benchmark;
+			$install_header = "Installing Test: " . $identifier;
 
-			if(($size = pts_test_estimated_download_size($Benchmark)) != "")
+			if(($size = pts_test_estimated_download_size($identifier)) != "")
 				$install_header .= "\nEstimated Install Size: " . $size . " MB";
 
 			echo pts_string_header($install_header);
@@ -301,26 +301,26 @@ function pts_install_benchmark($Benchmark)
 				pts_exit();
 			}
 
-			if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"))
+			if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh"))
 			{
-				echo pts_exec("cd " .  TEST_ENV_DIR . $Benchmark . "/ && sh " . TEST_RESOURCE_DIR . $Benchmark . "/install.sh " . TEST_ENV_DIR . $Benchmark) . "\n";
+				echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/install.sh " . TEST_ENV_DIR . $identifier) . "\n";
 			}
-			else if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))
+			else if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
 			{
-				echo pts_exec("cd " .  TEST_ENV_DIR . $Benchmark . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/install.php " . TEST_ENV_DIR . $Benchmark) . "\n";
+				echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/install.php " . TEST_ENV_DIR . $identifier) . "\n";
 			}
-			pts_test_generate_install_xml($Benchmark);
+			pts_test_generate_install_xml($identifier);
 			pts_module_process("__post_test_install");
 		}
 		else
 		{
-			echo "Installation script missing for " . $Benchmark . "\n";
+			echo "Installation script missing for " . $identifier . "\n";
 		}
 	}
 	else
 	{
 		if(!getenv("SILENT_INSTALL"))
-			echo $Benchmark . " is already installed, skipping installation routine...\n";
+			echo $identifier . " is already installed, skipping installation routine...\n";
 	}
 }
 function pts_external_dependency_generic($Name)
@@ -376,11 +376,11 @@ function pts_file_missing_check($file_arr)
 
 	return $file_missing;
 }
-function pts_install_package_on_distribution($benchmark)
+function pts_install_package_on_distribution($identifier)
 {
-	$benchmark = strtolower($benchmark);
+	$identifier = strtolower($identifier);
 	$install_objects = array();
-	pts_recurse_install_benchmark($benchmark, $install_objects);
+	pts_recurse_install_test($identifier, $install_objects);
 	pts_install_packages_on_distribution_process($install_objects);
 }
 function pts_install_packages_on_distribution_process($install_objects)
@@ -401,12 +401,12 @@ function pts_install_packages_on_distribution_process($install_objects)
 			echo "Distribution install script not found!";
 	}
 }
-function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
+function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 {
-	if(pts_test_type($Benchmark) != "TEST")
+	if(pts_test_type($identifier) != "TEST")
 		return;
 
-	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $Benchmark . ".xml");
+	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
 	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 

@@ -28,7 +28,7 @@ require("pts-core/functions/pts-functions-merge.php");
 $TO_RUN = strtolower($argv[1]);
 $TO_RUN_TYPE = pts_test_type($TO_RUN);
 $MODULE_STORE = implode(";", $GLOBALS["PTS_MODULE_VAR_STORE"]);
-$BENCHMARK_RAN = false;
+$TEST_RAN = false;
 
 if(isset($argv[2]) && $argv[2] == "BATCH")
 {
@@ -378,7 +378,7 @@ if($SAVE_RESULTS)
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_MAINTAINER, $id, $test_maintainer);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $MODULE_STORE);
 
-	if($BENCHMARK_RAN)
+	if($TEST_RAN)
 	{
 		pts_save_benchmark_file($PROPOSED_FILE_NAME, $RESULTS);
 		echo "Results Saved To: " . SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml\n";

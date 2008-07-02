@@ -192,8 +192,6 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 
 	if((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2))
 	{
-		global $BENCHMARK_RAN;
-
 		$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $benchmark . ".xml");
 		$benchmark_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 		$benchmark_version = $xml_parser->getXMLValue(P_TEST_VERSION);
@@ -248,7 +246,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_result, 5);
 
-		$BENCHMARK_RAN = true;
+		$GLOBALS["TEST_RAN"] = true;
 	}
 }
 function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)

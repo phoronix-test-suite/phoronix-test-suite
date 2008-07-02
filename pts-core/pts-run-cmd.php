@@ -83,7 +83,7 @@ switch($COMMAND)
 
 		// Install benchmarks
 		$install_objects = "";
-		pts_recurse_install_benchmark($ARG_1, $install_objects);
+		pts_recurse_install_test($ARG_1, $install_objects);
 		pts_module_process("__post_install_process");
 
 		if(getenv("SILENT_INSTALL") !== FALSE)
@@ -105,7 +105,7 @@ switch($COMMAND)
 
 			// Install benchmarks
 			$install_objects = "";
-			pts_recurse_install_benchmark($test, $install_objects);
+			pts_recurse_install_test($test, $install_objects);
 		}
 		break;
 	case "INSTALL_EXTERNAL_DEPENDENCIES":

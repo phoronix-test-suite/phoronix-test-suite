@@ -105,29 +105,29 @@ if(function_exists("pts_module_start_process"))
 // Phoronix Test Suite - Functions
 function pts_test_names_to_array()
 {
-	$benchmark_names = array();
-	foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
+	$test_names = array();
+	foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_file)
 	{
-	 	$xml_parser = new tandem_XmlReader($benchmark_file);
-		$benchmark_name = $xml_parser->getXMLValue(P_TEST_TITLE);
+	 	$xml_parser = new tandem_XmlReader($test_file);
+		$test_name = $xml_parser->getXMLValue(P_TEST_TITLE);
 
-		if(!empty($benchmark_name))
-			array_push($benchmark_names, $benchmark_name);
+		if(!empty($test_name))
+			array_push($test_names, $test_name);
 	}
-	return $benchmark_names;
+	return $test_names;
 }
 function pts_suite_names_to_array()
 {
-	$benchmark_suites = array();
-	foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
+	$test_suites = array();
+	foreach(glob(XML_SUITE_DIR . "*.xml") as $test_file)
 	{
-	 	$xml_parser = new tandem_XmlReader($benchmark_file);
-		$benchmark_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
+	 	$xml_parser = new tandem_XmlReader($test_file);
+		$test_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 
-		if(!empty($benchmark_name))
-			array_push($benchmark_suites, $benchmark_name);
+		if(!empty($test_name))
+			array_push($test_suites, $test_name);
 	}
-	return $benchmark_suites;
+	return $test_suites;
 }
 function pts_test_type($identifier)
 {
@@ -361,14 +361,14 @@ function pts_request_new_id()
 }
 function pts_global_upload_result($result_file, $tags = "")
 {
-	$benchmark_results = file_get_contents($result_file);
-	$benchmark_results = str_replace(array("\n", "\t"), "", $benchmark_results);
+	$test_results = file_get_contents($result_file);
+	$test_results = str_replace(array("\n", "\t"), "", $test_results);
 	$switch_tags = array("Benchmark>" => "B>", "Results>" => "R>", "Group>" => "G>", "Entry>" => "E>", "Identifier>" => "I>", "Value>" => "V>", "System>" => "S>", "Attributes>" => "A>");
 
 	foreach($switch_tags as $f => $t)
-		$benchmark_results = str_replace($f, $t, $benchmark_results);
+		$test_results = str_replace($f, $t, $test_results);
 
-	$ToUpload = base64_encode($benchmark_results);
+	$ToUpload = base64_encode($test_results);
 	$GlobalUser = pts_current_user();
 	$GlobalKey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "");
 	$tags = base64_encode($tags);
