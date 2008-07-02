@@ -198,7 +198,7 @@ switch($COMMAND)
 		break;
 	case "LIST_INSTALLED_TESTS":
 		echo pts_string_header("Phoronix Test Suite - Installed Tests");
-		foreach(glob(BENCHMARK_ENV_DIR . "*/pts-install") as $install_file)
+		foreach(glob(BENCHMARK_ENV_DIR . "*/pts-install.xml") as $install_file)
 		{
 			$install_file_arr = explode("/", $install_file);
 			$identifier = $install_file_arr[count($install_file_arr) - 2];

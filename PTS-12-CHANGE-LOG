@@ -21,3 +21,4 @@
 - tandem_Xml: Add a caching engine to the XML parsing/reading portion
 - tandem_Xml: Add setFileCaching(), setTagCaching(), and setCaching() options
 - Add ProjectURL tag to available test profiles
+- Introduce a test installation management system and this replaces the previous pts-install management solution. New setup is XML based and monitors time a test was installed, last time a test was run, number of times a test was run by PTS, and this pts-install.xml system will be used for some future features.

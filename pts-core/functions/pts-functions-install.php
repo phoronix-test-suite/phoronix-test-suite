@@ -254,7 +254,6 @@ function pts_install_benchmark($Benchmark)
 		return;
 	}
 
-	$custom_validated = true;
 	$custom_validated_output = "";
 
 	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/validate-install.sh"))
@@ -273,14 +272,7 @@ function pts_install_benchmark($Benchmark)
 			return false;
 	}
 
-	if(!defined("PTS_FORCE_INSTALL") && is_file(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install") && ((is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh") && file_get_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install") == @md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh")) || (is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php") && file_get_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install") == @md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))) && $custom_validated)
-	{
-		// pts_download_benchmark_files($Benchmark);
-
-		if(!getenv("SILENT_INSTALL"))
-			echo $Benchmark . " is already installed, skipping installation routine...\n";
-	}
-	else
+	if(pts_test_needs_updated_install($Benchmark) || defined("PTS_FORCE_INSTALL"))
 	{
 		if(!is_dir(BENCHMARK_ENV_DIR))
 			mkdir(BENCHMARK_ENV_DIR);
@@ -312,20 +304,23 @@ function pts_install_benchmark($Benchmark)
 			if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"))
 			{
 				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && sh " . TEST_RESOURCE_DIR . $Benchmark . "/install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
-				file_put_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install", md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"));
 			}
 			else if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))
 			{
 				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
-				file_put_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install", md5_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"));
 			}
+			pts_test_generate_install_xml($Benchmark);
 			pts_module_process("__post_test_install");
 		}
 		else
 		{
-			file_put_contents(BENCHMARK_ENV_DIR . $Benchmark . "/pts-install", 0);
 			echo "Installation script missing for " . $Benchmark . "\n";
 		}
+	}
+	else
+	{
+		if(!getenv("SILENT_INSTALL"))
+			echo $Benchmark . " is already installed, skipping installation routine...\n";
 	}
 }
 function pts_external_dependency_generic($Name)

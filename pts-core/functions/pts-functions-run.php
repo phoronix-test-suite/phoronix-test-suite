@@ -120,7 +120,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 
 	if($type == "BENCHMARK")
 	{
-		if(!is_file(BENCHMARK_ENV_DIR . $TO_VERIFY . "/pts-install"))
+		if(!is_file(BENCHMARK_ENV_DIR . $TO_VERIFY . "/pts-install.xml"))
 			array_push($NEEDS_INSTALLING, $TO_VERIFY);
 	}
 	else if($type == "TEST_SUITE")
@@ -351,7 +351,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		return;
 	}
 
-	if(is_dir(BENCHMARK_ENV_DIR . $benchmark_identifier . '/') && !(file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-install") != @md5_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/install.sh") || file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-install") != @md5_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/install.php")))
+	if(pts_test_needs_updated_install($benchmark_identifier))
 	{
 		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the " . $benchmark_title . " test should be re-installed.");
 		// Auto reinstall
@@ -516,6 +516,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	//pts_beep();
 	pts_process_remove($benchmark_identifier);
 	pts_module_process("__post_test_run");
+	pts_test_refresh_install_xml($benchmark_identifier);
 
 	// 0 = main end result
 	return array($END_RESULT);
