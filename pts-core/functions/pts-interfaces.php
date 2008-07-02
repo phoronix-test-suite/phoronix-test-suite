@@ -158,7 +158,7 @@ define("P_OPTION_BATCH_UPLOADRESULTS", "PhoronixTestSuite/Options/BatchMode/Uplo
 define("P_OPTION_BATCH_PROMPTIDENTIFIER", "PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier"); // Batch mode prompt for test identifier
 define("P_OPTION_BATCH_PROMPTSAVENAME", "PhoronixTestSuite/Options/BatchMode/PromptSaveName"); // Batch mode prompt for save results name
 
-define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/Trondheim/UserAgreement"); // PTS user agreement confirmation
+define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/Options/General/UserAgreement"); // PTS user agreement confirmation
 
 //
 // TEST INSTALLATION SPECIFICATION
