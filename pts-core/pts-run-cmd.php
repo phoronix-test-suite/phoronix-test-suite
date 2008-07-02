@@ -340,7 +340,9 @@ switch($COMMAND)
 		if(is_file(MODULE_DIR . $ARG_1 . ".php"))
 		{
 		 	$module = $ARG_1;
-			include(MODULE_DIR . $module . ".php");
+
+			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
+				include(MODULE_DIR . $module . ".php");
 
 			eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 			eval("\$module_version = " . $module . "::module_version;");
