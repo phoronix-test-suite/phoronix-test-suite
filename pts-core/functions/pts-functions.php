@@ -103,7 +103,7 @@ if(function_exists("pts_module_start_process"))
 	pts_module_start_process();
 
 // Phoronix Test Suite - Functions
-function pts_benchmark_names_to_array()
+function pts_test_names_to_array()
 {
 	$benchmark_names = array();
 	foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
@@ -128,38 +128,6 @@ function pts_suite_names_to_array()
 			array_push($benchmark_suites, $benchmark_name);
 	}
 	return $benchmark_suites;
-}
-function pts_benchmark_name_to_identifier($name)
-{
-	if(empty($name))
-		return false;
-
-	$identifier = false;
-
-	foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
-	{
-	 	$xml_parser = new tandem_XmlReader($benchmark_file);
-
-		if($xml_parser->getXMLValue(P_TEST_TITLE) == $name)
-			$identifier = basename($benchmark_file, ".xml");
-	}
-
-	return $identifier;
-}
-function pts_benchmark_identifier_to_name($identifier)
-{
-	if(empty($identifier))
-		return false;
-
-	$name = false;
-
-	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
-	{
-	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
-		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
-	}
-
-	return $name;
 }
 function pts_test_type($identifier)
 {
