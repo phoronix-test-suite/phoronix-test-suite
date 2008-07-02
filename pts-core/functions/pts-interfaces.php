@@ -149,6 +149,7 @@ define("P_OPTION_TEST_SCREENSAVER", "PhoronixTestSuite/Options/Benchmarking/Togg
 define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
 define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory"); // Results save directory
 define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/Benchmarking/CacheDirectory"); // Directory for reading/writing to download cache
+define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/Benchmarking/ResultsDirectory"); // Results save directory
 
 define("P_OPTION_BATCH_CONFIGURED", "PhoronixTestSuite/Options/BatchMode/Configured"); // Batch mode has been configured
 define("P_OPTION_BATCH_SAVERESULTS", "PhoronixTestSuite/Options/BatchMode/SaveResults"); // Batch mode save results
@@ -157,7 +158,6 @@ define("P_OPTION_BATCH_UPLOADRESULTS", "PhoronixTestSuite/Options/BatchMode/Uplo
 define("P_OPTION_BATCH_PROMPTIDENTIFIER", "PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier"); // Batch mode prompt for test identifier
 define("P_OPTION_BATCH_PROMPTSAVENAME", "PhoronixTestSuite/Options/BatchMode/PromptSaveName"); // Batch mode prompt for save results name
 
-define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/Results/Directory"); // Results save directory
 define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/Trondheim/UserAgreement"); // PTS user agreement confirmation
 
 //
