@@ -25,7 +25,7 @@ function pts_recurse_install_benchmark($TO_INSTALL, &$INSTALL_OBJ)
 {
 	$type = pts_test_type($TO_INSTALL);
 
-	if($type == "BENCHMARK")
+	if($type == "TEST")
 	{
 		if(is_array($INSTALL_OBJ))
 			pts_install_external_dependencies_list($TO_INSTALL, $INSTALL_OBJ);
@@ -245,7 +245,7 @@ function pts_download_benchmark_files($Benchmark)
 }
 function pts_install_benchmark($Benchmark)
 {
-	if(pts_test_type($Benchmark) != "BENCHMARK")
+	if(pts_test_type($Benchmark) != "TEST")
 		return;
 
 	if(!pts_test_architecture_supported($Benchmark))
@@ -403,7 +403,7 @@ function pts_install_packages_on_distribution_process($install_objects)
 }
 function pts_install_external_dependencies_list($Benchmark, &$INSTALL_OBJ)
 {
-	if(pts_test_type($Benchmark) != "BENCHMARK")
+	if(pts_test_type($Benchmark) != "TEST")
 		return;
 
 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $Benchmark . ".xml");

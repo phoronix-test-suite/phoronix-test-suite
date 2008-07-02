@@ -251,7 +251,7 @@ switch($COMMAND)
 		
 			echo "\n";
 		}
-		else if($pts_test_type == "BENCHMARK")
+		else if($pts_test_type == "TEST")
 		{
 			$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $ARG_1 . ".xml");
 

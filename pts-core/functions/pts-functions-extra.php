@@ -57,7 +57,7 @@ function pts_tests_in_suite($object)
 			foreach(pts_tests_in_suite($benchmark) as $sub_test)
 				array_push($tests, $sub_test);
 	}
-	else if($type == "BENCHMARK")
+	else if($type == "TEST")
 		return array($object);
 
 	return array_unique($tests);

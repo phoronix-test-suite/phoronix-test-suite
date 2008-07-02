@@ -147,7 +147,7 @@ if($SAVE_RESULTS)
 
 pts_disable_screensaver(); // Kill the screensaver
 
-if($TO_RUN_TYPE == "BENCHMARK")
+if($TO_RUN_TYPE == "TEST")
 {
 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
 	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);

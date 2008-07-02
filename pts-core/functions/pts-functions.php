@@ -137,7 +137,7 @@ function pts_test_type($identifier)
 	$test_type = false;
 
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
-		$test_type = "BENCHMARK";
+		$test_type = "TEST";
 	else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
 		$test_type = "TEST_SUITE";
 	else

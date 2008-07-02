@@ -118,7 +118,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 {
 	$type = pts_test_type($TO_VERIFY);
 
-	if($type == "BENCHMARK")
+	if($type == "TEST")
 	{
 		if(!is_file(TEST_ENV_DIR . $TO_VERIFY . "/pts-install.xml"))
 			array_push($NEEDS_INSTALLING, $TO_VERIFY);
@@ -172,7 +172,7 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 
 			pts_recurse_call_benchmark($sub_suite_benchmarks, $sub_arguments, $save_results, $tandem_xml, $results_identifier, $sub_arguments_description);
 		}
-		else if($test_type == "BENCHMARK")
+		else if($test_type == "TEST")
 		{
 			$test_result = pts_run_benchmark($benchmarks_array[$i], $arguments_array[$i], $arguments_description[$i]);
 
