@@ -81,7 +81,7 @@ define("PTS_USER_DIR", getenv("PTS_USER_DIR"));
 define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 pts_config_init();
-define("BENCHMARK_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
+define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
 define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
 
@@ -259,23 +259,23 @@ function pts_save_result($save_to = null, $save_results = null)
 }
 function pts_process_register($process)
 {
-	if(!is_dir(BENCHMARK_ENV_DIR))
-		mkdir(BENCHMARK_ENV_DIR);
-	if(!is_dir(BENCHMARK_ENV_DIR . ".processes"))
-		mkdir(BENCHMARK_ENV_DIR . ".processes");
+	if(!is_dir(TEST_ENV_DIR))
+		mkdir(TEST_ENV_DIR);
+	if(!is_dir(TEST_ENV_DIR . ".processes"))
+		mkdir(TEST_ENV_DIR . ".processes");
 
-	return file_put_contents(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p", getmypid());
+	return file_put_contents(TEST_ENV_DIR . ".processes/" . $process . ".p", getmypid());
 }
 function pts_process_remove($process)
 {
-	if(is_file(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p"))
-		return unlink(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p");
+	if(is_file(TEST_ENV_DIR . ".processes/" . $process . ".p"))
+		return unlink(TEST_ENV_DIR . ".processes/" . $process . ".p");
 }
 function pts_process_active($process)
 {
-	if(is_file(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p"))
+	if(is_file(TEST_ENV_DIR . ".processes/" . $process . ".p"))
 	{
-		$pid = trim(file_get_contents(BENCHMARK_ENV_DIR . ".processes/" . $process . ".p"));
+		$pid = trim(file_get_contents(TEST_ENV_DIR . ".processes/" . $process . ".p"));
 		$ps = trim(shell_exec("ps -p $pid 2>&1"));
 
 		if(strpos($ps, "php") > 0)

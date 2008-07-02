@@ -112,9 +112,9 @@ function pts_download_benchmark_files($Benchmark)
 				$package_filename[$i] = basename($package_url[$i]);
 
 			if($download_to[$i] == "SHARED")
-				$download_location = BENCHMARK_ENV_DIR . "pts-shared/";
+				$download_location = TEST_ENV_DIR . "pts-shared/";
 			else
-				$download_location = BENCHMARK_ENV_DIR . $Benchmark . "/";
+				$download_location = TEST_ENV_DIR . $Benchmark . "/";
 
 			if(!is_file($download_location . $package_filename[$i]))
 			{
@@ -130,9 +130,9 @@ function pts_download_benchmark_files($Benchmark)
 							echo pts_string_header("There is not enough temporary space (at " . PTS_TEMP_DIR . ") for this test.");
 							pts_exit();
 						}
-						if(ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576) < $size)
+						if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
 						{
-							echo pts_string_header("There is not enough space (at " . BENCHMARK_ENV_DIR . ") for this test.");
+							echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
 							pts_exit();
 						}
 					}
@@ -258,11 +258,11 @@ function pts_install_benchmark($Benchmark)
 
 	if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/validate-install.sh"))
 	{
-		$custom_validated_output = pts_exec("sh " . TEST_RESOURCE_DIR . $Benchmark . "/validate-install.sh " . BENCHMARK_ENV_DIR . $Benchmark);
+		$custom_validated_output = pts_exec("sh " . TEST_RESOURCE_DIR . $Benchmark . "/validate-install.sh " . TEST_ENV_DIR . $Benchmark);
 	}
 	else if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/validate-install.php"))
 	{
-		$custom_validated_output = pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/validate-install.php " . BENCHMARK_ENV_DIR . $Benchmark);
+		$custom_validated_output = pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/validate-install.php " . TEST_ENV_DIR . $Benchmark);
 	}
 	if(!empty($custom_validated_output))
 	{
@@ -274,14 +274,14 @@ function pts_install_benchmark($Benchmark)
 
 	if(pts_test_needs_updated_install($Benchmark) || defined("PTS_FORCE_INSTALL"))
 	{
-		if(!is_dir(BENCHMARK_ENV_DIR))
-			mkdir(BENCHMARK_ENV_DIR);
+		if(!is_dir(TEST_ENV_DIR))
+			mkdir(TEST_ENV_DIR);
 
-		if(!is_dir(BENCHMARK_ENV_DIR . $Benchmark))
-			mkdir(BENCHMARK_ENV_DIR . $Benchmark);
+		if(!is_dir(TEST_ENV_DIR . $Benchmark))
+			mkdir(TEST_ENV_DIR . $Benchmark);
 
-		if(!is_dir(BENCHMARK_ENV_DIR . "pts-shared"))
-			mkdir(BENCHMARK_ENV_DIR . "pts-shared");
+		if(!is_dir(TEST_ENV_DIR . "pts-shared"))
+			mkdir(TEST_ENV_DIR . "pts-shared");
 
 		pts_download_benchmark_files($Benchmark);
 
@@ -295,19 +295,19 @@ function pts_install_benchmark($Benchmark)
 
 			echo pts_string_header($install_header);
 
-			if(!empty($size) && ceil(disk_free_space(BENCHMARK_ENV_DIR) / 1048576) < $size)
+			if(!empty($size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
 			{
-				echo pts_string_header("There is not enough space (at " . BENCHMARK_ENV_DIR . ") for this test to be installed.");
+				echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test to be installed.");
 				pts_exit();
 			}
 
 			if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.sh"))
 			{
-				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && sh " . TEST_RESOURCE_DIR . $Benchmark . "/install.sh " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
+				echo pts_exec("cd " .  TEST_ENV_DIR . $Benchmark . "/ && sh " . TEST_RESOURCE_DIR . $Benchmark . "/install.sh " . TEST_ENV_DIR . $Benchmark) . "\n";
 			}
 			else if(is_file(TEST_RESOURCE_DIR . $Benchmark . "/install.php"))
 			{
-				echo pts_exec("cd " .  BENCHMARK_ENV_DIR . $Benchmark . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/install.php " . BENCHMARK_ENV_DIR . $Benchmark) . "\n";
+				echo pts_exec("cd " .  TEST_ENV_DIR . $Benchmark . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $Benchmark . "/install.php " . TEST_ENV_DIR . $Benchmark) . "\n";
 			}
 			pts_test_generate_install_xml($Benchmark);
 			pts_module_process("__post_test_install");

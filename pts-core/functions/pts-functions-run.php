@@ -120,7 +120,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 
 	if($type == "BENCHMARK")
 	{
-		if(!is_file(BENCHMARK_ENV_DIR . $TO_VERIFY . "/pts-install.xml"))
+		if(!is_file(TEST_ENV_DIR . $TO_VERIFY . "/pts-install.xml"))
 			array_push($NEEDS_INSTALLING, $TO_VERIFY);
 	}
 	else if($type == "TEST_SUITE")
@@ -207,20 +207,20 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 
 			if(!empty($default_test_descriptor))
 				$description = $default_test_descriptor;
-			else if(is_file(BENCHMARK_ENV_DIR . $benchmark . "/pts-test-description"))
-				$description = @file_get_contents(BENCHMARK_ENV_DIR . $benchmark . "/pts-test-description");
+			else if(is_file(TEST_ENV_DIR . $benchmark . "/pts-test-description"))
+				$description = @file_get_contents(TEST_ENV_DIR . $benchmark . "/pts-test-description");
 			else
 				$description = "Phoronix Test Suite v" . PTS_VERSION;
 		}
 		if(empty($benchmark_version))
 		{
-			if(is_file(BENCHMARK_ENV_DIR . $benchmark . "/pts-test-version"))
-				$benchmark_version = @file_get_contents(BENCHMARK_ENV_DIR . $benchmark . "/pts-test-version");
+			if(is_file(TEST_ENV_DIR . $benchmark . "/pts-test-version"))
+				$benchmark_version = @file_get_contents(TEST_ENV_DIR . $benchmark . "/pts-test-version");
 		}
 		if(empty($result_scale))
 		{
-			if(is_file(BENCHMARK_ENV_DIR . $benchmark . "/pts-results-scale"))
-				$result_scale = trim(@file_get_contents(BENCHMARK_ENV_DIR . $benchmark . "/pts-results-scale"));
+			if(is_file(TEST_ENV_DIR . $benchmark . "/pts-results-scale"))
+				$result_scale = trim(@file_get_contents(TEST_ENV_DIR . $benchmark . "/pts-results-scale"));
 		}
 		if(empty($result_format))
 		{
@@ -326,13 +326,13 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(empty($result_quantifier))
 	{
-		if(is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-result-quantifier"))
-			$result_quantifier = @trim(file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-result-quantifier"));
+		if(is_file(TEST_ENV_DIR . $benchmark_identifier . "/pts-result-quantifier"))
+			$result_quantifier = @trim(file_get_contents(TEST_ENV_DIR . $benchmark_identifier . "/pts-result-quantifier"));
 	}
 
-	if(is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . '/' . $execute_binary) || is_link(BENCHMARK_ENV_DIR . $benchmark_identifier . '/' . $execute_binary))
+	if(is_file(TEST_ENV_DIR . $benchmark_identifier . '/' . $execute_binary) || is_link(TEST_ENV_DIR . $benchmark_identifier . '/' . $execute_binary))
 	{
-		$to_execute = BENCHMARK_ENV_DIR . $benchmark_identifier . '/';
+		$to_execute = TEST_ENV_DIR . $benchmark_identifier . '/';
 	}
 	else
 	{
@@ -365,12 +365,12 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . BENCHMARK_ENV_DIR . $benchmark_identifier);
+		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . TEST_ENV_DIR . $benchmark_identifier);
 	}
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . BENCHMARK_ENV_DIR . $benchmark_identifier);
+		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . TEST_ENV_DIR . $benchmark_identifier);
 	}
 
 	if(!empty($pre_run_message))
@@ -392,7 +392,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		{
 			if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
 			{
-				$BENCHMARK_RESULTS = pts_exec("cd " .  BENCHMARK_ENV_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php \"" . $BENCHMARK_RESULTS . "\"");
+				$BENCHMARK_RESULTS = pts_exec("cd " .  TEST_ENV_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php \"" . $BENCHMARK_RESULTS . "\"");
 			}
 
 			if(!empty($BENCHMARK_RESULTS))
@@ -404,16 +404,16 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
 	{
-		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . BENCHMARK_ENV_DIR . $benchmark_identifier);
+		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . TEST_ENV_DIR . $benchmark_identifier);
 	}
 	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php"))
 	{
-		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php " . BENCHMARK_ENV_DIR . $benchmark_identifier);
+		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php " . TEST_ENV_DIR . $benchmark_identifier);
 	}
 
 	// End
-	if(empty($result_scale) && is_file(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-results-scale"))
-			$result_scale = trim(@file_get_contents(BENCHMARK_ENV_DIR . $benchmark_identifier . "/pts-results-scale"));
+	if(empty($result_scale) && is_file(TEST_ENV_DIR . $benchmark_identifier . "/pts-results-scale"))
+			$result_scale = trim(@file_get_contents(TEST_ENV_DIR . $benchmark_identifier . "/pts-results-scale"));
 
 	foreach(pts_env_variables() as $key => $value)
 		$arguments_description = str_replace("$" . $key, $value, $arguments_description);

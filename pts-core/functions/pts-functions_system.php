@@ -295,7 +295,7 @@ function pts_report_virtualized_mode()
 }
 function filesystem_type()
 {
-	$fs = shell_exec("stat " . BENCHMARK_ENV_DIR . " -L -f -c %T 2> /dev/null");
+	$fs = shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null");
 
 	if(empty($fs))
 		return "Unknown";

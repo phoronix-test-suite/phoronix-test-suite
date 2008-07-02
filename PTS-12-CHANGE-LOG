@@ -26,3 +26,4 @@
 - Change location of results directory tag within the user-config.xml configuration
 - Change location of the user agreement check-sum tag within the user-config.xml configuration
 - Add LoadModules tag to user-config.xml with support for loading modules every time upon running PTS
+- Change BENCHMARK_ENV_DIR to TEST_ENV_DIR definition

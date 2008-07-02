@@ -26,7 +26,7 @@ function pts_test_needs_updated_install($identifier)
 {
 	$needs_install = FALSE;
 
-	if(!is_file(BENCHMARK_ENV_DIR . $identifier . "/pts-install.xml")  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier))
+	if(!is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml")  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier))
 		$needs_install = TRUE;
 
 	return $needs_install;
@@ -46,9 +46,9 @@ function pts_test_installed_checksum_installer($identifier)
 {
 	$version = "";
 
-	if(is_file(BENCHMARK_ENV_DIR . $identifier . "/pts-install.xml"))
+	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(BENCHMARK_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
+	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
 		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
 	}
 
@@ -70,9 +70,9 @@ function pts_test_installed_profile_version($identifier)
 {
 	$version = "";
 
-	if(is_file(BENCHMARK_ENV_DIR . $identifier . "/pts-install.xml"))
+	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(BENCHMARK_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
+	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
 		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
 	}
 
@@ -89,13 +89,13 @@ function pts_test_generate_install_xml($identifier)
 	$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, "0000-00-00 00:00:00");
 	$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, "0");
 
-	file_put_contents(BENCHMARK_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
+	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
 }
 function pts_test_refresh_install_xml($identifier)
 {
-	if(is_file(BENCHMARK_ENV_DIR . $identifier . "/pts-install.xml"))
+	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(BENCHMARK_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
+	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
 		$xml_writer = new tandem_XmlWriter();
 
 		$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $xml_parser->getXMLValue(P_INSTALL_TEST_NAME));
@@ -105,7 +105,7 @@ function pts_test_refresh_install_xml($identifier)
 		$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, date("Y-m-d H:i:s"));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1);
 
-		file_put_contents(BENCHMARK_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
+		file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
 		return TRUE;
 	}
 	return FALSE;

@@ -60,10 +60,10 @@ fi
 
 case "$1" in
 "install")
-	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
+	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $2
 	;;
 "force-install")
-	$PHP_BIN pts-core/pts-run-cmd.php FORCE_INSTALL_BENCHMARK $2
+	$PHP_BIN pts-core/pts-run-cmd.php FORCE_INSTALL_TEST $2
 	;;
 "install-dependencies")
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_EXTERNAL_DEPENDENCIES $2
@@ -82,12 +82,12 @@ case "$1" in
 	;;
 "benchmark")
 	export SILENT_INSTALL=1
-	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
+	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $2
 	$PHP_BIN pts-core/pts-run-benchmark.php $2
 	;;
 "batch-benchmark")
 	export SILENT_INSTALL=1
-	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_BENCHMARK $2
+	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $2
 	$PHP_BIN pts-core/pts-run-benchmark.php $2 BATCH
 	;;
 "merge-results")

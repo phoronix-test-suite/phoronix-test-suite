@@ -118,23 +118,23 @@ function pts_generate_download_cache()
 			}
 			else
 			{
-				if(is_file(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED")
+				if(is_file(TEST_ENV_DIR . $test . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED")
 				{
-					if(empty($package_md5[$i]) || md5_file(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i]) == $package_md5[$i])
+					if(empty($package_md5[$i]) || md5_file(TEST_ENV_DIR . $test . "/" . $package_filename[$i]) == $package_md5[$i])
 					{
 						echo "\tCaching: " . $package_filename[$i] . "\n";
 
-						if(copy(BENCHMARK_ENV_DIR . $test . "/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+						if(copy(TEST_ENV_DIR . $test . "/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
 							$cached = true;
 					}
 				}
-				else if(is_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED")
+				else if(is_file(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED")
 				{
-					if(empty($package_md5[$i]) || md5_file(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i]) == $package_md5[$i])
+					if(empty($package_md5[$i]) || md5_file(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i]) == $package_md5[$i])
 					{
 						echo "\tCaching: " . $package_filename[$i] . "\n";
 
-						if(copy(BENCHMARK_ENV_DIR . "pts-shared/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+						if(copy(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
 							$cached = true;
 					}
 				}

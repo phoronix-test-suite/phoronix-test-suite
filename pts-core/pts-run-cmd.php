@@ -62,8 +62,8 @@ switch($COMMAND)
 			}
 		}
 		break;
-	case "FORCE_INSTALL_BENCHMARK":
-	case "INSTALL_BENCHMARK":
+	case "FORCE_INSTALL_TEST":
+	case "INSTALL_TEST":
 		require_once("pts-core/functions/pts-functions-install.php");
 
 		if(empty($ARG_1))
@@ -71,7 +71,7 @@ switch($COMMAND)
 			pts_exit("\nThe benchmark or suite name to install must be supplied.\n");
 		}
 
-		if($COMMAND == "FORCE_INSTALL_BENCHMARK")
+		if($COMMAND == "FORCE_INSTALL_TEST")
 			define("PTS_FORCE_INSTALL", 1);
 
 		$ARG_1 = strtolower($ARG_1);
@@ -198,7 +198,7 @@ switch($COMMAND)
 		break;
 	case "LIST_INSTALLED_TESTS":
 		echo pts_string_header("Phoronix Test Suite - Installed Tests");
-		foreach(glob(BENCHMARK_ENV_DIR . "*/pts-install.xml") as $install_file)
+		foreach(glob(TEST_ENV_DIR . "*/pts-install.xml") as $install_file)
 		{
 			$install_file_arr = explode("/", $install_file);
 			$identifier = $install_file_arr[count($install_file_arr) - 2];
@@ -289,9 +289,9 @@ switch($COMMAND)
 			if(!empty($test_estimated_length))
 				echo "Estimated Length: " . pts_estimated_time_string($test_estimated_length) . "\n";
 
-			if(is_file(BENCHMARK_ENV_DIR . $ARG_1 . "/pts-install.xml"))
+			if(is_file(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml"))
 			{
-				$xml_parser = new tandem_XmlReader(BENCHMARK_ENV_DIR . $ARG_1 . "/pts-install.xml", FALSE);
+				$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml", FALSE);
 
 				echo "\nTest Installed: Yes\n";
 				echo "Last Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME) . "\n";
