@@ -53,7 +53,14 @@ function pts_load_modules()
 	// Check for modules to auto-load from the configuration file
 	if(strlen(($load_modules = pts_read_user_config(P_OPTION_LOAD_MODULES, ""))) > 0)
 		foreach(explode(",", $load_modules) as $module)
-			array_push($GLOBALS["PTS_MODULES"], trim($module));
+		{
+			$module_r = explode("=", $module);
+
+			if(count($module_r) == 2)
+				pts_module_set_environment_variable(trim($module_r[0]), trim($module_r[1]));
+			else
+				array_push($GLOBALS["PTS_MODULES"], trim($module));
+		}
 
 	// Check for modules to load manually in PTS_MODULES
 	if(($load_modules = getenv("PTS_MODULES")) !== FALSE)
@@ -123,13 +130,16 @@ function pts_module_process_extensions($extensions)
 		foreach($extensions as $ev)
 		{
 			$ev_r = explode("=", $ev);
-
-			if(getenv($ev_r[0]) == FALSE)
-				putenv($ev);
+			pts_module_set_environment_variable($ev_r[1], $ev_r[2]);
 		}
 
 		pts_auto_detect_modules(true);
 	}
+}
+function pts_module_set_environment_variable($name, $value)
+{
+	if(getenv($name) == FALSE)
+		putenv($name . "=" . $value);
 }
 
 ?>
