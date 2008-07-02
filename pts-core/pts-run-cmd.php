@@ -289,6 +289,17 @@ switch($COMMAND)
 			if(!empty($test_estimated_length))
 				echo "Estimated Length: " . pts_estimated_time_string($test_estimated_length) . "\n";
 
+			if(is_file(BENCHMARK_ENV_DIR . $ARG_1 . "/pts-install.xml"))
+			{
+				$xml_parser = new tandem_XmlReader(BENCHMARK_ENV_DIR . $ARG_1 . "/pts-install.xml", FALSE);
+
+				echo "\nTest Installed: Yes\n";
+				echo "Last Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME) . "\n";
+				echo "Times Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) . "\n";
+			}
+			else
+				echo "\nTest Installed: No\n";
+
 			if(!empty($test_dependencies))
 			{
 				echo "\nSoftware Dependencies:\n";
