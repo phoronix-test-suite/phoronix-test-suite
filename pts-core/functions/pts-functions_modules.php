@@ -50,10 +50,20 @@ function pts_auto_detect_modules($load_here = FALSE)
 }
 function pts_load_modules()
 {
+	// Check for modules to auto-load from the configuration file
+	if(strlen(($load_modules = pts_read_user_config(P_OPTION_LOAD_MODULES, ""))) > 0)
+		foreach(explode(",", $load_modules) as $module)
+			array_push($GLOBALS["PTS_MODULES"], trim($module));
+
 	// Check for modules to load manually in PTS_MODULES
 	if(($load_modules = getenv("PTS_MODULES")) !== FALSE)
 		foreach(explode(",", $load_modules) as $module)
-			array_push($GLOBALS["PTS_MODULES"], trim($module));
+		{
+			$module = trim($module);
+
+			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
+				array_push($GLOBALS["PTS_MODULES"], trim($module));
+		}
 
 	// Detect modules to load automatically
 	pts_auto_detect_modules();

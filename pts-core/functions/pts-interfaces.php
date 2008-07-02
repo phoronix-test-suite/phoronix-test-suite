@@ -159,6 +159,7 @@ define("P_OPTION_BATCH_PROMPTIDENTIFIER", "PhoronixTestSuite/Options/BatchMode/P
 define("P_OPTION_BATCH_PROMPTSAVENAME", "PhoronixTestSuite/Options/BatchMode/PromptSaveName"); // Batch mode prompt for save results name
 
 define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/Options/General/UserAgreement"); // PTS user agreement confirmation
+define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/General/LoadModules"); // Modules to load by default
 
 //
 // TEST INSTALLATION SPECIFICATION

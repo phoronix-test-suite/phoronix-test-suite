@@ -25,3 +25,4 @@
 - With info option, when a test is specified, let the user know whether it's installed. If it's installed, print the last time the test was executed and the total number of times it was executed.
 - Change location of results directory tag within the user-config.xml configuration
 - Change location of the user agreement check-sum tag within the user-config.xml configuration
+- Add LoadModules tag to user-config.xml with support for loading modules every time upon running PTS
