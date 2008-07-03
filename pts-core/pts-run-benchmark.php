@@ -324,7 +324,8 @@ if($SAVE_RESULTS)
 	$check_processes = array(
 		"Compiz" => array("compiz", "compiz.real"),
 		"Firefox" => array("firefox", "mozilla-firefox", "mozilla-firefox-bin", "firefox-bin"),
-		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin", "thunderbird-bin")
+		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin", "thunderbird-bin"),
+		"BOINC" => array("boinc", "boinc_client")
 		);
 
 	$test_notes = pts_process_running_string($check_processes);

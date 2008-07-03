@@ -5,6 +5,7 @@ Phoronix Test Suite
 - Run the results parser from within the test's environment directory
 - Add Bonnie++ test profile (profile named bonnie)
 - Rename "Advanced Control and Power Interface" to ACPI in the compliance-acpi test profile
+- Add BOINC to active process checking during the testing process
 
 Phoronix Test Suite 1.0.2
 June 28, 2008
