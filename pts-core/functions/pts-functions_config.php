@@ -234,7 +234,7 @@ function pts_current_user()
 }
 function pts_download_cache()
 {
-	$dir = getenv("DOWNLOAD_CACHE");
+	$dir = getenv("PTS_DOWNLOAD_CACHE");
 
 	if(empty($dir))
 		$dir = pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/");

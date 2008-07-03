@@ -28,3 +28,4 @@
 - Add LoadModules tag to user-config.xml with support for loading modules every time upon running PTS
 - Change BENCHMARK_ENV_DIR to TEST_ENV_DIR definition
 - pts_test_type() now returns TEST instead of BENCHMARK
+- Change DOWNLOAD_CACHE environmental variable to PTS_DOWNLOAD_CACHE for manual override of the download cache location
