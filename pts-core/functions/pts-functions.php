@@ -84,6 +84,7 @@ pts_config_init();
 define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
 define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
+pts_extended_init();
 
 // Register PTS Process
 
@@ -252,7 +253,10 @@ function pts_save_result($save_to = null, $save_results = null)
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-		//if(defined("TEST_RESULTS_IDENTIFIER"))
+		if(defined("TEST_RESULTS_IDENTIFIER"))
+		{
+			// Save verbose system information here
+		}
 	}
 
 	return $bool;

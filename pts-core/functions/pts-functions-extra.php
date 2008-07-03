@@ -90,6 +90,11 @@ function pts_generate_download_cache()
 {
 	if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
 		mkdir(PTS_DOWNLOAD_CACHE_DIR);
+	else
+	{
+		if(is_file(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto"))
+			unlink(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto");
+	}
 
 	$xml_writer = new tandem_XmlWriter();
 	$xml_writer->addXmlObject(P_CACHE_PTS_VERSION, -1, PTS_VERSION);
