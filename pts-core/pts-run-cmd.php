@@ -491,8 +491,10 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n" . "Diagnostics Dump");
 		$pts_defined_constants = get_defined_constants(true);
 			foreach($pts_defined_constants["user"] as $constant => $constant_value)
-				if(substr($constant, 0, 2) != "P_")
+			{
+				if(substr($constant, 0, 2) != "P_" && substr($constant, 0, 3) != "IS_")
 					echo $constant . " = " . $constant_value . "\n";
+			}
 
 			echo "\nEnvironmental Variables (accessible via test scripts):\n";
 			foreach(pts_env_variables() as $var => $var_value)
