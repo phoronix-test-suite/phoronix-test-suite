@@ -35,14 +35,19 @@ function pts_init()
 	if(strpos($uname_o, "linux") !== FALSE)
 	{
 		define("OPERATING_SYSTEM", "Linux");
-		define("IS_LINUX", "1");
+		define("IS_LINUX", true);
 	}
 	else
 	{
 		define("OPERATING_SYSTEM", "Unknown");
-		define("IS_UNKNOWN", "1");
+		define("IS_UNKNOWN", true);
 	}
 
+	// Set the OSes that aren't the OS being used...
+	if(!defined("IS_LINUX"))
+		define("IS_LINUX", false);
+	if(!defined("IS_UNKNOWN"))
+		define("IS_UNKNOWN", false);
 }
 
 ?>
