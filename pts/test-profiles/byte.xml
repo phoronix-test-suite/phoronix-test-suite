@@ -1,0 +1,46 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>0.2</DownloadSize>
+		<EnvironmentSize>0.5</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>BYTE Unix Benchmarks</Title>
+		<Version>3.6</Version>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>LPS</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This test runs the ANSI C version of SciMark 2.0, which is a benchmark for scientific and numerical computing developed by programmers at the National Institute of Standards and Technology. This test is made up of Fast Foruier Transform, Jacobi Successive Over-relaxation, Monte Carlo, Sparse Matrix Multiply, and dense LU matrix factorization benchmarks.</Description>
+                <ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Computational Test</DisplayName>
+			<Identifier>compute-test</Identifier>
+			<ArgumentName>TEST_</ArgumentName>
+			<Menu>
+				<Entry>
+					<Name>Dhrystone 2</Name>
+					<Value>DHRY2</Value>
+				</Entry>
+				<Entry>
+					<Name>Register Arithmetic</Name>
+					<Value>REGISTER</Value>
+				</Entry>
+				<Entry>
+					<Name>Integer Arithmetic</Name>
+					<Value>INT</Value>
+				</Entry>
+				<Entry>
+					<Name>Floating-Point Arithmetic</Name>
+					<Value>FLOAT</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>

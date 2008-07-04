@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/byte-benchmark-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/byte-benchmark-1.tar.gz</URL>
+			<MD5>bd9f2fe88fd35aad9e1199709df802f9</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
