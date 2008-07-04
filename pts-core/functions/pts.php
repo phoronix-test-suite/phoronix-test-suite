@@ -25,4 +25,24 @@ define("PTS_VERSION", "1.0.5");
 define("PTS_CODENAME", "TRONDHEIM");
 define("PTS_TYPE", "DESKTOP");
 
+// Initalize common / needed PTS start-up work
+pts_init();
+
+function pts_init()
+{
+	$uname_o = strtolower(trim(shell_exec("uname -o")));
+
+	if(strpos($uname_o, "linux") !== FALSE)
+	{
+		define("OPERATING_SYSTEM", "Linux");
+		define("IS_LINUX", "1");
+	}
+	else
+	{
+		define("OPERATING_SYSTEM", "Unknown");
+		define("IS_UNKNOWN", "1");
+	}
+
+}
+
 ?>

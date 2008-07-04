@@ -59,7 +59,7 @@ function __autoload($to_load)
 		require_once(PTS_DIR . "pts-core/objects/" . $to_load . ".php");
 }
 
-// Load OS-specific functions
+// Load Main Functions
 require_once("pts-core/functions/pts.php");
 require_once("pts-core/functions/pts-interfaces.php");
 require_once("pts-core/functions/pts-functions_config.php");
