@@ -39,6 +39,9 @@ then
 elif [ -x /usr/bin/php ] || [ -x /usr/local/bin/php ]
 then
 	export PHP_BIN="php"
+elif [ -x /usr/php5/bin/php ]
+then
+	export PHP_BIN="/usr/php5/bin/php"
 else
 	export PHP_BIN=""
 fi

@@ -23,8 +23,17 @@
 
 function cpu_core_count()
 {
-	$processors = read_cpuinfo("processor");
-	$info = count($processors);
+	if(IS_SOLARIS)
+	{
+		$info = trim(shell_exec("psrinfo"));
+		$info = explode("\n", $info);
+		$info = count($info);
+	}
+	else
+	{
+		$processors = read_cpuinfo("processor");
+		$info = count($processors);
+	}
 
 	return $info;
 }
@@ -81,7 +90,15 @@ function processor_string()
 	}
 
 	if(empty($info))
+	{
+		if(IS_SOLARIS)
+		{
+			$info = trim(shell_exec("dmesg | grep cpu0"));
+			$info = substr($info, strrpos($info, "cpu0:") + 6);
+		}
+
 		$info = "Unknown";
+	}
 
 	return $info;
 }
@@ -178,8 +195,15 @@ function current_processor_frequency($cpu_core = 0)
 			$info = $cpu_speeds[$cpu_core];
 		else
 			$info = $cpu_speeds[0];
-		
-		        $info = pts_trim_double(intval($info), 2);
+
+		$info = pts_trim_double(intval($info), 2);
+	}
+	else if(IS_SOLARIS)
+	{
+		$info = shell_exec("psrinfo -v | grep MHz");
+		$info = substr($info, strrpos($info, "at") + 3);
+		$info = substr($info, 0, strpos($info, "MHz"));
+		$info = pts_trim_double(intval($info), 2);
 	}
 	else
 		$info = 0;

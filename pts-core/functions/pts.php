@@ -37,6 +37,11 @@ function pts_init()
 		define("OPERATING_SYSTEM", "Linux");
 		define("IS_LINUX", true);
 	}
+	else if(strpos($uname_o, "solaris") !== FALSE)
+	{
+		define("OPERATING_SYSTEM", "Solaris");
+		define("IS_SOLARIS", true);
+	}
 	else
 	{
 		define("OPERATING_SYSTEM", "Unknown");
@@ -46,6 +51,8 @@ function pts_init()
 	// Set the OSes that aren't the OS being used...
 	if(!defined("IS_LINUX"))
 		define("IS_LINUX", false);
+	if(!defined("IS_SOLARIS"))
+		define("IS_SOLARIS", false);
 	if(!defined("IS_UNKNOWN"))
 		define("IS_UNKNOWN", false);
 }

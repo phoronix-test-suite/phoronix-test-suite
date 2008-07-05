@@ -122,6 +122,12 @@ function memory_mb_capacity()
 		$info = intval(trim(substr($info, 0, strpos($info, "kB"))));
 		$info = floor($info / 1024);
 	}
+	else if(IS_SOLARIS)
+	{
+		$info = shell_exec("prtconf | grep Memory");
+		$info = substr($info, strpos($info, ":") + 2));
+		$info = substr($info, 0, strpos($info, "Megabytes"));
+	}
 	else
 		$info = "Unknown";
 
@@ -187,10 +193,20 @@ function operating_system_release()
 				$file = file_get_contents($files[0]);
 				$os = substr($file, 0, strpos($file, "\n"));
 			}
+			else
+			{
+				if(is_file("/etc/release"))
+				{
+					$file = file_get_contents("/etc/release");
+					$os = substr($file, 0, strpos($file, "\n"));
+				}
+			}
 		}
 	}
 	else
 		$os = $vendor . " " . $version;
+
+	$os = trim($os);
 
 	return $os;
 }
