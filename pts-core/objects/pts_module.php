@@ -90,6 +90,10 @@ class pts_module
 
 		return FALSE;
 	}
+	public static function pts_fork_function($function)
+	{
+		self::pts_timed_function(-1, $function);
+	}
 	public static function pts_timed_function($time, $function)
 	{
 		if($time < 15 || $time > 300)
@@ -107,10 +111,16 @@ class pts_module
 				}
 				else
 				{
-					while(!defined("PTS_TESTING_DONE") && !defined("PTS_END_TIME") && pts_process_active("phoronix-test-suite"))
+					$loop_continue = true;
+
+					while(!defined("PTS_TESTING_DONE") && !defined("PTS_END_TIME") && pts_process_active("phoronix-test-suite") && $loop_continue)
 					{
 						eval(self::module_name() . "::" . $function . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
-						sleep($time);
+
+						if($time > 0)
+							sleep($time);
+						else if($time == -1)
+							$loop_continue = false;
 					}
 					exit(0);
 				}
