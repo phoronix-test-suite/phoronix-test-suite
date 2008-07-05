@@ -469,7 +469,7 @@ function pts_clean_information_string($str)
 	foreach($change_phrases as $original_phrase => $new_phrase)
 		$str = str_ireplace($original_phrase, $new_phrase, $str);
 
-	$str = preg_replace("/\s+/", " ", $str);
+	$str = trim(preg_replace("/\s+/", " ", $str));
 
 	return $str;
 }

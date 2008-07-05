@@ -284,6 +284,8 @@ function graphics_processor_string()
 
 	}
 
+	$info = pts_clean_information_string($info);
+
 	return $info;
 }
 function graphics_subsystem_version()

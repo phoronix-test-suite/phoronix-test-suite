@@ -125,7 +125,7 @@ function memory_mb_capacity()
 	else if(IS_SOLARIS)
 	{
 		$info = shell_exec("prtconf | grep Memory");
-		$info = substr($info, strpos($info, ":") + 2));
+		$info = substr($info, strpos($info, ":") + 2);
 		$info = substr($info, 0, strpos($info, "Megabytes"));
 	}
 	else
@@ -277,7 +277,7 @@ function main_system_hardware_string()
 	}
 	else
 	{
-		$info = trim(pts_clean_information_string($vendor . " " . $product));
+		$info = pts_clean_information_string($vendor . " " . $product);
 	}
 
 	return $info;

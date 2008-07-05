@@ -95,9 +95,10 @@ function processor_string()
 		{
 			$info = trim(shell_exec("dmesg | grep cpu0"));
 			$info = substr($info, strrpos($info, "cpu0:") + 6);
+			$info = append_processor_frequency(pts_clean_information_string($current_string), 0);
 		}
-
-		$info = "Unknown";
+		else
+			$info = "Unknown";
 	}
 
 	return $info;
@@ -134,7 +135,7 @@ function processor_frequency($cpu_core = 0)
 		$info = pts_trim_double(intval($info) / 1000, 2);
 	}
 	else
-		$info = 0;
+		$info = current_processor_frequency($cpu_core);
 
 	return $info;
 }
