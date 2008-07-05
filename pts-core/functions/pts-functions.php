@@ -320,7 +320,7 @@ function pts_env_variables()
 	"VIDEO_MEMORY" => graphics_memory_capacity(),
 	"VIDEO_WIDTH" => current_screen_width(),
 	"VIDEO_HEIGHT" => current_screen_height(),
-	"OPERATING_SYSTEM" => operating_system_release(),
+	"OPERATING_SYSTEM" => pts_vendor_identifier(),
 	"OS" => os_vendor(),
 	"OS_VERSION" => os_version(),
 	"OS_ARCH" => kernel_arch(),

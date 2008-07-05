@@ -95,7 +95,7 @@ function processor_string()
 		{
 			$info = trim(shell_exec("dmesg | grep cpu0"));
 			$info = substr($info, strrpos($info, "cpu0:") + 6);
-			$info = append_processor_frequency(pts_clean_information_string($current_string), 0);
+			$info = append_processor_frequency(pts_clean_information_string($info), 0);
 		}
 		else
 			$info = "Unknown";
@@ -204,7 +204,7 @@ function current_processor_frequency($cpu_core = 0)
 		$info = shell_exec("psrinfo -v | grep MHz");
 		$info = substr($info, strrpos($info, "at") + 3);
 		$info = substr($info, 0, strpos($info, "MHz"));
-		$info = pts_trim_double(intval($info), 2);
+		$info = pts_trim_double(intval($info) / 1000, 2);
 	}
 	else
 		$info = 0;
