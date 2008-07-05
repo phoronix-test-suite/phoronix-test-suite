@@ -31,3 +31,4 @@
 - Change DOWNLOAD_CACHE environmental variable to PTS_DOWNLOAD_CACHE for manual override of the download cache location
 - Add operating system detection support
 - pts-core: Time-zone used is now set to UTC
+- Add support for OpenSolaris 2008.05 operating system
