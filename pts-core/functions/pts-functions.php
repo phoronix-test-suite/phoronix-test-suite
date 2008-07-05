@@ -67,6 +67,7 @@ require_once("pts-core/functions/pts-functions_system.php");
 require_once("pts-core/functions/pts-functions_tests.php");
 require_once("pts-core/functions/pts-functions_modules.php");
 
+date_default_timezone_set("UTC");
 define("THIS_RUN_TIME", time());
 
 define("XML_PROFILE_DIR", PTS_DIR . "pts/test-profiles/");
