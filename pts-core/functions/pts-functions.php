@@ -257,6 +257,30 @@ function pts_save_result($save_to = null, $save_results = null)
 		if(defined("TEST_RESULTS_IDENTIFIER"))
 		{
 			// Save verbose system information here
+			if(!is_dir($save_to_dir . "/system-information/"))
+				mkdir($save_to_dir . "/system-information/");
+			if(!is_dir($save_to_dir . "/system-information/" . TEST_RESULTS_IDENTIFIER))
+				mkdir($save_to_dir . "/system-information/" . TEST_RESULTS_IDENTIFIER);
+
+			// lspci
+			$file = shell_exec("lspci 2>&1");
+
+			if(strpos($file, "not found") == FALSE)
+				@file_put_contents($save_to_dir . "/system-information/" . TEST_RESULTS_IDENTIFIER . "/lspci", $file);
+
+			// sensors
+			$file = shell_exec("sensors 2>&1");
+
+			if(strpos($file, "not found") == FALSE)
+				@file_put_contents($save_to_dir . "/system-information/" . TEST_RESULTS_IDENTIFIER . "/sensors", $file);
+
+			// cpuinfo
+			if(is_file("/proc/cpuinfo"))
+			{
+				$file = file_get_contents("/proc/cpuinfo");
+
+				@file_put_contents($save_to_dir . "/system-information/" . TEST_RESULTS_IDENTIFIER . "/cpuinfo", $file);
+			}
 		}
 	}
 
