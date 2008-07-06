@@ -41,7 +41,7 @@
 				<h1>Additional Details</h1>
 				<div class="pts_chart_box">
 				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_head"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><xsl:value-of select="AssociatedIdentifiers" /></div></xsl:for-each>
-				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_body"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><strong>Test Administrator:</strong> <xsl:value-of select="Author" /><br /><strong>Test Date/Time:</strong> <xsl:value-of select="TestDate" /><br /><strong>PTS Version:</strong> <xsl:value-of select="Version" /><br /><strong>Test Notes:</strong><br /><xsl:value-of select="TestNotes" /></div></xsl:for-each>
+				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_body"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><strong>Test Administrator:</strong> <xsl:value-of select="Author" /><br /><strong>Test Date/Time:</strong> <xsl:value-of select="TestDate" /> (UTC)<br /><strong>PTS Version:</strong> <xsl:value-of select="Version" /><br /><strong>Test Notes:</strong><br /><xsl:value-of select="TestNotes" /></div></xsl:for-each>
 				</div>
 			</div>
 

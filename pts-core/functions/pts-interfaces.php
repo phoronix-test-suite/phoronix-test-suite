@@ -158,6 +158,8 @@ define("P_OPTION_BATCH_UPLOADRESULTS", "PhoronixTestSuite/Options/BatchMode/Uplo
 define("P_OPTION_BATCH_PROMPTIDENTIFIER", "PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier"); // Batch mode prompt for test identifier
 define("P_OPTION_BATCH_PROMPTSAVENAME", "PhoronixTestSuite/Options/BatchMode/PromptSaveName"); // Batch mode prompt for save results name
 
+define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/TestResults/LogVerboseSystemDetails"); // Log verbose system details?
+
 define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/Options/General/UserAgreement"); // PTS user agreement confirmation
 define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/General/LoadModules"); // Modules to load by default
 

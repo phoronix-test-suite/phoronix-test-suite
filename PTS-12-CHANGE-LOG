@@ -32,3 +32,4 @@
 - Add operating system detection support
 - pts-core: Time-zone used is now set to UTC
 - Add support for OpenSolaris 2008.05 operating system
+- Add verbose system hardware detail logging support
