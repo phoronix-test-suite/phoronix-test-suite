@@ -7,6 +7,7 @@ Phoronix Test Suite
 - Rename "Advanced Control and Power Interface" to ACPI in the compliance-acpi test profile
 - Add BOINC to active process checking during the testing process
 - Add BYTE Unix Benchmarks test (profile named byte)
+- ubuntu-packages.xml: Add libxi-dev to xorg-development generic package
 
 Phoronix Test Suite 1.0.2
 June 28, 2008
