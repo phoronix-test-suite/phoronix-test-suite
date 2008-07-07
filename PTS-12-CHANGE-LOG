@@ -1,37 +1,47 @@
-- Implement PTS modules support
-- Move sensor monitoring support from pts-core to a new module called system_monitor
-- Add list-modules option for listing all available/installed modules
-- Add module-info option for viewing information on a module
-- Drop pts-functions_monitor.php now that it's all modulized.
-- Drop PTS_MONITOR_DIR environmental variable and pts_save_user_file() function from pts-core
-- Add pts_module object for providing some common functions to use by PTS modules
+- pts-core: Implement PTS modules support
+- pts-core: Move sensor monitoring support to a new module called system_monitor
+- pts-core: Add list-modules option for listing all available/installed modules
+- pts-core: Add module-info option for viewing information on a module
+- pts-core: Drop pts-functions_monitor.php now that it's all modulized.
+- pts-core: Drop PTS_MONITOR_DIR environmental variable and pts_save_user_file() function from pts-core
+- pts-core: Add pts_module object for providing some common functions to use by PTS modules
+- pts-core: Add CPU usage monitoring support
+- pts-core: Fixes for PTS results merging and recording of arguments
+- pts-core: Clear up test file versus unique identifier / test run text
+- pts-core: Allow support for loading modules manually by setting each module name in the PTS_MODULES environmental variable and separating multiple modules via comma
+- pts-cpre: Add Extensions tag to results file
+- pts-core: Introduce a test installation management system and this replaces the previous pts-install management solution. New setup is XML based and monitors time a test was installed, last time a test was run, number of times a test was run by PTS, and this pts-install.xml system will be used for some future features.
+- pts-core: With info option, when a test is specified, let the user know whether it's installed. If it's installed, print the last time the test was executed and the total number of times it was executed.
+- pts-core: Change location of results directory tag within the user-config.xml configuration
+- pts-core: Change location of the user agreement check-sum tag within the user-config.xml configuration
+- pts-core: Add LoadModules tag to user-config.xml with support for loading modules every time upon running PTS
+- pts-core: Change BENCHMARK_ENV_DIR to TEST_ENV_DIR definition
+- pts-core: pts_test_type() now returns TEST instead of BENCHMARK
+- pts-core: Change DOWNLOAD_CACHE environmental variable to PTS_DOWNLOAD_CACHE for manual override of the download cache location
+- pts-core: Add operating system detection support
+- pts-core: Time-zone used is now set to UTC
+- pts-core: Add support for OpenSolaris 2008.05 operating system
+- pts-core: Add verbose system hardware detail logging support
+- pts-core: Improve text layout of test option prompts
+
+- pts_module: If pcntl isn't present, don't thread and warn the user
+
 - system_monitor: Poll sensors every 30 seconds during testing
-- Add CPU usage monitoring support to pts-core
 - system_monitor: Add cpu.usage to MONITOR, fix some bugs as well
+- system_monitor: Add gpu.freq to MONITOR
+
 - pts_LineGraph: Don't display the pointers if there are too many points on the graph
+
 - pts_Graph: Always show key/legend if it's a single-type line graph
 - pts_Graph: Use image antialiasing if it's available on the system
-- pts_module: If pcntl isn't present, don't thread and warn the user
-- system_monitor: Add gpu.freq to MONITOR
-- Fixes for PTS results merging and recording of arguments
-- Clear up test file versus unique identifier / test run text
-- Add graphics_override module for having FORCE_AA and FORCE_AF options for overriding anti-aliasing and anisotropic filtering levels with supported drivers
-- Allow support for loading modules manually by setting each module name in the PTS_MODULES environmental variable and separating multiple modules via comma
-- Add Extensions tag to results file
+
+- graphics_override: Add graphics_override module for having FORCE_AA and FORCE_AF options for overriding anti-aliasing and anisotropic filtering levels with supported drivers
+
 - tandem_Xml: Add a caching engine to the XML parsing/reading portion
 - tandem_Xml: Add setFileCaching(), setTagCaching(), and setCaching() options
-- Add ProjectURL tag to available test profiles
-- Introduce a test installation management system and this replaces the previous pts-install management solution. New setup is XML based and monitors time a test was installed, last time a test was run, number of times a test was run by PTS, and this pts-install.xml system will be used for some future features.
-- With info option, when a test is specified, let the user know whether it's installed. If it's installed, print the last time the test was executed and the total number of times it was executed.
-- Change location of results directory tag within the user-config.xml configuration
-- Change location of the user agreement check-sum tag within the user-config.xml configuration
-- Add LoadModules tag to user-config.xml with support for loading modules every time upon running PTS
-- Change BENCHMARK_ENV_DIR to TEST_ENV_DIR definition
-- pts_test_type() now returns TEST instead of BENCHMARK
-- Change DOWNLOAD_CACHE environmental variable to PTS_DOWNLOAD_CACHE for manual override of the download cache location
-- Add operating system detection support
-- pts-core: Time-zone used is now set to UTC
-- Add support for OpenSolaris 2008.05 operating system
-- Add verbose system hardware detail logging support
-- pts-core: Improve text layout of test option prompts
+
+- pts: Add ProjectURL tag to available test profiles
+- pts: Add PTS External Dependencies support for OpenSolaris using IPS
+
+
 - pts-run-benchmark: General code cleanups
