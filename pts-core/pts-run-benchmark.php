@@ -150,10 +150,12 @@ pts_disable_screensaver(); // Kill the screensaver
 if($TO_RUN_TYPE == "TEST")
 {
 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
+	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
 	$settings_argument = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGUMENTNAME);
 	$settings_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
 	$settings_menu = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
+	$test_title_shown = false;
 
 	if(!defined("PTS_BATCH_MODE"))
 	{
@@ -162,7 +164,6 @@ if($TO_RUN_TYPE == "TEST")
 		for($option_count = 0; $option_count < count($settings_name); $option_count++)
 		{
 			// $this_identifier = $settings_identifier[$option_count];
-			echo "\n" . $settings_name[$option_count] . ":\n";
 
 			if(!empty($settings_menu[$option_count]))
 			{
@@ -176,6 +177,15 @@ if($TO_RUN_TYPE == "TEST")
 				}
 				else
 				{
+					if(!$test_title_shown)
+					{
+						echo pts_string_header("Test Configuration: " . $test_title);
+						$test_title_shown = true;
+					}
+					else
+						echo "\n";
+
+					echo $settings_name[$option_count] . ":\n";
 					do
 					{
 						echo "\n";
