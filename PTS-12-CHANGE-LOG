@@ -33,3 +33,5 @@
 - pts-core: Time-zone used is now set to UTC
 - Add support for OpenSolaris 2008.05 operating system
 - Add verbose system hardware detail logging support
+- pts-core: Improve text layout of test option prompts
+- pts-run-benchmark: General code cleanups

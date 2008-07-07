@@ -280,8 +280,6 @@ if($TO_RUN_TYPE == "TEST")
 		$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 		unset($xml_parser);
 	}
-
-	pts_recurse_call_benchmark($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
 }
 else if($TO_RUN_TYPE == "TEST_SUITE")
 {
@@ -297,12 +295,10 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 		$test_maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
 	}
 
-	$suite_benchmarks = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-	$arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
-	$arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
+	$TEST_RUN = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+	$TEST_ARGS = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
+	$TEST_ARGS_DESCRIPTION = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
 	unset($xml_parser);
-
-	pts_recurse_call_benchmark($suite_benchmarks, $arguments, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $arguments_description);
 }
 else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE == "LOCAL_COMPARISON"))
 {
@@ -315,20 +311,22 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 	$test_version = $xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
 	$test_type = $xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
 	$test_maintainer = $xml_parser->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
-	$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-	$arguments = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
-	$arguments_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+	$TEST_RUN = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+	$TEST_ARGS = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
+	$TEST_ARGS_DESCRIPTION = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 	unset($xml_parser);
 
 	pts_module_process_extensions($test_extensions);
-	pts_recurse_call_benchmark($suite_benchmarks, $arguments, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $arguments_description);
 }
 else
 {
 	pts_exit("\nUnrecognized option: $TO_RUN_TYPE\n");
 }
 
-//pts_beep(2);
+// Run the test process
+
+pts_recurse_call_benchmark($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
+
 define("PTS_TESTING_DONE", 1);
 pts_module_process("__post_run_process");
 
