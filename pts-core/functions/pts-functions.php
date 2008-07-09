@@ -298,7 +298,7 @@ function pts_process_register($process)
 function pts_process_remove($process)
 {
 	if(is_file(TEST_ENV_DIR . ".processes/" . $process . ".p"))
-		return unlink(TEST_ENV_DIR . ".processes/" . $process . ".p");
+		return @unlink(TEST_ENV_DIR . ".processes/" . $process . ".p");
 }
 function pts_process_active($process)
 {

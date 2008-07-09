@@ -413,10 +413,20 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 	if(empty($dependencies))
 		return;
 
-	$dependencies = explode(',', $dependencies);
+	$dependencies = explode(",", $dependencies);
 
 	for($i = 0; $i < count($dependencies); $i++)
 		$dependencies[$i] = trim($dependencies[$i]);
+
+	if(!defined("PTS_EXDEP_FIRST_RUN"))
+	{
+		array_push($dependencies, "php-extras");
+
+		if(kernel_arch() == "x86_64")
+			array_push($dependencies, "linux-32bit-libraries");
+
+		define("PTS_EXDEP_FIRST_RUN", 1);
+	}
 
 	$vendor = pts_vendor_identifier();
 
