@@ -1,0 +1,52 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Game</SoftwareType>
+		<License>NON-FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.unrealtournament2003.com/ut2004/index.html</ProjectURL>
+	</TestProfile>
+	<TestInformation>
+		<Title>Unreal Tournament 2004 Demo</Title>
+		<Version>3334</Version>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Average FPS</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This test calculates the average frame-rate within the Unreal Tournament 2004 game demo from Epic Games.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Map</DisplayName>
+			<Identifier>map</Identifier>
+			<Menu>
+				<Entry>
+					<Name>AS-Convoy</Name>
+					<Value>as-convoy?spectatoronly=1?numbots=18?quickstart=1?attractcam=1 -benchmark -seconds=180 -nosound</Value>
+				</Entry>
+				<Entry>
+					<Name>BR-Colossus</Name>
+					<Value>br-colossus?spectatoronly=1?numbots=18?quickstart=1?attractcam=1 -benchmark -seconds=180 -nosound</Value>
+				</Entry>
+				<Entry>
+					<Name>CTF-BridgeOfFate</Name>
+					<Value>ctf-bridgeoffate?spectatoronly=1?numbots=18?quickstart=1?attractcam=1 -benchmark -seconds=180 -nosound</Value>
+				</Entry>
+				<Entry>
+					<Name>CTF-FaceClassic</Name>
+					<Value>ctf-faceclassic?spectatoronly=1?numbots=18?quickstart=1?attractcam=1 -benchmark -seconds=180 -nosound</Value>
+				</Entry>
+				<Entry>
+					<Name>DM-Rankin</Name>
+					<Value>dm-rankin?spectatoronly=1?numbots=18?quickstart=1?attractcam=1 -benchmark -seconds=180 -nosound</Value>
+				</Entry>
+				<Entry>
+					<Name>ONS-Torlan</Name>
+					<Value>ons-torlan?spectatoronly=1?numbots=18?quickstart=1?attractcam=1 -benchmark -seconds=180 -nosound</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>

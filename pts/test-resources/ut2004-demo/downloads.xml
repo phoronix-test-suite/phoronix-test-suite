@@ -1,0 +1,12 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>ftp://mirror.mcs.anl.gov/pub/gentoo/distfiles/ut2004-lnx-demo3334.run, http://gentoo.cites.uiuc.edu/pub/gentoo/distfiles/ut2004-lnx-demo3334.run, http://gentoo.chem.wisc.edu/gentoo/distfiles/ut2004-lnx-demo3334.run</URL>
+			<MD5>bf9f483902c6006b94c327fb7b585086</MD5>
+		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/UT2004-ptsconfig-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/UT2004-ptsconfig-1.tar.gz</URL>
+			<MD5>788a6aac37198f7aa5d06ad571ad534e</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

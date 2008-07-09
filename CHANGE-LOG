@@ -4,6 +4,7 @@ Phoronix Test Suite
 
 - pts: Add BYTE Unix Benchmarks test (profile named byte)
 - pts: Add Bonnie++ test profile (profile named bonnie)
+- pts: Add Unreal Tournament 2004 Demo test profile (profile named ut2004-demo)
 - pts: Rename "Advanced Control and Power Interface" to ACPI in the compliance-acpi test profile
 - pts: Add libxi-dev to xorg-development generic package for ubuntu-packages.xml
 - pts: Add disk test suite (bonnie and iozone tests) and add this suite to universe-cli suite
