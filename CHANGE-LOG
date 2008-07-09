@@ -8,6 +8,7 @@ Phoronix Test Suite
 - pts: Rename "Advanced Control and Power Interface" to ACPI in the compliance-acpi test profile
 - pts: Add libxi-dev to xorg-development generic package for ubuntu-packages.xml
 - pts: Add disk test suite (bonnie and iozone tests) and add this suite to universe-cli suite
+- pts: Add ut2004-demo test profile to gaming-closed test suite
 - pts-core: Run the results parser from within the test's environment directory
 - pts-core: Add BOINC to active process checking during the testing process
 - pts-core: Ensure read_sensors() returns a numeric type from LM_Sensors parsing, in the event it hit a FAULT
