@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<TestType>System</TestType>
 		<Title>Universe CLI Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -19,12 +19,10 @@
 		<Test>compression</Test>
 	</RunTest>
 	<RunTest>
-		<Test>espeak</Test>
+		<Test>disk</Test>
 	</RunTest>
 	<RunTest>
-		<Test>iozone</Test>
-		<Arguments>-i0</Arguments>
-		<Description>Write Performance</Description>
+		<Test>espeak</Test>
 	</RunTest>
 	<RunTest>
 		<Test>cryptography</Test>
@@ -39,6 +37,11 @@
 	</RunTest>
 	<RunTest>
 		<Test>pts-graph</Test>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_DHRY2</Arguments>
+		<Description>Dhrystone 2</Description>
 	</RunTest>
 	<RunTest>
 		<Test>scimark2</Test>
