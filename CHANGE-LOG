@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 1.0.3
+July 9, 2008
 
 - pts: Add BYTE Unix Benchmarks test (profile named byte)
 - pts: Add Bonnie++ test profile (profile named bonnie)
