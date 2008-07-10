@@ -47,6 +47,13 @@ function pts_extended_init()
 		define("IS_ATI_GRAPHICS", true);
 	else if(strpos($opengl_driver, "Mesa") !== FALSE)
 		define("IS_MESA_GRAPHICS", true);
+
+	if(!defined("IS_NVIDIA_GRAPHICS"))
+		define("IS_NVIDIA_GRAPHICS", false);
+	if(!defined("IS_ATI_GRAPHICS"))
+		define("IS_ATI_GRAPHICS", false);
+	if(!defined("IS_MESA_GRAPHICS"))
+		define("IS_MESA_GRAPHICS", false);
 }
 function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions = NULL)
 {
