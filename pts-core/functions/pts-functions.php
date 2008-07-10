@@ -515,6 +515,16 @@ function pts_string_bool($string)
 	$string = strtolower($string);
 	return $string == "true" || $string == "1" || $string == "on";
 }
+function pts_is_valid_download_url($string, $basename = NULL)
+{
+	if(strpos($string, "://") == FALSE)
+		return FALSE;
+
+	if(!empty($basename) && $basename != basename($string))
+		return FALSE;
+
+	return TRUE;
+}
 function pts_format_time_string($time, $format = "SECONDS")
 {
 	if($format == "MINUTES")

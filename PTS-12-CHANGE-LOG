@@ -28,6 +28,7 @@
 - pts-core: Switch graphics functions to depend upon IS_*_GRAPHICS booleans
 - pts-core: Add list-test-usage option for showing the tests that are installed with the time the test was installed, when the test was last run, and the number of times total the test was run
 - pts-core: Update schema for some XML tags within user-config.xml
+- pts-core: If PromptForDownloadMirror tag in user-config.xml is set to TRUE, prompt the user when running in a non-batch mode what mirror to download a test file from or optionally the user can input their own download location
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called

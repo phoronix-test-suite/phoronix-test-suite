@@ -188,10 +188,39 @@ function pts_download_test_files($identifier)
 
 					do
 					{
-						$url = trim(array_pop($urls));
+						if(!defined("PTS_BATCH_MODE") && pts_string_bool(pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE")) && count($urls) > 1)
+						{
+							// Prompt user to select mirror
+							do
+							{
+								echo "\nAvailable Download Mirrors:\n\n";
+								for($j = 0; $j < count($urls); $j++)
+								{
+									$urls[$j] = trim($urls[$j]);
+									echo ($j + 1) . ": " . $urls[$j] . "\n";
+								}
+								echo "\nEnter Your Preferred Mirror: ";
+								$mirror_choice = trim(fgets(STDIN));
+							}
+							while(($mirror_choice < 1 || $mirror_choice > count($urls)) && !pts_is_valid_download_url($mirror_choice, $package_filename[$i]));
+
+							if(is_numeric($mirror_choice))
+								$url = $urls[($mirror_choice - 1)];
+							else
+								$url = $mirror_choice;
+						}
+						else
+						{
+							// Auto-select mirror
+							do
+							{
+								$url = trim(array_pop($urls));
+							}
+							while(!pts_is_valid_download_url($url));
+						}
+
 						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
 						echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . $url . " -O " . $package_filename[$i]);
-
 
 						if((is_file(PTS_TEMP_DIR . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file(PTS_TEMP_DIR . $package_filename[$i]) != $package_md5[$i]) || !is_file(PTS_TEMP_DIR . $package_filename[$i]))
 						{
