@@ -192,7 +192,7 @@ switch($COMMAND)
 			eval("\$module_version = " . $module . "::module_version;");
 			eval("\$module_author = " . $module . "::module_author;");
 
-			printf("%-16ls - %-24ls [Developed By: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
+			printf("%-16ls - %-25ls [Developed By: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
 		}
 		echo "\n";
 		break;

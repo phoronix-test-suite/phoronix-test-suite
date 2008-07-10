@@ -28,17 +28,18 @@
 - pts-core: Switch graphics functions to depend upon IS_*_GRAPHICS booleans
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
+- pts_module: Add a simple module called dummy_module for showing developers where the different functions are called
 
 - system_monitor: Poll sensors every 30 seconds during testing
 - system_monitor: Add cpu.usage to MONITOR, fix some bugs as well
 - system_monitor: Add gpu.freq to MONITOR
 
+- graphics_override: Add graphics_override module for having FORCE_AA and FORCE_AF options for overriding anti-aliasing and anisotropic filtering levels with supported drivers
+
 - pts_LineGraph: Don't display the pointers if there are too many points on the graph
 
 - pts_Graph: Always show key/legend if it's a single-type line graph
 - pts_Graph: Use image antialiasing if it's available on the system
-
-- graphics_override: Add graphics_override module for having FORCE_AA and FORCE_AF options for overriding anti-aliasing and anisotropic filtering levels with supported drivers
 
 - tandem_Xml: Add a caching engine to the XML parsing/reading portion
 - tandem_Xml: Add setFileCaching(), setTagCaching(), and setCaching() options
@@ -46,6 +47,4 @@
 - pts: Add ProjectURL tag to available test profiles
 - pts: Add PTS External Dependencies support for OpenSolaris using IPS
 - pts: Add linux-32bit-libraries generic package to PTS External Dependencies
-
-
-- pts-run-benchmark: General code cleanups
+- pts: General code cleanups
