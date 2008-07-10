@@ -108,5 +108,10 @@
 			<PackageName>media-libs/jpeg</PackageName>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>libaio-devel</GenericName>
+			<PackageName>dev-libs/libaio</PackageName>
+			<FileCheck>/usr/include/libaio.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

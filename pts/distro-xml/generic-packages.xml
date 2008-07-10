@@ -114,5 +114,11 @@
 			<PossibleNames>libjpeg62-devel, libjpeg62-dev, libjpeg-devel</PossibleNames>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>libaio-devel</GenericName>
+			<Title>Development Files For Linux Kernel AIO Access Library</Title>
+			<PossibleNames>libaio-dev, libaio-devel</PossibleNames>
+			<FileCheck>/usr/include/libaio.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

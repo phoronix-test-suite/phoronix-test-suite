@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite
+
+- pts: Add libaio-devel to PTS External Dependencies
+
 Phoronix Test Suite 1.0.3
 July 9, 2008
 
