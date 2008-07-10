@@ -1,0 +1,38 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.9.9</Version>
+		<TestType>Disk</TestType>
+		<SoftwareType>Benchmark</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>1.30</DownloadSize>
+		<EnvironmentSize>5.0</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>fio</Title>
+		<Version>1.21</Version>
+		<ExternalDependencies>build-utilities, libaio-devel</ExternalDependencies>
+		<Executable>fio-run</Executable>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Seconds (Run Time)</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>fio is an advanced disk benchmark that depends upon the kernel's AIO access library.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Test</DisplayName>
+			<Identifier>test</Identifier>
+			<Menu>
+				<Entry>
+					<Name>Intel IOMeter File Server Access Pattern</Name>
+					<Value>examples/iometer-file-access-server</Value>
+				</Entry>
+				<Entry>
+					<Name>Example Network Job</Name>
+					<Value>examples/netio</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>
