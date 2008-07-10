@@ -65,32 +65,6 @@ if(function_exists("pts_module_start_process"))
 	pts_module_start_process();
 
 // Phoronix Test Suite - Functions
-function pts_test_names_to_array()
-{
-	$test_names = array();
-	foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_file)
-	{
-	 	$xml_parser = new tandem_XmlReader($test_file);
-		$test_name = $xml_parser->getXMLValue(P_TEST_TITLE);
-
-		if(!empty($test_name))
-			array_push($test_names, $test_name);
-	}
-	return $test_names;
-}
-function pts_suite_names_to_array()
-{
-	$test_suites = array();
-	foreach(glob(XML_SUITE_DIR . "*.xml") as $test_file)
-	{
-	 	$xml_parser = new tandem_XmlReader($test_file);
-		$test_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
-
-		if(!empty($test_name))
-			array_push($test_suites, $test_name);
-	}
-	return $test_suites;
-}
 function pts_test_type($identifier)
 {
 	if(empty($identifier))
