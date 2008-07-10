@@ -23,12 +23,7 @@
 
 // Start Phoronix Test Suite
 require_once("pts-core/functions/pts.php");
-
-function __autoload($to_load)
-{
-	if(is_file(PTS_DIR . "pts-core/objects/" . $to_load . ".php"))
-		require_once(PTS_DIR . "pts-core/objects/" . $to_load . ".php");
-}
+require_once("pts-core/functions/pts-init.php");
 
 // Load Main Functions
 require_once("pts-core/functions/pts-interfaces.php");
@@ -55,7 +50,6 @@ define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
 pts_extended_init();
 
 // Register PTS Process
-
 if(pts_process_active("phoronix-test-suite"))
 {
 	echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running...\nFor proper results, only run one instance at a time.");
@@ -64,7 +58,6 @@ pts_process_register("phoronix-test-suite");
 register_shutdown_function("pts_shutdown");
 
 // Etc
-
 $PTS_GLOBAL_ID = 1;
 
 // PTS Modules Support

@@ -31,30 +31,6 @@ function pts_config_init()
 	pts_user_config_init();
 	pts_graph_config_init();
 }
-function pts_extended_init()
-{
-	if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
-	{
-		mkdir(PTS_DOWNLOAD_CACHE_DIR);
-		file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto", "A download cache is used for conserving time and bandwidth by eliminating the need for the Phoronix Test Suite to download files that have already been downloaded once. A download cache can also be transferred between PCs running the Phoronix Test Suite. For more information on this feature, view the included documentation. To generate a download cache, run:\n\nphoronix-test-suite make-download-cache\n");
-	}
-
-	$opengl_driver = opengl_version();
-
-	if(strpos($opengl_driver, "NVIDIA") !== FALSE)
-		define("IS_NVIDIA_GRAPHICS", true);
-	else if(strpos($opengl_driver, "fglrx") !== FALSE)
-		define("IS_ATI_GRAPHICS", true);
-	else if(strpos($opengl_driver, "Mesa") !== FALSE)
-		define("IS_MESA_GRAPHICS", true);
-
-	if(!defined("IS_NVIDIA_GRAPHICS"))
-		define("IS_NVIDIA_GRAPHICS", false);
-	if(!defined("IS_ATI_GRAPHICS"))
-		define("IS_ATI_GRAPHICS", false);
-	if(!defined("IS_MESA_GRAPHICS"))
-		define("IS_MESA_GRAPHICS", false);
-}
 function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions = NULL)
 {
 	if(is_file(PTS_USER_DIR . "user-config.xml"))
