@@ -145,11 +145,12 @@ define("P_RESULTS_RESULTS_GROUP_VALUE", P_RESULTS_RESULTS_GROUP . "/" . S_RESULT
 define("P_OPTION_GLOBAL_USERNAME", "PhoronixTestSuite/GlobalDatabase/UserName"); // PTS Global user-name
 define("P_OPTION_GLOBAL_UPLOADKEY", "PhoronixTestSuite/GlobalDatabase/UploadKey"); // PTS Global upload key
 
-define("P_OPTION_TEST_SCREENSAVER", "PhoronixTestSuite/Options/Benchmarking/ToggleScreensaver"); // Toggle screensaver?
-define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Benchmarking/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
-define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/Benchmarking/EnvironmentDirectory"); // Results save directory
-define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/Benchmarking/CacheDirectory"); // Directory for reading/writing to download cache
-define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/Benchmarking/ResultsDirectory"); // Results save directory
+define("P_OPTION_TEST_SCREENSAVER", "PhoronixTestSuite/Options/Testing/ToggleScreensaver"); // Toggle screensaver?
+define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Testing/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
+
+define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/FileManagement/EnvironmentDirectory"); // Results save directory
+define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/CacheDirectory"); // Directory for reading/writing to download cache
+define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/ResultsDirectory"); // Results save directory
 
 define("P_OPTION_BATCH_CONFIGURED", "PhoronixTestSuite/Options/BatchMode/Configured"); // Batch mode has been configured
 define("P_OPTION_BATCH_SAVERESULTS", "PhoronixTestSuite/Options/BatchMode/SaveResults"); // Batch mode save results
