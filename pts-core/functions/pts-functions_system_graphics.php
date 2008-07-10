@@ -95,13 +95,13 @@ function graphics_antialiasing_level()
 			switch($ati_fsaa)
 			{
 				case "0x00000002":
-					$aa_level = 2;
+					$aa_level = "2x";
 					break;
 				case "0x00000004":
-					$aa_level = 4;
+					$aa_level = "4x";
 					break;
 				case "0x00000008":
-					$aa_level = 8;
+					$aa_level = "8x";
 					break;
 			}
 		}
@@ -142,16 +142,16 @@ function graphics_anisotropic_level()
 			switch($ati_af)
 			{
 				case "0x00000002":
-					$af_level = 2;
+					$af_level = "2x";
 					break;
 				case "0x00000004":
-					$af_level = 4;
+					$af_level = "4x";
 					break;
 				case "0x00000008":
-					$af_level = 8;
+					$af_level = "8x";
 					break;
 				case "0x00000010":
-					$af_level = 16;
+					$af_level = "16x";
 					break;
 			}
 		}
