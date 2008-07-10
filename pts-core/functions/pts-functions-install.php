@@ -146,9 +146,6 @@ function pts_download_test_files($identifier)
 				else
 					$urls = explode(",", $package_url[$i]);
 
-				if(count($urls) > 1)
-					shuffle($urls);
-
 				if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
 					unlink(PTS_TEMP_DIR . $package_filename[$i]);
 
@@ -181,8 +178,11 @@ function pts_download_test_files($identifier)
 						$urls = array();
 				}
 
-				if(count($urls) > 0)
+				if(($c = count($urls)) > 0)
 				{
+					if($c > 1)
+						shuffle($urls);
+
 					$fail_count = 0;
 					$try_again = true;
 
