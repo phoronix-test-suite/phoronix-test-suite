@@ -21,37 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_directory()
-{
-	$dir = getenv("PTS_DIR");
-
-	if($dir == ".")
-		$dir = "";
-
-	if(!empty($dir))
-	{
-		if(substr($dir, -1) != "/")
-			$dir .= "/";
-	}
-	
-	return $dir;
-}
-
-define("PTS_DIR", pts_directory());
-define("PTS_TEMP_DIR", "/tmp/phoronix-test-suite/");
-define("PHP_BIN", getenv("PHP_BIN"));
-define("PTS_START_TIME", time());
-
-if(getenv("DEBUG") == "1" || ($debug_file = getenv("DEBUG_FILE")) != FALSE)
-{
-	define("PTS_DEBUG_MODE", 1);
-
-	if($debug_file != FALSE)
-	{
-		define("PTS_DEBUG_FILE", $debug_file);
-		$DEBUG_CONTENTS = "";
-	}
-}
+// Start Phoronix Test Suite
+require_once("pts-core/functions/pts.php");
 
 function __autoload($to_load)
 {
@@ -60,15 +31,11 @@ function __autoload($to_load)
 }
 
 // Load Main Functions
-require_once("pts-core/functions/pts.php");
 require_once("pts-core/functions/pts-interfaces.php");
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
 require_once("pts-core/functions/pts-functions_tests.php");
 require_once("pts-core/functions/pts-functions_modules.php");
-
-date_default_timezone_set("UTC");
-define("THIS_RUN_TIME", time());
 
 define("XML_PROFILE_DIR", PTS_DIR . "pts/test-profiles/");
 define("XML_SUITE_DIR", PTS_DIR . "pts/test-suites/");
@@ -523,8 +490,8 @@ function pts_exit($string = "")
 }
 function pts_version_comparable($old, $new)
 {
-	$old = explode('.', $old);
-	$new = explode('.', $new);
+	$old = explode(".", $old);
+	$new = explode(".", $new);
 	$compare = true;
 
 	if(count($old) >= 2 && count($new) >= 2)

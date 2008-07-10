@@ -320,11 +320,10 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 }
 else
 {
-	pts_exit("\nUnrecognized option: $TO_RUN_TYPE\n");
+	pts_exit("\nUnrecognized option: " . $TO_RUN_TYPE . "\n");
 }
 
 // Run the test process
-
 pts_recurse_call_benchmark($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
 
 define("PTS_TESTING_DONE", 1);

@@ -1,3 +1,4 @@
+- pts-core: Variety of code cleaning and other general improvements
 - pts-core: Implement PTS modules support
 - pts-core: Move sensor monitoring support to a new module called system_monitor
 - pts-core: Add list-modules option for listing all available/installed modules

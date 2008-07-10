@@ -24,7 +24,7 @@
 function graphics_frequency_string()
 {
 	$freq = graphics_processor_frequency();
-	$freq_string = $freq[0] . '/' . $freq[1];
+	$freq_string = $freq[0] . "/" . $freq[1];
 
 	if($freq_string == "0/0")
 	{
@@ -175,7 +175,7 @@ function set_amd_pcsdb($attribute, $value)
 	{
 		$DISPLAY = substr(getenv("DISPLAY"), 1, 1);
 		
-		$info = shell_exec("DISPLAY=:$DISPLAY aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
+		$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
 	}
 }
 function xrandr_screen_resolution()
@@ -305,7 +305,6 @@ function graphics_processor_string()
 
 		if(strpos($log_parse, "ATI") !== FALSE || strpos($log_parse, "NVIDIA") !== FALSE || strpos($log_parse, "VIA") !== FALSE || strpos($log_parse, "Intel") !== FALSE)
 			$info = $log_parse;
-
 	}
 
 	$info = pts_clean_information_string($info);
