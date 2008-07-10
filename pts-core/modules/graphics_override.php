@@ -24,13 +24,12 @@
 class graphics_override extends pts_module_interface
 {
 	const module_name = "Graphics Override";
-	const module_version = "1.0.2";
+	const module_version = "1.0.3";
 	const module_description = "This module allows you to override some graphics rendering settings for the ATI and NVIDIA drivers while running the Phoronix Test Suite.";
 	const module_author = "Michael Larabel";
 
 	public static $module_store_vars = array("FORCE_AA", "FORCE_AF");
 
-	static $graphics_driver = FALSE;
 	static $preset_aa = FALSE;
 	static $preset_af = FALSE;
 	static $preset_aa_control = FALSE;
@@ -41,17 +40,11 @@ class graphics_override extends pts_module_interface
 
 	public static function __pre_run_process()
 	{
-		$opengl_driver = opengl_version();
-
-		if(strpos($opengl_driver, "NVIDIA") != FALSE)
-			self::$graphics_driver = "NVIDIA";
-		else if(strpos($opengl_driver, "fglrx") != FALSE)
-			self::$graphics_driver = "fglrx";
-		else
+		if(!(IS_NVIDIA_GRAPHICS || IS_ATI_GRAPHICS))
+		{
 			echo "\nNo supported driver found for graphics_override module!\n";
-
-		if(self::$graphics_driver == FALSE)
 			return; // Not using a supported driver
+		}
 
 		$force_aa = trim(getenv("FORCE_AA"));
 		$force_af = trim(getenv("FORCE_AF"));
@@ -59,7 +52,7 @@ class graphics_override extends pts_module_interface
 		if($force_aa !== FALSE && in_array($force_aa, self::$supported_aa_levels))
 		{
 			// First backup any existing override, then set the new value
-			if(self::$graphics_driver == "NVIDIA")
+			if(IS_NVIDIA_GRAPHICS)
 			{
 				self::$preset_aa = read_nvidia_extension("FSAA");
 				self::$preset_aa_control = read_nvidia_extension("FSAAAppControlled");
@@ -82,7 +75,7 @@ class graphics_override extends pts_module_interface
 				set_nvidia_extension("FSAA", $nvidia_aa);
 				set_nvidia_extension("FSAAAppControlled", 0);
 			}
-			else if(self::$graphics_driver == "fglrx")
+			else if(IS_ATI_GRAPHICS)
 			{
 				self::$preset_aa = read_amd_pcsdb("OpenGL,AntiAliasSamples");
 				self::$preset_aa_control = read_amd_pcsdb("OpenGL,AAF");
@@ -111,7 +104,7 @@ class graphics_override extends pts_module_interface
 		if($force_af !== FALSE && in_array($force_af, self::$supported_af_levels))
 		{
 			// First backup any existing override, then set the new value
-			if(self::$graphics_driver == "NVIDIA")
+			if(IS_NVIDIA_GRAPHICS)
 			{
 				self::$preset_af = read_nvidia_extension("LogAniso");
 				self::$preset_af_control = read_nvidia_extension("LogAnisoAppControlled");
@@ -134,7 +127,7 @@ class graphics_override extends pts_module_interface
 				set_nvidia_extension("LogAniso", $nvidia_af);
 				set_nvidia_extension("LogAnisoAppControlled", 0);
 			}
-			else if(self::$graphics_driver == "fglrx")
+			else if(IS_ATI_GRAPHICS)
 			{
 				self::$preset_af = read_amd_pcsdb("OpenGL,AnisoDegree");
 
@@ -159,10 +152,12 @@ class graphics_override extends pts_module_interface
 	}
 	public static function __shutdown()
 	{
-		if(self::$graphics_driver == FALSE)
-			return; // Not using a supported graphics driver
+		if(!(IS_NVIDIA_GRAPHICS || IS_ATI_GRAPHICS))
+		{
+			return; // Not using a supported driver
+		}
 
-		if(self::$graphics_driver == "NVIDIA")
+		if(IS_NVIDIA_GRAPHICS)
 		{
 			if(self::$preset_aa !== FALSE)
 			{
@@ -175,7 +170,7 @@ class graphics_override extends pts_module_interface
 				set_nvidia_extension("LogAnisoAppControlled", self::$preset_af_control);
 			}
 		}
-		else if(self::$graphics_driver == "fglrx")
+		else if(IS_ATI_GRAPHICS)
 		{
 			if(self::$preset_aa !== FALSE)
 			{
