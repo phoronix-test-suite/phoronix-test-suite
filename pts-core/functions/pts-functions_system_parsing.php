@@ -172,7 +172,7 @@ function read_cpuinfo($attribute)
 function read_nvidia_extension($attribute)
 {
 	$info = shell_exec("nvidia-settings --query " . $attribute . " 2>&1");
-	$nv_info = "";
+	$nv_info = NULL;
 
 	if(($pos = strpos($info, $attribute)) > 0)
 	{

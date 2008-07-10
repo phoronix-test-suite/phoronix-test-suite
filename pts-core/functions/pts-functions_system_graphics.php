@@ -40,13 +40,18 @@ function graphics_frequency_string()
 function graphics_processor_temperature()
 {
 	$temp_c = -1;
-	$nv_temp_c = read_nvidia_extension("GPUCoreTemp");
-	$ati_temp_c = read_ati_extension("CoreTemperature");
 
-	if(!empty($nv_temp_c))
-		$temp_c = $nv_temp_c;
-	else if(!empty($ati_temp_c))
-		$temp_c = $ati_temp_c;
+	if(IS_NVIDIA_GRAPHICS)
+	{
+		$temp_c = read_nvidia_extension("GPUCoreTemp");
+	}
+	else if(IS_ATI_GRAPHICS)
+	{
+		$temp_c = read_ati_extension("CoreTemperature");
+	}
+
+	if(empty($temp_c) || !is_numeric($temp_c))
+		$temp_c = -1;
 
 	return $temp_c;
 }
@@ -54,10 +59,11 @@ function graphics_antialiasing_level()
 {
 	$aa_level = "";
 
-	$nvidia_fsaa = read_nvidia_extension("FSAA");
 
-	if(!empty($nvidia_fsaa))
+	if(IS_NVIDIA_GRAPHICS)
 	{
+		$nvidia_fsaa = read_nvidia_extension("FSAA");
+
 		switch($nvidia_fsaa)
 		{
 			case 1:
@@ -80,7 +86,7 @@ function graphics_antialiasing_level()
 				break;
 		}
 	}
-	else
+	else if(IS_ATI_GRAPHICS)
 	{
 		$ati_fsaa = read_amd_pcsdb("OpenGL,AntiAliasSamples");
 
@@ -107,10 +113,10 @@ function graphics_anisotropic_level()
 {
 	$af_level = "";
 
-	$nvidia_af = read_nvidia_extension("LogAniso");
-
-	if(!empty($nvidia_af))
+	if(IS_NVIDIA_GRAPHICS)
 	{
+		$nvidia_af = read_nvidia_extension("LogAniso");
+
 		switch($nvidia_af)
 		{
 			case 1:
@@ -127,7 +133,7 @@ function graphics_anisotropic_level()
 				break;
 		}
 	}
-	else
+	else if(IS_ATI_GRAPHICS)
 	{
 		$ati_af = read_amd_pcsdb("OpenGL,AnisoDegree");
 
@@ -155,10 +161,16 @@ function graphics_anisotropic_level()
 }
 function set_nvidia_extension($attribute, $value)
 {
+	if(!IS_NVIDIA_GRAPHICS)
+		return;
+
 	$info = shell_exec("nvidia-settings --assign " . $attribute . "=" . $value);
 }
 function set_amd_pcsdb($attribute, $value)
 {
+	if(!IS_ATI_GRAPHICS)
+		return;
+
 	if(!empty($value))
 	{
 		$DISPLAY = substr(getenv("DISPLAY"), 1, 1);
@@ -183,7 +195,7 @@ function xrandr_screen_resolution()
 
 	if($pos == FALSE || empty($info))
 	{
-		if(($nvidia = read_nvidia_extension("FrontendResolution")) != "")
+		if(IS_NVIDIA_GRAPHICS && ($nvidia = read_nvidia_extension("FrontendResolution")) != "")
 		{
 			$info = explode(',', $nvidia);
 		}
@@ -217,21 +229,27 @@ function graphics_processor_stock_frequency()
 	$core_freq = 0;
 	$mem_freq = 0;
 
-	$nv_freq = read_nvidia_extension("GPUDefault3DClockFreqs");
-	$ati_freq = read_ati_extension("Stock3DFrequencies");
-
-	if(!empty($nv_freq)) // NVIDIA GPU
+	if(IS_NVIDIA_GRAPHICS) // NVIDIA GPU
 	{
+		$nv_freq = read_nvidia_extension("GPUDefault3DClockFreqs");
+
 		$nv_freq = explode(',', $nv_freq);
 		$core_freq = $nv_freq[0];
 		$mem_freq = $nv_freq[1];
 	}
-	else if(!empty($ati_freq)) // ATI GPU
+	else if(IS_ATI_GRAPHICS) // ATI GPU
 	{
+		$ati_freq = read_ati_extension("Stock3DFrequencies");
+
 		$ati_freq = explode(',', $ati_freq);
 		$core_freq = $ati_freq[0];
 		$mem_freq = $ati_freq[1];
 	}
+
+	if(!is_numeric($core_freq))
+		$core_freq = 0;
+	if(!is_numeric($mem_freq))
+		$mem_freq = 0;
 
 	return array($core_freq, $mem_freq);
 }
@@ -240,21 +258,27 @@ function graphics_processor_frequency()
 	$core_freq = 0;
 	$mem_freq = 0;
 
-	$nv_freq = read_nvidia_extension("GPUCurrentClockFreqs");
-	$ati_freq = read_ati_extension("Current3DFrequencies");
-
-	if(!empty($nv_freq)) // NVIDIA GPU
+	if(IS_NVIDIA_GRAPHICS) // NVIDIA GPU
 	{
+		$nv_freq = read_nvidia_extension("GPUCurrentClockFreqs");
+
 		$nv_freq = explode(',', $nv_freq);
 		$core_freq = $nv_freq[0];
 		$mem_freq = $nv_freq[1];
 	}
-	else if(!empty($ati_freq)) // ATI GPU
+	else if(IS_ATI_GRAPHICS) // ATI GPU
 	{
+		$ati_freq = read_ati_extension("Current3DFrequencies");
+
 		$ati_freq = explode(',', $ati_freq);
 		$core_freq = $ati_freq[0];
 		$mem_freq = $ati_freq[1];
 	}
+
+	if(!is_numeric($core_freq))
+		$core_freq = 0;
+	if(!is_numeric($mem_freq))
+		$mem_freq = 0;
 
 	return array($core_freq, $mem_freq);
 }
@@ -323,7 +347,7 @@ function graphics_memory_capacity()
 	}
 	else
 	{
-		if(($NVIDIA = read_nvidia_extension("VideoRam")) > 0) // NVIDIA blob
+		if(IS_NVIDIA_GRAPHICS && ($NVIDIA = read_nvidia_extension("VideoRam")) > 0) // NVIDIA blob
 		{
 			$video_ram = $NVIDIA / 1024;
 		}
@@ -373,7 +397,12 @@ function opengl_version()
 }
 function graphics_gpu_usage()
 {
-	return read_ati_extension("GPUActivity");
+	$gpu_usage = 0;
+
+	if(IS_ATI_GRAPHICS)
+		$gpu_usage = read_ati_extension("GPUActivity");
+
+	return $gpu_usage;
 }
 
 ?>

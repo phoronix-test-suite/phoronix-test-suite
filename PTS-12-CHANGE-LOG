@@ -24,6 +24,7 @@
 - pts-core: Add verbose system hardware detail logging support
 - pts-core: Improve text layout of test option prompts
 - pts-core: Add IS_NVIDIA_GRAPHICS, IS_ATI_GRAPHICS, and IS_MESA_GRAPHICS defines for boolean types of graphics card / driver being used
+- pts-core: Switch graphics functions to depend upon IS_*_GRAPHICS booleans
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 
