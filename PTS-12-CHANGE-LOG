@@ -26,6 +26,7 @@
 - pts-core: Improve text layout of test option prompts
 - pts-core: Add IS_NVIDIA_GRAPHICS, IS_ATI_GRAPHICS, and IS_MESA_GRAPHICS defines for boolean types of graphics card / driver being used
 - pts-core: Switch graphics functions to depend upon IS_*_GRAPHICS booleans
+- pts-core: Add list-test-usage option for showing the tests that are installed with the time the test was installed, when the test was last run, and the number of times total the test was run
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called

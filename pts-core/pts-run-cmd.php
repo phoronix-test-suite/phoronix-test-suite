@@ -215,6 +215,29 @@ switch($COMMAND)
 		}
 		echo "\n";
 		break;
+	case "LIST_TEST_USAGE":
+		echo pts_string_header("Phoronix Test Suite - Test Usage");
+		printf("%-22ls   %-20ls %-20ls %-3ls\n", "TEST", "INSTALL TIME", "LAST RUN", "TIMES RUN");
+		foreach(glob(TEST_ENV_DIR . "*/pts-install.xml") as $install_file)
+		{
+			$install_file_arr = explode("/", $install_file);
+			$identifier = $install_file_arr[count($install_file_arr) - 2];
+
+			$xml_parser = new tandem_XmlReader($install_file);
+			$test_time_install = $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);
+			$test_time_lastrun = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
+			$test_times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
+
+			if($test_time_lastrun == "0000-00-00 00:00:00")
+			{
+				$test_time_lastrun = "NEVER";
+				$test_times_run = "";
+			}
+
+			printf("%-22ls - %-20ls %-20ls %-3ls\n", $identifier, $test_time_install, $test_time_lastrun, $test_times_run);
+		}
+		echo "\n";
+		break;
 	case "LIST_POSSIBLE_EXTERNAL_DEPENDENCIES":
 		echo pts_string_header("Phoronix Test Suite - Possible External Dependencies");
 		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");

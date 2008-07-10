@@ -123,6 +123,9 @@ case "$1" in
 "list-installed-tests")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_INSTALLED_TESTS
 	;;
+"list-usage" | "list-test-usage")
+	$PHP_BIN pts-core/pts-run-cmd.php LIST_TEST_USAGE
+	;;
 "list-results" | "list-saved-results" | "list-test-results")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
 	;;
