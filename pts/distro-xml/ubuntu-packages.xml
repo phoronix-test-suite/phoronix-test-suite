@@ -105,5 +105,10 @@
 			<PackageName>perl perl-base perl-modules</PackageName>
 			<FileCheck>/usr/bin/perlcc, /usr/bin/perl, /etc/perl/CPAN</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>perl-opengl</GenericName>
+			<PackageName>libopengl-perl</PackageName>
+			<FileCheck>/usr/lib/perl5/auto/OpenGL/OpenGL.so</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -126,5 +126,11 @@
 			<PossibleNames>perl, perl-base</PossibleNames>
 			<FileCheck>/usr/bin/perl</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>perl-opengl</GenericName>
+			<Title>OpenGL Support For PERL Language</Title>
+			<PossibleNames>perl-opengl, perl-OpenGL-Simple</PossibleNames>
+			<FileCheck>/usr/lib/perl5/auto/OpenGL/OpenGL.so</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
