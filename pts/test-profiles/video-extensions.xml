@@ -1,0 +1,21 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Benchmark</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>24.0</DownloadSize>
+		<EnvironmentSize>30.0</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>MPlayer Video Extensions</Title>
+		<Version>1.0-rc2</Version>
+		<SubTitle>Supported Video Extensions</SubTitle>
+		<ResultScale>GL, GL2, X-Video, XvMC</ResultScale>
+		<Description>This is a test of playing back a short video file with different video extensions supported by X.Org and MPlayer.</Description>
+		<ResultFormat>MULTI_PASS_FAIL</ResultFormat>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestInformation>
+</PhoronixTestSuite>
