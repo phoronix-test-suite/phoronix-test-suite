@@ -11,7 +11,7 @@ THIS_DIR=$(pwd)
 mkdir $THIS_DIR/mplayer_
 
 cd MPlayer-1.0rc2/
-./configure --prefix=$THIS_DIR/mplayer_ > /dev/null
+./configure --enable-xv --enable-xvmc --prefix=$THIS_DIR/mplayer_ > /dev/null
 make -j $NUM_CPU_JOBS
 make install
 cd ..

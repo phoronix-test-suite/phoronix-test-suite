@@ -5,6 +5,7 @@ Phoronix Test Suite
 - pts: Add libaio-devel to PTS External Dependencies
 - pts: Add perl to PTS External Dependencies
 - pts: Add perl-opengl to PTS External Dependencies
+- pts: Add xorg-video to PTS External Dependencies
 - pts: Add fio disk test profile (fio)
 - pts: Add Triangle Slammer test profile (trislam)
 - pts: Add test profile for trying video playback of GL, GL2, X-Video, and XvMC (video-extensions)
