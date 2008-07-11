@@ -132,5 +132,11 @@
 			<PossibleNames>perl-opengl, perl-OpenGL-Simple</PossibleNames>
 			<FileCheck>/usr/lib/perl5/auto/OpenGL/OpenGL.so</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>xorg-video</GenericName>
+			<Title>Xv and XvMC Library Files</Title>
+			<PossibleNames>xorg-x11-libXv-devel, xorg-x11-devel, libxv-dev, libxvmc-dev</PossibleNames>
+			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

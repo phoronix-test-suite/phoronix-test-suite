@@ -110,5 +110,10 @@
 			<PackageName>libopengl-perl</PackageName>
 			<FileCheck>/usr/lib/perl5/auto/OpenGL/OpenGL.so</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>xorg-video</GenericName>
+			<PackageName>libxv-dev libxvmc-dev</PackageName>
+			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

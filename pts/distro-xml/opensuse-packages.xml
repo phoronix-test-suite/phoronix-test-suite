@@ -105,5 +105,10 @@
 			<PackageName>perl</PackageName>
 			<FileCheck>/usr/bin/perl</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>xorg-video</GenericName>
+			<PackageName>xorg-x11-libXv-devel xorg-x11-devel</PackageName>
+			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

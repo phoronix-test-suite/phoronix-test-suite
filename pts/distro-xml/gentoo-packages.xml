@@ -2,109 +2,91 @@
 	<ExternalDependencies>
 		<Package>
 			<GenericName>gtk-development</GenericName>
-			<Title>GTK Development Files</Title>
 			<PackageName>>=x11-libs/gtk+-2</PackageName>
 			<FileCheck>/usr/include/gtk-2.0</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<Title>SDL Development Files</Title>
 			<PackageName>>=media-libs/libsdl-1.2 >=media-libs/sdl-net-1.2 >=media-libs/sdl-image-1.2</PackageName>
 			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
-			<Title>OpenGL Utility Kit (GLUT)</Title>
 			<PackageName>virtual/glut</PackageName>
 			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
-			<Title>CSH</Title>
 			<PackageName>app-shells/tcsh</PackageName>
 			<FileCheck>/bin/csh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
-			<Title>libpng (PNG Image) Development Files</Title>
 			<PackageName>>=media-libs/libpng-1.2</PackageName>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<Title>GNU Development Utilities / Libraries</Title>
 			<PackageName>sys-devel/gcc</PackageName>
 			<FileCheck>/usr/bin/gcc</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
-			<Title>Git</Title>
 			<PackageName>dev-util/git</PackageName>
 			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
-			<Title>X.Org Development Files and Libraries</Title>
 			<PackageName>x11-base/xorg-server</PackageName>
 			<FileCheck>/usr/include/xorg</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
-			<Title>Bison</Title>
 			<PackageName>sys-devel/bison</PackageName>
 			<FileCheck>/usr/bin/bison</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>flex</GenericName>
-			<Title>Flex</Title>
 			<PackageName>sys-devel/flex</PackageName>
 			<FileCheck>/usr/bin/flex</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>imlib2-development</GenericName>
-			<Title>Imlib2 Development Files</Title>
 			<PackageName>media-libs/imlib2</PackageName>
 			<FileCheck>/usr/include/Imlib2.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<Title>Java Runtime Environment</Title>
 			<PackageName>>=virtual/jre-1.5</PackageName>
 			<FileCheck>/usr/bin/java</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
-			<Title>PortAudio Development Files</Title>
 			<PackageName>media-libs/portaudio</PackageName>
 			<FileCheck>/usr/include/portaudio.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
-			<Title>Fortran Compiler</Title>
 			<PossibleNames>re-emerge sys-devel/gcc with the useflag 'fortran' active</PossibleNames>
 			<FileCheck>/usr/bin/gfortran</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glew</GenericName>
-			<Title>OpenGL Extension Wrangler</Title>
 			<PackageName>media-libs/glew</PackageName>
 			<FileCheck>/usr/include/GL/glew.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>scons</GenericName>
-			<Title>SCons</Title>
 			<PackageName>dev-util/scons</PackageName>
 			<FileCheck>/usr/bin/scons</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>zlib-devel</GenericName>
-			<Title>Zlib Compression Library</Title>
 			<PackageName>sys-libs/zlib</PackageName>
 			<FileCheck>/usr/include/zlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jpeg-devel</GenericName>
-			<Title>Development Files For IJG JPEG Library</Title>
 			<PackageName>media-libs/jpeg</PackageName>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
@@ -117,6 +99,16 @@
 			<GenericName>perl</GenericName>
 			<PackageName>dev-lang/perl</PackageName>
 			<FileCheck>/usr/bin/perl</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>sdl-development</GenericName>
+			<PackageName>>=media-libs/libsdl-1.2 >=media-libs/sdl-net-1.2 >=media-libs/sdl-image-1.2</PackageName>
+			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>xorg-video</GenericName>
+			<PackageName>>=x11-libs/libXvMC >=x11-libs/libXv</PackageName>
+			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
