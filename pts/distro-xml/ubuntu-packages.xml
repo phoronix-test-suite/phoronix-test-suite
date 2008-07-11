@@ -100,5 +100,10 @@
 			<PackageName>libaio-dev</PackageName>
 			<FileCheck>/usr/include/libaio.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>perl</GenericName>
+			<PackageName>perl perl-base perl-modules</PackageName>
+			<FileCheck>/usr/bin/perlcc, /usr/bin/perl, /etc/perl/CPAN</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

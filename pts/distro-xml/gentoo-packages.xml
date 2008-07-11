@@ -113,5 +113,10 @@
 			<PackageName>dev-libs/libaio</PackageName>
 			<FileCheck>/usr/include/libaio.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>perl</GenericName>
+			<PackageName>dev-lang/perl</PackageName>
+			<FileCheck>/usr/bin/perl</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
