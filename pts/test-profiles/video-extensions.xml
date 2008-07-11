@@ -10,7 +10,7 @@
 		<EnvironmentSize>30.0</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
-		<Title>MPlayer Video Extensions</Title>
+		<Title>MPlayer Video Playback Tests</Title>
 		<Version>1.0-rc2</Version>
 		<SubTitle>Supported Video Extensions</SubTitle>
 		<ResultScale>GL, GL2, X-Video, XvMC</ResultScale>
