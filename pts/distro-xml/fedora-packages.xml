@@ -102,7 +102,7 @@
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl</PackageName>
+			<PackageName>perl perl-SDL</PackageName>
 			<FileCheck>/usr/bin/perl</FileCheck>
 		</Package>
 	</ExternalDependencies>
