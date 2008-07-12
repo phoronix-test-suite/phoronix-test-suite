@@ -40,6 +40,7 @@
 - graphics_override: Add graphics_override module for having FORCE_AA and FORCE_AF options for overriding anti-aliasing and anisotropic filtering levels with supported drivers
 
 - pts_LineGraph: Don't display the pointers if there are too many points on the graph
+- pts_LineGraph: Improve graphing of the line when it comes to both ends and increase width to 2px
 
 - pts_Graph: Always show key/legend if it's a single-type line graph
 - pts_Graph: Use image antialiasing if it's available on the system

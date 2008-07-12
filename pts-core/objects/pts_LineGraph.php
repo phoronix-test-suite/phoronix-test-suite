@@ -73,10 +73,21 @@ class pts_LineGraph extends pts_CustomGraph
 				if($previous_placement != -1 && $previous_offset != -1)
 				{
 					imageline($this->graph_image, $previous_offset, $previous_placement, $px_from_left, $value_plot_top, $paint_color);
-					if($point_counter < 26)
-						$this->render_graph_pointer($previous_offset, $previous_placement);
+					imageline($this->graph_image, $previous_offset, $previous_placement + 1, $px_from_left, $value_plot_top + 1, $paint_color);
 				}
-				if($i == 0 || $i == count($this->graph_data[$i_o]) - 1)
+
+				if($i == 0)
+				{
+					imageline($this->graph_image, $this->graph_left_start + 1, $value_plot_top, $px_from_left, $value_plot_top, $paint_color);
+					imageline($this->graph_image, $this->graph_left_start + 1, $value_plot_top + 1, $px_from_left, $value_plot_top + 1, $paint_color);
+				}
+				else if($i == ($point_counter - 1))
+				{
+					imageline($this->graph_image, $px_from_left, $value_plot_top, $this->graph_left_end - 1, $value_plot_top, $paint_color);
+					imageline($this->graph_image, $px_from_left, $value_plot_top + 1, $this->graph_left_end - 1, $value_plot_top + 1, $paint_color);
+				}
+
+				if($point_counter < 20)
 					$this->render_graph_pointer($px_from_left, $value_plot_top);
 
 				$previous_placement = $value_plot_top;
