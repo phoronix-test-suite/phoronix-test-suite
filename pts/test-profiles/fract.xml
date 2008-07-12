@@ -1,13 +1,14 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.2</Version>
+		<Version>1.0.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
-		<Status>BROKEN</Status>
+		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>0.58</DownloadSize>
 		<EnvironmentSize>3.2</EnvironmentSize>
+		<SupportedArchitectures>x86</SupportedArchitectures>
 	</TestProfile>
 	<TestInformation>
 		<Title>FRACT</Title>
@@ -16,6 +17,7 @@
 		<ResultScale>FPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test uses the FRACT benchmark.</Description>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>
+		<PreRunMessage>Once the benchmark completes, you must close the opened window for the testing process to continue.</PreRunMessage>
 	</TestInformation>
 </PhoronixTestSuite>

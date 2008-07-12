@@ -12,6 +12,7 @@ Phoronix Test Suite
 - pts: Add system memory test suite (memory)
 - pts: Add database test suite (database)
 - pts: Add computational/arithmetic test suite (computational)
+- pts: Update fract test profile with fixes to bring it into a verified state
 
 Phoronix Test Suite 1.0.3
 July 9, 2008
