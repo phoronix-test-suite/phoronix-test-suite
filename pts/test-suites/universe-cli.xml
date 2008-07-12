@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<TestType>System</TestType>
 		<Title>Universe CLI Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -22,46 +22,24 @@
 		<Test>disk</Test>
 	</RunTest>
 	<RunTest>
-		<Test>espeak</Test>
-	</RunTest>
-	<RunTest>
 		<Test>cryptography</Test>
 	</RunTest>
 	<RunTest>
-		<Test>super-pi</Test>
-		<Arguments>20</Arguments>
-		<Description>1 Million Digits</Description>
-	</RunTest>
-	<RunTest>
-		<Test>sqlite</Test>
-	</RunTest>
-	<RunTest>
-		<Test>pts-graph</Test>
-	</RunTest>
-	<RunTest>
-		<Test>byte</Test>
-		<Arguments>TEST_DHRY2</Arguments>
-		<Description>Dhrystone 2</Description>
-	</RunTest>
-	<RunTest>
-		<Test>scimark2</Test>
-		<Arguments>TEST_COMPOSITE</Arguments>
-		<Description>Composite</Description>
+		<Test>computational</Test>
 	</RunTest>
 	<RunTest>
 		<Test>memory</Test>
 	</RunTest>
 	<RunTest>
-		<Test>tandem-xml</Test>
-		<Arguments>WRITE</Arguments>
-		<Description>Write Performance</Description>
-	</RunTest>
-	<RunTest>
-		<Test>tandem-xml</Test>
-		<Arguments>READ</Arguments>
-		<Description>Read Performance</Description>
+		<Test>database</Test>
 	</RunTest>
 	<RunTest>
 		<Test>java</Test>
+	</RunTest>
+	<RunTest>
+		<Test>espeak</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pts-graph</Test>
 	</RunTest>
 </PhoronixTestSuite>
