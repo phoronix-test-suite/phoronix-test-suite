@@ -1,0 +1,24 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<Title>Computational Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite contains tests that deal with measuring the system's computational / arithmetic performance. Some of the included tests are of synthetic nature while others have real-world meanings.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>super-pi</Test>
+		<Arguments>20</Arguments>
+		<Description>1 Million Digits</Description>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_DHRY2</Arguments>
+		<Description>Dhrystone 2</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_COMPOSITE</Arguments>
+		<Description>Composite</Description>
+	</RunTest>
+</PhoronixTestSuite>
