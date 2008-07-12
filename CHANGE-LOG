@@ -10,6 +10,7 @@ Phoronix Test Suite
 - pts: Add Triangle Slammer test profile (trislam)
 - pts: Add test profile for trying video playback of GL, GL2, X-Video, and XvMC (video-extensions)
 - pts: Add system memory test suite (memory)
+- pts: Add database test suite (database)
 
 Phoronix Test Suite 1.0.3
 July 9, 2008
