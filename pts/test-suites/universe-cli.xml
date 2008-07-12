@@ -49,14 +49,7 @@
 		<Description>Composite</Description>
 	</RunTest>
 	<RunTest>
-		<Test>ramspeed</Test>
-		<Arguments>ADD -b 3 -l 10</Arguments>
-		<Description>Integer BatchRun Add</Description>
-	</RunTest>
-	<RunTest>
-		<Test>memory-bandwidth</Test>
-		<Arguments>TEST_READ</Arguments>
-		<Description>RAM Sequential Read</Description>
+		<Test>memory</Test>
 	</RunTest>
 	<RunTest>
 		<Test>tandem-xml</Test>

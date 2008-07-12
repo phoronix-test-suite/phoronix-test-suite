@@ -1,0 +1,19 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.2</Version>
+		<TestType>Memory</TestType>
+		<Title>System Memory Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The memory test suite contains tests designed to gauge the system's memory performance.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>ramspeed</Test>
+		<Arguments>ADD -b 3 -l 10</Arguments>
+		<Description>Integer BatchRun Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>memory-bandwidth</Test>
+		<Arguments>TEST_READ</Arguments>
+		<Description>RAM Sequential Read</Description>
+	</RunTest>
+</PhoronixTestSuite>
