@@ -34,7 +34,7 @@ function pts_module_start_process()
 }
 function pts_auto_detect_modules($load_here = FALSE)
 {
-	$modules_assoc = array("MONITOR" => "system_monitor", "FORCE_AA" => "graphics_override", "FORCE_AF" => "graphics_override");
+	$modules_assoc = array("MONITOR" => "system_monitor", "FORCE_AA" => "graphics_override", "FORCE_AF" => "graphics_override", "HALT_SCREENSAVER" => "toggle_screensaver");
 
 	foreach($modules_assoc as $env_var => $module)
 		if(!in_array($module, $GLOBALS["PTS_MODULES"]) && ($e = getenv($env_var)) != FALSE && !empty($e))
