@@ -280,8 +280,6 @@ function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEX
 }
 function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $arguments_description = "")
 {
-	pts_interrupt_screensaver();
-
 	if(pts_process_active($benchmark_identifier))
 	{
 		echo "\nThis test (" . $benchmark_identifier . ") is already running... Please wait until the first instance is finished.\n";

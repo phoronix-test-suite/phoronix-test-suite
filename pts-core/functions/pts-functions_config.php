@@ -57,17 +57,6 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
 	}
 
-	$ToggleScreensaver = pts_read_user_config(P_OPTION_TEST_SCREENSAVER, "", $read_config);
-	if(empty($ToggleScreensaver))
-	{
-		$ToggleScreensaver = trim(shell_exec("gconftool -g /apps/gnome-screensaver/idle_activation_enabled 2>&1"));
-
-		if($ToggleScreensaver == "true")
-			$ToggleScreensaver = "TRUE";
-		else
-			$ToggleScreensaver = "FALSE";			
-	}	
-
 	if($UserName == NULL)
 		$UserName = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User", $read_config);
 	if($UploadKey == NULL)
@@ -99,7 +88,6 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 	$config->addXmlObject(P_OPTION_GLOBAL_UPLOADKEY, 0, $UploadKey);
 
 	$config->addXmlObject(P_OPTION_TEST_SLEEPTIME, 2, pts_read_user_config(P_OPTION_TEST_SLEEPTIME, "8", $read_config));
-	$config->addXmlObject(P_OPTION_TEST_SCREENSAVER, 2, $ToggleScreensaver);
 
 	$config->addXmlObject(P_OPTION_PROMPT_DOWNLOADLOC, 3, pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_RESULTS_DIRECTORY, 3, pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/", $read_config));

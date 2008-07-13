@@ -476,10 +476,6 @@ function pts_shutdown()
 {
 	define("PTS_END_TIME", time());
 
-	// Ensure screensaver is back to being enabled
-	if(defined("SCREENSAVER_KILLED"))
-		shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");
-
 	if(defined("PTS_DEBUG_MODE") && defined("PTS_DEBUG_FILE"))
 	{
 		if(!is_dir(PTS_USER_DIR . "debug-messages/"))
@@ -491,24 +487,6 @@ function pts_shutdown()
 
 	// Remove process
 	pts_process_remove("phoronix-test-suite");
-}
-function pts_disable_screensaver()
-{
-	if(pts_read_user_config(P_OPTION_TEST_SCREENSAVER, "FALSE") == "TRUE")
-	{
-		shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled false");
-		define("SCREENSAVER_KILLED", 1);
-	}
-}
-function pts_enable_screensaver()
-{
-	if(defined("SCREENSAVER_KILLED"))
-		shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true");
-}
-function pts_interrupt_screensaver()
-{
-	if(!defined("SCREENSAVER_KILLED"))
-		shell_exec("xdg-screensaver reset 2>&1 > /dev/null");
 }
 function pts_string_bool($string)
 {

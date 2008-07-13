@@ -145,8 +145,6 @@ if($SAVE_RESULTS)
 	$RESULTS_IDENTIFIER = pts_prompt_results_identifier($result_identifiers);
 }
 
-pts_disable_screensaver(); // Kill the screensaver
-
 if($TO_RUN_TYPE == "TEST")
 {
 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
