@@ -25,10 +25,11 @@ class toggle_screensaver extends pts_module_interface
 {
 	const module_name = "Toggle Screensaver";
 	const module_version = "1.0.0";
-	const module_description = "This module toggles the system's screensaver while the Phoronix Test Suite is running. At this time, only the GNOME screensaver is supported.";
+	const module_description = "This module toggles the system's screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.";
 	const module_author = "Phoronix Media";
 
 	static $gnome_screensaver_halted = FALSE;
+	static $kde_screensaver_halted = FALSE;
 
 	public static function __startup()
 	{
@@ -45,6 +46,20 @@ class toggle_screensaver extends pts_module_interface
 			shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1");
 			self::$gnome_screensaver_halted = TRUE;
 		}
+		else
+		{
+			// KDE Screensaver?
+			$is_kde_screensaver_enabled = trim(shell_exec("dcop kdesktop KScreensaverIface isEnabled 2>&1"));
+
+			if($is_kde_screensaver_enabled == "true")
+			{
+				// Stop the KDE Screensaver
+				shell_exec("dcop kdesktop KScreensaverIface enable false 2>&1");
+				self::$kde_screensaver_halted = TRUE;
+			}
+		}
+
+
 	}
 	public static function __shutdown()
 	{
@@ -52,6 +67,11 @@ class toggle_screensaver extends pts_module_interface
 		{
 			// Restore the GNOME Screensaver
 			shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");
+		}
+		else if(self::$kde_screensaver_halted == TRUE)
+		{
+			// Restore the KDE Screensaver
+			shell_exec("dcop kdesktop KScreensaverIface enable true 2>&1");
 		}
 	}
 	public static function __pre_run_process()

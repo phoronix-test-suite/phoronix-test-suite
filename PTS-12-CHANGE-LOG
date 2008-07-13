@@ -40,7 +40,8 @@
 
 - graphics_override: Add graphics_override module for having FORCE_AA and FORCE_AF options for overriding anti-aliasing and anisotropic filtering levels with supported drivers
 
-- toggle_screensaver: Move screensaver toggling code from pts-core into a module named toggle_screensaver. This module is controlled through the HALT_SCREENSAVER environmental variable.
+- toggle_screensaver: Move screensaver toggling code from pts-core into a module named toggle_screensaver. This module is loaded by default but controlled through the HALT_SCREENSAVER environmental variable.
+- toggle_screensaver: Add KDE screensaver support
 
 - pts_LineGraph: Don't display the pointers if there are too many points on the graph
 - pts_LineGraph: Improve graphing of the line when it comes to both ends and increase width to 2px
