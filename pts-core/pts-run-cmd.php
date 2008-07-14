@@ -365,9 +365,12 @@ switch($COMMAND)
 		if(is_file(MODULE_DIR . $ARG_1 . ".php"))
 		{
 		 	$module = $ARG_1;
+			$pre_message = "";
 
 			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
 				include(MODULE_DIR . $module . ".php");
+			else
+				$pre_message = "** This module is currently loaded. **\n";
 
 			eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 			eval("\$module_version = " . $module . "::module_version;");
@@ -376,7 +379,7 @@ switch($COMMAND)
 			eval("\$module_information = " . $module . "::module_info();");
 
 			echo pts_string_header("Module: " . $module_name);
-
+			echo $pre_message;
 			echo "Version: " . $module_version . "\n";
 			echo "Author: " . $module_author . "\n";
 			echo "Description: " . $module_description . "\n";
