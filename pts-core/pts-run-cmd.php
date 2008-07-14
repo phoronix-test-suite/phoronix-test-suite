@@ -185,8 +185,10 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite - Modules");
 		foreach(glob(MODULE_DIR . "*.php") as $module_file)
 		{
-			include($module_file);
 		 	$module = basename($module_file, ".php");
+
+			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
+				include($module_file);
 
 			eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 			eval("\$module_version = " . $module . "::module_version;");
