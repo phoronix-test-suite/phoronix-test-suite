@@ -7,7 +7,7 @@ cd data/
 ./etqw.x86 \$@ | grep fps" > etqw
 chmod +x etqw
 
-tar -jxvf etqw-demo-files-2.tar.bz2
+tar -jxvf etqw-demo-files-3.tar.bz2
 mkdir data/base/demos
 mv -f pts.ndm data/base/demos/pts.ndm
 mv -f etqw-pts.cfg data/base/etqw-pts.cfg

@@ -5,8 +5,8 @@
 			<MD5>11f5a882127a917b6c8b648ffa22da74</MD5>
 		</Package>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/etqw-demo-files-2.tar.bz2</URL>
-			<MD5>033cab9c92d5622877df9a0db584c4e1</MD5>
+			<URL>http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/etqw-demo-files-3.tar.bz2, http://www.phoronix-test-suite.com/benchmark-files/etqw-demo-files-3.tar.bz2</URL>
+			<MD5>639c2251ecd21bed218b1d99ff222db9</MD5>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
