@@ -56,3 +56,4 @@
 - pts: Add PTS External Dependencies support for OpenSolaris using IPS
 - pts: Add linux-32bit-libraries generic package to PTS External Dependencies
 - pts: General code cleanups
+- pts: Add synaptic support within install-ubuntu-packages.sh for Debian package install support
