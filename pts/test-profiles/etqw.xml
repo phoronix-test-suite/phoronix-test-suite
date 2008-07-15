@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
@@ -21,7 +21,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>+set in_tty 0 +set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +exec etqw_pts.cfg</Arguments>
+			<Arguments>+set in_tty 0 +set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +exec etqw-pts.cfg</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>

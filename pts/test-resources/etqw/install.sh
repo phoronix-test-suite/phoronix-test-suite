@@ -7,21 +7,10 @@ cd data
 ./etqw.x86 \$@ | grep fps" > etqw
 chmod +x etqw
 
-tar -xvf etqw-pts-demo-2.tar.gz
+tar -jxvf etqw-files-3.tar.bz2
 mkdir data/base/demos
 mv -f pts.ndm data/base/demos/pts.ndm
-
-# etqw_pts.cfg
-echo "
-set com_unlockFPS \"1\"
-timenetdemo pts
-wait 5018
-echo ======================
-echo wait '# of frames + 3'
-echo timenetdemo ended
-echo quit
-echo ======================
-quit" > data/base/etqw_pts.cfg
+mv -f etqw-pts.cfg data/base/etqw-pts.cfg
 
 # Since the game is installed, we search for the game directory
 # where there are the ET:QW Game Files (*.mega) and (*.pk4)
