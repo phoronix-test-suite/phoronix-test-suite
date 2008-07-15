@@ -213,7 +213,7 @@ function graphics_processor_frequency()
 }
 function graphics_processor_string()
 {
-	$info = shell_exec("glxinfo | grep renderer 2>&1");
+	$info = shell_exec("glxinfo 2>&1 | grep renderer");
 
 	if(($pos = strpos($info, "renderer string:")) > 0)
 	{
@@ -290,7 +290,7 @@ function pts_record_gpu_usage()
 }
 function opengl_version()
 {
-	$info = shell_exec("glxinfo | grep version");
+	$info = shell_exec("glxinfo 2>&1 | grep version");
 
 	if(($pos = strpos($info, "OpenGL version string:")) === FALSE)
 	{

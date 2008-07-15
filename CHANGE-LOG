@@ -13,6 +13,7 @@ Phoronix Test Suite
 - pts: Add database test suite (database)
 - pts: Add computational/arithmetic test suite (computational)
 - pts: Update fract test profile with fixes to bring it into a verified state
+- pts-core: Improve parsing of glxinfo to not mistakenly report glxinfo errors outputted
 
 Phoronix Test Suite 1.0.3
 July 9, 2008
