@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
@@ -45,6 +45,10 @@
 				<Entry>
 					<Name>500px Compositing From Window To Window</Name>
 					<Value>-compwinwin500</Value>
+				</Entry>
+				<Entry>
+					<Name>Char in 80-char aa line</Name>
+					<Value>-aa10text</Value>
 				</Entry>
 			</Menu>
 		</Option>
