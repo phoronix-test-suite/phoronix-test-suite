@@ -38,19 +38,30 @@ function pts_module_start_process()
 }
 function pts_auto_detect_modules($load_here = FALSE)
 {
-	$modules_assoc = array("MONITOR" => "system_monitor", "FORCE_AA" => "graphics_override", "FORCE_AF" => "graphics_override", "HALT_SCREENSAVER" => "toggle_screensaver", "EMAIL_RESULTS_TO" => "email_results");
+	$module_variables_file = @file_get_contents(MODULE_DIR . "module-variables.txt");
+	$module_variables = explode("\n", $module_variables_file);
 
-	foreach($modules_assoc as $env_var => $module)
-		if(!in_array($module, $GLOBALS["PTS_MODULES"]) && ($e = getenv($env_var)) != FALSE && !empty($e))
+	foreach($module_variables as $module_var)
+	{
+		$module_var = explode("=", $module_var);
+
+		if(count($module_var) == 2)
 		{
-			if(defined("PTS_DEBUG_MODE"))
-				echo "Attempting To Add Module: " . $module . "\n";
+			$env_var = trim($module_var[0]);
+			$module = trim($module_var[1]);
 
-			array_push($GLOBALS["PTS_MODULES"], $module);
+			if(!in_array($module, $GLOBALS["PTS_MODULES"]) && ($e = getenv($env_var)) != FALSE && !empty($e))
+			{
+				if(defined("PTS_DEBUG_MODE"))
+					echo "Attempting To Add Module: " . $module . "\n";
 
-			if($load_here)
-				pts_load_module($module);
+				array_push($GLOBALS["PTS_MODULES"], $module);
+
+				if($load_here)
+					pts_load_module($module);
+			}
 		}
+	}
 }
 function pts_load_modules()
 {

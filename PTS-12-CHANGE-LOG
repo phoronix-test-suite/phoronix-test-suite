@@ -31,6 +31,7 @@
 - pts-core: If PromptForDownloadMirror tag in user-config.xml is set to TRUE, prompt the user when running in a non-batch mode what mirror to download a test file from or optionally the user can input their own download location
 - pts-core: Drop (GNOME) screensaver toggling from the core, move to a module
 - pts-core: Write PTS_BATCH_MODE=1 to Extensions tag in results file when PTS is running in batch mode
+- pts-core: Move environmental variables to check for auto-loading of PTS modules out to modules/module-variables.txt
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called
