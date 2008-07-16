@@ -1,11 +1,11 @@
 <?php
 
 /*
-	Phoronix Test Suite "Trondheim"
+	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2004-2008, Michael Larabel
-	dummy_module.php: A simple "dummy" module to demonstrate the PTS functions
+	email_results.php: A simple "dummy" module to demonstrate the PTS functions
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

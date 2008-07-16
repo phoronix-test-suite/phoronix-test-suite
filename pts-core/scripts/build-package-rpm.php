@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Phoronix Test Suite "Trondheim"
+	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2008, Andrew Schofield
