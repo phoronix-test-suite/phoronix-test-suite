@@ -25,18 +25,21 @@ require("pts-core/functions/pts-functions.php");
 require("pts-core/functions/pts-functions-run.php");
 require("pts-core/functions/pts-functions-merge.php");
 
-$TO_RUN = strtolower($argv[1]);
-$TO_RUN_TYPE = pts_test_type($TO_RUN);
-$MODULE_STORE = implode(";", $GLOBALS["PTS_MODULE_VAR_STORE"]);
-$TEST_RAN = false;
-
 if(isset($argv[2]) && $argv[2] == "BATCH")
 {
 	if(pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "FALSE")
 		pts_exit(pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup"));
 
 	define("PTS_BATCH_MODE", "1");
+
+	if(!in_array("PTS_BATCH_MODE=1", $GLOBALS["PTS_MODULE_VAR_STORE"]))
+		array_push($GLOBALS["PTS_MODULE_VAR_STORE"], "PTS_BATCH_MODE=1");
 }
+
+$TO_RUN = strtolower($argv[1]);
+$TO_RUN_TYPE = pts_test_type($TO_RUN);
+$MODULE_STORE = implode(";", $GLOBALS["PTS_MODULE_VAR_STORE"]);
+$TEST_RAN = false;
 
 if(empty($TO_RUN))
 	pts_exit("\nThe benchmark, suite name, or saved file name must be supplied.\n");
