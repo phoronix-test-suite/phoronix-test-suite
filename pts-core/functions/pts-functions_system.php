@@ -206,6 +206,9 @@ function operating_system_release()
 				}
 			}
 		}
+
+		if($os == "Unknown")
+			$os = shell_exec("uname -s");
 	}
 	else
 		$os = $vendor . " " . $version;
