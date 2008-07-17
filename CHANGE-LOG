@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite
 
+- pts-core: Improve parsing of glxinfo to not mistakenly report glxinfo errors outputted
 - pts: Add libaio-devel to PTS External Dependencies
 - pts: Add perl to PTS External Dependencies
 - pts: Add perl-opengl to PTS External Dependencies
@@ -9,12 +10,12 @@ Phoronix Test Suite
 - pts: Add fio disk test profile (fio)
 - pts: Add Triangle Slammer test profile (trislam)
 - pts: Add test profile for trying video playback of GL, GL2, X-Video, and XvMC (video-extensions)
-- pts: Add system memory test suite (memory)
-- pts: Add database test suite (database)
 - pts: Add computational/arithmetic test suite (computational)
 - pts: Update fract test profile with fixes to bring it into a verified state
-- pts-core: Improve parsing of glxinfo to not mistakenly report glxinfo errors outputted
 - pts: Add another option to x11perf test profile
+- pts: Add system memory test suite (memory)
+- pts: Add database test suite (database)
+- pts: Add OpenGL demos test suite (opengl-demos)
 
 Phoronix Test Suite 1.0.3
 July 9, 2008
