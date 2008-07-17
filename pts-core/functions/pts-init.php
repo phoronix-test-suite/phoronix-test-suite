@@ -64,19 +64,29 @@ function pts_init()
 	}
 
 	// Operating System Detection
-	$uname_o = strtolower(trim(shell_exec("uname -o")));
+	$uname_s = strtolower(trim(shell_exec("uname -s")));
 
-	if(strpos($uname_o, "linux") !== FALSE)
+	if(strpos($uname_s, "linux") !== FALSE) // Support for Linux
 	{
 		define("OPERATING_SYSTEM", "Linux");
 		define("IS_LINUX", true);
 	}
-	else if(strpos($uname_o, "solaris") !== FALSE)
+	else if(strpos($uname_s, "sun") !== FALSE || strpos($uname_s, "solaris") !== FALSE) // Support for OpenSolaris
 	{
 		define("OPERATING_SYSTEM", "Solaris");
 		define("IS_SOLARIS", true);
 	}
-	else
+	else if(strpos($uname_s, "freebsd") !== FALSE) // Support for FreeBSD
+	{
+		define("OPERATING_SYSTEM", "FreeBSD");
+		define("IS_BSD", true);
+	}
+	else if(strpos($uname_s, "bsd") !== FALSE) // Support for other BSDs
+	{
+		define("OPERATING_SYSTEM", "FreeBSD");
+		define("IS_BSD", true);
+	}
+	else // OS is unknown
 	{
 		define("OPERATING_SYSTEM", "Unknown");
 		define("IS_UNKNOWN", true);
@@ -87,6 +97,8 @@ function pts_init()
 		define("IS_LINUX", false);
 	if(!defined("IS_SOLARIS"))
 		define("IS_SOLARIS", false);
+	if(!defined("IS_BSD"))
+		define("IS_BSD", false);
 	if(!defined("IS_UNKNOWN"))
 		define("IS_UNKNOWN", false);
 }
