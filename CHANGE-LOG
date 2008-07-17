@@ -16,6 +16,7 @@ Phoronix Test Suite
 - pts: Add system memory test suite (memory)
 - pts: Add database test suite (database)
 - pts: Add OpenGL demos test suite (opengl-demos)
+- pts: Add OpenGL workstation test suite (opengl-workstation)
 
 Phoronix Test Suite 1.0.3
 July 9, 2008

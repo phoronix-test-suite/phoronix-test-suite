@@ -26,4 +26,9 @@
 		<Arguments>maya</Arguments>
 		<Description>Maya</Description>
 	</RunTest>
+	<RunTest>
+		<Test>xplane9</Test>
+		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=1024 --pref:_y_res_req_ALL=768 --no_sound</Arguments>
+		<Description>1024 x 768 - High Quality</Description>
+	</RunTest>
 </PhoronixTestSuite>

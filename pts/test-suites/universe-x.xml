@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>System</TestType>
 		<Title>Universe Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -16,14 +16,7 @@
 		<Test>gaming</Test>
 	</RunTest>
 	<RunTest>
-		<Test>glmark</Test>
-		<Arguments>1024 768 VERTEX_ARRAY</Arguments>
-		<Description>1024 x 768 - Vertex Array</Description>
-	</RunTest>
-	<RunTest>
-		<Test>glmark</Test>
-		<Arguments>1024 768 GLSL_PER_PIXEL</Arguments>
-		<Description>1024 x 768 - GLSL Per Pixel Lighting</Description>
+		<Test>opengl-demos</Test>
 	</RunTest>
 	<RunTest>
 		<Test>x11perf</Test>
@@ -31,21 +24,6 @@
 		<Description>500px Compositing From Pixmap To Window</Description>
 	</RunTest>
 	<RunTest>
-		<Test>norsetto-shadow</Test>
-	</RunTest>
-	<RunTest>
-		<Test>specviewperf9</Test>
-		<Arguments>3dsmax</Arguments>
-		<Description>3DS Max</Description>
-	</RunTest>
-	<RunTest>
-		<Test>specviewperf10</Test>
-		<Arguments>maya</Arguments>
-		<Description>Maya</Description>
-	</RunTest>
-	<RunTest>
-		<Test>xplane9</Test>
-		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=1024 --pref:_y_res_req_ALL=768 --no_sound</Arguments>
-		<Description>1024 x 768 - High Quality</Description>
+		<Test>opengl-workstation</Test>
 	</RunTest>
 </PhoronixTestSuite>
