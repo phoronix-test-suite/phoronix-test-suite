@@ -180,16 +180,23 @@ function set_amd_pcsdb($attribute, $value)
 }
 function xrandr_screen_resolution()
 {
-	$info = shell_exec("xrandr 2>&1");
+	$info = shell_exec("xrandr 2>&1 | grep \"*\"");
 
-	if(($pos = strrpos($info, "*")) != FALSE)
+	if(strpos($info, "*") != FALSE)
 	{
-		$info = substr($info, 0, $pos);
-		$info = trim(substr($info, strrpos($info, "\n")));
-		$info = substr($info, 0, strpos($info, " "));
-		$info = explode("x", $info);
+		$res = explode("x", $info);
+		$res[0] = trim($res[0]);
+		$res[1] = trim($res[1]);
 
-		if(count($info) != 2 && (!is_int($info[0]) || !is_int($info[1])))
+		$res[0] = substr($res[0], strpos($res[0], " "));
+		$res[1] = substr($res[1], 0, strpos($res[1], " "));
+
+		if(is_numeric($res[0]) && is_numeric($res[1]))
+		{
+			$info = array();
+			array_push($info, $res[0], $res[1]);
+		}
+		else
 			$info = "";
 	}
 
@@ -197,7 +204,7 @@ function xrandr_screen_resolution()
 	{
 		if(IS_NVIDIA_GRAPHICS && ($nvidia = read_nvidia_extension("FrontendResolution")) != "")
 		{
-			$info = explode(',', $nvidia);
+			$info = explode(",", $nvidia);
 		}
 		else
 			$info = array("Unknown", "Unknown");
