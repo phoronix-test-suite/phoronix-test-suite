@@ -1,0 +1,29 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<Title>OpenGL Workstation Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The OpenGL Workstation Test Suite consists of OpenGL-powered workstation tests, such as SPECViewPerf.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>3dsmax</Arguments>
+		<Description>3DS Max</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>ensight-03</Arguments>
+		<Description>Ensight</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>proe-04</Arguments>
+		<Description>PRO Engineer</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf10</Test>
+		<Arguments>maya</Arguments>
+		<Description>Maya</Description>
+	</RunTest>
+</PhoronixTestSuite>
