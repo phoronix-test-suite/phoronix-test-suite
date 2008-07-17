@@ -25,5 +25,5 @@ cd System/
 chmod +x ut2004-demo
 
 mkdir -p ~/.ut2004demo/System
-cp -f UT2004.ini ~/.ut2004demo/System
+# cp -f UT2004.ini ~/.ut2004demo/System
 
