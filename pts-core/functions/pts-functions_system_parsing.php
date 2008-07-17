@@ -144,6 +144,21 @@ function read_lsb($desc)
 
 	return $info;
 }
+function read_sysctl($desc)
+{
+	$info = shell_exec("sysctl $desc 2>&1");
+
+	if((strrpos($info, $desc . ":") !== FALSE)
+	{
+		$info = trim(substr($info, strlen($desc) + 2));
+	}
+	else
+	{
+		$info = "Unknown";
+	}
+
+	return $info;
+}
 function read_cpuinfo($attribute)
 {
 	$cpuinfo_matches = array();

@@ -23,16 +23,24 @@
 
 function cpu_core_count()
 {
-	if(IS_SOLARIS)
+	if(IS_LINUX)
+	{
+		$processors = read_cpuinfo("processor");
+		$info = count($processors);
+	}
+	else if(IS_SOLARIS)
 	{
 		$info = trim(shell_exec("psrinfo"));
 		$info = explode("\n", $info);
 		$info = count($info);
 	}
+	else if(IS_BSD)
+	{
+		$info = read_sysctl("hw.ncpu");
+	}
 	else
 	{
-		$processors = read_cpuinfo("processor");
-		$info = count($processors);
+		$processors = 1;
 	}
 
 	return $info;
@@ -96,6 +104,10 @@ function processor_string()
 			$info = trim(shell_exec("dmesg | grep cpu0"));
 			$info = substr($info, strrpos($info, "cpu0:") + 6);
 			$info = append_processor_frequency(pts_clean_information_string($info), 0);
+		}
+		else if(IS_BSD)
+		{
+			$info = read_sysctl("hw.model");
 		}
 		else
 			$info = "Unknown";
