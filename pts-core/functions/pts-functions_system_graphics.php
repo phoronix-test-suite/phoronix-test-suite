@@ -380,6 +380,9 @@ function graphics_memory_capacity()
 		}
 	}
 
+	if(IS_BSD)
+		$video_ram = 128;
+
 	return $video_ram;
 }
 function opengl_version()
