@@ -128,6 +128,10 @@ function memory_mb_capacity()
 		$info = substr($info, strpos($info, ":") + 2);
 		$info = substr($info, 0, strpos($info, "Megabytes"));
 	}
+	else if(IS_BSD)
+	{
+		$info = floor(read_sysctl("hw.realmem") / 1048576);
+	}
 	else
 		$info = "Unknown";
 
@@ -269,8 +273,9 @@ function main_system_hardware_string()
 	$version = read_system_hal("system.hardware.version");
 
 	if($product == "Unknown" || $product == "Not Applicable" || (strpos($version, '.') === FALSE && $version != "Unknown"))
+	{
 		$product = $version;
-
+	}
 	if($vendor == "Unknown" || $vendor == "System manufacturer" || $vendor == "To Be Filled By O.E.M." || $vendor == "Not Applicable")
 	{
 		$info = "Unknown";

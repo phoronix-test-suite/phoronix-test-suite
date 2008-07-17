@@ -49,9 +49,9 @@ function read_acpi($point, $match)
 function read_hal($name, $UDI = NULL)
 {
 	if(empty($UDI))
-		$info = shell_exec("lshal | grep \"" . $name . "\"");
+		$info = shell_exec("lshal 2>&1 | grep \"" . $name . "\"");
 	else
-		$info = shell_exec("lshal -u $UDI | grep \"" . $name . "\"");
+		$info = shell_exec("lshal -u $UDI 2>&1 | grep \"" . $name . "\"");
 
 	if(($pos = strpos($info, $name . " = '")) === FALSE)
 	{

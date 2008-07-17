@@ -314,6 +314,14 @@ function graphics_processor_string()
 			$info = $log_parse;
 	}
 
+	if(IS_BSD && $info == "Unknown")
+	{
+		$info = read_sysctl("dev.drm.0.%desc");
+
+		if($info == "Unknown")
+			$info = read_sysctl("dev.agp.0.%desc");
+	}
+
 	$info = pts_clean_information_string($info);
 
 	return $info;
