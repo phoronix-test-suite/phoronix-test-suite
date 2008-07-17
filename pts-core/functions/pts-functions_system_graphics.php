@@ -182,7 +182,7 @@ function xrandr_screen_resolution()
 {
 	$info = shell_exec("xrandr 2>&1 | grep \"*\"");
 
-	if(strpos($info, "*") != FALSE)
+	if(strpos($info, "*") !== FALSE)
 	{
 		$res = explode("x", $info);
 		$res[0] = trim($res[0]);
@@ -194,7 +194,7 @@ function xrandr_screen_resolution()
 		if(is_numeric($res[0]) && is_numeric($res[1]))
 		{
 			$info = array();
-			array_push($info, $res[0], $res[1]);
+			array_push($info, trim($res[0]), trim($res[1]));
 		}
 		else
 			$info = "";
