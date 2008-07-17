@@ -24,6 +24,8 @@ cd System/
 ./ut2004-bin \$@" > ut2004-demo
 chmod +x ut2004-demo
 
-mkdir -p ~/.ut2004demo/System
+echo "causeevent flyby
+ship" > flybyexec.txt
+# mkdir -p ~/.ut2004demo/System
 # cp -f UT2004.ini ~/.ut2004demo/System
 
