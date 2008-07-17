@@ -108,6 +108,7 @@ function processor_string()
 		else if(IS_BSD)
 		{
 			$info = read_sysctl("hw.model");
+			$info = append_processor_frequency(pts_clean_information_string($info), 0);
 		}
 		else
 			$info = "Unknown";
@@ -216,6 +217,11 @@ function current_processor_frequency($cpu_core = 0)
 		$info = shell_exec("psrinfo -v | grep MHz");
 		$info = substr($info, strrpos($info, "at") + 3);
 		$info = substr($info, 0, strpos($info, "MHz"));
+		$info = pts_trim_double(intval($info) / 1000, 2);
+	}
+	else if(IS_BSD)
+	{
+		$info = read_sysctl("dev.cpu.0.freq");
 		$info = pts_trim_double(intval($info) / 1000, 2);
 	}
 	else
