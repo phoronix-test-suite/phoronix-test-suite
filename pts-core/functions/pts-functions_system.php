@@ -318,7 +318,7 @@ function filesystem_type()
 {
 	$fs = shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null");
 
-	if(empty($fs))
+	if(empty($fs) || IS_BSD)
 		return "Unknown";
 
 	return $fs;

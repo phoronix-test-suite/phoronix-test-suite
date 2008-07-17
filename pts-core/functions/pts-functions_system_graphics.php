@@ -200,7 +200,7 @@ function xrandr_screen_resolution()
 			$info = "";
 	}
 
-	if($pos == FALSE || empty($info))
+	if(empty($info))
 	{
 		if(IS_NVIDIA_GRAPHICS && ($nvidia = read_nvidia_extension("FrontendResolution")) != "")
 		{
