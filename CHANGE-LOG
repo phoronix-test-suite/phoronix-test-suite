@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 1.0.4
+July 18, 2008
 
 - pts-core: Improve parsing of glxinfo to not mistakenly report glxinfo errors outputted
 - pts: Add libaio-devel to PTS External Dependencies
