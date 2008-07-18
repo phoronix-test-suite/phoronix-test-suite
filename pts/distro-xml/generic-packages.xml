@@ -1,6 +1,12 @@
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Package>
+			<GenericName>linux-32bit-libraries</GenericName>
+			<Title>32-bit Libraries For Linux</Title>
+			<PossibleNames>ia32-libs</PossibleNames>
+			<FileCheck>/usr/lib32/</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>gtk-development</GenericName>
 			<Title>GTK Development Files</Title>
 			<PossibleNames>libgtk2.0-dev</PossibleNames>
