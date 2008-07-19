@@ -1,5 +1,31 @@
 <?php
 
+require("pts-core/functions/pts-functions.php");
+require("pts-core/functions/pts-functions-extra.php");
+
+$saved_results = array();
+foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $benchmark_file)
+{
+	$xml_parser = new tandem_XmlReader($benchmark_file);
+	$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
+	$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+	$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+	$results_xml = new tandem_XmlReader($raw_results[0]);
+	$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
+
+	if(!empty($title))
+	{
+		$info = "<b>$suite</b> as $title <span color=\"#737373\">";
+
+		foreach($identifiers as $id)
+			$info .= "- " . $id;
+
+		$info .= "</span>";
+
+		array_push($saved_results, array($info));
+	}
+}
+
 if(!extension_loaded("gtk"))
 {
 	dl("php_gtk2.so");
@@ -12,9 +38,6 @@ $glade->signal_autoconnect();
 $window = $glade->get_widget("pts_main_window");
 $window->connect_simple("destroy", array("Gtk", "main_quit"));
 
-$data = array(
-array('<b>gtkperf</b> <span color="#737373">(test)       Result name: <b>gtk2</b>, test run name: <b>run 1</b>\n</span><span color="#999999"><small>GtkPerf<small><sup>v0.40</sup></small>: <b>931.06s</b></small></span>'),
-array('<b>audio-encoding</b> <span color="#737373">(suite)       Result name: <b>testingaudio</b>, test run name: <b>test1</b>\n</span><span color="#999999"><small><b><span color="#737373">test1</span></b>: LAME MP3 Encoding<small><sup>v3.97</sup></small>: <b>35.75s</b>, Ogg Encoding<small><sup>v1.2.0</sup></small>: <b>18.57s</b>, FLAC Audio Encoding<small><sup>v1.2.1</sup></small>: <b>17.43s</b></small></span>'));
 
 $field_header = array("Name");
 
@@ -44,15 +67,15 @@ for($col = 0; $col < count($field_header); ++$col)
 	$view->append_column($column);
 }
     
-for($row = 0; $row < count($data); ++$row)
+for($row = 0; $row < count($saved_results); ++$row)
 {
 	$values = array();
 
-	for($col = 0; $col < count($data[$row]); ++$col)
+	for($col = 0; $col < count($saved_results[$row]); ++$col)
 	{
-		$values[] = $data[$row][$col];
+		$values[] = $saved_results[$row][$col];
         }
-	$model->append($values); // note 6 
+	$model->append($values);
 }
 
 $window->show();
