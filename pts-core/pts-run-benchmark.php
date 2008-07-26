@@ -203,13 +203,15 @@ if($TO_RUN_TYPE == "TEST")
 				if(($cut_point = strpos($option_display_name, '(')) > 1 && strpos($option_display_name, ')') > $cut_point)
 					$option_display_name = substr($option_display_name, 0, $cut_point);
 
-				$TEXT_ARGS .= $option_display_name;
-				//$TEXT_ARGS .= "$settings_name[$option_count]: " . $option_names[($bench_choice - 1)];
+				if(count($settings_name) > 1)
+					$TEXT_ARGS .= $settings_name[$option_count] . ": ";
 
-				$USER_ARGS .= $settings_argument[$option_count] . $option_values[($bench_choice - 1)] . " ";
+				$TEXT_ARGS .= $option_display_name;
 
 				if($option_count < count($settings_name) - 1)
 					$TEXT_ARGS .= " - ";
+
+				$USER_ARGS .= $settings_argument[$option_count] . $option_values[($bench_choice - 1)] . " ";
 			}
 			else
 			{
