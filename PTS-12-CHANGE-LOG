@@ -40,6 +40,7 @@
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called
 - pts_module: Add support for shell script PTS modules
+- pts_module: Add sample shell script module (dummy_script_module.sh)
 
 - email_results: Add a module to email test results automatically to a user upon completion. Specify the email addres in the EMAIL_RESULTS_TO environmental variable.
 
