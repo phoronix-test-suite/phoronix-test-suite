@@ -194,7 +194,16 @@ switch($COMMAND)
 			eval("\$module_version = " . $module . "::module_version;");
 			eval("\$module_author = " . $module . "::module_author;");
 
-			printf("%-16ls - %-25ls [Developed By: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
+			printf("%-19ls - %-25ls [Author: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
+		}
+		foreach(glob(MODULE_DIR . "*.sh") as $module_file)
+		{
+		 	$module = basename($module_file, ".sh");
+			$module_name = trim(shell_exec("sh " . $module_file . " module_name"));
+			$module_version = trim(shell_exec("sh " . $module_file . " module_version"));
+			$module_author = trim(shell_exec("sh " . $module_file . " module_author"));
+
+			printf("%-19ls - %-25ls [Author: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
 		}
 		echo "\n";
 		break;
@@ -400,7 +409,7 @@ switch($COMMAND)
 				$module_version = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_version"));
 				$module_author = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_author"));
 				$module_description = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_description"));
-				$module_information = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_information"));
+				$module_information = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_info"));
 			}
 
 			echo pts_string_header("Module: " . $module_name);
@@ -410,7 +419,7 @@ switch($COMMAND)
 			echo "Description: " . $module_description . "\n";
 
 			if(!empty($module_information))
-				echo $module_information . "\n";
+				echo "\n" . $module_information . "\n";
 
 			echo "\n";
 		}
