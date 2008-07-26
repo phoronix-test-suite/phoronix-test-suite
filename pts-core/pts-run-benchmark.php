@@ -25,21 +25,20 @@ require("pts-core/functions/pts-functions.php");
 require("pts-core/functions/pts-functions-run.php");
 require("pts-core/functions/pts-functions-merge.php");
 
+$TO_RUN = strtolower($argv[1]);
+$TO_RUN_TYPE = pts_test_type($TO_RUN);
+$MODULE_STORE = implode(";", $GLOBALS["PTS_MODULE_VAR_STORE"]);
+$TEST_PROPERTIES = array();
+$TEST_RAN = false;
+
 if(isset($argv[2]) && $argv[2] == "BATCH")
 {
 	if(pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "FALSE")
 		pts_exit(pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup"));
 
 	define("PTS_BATCH_MODE", "1");
-
-	if(!in_array("PTS_BATCH_MODE=1", $GLOBALS["PTS_MODULE_VAR_STORE"]))
-		array_push($GLOBALS["PTS_MODULE_VAR_STORE"], "PTS_BATCH_MODE=1");
+	array_push($TEST_PROPERTIES, "PTS_BATCH_MODE");
 }
-
-$TO_RUN = strtolower($argv[1]);
-$TO_RUN_TYPE = pts_test_type($TO_RUN);
-$MODULE_STORE = implode(";", $GLOBALS["PTS_MODULE_VAR_STORE"]);
-$TEST_RAN = false;
 
 if(empty($TO_RUN))
 	pts_exit("\nThe benchmark, suite name, or saved file name must be supplied.\n");
@@ -309,6 +308,7 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 	$CUSTOM_TITLE = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 	$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
 	$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
+	$test_previous_properties = $xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
 	$test_version = $xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
 	$test_type = $xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
 	$test_maintainer = $xml_parser->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
@@ -316,6 +316,10 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 	$TEST_ARGS = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
 	$TEST_ARGS_DESCRIPTION = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 	unset($xml_parser);
+
+	foreach(explode(";", $test_previous_properties) as $test_prop)
+		if(!in_array($test_prop, $TEST_PROPERTIES))
+			array_push($TEST_PROPERTIES, $test_prop);
 
 	pts_module_process_extensions($test_extensions);
 }
@@ -385,6 +389,7 @@ if($SAVE_RESULTS)
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_MAINTAINER, $id, $test_maintainer);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $MODULE_STORE);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $TEST_PROPERTIES));
 
 	if($TEST_RAN)
 	{

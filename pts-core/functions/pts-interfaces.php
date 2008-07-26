@@ -122,7 +122,8 @@ define("P_RESULTS_SUITE_TYPE", "PhoronixTestSuite/Suite/Type"); // Type of suite
 define("P_RESULTS_SUITE_MAINTAINER", "PhoronixTestSuite/Suite/Maintainer"); // Maintainer of suite
 define("P_RESULTS_SUITE_VERSION", "PhoronixTestSuite/Suite/Version"); // Version of suite
 define("P_RESULTS_SUITE_DESCRIPTION", "PhoronixTestSuite/Suite/Description"); // Description of suite
-define("P_RESULTS_SUITE_EXTENSIONS", "PhoronixTestSuite/Suite/Extensions"); // Description of suite
+define("P_RESULTS_SUITE_EXTENSIONS", "PhoronixTestSuite/Suite/Extensions"); // Extensions of suite
+define("P_RESULTS_SUITE_PROPERTIES", "PhoronixTestSuite/Suite/TestProperties"); // Properties during test execution
 
 define("P_RESULTS_TEST_TESTNAME", "PhoronixTestSuite/Benchmark/TestName"); // Names of all tests in results
 define("P_RESULTS_TEST_TITLE", "PhoronixTestSuite/Benchmark/Name"); // Title of all tests in results

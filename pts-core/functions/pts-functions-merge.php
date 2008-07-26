@@ -54,6 +54,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	$new_suite_title = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_TITLE);
 	$new_suite_description = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
 	$new_suite_extensions = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
+	$new_suite_properties = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
 	$new_suite_type = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_TYPE);
 	$new_suite_maintainer = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
 
@@ -137,6 +138,7 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $new_suite_type);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_MAINTAINER, 0, $new_suite_maintainer);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $new_suite_extensions);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $new_suite_properties);
 
 	// Same hardware and software?
 	
