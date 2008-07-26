@@ -88,11 +88,7 @@ class pts_Graph
 		$this->graph_sub_title = $SubTitle;
 		$this->graph_y_title = $YTitle;
 
-		if(empty($YTitle) || $this->graph_y_title_hide)
-			$this->graph_left_start = $this->graph_top_end_opp - 5;
-
-		$this->graph_top_end = $this->graph_attr_height - $this->graph_top_end_opp;
-		$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
+		$this->update_graph_dimensions(-1, -1, true);
 
 		// Directory for TTF Fonts
 		if(defined("FONT_DIR"))
@@ -261,6 +257,27 @@ class pts_Graph
 	{
 		return $this->graph_left_start + (($this->graph_left_end - $this->graph_left_start) / 2);
 	}
+	protected function update_graph_dimensions($width = -1, $height = -1, $recalculate_offsets = false)
+	{
+		// Allow render area to be increased, but not decreased
+		if($width > $this->graph_attr_width)
+		{
+			$this->graph_attr_width = $width;
+		}
+		if($height > $this->graph_attr_height)
+		{
+			$this->graph_attr_height = $height;
+		}
+
+		if(empty($this->graph_y_title) || $this->graph_y_title_hide)
+			$this->graph_left_start = $this->graph_top_end_opp - 5;
+
+		if($recalculate_offsets)
+		{
+			$this->graph_top_end = $this->graph_attr_height - $this->graph_top_end_opp;
+			$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
+		}
+	}
 	protected function gd_write_text_right($String, $Size, $Color, $RightX, $CenterY, $Rotate = FALSE)
 	{
 		if(empty($String))
@@ -273,7 +290,11 @@ class pts_Graph
 		$ttf_width = $ttf_dimensions[0];
 		$ttf_height = $ttf_dimensions[1];
 
-		$Rotation = 0;
+		if($Rotate == FALSE)
+			$Rotation = 0;
+		else
+			$Rotation = 90;
+
 		$text_x = $RightX - $ttf_width;
 		$text_y = $CenterY + round($ttf_height / 2);
 
@@ -291,9 +312,18 @@ class pts_Graph
 		$ttf_width = $ttf_dimensions[0];
 		$ttf_height = $ttf_dimensions[1];
 
-		$Rotation = 0;
-		$text_x = $LeftX;
-		$text_y = $CenterY + round($ttf_height / 2);
+		if($Rotate == FALSE)
+		{
+			$text_x = $LeftX;
+			$text_y = $CenterY + round($ttf_height / 2);
+			$Rotation = 0;
+		}
+		else
+		{
+			$text_x = $LeftX - round($ttf_height / 4);
+			$text_y = $CenterY + round($ttf_height / 2);
+			$Rotation = 270;
+		}
 
 		imagettftext($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
 	}
@@ -301,9 +331,13 @@ class pts_Graph
 	//
 	// Render Functions
 	//
-
+	protected function render_graph_pre_init()
+	{
+		return;
+	}
 	protected function render_graph_init()
 	{
+		$this->update_graph_dimensions();
 		$this->graph_image = imagecreate($this->graph_attr_width, $this->graph_attr_height);
 
 		imageinterlace($this->graph_image, true);
@@ -399,6 +433,7 @@ class pts_Graph
 	}
 	public function renderGraph()
 	{
+		$this->render_graph_pre_init();
 		$this->render_graph_init();
 		$this->render_graph_base();
 
