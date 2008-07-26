@@ -97,11 +97,26 @@ class pts_LineGraph extends pts_CustomGraph
 					imageline($this->graph_image, $px_from_left, $value_plot_top + 1, $this->graph_left_end - 1, $value_plot_top + 1, $paint_color);
 				}
 
-				if($point_counter < 20)
-					$this->render_graph_pointer($px_from_left, $value_plot_top);
-
 				$previous_placement = $value_plot_top;
 				$previous_offset = $px_from_left;
+			}
+
+			if($point_counter < 20)
+			{
+				$previous_placement = -1;
+				$previous_offset = -1;
+
+				for($i = 0; $i < $point_counter; $i++)
+				{
+					$value = $this->graph_data[$i_o][$i];
+					$value_plot_top = $this->graph_top_end + 1 - round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
+					$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
+
+					$this->render_graph_pointer($px_from_left, $value_plot_top);
+
+					$previous_placement = $value_plot_top;
+					$previous_offset = $px_from_left;
+				}
 			}
 		}
 	}
@@ -113,7 +128,7 @@ class pts_LineGraph extends pts_CustomGraph
 	{
 		imageline($this->graph_image, $x - 5, $y - 5, $x + 5, $y + 5, $this->graph_color_notches);
 		imageline($this->graph_image, $x + 5, $y - 5, $x - 5, $y + 5, $this->graph_color_notches);
-		imagefilledrectangle($this->graph_image, $x - 2, $y - 2, $x + 2, $y + 2, $this->graph_color_notches);
+		imagefilledrectangle($this->graph_image, $x - 2, $y - 2, $x + 3, $y + 3, $this->graph_color_notches);
 	}
 }
 
