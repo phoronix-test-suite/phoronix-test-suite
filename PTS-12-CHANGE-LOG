@@ -34,6 +34,7 @@
 - pts-core: Move environmental variables to check for auto-loading of PTS modules out to modules/module-variables.txt
 - pts-core: Change XRandR resolution detection to support xrandr version 1.1 and 1.2
 - pts-core: Add basic support for *BSD operating systems. Tested with FreeBSD 7.0.
+- pts-core: Add analyze option for looking at PTS batch results
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called

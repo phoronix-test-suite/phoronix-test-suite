@@ -515,6 +515,35 @@ switch($COMMAND)
 		echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $MERGE_TO . "\n\n";
 		display_web_browser(SAVE_RESULTS_DIR . $MERGE_TO);
 		break;
+	case "ANALYZE_RESULTS":
+		require_once("pts-core/functions/pts-functions-merge.php");
+
+		$BASE_FILE = pts_find_file($ARG_1);
+		$SAVE_TO = $ARG_2;
+
+		if(!empty($SAVE_TO) && !is_dir(SAVE_RESULTS_DIR . $SAVE_TO))
+			$SAVE_TO .= "/composite.xml";
+		else
+			$SAVE_TO = null;
+
+		if(empty($SAVE_TO))
+		{
+			do
+			{
+				$rand_file = rand(1000, 9999);
+				$SAVE_TO = "analyze-" . $rand_file . '/';
+			}
+			while(is_dir(SAVE_RESULTS_DIR . $SAVE_TO));
+
+			$SAVE_TO .= "composite.xml";
+		}
+
+		// Analyze Results
+		$SAVED_RESULTS = pts_merge_batch_tests_to_line_comparison(@file_get_contents($BASE_FILE));
+		pts_save_result($SAVE_TO, $SAVED_RESULTS);
+		echo "Results Saved To: " . SAVE_RESULTS_DIR . $SAVE_TO . "\n\n";
+		display_web_browser(SAVE_RESULTS_DIR . $SAVE_TO);
+		break;
 	case "DIAGNOSTICS_DUMP":
 		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n" . "Diagnostics Dump");
 		$pts_defined_constants = get_defined_constants(true);

@@ -96,6 +96,9 @@ case "$1" in
 "merge-results")
 	$PHP_BIN pts-core/pts-run-cmd.php MERGE_RESULTS $2 $3 $4
 	;;
+"analyze")
+	$PHP_BIN pts-core/pts-run-cmd.php ANALYZE_RESULTS $2 $3
+	;;
 "remove-result")
 	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_RESULT $2
 	;;
