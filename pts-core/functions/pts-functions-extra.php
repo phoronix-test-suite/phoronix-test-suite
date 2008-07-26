@@ -110,6 +110,7 @@ function pts_generate_download_cache()
 		$cached = false;
 
 		echo "\nChecking Downloads For: " . $test . "\n";
+		$test_install_message = true;
 
 		for($i = 0; $i < count($package_url); $i++)
 		{
@@ -123,24 +124,35 @@ function pts_generate_download_cache()
 			}
 			else
 			{
-				if(is_file(TEST_ENV_DIR . $test . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED")
+				if(is_dir(TEST_ENV_DIR . $test . "/"))
 				{
-					if(empty($package_md5[$i]) || md5_file(TEST_ENV_DIR . $test . "/" . $package_filename[$i]) == $package_md5[$i])
+					if(is_file(TEST_ENV_DIR . $test . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED")
 					{
-						echo "\tCaching: " . $package_filename[$i] . "\n";
+						if(empty($package_md5[$i]) || md5_file(TEST_ENV_DIR . $test . "/" . $package_filename[$i]) == $package_md5[$i])
+						{
+							echo "\tCaching: " . $package_filename[$i] . "\n";
 
-						if(copy(TEST_ENV_DIR . $test . "/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
-							$cached = true;
+							if(copy(TEST_ENV_DIR . $test . "/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+								$cached = true;
+						}
+					}
+					else if(is_file(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED")
+					{
+						if(empty($package_md5[$i]) || md5_file(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i]) == $package_md5[$i])
+						{
+							echo "\tCaching: " . $package_filename[$i] . "\n";
+
+							if(copy(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+								$cached = true;
+						}
 					}
 				}
-				else if(is_file(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED")
+				else
 				{
-					if(empty($package_md5[$i]) || md5_file(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i]) == $package_md5[$i])
+					if($test_install_message)
 					{
-						echo "\tCaching: " . $package_filename[$i] . "\n";
-
-						if(copy(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
-							$cached = true;
+						echo "\tTest Not Installed\n";
+						$test_install_message = false;
 					}
 				}
 			}
