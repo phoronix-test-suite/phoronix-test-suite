@@ -343,7 +343,8 @@ function pts_install_benchmark($identifier)
 		}
 		else
 		{
-			echo "Installation script missing for " . $identifier . "\n";
+			echo "No installation script found for " . $identifier . "\n";
+			pts_test_generate_install_xml($identifier);
 		}
 	}
 	else
