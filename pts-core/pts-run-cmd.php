@@ -362,21 +362,46 @@ switch($COMMAND)
 		break;
 	case "MODULE_INFO":
 		$ARG_1 = strtolower($ARG_1);
-		if(is_file(MODULE_DIR . $ARG_1 . ".php"))
+		if(is_file(MODULE_DIR . $ARG_1 . ".php") || is_file(MODULE_DIR . $ARG_1 . ".sh"))
 		{
 		 	$module = $ARG_1;
 			$pre_message = "";
 
-			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
-				include(MODULE_DIR . $module . ".php");
+			if(is_file(MODULE_DIR . $module . ".php"))
+			{
+				$module_type = "PHP";
+
+				if(!in_array($module, $GLOBALS["PTS_MODULES"]))
+					include(MODULE_DIR . $module . ".php");
+			}
+			else if(is_file(MODULE_DIR . $module . ".sh"))
+			{
+				$module_type = "SH";
+			}
 			else
+			{
+				$module_type = "UNKNOWN";
+			}
+
+			if(in_array($module, $GLOBALS["PTS_MODULES"]))
 				$pre_message = "** This module is currently loaded. **\n";
 
-			eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
-			eval("\$module_version = " . $module . "::module_version;");
-			eval("\$module_author = " . $module . "::module_author;");
-			eval("\$module_description = " . $module . "::module_description;");
-			eval("\$module_information = " . $module . "::module_info();");
+			if($module_type == "PHP")
+			{
+				eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+				eval("\$module_version = " . $module . "::module_version;");
+				eval("\$module_author = " . $module . "::module_author;");
+				eval("\$module_description = " . $module . "::module_description;");
+				eval("\$module_information = " . $module . "::module_info();");
+			}
+			else if($module_type == "SH")
+			{
+				$module_name = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_name"));
+				$module_version = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_version"));
+				$module_author = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_author"));
+				$module_description = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_description"));
+				$module_information = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_information"));
+			}
 
 			echo pts_string_header("Module: " . $module_name);
 			echo $pre_message;

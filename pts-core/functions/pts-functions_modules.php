@@ -105,7 +105,10 @@ function pts_load_modules()
 	{
 		pts_load_module($module);
 
-		eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
+		if(pts_module_type($module) == "PHP")
+			eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
+		else
+			$module_store_vars = array();
 
 		if(is_array($module_store_vars) && count($module_store_vars) > 0)
 			foreach($module_store_vars as $store_var)
@@ -124,14 +127,19 @@ function pts_load_modules()
 }
 function pts_load_module($module)
 {
-	@include(MODULE_DIR . $module . ".php");
+	if(pts_module_type($module) == "PHP")
+		@include(MODULE_DIR . $module . ".php");
 }
 function pts_module_process($process)
 {
 	foreach($GLOBALS["PTS_MODULES"] as $module)
 	{
 		$GLOBALS["PTS_MODULE_CURRENT"] = $module;
-		eval($module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+
+		if(pts_module_type($module) == "PHP")
+			eval($module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+		else
+			shell_exec("sh " . MODULE_DIR . $module . ".sh " . $process);
 	}
 	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
 }
@@ -155,6 +163,26 @@ function pts_module_set_environment_variable($name, $value)
 {
 	if(getenv($name) == FALSE)
 		putenv($name . "=" . $value);
+}
+function pts_module_type($name)
+{
+	if(isset($GLOBALS["PTS_MODULE_CACHE"]["MODULE_TYPES"][$name]))
+	{
+		$type = $GLOBALS["PTS_MODULE_CACHE"]["MODULE_TYPES"][$name];
+	}
+	else
+	{
+		if(is_file(MODULE_DIR . $name . ".php"))
+			$type = "PHP";
+		else if(is_file(MODULE_DIR . $name . ".sh"))
+			$type = "SH";
+		else
+			$type = null;
+
+		$GLOBALS["PTS_MODULE_CACHE"]["MODULE_TYPES"][$name] = $type;
+	}
+
+	return $type;
 }
 
 ?>
