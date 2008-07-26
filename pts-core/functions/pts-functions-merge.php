@@ -288,6 +288,7 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 	$suite_title = $xml_reader->getXMLValue(P_RESULTS_SUITE_TITLE);
 	$suite_description = $xml_reader->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
 	$suite_extensions = $xml_reader->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
+	$suite_properties = $xml_reader->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
 	$suite_type = $xml_reader->getXMLValue(P_RESULTS_SUITE_TYPE);
 	$suite_maintainer = $xml_reader->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
 
@@ -310,6 +311,15 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 		array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
 	}
 
+	// Some other work
+	if(!empty($suite_properties))
+		$suite_properties = explode(";", $suite_properties);
+	else
+		$suite_properties = array();
+
+	if(!in_array("BATCH_LINE_ANALYSIS", $suite_properties)) // analysis type
+		array_push($suite_properties, "BATCH_LINE_ANALYSIS");
+
 	// Write the new merge
 
 	$RESULTS = new tandem_XmlWriter();
@@ -323,6 +333,7 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $suite_type);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_MAINTAINER, 0, $suite_maintainer);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $suite_extensions);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, implode(";", $suite_properties));
 
 	// Write system information
 	for($i = 0; $i < count($system_hardware); $i++)
