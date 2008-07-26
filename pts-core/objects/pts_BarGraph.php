@@ -23,45 +23,58 @@
 
 class pts_BarGraph extends pts_CustomGraph
 {
+	var $identifier_width = -1;
+
 	public function __construct($Title, $SubTitle, $YTitle)
 	{
 		parent::__construct($Title, $SubTitle, $YTitle);
 		$this->graph_type = "BAR_GRAPH";
 	}
+	protected function render_graph_pre_init()
+	{
+		// Do some common work to this object
+		$identifier_count = count($this->graph_identifiers);
+		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
+
+		$longest_string = $this->find_longest_string($this->graph_identifiers);
+
+		while($this->return_ttf_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) > ($this->identifier_width - 2) && $this->graph_font_size_identifiers > 6)
+		{
+			$this->graph_font_size_identifiers -= 0.5;
+		}
+
+		if($this->graph_font_size_identifiers == 6)
+		{
+			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->return_ttf_string_width($longest_string, $this->graph_font, 9));
+		}
+	}
 	protected function render_graph_identifiers()
 	{
-		$identifier_count = count($this->graph_identifiers);
-		$graph_width = $this->graph_left_end - $this->graph_left_start;
-		$identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
-
 		$px_from_top_start = $this->graph_top_end - 5;
 		$px_from_top_end = $this->graph_top_end + 5;
 
-		$longest_string = $this->find_longest_string($this->graph_identifiers);
-		$font_size = $this->graph_font_size_identifiers;
-
-		while($this->return_ttf_string_width($longest_string, $this->graph_font, $font_size) > ($identifier_width - 3))
-			$font_size -= 0.5;
-
-		for($i = 0; $i < $identifier_count; $i++)
+		for($i = 0; $i < count($this->graph_identifiers); $i++)
 		{
-			$px_bound_left = $this->graph_left_start + ($identifier_width * $i);
-			$px_bound_right = $this->graph_left_start + ($identifier_width * ($i + 1));
+			$px_bound_left = $this->graph_left_start + ($this->identifier_width * $i);
+			$px_bound_right = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
 			if($i == 0)
 				imageline($this->graph_image, $px_bound_left, $px_from_top_start, $px_bound_left, $px_from_top_end, $this->graph_color_notches);
 
 			imageline($this->graph_image, $px_bound_right, $px_from_top_start, $px_bound_right, $px_from_top_end, $this->graph_color_notches);
 
-			$this->gd_write_text_center($this->graph_identifiers[$i], $font_size, $this->graph_color_headers, $px_bound_left + ceil($identifier_width / 2), $px_from_top_end - 5, FALSE, TRUE);
+			if($this->graph_font_size_identifiers == 6)
+				$this->gd_write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, TRUE);
+			else
+				$this->gd_write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end - 5, FALSE, TRUE);
 		}
 	}
 	protected function render_graph_bars()
 	{
 		$identifier_count = count($this->graph_identifiers) + 1;
 		$graph_width = $this->graph_left_end - $this->graph_left_start;
-		$identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
-		$bar_count = count($this->graph_data);
+		$identifier_width = ($this->graph_left_end - $this->graph_left_start) / ($identifier_count - 1);
+ 		$bar_count = count($this->graph_data);
 		$bar_width = floor($identifier_width / $bar_count);
 
 		$font_size = $this->graph_font_size_bars;
@@ -79,10 +92,6 @@ class pts_BarGraph extends pts_CustomGraph
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
 				$value_plot_top = $this->graph_top_end + 1 - $graph_size;
 
-				$identifier_count = count($this->graph_data[$i_o]);
-				$graph_width = $this->graph_left_end - $this->graph_left_start;
-				$identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
-				$bar_width = floor($identifier_width / $bar_count);
 				$px_bound_left = $this->graph_left_start + ($identifier_width * $i)  + ($bar_width * $i_o) + 2;
 				$px_bound_right = $this->graph_left_start + ($identifier_width * ($i + 1)) - ($bar_width * ($bar_count - $i_o - 1));
 
