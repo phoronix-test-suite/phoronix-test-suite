@@ -245,7 +245,7 @@ if($TO_RUN_TYPE == "TEST")
 				{
 					// A bit redundant processing, but will ensure against malformed XML problems and extra stuff added
 					$this_arg = $settings_argument[$option_count] . $option_values[$i];
-					$this_arg_description = $option_names[$i];
+					$this_arg_description = $settings_name[$option_count] . ": " . $option_names[$i];
 
 					if(($cut_point = strpos($this_arg_description, '(')) > 1 && strpos($this_arg_description, ')') > $cut_point)
 						$this_arg_description = substr($this_arg_description, 0, $cut_point);
