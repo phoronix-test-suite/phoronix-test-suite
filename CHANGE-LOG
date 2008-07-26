@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite
+
+- pts-core: Fix for detection of single-core processors
+
 Phoronix Test Suite 1.0.4
 July 18, 2008
 

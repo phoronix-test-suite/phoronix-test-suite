@@ -44,7 +44,7 @@ function processor_string()
 		$cpu_strings = read_cpuinfo("model name");
 		$cpu_strings_unique = array_unique($cpu_strings);
 
-		if($physical_cpu_count == 1)
+		if($physical_cpu_count == 1 || empty($physical_cpu_count))
 		{
 			// Just one processor
 			$info = append_processor_frequency(pts_clean_information_string($cpu_strings[0]));
