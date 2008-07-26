@@ -36,7 +36,7 @@
 - pts-core: Add basic support for *BSD operating systems. Tested with FreeBSD 7.0.
 - pts-core: Add analyze option for looking at PTS batch results
 - pts-core: Add test properties type to PTS results file
-pts-core: Improve download caching for information displayed where tests aren't installed
+- pts-core: Improve download caching for information displayed where tests aren't installed
 
 
 - pts_module: If pcntl isn't present, don't thread and warn the user

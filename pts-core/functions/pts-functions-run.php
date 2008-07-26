@@ -510,7 +510,8 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	if(!isset($GLOBALS["TEST_RESULTS_TEXT"]))
 		$GLOBALS["TEST_RESULTS_TEXT"] = "";
 
-	echo $GLOBALS["TEST_RESULTS_TEXT"] .= pts_string_header($RETURN_STRING, '#');
+	echo $this_result = pts_string_header($RETURN_STRING, "#");
+	$GLOBALS["TEST_RESULTS_TEXT"] .= $this_result;
 
 	//pts_beep();
 	pts_process_remove($benchmark_identifier);
