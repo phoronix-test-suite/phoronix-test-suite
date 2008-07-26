@@ -23,40 +23,50 @@
 
 class pts_LineGraph extends pts_CustomGraph
 {
+	var $identifier_width = -1;
+
 	public function __construct($Title, $SubTitle, $YTitle)
 	{
 		parent::__construct($Title, $SubTitle, $YTitle);
 		$this->graph_type = "LINE_GRAPH";
 	}
+	protected function render_graph_pre_init()
+	{
+		// Do some common work to this object
+		$identifier_count = count($this->graph_identifiers) + 1;
+		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
+
+		$longest_string = $this->find_longest_string($this->graph_identifiers);
+
+		while($this->return_ttf_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) > ($this->identifier_width - 2) && $this->graph_font_size_identifiers > 6)
+		{
+			$this->graph_font_size_identifiers -= 0.5;
+		}
+
+		if($this->graph_font_size_identifiers == 6)
+		{
+			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->return_ttf_string_width($longest_string, $this->graph_font, 9));
+		}
+	}
 	protected function render_graph_identifiers()
 	{
-		$identifier_count = count($this->graph_identifiers) + 1;
-		$graph_width = $this->graph_left_end - $this->graph_left_start;
-		$identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
-
 		$px_from_top_start = $this->graph_top_end - 5;
 		$px_from_top_end = $this->graph_top_end + 5;
 
-		$longest_string = $this->find_longest_string($this->graph_identifiers);
-		$font_size = $this->graph_font_size_identifiers;
-
-		while($this->return_ttf_string_width($longest_string, $this->graph_font, $font_size) > ($identifier_width - 2))
-			$font_size -= 0.5;
-
-		for($i = 0; $i < ($identifier_count - 1); $i++)
+		for($i = 0; $i < count($this->graph_identifiers); $i++)
 		{
-			$px_from_left = $this->graph_left_start + ($identifier_width * ($i + 1));
+			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
 			imageline($this->graph_image, $px_from_left, $px_from_top_start, $px_from_left, $px_from_top_end, $this->graph_color_notches);
-			$this->gd_write_text_center($this->graph_identifiers[$i], $font_size, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2);
+
+			if($this->graph_font_size_identifiers == 6)
+				$this->gd_write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, TRUE);
+			else
+				$this->gd_write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2);
 		}
 	}
 	protected function renderGraphLines()
 	{
-		$identifier_count = count($this->graph_identifiers) + 1;
-		$graph_width = $this->graph_left_end - $this->graph_left_start;
-		$identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
-
 		for($i_o = 0; $i_o < count($this->graph_data); $i_o++)
 		{
 			$previous_placement = -1;
@@ -68,7 +78,7 @@ class pts_LineGraph extends pts_CustomGraph
 			{
 				$value = $this->graph_data[$i_o][$i];
 				$value_plot_top = $this->graph_top_end + 1 - round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
-				$px_from_left = $this->graph_left_start + ($identifier_width * ($i + 1));
+				$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
 				if($previous_placement != -1 && $previous_offset != -1)
 				{
@@ -92,7 +102,6 @@ class pts_LineGraph extends pts_CustomGraph
 
 				$previous_placement = $value_plot_top;
 				$previous_offset = $px_from_left;
-				
 			}
 		}
 	}
