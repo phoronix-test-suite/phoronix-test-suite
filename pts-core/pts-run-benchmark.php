@@ -327,7 +327,7 @@ else
 	pts_exit("\nUnrecognized option: " . $TO_RUN_TYPE . "\n");
 }
 
-if($SAVE_RESULTS && !defined("PTS_BATCH_MODE"))
+if($SAVE_RESULTS && (!defined("PTS_BATCH_MODE") || pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE") == "TRUE"))
 {
 	if(empty($test_description))
 		$test_description = "N/A";

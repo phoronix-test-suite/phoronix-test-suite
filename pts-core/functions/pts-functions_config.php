@@ -69,6 +69,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 		$BatchOptions[1] = pts_read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE", $read_config);
 		$BatchOptions[2] = pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE", $read_config);
 		$BatchOptions[3] = pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE", $read_config);
+		$BatchOptions[3] = pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "TRUE", $read_config);
 		$BatchOptions[4] = pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "TRUE", $read_config);
 		$BatchOptions[5] = pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE", $read_config);
 	}
@@ -79,7 +80,8 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 		$BatchOptions[2] = pts_config_bool_to_string($BatchOptions[2]);
 		$BatchOptions[3] = pts_config_bool_to_string($BatchOptions[3]);
 		$BatchOptions[4] = pts_config_bool_to_string($BatchOptions[4]);
-		$BatchOptions[5] = pts_config_bool_to_string(true);
+		$BatchOptions[5] = pts_config_bool_to_string($BatchOptions[5]);
+		$BatchOptions[6] = pts_config_bool_to_string(true);
 	}
 
 
@@ -98,8 +100,9 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 4, $BatchOptions[1]);
 	$config->addXmlObject(P_OPTION_BATCH_UPLOADRESULTS, 4, $BatchOptions[2]);
 	$config->addXmlObject(P_OPTION_BATCH_PROMPTIDENTIFIER, 4, $BatchOptions[3]);
-	$config->addXmlObject(P_OPTION_BATCH_PROMPTSAVENAME, 4, $BatchOptions[4]);
-	$config->addXmlObject(P_OPTION_BATCH_CONFIGURED, 4, $BatchOptions[5]);
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTIDENTIFIER, 4, $BatchOptions[4]);
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTSAVENAME, 4, $BatchOptions[5]);
+	$config->addXmlObject(P_OPTION_BATCH_CONFIGURED, 4, $BatchOptions[6]);
 
 	$config->addXmlObject(P_OPTION_LOG_VSYSDETAILS, 5, pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE", $read_config));
 

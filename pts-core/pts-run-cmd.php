@@ -626,7 +626,8 @@ switch($COMMAND)
 			$batch_options[1] = pts_bool_question("Open the web browser automatically when in batch mode (y/N)?", false);
 			$batch_options[2] = pts_bool_question("Auto upload the results to PTS Global (Y/n)?", true);
 			$batch_options[3] = pts_bool_question("Prompt for test identifier (Y/n)?", true);
-			$batch_options[4] = pts_bool_question("Prompt for saved results file-name (Y/n)?", true);
+			$batch_options[4] = pts_bool_question("Prompt for test description (Y/n)?", true);
+			$batch_options[5] = pts_bool_question("Prompt for saved results file-name (Y/n)?", true);
 		}
 		else
 		{
@@ -634,6 +635,7 @@ switch($COMMAND)
 			$batch_options[2] = false;
 			$batch_options[3] = false;
 			$batch_options[4] = false;
+			$batch_options[5] = false;
 		}
 
 		pts_user_config_init(null, null, $batch_options);
