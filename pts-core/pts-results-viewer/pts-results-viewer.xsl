@@ -20,9 +20,8 @@
 
 				<h1><xsl:value-of select="PhoronixTestSuite/Suite/Title" /></h1>
 				<div class="pts_chart_box">
-					<p><xsl:value-of select="PhoronixTestSuite/Suite/Name" /> v<xsl:value-of select="PhoronixTestSuite/Suite/Version" /> (<xsl:value-of select="PhoronixTestSuite/Suite/Type" /> Benchmarks)</p>
-					<p id="tsd_show" style="display: none;"><div class="pts_area_box"><p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p><p style="font-size: 11px;">This test is maintained by <xsl:value-of select="PhoronixTestSuite/Suite/Maintainer" />.</p><p><a onclick="switchShow('tsd_hidden');switchShow('tsd_show');">&lt;&lt; Hide Test Details</a></p></div></p>
-					<p class="pts_benchmark_descriptor" id="tsd_hidden"><a onclick="switchShow('tsd_hidden');switchShow('tsd_show');hideObject('tips_show');showObject('tips_hidden');">Show Test Details &gt;&gt;</a></p>
+					<p><strong><xsl:value-of select="PhoronixTestSuite/Suite/Name" /> v<xsl:value-of select="PhoronixTestSuite/Suite/Version" /> (<xsl:value-of select="PhoronixTestSuite/Suite/Type" />)</strong></p>
+					<p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p>
 				</div>
 
 				<xsl:variable name="idcount"><xsl:value-of select="count(PhoronixTestSuite/System)" /></xsl:variable>
