@@ -279,7 +279,6 @@ if($TO_RUN_TYPE == "TEST")
 		$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 		$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 		$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
-		$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 		unset($xml_parser);
 	}
 }
@@ -294,7 +293,6 @@ else if($TO_RUN_TYPE == "TEST_SUITE")
 		$test_description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
 		$test_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
 		$test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-		$test_maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
 	}
 
 	$TEST_RUN = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
@@ -313,7 +311,6 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 	$test_previous_properties = $xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
 	$test_version = $xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
 	$test_type = $xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
-	$test_maintainer = $xml_parser->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
 	$TEST_RUN = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 	$TEST_ARGS = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
 	$TEST_ARGS_DESCRIPTION = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
@@ -389,7 +386,6 @@ if($SAVE_RESULTS)
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_VERSION, $id, $test_version);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_MAINTAINER, $id, $test_maintainer);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $MODULE_STORE);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $TEST_PROPERTIES));
 

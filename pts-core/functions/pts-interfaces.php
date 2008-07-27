@@ -119,7 +119,7 @@ define("P_RESULTS_SYSTEM_IDENTIFIERS", "PhoronixTestSuite/System/AssociatedIdent
 define("P_RESULTS_SUITE_TITLE", "PhoronixTestSuite/Suite/Title"); // Suite title shown to end-user
 define("P_RESULTS_SUITE_NAME", "PhoronixTestSuite/Suite/Name"); // Real name of suite
 define("P_RESULTS_SUITE_TYPE", "PhoronixTestSuite/Suite/Type"); // Type of suite
-define("P_RESULTS_SUITE_MAINTAINER", "PhoronixTestSuite/Suite/Maintainer"); // Maintainer of suite
+// DROPPED IN PTS 1.2: define("P_RESULTS_SUITE_MAINTAINER", "PhoronixTestSuite/Suite/Maintainer"); // Maintainer of suite
 define("P_RESULTS_SUITE_VERSION", "PhoronixTestSuite/Suite/Version"); // Version of suite
 define("P_RESULTS_SUITE_DESCRIPTION", "PhoronixTestSuite/Suite/Description"); // Description of suite
 define("P_RESULTS_SUITE_EXTENSIONS", "PhoronixTestSuite/Suite/Extensions"); // Extensions of suite

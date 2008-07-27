@@ -56,7 +56,6 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	$new_suite_extensions = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
 	$new_suite_properties = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
 	$new_suite_type = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_TYPE);
-	$new_suite_maintainer = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
 
 	$new_results_name = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 	$new_results_version = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
@@ -136,7 +135,6 @@ function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $new_suite_version);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $new_suite_description);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $new_suite_type);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_MAINTAINER, 0, $new_suite_maintainer);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $new_suite_extensions);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $new_suite_properties);
 
@@ -290,7 +288,6 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 	$suite_extensions = $xml_reader->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
 	$suite_properties = $xml_reader->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
 	$suite_type = $xml_reader->getXMLValue(P_RESULTS_SUITE_TYPE);
-	$suite_maintainer = $xml_reader->getXMLValue(P_RESULTS_SUITE_MAINTAINER);
 
 	$results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 	$results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
@@ -331,7 +328,6 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $suite_version);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $suite_description);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $suite_type);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_MAINTAINER, 0, $suite_maintainer);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $suite_extensions);
 	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, implode(";", $suite_properties));
 
