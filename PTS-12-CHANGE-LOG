@@ -37,6 +37,7 @@
 - pts-core: Add test properties type to PTS results file
 - pts-core: Improve download caching for information displayed where tests aren't installed
 - pts-core: Drop maintainer field from PTS Results Viewer (P_RESULTS_SUITE_MAINTAINER / PhoronixTestSuite/Suite/Maintainer)
+- pts-core: Minor updates to local PTS Results Viewer
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called

@@ -15,12 +15,18 @@
 			</div>
 		</div>
 		<div id="pts_container">
-
 			<div class="pts_box">
 
+			<div style="float: left; width: 60%;">
 				<h1><xsl:value-of select="PhoronixTestSuite/Suite/Title" /></h1>
 				<div class="pts_chart_box">
 					<p><strong><xsl:value-of select="PhoronixTestSuite/Suite/Name" /> v<xsl:value-of select="PhoronixTestSuite/Suite/Version" /> (<xsl:value-of select="PhoronixTestSuite/Suite/Type" />)</strong></p>
+				</div>
+			</div>
+			<div style="float: right; width: 40%;">
+				<p align="right"><img src="../pts-results-viewer/pts-logo.png" /></p>
+			</div>
+				<div class="pts_chart_box">
 					<p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p>
 				</div>
 
