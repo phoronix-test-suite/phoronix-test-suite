@@ -327,6 +327,20 @@ else
 	pts_exit("\nUnrecognized option: " . $TO_RUN_TYPE . "\n");
 }
 
+if($SAVE_RESULTS && !defined("PTS_BATCH_MODE"))
+{
+	if(empty($test_description))
+		$test_description = "N/A";
+
+	echo pts_string_header("Below is the current test description. If you wish to have a new description, enter it below. Press ENTER to proceed without changes.", "#");
+	echo "Current Description: " . $test_description;
+	echo "\n\nNew Description: ";
+	$new_test_description = trim(fgets(STDIN));
+
+	if(!empty($new_test_description))
+		$test_description = $new_test_description;
+}
+
 // Run the test process
 pts_recurse_call_benchmark($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
 
