@@ -350,6 +350,7 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 
 	// Merge Results
 	$merge_count = 0;
+//	$merge_patterns = array();
 	for($r_o = 0; $r_o < count($results_identifiers); $r_o++)
 	{
 		$has_merged = false;
@@ -358,8 +359,8 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 			if($r_o != $r_n && !empty($results_testname[$r_o]) && $results_testname[$r_o] == $results_testname[$r_n] && $results_result_format[$r_o] == "BAR_GRAPH" && $results_result_format[$r_n] == "BAR_GRAPH")
 			{
 				$similar_attributes = array();
-				$r_o_test_attributes = explode(" - ", $results_attributes[$r_o]);
-				$r_n_test_attributes = explode(" - ", $results_attributes[$r_n]);
+				$r_o_test_attributes = array_reverse(explode(" - ", $results_attributes[$r_o]));
+				$r_n_test_attributes = array_reverse(explode(" - ", $results_attributes[$r_n]));
 
 				for($i = 0; $i < count($r_o_test_attributes); $i++)
 				{
@@ -383,10 +384,17 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 				{
 					if(!$has_merged)
 					{
+						$similar_attributes_text = implode(" - ", $similar_attributes);
+						$test_attribute = array_pop($r_o_test_attributes);
+						$r_o_test_attributes_1 = explode(":", $test_attribute);
+
+						if(count($r_o_test_attributes_1) > 1)
+							$similar_attributes_text = trim($r_o_test_attributes_1[0]) . " Analysis [" . $similar_attributes_text . "]";
+
 						$USE_ID = pts_request_new_id();
 						$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $results_name[$r_o]);
 						$RESULTS->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $results_version[$r_o]);
-						$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, implode(" - ", $similar_attributes));
+						$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $similar_attributes_text);
 						$RESULTS->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $results_scale[$r_o]);
 						$RESULTS->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $results_proportion[$r_o]);
 						$RESULTS->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $results_testname[$r_o]);
@@ -395,20 +403,29 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 
 						for($o = 0; $o < count($results_identifiers[$r_o]); $o++)
 						{
-							$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, array_pop($r_o_test_attributes), 5, "o-$r_o-$o");
+							$show_attribute = trim(array_pop(explode(":", $test_attribute)));
+							$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $show_attribute, 5, "o-$r_o-$o");
 							$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $results_values[$r_o][$o], 5, "o-$r_o-$o");
 						}
 					}
 
 					for($o = 0; $o < count($results_identifiers[$r_n]); $o++)
 					{
-						$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, array_pop($r_n_test_attributes), 5, "n-$r_n-$o");
+						$show_attribute = trim(array_pop(explode(":", array_pop($r_n_test_attributes))));
+						$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $show_attribute, 5, "n-$r_n-$o");
 						$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $results_values[$r_n][$o], 5, "n-$r_n-$o");
 					}
 					$results_testname[$r_n] = null;
 					$has_merged = true;
 					$merge_count++;
 				}
+
+			/*	if($r_n == (count($results_identifiers) - 1) && $has_merged)
+				{
+					// Reset counter and try again
+					$has_merged = false;
+					$r_n = 0;
+				} */
 			}
 		}
 		$results_testname[$r_o] = null;
