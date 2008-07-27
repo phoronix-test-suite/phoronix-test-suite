@@ -43,7 +43,8 @@ function setup_window($glade, &$window, &$view, &$scrolledwindow2)
     // Enable multiple selection via ctrl+, shift+click
     $view->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
     // Enable multiple selection via click and drag
-    $view->set_rubber_banding(true);
+    if(method_exists($view, "set_rubber_banding"))
+        $view->set_rubber_banding(true);
     // Set the tooltips to be the first column
     $view->set_property("tooltip-column", 0);
 
