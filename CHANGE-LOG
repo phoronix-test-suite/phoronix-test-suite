@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite
 
 - pts-core: Fix for detection of single-core processors
+- pts: Update ut2004-demo profile with resolution options and other fixes
 
 Phoronix Test Suite 1.0.4
 July 18, 2008
