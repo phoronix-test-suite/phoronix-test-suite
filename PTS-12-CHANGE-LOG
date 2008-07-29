@@ -75,3 +75,4 @@
 - pts: Add linux-32bit-libraries generic package to PTS External Dependencies
 - pts: General code cleanups
 - pts: Add synaptic support within install-ubuntu-packages.sh for Debian package install support
+- pts: xorg-development external dependency in ubuntu-packages.xml switch to xorg-dev instead of xserver-xorg-dev for acquiring all the needed packages

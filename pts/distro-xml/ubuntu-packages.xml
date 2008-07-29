@@ -47,7 +47,7 @@
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
-			<PackageName>xserver-xorg-dev libxmu-dev libxmuu-dev libxi-dev</PackageName>
+			<PackageName>xorg-dev</PackageName>
 			<FileCheck>/usr/share/doc/xserver-xorg-dev, /usr/lib/libXmu.so, /usr/lib/libXmuu.so, /usr/lib/libXi.a</FileCheck>
 		</Package>
 		<Package>
