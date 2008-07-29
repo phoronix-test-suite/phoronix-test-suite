@@ -115,5 +115,10 @@
 			<PackageName>>=x11-libs/libXvMC >=x11-libs/libXv</PackageName>
 			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>libstdcpp5</GenericName>
+			<PackageName>sys-libs/libstdc++-v3</PackageName>
+			<FileCheck>/usr/lib/libstdc++.so.5</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

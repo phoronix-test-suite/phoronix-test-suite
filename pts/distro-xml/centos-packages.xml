@@ -80,5 +80,10 @@
 			<PackageName>libXv-devel libXvMC-devel</PackageName>
 			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>libstdcpp5</GenericName>
+			<PackageName>compat-libstdc++-33</PackageName>
+			<FileCheck>/usr/lib/libstdc++.so.5</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

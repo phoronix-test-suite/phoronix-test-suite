@@ -150,5 +150,11 @@
 			<PossibleNames>xorg-x11-libXv-devel, xorg-x11-devel, libxv-dev, libxvmc-dev</PossibleNames>
 			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>libstdcpp5</GenericName>
+			<Title>GNU Standard C++ Library v3</Title>
+			<PossibleNames>compat-libstdc++-33, libstdc++5</PossibleNames>
+			<FileCheck>/usr/lib/libstdc++.so.5</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
