@@ -13,10 +13,11 @@ echo "#!/bin/sh
 cd warsow_0.42_unified/
 case \$OS_ARCH in
 	\"x86_64\" )
-	./warsow.x86_64 \$@ | grep seconds
+	./warsow.x86_64 +logconsole 1 \$@ | grep seconds
 	;;
 	* )
-	./warsow.i386 \$@ | grep seconds
+	./warsow.i386 +logconsole 1 \$@ | grep seconds
 	;;
+        cat ~/.warsow/basewsw/1.log | grep seconds
 esac" > warsow
 chmod +x warsow

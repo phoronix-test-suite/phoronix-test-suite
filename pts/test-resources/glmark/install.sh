@@ -40,7 +40,7 @@ cd GLMark-0.5.2/
 rm -f *.result
 ./glmark \$@ > \$THIS_RUN_TIME.result
 
-case \"\$3\" in
+case \"\$5\" in
 \"VERTEX_ARRAY\")
 	cat \$THIS_RUN_TIME.result | grep \"Vertex array\"
 	;;

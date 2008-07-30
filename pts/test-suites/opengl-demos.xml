@@ -8,12 +8,12 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>glmark</Test>
-		<Arguments>1024 768 VERTEX_ARRAY</Arguments>
+		<Arguments>1024 768 24 0 VERTEX_ARRAY</Arguments>
 		<Description>1024 x 768 - Vertex Array</Description>
 	</RunTest>
 	<RunTest>
 		<Test>glmark</Test>
-		<Arguments>1024 768 GLSL_PER_PIXEL</Arguments>
+		<Arguments>1024 768 24 0 GLSL_PER_PIXEL</Arguments>
 		<Description>1024 x 768 - GLSL Per Pixel Lighting</Description>
 	</RunTest>
 	<RunTest>
