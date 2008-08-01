@@ -117,6 +117,8 @@ function pts_extended_init()
 		define("IS_ATI_GRAPHICS", true);
 	else if(strpos($opengl_driver, "Mesa") !== FALSE)
 		define("IS_MESA_GRAPHICS", true);
+	else
+		define("IS_UNKNOWN_GRAPHICS", true);
 
 	if(!defined("IS_NVIDIA_GRAPHICS"))
 		define("IS_NVIDIA_GRAPHICS", false);
@@ -124,6 +126,8 @@ function pts_extended_init()
 		define("IS_ATI_GRAPHICS", false);
 	if(!defined("IS_MESA_GRAPHICS"))
 		define("IS_MESA_GRAPHICS", false);
+	if(!defined("IS_UNKNOWN_GRAPHICS"))
+		define("IS_UNKNOWN_GRAPHICS", false);
 
 	// Check for batch mode
 	if(getenv("PTS_BATCH_MODE") != FALSE)
