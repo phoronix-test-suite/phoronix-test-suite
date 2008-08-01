@@ -78,4 +78,3 @@
 - pts: xorg-development external dependency in ubuntu-packages.xml switch to xorg-dev instead of xserver-xorg-dev for acquiring all the needed packages
 - pts: Add PTS External dependency for libstdc++5 named libstdcpp5
 - pts: Add PTS External dependency for OpenAL and OpenAL development files named openal-devel
-- pts: Add libstdcpp5 PTS External Depenendency in ut2004-demo
