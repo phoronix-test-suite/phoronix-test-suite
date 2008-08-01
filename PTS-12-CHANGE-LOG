@@ -19,7 +19,7 @@
 - pts-core: Change BENCHMARK_ENV_DIR to TEST_ENV_DIR definition
 - pts-core: pts_test_type() now returns TEST instead of BENCHMARK
 - pts-core: Change DOWNLOAD_CACHE environmental variable to PTS_DOWNLOAD_CACHE for manual override of the download cache location
-- pts-core: Add operating system detection support
+- pts-core: Add robust operating system detection support
 - pts-core: Time-zone used is now set to UTC
 - pts-core: Add support for OpenSolaris 2008.05 operating system
 - pts-core: Add verbose system hardware detail logging support
