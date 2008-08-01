@@ -143,7 +143,7 @@ switch($COMMAND)
 			$status = $xml_parser->getXMLValue(P_TEST_STATUS);
 			$identifier = basename($benchmark_file, ".xml");
 
-			if(defined("PTS_DEBUG_MODE"))
+			if(IS_DEBUG_MODE)
 			{
 				$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 				$test_download_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
@@ -169,7 +169,7 @@ switch($COMMAND)
 			$benchmark_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 			$identifier = basename($benchmark_file, ".xml");
 
-			if(defined("PTS_DEBUG_MODE"))
+			if(IS_DEBUG_MODE)
 			{
 				$version = $xml_parser->getXMLValue(P_SUITE_VERSION);
 				$type = $xml_parser->getXMLValue(P_SUITE_TYPE);

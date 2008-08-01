@@ -52,7 +52,7 @@ function pts_auto_detect_modules($load_here = FALSE)
 
 			if(!in_array($module, $GLOBALS["PTS_MODULES"]) && ($e = getenv($env_var)) != FALSE && !empty($e))
 			{
-				if(defined("PTS_DEBUG_MODE"))
+				if(IS_DEBUG_MODE)
 					echo "Attempting To Add Module: " . $module . "\n";
 
 				array_push($GLOBALS["PTS_MODULES"], $module);

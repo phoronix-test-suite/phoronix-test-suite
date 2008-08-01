@@ -477,7 +477,7 @@ function pts_shutdown()
 {
 	define("PTS_END_TIME", time());
 
-	if(defined("PTS_DEBUG_MODE") && defined("PTS_DEBUG_FILE"))
+	if(IS_DEBUG_MODE && defined("PTS_DEBUG_FILE"))
 	{
 		if(!is_dir(PTS_USER_DIR . "debug-messages/"))
 			mkdir(PTS_USER_DIR . "debug-messages/");
@@ -550,7 +550,7 @@ function pts_format_time_string($time, $format = "SECONDS")
 }
 function pts_debug_message($message)
 {
-	if(defined("PTS_DEBUG_MODE"))
+	if(IS_DEBUG_MODE)
 	{
 		if(strpos($message, "$") > 0)
 			foreach(pts_env_variables() as $key => $value)

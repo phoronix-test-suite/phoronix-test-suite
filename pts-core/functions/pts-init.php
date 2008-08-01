@@ -55,6 +55,7 @@ function pts_init()
 	if(getenv("DEBUG") == "1" || ($debug_file = getenv("DEBUG_FILE")) != FALSE)
 	{
 		define("PTS_DEBUG_MODE", 1);
+		define("IS_DEBUG_MODE", true);
 
 		if($debug_file != FALSE)
 		{
@@ -62,6 +63,8 @@ function pts_init()
 			$GLOBALS["DEBUG_CONTENTS"] = "";
 		}
 	}
+	else
+		define("IS_DEBUG_MODE", false);
 
 	// Operating System Detection
 	$supported_operating_systems = array("Linux", array("Solaris", "Sun"), "FreeBSD", "BSD");
