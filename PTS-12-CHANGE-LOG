@@ -40,6 +40,7 @@
 - pts-core: Minor updates to local PTS Results Viewer
 - pts-core: Allow the test description to be changed/set by the user at run time
 - pts-core: Create unified batch mode support and make detection done at init time
+- pts-core: Improve HAL motherboard detection
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called

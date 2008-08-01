@@ -275,20 +275,19 @@ function main_system_hardware_string()
 	$product = read_system_hal("system.hardware.product");
 	$version = read_system_hal("system.hardware.version");
 
-	if($product == "Unknown" || $product == "Not Applicable" || (strpos($version, '.') === FALSE && $version != "Unknown"))
-	{
-		$product = $version;
-	}
-	if($vendor == "Unknown" || $vendor == "System manufacturer" || $vendor == "To Be Filled By O.E.M." || $vendor == "Not Applicable")
-	{
-		$info = "Unknown";
-	}
+	if($vendor != "Unknown" && $vendor != "System manufacturer" && $vendor != "To Be Filled By O.E.M." && $vendor != "Not Applicable")
+		$info = $vendor;
 	else
-	{
-		$info = pts_clean_information_string($vendor . " " . $product);
-	}
+		$info = "";
 
-	return $info;
+	if($product == "Unknown" || $product == "Not Applicable" || empty($product) || (strpos($version, ".") === FALSE && $version != "Unknown"))
+		$product = $version;
+
+	if(!empty($product) && $product != "Unknown")
+	{
+		$info .= " " . $product;
+	}
+	return pts_clean_information_string($info);
 }
 function pts_report_power_mode()
 {
