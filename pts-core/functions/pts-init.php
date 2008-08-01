@@ -83,7 +83,7 @@ function pts_init()
 	}
 	else if(strpos($uname_s, "bsd") !== FALSE) // Support for other BSDs
 	{
-		define("OPERATING_SYSTEM", "FreeBSD");
+		define("OPERATING_SYSTEM", "BSD");
 		define("IS_BSD", true);
 	}
 	else // OS is unknown

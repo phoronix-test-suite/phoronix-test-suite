@@ -26,7 +26,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 	$RESULTS_IDENTIFIER = null;
 	$show_identifiers = array();
 
-	if(!defined("PTS_BATCH_MODE") || (defined("PTS_BATCH_MODE") && pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE"))
+	if(!defined("PTS_BATCH_MODE") || pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE")
 	{
 		if(is_array($current_identifiers) && count($current_identifiers) > 0)
 		{
@@ -44,7 +44,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 			$show_identifiers = array_unique($show_identifiers);
 			sort($show_identifiers);
 
-			echo "\nCurrent Test Runs:\n";
+			echo "\nCurrent Test Identifiers:\n";
 			foreach($show_identifiers as $identifier)
 				echo "- " . $identifier . "\n";
 			echo "\n";

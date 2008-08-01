@@ -265,7 +265,7 @@ function display_web_browser($URL, $alt_text = NULL, $default_open = FALSE)
 		$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
 
 	if($view_results)
-		shell_exec("sh pts-core/scripts/launch-browser.sh \"" . $URL . "\" &");
+		shell_exec("sh pts-core/scripts/launch-browser.sh \"" . $URL . "\" 2>&1");
 }
 function pts_env_variables()
 {
@@ -373,7 +373,7 @@ function pts_trim_double($double, $accuracy = 2)
 			for($i = $strlen; $i < $accuracy; $i++)
 				$return[1] .= '0';
 
-		$return = $return[0] . '.' . $return[1];
+		$return = $return[0] . "." . $return[1];
 	}
 	else
 		$return = $return[0];

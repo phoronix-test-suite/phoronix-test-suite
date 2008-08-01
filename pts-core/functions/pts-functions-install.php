@@ -293,6 +293,7 @@ function pts_install_benchmark($identifier)
 	{
 		$custom_validated_output = pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/validate-install.php " . TEST_ENV_DIR . $identifier);
 	}
+
 	if(!empty($custom_validated_output))
 	{
 		$custom_validated_output = trim($custom_validated_output);
