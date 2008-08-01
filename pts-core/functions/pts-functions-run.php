@@ -26,7 +26,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 	$RESULTS_IDENTIFIER = null;
 	$show_identifiers = array();
 
-	if(!defined("PTS_BATCH_MODE") || pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE")
+	if(!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE")
 	{
 		if(is_array($current_identifiers) && count($current_identifiers) > 0)
 		{
@@ -68,7 +68,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 }
 function pts_prompt_save_file_name()
 {
-	if(!defined("PTS_BATCH_MODE") || (defined("PTS_BATCH_MODE") && pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE"))
+	if(!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
 	{
 		do
 		{

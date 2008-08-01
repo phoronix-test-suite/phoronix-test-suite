@@ -153,7 +153,7 @@ if($TO_RUN_TYPE == "TEST")
 	$settings_menu = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
 	$test_title_shown = false;
 
-	if(!defined("PTS_BATCH_MODE"))
+	if(!IS_BATCH_MODE)
 	{
 		$USER_ARGS = "";
 		$TEXT_ARGS = "";
@@ -323,7 +323,7 @@ else
 	pts_exit("\nUnrecognized option: " . $TO_RUN_TYPE . "\n");
 }
 
-if($SAVE_RESULTS && (!defined("PTS_BATCH_MODE") || pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE") == "TRUE"))
+if($SAVE_RESULTS && (!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE") == "TRUE"))
 {
 	if(empty($test_description))
 		$test_description = "N/A";
@@ -411,7 +411,7 @@ if($SAVE_RESULTS)
 		{
 			$tags_input = "";
 
-			if(!defined("PTS_BATCH_MODE"))
+			if(!IS_BATCH_MODE)
 			{
 				echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
 				$tags_input .= trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
