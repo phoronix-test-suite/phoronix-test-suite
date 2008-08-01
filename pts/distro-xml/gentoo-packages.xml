@@ -120,5 +120,10 @@
 			<PackageName>sys-libs/libstdc++-v3</PackageName>
 			<FileCheck>/usr/lib/libstdc++.so.5</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>openal-devel</GenericName>
+			<PackageName>media-libs/openal</PackageName>
+			<FileCheck>/usr/include/AL/al.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

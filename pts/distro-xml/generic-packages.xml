@@ -156,5 +156,11 @@
 			<PossibleNames>compat-libstdc++-33, libstdc++5</PossibleNames>
 			<FileCheck>/usr/lib/libstdc++.so.5</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>openal-devel</GenericName>
+			<Title>OpenAL Library And Development Files</Title>
+			<PossibleNames>openal, openal-devel, libopenal0a, libopenal-dev</PossibleNames>
+			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -130,5 +130,10 @@
 			<PackageName>libstdc++5</PackageName>
 			<FileCheck>/usr/lib/libstdc++.so.5</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>openal-devel</GenericName>
+			<PackageName>libopenal0a libopenal-dev</PackageName>
+			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
