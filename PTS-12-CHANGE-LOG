@@ -10,7 +10,7 @@
 - pts-core: Fixes for PTS results merging and recording of arguments
 - pts-core: Clear up test file versus unique identifier / test run text
 - pts-core: Allow support for loading modules manually by setting each module name in the PTS_MODULES environmental variable and separating multiple modules via comma
-- pts-cpre: Add Extensions tag to results file
+- pts-core: Add Extensions tag to results file
 - pts-core: Introduce a test installation management system and this replaces the previous pts-install management solution. New setup is XML based and monitors time a test was installed, last time a test was run, number of times a test was run by PTS, and this pts-install.xml system will be used for some future features.
 - pts-core: With info option, when a test is specified, let the user know whether it's installed. If it's installed, print the last time the test was executed and the total number of times it was executed.
 - pts-core: Change location of results directory tag within the user-config.xml configuration
@@ -39,6 +39,7 @@
 - pts-core: Drop maintainer field from PTS Results Viewer (P_RESULTS_SUITE_MAINTAINER / PhoronixTestSuite/Suite/Maintainer)
 - pts-core: Minor updates to local PTS Results Viewer
 - pts-core: Allow the test description to be changed/set by the user at run time
+- pts-core: Create unified batch mode support and make detection done at init time
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called

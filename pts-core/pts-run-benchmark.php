@@ -31,12 +31,8 @@ $MODULE_STORE = implode(";", $GLOBALS["PTS_MODULE_VAR_STORE"]);
 $TEST_PROPERTIES = array();
 $TEST_RAN = false;
 
-if(isset($argv[2]) && $argv[2] == "BATCH")
+if(IS_BATCH_MODE)
 {
-	if(pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "FALSE")
-		pts_exit(pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup"));
-
-	define("PTS_BATCH_MODE", "1");
 	array_push($TEST_PROPERTIES, "PTS_BATCH_MODE");
 }
 

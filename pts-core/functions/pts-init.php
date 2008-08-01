@@ -105,6 +105,7 @@ function pts_extended_init()
 		file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto", "A download cache is used for conserving time and bandwidth by eliminating the need for the Phoronix Test Suite to download files that have already been downloaded once. A download cache can also be transferred between PCs running the Phoronix Test Suite. For more information on this feature, view the included documentation. To generate a download cache, run:\n\nphoronix-test-suite make-download-cache\n");
 	}
 
+	// OpenGL / graphics detection
 	$opengl_driver = opengl_version();
 
 	if(strpos($opengl_driver, "NVIDIA") !== FALSE)
@@ -120,6 +121,18 @@ function pts_extended_init()
 		define("IS_ATI_GRAPHICS", false);
 	if(!defined("IS_MESA_GRAPHICS"))
 		define("IS_MESA_GRAPHICS", false);
+
+	// Check for batch mode
+	if(getenv("PTS_BATCH_MODE") != FALSE)
+	{
+		if(pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "FALSE")
+			pts_exit(pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup"));
+
+		define("PTS_BATCH_MODE", "1");
+		define("IS_BATCH_MODE", true);
+	}
+	else
+		define("IS_BATCH_MODE", false);
 }
 function __autoload($to_load)
 {
