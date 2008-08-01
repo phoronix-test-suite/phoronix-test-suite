@@ -16,16 +16,16 @@ div#pts_doc_header
 {
 	width: 100%;
 	margin: 0;
-	background-color: #000;
+	background-color: #2b6b29;
 }
 div#pts_doc_logo
 {
-	width: 255px;
+	width: 135px;
 	height: 70px;
-	padding: 1px;
-	background: #000 url(pts-documentation.png) no-repeat;
+	padding: 3px;
+	background: #2b6b29 url(pts-documentation.png) no-repeat;
 	position: relative;
-	left: 452px;
+	left: 552px;
 }
 div.pts_doc_fixed
 {
@@ -44,7 +44,7 @@ div.pts_doc_notice
 {
 	border: solid #737373;
 	border-width: 0 1px;
-	background-color: #4e4e4e;
+	background-color: #222;
 	text-align: left;
 	overflow: hidden;
 	padding: 4px 8px;
@@ -53,7 +53,7 @@ div.pts_doc_notice
 }
 div.pts_doc_bottom
 {
-	background-color: #000;
+	background-color: #2b6b29;
 	color: #FFF;
 	text-align: left;
 	padding: 3px 8px;
