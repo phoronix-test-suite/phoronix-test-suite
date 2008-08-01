@@ -102,6 +102,10 @@ class tandem_XmlReader
 	{
 		return $this->getValue($XML_TAG, $this->XML_DATA);
 	}
+	function isDefined($XML_TAG)
+	{
+		return $this->getValue($XML_TAG, $this->XML_DATA) != null;
+	}
 	function getValue($XML_TAG, $XML_MATCH, $DO_CACHE = TRUE)
 	{
 		if($this->XML_CACHE_TAGS == TRUE && $DO_CACHE && isset($GLOBALS["XML_CACHE"]["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG]))

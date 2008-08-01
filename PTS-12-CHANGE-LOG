@@ -70,6 +70,7 @@
 
 - tandem_Xml: Add a caching engine to the XML parsing/reading portion
 - tandem_Xml: Add setFileCaching(), setTagCaching(), and setCaching() options
+- tandem_Xml: Add isDefined() function for XML tags in tandem_XmlReader
 
 - pts: Add ProjectURL tag to available test profiles
 - pts: Add PTS External Dependencies support for OpenSolaris using IPS
