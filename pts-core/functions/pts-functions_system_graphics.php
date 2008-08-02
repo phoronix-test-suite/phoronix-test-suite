@@ -301,8 +301,13 @@ function graphics_processor_string()
 	else
 		$info = "";
 
-	if(empty($info) || strpos($info, "Mesa GLX") !== FALSE || strpos($info, "Mesa DRI") !== FALSE)
-		$info = read_pci("VGA compatible controller:");
+	if(empty($info) || strpos($info, "Mesa ") !== FALSE)
+	{
+		$info_pci = read_pci("VGA compatible controller:");
+
+		if(!empty($info_pci) && $info_pci != "Unknown")
+			$info = $info_pci;
+	}
 
 	if($info == "Unknown")
 	{
