@@ -41,7 +41,7 @@
 - pts-core: Allow the test description to be changed/set by the user at run time
 - pts-core: Create unified batch mode support and make detection done at init time
 - pts-core: Improve HAL motherboard detection
-- pts-core: Set $HOME environmental variable while tests are running to the test's PTS directory
+- pts-core: Set $HOME environmental variable while tests are running to the test's PTS directory and during the installation process
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called

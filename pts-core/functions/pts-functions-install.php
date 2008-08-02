@@ -333,11 +333,11 @@ function pts_install_benchmark($identifier)
 
 			if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh"))
 			{
-				echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/install.sh " . TEST_ENV_DIR . $identifier) . "\n";
+				echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/install.sh " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
 			}
 			else if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
 			{
-				echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/install.php " . TEST_ENV_DIR . $identifier) . "\n";
+				echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/install.php " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
 			}
 			pts_test_generate_install_xml($identifier);
 			pts_module_process("__post_test_install");
