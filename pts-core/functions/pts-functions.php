@@ -383,7 +383,7 @@ function pts_trim_double($double, $accuracy = 2)
 }
 function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 {
-	if(IS_BATCH_MODE)
+	if(defined("IS_BATCH_MODE") && IS_BATCH_MODE)
 	{
 		switch($question_id)
 		{
