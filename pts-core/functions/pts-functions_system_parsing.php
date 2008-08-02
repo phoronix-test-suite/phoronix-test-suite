@@ -63,7 +63,8 @@ function read_hal($name, $UDI = NULL)
 		$info = trim(substr($info, 0, strpos($info, "'")));
 	}
 
-	if(empty($info) || $info == "empty" || $info == "Unknow" || $info == "System Manufacturer" || $info == "System Version")
+	$remove_words = array("empty", "unknow", "system manufacturer", "system version", "to be filled by o.e.m.", "not applicable");
+	if(empty($info) || in_array(strtolower($info), $remove_words))
 		$info = "Unknown";
 
 	return $info;

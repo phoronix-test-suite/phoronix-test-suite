@@ -275,15 +275,17 @@ function main_system_hardware_string()
 	$product = read_system_hal("system.hardware.product");
 	$version = read_system_hal("system.hardware.version");
 
-	if($vendor != "Unknown" && $vendor != "System manufacturer" && $vendor != "To Be Filled By O.E.M." && $vendor != "Not Applicable")
+	if($vendor != "Unknown")
 		$info = $vendor;
 	else
 		$info = "";
 
-	if($product == "Unknown" || $product == "Not Applicable" || empty($product) || (strpos($version, ".") === FALSE && $version != "Unknown"))
+	if($product == "Unknown" || empty($product) || (strpos($version, ".") === FALSE && $version != "Unknown"))
+	{
 		$product = $version;
+	}
 
-	if(!empty($product) && $product != "Unknown" && $product != "To Be Filled By O.E.M.")
+	if(!empty($product) && $product != "Unknown")
 	{
 		$info .= " " . $product;
 	}
@@ -291,9 +293,6 @@ function main_system_hardware_string()
 	if(empty($info))
 	{
 		$info = read_hal("pci.subsys_vendor");
-
-		if(empty($info))
-			$info = "Unknown";
 	}
 
 	return pts_clean_information_string($info);
