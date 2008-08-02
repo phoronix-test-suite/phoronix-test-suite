@@ -382,7 +382,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		echo pts_string_header($benchmark_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
-		echo $BENCHMARK_RESULTS = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $PTS_BENCHMARK_ARGUMENTS);
+		echo $BENCHMARK_RESULTS = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $PTS_BENCHMARK_ARGUMENTS, array("HOME" => TEST_ENV_DIR . $benchmark_identifier));
 
 		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
