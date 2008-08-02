@@ -286,6 +286,7 @@ function pts_env_variables()
 	"OS" => os_vendor(),
 	"OS_VERSION" => os_version(),
 	"OS_ARCH" => kernel_arch(),
+	"OS_TYPE" => OPERATING_SYSTEM,
 	"THIS_RUN_TIME" => THIS_RUN_TIME
 	);
 }
