@@ -283,10 +283,19 @@ function main_system_hardware_string()
 	if($product == "Unknown" || $product == "Not Applicable" || empty($product) || (strpos($version, ".") === FALSE && $version != "Unknown"))
 		$product = $version;
 
-	if(!empty($product) && $product != "Unknown")
+	if(!empty($product) && $product != "Unknown" && $product != "To Be Filled By O.E.M.")
 	{
 		$info .= " " . $product;
 	}
+
+	if(empty($info))
+	{
+		$info = read_hal("pci.subsys_vendor");
+
+		if(empty($info))
+			$info = "Unknown";
+	}
+
 	return pts_clean_information_string($info);
 }
 function pts_report_power_mode()
