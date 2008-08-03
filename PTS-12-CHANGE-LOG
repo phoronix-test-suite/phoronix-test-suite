@@ -1,6 +1,7 @@
 - pts-core: Variety of code cleaning and other general improvements
 - pts-core: Implement PTS modules support
 - pts-core: Move sensor monitoring support to a new module called system_monitor
+- pts-core: Drop sensors and sensor-options arguments
 - pts-core: Add list-modules option for listing all available/installed modules
 - pts-core: Add module-info option for viewing information on a module
 - pts-core: Drop pts-functions_monitor.php now that it's all modulized.
@@ -55,7 +56,7 @@
 
 - email_results: Add a module to email test results automatically to a user upon completion. Specify the email addres in the EMAIL_RESULTS_TO environmental variable.
 
-- system_monitor: Poll sensors every 30 seconds during testing
+- system_monitor: Poll sensors every 15 seconds during testing
 - system_monitor: Add cpu.usage to MONITOR, fix some bugs as well
 - system_monitor: Add gpu.freq to MONITOR
 

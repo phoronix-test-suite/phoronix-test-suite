@@ -170,8 +170,8 @@ case "$1" in
 "sensor-options")
 	$PHP_BIN pts-core/pts-run-cmd.php SENSOR_OPTIONS
 	;;
-"sensors")
-	$PHP_BIN pts-core/pts-run-cmd.php SENSORS
+"sensors" | "sensor-options")
+	echo "\nThis option was dropped from the Phoronix Test Suite. For more information and the replacement option, view the latest documentation.\n"
 	;;
 *)
 	cat <<'EOT'

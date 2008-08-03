@@ -659,19 +659,8 @@ switch($COMMAND)
 				echo $ARG_1 . " is an unrecognized PTS Global ID.\n\n";
 		}
 		break;
-	case "SENSOR_OPTIONS":
-		//echo "\nThe Phoronix Test Suite supports monitoring various system hardware sensors through the LM_Sensors and ACPI interfaces. The Phoronix Test Suite will automatically monitor the selected sensors while each test is running and at the end will then provide the low and high thresholds for each sensor as well as the average. In addition, the sensor results are then plotted on line graphs and can be viewed through the PTS Results Viewer.\n";
-		echo "\nMonitoring these sensors are as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). Below are all of the sensors supported by this version of the Phoronix Test Suite.\n\n";
-		//echo "Supported Options:\n";
-		//foreach(pts_monitor_arguments() as $arg)
-		//	echo "  - " . $arg . "\n";
-		//echo "\n";
-		break;
 	case "VERSION":
 		echo "\nPhoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n\n";
-		break;
-	case "SENSORS":
-		echo "\nThis option was dropped from the Phoronix Test Suite. For more information and the replacement option, view the latest documentation.\n\n";
 		break;
 	default:
 		echo "Phoronix Test Suite: Internal Error.\nCommand Not Recognized (" . $COMMAND . ").\n";
