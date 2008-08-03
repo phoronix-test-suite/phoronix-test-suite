@@ -46,6 +46,11 @@
 			<FileCheck>/usr/bin/bison</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>freeimage</GenericName>
+			<PackageName>freeimage freeimage-devel</PackageName>
+			<FileCheck>/usr/lib/libfreeimage.so.3, /usr/include/FreeImage.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>flex</GenericName>
 			<PackageName>flex</PackageName>
 			<FileCheck>/usr/bin/flex</FileCheck>

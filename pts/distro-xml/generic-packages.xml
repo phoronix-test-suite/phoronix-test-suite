@@ -97,6 +97,12 @@
 			<FileCheck>/usr/include/GL/glew.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>freeimage</GenericName>
+			<Title>FreeImage Graphics Library</Title>
+			<PossibleNames>libfreeimage3, libfreeimage-dev, </PossibleNames>
+			<FileCheck>/usr/lib/libfreeimage.so.3, /usr/include/FreeImage.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>scons</GenericName>
 			<Title>SCons</Title>
 			<PossibleNames>scons</PossibleNames>

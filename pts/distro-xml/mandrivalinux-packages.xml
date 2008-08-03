@@ -83,6 +83,11 @@
 			<FileCheck>/usr/include/GL/glew.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>freeimage</GenericName>
+			<PackageName>libFreeImage3 libFreeImage3-devel</PackageName>
+			<FileCheck>/usr/lib/libfreeimage.so.3, /usr/include/FreeImage.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>scons</GenericName>
 			<PackageName>scons</PackageName>
 			<FileCheck>/usr/bin/scons</FileCheck>
