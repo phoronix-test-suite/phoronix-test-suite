@@ -91,3 +91,4 @@
 - pts: Add PTS External dependency for OpenAL and OpenAL development files named openal-devel
 
 - documentation: Update CSS style / image interface
+- documentation: Update documentation text and add page covering how to write a PHP/SH module

@@ -1,0 +1,124 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<Title>Phoronix Test Suite - Module Writing</Title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="includes/pts-documentation.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="pts_doc_header"><div class="pts_doc_fixed"><a href="http://www.phoronix-test-suite.com/"><div id="pts_doc_logo"></div></a></div></div>
+<div class="pts_doc_fixed">
+<div class="pts_doc_notice"><div style="float: left"><a href="index.html">&lt;&lt; Documentation Home</a></div><div style="float: right;">Module Writing</div></div>
+<div class="pts_doc_main">
+<!-- PTS AREA -->
+<h1>Phoronix Test Suite</h1>
+<div style="width: 1px; height: 20px;"></div>
+<p>Writing a module for the Phoronix Test Suite allows new functionality to be added 
+without having to extensively learn how pts-core functions. The module framework 
+for the Phoronix Test Suite allows modules to be written either as a shell script 
+or as a PHP object. Example PTS modules could include a module to shutdown the 
+screensaver when the Phoronix Test Suite starts up and re-enabling it when the 
+test is over, using sendmail to forward the results to an e-mail address when 
+testing is completed, or writing the current test status to a LCDproc-enabled 
+VFD display.</p>
+<p>Both PHP and SH modules are stored in <em>pts-core/modules/</em>. Loading a 
+module is done by either setting the <em>PTS_MODULES</em> environmental variable 
+with the name of the module (excluding the <em>.sh</em> or <em>.php</em> file 
+extension) or by associating a module with a separate environmental variable. 
+The list of these environmental variables for auto-loading modules is stored in <em>pts-core/modules/module-variables.txt</em>. 
+The name of the environmental variable starts the line followed by an equal sign 
+(<em>=</em>) and then what module to load if the variable is set. For example, 
+if <em>module-variables.txt</em> contained a line that read <em>EMAIL_RESULTS_TO=email_results</em>, 
+and the following command was run <em>EMAIL_RESULTS_TO=my-email-address@my-domain.com 
+phoronix-test-suite benchmark universe</em>, it would automatically load the <em>email_results</em> 
+module and the <em>EMAIL_RESULTS_TO</em> variable could be read by this module 
+using a conventional method for reading the variable.</p>
+<p>If you plan to permanently use a module, the string that normally would be 
+defined in <em>PTS_MODULES</em> can be set within the <em>LoadModules</em> tag 
+found in <em>~/.phoronix-test-suite/user-config.xml</em>. Multiple modules can 
+be loaded simultaneously using the <em>PTS_MODULES</em> variable or <em>LoadModules</em> 
+tag by delimiting each command with a comma (<em>,</em>).</p>
+<h1>PHP Module</h1>
+<p>To see all of the functions supported for modules written in PHP, look at <em>pts-core/modules/dummy_module.php</em> 
+and additionally the other .php modules that ship with the Phoronix Test Suite. 
+Additionally, there are several functions written specifically for Phoronix Test 
+Suite modules that make it easier to save files, read files, and provided multi-threading 
+support for modules. The <em>pts_timed_function()</em> makes it possible (and 
+very easy) to thread functions within a module so that at a set interval the defined 
+functions will be called. For example, this support is used heavily within the 
+<em>system_monitor</em> module to poll sensors every X seconds even while there 
+are tests running. These functions can be found within <em>pts-core/objects/pts_module.php</em>.</p>
+<p>Below is a sample module that times how long it takes to run the Phoronix Test 
+Suite. It would be saved as <em>pts-core/modules/time_me.php</em>.</p>
+<blockquote>&lt;?php<br />
+class time_me extends pts_module_interface<br />
+{<br />
+ &nbsp; &nbsp; const module_name = "Time Me!";<br />
+ &nbsp; &nbsp; const module_version = "1.0.0";<br />
+ &nbsp; &nbsp; const module_description = "This is a module that times how long the Phoronix Test Suite runs.";<br />
+ &nbsp; &nbsp; const module_author = "Phoronix Media";<br />
+<br />
+ &nbsp; &nbsp; static $start_time = NULL;<br />
+ &nbsp; &nbsp; static $end_time = NULL;<br />
+<br />
+ &nbsp; &nbsp; public static function __startup()<br />
+ &nbsp; &nbsp; {<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; self::$start_time = time();<br />
+ &nbsp; &nbsp; }<br />
+ &nbsp; &nbsp; public static function __shutdown()<br />
+ &nbsp; &nbsp; {<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; self::$end_time = time();<br />
+<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; $time_elapsed = self::$end_time - self::$start_time;<br />
+<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; echo "\nThe Phoronix Test Suite Ran For " . $time_elapsed . " Seconds.\n";<br />
+ &nbsp; &nbsp; }<br />
+}<br />
+?&gt;</blockquote>
+<p>Then by running <em>PTS_MODULES=time_me phoronix-test-suite benchmark video-extensions</em>, 
+at the end of the test it would print a string similar to: &quot;The Phoronix 
+Test Suite Ran For 52 Seconds.&quot;</p>
+<p>Running phoronix-test-suite module-info time_me would produce the following 
+text.</p>
+<blockquote>====================================<br>
+Module: Time Me!<br>
+====================================</p>
+<p>Version: 1.0.0<br>
+Author: Phoronix Media<br>
+Description: This is a module that times how long the Phoronix Test Suite runs.</blockquote>
+<h1>Shell Script Modules</h1>
+<p>Writing Phoronix Test Suite modules in PHP is the preferred method, but the 
+programming model for a shell script is similar. Look at <em>dummy_script_module.sh</em> 
+to see available options. Below is a .sh version of the <em>time_me.php</em> module 
+showcased in the previous section. This <em>time_me.sh</em> module provides the 
+same exact functionality as the PHP version.</p>
+<blockquote>#!/bin/sh<br />
+case $1 in<br />
+ &nbsp; &nbsp; "module_name")<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; echo "Time Me!"<br />
+ &nbsp; &nbsp; ;;<br />
+ &nbsp; &nbsp; "module_version")<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; echo "1.0.0"<br />
+ &nbsp; &nbsp; ;;<br />
+ &nbsp; &nbsp; "module_description")<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; echo "This is a module that times how long the Phoronix Test Suite runs."<br />
+ &nbsp; &nbsp; ;;<br />
+ &nbsp; &nbsp; "module_author")<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; echo "Phoronix Media"<br />
+ &nbsp; &nbsp; ;;<br />
+ &nbsp; &nbsp; "__startup")<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; date +%s > /tmp/pts-start-timer<br />
+ &nbsp; &nbsp; ;;<br />
+ &nbsp; &nbsp; "__shutdown")<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; date +%s > /tmp/pts-end-timer<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; START_TIME=`cat /tmp/pts-start-timer`<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; END_TIME=`cat /tmp/pts-end-timer`<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; TIME_ELAPSED=`expr $END_TIME - $START_TIME`<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; echo "\nThe Phoronix Test Suite Ran For $TIME_ELAPSED Seconds.\n";<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; rm -f /tmp/pts-start-timer<br />
+ &nbsp; &nbsp;  &nbsp; &nbsp; rm -f /tmp/pts-end-timer<br />
+ &nbsp; &nbsp; ;;<br />
+esac</blockquote>
+<!-- END OF PTS AREA -->
+</div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 by <a href="http://www.phoronixmedia.com/">Phoronix Media</a>.</div></div></div>
+</body>
+</html>
