@@ -32,7 +32,7 @@
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
-			<Title>libpng (PNG Image) Development Files</Title>
+			<Title>PNG Library Development Files</Title>
 			<PossibleNames>libpng12-dev</PossibleNames>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>

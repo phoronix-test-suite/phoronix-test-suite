@@ -252,12 +252,12 @@ switch($COMMAND)
 	case "LIST_POSSIBLE_EXTERNAL_DEPENDENCIES":
 		echo pts_string_header("Phoronix Test Suite - Possible External Dependencies");
 		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
-		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+		$dependency_titles = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+		sort($dependency_titles);
 
-		for($i = 0; $i < count($title); $i++)
+		foreach($dependency_titles as $title)
 		{
-			echo "- " . $title[$i] . "\n";
+			echo "- " . $title . "\n";
 		}
 		echo "\n";
 
