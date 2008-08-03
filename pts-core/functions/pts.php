@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "1.0.4");
+define("PTS_VERSION", "1.0.5");
 define("PTS_CODENAME", "TRONDHEIM");
 define("PTS_TYPE", "DESKTOP");
 
