@@ -37,7 +37,7 @@ if(IS_BATCH_MODE)
 }
 
 if(empty($TO_RUN))
-	pts_exit("\nThe benchmark, suite name, or saved file name must be supplied.\n");
+	pts_exit("\nThe test, suite name, or saved file name must be supplied.\n");
 
 // Make sure tests are installed
 pts_verify_test_installation($TO_RUN);
@@ -328,7 +328,7 @@ if($SAVE_RESULTS && (!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMP
 	if(empty($test_description))
 		$test_description = "N/A";
 
-	echo pts_string_header("Below is the current test description. If you wish to have a new description, enter it below. Press ENTER to proceed without changes.", "#");
+	echo pts_string_header("If you wish, enter a new description below.\nPress ENTER to proceed without changes.", "#");
 	echo "Current Description: " . $test_description;
 	echo "\n\nNew Description: ";
 	$new_test_description = trim(fgets(STDIN));
@@ -338,7 +338,7 @@ if($SAVE_RESULTS && (!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMP
 }
 
 // Run the test process
-pts_recurse_call_benchmark($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
+pts_recurse_call_tests($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
 
 define("PTS_TESTING_DONE", 1);
 pts_module_process("__post_run_process");
@@ -401,7 +401,7 @@ if($SAVE_RESULTS)
 
 	if($TEST_RAN)
 	{
-		pts_save_benchmark_file($PROPOSED_FILE_NAME, $RESULTS);
+		pts_save_test_file($PROPOSED_FILE_NAME, $RESULTS);
 		echo "Results Saved To: " . SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml\n";
 		display_web_browser(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml");
 

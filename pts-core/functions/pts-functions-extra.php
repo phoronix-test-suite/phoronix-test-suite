@@ -51,10 +51,10 @@ function pts_tests_in_suite($object)
 	if($type == "TEST_SUITE")
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents(XML_SUITE_DIR . $object . ".xml"));
-		$suite_benchmarks = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
-		foreach($suite_benchmarks as $benchmark)
-			foreach(pts_tests_in_suite($benchmark) as $sub_test)
+		foreach($tests_in_suite as $test)
+			foreach(pts_tests_in_suite($test) as $sub_test)
 				array_push($tests, $sub_test);
 	}
 	else if($type == "TEST")
@@ -68,19 +68,19 @@ function pts_print_format_tests($object, $steps = -1)
 	if(pts_test_type($object) == "TEST_SUITE")
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents(XML_SUITE_DIR . $object . ".xml"));
-		$suite_benchmarks = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 		if($steps > 0)
-			asort($suite_benchmarks);
+			asort($tests_in_suite);
 
 		if($steps == 0)
 			echo $object . "\n";
 		else
 			echo str_repeat("  ", $steps) . "+ " . $object . "\n";
 
-		foreach($suite_benchmarks as $benchmark)
+		foreach($tests_in_suite as $test)
 		{
-			echo pts_print_format_tests($benchmark, $steps);
+			echo pts_print_format_tests($test, $steps);
 		}
 	}
 	else

@@ -36,7 +36,7 @@ function pts_find_file($file)
 
 	return $USE_FILE;
 }
-function pts_merge_benchmarks($OLD_RESULTS, $NEW_RESULTS)
+function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 {
 	// RE-READ LATEST RESULTS
 	$new_xml_reader = new tandem_XmlReader($NEW_RESULTS);

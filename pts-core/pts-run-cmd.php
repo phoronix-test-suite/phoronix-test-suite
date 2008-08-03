@@ -40,15 +40,15 @@ switch($COMMAND)
 {
 	case "LIST_SAVED_RESULTS":
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
-		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $benchmark_file)
+		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
 		{
-			$xml_parser = new tandem_XmlReader($benchmark_file);
+			$xml_parser = new tandem_XmlReader($saved_results_file);
 			$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 			$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
 			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 			$results_xml = new tandem_XmlReader($raw_results[0]);
 			$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
-			$saved_identifier = array_pop(explode('/', dirname($benchmark_file)));
+			$saved_identifier = array_pop(explode('/', dirname($test_profile_file)));
 
 			if(!empty($title))
 			{
@@ -68,7 +68,7 @@ switch($COMMAND)
 
 		if(empty($ARG_1))
 		{
-			pts_exit("\nThe benchmark or suite name to install must be supplied.\n");
+			pts_exit("\nThe test or suite name to install must be supplied.\n");
 		}
 
 		if($COMMAND == "FORCE_INSTALL_TEST")
@@ -81,7 +81,7 @@ switch($COMMAND)
 		// Any external dependencies?
 		pts_install_package_on_distribution($ARG_1);
 
-		// Install benchmarks
+		// Install tests
 		$install_objects = "";
 		pts_recurse_install_test($ARG_1, $install_objects);
 		pts_module_process("__post_install_process");
@@ -96,14 +96,14 @@ switch($COMMAND)
 		if($COMMAND == "FORCE_INSTALL_ALL")
 			define("PTS_FORCE_INSTALL", 1);
 
-		foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
+		foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_profile_file)
 		{
-			$test = basename($benchmark_file, ".xml");
+			$test = basename($test_profile_file, ".xml");
 
 			// Any external dependencies?
 			pts_install_package_on_distribution($test);
 
-			// Install benchmarks
+			// Install tests
 			$install_objects = "";
 			pts_recurse_install_test($test, $install_objects);
 		}
@@ -135,13 +135,13 @@ switch($COMMAND)
 		break;
 	case "LIST_TESTS":
 		echo pts_string_header("Phoronix Test Suite - Tests");
-		foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
+		foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_profile_file)
 		{
-		 	$xml_parser = new tandem_XmlReader($benchmark_file);
+		 	$xml_parser = new tandem_XmlReader($test_profile_file);
 			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 			$license = $xml_parser->getXMLValue(P_TEST_LICENSE);
 			$status = $xml_parser->getXMLValue(P_TEST_STATUS);
-			$identifier = basename($benchmark_file, ".xml");
+			$identifier = basename($test_profile_file, ".xml");
 
 			if(IS_DEBUG_MODE)
 			{
@@ -162,12 +162,12 @@ switch($COMMAND)
 		break;
 	case "LIST_SUITES":
 		echo pts_string_header("Phoronix Test Suite - Suites");
-		foreach(glob(XML_SUITE_DIR . "*.xml") as $benchmark_file)
+		foreach(glob(XML_SUITE_DIR . "*.xml") as $test_suite_file)
 		{
-		 	$xml_parser = new tandem_XmlReader($benchmark_file);
+		 	$xml_parser = new tandem_XmlReader($test_suite_file);
 			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
-			$benchmark_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-			$identifier = basename($benchmark_file, ".xml");
+			$test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
+			$identifier = basename($test_suite_file, ".xml");
 
 			if(IS_DEBUG_MODE)
 			{
@@ -177,7 +177,7 @@ switch($COMMAND)
 				printf("%-26ls - %-32ls %-4ls  %-12ls\n", $identifier, $name, $version, $type);
 			}
 			else
-				printf("%-26ls - %-32ls [Type: %s]\n", $identifier, $name, $benchmark_type);
+				printf("%-26ls - %-32ls [Type: %s]\n", $identifier, $name, $test_type);
 		}
 		echo "\n";
 		break;
@@ -214,11 +214,11 @@ switch($COMMAND)
 			$install_file_arr = explode("/", $install_file);
 			$identifier = $install_file_arr[count($install_file_arr) - 2];
 
-			$benchmark_file = XML_PROFILE_DIR . $identifier . ".xml";
+			$test_profile_file = XML_PROFILE_DIR . $identifier . ".xml";
 
-			if(is_file($benchmark_file))
+			if(is_file($test_profile_file))
 			{
-			 	$xml_parser = new tandem_XmlReader($benchmark_file);
+			 	$xml_parser = new tandem_XmlReader($test_profile_file);
 				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 
 				printf("%-18ls - %-30ls\n", $identifier, $name);
@@ -489,9 +489,9 @@ switch($COMMAND)
 
 		if($remove_all)
 		{
-			foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $benchmark_file)
+			foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
 			{
-				$saved_identifier = array_pop(explode('/', dirname($benchmark_file)));
+				$saved_identifier = array_pop(explode('/', dirname($saved_results_file)));
 				pts_remove_saved_result($saved_identifier);
 			}
 			echo "\n";
@@ -544,7 +544,7 @@ switch($COMMAND)
 		}
 
 		// Merge Results
-		$MERGED_RESULTS = pts_merge_benchmarks(file_get_contents($BASE_FILE), file_get_contents($MERGE_FROM_FILE));
+		$MERGED_RESULTS = pts_merge_test_results(file_get_contents($BASE_FILE), file_get_contents($MERGE_FROM_FILE));
 		pts_save_result($MERGE_TO, $MERGED_RESULTS);
 		echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $MERGE_TO . "\n\n";
 		display_web_browser(SAVE_RESULTS_DIR . $MERGE_TO);

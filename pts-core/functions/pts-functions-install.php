@@ -30,7 +30,7 @@ function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
 		if(is_array($INSTALL_OBJ))
 			pts_install_external_dependencies_list($TO_INSTALL, $INSTALL_OBJ);
 		else
-			pts_install_benchmark($TO_INSTALL);
+			pts_install_test($TO_INSTALL);
 	}
 	else if($type == "TEST_SUITE")
 	{
@@ -272,7 +272,7 @@ function pts_download_test_files($identifier)
 		}
 	}
 }
-function pts_install_benchmark($identifier)
+function pts_install_test($identifier)
 {
 	if(pts_test_type($identifier) != "TEST")
 		return;

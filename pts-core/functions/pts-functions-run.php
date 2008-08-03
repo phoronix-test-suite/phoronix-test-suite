@@ -126,31 +126,31 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 	else if($type == "TEST_SUITE")
 	{
 		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_VERIFY . ".xml");
-		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+		$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 
-		foreach($suite_benchmarks as $benchmark)
-			pts_recurse_verify_installation($benchmark, $NEEDS_INSTALLING);
+		foreach($tests_in_suite as $test)
+			pts_recurse_verify_installation($test, $NEEDS_INSTALLING);
 	}
 	else if(is_file(pts_input_correct_results_path($TO_VERIFY)))
 	{
 		$xml_parser = new tandem_XmlReader(pts_input_correct_results_path($TO_VERIFY));
-		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+		$tests_in_suite = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
-		foreach($suite_benchmarks as $benchmark)
-			pts_recurse_verify_installation($benchmark, $NEEDS_INSTALLING);
+		foreach($tests_in_suite as $test)
+			pts_recurse_verify_installation($test, $NEEDS_INSTALLING);
 	}
 	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $TO_VERIFY)) == "REMOTE_FILE")
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $TO_VERIFY));
-		$suite_benchmarks = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+		$tests_in_suite = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
-		foreach($suite_benchmarks as $benchmark)
-			pts_recurse_verify_installation($benchmark, $NEEDS_INSTALLING);
+		foreach($tests_in_suite as $test)
+			pts_recurse_verify_installation($test, $NEEDS_INSTALLING);
 	}
 	//else
 	//	echo "\nNot recognized: $TO_VERIFY.\n";
 }
-function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
+function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
 {
 	if(!defined("PTS_RECURSE_CALL"))
 	{
@@ -158,43 +158,43 @@ function pts_recurse_call_benchmark($benchmarks_array, $arguments_array, $save_r
 		define("PTS_RECURSE_CALL", 1);
 	}
 
-	for($i = 0; $i < count($benchmarks_array); $i++)
+	for($i = 0; $i < count($tests_to_run); $i++)
 	{
-		$test_type = pts_test_type($benchmarks_array[$i]);
+		$test_type = pts_test_type($tests_to_run[$i]);
 
 		if($test_type == "TEST_SUITE")
 		{
-			$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $benchmarks_array[$i] . ".xml");
+			$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $tests_to_run[$i] . ".xml");
 
-			$sub_suite_benchmarks = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+			$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 			$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
 			$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
 
-			pts_recurse_call_benchmark($sub_suite_benchmarks, $sub_arguments, $save_results, $tandem_xml, $results_identifier, $sub_arguments_description);
+			pts_recurse_call_tests($tests_in_suite, $sub_arguments, $save_results, $tandem_xml, $results_identifier, $sub_arguments_description);
 		}
 		else if($test_type == "TEST")
 		{
-			$test_result = pts_run_benchmark($benchmarks_array[$i], $arguments_array[$i], $arguments_description[$i]);
+			$test_result = pts_run_test($tests_to_run[$i], $arguments_array[$i], $arguments_description[$i]);
 
 			// test_result[0] == the main result
 
 			if($save_results && count($test_result) > 0 && ((is_numeric($test_result[0]) && $test_result[0] > 0) || (!is_numeric($test_result[0]) && strlen($test_result[0]) > 2)))
-				pts_record_benchmark_result($tandem_xml, $benchmarks_array[$i], $arguments_array[$i], $results_identifier, $test_result, $arguments_description[$i], pts_request_new_id());
+				pts_record_test_result($tandem_xml, $tests_to_run[$i], $arguments_array[$i], $results_identifier, $test_result, $arguments_description[$i], pts_request_new_id());
 
-			if($i != (count($benchmarks_array) - 1))
+			if($i != (count($tests_to_run) - 1))
 				sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 		}
 	}
 }
-function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $identifier, $result, $description, $tandem_id = 128)
+function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $result, $description, $tandem_id = 128)
 {
 	$test_result = $result[0];
 
 	if((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2))
 	{
-		$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $benchmark . ".xml");
-		$benchmark_title = $xml_parser->getXMLValue(P_TEST_TITLE);
-		$benchmark_version = $xml_parser->getXMLValue(P_TEST_VERSION);
+		$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $test . ".xml");
+		$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
+		$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 		$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
 		$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 		$proportion = $xml_parser->getXMLValue(P_TEST_PROPORTION);
@@ -205,20 +205,20 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 
 			if(!empty($default_test_descriptor))
 				$description = $default_test_descriptor;
-			else if(is_file(TEST_ENV_DIR . $benchmark . "/pts-test-description"))
-				$description = @file_get_contents(TEST_ENV_DIR . $benchmark . "/pts-test-description");
+			else if(is_file(TEST_ENV_DIR . $test . "/pts-test-description"))
+				$description = @file_get_contents(TEST_ENV_DIR . $test . "/pts-test-description");
 			else
 				$description = "Phoronix Test Suite v" . PTS_VERSION;
 		}
-		if(empty($benchmark_version))
+		if(empty($test_version))
 		{
-			if(is_file(TEST_ENV_DIR . $benchmark . "/pts-test-version"))
-				$benchmark_version = @file_get_contents(TEST_ENV_DIR . $benchmark . "/pts-test-version");
+			if(is_file(TEST_ENV_DIR . $test . "/pts-test-version"))
+				$test_version = @file_get_contents(TEST_ENV_DIR . $test . "/pts-test-version");
 		}
 		if(empty($result_scale))
 		{
-			if(is_file(TEST_ENV_DIR . $benchmark . "/pts-results-scale"))
-				$result_scale = trim(@file_get_contents(TEST_ENV_DIR . $benchmark . "/pts-results-scale"));
+			if(is_file(TEST_ENV_DIR . $test . "/pts-results-scale"))
+				$result_scale = trim(@file_get_contents(TEST_ENV_DIR . $test . "/pts-results-scale"));
 		}
 		if(empty($result_format))
 		{
@@ -235,13 +235,13 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 			if($key != "VIDEO_MEMORY" && $key != "NUM_CPU_CORES" && $key != "NUM_CPU_JOBS")
 				$arguments = str_replace("$" . $key, $value, $arguments);
 
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $benchmark_title);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $benchmark_version);
+		$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $test_title);
+		$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $test_version);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $description);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result_scale);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $proportion);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result_format);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $benchmark);
+		$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $test);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $arguments);
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
 		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_result, 5);
@@ -249,7 +249,7 @@ function pts_record_benchmark_result(&$tandem_xml, $benchmark, $arguments, $iden
 		$GLOBALS["TEST_RAN"] = true;
 	}
 }
-function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)
+function pts_save_test_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)
 {
 	$j = 1;
 	while(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/test-" . $j . ".xml"))
@@ -273,25 +273,25 @@ function pts_save_benchmark_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEX
 	else
 	{
 		// Merge Results
-		$MERGED_RESULTS = pts_merge_benchmarks(file_get_contents(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $REAL_FILE_NAME));
+		$MERGED_RESULTS = pts_merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $REAL_FILE_NAME));
 		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", $MERGED_RESULTS);
 	}
 	return $REAL_FILE_NAME;
 }
-function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $arguments_description = "")
+function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "")
 {
-	if(pts_process_active($benchmark_identifier))
+	if(pts_process_active($test_identifier))
 	{
-		echo "\nThis test (" . $benchmark_identifier . ") is already running... Please wait until the first instance is finished.\n";
+		echo "\nThis test (" . $test_identifier . ") is already running... Please wait until the first instance is finished.\n";
 		return 0;
 	}
-	pts_process_register($benchmark_identifier);
-
+	pts_process_register($test_identifier);
+	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 	pts_module_process("__pre_test_run");
 
-	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $benchmark_identifier . ".xml");
+	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $test_identifier . ".xml");
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
-	$benchmark_title = $xml_parser->getXMLValue(P_TEST_TITLE);
+	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));
 	$ignore_first_run = $xml_parser->getXMLValue(P_TEST_IGNOREFIRSTRUN);
 	$pre_run_message = $xml_parser->getXMLValue(P_TEST_PRERUNMSG);
@@ -310,7 +310,7 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		$times_to_run = 1;
 
 	if(empty($execute_binary))
-		$execute_binary = $benchmark_identifier;
+		$execute_binary = $test_identifier;
 
 	if(!empty($test_type))
 	{
@@ -322,13 +322,13 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 
 	if(empty($result_quantifier))
 	{
-		if(is_file(TEST_ENV_DIR . $benchmark_identifier . "/pts-result-quantifier"))
-			$result_quantifier = @trim(file_get_contents(TEST_ENV_DIR . $benchmark_identifier . "/pts-result-quantifier"));
+		if(is_file($test_directory . "pts-result-quantifier"))
+			$result_quantifier = @trim(file_get_contents($test_directory . "pts-result-quantifier"));
 	}
 
-	if(is_file(TEST_ENV_DIR . $benchmark_identifier . '/' . $execute_binary) || is_link(TEST_ENV_DIR . $benchmark_identifier . '/' . $execute_binary))
+	if(is_file($test_directory . $execute_binary) || is_link($test_directory . $execute_binary))
 	{
-		$to_execute = TEST_ENV_DIR . $benchmark_identifier . '/';
+		$to_execute = $test_directory;
 	}
 	else
 	{
@@ -347,26 +347,26 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 		return;
 	}
 
-	if(pts_test_needs_updated_install($benchmark_identifier))
+	if(pts_test_needs_updated_install($test_identifier))
 	{
-		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the " . $benchmark_title . " test should be re-installed.");
+		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the " . $test_title . " test should be re-installed.");
 		// Auto reinstall
 		//require_once("pts-core/functions/pts-functions-run.php");
-		//pts_install_benchmark($benchmark_identifier);
+		//pts_install_test($test_identifier);
 	}
 
 	$PTS_BENCHMARK_ARGUMENTS = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
 	$BENCHMARK_RESULTS_ARRAY = array();
 
-	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh"))
+	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/pre.sh"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.sh " . TEST_ENV_DIR . $benchmark_identifier);
+		pts_exec("sh " . TEST_RESOURCE_DIR . $test_identifier . "/pre.sh " . $test_directory);
 	}
-	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php"))
+	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/pre.php"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/pre.php " . TEST_ENV_DIR . $benchmark_identifier);
+		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $test_identifier . "/pre.php " . $test_directory);
 	}
 
 	if(!empty($pre_run_message))
@@ -379,16 +379,16 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	pts_debug_message("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
 	for($i = 0; $i < $times_to_run; $i++)
 	{
-		echo pts_string_header($benchmark_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
+		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
-		echo $BENCHMARK_RESULTS = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $PTS_BENCHMARK_ARGUMENTS, array("HOME" => TEST_ENV_DIR . $benchmark_identifier));
+		echo $BENCHMARK_RESULTS = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $PTS_BENCHMARK_ARGUMENTS, array("HOME" => $test_directory));
 
 		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
-			if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php"))
+			if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/parse-results.php"))
 			{
-				$BENCHMARK_RESULTS = pts_exec("cd " .  TEST_ENV_DIR . $benchmark_identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/parse-results.php \"" . $BENCHMARK_RESULTS . "\"");
+				$BENCHMARK_RESULTS = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $test_identifier . "/parse-results.php \"" . $BENCHMARK_RESULTS . "\"");
 			}
 
 			if(!empty($BENCHMARK_RESULTS))
@@ -398,23 +398,23 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 			pts_module_process("__interim_test_run");
 	}
 
-	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh"))
+	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/post.sh"))
 	{
-		pts_exec("sh " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.sh " . TEST_ENV_DIR . $benchmark_identifier);
+		pts_exec("sh " . TEST_RESOURCE_DIR . $test_identifier . "/post.sh " . $test_directory);
 	}
-	if(is_file(TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php"))
+	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/post.php"))
 	{
-		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $benchmark_identifier . "/post.php " . TEST_ENV_DIR . $benchmark_identifier);
+		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $test_identifier . "/post.php " . $test_directory);
 	}
 
 	// End
-	if(empty($result_scale) && is_file(TEST_ENV_DIR . $benchmark_identifier . "/pts-results-scale"))
-			$result_scale = trim(@file_get_contents(TEST_ENV_DIR . $benchmark_identifier . "/pts-results-scale"));
+	if(empty($result_scale) && is_file($test_directory . "pts-results-scale"))
+			$result_scale = trim(@file_get_contents($test_directory . "pts-results-scale"));
 
 	foreach(pts_env_variables() as $key => $value)
 		$arguments_description = str_replace("$" . $key, $value, $arguments_description);
 
-	$RETURN_STRING = $benchmark_title . ":\n";
+	$RETURN_STRING = $test_title . ":\n";
 	$RETURN_STRING .= $arguments_description . "\n";
 
 	if(!empty($arguments_description))
@@ -514,9 +514,9 @@ function pts_run_benchmark($benchmark_identifier, $extra_arguments = "", $argume
 	$GLOBALS["TEST_RESULTS_TEXT"] .= $this_result;
 
 	//pts_beep();
-	pts_process_remove($benchmark_identifier);
+	pts_process_remove($test_identifier);
 	pts_module_process("__post_test_run");
-	pts_test_refresh_install_xml($benchmark_identifier);
+	pts_test_refresh_install_xml($test_identifier);
 
 	// 0 = main end result
 	return array($END_RESULT);

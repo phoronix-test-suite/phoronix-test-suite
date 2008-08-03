@@ -117,12 +117,12 @@ function pts_test_name_to_identifier($name)
 
 	$identifier = false;
 
-	foreach(glob(XML_PROFILE_DIR . "*.xml") as $benchmark_file)
+	foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_profile_file)
 	{
-	 	$xml_parser = new tandem_XmlReader($benchmark_file);
+	 	$xml_parser = new tandem_XmlReader($test_profile_file);
 
 		if($xml_parser->getXMLValue(P_TEST_TITLE) == $name)
-			$identifier = basename($benchmark_file, ".xml");
+			$identifier = basename($test_profile_file, ".xml");
 	}
 
 	return $identifier;
