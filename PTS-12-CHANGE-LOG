@@ -46,6 +46,7 @@
 - pts-core: Improve graphics card detection
 - pts-core: Clean up HAL (Hardware Abstraction Layer) parsing
 - pts-core: Rename pts-run-benchmark.php to pts-run-test.php
+- pts-core: Eliminate one second sleep time when determining whether a CPU throttling technology (EIST/CnQ) is enabled or not
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called

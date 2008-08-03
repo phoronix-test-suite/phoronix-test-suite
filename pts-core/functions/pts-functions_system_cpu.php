@@ -175,11 +175,11 @@ function pts_processor_power_savings_enabled()
 
 	if(is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq") && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"))
 	{
-		sleep(1); // try to get it to drop power levels
-		$cur = trim(file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"));
+		// if EIST / CnQ is disabled, the cpufreq folder shoudln't be present, but double check by comparing the min and max frequencies
+		$min = trim(file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq"));
 		$max = trim(file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"));
 
-		if($cur < $max) // TODO: improved test, since the CPU could already be maxed from other processes running
+		if($min < $max)
 		{
 			$cpu = processor_string();
 
