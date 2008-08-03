@@ -195,7 +195,6 @@ function pts_processor_power_savings_enabled()
 }
 function current_processor_frequency($cpu_core = 0)
 {
-
 	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
 	{
 		$info = trim(file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"));

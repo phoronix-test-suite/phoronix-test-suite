@@ -90,7 +90,7 @@ function pts_user_name()
 	}
 	else
 	{
-		$username = getenv("USERNAME");
+		$username = trim(getenv("USERNAME"));
 	}
 
 	return $username;

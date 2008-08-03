@@ -355,8 +355,8 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		//pts_install_test($test_identifier);
 	}
 
-	$PTS_BENCHMARK_ARGUMENTS = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
-	$BENCHMARK_RESULTS_ARRAY = array();
+	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
+	$TEST_RESULTS_ARRAY = array();
 
 	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/pre.sh"))
 	{
@@ -372,27 +372,27 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if(!empty($pre_run_message))
 	{
 		echo $pre_run_message . "\n";
-		echo "\nHit Any Key To Continue Benchmarking.\n";
+		echo "\nHit Any Key To Continue Benchmarking...\n";
 		fgets(STDIN);
 	}
 
-	pts_debug_message("cd $to_execute && ./$execute_binary $PTS_BENCHMARK_ARGUMENTS");
+	pts_debug_message("cd $to_execute && ./$execute_binary $pts_test_arguments");
 	for($i = 0; $i < $times_to_run; $i++)
 	{
 		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
-		echo $BENCHMARK_RESULTS = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $PTS_BENCHMARK_ARGUMENTS, array("HOME" => $test_directory));
+		echo $test_results = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $pts_test_arguments, array("HOME" => $test_directory));
 
 		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
 			if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/parse-results.php"))
 			{
-				$BENCHMARK_RESULTS = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $test_identifier . "/parse-results.php \"" . $BENCHMARK_RESULTS . "\"");
+				$test_results = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $test_identifier . "/parse-results.php \"" . $test_results . "\"");
 			}
 
-			if(!empty($BENCHMARK_RESULTS))
-				array_push($BENCHMARK_RESULTS_ARRAY, $BENCHMARK_RESULTS);
+			if(!empty($test_results))
+				array_push($TEST_RESULTS_ARRAY, $test_results);
 		}
 		if($times_to_run > 1 && $i < ($times_to_run - 1))
 			pts_module_process("__interim_test_run");
@@ -426,11 +426,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		$END_RESULT = -1;
 		$i = 1;
 
-		if(count($BENCHMARK_RESULTS_ARRAY) == 1)
-			$END_RESULT = $BENCHMARK_RESULTS_ARRAY[0];
+		if(count($TEST_RESULTS_ARRAY) == 1)
+			$END_RESULT = $TEST_RESULTS_ARRAY[0];
 		else
 		{
-			foreach($BENCHMARK_RESULTS_ARRAY as $result)
+			foreach($TEST_RESULTS_ARRAY as $result)
 			{
 				if($result == "FALSE" || $result == "0" || $result == "FAIL")
 				{
@@ -464,8 +464,8 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		if($result_quantifier == "MAX")
 		{
-			$max_value = $BENCHMARK_RESULTS_ARRAY[0];
-			foreach($BENCHMARK_RESULTS_ARRAY as $result)
+			$max_value = $TEST_RESULTS_ARRAY[0];
+			foreach($TEST_RESULTS_ARRAY as $result)
 			{
 				if($result > $max_value)
 					$max_value = $result;
@@ -477,8 +477,8 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 		else if($result_quantifier == "MIN")
 		{
-			$min_value = $BENCHMARK_RESULTS_ARRAY[0];
-			foreach($BENCHMARK_RESULTS_ARRAY as $result)
+			$min_value = $TEST_RESULTS_ARRAY[0];
+			foreach($TEST_RESULTS_ARRAY as $result)
 			{
 				if($result < $min_value)
 					$min_value = $result;
@@ -492,14 +492,14 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		{
 			// assume AVG
 			$TOTAL_RESULT = 0;
-			foreach($BENCHMARK_RESULTS_ARRAY as $result)
+			foreach($TEST_RESULTS_ARRAY as $result)
 			{
 				$TOTAL_RESULT += trim($result);
 				$RETURN_STRING .= $result . " " . $result_scale . "\n";
 			}
 
-			if(count($BENCHMARK_RESULTS_ARRAY) > 0)
-				$END_RESULT = pts_trim_double($TOTAL_RESULT / count($BENCHMARK_RESULTS_ARRAY), 2);
+			if(count($TEST_RESULTS_ARRAY) > 0)
+				$END_RESULT = pts_trim_double($TOTAL_RESULT / count($TEST_RESULTS_ARRAY), 2);
 			else
 				$END_RESULT = pts_trim_double($TOTAL_RESULT, 2);
 
