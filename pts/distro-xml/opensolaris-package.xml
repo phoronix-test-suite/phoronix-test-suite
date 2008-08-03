@@ -41,6 +41,11 @@
 			<FileCheck>/usr/X11/include/X11/</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>xorg-video</GenericName>
+			<PackageName>SUNWxorg-headers</PackageName>
+			<FileCheck>/usr/X11/include/X11/extensions/Xvlib.h, /usr/X11/include/X11/extensions/XvMClib.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>bison</GenericName>
 			<PackageName>SUNWbison</PackageName>
 			<FileCheck>/usr/sfw/bin/bison</FileCheck>
@@ -64,6 +69,16 @@
 			<GenericName>jpeg-devel</GenericName>
 			<PackageName>SUNWjpg</PackageName>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>perl</GenericName>
+			<PackageName>SUNWperl584core</PackageName>
+			<FileCheck>/usr/bin/perl</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>libstdcpp5</GenericName>
+			<PackageName>SUNWgccruntime</PackageName>
+			<FileCheck>/usr/sfw/lib/libstdc++.so</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
