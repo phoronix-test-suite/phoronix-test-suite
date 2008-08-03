@@ -10,7 +10,7 @@
 <div class="pts_doc_main">
 <!-- PTS AREA -->
 <h1>Phoronix Test Suite Installation</h1>
-<p>A majority of the Phoronix Test Suite development and testing are done on Ubuntu and Fedora Linux, but this testing software should run virtually unmodified on any Linux distribution. The only distribution-specific bits deal with the external dependencies support feature. For instance, if you're not running one of the supported distributions (Ubuntu, Fedora, Mandriva, OpenSuSE, CentOS) you may need to install a package manually in order for a test to run. For example, the OpenGL Utility Toolkit may need to be installed manually by the user to support the OpenGL source tests.</p>
+<p>A majority of the Phoronix Test Suite development and testing is done on Ubuntu and Fedora Linux, but this software should run virtually unmodified on any Linux distribution. The only distribution-specific bits deal with the external dependencies support feature. For instance, if you're not running one of the supported distributions (Ubuntu, Fedora, Mandriva, OpenSuSE, CentOS) you may need to install a package manually in order for a test to run. For example, the OpenGL Utility Toolkit may need to be installed manually by the user to support the OpenGL source tests.</p>
 <h2>Running Locally</h2>
 <p>The Phoronix Test Suite can be simply extracted from the downloaded <em>.tar.gz</em> 
 file or it can also be installed system-wide. If you just wish to run the Phoronix 
@@ -26,13 +26,12 @@ behind the use of PHP 5 for is the portability across platforms for this languag
 low impact on the overall system, a lower entrance barrier for new developers, 
 and low number (if any) dependencies that PHP5 CLI requires. The PHP GD library 
 is used for rendering the graphs within the PTS Results Viewer.</p>
-<p>Note #1: Depending upon your distribution's package configuration, you may also need <em>php-posix</em> package for providing the POSIX functions.</p>
-<p>Note #2: You may need to modify the <em>php.ini</em> file on your system in order to support uploading results to PTS Global or logging into your PTS Global account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration and curl must be supported by the PHP installation. <a href="http://www.phoronix.com/forums/showpost.php?p=32484&postcount=4">Additional information</a>.
+<p><strong>Note #1:</strong> Depending upon your distribution's package configuration, you may also need <em>php-posix</em> package for providing the POSIX functions.</p>
+<p><strong>Note #2:</strong> <em>/usr/bin/time</em> is needed by many of the timed tests.</p>
+<p><strong>Note #3:</strong> You may need to modify the <em>php.ini</em> file on your system in order to support uploading results to PTS Global or logging into your PTS Global account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration and curl must be supported by the PHP installation. <a href="http://www.phoronix.com/forums/showpost.php?p=32484&postcount=4">Additional information</a>.
 <p>While PHP and PHP GD are the only required dependencies, many of the test profiles 
 do require the standard Linux development tools/libraries (GCC, etc). On a clean 
-Ubuntu installation, it's as easy as first running <em>sudo apt-get install build-essential 
-php5-cli php-gd</em> and then running the Phoronix Test Suite. In addition, <em>/usr/bin/time</em> 
-is another dependency used by many of the tests.</p>
+Ubuntu installation, it's as easy as first running <em>sudo apt-get install php5-cli php5-gd</em> and then running the Phoronix Test Suite as it will take care of installing additional dependencies.</p>
 <p>The Phoronix Test Suite has a feature known as &quot;External Dependencies&quot; 
 where the Phoronix Test Suite can attempt to automatically install some of the 
 test-specific dependencies on supported distributions. If running on a distribution 
@@ -52,7 +51,7 @@ install the software for system-wide access. By default the <em>phoronix-test-su
 executable is in <em>/usr/bin/</em>, the Phoronix Test Suite files in <em>/usr/share/phoronix-test-suite/</em>, 
 and the documentation in /<em>usr/share/doc/phoronix-test-suite/</em>. Root access 
 is required. The default installation prefix is /usr/ but can be adjusted as the 
-first argument (example: install-sh /home/user-name/ to install the Phoronix Test 
+first argument (example: <em>install-sh /home/user/</em> to install the Phoronix Test 
 Suite in your home directory).</p>
 <h2>Debian/Ubuntu Installation</h2>
 <p>Debian/Ubuntu users are able to follow the Generic Installation instructions 
@@ -66,7 +65,9 @@ and the documentation in <em>/usr/share/doc/phoronix-test-suite/</em>.</p>
 <h2>Mandriva Installation</h2>
 <p>Mandriva packages are being worked on by Stephane Teletchea and are expected for inclusion in Mandriva Linux 2009 development.</p>
 <h2>OpenSolaris Installation</h2>
-<p>The Phoronix Test Suite core (pts-core) is supported on Solaris and OpenSolaris platforms, but some features may not fully function. Additionally, the PTS External Dependencies feature is supported on OpenSolaris. However, not all test profiles are supported on Solaris / OpenSolaris, and it may be in violation of your end-user agreement to perform such benchmarks on the Sun Solaris operating system. Using the OpenSolaris IPS (Image Packaging System), installing <em>SUNWphp524</em> will provide PHP, PHP GD, and related dependencies.</p>
+<p>The Phoronix Test Suite core (pts-core) is supported on Solaris and OpenSolaris platforms, but some features may not fully function. Additionally, the PTS External Dependencies feature is supported on OpenSolaris using IPS (the Image Packaging System). However, not all test profiles are supported on Solaris / OpenSolaris, and it may be in violation of your end-user agreement to perform such benchmarks on the Sun Solaris operating system. Using the OpenSolaris Image Packaging System, installing <em>SUNWphp524</em> will provide PHP, PHP GD, and related dependencies.</p>
+<h2>FreeBSD Installation</h2>
+<p>The Phoronix Test Suite also supports *BSD operating systems. However, like the Solaris support, not all test profiles are compatible with BSD operating systems, but pts-core has been tested against FreeBSD 7.0.</p>
 <!-- END OF PTS AREA -->
 </div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 by <a href="http://www.phoronixmedia.com/">Phoronix Media</a>.</div></div></div>
 </body>

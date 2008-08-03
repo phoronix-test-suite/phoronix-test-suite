@@ -16,14 +16,14 @@ div#pts_doc_header
 {
 	width: 100%;
 	margin: 0;
-	background-color: #2b6b29;
+	background-color: #000;
 }
 div#pts_doc_logo
 {
 	width: 135px;
 	height: 70px;
 	padding: 3px;
-	background: #2b6b29 url(pts-documentation.png) no-repeat;
+	background: #000 url(pts-documentation.png) no-repeat;
 	position: relative;
 	left: 552px;
 }
@@ -53,7 +53,7 @@ div.pts_doc_notice
 }
 div.pts_doc_bottom
 {
-	background-color: #2b6b29;
+	background-color: #222;
 	color: #FFF;
 	text-align: left;
 	padding: 3px 8px;

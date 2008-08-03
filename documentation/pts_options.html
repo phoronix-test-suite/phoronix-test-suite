@@ -10,7 +10,7 @@
 <div class="pts_doc_main">
 <!-- PTS AREA -->
 <h1>Phoronix Test Suite Options</h1>
-<h2>Installation Options</h2> 
+<h2>Test Installation Options</h2> 
 <p><strong>install &lt;To Install&gt;</strong></p>
 <p>This option will install the selected test(s) inside the testing environment 
 directory (defaults to ~/.phoronix-test-suite/installed-tests). The install process 
@@ -39,16 +39,19 @@ dependencies are automatically checked.</p>
 <p>This option will install all available test(s) inside the testing environment 
 directory (defaults to ~/.phoronix-test-suite/installed-tests). The install process 
 from downloading of the test files to the installation is fully automated.</p>
-<p><strong>list-installed-tests</strong></p>
-<p>This option will list all tests that have been installed by the Phoronix Test 
-Suite.</p>
-<p><strong>list-test-usage</strong></p>
-<p>This option is similar to list-installed-tests with showing the tests that are installed, 
-but it will also show the date/time a test was installed, when the test was last run, and the 
-number of times the test was run by the Phoronix Test Suite.</p>
+<p><strong>force-install &lt;To Install&gt;</strong></p>
+<p>This option will force the installation (or re-installation) of a test or suite. 
+The arguments and process is similar to the install option but even if the test 
+is installed, the entire installation process will automatically be executed. 
+This option should only be used when debugging a test installation problem.</p>
+<p><strong>force-install-all</strong></p>
+<p>This option will force the installation (or re-installation) of all tests. 
+The process is similar to the install-all option but even if a test is installed, 
+the entire installation process will automatically be executed. This option should 
+only be used when debugging a test installation problem.</p>
 <p><strong>list-possible-dependencies</strong></p>
 <p>List all possible external dependencies used by tests within the Phoronix Test Suite.</p>
-<h2>Testing Options</h2>
+<h2>Run Options</h2>
 <p><strong>benchmark &lt;To Run&gt;</strong></p>
 <p>This option will install the selected test(s) (if needed) and will proceed 
 to run the test(s). This option is equivalent to running phoronix-test-suite with 
@@ -57,13 +60,7 @@ be supplied or the PTS Global ID or saved local file name.</p>
 <p><strong>run &lt;To Run&gt;</strong></p>
 <p>This option will run the selected test(s). The name of the test or suite must 
 be supplied or the PTS Global ID or saved local file name.</p>
-<p><strong>list-tests</strong></p>
-<p>This option will list all available tests. The name, title, status, and license 
-are displayed for each test.</p>
-<p><strong>list-suites</strong></p>
-<p>This option will list all available test suites. The name, title, and type 
-are displayed for each suite.</p>
-<h2>Batch Testing Options</h2>
+<h2>Batch Run Options</h2>
 <p><strong>batch-setup</strong></p>
 <p>This option is used to configure the batch mode options for the Phoronix Test 
 Suite, which is subsequently written to the user configuration file. Among the 
@@ -75,6 +72,30 @@ will be ran in the Phoronix Test Suite batch mode.</p>
 <p><strong>batch-benchmark &lt;To Run&gt;</strong></p>
 <p>This option and its arguments are equivalent to the benchmark option, but the 
 process will be ran in the Phoronix Test Suite batch mode.</p>
+<p><strong>analyze &lt;Saved Name&gt;</strong></p>
+<p>This option will analyze a batch results file and plot out the performance impact 
+from the different options onto a line graph (i.e. to see the impact that changing the video 
+resolution has on the system's performance).</p>
+<h2>Test Options</h2>
+<p><strong>list-tests</strong></p>
+<p>This option will list all available tests. The name, title, status, and license 
+are displayed for each test.</p>
+<p><strong>list-suites</strong></p>
+<p>This option will list all available test suites. The name, title, and type 
+are displayed for each suite.</p>
+<p><strong>list-installed-tests</strong></p>
+<p>This option will list all tests that have been installed by the Phoronix Test 
+Suite.</p>
+<p><strong>list-test-usage</strong></p>
+<p>This option is similar to list-installed-tests with showing the tests that are installed, 
+but it will also show the date/time a test was installed, when the test was last run, and the 
+number of times the test was run by the Phoronix Test Suite.</p>
+<p><strong>info &lt;To Show&gt;</strong></p>
+<p>This option will show details about the test or suite that's supplied as the 
+first argument to this option. When supplying the name of a test, the version, 
+maintainer, type, download size, license information, and suites using this test 
+are displayed. When supplying the name of a suite, the version, maintainer, type, 
+and tests that make up the suite are displayed.</p>
 <h2>Result Viewing Options</h2>
 <p><strong>list-results</strong></p>
 <p>This option will list all saved results. The file name, title, test(s) performed, 
@@ -101,7 +122,7 @@ this information automatically. A new PTS Global account can be created (for fre
 at http://global.phoronix-test-suite.com/.</p>
 <h2>Module Options</h2>
 <p><strong>list-modules</strong></p>
-<p>This option will list all modules that are installed / present in the <em>pts-core/modules/<em> directory. 
+<p>This option will list all modules that are installed / present in the <em>pts-core/modules/</em> directory. 
 Modules are used for extending the functionality of the Phoronix Test Suite without over-inflating the pts-core.</p>
 <p><strong>module-info &lt;Module Name&gt;</strong></p>
 <p>This option will show detailed information on a PTS module such as the version, developer, and a description of its purpose.</p>
@@ -115,37 +136,17 @@ Phoronix Test Suite thereby conserving bandwidth and reducing time. Through modi
 the user configuration file, the download cache location can be adjusted. The 
 Phoronix Test Suite supports reading from download caches over the network and 
 on remote file-systems.</p>
-<p><strong>info &lt;To Show&gt;</strong></p>
-<p>This option will show details about the test or suite that's supplied as the 
-first argument to this option. When supplying the name of a test, the version, 
-maintainer, type, download size, license information, and suites using this test 
-are displayed. When supplying the name of a suite, the version, maintainer, type, 
-and tests that make up the suite are displayed.</p>
 <p><strong>clone &lt;PTS Global ID&gt;</strong></p>
 <p>This option will download a local copy of a file that was saved to PTS Global, 
 as long as a valid PTS Global ID is supplied.</p>
 <p><strong>system-info</strong></p>
 <p>This option will show installed system hardware and software that has been 
 detected by the Phoronix Test Suite.</p>
-<p><strong>sensor-options</strong></p>
-<p>This option will show system sensors that can be monitored through the Phoronix 
-Test Suite.</p>
 <p><strong>diagnostics</strong></p>
 <p>This option will print information that is useful to developers when debugging 
 problems with the Phoronix Test Suite.</p>
 <p><strong>version</strong></p>
 <p>This option will print the Phoronix Test Suite version.</p>
-<h2>Other Options</h2>
-<p><strong>force-install &lt;To Install&gt;</strong></p>
-<p>This option will force the installation (or re-installation) of a test or suite. 
-The arguments and process is similar to the install option but even if the test 
-is installed, the entire installation process will automatically be executed. 
-This option should only be used when debugging a test installation problem.</p>
-<p><strong>force-install-all</strong></p>
-<p>This option will force the installation (or re-installation) of all tests. 
-The process is similar to the install-all option but even if a test is installed, 
-the entire installation process will automatically be executed. This option should 
-only be used when debugging a test installation problem.</p>
 <p><strong>refresh-graphs &lt;Saved Name&gt;</strong></p>
 <p>This option will re-render and save all result graphs within a saved file. 
 This option can be used when making modifications to the graphing code or its 

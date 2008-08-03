@@ -197,6 +197,7 @@ Batch Testing Options:
 	batch-setup: Setup the batch mode options
 	batch-run <suite OR test>: Run the specified test(s) in batch mode
 	batch-benchmark <suite OR test OR saved file>: Install and run the test(s) in batch mode
+	analyze <suite / test / saved file / Global ID>: Provide an analysis of the results generated from a batch run
 
 Result Viewing Options:
 	list-results: List all saved results

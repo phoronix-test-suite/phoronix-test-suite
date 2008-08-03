@@ -13,16 +13,15 @@
 <p>This page shares some tips and tricks about the Phoronix Test Suite as well 
 as some random information that some users may find useful.</p>
 <h2>General</h2>
-<p>- If running within a GNOME desktop, the screensaver will automatically be 
+<p>- The desktop's screensaver will automatically be 
 shutdown when a test is running and will be restored to its previous state upon 
-the test's completion. If the using a different desktop environment, it will attempt 
-to interrupt the screensaver using an XDG command.</p>
+the test's completion. This should work for GNOME, KDE, and other XDG-supportive desktop environments.</p>
 <p>- When running a test in batch mode (through the use of the <em>batch-run</em> 
 or <em>batch-benchmark</em> options) that normally has end-user options (such 
 as the sub-test to run or resolution), the Phoronix Test Suite will run the test 
 with each unique combination of options possible.</p>
-<p>- Phoronix Test Suite support for Mac OS X and OpenSolaris may be added in 
-the future.</p>
+<p>- Phoronix Test Suite supports OpenSolaris and *BSD operating systems. Support for Mac OS X may 
+be added in the future.</p>
 <p>- If the environmental variable <em>PTS_MERGE=custom</em> is set, no compatibility 
 checks will be performed when merging results and it will allow you to form custom 
 suites very easily, etc. Though the preferred method to create a suite is by writing 
@@ -40,7 +39,8 @@ Phoronix Premium subscriber @ <a href="http://www.phoronix.com/scan.php?page=pho
 You may also contact us (phoronix [at] phoronix.com) for additional information 
 or ideas.</p>
 <h2>Download Caches</h2>
-<p>- If you're a company or simply own multiple computers, the download caching support of the Phoronix Test Suite can work quite well. This feature allows you to very simply setup a local (or network-wide) repository for the Phoronix Test Suite of all the files the different tests use. After you've installed the tests on one system that you normally use (or have ran <em>phoronix-test-suite install-all</em>) running <em>phoronix-test-suite make-download-cache</em> will cache all of the files that each test downloaded. The location of this cache is <em>~/.phoronix-test-suite/download-cache/</em>. Once the cache has been created, you can copy this folder to other systems and place the files in the same location. Then when the Phoronix Test Suite needs to download a file for a test, before downloading it from the Internet it will first check this cache for the file(s). If the files are there and the MD5 check-sums have been verified, it will simply copy the file -- thereby saving bandwidth and time. The download cache location can be downloaded in <em>~/.phoronix-test-suite/user-config.xml</em>. By adjusting the download cache, you could setup the cache folder to be on an FTP or NFS share (as an example) on a server that's accessible via your LAN. Configure your test systems to use this local repository and you'll be saving time and bandwidth.</p>
+<p>- If you're a company or simply own multiple computers, the download caching support of the Phoronix Test Suite can work quite well. This feature allows you to very simply setup a local (or network-wide) repository for the Phoronix Test Suite of all the files the different tests use. After you've installed the tests on one system that you normally use (or have ran <em>phoronix-test-suite install-all</em>) running <em>phoronix-test-suite make-download-cache</em> will cache all of the files that each test downloaded. The location of this cache is <em>~/.phoronix-test-suite/download-cache/</em>.</p>
+<p>Once the cache has been created, you can copy this folder to other systems and place the files in the same location. Then when the Phoronix Test Suite needs to download a file for a test, before downloading it from the Internet it will first check this cache for the file(s). If the files are there and the MD5 check-sums have been verified, it will simply copy the file -- thereby saving bandwidth and time. The download cache location can be downloaded in <em>~/.phoronix-test-suite/user-config.xml</em>. By adjusting the download cache, you could setup the cache folder to be on an FTP or NFS share (as an example) on a server that's accessible via your LAN. Configure your test systems to use this local repository and you'll be saving time and bandwidth.</p>
 <p>- I already have many of the source files for the standard tests, do I need to re-download them? Nope! Just throw them into <em>~/.phoronix-test-suite/download-cache/</em> and then fire up the Phoronix Test Suite. If the file-names and MD5 check-sums match, it will automatically use these cached files.</p>
 <h2>Configuration</h2>
 <p>- The user configuration options for the Phoronix Test Suite are stored in 
@@ -56,9 +56,16 @@ same generic <em>graph-config.xml</em> configuration is used.</p>
 <p>- The Phoronix Test Suite recursively determines tests/suites and allows a suite 
 to call another suite.</p>
 <p>- One of the quickest and easiest ways to understand how to write a profile 
-is by just looking at the some of the existing profiles within the <em>pts/ </em>folder.</p>
+is by just looking at the some of the existing profiles within the <em>pts/</em> folder.</p>
 <p>- The XML syntax for all file specifications are defined within <em>pts-core/functions/pts-interfaces.php</em> 
 and trailing each definition is a comment describing its purpose / value.</p>
+<h2>Module Writing</h2>
+<p>- By writing a PTS module, you can easily extend the functionality of the Phoronix Test Suite. Some examples are 
+being able to email the results upon completion, controlling the system's screensaver, updating a text LCD panel with 
+the current test status, etc.</p>
+<p>- One of the quickest and easiest ways to understand how to write a profile 
+is by just looking at the some of the existing modules within the <em>pts-core/modules</em> folder. The Phoronix Test 
+Suite has support for both shell and PHP modules.</p>
 <h2>Debugging</h2>
 <p>- Setting <em>DEBUG=1</em> as an environmental variable prior to running the 
 Phoronix Test Suite will put it in a diagnostics mode. In this mode, additional 
