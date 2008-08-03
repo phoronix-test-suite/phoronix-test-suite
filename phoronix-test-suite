@@ -78,22 +78,22 @@ case "$1" in
 	$PHP_BIN pts-core/pts-run-cmd.php FORCE_INSTALL_ALL
 	;;
 "run")
-	$PHP_BIN pts-core/pts-run-benchmark.php $2
+	$PHP_BIN pts-core/pts-run-test.php $2
 	;;
 "batch-run")
 	export PTS_BATCH_MODE=1
-	$PHP_BIN pts-core/pts-run-benchmark.php $2
+	$PHP_BIN pts-core/pts-run-test.php $2
 	;;
 "benchmark")
 	export SILENT_INSTALL=1
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $2
-	$PHP_BIN pts-core/pts-run-benchmark.php $2
+	$PHP_BIN pts-core/pts-run-test.php $2
 	;;
 "batch-benchmark")
 	export PTS_BATCH_MODE=1
 	export SILENT_INSTALL=1
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $2
-	$PHP_BIN pts-core/pts-run-benchmark.php $2
+	$PHP_BIN pts-core/pts-run-test.php $2
 	;;
 "merge-results")
 	$PHP_BIN pts-core/pts-run-cmd.php MERGE_RESULTS $2 $3 $4

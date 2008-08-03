@@ -44,7 +44,8 @@
 - pts-core: Set $HOME environmental variable while tests are running to the test's PTS directory and during the installation process
 - pts-core: Add OS_TYPE to pts_env_variables() for defining OPERATING_SYSTEM
 - pts-core: Improve graphics card detection
-- git-core: Clean up HAL (Hardware Abstraction Layer) parsing
+- pts-core: Clean up HAL (Hardware Abstraction Layer) parsing
+- pts-core: Rename pts-run-benchmark.php to pts-run-test.php
 
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called
