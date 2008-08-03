@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.1.0";
+	const module_version = "1.1.1";
 	const module_description = "This module contains the sensor monitoring support.";
 	const module_author = "Michael Larabel";
 
@@ -116,7 +116,9 @@ class system_monitor extends pts_module_interface
 			define("MONITOR_CPU_USAGE", 1);
 			pts_module::save_file(".s/CPU_USAGE");
 		}
-
+	}
+	public static function __pre_run_process()
+	{
 		pts_module::pts_timed_function(15, "pts_monitor_update");
 	}
 	public static function __shutdown($obj = NULL)
