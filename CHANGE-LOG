@@ -7,6 +7,7 @@ Phoronix Test Suite
 - pts: glmark test update from Wuppermann
 - pts: Warsow test update from Wuppermann
 - pts: Add PTS External Dependency for FreeImage Graphics Library (named freeimage)
+- pts: Add Lightsmark 2008 test profile (lightsmark)
 
 Phoronix Test Suite 1.0.4
 July 18, 2008
