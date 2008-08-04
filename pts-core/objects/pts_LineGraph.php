@@ -80,6 +80,9 @@ class pts_LineGraph extends pts_CustomGraph
 				$value_plot_top = $this->graph_top_end + 1 - round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
 				$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
+				if($px_from_left > $this->graph_left_end)
+					$px_from_left = $this->graph_left_end - 1;
+
 				if($previous_placement != -1 && $previous_offset != -1)
 				{
 					imageline($this->graph_image, $previous_offset, $previous_placement, $px_from_left, $value_plot_top, $paint_color);
