@@ -61,6 +61,7 @@
 
 - documentation: Update CSS style / image interface
 - documentation: Update documentation text and add page covering how to write a PHP/SH module
+- documentation: Vast rewrite of the included man page
 
 - pts_Graph: Always show key/legend if it's a single-type line graph
 - pts_Graph: Use image antialiasing if it's available on the system

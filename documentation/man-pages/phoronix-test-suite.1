@@ -1,12 +1,16 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "Version 1.0" "BASIC COMMANDS"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "PTS Malvik"
 .SH NAME
-phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source (GNU GPLv3) platform for performing Linux-based testing and performance evaluation.
+phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing Linux-based testing and performance evaluation.
 .SH SYNOPSIS
 .B phoronix-test-suite [options]
+.br
+.B phoronix-test-suite install [test | suite]
+.br
+.B phoronix-test-suite benchmark [test | suite]
 .SH DESCRIPTION
-The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux and is designed to carry out qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner. This software is based upon the internal tools and extensive Linux benchmarking work done by Phoronix since 2004, with input from tier-one computer hardware vendors. This software is open-source and licensed under the GNU GPLv3 and consists of a lightweight core (pts-core) with each benchmark consisting of an XML-based profile with related utility scripts. The process from the benchmark installation, to the actual benchmarking, to the parsing of important hardware and software components is heavily automated and completely repeatable, asking users only for confirmation of actions.
+The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for the Linux operating system. This software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner. This software is based upon the extensive Linux benchmarking work and internal tools developed by Phoronix.com since 2004 along with input from leading tier-one computer hardware vendors. This software is open-source and licensed under the GNU GPLv3. The Phoronix Test Suite consists of a lightweight core (pts-core) with each benchmark consisting of an XML-based profile with related resource scripts. The process from the benchmark installation, to the actual benchmarking, to the parsing of important hardware and software components is heavily automated and completely repeatable, asking users only for confirmation of actions.
 .PP
-The Phoronix Test Suite can be used for simply comparing your computer's performance with your friends and co-workers or can also be used at your company for internal quality assurance purposes under Linux. Results from the Phoronix Test Suite are displayed in a results viewer with optional support for uploading them to PTS Global. PTS Global allows you to browse all uploaded results, search these results, and comparing other results against your own system.
+The Phoronix Test Suite can be used for simply comparing your computer's performance with your friends and co-workers or can also be used at your company for internal quality assurance purposes under Linux. Results from the Phoronix Test Suite are displayed in a results viewer with optional support for uploading them to Phoronix Global. Phoronix Global allows you to browse all uploaded results, search these results, and compare other results against your own system.
 .SH OPTIONS
 .TP
 .B install <To Install>
@@ -17,6 +21,9 @@ This option will install the selected test(s) (if needed) and will proceed to ru
 .TP
 .B batch-benchmark <To Run>
 This option and its arguments are equivalent to the benchmark option, but the process will be ran in the Phoronix Test Suite batch mode.
+.TP
+.B batch-setup
+This option will prompt the user through the process of configuring the Phoronix Test Suite batch mode.
 .TP
 .B list-tests
 This option will list all available tests. The name, title, status, and license are displayed for each test.
@@ -31,10 +38,6 @@ This option will show details about the test or suite that's supplied as the fir
 .TP
 .B login
 This option allows you to log-in to your PTS Global account and will store this information automatically. A new PTS Global account can be created (for free) at http://global.phoronix-test-suite.com/.
-.SH ALL OPTIONS
-To view all options and more information, view the included documentation or view the online documentation at:
-.PP
-.B http://www.phoronix-test-suite.com/documentation/1.0/index.html
 .SH EXAMPLES
 .TP
 .B $ phoronix-test-suite benchmark universe
@@ -48,19 +51,83 @@ This command will install (if needed) and then proceed to run the build-linux-ke
 .TP
 .B $ MONITOR=all phoronix-test-suite benchmark universe
 This command will install (if needed) and then proceed to run all tests within the universe suite, while recording/monitoring available system sensors. The sensor results are then shown at the end of the test.
-.SH SUPPORT
-Limited free support for the Phoronix Test Suite is available through the Phoronix Forums (see http://www.phoronix.com/forums/) or the Phoronix Test Suite Mailing List. Support and other services can also be made available to enterprise customers on an individual basis by contacting Michael Larabel or Phoronix Media at http://www.phoronix.com/.
-.SH AUTHORS
-Copyright 2008 by Phoronix Media
+.SH OTHER OPTIONS
+.B install-dependencies <To Install>
 .TP
-.B Lead Developers:
-Michael Larabel (Michael [at] phoronix.com)
-.br
-Wuppermann
-.br
-Andrew Schofield
+.B install-all
+.TP
+.B force-install <To Install>
+.TP
+.B force-install-all
+.TP
+.B list-possible-dependencies
+.TP
+.B run <To Run>
+.TP
+.B batch-run <To Run>
+.TP
+.B analyze <Saved Name>
+.TP
+.B list-installed-tests
+.TP
+.B list-test-usage
+.TP
+.B list-results
+.TP
+.B show-result <To Show>
+.TP
+.B remove-result <To Remove>
+.TP
+.B remove-all-results
+.TP
+.B upload <To Upload>
+.TP
+.B list-modules
+.TP
+.B module-info <Module Name>
+.TP
+.B make-download-cache
+.TP
+.B clone <PTS Global ID>
+.TP
+.B system-info
+.TP
+.B diagnostics
+.TP
+.B version
+.TP
+.B refresh-graphs <Saved Name>
+.TP
+.B initial-config
+.PP
+.SH FILES
+.I ~/.phoronix-test-suite/user-config.xml
+.RS
+This is a per-user configuration file. Among the information stored here is the Phoronix Global account information, test options, locations for storing files, and batch mode options.
+.RE
+.I ~/.phoronix-test-suite/graph-config.xml
+.RS
+This is a per-user configuration file for storing graph attributes. The adjustable options include HTML hex color codes for different areas of the graph, dimensions of the graph, and font sizes.
+.RE
+.I ~/.phoronix-test-suite/download-cache/
+.RS
+This directory contains test packages that have been generated when running phoronix-test-suite make-download-cache. For more information on the download cache, view the included HTML documentation.
+.RE
+.I ~/.phoronix-test-suite/installed-tests/
+.RS
+This directory is where tests are installed by default.
+.RE
+.I ~/.phoronix-test-suite/test-results/
+.RS
+This directory is where tests results are saved by default.
+.RE
+.SH LICENSE
+The Phoronix Test Suite is licensed under the GNU GPLv3, however some of the test profiles may link to software distribubted under other licenses.
 .SH SEE ALSO
-.TP
+To find out more information on the Phoronix Test Suite, detailed descriptions of all available options, and other features, view the included documentation or online documentation at:
+.PP
+.B http://www.phoronix-test-suite.com/documentation/1.2/index.html
+.PP
 .B Websites:
 .br
 http://www.phoronix.com/
@@ -70,4 +137,15 @@ http://www.phoronix.com/forums/
 http://www.phoronix-test-suite.com/
 .br
 http://global.phoronix-test-suite.com/
+.SH SUPPORT
+Limited free support for the Phoronix Test Suite is available through the Phoronix Forums (see http://www.phoronix.com/forums/) or the Phoronix Test Suite Mailing List. Support and other services can also be made available to enterprise customers on an individual basis by contacting Phoronix Media at http://www.phoronix-media.com/.
+.SH AUTHORS
+Copyright 2008 by Phoronix Media
+.TP
+.B Lead Developers:
+Michael Larabel (Michael [at] phoronix.com)
+.br
+Wuppermann
+.br
+Andrew Schofield
 
