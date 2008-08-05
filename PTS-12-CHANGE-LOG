@@ -49,6 +49,7 @@
 - pts-core: Rename pts-run-benchmark.php to pts-run-test.php
 - pts-core: Eliminate one second sleep time when determining whether a CPU throttling technology (EIST/CnQ) is enabled or not
 - pts-core: Alphabetize list-possible-dependencies
+- pts-core: Add support for detecting all available video modes
 
 - pts: Add ProjectURL tag to available test profiles
 - pts: Add PTS External Dependencies support for OpenSolaris using IPS
