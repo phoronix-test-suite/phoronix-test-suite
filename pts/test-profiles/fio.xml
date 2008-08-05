@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.9.9</Version>
+		<Version>1.0.0</Version>
 		<TestType>Disk</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
@@ -8,9 +8,10 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>1.30</DownloadSize>
 		<EnvironmentSize>5.0</EnvironmentSize>
+		<ProjectURL>http://git.kernel.dk/?p=fio.git;a=summary</ProjectURL>
 	</TestProfile>
 	<TestInformation>
-		<Title>fio</Title>
+		<Title>Flexible IO Tester</Title>
 		<Version>1.21</Version>
 		<ExternalDependencies>build-utilities, libaio-devel</ExternalDependencies>
 		<Executable>fio-run</Executable>

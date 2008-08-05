@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>0.1</DownloadSize>
 		<EnvironmentSize>0.1</EnvironmentSize>
+		<ProjectURL>http://www.coker.com.au/bonnie++/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Bonnie++</Title>

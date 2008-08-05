@@ -8,6 +8,7 @@
 		<Maintainer>apaige</Maintainer>
 		<DownloadSize>0.4</DownloadSize>
 		<EnvironmentSize>5</EnvironmentSize>
+		<ProjectURL>http://www.monkeysaudio.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Monkey Audio Encoding</Title>

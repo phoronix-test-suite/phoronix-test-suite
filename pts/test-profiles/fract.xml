@@ -9,6 +9,7 @@
 		<DownloadSize>0.58</DownloadSize>
 		<EnvironmentSize>3.2</EnvironmentSize>
 		<SupportedArchitectures>x86</SupportedArchitectures>
+		<ProjectURL>http://fract.sourceforge.net/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>FRACT</Title>

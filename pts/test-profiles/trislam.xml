@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>0.4</DownloadSize>
 		<EnvironmentSize>0.8</EnvironmentSize>
+		<ProjectURL>http://graphcomp.com/pogl.cgi?v=0111s3B3</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Triangle Slammer</Title>

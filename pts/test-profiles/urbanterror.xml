@@ -9,7 +9,7 @@
 		<DownloadSize>721</DownloadSize>
 		<EnvironmentSize>740</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<ProjectURL>http://www.urbanterror.net/news.php</ProjectURL>
+		<ProjectURL>http://www.urbanterror.net/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Urban Terror</Title>
