@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<TestType>Graphics</TestType>
 		<ApplicationType>Game</ApplicationType>
 		<License>FREE</License>
@@ -25,32 +25,11 @@
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
-			<Identifier>resolution</Identifier>
-			<ArgumentName></ArgumentName>
+			<Identifier>auto-resolution</Identifier>
 			<Menu>
 				<Entry>
-					<Name>800 x 600</Name>
-					<Value>+vid_customwidth 800 +vid_customheight 600 +vid_restart</Value>
-				</Entry>
-				<Entry>
-					<Name>1024 x 768</Name>
-					<Value>+vid_customwidth 1024 +vid_customheight 768 +vid_restart</Value>
-				</Entry>
-				<Entry>
-					<Name>1280 x 1024</Name>
-					<Value>+vid_customwidth 1280 +vid_customheight 1024 +vid_restart</Value>
-				</Entry>
-				<Entry>
-					<Name>1600 x 1200</Name>
-					<Value>+vid_customwidth 1600 +vid_customheight 1200 +vid_restart</Value>
-				</Entry>
-				<Entry>
-					<Name>1680 x 1050</Name>
-					<Value>+vid_customwidth 1680 +vid_customheight 1050 +vid_restart</Value>
-				</Entry>
-				<Entry>
-					<Name>1920 x 1200</Name>
-					<Value>+vid_customwidth 1920 +vid_customheight 1200 +vid_restart</Value>
+					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+					<Value>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Value>
 				</Entry>
 			</Menu>
 		</Option>

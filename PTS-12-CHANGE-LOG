@@ -61,6 +61,8 @@
 - pts: xorg-development external dependency in ubuntu-packages.xml switch to xorg-dev instead of xserver-xorg-dev for acquiring all the needed packages
 - pts: Add PTS External dependency for libstdc++5 named libstdcpp5
 - pts: Add PTS External dependency for OpenAL and OpenAL development files named openal-devel
+- pts: Update lightsmark to Lightsmark 2.0 2008
+- pts: Switch relevant test profiles over to using auto-resolution
 
 - documentation: Update CSS style / image interface
 - documentation: Update documentation text and add page covering how to write a PHP/SH module
