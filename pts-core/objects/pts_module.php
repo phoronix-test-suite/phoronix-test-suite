@@ -96,7 +96,7 @@ class pts_module
 	}
 	public static function pts_timed_function($time, $function)
 	{
-		if($time < 15 || $time > 300)
+		if($time <= 5 || $time > 300)
 			return;
 
 		if(function_exists("pcntl_fork"))
