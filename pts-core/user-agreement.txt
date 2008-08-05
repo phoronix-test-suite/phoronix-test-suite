@@ -1,8 +1,13 @@
-The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux and is designed to carry out tests in a clean, reproducible, and easy-to-use manner. This software ships with over 50 test profiles and 20 test suites, but new custom tests can be easily added by writing an XML-based test profile. For more information on the Phoronix Test Suite and its possibilities, check out: http://www.phoronix-test-suite.com/ or view the included documentation.
+The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux and is designed to carry out tests in a clean, reproducible, and easy-to-use manner. This software ships with over 70 test profiles and 30 test suites, but new custom tests can be easily added by writing an XML-based test profile. 
 
 - The Phoronix Test Suite is open-source and licensed under the GNU GPLv3. However, some tests supported by the PTS are not open-source. To see the license of tests, run: phoronix-test-suite list-tests.
 
 - The Phoronix Test Suite contains tests which may stress your system and in some cases could exhibit stability problems of the system's hardware or software configuration. The Phoronix Test Suite is provided WITHOUT ANY WARRANTY. Phoronix Media and involved parties take no responsibility for misuse of this software. Use of the Phoronix Test Suite is at your own risk.
 
+- For enterprise support, sponsorship, or other professional inquiries, contact phoronix@phoronix.com. Community support can be found in the Phoronix Forums @ http://www.phoronix.com/forums/.
+
 - If you opt to submit your test results to PTS Global, the final results as well as basic hardware and software details (what is shown in the PTS Results Viewer) will be shared and publicly accessible through http://global.phoronix-test-suite.com/.
+
+For more information on the Phoronix Test Suite and its possibilities, check out: http://www.phoronix-test-suite.com/ or view the included documentation.
+
 
