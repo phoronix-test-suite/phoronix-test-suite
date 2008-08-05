@@ -184,6 +184,9 @@ function xrandr_available_modes()
 	$xrandr_lines = array_reverse(explode("\n", $info));
 	$available_modes = array();
 
+	$supported_ratios = array(1.60, 1.25, 1.33);
+	$ignore_modes = array(array(832, 624), array(1152, 864));
+
 	foreach($xrandr_lines as $xrandr_mode)
 	{
 		$res = explode("x", $xrandr_mode);
@@ -193,16 +196,13 @@ function xrandr_available_modes()
 			$res[0] = trim($res[0]);
 			$res[1] = trim($res[1]);
 
-			$res[0] = substr($res[0], strpos($res[0], " "));
+			$res[0] = substr($res[0], strrpos($res[0], " "));
 			$res[1] = substr($res[1], 0, strpos($res[1], " "));
 
 			if(is_numeric($res[0]) && is_numeric($res[1]) && $res[0] >= 800 && $res[1] >= 600)
 			{
 				$ratio = pts_trim_double($res[0] / $res[1], 2);
 				$this_mode = array($res[0], $res[1]);
-
-				$supported_ratios = array(1.60, 1.25, 1.33);
-				$ignore_modes = array(array(832, 624), array(1152, 864));
 
 				if(in_array($ratio, $supported_ratios) && !in_array($this_mode, $ignore_modes))
 					array_push($available_modes, $this_mode);
@@ -227,7 +227,7 @@ function xrandr_screen_resolution()
 		$res[0] = trim($res[0]);
 		$res[1] = trim($res[1]);
 
-		$res[0] = substr($res[0], strpos($res[0], " "));
+		$res[0] = substr($res[0], strrpos($res[0], " "));
 		$res[1] = substr($res[1], 0, strpos($res[1], " "));
 
 		if(is_numeric($res[0]) && is_numeric($res[1]))
