@@ -215,9 +215,14 @@ if($TO_RUN_TYPE == "TEST")
 							echo ($i + 1) . ": " . $option_names[$i] . "\n";
 						}
 						echo "\nPlease Enter Your Choice: ";
-						$bench_choice = strtolower(trim(fgets(STDIN)));
+						$bench_choice = trim(fgets(STDIN));
 					}
-					while($bench_choice < 1 || $bench_choice > count($option_names));
+					while(($bench_choice < 1 || $bench_choice > count($option_names)) && !in_array($bench_choice, $option_names));
+
+					if(!is_numeric($bench_choice) && in_array($bench_choice, $option_names))
+						for($i = 0; $i < count($option_names); $i++)
+							if($option_names[$i] == $bench_choice)
+								$bench_choice = ($i + 1);
 				}
 				$option_display_name = $option_names[($bench_choice - 1)];
 
