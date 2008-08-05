@@ -50,6 +50,7 @@
 - pts-core: Eliminate one second sleep time when determining whether a CPU throttling technology (EIST/CnQ) is enabled or not
 - pts-core: Alphabetize list-possible-dependencies
 - pts-core: Add support for detecting all available video modes
+- pts-core: Allow test profiles to create options dynamically for the video modes supported by the test system's configuration
 
 - pts: Add ProjectURL tag to available test profiles
 - pts: Add PTS External Dependencies support for OpenSolaris using IPS
