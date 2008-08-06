@@ -28,6 +28,9 @@ function pts_module_start_process()
 	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
 	$GLOBALS["PTS_MODULE_VAR_STORE"] = array();
 
+	if(getenv("PTS_IGNORE_MODULES") !== FALSE)
+		return;
+
 	// Enable the toggling of the system screensaver by default.
 	// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
 	array_push($GLOBALS["PTS_MODULES"], "toggle_screensaver");
