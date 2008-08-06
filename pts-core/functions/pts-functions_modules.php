@@ -58,7 +58,7 @@ function pts_auto_detect_modules($load_here = FALSE)
 				if(IS_DEBUG_MODE)
 					echo "Attempting To Add Module: " . $module . "\n";
 
-				array_push($GLOBALS["PTS_MODULES"], $module);
+				pts_attach_module($module);
 
 				if($load_here)
 					pts_load_module($module);
@@ -77,7 +77,7 @@ function pts_load_modules()
 			if(count($module_r) == 2)
 				pts_module_set_environment_variable(trim($module_r[0]), trim($module_r[1]));
 			else
-				array_push($GLOBALS["PTS_MODULES"], trim($module));
+				pts_attach_module($module);
 		}
 
 	// Check for modules to load manually in PTS_MODULES
@@ -87,7 +87,7 @@ function pts_load_modules()
 			$module = trim($module);
 
 			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
-				array_push($GLOBALS["PTS_MODULES"], trim($module));
+				pts_attach_module($module);
 		}
 
 	// Detect modules to load automatically
@@ -127,6 +127,10 @@ function pts_load_modules()
 		if($var_value != FALSE && !empty($var_value))
 			array_push($GLOBALS["PTS_MODULE_VAR_STORE"], $var . "=" . $var_value);
 	}
+}
+function pts_attach_module($module)
+{
+	array_push($GLOBALS["PTS_MODULES"], trim($module));
 }
 function pts_load_module($module)
 {

@@ -242,7 +242,7 @@ function pts_process_active($process)
 		if(IS_SOLARIS)
 			return false;
 
-		$pid = trim(file_get_contents(TEST_ENV_DIR . ".processes/" . $process . ".p"));
+		$pid = trim(@file_get_contents(TEST_ENV_DIR . ".processes/" . $process . ".p"));
 		$ps = trim(shell_exec("ps -p $pid 2>&1"));
 
 		if(strpos($ps, "php") > 0)
