@@ -4,6 +4,7 @@ Phoronix Test Suite
 
 - pts-core: Add an OR structure for PTS External Dependency FileCheck tag
 - pts-core: Print out the external dependencies that will be installed prior to running the script
+- pts-core: Add dynamic option building support to tests running in batch mode
 
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 

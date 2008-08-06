@@ -590,4 +590,32 @@ function pts_all_combos(&$return_arr, $current_string, $options, $counter, $deli
 		}
 	}
 }
+function pts_auto_process_test_option($identifier, &$option_names, &$option_values)
+{
+	if(count($option_names) == 1 && count($option_values) == 1)
+	{
+		switch($identifier)
+		{
+			case "auto-resolution":
+				$available_video_modes = xrandr_available_modes();
+				$format_name = $option_names[0];
+				$format_value = $option_values[0];
+				$option_names = array();
+				$option_values = array();
+
+				foreach($available_video_modes as $video_mode)
+				{
+					$this_name = str_replace("\$VIDEO_WIDTH", $video_mode[0], $format_name);
+					$this_name = str_replace("\$VIDEO_HEIGHT", $video_mode[1], $this_name);
+
+					$this_value = str_replace("\$VIDEO_WIDTH", $video_mode[0], $format_value);
+					$this_value = str_replace("\$VIDEO_HEIGHT", $video_mode[1], $this_value);
+
+					array_push($option_names, $this_name);
+					array_push($option_values, $this_value);
+				}
+			break;
+		}
+	} 
+}
 ?>

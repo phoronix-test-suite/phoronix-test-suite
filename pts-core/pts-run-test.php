@@ -166,31 +166,7 @@ if($TO_RUN_TYPE == "TEST")
 				$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
 				$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
 				$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
-
-				if(count($option_names) == 1 && count($option_values))
-				{
-					switch($this_identifier)
-					{
-						case "auto-resolution":
-							$available_video_modes = xrandr_available_modes();
-							$format_name = $option_names[0];
-							$format_value = $option_values[0];
-							$option_names = array();
-							$option_values = array();
-
-							foreach($available_video_modes as $video_mode)
-							{
-								$this_name = str_replace("\$VIDEO_WIDTH", $video_mode[0], $format_name);
-								$this_name = str_replace("\$VIDEO_HEIGHT", $video_mode[1], $this_name);
-								$this_value = str_replace("\$VIDEO_WIDTH", $video_mode[0], $format_value);
-								$this_value = str_replace("\$VIDEO_HEIGHT", $video_mode[1], $this_value);
-
-								array_push($option_names, $this_name);
-								array_push($option_values, $this_value);
-							}
-						break;
-					}
-				} 
+				pts_auto_process_test_option($this_identifier, $option_names, $option_values);
 
 				if(count($option_values) == 1)
 				{
@@ -264,6 +240,8 @@ if($TO_RUN_TYPE == "TEST")
 				$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
 				$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
 				$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
+				pts_auto_process_test_option($this_identifier, $option_names, $option_values);
+
 				$option_args = array();
 				$option_args_description = array();
 
