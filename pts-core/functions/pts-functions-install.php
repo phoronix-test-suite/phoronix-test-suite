@@ -399,10 +399,17 @@ function pts_file_missing_check($file_arr)
 
 	foreach($file_arr as $file)
 	{
-		$file = trim($file);
+		$file_is_there = false;
+		$file = explode("OR", $file);
 
-		if(!is_file($file) && !is_dir($file) && !is_link($file))
-			$file_missing = true;
+		for($i = 0; $i < count($file) && $file_is_there == false; $i++)
+		{
+			$file[$i] = trim($file[$i]);
+
+			if(is_file($file[$i]) || is_dir($file[$i]) || is_link($file[$i]))
+				$file_is_there = true;
+		}
+		$file_missing = $file_missing || !$file_is_there;
 	}
 
 	return $file_missing;
