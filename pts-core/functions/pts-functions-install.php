@@ -304,6 +304,15 @@ function pts_install_test($identifier)
 
 	if(pts_test_needs_updated_install($identifier) || defined("PTS_FORCE_INSTALL"))
 	{
+		if(!defined("PTS_TOTAL_SIZE_MSG"))
+		{
+			$total_download_size = pts_estimated_download_size($argv[1]);
+
+			if($total_download_size > 0 && pts_test_type($ARG_1) == "TEST_SUITE")
+				echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
+			define("PTS_TOTAL_SIZE_MSG", 1);
+		}
+
 		if(!is_dir(TEST_ENV_DIR))
 			mkdir(TEST_ENV_DIR);
 

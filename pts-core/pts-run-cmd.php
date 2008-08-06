@@ -83,7 +83,6 @@ switch($COMMAND)
 		pts_install_package_on_distribution($ARG_1);
 
 		// Install tests
-		echo pts_string_header("Total Estimated Download Size: " . pts_estimated_download_size($ARG_1) . " MB");
 		$install_objects = "";
 		pts_recurse_install_test($ARG_1, $install_objects);
 		pts_module_process("__post_install_process");
