@@ -239,7 +239,7 @@ function pts_download_test_files($identifier)
 							{
 								if(count($urls) > 0)
 								{
-									echo "Attempting to re-download from another mirror...\n";
+									echo "Attempting to re-download from another mirror.\n";
 								}
 								else
 								{
@@ -263,7 +263,7 @@ function pts_download_test_files($identifier)
 
 						if(!$try_again)
 						{
-							pts_exit("\nDownload of Needed Test Dependencies Failed! Exiting...\n\n");
+							pts_exit("\nDownload of Needed Test Dependencies Failed! Exiting.\n\n");
 						}
 					}
 					while(!$file_downloaded);
@@ -409,7 +409,7 @@ function pts_file_missing_check($file_arr)
 }
 function pts_install_package_on_distribution($identifier)
 {
-	echo "Processing PTS External Dependencies...\n";
+	echo "Checking For Needed External Dependencies.\n";
 	$identifier = strtolower($identifier);
 	$install_objects = array();
 	pts_recurse_install_test($identifier, $install_objects);
