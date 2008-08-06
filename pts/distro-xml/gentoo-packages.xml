@@ -106,24 +106,19 @@
 			<FileCheck>/usr/bin/perl</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>sdl-development</GenericName>
-			<PackageName>>=media-libs/libsdl-1.2 >=media-libs/sdl-net-1.2 >=media-libs/sdl-image-1.2</PackageName>
-			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>xorg-video</GenericName>
-			<PackageName>>=x11-libs/libXvMC >=x11-libs/libXv</PackageName>
+			<PackageName>x11-libs/libXvMC x11-libs/libXv</PackageName>
 			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
-			<PackageName>sys-libs/libstdc++-v3</PackageName>
-			<FileCheck>/usr/lib/libstdc++.so.5</FileCheck>
+			<PackageName>=virtual/libstdc++-3.3</PackageName>
+			<FileCheck>/usr/lib/libstdc++.so.5 OR /usr/lib/libstdc++-v3/libstdc++.so.5</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openal-devel</GenericName>
 			<PackageName>media-libs/openal</PackageName>
-			<FileCheck>/usr/include/AL/al.h</FileCheck>
+			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
