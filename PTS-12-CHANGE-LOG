@@ -52,6 +52,8 @@
 - pts-core: Add support for detecting all available video modes
 - pts-core: Allow test profiles to create options dynamically for the video modes supported by the test system's configuration
 - pts-core: When running a test, allow the option name to be entered instead of just its number/position
+- pts-core: Improve text strings during installation / external dependency process
+- pts-core: Provide "Total Estimated Download Size: at the beginning of a test
 
 - pts: Add ProjectURL tag to available test profiles
 - pts: Add PTS External Dependencies support for OpenSolaris using IPS

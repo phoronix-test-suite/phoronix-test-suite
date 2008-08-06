@@ -34,8 +34,8 @@ function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
 	}
 	else if($type == "TEST_SUITE")
 	{
-		if(!getenv("SILENT_INSTALL"))
-			echo "\nInstalling Test Suite: " . $TO_INSTALL . "\n\n";
+		if(!getenv("SILENT_INSTALL") && !is_array($INSTALL_OBJ))
+			echo "Installing Test Suite: " . $TO_INSTALL . "\n";
 
 		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_INSTALL . ".xml");
 		$suite_tests = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
@@ -351,7 +351,7 @@ function pts_install_test($identifier)
 	else
 	{
 		if(!getenv("SILENT_INSTALL"))
-			echo $identifier . " is already installed, skipping installation routine...\n";
+			echo "Already Installed: " . $identifier . "\n";
 	}
 }
 function pts_external_dependency_generic($Name)
@@ -409,6 +409,7 @@ function pts_file_missing_check($file_arr)
 }
 function pts_install_package_on_distribution($identifier)
 {
+	echo "Processing PTS External Dependencies...\n";
 	$identifier = strtolower($identifier);
 	$install_objects = array();
 	pts_recurse_install_test($identifier, $install_objects);
@@ -534,6 +535,27 @@ function pts_test_architecture_supported($identifier)
 	}
 
 	return $supported;
+}
+function pts_estimated_download_size($identifier)
+{
+	$type = pts_test_type($identifier);
+	$estimated_size = 0;
+
+	if($type == "TEST")
+	{
+	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
+		$estimated_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
+	}
+	else if($type == "TEST_SUITE")
+	{
+		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $identifier . ".xml");
+		$suite_tests = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+
+		foreach($suite_tests as $test)
+			$estimated_size += pts_estimated_download_size($test);
+	}
+
+	return $estimated_size;
 }
 function pts_test_estimated_download_size($identifier)
 {

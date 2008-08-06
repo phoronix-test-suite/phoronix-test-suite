@@ -6,6 +6,9 @@
 		<License></License>
 		<Status></Status>
 		<Maintainer></Maintainer>
+		<DownloadSize></DownloadSize>
+		<EnvironmentSize></EnvironmentSize>
+		<ProjectURL></ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title></Title>
