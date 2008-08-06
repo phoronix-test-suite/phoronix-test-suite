@@ -24,7 +24,7 @@ system temperature, battery power consumption, CPU voltage, +3.33V line voltage,
 in the future.</p>
 <p>The full list of supported sensor options can be found by running <em>phoronix-test-suite 
 module-info system_monitor</em>. The sensors actually detected on the current system and their 
-values can be read by running <em>phoronix-test-suite test-module system_monitor</em>. Selecting 
+values can be read by running <em>MONITOR=all phoronix-test-suite test-module system_monitor</em>. Selecting 
 sensors to monitor is performed through the <em>MONITOR</em> environmental variable. 
 As examples, to monitor just the CPU temperature while running the universe suite, 
 one would run <em>MONITOR=cpu.temp phoronix-test-suite benchmark universe</em>. 
