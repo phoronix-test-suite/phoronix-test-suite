@@ -433,7 +433,13 @@ function pts_install_packages_on_distribution_process($install_objects)
 
 		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh") || is_link(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
 		{
-			echo "Installing PTS External Dependencies.\nThis process may take several minutes.\n";
+			echo "\nThe following dependencies will be installed: \n";
+
+			foreach(explode(" ", $install_objects) as $obj)
+				echo "- " . $obj . "\n";
+
+			echo "\nThis process may take several minutes.\n";
+
 			echo shell_exec("cd " . SCRIPT_DISTRO_DIR . " && sh install-" . $distribution . "-packages.sh " . $install_objects);
 		}
 		else
