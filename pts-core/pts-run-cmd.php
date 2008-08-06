@@ -580,6 +580,32 @@ switch($COMMAND)
 		echo "Results Saved To: " . SAVE_RESULTS_DIR . $SAVE_TO . "\n\n";
 		display_web_browser(SAVE_RESULTS_DIR . $SAVE_TO);
 		break;
+	case "TEST_MODULE":
+		$module = strtolower($ARG_1);
+		if(is_file(MODULE_DIR . $module . ".php") || is_file(MODULE_DIR . $module . ".sh"))
+		{
+			pts_load_module($module);
+			pts_attach_module($module);
+
+			echo pts_string_header("Starting Module Test Process");
+
+			$module_processes = array("__startup", "__pre_install_process", "__pre_test_install", "__post_test_install", "__post_install_process", 
+			"__pre_run_process", "__pre_test_run", "__interim_test_run", "__post_test_run", "__post_run_process", "__shutdown");
+
+			foreach($module_processes as $process)
+			{
+				if(IS_DEBUG_MODE)
+					echo "Calling: " . $process . "()\n";
+				pts_module_process($process);
+				sleep(1);
+			}
+			echo "\n";
+		}
+		else
+		{
+			echo "\n" . $module . " is not recognized.\n";
+		}
+		break;
 	case "DIAGNOSTICS_DUMP":
 		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n" . "Diagnostics Dump");
 		$pts_defined_constants = get_defined_constants(true);

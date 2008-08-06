@@ -37,6 +37,10 @@ defined in <em>PTS_MODULES</em> can be set within the <em>LoadModules</em> tag
 found in <em>~/.phoronix-test-suite/user-config.xml</em>. Multiple modules can 
 be loaded simultaneously using the <em>PTS_MODULES</em> variable or <em>LoadModules</em> 
 tag by delimiting each command with a comma (<em>,</em>).</p>
+<p>Note: To run through all of the function calls for a module without needing to run a test, 
+run <em>phoronix-test-suite test-module MODULE_NAME</em>. Additionally, running 
+<em>phoronix-test-suite debug-module MODULE_NAME</em> will yield additional debugging details while 
+executing the same process.</p>
 <h1>PHP Module</h1>
 <p>To see all of the functions supported for modules written in PHP, look at <em>pts-core/modules/dummy_module.php</em> 
 and additionally the other .php modules that ship with the Phoronix Test Suite. 

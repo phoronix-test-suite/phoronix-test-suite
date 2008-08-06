@@ -167,8 +167,14 @@ case "$1" in
 "refresh-graph" | "refresh-graphs" | "refresh-result")
 	$PHP_BIN pts-core/pts-run-cmd.php REFRESH_GRAPHS $2
 	;;
-"sensor-options")
-	$PHP_BIN pts-core/pts-run-cmd.php SENSOR_OPTIONS
+"test-module" | "debug-module")
+	if [ "$1" = "debug-module" ]
+	then
+		export PTS_DEBUG=1
+	fi
+
+	export PTS_IGNORE_MODULES=1
+	$PHP_BIN pts-core/pts-run-cmd.php TEST_MODULE $2
 	;;
 "sensors" | "sensor-options")
 	echo "\nThis option was dropped from the Phoronix Test Suite. For more information and the replacement option, view the latest documentation.\n"
