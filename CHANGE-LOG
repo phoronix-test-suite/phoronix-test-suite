@@ -6,6 +6,7 @@ Phoronix Test Suite
 - pts-core: Print out the external dependencies that will be installed prior to running the script
 - pts-core: Add dynamic option building support to tests running in batch mode
 
+- system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 
 Phoronix Test Suite 1.2.0 Beta 1

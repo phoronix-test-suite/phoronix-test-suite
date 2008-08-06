@@ -84,7 +84,7 @@ class system_monitor extends pts_module_interface
 		if(in_array("v3.voltage", $to_show) || $monitor_voltage)
 		{
 			define("MONITOR_V3_VOLTAGE", 1);
-			pts_module::save_file(".s/BATTERY_POWER");
+			pts_module::save_file(".s/V3_POWER");
 		}
 		if(in_array("v5.voltage", $to_show) || $monitor_voltage)
 		{
