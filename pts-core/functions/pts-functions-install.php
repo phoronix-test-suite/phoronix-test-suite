@@ -121,7 +121,7 @@ function pts_download_test_files($identifier)
 				if(!$header_displayed)
 				{
 					$download_append = "";
-					if(($size = pts_test_estimated_download_size($identifier)) != "")
+					if(($size = pts_estimated_download_size($identifier)) > 0)
 					{
 						$download_append = "\nEstimated Download Size: " . $size . " MB";
 
@@ -320,7 +320,7 @@ function pts_install_test($identifier)
 			pts_module_process("__pre_test_install");
 			$install_header = "Installing Test: " . $identifier;
 
-			if(($size = pts_test_estimated_download_size($identifier)) != "")
+			if(($size = pts_estimated_download_size($identifier)) > 0)
 				$install_header .= "\nEstimated Install Size: " . $size . " MB";
 
 			echo pts_string_header($install_header);
@@ -556,18 +556,6 @@ function pts_estimated_download_size($identifier)
 	}
 
 	return $estimated_size;
-}
-function pts_test_estimated_download_size($identifier)
-{
-	$size = "";
-
-	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
-	{
-	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
-		$size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
-	}
-
-	return $size;
 }
 function pts_test_estimated_environment_size($identifier)
 {
