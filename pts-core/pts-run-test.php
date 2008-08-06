@@ -75,7 +75,10 @@ if(!$TO_RUN_TYPE)
 else
 {
 	echo "\n";
-	$SAVE_RESULTS = pts_bool_question("Would you like to save these test results (Y/n)?", true, "SAVE_RESULTS");
+	if(getenv("PTS_SAVE_RESULTS") == "NO")
+		$SAVE_RESULTS = FALSE;
+	else
+		$SAVE_RESULTS = pts_bool_question("Would you like to save these test results (Y/n)?", true, "SAVE_RESULTS");
 
 	if($SAVE_RESULTS)
 	{

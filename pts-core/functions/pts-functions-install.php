@@ -416,7 +416,9 @@ function pts_file_missing_check($file_arr)
 }
 function pts_install_package_on_distribution($identifier)
 {
-	echo "Checking For Needed External Dependencies.\n";
+	if(getenv("SILENT_INSTALL") == FALSE)
+		echo "Checking For Needed External Dependencies.\n";
+
 	$identifier = strtolower($identifier);
 	$install_objects = array();
 	pts_recurse_install_test($identifier, $install_objects);
