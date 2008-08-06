@@ -8,6 +8,7 @@ Phoronix Test Suite
 - pts-core: Don't auto-load PTS modules if PTS_IGNORE_MODULES environmental variable is set
 - pts-core: Few PTS module architecture updates
 - pts-core: Add test-module and debug-module options for running through all module function calls for testing their functionality
+- pts-core: pts_module_set_environment_variable() to pts_set_environment_variable()
 
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 - pts: Update gentoo-packages.xml with Nils Kneuper changes

@@ -549,6 +549,11 @@ function pts_format_time_string($time, $format = "SECONDS")
 
 	return implode(", ", $formatted_time);
 }
+function pts_set_environment_variable($name, $value)
+{
+	if(getenv($name) == FALSE)
+		putenv($name . "=" . $value);
+}
 function pts_debug_message($message)
 {
 	if(IS_DEBUG_MODE)

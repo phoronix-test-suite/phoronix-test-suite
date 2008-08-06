@@ -75,7 +75,7 @@ function pts_load_modules()
 			$module_r = explode("=", $module);
 
 			if(count($module_r) == 2)
-				pts_module_set_environment_variable(trim($module_r[0]), trim($module_r[1]));
+				pts_set_environment_variable(trim($module_r[0]), trim($module_r[1]));
 			else
 				pts_attach_module($module);
 		}
@@ -160,16 +160,11 @@ function pts_module_process_extensions($extensions)
 		foreach($extensions as $ev)
 		{
 			$ev_r = explode("=", $ev);
-			pts_module_set_environment_variable($ev_r[1], $ev_r[2]);
+			pts_set_environment_variable($ev_r[1], $ev_r[2]);
 		}
 
 		pts_auto_detect_modules(true);
 	}
-}
-function pts_module_set_environment_variable($name, $value)
-{
-	if(getenv($name) == FALSE)
-		putenv($name . "=" . $value);
 }
 function pts_module_type($name)
 {
