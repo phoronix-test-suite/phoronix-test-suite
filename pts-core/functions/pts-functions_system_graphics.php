@@ -55,6 +55,27 @@ function graphics_processor_temperature()
 
 	return $temp_c;
 }
+function graphics_monitor_count()
+{
+	$monitor_count = 1;
+
+	if(IS_NVIDIA_GRAPHICS)
+	{
+		$enabled_displays = read_nvidia_extension("EnabledDisplays");
+
+		switch($enabled_displays)
+		{
+			case "0x00010000":
+				$monitor_count = 1;
+				break;
+			case "0x00010001":
+				$monitor_count = 2;
+				break;
+		}
+	}
+
+	return $monitor_count;
+}
 function graphics_antialiasing_level()
 {
 	$aa_level = "";

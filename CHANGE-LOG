@@ -10,6 +10,8 @@ Phoronix Test Suite
 - pts-core: Add test-module and debug-module options for running through all module function calls for testing their functionality
 - pts-core: pts_module_set_environment_variable() to pts_set_environment_variable()
 - pts-core: Improve "Total Estimated Download Size" text
+- pts-core: Fix for xrandr_available_modes() parsing on X.Org 7.1
+- pts-core: Add detection support for number of monitors enabled. Test profiles can access this using $VIDEO_MONITOR_COUNT variable
 
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
