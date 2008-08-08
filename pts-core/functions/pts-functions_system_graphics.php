@@ -189,6 +189,9 @@ function xrandr_available_modes()
 
 	foreach($xrandr_lines as $xrandr_mode)
 	{
+		if(($cut_point = strpos($xrandr_mode, "(")) > 0)
+			$xrandr_mode = substr($xrandr_mode, 0, $cut_point);
+
 		$res = explode("x", $xrandr_mode);
 
 		if(count($res) == 2)

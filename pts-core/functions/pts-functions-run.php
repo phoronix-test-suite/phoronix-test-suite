@@ -513,7 +513,6 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	echo $this_result = pts_string_header($RETURN_STRING, "#");
 	$GLOBALS["TEST_RESULTS_TEXT"] .= $this_result;
 
-	//pts_beep();
 	pts_process_remove($test_identifier);
 	pts_module_process("__post_test_run");
 	pts_test_refresh_install_xml($test_identifier);
