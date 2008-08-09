@@ -57,33 +57,44 @@ function graphics_processor_temperature()
 }
 function graphics_monitor_count()
 {
-	$monitor_count = 1;
+	$monitor_count = 0;
 
-	if(IS_NVIDIA_GRAPHICS)
+	// First try reading number of monitors from xdpyinfo
+	$monitor_count = count(read_xdpy_monitor_info());
+
+	if($monitor_count == 0)
 	{
-		$enabled_displays = read_nvidia_extension("EnabledDisplays");
-
-		switch($enabled_displays)
+		// Fallback support for ATI and NVIDIA if read_xdpy_monitor_info() fails
+		if(IS_NVIDIA_GRAPHICS)
 		{
-			case "0x00010000":
-				$monitor_count = 1;
-				break;
-			case "0x00010001":
-				$monitor_count = 2;
-				break;
+			$enabled_displays = read_nvidia_extension("EnabledDisplays");
+
+			switch($enabled_displays)
+			{
+				case "0x00010000":
+					$monitor_count = 1;
+					break;
+				case "0x00010001":
+					$monitor_count = 2;
+					break;
+				default:
+					$monitor_count = 1;
+					break;
+			}
 		}
-	}
-	else if(IS_ATI_GRAPHICS)
-	{
-		$amdpcsdb_enabled_monitors = amd_pcsdb_parser("SYSTEM/BUSID-*/DDX,EnableMonitor");
-		$monitor_count = 0;
+		else if(IS_ATI_GRAPHICS)
+		{
+			$amdpcsdb_enabled_monitors = amd_pcsdb_parser("SYSTEM/BUSID-*/DDX,EnableMonitor");
 
-		if(!is_array($amdpcsdb_enabled_monitors))
-			$amdpcsdb_enabled_monitors = array($amdpcsdb_enabled_monitors);
+			if(!is_array($amdpcsdb_enabled_monitors))
+				$amdpcsdb_enabled_monitors = array($amdpcsdb_enabled_monitors);
 
-		foreach($amdpcsdb_enabled_monitors as $enabled_monitor)
-			foreach(explode(",", $enabled_monitor) as $monitor_connection)
-				$monitor_count++;
+			foreach($amdpcsdb_enabled_monitors as $enabled_monitor)
+				foreach(explode(",", $enabled_monitor) as $monitor_connection)
+					$monitor_count++;
+		}
+		else
+			$monitor_count = 1;
 	}
 
 	return $monitor_count;
@@ -94,29 +105,62 @@ function graphics_monitor_layout()
 
 	if(graphics_monitor_count() > 1)
 	{
-		if(IS_ATI_GRAPHICS)
+		$xdpy_monitors = read_xdpy_monitor_info();
+		$hit_0_0 = false;
+		for($i = 0; $i < count($xdpy_monitors); $i++)
 		{
-			$amdpcsdb_monitor_layout = amd_pcsdb_parser("SYSTEM/BUSID-*/DDX,DesktopSetup");
+			$monitor_position = explode("@", $xdpy_monitors[$i]);
+			$monitor_position = trim($monitor_position[1]);
+			$monitor_position_x = substr($monitor_position, 0, strpos($monitor_position, ","));
+			$monitor_position_y = substr($monitor_position, strpos($monitor_position, ",") + 1);
 
-			if(!is_array($amdpcsdb_monitor_layout))
-				$amdpcsdb_monitor_layout = array($amdpcsdb_monitor_layout);
-
-			foreach($amdpcsdb_monitor_layout as $card_monitor_configuration)
+			if($monitor_position == "0,0")
 			{
-				switch($card_monitor_configuration)
+				$hit_0_0 = true;
+			}
+			else if($monitor_position_x > 0 && $monitor_position_y == 0)
+			{
+				if($hit_0_0 == false)
+					array_push($monitor_layout, "LEFT");
+				else
+					array_push($monitor_layout, "RIGHT");
+			}
+			else if($monitor_position_x == 0 && $monitor_position_y > 0)
+			{
+				if($hit_0_0 == false)
+					array_push($monitor_layout, "UPPER");
+				else
+					array_push($monitor_layout, "LOWER");
+			}
+		}
+
+		if(count($monitor_layout) == 1)
+		{
+			// Something went wrong with xdpy information, go to fallback support
+			if(IS_ATI_GRAPHICS)
+			{
+				$amdpcsdb_monitor_layout = amd_pcsdb_parser("SYSTEM/BUSID-*/DDX,DesktopSetup");
+
+				if(!is_array($amdpcsdb_monitor_layout))
+					$amdpcsdb_monitor_layout = array($amdpcsdb_monitor_layout);
+
+				foreach($amdpcsdb_monitor_layout as $card_monitor_configuration)
 				{
-					case "horizontal":
-						array_push($monitor_layout, "RIGHT");
-						break;
-					case "horizontal,reverse":
-						array_push($monitor_layout, "LEFT");
-						break;
-					case "vertical":
-						array_push($monitor_layout, "ABOVE");
-						break;
-					case "vertical,reverse":
-						array_push($monitor_layout, "BELOW");
-						break;
+					switch($card_monitor_configuration)
+					{
+						case "horizontal":
+							array_push($monitor_layout, "RIGHT");
+							break;
+						case "horizontal,reverse":
+							array_push($monitor_layout, "LEFT");
+							break;
+						case "vertical":
+							array_push($monitor_layout, "ABOVE");
+							break;
+						case "vertical,reverse":
+							array_push($monitor_layout, "BELOW");
+							break;
+					}
 				}
 			}
 		}
@@ -126,14 +170,27 @@ function graphics_monitor_layout()
 }
 function graphics_monitor_resolutions()
 {
-	$resolutions = array(current_screen_resolution());
+	$resolutions = array();
+
+	if(graphics_monitor_count() == 1)
+	{
+		array_push($resolutions, current_screen_resolution());
+	}
+	else
+	{
+		foreach(read_xdpy_monitor_info() as $monitor_line)
+		{
+			$this_resolution = substr($monitor_line, strpos($monitor_line, ":") + 2);
+			$this_resolution = substr($this_resolution, 0, strpos($this_resolution, " "));
+			array_push($resolutions, $this_resolution);
+		}
+	}
 
 	return implode(",", $resolutions);
 }
 function graphics_antialiasing_level()
 {
 	$aa_level = "";
-
 
 	if(IS_NVIDIA_GRAPHICS)
 	{
