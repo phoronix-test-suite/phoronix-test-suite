@@ -199,13 +199,13 @@ function read_nvidia_extension($attribute)
 
 	return $nv_info;
 }
-function read_xpdy_monitor_info()
+function read_xdpy_monitor_info()
 {
 	$info = trim(shell_exec("xdpyinfo -ext XINERAMA 2>&1 | grep head"));
 	$monitor_info = array();
 
 	foreach(explode("\n", $info) as $xdpyinfo_line)
-		if(!empty($xdpyinfo_line))
+		if(!empty($xdpyinfo_line) && strpos($xdpyinfo_line, "0x0") == FALSE)
 			array_push($monitor_info, $xdpyinfo_line);
 
 	return $monitor_info;
