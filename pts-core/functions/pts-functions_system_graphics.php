@@ -73,14 +73,56 @@ function graphics_monitor_count()
 				break;
 		}
 	}
+	else if(IS_ATI_GRAPHICS)
+	{
+		$amdpcsdb_enabled_monitors = amd_pcsdb_parser("SYSTEM/BUSID-*/DDX,EnableMonitor");
+		$monitor_count = 0;
+
+		if(!is_array($amdpcsdb_enabled_monitors))
+			$amdpcsdb_enabled_monitors = array($amdpcsdb_enabled_monitors);
+
+		foreach($amdpcsdb_enabled_monitors as $enabled_monitor)
+			foreach(explode(",", $enabled_monitor) as $monitor_connection)
+				$monitor_count++;
+	}
 
 	return $monitor_count;
 }
 function graphics_monitor_layout()
 {
-	$layout = array("CENTER");
+	$monitor_layout = array("CENTER");
 
-	return implode(",", $layout);
+	if(graphics_monitor_count() > 1)
+	{
+		if(IS_ATI_GRAPHICS)
+		{
+			$amdpcsdb_monitor_layout = amd_pcsdb_parser("SYSTEM/BUSID-*/DDX,DesktopSetup");
+
+			if(!is_array($amdpcsdb_monitor_layout))
+				$amdpcsdb_monitor_layout = array($amdpcsdb_monitor_layout);
+
+			foreach($amdpcsdb_monitor_layout as $card_monitor_configuration)
+			{
+				switch($card_monitor_configuration)
+				{
+					case "horizontal":
+						array_push($monitor_layout, "RIGHT");
+						break;
+					case "horizontal,reverse":
+						array_push($monitor_layout, "LEFT");
+						break;
+					case "vertical":
+						array_push($monitor_layout, "ABOVE");
+						break;
+					case "vertical,reverse":
+						array_push($monitor_layout, "BELOW");
+						break;
+				}
+			}
+		}
+	}
+
+	return implode(",", $monitor_layout);
 }
 function graphics_monitor_resolutions()
 {
