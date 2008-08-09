@@ -580,10 +580,14 @@ function graphics_memory_capacity()
 			// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
 
 			$info = shell_exec("cat /var/log/Xorg.0.log | grep VideoRAM");
-			if(($pos = strpos($info, "VideoRAM:")) > 0)
+
+			if(empty($info))
+				$info = shell_exec("cat /var/log/Xorg.0.log | grep \"Video RAM\"");
+
+			if(($pos = strpos($info, "RAM:")) > 0)
 			{
-				$info = substr($info, $pos + 10);
-				$info = substr($info, 0, strpos($info, ' '));
+				$info = substr($info, $pos + 5);
+				$info = substr($info, 0, strpos($info, " "));
 				$video_ram = intval($info) / 1024;
 			}
 		}
