@@ -19,10 +19,10 @@ Phoronix Test Suite
 - pts-core: Add ATI CrossFire detection support
 - pts-core: Improved Video RAM detection when parsing X log
 
-- system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 - pts: Improved sensor detection for compliance-sensors test
 - pts: Update download links for text file on espeak test
+- system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 
 Phoronix Test Suite 1.2.0 Beta 1
 August 6, 2008
@@ -83,7 +83,6 @@ August 6, 2008
 - pts-core: When running a test, allow the option name to be entered instead of just its number/position
 - pts-core: Improve text strings during installation / external dependency process
 - pts-core: Provide "Total Estimated Download Size: at the beginning of a test
-
 - pts: Add ProjectURL tag to available test profiles
 - pts: Add PTS External Dependencies support for OpenSolaris using IPS
 - pts: Add linux-32bit-libraries generic package to PTS External Dependencies
@@ -94,41 +93,31 @@ August 6, 2008
 - pts: Add PTS External dependency for OpenAL and OpenAL development files named openal-devel
 - pts: Update lightsmark to Lightsmark 2.0 2008
 - pts: Switch relevant test profiles over to using auto-resolution
-
-- documentation: Update CSS style / image interface
-- documentation: Update documentation text and add page covering how to write a PHP/SH module
-- documentation: Vast rewrite of the included man page
-
 - pts_Graph: Always show key/legend if it's a single-type line graph
 - pts_Graph: Use image antialiasing if it's available on the system
 - pts_Graph: Add support so a graph module can resize its drawing buffer
-
 - pts_LineGraph: Don't display the pointers if there are too many points on the graph
 - pts_LineGraph: Improve graphing of the line when it comes to both ends and increase width to 2px
 - pts_LineGraph: Add rotation identifier support
 - pts_LineGraph: Improve line plotting
-
 - pts_BarGraph: Add rotation identifier support
-
 - tandem_Xml: Add a caching engine to the XML parsing/reading portion
 - tandem_Xml: Add setFileCaching(), setTagCaching(), and setCaching() options
 - tandem_Xml: Add isDefined() function for XML tags in tandem_XmlReader
-
 - pts_module: If pcntl isn't present, don't thread and warn the user
 - pts_module: Add a simple module called dummy_module for showing developers where the different functions are called
 - pts_module: Add support for shell script PTS modules
 - pts_module: Add sample shell script module (dummy_script_module.sh)
-
 - email_results: Add a module to email test results automatically to a user upon completion. Specify the email address in the EMAIL_RESULTS_TO environmental variable.
-
 - system_monitor: Poll sensors every 15 seconds during testing
 - system_monitor: Add cpu.usage to MONITOR, fix some bugs as well
 - system_monitor: Add gpu.freq to MONITOR
-
 - graphics_override: Add graphics_override module for having FORCE_AA and FORCE_AF options for overriding anti-aliasing and anisotropic filtering levels with supported drivers
-
 - toggle_screensaver: Move screensaver toggling code from pts-core into a module named toggle_screensaver. This module is loaded by default but controlled through the HALT_SCREENSAVER environmental variable.
 - toggle_screensaver: Add KDE screensaver support
+- documentation: Update CSS style / image interface
+- documentation: Update documentation text and add page covering how to write a PHP/SH module
+- documentation: Vast rewrite of the included man page
 
 Phoronix Test Suite 1.0.5
 August 3, 2008
