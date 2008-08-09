@@ -210,7 +210,97 @@ function read_amd_pcsdb($attribute)
 		$ati_info = substr($ati_info, 0, strpos($ati_info, " "));
 	}
 
+	if(empty($ati_info))
+	{
+		// Using aticonfig --get-pcs-key failed, switch to the PTS direct parser of AMDPCSDB
+		$ati_info = read_amd_pcsdb_direct_parser($attribute);
+	}
+
 	return $ati_info;
+}
+function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
+{
+	$amdpcsdb_file = "";
+	$last_found_section_count = -1;
+	$this_section_count = 0;
+	$attribute_values = array();
+	$attribute = explode(",", $attribute);
+
+	if(count($attribute) == 2)
+	{
+		$attribute_prefix = array_reverse(explode("/", $attribute[0]));
+		$attribute_key = $attribute[1];
+		$is_in_prefix = false;
+
+		if(is_file("/etc/ati/amdpcsdb"))
+			$amdpcsdb_file = explode("\n", file_get_contents("/etc/ati/amdpcsdb"));
+
+		for($l = 0; $l < count($amdpcsdb_file) && ($find_once == false || $last_found_section_count == -1); $l++)
+		{
+			$line = trim($amdpcsdb_file[$l]);
+
+			if(substr($line, 0, 1) == "[" && substr($line, -1) == "]")
+			{
+				// AMDPCSDB Header
+				$prefix_matches = true;
+				$header = array_reverse(explode("/", substr($line, 1, -1)));
+
+				for($i = 0; $i < count($attribute_prefix) && $i < count($header) && $prefix_matches == true; $i++)
+				{
+					if($attribute_prefix[$i] != $header[$i])
+					{
+						$prefix_matches = false;
+					}
+				}
+
+				if($prefix_matches)
+				{
+					$is_in_prefix = true;
+					$this_section_count++;
+				}
+				else
+					$is_in_prefix = false;
+			}
+			else if($is_in_prefix && $this_section_count != $last_found_section_count && count(($key_components = explode("=", $line))) == 2)
+			{
+				echo 1111;
+				// AMDPCSDB Value
+				if($key_components[0] == $attribute_key)
+				{
+					$value_type = substr($key_components[1], 0, 1);
+					$value = substr($key_components[1], 1);
+
+					switch($value_type)
+					{
+						case "V":
+							// Value
+							if(is_numeric($value) && strlen($value) < 9)
+							{
+								$value = dechex($value);
+								$value = "0x" . str_repeat(0, 8 - strlen($value)) . strtoupper($value);						
+							}
+						break;
+						case "R":
+							// Raw
+						break;
+						case "S":
+							// String
+						break;
+
+					}
+					array_push($attribute_values, $value);
+					$last_found_section_count = $this_section_count;
+				}
+			}
+		}
+	}
+
+	if(count($attribute_values) == 0)
+		$attribute_values = "";
+	else if(count($attribute_values) == 1)
+		$attribute_values = $attribute_values[0];
+
+	return $attribute_values;
 }
 function read_ati_extension($attribute)
 {
