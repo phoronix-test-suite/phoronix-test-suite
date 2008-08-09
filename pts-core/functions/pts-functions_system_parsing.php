@@ -218,6 +218,10 @@ function read_amd_pcsdb($attribute)
 
 	return $ati_info;
 }
+function amd_pcsdb_parser($attribute, $find_once = false)
+{
+	return read_amd_pcsdb_direct_parser($attribute, $find_once);
+}
 function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 {
 	$amdpcsdb_file = "";
