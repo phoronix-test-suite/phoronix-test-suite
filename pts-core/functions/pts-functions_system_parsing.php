@@ -204,9 +204,9 @@ function read_amd_pcsdb($attribute)
 	$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
 	$ati_info = "";
 
-	if(($pos = strpos($info, "):")) > 0)
+	if(($pos = strpos($info, ":")) > 0)
 	{
-		$ati_info = substr($info, $pos + 3);
+		$ati_info = substr($info, $pos + 2);
 		$ati_info = substr($ati_info, 0, strpos($ati_info, " "));
 	}
 
