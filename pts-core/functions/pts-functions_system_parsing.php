@@ -205,7 +205,8 @@ function read_xpdy_monitor_info()
 	$monitor_info = array();
 
 	foreach(explode("\n", $info) as $xdpyinfo_line)
-		array_push($monitor_info, $xdpyinfo_line);
+		if(!empty($xdpyinfo_line))
+			array_push($monitor_info, $xdpyinfo_line);
 
 	return $monitor_info;
 }
