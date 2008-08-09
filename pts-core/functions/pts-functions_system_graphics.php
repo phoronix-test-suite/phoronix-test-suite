@@ -475,6 +475,36 @@ function graphics_processor_string()
 	else
 		$info = "";
 
+	if(IS_ATI_GRAPHICS)
+	{
+		$crossfire_status = amd_pcsdb_parser("SYSTEM/Crossfire/chain/*,Enable");
+		$crossfire_card_count = 0;
+
+		if(!is_array($crossfire_status))
+			$crossfire_status = array($crossfire_status);
+
+		for($i = 0; $i < count($crossfire_status); $i++)
+			if($crossfire_status[$i] == "0x00000001")
+				$crossfire_card_count += 2; // For now assume each chain is 2 cards, but proper way would be NumSlaves + 1				
+
+		$adapters = read_amd_graphics_adapters();
+
+		if(count($adapters) > 1)
+		{
+			if($crossfire_card_count > 1 && $crossfire_card_count <= count($adapters))
+			{
+				$unique_adapters = array_unique($adapters);
+
+				if(count($unique_adapters) == 1)
+					$info = $crossfire_card_count . " x " . $adapters[0] . " CrossFire";
+				else
+					$info = implode(", ", $unique_adapters) . " CrossFire";
+			}
+			else
+				$info = $adapters[0];
+		}
+	}
+
 	if(empty($info) || strpos($info, "Mesa ") !== FALSE)
 	{
 		$info_pci = read_pci("VGA compatible controller:");

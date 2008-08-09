@@ -210,6 +210,17 @@ function read_xdpy_monitor_info()
 
 	return $monitor_info;
 }
+function read_amd_graphics_adapters()
+{
+	$info = trim(shell_exec("aticonfig --list-adapters 2>&1"));
+	$adapters = array();
+
+	foreach(explode("\n", $info) as $line)
+		if(($last_point = strrpos($line, ".")) > 0)
+			array_push($adapters, substr($line, $last_point + 3));
+
+	return $adapters;
+}
 function read_amd_pcsdb($attribute)
 {
 	$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
