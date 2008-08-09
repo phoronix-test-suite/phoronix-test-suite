@@ -489,19 +489,26 @@ function graphics_processor_string()
 
 		$adapters = read_amd_graphics_adapters();
 
-		if(count($adapters) > 1)
+		if(count($adapters) > 0)
 		{
+			$vram = graphics_memory_capacity();
+
+			if($vram > 128)
+				$vram = " " . $vram . "MB";
+			else
+				$vram = "";
+
 			if($crossfire_card_count > 1 && $crossfire_card_count <= count($adapters))
 			{
 				$unique_adapters = array_unique($adapters);
 
 				if(count($unique_adapters) == 1)
-					$info = $crossfire_card_count . " x " . $adapters[0] . " CrossFire";
+					$info = $crossfire_card_count . " x " . $adapters[0] . $vram . " CrossFire";
 				else
 					$info = implode(", ", $unique_adapters) . " CrossFire";
 			}
 			else
-				$info = $adapters[0];
+				$info = $adapters[0] . $vram;
 		}
 	}
 
