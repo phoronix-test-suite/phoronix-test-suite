@@ -15,6 +15,7 @@ Phoronix Test Suite
 - pts-core: Add a hard-coded AMDPCSDB (AMD Persistent Configuration Store Data-Base) parser for fglrx driver when aticonfig fails
 - pts-core: Add in infrastructure for detecting multi-monitor support. Set $VIDEO_MONITOR_COUNT for number of monitors, $VIDEO_MONITOR_LAYOUT for the physical layout of multiple monitors, and $VIDEO_MONITOR_SIZES for the resolution of each monitor in a multi-monitor configuration.
 - pts-core: Add support for reading xdpyinfo XINERAMA monitor information using read_xpdy_monitor_info()
+- pts-core: Improve system voltage detection through LM_Sensors
 
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 - pts: Update gentoo-packages.xml with Nils Kneuper changes

@@ -256,11 +256,26 @@ function system_line_voltage($type)
 	if($type == "CPU")
 		$voltage = read_sensors("VCore");
 	else if($type == "V3")
+	{
 		$voltage = read_sensors("V3.3");
+
+		if(empty($voltage))
+			$voltage = read_sensors("+3.3V");
+	}
 	else if($type == "V5")
+	{
 		$voltage = read_sensors("V5");
+
+		if(empty($voltage))
+			$voltage = read_sensors("+5V");
+	}
 	else if($type == "V12")
+	{
 		$voltage = read_sensors("V12");
+
+		if(empty($voltage))
+			$voltage = read_sensors("+12V");
+	}
 	else
 		$voltage = "";
 
