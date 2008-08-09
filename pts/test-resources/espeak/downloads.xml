@@ -1,8 +1,8 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.gutenberg.org/files/20417/20417-8.txt</URL>
-			<MD5>418a00ff21617b2eb39c2a0717f35a30</MD5>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/gutenberg-science.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/gutenberg-science.tar.gz</URL>
+			<MD5>e1b5250bbcf5e65d0f1e37ed727cc3d1</MD5>
 		</Package>
 		<Package>
 			<URL>http://kent.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip, http://superb-west.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip, http://superb-east.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip</URL>
