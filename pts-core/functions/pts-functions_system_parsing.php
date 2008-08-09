@@ -251,7 +251,7 @@ function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 
 				for($i = 0; $i < count($attribute_prefix) && $i < count($header) && $prefix_matches == true; $i++)
 				{
-					if($attribute_prefix[$i] != $header[$i])
+					if($attribute_prefix[$i] != $header[$i] && !pts_proximity_match($attribute_prefix[$i], $header[$i]))
 					{
 						$prefix_matches = false;
 					}
@@ -267,9 +267,8 @@ function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 			}
 			else if($is_in_prefix && $this_section_count != $last_found_section_count && count(($key_components = explode("=", $line))) == 2)
 			{
-				echo 1111;
 				// AMDPCSDB Value
-				if($key_components[0] == $attribute_key || pts_proximity_match($attribute_key, $key_components[0]))
+				if($key_components[0] == $attribute_key)
 				{
 					$value_type = substr($key_components[1], 0, 1);
 					$value = substr($key_components[1], 1);
