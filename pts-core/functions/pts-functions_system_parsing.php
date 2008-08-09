@@ -218,23 +218,6 @@ function read_amd_pcsdb($attribute)
 
 	return $ati_info;
 }
-function pts_proximity_match($search, $match_to)
-{
-	$search = explode("*", $search);
-	$is_match = true;
-
-	for($i = 0; $i < count($search) && $is_match; $i++)
-	{
-		if(($match_point = strpos($match_to, $search[$i])) !== FALSE)
-		{
-			$match_to = substr($match_to, ($match_point + strlen($search[$i])));
-		}
-		else
-			$is_match = false;
-	}
-
-	return $is_match;
-}
 function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 {
 	$amdpcsdb_file = "";
