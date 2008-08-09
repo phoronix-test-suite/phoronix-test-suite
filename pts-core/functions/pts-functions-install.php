@@ -306,10 +306,14 @@ function pts_install_test($identifier)
 	{
 		if(!defined("PTS_TOTAL_SIZE_MSG"))
 		{
-			$total_download_size = pts_estimated_download_size($argv[1]);
+			if(isset($argv[1]))
+			{
+				$total_download_size = pts_estimated_download_size($argv[1]);
 
-			if($total_download_size > 0 && pts_test_type($ARG_1) == "TEST_SUITE")
-				echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
+				if($total_download_size > 0 && pts_test_type($argv[1]) == "TEST_SUITE")
+					echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
+			}
+
 			define("PTS_TOTAL_SIZE_MSG", 1);
 		}
 
