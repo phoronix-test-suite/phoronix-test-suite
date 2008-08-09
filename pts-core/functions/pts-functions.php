@@ -555,6 +555,26 @@ function pts_set_environment_variable($name, $value)
 	if(getenv($name) == FALSE)
 		putenv($name . "=" . $value);
 }
+function pts_proximity_match($search, $match_to)
+{
+	$search = explode("*", $search);
+	$is_match = true;
+
+	if(count($search) == 1)
+		$is_match = false;
+
+	for($i = 0; $i < count($search) && $is_match && !empty($search[$i]); $i++)
+	{
+		if(($match_point = strpos($match_to, $search[$i])) !== FALSE && ($i > 0 || $match_point == 0))
+		{
+			$match_to = substr($match_to, ($match_point + strlen($search[$i])));
+		}
+		else
+			$is_match = false;
+	}
+
+	return $is_match;
+}
 function pts_debug_message($message)
 {
 	if(IS_DEBUG_MODE)
