@@ -283,6 +283,8 @@ function pts_env_variables()
 	"VIDEO_WIDTH" => current_screen_width(),
 	"VIDEO_HEIGHT" => current_screen_height(),
 	"VIDEO_MONITOR_COUNT" => graphics_monitor_count(),
+	"VIDEO_MONITOR_LAYOUT" => graphics_monitor_layout(),
+	"VIDEO_MONITOR_SIZES" => graphics_monitor_resolutions(),
 	"OPERATING_SYSTEM" => pts_vendor_identifier(),
 	"OS" => os_vendor(),
 	"OS_VERSION" => os_version(),

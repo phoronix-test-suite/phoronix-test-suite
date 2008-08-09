@@ -76,6 +76,18 @@ function graphics_monitor_count()
 
 	return $monitor_count;
 }
+function graphics_monitor_layout()
+{
+	$layout = array("CENTER");
+
+	return implode(",", $layout);
+}
+function graphics_monitor_resolutions()
+{
+	$resolutions = array(current_screen_resolution());
+
+	return implode(",", $resolutions);
+}
 function graphics_antialiasing_level()
 {
 	$aa_level = "";
