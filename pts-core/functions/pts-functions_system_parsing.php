@@ -199,6 +199,16 @@ function read_nvidia_extension($attribute)
 
 	return $nv_info;
 }
+function read_xpdy_monitor_info()
+{
+	$info = trim(shell_exec("xdpyinfo -ext XINERAMA 2>&1 | grep head"));
+	$monitor_info = array();
+
+	foreach(explode("\n", $info) as $xdpyinfo_line)
+		array_push($monitor_info, $xdpyinfo_line);
+
+	return $monitor_info;
+}
 function read_amd_pcsdb($attribute)
 {
 	$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
