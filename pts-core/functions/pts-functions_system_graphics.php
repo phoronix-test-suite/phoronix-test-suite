@@ -21,6 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+define("DEFAULT_VIDEO_RAM_CAPACITY", 128);
+
 function graphics_frequency_string()
 {
 	if(IS_ATI_GRAPHICS)
@@ -517,7 +519,7 @@ function graphics_processor_string()
 
 		if(count($adapters) > 0)
 		{
-			if($video_ram > 128)
+			if($video_ram > DEFAULT_VIDEO_RAM_CAPACITY)
 				$video_ram = " " . $video_ram . "MB";
 			else
 				$video_ram = "";
@@ -562,7 +564,7 @@ function graphics_processor_string()
 			$info = read_sysctl("dev.agp.0.%desc");
 	}
 
-	if(IS_NVIDIA_GRAPHICS && $video_ram > 128 && strpos($info, $video_ram) == FALSE)
+	if(IS_NVIDIA_GRAPHICS && $video_ram > DEFAULT_VIDEO_RAM_CAPACITY && strpos($info, $video_ram) == FALSE)
 	{
 		$info .= " " . $video_ram . "MB";
 	}
@@ -598,9 +600,9 @@ function graphics_subsystem_version()
 }
 function graphics_memory_capacity()
 {
-	$video_ram = 128;
+	$video_ram = DEFAULT_VIDEO_RAM_CAPACITY;
 
-	if(($vram = getenv("VIDEO_MEMORY")) != FALSE && is_numeric($vram) && $vram > 128)
+	if(($vram = getenv("VIDEO_MEMORY")) != FALSE && is_numeric($vram) && $vram > DEFAULT_VIDEO_RAM_CAPACITY)
 	{
 		$video_ram = $vram;
 	}
@@ -633,7 +635,7 @@ function graphics_memory_capacity()
 	}
 
 	if(IS_BSD)
-		$video_ram = 128;
+		$video_ram = DEFAULT_VIDEO_RAM_CAPACITY;
 
 	return $video_ram;
 }
