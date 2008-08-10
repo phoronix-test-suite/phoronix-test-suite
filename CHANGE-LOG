@@ -24,6 +24,7 @@ Phoronix Test Suite
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 - pts: Improved sensor detection for compliance-sensors test
 - pts: Update download links for text file on espeak test
+- pts: Update Tremulous download file for tremulous test profile
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 
 Phoronix Test Suite 1.2.0 Beta 1

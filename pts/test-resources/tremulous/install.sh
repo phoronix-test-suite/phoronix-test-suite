@@ -1,19 +1,13 @@
 #!/bin/sh
 
-chmod +x tremulous-1.1.0-installer.x86.run
-./tremulous-1.1.0-installer.x86.run --target tremulous_ --noexec
-
+unzip -o tremulous-1.1.0.zip -d tremulous_/
 tar -xvf tremulous-benchmark-1.tar.gz
-mv tremulous-benchmark.cfg tremulous_/base/
-mv demos/ tremulous_/base/
 
-cd tremulous_
-cp bin/Linux/x86/tremulous.x86 tremulous.x86
-
-cd ..
+mv tremulous-benchmark.cfg tremulous_/tremulous/base/
+mv demos/ tremulous_/tremulous/base/
 
 echo "#!/bin/sh
-cd tremulous_/
+cd tremulous_/tremulous/
 ./tremulous.x86 \$@ 2>&1 | grep fps
 " > tremulous
 chmod +x tremulous
