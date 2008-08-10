@@ -146,12 +146,13 @@ switch($COMMAND)
 
 			if(IS_DEBUG_MODE)
 			{
+				$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 				$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 				$test_download_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
 				$test_environment_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 				$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 
-				printf("%-18ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $identifier, $version, $status, $license, $test_download_size, $test_environment_size, $test_maintainer);
+				printf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $identifier, $test_version, $version, $status, $license, $test_download_size, $test_environment_size, $test_maintainer);
 			}
 			else
 			{

@@ -41,7 +41,7 @@ function pts_directory()
 }
 function pts_init()
 {
-	// Switch time-zone
+	// Set time-zone
 	date_default_timezone_set("UTC");
 
 	// PTS Defines

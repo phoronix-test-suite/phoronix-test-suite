@@ -634,9 +634,6 @@ function graphics_memory_capacity()
 		}
 	}
 
-	if(IS_BSD)
-		$video_ram = DEFAULT_VIDEO_RAM_CAPACITY;
-
 	return $video_ram;
 }
 function opengl_version()

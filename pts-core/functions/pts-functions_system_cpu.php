@@ -101,7 +101,7 @@ function processor_string()
 	{
 		if(IS_SOLARIS)
 		{
-			$info = trim(shell_exec("dmesg | grep cpu0"));
+			$info = trim(shell_exec("dmesg 2>&1 | grep cpu0"));
 			$info = substr($info, strrpos($info, "cpu0:") + 6);
 			$info = append_processor_frequency(pts_clean_information_string($info), 0);
 		}
@@ -258,4 +258,5 @@ function current_processor_usage()
 
 	return pts_trim_double($percent);
 }
+
 ?>
