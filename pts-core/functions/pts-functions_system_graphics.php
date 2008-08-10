@@ -491,6 +491,7 @@ function graphics_processor_frequency()
 function graphics_processor_string()
 {
 	$info = shell_exec("glxinfo 2>&1 | grep renderer");
+	$video_ram = graphics_memory_capacity();
 
 	if(($pos = strpos($info, "renderer string:")) > 0)
 	{
@@ -516,24 +517,22 @@ function graphics_processor_string()
 
 		if(count($adapters) > 0)
 		{
-			$vram = graphics_memory_capacity();
-
-			if($vram > 128)
-				$vram = " " . $vram . "MB";
+			if($video_ram > 128)
+				$video_ram = " " . $video_ram . "MB";
 			else
-				$vram = "";
+				$video_ram = "";
 
 			if($crossfire_card_count > 1 && $crossfire_card_count <= count($adapters))
 			{
 				$unique_adapters = array_unique($adapters);
 
 				if(count($unique_adapters) == 1)
-					$info = $crossfire_card_count . " x " . $adapters[0] . $vram . " CrossFire";
+					$info = $crossfire_card_count . " x " . $adapters[0] . $video_ram . " CrossFire";
 				else
 					$info = implode(", ", $unique_adapters) . " CrossFire";
 			}
 			else
-				$info = $adapters[0] . $vram;
+				$info = $adapters[0] . $video_ram;
 		}
 	}
 
@@ -561,6 +560,11 @@ function graphics_processor_string()
 
 		if($info == "Unknown")
 			$info = read_sysctl("dev.agp.0.%desc");
+	}
+
+	if(IS_NVIDIA_GRAPHICS && $video_ram > 128 && strpos($info, $video_ram) == FALSE)
+	{
+		$info .= " " . $video_ram . "MB";
 	}
 
 	$info = pts_clean_information_string($info);
@@ -608,8 +612,9 @@ function graphics_memory_capacity()
 		}
 		else if(is_file("/var/log/Xorg.0.log"))
 		{
-			// Attempt ATI (Binary Driver) Video RAM detection
+			// Attempt Video RAM detection using X log
 			// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
+			// xf86-video-ati and xf86-video-radeonhd also report their memory information in a similar format
 
 			$info = shell_exec("cat /var/log/Xorg.0.log | grep VideoRAM");
 
