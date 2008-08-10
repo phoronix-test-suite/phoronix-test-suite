@@ -16,7 +16,11 @@ else
 fi
 
 if [ -x /usr/sbin/synaptic ] && [ ! -z "$DISPLAY" ]; then
-	$ROOT "sh -c 'echo \"$@ install\" | /usr/sbin/synaptic --set-selections --non-interactive --hide-main-window'"
+	TEMPFILE=`/bin/tempfile`
+	echo "#!/bin/sh\necho \"$@ install\" | /usr/sbin/synaptic --set-selections --non-interactive --hide-main-window" > $TEMPFILE
+	chmod +x $TEMPFILE
+	$ROOT $TEMPFILE
+	rm -f $TEMPFILE
 else
 	$ROOT "apt-get -y install $@"
 fi
