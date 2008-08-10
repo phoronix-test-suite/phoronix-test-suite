@@ -269,29 +269,40 @@ function display_web_browser($URL, $alt_text = NULL, $default_open = FALSE)
 }
 function pts_env_variables()
 {
-	return array(
-	"PTS_TYPE" => PTS_TYPE,
-	"PTS_VERSION" => PTS_VERSION,
-	"PTS_CODENAME" => PTS_CODENAME,
-	"PTS_DIR" => PTS_DIR,
-	"FONT_DIR" => FONT_DIR,
-	"PHP_BIN" => PHP_BIN,
-	"NUM_CPU_CORES" => cpu_core_count(),
-	"NUM_CPU_JOBS" => cpu_job_count(),
-	"SYS_MEMORY" => memory_mb_capacity(),
-	"VIDEO_MEMORY" => graphics_memory_capacity(),
-	"VIDEO_WIDTH" => current_screen_width(),
-	"VIDEO_HEIGHT" => current_screen_height(),
-	"VIDEO_MONITOR_COUNT" => graphics_monitor_count(),
-	"VIDEO_MONITOR_LAYOUT" => graphics_monitor_layout(),
-	"VIDEO_MONITOR_SIZES" => graphics_monitor_resolutions(),
-	"OPERATING_SYSTEM" => pts_vendor_identifier(),
-	"OS" => os_vendor(),
-	"OS_VERSION" => os_version(),
-	"OS_ARCH" => kernel_arch(),
-	"OS_TYPE" => OPERATING_SYSTEM,
-	"THIS_RUN_TIME" => THIS_RUN_TIME
-	);
+	if(isset($GLOBALS["PTS_VAR_CACHE"]["ENV_VARIABLES"]))
+	{
+		$var_array = $GLOBALS["PTS_VAR_CACHE"]["ENV_VARIABLES"];
+	}
+	else
+	{
+		$var_array = array(
+		"PTS_TYPE" => PTS_TYPE,
+		"PTS_VERSION" => PTS_VERSION,
+		"PTS_CODENAME" => PTS_CODENAME,
+		"PTS_DIR" => PTS_DIR,
+		"FONT_DIR" => FONT_DIR,
+		"PHP_BIN" => PHP_BIN,
+		"NUM_CPU_CORES" => cpu_core_count(),
+		"NUM_CPU_JOBS" => cpu_job_count(),
+		"SYS_MEMORY" => memory_mb_capacity(),
+		"VIDEO_MEMORY" => graphics_memory_capacity(),
+		"VIDEO_WIDTH" => current_screen_width(),
+		"VIDEO_HEIGHT" => current_screen_height(),
+		"VIDEO_MONITOR_COUNT" => graphics_monitor_count(),
+		"VIDEO_MONITOR_LAYOUT" => graphics_monitor_layout(),
+		"VIDEO_MONITOR_SIZES" => graphics_monitor_resolutions(),
+		"OPERATING_SYSTEM" => pts_vendor_identifier(),
+		"OS" => os_vendor(),
+		"OS_VERSION" => os_version(),
+		"OS_ARCH" => kernel_arch(),
+		"OS_TYPE" => OPERATING_SYSTEM,
+		"THIS_RUN_TIME" => THIS_RUN_TIME
+		);
+
+		$GLOBALS["PTS_VAR_CACHE"]["ENV_VARIABLES"] = $var_array;
+	}
+
+	return $var_array;
 }
 function pts_input_correct_results_path($path)
 {

@@ -168,9 +168,9 @@ function pts_module_process_extensions($extensions)
 }
 function pts_module_type($name)
 {
-	if(isset($GLOBALS["PTS_MODULE_CACHE"]["MODULE_TYPES"][$name]))
+	if(isset($GLOBALS["PTS_VAR_CACHE"]["MODULE_TYPES"][$name]))
 	{
-		$type = $GLOBALS["PTS_MODULE_CACHE"]["MODULE_TYPES"][$name];
+		$type = $GLOBALS["PTS_VAR_CACHE"]["MODULE_TYPES"][$name];
 	}
 	else
 	{
@@ -181,7 +181,7 @@ function pts_module_type($name)
 		else
 			$type = null;
 
-		$GLOBALS["PTS_MODULE_CACHE"]["MODULE_TYPES"][$name] = $type;
+		$GLOBALS["PTS_VAR_CACHE"]["MODULE_TYPES"][$name] = $type;
 	}
 
 	return $type;
