@@ -96,7 +96,7 @@ function read_sensors($attribute)
 
 	return $value;
 }
-function read_pci($desc)
+function read_pci($desc, $clean_string = true)
 {
 	$info = shell_exec("lspci 2>&1");
 
@@ -123,7 +123,7 @@ function read_pci($desc)
 
 		if(($strlen = strlen($info)) < 6 || $strlen > 96)
 			$info = "N/A";
-		else
+		else if($clean_string)
 			$info = pts_clean_information_string($info);
 	}
 

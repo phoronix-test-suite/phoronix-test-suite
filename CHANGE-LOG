@@ -19,6 +19,7 @@ Phoronix Test Suite
 - pts-core: Improve system voltage detection through LM_Sensors
 - pts-core: Add ATI CrossFire detection support
 - pts-core: Improved Video RAM detection when parsing X log
+- pts-core: Improve GPU string detection for open-source drivers
 
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 - pts: Improved sensor detection for compliance-sensors test

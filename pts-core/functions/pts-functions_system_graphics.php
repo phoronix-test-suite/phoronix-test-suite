@@ -539,13 +539,13 @@ function graphics_processor_string()
 
 	if(empty($info) || strpos($info, "Mesa ") !== FALSE)
 	{
-		$info_pci = read_pci("VGA compatible controller:");
+		$info_pci = read_pci("VGA compatible controller:", false);
 
 		if(!empty($info_pci) && $info_pci != "Unknown")
 			$info = $info_pci;
 	}
 
-	if($info == "Unknown")
+	if(strpos($info, "Unknown") !== FALSE)
 	{
 		$log_parse = shell_exec("cat /var/log/Xorg.0.log | grep Chipset");
 		$log_parse = substr($log_parse, strpos($log_parse, "Chipset") + 8);
