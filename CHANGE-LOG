@@ -26,6 +26,7 @@ Phoronix Test Suite
 - pts: Improved sensor detection for compliance-sensors test
 - pts: Update download links for text file on espeak test
 - pts: Update Tremulous download file for tremulous test profile
+- pts: Fixes for synaptic in install-ubuntu-packages.sh
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 
 Phoronix Test Suite 1.2.0 Beta 1

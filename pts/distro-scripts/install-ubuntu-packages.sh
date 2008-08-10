@@ -16,7 +16,7 @@ else
 fi
 
 if [ -x /usr/sbin/synaptic ] && [ ! -z "$DISPLAY" ]; then
-	echo "$@ install" | sudo synaptic --set-selections --non-interactive --hide-main-window
+	$ROOT "sh -c 'echo \"$@ install\" | /usr/sbin/synaptic --set-selections --non-interactive --hide-main-window'"
 else
 	$ROOT "apt-get -y install $@"
 fi
