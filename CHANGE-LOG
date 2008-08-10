@@ -10,6 +10,7 @@ Phoronix Test Suite
 - pts-core: Add test-module and debug-module options for running through all module function calls for testing their functionality
 - pts-core: pts_module_set_environment_variable() to pts_set_environment_variable()
 - pts-core: Improve "Total Estimated Download Size" text
+- pts-core: Add ATI OverDrive support for reading thermal and clock information
 - pts-core: Fix for xrandr_available_modes() parsing on X.Org 7.1
 - pts-core: Add detection support for number of monitors enabled. Test profiles can access this using $VIDEO_MONITOR_COUNT variable
 - pts-core: Add a hard-coded AMDPCSDB (AMD Persistent Configuration Store Data-Base) parser for fglrx driver when aticonfig fails

@@ -23,7 +23,11 @@
 
 function graphics_frequency_string()
 {
-	$freq = graphics_processor_frequency();
+	if(IS_ATI_GRAPHICS)
+		$freq = graphics_processor_stock_frequency();
+	else
+		$freq = graphics_processor_frequency();
+
 	$freq_string = $freq[0] . "/" . $freq[1];
 
 	if($freq_string == "0/0")
@@ -47,7 +51,10 @@ function graphics_processor_temperature()
 	}
 	else if(IS_ATI_GRAPHICS)
 	{
-		$temp_c = read_ati_extension("CoreTemperature");
+		$temp_c = read_ati_overdrive("Temperature");
+
+		if($temp_c == -1)
+			$temp_c = read_ati_extension("CoreTemperature");
 	}
 
 	if(empty($temp_c) || !is_numeric($temp_c))
@@ -420,11 +427,20 @@ function graphics_processor_stock_frequency()
 	}
 	else if(IS_ATI_GRAPHICS) // ATI GPU
 	{
-		$ati_freq = read_ati_extension("Stock3DFrequencies");
+		$od_clocks = read_ati_overdrive("CurrentPeak");
 
-		$ati_freq = explode(',', $ati_freq);
-		$core_freq = $ati_freq[0];
-		$mem_freq = $ati_freq[1];
+		if(is_array($od_clocks) && count($od_clocks) == 2) // ATI OverDrive
+		{
+			$core_freq = $od_clocks[0];
+			$mem_freq = $od_clocks[1];
+		}
+		else // Fallback for ATI GPUs w/o OverDrive Support
+		{
+			$ati_freq = read_ati_extension("Stock3DFrequencies");
+			$ati_freq = explode(",", $ati_freq);
+			$core_freq = $ati_freq[0];
+			$mem_freq = $ati_freq[1];
+		}
 	}
 
 	if(!is_numeric($core_freq))
@@ -449,11 +465,20 @@ function graphics_processor_frequency()
 	}
 	else if(IS_ATI_GRAPHICS) // ATI GPU
 	{
-		$ati_freq = read_ati_extension("Current3DFrequencies");
+		$od_clocks = read_ati_overdrive("CurrentClocks");
 
-		$ati_freq = explode(',', $ati_freq);
-		$core_freq = $ati_freq[0];
-		$mem_freq = $ati_freq[1];
+		if(is_array($od_clocks) && count($od_clocks) == 2) // ATI OverDrive
+		{
+			$core_freq = $od_clocks[0];
+			$mem_freq = $od_clocks[1];
+		}
+		else // Fallback for ATI GPUs w/o OverDrive Support
+		{
+			$ati_freq = read_ati_extension("Current3DFrequencies");
+			$ati_freq = explode(",", $ati_freq);
+			$core_freq = $ati_freq[0];
+			$mem_freq = $ati_freq[1];
+		}
 	}
 
 	if(!is_numeric($core_freq))
@@ -595,7 +620,9 @@ function graphics_memory_capacity()
 			{
 				$info = substr($info, $pos + 5);
 				$info = substr($info, 0, strpos($info, " "));
-				$video_ram = intval($info) / 1024;
+
+				if($info > 65535)
+					$video_ram = intval($info) / 1024;
 			}
 		}
 	}
@@ -637,7 +664,12 @@ function graphics_gpu_usage()
 	$gpu_usage = 0;
 
 	if(IS_ATI_GRAPHICS)
-		$gpu_usage = read_ati_extension("GPUActivity");
+	{
+		$gpu_usage = read_ati_overdrive("GPUload");
+
+		if($gpu_usage == -1) // OverDrive isn't supported on the ATI hardware or a supported driver isn't loaded
+			$gpu_usage = read_ati_extension("GPUActivity");
+	}
 
 	return $gpu_usage;
 }

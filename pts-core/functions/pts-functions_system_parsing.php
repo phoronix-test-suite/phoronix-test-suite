@@ -382,4 +382,53 @@ function read_ati_extension($attribute)
 
 	return $ati_info;
 }
+function read_ati_overdrive($attribute, $adapter = 0)
+{
+	$value = -1;
+
+	if($attribute == "Temperature")
+	{
+		$info = shell_exec("aticonfig --adapter=" . $adapter . " --od-gettemperature 2>&1");
+
+		if(($start = strpos($info, "Temperature -")) !== FALSE)
+		{
+			$info = substr($info, $start + 14);
+			$value = substr($info, 0, strpos($info, " C"));
+		}
+	}
+	else
+	{
+		$info = shell_exec("aticonfig --adapter=" . $adapter . " --od-getclocks 2>&1");
+
+		if(strpos($info, "GPU") !== FALSE)
+		{
+			foreach(explode("\n", $info) as $line)
+			{
+				$line_r = explode(":", $line);
+
+				if(count($line_r) == 2)
+				{
+					$od_option = str_replace(" ", "", trim($line_r[0]));
+
+					if($od_option == $attribute)
+					{
+						$od_value = trim($line_r[1]);
+						$od_value = preg_replace("/\s+/", " ", $od_value);
+						$od_value = str_replace(array("%"), "", $od_value);
+
+						$od_value_r = explode(" ", $od_value);
+
+						if(count($od_value_r) == 1)
+							$value = $od_value_r[0];
+						else
+							$value = $od_value_r;												
+					}
+				}
+			}
+		}
+	}
+
+	return $value;
+}
+
 ?>
