@@ -1,13 +1,13 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Scientific</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Andrew Schofield</Maintainer>
 		<DownloadSize>30</DownloadSize>
-		<EnvironmentSize>247</EnvironmentSize>
+		<EnvironmentSize>106</EnvironmentSize>
 		<ProjectURL>http://www.gromacs.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
@@ -25,7 +25,6 @@
 		<Option>
 			<DisplayName>Molecule</DisplayName>
 			<Identifier>molecule</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>Villin</Name>
@@ -48,7 +47,6 @@
 		<Option>
 			<DisplayName>Run-type</DisplayName>
 			<Identifier>runtype</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>Single Node (1 thread)</Name>
@@ -57,6 +55,20 @@
 				<Entry>
 					<Name>Parallel (multiple threads)</Name>
 					<Value>mpi</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>Precision</DisplayName>
+			<Identifier>precision</Identifier>
+			<Menu>
+				<Entry>
+					<Name>Single Precision (SSE)</Name>
+					<Value>single</Value>
+				</Entry>
+				<Entry>
+					<Name>Double Precision (SSE2)</Name>
+					<Value>double</Value>
 				</Entry>
 			</Menu>
 		</Option>

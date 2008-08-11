@@ -1,6 +1,9 @@
 #!/bin/sh
 
 THIS_DIR=$(pwd)
+rm -rf $THIS_DIR/fftw_
+rm -rf $THIS_DIR/mpich2_
+rm -rf $THIS_DIR/gromacs333_
 mkdir $THIS_DIR/fftw_
 mkdir $THIS_DIR/mpich2_
 mkdir $THIS_DIR/gromacs333_
@@ -27,13 +30,21 @@ rm -rf mpich2-1.0.7/
 
 tar -xvf gromacs-3.3.3.tar.gz
 cd gromacs-3.3.3/
-./configure --prefix=$THIS_DIR/gromacs333_ --enable-mpi CPPFLAGS=-I$THIS_DIR/fftw_/include LDFLAGS=-L$THIS_DIR/fftw_/lib PATH=$THIS_DIR/mpich2_/bin/:$PATH
+./configure --prefix=$THIS_DIR/gromacs333_ --enable-mpi --program-suffix="_SSE_MPI" CPPFLAGS=-I$THIS_DIR/fftw_/include LDFLAGS=-L$THIS_DIR/fftw_/lib PATH=$THIS_DIR/mpich2_/bin/:$PATH
 make -j $NUM_CPU_JOBS PATH=$THIS_DIR/mpich2_/bin/:$PATH
 make install
 make clean
-./configure --prefix=$THIS_DIR/gromacs333_ CPPFLAGS=-I$THIS_DIR/fftw_/include LDFLAGS=-L$THIS_DIR/fftw_/lib --program-suffix="_single"
-make mdrun
-make install-mdrun
+./configure --prefix=$THIS_DIR/gromacs333_ CPPFLAGS=-I$THIS_DIR/fftw_/include LDFLAGS=-L$THIS_DIR/fftw_/lib --program-suffix="_SSE"
+make -j $NUM_CPU_JOBS
+make install
+make clean
+./configure --prefix=$THIS_DIR/gromacs333_ --enable-mpi --disable-float --program-suffix="_SSE2_MPI" CPPFLAGS=-I$THIS_DIR/fftw_/include LDFLAGS=-L$THIS_DIR/fftw_/lib PATH=$THIS_DIR/mpich2_/bin/:$PATH
+make -j $NUM_CPU_JOBS PATH=$THIS_DIR/mpich2_/bin/:$PATH
+make install
+make clean
+./configure --prefix=$THIS_DIR/gromacs333_ CPPFLAGS=-I$THIS_DIR/fftw_/include LDFLAGS=-L$THIS_DIR/fftw_/lib --disable-float --program-suffix="_SSE2"
+make -j $NUM_CPU_JOBS
+make install
 cd ..
 rm -rf gromacs-3.3.3/
 
@@ -49,7 +60,19 @@ fi
 mkdir $THIS_DIR/gmxbench
 tar -xvf gmxbench-3.0.tar.gz -C $THIS_DIR/gmxbench/ 1>/dev/null 2>&1
 
-case "\$1" in
+case \"\$3\" in
+\"single\")
+    PRECISION=\"SSE\"
+    ;;
+\"double\")
+    PRECISION=\"SSE2\"
+    ;;
+*)
+    exit
+    ;;
+esac
+
+case \"\$1\" in
 \"villin\")
 	cd $THIS_DIR/gmxbench/d.villin/
 	;;
@@ -67,18 +90,15 @@ case "\$1" in
 	exit
 	;;
 esac
-#cat grompp.mdp | sed 's/nsteps                   = 5000/nsteps                   = 5000/' > grompp.mdp.new
-#rm -f grompp.mdp
-#mv grompp.mdp.new grompp.mdp
 
-case "\$2" in
+case \"\$2\" in
 \"mpi\")
-	$THIS_DIR/gromacs333_/bin/grompp -np \$NUM_CPU_CORES -nov 1>/dev/null 2>&1
-	$THIS_DIR/mpich2_/bin/mpiexec -np \$NUM_CPU_CORES $THIS_DIR/gromacs333_/bin/mdrun 1>$THIS_DIR/flopcount 2>&1
+        $THIS_DIR/gromacs333_/bin/grompp_\$PRECISION\_MPI -np \$NUM_CPU_CORES -nov 1>/dev/null 2>&1
+        $THIS_DIR/mpich2_/bin/mpiexec -np \$NUM_CPU_CORES $THIS_DIR/gromacs333_/bin/mdrun_\$PRECISION\_MPI 1>$THIS_DIR/flopcount 2>&1
 	;;
 \"single-node\")
-	$THIS_DIR/gromacs333_/bin/grompp -nov 1>/dev/null 2>&1
-	$THIS_DIR/gromacs333_/bin/mdrun_single 1>$THIS_DIR/flopcount 2>&1
+        $THIS_DIR/gromacs333_/bin/grompp_\$PRECISION -nov 1>/dev/null 2>&1
+        $THIS_DIR/gromacs333_/bin/mdrun_\$PRECISION 1>$THIS_DIR/flopcount 2>&1
 	;;
 *)
 	exit
