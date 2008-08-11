@@ -1,19 +1,19 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>272</DownloadSize>
-		<EnvironmentSize>279</EnvironmentSize>
+		<DownloadSize>309</DownloadSize>
+		<EnvironmentSize>329</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://openarena.ws/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>OpenArena</Title>
-		<Version>0.7.6</Version>
+		<Version>0.8.0</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average FPS</ResultScale>
 		<Proportion>HIB</Proportion>

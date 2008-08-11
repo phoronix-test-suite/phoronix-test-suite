@@ -1,12 +1,12 @@
 #!/bin/sh
 
-unzip -o oa076.zip
-cd openarena-0.7.6/baseoa
-tar -xvf ../../openarena-benchmark-files-2.tar.gz
+unzip -o oa080.zip
+cd openarena-0.8.0/baseoa
+tar -xvf ../../openarena-benchmark-files-3.tar.gz
 cd ../..
 
 echo "#!/bin/sh
-cd openarena-0.7.6/
+cd openarena-0.8.0/
 
 case \$OS_ARCH in
 	\"x86_64\" )
