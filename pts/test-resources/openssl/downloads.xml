@@ -1,8 +1,8 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.openssl.org/source/openssl-0.9.8g.tar.gz, http://ftp.uoi.gr/pub/security/OpenSSL/source/openssl-0.9.8g.tar.gz, http://ftp.osuosl.org/pub/blfs/6.3/o/openssl-0.9.8g.tar.gz</URL>
-			<MD5>acf70a16359bf3658bdfb74bda1c4419</MD5>
+			<URL>ftp://ftp.openssl.org/source/openssl-0.9.8h.tar.gz, http://ftp.uoi.gr/pub/security/OpenSSL/source/openssl-0.9.8h.tar.gz</URL>
+			<MD5>7d3d41dafc76cf2fcb5559963b5783b3</MD5>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

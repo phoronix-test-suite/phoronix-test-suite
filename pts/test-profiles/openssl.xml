@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -13,7 +13,7 @@
 	<TestInformation>
 		<Title>OpenSSL</Title>
 		<SubTitle>RSA 4096-bit Performance</SubTitle>
-		<Version>0.9.8g</Version>
+		<Version>0.9.8h</Version>
 		<TimesToRun>4</TimesToRun>
 		<ResultScale>Signs Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
