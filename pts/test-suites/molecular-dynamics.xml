@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<Title>Molecular Dynamics Test Suite</Title>
 		<Maintainer>Andrew Schofield</Maintainer>
@@ -8,22 +8,42 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>md-gromacs</Test>
-		<Arguments>villin single-node</Arguments>
-		<Description>Single-node Villin</Description>
+		<Arguments>villin single-node single</Arguments>
+		<Description>Single-node Villin with Single Precision</Description>
 	</RunTest>
 	<RunTest>
 		<Test>md-gromacs</Test>
-		<Arguments>villin mpi</Arguments>
-		<Description>Parallel Villin</Description>
+		<Arguments>villin single-node double</Arguments>
+		<Description>Single-node Villin with Double Precision</Description>
 	</RunTest>
 	<RunTest>
 		<Test>md-gromacs</Test>
-		<Arguments>lzm single-node</Arguments>
-		<Description>Single-node Lysozyme</Description>
+		<Arguments>villin mpi single</Arguments>
+		<Description>Parallel Villin with Single Precision</Description>
 	</RunTest>
 	<RunTest>
 		<Test>md-gromacs</Test>
-		<Arguments>lzm mpi</Arguments>
-		<Description>Parallel Lysozyme</Description>
+		<Arguments>villin mpi double</Arguments>
+		<Description>Parallel Villin with Double Precision</Description>
+	</RunTest>
+	<RunTest>
+		<Test>md-gromacs</Test>
+		<Arguments>lzm single-node single</Arguments>
+		<Description>Single-node Lysozyme with Single Precision</Description>
+	</RunTest>
+	<RunTest>
+		<Test>md-gromacs</Test>
+		<Arguments>lzm single-node double</Arguments>
+		<Description>Single-node Lysozyme with Double Precision</Description>
+	</RunTest>
+	<RunTest>
+		<Test>md-gromacs</Test>
+		<Arguments>lzm mpi single</Arguments>
+		<Description>Parallel Lysozyme with Single Precision</Description>
+		</RunTest>
+	<RunTest>
+		<Test>md-gromacs</Test>
+		<Arguments>lzm mpi double</Arguments>
+		<Description>Parallel Lysozyme with Double Precision</Description>
 	</RunTest>
 </PhoronixTestSuite>
