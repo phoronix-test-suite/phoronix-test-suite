@@ -238,6 +238,7 @@ if($TO_RUN_TYPE == "TEST")
 
 		for($option_count = 0; $option_count < count($settings_name); $option_count++)
 		{
+			$this_identifier = $settings_identifier[$option_count];
 			if(!empty($settings_menu[$option_count]))
 			{
 				$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
