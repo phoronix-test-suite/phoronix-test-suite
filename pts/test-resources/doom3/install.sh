@@ -162,6 +162,10 @@ if [ -f doom3-game-files.tar ]
   then
      tar -k -C $1/base -xvf $1/doom3-game-files.tar
 fi
+if [ -f doom3-key.tar ]
+  then
+     tar -xvf doom3-key.tar
+fi
 
 echo "Doom 3 Game Files (*.pk4) Must Be Copied Into $1/base"
 echo "Also Copy Your Game Key File To $HOME/.doom3/base/doomkey (If Not Already There)"

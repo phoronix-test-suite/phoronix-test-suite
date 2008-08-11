@@ -8,5 +8,9 @@
 			<URL>doom3-game-files.tar</URL>
 			<FileName>doom3-game-files.tar</FileName>
 		</Package>
+		<Package>
+			<URL>doom3-key.tar</URL>
+			<FileName>doom3-key.tar</FileName>
+		</Package>
 	</Downloads>
 </PhoronixTestSuite>
