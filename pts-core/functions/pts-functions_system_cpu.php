@@ -47,7 +47,7 @@ function cpu_core_count()
 }
 function cpu_job_count()
 {
-	return cpu_core_count() + 1;
+	return cpu_core_count() * 2;
 }
 function processor_string()
 {
