@@ -30,6 +30,7 @@ Phoronix Test Suite
 - pts: Fixes for synaptic in install-ubuntu-packages.sh
 - pts: Upgrade Bonnie++ to 1.03d in bonnie test profile
 - pts: Have doom3 support installing the key if it's stored locally in the download-cache
+- pts: In encode-mp3 test profile upgrade to LAME 3.98
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 
 Phoronix Test Suite 1.2.0 Beta 1
