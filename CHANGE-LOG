@@ -36,6 +36,7 @@ Phoronix Test Suite
 - pts: Fix ut2004-demo benchmark log parsing after $HOME change in pts-core
 - pts: Upgrade openarena test profile to OpenArena 0.8.0
 - pts: Upgrade sqlite test profile to SQLite 3.6.1
+- pts: Fix warsow test profile after $HOME change in pts-core
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 
 Phoronix Test Suite 1.2.0 Beta 1

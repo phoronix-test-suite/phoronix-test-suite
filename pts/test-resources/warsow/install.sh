@@ -18,6 +18,6 @@ case \$OS_ARCH in
 	* )
 	./warsow.i386 +logconsole 1 \$@ | grep seconds
 	;;
-        cat ~/.warsow/basewsw/1.log | grep seconds
-esac" > warsow
+esac
+cat .warsow/basewsw/1.log | grep seconds" > warsow
 chmod +x warsow
