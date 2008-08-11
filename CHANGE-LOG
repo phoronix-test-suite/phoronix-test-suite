@@ -18,6 +18,7 @@ Phoronix Test Suite
 - pts-core: Add support for reading xdpyinfo XINERAMA monitor information using read_xpdy_monitor_info()
 - pts-core: Improve system voltage detection through LM_Sensors
 - pts-core: Add ATI CrossFire detection support
+- pts-core: Add NVIDIA SLI detection support
 - pts-core: Improved Video RAM detection when parsing X log
 - pts-core: Improve GPU string detection for open-source drivers
 - pts-core: After first call, cache pts_env_variables()

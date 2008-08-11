@@ -537,6 +537,13 @@ function graphics_processor_string()
 				$info = $adapters[0] . $video_ram;
 		}
 	}
+	else if(IS_NVIDIA_GRAPHICS)
+	{
+		$sli_mode = read_nvidia_extension("SLIMode");
+
+		if(!empty($sli_mode) && $sli_mode != "Off")
+			$info .= " SLI";
+	}
 
 	if(empty($info) || strpos($info, "Mesa ") !== FALSE)
 	{
