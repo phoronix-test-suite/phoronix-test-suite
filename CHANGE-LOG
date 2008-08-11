@@ -32,6 +32,8 @@ Phoronix Test Suite
 - pts: Have doom3 support installing the key if it's stored locally in the download-cache
 - pts: In encode-mp3 test profile upgrade to LAME 3.98
 - pts: Upgrade iozone test profile to IOzone 3.308
+- pts: Upgrade openssl test profile to OpenSSL 0.9.8h
+- pts: Fix ut2004-demo benchmark log parsing after $HOME change in pts-core
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 
 Phoronix Test Suite 1.2.0 Beta 1
