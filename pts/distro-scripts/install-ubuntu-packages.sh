@@ -15,8 +15,8 @@ else
 	ROOT=""
 fi
 
-if [ -x /usr/sbin/synaptic ] && [ ! -z "$DISPLAY" ]; then
-	$ROOT "sh -c 'echo \"$@ install\" | /usr/sbin/synaptic --set-selections --non-interactive --hide-main-window'"
-else
+# if [ -x /usr/sbin/synaptic ] && [ ! -z "$DISPLAY" ]; then
+#	$ROOT "sh -c 'echo \"$@ install\" | /usr/sbin/synaptic --set-selections --non-interactive --hide-main-window'"
+# else
 	$ROOT "apt-get -y install $@"
-fi
+# fi
