@@ -23,6 +23,7 @@ Phoronix Test Suite
 - pts-core: Improve GPU string detection for open-source drivers
 - pts-core: After first call, cache pts_env_variables()
 - pts-core: NUM_CPU_JOBS now equals NUM_CPU_CORES * 2
+- pts-core: Fix similar attributes text in analyze option
 
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 - pts: Improved sensor detection for compliance-sensors test

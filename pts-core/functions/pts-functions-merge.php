@@ -385,7 +385,12 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 						$r_o_test_attributes_1 = explode(":", $test_attribute);
 
 						if(count($r_o_test_attributes_1) > 1)
-							$similar_attributes_text = trim($r_o_test_attributes_1[0]) . " Analysis [" . $similar_attributes_text . "]";
+						{
+							$similar_attributes_text = trim($r_o_test_attributes_1[0]) . " Analysis";
+
+							if(!empty($similar_attributes_text))
+								$similar_attributes_text .= " [" . $similar_attributes_text . "]";
+						}
 
 						$USE_ID = pts_request_new_id();
 						$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $results_name[$r_o]);
