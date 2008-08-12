@@ -417,7 +417,7 @@ if($SAVE_RESULTS)
 		echo "Results Saved To: " . SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml\n";
 		display_web_browser(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml");
 
-		$upload_results = pts_bool_question("Would you like to upload these results to PTS Global (Y/n)?", true, "UPLOAD_RESULTS");
+		$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
 
 		if($upload_results)
 		{
@@ -425,7 +425,7 @@ if($SAVE_RESULTS)
 
 			if(!IS_BATCH_MODE)
 			{
-				echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
+				echo "\nTags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
 				$tags_input .= trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
 			}
 
@@ -437,7 +437,7 @@ if($SAVE_RESULTS)
 			if(!empty($upload_url))
 			{
 				echo "\nResults Uploaded To: " . $upload_url . "\n";
-				display_web_browser($upload_url, "Do you want to launch PTS Global", true);
+				display_web_browser($upload_url, "Do you want to launch Phoronix Global", true);
 			}
 			else
 				echo "\nResults Failed To Upload.\n";

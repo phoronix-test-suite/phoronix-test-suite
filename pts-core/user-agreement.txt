@@ -6,7 +6,7 @@ The Phoronix Test Suite is the most comprehensive testing and benchmarking platf
 
 - For enterprise support, sponsorship, or other professional inquiries, contact phoronix@phoronix.com. Community support can be found in the Phoronix Forums @ http://www.phoronix.com/forums/.
 
-- If you opt to submit your test results to PTS Global, the final results as well as basic hardware and software details (what is shown in the PTS Results Viewer) will be shared and publicly accessible through http://global.phoronix-test-suite.com/.
+- If you opt to submit your test results to Phoronix Global, the final results as well as basic hardware and software details (what is shown in the PTS Results Viewer) will be shared and publicly accessible through http://global.phoronix-test-suite.com/.
 
 For more information on the Phoronix Test Suite and its possibilities, check out: http://www.phoronix-test-suite.com/ or view the included documentation.
 

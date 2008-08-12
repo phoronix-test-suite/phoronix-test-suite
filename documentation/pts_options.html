@@ -16,7 +16,7 @@
 directory (defaults to ~/.phoronix-test-suite/installed-tests). The install process 
 from downloading of the test files to the installation is fully automated. The 
 install option needs to be supplied with the test name or suite as an argument. 
-Optionally, a PTS Global ID or the name of a saved results file can be supplied 
+Optionally, a Phoronix Global ID or the name of a saved results file can be supplied 
 as well and the test(s) to install will automatically be extracted from that information. 
 If the test is already installed and was ran by the latest version of the installation 
 process, no action will be taken.</p>
@@ -30,7 +30,7 @@ the root password while the process is running. The distributions supported at
 this time are CentOS, Fedora, Mandriva Linux, and Ubuntu. For unsupported distributions, 
 the dependency names will be displayed along with common names for the package. 
 The install-dependencies option needs to be supplied with the test name or suite 
-as an argument. Optionally, a PTS Global ID or the name of a saved results file 
+as an argument. Optionally, a Phoronix Global ID or the name of a saved results file 
 can be supplied as well and the external dependencies will automatically be extracted 
 from that information. The install-dependencies option will only install the dependencies 
 on tests that utilize this feature. When using the install option, the external 
@@ -56,15 +56,15 @@ only be used when debugging a test installation problem.</p>
 <p>This option will install the selected test(s) (if needed) and will proceed 
 to run the test(s). This option is equivalent to running phoronix-test-suite with 
 the install option followed by the run option. The name of the test or suite must 
-be supplied or the PTS Global ID or saved local file name.</p>
+be supplied or the Phoronix Global ID or saved local file name.</p>
 <p><strong>run &lt;To Run&gt;</strong></p>
 <p>This option will run the selected test(s). The name of the test or suite must 
-be supplied or the PTS Global ID or saved local file name.</p>
+be supplied or the Phoronix Global ID or saved local file name.</p>
 <h2>Batch Run Options</h2>
 <p><strong>batch-setup</strong></p>
 <p>This option is used to configure the batch mode options for the Phoronix Test 
 Suite, which is subsequently written to the user configuration file. Among the 
-options are whether to automatically upload the test results to PTS Global and 
+options are whether to automatically upload the test results to Phoronix Global and 
 prompting for the saved file name.</p>
 <p><strong>batch-run &lt;To Run&gt;</strong></p>
 <p>This option and its arguments are equivalent to the run option, but the process 
@@ -113,12 +113,12 @@ first argument.</p>
 Test Suite. The merged results will then be saved to a new file if the targeted 
 save name is specified as the third argument otherwise the results will be re-saved 
 to first file. For the first two arguments, the name of the test or suite must 
-be supplied or the PTS Global ID or saved local file name.</p>
+be supplied or the Phoronix Global ID or saved local file name.</p>
 <p><strong>upload &lt;To Upload&gt;</strong></p>
-<p>This option allows you to upload a saved result to PTS Global.</p>
+<p>This option allows you to upload a saved result to Phoronix Global.</p>
 <p><strong>login</strong></p>
-<p>This option allows you to log-in to your PTS Global account and will store 
-this information automatically. A new PTS Global account can be created (for free) 
+<p>This option allows you to log-in to your Phoronix Global account and will store 
+this information automatically. A new Phoronix Global account can be created (for free) 
 at http://global.phoronix-test-suite.com/.</p>
 <h2>Module Options</h2>
 <p><strong>list-modules</strong></p>
@@ -136,9 +136,9 @@ Phoronix Test Suite thereby conserving bandwidth and reducing time. Through modi
 the user configuration file, the download cache location can be adjusted. The 
 Phoronix Test Suite supports reading from download caches over the network and 
 on remote file-systems.</p>
-<p><strong>clone &lt;PTS Global ID&gt;</strong></p>
-<p>This option will download a local copy of a file that was saved to PTS Global, 
-as long as a valid PTS Global ID is supplied.</p>
+<p><strong>clone &lt;Phoronix Global ID&gt;</strong></p>
+<p>This option will download a local copy of a file that was saved to Phoronix Global, 
+as long as a valid Phoronix Global ID is supplied.</p>
 <p><strong>system-info</strong></p>
 <p>This option will show installed system hardware and software that has been 
 detected by the Phoronix Test Suite.</p>

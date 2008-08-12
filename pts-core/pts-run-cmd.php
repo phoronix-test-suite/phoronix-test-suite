@@ -472,7 +472,7 @@ switch($COMMAND)
 			exit(0);
 		}
 
-		echo "\nTags are optional and used on PTS Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
+		echo "\nTags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
 		$tags_input = trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
 		echo "\n";
 
@@ -629,7 +629,7 @@ switch($COMMAND)
 		pts_user_config_init();
 		break;
 	case "LOGIN":
-		echo "\nIf you haven't already registered for your free PTS Global account, you can do so at http://global.phoronix-test-suite.com/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";
+		echo "\nIf you haven't already registered for your free Phoronix Global account, you can do so at http://global.phoronix-test-suite.com/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";
 		echo "User-Name: ";
 		$username = trim(fgets(STDIN));
 		echo "Password: ";
@@ -642,7 +642,7 @@ switch($COMMAND)
 			echo "\nAccount: " . $uploadkey . "\nAccount information written to user-config.xml.\n\n";
 		}
 		else
-			echo "\nPTS Global Account Not Found.\n";
+			echo "\nPhoronix Global Account Not Found.\n";
 		break;
 	case "BATCH_SETUP":
 		echo "\nThese are the default configuration options for when running the Phoronix Test Suite in a batch mode (i.e. running phoronix-test-suite batch-benchmark universe). Running in a batch mode is designed to be as autonomous as possible, except for where you'd like any end-user interaction.\n\n";
@@ -652,7 +652,7 @@ switch($COMMAND)
 		if($batch_options[0] == true)
 		{
 			$batch_options[1] = pts_bool_question("Open the web browser automatically when in batch mode (y/N)?", false);
-			$batch_options[2] = pts_bool_question("Auto upload the results to PTS Global (Y/n)?", true);
+			$batch_options[2] = pts_bool_question("Auto upload the results to Phoronix Global (Y/n)?", true);
 			$batch_options[3] = pts_bool_question("Prompt for test identifier (Y/n)?", true);
 			$batch_options[4] = pts_bool_question("Prompt for test description (Y/n)?", true);
 			$batch_options[5] = pts_bool_question("Prompt for saved results file-name (Y/n)?", true);
@@ -684,7 +684,7 @@ switch($COMMAND)
 				//display_web_browser(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");
 			}
 			else
-				echo $ARG_1 . " is an unrecognized PTS Global ID.\n\n";
+				echo $ARG_1 . " is an unrecognized Phoronix Global ID.\n\n";
 		}
 		break;
 	case "VERSION":

@@ -11,7 +11,7 @@
 		<div id="pts_header_top">
 			<div id="pts_header_top_center">
 				<div id="pts_header_top_title">Phoronix Test Suite</div>
-				<div id="pts_header_top_link_group"><a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a><a href="http://global.phoronix-test-suite.com/index.php?k=results">PTS Global</a></div>
+				<div id="pts_header_top_link_group"><a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a><a href="http://global.phoronix.com/">Phoronix Global</a></div>
 			</div>
 		</div>
 		<div id="pts_container">

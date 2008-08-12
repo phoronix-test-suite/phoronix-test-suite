@@ -211,8 +211,8 @@ Result Viewing Options:
 	remove-result <saved name>: Remove this saved result file
 	remove-all-results: Removes all saved results
 	merge-results <saved Name 1 / Global ID> <saved Name 2 / Global ID> <save name>: Merge two sets of results
-	upload <saved name>: Upload a saved set of results to PTS Global
-	login: Enter your PTS Global log-in information for uploading results
+	upload <saved name>: Upload a saved set of results to Phoronix Global
+	login: Enter your Phoronix Global log-in information for uploading results
 
 Module Options:
 	list-modules: List all installed/available PTS modules
