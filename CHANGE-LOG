@@ -41,6 +41,7 @@ Phoronix Test Suite
 - pts: Add single and double precision support to md-gromacs test profile
 - pts: Update molecular-dynamics test suite with new md-gromacs options
 - pts: PTS Global being renamed to Phoronix Global
+- pts_LineGraph: Fix regression that caused the line not to be plotted
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 
 Phoronix Test Suite 1.2.0 Beta 1

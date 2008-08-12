@@ -83,8 +83,8 @@ class pts_LineGraph extends pts_CustomGraph
 				if($px_from_left > $this->graph_left_end)
 					$px_from_left = $this->graph_left_end - 1;
 
-				if($value_plot_top <= $this->graph_top_end)
-					$value_plot_top = $this->graph_top_end + 1;
+				if($value_plot_top >= $this->graph_top_end)
+					$value_plot_top = $this->graph_top_end - 1;
 
 				if($previous_placement != -1 && $previous_offset != -1)
 				{
