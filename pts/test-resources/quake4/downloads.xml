@@ -12,6 +12,10 @@
 			<URL>quake4-game-files.tar</URL>
 			<FileName>quake4-game-files.tar</FileName>
 		</Package>
+		<Package>
+			<URL>quake4-key.tar</URL>
+			<FileName>quake4-key.tar</FileName>
+		</Package>
 	</Downloads>
 </PhoronixTestSuite>
 

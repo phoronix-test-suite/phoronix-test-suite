@@ -18,6 +18,11 @@ if [ -f quake4-game-files.tar ]
   then
      tar -k -C $1/q4base -xvf $1/quake4-game-files.tar
 fi
+if [ -f quake4-key.tar ]
+  then
+     tar -xvf quake4-key.tar
+fi
+
 
 echo "Quake 4 Game Files (*.pk4) Must Be Copied Into $1/q4base"
 echo "Also Copy Your Game Key File To $HOME/.quake4/q4base/quake4key (If Not Already There)"
