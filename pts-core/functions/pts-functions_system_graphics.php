@@ -545,7 +545,7 @@ function graphics_processor_string()
 			$info .= " SLI";
 	}
 
-	if(empty($info) || strpos($info, "Mesa ") !== FALSE)
+	if(empty($info) || strpos($info, "Mesa ") !== FALSE || $info == "Software Rasterizer")
 	{
 		$info_pci = read_pci("VGA compatible controller:", false);
 
