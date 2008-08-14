@@ -326,7 +326,7 @@ function xrandr_available_modes()
 	$available_modes = array();
 
 	$supported_ratios = array(1.60, 1.25, 1.33);
-	$ignore_modes = array(array(832, 624), array(1152, 864));
+	$ignore_modes = array(array(832, 624), array(1152, 864), array(1792, 1344), array(1800, 1440), array(1856, 1392), array(2048, 1536));
 
 	foreach($xrandr_lines as $xrandr_mode)
 	{
