@@ -1,6 +1,6 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 1.2.0 Beta 2
 
 - pts-core: Add an OR structure for PTS External Dependency FileCheck tag
 - pts-core: Print out the external dependencies that will be installed prior to running the script
