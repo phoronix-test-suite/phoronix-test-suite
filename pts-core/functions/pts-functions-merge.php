@@ -380,7 +380,7 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 				{
 					if(!$has_merged)
 					{
-						$similar_attributes_text = implode(" - ", $similar_attributes);
+						$similar_attributes_text_add = implode(" - ", $similar_attributes);
 						$test_attribute = array_pop($r_o_test_attributes);
 						$r_o_test_attributes_1 = explode(":", $test_attribute);
 
@@ -388,8 +388,8 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 						{
 							$similar_attributes_text = trim($r_o_test_attributes_1[0]) . " Analysis";
 
-							if(!empty($similar_attributes_text))
-								$similar_attributes_text .= " [" . $similar_attributes_text . "]";
+							if(!empty($similar_attributes_text_add))
+								$similar_attributes_text .= " [" . $similar_attributes_text_add . "]";
 						}
 
 						$USE_ID = pts_request_new_id();
