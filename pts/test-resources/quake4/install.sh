@@ -3,7 +3,7 @@
 chmod +x quake4-linux-1.4.2.x86.run
 
 ./quake4-linux-1.4.2.x86.run --noexec --target .
-chmod +x quake4-real
+chmod +x bin/Linux/x86/quake4.x86
 
 echo "#!/bin/sh
 ./bin/Linux/x86/quake4.x86 \$@ | grep fps" > quake4
