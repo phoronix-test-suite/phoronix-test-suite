@@ -151,11 +151,10 @@ EOT
 chmod +x doom3-linux-1.3.1.1304.x86.run
 
 ./doom3-linux-1.3.1.1304.x86.run --noexec --target .
-ln bin/Linux/x86/doom.x86 doom3-real
 mv -f doom3-pts.cfg base/doom3-pts.cfg
 
 echo "#!/bin/sh
-./doom3-real \$@ | grep fps" > doom3
+./bin/Linux/x86/doom.x86 \$@ | grep fps" > doom3
 chmod +x doom3
 
 if [ -f doom3-game-files.tar ]
