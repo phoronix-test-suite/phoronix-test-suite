@@ -3,11 +3,10 @@
 chmod +x quake4-linux-1.4.2.x86.run
 
 ./quake4-linux-1.4.2.x86.run --noexec --target .
-ln bin/Linux/x86/quake4.x86 quake4-real
 chmod +x quake4-real
 
 echo "#!/bin/sh
-./quake4-real \$@ | grep fps" > quake4
+./bin/Linux/x86/quake4.x86 \$@ | grep fps" > quake4
 chmod +x quake4
 
 tar -xvf quake4-pts-demo-1.tar.gz
