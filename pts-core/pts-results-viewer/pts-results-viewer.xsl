@@ -31,7 +31,7 @@
 				</div>
 
 				<xsl:variable name="idcount"><xsl:value-of select="count(PhoronixTestSuite/System)" /></xsl:variable>
-				<xsl:variable name="idwidth"><xsl:value-of select="floor(820 div $idcount) - 3" /></xsl:variable>
+				<xsl:variable name="idwidth"><xsl:value-of select="floor(815 div $idcount) - 3" /></xsl:variable>
 
 				<h1>System Hardware</h1>
 				<div class="pts_chart_box">
