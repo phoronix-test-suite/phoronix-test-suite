@@ -365,9 +365,6 @@ class pts_Graph
 
 		if($this->graph_attr_big_border == TRUE)
 			imagerectangle($this->graph_image, 0, 0, $this->graph_attr_width - 1, $this->graph_attr_height - 1, $this->graph_color_border);
-
-		// Etc
-		$this->graph_maximum_value = $this->maximum_graph_value();
 	}
 	protected function render_graph_base()
 	{
@@ -376,13 +373,6 @@ class pts_Graph
 			$num_key_lines = ceil(count($this->graph_data_title) / 4);
 			$this->graph_top_start = $this->graph_top_start + 8 + ($num_key_lines * 11);
 		}
-
-		// Make room for tick markings, left hand side
-		if($this->graph_value_type == "NUMERICAL")
-			$this->graph_left_start += $this->return_ttf_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
-
-		if($this->graph_hide_identifiers == TRUE)
-			$this->graph_top_end += $this->graph_top_end_opp / 2;
 
 		imagefilledrectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body);
 		imagerectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches);
@@ -433,6 +423,16 @@ class pts_Graph
 	}
 	public function renderGraph()
 	{
+		$this->graph_maximum_value = $this->maximum_graph_value();
+
+		// Make room for tick markings, left hand side
+		if($this->graph_value_type == "NUMERICAL")
+			$this->graph_left_start += $this->return_ttf_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+
+		if($this->graph_hide_identifiers == TRUE)
+			$this->graph_top_end += $this->graph_top_end_opp / 2;
+
+		// Do the actual work
 		$this->render_graph_pre_init();
 		$this->render_graph_init();
 		$this->render_graph_base();

@@ -24,6 +24,7 @@
 class pts_LineGraph extends pts_CustomGraph
 {
 	var $identifier_width = -1;
+	var $minimum_identifier_font = 7;
 
 	public function __construct($Title, $SubTitle, $YTitle)
 	{
@@ -38,12 +39,12 @@ class pts_LineGraph extends pts_CustomGraph
 
 		$longest_string = $this->find_longest_string($this->graph_identifiers);
 
-		while($this->return_ttf_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) > ($this->identifier_width - 2) && $this->graph_font_size_identifiers > 6)
+		while($this->return_ttf_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) > ($this->identifier_width - 2) && $this->graph_font_size_identifiers > $this->minimum_identifier_font)
 		{
 			$this->graph_font_size_identifiers -= 0.5;
 		}
 
-		if($this->graph_font_size_identifiers == 6)
+		if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
 		{
 			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->return_ttf_string_width($longest_string, $this->graph_font, 9));
 		}
@@ -59,7 +60,7 @@ class pts_LineGraph extends pts_CustomGraph
 
 			imageline($this->graph_image, $px_from_left, $px_from_top_start, $px_from_left, $px_from_top_end, $this->graph_color_notches);
 
-			if($this->graph_font_size_identifiers == 6)
+			if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
 				$this->gd_write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, TRUE);
 			else
 				$this->gd_write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2);

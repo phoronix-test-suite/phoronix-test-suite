@@ -25,7 +25,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts-core: NUM_CPU_JOBS now equals NUM_CPU_CORES * 2
 - pts-core: Fix similar attributes text in analyze option
 - pts-core: Don't report Software Rasterizer in graphics string
-- pts-core: PTS Results Viewer improvements
+- pts-core: PTS Results Viewer improvements and graphing fixes
 
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 - pts: Improved sensor detection for compliance-sensors test
