@@ -47,6 +47,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts: No symlink doom3 file
 - pts: No symlink quake4 file
 - pts: Add Java OpenGL compliance test named jgfxbat test profile (Thanks to Sun Microsystems)
+- pts: Add fio test profile to disk test suite
 - pts_LineGraph: Fix regression that caused the line not to be plotted
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 

@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<TestType>Hard Disk</TestType>
 		<Title>Hard Disk Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -25,5 +25,15 @@
 		<Test>iozone</Test>
 		<Arguments>-i0</Arguments>
 		<Description>Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>fio</Test>
+		<Arguments>examples/iometer-file-access-server</Arguments>
+		<Description>Intel IOMeter File Server Access Pattern</Description>
+	</RunTest>
+	<RunTest>
+		<Test>fio</Test>
+		<Arguments>examples/netio</Arguments>
+		<Description>Example Network Job</Description>
 	</RunTest>
 </PhoronixTestSuite>
