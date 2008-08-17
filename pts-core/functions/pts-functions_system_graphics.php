@@ -529,7 +529,12 @@ function graphics_processor_string()
 				$unique_adapters = array_unique($adapters);
 
 				if(count($unique_adapters) == 1)
+				{
+					if(strpos($adapters[0], "X2") > 0 && $crossfire_card_count > 1)
+						$crossfire_card_count -= 1;
+
 					$info = $crossfire_card_count . " x " . $adapters[0] . $video_ram . " CrossFire";
+				}
 				else
 					$info = implode(", ", $unique_adapters) . " CrossFire";
 			}
