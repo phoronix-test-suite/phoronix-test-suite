@@ -18,7 +18,7 @@
 	</RunTest>
 	<RunTest>
 		<Test>ut2004-demo</Test>
-		<Arguments>dm-rankin?spectatoronly=1?numbots=18?quickstart=1?attractcam=1 -benchmark -seconds=180 -nosound</Arguments>
-		<Description>DM-Rankin</Description>
+		<Arguments>ons-torlan?spectatoronly=1?numbots=8?quickstart=1?attractcam=1 -benchmark -seconds=120 -nosound -ini=../UT2004_1280x1024.ini</Arguments>
+		<Description>ONS-Torlan Botmatch - 1280 x 1024</Description>
 	</RunTest>
 </PhoronixTestSuite>
