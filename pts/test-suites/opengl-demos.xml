@@ -19,7 +19,4 @@
 	<RunTest>
 		<Test>norsetto-shadow</Test>
 	</RunTest>
-	<RunTest>
-		<Test>norsetto-shadow</Test>
-	</RunTest>
 </PhoronixTestSuite>
