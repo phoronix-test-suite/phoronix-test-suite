@@ -371,6 +371,27 @@ function pts_global_upload_result($result_file, $tags = "")
 
 	return $return_stream;
 }
+function pts_is_global_id($global_id)
+{
+	return pts_global_valid_id_string($global_id) && trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id)) == "REMOTE_FILE";
+}
+function pts_global_download_xml($global_id)
+{
+	return @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $global_id);
+}
+function pts_global_valid_id_string($global_id)
+{
+	// Basic checking to see if the string is possibly a Global ID
+	$is_valid = true;
+
+	if(count(explode("-", $global_id)) < 3) // Global IDs should have three (or more) dashes
+		$is_valid = false;
+
+	if(strlen($global_id) < 13) // Shorted Possible ID would be X-000-000-000
+		$is_valid = false;
+
+	return $is_valid;
+}
 function pts_trim_double($double, $accuracy = 2)
 {
 	$return = explode('.', $double);

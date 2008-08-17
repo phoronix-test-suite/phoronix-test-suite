@@ -439,7 +439,7 @@ switch($COMMAND)
 	case "SHOW_RESULT":
 		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
 			$URL = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml";
-		//else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $ARG_1)) == "REMOTE_FILE")
+		//else if(pts_is_global_id($ARG_1))
 		//	$URL = "http://global.phoronix-test-suite.com/index.php?k=profile&u=" . trim($ARG_1);
 		else
 			$URL = false;
@@ -682,9 +682,9 @@ switch($COMMAND)
 		}
 		else
 		{
-			if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $ARG_1)) == "REMOTE_FILE")
+			if(pts_is_global_id($ARG_1))
 			{
-				pts_save_result($ARG_1 . "/composite.xml", @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $ARG_1));
+				pts_save_result($ARG_1 . "/composite.xml", pts_global_download_xml($ARG_1));
 				// TODO: re-render the XML file and generate the graphs through that save
 				echo "Result Saved To: " . SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml\n\n";
 				//display_web_browser(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");

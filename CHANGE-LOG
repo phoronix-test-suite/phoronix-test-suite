@@ -31,6 +31,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts-core: For LM_Sensors parsing with read_sensors() support an array as an argument for multiple possible values
 - pts-core: Idle for one second between interim test runs
 - pts-core: Check against error when using the aticonfig-based AMDPCSDB parser with read_amd_pcsdb() call
+- pts-core: Add validation to see if Global ID string format is valid before querying server, and functionize some of the code
 
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 - pts: Improved sensor detection for compliance-sensors test

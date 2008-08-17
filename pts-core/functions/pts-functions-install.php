@@ -63,9 +63,9 @@ function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
 			pts_recurse_install_test($test, $INSTALL_OBJ);
 		}
 	}
-	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $TO_INSTALL)) == "REMOTE_FILE")
+	else if(pts_is_global_id($TO_RUN))
 	{
-		$xml_parser = new tandem_XmlReader(@file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $TO_INSTALL));
+		$xml_parser = new tandem_XmlReader(pts_global_download_xml($TO_INSTALL));
 		$suite_tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($suite_tests as $test)

@@ -58,14 +58,14 @@ if(!$TO_RUN_TYPE)
 		$PROPOSED_FILE_NAME = $TO_RUN;
 		$RES_NULL = null;
 	}
-	else if(trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $TO_RUN)) == "REMOTE_FILE")
+	else if(pts_is_global_id($TO_RUN))
 	{
 		$SAVE_RESULTS = true;
 		$TO_RUN_TYPE = "GLOBAL_COMPARISON";
 		$PROPOSED_FILE_NAME = $TO_RUN;
 		$RES_NULL = null;
 		define("GLOBAL_COMPARISON", 1);
-		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $TO_RUN));
+		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", pts_global_download_xml($TO_RUN));
 	}
 	else
 	{
