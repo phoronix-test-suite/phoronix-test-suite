@@ -119,7 +119,7 @@ class system_monitor extends pts_module_interface
 	}
 	public static function __pre_run_process()
 	{
-		pts_module::pts_timed_function(15, "pts_monitor_update");
+		pts_module::pts_timed_function(10, "pts_monitor_update");
 	}
 	public static function __shutdown($obj = NULL)
 	{

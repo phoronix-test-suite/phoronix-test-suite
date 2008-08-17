@@ -58,6 +58,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts: Add x-testing suite for synthetic X tests
 - pts_LineGraph: Fix regression that caused the line not to be plotted
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
+- system_monitor: Poll sensors every 10 seconds
 
 Phoronix Test Suite 1.2.0 Beta 1
 August 6, 2008
