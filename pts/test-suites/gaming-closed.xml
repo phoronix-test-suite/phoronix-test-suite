@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>System</TestType>
 		<Title>Closed-Source Gaming</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -8,13 +8,13 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>et</Test>
-		<Arguments>+set r_customwidth 1024 +set r_customheight 768</Arguments>
-		<Description>1024 x 768</Description>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>etqw-demo</Test>
-		<Arguments>+set r_customWidth 1024 +set r_customHeight 768</Arguments>
-		<Description>1024 x 768</Description>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>ut2004-demo</Test>

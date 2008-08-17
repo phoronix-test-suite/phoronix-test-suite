@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>System</TestType>
 		<Title>OpenGL Demos Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -8,13 +8,18 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>glmark</Test>
-		<Arguments>1024 768 24 0 VERTEX_ARRAY</Arguments>
-		<Description>1024 x 768 - Vertex Array</Description>
+		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 24 0 VERTEX_ARRAY</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - Vertex Array</Description>
 	</RunTest>
 	<RunTest>
 		<Test>lightsmark</Test>
-		<Arguments>1024x768</Arguments>
-		<Description>1024 x 768</Description>
+		<Arguments>$VIDEO_WIDTHx$VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>unigine-sanctuary</Test>
+		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>norsetto-shadow</Test>

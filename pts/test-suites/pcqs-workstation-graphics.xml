@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>Graphics</TestType>
 		<Title>PCQS: Workstation Graphics</Title>
 		<Maintainer>Phoronix.com</Maintainer>
@@ -53,12 +53,12 @@
 	</RunTest>
 	<RunTest>
 		<Test>xplane9</Test>
-		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=1280 --pref:_y_res_req_ALL=1024 --no_sound</Arguments>
-		<Description>1280 x 1024 - High Quality</Description>
+		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT --no_sound</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>
 	</RunTest>
 	<RunTest>
 		<Test>xplane9</Test>
-		<Arguments>--fps_test=3 --pref:_x_res_req_ALL=1280 --pref:_y_res_req_ALL=1024 --no_sound</Arguments>
-		<Description>1280 x 1024 - Ultra Quality</Description>
+		<Arguments>--fps_test=3 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT --no_sound</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - Ultra Quality</Description>
 	</RunTest>
 </PhoronixTestSuite>

@@ -19,7 +19,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts-core: Improve system voltage detection through LM_Sensors
 - pts-core: Add ATI CrossFire detection support
 - pts-core: Add NVIDIA SLI detection support
-- pts-core: Improved Video RAM detection when parsing X log
+- pts-core: Improve Video RAM detection when parsing X log
 - pts-core: Improve GPU string detection for open-source drivers
 - pts-core: After first call, cache pts_env_variables()
 - pts-core: NUM_CPU_JOBS now equals NUM_CPU_CORES * 2
@@ -58,6 +58,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts: Add more tests to memory test suite
 - pts: Add x-testing suite for synthetic X tests
 - pts: Add unigine-sanctuary test profile for Unigine Engine (Thanks to Unigine Corp)
+- pts: Switch graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT instead of fixed size
 - pts_LineGraph: Fix regression that caused the line not to be plotted
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 - system_monitor: Poll sensors every 10 seconds

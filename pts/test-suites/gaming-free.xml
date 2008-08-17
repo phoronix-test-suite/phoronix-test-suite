@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<TestType>System</TestType>
 		<Title>Free Software Gaming</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -8,13 +8,13 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>nexuiz</Test>
-		<Arguments>+vid_width 1024 +vid_height 768</Arguments>
-		<Description>1024 x 768</Description>
+		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>warsow</Test>
-		<Arguments>+vid_customwidth 1024 +vid_customheight 768 +vid_restart</Arguments>
-		<Description>1024 x 768</Description>
+		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>ioquake3-games</Test>

@@ -57,6 +57,16 @@
 		<Description>1280 x 1024 - High Quality</Description>
 	</RunTest>
 	<RunTest>
+		<Test>unigine-sanctuary</Test>
+		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>lightsmark</Test>
+		<Arguments>$VIDEO_WIDTHx$VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
 		<Test>gui-toolkits</Test>
 	</RunTest>
 </PhoronixTestSuite>
