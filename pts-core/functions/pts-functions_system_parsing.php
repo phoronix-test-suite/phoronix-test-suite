@@ -73,24 +73,31 @@ function read_system_hal($name)
 {
 	return read_hal($name, "/org/freedesktop/Hal/devices/computer");
 }
-function read_sensors($attribute)
+function read_sensors($attributes)
 {
 	$value = "";
 	$sensors = shell_exec("sensors 2>&1");
 	$sensors_lines = explode("\n", $sensors);
 
-	for($i = 0; $i < count($sensors_lines) && $value == ""; $i++)
+	if(!is_array($attributes))
+		$attributes = array($attributes);
+
+	for($j = 0; $j < count($attributes) && empty($value); $j++)
 	{
-		$line = explode(": ", $sensors_lines[$i]);
-		$this_attribute = trim($line[0]);
-
-		if($this_attribute == $attribute)
+		$attribute = $attributes[$j];
+		for($i = 0; $i < count($sensors_lines) && empty($value); $i++)
 		{
-			$this_remainder = trim(str_replace(array('+', '°'), ' ', $line[1]));
-			$this_value = substr($this_remainder, 0, strpos($this_remainder, ' '));
+			$line = explode(": ", $sensors_lines[$i]);
+			$this_attribute = trim($line[0]);
 
-			if(is_numeric($this_value))
-				$value = $this_value;
+			if($this_attribute == $attribute)
+			{
+				$this_remainder = trim(str_replace(array('+', '°'), ' ', $line[1]));
+				$this_value = substr($this_remainder, 0, strpos($this_remainder, ' '));
+
+				if(is_numeric($this_value))
+					$value = $this_value;
+			}
 		}
 	}
 

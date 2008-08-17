@@ -27,6 +27,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts-core: Don't report Software Rasterizer in graphics string
 - pts-core: PTS Results Viewer improvements and graphing fixes
 - pts-core: If DISPLAY environmental variable not set OR NO_GRAPHICS_TESTS is set, don't run tests of Graphics type
+- pts-core: For LM_Sensors parsing with read_sensors() support an array as an argument for multiple possible values
 
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 - pts: Improved sensor detection for compliance-sensors test
