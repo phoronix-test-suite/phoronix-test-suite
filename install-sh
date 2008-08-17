@@ -28,7 +28,7 @@ fi
 
 if [ ! -w $INSTALL_PREFIX ]
 then
-	echo "\nERROR: $INSTALL_PREFIX is not writable. Run this installer as root or specify a different directory as the first argument sent to this script.\n"
+	echo "\nERROR: $INSTALL_PREFIX is not writable. Run this installer as root or specify a different directory prefix as the first argument sent to this script.\n"
 	exit
 fi
 
