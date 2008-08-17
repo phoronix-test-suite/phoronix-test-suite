@@ -328,10 +328,16 @@ switch($COMMAND)
 			if(is_file(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml"))
 			{
 				$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml", FALSE);
+				$last_run = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
+
+				if($last_run == "0000-00-00 00:00:00")
+					$last_run = "Never";
 
 				echo "\nTest Installed: Yes\n";
-				echo "Last Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME) . "\n";
-				echo "Times Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) . "\n";
+				echo "Last Run: " . $last_run . "\n";
+
+				if($last_run != "Never")
+					echo "Times Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) . "\n";
 			}
 			else
 				echo "\nTest Installed: No\n";
