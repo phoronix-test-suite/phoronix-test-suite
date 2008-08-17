@@ -154,7 +154,7 @@ function processor_frequency($cpu_core = 0)
 }
 function processor_temperature()
 {
-	$temp_c = read_sensors("CPU Temp");
+	$temp_c = read_sensors(array("CPU Temp", "Core 0"));
 
 	if(empty($temp_c))
 	{
