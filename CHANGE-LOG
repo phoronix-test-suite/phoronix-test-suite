@@ -56,6 +56,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts: Improve the generic installer (install-sh)
 - pts: Add more tests to memory test suite
 - pts: Add x-testing suite for synthetic X tests
+- pts: Add unigine-sanctuary test profile for Unigine Engine (Thanks to Unigine Corp)
 - pts_LineGraph: Fix regression that caused the line not to be plotted
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 - system_monitor: Poll sensors every 10 seconds

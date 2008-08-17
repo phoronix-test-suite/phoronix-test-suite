@@ -1,0 +1,36 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Game</SoftwareType>
+		<License>NON-FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<DownloadSize>25</DownloadSize>
+		<EnvironmentSize>55</EnvironmentSize>
+		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+	</TestProfile>
+	<TestInformation>
+		<Title>Unigine Sanctuary</Title>
+		<Version>4</Version>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Average FPS</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This test calculates the average frame-rate within the Sanctuary demo for the Unigine engine. This engine is very demanding on the system's graphics card.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<Arguments>-video_app opengl -sound_app null -data_path ../data -system_script sanctuary/unigine.cpp -engine_config ../data/unigine.cfg -video_mode -1 -video_fullscreen 1 -video_multisample 0 -extern_define PHORONIX</Arguments>
+		</Default>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>auto-resolution</Identifier>
+			<Menu>
+				<Entry>
+					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+					<Value>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>
