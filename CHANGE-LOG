@@ -29,6 +29,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts-core: If DISPLAY environmental variable not set, don't run tests of Graphics type
 - pts-core: If NO_<TEST TYPE>_TESTS environmental variable is set and matches the type of test of test currently running, skip the test(s) that match the variable(s)
 - pts-core: For LM_Sensors parsing with read_sensors() support an array as an argument for multiple possible values
+- pts-core: Idle for one second between interim test runs
 
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 - pts: Improved sensor detection for compliance-sensors test
