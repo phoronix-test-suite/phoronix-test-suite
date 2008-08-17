@@ -303,7 +303,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$default_arguments = $xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
 	$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 
-	if($test_type == "Graphics" && (getenv("DISPLAY") == FALSE || getenv("NO_GRAPHICS_TESTS") != FALSE))
+	if(($test_type == "Graphics" && getenv("DISPLAY") == FALSE) || getenv("NO_" . strtoupper($test_type) . "_TESTS") != FALSE)
 		return array(0);
 
 	if(empty($times_to_run) || !is_int($times_to_run))
