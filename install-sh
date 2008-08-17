@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Phoronix Test Suite "Trondheim"
+# Phoronix Test Suite
 # URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 # Copyright (C) 2008, Phoronix Media
 #
@@ -26,6 +26,12 @@ else
 	INSTALL_PREFIX="$1"
 fi
 
+if [ ! -w $INSTALL_PREFIX ]
+then
+	echo "\nERROR: $INSTALL_PREFIX is not writable. Run this installer as root or specify a different directory as the first argument sent to this script.\n"
+	exit
+fi
+
 mkdir -p $INSTALL_PREFIX/bin/
 mkdir -p $INSTALL_PREFIX/share/man/man1/
 mkdir -p $INSTALL_PREFIX/share/phoronix-test-suite/
@@ -49,4 +55,7 @@ cp -r pts-core/ $INSTALL_PREFIX/share/phoronix-test-suite/
 sed 's:PTS_DIR=`pwd`:PTS_DIR='"$INSTALL_PREFIX"'\/share\/phoronix-test-suite:g' phoronix-test-suite > $INSTALL_PREFIX/bin/phoronix-test-suite
 chmod +x $INSTALL_PREFIX/bin/phoronix-test-suite
 
-echo "Phoronix Test Suite Installed: $INSTALL_PREFIX/bin/phoronix-test-suite"
+echo "\nPhoronix Test Suite Installation Completed\n
+Executable File: $INSTALL_PREFIX/bin/phoronix-test-suite
+Documentation: $INSTALL_PREFIX/share/doc/phoronix-test-suite/
+Phoronix Test Suite Files: $INSTALL_PREFIX/share/phoronix-test-suite/\n"

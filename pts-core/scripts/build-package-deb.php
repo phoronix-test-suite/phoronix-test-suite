@@ -36,6 +36,7 @@ if(!defined("PTS_VERSION"))
 
 shell_exec("rm -rf /tmp/pts-deb-builder/");
 shell_exec("mkdir -p /tmp/pts-deb-builder/DEBIAN/");
+shell_exec("mkdir -p /tmp/pts-deb-builder/usr/");
 shell_exec("./install-sh /tmp/pts-deb-builder/usr");
 
 $phoronix_test_suite_bin = file_get_contents("phoronix-test-suite");
