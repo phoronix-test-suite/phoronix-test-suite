@@ -12,9 +12,12 @@
 		<Description>1024 x 768 - Vertex Array</Description>
 	</RunTest>
 	<RunTest>
-		<Test>glmark</Test>
-		<Arguments>1024 768 24 0 GLSL_PER_PIXEL</Arguments>
-		<Description>1024 x 768 - GLSL Per Pixel Lighting</Description>
+		<Test>lightsmark</Test>
+		<Arguments>1024x768</Arguments>
+		<Description>1024 x 768</Description>
+	</RunTest>
+	<RunTest>
+		<Test>norsetto-shadow</Test>
 	</RunTest>
 	<RunTest>
 		<Test>norsetto-shadow</Test>

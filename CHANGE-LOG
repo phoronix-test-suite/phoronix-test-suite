@@ -54,6 +54,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts: Add fio test profile to disk test suite
 - pts: Improve the generic installer (install-sh)
 - pts: Add more tests to memory test suite
+- pts: Add x-testing suite for synthetic X tests
 - pts_LineGraph: Fix regression that caused the line not to be plotted
 - system_monitor: When reading +3.3V, poll V3_POWER not BATTERY_POWER (noted by Marox)
 

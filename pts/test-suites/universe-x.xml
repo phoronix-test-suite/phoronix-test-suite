@@ -1,14 +1,11 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<TestType>System</TestType>
 		<Title>Universe Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
-		<Description>The Universe CLI suite contains Phoronix Test Suite tests that require an active X server / tests that are graphics-based.</Description>
+		<Description>The Universe X suite contains Phoronix Test Suite tests that require an active X server / tests that are graphics-based.</Description>
 	</SuiteInformation>
-	<RunTest>
-		<Test>compliance-ogl</Test>
-	</RunTest>
 	<RunTest>
 		<Test>gui-toolkits</Test>
 	</RunTest>
@@ -17,11 +14,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>opengl-demos</Test>
-	</RunTest>
-	<RunTest>
-		<Test>x11perf</Test>
-		<Arguments>-comppixwin500</Arguments>
-		<Description>500px Compositing From Pixmap To Window</Description>
 	</RunTest>
 	<RunTest>
 		<Test>opengl-workstation</Test>
