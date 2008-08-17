@@ -28,6 +28,7 @@ suites very easily, etc. Though the preferred method to create a suite is by wri
 a formal suite.</p>
 <p>- How do I find tests that are in a suite? Run <em>phoronix-test-suite info NAME-OF-SUITE</em> and (along with other information) a tree will be displayed that recursively shows the tests (along with any sub-suites) inside. To find suites that utilize a particular test, run <em>phoronix-test-suite info NAME-OF-TEST</em> and it will show that information too.</p>
 <p>- If the amount of video memory for your graphics card is incorrectly reported by the Phoronix Test Suite (you can check by running <em>phoronix-test-suite diagnostics</em>), you can use the <em>VIDEO_MEMORY=</em> environmental variable for overriding the video memory capacity (in Megabytes) used by the Phoronix Test Suite.</p>
+<p>- If the <em>DISPLAY</em> environmental variable is not set or <em>NO_GRAPHICS_TESTS</em> environmental variable is set, tests of type <em>Graphics</em> will not be run.</p>
 <h2>Support</h2>
 <p>- The Phoronix Test Suite really appreciates and welcomes independent code 
 contributions, patches, new tests/suites, etc... :)</p>
