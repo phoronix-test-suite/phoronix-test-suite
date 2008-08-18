@@ -66,19 +66,25 @@ function pts_prompt_results_identifier($current_identifiers = null)
 
 	return $RESULTS_IDENTIFIER;
 }
-function pts_prompt_save_file_name()
+function pts_prompt_save_file_name($check_env = true)
 {
-	if(!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
+	if($check_env && ($save_name = getenv("TEST_RESULTS_NAME")) != FALSE)
 	{
-		do
-		{
-			echo "Enter a name to save these results: ";
-			$PROPOSED_FILE_NAME = trim(fgets(STDIN));
-		}
-		while(empty($PROPOSED_FILE_NAME));
+		$PROPOSED_FILE_NAME = $save_name;
+		echo "Saving results to: " . $PROPOSED_FILE_NAME . "\n";
 	}
 	else
-		$PROPOSED_FILE_NAME = date("Y-m-d_Hi");
+	{
+		if(!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
+		{
+			do
+			{
+				echo "Enter a name to save these results: ";
+				$PROPOSED_FILE_NAME = trim(fgets(STDIN));
+			}
+			while(empty($PROPOSED_FILE_NAME));
+		}
+	}
 
 	$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
 	$PROPOSED_FILE_NAME = trim(str_replace(array(' ', '/', '&', '\''), "", strtolower($PROPOSED_FILE_NAME))); // Clean up name

@@ -77,6 +77,8 @@ else
 	echo "\n";
 	if(getenv("PTS_SAVE_RESULTS") == "NO")
 		$SAVE_RESULTS = FALSE;
+	else if(getenv("TEST_RESULTS_NAME") != FALSE)
+		$SAVE_RESULTS = TRUE;
 	else
 		$SAVE_RESULTS = pts_bool_question("Would you like to save these test results (Y/n)?", true, "SAVE_RESULTS");
 
@@ -85,9 +87,6 @@ else
 		$FILE_NAME = pts_prompt_save_file_name();
 		$PROPOSED_FILE_NAME = $FILE_NAME[0];
 		$CUSTOM_TITLE = $FILE_NAME[1];
-
-		if(empty($PROPOSED_FILE_NAME))
-			$PROPOSED_FILE_NAME = date("Y-m-d-Hi");
 
 		do
 		{
@@ -114,7 +113,7 @@ else
 			if(!$is_validated)
 			{
 				echo pts_string_header("This saved file-name is associated with a different test ($test_suite) from $TO_RUN. Enter a new name for saving the results.");
-				$FILE_NAME = pts_prompt_save_file_name();
+				$FILE_NAME = pts_prompt_save_file_name(FALSE);
 				$PROPOSED_FILE_NAME = $FILE_NAME[0];
 				$CUSTOM_TITLE = $FILE_NAME[1];
 			}
