@@ -231,8 +231,8 @@ if($TO_RUN_TYPE == "TEST")
 	else
 	{
 		// Batch mode for single test
-		$all_args_real = array();
-		$all_args_description = array();
+		$batch_all_args_real = array();
+		$batch_all_args_description = array();
 		$description_separate = " ";
 
 		for($option_count = 0; $option_count < count($settings_name); $option_count++)
@@ -264,16 +264,16 @@ if($TO_RUN_TYPE == "TEST")
 				if($i > 1)
 					$description_separate = " - ";
 
-				array_push($all_args_real, $option_args);
-				array_push($all_args_description, $option_args_description);
+				array_push($batch_all_args_real, $option_args);
+				array_push($batch_all_args_description, $option_args_description);
 			}
 		}
 
 		$TEST_ARGS = array();
-		pts_all_combos($TEST_ARGS, "", $all_args_real, 0);
+		pts_all_combos($TEST_ARGS, "", $batch_all_args_real, 0);
 
 		$TEST_ARGS_DESCRIPTION = array();
-		pts_all_combos($TEST_ARGS_DESCRIPTION, "", $all_args_description, 0, $description_separate);
+		pts_all_combos($TEST_ARGS_DESCRIPTION, "", $batch_all_args_description, 0, $description_separate);
 
 		$TEST_RUN = array();
 		for($i = 0; $i < count($TEST_ARGS); $i++) // needed at this time to fill up the array same size as the number of options present
