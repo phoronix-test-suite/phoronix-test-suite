@@ -50,10 +50,20 @@ function pts_prompt_results_identifier($current_identifiers = null)
 			echo "\n";
 		}
 
+		$times_tried = 0;
 		do
 		{
-			echo "Enter a unique name for this test run: ";
-			$RESULTS_IDENTIFIER = trim(str_replace(array("/"), "", fgets(STDIN)));
+			if($times_tried == 0 && ($env_identifier = getenv("TEST_RESULTS_IDENTIFIER")) != FALSE)
+			{
+				$RESULTS_IDENTIFIER = $env_identifier;
+				echo "Test Identifier: " . $RESULTS_IDENTIFIER . "\n";
+			}
+			else
+			{
+				echo "Enter a unique name for this test run: ";
+				$RESULTS_IDENTIFIER = trim(str_replace(array("/"), "", fgets(STDIN)));
+			}
+			$times_tried++;
 		}
 		while(empty($RESULTS_IDENTIFIER) || in_array($RESULTS_IDENTIFIER, $show_identifiers));
 	}
@@ -71,7 +81,7 @@ function pts_prompt_save_file_name($check_env = true)
 	if($check_env && ($save_name = getenv("TEST_RESULTS_NAME")) != FALSE)
 	{
 		$PROPOSED_FILE_NAME = $save_name;
-		echo "Saving results to: " . $PROPOSED_FILE_NAME . "\n";
+		echo "Saving Results To: " . $PROPOSED_FILE_NAME . "\n";
 	}
 	else
 	{

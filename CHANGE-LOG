@@ -33,6 +33,7 @@ Phoronix Test Suite 1.2.0 Beta 2
 - pts-core: Check against error when using the aticonfig-based AMDPCSDB parser with read_amd_pcsdb() call
 - pts-core: Add validation to see if Global ID string format is valid before querying server, and functionize some of the code
 - pts-core: If TEST_RESULTS_NAME environmental variable set, use that value instead of prompting for save name
+- pts-core: If TEST_RESULTS_IDENTIFIER environmental variable set, use that value instead of prompting for the results identifier when saving a test
 
 - pts: Update gentoo-packages.xml with Nils Kneuper changes
 - pts: Improved sensor detection for compliance-sensors test
