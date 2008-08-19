@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite
+
+- pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
+
 Phoronix Test Suite 1.2.0 Beta 2
 August 20, 2008
 
