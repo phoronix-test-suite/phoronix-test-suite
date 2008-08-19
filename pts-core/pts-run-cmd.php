@@ -135,6 +135,7 @@ switch($COMMAND)
 		echo "\n";
 		break;
 	case "LIST_TESTS":
+	case "LIST_ALL_TESTS":
 		echo pts_string_header("Phoronix Test Suite - Tests");
 		foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_profile_file)
 		{
@@ -156,7 +157,7 @@ switch($COMMAND)
 			}
 			else
 			{
-				if(!in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED")))
+				if($COMMAND == "LIST_ALL_TESTS" || !in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED")))
 					printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 			}
 		}

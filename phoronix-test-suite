@@ -116,6 +116,9 @@ case "$1" in
 "list-tests")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_TESTS
 	;;
+"list-all-tests" | "list-tests-all")
+	$PHP_BIN pts-core/pts-run-cmd.php LIST_ALL_TESTS
+	;;
 "list-suites")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_SUITES
 	;;
