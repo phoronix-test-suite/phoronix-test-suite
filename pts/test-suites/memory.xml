@@ -8,13 +8,13 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>nexuiz</Test>
-		<Arguments>+vid_width 1024 +vid_height 768</Arguments>
-		<Description>1024 x 768</Description>
+		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>openarena</Test>
-		<Arguments>+set r_customWidth 1024 +set r_customHeight 768</Arguments>
-		<Description>1024 x 768</Description>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>encode-mp3</Test>

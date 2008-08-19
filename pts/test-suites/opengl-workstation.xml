@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>System</TestType>
 		<Title>OpenGL Workstation Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -28,7 +28,7 @@
 	</RunTest>
 	<RunTest>
 		<Test>xplane9</Test>
-		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=1024 --pref:_y_res_req_ALL=768 --no_sound</Arguments>
-		<Description>1024 x 768 - High Quality</Description>
+		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT --no_sound</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>
 	</RunTest>
 </PhoronixTestSuite>

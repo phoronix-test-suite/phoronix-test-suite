@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite
 
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
+- pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - system_monitor: V3_POWER -> V3_VOLTAGE (Reported by Marox)
 
 Phoronix Test Suite 1.2.0 Beta 2

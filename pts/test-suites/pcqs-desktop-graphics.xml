@@ -43,8 +43,8 @@
 	</RunTest>
 	<RunTest>
 		<Test>etqw</Test>
-		<Arguments>+set r_customWidth 1280 +set r_customHeight 1024</Arguments>
-		<Description>1280 x 1024</Description>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>etqw</Test>
@@ -53,8 +53,8 @@
 	</RunTest>
 	<RunTest>
 		<Test>xplane9</Test>
-		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=1280 --pref:_y_res_req_ALL=1024 --no_sound</Arguments>
-		<Description>1280 x 1024 - High Quality</Description>
+		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT --no_sound</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>
 	</RunTest>
 	<RunTest>
 		<Test>unigine-sanctuary</Test>
