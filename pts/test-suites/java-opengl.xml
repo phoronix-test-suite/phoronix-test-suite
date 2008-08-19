@@ -1,0 +1,22 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<Title>Java OpenGL</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The Java test suite contains all Java-based test profiles within the Phoronix Test Suite that use graphics / OpenGL.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>jgfxbat</Test>
+	</RunTest>
+	<RunTest>
+		<Test>j2dbench</Test>
+		<Arguments>GRAPHICS</Arguments>
+		<Description>Vector Graphics</Description>
+	</RunTest>
+	<RunTest>
+		<Test>j2dbench</Test>
+		<Arguments>TEXT</Arguments>
+		<Description>Text Rendering</Description>
+	</RunTest>
+</PhoronixTestSuite>
