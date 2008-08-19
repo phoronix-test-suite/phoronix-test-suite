@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite
 
+- pts-core: Sort xrandr_available_modes() by pixel count
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests

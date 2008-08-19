@@ -319,6 +319,36 @@ function set_amd_pcsdb($attribute, $value)
 		$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
 	}
 }
+function sort_available_modes($modes)
+{
+	// Order modes properly
+	$mode_pixel_counts = array();
+	$sorted_modes = array();
+
+	foreach($modes as $this_mode)
+		if(count($this_mode) == 2)
+			array_push($mode_pixel_counts, $this_mode[0] * $this_mode[1]);
+		else
+			unset($this_mode);
+
+	sort($mode_pixel_counts);
+
+	for($i = 0; $i < count($mode_pixel_counts); $i++)
+	{
+		$hit = false;
+		for($j = 0; $j < count($modes) && !$hit; $j++)
+		{
+			if(($modes[$j][0] * $modes[$j][1]) == $mode_pixel_counts[$i])
+			{
+				array_push($sorted_modes, $modes[$j]);
+				unset($modes[$j]);
+				$hit = true;
+			}
+		}
+	}
+
+	return $sorted_modes;
+}
 function xrandr_available_modes()
 {
 	$info = shell_exec("xrandr 2>&1");
@@ -357,6 +387,10 @@ function xrandr_available_modes()
 	if(count($available_modes) < 2)
 	{
 		$available_modes = array(array(800, 600), array(1024, 768), array(1280, 1024), array(1680, 1050), array(1600, 1200), array(1920, 1080));
+	}
+	else
+	{
+		$available_modes = sort_available_modes($available_modes);
 	}
 
 	return $available_modes;
