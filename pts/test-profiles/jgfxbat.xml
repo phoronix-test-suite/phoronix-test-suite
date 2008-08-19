@@ -4,7 +4,7 @@
     <TestType>Processor</TestType>
     <SoftwareType>Utility</SoftwareType>
     <License>FREE</License>
-    <Status>EXPERIMENTAL</Status>
+    <Status>VERIFIED</Status>
     <Maintainer>Tao Zhang</Maintainer>
   </TestProfile>
   <TestInformation>
