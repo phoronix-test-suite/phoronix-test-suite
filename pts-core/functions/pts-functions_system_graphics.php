@@ -338,10 +338,10 @@ function sort_available_modes($modes)
 		$hit = false;
 		for($j = 0; $j < count($modes) && !$hit; $j++)
 		{
-			if(($modes[$j][0] * $modes[$j][1]) == $mode_pixel_counts[$i])
+			if($modes[$j] != null && ($modes[$j][0] * $modes[$j][1]) == $mode_pixel_counts[$i])
 			{
 				array_push($sorted_modes, $modes[$j]);
-				unset($modes[$j]);
+				$modes[$j] = null;
 				$hit = true;
 			}
 		}
