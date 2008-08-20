@@ -191,7 +191,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 		else if($test_type == "TEST")
 		{
 			$test_result = pts_run_test($tests_to_run[$i], $arguments_array[$i], $arguments_description[$i]);
-
+			$GLOBALS["TEST_IDENTIFIER"] = null;
 			// test_result[0] == the main result
 
 			if($save_results && count($test_result) > 0 && ((is_numeric($test_result[0]) && $test_result[0] > 0) || (!is_numeric($test_result[0]) && strlen($test_result[0]) > 2)))
@@ -303,6 +303,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	}
 	pts_process_register($test_identifier);
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
+	$GLOBALS["TEST_IDENTIFIER"] = $test_identifier;
 	pts_module_process("__pre_test_run");
 
 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $test_identifier . ".xml");

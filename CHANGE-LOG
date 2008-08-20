@@ -5,6 +5,7 @@ Phoronix Test Suite
 - pts-core: Sort xrandr_available_modes() by pixel count
 - pts-core: Add list-all-tests option that is like list-tests but will also list tests that are marked of an EXPERIMENTAL, PRIVATE, BROKEN, or UNVERIFIED state
 - pts-core: Add PTS module return response types. First implementation: If a module call returns PTS_MODULE_UNLOAD, it will unload the module midway through the process.
+- pts-core: During the testing process, the test identifier is set to $GLOBALS["TEST_IDENTIFIER"]
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests
