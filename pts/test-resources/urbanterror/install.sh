@@ -7,7 +7,7 @@ chmod +x ioUrbanTerror.i386
 chmod +x ioUrbanTerror.x86_64
 cd ..
 
-tar -xvf urbanterror-q3ut4-1.tar.gz
+tar -xvf urbanterror-q3ut4-2.tar.gz
 mv -f autoexec.cfg UrbanTerror/q3ut4/
 mv -f pts1.dm_68 UrbanTerror/q3ut4/demos/
 
