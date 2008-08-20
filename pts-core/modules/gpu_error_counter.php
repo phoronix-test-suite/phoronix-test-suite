@@ -56,7 +56,6 @@ class gpu_error_counter extends pts_module_interface
 			self::$error_analysis[$this_test] = $this_error_count; // Tally up errors for this test
 			self::$error_count += $this_error_count; // Add to total error count
 			self::$error_pointer = $current_error_position; // Reset the pointer
-
 		}
 	}
 	public static function __shutdown()

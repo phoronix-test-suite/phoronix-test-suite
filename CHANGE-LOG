@@ -9,6 +9,7 @@ Phoronix Test Suite
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests
+- pts: With urbanterror profile, disable vsync
 - system_monitor: V3_POWER -> V3_VOLTAGE (Reported by Marox)
 - gpu_error_counter: A module that monitors the graphics card to see if any errors occurred during testing, and then report any errors on exit
 
