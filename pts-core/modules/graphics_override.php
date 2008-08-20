@@ -43,7 +43,7 @@ class graphics_override extends pts_module_interface
 		if(!(IS_NVIDIA_GRAPHICS || IS_ATI_GRAPHICS))
 		{
 			echo "\nNo supported driver found for graphics_override module!\n";
-			return; // Not using a supported driver
+			return PTS_MODULE_UNLOAD; // Not using a supported driver, quit the module
 		}
 
 		$force_aa = trim(getenv("FORCE_AA"));
@@ -152,10 +152,6 @@ class graphics_override extends pts_module_interface
 	}
 	public static function __shutdown()
 	{
-		if(!(IS_NVIDIA_GRAPHICS || IS_ATI_GRAPHICS))
-		{
-			return; // Not using a supported driver
-		}
 
 		if(IS_NVIDIA_GRAPHICS)
 		{
