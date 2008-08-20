@@ -219,7 +219,15 @@ if($TO_RUN_TYPE == "TEST")
 			}
 			else
 			{
-				echo "\nEnter Value: ";
+				if(!$test_title_shown)
+				{
+					echo pts_string_header("Test Configuration: " . $test_title);
+					$test_title_shown = true;
+				}
+				else
+					echo "\n";
+
+				echo $settings_name[$option_count] . "\n" . "Enter Value: ";
 				$value = strtolower(trim(fgets(STDIN)));
 				$USER_ARGS .= $settings_argument[$option_count] . $value;
 			}
