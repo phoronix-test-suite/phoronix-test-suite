@@ -22,6 +22,7 @@ Phoronix Test Suite
 - pts: Add a basic netbook test suite with trying to do some netbook tests that aren't so much desktop-hungry
 - pts: Add a ray-tracing test suite of ray-tracing tests
 - system_monitor: V3_POWER -> V3_VOLTAGE (Reported by Marox)
+- system_monitor: Report elapsed time in graphs instead of date
 - gpu_error_counter: A module that monitors the graphics card to see if any errors occurred during testing, and then report any errors on exit
 
 Phoronix Test Suite 1.2.0 Beta 2

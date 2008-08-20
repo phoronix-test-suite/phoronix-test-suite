@@ -126,6 +126,9 @@ class system_monitor extends pts_module_interface
 		if(defined("PTS_EXIT"))
 			return;
 
+		// Elapsed time
+		$time_diff = PTS_END_TIME - PTS_START_TIME;
+
 		$device = array();
 		$type = array();
 		$unit = array();
@@ -348,10 +351,14 @@ class system_monitor extends pts_module_interface
 					{
 						if(count($sub_array) > 0)
 						{
+							$time_minutes = floor($time_diff / 60);
+							if($time_minutes == 0)
+								$time_minutes = 1;
+
 							$graph_title = $type[$sub_array[0]] . " Monitor";
 							$graph_unit = $unit[$sub_array[0]];
 							$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
-							$sub_title = date("F j, Y") . " - ";
+							$sub_title = $time_minutes . " Minutes - ";
 
 							if(isset($GLOBALS["TO_RUN"]))
 								$sub_title .= $GLOBALS["TO_RUN"];
@@ -384,9 +391,6 @@ class system_monitor extends pts_module_interface
 				}
 			}
 		}
-
-		// Elapsed time
-		$time_diff = PTS_END_TIME - PTS_START_TIME;
 
 		if($time_diff > 10 && count($m_array) > 0)
 			$info_report .= "\n\nElapsed Time: " . pts_format_time_string($time_diff);
