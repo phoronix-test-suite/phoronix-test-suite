@@ -40,6 +40,9 @@
 		<Test>espeak</Test>
 	</RunTest>
 	<RunTest>
+		<Test>yafray</Test>
+	</RunTest>
+	<RunTest>
 		<Test>pts-graph</Test>
 	</RunTest>
 </PhoronixTestSuite>
