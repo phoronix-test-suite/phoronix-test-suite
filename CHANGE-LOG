@@ -10,6 +10,7 @@ Phoronix Test Suite
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests
 - system_monitor: V3_POWER -> V3_VOLTAGE (Reported by Marox)
+- gpu_error_counter: A module that monitors the graphics card to see if any errors occurred during testing, and then report any errors on exit
 
 Phoronix Test Suite 1.2.0 Beta 2
 August 20, 2008
