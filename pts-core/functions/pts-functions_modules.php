@@ -22,6 +22,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// PTS Module Return Types
+define("PTS_MODULE_UNLOAD", "PTS_MODULE_UNLOAD");
+
 function pts_module_start_process()
 {
 	$GLOBALS["PTS_MODULES"] = array();
@@ -139,14 +142,26 @@ function pts_load_module($module)
 }
 function pts_module_process($process)
 {
-	foreach($GLOBALS["PTS_MODULES"] as $module)
+	foreach($GLOBALS["PTS_MODULES"] as $module_index => $module)
 	{
 		$GLOBALS["PTS_MODULE_CURRENT"] = $module;
+		$MODULE_RESPONSE = null;
 
 		if(pts_module_type($module) == "PHP")
-			eval($module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+			eval("\$MODULE_RESPONSE = " . $module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 		else
 			shell_exec("sh " . MODULE_DIR . $module . ".sh " . $process);
+
+		if(!empty($MODULE_RESPONSE))
+		{
+			switch($MODULE_RESPONSE)
+			{
+				case PTS_MODULE_UNLOAD:
+					// Unload the PTS module
+					unset($GLOBALS["PTS_MODULES"][$module_index]);
+					break;
+			}
+		}
 	}
 	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
 }
