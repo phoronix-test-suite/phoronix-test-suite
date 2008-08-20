@@ -9,6 +9,7 @@ Phoronix Test Suite
 - pts-core: OS detection fix for Xandros / Eee PC 901
 - pts-core: Fix division by zero in current_processor_usage() exposed on the Eee PC
 - pts-core: Improve input when using custom values for a test option
+- pts-core: Add ResultFormat type of NO_RESULT for tests that return no result
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests

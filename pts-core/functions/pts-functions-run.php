@@ -481,6 +481,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		$RETURN_STRING .= "\nFinal: " . $END_RESULT . "\n";
 	}
+	else if($result_format == "NO_RESULT")
+	{
+		$RETURN_STRING = null;
+		$END_RESULT = 0;
+	}
 	else
 	{
 		// Result is of a normal numerical type
@@ -533,8 +538,13 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if(!isset($GLOBALS["TEST_RESULTS_TEXT"]))
 		$GLOBALS["TEST_RESULTS_TEXT"] = "";
 
-	echo $this_result = pts_string_header($RETURN_STRING, "#");
-	$GLOBALS["TEST_RESULTS_TEXT"] .= $this_result;
+	if(!empty($RETURN_STRING))
+	{
+		echo $this_result = pts_string_header($RETURN_STRING, "#");
+		$GLOBALS["TEST_RESULTS_TEXT"] .= $this_result;
+	}
+	else
+		echo "\n\n";
 
 	pts_process_remove($test_identifier);
 	pts_module_process("__post_test_run");
