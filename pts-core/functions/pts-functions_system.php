@@ -213,6 +213,9 @@ function operating_system_release()
 	else
 		$os = $vendor . " " . $version;
 
+	if(($break_point = strpos($os, ":")) > 0)
+		$os = substr($os, $break_point + 1);
+
 	$os = trim($os);
 
 	return $os;
