@@ -245,13 +245,16 @@ function current_processor_usage()
 	$start_load = cpu_load_array();
 	sleep(1);
 	$end_load = cpu_load_array();
-
+	
 	for($i = 0; $i < count($end_load); $i++)
 	{
 		$end_load[$i] -= $start_load[$i];
 	}
 
-	$percent = 100 - (($end_load[(count($end_load) - 1)] * 100) / array_sum($end_load));
+	if(array_sum($end_load) == 0)
+		$percent = 0;
+	else
+		$percent = 100 - (($end_load[(count($end_load) - 1)] * 100) / array_sum($end_load));
 
 	if(!is_numeric($percent) || $percent < 0 || $percent > 100)
 		$percent = -1;

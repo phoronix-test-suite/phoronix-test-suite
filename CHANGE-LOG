@@ -7,6 +7,7 @@ Phoronix Test Suite
 - pts-core: Add PTS module return response types. First implementation: If a module call returns PTS_MODULE_UNLOAD, it will unload the module midway through the process.
 - pts-core: During the testing process, the test identifier is set to $GLOBALS["TEST_IDENTIFIER"]
 - pts-core: OS detection fix for Xandros / Eee PC 901
+- pts-core: Fix division by zero in current_processor_usage() exposed on the Eee PC
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests
