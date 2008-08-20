@@ -389,7 +389,7 @@ switch($COMMAND)
 			{
 				$module_type = "PHP";
 
-				if(!in_array($module, $GLOBALS["PTS_MODULES"]))
+				if(!in_array($module, $GLOBALS["PTS_MODULES"]) && !class_exists($module))
 					include(MODULE_DIR . $module . ".php");
 			}
 			else if(is_file(MODULE_DIR . $module . ".sh"))
