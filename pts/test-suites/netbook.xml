@@ -1,0 +1,55 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<Title>Netbook Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite is designed to test various aspects of a netbook/net-top/UMPC computer.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>mencoder</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-imagemagick</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-gzip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>bonnie</Test>
+		<Arguments>RAND_READ</Arguments>
+		<Description>Random Read</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-i0</Arguments>
+		<Description>Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tandem-xml</Test>
+		<Arguments>WRITE</Arguments>
+		<Description>Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tandem-xml</Test>
+		<Arguments>READ</Arguments>
+		<Description>Read Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
+		<Arguments>ADD -b 3 -l 10</Arguments>
+		<Description>Integer Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>sunflow</Test>
+	</RunTest>
+	<RunTest>
+		<Test>yafray</Test>
+	</RunTest>
+</PhoronixTestSuite>
