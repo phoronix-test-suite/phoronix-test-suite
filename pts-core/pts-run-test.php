@@ -80,7 +80,23 @@ else
 	else if(getenv("TEST_RESULTS_NAME") != FALSE)
 		$SAVE_RESULTS = TRUE;
 	else
-		$SAVE_RESULTS = pts_bool_question("Would you like to save these test results (Y/n)?", true, "SAVE_RESULTS");
+	{
+		$save_option = true;
+
+		if($TO_RUN_TYPE == "TEST")
+		{
+			$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
+			$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
+
+			if($result_format == "NO_RESULT")
+				$save_option = false;
+		}
+
+		if($save_option)
+			$SAVE_RESULTS = pts_bool_question("Would you like to save these test results (Y/n)?", true, "SAVE_RESULTS");
+		else
+			$SAVE_RESULTS = false;
+	}
 
 	if($SAVE_RESULTS)
 	{
@@ -227,8 +243,13 @@ if($TO_RUN_TYPE == "TEST")
 				else
 					echo "\n";
 
-				echo $settings_name[$option_count] . "\n" . "Enter Value: ";
-				$value = strtolower(trim(fgets(STDIN)));
+				do
+				{
+					echo $settings_name[$option_count] . "\n" . "Enter Value: ";
+					$value = strtolower(trim(fgets(STDIN)));
+				}
+				while(empty($value));
+
 				$USER_ARGS .= $settings_argument[$option_count] . $value;
 			}
 		}
