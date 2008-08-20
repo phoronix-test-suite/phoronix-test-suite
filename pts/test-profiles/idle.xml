@@ -1,0 +1,24 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Pekka Panula</Maintainer>
+		<DownloadSize>0.01</DownloadSize>
+		<EnvironmentSize>0.01</EnvironmentSize>
+	</TestProfile>
+	<TestInformation>
+		<Title>Timed Idle</Title>
+		<TimesToRun>1</TimesToRun>
+		<Description>This test will just idle the system for the specified amount of time. This test is of benefit if paired with the system_monitor module to monitor the system sensors, battery consumption, etc while the system is idling. This also can be used just as a simple test profile to understand how the Phoronix Test Suite works.</Description>
+		<ResultFormat>NO_RESULT</ResultFormat>
+	</TestInformation>
+        <TestSettings>
+		<Option>
+			<DisplayName>Time To Idle (In Minutes)</DisplayName>
+			<Identifier>idle-time</Identifier>
+		</Option>
+        </TestSettings>
+</PhoronixTestSuite>

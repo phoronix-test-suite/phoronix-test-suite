@@ -14,6 +14,7 @@ Phoronix Test Suite
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests
 - pts: With urbanterror profile, disable vsync
+- pts: Add idle test profile, which just idles the system for the specified amount of time in minutes (mostly if you want to use another module for that amount of time or do system monitoring)
 - system_monitor: V3_POWER -> V3_VOLTAGE (Reported by Marox)
 - gpu_error_counter: A module that monitors the graphics card to see if any errors occurred during testing, and then report any errors on exit
 
