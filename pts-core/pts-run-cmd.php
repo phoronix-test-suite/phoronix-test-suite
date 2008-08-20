@@ -273,6 +273,7 @@ switch($COMMAND)
 			$suite_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 			$suite_maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
 			$suite_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
+			$suite_description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
 			$suite_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 			$unique_tests = count(pts_tests_in_suite($ARG_1));
 
@@ -282,6 +283,7 @@ switch($COMMAND)
 			echo "Maintainer: " . $suite_maintainer . "\n";
 			echo "Suite Type: " . $suite_type . "\n";
 			echo "Unique Tests: " . $unique_tests . "\n";
+			echo "Suite Description: " . $suite_description . "\n";
 			echo "\n";
 
 			echo pts_print_format_tests($ARG_1);
@@ -295,6 +297,7 @@ switch($COMMAND)
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 			$test_sw_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 			$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
+			$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 			$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 			$test_app_type = $xml_parser->getXMLValue(P_TEST_SOFTWARE_TYPE);
 			$test_license = $xml_parser->getXMLValue(P_TEST_LICENSE);
@@ -325,6 +328,8 @@ switch($COMMAND)
 				echo "Environment Size: " . $test_environment_size . " MB\n";
 			if(!empty($test_estimated_length))
 				echo "Estimated Length: " . pts_estimated_time_string($test_estimated_length) . "\n";
+
+			echo "\nDescription: " . $test_description . "\n";
 
 			if(is_file(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml"))
 			{
