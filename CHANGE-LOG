@@ -25,6 +25,8 @@ Phoronix Test Suite
 - pts: Fix tremulous test-resource file permissions
 - system_monitor: V3_POWER -> V3_VOLTAGE (Reported by Marox)
 - system_monitor: Report elapsed time in graphs instead of date
+- system_monitor: Add physical, SWAP, and total memory usage monitoring support
+- system_monitor: Fix low stat calculation and other improvements
 - gpu_error_counter: A module that monitors the graphics card to see if any errors occurred during testing, and then report any errors on exit
 
 Phoronix Test Suite 1.2.0 Beta 2

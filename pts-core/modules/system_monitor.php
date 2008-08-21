@@ -24,8 +24,8 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.1.2";
-	const module_description = "This module contains the sensor monitoring support.";
+	const module_version = "1.2.0";
+	const module_description = "This module contains sensor monitoring support.";
 	const module_author = "Michael Larabel";
 
 	public static function module_info()
@@ -55,6 +55,7 @@ class system_monitor extends pts_module_interface
 		$monitor_voltage = in_array("all.voltage", $to_show) || $monitor_all;
 		$monitor_freq = in_array("all.freq", $to_show) || $monitor_all;
 		$monitor_usage = in_array("all.usage", $to_show) || $monitor_all;
+		$monitor_memory = in_array("all.memory", $to_show) || $monitor_all;
 
 		if(in_array("gpu.temp", $to_show)  || $monitor_temp)
 		{
@@ -116,10 +117,25 @@ class system_monitor extends pts_module_interface
 			define("MONITOR_CPU_USAGE", 1);
 			pts_module::save_file(".s/CPU_USAGE");
 		}
+		if(in_array("system.memory", $to_show) || $monitor_memory)
+		{
+			define("MONITOR_SYS_MEMORY", 1);
+			pts_module::save_file(".s/SYS_MEMORY");
+		}
+		if(in_array("swap.memory", $to_show) || $monitor_memory)
+		{
+			define("MONITOR_SWAP_MEMORY", 1);
+			pts_module::save_file(".s/SWAP_MEMORY");
+		}
+		if(in_array("total.memory", $to_show) || $monitor_memory)
+		{
+			define("MONITOR_TOTAL_MEMORY", 1);
+			pts_module::save_file(".s/TOTAL_MEMORY");
+		}
 	}
 	public static function __pre_run_process()
 	{
-		pts_module::pts_timed_function(10, "pts_monitor_update");
+		pts_module::pts_timed_function(15, "pts_monitor_update");
 	}
 	public static function __shutdown($obj = NULL)
 	{
@@ -139,6 +155,7 @@ class system_monitor extends pts_module_interface
 		$type_index["VOLTAGE"] = array();
 		$type_index["FREQUENCY"] = array();
 		$type_index["USAGE"] = array();
+		$type_index["MEMORY"] = array();
 
 		if(defined("MONITOR_GPU_TEMP"))
 		{
@@ -252,7 +269,7 @@ class system_monitor extends pts_module_interface
 			{
 				array_push($device, "CPU");
 				array_push($type, "Frequency");
-				array_push($unit, "MHz");
+				array_push($unit, "Megahertz");
 				array_push($m_array, $this_array);
 				array_push($type_index["FREQUENCY"], count($m_array) - 1);
 			}
@@ -265,7 +282,7 @@ class system_monitor extends pts_module_interface
 			{
 				array_push($device, "GPU");
 				array_push($type, "Frequency");
-				array_push($unit, "MHz");
+				array_push($unit, "Megahertz");
 				array_push($m_array, $this_array);
 				array_push($type_index["FREQUENCY"], count($m_array) - 1);
 			}
@@ -296,6 +313,45 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["USAGE"], count($m_array) - 1);
 			}
 		}
+		if(defined("MONITOR_SYS_MEMORY"))
+		{
+			$this_array = self::parse_monitor_log(".s/SYS_MEMORY");
+
+			if(is_array($this_array) && !empty($this_array[0]))
+			{
+				array_push($device, "Physical");
+				array_push($type, "Memory Usage");
+				array_push($unit, "Megabytes");
+				array_push($m_array, $this_array);
+				array_push($type_index["MEMORY"], count($m_array) - 1);
+			}
+		}
+		if(defined("MONITOR_SWAP_MEMORY"))
+		{
+			$this_array = self::parse_monitor_log(".s/SWAP_MEMORY");
+
+			if(is_array($this_array) && !empty($this_array[0]))
+			{
+				array_push($device, "SWAP");
+				array_push($type, "Memory Usage");
+				array_push($unit, "Megabytes");
+				array_push($m_array, $this_array);
+				array_push($type_index["MEMORY"], count($m_array) - 1);
+			}
+		}
+		if(defined("MONITOR_TOTAL_MEMORY"))
+		{
+			$this_array = self::parse_monitor_log(".s/TOTAL_MEMORY");
+
+			if(is_array($this_array) && !empty($this_array[0]))
+			{
+				array_push($device, "Total");
+				array_push($type, "Memory Usage");
+				array_push($unit, "Megabytes");
+				array_push($m_array, $this_array);
+				array_push($type_index["MEMORY"], count($m_array) - 1);
+			}
+		}
 
 		$info_report = "";
 
@@ -315,16 +371,18 @@ class system_monitor extends pts_module_interface
 			for($i = 0; $i < count($m_array); $i++)
 			{
 				// Calculate statistics
-
 				if($i > 0)
 					$info_report .= "\n\n";
 
-				$low = 0;
+				$low = false;
 				$high = 0;
 				$total = 0;
 
 				foreach($m_array[$i] as $temp)
 				{
+					if($low == false)
+						$low = $temp;
+
 					if($temp < $low || ($low == 0 && $type[$i] <> "Usage"))
 						$low = $temp;
 					else if($temp > $high)
@@ -505,6 +563,27 @@ class system_monitor extends pts_module_interface
 			if($usage != -1)
 				pts_module::save_file(".s/CPU_USAGE", $usage, true);
 		}
+		if(defined("MONITOR_SYS_MEMORY"))
+		{
+			$usage = read_physical_memory_usage();
+
+			if($usage != -1)
+				pts_module::save_file(".s/SYS_MEMORY", $usage, true);
+		}
+		if(defined("MONITOR_SWAP_MEMORY"))
+		{
+			$usage = read_swap_usage();
+
+			if($usage != -1)
+				pts_module::save_file(".s/SWAP_MEMORY", $usage, true);
+		}
+		if(defined("MONITOR_TOTAL_MEMORY"))
+		{
+			$usage = read_total_memory_usage();
+
+			if($usage != -1)
+				pts_module::save_file(".s/TOTAL_MEMORY", $usage, true);
+		}
 	}
 	private function parse_monitor_log($log_file)
 	{
@@ -524,7 +603,7 @@ class system_monitor extends pts_module_interface
 	}
 	private function monitor_arguments()
 	{
-		return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.freq", "gpu.usage", "cpu.usage");
+		return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "all.memory", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.freq", "gpu.usage", "cpu.usage", "system.memory", "swap.memory", "total.memory");
 	}
 }
 
