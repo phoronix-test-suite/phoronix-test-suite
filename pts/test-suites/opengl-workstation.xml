@@ -13,12 +13,12 @@
 	</RunTest>
 	<RunTest>
 		<Test>specviewperf9</Test>
-		<Arguments>ensight-03</Arguments>
+		<Arguments>ensight</Arguments>
 		<Description>Ensight</Description>
 	</RunTest>
 	<RunTest>
 		<Test>specviewperf9</Test>
-		<Arguments>proe-04</Arguments>
+		<Arguments>proe</Arguments>
 		<Description>PRO Engineer</Description>
 	</RunTest>
 	<RunTest>
