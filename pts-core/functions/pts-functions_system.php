@@ -349,7 +349,7 @@ function read_system_memory_usage($TYPE = "TOTAL", $READ = "USED")
 {
 	$mem = explode("\n", shell_exec("free -t -m 2>&1"));
 	$grab_line = null;
-	$mem_usage = 0;
+	$mem_usage = -1;
 
 	for($i = 0; $i < count($mem) && empty($grab_line); $i++)
 	{
