@@ -358,7 +358,7 @@ class system_monitor extends pts_module_interface
 							$graph_title = $type[$sub_array[0]] . " Monitor";
 							$graph_unit = $unit[$sub_array[0]];
 							$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
-							$sub_title = $time_minutes . " Minutes - ";
+							$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
 
 							if(isset($GLOBALS["TO_RUN"]))
 								$sub_title .= $GLOBALS["TO_RUN"];

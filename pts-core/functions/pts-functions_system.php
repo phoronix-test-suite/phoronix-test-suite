@@ -333,6 +333,65 @@ function filesystem_type()
 
 	return $fs;
 }
+function read_memory_usage()
+{
+	return read_system_memory_usage("MEMORY");
+}
+function read_total_memory_usage()
+{
+	return read_system_memory_usage("TOTAL");
+}
+function read_swap_usage()
+{
+	return read_system_memory_usage("SWAP");
+}
+function read_system_memory_usage($TYPE = "TOTAL", $READ = "USED")
+{
+	$mem = explode("\n", shell_exec("free -t -m 2>&1"));
+	$grab_line = null;
+	$mem_usage = 0;
+
+	for($i = 0; $i < count($mem) && empty($grab_line); $i++)
+	{
+		$line_parts = explode(":", $mem[$i]);
+
+		if(count($line_parts) == 2)
+		{
+			$line_type = trim($line_parts[0]);
+
+			if($TYPE == "MEMORY" && $line_type == "Mem")
+				$grab_line = $line_parts[1];
+			else if($TYPE == "SWAP" && $line_type == "Swap")
+				$grab_line = $line_parts[1];
+			else if($TYPE == "TOTAL" && $line_type == "Total")
+				$grab_line = $line_parts[1];
+		}
+	}
+
+	if(!empty($grab_line))
+	{
+		$grab_line = trim(preg_replace("/\s+/", " ", $grab_line));
+		$mem_parts = explode(" ", $grab_line);
+
+		if($READ == "USED")
+		{
+			if(count($mem_parts) >= 2 && is_numeric($mem_parts[1]))
+				$mem_usage = $mem_parts[1];
+		}
+		else if($READ == "TOTAL")
+		{
+			if(count($mem_parts) >= 1 && is_numeric($mem_parts[0]))
+				$mem_usage = $mem_parts[0];
+		}
+		else if($READ == "FREE")
+		{
+			if(count($mem_parts) >= 3 && is_numeric($mem_parts[2]))
+				$mem_usage = $mem_parts[2];
+		}
+	}
+
+	return $mem_usage;
+}
 function pts_hw_string()
 {
 	$hw_string = "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . "), ";
