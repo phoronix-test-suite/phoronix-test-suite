@@ -333,7 +333,7 @@ function filesystem_type()
 
 	return $fs;
 }
-function read_memory_usage()
+function read_physical_memory_usage()
 {
 	return read_system_memory_usage("MEMORY");
 }
