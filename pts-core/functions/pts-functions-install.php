@@ -298,7 +298,7 @@ function pts_install_test($identifier)
 	{
 		$custom_validated_output = trim($custom_validated_output);
 
-		if($custom_validated_output != "1" && strtolower($custom_validated_output) != "true")
+		if(!pts_string_bool($custom_validated_output))
 			return false;
 	}
 

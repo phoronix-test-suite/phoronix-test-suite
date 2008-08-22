@@ -532,13 +532,15 @@ function pts_string_bool($string)
 }
 function pts_is_valid_download_url($string, $basename = NULL)
 {
+	$is_valid = true;
+
 	if(strpos($string, "://") == FALSE)
-		return FALSE;
+		$is_valid = FALSE;
 
 	if(!empty($basename) && $basename != basename($string))
-		return FALSE;
+		$is_valid = FALSE;
 
-	return TRUE;
+	return $is_valid;
 }
 function pts_format_time_string($time, $format = "SECONDS")
 {

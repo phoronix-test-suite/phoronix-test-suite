@@ -414,11 +414,13 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 			if(!empty($test_results))
 			{
 				array_push($TEST_RESULTS_ARRAY, $test_results);
-				sleep(1); // Rest for a moment between tests
 			}
 		}
 		if($times_to_run > 1 && $i < ($times_to_run - 1))
+		{
 			pts_module_process("__interim_test_run");
+			sleep(1); // Rest for a moment between tests
+		}
 	}
 
 	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/post.sh"))
@@ -648,6 +650,6 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 				}
 			break;
 		}
-	} 
+	}
 }
 ?>
