@@ -21,7 +21,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>-s 904800 -r 1</Arguments>
+			<Arguments>-r 1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Disk Test</DisplayName>
