@@ -23,6 +23,7 @@
 
 function read_acpi($point, $match)
 {
+	// Read ACPI - Advanced Configuration and Power Interface
 	$value = "";
 
 	if(is_file("/proc/acpi" . $point))
@@ -48,6 +49,7 @@ function read_acpi($point, $match)
 }
 function read_hal($name, $UDI = NULL)
 {
+	// Read HAL - Hardware Abstraction Layer
 	if(empty($UDI))
 		$info = shell_exec("lshal 2>&1 | grep \"" . $name . "\"");
 	else
@@ -71,10 +73,12 @@ function read_hal($name, $UDI = NULL)
 }
 function read_system_hal($name)
 {
+	// Read system HAL
 	return read_hal($name, "/org/freedesktop/Hal/devices/computer");
 }
 function read_sensors($attributes)
 {
+	// Read LM_Sensors
 	$value = "";
 	$sensors = shell_exec("sensors 2>&1");
 	$sensors_lines = explode("\n", $sensors);
@@ -105,6 +109,7 @@ function read_sensors($attributes)
 }
 function read_pci($desc, $clean_string = true)
 {
+	// Read PCI bus information
 	$info = shell_exec("lspci 2>&1");
 
 	if(($pos = strpos($info, $desc)) === FALSE)
@@ -138,6 +143,7 @@ function read_pci($desc, $clean_string = true)
 }
 function read_lsb($desc)
 {
+	// Read LSB Release information, Linux Standards Base
 	$info = shell_exec("lsb_release -a 2>&1");
 
 	if(($pos = strrpos($info, $desc . ':')) === FALSE)
@@ -154,6 +160,7 @@ function read_lsb($desc)
 }
 function read_sysctl($desc)
 {
+	// Read sysctl, used by *BSDs
 	$info = shell_exec("sysctl $desc 2>&1");
 
 	if(strpos($info, $desc . ":") !== FALSE)
@@ -169,6 +176,7 @@ function read_sysctl($desc)
 }
 function read_cpuinfo($attribute)
 {
+	// Read CPU information
 	$cpuinfo_matches = array();
 
 	if(is_file("/proc/cpuinfo"))
@@ -194,6 +202,7 @@ function read_cpuinfo($attribute)
 }
 function read_nvidia_extension($attribute)
 {
+	// Read NVIDIA's NV Extension
 	$info = shell_exec("nvidia-settings --query " . $attribute . " 2>&1");
 	$nv_info = NULL;
 
@@ -208,6 +217,7 @@ function read_nvidia_extension($attribute)
 }
 function read_xdpy_monitor_info()
 {
+	// Read xdpyinfo monitor information
 	$info = trim(shell_exec("xdpyinfo -ext XINERAMA 2>&1 | grep head"));
 	$monitor_info = array();
 
@@ -219,6 +229,7 @@ function read_xdpy_monitor_info()
 }
 function read_amd_graphics_adapters()
 {
+	// Read ATI/AMD graphics hardware using aticonfig
 	$info = trim(shell_exec("aticonfig --list-adapters 2>&1"));
 	$adapters = array();
 
@@ -230,6 +241,7 @@ function read_amd_graphics_adapters()
 }
 function read_amd_pcsdb($attribute)
 {
+	// Read AMD's AMDPCSDB, AMD Persistent Configuration Store Database
 	$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
 	$ati_info = "";
 
@@ -253,6 +265,7 @@ function amd_pcsdb_parser($attribute, $find_once = false)
 }
 function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 {
+	// Read AMD's AMDPCSDB, AMD Persistent Configuration Store Database but using our own internal parser instead of relying upon aticonfig
 	$amdpcsdb_file = "";
 	$last_found_section_count = -1;
 	$this_section_count = 0;
@@ -336,6 +349,7 @@ function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 }
 function read_ati_extension($attribute)
 {
+	// Read ATI fake extension
 	$ati_info = "";
 
 	//mangler to get correct info out of aticonfig
@@ -391,6 +405,8 @@ function read_ati_extension($attribute)
 }
 function read_ati_overdrive($attribute, $adapter = 0)
 {
+	// Read ATI OverDrive information using aticonfig
+	// OverDrive supported in fglrx 8.52+ drivers
 	$value = -1;
 
 	if($attribute == "Temperature")

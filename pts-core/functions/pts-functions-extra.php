@@ -23,6 +23,7 @@
 
 function pts_remove_saved_result($identifier)
 {
+	// Remove a saved result file
 	$return_value = false;
 
 	if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
@@ -45,6 +46,7 @@ function pts_remove_saved_result($identifier)
 }
 function pts_tests_in_suite($object)
 {
+	// Find tests contained within a suite
 	$type = pts_test_type($object);
 	$tests = array();
 
@@ -64,6 +66,7 @@ function pts_tests_in_suite($object)
 }
 function pts_print_format_tests($object, $steps = -1)
 {
+	// Print out a text tree that shows the suites and tests within an object
 	$steps++;
 	if(pts_test_type($object) == "TEST_SUITE")
 	{
@@ -88,8 +91,11 @@ function pts_print_format_tests($object, $steps = -1)
 }
 function pts_generate_download_cache()
 {
+	// Generates a PTS Download Cache
 	if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
+	{
 		mkdir(PTS_DOWNLOAD_CACHE_DIR);
+	}
 	else
 	{
 		if(is_file(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto"))
@@ -171,6 +177,7 @@ function pts_generate_download_cache()
 }
 function pts_dependency_name($dependency)
 {
+	// Find the name of a dependency
 	$return_title = "";
 	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
 	{
@@ -191,6 +198,7 @@ function pts_dependency_name($dependency)
 }
 function pts_estimated_time_string($time)
 {
+	// Estimated time that it will take for the test to complete
 	$strlen_time = strlen($time);
 
 	if(strlen($time_trim = str_replace("~", "", $time)) != $strlen_time)

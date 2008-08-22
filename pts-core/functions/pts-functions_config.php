@@ -33,6 +33,8 @@ function pts_config_init()
 }
 function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions = NULL)
 {
+	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
+
 	if(is_file(PTS_USER_DIR . "user-config.xml"))
 		$file = file_get_contents(PTS_USER_DIR . "user-config.xml");
 	else if(is_file(ETC_DIR . "user-config-template.xml"))
@@ -113,6 +115,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 }
 function pts_config_bool_to_string($bool)
 {
+	// Evaluate a string to boolean type
 	if($bool == true)
 		$bool_return = "TRUE";
 	else
@@ -122,6 +125,8 @@ function pts_config_bool_to_string($bool)
 }
 function pts_graph_config_init()
 {
+	// Initialize the graph configuration file
+
 	if(is_file(PTS_USER_DIR . "graph-config.xml"))
 		$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
 	else if(is_file(RESULTS_VIEWER_DIR . "graph-config-template.xml"))
@@ -170,14 +175,17 @@ function pts_graph_config_init()
 }
 function pts_read_user_config($xml_pointer, $value = null, $tandem_xml = null)
 {
+	// Read an option from a user's config file
 	return pts_read_config("user-config.xml", $xml_pointer, $value, $tandem_xml);
 }
 function pts_read_graph_config($xml_pointer, $value = null, $tandem_xml = null)
 {
+	// Read an option from a user's graph config file
 	return pts_read_config("graph-config.xml", $xml_pointer, $value, $tandem_xml);
 }
 function pts_read_config($config_file, $xml_pointer, $value, $tandem_xml)
 {
+	// Generic call for reading a config file
 	if(!empty($tandem_xml))
 	{
 		$temp_value = $tandem_xml->getXmlValue($xml_pointer);
@@ -203,6 +211,7 @@ function pts_read_config($config_file, $xml_pointer, $value, $tandem_xml)
 }
 function pts_find_home($path)
 {
+	// Find home directory if needed
 	if(strpos($path, "~/") !== FALSE)
 	{
 		$home_path = pts_user_home();
@@ -212,6 +221,7 @@ function pts_find_home($path)
 }
 function pts_current_user()
 {
+	// Current system user
 	$pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User");
 
 	if($pts_user == "Default User")
@@ -221,6 +231,7 @@ function pts_current_user()
 }
 function pts_download_cache()
 {
+	// Returns directory of the PTS Download Cache
 	$dir = getenv("PTS_DOWNLOAD_CACHE");
 
 	if(empty($dir))

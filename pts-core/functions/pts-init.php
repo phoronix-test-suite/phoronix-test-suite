@@ -26,6 +26,7 @@ pts_init();
 
 function pts_directory()
 {
+	// Read PTS directory
 	$dir = getenv("PTS_DIR");
 
 	if($dir == ".")
@@ -41,6 +42,8 @@ function pts_directory()
 }
 function pts_init()
 {
+	// Initialize The Phoronix Test Suite
+
 	// Set time-zone
 	date_default_timezone_set("UTC");
 
@@ -102,6 +105,7 @@ function pts_init()
 }
 function pts_extended_init()
 {
+	// Extended Initalization Process
 	if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
 	{
 		mkdir(PTS_DOWNLOAD_CACHE_DIR);
@@ -143,6 +147,7 @@ function pts_extended_init()
 }
 function __autoload($to_load)
 {
+	// Autoload needed objects
 	if(is_file(PTS_DIR . "pts-core/objects/" . $to_load . ".php"))
 		require_once(PTS_DIR . "pts-core/objects/" . $to_load . ".php");
 }

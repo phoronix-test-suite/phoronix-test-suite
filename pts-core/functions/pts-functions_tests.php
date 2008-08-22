@@ -24,6 +24,7 @@
 
 function pts_test_needs_updated_install($identifier)
 {
+	// Checks if test needs updating
 	$needs_install = FALSE;
 
 	if(!is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml")  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier))
@@ -33,6 +34,7 @@ function pts_test_needs_updated_install($identifier)
 }
 function pts_test_checksum_installer($identifier)
 {
+	// Calculate installed checksum
 	$md5_checksum = "";
 
 	if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
@@ -44,6 +46,7 @@ function pts_test_checksum_installer($identifier)
 }
 function pts_test_installed_checksum_installer($identifier)
 {
+	// Read installer checksum of installed tests
 	$version = "";
 
 	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
@@ -56,6 +59,7 @@ function pts_test_installed_checksum_installer($identifier)
 }
 function pts_test_profile_version($identifier)
 {
+	// Checks PTS profile version
 	$version = "";
 
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
@@ -68,6 +72,7 @@ function pts_test_profile_version($identifier)
 }
 function pts_test_installed_profile_version($identifier)
 {
+	// Checks installed version
 	$version = "";
 
 	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
@@ -80,6 +85,7 @@ function pts_test_installed_profile_version($identifier)
 }
 function pts_test_generate_install_xml($identifier)
 {
+	// Generate an install XML for pts-install.xml
 	$xml_writer = new tandem_XmlWriter();
 
 	$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $identifier);
@@ -93,6 +99,7 @@ function pts_test_generate_install_xml($identifier)
 }
 function pts_test_refresh_install_xml($identifier)
 {
+	// Refresh the pts-install.xml for a test
 	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
 	{
 	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
@@ -112,6 +119,7 @@ function pts_test_refresh_install_xml($identifier)
 }
 function pts_test_name_to_identifier($name)
 {
+	// Convert test name to identifier
 	if(empty($name))
 		return false;
 
@@ -129,6 +137,7 @@ function pts_test_name_to_identifier($name)
 }
 function pts_test_identifier_to_name($identifier)
 {
+	// Convert identifier to test name
 	if(empty($identifier))
 		return false;
 

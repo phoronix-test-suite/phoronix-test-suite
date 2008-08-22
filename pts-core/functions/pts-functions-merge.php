@@ -23,6 +23,7 @@
 
 function pts_find_file($file)
 {
+	// PTS Find A Saved File
 	if(is_file($file))
 		$USE_FILE = $file;
 	else if(is_file(SAVE_RESULTS_DIR . $file . "/composite.xml"))
@@ -38,6 +39,8 @@ function pts_find_file($file)
 }
 function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 {
+	// Merge two test results
+
 	// RE-READ LATEST RESULTS
 	$new_xml_reader = new tandem_XmlReader($NEW_RESULTS);
 	$new_system_hardware = $new_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);
@@ -270,6 +273,8 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 }
 function pts_merge_batch_tests_to_line_comparison($RESULT)
 {
+	// Perform analyze line comparison
+
 	// RE-READ LATEST RESULTS
 	$xml_reader = new tandem_XmlReader($RESULT);
 	$system_hardware = $xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);

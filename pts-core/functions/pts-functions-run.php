@@ -23,6 +23,7 @@
 
 function pts_prompt_results_identifier($current_identifiers = null)
 {
+	// Prompt for a results identifier
 	$RESULTS_IDENTIFIER = null;
 	$show_identifiers = array();
 
@@ -78,6 +79,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 }
 function pts_prompt_save_file_name($check_env = true)
 {
+	// Prompt to save a file when running a test
 	if($check_env && ($save_name = getenv("TEST_RESULTS_NAME")) != FALSE)
 	{
 		$PROPOSED_FILE_NAME = $save_name;
@@ -106,6 +108,7 @@ function pts_prompt_save_file_name($check_env = true)
 }
 function pts_verify_test_installation($TO_RUN)
 {
+	// Verify a test is installed
 	$needs_installing = array();
 	pts_recurse_verify_installation($TO_RUN, $needs_installing);
 
@@ -132,6 +135,7 @@ function pts_verify_test_installation($TO_RUN)
 }
 function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 {
+	// Verify tests are installed
 	$type = pts_test_type($TO_VERIFY);
 
 	if($type == "TEST")
@@ -168,6 +172,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 }
 function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
 {
+	// Call the tests
 	if(!defined("PTS_RECURSE_CALL"))
 	{
 		pts_module_process("__pre_run_process");
@@ -204,6 +209,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 }
 function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $result, $description, $tandem_id = 128)
 {
+	// Do the actual recording of the test result and other relevant information for the given test
 	$test_result = $result[0];
 
 	if((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2))
@@ -267,6 +273,7 @@ function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $r
 }
 function pts_save_test_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)
 {
+	// Save the test file
 	$j = 1;
 	while(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/test-" . $j . ".xml"))
 		$j++;
@@ -296,6 +303,7 @@ function pts_save_test_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = n
 }
 function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "")
 {
+	// Do the actual test running process
 	if(pts_process_active($test_identifier))
 	{
 		echo "\nThis test (" . $test_identifier . ") is already running... Please wait until the first instance is finished.\n";
@@ -557,7 +565,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 }
 function pts_global_auto_tags($extra_attr = NULL)
 {
-	// Auto tagging
+	// Generate automatic tags for the system, used for Phoronix Global
 	$tags_array = array();
 
 	if(!empty($extra_attr) && is_array($extra_attr))
@@ -605,6 +613,7 @@ function pts_global_auto_tags($extra_attr = NULL)
 }
 function pts_all_combos(&$return_arr, $current_string, $options, $counter, $delimiter = " ")
 {
+	// In batch mode, find all possible combinations for test options
 	if(count($options) <= $counter)
 	{
 		array_push($return_arr, trim($current_string));
@@ -626,6 +635,7 @@ function pts_all_combos(&$return_arr, $current_string, $options, $counter, $deli
 }
 function pts_auto_process_test_option($identifier, &$option_names, &$option_values)
 {
+	// Some test items have options that are dynamically built
 	if(count($option_names) == 1 && count($option_values) == 1)
 	{
 		switch($identifier)

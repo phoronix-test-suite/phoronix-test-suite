@@ -23,6 +23,7 @@
 
 function cpu_core_count()
 {
+	// Returns number of cores present on the system
 	if(IS_LINUX)
 	{
 		$processors = read_cpuinfo("processor");
@@ -47,10 +48,12 @@ function cpu_core_count()
 }
 function cpu_job_count()
 {
+	// Number of CPU jobs to tell the tests to use
 	return cpu_core_count() * 2;
 }
 function processor_string()
 {
+	// Returns the processor name / frequency information
 	$info = "";
 
 	if(is_file("/proc/cpuinfo"))
@@ -118,6 +121,7 @@ function processor_string()
 }
 function append_processor_frequency($cpu_string, $cpu_core = 0)
 {
+	// Append the processor frequency to a string
 	if(($freq = processor_frequency($cpu_core)) > 0)
 	{
 		if(($strip_point = strpos($cpu_string, '@')) > 0)
@@ -130,7 +134,7 @@ function append_processor_frequency($cpu_string, $cpu_core = 0)
 }
 function processor_frequency($cpu_core = 0)
 {
-
+	// Find out the processor frequency
 	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
 	{
 		$info = trim(file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"));
@@ -154,6 +158,7 @@ function processor_frequency($cpu_core = 0)
 }
 function processor_temperature()
 {
+	// Read the processor temperature
 	$temp_c = read_sensors(array("CPU Temp", "Core 0"));
 
 	if(empty($temp_c))
@@ -171,6 +176,7 @@ function processor_temperature()
 }
 function pts_processor_power_savings_enabled()
 {
+	// Report string if CPU power savings feature is enabled
 	$return_string = "";
 
 	if(is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq") && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"))
@@ -195,6 +201,7 @@ function pts_processor_power_savings_enabled()
 }
 function current_processor_frequency($cpu_core = 0)
 {
+	// Determine the current processor frequency
 	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
 	{
 		$info = trim(file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"));
@@ -230,6 +237,7 @@ function current_processor_frequency($cpu_core = 0)
 }
 function cpu_load_array()
 {
+	// CPU load array
 	$stat = @file_get_contents("/proc/stat");
 	$stat = substr($stat, 0, strpos($stat, "\n"));
 	$stat_break = explode(" ", $stat);
@@ -242,6 +250,7 @@ function cpu_load_array()
 }
 function current_processor_usage()
 {
+	// Determine current percentage for processor usage
 	$start_load = cpu_load_array();
 	sleep(1);
 	$end_load = cpu_load_array();

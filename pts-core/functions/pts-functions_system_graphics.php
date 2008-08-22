@@ -25,6 +25,7 @@ define("DEFAULT_VIDEO_RAM_CAPACITY", 128);
 
 function graphics_frequency_string()
 {
+	// Report graphics frequency string
 	if(IS_ATI_GRAPHICS)
 		$freq = graphics_processor_stock_frequency();
 	else
@@ -45,6 +46,7 @@ function graphics_frequency_string()
 }
 function graphics_processor_temperature()
 {
+	// Report graphics processor temperature
 	$temp_c = -1;
 
 	if(IS_NVIDIA_GRAPHICS)
@@ -66,6 +68,7 @@ function graphics_processor_temperature()
 }
 function graphics_monitor_count()
 {
+	// Report number of connected/enabled monitors
 	$monitor_count = 0;
 
 	// First try reading number of monitors from xdpyinfo
@@ -110,6 +113,7 @@ function graphics_monitor_count()
 }
 function graphics_monitor_layout()
 {
+	// Determine layout for multiple monitors
 	$monitor_layout = array("CENTER");
 
 	if(graphics_monitor_count() > 1)
@@ -179,6 +183,7 @@ function graphics_monitor_layout()
 }
 function graphics_monitor_resolutions()
 {
+	// Determine resolutions for each monitor
 	$resolutions = array();
 
 	if(graphics_monitor_count() == 1)
@@ -199,6 +204,7 @@ function graphics_monitor_resolutions()
 }
 function graphics_antialiasing_level()
 {
+	// Determine AA level if over-rode
 	$aa_level = "";
 
 	if(IS_NVIDIA_GRAPHICS)
@@ -252,6 +258,7 @@ function graphics_antialiasing_level()
 }
 function graphics_anisotropic_level()
 {
+	// Determine AF level if over-rode
 	$af_level = "";
 
 	if(IS_NVIDIA_GRAPHICS)
@@ -302,6 +309,7 @@ function graphics_anisotropic_level()
 }
 function set_nvidia_extension($attribute, $value)
 {
+	// Sets an object in NVIDIA's NV Extension
 	if(!IS_NVIDIA_GRAPHICS)
 		return;
 
@@ -309,6 +317,7 @@ function set_nvidia_extension($attribute, $value)
 }
 function set_amd_pcsdb($attribute, $value)
 {
+	// Sets a value for AMD's PCSDB, Persistent Configuration Store Database
 	if(!IS_ATI_GRAPHICS)
 		return;
 
@@ -321,7 +330,7 @@ function set_amd_pcsdb($attribute, $value)
 }
 function sort_available_modes($modes)
 {
-	// Order modes properly
+	// Sort graphics card resolution modes
 	$mode_pixel_counts = array();
 	$sorted_modes = array();
 
@@ -351,6 +360,7 @@ function sort_available_modes($modes)
 }
 function xrandr_available_modes()
 {
+	// XRandR available modes
 	$info = shell_exec("xrandr 2>&1");
 	$xrandr_lines = array_reverse(explode("\n", $info));
 	$available_modes = array();
@@ -397,6 +407,7 @@ function xrandr_available_modes()
 }
 function xrandr_screen_resolution()
 {
+	// Find the current screen resolution using XRandR
 	$info = shell_exec("xrandr 2>&1 | grep \"*\"");
 
 	if(strpos($info, "*") !== FALSE)
@@ -431,6 +442,7 @@ function xrandr_screen_resolution()
 }
 function current_screen_resolution()
 {
+	// Return the current screen resolution
 	if(($width = current_screen_width()) != "Unknown" && ($height = current_screen_height()) != "Unknown")
 		$resolution = $width . "x" . $height;
 	else
@@ -440,16 +452,19 @@ function current_screen_resolution()
 }
 function current_screen_width()
 {
+	// Current screen width
 	$resolution = xrandr_screen_resolution();
 	return $resolution[0];
 }
 function current_screen_height()
 {
+	// Current screen height
 	$resolution = xrandr_screen_resolution();
 	return $resolution[1];
 }
 function graphics_processor_stock_frequency()
 {
+	// Graphics processor stock frequency
 	$core_freq = 0;
 	$mem_freq = 0;
 
@@ -488,6 +503,7 @@ function graphics_processor_stock_frequency()
 }
 function graphics_processor_frequency()
 {
+	// Graphics processor real/current frequency
 	$core_freq = 0;
 	$mem_freq = 0;
 
@@ -526,6 +542,7 @@ function graphics_processor_frequency()
 }
 function graphics_processor_string()
 {
+	// Report graphics processor string
 	$info = shell_exec("glxinfo 2>&1 | grep renderer");
 	$video_ram = graphics_memory_capacity();
 
@@ -621,6 +638,7 @@ function graphics_processor_string()
 }
 function graphics_subsystem_version()
 {
+	// Find graphics subsystem version
 	if(IS_SOLARIS)
 		$info = shell_exec("X :0 -version 2>&1");
 	else
@@ -646,6 +664,7 @@ function graphics_subsystem_version()
 }
 function graphics_memory_capacity()
 {
+	// Graphics memory capacity
 	$video_ram = DEFAULT_VIDEO_RAM_CAPACITY;
 
 	if(($vram = getenv("VIDEO_MEMORY")) != FALSE && is_numeric($vram) && $vram > DEFAULT_VIDEO_RAM_CAPACITY)
@@ -684,6 +703,7 @@ function graphics_memory_capacity()
 }
 function opengl_version()
 {
+	// OpenGL version
 	$info = shell_exec("glxinfo 2>&1 | grep version");
 
 	if(($pos = strpos($info, "OpenGL version string:")) === FALSE)
@@ -711,6 +731,7 @@ function opengl_version()
 }
 function graphics_gpu_usage()
 {
+	// Determine GPU usage
 	$gpu_usage = 0;
 
 	if(IS_ATI_GRAPHICS)

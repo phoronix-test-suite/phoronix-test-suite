@@ -23,6 +23,7 @@
 
 function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
 {
+	// Recurse call to install a test/suite and to handle the PTS External Dependencies
 	$type = pts_test_type($TO_INSTALL);
 
 	if($type == "TEST")
@@ -85,6 +86,7 @@ function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
 }
 function pts_download_test_files($identifier)
 {
+	// Download needed files for a test
 	if(is_file(TEST_RESOURCE_DIR . $identifier . "/downloads.xml"))
 	{
 		$xml_parser = new tandem_XmlReader(TEST_RESOURCE_DIR . $identifier . "/downloads.xml");
@@ -274,101 +276,110 @@ function pts_download_test_files($identifier)
 }
 function pts_install_test($identifier)
 {
-	if(pts_test_type($identifier) != "TEST")
-		return;
-
-	if(!pts_test_architecture_supported($identifier))
+	// Install a test
+	$installed = false;
+	if(pts_test_type($identifier) == "TEST")
 	{
-		echo pts_string_header($identifier . " is not supported on this platform (" . kernel_arch() . ").");
-		return;
-	}
-
-	$custom_validated_output = "";
-
-	if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.sh"))
-	{
-		$custom_validated_output = pts_exec("sh " . TEST_RESOURCE_DIR . $identifier . "/validate-install.sh " . TEST_ENV_DIR . $identifier);
-	}
-	else if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.php"))
-	{
-		$custom_validated_output = pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/validate-install.php " . TEST_ENV_DIR . $identifier);
-	}
-
-	if(!empty($custom_validated_output))
-	{
-		$custom_validated_output = trim($custom_validated_output);
-
-		if(!pts_string_bool($custom_validated_output))
-			return false;
-	}
-
-	if(pts_test_needs_updated_install($identifier) || defined("PTS_FORCE_INSTALL"))
-	{
-		if(!defined("PTS_TOTAL_SIZE_MSG"))
+		if(!pts_test_architecture_supported($identifier))
 		{
-			if(isset($argv[1]))
-			{
-				$total_download_size = pts_estimated_download_size($argv[1]);
-
-				if($total_download_size > 0 && pts_test_type($argv[1]) == "TEST_SUITE")
-					echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
-			}
-
-			define("PTS_TOTAL_SIZE_MSG", 1);
-		}
-
-		if(!is_dir(TEST_ENV_DIR))
-			mkdir(TEST_ENV_DIR);
-
-		if(!is_dir(TEST_ENV_DIR . $identifier))
-			mkdir(TEST_ENV_DIR . $identifier);
-
-		if(!is_dir(TEST_ENV_DIR . "pts-shared"))
-			mkdir(TEST_ENV_DIR . "pts-shared");
-
-		pts_download_test_files($identifier);
-
-		if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh") || is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
-		{
-			pts_module_process("__pre_test_install");
-			$install_header = "Installing Test: " . $identifier;
-
-			if(($size = pts_estimated_download_size($identifier)) > 0)
-				$install_header .= "\nEstimated Install Size: " . $size . " MB";
-
-			echo pts_string_header($install_header);
-
-			if(!empty($size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
-			{
-				echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test to be installed.");
-				pts_exit();
-			}
-
-			if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh"))
-			{
-				echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/install.sh " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
-			}
-			else if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
-			{
-				echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/install.php " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
-			}
-			pts_test_generate_install_xml($identifier);
-			pts_module_process("__post_test_install");
+			echo pts_string_header($identifier . " is not supported on this platform (" . kernel_arch() . ").");
 		}
 		else
 		{
-			echo "No installation script found for " . $identifier . "\n";
-			pts_test_generate_install_xml($identifier);
+			// TODO: clean up validate-install and put in pts_validate_test_install
+			$custom_validated_output = "";
+			if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.sh"))
+			{
+				$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/validate-install.sh " . TEST_ENV_DIR . $identifier);
+			}
+			else if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.php"))
+			{
+				$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/validate-install.php " . TEST_ENV_DIR . $identifier);
+			}
+
+			if(!empty($custom_validated_output))
+			{
+				$custom_validated_output = trim($custom_validated_output);
+
+				if(!pts_string_bool($custom_validated_output))
+					$installed = false;
+			}
+			else
+			{
+
+				if(pts_test_needs_updated_install($identifier) || defined("PTS_FORCE_INSTALL"))
+				{
+					if(!defined("PTS_TOTAL_SIZE_MSG"))
+					{
+						if(isset($argv[1]))
+						{
+							$total_download_size = pts_estimated_download_size($argv[1]);
+
+							if($total_download_size > 0 && pts_test_type($argv[1]) == "TEST_SUITE")
+								echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
+						}
+
+						define("PTS_TOTAL_SIZE_MSG", 1);
+					}
+
+					if(!is_dir(TEST_ENV_DIR))
+						mkdir(TEST_ENV_DIR);
+
+					if(!is_dir(TEST_ENV_DIR . $identifier))
+						mkdir(TEST_ENV_DIR . $identifier);
+
+					if(!is_dir(TEST_ENV_DIR . "pts-shared"))
+						mkdir(TEST_ENV_DIR . "pts-shared");
+
+					pts_download_test_files($identifier);
+
+					if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh") || is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
+					{
+						pts_module_process("__pre_test_install");
+						$install_header = "Installing Test: " . $identifier;
+
+						if(($size = pts_estimated_download_size($identifier)) > 0)
+							$install_header .= "\nEstimated Install Size: " . $size . " MB";
+
+						echo pts_string_header($install_header);
+
+						if(!empty($size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
+						{
+							echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test to be installed.");
+							pts_exit();
+						}
+
+						if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh"))
+						{
+							echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/install.sh " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
+						}
+						else if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
+						{
+							echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/install.php " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
+						}
+						pts_test_generate_install_xml($identifier);
+						pts_module_process("__post_test_install");
+					}
+					else
+					{
+						echo "No installation script found for " . $identifier . "\n";
+						$installed = true;
+						pts_test_generate_install_xml($identifier);
+					}
+				}
+				else
+				{
+					$installed = true;
+					if(!getenv("SILENT_INSTALL"))
+						echo "Already Installed: " . $identifier . "\n";
+				}
+			}
 		}
-	}
-	else
-	{
-		if(!getenv("SILENT_INSTALL"))
-			echo "Already Installed: " . $identifier . "\n";
 	}
 }
 function pts_external_dependency_generic($Name)
 {
+	// Get the generic information for a PTS External Dependency generic
 	$generic_information = "";
 
 	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
@@ -408,6 +419,7 @@ function pts_external_dependency_generic($Name)
 }
 function pts_file_missing_check($file_arr)
 {
+	// Checks if file is missing
 	$file_missing = false;
 
 	foreach($file_arr as $file)
@@ -429,6 +441,7 @@ function pts_file_missing_check($file_arr)
 }
 function pts_install_package_on_distribution($identifier)
 {
+	// PTS External Dependencies install on distribution
 	if(getenv("SILENT_INSTALL") == FALSE)
 		echo "Checking For Needed External Dependencies.\n";
 
@@ -439,6 +452,7 @@ function pts_install_package_on_distribution($identifier)
 }
 function pts_install_packages_on_distribution_process($install_objects)
 {
+	// Do the actual installing process of packages using the distribution's package management system
 	if(!empty($install_objects))
 	{
 		if(is_array($install_objects))
@@ -463,6 +477,7 @@ function pts_install_packages_on_distribution_process($install_objects)
 }
 function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 {
+	// Install from a list of external dependencies
 	if(pts_test_type($identifier) != "TEST")
 		return;
 
@@ -470,40 +485,41 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 
-	if(empty($dependencies))
-		return;
-
-	$dependencies = explode(",", $dependencies);
-
-	for($i = 0; $i < count($dependencies); $i++)
-		$dependencies[$i] = trim($dependencies[$i]);
-
-	if(!defined("PTS_EXDEP_FIRST_RUN"))
+	if(!empty($dependencies))
 	{
-		array_push($dependencies, "php-extras");
+		$dependencies = explode(",", $dependencies);
 
-		if(kernel_arch() == "x86_64")
-			array_push($dependencies, "linux-32bit-libraries");
+		for($i = 0; $i < count($dependencies); $i++)
+			$dependencies[$i] = trim($dependencies[$i]);
 
-		define("PTS_EXDEP_FIRST_RUN", 1);
-	}
-
-	$vendor = pts_vendor_identifier();
-
-	if(!pts_package_generic_to_distro_name($INSTALL_OBJ, $dependencies))
-	{
-		$package_string = "";
-		foreach($dependencies as $dependency)
+		if(!defined("PTS_EXDEP_FIRST_RUN"))
 		{
-			$package_string .= pts_external_dependency_generic($dependency);
+			array_push($dependencies, "php-extras");
+
+			if(kernel_arch() == "x86_64")
+				array_push($dependencies, "linux-32bit-libraries");
+
+			define("PTS_EXDEP_FIRST_RUN", 1);
 		}
 
-		if(!empty($package_string))
-			echo "\nSome additional dependencies are required to run or more of these tests, and they could not be installed automatically for your distribution. Below are the software packages that must be installed for the test(s) to run properly.\n\n" . $package_string;
+		$vendor = pts_vendor_identifier();
+
+		if(!pts_package_generic_to_distro_name($INSTALL_OBJ, $dependencies))
+		{
+			$package_string = "";
+			foreach($dependencies as $dependency)
+			{
+				$package_string .= pts_external_dependency_generic($dependency);
+			}
+
+			if(!empty($package_string))
+				echo "\nSome additional dependencies are required to run or more of these tests, and they could not be installed automatically for your distribution. Below are the software packages that must be installed for the test(s) to run properly.\n\n" . $package_string;
+		}
 	}
 }
 function pts_package_generic_to_distro_name(&$package_install_array, $generic_names)
 {
+	// Generic name to distribution package name
 	$vendor = pts_vendor_identifier();
 	$generated = false;
 
@@ -538,6 +554,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 }
 function pts_test_architecture_supported($identifier)
 {
+	// Check if the system's architecture is supported by a test
 	$supported = true;
 
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
@@ -566,6 +583,7 @@ function pts_test_architecture_supported($identifier)
 }
 function pts_estimated_download_size($identifier)
 {
+	// Estimate the size of files to be downloaded
 	$type = pts_test_type($identifier);
 	$estimated_size = 0;
 
@@ -587,6 +605,7 @@ function pts_estimated_download_size($identifier)
 }
 function pts_test_estimated_environment_size($identifier)
 {
+	// Estimate the environment size of a test
 	$size = "";
 
 	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))

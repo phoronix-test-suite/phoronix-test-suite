@@ -67,27 +67,29 @@ if(function_exists("pts_module_start_process"))
 // Phoronix Test Suite - Functions
 function pts_test_type($identifier)
 {
-	if(empty($identifier))
-		return false;
+	// Determine type of test based on identifier
 
 	$test_type = false;
-
-	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
-		$test_type = "TEST";
-	else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
-		$test_type = "TEST_SUITE";
-	else
-		$test_type = false;
+	if(!empty($identifier))
+	{
+		if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+			$test_type = "TEST";
+		else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
+			$test_type = "TEST_SUITE";
+	}
 
 	return $test_type;
 }
 function pts_copy($from, $to)
 {
+	// Copy file
 	if(!is_file($to) || md5_file($from) != md5_file($to))
 		copy($from, $to);
 }
 function pts_gd_available()
 {
+	// Checks if PHP GD library is available for image rendering
+
 	if(!extension_loaded("gd"))
 	{
 	/*	if(dl("gd.so"))
@@ -105,6 +107,7 @@ function pts_gd_available()
 }
 function pts_save_result($save_to = null, $save_results = null)
 {
+	// Saves PTS result file
 	if(strpos($save_to, ".xml") === FALSE)
 	{
 		$save_to .= ".xml";
@@ -223,6 +226,7 @@ function pts_save_result($save_to = null, $save_results = null)
 }
 function pts_process_register($process)
 {
+	// Register a process as active
 	if(!is_dir(TEST_ENV_DIR))
 		mkdir(TEST_ENV_DIR);
 	if(!is_dir(TEST_ENV_DIR . ".processes"))
@@ -232,28 +236,29 @@ function pts_process_register($process)
 }
 function pts_process_remove($process)
 {
+	// Remove a process from being active, if present
 	if(is_file(TEST_ENV_DIR . ".processes/" . $process . ".p"))
 		return @unlink(TEST_ENV_DIR . ".processes/" . $process . ".p");
 }
 function pts_process_active($process)
 {
-	if(is_file(TEST_ENV_DIR . ".processes/" . $process . ".p"))
+	// Register a process as active
+	$active = false;
+	if(is_file(TEST_ENV_DIR . ".processes/" . $process . ".p") && !IS_SOLARIS)
 	{
-		if(IS_SOLARIS)
-			return false;
-
 		$pid = trim(@file_get_contents(TEST_ENV_DIR . ".processes/" . $process . ".p"));
 		$ps = trim(shell_exec("ps -p $pid 2>&1"));
 
 		if(strpos($ps, "php") > 0)
-			return true;
+			$active = true;
 
 		pts_process_remove($process);
 	}
-	return false;
+	return $active;
 }
 function display_web_browser($URL, $alt_text = NULL, $default_open = FALSE)
 {
+	// Launch the web browser
 	if($alt_text == NULL)
 		$text = "Do you want to view the results in your web browser";
 	else
@@ -269,6 +274,8 @@ function display_web_browser($URL, $alt_text = NULL, $default_open = FALSE)
 }
 function pts_env_variables()
 {
+	// The PTS environmental variables passed during the testing process, etc
+
 	if(isset($GLOBALS["PTS_VAR_CACHE"]["ENV_VARIABLES"]))
 	{
 		$var_array = $GLOBALS["PTS_VAR_CACHE"]["ENV_VARIABLES"];
@@ -306,6 +313,7 @@ function pts_env_variables()
 }
 function pts_input_correct_results_path($path)
 {
+	// Correct an input path for an XML file
 	if(strpos($path, "/") === FALSE)
 	{
 		$path = SAVE_RESULTS_DIR . $path;
@@ -318,6 +326,7 @@ function pts_input_correct_results_path($path)
 }
 function pts_variables_export_string($vars = null)
 {
+	// Convert pts_env_variables() into shell export variable syntax
 	$return_string = "";
 
 	if($vars == null)
@@ -333,10 +342,12 @@ function pts_variables_export_string($vars = null)
 }
 function pts_exec($exec, $extra_vars = null)
 {
+	// Same as shell_exec() but with the PTS env variables added in
 	return shell_exec(pts_variables_export_string($extra_vars) . $exec);
 }
 function pts_request_new_id()
 {
+	// Request a new ID for a counter
 	global $PTS_GLOBAL_ID;
 	$PTS_GLOBAL_ID++;
 
@@ -344,6 +355,7 @@ function pts_request_new_id()
 }
 function pts_global_upload_result($result_file, $tags = "")
 {
+	// Upload a test result to the Phoronix Global database
 	$test_results = file_get_contents($result_file);
 	$test_results = str_replace(array("\n", "\t"), "", $test_results);
 	$switch_tags = array("Benchmark>" => "B>", "Results>" => "R>", "Group>" => "G>", "Entry>" => "E>", "Identifier>" => "I>", "Value>" => "V>", "System>" => "S>", "Attributes>" => "A>");
@@ -373,10 +385,12 @@ function pts_global_upload_result($result_file, $tags = "")
 }
 function pts_is_global_id($global_id)
 {
+	// Checks if a string is a valid Phoronix Global ID
 	return pts_global_valid_id_string($global_id) && trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id)) == "REMOTE_FILE";
 }
 function pts_global_download_xml($global_id)
 {
+	// Download a saved test result from Phoronix Global
 	return @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $global_id);
 }
 function pts_global_valid_id_string($global_id)
@@ -394,7 +408,8 @@ function pts_global_valid_id_string($global_id)
 }
 function pts_trim_double($double, $accuracy = 2)
 {
-	$return = explode('.', $double);
+	// Set precision for a variable's points after the decimal spot
+	$return = explode(".", $double);
 
 	if(count($return) == 1)
 		$return[1] = "00";
@@ -418,6 +433,7 @@ function pts_trim_double($double, $accuracy = 2)
 }
 function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 {
+	// Prompt user for yes/no question
 	if(defined("IS_BATCH_MODE") && IS_BATCH_MODE)
 	{
 		switch($question_id)
@@ -459,6 +475,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 }
 function pts_clean_information_string($str)
 {
+	// Clean a string containing hardware information of some common things to change/strip out
 	$remove_phrases = array("corporation ", " technologies", ",", " technology", " Incorporation", "version ", "computer ", "processor ", "genuine ", "Unknown device ", "(r)", "(tm)", "inc. ", "inc ", "/pci/sse2/3dnow!", "/pci/sse2", "co. ltd", "co. ltd.");
 	$str = str_ireplace($remove_phrases, " ", $str);
 
@@ -473,6 +490,7 @@ function pts_clean_information_string($str)
 }
 function pts_string_header($heading, $char = '=')
 {
+	// Return a string header
 	$header_size = 36;
 
 	foreach(explode("\n", $heading) as $line)
@@ -488,12 +506,14 @@ function pts_string_header($heading, $char = '=')
 }
 function pts_exit($string = "")
 {
+	// Have PTS exit abruptly
 	define("PTS_EXIT", 1);
 	echo $string;
 	exit(0);
 }
 function pts_version_comparable($old, $new)
 {
+	// Checks if there's a major version difference between two strings, if so returns false. If the same or only a minor difference, returns true.
 	$old = explode(".", $old);
 	$new = explode(".", $new);
 	$compare = true;
@@ -504,13 +524,9 @@ function pts_version_comparable($old, $new)
 
 	return $compare;	
 }
-function pts_beep($times = 1)
-{
-	for($i = 0; $i < $times; $i++)
-		shell_exec("echo -e \"\\a\"");
-}
 function pts_shutdown()
 {
+	// Shutdown process for PTS
 	define("PTS_END_TIME", time());
 
 	if(IS_DEBUG_MODE && defined("PTS_DEBUG_FILE"))
@@ -527,11 +543,13 @@ function pts_shutdown()
 }
 function pts_string_bool($string)
 {
+	// Used for evaluating if the user inputted a string that evaluates to true
 	$string = strtolower($string);
 	return $string == "true" || $string == "1" || $string == "on";
 }
 function pts_is_valid_download_url($string, $basename = NULL)
 {
+	// Checks for valid download URL
 	$is_valid = true;
 
 	if(strpos($string, "://") == FALSE)
@@ -544,6 +562,7 @@ function pts_is_valid_download_url($string, $basename = NULL)
 }
 function pts_format_time_string($time, $format = "SECONDS")
 {
+	// Format an elapsed time string
 	if($format == "MINUTES")
 		$time *= 60;
 
@@ -588,11 +607,13 @@ function pts_format_time_string($time, $format = "SECONDS")
 }
 function pts_set_environment_variable($name, $value)
 {
+	// Sets an environmental variable
 	if(getenv($name) == FALSE)
 		putenv($name . "=" . $value);
 }
 function pts_proximity_match($search, $match_to)
 {
+	// Proximity search in $search string for * against $match_to
 	$search = explode("*", $search);
 	$is_match = true;
 
@@ -613,6 +634,7 @@ function pts_proximity_match($search, $match_to)
 }
 function pts_debug_message($message)
 {
+	// Writes a PTS debug message
 	if(IS_DEBUG_MODE)
 	{
 		if(strpos($message, "$") > 0)

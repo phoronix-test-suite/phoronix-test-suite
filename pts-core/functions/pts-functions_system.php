@@ -27,6 +27,7 @@ require_once("pts-core/functions/pts-functions_system_graphics.php");
 
 function pts_process_running_string($process_arr)
 {
+	// Format a nice string that shows processes running
 	$p = array();
 	$p_string = "";
 
@@ -71,6 +72,7 @@ function pts_process_running_string($process_arr)
 }
 function pts_process_running_bool($process)
 {
+	// Checks if process is running on the system
 	$running = shell_exec("ps -C " . strtolower($process));
 	$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
 
@@ -83,6 +85,7 @@ function pts_process_running_bool($process)
 }
 function pts_user_name()
 {
+	// Gets the system user's name
 	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
 	{
 		$userinfo = posix_getpwuid(posix_getuid());
@@ -97,6 +100,7 @@ function pts_user_name()
 }
 function pts_user_home()
 {
+	// Gets the system user's home directory
 	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
 	{
 		$userinfo = posix_getpwuid(posix_getuid());
@@ -111,10 +115,12 @@ function pts_user_home()
 }
 function pts_disk_total()
 {
+	// Returns amoung of disk space
 	return ceil(disk_total_space("/") / 1073741824);
 }
 function memory_mb_capacity()
 {
+	// Returns physical memory capacity
 	if(is_file("/proc/meminfo"))
 	{
 		$info = file_get_contents("/proc/meminfo");
@@ -139,18 +145,22 @@ function memory_mb_capacity()
 }
 function os_vendor()
 {
+	// Returns OS vendor
 	return read_lsb("Distributor ID");
 }
 function os_version()
 {
+	// Returns OS version
 	return read_lsb("Release");
 }
 function kernel_string()
 {
+	// Returns kernel
 	return trim(shell_exec("uname -r"));
 }
 function kernel_arch()
 {
+	// Find out the kernel archiecture
 	$kernel_arch = trim(shell_exec("uname -m"));
 
 	if($kernel_arch == "X86-64")
@@ -160,10 +170,12 @@ function kernel_arch()
 }
 function motherboard_chipset_string()
 {
+	// Returns motherboard chipset
 	return read_pci("Host bridge:");
 }
 function compiler_version()
 {
+	// Returns version of the compiler (if present)
 	$info = shell_exec("gcc -dumpversion 2>&1");
 	$gcc_info = "N/A";
 
@@ -174,6 +186,7 @@ function compiler_version()
 }
 function operating_system_release()
 {
+	// Determine the operating system release
 	$vendor = os_vendor();
 	$version = os_version();
 
@@ -222,6 +235,7 @@ function operating_system_release()
 }
 function pts_vendor_identifier()
 {
+	// Returns the vendor identifier used with the External Dependencies and other distro-specific features
 	$vendor = os_vendor();
 
 	if($vendor == "Unknown")
@@ -236,6 +250,7 @@ function pts_vendor_identifier()
 }
 function system_temperature()
 {
+	// Reads the system's temperature
 	$temp_c = read_sensors(array("Sys Temp", "Board Temp"));
 
 	if(empty($temp_c))
@@ -253,6 +268,7 @@ function system_temperature()
 }
 function system_line_voltage($type)
 {
+	// Reads the system's line voltages
 	if($type == "CPU")
 		$voltage = read_sensors("VCore");
 	else if($type == "V3")
@@ -271,6 +287,7 @@ function system_line_voltage($type)
 }
 function main_system_hardware_string()
 {
+	// Returns the motherboard
 	$vendor = read_system_hal("system.hardware.vendor");
 	$product = read_system_hal("system.hardware.product");
 	$version = read_system_hal("system.hardware.version");
@@ -299,6 +316,7 @@ function main_system_hardware_string()
 }
 function pts_report_power_mode()
 {
+	// Returns the power mode
 	$power_state = read_acpi("/ac_adapter/AC/state", "state");
 	$return_status = "";
 
@@ -309,6 +327,7 @@ function pts_report_power_mode()
 }
 function pts_report_virtualized_mode()
 {
+	// Reports if system is running virtualized
 	$virtualized = "";
 	$gpu = graphics_processor_string();
 
@@ -326,6 +345,7 @@ function pts_report_virtualized_mode()
 }
 function filesystem_type()
 {
+	// Determine file-system type
 	$fs = shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null");
 
 	if(empty($fs) || IS_BSD)
@@ -335,18 +355,22 @@ function filesystem_type()
 }
 function read_physical_memory_usage()
 {
+	// Amount of physical memory being used
 	return read_system_memory_usage("MEMORY");
 }
 function read_total_memory_usage()
 {
+	// Amount of total (physical + SWAP) memory being used
 	return read_system_memory_usage("TOTAL");
 }
 function read_swap_usage()
 {
+	// Amount of SWAP memory being used
 	return read_system_memory_usage("SWAP");
 }
 function read_system_memory_usage($TYPE = "TOTAL", $READ = "USED")
 {
+	// Reads system memory usage
 	$mem = explode("\n", shell_exec("free -t -m 2>&1"));
 	$grab_line = null;
 	$mem_usage = -1;
@@ -394,6 +418,7 @@ function read_system_memory_usage($TYPE = "TOTAL", $READ = "USED")
 }
 function pts_hw_string()
 {
+	// Returns string of hardware information
 	$hw_string = "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . "), ";
 	$hw_string .= "Motherboard: " . main_system_hardware_string() . ", ";
 	$hw_string .= "Chipset: " . motherboard_chipset_string() . ", ";
@@ -406,6 +431,7 @@ function pts_hw_string()
 }
 function pts_sw_string()
 {
+	// Returns string of software information
 	$sw_string = "OS: " . operating_system_release() . ", ";
 	$sw_string .= "Kernel: " . kernel_string() . " (" . kernel_arch() . "), ";
 	$sw_string .= "X.Org Server: " . graphics_subsystem_version() . ", ";

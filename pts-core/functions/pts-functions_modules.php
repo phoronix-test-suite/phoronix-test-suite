@@ -27,6 +27,7 @@ define("PTS_MODULE_UNLOAD", "PTS_MODULE_UNLOAD");
 
 function pts_module_start_process()
 {
+	// Process initially called when PTS starts up
 	$GLOBALS["PTS_MODULES"] = array();
 	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
 	$GLOBALS["PTS_MODULE_VAR_STORE"] = array();
@@ -45,6 +46,7 @@ function pts_module_start_process()
 }
 function pts_auto_detect_modules($load_here = FALSE)
 {
+	// Auto detect modules to load
 	$module_variables_file = @file_get_contents(MODULE_DIR . "module-variables.txt");
 	$module_variables = explode("\n", $module_variables_file);
 
@@ -72,6 +74,8 @@ function pts_auto_detect_modules($load_here = FALSE)
 }
 function pts_load_modules()
 {
+	// Load the modules list
+
 	// Check for modules to auto-load from the configuration file
 	if(strlen(($load_modules = pts_read_user_config(P_OPTION_LOAD_MODULES, ""))) > 0)
 		foreach(explode(",", $load_modules) as $module)
@@ -134,15 +138,18 @@ function pts_load_modules()
 }
 function pts_attach_module($module)
 {
+	// Attach a module to be called routinely
 	array_push($GLOBALS["PTS_MODULES"], trim($module));
 }
 function pts_load_module($module)
 {
+	// Load the actual file needed that contains the module
 	if(pts_module_type($module) == "PHP")
 		@include(MODULE_DIR . $module . ".php");
 }
 function pts_module_process($process)
 {
+	// Run a module process on all registered modules
 	foreach($GLOBALS["PTS_MODULES"] as $module_index => $module)
 	{
 		$GLOBALS["PTS_MODULE_CURRENT"] = $module;
@@ -168,6 +175,7 @@ function pts_module_process($process)
 }
 function pts_module_process_extensions($extensions)
 {
+	// Process extensions for modules
 	if(!empty($extensions))
 	{
 		$GLOBALS["MODULE_STORE"] = $extensions;
@@ -184,6 +192,8 @@ function pts_module_process_extensions($extensions)
 }
 function pts_module_type($name)
 {
+	// Determine the code type of a module
+
 	if(isset($GLOBALS["PTS_VAR_CACHE"]["MODULE_TYPES"][$name]))
 	{
 		$type = $GLOBALS["PTS_VAR_CACHE"]["MODULE_TYPES"][$name];

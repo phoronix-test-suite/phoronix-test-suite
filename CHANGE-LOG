@@ -14,6 +14,9 @@ Phoronix Test Suite
 - pts-core: If using custom input value, it will prompt user until the input is !empty()
 - pts-core: With info command for tests and suites, show the description string
 - pts-core: Add support for reading system memory and SWAP usage
+- pts-core: Drop pts_beep()
+- pts-core: If using validate-install.sh/validate-install.php, switch to the test's environment directory before calling the validation script
+- pts-core: General code cleaning, add more documentation, and other cleaning
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests
