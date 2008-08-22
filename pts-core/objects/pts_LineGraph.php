@@ -30,6 +30,8 @@ class pts_LineGraph extends pts_CustomGraph
 	{
 		parent::__construct($Title, $SubTitle, $YTitle);
 		$this->graph_type = "LINE_GRAPH";
+		$this->graph_show_key = TRUE;
+		$this->graph_background_lines = TRUE;
 	}
 	protected function render_graph_pre_init()
 	{

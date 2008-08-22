@@ -65,6 +65,8 @@ class pts_Graph
 	// Not user-friendly changes below this line
 	var $graph_body_image = FALSE;
 	var $graph_hide_identifiers = FALSE;
+	var $graph_show_key = FALSE;
+	var $graph_background_lines = FALSE;
 	var $graph_type = "GRAPH";
 	var $graph_value_type = "NUMERICAL";
 	var $graph_image;
@@ -368,7 +370,7 @@ class pts_Graph
 	}
 	protected function render_graph_base()
 	{
-		if(count($this->graph_data_title) > 1 || $this->graph_type == "LINE_GRAPH")
+		if(count($this->graph_data_title) > 1 || $this->graph_show_key == TRUE)
 		{
 			$num_key_lines = ceil(count($this->graph_data_title) / 4);
 			$this->graph_top_start = $this->graph_top_start + 8 + ($num_key_lines * 11);
@@ -408,7 +410,7 @@ class pts_Graph
 
 			$this->gd_write_text_right($display_value, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2);
 
-			if($i != 0 && $this->graph_type == "LINE_GRAPH")
+			if($i != 0 && $this->graph_background_lines == TRUE)
 			{
 				$line_width = 6;
 				for($y = $px_from_left_end + $line_width; $y < $this->graph_left_end; $y += ($line_width * 2))
@@ -458,7 +460,7 @@ class pts_Graph
 	}
 	protected function render_graph_key()
 	{
-		if(count($this->graph_data_title) < 2 && $this->graph_type != "LINE_GRAPH")
+		if(count($this->graph_data_title) < 2 && $this->graph_show_key == FALSE)
 			return;
 
 		$key_counter = 0;
