@@ -25,6 +25,7 @@ Phoronix Test Suite
 - pts: Fix tremulous test-resource file permissions
 - pts: Fix specviewperf9 in opengl-workstation test suite
 - pts: Improve size detection in iozone test profile (Thanks to Michael Ploujnikov)
+- pts: Let the user know that they will be asked for a root password (Thanks to Michael Ploujnikov)
 - system_monitor: V3_POWER -> V3_VOLTAGE (Reported by Marox)
 - system_monitor: Report elapsed time in graphs instead of date
 - system_monitor: Add physical, SWAP, and total memory usage monitoring support
