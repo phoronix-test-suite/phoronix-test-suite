@@ -96,6 +96,8 @@ function pts_prompt_save_file_name($check_env = true)
 			}
 			while(empty($PROPOSED_FILE_NAME));
 		}
+		else
+			$PROPOSED_FILE_NAME = "";
 	}
 
 	$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
