@@ -279,6 +279,12 @@ switch($COMMAND)
 
 			echo pts_string_header($suite_name);
 
+			$suite_maintainer = explode("|", $suite_maintainer);
+			if(count($suite_maintainer) == 2)
+				$suite_maintainer = trim($suite_maintainer[0]) . " <" . trim($suite_maintainer[1]) . ">";
+			else
+				$suite_maintainer = $suite_maintainer[0];
+
 			echo "Suite Version: " . $suite_version . "\n";
 			echo "Maintainer: " . $suite_maintainer . "\n";
 			echo "Suite Type: " . $suite_type . "\n";
@@ -313,6 +319,12 @@ switch($COMMAND)
 				$test_title .= " " . $test_sw_version;
 
 			echo pts_string_header($test_title);
+
+			$test_maintainer = explode("|", $test_maintainer);
+			if(count($test_maintainer) == 2)
+				$test_maintainer = trim($test_maintainer[0]) . " <" . trim($test_maintainer[1]) . ">";
+			else
+				$test_maintainer = $test_maintainer[0];
 
 			echo "Test Version: " . $test_version . "\n";
 			echo "Maintainer: " . $test_maintainer . "\n";
