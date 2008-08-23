@@ -165,6 +165,8 @@ function kernel_arch()
 
 	if($kernel_arch == "X86-64")
 		$kernel_arch = "x86_64";
+	else if($kernel_arch == "i86pc")
+		$kernel_arch = "i686";
 
 	return $kernel_arch;
 }
