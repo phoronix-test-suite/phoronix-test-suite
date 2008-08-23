@@ -74,7 +74,12 @@ function read_hal($name, $UDI = NULL)
 function read_system_hal($name)
 {
 	// Read system HAL
-	return read_hal($name, "/org/freedesktop/Hal/devices/computer");
+	$hal = read_hal($name, "/org/freedesktop/Hal/devices/computer");
+
+	if($hal == "Unknown")
+		$hal = read_hal($name);
+
+	return $hal;
 }
 function read_sensors($attributes)
 {
