@@ -64,7 +64,7 @@ function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
 			pts_recurse_install_test($test, $INSTALL_OBJ);
 		}
 	}
-	else if(pts_is_global_id($TO_RUN))
+	else if(pts_is_global_id($TO_INSTALL))
 	{
 		$xml_parser = new tandem_XmlReader(pts_global_download_xml($TO_INSTALL));
 		$suite_tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);

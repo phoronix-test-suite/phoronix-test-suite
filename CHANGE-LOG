@@ -20,6 +20,8 @@ Phoronix Test Suite
 - pts-core: Add support for email address to follow the maintainer's name in tests and suites if a | character is between the name and email
 - pts-core: When running on Solaris and ps error generated, don't print to screen
 - pts-core: Fix HAL system detection for some systems
+- pts-core: For OpenSolaris, i86pc -> i686 architecture
+- pts-core: Fix missing variables in run and install functions
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests

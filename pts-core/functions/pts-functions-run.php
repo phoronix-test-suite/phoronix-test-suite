@@ -159,7 +159,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 		foreach($tests_in_suite as $test)
 			pts_recurse_verify_installation($test, $NEEDS_INSTALLING);
 	}
-	else if(pts_is_global_id($TO_RUN))
+	else if(pts_is_global_id($TO_VERIFY))
 	{
 		$xml_parser = new tandem_XmlReader(pts_global_download_xml($TO_VERIFY));
 		$tests_in_suite = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
