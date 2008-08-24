@@ -311,6 +311,14 @@ function main_system_hardware_string()
 
 	if(empty($info))
 	{
+		$fw_version = explode(" ", read_system_hal("system.firmware.version"));
+
+		if(count($fw_version) > 1)
+			$info = $fw_version[0] . " " . $fw_version[1];
+	}
+
+	if(empty($info))
+	{
 		$info = read_hal("pci.subsys_vendor");
 	}
 
