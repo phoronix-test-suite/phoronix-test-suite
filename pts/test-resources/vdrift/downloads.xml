@@ -1,0 +1,8 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://internap.dl.sourceforge.net/sourceforge/vdrift/vdrift-2008-08-05-src.tar.bz2, http://voxel.dl.sourceforge.net/sourceforge/vdrift/vdrift-2008-08-05-src.tar.bz2, http://ovh.dl.sourceforge.net/sourceforge/vdrift/vdrift-2008-08-05-src.tar.bz2, http://internode.dl.sourceforge.net/sourceforge/vdrift/vdrift-2008-08-05-src.tar.bz2, http://waix.dl.sourceforge.net/sourceforge/vdrift/vdrift-2008-08-05-src.tar.bz2</URL>
+			<MD5>9e3e3c91960146354c2a9fb65da3bd97</MD5>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

@@ -41,6 +41,7 @@ Phoronix Test Suite
 - pts: Add fhourstones test profile to computational test suite
 - pts: Add vorbis-devel to PTS External Dependencies for Vorbis development files
 - pts: Add jam to PTS External Dependencies for Jam build system
+- pts: Add vdrift test profile for vDrift racing game, but currently the profile is incomplete
 - pts_Graph: Add graph_show_key and graph_background_lines properties
 - system_monitor: V3_POWER -> V3_VOLTAGE (Reported by Marox)
 - system_monitor: Report elapsed time in graphs instead of date
