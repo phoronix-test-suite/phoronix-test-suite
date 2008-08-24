@@ -125,5 +125,15 @@
 			<PackageName>openal openal-devel</PackageName>
 			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>vorbis-devel</GenericName>
+			<PackageName>taglib-devel</PackageName>
+			<FileCheck>/usr/include/taglib/vorbisfile.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>jam</GenericName>
+			<PackageName>jam</PackageName>
+			<FileCheck>/usr/bin/jam</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

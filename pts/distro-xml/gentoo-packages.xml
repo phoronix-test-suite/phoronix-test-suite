@@ -120,5 +120,15 @@
 			<PackageName>media-libs/openal</PackageName>
 			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>vorbis-devel</GenericName>
+			<PackageName>media-libs/taglib</PackageName>
+			<FileCheck>/usr/include/taglib/vorbisfile.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>jam</GenericName>
+			<PackageName>dev-util/ftjam</PackageName>
+			<FileCheck>/usr/bin/jam</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -172,7 +172,7 @@
 			<GenericName>jam</GenericName>
 			<Title>Jam Build Tool</Title>
 			<PossibleNames>jam</PossibleNames>
-			<FileCheck>/usr/bin/jam.perforce</FileCheck>
+			<FileCheck>/usr/bin/jam</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
