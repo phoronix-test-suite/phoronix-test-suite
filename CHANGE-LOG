@@ -22,6 +22,7 @@ Phoronix Test Suite
 - pts-core: Fix HAL system detection for some systems
 - pts-core: For OpenSolaris, i86pc -> i686 architecture
 - pts-core: Fix missing variables in run and install functions
+- pts-core: When running in debug mode, set error reporting to all and strict
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests

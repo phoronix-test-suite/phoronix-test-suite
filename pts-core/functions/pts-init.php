@@ -65,6 +65,8 @@ function pts_init()
 			define("PTS_DEBUG_FILE", $debug_file);
 			$GLOBALS["DEBUG_CONTENTS"] = "";
 		}
+
+		error_reporting(E_ALL | E_STRICT); // Set error reporting to all and strict
 	}
 	else
 		define("IS_DEBUG_MODE", false);
