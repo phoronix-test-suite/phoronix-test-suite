@@ -168,5 +168,11 @@
 			<PossibleNames>libvorbis-dev, vorbis-devel</PossibleNames>
 			<FileCheck>/usr/include/vorbis/vorbisfile.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>jam</GenericName>
+			<Title>Jam Build Tool</Title>
+			<PossibleNames>jam</PossibleNames>
+			<FileCheck>/usr/bin/jam.perforce</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
