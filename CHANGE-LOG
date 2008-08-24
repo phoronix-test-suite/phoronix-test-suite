@@ -39,6 +39,7 @@ Phoronix Test Suite
 - pts: PTS External Dependency installer improvement  (Thanks to Michael Ploujnikov)
 - pts: Add fhourstones test profile that does advanced Connect 4 game solving
 - pts: Add fhourstones test profile to computational test suite
+- pts: Add voribs-devel to PTS External Dependencies for Vorbis development files
 - pts_Graph: Add graph_show_key and graph_background_lines properties
 - system_monitor: V3_POWER -> V3_VOLTAGE (Reported by Marox)
 - system_monitor: Report elapsed time in graphs instead of date
