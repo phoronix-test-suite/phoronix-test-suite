@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>System</TestType>
 		<Title>Computational Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -20,5 +20,8 @@
 		<Test>scimark2</Test>
 		<Arguments>TEST_COMPOSITE</Arguments>
 		<Description>Composite</Description>
+	</RunTest>
+	<RunTest>
+		<Test>fhourstones</Test>
 	</RunTest>
 </PhoronixTestSuite>
