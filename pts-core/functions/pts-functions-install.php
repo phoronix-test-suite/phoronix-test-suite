@@ -299,6 +299,7 @@ function pts_local_download_test_files($identifier)
 }
 function pts_remove_local_download_test_files($identifier)
 {
+	// Remove locally downloaded files for a given test
 	foreach(pts_local_download_test_files($identifier) as $test_file)
 	{
 		$file_location = TEST_ENV_DIR . $identifier . "/" . $test_file;

@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 1.2.0 Beta 3
+August 25, 2008
 
 - pts-core: Sort xrandr_available_modes() by pixel count
 - pts-core: Add list-all-tests option that is like list-tests but will also list tests that are marked of an EXPERIMENTAL, PRIVATE, BROKEN, or UNVERIFIED state
@@ -31,7 +32,7 @@ Phoronix Test Suite
 - pts: Add java-opengl test suite for Java OpenGL tests
 - pts: With urbanterror profile, disable vsync
 - pts: Add idle test profile, which just idles the system for the specified amount of time in minutes (mostly if you want to use another module for that amount of time or do system monitoring)
-- pts: Mixup with memory -> pcqs-memory. Now a PCQS memory test suite and revert the memory test suite changes
+- pts: Mix-up with memory -> pcqs-memory. Now a PCQS memory test suite and revert the memory test suite changes
 - pts: Add a basic netbook test suite with trying to do some netbook tests that aren't so much desktop-hungry
 - pts: Add a ray-tracing test suite of ray-tracing tests
 - pts: Fix tremulous test-resource file permissions
