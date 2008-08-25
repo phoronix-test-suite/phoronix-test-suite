@@ -55,7 +55,7 @@ function pts_init()
 	define("PTS_START_TIME", THIS_RUN_TIME);
 
 	// Run in debug mode?
-	if(getenv("DEBUG") == "1" || getenv("PTS_DEBUG") == "1" || ($debug_file = getenv("DEBUG_FILE")) != FALSE)
+	if(($debug_file = getenv("DEBUG_FILE")) != FALSE || getenv("DEBUG") == "1" || getenv("PTS_DEBUG") == "1")
 	{
 		define("PTS_DEBUG_MODE", 1);
 		define("IS_DEBUG_MODE", true);
