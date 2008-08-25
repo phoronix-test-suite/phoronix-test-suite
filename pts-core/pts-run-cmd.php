@@ -48,7 +48,7 @@ switch($COMMAND)
 			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 			$results_xml = new tandem_XmlReader($raw_results[0]);
 			$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
-			$saved_identifier = array_pop(explode('/', dirname($test_profile_file)));
+			$saved_identifier = array_pop(explode('/', dirname($saved_results_file)));
 
 			if(!empty($title))
 			{
