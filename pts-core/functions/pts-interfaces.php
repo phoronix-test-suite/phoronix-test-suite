@@ -148,6 +148,8 @@ define("P_OPTION_GLOBAL_UPLOADKEY", "PhoronixTestSuite/GlobalDatabase/UploadKey"
 
 define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Testing/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
 
+define("P_OPTION_TEST_REMOVEDOWNLOADS", "PhoronixTestSuite/Options/Installation/RemoveDownloadFiles"); // Remove downloaded files after test is installed
+
 define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/FileManagement/EnvironmentDirectory"); // Results save directory
 define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/CacheDirectory"); // Directory for reading/writing to download cache
 define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/ResultsDirectory"); // Results save directory

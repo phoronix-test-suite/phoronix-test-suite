@@ -25,6 +25,7 @@ Phoronix Test Suite
 - pts-core: When running in debug mode, set error reporting to all and strict
 - pts-core: More improvements to motherboard detection
 - pts-core: Default LogVerboseSystemDetails to FALSE
+- pts-core: Add RemoveDownloadFiles to user-config.xml for removing the originally downloaded files from a test once it has been installed
 - pts: Add j2dbench test profile for a Java OpenGL 2D Microbenchmark (Thanks to Sun Microsystems)
 - pts: Switch over rest of graphics suites to using $VIDEO_WIDTH and $VIDEO_HEIGHT
 - pts: Add java-opengl test suite for Java OpenGL tests
