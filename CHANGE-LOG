@@ -4,6 +4,7 @@ Phoronix Test Suite
 
 - pts-core: Fix for DEBUG_FILE not being detected
 - pts-core: Fix missing variable in list-saved-results (Thanks to Michael Ploujnikov)
+- pts-core: Fix for calls using explode() directly into an array_pop()
 
 Phoronix Test Suite 1.2.0 Beta 3
 August 25, 2008

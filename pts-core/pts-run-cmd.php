@@ -48,7 +48,8 @@ switch($COMMAND)
 			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 			$results_xml = new tandem_XmlReader($raw_results[0]);
 			$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
-			$saved_identifier = array_pop(explode('/', dirname($saved_results_file)));
+			$dirpath = explode("/", dirname($saved_results_file));
+			$saved_identifier = array_pop($dirpath);
 
 			if(!empty($title))
 			{
@@ -517,7 +518,8 @@ switch($COMMAND)
 		{
 			foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
 			{
-				$saved_identifier = array_pop(explode('/', dirname($saved_results_file)));
+				$dirpath = explode('/', dirname($saved_results_file));
+				$saved_identifier = array_pop($dirpath);
 				pts_remove_saved_result($saved_identifier);
 			}
 			echo "\n";
