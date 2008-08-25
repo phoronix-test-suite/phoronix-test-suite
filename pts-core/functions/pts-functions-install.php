@@ -274,6 +274,39 @@ function pts_download_test_files($identifier)
 		}
 	}
 }
+function pts_local_download_test_files($identifier)
+{
+	// Names of files downloaded to the local test installation folder for the test
+	$downloaded_files = array();
+	if(is_file(TEST_RESOURCE_DIR . $identifier . "/downloads.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(TEST_RESOURCE_DIR . $identifier . "/downloads.xml");
+		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
+		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
+		$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
+
+		for($i = 0; $i < count($package_url); $i++)
+		{
+			if(empty($package_filename[$i]))
+				$package_filename[$i] = basename($package_url[$i]);
+
+			if($download_to[$i] != "SHARED")
+				array_push($downloaded_files, $package_filename[$i]);
+		}
+	}
+
+	return $downloaded_files;
+}
+function pts_remove_local_download_test_files($identifier)
+{
+	foreach(pts_local_download_test_files($identifier) as $test_file)
+	{
+		$file_location = TEST_ENV_DIR . $identifier . "/" . $test_file;
+
+		if(is_file($file_location))
+			@unlink($file_location);
+	}
+}
 function pts_install_test($identifier)
 {
 	// Install a test
@@ -359,6 +392,9 @@ function pts_install_test($identifier)
 						}
 						pts_test_generate_install_xml($identifier);
 						pts_module_process("__post_test_install");
+
+						if(pts_string_bool(pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
+							pts_remove_local_download_test_files($identifier); // Remove original downloaded files
 					}
 					else
 					{
