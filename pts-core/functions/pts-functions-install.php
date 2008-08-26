@@ -316,7 +316,11 @@ function pts_install_test($identifier)
 	{
 		if(!pts_test_architecture_supported($identifier))
 		{
-			echo pts_string_header($identifier . " is not supported on this platform (" . kernel_arch() . ").");
+			echo pts_string_header($identifier . " is not supported with this processor architecture (" . kernel_arch() . ").");
+		}
+		else if(!pts_test_platform_supported($identifier))
+		{
+			echo pts_string_header($identifier . " is not supported by this operating system (" . OPERATING_SYSTEM . ").");
 		}
 		else
 		{
@@ -612,6 +616,30 @@ function pts_test_architecture_supported($identifier)
 				$this_arch = "x86";
 
 			if(!in_array($this_arch, $archs))
+				$supported = false;
+		}
+	}
+
+	return $supported;
+}
+function pts_test_platform_supported($identifier)
+{
+	// Check if the system's OS is supported by a test
+	$supported = true;
+
+	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+	{
+	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
+		$platforms = $xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
+
+		if(!empty($platforms))
+		{
+			$platforms = explode(",", $platforms);
+
+			foreach($platforms as $key => $value)
+				$platforms[$key] = trim($value);
+
+			if(!in_array(OPERATING_SYSTEM, $platforms) && OPERATING_SYSTEM != "Unknown")
 				$supported = false;
 		}
 	}
