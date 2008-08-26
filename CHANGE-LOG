@@ -8,7 +8,9 @@ Phoronix Test Suite
 - pts-core: Add a few more remove_words in the HAL extraction to check for
 - pts-core: Add fallback support for read_hal() when the names are specified in an array and the earlier names can't be found with the proper information
 - pts-core: More improved motherboard detection support
-- pts-coere: Add SupportedPlatforms tag for optionally specifying on what operating systems this test is compatible with (Linux, Solaris, and FreeBSD)
+- pts-core: Add SupportedPlatforms tag for optionally specifying on what operating systems this test is compatible with (Linux, Solaris, and FreeBSD)
+- pts-core: Allow read_pci() to accept an array for fallback devices to read
+- pts-core: Improved chipset / Northbridge detection
 - documentation: Update the test profile and suite XML specifications
 
 Phoronix Test Suite 1.2.0 Beta 3

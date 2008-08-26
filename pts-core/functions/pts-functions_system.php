@@ -173,7 +173,30 @@ function kernel_arch()
 function motherboard_chipset_string()
 {
 	// Returns motherboard chipset
-	return read_pci("Host bridge:");
+	$info = read_pci("Host bridge:");
+
+	if(count(explode(" ", $info)) == 1)
+	{
+		$bridge = read_pci(array("Bridge:", "PCI bridge:"));
+
+		if($bridge != "Unknown")
+		{
+			$match = false;
+			$break_words = array("Ethernet", "PCI", "High", "USB");
+
+			for($i = 0; $i < count($break_words) && !$match; $i++)
+			{
+				if(($pos = strpos($bridge, $break_words[$i])) > 0)
+				{
+					$bridge = trim(substr($bridge, 0, $pos));
+					$info = $bridge;
+					$match = true;
+				}
+			}
+		}
+	}
+
+	return $info;
 }
 function compiler_version()
 {
