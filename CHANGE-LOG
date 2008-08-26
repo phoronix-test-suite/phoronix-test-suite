@@ -12,6 +12,7 @@ Phoronix Test Suite
 - pts-core: Allow read_pci() to accept an array for fallback devices to read
 - pts-core: The read_pci() tags don't need to be postfixed with a colon any longer
 - pts-core: Improved chipset / Northbridge detection
+- pts-core: Don't emit errors in pts_extended_init() if making the download cache directory failed due to read only file-system if specified
 - documentation: Update the test profile and suite XML specifications
 
 Phoronix Test Suite 1.2.0 Beta 3
