@@ -119,33 +119,34 @@ function read_sensors($attributes)
 function read_pci($desc, $clean_string = true)
 {
 	// Read PCI bus information
-	$info = shell_exec("lspci 2>&1");
+	$pci_info = shell_exec("lspci 2>&1");
+	$info = "Unknown";
 
-	if(($pos = strpos($info, $desc)) === FALSE)
-	{
-		$info = "Unknown";
-	}
-	else
-	{
-		$info = substr($info, $pos + strlen($desc));
-		$EOL = strpos($info, "\n");
+	if(!is_array($desc))
+		$desc = array($desc);
 
-		if(($temp = strpos($info, '/')) < $EOL && $temp > 0)
-			if(($temp = strpos($info, ' ', ($temp + 2))) < $EOL && $temp > 0)
+	for($i = 0; $i < count($desc) && $info == "Unknown"; $i++)
+	{
+		if(($pos = strpos($pci_info, $desc[$i])) !== FALSE)
+		{
+			$sub_pci_info = substr($pci_info, $pos + strlen($desc[$i]));
+			$EOL = strpos($sub_pci_info, "\n");
+
+			if(($temp = strpos($sub_pci_info, '/')) < $EOL && $temp > 0)
+				if(($temp = strpos($sub_pci_info, ' ', ($temp + 2))) < $EOL && $temp > 0)
+					$EOL = $temp;
+
+			if(($temp = strpos($sub_pci_info, '(')) < $EOL && $temp > 0)
 				$EOL = $temp;
 
-		if(($temp = strpos($info, '(')) < $EOL && $temp > 0)
-			$EOL = $temp;
+			if(($temp = strpos($sub_pci_info, '[')) < $EOL && $temp > 0)
+				$EOL = $temp;
 
-		if(($temp = strpos($info, '[')) < $EOL && $temp > 0)
-			$EOL = $temp;
+			$sub_pci_info = trim(substr($sub_pci_info, 0, $EOL));
 
-		$info = trim(substr($info, 0, $EOL));
-
-		if(($strlen = strlen($info)) < 6 || $strlen > 96)
-			$info = "N/A";
-		else if($clean_string)
-			$info = pts_clean_information_string($info);
+			if(($strlen = strlen($sub_pci_info)) >= 6 && $strlen < 96)
+				$info = pts_clean_information_string($sub_pci_info);
+		}
 	}
 
 	return $info;
