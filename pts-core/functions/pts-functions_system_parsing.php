@@ -50,24 +50,28 @@ function read_acpi($point, $match)
 function read_hal($name, $UDI = NULL)
 {
 	// Read HAL - Hardware Abstraction Layer
-	if(empty($UDI))
-		$info = shell_exec("lshal 2>&1 | grep \"" . $name . "\"");
-	else
-		$info = shell_exec("lshal -u $UDI 2>&1 | grep \"" . $name . "\"");
+	$info = "Unknown";
 
-	if(($pos = strpos($info, $name . " = '")) === FALSE)
-	{
-		$info = "Unknown";
-	}
-	else
-	{
-		$info = substr($info, $pos + strlen($name . " = '"));
-		$info = trim(substr($info, 0, strpos($info, "'")));
-	}
+	if(!is_array($name))
+		$name = array($name);
 
-	$remove_words = array("empty", "unknow", "system manufacturer", "system version", "name", "system product", "to be filled by o.e.m.", "not applicable");
-	if(empty($info) || in_array(strtolower($info), $remove_words))
-		$info = "Unknown";
+	for($i = 0; $i < count($name) && $info == "Unknown"; $i++)
+	{
+		if(empty($UDI))
+			$info = shell_exec("lshal 2>&1 | grep \"" . $name[$i] . "\"");
+		else
+			$info = shell_exec("lshal -u $UDI 2>&1 | grep \"" . $name[$i] . "\"");
+
+		if(($pos = strpos($info, $name[$i] . " = '")) !== FALSE)
+		{
+			$info = substr($info, $pos + strlen($name[$i] . " = '"));
+			$info = trim(substr($info, 0, strpos($info, "'")));
+		}
+
+		$remove_words = array("empty", "unknow", "system manufacturer", "system version", "system name", "system product name", "to be filled by o.e.m.", "not applicable");
+		if(empty($info) || in_array(strtolower($info), $remove_words))
+			$info = "Unknown";
+	}
 
 	return $info;
 }
