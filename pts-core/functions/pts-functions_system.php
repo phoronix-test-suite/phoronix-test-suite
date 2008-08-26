@@ -173,11 +173,11 @@ function kernel_arch()
 function motherboard_chipset_string()
 {
 	// Returns motherboard chipset
-	$info = read_pci("Host bridge:");
+	$info = read_pci("Host bridge");
 
 	if(count(explode(" ", $info)) == 1)
 	{
-		$bridge = read_pci(array("Bridge:", "PCI bridge:"));
+		$bridge = read_pci(array("Bridge", "PCI bridge"));
 
 		if($bridge != "Unknown")
 		{

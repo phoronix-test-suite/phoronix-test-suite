@@ -127,6 +127,9 @@ function read_pci($desc, $clean_string = true)
 
 	for($i = 0; $i < count($desc) && $info == "Unknown"; $i++)
 	{
+		if(substr($desc[$i], -1) != ":")
+			$desc[$i] .= ":";
+
 		if(($pos = strpos($pci_info, $desc[$i])) !== FALSE)
 		{
 			$sub_pci_info = substr($pci_info, $pos + strlen($desc[$i]));

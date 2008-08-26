@@ -603,7 +603,7 @@ function graphics_processor_string()
 
 	if(empty($info) || strpos($info, "Mesa ") !== FALSE || $info == "Software Rasterizer")
 	{
-		$info_pci = read_pci("VGA compatible controller:", false);
+		$info_pci = read_pci("VGA compatible controller", false);
 
 		if(!empty($info_pci) && $info_pci != "Unknown")
 			$info = $info_pci;
