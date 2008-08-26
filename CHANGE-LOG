@@ -7,6 +7,7 @@ Phoronix Test Suite
 - pts-core: Fix for calls using explode() directly into an array_pop()
 - pts-core: Add a few more remove_words in the HAL extraction to check for
 - pts-core: Add fallback support for read_hal() when the names are specified in an array and the earlier names can't be found with the proper information
+- pts-core: More improved motherboard detection support
 
 Phoronix Test Suite 1.2.0 Beta 3
 August 25, 2008
