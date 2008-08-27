@@ -251,8 +251,8 @@ function pts_process_active($process)
 
 		if(strpos($ps, "php") > 0)
 			$active = true;
-
-		pts_process_remove($process);
+		else
+			pts_process_remove($process);
 	}
 	return $active;
 }
