@@ -313,7 +313,7 @@ function set_nvidia_extension($attribute, $value)
 	if(!IS_NVIDIA_GRAPHICS)
 		return;
 
-	$info = shell_exec("nvidia-settings --assign " . $attribute . "=" . $value);
+	$info = shell_exec("nvidia-settings --assign " . $attribute . "=" . $value . " 2>&1");
 }
 function set_amd_pcsdb($attribute, $value)
 {
