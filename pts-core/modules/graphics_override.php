@@ -72,8 +72,12 @@ class graphics_override extends pts_module_interface
 						$nvidia_aa = 8;
 						break;
 				}
-				set_nvidia_extension("FSAA", $nvidia_aa);
-				set_nvidia_extension("FSAAAppControlled", 0);
+
+				if(isset($nvidia_aa))
+				{
+					set_nvidia_extension("FSAA", $nvidia_aa);
+					set_nvidia_extension("FSAAAppControlled", 0);
+				}
 			}
 			else if(IS_ATI_GRAPHICS)
 			{
@@ -96,8 +100,12 @@ class graphics_override extends pts_module_interface
 						$ati_aa = "0x00000008";
 						break;
 				}
-				set_amd_pcsdb("OpenGL,AntiAliasSamples", $ati_aa);
-				set_amd_pcsdb("OpenGL,AAF", "0x00000000");
+
+				if(isset($ati_aa))
+				{
+					set_amd_pcsdb("OpenGL,AntiAliasSamples", $ati_aa);
+					set_amd_pcsdb("OpenGL,AAF", "0x00000000");
+				}
 			}
 		}
 
@@ -124,8 +132,12 @@ class graphics_override extends pts_module_interface
 						$nvidia_af = 4;
 						break;
 				}
-				set_nvidia_extension("LogAniso", $nvidia_af);
-				set_nvidia_extension("LogAnisoAppControlled", 0);
+
+				if(isset($nvidia_af))
+				{
+					set_nvidia_extension("LogAniso", $nvidia_af);
+					set_nvidia_extension("LogAnisoAppControlled", 0);
+				}
 			}
 			else if(IS_ATI_GRAPHICS)
 			{
@@ -146,7 +158,11 @@ class graphics_override extends pts_module_interface
 						$ati_af = "0x00000010";
 						break;
 				}
-				set_amd_pcsdb("OpenGL,AnisoDegree", $ati_af);
+
+				if(isset($ati_af))
+				{
+					set_amd_pcsdb("OpenGL,AnisoDegree", $ati_af);
+				}
 			}
 		}
 	}
