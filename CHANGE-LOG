@@ -16,6 +16,7 @@ Phoronix Test Suite
 - pts-core: pts_module_processes() contains an array of all supported module processes
 - pts-core: Fix regression that caused pts_process_remove() to run when checking a process status using pts_process_active()
 - pts-core: Suppress warnings/errors from set_nvidia_extension()
+- pts-core: On some Intel setups, don't report DRI in graphics string
 - graphics_override: Don't apply anti-aliasing or anisotropic filtering settings unless there is something to apply
 - documentation: Update the test profile and suite XML specifications
 
