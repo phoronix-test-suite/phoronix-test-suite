@@ -2,7 +2,7 @@
 	<ExternalDependencies>
 		<Package>
 			<GenericName>gtk-development</GenericName>
-			<PackageName>gtk+2.0-devel</PackageName>
+			<PackageName>gtk+2-devel</PackageName>
 			<FileCheck>/usr/include/gtk-2.0/gtk/</FileCheck>
 		</Package>
 		<Package>
@@ -11,18 +11,13 @@
 			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>glut</GenericName>
-			<PackageName>mesaglut-devel</PackageName>
-			<FileCheck>/usr/include/GL/glut.h</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>tcsh</PackageName>
 			<FileCheck>/bin/tcsh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
-			<PackageName>libpng-devel</PackageName>
+			<PackageName>png-devel</PackageName>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
@@ -32,19 +27,17 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc</PackageName>
-			<PackageName>gcc-c++/<PackageName>
-			<FileCheck>/usr/bin/gcc</FileCheck>
+			<PackageName>task-c-devel task-c++-devel</PackageName>
+			<FileCheck>/usr/bin/gcc, /usr/bin/bison, /usr/bin/flex</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
-			<PackageName>xorg-x11-devel</PackageName>
-			<FileCheck>/usr/include/xorg</FileCheck>
+			<PackageName>x11-devel</PackageName>
+			<FileCheck>/usr/include/xorg, /usr/include/GL/glut.h, /usr/include/zlib.h, /usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
-			<Title>Git</Title>
-			<PossibleNames>git</PossibleNames>
+			<PackageName>git</PackageName>
 			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
 		<Package>
@@ -64,7 +57,7 @@
 		</Package>
                 <Package>
                         <GenericName>java</GenericName>
-                        <PackageName>java-openjdk</PackageName>
+                        <PackageName>java</PackageName>
                         <FileCheck>/usr/bin/java</FileCheck>
                 </Package>
 		<Package>
@@ -79,12 +72,12 @@
 		</Package>
 		<Package>
 			<GenericName>glew</GenericName>
-			<PackageName>libglew-devel</PackageName>
+			<PackageName>glew-devel</PackageName>
 			<FileCheck>/usr/include/GL/glew.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>freeimage</GenericName>
-			<PackageName>libFreeImage3 libFreeImage3-devel</PackageName>
+			<PackageName>freeimage-devel</PackageName>
 			<FileCheck>/usr/lib/libfreeimage.so.3, /usr/include/FreeImage.h</FileCheck>
 		</Package>
 		<Package>
@@ -99,12 +92,12 @@
 		</Package>
 		<Package>
 			<GenericName>jpeg-devel</GenericName>
-			<PackageName>libjpeg62-devel</PackageName>
+			<PackageName>jpeg-devel</PackageName>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libaio-devel</GenericName>
-			<PackageName>libaio1-devel</PackageName>
+			<PackageName>libaio-devel</PackageName>
 			<FileCheck>/usr/include/libaio.h</FileCheck>
 		</Package>
 		<Package>
