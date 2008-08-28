@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<TestType>System</TestType>
 		<Title>OpenGL Demos Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -17,9 +17,7 @@
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
-		<Test>unigine-sanctuary</Test>
-		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+		<Test>unigine</Test>
 	</RunTest>
 	<RunTest>
 		<Test>norsetto-shadow</Test>
