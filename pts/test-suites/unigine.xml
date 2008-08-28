@@ -1,0 +1,14 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<Title>Unigine Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The Unigine suite contains all technology demos from the Unigine Corp's advanced engine. The Unigine engine is very demanding upon the graphics processor.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>unigine-sanctuary</Test>
+		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+</PhoronixTestSuite>
