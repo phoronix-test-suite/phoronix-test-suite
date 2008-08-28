@@ -607,6 +607,9 @@ function graphics_processor_string()
 
 		if(!empty($info_pci) && $info_pci != "Unknown")
 			$info = $info_pci;
+
+		if(($start_pos = strpos($info, " DRI ")) > 0)
+			$info = substr($info, $start_pos + 5);
 	}
 
 	if(strpos($info, "Unknown") !== FALSE)
@@ -617,9 +620,6 @@ function graphics_processor_string()
 
 		if(strpos($log_parse, "ATI") !== FALSE || strpos($log_parse, "NVIDIA") !== FALSE || strpos($log_parse, "VIA") !== FALSE || strpos($log_parse, "Intel") !== FALSE)
 			$info = $log_parse;
-
-		if(($start_pos = strpos($info, " DRI ")) > 0)
-			$info = substr($info, $start_pos + 5);
 	}
 
 	if(IS_BSD && $info == "Unknown")
