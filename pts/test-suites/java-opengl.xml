@@ -11,12 +11,12 @@
 	</RunTest>
 	<RunTest>
 		<Test>j2dbench</Test>
-		<Arguments>GRAPHICS</Arguments>
+		<Arguments>TEST_GRAPHICS</Arguments>
 		<Description>Vector Graphics</Description>
 	</RunTest>
 	<RunTest>
 		<Test>j2dbench</Test>
-		<Arguments>TEXT</Arguments>
+		<Arguments>TEST_TEXT</Arguments>
 		<Description>Text Rendering</Description>
 	</RunTest>
 </PhoronixTestSuite>

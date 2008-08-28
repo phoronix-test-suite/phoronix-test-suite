@@ -20,6 +20,7 @@ Phoronix Test Suite
 - pts-core: Improve Intel graphics memory detection and other drivers that report the capacity as VideoRam instead of VideoRAM
 - pts: Update mandrivalinux-packages.xml from Stéphane Téletchéa
 - pts: Add the unigine test suite for OpenGL tech demo tests from Unigine Corp
+- pts: Fix tests in java-opengl test suite
 - graphics_override: Don't apply anti-aliasing or anisotropic filtering settings unless there is something to apply
 - documentation: Update the test profile and suite XML specifications
 
