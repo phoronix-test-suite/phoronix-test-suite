@@ -686,12 +686,12 @@ function graphics_memory_capacity()
 			// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
 			// xf86-video-ati and xf86-video-radeonhd also report their memory information in a similar format
 
-			$info = shell_exec("cat /var/log/Xorg.0.log | grep VideoRAM");
+			$info = shell_exec("cat /var/log/Xorg.0.log | grep -i VideoRAM");
 
 			if(empty($info))
 				$info = shell_exec("cat /var/log/Xorg.0.log | grep \"Video RAM\"");
 
-			if(($pos = strpos($info, "RAM:")) > 0)
+			if(($pos = strpos($info, "RAM:")) > 0 || ($pos = strpos($info, "Ram:")) > 0)
 			{
 				$info = substr($info, $pos + 5);
 				$info = substr($info, 0, strpos($info, " "));
