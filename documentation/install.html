@@ -10,7 +10,7 @@
 <div class="pts_doc_main">
 <!-- PTS AREA -->
 <h1>Phoronix Test Suite Installation</h1>
-<p>A majority of the Phoronix Test Suite development and testing is done on Ubuntu and Fedora Linux, but this software should run virtually unmodified on any Linux distribution. The only distribution-specific bits deal with the external dependencies support feature. For instance, if you're not running one of the supported distributions (Ubuntu, Fedora, Mandriva, Gentoo, OpenSolaris, OpenSuSE, CentOS) you may need to install a package manually in order for a test to run. For example, GCC and the OpenGL Utility Toolkit may need to be installed manually by the user to support the OpenGL source tests.</p>
+<p>A majority of the Phoronix Test Suite development and testing is done on Ubuntu and Fedora Linux, but this software should run virtually unmodified on any Linux distribution. The only distribution-specific bits deal with the external dependencies support feature. For instance, if you are not running one of the supported distributions (Ubuntu, Fedora, Mandriva, Gentoo, OpenSolaris, OpenSuSE, and CentOS) you may need to install a package manually in order for a test to run. For example, GCC and the OpenGL Utility Toolkit may need to be installed manually by the user to support the OpenGL source tests.</p>
 <h2>Running Locally</h2>
 <p>The Phoronix Test Suite can be simply extracted from the downloaded <em>.tar.gz</em> 
 file or it can also be installed system-wide. If you just wish to run the Phoronix 
@@ -27,7 +27,7 @@ low impact on the overall system, a lower entrance barrier for new developers,
 and low number (if any) dependencies that PHP5 CLI requires. The PHP GD library 
 is used for rendering the graphs within the PTS Results Viewer.</p>
 <p><strong>Note #1:</strong> Depending upon your distribution's package configuration, you may also need <em>php-posix</em> package for providing the POSIX functions.</p>
-<p><strong>Note #2:</strong> <em>/usr/bin/time</em> is needed by many of the timed tests.</p>
+<p><strong>Note #2:</strong> Many of the timed tests need <em>/usr/bin/time</em>.</p>
 <p><strong>Note #3:</strong> You may need to modify the <em>php.ini</em> file on your system in order to support uploading results to Phoronix Global or logging into your Phoronix Global account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration and curl must be supported by the PHP installation. <a href="http://www.phoronix.com/forums/showpost.php?p=32484&postcount=4">Additional information</a>.
 <p>While PHP and PHP GD are the only required dependencies, many of the test profiles 
 do require the standard Linux development tools/libraries (GCC, etc). On a clean 
