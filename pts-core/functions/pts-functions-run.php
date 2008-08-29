@@ -71,11 +71,32 @@ function pts_prompt_results_identifier($current_identifiers = null)
 
 	if(empty($RESULTS_IDENTIFIER))
 		$RESULTS_IDENTIFIER = date("Y-m-d H:i");
+	else
+		$RESULTS_IDENTIFIER = pts_swap_user_variables($RESULTS_IDENTIFIER);
 
 	if(!defined("TEST_RESULTS_IDENTIFIER"))
 		define("TEST_RESULTS_IDENTIFIER", $RESULTS_IDENTIFIER);
 
 	return $RESULTS_IDENTIFIER;
+}
+function pts_swap_user_variables($user_str)
+{
+	if(strpos($user_str, "$") !== FALSE)
+	{
+		$supported_variables = array(
+		"VIDEO_RESOLUTION" => current_screen_resolution(),
+		"VIDEO_CARD" => graphics_processor_string(),
+		"OPERATING_SYSTEM" => pts_vendor_identifier(),
+		"PROCESSOR" => processor_string(),
+		"MOTHERBOARD" => main_system_hardware_string(),
+		"KERNEL_VERSION" => kernel_string()
+		);
+
+		foreach($supported_variables as $key => $value)
+			$user_str = str_replace("$" . $key, $value, $user_str);
+	}
+
+	return $user_str;
 }
 function pts_prompt_save_file_name($check_env = true)
 {
