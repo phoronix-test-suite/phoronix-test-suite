@@ -16,12 +16,14 @@ as some random information that some users may find useful.</p>
 <p>- The desktop's screensaver will automatically be 
 shutdown when a test is running and will be restored to its previous state upon 
 the test's completion. This should work for GNOME, KDE, and other XDG-supportive desktop environments.</p>
+<p>- Phoronix Test Suite supports OpenSolaris and *BSD operating systems. Support for Mac OS X may 
+be added in the future.</p>
+<p>- How do I find tests that are in a suite? Run <em>phoronix-test-suite info NAME-OF-SUITE</em> and (along with other information) a tree will be displayed that recursively shows the tests (along with any sub-suites) inside. To find suites that utilize a particular test, run <em>phoronix-test-suite info NAME-OF-TEST</em> and it will show that information too.</p>
+<h2>Running</h2>
 <p>- When running a test in batch mode (through the use of the <em>batch-run</em> 
 or <em>batch-benchmark</em> options) that normally has end-user options (such 
 as the sub-test to run or resolution), the Phoronix Test Suite will run the test 
 with each unique combination of options possible.</p>
-<p>- Phoronix Test Suite supports OpenSolaris and *BSD operating systems. Support for Mac OS X may 
-be added in the future.</p>
 <p>- If the environmental variable <em>PTS_MERGE=custom</em> is set, no compatibility 
 checks will be performed when merging results and it will allow you to form custom 
 suites very easily, etc. Though the preferred method to create a suite is by writing 
@@ -34,7 +36,6 @@ once a test has been installed the originally downloaded files for that test wil
 disk space but will cause these files to be re-downloaded the next time the test needs to be re-installed. This will also 
 not back up the downloaded files to the Phoronix Test Suite download cache. Enabling this option is just recommended for users 
 with very limited disk space.</p>
-<p>- How do I find tests that are in a suite? Run <em>phoronix-test-suite info NAME-OF-SUITE</em> and (along with other information) a tree will be displayed that recursively shows the tests (along with any sub-suites) inside. To find suites that utilize a particular test, run <em>phoronix-test-suite info NAME-OF-TEST</em> and it will show that information too.</p>
 <p>- If the amount of video memory for your graphics card is incorrectly reported by the Phoronix Test Suite (you can check by running <em>phoronix-test-suite diagnostics</em>), you can use the <em>VIDEO_MEMORY=</em> environmental variable for overriding the video memory capacity (in Megabytes) used by the Phoronix Test Suite.</p>
 <p>- If the <em>DISPLAY</em> environmental variable is not set or <em>NO_GRAPHICS_TESTS</em> environmental variable is set, tests of type <em>Graphics</em> will not be run. Likewise, if <em>NO_SYSTEM_TESTS</em> environmental variable is set, tests of type <em>System</em> will not run. This applies to all test types where <em>NO_&lt;TEST TYPE&gt;_TESTS</em> is set.</p>
 <p>- If the <em>TEST_RESULTS_NAME</em> environmental variable is set, instead of prompting the user for the name to save the results as, it will use the variable's value.</p>
