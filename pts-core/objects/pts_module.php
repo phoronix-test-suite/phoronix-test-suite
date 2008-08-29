@@ -25,7 +25,7 @@ class pts_module
 {
 	public static function save_dir()
 	{
-		$prefix_dir = PTS_USER_DIR . "local/";
+		$prefix_dir = PTS_USER_DIR . "module-files/";
 
 		if(!is_dir($prefix_dir))
 			mkdir($prefix_dir);
