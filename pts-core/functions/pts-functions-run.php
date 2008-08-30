@@ -153,7 +153,9 @@ function pts_verify_test_installation($TO_RUN)
 
 			echo pts_string_header($message);
 		}
-		pts_exit();
+
+		if(!defined("TEST_INSTALL_PASS") || getenv("SILENT_INSTALL") == FALSE)
+			pts_exit();
 	}
 }
 function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
@@ -165,6 +167,11 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 	{
 		if(!is_file(TEST_ENV_DIR . $TO_VERIFY . "/pts-install.xml"))
 			array_push($NEEDS_INSTALLING, $TO_VERIFY);
+		else
+		{
+			if(!defined("TEST_INSTALL_PASS"))
+				define("TEST_INSTALL_PASS", true);
+		}
 	}
 	else if($type == "TEST_SUITE")
 	{
@@ -394,7 +401,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	if(!isset($to_execute) || empty($to_execute))
 	{
-		echo "The test executable could not be found... Test terminating.";
+		echo "The test executable for " . $test_identifier . " could not be found. Skipping test.\n\n";
 		return;
 	}
 

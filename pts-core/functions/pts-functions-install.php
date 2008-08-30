@@ -316,7 +316,7 @@ function pts_install_test($identifier)
 	{
 		if(!pts_test_architecture_supported($identifier))
 		{
-			echo pts_string_header($identifier . " is not supported with this processor architecture (" . kernel_arch() . ").");
+			echo pts_string_header($identifier . " is not supported on this architecture: " . kernel_arch());
 		}
 		else if(!pts_test_platform_supported($identifier))
 		{
