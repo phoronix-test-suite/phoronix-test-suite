@@ -11,4 +11,9 @@
 		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
+	<RunTest>
+		<Test>unigine-islands</Test>
+		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
 </PhoronixTestSuite>
