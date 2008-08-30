@@ -17,6 +17,11 @@
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
+		<Test>ppracer</Test>
+		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
 		<Test>ioquake3-games</Test>
 	</RunTest>
 </PhoronixTestSuite>
