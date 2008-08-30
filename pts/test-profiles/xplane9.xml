@@ -15,7 +15,7 @@
 		<Title>X-Plane</Title>
 		<Version>9.00</Version>
 		<TimesToRun>2</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<ExternalDependencies>openal-devel</ExternalDependencies>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of X-Plane, a realistic multi-platform flight simulator designed for personal computers. This is commercial closed-source software, but this X-Plane 9.0 benchmark has been kindly made available for free. X-Plane is the product of Austin Meyer and Laminar Research.</Description>

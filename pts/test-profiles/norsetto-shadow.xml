@@ -12,7 +12,7 @@
 	<TestInformation>
 		<Title>Norsetto Shadow</Title>
 		<TimesToRun>2</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of Norsetto Shadow, which is a basic OpenGL demo.</Description>
 		<ExternalDependencies>build-utilities, glut</ExternalDependencies>

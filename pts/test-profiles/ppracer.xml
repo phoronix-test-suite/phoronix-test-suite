@@ -16,7 +16,7 @@
 		<Version>0.5 Alpha</Version>
 		<ExternalDependencies>build-utilities, glut, sdl-development, libpng-development</ExternalDependencies>
 		<TimesToRun>3</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test runs the open-source Planet Penguin Racer game as an OpenGL benchmark.</Description>
 	</TestInformation>

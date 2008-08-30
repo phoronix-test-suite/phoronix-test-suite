@@ -15,7 +15,7 @@
 		<Title>Tremulous</Title>
 		<Version>1.1.0</Version>
 		<TimesToRun>3</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>Tremulous is an open-source game that uses the ioquake3 engine. Tremulous is a combination of a first-person shooter and real-time strategy.</Description>
 	</TestInformation>

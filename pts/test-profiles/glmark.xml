@@ -15,7 +15,7 @@
 		<Version>0.5.2</Version>
 		<ExternalDependencies>sdl-development, glut, build-utilities, glew</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of GLMark, an open-source OpenGL benchmark.</Description>
 	</TestInformation>

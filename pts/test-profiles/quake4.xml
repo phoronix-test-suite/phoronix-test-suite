@@ -15,7 +15,7 @@
 		<Title>Quake 4</Title>
 		<Version>1.4.2</Version>
 		<TimesToRun>3</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the Quake 4 game from id Software.</Description>
 	</TestInformation>

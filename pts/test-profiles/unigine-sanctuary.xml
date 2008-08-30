@@ -14,7 +14,7 @@
 		<Title>Unigine Sanctuary</Title>
 		<Version>4</Version>
 		<TimesToRun>1</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the Sanctuary demo for the Unigine engine. This engine is very demanding on the system's graphics card.</Description>
 	</TestInformation>

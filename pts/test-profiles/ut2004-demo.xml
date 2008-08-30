@@ -14,7 +14,7 @@
 		<Version>3334</Version>
 		<TimesToRun>1</TimesToRun>
 		<ExternalDependencies>libstdcpp5</ExternalDependencies>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the Unreal Tournament 2004 game demo from Epic Games.</Description>
 	</TestInformation>

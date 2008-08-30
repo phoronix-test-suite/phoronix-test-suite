@@ -15,7 +15,7 @@
 		<Title>Urban Terror</Title>
 		<Version>4.1</Version>
 		<TimesToRun>3</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>Urban Terror is an open-source game that uses the ioquake3 engine. Urban Terror is a tactical first-person shooter.</Description>
 	</TestInformation>

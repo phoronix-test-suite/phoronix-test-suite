@@ -15,7 +15,7 @@
 		<Title>ET: Quake Wars Demo</Title>
 		<Executable>etqw</Executable>
 		<TimesToRun>3</TimesToRun>
-		<ResultScale>FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the demo for the game Enemy Territory: Quake Wars demo game.</Description>
 		<DownloadSize>660</DownloadSize>

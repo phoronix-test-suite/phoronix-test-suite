@@ -15,7 +15,7 @@
 		<Title>FRACT</Title>
 		<Version>1.07b</Version>
 		<TimesToRun>1</TimesToRun>
-		<ResultScale>FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test uses the FRACT benchmark.</Description>
 		<ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>

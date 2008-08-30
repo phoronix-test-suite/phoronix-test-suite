@@ -13,7 +13,7 @@
 		<Title>vDrift</Title>
 		<Version>2008-08-05</Version>
 		<TimesToRun>3</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<ExternalDependencies>sdl-development, build-utilities, glew, jam, scons, vorbis-devel</ExternalDependencies>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within vDrift, which is an open-source drift racing game.</Description>

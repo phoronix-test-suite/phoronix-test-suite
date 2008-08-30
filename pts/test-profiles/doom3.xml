@@ -13,7 +13,7 @@
 		<Title>Doom 3</Title>
 		<Version>1.3.1</Version>
 		<TimesToRun>3</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the Doom 3 game from id Software.</Description>
 	</TestInformation>

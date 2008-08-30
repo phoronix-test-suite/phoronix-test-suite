@@ -15,7 +15,7 @@
 		<Title>Warsow</Title>
 		<Version>0.42</Version>
 		<TimesToRun>1</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<ExternalDependencies>xorg-development</ExternalDependencies>
 		<Proportion>HIB</Proportion>
 		<Description>This is a benchmark of Warsow, a popular open-source first-person shooter. This game uses the QFusion engine.</Description>

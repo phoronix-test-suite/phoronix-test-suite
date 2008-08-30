@@ -14,7 +14,7 @@
 		<Version>2008</Version>
 		<TimesToRun>1</TimesToRun>
 		<ExternalDependencies>glut, glew, freeimage</ExternalDependencies>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the Lightsmark 2008. Lightsmark is an OpenGL real-time global illumination and penumbra shadow benchmark.</Description>
 	</TestInformation>

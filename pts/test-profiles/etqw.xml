@@ -15,7 +15,7 @@
 		<Title>ET: Quake Wars</Title>
 		<Version>1.5</Version>
 		<TimesToRun>3</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the Enemy Territory: Quake Wars game from id Software / Splash Damage.</Description>
 	</TestInformation>

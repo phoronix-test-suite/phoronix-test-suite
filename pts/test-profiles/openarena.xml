@@ -15,7 +15,7 @@
 		<Title>OpenArena</Title>
 		<Version>0.8.0</Version>
 		<TimesToRun>3</TimesToRun>
-		<ResultScale>Average FPS</ResultScale>
+		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of OpenArena, a popular open-source first-person shooter. This game is based upon ioquake3, which in turn uses the GPL version of id Software's Quake 3 engine.</Description>
 	</TestInformation>
