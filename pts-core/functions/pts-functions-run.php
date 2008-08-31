@@ -121,6 +121,8 @@ function pts_prompt_save_file_name($check_env = true)
 			$PROPOSED_FILE_NAME = "";
 	}
 
+	$PROPOSED_FILE_NAME = pts_swap_user_variables($PROPOSED_FILE_NAME);
+
 	$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
 	$PROPOSED_FILE_NAME = trim(str_replace(array(' ', '/', '&', '\''), "", strtolower($PROPOSED_FILE_NAME))); // Clean up name
 
