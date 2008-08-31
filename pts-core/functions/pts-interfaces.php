@@ -147,14 +147,17 @@ define("P_RESULTS_RESULTS_GROUP_VALUE", P_RESULTS_RESULTS_GROUP . "/" . S_RESULT
 define("P_OPTION_GLOBAL_USERNAME", "PhoronixTestSuite/GlobalDatabase/UserName"); // Phoronix Global user-name
 define("P_OPTION_GLOBAL_UPLOADKEY", "PhoronixTestSuite/GlobalDatabase/UploadKey"); // Phoronix Global upload key
 
+define("P_OPTION_PROMPT_DOWNLOADLOC", "PhoronixTestSuite/Options/General/PromptForDownloadMirror"); // Results save directory
+define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/General/LoadModules"); // Modules to load by default
+
 define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Testing/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
+define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/Testing/LogVerboseSystemDetails"); // Log verbose system details?
 
 define("P_OPTION_TEST_REMOVEDOWNLOADS", "PhoronixTestSuite/Options/Installation/RemoveDownloadFiles"); // Remove downloaded files after test is installed
 
 define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/FileManagement/EnvironmentDirectory"); // Results save directory
 define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/CacheDirectory"); // Directory for reading/writing to download cache
 define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/ResultsDirectory"); // Results save directory
-define("P_OPTION_PROMPT_DOWNLOADLOC", "PhoronixTestSuite/Options/FileManagement/PromptForDownloadMirror"); // Results save directory
 
 define("P_OPTION_BATCH_CONFIGURED", "PhoronixTestSuite/Options/BatchMode/Configured"); // Batch mode has been configured
 define("P_OPTION_BATCH_SAVERESULTS", "PhoronixTestSuite/Options/BatchMode/SaveResults"); // Batch mode save results
@@ -164,12 +167,8 @@ define("P_OPTION_BATCH_PROMPTIDENTIFIER", "PhoronixTestSuite/Options/BatchMode/P
 define("P_OPTION_BATCH_PROMPTDESCRIPTION", "PhoronixTestSuite/Options/BatchMode/PromptForTestDescription"); // Batch mode prompt for test description
 define("P_OPTION_BATCH_PROMPTSAVENAME", "PhoronixTestSuite/Options/BatchMode/PromptSaveName"); // Batch mode prompt for save results name
 
-define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/TestResults/LogVerboseSystemDetails"); // Log verbose system details?
-
-define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/Options/General/UserAgreement"); // PTS user agreement confirmation
-define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/General/LoadModules"); // Modules to load by default
-
 define("P_OPTION_TESTCORE_LASTVERSION", "PhoronixTestSuite/TestCore/LastRun/Version"); // Last version of the Phoronix Test Suite Run
+define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/TestCore/UserInformation/AgreementCheckSum"); // PTS user agreement confirmation
 
 //
 // TEST INSTALLATION SPECIFICATION

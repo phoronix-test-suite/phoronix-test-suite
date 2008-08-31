@@ -95,29 +95,28 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, $UserName);
 	$config->addXmlObject(P_OPTION_GLOBAL_UPLOADKEY, 0, $UploadKey);
 
-	$config->addXmlObject(P_OPTION_PROMPT_DOWNLOADLOC, 1, pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_RESULTS_DIRECTORY, 1, pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/", $read_config));
 	$config->addXmlObject(P_OPTION_TEST_ENVIRONMENT, 1, pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/", $read_config));
 	$config->addXmlObject(P_OPTION_CACHE_DIRECTORY, 1, pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/", $read_config));
 
-	$config->addXmlObject(P_OPTION_TEST_REMOVEDOWNLOADS, 2, pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE", $read_config));
+	$config->addXmlObject(P_OPTION_LOAD_MODULES, 2, pts_read_user_config(P_OPTION_LOAD_MODULES, "", $read_config));
+	$config->addXmlObject(P_OPTION_PROMPT_DOWNLOADLOC, 2, pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE", $read_config));
 
-	$config->addXmlObject(P_OPTION_TEST_SLEEPTIME, 3, pts_read_user_config(P_OPTION_TEST_SLEEPTIME, "8", $read_config));
+	$config->addXmlObject(P_OPTION_TEST_REMOVEDOWNLOADS, 3, pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE", $read_config));
 
-	$config->addXmlObject(P_OPTION_BATCH_SAVERESULTS, 4, $BatchOptions[0]);
-	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 4, $BatchOptions[1]);
-	$config->addXmlObject(P_OPTION_BATCH_UPLOADRESULTS, 4, $BatchOptions[2]);
-	$config->addXmlObject(P_OPTION_BATCH_PROMPTIDENTIFIER, 4, $BatchOptions[3]);
-	$config->addXmlObject(P_OPTION_BATCH_PROMPTDESCRIPTION, 4, $BatchOptions[4]);
-	$config->addXmlObject(P_OPTION_BATCH_PROMPTSAVENAME, 4, $BatchOptions[5]);
-	$config->addXmlObject(P_OPTION_BATCH_CONFIGURED, 4, $BatchOptions[6]);
+	$config->addXmlObject(P_OPTION_TEST_SLEEPTIME, 4, pts_read_user_config(P_OPTION_TEST_SLEEPTIME, "8", $read_config));
+	$config->addXmlObject(P_OPTION_LOG_VSYSDETAILS, 4, pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "FALSE", $read_config));
 
-	$config->addXmlObject(P_OPTION_LOG_VSYSDETAILS, 5, pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "FALSE", $read_config));
+	$config->addXmlObject(P_OPTION_BATCH_SAVERESULTS, 5, $BatchOptions[0]);
+	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 5, $BatchOptions[1]);
+	$config->addXmlObject(P_OPTION_BATCH_UPLOADRESULTS, 5, $BatchOptions[2]);
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTIDENTIFIER, 5, $BatchOptions[3]);
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTDESCRIPTION, 5, $BatchOptions[4]);
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTSAVENAME, 5, $BatchOptions[5]);
+	$config->addXmlObject(P_OPTION_BATCH_CONFIGURED, 5, $BatchOptions[6]);
 
-	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 6, $UserAgreement_MD5);
-	$config->addXmlObject(P_OPTION_LOAD_MODULES, 6, pts_read_user_config(P_OPTION_LOAD_MODULES, "", $read_config));
-
-	$config->addXmlObject(P_OPTION_TESTCORE_LASTVERSION, 7, $last_version);
+	$config->addXmlObject(P_OPTION_TESTCORE_LASTVERSION, 6, $last_version);
+	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 7, $UserAgreement_MD5);
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
 }
