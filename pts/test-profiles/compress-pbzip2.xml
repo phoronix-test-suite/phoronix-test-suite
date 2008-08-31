@@ -14,6 +14,7 @@
 		<Title>Parallel BZIP2 Compression</Title>
 		<Version>1.0.2</Version>
 		<SubTitle>512MB File Compression</SubTitle>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
