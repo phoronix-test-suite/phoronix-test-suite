@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 1.2.0
+September 3, 2008
 
 - pts-core: Fix for DEBUG_FILE not being detected
 - pts-core: Fix missing variable in list-saved-results (Thanks to Michael Ploujnikov)
