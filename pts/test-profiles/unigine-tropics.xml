@@ -11,11 +11,10 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 	</TestProfile>
 	<TestInformation>
-		<Title>Unigine Islands</Title>
-		<TimesToRun>1</TimesToRun>
+		<Title>Unigine Tropics</Title>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This test calculates the average frame-rate within the Islands demo for the Unigine engine. This engine is very demanding on the system's graphics card.</Description>
+		<Description>This test calculates the average frame-rate within the Tropics / Islands demo for the Unigine engine. This engine is very demanding on the system's graphics card.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>

@@ -26,7 +26,7 @@ Phoronix Test Suite
 - pts: Add the unigine test suite for OpenGL tech demo tests from Unigine Corp
 - pts: Fix tests in java-opengl test suite
 - pts: Add ppracer test profile for Planet Penguin Racer
-- pts: Add unigine-islands test profile for new Unigine Islands technology demo
+- pts: Add unigine-tropics test profile for new Unigine Tropics technology demo
 - graphics_override: Don't apply anti-aliasing or anisotropic filtering settings unless there is something to apply
 - pts_MultiPassFailGraph: Ensure the background fill reaches the bottom edge of the box
 - documentation: Update the test profile and suite XML specifications
