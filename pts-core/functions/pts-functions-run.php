@@ -89,6 +89,7 @@ function pts_swap_user_variables($user_str)
 		"OPERATING_SYSTEM" => pts_vendor_identifier(),
 		"PROCESSOR" => processor_string(),
 		"MOTHERBOARD" => main_system_hardware_string(),
+		"CHIPSET" => motherboard_chipset_string(),
 		"KERNEL_VERSION" => kernel_string()
 		);
 
