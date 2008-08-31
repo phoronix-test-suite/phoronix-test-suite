@@ -1,18 +1,19 @@
 <PhoronixTestSuite>
-  <TestProfile>
-    <Version>1.0.0</Version>
-    <TestType>Processor</TestType>
-    <SoftwareType>Utility</SoftwareType>
-    <License>FREE</License>
-    <Status>VERIFIED</Status>
-    <Maintainer>Tao Zhang</Maintainer>
-  </TestProfile>
-  <TestInformation>
-    <Title>Java Graphics Basic Acceptance Test</Title>
-    <Version>2.0</Version>
-    <ExternalDependencies>java</ExternalDependencies>
-    <TimesToRun>1</TimesToRun>
-    <ResultFormat>PASS_FAIL</ResultFormat>
-    <Description>This test runs a series of automated performance/quality sub-tests that exercise the OpenGL-based Java 2D pipeline in order to verify the quality of OpenGL drivers.</Description>
-  </TestInformation>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Tao Zhang</Maintainer>
+		<ProjectURL>http://www.java.net/</ProjectURL>
+	</TestProfile>
+	<TestInformation>
+		<Title>Java Graphics Basic Acceptance Test</Title>
+		<Version>2.0</Version>
+		<ExternalDependencies>java</ExternalDependencies>
+		<TimesToRun>1</TimesToRun>
+		<ResultFormat>PASS_FAIL</ResultFormat>
+		<Description>This test runs a series of automated performance/quality sub-tests that exercise the OpenGL-based Java 2D pipeline in order to verify the quality of OpenGL drivers.</Description>
+	</TestInformation>
 </PhoronixTestSuite>

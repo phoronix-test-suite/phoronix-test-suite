@@ -9,6 +9,7 @@
 		<DownloadSize>63</DownloadSize>
 		<EnvironmentSize>73</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.unigine.com/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Unigine Tropics</Title>
