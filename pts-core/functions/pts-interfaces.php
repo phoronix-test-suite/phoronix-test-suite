@@ -169,6 +169,8 @@ define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/TestResults/LogVer
 define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/Options/General/UserAgreement"); // PTS user agreement confirmation
 define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/General/LoadModules"); // Modules to load by default
 
+define("P_OPTION_TESTCORE_LASTVERSION", "PhoronixTestSuite/TestCore/LastRun/Version"); // Last version of the Phoronix Test Suite Run
+
 //
 // TEST INSTALLATION SPECIFICATION
 //

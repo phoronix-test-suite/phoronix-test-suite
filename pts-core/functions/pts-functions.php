@@ -529,6 +529,9 @@ function pts_shutdown()
 	// Shutdown process for PTS
 	define("PTS_END_TIME", time());
 
+	// Re-run the config file generation to save the last run version
+	pts_user_config_init();
+
 	if(IS_DEBUG_MODE && defined("PTS_DEBUG_FILE"))
 	{
 		if(!is_dir(PTS_USER_DIR . "debug-messages/"))

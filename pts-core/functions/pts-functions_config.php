@@ -86,6 +86,10 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 		$BatchOptions[6] = "TRUE";
 	}
 
+	// Determine last version run of the Phoronix Test Suite
+	$last_version = pts_read_user_config(P_OPTION_TESTCORE_LASTVERSION, PTS_VERSION, $read_config);
+	if(defined("PTS_END_TIME") && !defined("PTS_EXIT") && $last_version != PTS_VERSION)
+		$last_version = PTS_VERSION;
 
 	$config = new tandem_XmlWriter();
 	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, $UserName);
@@ -112,6 +116,8 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 
 	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 6, $UserAgreement_MD5);
 	$config->addXmlObject(P_OPTION_LOAD_MODULES, 6, pts_read_user_config(P_OPTION_LOAD_MODULES, "", $read_config));
+
+	$config->addXmlObject(P_OPTION_TESTCORE_LASTVERSION, 7, $last_version);
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
 }
