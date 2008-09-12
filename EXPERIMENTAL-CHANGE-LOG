@@ -20,6 +20,7 @@ Phoronix Test Suite
 - pts-core: Add $COMPILER and $VIDEO_DRIVER user variables when saving the results and supplying the test identifier
 - pts-core: Let the size of files being downloaded be specified individually within the test's downloads.xml profile instead of a generic one throug the test profile XML file
 - pts-core: When downloading files for tests, don't first download the file to the PTS temporary directory, but just rename it initially within the test's environment directory
+- pts-core: When running a test (or suite that contains a test) on an unsupported architecture or platform, don't abruptly exit
 - pts: Switch all audio encoding tests to extend a timed-audio-encode base test instead of all tests having some of the same code copied throughout
 - pts: Switch all build tests to extend a timed-build base test instead of all tests having some of the same code copied throughout
 - pts: Switch all video tests to extend a video-sample base test instead of all tests having some of the same code copied throughout

@@ -584,58 +584,5 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 
 	return $generated;
 }
-function pts_test_architecture_supported($identifier)
-{
-	// Check if the system's architecture is supported by a test
-	$supported = true;
-
-	if(is_test($identifier))
-	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
-		$archs = $xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS);
-
-		if(!empty($archs))
-		{
-			$archs = explode(",", $archs);
-
-			foreach($archs as $key => $value)
-				$archs[$key] = trim($value);
-
-			$this_arch = kernel_arch();
-
-			if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
-				$this_arch = "x86";
-
-			if(!in_array($this_arch, $archs))
-				$supported = false;
-		}
-	}
-
-	return $supported;
-}
-function pts_test_platform_supported($identifier)
-{
-	// Check if the system's OS is supported by a test
-	$supported = true;
-
-	if(is_test($identifier))
-	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
-		$platforms = $xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
-
-		if(!empty($platforms))
-		{
-			$platforms = explode(",", $platforms);
-
-			foreach($platforms as $key => $value)
-				$platforms[$key] = trim($value);
-
-			if(!in_array(OPERATING_SYSTEM, $platforms) && OPERATING_SYSTEM != "Unknown")
-				$supported = false;
-		}
-	}
-
-	return $supported;
-}
 
 ?>

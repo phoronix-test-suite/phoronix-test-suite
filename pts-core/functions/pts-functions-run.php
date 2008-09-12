@@ -163,7 +163,8 @@ function pts_verify_test_installation($TO_RUN)
 	{
 		if(!is_file(TEST_ENV_DIR . $test . "/pts-install.xml"))
 		{
-			array_push($needs_installing, $test);
+			if(!pts_test_architecture_supported($test) || !pts_test_platform_supported($test))
+				array_push($needs_installing, $test);
 		}
 		else
 		{
