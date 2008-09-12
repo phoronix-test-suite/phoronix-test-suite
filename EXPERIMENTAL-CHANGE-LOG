@@ -12,3 +12,4 @@ Phoronix Test Suite
 - pts-core: Add support so that a test profile can extend another test, for Cascading Test Profile support. This is similar to inheritance in programming languages or Cascading Style Sheets.
 - tandem_Xml: Add a pts_test_tandem_XmlReader object that extends tandem_XmlReader but takes advantage of the handleXmlZeroTagFallback
 - tandem_Xml: Add fallback function handler support when a tag isn't found
+- documentation: Add basic documentation concerning the Self-Contained Test Profiles (SCTP) XML tags that are added
