@@ -126,7 +126,7 @@ function pts_download_test_files($identifier)
 						{
 							echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i] . " -O " . $package_filename[$i]);
 
-							if(@md5_file(PTS_TEMP_DIR . $package_filename[$i]) != $package_md5[$i])
+							if(!pts_validate_md5_download_file(PTS_TEMP_DIR . $package_filename[$i], $package_md5[$i]))
 								@unlink(PTS_TEMP_DIR . $package_filename[$i]);
 							else
 							{
@@ -138,7 +138,7 @@ function pts_download_test_files($identifier)
 						}
 					}
 				}
-				else if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && (empty($package_md5[$i]) || $package_md5[$i] == md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i])))
+				else if(pts_validate_md5_download_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $package_md5[$i]))
 				{
 					echo "Copying Cached File: " . $package_filename[$i] . "\n";
 
@@ -190,7 +190,7 @@ function pts_download_test_files($identifier)
 						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
 						echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . $url . " -O " . $package_filename[$i]);
 
-						if(pts_validate_md5_download_file($package_filename[$i], $package_md5[$i]))
+						if(pts_validate_md5_download_file(PTS_TEMP_DIR . $package_filename[$i], $package_md5[$i]))
 						{
 							if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
 								unlink(PTS_TEMP_DIR . $package_filename[$i]);
@@ -267,13 +267,13 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 
 	if(!empty($verified_md5))
 	{
-		if(!is_file(PTS_TEMP_DIR . $filename))
+		if(!is_file($filename))
 		{
 			$valid = false;
 		}
 		else
 		{
-			$real_md5 = md5_file(PTS_TEMP_DIR . $filename);
+			$real_md5 = md5_file($filename);
 
 			if(count(explode("://", $verified_md5)) > 1)
 			{
