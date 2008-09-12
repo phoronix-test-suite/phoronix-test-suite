@@ -22,7 +22,7 @@ foreach($extensions_to_check as $extension)
 {
 	echo "Checking Video Output For: $extension\n";
 	$start_time = time();
-	echo shell_exec("./mplayer_/bin/mplayer -vo $extension -ao null $TEST_EXTENDS/pts-sample-playback-1.avi");
+	echo shell_exec("./mplayer_/bin/mplayer -vo $extension -ao null " . getenv("TEST_EXTENDS") . "/pts-sample-playback-1.avi");
 	$end_time = time();
 
 	$time_diff = $end_time - $start_time;
