@@ -23,19 +23,20 @@
 
 function sctp_test_directory()
 {
-	return (PTS_TEMP_DIR . "sctp/" . basename(SCTP_FILE) . "/";
+	return PTS_TEMP_DIR . "sctp/" . basename(SCTP_FILE) . "/";
 }
 function generate_sctp_layer()
 {
 	$xml_parser = new tandem_XmlReader(SCTP_FILE);
+	$test_directory = sctp_test_directory();
 
 	if(!$xml_parser->isDefined(P_TEST_TITLE))
 				pts_exit("\n" . SCTP_FILE . " is not a valid self-contained test profile!\n");
 
 	if(!is_dir(PTS_TEMP_DIR . "sctp/"))
 		mkdir(PTS_TEMP_DIR . "sctp/");
-	if(!is_dir(sctp_test_directory())
-		mkdir(sctp_test_directory());
+	if(!is_dir($test_directory))
+		mkdir($test_directory);
 
 	$sctp_stages = array("install" => P_TEST_SCTP_INSTALLSCRIPT, "downloads" => P_TEST_SCTP_DOWNLOADS, "parse-results" => P_TEST_SCTP_RESULTSPARSER, "pre" => P_TEST_SCTP_PRERUN, "post" => P_TEST_SCTP_POSTRUN);
 	foreach($sctp_stages as $stage_file => $stage_point)
@@ -63,16 +64,16 @@ function generate_sctp_layer()
 
 			if($object_type == "PHP")
 			{
-				file_put_contents(sctp_test_directory() . $stage_file . ".php", $object);
+				file_put_contents($test_directory . $stage_file . ".php", $object);
 			}
 			else if($object_type == "SH")
 			{
-				file_put_contents(sctp_test_directory() . $stage_file . ".sh", $object);
-				chmod(sctp_test_directory() . $stage_file . ".sh", 0755);
+				file_put_contents($test_directory . $stage_file . ".sh", $object);
+				chmod($test_directory . $stage_file . ".sh", 0755);
 			}
 			else if($object_type == "XML")
 			{
-				file_put_contents(sctp_test_directory() . $stage_file . ".xml", $object);
+				file_put_contents($test_directory . $stage_file . ".xml", $object);
 			}
 		}
 	}
