@@ -116,6 +116,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 	$config->addXmlObject(P_OPTION_BATCH_CONFIGURED, 5, $BatchOptions[6]);
 
 	$config->addXmlObject(P_OPTION_TESTCORE_LASTVERSION, 6, $last_version);
+	$config->addXmlObject(P_OPTION_TESTCORE_LASTTIME, 6, date("Y-m-d H:i:s"));
 	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 7, $UserAgreement_MD5);
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
