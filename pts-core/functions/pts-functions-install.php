@@ -190,7 +190,7 @@ function pts_download_test_files($identifier)
 						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
 						echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . $url . " -O " . $package_filename[$i]);
 
-						if(pts_validate_md5_download_file(PTS_TEMP_DIR . $package_filename[$i], $package_md5[$i]))
+						if(!pts_validate_md5_download_file(PTS_TEMP_DIR . $package_filename[$i], $package_md5[$i]))
 						{
 							if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
 								unlink(PTS_TEMP_DIR . $package_filename[$i]);
