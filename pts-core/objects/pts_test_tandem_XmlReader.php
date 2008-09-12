@@ -33,7 +33,7 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 
 		if(!empty($this->XML_FILE_NAME))
 		{
-			$test_extends = $this->getXMLValue(P_TEST_CTPEXTENDS);
+			$test_extends = $this->getValue(P_TEST_CTPEXTENDS, null, null, true, true);
 
 			if(!empty($test_extends) && is_test($test_extends))
 			{

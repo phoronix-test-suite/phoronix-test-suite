@@ -22,7 +22,7 @@
 */
 function pts_start_install($TO_INSTALL)
 {
-	$tests = pts_contained_tests($TO_INSTALL);
+	$tests = pts_contained_tests($TO_INSTALL, TRUE);
 
 	if(count($tests) == 0)
 	{
