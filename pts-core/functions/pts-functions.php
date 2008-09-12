@@ -51,8 +51,10 @@ define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 // Test & Suite Locations
 define("XML_PROFILE_DIR", PTS_DIR . "pts/test-profiles/");
+define("XML_PROFILE_CTP_BASE_DIR", XML_PROFILE_DIR . "base/");
 define("XML_SUITE_DIR", PTS_DIR . "pts/test-suites/");
 define("TEST_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
+define("TEST_RESOURCE_CTP_BASE_DIR", TEST_RESOURCE_DIR . "base/");
 define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
 define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
 define("TEST_RESOURCE_LOCAL_DIR", PTS_USER_DIR . "test-resources/");
@@ -355,7 +357,7 @@ function pts_run_additional_vars($identifier)
 		$extra_vars["PATH"] = $ctp_extension_string . "\$PATH";
 
 	if(count($extends) > 0)
-		$extra_vars["TEST_EXTENDS"] = $extends[0];
+		$extra_vars["TEST_EXTENDS"] = TEST_ENV_DIR . $extends[0];
 
 	return $extra_vars;
 }

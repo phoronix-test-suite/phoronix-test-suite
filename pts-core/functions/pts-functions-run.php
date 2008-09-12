@@ -234,20 +234,12 @@ function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $r
 			else
 				$description = "Phoronix Test Suite v" . PTS_VERSION;
 		}
-		if(empty($test_version))
-		{
-			if(is_file(TEST_ENV_DIR . $test . "/pts-test-version"))
-				$test_version = @file_get_contents(TEST_ENV_DIR . $test . "/pts-test-version");
-		}
-		if(empty($result_scale))
-		{
-			if(is_file(TEST_ENV_DIR . $test . "/pts-results-scale"))
-				$result_scale = trim(@file_get_contents(TEST_ENV_DIR . $test . "/pts-results-scale"));
-		}
+		if(empty($test_version) && is_file(TEST_ENV_DIR . $test . "/pts-test-version"))
+			$test_version = @file_get_contents(TEST_ENV_DIR . $test . "/pts-test-version");
+		if(empty($result_scale) && is_file(TEST_ENV_DIR . $test . "/pts-results-scale"))
+			$result_scale = trim(@file_get_contents(TEST_ENV_DIR . $test . "/pts-results-scale"));
 		if(empty($result_format))
-		{
 			$result_format = "BAR_GRAPH";
-		}
 
 		unset($xml_parser);
 		$pts_vars = pts_env_variables();

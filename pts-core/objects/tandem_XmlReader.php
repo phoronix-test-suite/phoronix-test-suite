@@ -128,10 +128,14 @@ class tandem_XmlReader
 				if(count($new_match) > 1)
 					$XML_MATCH = $new_match[1];
 				else
+				{
 					if(!$FALLBACK_PROCESS)
+					{
 						$XML_MATCH = $this->handleXmlZeroTagFallback($FULL_XML_TAG);
+					}
 					else
 						$XML_MATCH = $this->NO_TAG_FALLBACK_VALUE;
+				}
 			}
 
 			if($this->XML_CACHE_TAGS == TRUE && $DO_CACHE)
@@ -140,7 +144,7 @@ class tandem_XmlReader
 
 		return $XML_MATCH;
 	}
-	private function handleXmlZeroTagFallback($XML_TAG)
+	function handleXmlZeroTagFallback($XML_TAG)
 	{
 		return $this->NO_TAG_FALLBACK_VALUE;
 	}
