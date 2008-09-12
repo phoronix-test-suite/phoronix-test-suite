@@ -84,8 +84,7 @@ switch($COMMAND)
 		pts_install_package_on_distribution($ARG_1);
 
 		// Install tests
-		$install_objects = "";
-		pts_recurse_install_test($ARG_1, $install_objects);
+		pts_start_install($ARG_1);
 		pts_module_process("__post_install_process");
 
 		if(getenv("SILENT_INSTALL") !== FALSE)
@@ -106,8 +105,7 @@ switch($COMMAND)
 			pts_install_package_on_distribution($test);
 
 			// Install tests
-			$install_objects = "";
-			pts_recurse_install_test($test, $install_objects);
+			pts_start_install($test);
 		}
 		break;
 	case "INSTALL_EXTERNAL_DEPENDENCIES":

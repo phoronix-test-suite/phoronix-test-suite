@@ -20,61 +20,11 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
-function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
+function pts_start_install($TO_INSTALL)
 {
-	// Recurse call to install a test/suite and to handle the PTS External Dependencies
-	$type = pts_test_type($TO_INSTALL);
+	$tests = pts_test_objects($TO_INSTALL);
 
-	if($type == TYPE_TEST)
-	{
-		if(is_array($INSTALL_OBJ))
-			pts_install_external_dependencies_list($TO_INSTALL, $INSTALL_OBJ);
-		else
-			pts_install_test($TO_INSTALL);
-	}
-	else if($type == TYPE_TEST_SUITE)
-	{
-		if(!getenv("SILENT_INSTALL") && !is_array($INSTALL_OBJ))
-			echo "Installing Test Suite: " . $TO_INSTALL . "\n";
-
-		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_INSTALL . ".xml");
-		$suite_tests = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
-
-		foreach($suite_tests as $test)
-			pts_recurse_install_test($test, $INSTALL_OBJ);
-	}
-	else if(is_file(pts_input_correct_results_path($TO_INSTALL)))
-	{
-		$xml_parser = new tandem_XmlReader(pts_input_correct_results_path($TO_INSTALL));
-		$suite_tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-		foreach($suite_tests as $test)
-		{
-			pts_recurse_install_test($test, $INSTALL_OBJ);
-		}
-	}
-	else if(is_file(SAVE_RESULTS_DIR . $TO_INSTALL . "/composite.xml"))
-	{
-		$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $TO_INSTALL . "/composite.xml");
-		$suite_tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-		foreach($suite_tests as $test)
-		{
-			pts_recurse_install_test($test, $INSTALL_OBJ);
-		}
-	}
-	else if(pts_is_global_id($TO_INSTALL))
-	{
-		$xml_parser = new tandem_XmlReader(pts_global_download_xml($TO_INSTALL));
-		$suite_tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-		foreach($suite_tests as $test)
-		{
-			pts_recurse_install_test($test, $INSTALL_OBJ);
-		}
-	}
-	else
+	if(count($tests) == 0)
 	{
 		$exit_message = "";
 
@@ -83,6 +33,16 @@ function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
 
 		pts_exit($exit_message);
 	}
+
+	foreach($tests as $test)
+		pts_install_test($test);
+}
+function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
+{
+	$tests = pts_test_objects($TO_INSTALL);
+
+	foreach($tests as $test)
+		pts_install_external_dependencies_list($test, $PLACE_LIST);
 }
 function pts_download_test_files($identifier)
 {
@@ -526,7 +486,7 @@ function pts_install_package_on_distribution($identifier)
 
 	$identifier = strtolower($identifier);
 	$install_objects = array();
-	pts_recurse_install_test($identifier, $install_objects);
+	pts_start_install_dependencies($identifier, $install_objects);
 	pts_install_packages_on_distribution_process($install_objects);
 }
 function pts_install_packages_on_distribution_process($install_objects)
