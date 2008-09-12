@@ -1,24 +1,17 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<Version>1.1.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>2.8</DownloadSize>
 		<EnvironmentSize>6</EnvironmentSize>
 		<ProjectURL>http://www.vorbis.com/</ProjectURL>
+		<Extends>timed-audio-encode</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>Ogg Encoding</Title>
 		<Version>1.2.0</Version>
 		<SubTitle>78MB WAV File To Ogg</SubTitle>
 		<Executable>oggenc</Executable>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
 		<Description>This test times how long it takes to encode a sample WAV file to Ogg format.</Description>
-                <ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>

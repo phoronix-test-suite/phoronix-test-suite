@@ -13,6 +13,7 @@ Phoronix Test Suite
 - pts-core: Add in support for Self-Contained Test Profiles (SCTP) that initiate the Phoronix Test Suite and runs a stand-alone test
 - pts-core: A test profile isn't real: likely incomplete or just a base test within a Self-Contained Test Profile extension
 - pts-core: Report identifiers of test profiles being extended to the test profiles being run
+- pts: Switch all audio encoding tests to extend a timed-audio-encode base test instead of all tests having some of the same code copied throughout
 - tandem_Xml: Add a pts_test_tandem_XmlReader object that extends tandem_XmlReader but takes advantage of the handleXmlZeroTagFallback
 - tandem_Xml: Add fallback function handler support when a tag isn't found
 - documentation: Add basic documentation concerning the Self-Contained Test Profiles (SCTP) XML tags that are added

@@ -1,10 +1,5 @@
 #!/bin/sh
 
-if [ ! -f ../pts-shared/pts-trondheim-3.wav ]
-  then
-     tar -xvf ../pts-shared/pts-trondheim-wav-3.tar.gz -C ../pts-shared/
-fi
-
 THIS_DIR=$(pwd)
 mkdir $THIS_DIR/wavpack_
 
@@ -17,7 +12,7 @@ cd ..
 rm -rf wavpack-4.41.0/
 
 echo "#!/bin/sh
-./wavpack_/bin/wavpack -q -r -hhx2 -o - ../pts-shared/pts-trondheim-3.wav >/dev/null" > wavpack_process
+./wavpack_/bin/wavpack -q -r -hhx2 -o - \$TEST_EXTENDS/pts-trondheim.wav >/dev/null" > wavpack_process
 chmod +x wavpack_process
 
 echo "#!/bin/sh
