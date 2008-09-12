@@ -37,10 +37,10 @@ function pts_test_checksum_installer($identifier)
 	// Calculate installed checksum
 	$md5_checksum = "";
 
-	if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
-		$md5_checksum = md5_file(TEST_RESOURCE_DIR . $identifier . "/install.php");
-	else if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh"))
-		$md5_checksum = md5_file(TEST_RESOURCE_DIR . $identifier . "/install.sh");
+	if(is_file(pts_location_test_resources($identifier) . "install.php"))
+		$md5_checksum = md5_file(pts_location_test_resources($identifier) . "install.php");
+	else if(is_file(pts_location_test_resources($identifier) . "install.sh"))
+		$md5_checksum = md5_file(pts_location_test_resources($identifier) . "install.sh");
 
 	return $md5_checksum;
 }

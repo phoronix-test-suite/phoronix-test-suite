@@ -388,15 +388,15 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
 	$TEST_RESULTS_ARRAY = array();
 
-	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/pre.sh"))
+	if(is_file(pts_location_test_resources($test_identifier) . "pre.sh"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec("sh " . TEST_RESOURCE_DIR . $test_identifier . "/pre.sh " . $test_directory);
+		pts_exec("sh " . pts_location_test_resources($test_identifier) . "/pre.sh " . $test_directory);
 	}
-	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/pre.php"))
+	if(is_file(pts_location_test_resources($test_identifier) . "/pre.php"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $test_identifier . "/pre.php " . $test_directory);
+		pts_exec(PHP_BIN . " " . pts_location_test_resources($test_identifier) . "/pre.php " . $test_directory);
 	}
 
 	if(!empty($pre_run_message))
@@ -416,9 +416,9 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
-			if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/parse-results.php"))
+			if(is_file(pts_location_test_resources($test_identifier) . "parse-results.php"))
 			{
-				$test_results = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $test_identifier . "/parse-results.php \"" . $test_results . "\"");
+				$test_results = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . pts_location_test_resources($test_identifier) . "parse-results.php \"" . $test_results . "\"");
 			}
 
 			if(!empty($test_results))
@@ -433,13 +433,13 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 	}
 
-	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/post.sh"))
+	if(is_file(pts_location_test_resources($test_identifier) . "post.sh"))
 	{
-		pts_exec("sh " . TEST_RESOURCE_DIR . $test_identifier . "/post.sh " . $test_directory);
+		pts_exec("sh " . pts_location_test_resources($test_identifier) . "post.sh " . $test_directory);
 	}
-	if(is_file(TEST_RESOURCE_DIR . $test_identifier . "/post.php"))
+	if(is_file(pts_location_test_resources($test_identifier) . "post.php"))
 	{
-		pts_exec(PHP_BIN . " " . TEST_RESOURCE_DIR . $test_identifier . "/post.php " . $test_directory);
+		pts_exec(PHP_BIN . " " . pts_location_test_resources($test_identifier) . "post.php " . $test_directory);
 	}
 
 	// End

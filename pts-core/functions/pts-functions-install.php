@@ -47,9 +47,9 @@ function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
 function pts_download_test_files($identifier)
 {
 	// Download needed files for a test
-	if(is_file(TEST_RESOURCE_DIR . $identifier . "/downloads.xml"))
+	if(is_file(pts_location_test_resources($identifier) . "downloads.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(TEST_RESOURCE_DIR . $identifier . "/downloads.xml");
+		$xml_parser = new tandem_XmlReader(pts_location_test_resources($identifier) . "downloads.xml");
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
@@ -238,9 +238,9 @@ function pts_local_download_test_files($identifier)
 {
 	// Names of files downloaded to the local test installation folder for the test
 	$downloaded_files = array();
-	if(is_file(TEST_RESOURCE_DIR . $identifier . "/downloads.xml"))
+	if(is_file(pts_location_test_resources($identifier) . "downloads.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(TEST_RESOURCE_DIR . $identifier . "/downloads.xml");
+		$xml_parser = new tandem_XmlReader(pts_location_test_resources($identifier) . "downloads.xml");
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
 		$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
@@ -325,13 +325,13 @@ function pts_install_test($identifier)
 	{
 		// TODO: clean up validate-install and put in pts_validate_test_install
 		$custom_validated_output = "";
-		if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.sh"))
+		if(is_file(pts_location_test_resources($identifier) . "validate-install.sh"))
 		{
-			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/validate-install.sh " . TEST_ENV_DIR . $identifier);
+			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . pts_location_test_resources($identifier) . "validate-install.sh " . TEST_ENV_DIR . $identifier);
 		}
-		else if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.php"))
+		else if(is_file(pts_location_test_resources($identifier) . "/validate-install.php"))
 		{
-			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/validate-install.php " . TEST_ENV_DIR . $identifier);
+			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "validate-install.php " . TEST_ENV_DIR . $identifier);
 		}
 
 		if(!empty($custom_validated_output))
@@ -369,7 +369,7 @@ function pts_install_test($identifier)
 
 				pts_download_test_files($identifier);
 
-				if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh") || is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
+				if(is_file(pts_location_test_resources($identifier) . "install.sh") || is_file(pts_location_test_resources($identifier) . "install.php"))
 				{
 					pts_module_process("__pre_test_install");
 					$install_header = "Installing Test: " . $identifier;
@@ -385,13 +385,13 @@ function pts_install_test($identifier)
 						pts_exit();
 					}
 
-					if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh"))
+					if(is_file(pts_location_test_resources($identifier) . "install.sh"))
 					{
-						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/install.sh " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
+						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . pts_location_test_resources($identifier) . "install.sh " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
 					}
-					else if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
+					else if(is_file(pts_location_test_resources($identifier) . "/install.php"))
 					{
-						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/install.php " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
+						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "install.php " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
 					}
 					pts_test_generate_install_xml($identifier);
 					pts_module_process("__post_test_install");
