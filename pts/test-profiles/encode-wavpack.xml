@@ -5,6 +5,7 @@
 		<EnvironmentSize>5</EnvironmentSize>
 		<ProjectURL>http://www.wavpack.com/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>
+		<EnvironmentSize>1.0</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>WavPack Audio Encoding</Title>

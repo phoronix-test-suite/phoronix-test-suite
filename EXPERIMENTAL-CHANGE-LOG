@@ -23,6 +23,7 @@ Phoronix Test Suite
 - pts: Switch all build tests to extend a timed-build base test instead of all tests having some of the same code copied throughout
 - pts: Switch all video tests to extend a video-sample base test instead of all tests having some of the same code copied throughout
 - pts: Change all current and relevant test profiles shipping the Phoronix Test Suite to using the FileSize tags within their downloads.xml files
+- pts: Improve the reported environment size for many of the test profiles
 - tandem_Xml: Add a pts_test_tandem_XmlReader object that extends tandem_XmlReader but takes advantage of the handleXmlZeroTagFallback
 - tandem_Xml: Add fallback function handler support when a tag isn't found
 - documentation: Add basic documentation concerning the Self-Contained Test Profiles (SCTP) XML tags that are added
