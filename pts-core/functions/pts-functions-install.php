@@ -327,11 +327,11 @@ function pts_install_test($identifier)
 		$custom_validated_output = "";
 		if(is_file(pts_location_test_resources($identifier) . "validate-install.sh"))
 		{
-			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . pts_location_test_resources($identifier) . "validate-install.sh " . TEST_ENV_DIR . $identifier);
+			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . pts_location_test_resources($identifier) . "validate-install.sh " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier));
 		}
 		else if(is_file(pts_location_test_resources($identifier) . "/validate-install.php"))
 		{
-			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "validate-install.php " . TEST_ENV_DIR . $identifier);
+			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "validate-install.php " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier));
 		}
 
 		if(!empty($custom_validated_output))
@@ -387,11 +387,11 @@ function pts_install_test($identifier)
 
 					if(is_file(pts_location_test_resources($identifier) . "install.sh"))
 					{
-						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . pts_location_test_resources($identifier) . "install.sh " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
+						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . pts_location_test_resources($identifier) . "install.sh " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier)) . "\n";
 					}
 					else if(is_file(pts_location_test_resources($identifier) . "/install.php"))
 					{
-						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "install.php " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
+						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "install.php " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier)) . "\n";
 					}
 					pts_test_generate_install_xml($identifier);
 					pts_module_process("__post_test_install");

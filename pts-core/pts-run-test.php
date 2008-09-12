@@ -311,7 +311,7 @@ if(is_test($TO_RUN))
 
 	if($SAVE_RESULTS)
 	{
-		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN);
+		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));
 		$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 		$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 		$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);

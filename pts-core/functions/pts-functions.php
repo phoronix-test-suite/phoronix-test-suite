@@ -336,6 +336,22 @@ function pts_variables_export_string($vars = null)
 	}
 	return $return_string . " ";
 }
+function pts_run_additional_vars($identifier)
+{
+	$extra_vars = array();
+
+	$extra_vars["HOME"] = TEST_ENV_DIR . $identifier . "/";
+
+	$ctp_extension_string = "";
+	foreach(pts_test_extends_below($identifier) as $extended_test)
+		if(is_dir(TEST_ENV_DIR . $extended_test . "/"))
+			$ctp_extension_string .= TEST_ENV_DIR . $extended_test . ":";
+
+	if(!empty($ctp_extension_string))
+		$extra_vars["PATH"] = $ctp_extension_string . "\$PATH";
+
+	return $extra_vars;
+}
 function pts_exec($exec, $extra_vars = null)
 {
 	// Same as shell_exec() but with the PTS env variables added in
