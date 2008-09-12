@@ -32,6 +32,38 @@ class pts_module
 
 		return $prefix_dir . str_replace("_", "-", self::module_name()) . "/";
 	}
+	public static function read_option($identifier)
+	{
+		$module_name = self::module_name();
+		$value = "";
+
+		$module_config_parser = new tandem_XmlReader(PTS_USER_DIR . "modules-config.xml");
+		$option_module = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_NAME);
+		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
+		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
+
+		for($i = 0; $i < count($option_module) && $value == ""; $i++)
+		{
+			if($option_module[$i] == $module_name && $option_identifier[$i] == $identifier)
+			{
+				$value = $option_value[$i];
+			}
+		}
+
+		if(empty($value))
+		{
+			// Find the default value
+			eval("\$module_options = " . $module_name . "::module_setup();");
+
+			for($i = 0; $i < count($module_options) && $value == ""; $i++)
+			{
+				if($module_options[$i]->get_identifier() == $identifier)
+					$value = $module_options[$i]->get_default_value();
+			}
+		}
+
+		return $value;
+	}
 	public static function save_file($file, $contents = NULL, $append = false)
 	{
 		// Saves a file for a module

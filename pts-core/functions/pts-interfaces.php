@@ -187,6 +187,14 @@ define("P_OPTION_TESTCORE_LASTTIME", "PhoronixTestSuite/TestCore/LastRun/Time");
 define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/TestCore/UserInformation/AgreementCheckSum"); // PTS user agreement confirmation
 
 //
+// MODULE CONFIGURATION SPECIFICATION
+//
+
+define("P_MODULE_OPTION_NAME", "PhoronixTestSuite/Modules/Option/ModuleName"); // The name of the module
+define("P_MODULE_OPTION_IDENTIFIER", "PhoronixTestSuite/Modules/Option/Identifier"); // The identifier of the option
+define("P_MODULE_OPTION_VALUE", "PhoronixTestSuite/Modules/Option/Value"); // The value of the identifier for this module
+
+//
 // TEST INSTALLATION SPECIFICATION
 //
 

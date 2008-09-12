@@ -121,6 +121,58 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
 }
+function pts_module_config_init($SetOptions = NULL)
+{
+	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
+
+	if(is_file(PTS_USER_DIR . "modules-config.xml"))
+		$file = file_get_contents(PTS_USER_DIR . "modules-config.xml");
+	else
+		$file = "";
+
+	$module_config_parser = new tandem_XmlReader($file);
+	$option_module = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_NAME);
+	$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
+	$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
+
+	if(is_array($SetOptions) && count($SetOptions) > 0)
+	{
+		foreach($SetOptions as $this_option_set => $this_option_value)
+		{
+			$replaced = false;
+			$this_option_set = explode("__", $this_option_set);
+			$this_option_module = $this_option_set[0];
+			$this_option_identifier = $this_option_set[1];
+
+			for($i = 0; $i < count($option_module) && !$replaced; $i++)
+			{
+				if($option_module[$i] == $this_option_module && $option_identifier[$i] == $this_option_identifier)
+				{
+					$option_value[$i] = $this_option_value;
+					$replaced = true;
+				}
+			}
+
+			if(!$replaced)
+			{
+				array_push($option_module, $this_option_module);
+				array_push($option_identifier, $this_option_identifier);
+				array_push($option_value, $this_option_value);
+			}
+		}
+	}
+
+	$config = new tandem_XmlWriter();
+
+	for($i = 0; $i < count($option_module); $i++)
+	{
+		$config->addXmlObject(P_MODULE_OPTION_NAME, $i, $option_module[$i]);
+		$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $option_identifier[$i]);
+		$config->addXmlObject(P_MODULE_OPTION_VALUE, $i, $option_value[$i]);
+	}
+
+	file_put_contents(PTS_USER_DIR . "modules-config.xml", $config->getXML());
+}
 function pts_config_bool_to_string($bool)
 {
 	// Evaluate a string to boolean type

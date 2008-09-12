@@ -129,6 +129,10 @@ at http://global.phoronix-test-suite.com/.</p>
 Modules are used for extending the functionality of the Phoronix Test Suite without over-inflating the pts-core.</p>
 <p><strong>module-info &lt;Module Name&gt;</strong></p>
 <p>This option will show detailed information on a PTS module such as the version, developer, and a description of its purpose.</p>
+<p><strong>module-setup &lt;Module Name&gt;</strong></p>
+<p>This option will allow you to configure all available end-user options for a PTS module. These options are then stored within the user's 
+configuration file. Not all modules may have options that can be configured by the end-user. These options are then stored in 
+<em>~/.phoronix-test-suite/modules-config.xml</em> and modules can access them using the <em>pts_module::read_option()</em> function.</p>
 <h2>Miscellaneous Options</h2>
 <p><strong>make-download-cache</strong></p>
 <p>This option will backup all files that were automatically downloaded by the 

@@ -459,6 +459,54 @@ switch($COMMAND)
 			echo "\n" . $ARG_1 . " is not recognized.\n";
 		}
 		break;
+	case "MODULE_SETUP":
+		$ARG_1 = strtolower($ARG_1);
+		if(is_file(MODULE_DIR . $ARG_1 . ".php"))
+		{
+		 	$module = $ARG_1;
+			$pre_message = "";
+
+			if(!in_array($module, $GLOBALS["PTS_MODULES"]) && !class_exists($module))
+				include(MODULE_DIR . $module . ".php");
+
+			eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+			eval("\$module_description = " . $module . "::module_description;");
+			eval("\$module_setup = " . $module . "::module_setup();");
+
+			echo pts_string_header("Module: " . $module_name);
+			echo $module_description . "\n";
+
+			if(count($module_setup) == 0)
+				echo "\nThere are no options available for configuring with the " . $ARG_1 . " module.";
+			else
+			{
+				$set_options = array();
+				foreach($module_setup as $module_option)
+				{
+					do
+					{
+						echo "\n" . $module_option->get_formatted_question();
+						$input = trim(fgets(STDIN));
+					}
+					while(!$module_option->is_supported_value($input));
+
+					if(empty($input))
+						$input = $module_option->get_default_value();
+
+					$this_input_identifier = $module_option->get_identifier();
+
+					$set_options[$ARG_1 . "__" . $this_input_identifier] = $input;
+				}
+				pts_module_config_init($set_options);
+			}
+
+			echo "\n";
+		}
+		else
+		{
+			echo "\n" . $ARG_1 . " is not recognized.\n";
+		}
+		break;
 	case "SHOW_RESULT":
 		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
 			$URL = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml";
