@@ -108,10 +108,21 @@ function pts_init()
 function pts_extended_init()
 {
 	// Extended Initalization Process
+
+	// Create Other Directories
 	if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
 	{
 		@mkdir(PTS_DOWNLOAD_CACHE_DIR);
 		@file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto", "A download cache is used for conserving time and bandwidth by eliminating the need for the Phoronix Test Suite to download files that have already been downloaded once. A download cache can also be transferred between PCs running the Phoronix Test Suite. For more information on this feature, view the included documentation. To generate a download cache, run:\n\nphoronix-test-suite make-download-cache\n");
+	}
+	if(!is_dir(XML_SUITE_LOCAL_DIR))
+		@mkdir(XML_SUITE_LOCAL_DIR);
+	if(!is_dir(TEST_RESOURCE_LOCAL_DIR))
+		@mkdir(TEST_RESOURCE_LOCAL_DIR);
+	if(!is_dir(XML_PROFILE_LOCAL_DIR))
+	{
+		@mkdir(XML_PROFILE_LOCAL_DIR);
+		@file_put_contents(XML_PROFILE_LOCAL_DIR . "local-tests-howto", "If you wish to use a test profile for the Phoronix Test Suite without installing it system-wide, the XML profile(s) can be saved into this folder as <test-name.xml> and the test resources saved inside ~/.phoronix-test-suite/test-resources/<test-name>/");
 	}
 
 	// OpenGL / graphics detection
