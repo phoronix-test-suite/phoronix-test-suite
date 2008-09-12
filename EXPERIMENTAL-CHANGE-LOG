@@ -16,6 +16,7 @@ Phoronix Test Suite
 - pts-core: Drop PTS shared download support for test profiles, instead they should be using the Cascading Test Profiles functionality
 - pts-core: Don't allow the user to save a test result file if it's the same name as a real test profile or test suite
 - pts-core: Add Mac OS X operating system detection support (using the IS_MACOSX define)
+- pts-core: Improve VirtualBox virtualization detection for guest operating systems running
 - pts: Switch all audio encoding tests to extend a timed-audio-encode base test instead of all tests having some of the same code copied throughout
 - pts: Switch all build tests to extend a timed-build base test instead of all tests having some of the same code copied throughout
 - pts: Switch all video tests to extend a video-sample base test instead of all tests having some of the same code copied throughout
