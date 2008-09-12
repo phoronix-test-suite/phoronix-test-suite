@@ -650,13 +650,32 @@ function pts_estimated_download_size($identifier)
 	// Estimate the size of files to be downloaded
 	$estimated_size = 0;
 
-	for(pts_contained_tests($identifier, TRUE) as $test)
+	foreach(pts_contained_tests($identifier, TRUE) as $test)
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
-		$this_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
+	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test));
+		$this_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE); // TODO: The DownloadSize tag has been deprecates as of Phoronix Test Suite 1.4.0
 
 		if(!empty($this_size) && is_numeric($this_size))
+		{
 			$estimated_size += $this_size;
+		}
+		else
+		{
+			// The work for calculating the download size post 1.4.0.
+			if(is_file(pts_location_test_resources($test) . "downloads.xml"))
+			{
+				$xml_parser = new tandem_XmlReader(pts_location_test_resources($test) . "downloads.xml");
+				$package_filesize_bytes = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILESIZE);
+
+				foreach($package_filesize_bytes as $this_package_size)
+				{
+					if(is_numeric($this_package_size))
+					{
+						$estimated_size += pts_trim_double($this_package_size / 1048576);
+					}
+				}
+			}
+		}
 	}
 
 	return $estimated_size;
@@ -666,7 +685,7 @@ function pts_test_estimated_environment_size($identifier)
 	// Estimate the environment size of a test or suite
 	$estimated_size = 0;
 
-	for(pts_contained_tests($identifier, TRUE) as $test)
+	foreach(pts_contained_tests($identifier, TRUE) as $test)
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$this_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
