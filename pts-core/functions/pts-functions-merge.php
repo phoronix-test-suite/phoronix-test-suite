@@ -28,7 +28,7 @@ function pts_find_file($file)
 		$USE_FILE = $file;
 	else if(is_file(SAVE_RESULTS_DIR . $file . "/composite.xml"))
 		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
-	else if(pts_is_global_id($TO_RUN))
+	else if(pts_is_global_id($file))
 		$USE_FILE = "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $file;
 	else
 	{
