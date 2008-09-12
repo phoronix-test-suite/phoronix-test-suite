@@ -1,23 +1,15 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.1</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<Version>1.1.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<DownloadSize>5.8</DownloadSize>
 		<ProjectURL>http://www.apache.org/</ProjectURL>
+		<Extends>timed-build</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed Apache Compilation</Title>
 		<Version>2.2.8</Version>
-		<SubTitle>Time To Compile</SubTitle>
 		<Executable>time-compile-apache</Executable>
-		<TimesToRun>1</TimesToRun>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
 		<Description>This test times how long it takes to build Apache HTTPD 2.2.8.</Description>
 	</TestInformation>
 </PhoronixTestSuite>
