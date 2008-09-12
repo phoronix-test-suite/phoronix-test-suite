@@ -556,6 +556,9 @@ function pts_shutdown()
 			echo "\nDebug Message Saved To: " . PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE . "\n";
 	}
 
+	if(IS_SCTP_MODE)
+		remote_sctp_test_files();
+
 	// Remove process
 	pts_process_remove("phoronix-test-suite");
 }

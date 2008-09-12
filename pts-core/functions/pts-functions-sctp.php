@@ -25,6 +25,10 @@ function sctp_test_directory()
 {
 	return PTS_TEMP_DIR . "sctp/" . basename(SCTP_FILE) . "/";
 }
+function remote_sctp_test_files()
+{
+	shell_exec("rm -rf " . sctp_test_directory() . " 2>&1");
+}
 function generate_sctp_layer()
 {
 	$xml_parser = new tandem_XmlReader(SCTP_FILE);
