@@ -1,0 +1,14 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+	</TestProfile>
+	<TestInformation>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestInformation>
+</PhoronixTestSuite>

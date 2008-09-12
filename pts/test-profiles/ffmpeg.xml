@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -9,6 +9,7 @@
 		<DownloadSize>88</DownloadSize>
 		<EnvironmentSize>16</EnvironmentSize>
 		<ProjectURL>http://ffmpeg.mplayerhq.hu/</ProjectURL>
+		<Extends>video-sample</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>FFmpeg</Title>

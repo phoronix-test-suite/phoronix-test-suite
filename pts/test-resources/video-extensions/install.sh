@@ -1,10 +1,5 @@
 #!/bin/sh
 
-if [ ! -f ../pts-shared/pts-sample-playback-1.avi ]
-  then
-     tar -xvf ../pts-shared/pts-sample-playback-1.avi.tar.bz2 -C ../pts-shared/
-fi
-
 tar -xjf MPlayer-1.0rc2.tar.bz2
 
 THIS_DIR=$(pwd)
@@ -27,7 +22,7 @@ foreach($extensions_to_check as $extension)
 {
 	echo "Checking Video Output For: $extension\n";
 	$start_time = time();
-	echo shell_exec("./mplayer_/bin/mplayer -vo $extension -ao null ../pts-shared/pts-sample-playback-1.avi");
+	echo shell_exec("./mplayer_/bin/mplayer -vo $extension -ao null $TEST_EXTENDS/pts-sample-playback-1.avi");
 	$end_time = time();
 
 	$time_diff = $end_time - $start_time;
