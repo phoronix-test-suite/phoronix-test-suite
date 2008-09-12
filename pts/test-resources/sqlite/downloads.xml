@@ -3,10 +3,12 @@
 		<Package>
 			<URL>http://www.sqlite.org/sqlite-3.6.1.tar.gz</URL>
 			<MD5>eeef61635d89710bb8d976c2a0b99841</MD5>
+			<FileSize>2187909</FileSize>
 		</Package>
 		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sqlite-tests-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sqlite-tests-1.tar.gz</URL>
 			<MD5>153e725642619e38766ddf8359f65cfe</MD5>
+			<FileSize>42835</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

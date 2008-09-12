@@ -3,6 +3,7 @@
 		<Package>
 			<URL>http://wavpack.com/wavpack-4.41.0.tar.bz2</URL>
 			<MD5>6a13edeae437498db78fe528d9e95144</MD5>
+			<FileSize>329241</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

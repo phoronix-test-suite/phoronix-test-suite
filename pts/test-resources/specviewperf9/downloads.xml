@@ -3,10 +3,12 @@
 		<Package>
 			<URL>ftp://spec.it.miami.edu/dist/gpc/opc/viewperf/unix/SPECViewperf9.0.3.tar.gz, ftp://spec.unipv.it/dist/gpc/opc/viewperf/unix/SPECViewperf9.0.3.tar.gz, ftp://ftpsv1.u-aizu.ac.jp/pub/spec/dist/gpc/opc/viewperf/unix/SPECViewperf9.0.3.tar.gz</URL>
 			<MD5>1651c5c99cbc724bfdbb6cf70220502d</MD5>
+			<FileSize>654727464</FileSize>
 		</Package>
 		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/SPECViewPerf9-Configure.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/SPECViewPerf9-Configure.tar.gz</URL>
 			<MD5>de9fd4881ebd5d42a5067e9c7b51ec1a</MD5>
+			<FileSize>839</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

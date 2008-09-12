@@ -3,10 +3,12 @@
 		<Package>
 			<URL>http://tx-us.lunar-linux.org/lunar/cache/yafray-0.0.9.tar.gz, http://www.yafray.org/sec/2/downloads/yafray-0.0.9.tar.gz</URL>
 			<MD5>7365122e0ca6f439988f51e8b4db935c</MD5>
+			<FileSize>316033</FileSize>
 		</Package>
 		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/yafray-render-1.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/yafray-render-1.tar.bz2</URL>
 			<MD5>fa4861ec07c431a5274fe44ae5679741</MD5>
+			<FileSize>2768882</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

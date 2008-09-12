@@ -3,6 +3,7 @@
 		<Package>
 			<URL>http://brick.kernel.dk/snaps/fio-1.21.tar.bz2</URL>
 			<MD5>129b20d20868bc482b7316f0e327c930</MD5>
+			<FileSize>1353714</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

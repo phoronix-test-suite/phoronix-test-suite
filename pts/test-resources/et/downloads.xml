@@ -3,10 +3,12 @@
 		<Package>
 			<URL>ftp://ftp.games.skynet.be/spool1/games/wolfenstein/et-linux-2.60.x86.run, ftp://ftp.csie.ncu.edu.tw/FreeBSD/ports/distfiles/et-linux-2.60.x86.run, ftp://ftp.idsoftware.com/idstuff/et/linux/et-linux-2.60.x86.run, ftp://ftp.ucsd.edu/mirror2/FreeBSD/ports/distfiles/et-linux-2.60.x86.run, ftp://ftp.tw.freebsd.org/pub/ports/distfiles/et-linux-2.60.x86.run</URL>
 			<MD5>2d2373f29f02e18d365d7f1860eee435</MD5>
+			<FileSize>270965248</FileSize>
 		</Package>
 		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/et-demos-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/et-demos-1.tar.gz</URL>
 			<MD5>f6a91c2b2d0874010f6382d07b65fe02</MD5>
+			<FileSize>1157402</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

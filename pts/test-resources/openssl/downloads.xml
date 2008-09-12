@@ -3,6 +3,7 @@
 		<Package>
 			<URL>ftp://ftp.openssl.org/source/openssl-0.9.8h.tar.gz, http://ftp.uoi.gr/pub/security/OpenSSL/source/openssl-0.9.8h.tar.gz</URL>
 			<MD5>7d3d41dafc76cf2fcb5559963b5783b3</MD5>
+			<FileSize>3439981</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

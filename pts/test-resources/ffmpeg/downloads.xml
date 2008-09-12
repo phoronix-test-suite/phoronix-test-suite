@@ -3,6 +3,7 @@
 		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/ffmpeg-may27-2008.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/ffmpeg-may27-2008.tar.bz2</URL>
 			<MD5>7d3f30e1f03770948d7688612dc4f063</MD5>
+			<FileSize>2566151</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

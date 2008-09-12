@@ -3,6 +3,7 @@
 		<Package>
 			<URL>http://internap.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.57_src_all.tar.bz2, http://voxel.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.57_src_all.tar.bz2, http://superb-west.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.57_src_all.tar.bz2</URL>
 			<MD5>773f78d8b297eb858626667d4dfa93c7</MD5>
+			<FileSize>1473608</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

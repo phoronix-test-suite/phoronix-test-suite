@@ -1,7 +1,8 @@
 <PhoronixTestSuite>
-  <Downloads>
-    <Package>
-      <URL>http://download.java.net/javadesktop/jgfxbat/2.0/J2DBench.zip</URL>
-    </Package>
-  </Downloads>
+	<Downloads>
+		<Package>
+			<URL>http://download.java.net/javadesktop/jgfxbat/2.0/J2DBench.zip</URL>
+			<FileSize>260894</FileSize>
+		</Package>
+	</Downloads>
 </PhoronixTestSuite>

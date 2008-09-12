@@ -3,6 +3,7 @@
 		<Package>
 			<URL>http://math.nist.gov/scimark2/scimark2_1c.zip</URL>
 			<MD5>6cc8d6d5312a07e32316c03580e0206b</MD5>
+			<FileSize>13792</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

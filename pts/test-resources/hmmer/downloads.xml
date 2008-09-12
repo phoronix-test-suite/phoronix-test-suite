@@ -3,10 +3,12 @@
 		<Package>
 			<URL>ftp://selab.janelia.org/pub/software/hmmer/CURRENT/hmmer-2.3.2.tar.gz</URL>
 			<MD5>5f073340c0cf761288f961a73821228a</MD5>
+			<FileSize>1024933</FileSize>
 		</Package>
 		<Package>
 			<URL>ftp://ftp.sanger.ac.uk/pub/databases/Pfam/current_release/Pfam_ls.gz, ftp://topaze.jouy.inra.fr/pub/pfam/current/Pfam_ls.gz, ftp://selab.janelia.org/pub/Pfam/Pfam_ls.gz</URL>
 			<MD5>31647337a0e8309fce3914da7e8f4a1c</MD5>
+			<FileSize>111043685</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

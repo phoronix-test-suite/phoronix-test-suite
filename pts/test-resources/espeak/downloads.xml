@@ -3,10 +3,12 @@
 		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/gutenberg-science.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/gutenberg-science.tar.gz</URL>
 			<MD5>e1b5250bbcf5e65d0f1e37ed727cc3d1</MD5>
+			<FileSize>250250</FileSize>
 		</Package>
 		<Package>
 			<URL>http://kent.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip, http://superb-west.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip, http://superb-east.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip</URL>
 			<MD5>5c7b292d0537232868b4ac1317d76c02</MD5>
+			<FileSize>1292986</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

@@ -3,10 +3,12 @@
 		<Package>
 			<URL>ftp://ftp.snt.utwente.nl/pub/games/urbanterror/UrbanTerror_41_FULL.zip, http://mirror.kickassctf.com/UrbanTerror_41_FULL.zip, http://mrsentry.net/release/UrbanTerror_41_FULL.zip</URL>
 			<MD5>1370306ea236f65f595e7ca70765e469</MD5>
+			<FileSize>754307397</FileSize>
 		</Package>
 		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/urbanterror-q3ut4-2.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/urbanterror-q3ut4-2.tar.gz</URL>
 			<MD5>66d2e85c49fb2a693ec072699f10a695</MD5>
+			<FileSize>1447268</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

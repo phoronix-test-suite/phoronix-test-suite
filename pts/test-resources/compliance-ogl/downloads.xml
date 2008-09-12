@@ -3,6 +3,7 @@
 		<Package>
 			<URL>http://superb-west.dl.sourceforge.net/sourceforge/glew/glew-1.5.0-src.tgz, http://internap.dl.sourceforge.net/sourceforge/glew/glew-1.5.0-src.tgz, http://dfn.dl.sourceforge.net/sourceforge/glew/glew-1.5.0-src.tgz</URL>
 			<MD5>3fececda0151b060c08ffd8a12892741</MD5>
+			<FileSize>356247</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
