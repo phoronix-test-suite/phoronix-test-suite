@@ -92,7 +92,6 @@ function pts_generate_download_cache()
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
-		$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
 		$cached = false;
 
 		echo "\nChecking Downloads For: " . $test . "\n";
@@ -112,23 +111,13 @@ function pts_generate_download_cache()
 			{
 				if(is_dir(TEST_ENV_DIR . $test . "/"))
 				{
-					if(is_file(TEST_ENV_DIR . $test . "/" . $package_filename[$i]) && $download_to[$i] != "SHARED")
+					if(is_file(TEST_ENV_DIR . $test . "/" . $package_filename[$i]))
 					{
 						if(empty($package_md5[$i]) || md5_file(TEST_ENV_DIR . $test . "/" . $package_filename[$i]) == $package_md5[$i])
 						{
 							echo "\tCaching: " . $package_filename[$i] . "\n";
 
 							if(copy(TEST_ENV_DIR . $test . "/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
-								$cached = true;
-						}
-					}
-					else if(is_file(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i]) && $download_to[$i] == "SHARED")
-					{
-						if(empty($package_md5[$i]) || md5_file(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i]) == $package_md5[$i])
-						{
-							echo "\tCaching: " . $package_filename[$i] . "\n";
-
-							if(copy(TEST_ENV_DIR . "pts-shared/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
 								$cached = true;
 						}
 					}

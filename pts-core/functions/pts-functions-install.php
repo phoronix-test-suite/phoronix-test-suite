@@ -63,7 +63,6 @@ function pts_download_test_files($identifier)
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
-		$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
 		$header_displayed = false;
 
 		if(PTS_DOWNLOAD_CACHE_DIR != "" && strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != FALSE)
@@ -83,10 +82,7 @@ function pts_download_test_files($identifier)
 			if(empty($package_filename[$i]))
 				$package_filename[$i] = basename($package_url[$i]);
 
-			if($download_to[$i] == "SHARED")
-				$download_location = TEST_ENV_DIR . "pts-shared/";
-			else
-				$download_location = TEST_ENV_DIR . $identifier . "/";
+			$download_location = TEST_ENV_DIR . $identifier . "/";
 
 			if(!is_file($download_location . $package_filename[$i]))
 			{
@@ -253,15 +249,13 @@ function pts_local_download_test_files($identifier)
 		$xml_parser = new tandem_XmlReader(pts_location_test_resources($identifier) . "downloads.xml");
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
-		$download_to = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_DESTINATION);
 
 		for($i = 0; $i < count($package_url); $i++)
 		{
 			if(empty($package_filename[$i]))
 				$package_filename[$i] = basename($package_url[$i]);
 
-			if($download_to[$i] != "SHARED")
-				array_push($downloaded_files, $package_filename[$i]);
+			array_push($downloaded_files, $package_filename[$i]);
 		}
 	}
 
@@ -373,9 +367,6 @@ function pts_install_test($identifier)
 
 				if(!is_dir(TEST_ENV_DIR . $identifier))
 					mkdir(TEST_ENV_DIR . $identifier);
-
-				if(!is_dir(TEST_ENV_DIR . "pts-shared"))
-					mkdir(TEST_ENV_DIR . "pts-shared");
 
 				pts_download_test_files($identifier);
 

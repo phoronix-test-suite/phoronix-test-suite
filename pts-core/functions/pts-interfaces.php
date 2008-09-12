@@ -99,7 +99,7 @@ define("P_SUITE_TEST_DESCRIPTION", "PhoronixTestSuite/RunTest/Description"); // 
 define("P_DOWNLOADS_PACKAGE_URL", "PhoronixTestSuite/Downloads/Package/URL"); // URL for PTS to download from
 define("P_DOWNLOADS_PACKAGE_MD5", "PhoronixTestSuite/Downloads/Package/MD5"); // MD5 for PTS to verify
 define("P_DOWNLOADS_PACKAGE_FILENAME", "PhoronixTestSuite/Downloads/Package/FileName"); // Local file-name for PTS to save package as
-define("P_DOWNLOADS_PACKAGE_DESTINATION", "PhoronixTestSuite/Downloads/Package/DownloadTo"); // Location to save file to
+// DROPPED IN PTS 1.4, USE CTP INSTEAD: define("P_DOWNLOADS_PACKAGE_DESTINATION", "PhoronixTestSuite/Downloads/Package/DownloadTo"); // Location to save file to
 
 //
 // DOWNLOAD CACHE SPECIFICATION
