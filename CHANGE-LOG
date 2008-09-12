@@ -2,7 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite 1.2.1
 
-- pts: MD5 check-sum fixes for unigine-sanctuary and unigine-tropics.
+- pts-core: Improve formatting for systems with multiple CPUs but of different models
+- pts: MD5 check-sum fixes for unigine-sanctuary and unigine-tropics
 - pts: Fix a system script bugg in unigine-tropics
 
 Phoronix Test Suite 1.2.0

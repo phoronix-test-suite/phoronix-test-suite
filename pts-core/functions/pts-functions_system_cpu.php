@@ -80,12 +80,13 @@ function processor_string()
 			$current_id = -1;
 			$current_string = $cpu_strings[0];
 			$current_count = 0;
+			$cpus = array();
 
 			for($i = 0; $i < count($physical_cpu_ids); $i++)
 			{
 				if($current_string != $cpu_strings[$i] || $i == (count($physical_cpu_ids) - 1))
 				{
-					$info .= $current_count . " x " . append_processor_frequency(pts_clean_information_string($current_string), $i);
+					array_push($cpus, $current_count . " x " . append_processor_frequency(pts_clean_information_string($current_string), $i));
 
 					$current_string = $cpu_strings[$i];
 					$current_count = 0;
@@ -97,6 +98,7 @@ function processor_string()
 					$current_id = $physical_cpu_ids[$i];
 				}
 			}
+			$info = implode(", ", $cpus);
 		}
 	}
 
