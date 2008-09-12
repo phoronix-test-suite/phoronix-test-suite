@@ -65,7 +65,7 @@ function pts_download_test_files($identifier)
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
 		$header_displayed = false;
 
-		if(PTS_DOWNLOAD_CACHE_DIR != "" && strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != FALSE)
+		if(strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != FALSE)
 		{
 			$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
 			$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
@@ -93,11 +93,6 @@ function pts_download_test_files($identifier)
 					{
 						$download_append = "\nEstimated Download Size: " . $size . " MB";
 
-						if(ceil(disk_free_space(PTS_TEMP_DIR) / 1048576) < $size)
-						{
-							echo pts_string_header("There is not enough temporary space (at " . PTS_TEMP_DIR . ") for this test.");
-							pts_exit();
-						}
 						if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
 						{
 							echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
@@ -114,9 +109,6 @@ function pts_download_test_files($identifier)
 				else
 					$urls = explode(",", $package_url[$i]);
 
-				if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
-					unlink(PTS_TEMP_DIR . $package_filename[$i]);
-
 				if(count($dc_file) > 0 && count($dc_md5) > 0)
 				{
 					$cache_search = true;
@@ -124,13 +116,13 @@ function pts_download_test_files($identifier)
 					{
 						if($dc_file[$f] == $package_filename[$i] && $dc_md5[$f] == $package_md5[$i])
 						{
-							echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i] . " -O " . $package_filename[$i]);
+							echo shell_exec("cd " . $download_location . " && wget " . PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i] . " -O " . $package_filename[$i] . ".temp");
 
-							if(!pts_validate_md5_download_file(PTS_TEMP_DIR . $package_filename[$i], $package_md5[$i]))
-								@unlink(PTS_TEMP_DIR . $package_filename[$i]);
+							if(!pts_validate_md5_download_file$download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
+								@unlink($download_location . $package_filename[$i] . ".temp");
 							else
 							{
-								shell_exec("mv " . PTS_TEMP_DIR . $package_filename[$i] . " " . $download_location);
+								shell_exec("cd " . $download_location . " && mv " . $package_filename[$i] . ".temp " . $package_filename[$i]);
 								$urls = array();
 							}
 
@@ -188,12 +180,12 @@ function pts_download_test_files($identifier)
 						}
 
 						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
-						echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . $url . " -O " . $package_filename[$i]);
+						echo shell_exec("cd " . $download_location . " && wget " . $url . " -O " . $package_filename[$i] . ".temp");
 
-						if(!pts_validate_md5_download_file(PTS_TEMP_DIR . $package_filename[$i], $package_md5[$i]))
+						if(!pts_validate_md5_download_file($download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
 						{
-							if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
-								unlink(PTS_TEMP_DIR . $package_filename[$i]);
+							if(is_file($download_location . $package_filename[$i] . ".temp"))
+								unlink($download_location . $package_filename[$i] . ".temp");
 
 							$file_downloaded = false;
 							$fail_count++;
@@ -222,8 +214,8 @@ function pts_download_test_files($identifier)
 						}
 						else
 						{
-							if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
-								shell_exec("mv " . PTS_TEMP_DIR . $package_filename[$i] . " " . $download_location);
+							if(is_file($download_location . $package_filename[$i] . ".temp"))
+								shell_exec("cd " . $download_location . " && mv " . $package_filename[$i] . ".temp " . $package_filename[$i]);
 
 							$file_downloaded = true;
 							$fail_count = 0;
