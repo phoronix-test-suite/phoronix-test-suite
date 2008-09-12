@@ -224,7 +224,7 @@ function pts_download_test_files($identifier)
 						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
 						echo shell_exec("cd " . PTS_TEMP_DIR . " && wget " . $url . " -O " . $package_filename[$i]);
 
-						if((is_file(PTS_TEMP_DIR . $package_filename[$i]) && !empty($package_md5[$i]) && md5_file(PTS_TEMP_DIR . $package_filename[$i]) != $package_md5[$i]) || !is_file(PTS_TEMP_DIR . $package_filename[$i]))
+						if(pts_validate_md5_download_file($package_filename[$i], $package_md5[$i]))
 						{
 							if(is_file(PTS_TEMP_DIR . $package_filename[$i]))
 								unlink(PTS_TEMP_DIR . $package_filename[$i]);
@@ -296,6 +296,44 @@ function pts_local_download_test_files($identifier)
 	}
 
 	return $downloaded_files;
+}
+function pts_validate_md5_download_file($filename, $verified_md5)
+{
+	$valid = true;
+
+	if(!empty($verified_md5))
+	{
+		if(!is_file(PTS_TEMP_DIR . $filename))
+		{
+			$valid = false;
+		}
+		else
+		{
+			$real_md5 = md5_file(PTS_TEMP_DIR . $filename);
+
+			if(count(explode("://", $verified_md5)) > 1)
+			{
+				$md5_file = explode("\n", trim(@file_get_contents($verified_md5)));
+
+				for($i = 0; $i < count($md5_file) && $valid; $i++)
+				{
+					$line_explode = explode(" ", trim($md5_file[$i]));
+
+					if($line_explode[(count($line_explode) - 1)] == $filename)
+					{
+						if($line_explode[0] != $real_md5)
+						{
+							$valid = false;
+						}
+					}
+				}
+			}
+			else if($real_md5 != $verified_md5)
+				$valid = false;
+		}
+	}
+
+	return $valid;
 }
 function pts_remove_local_download_test_files($identifier)
 {
