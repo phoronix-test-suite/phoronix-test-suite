@@ -33,6 +33,8 @@ class tandem_XmlReader
 	var $XML_CACHE_FILE = FALSE; // Cache the entire XML file being parsed
 	var $XML_CACHE_TAGS = TRUE; // Cache the tags that are being called
 
+	var $NO_TAG_FALLBACK_VALUE = NULL;
+
 	function __construct($XML, $DO_CACHE = TRUE)
 	{
 		if(is_file($XML))
@@ -137,9 +139,7 @@ class tandem_XmlReader
 	}
 	private function handleXmlZeroTagFallback($XML_TAG)
 	{
-		$fallback_value = null;
-
-		return $fallback_value;
+		return $this->NO_TAG_FALLBACK_VALUE;
 	}
 	function getXMLValues($XML_TAG)
 	{
