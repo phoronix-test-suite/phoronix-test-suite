@@ -118,7 +118,7 @@ function pts_download_test_files($identifier)
 						{
 							echo shell_exec("cd " . $download_location . " && wget " . PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i] . " -O " . $package_filename[$i] . ".temp");
 
-							if(!pts_validate_md5_download_file$download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
+							if(!pts_validate_md5_download_file($download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
 								@unlink($download_location . $package_filename[$i] . ".temp");
 							else
 							{
