@@ -34,6 +34,10 @@ class pts_module_interface
 	{
 
 	}
+	public static function module_setup()
+	{
+		return array();
+	}
 
 	//
 	// General Functions
