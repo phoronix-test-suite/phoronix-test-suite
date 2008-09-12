@@ -17,6 +17,7 @@ Phoronix Test Suite
 - pts-core: Don't allow the user to save a test result file if it's the same name as a real test profile or test suite
 - pts-core: Add Mac OS X operating system detection support (using the IS_MACOSX define)
 - pts-core: Improve VirtualBox virtualization detection for guest operating systems running
+- pts-core: Add $COMPILER and $VIDEO_DRIVER user variables when saving the results and supplying the test identifier
 - pts: Switch all audio encoding tests to extend a timed-audio-encode base test instead of all tests having some of the same code copied throughout
 - pts: Switch all build tests to extend a timed-build base test instead of all tests having some of the same code copied throughout
 - pts: Switch all video tests to extend a video-sample base test instead of all tests having some of the same code copied throughout

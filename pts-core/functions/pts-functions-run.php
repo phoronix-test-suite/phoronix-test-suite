@@ -86,11 +86,13 @@ function pts_swap_user_variables($user_str)
 		$supported_variables = array(
 		"VIDEO_RESOLUTION" => current_screen_resolution(),
 		"VIDEO_CARD" => graphics_processor_string(),
+		"VIDEO_DRIVER" => opengl_version(),
 		"OPERATING_SYSTEM" => pts_vendor_identifier(),
 		"PROCESSOR" => processor_string(),
 		"MOTHERBOARD" => main_system_hardware_string(),
 		"CHIPSET" => motherboard_chipset_string(),
-		"KERNEL_VERSION" => kernel_string()
+		"KERNEL_VERSION" => kernel_string(),
+		"COMPILER" => compiler_version()
 		);
 
 		foreach($supported_variables as $key => $value)
