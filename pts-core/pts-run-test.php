@@ -67,6 +67,14 @@ if(!$TO_RUN_TYPE)
 		define("GLOBAL_COMPARISON", 1);
 		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", pts_global_download_xml($TO_RUN));
 	}
+	else if(IS_SCTP_MODE)
+	{
+		$SAVE_RESULTS = true;
+		$TO_RUN_TYPE = "SCTP_COMPARISON";
+		$TO_RUN = basename($TO_RUN);
+		$PROPOSED_FILE_NAME = $TO_RUN;
+		$RES_NULL = null;
+	}
 	else
 	{
 		pts_exit("\nNot Recognized: $TO_RUN \n\n");

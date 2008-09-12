@@ -22,16 +22,23 @@
 */
 function pts_start_install($TO_INSTALL)
 {
-	$tests = pts_contained_tests($TO_INSTALL, TRUE);
-
-	if(count($tests) == 0)
+	if(IS_SCTP_MODE)
 	{
-		$exit_message = "";
+		$tests = array($TO_INSTALL);
+	}
+	else
+	{
+		$tests = pts_contained_tests($TO_INSTALL, TRUE);
 
-		if(!getenv("SILENT_INSTALL"))
-			$exit_message = "\nNot recognized: $TO_INSTALL\n";
+		if(count($tests) == 0)
+		{
+			$exit_message = "";
 
-		pts_exit($exit_message);
+			if(!getenv("SILENT_INSTALL"))
+				$exit_message = "\nNot recognized: $TO_INSTALL\n";
+
+			pts_exit($exit_message);
+		}
 	}
 
 	foreach($tests as $test)
@@ -39,8 +46,11 @@ function pts_start_install($TO_INSTALL)
 }
 function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
 {
-	$tests = pts_contained_tests($TO_INSTALL, TRUE);
-
+	if(IS_SCTP_MODE)
+		$tests = array($TO_INSTALL);
+	else
+		$tests = pts_contained_tests($TO_INSTALL, TRUE);
+	
 	foreach($tests as $test)
 		pts_install_external_dependencies_list($test, $PLACE_LIST);
 }

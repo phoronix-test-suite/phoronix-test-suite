@@ -71,6 +71,15 @@ function pts_init()
 	else
 		define("IS_DEBUG_MODE", false);
 
+	// Self-Contained Test Profile
+	if(($sctp_file = getenv("SCTP_FILE")) != FALSE && is_file($sctp_file))
+	{
+		define("SCTP_FILE", $sctp_file);
+		define("IS_SCTP_MODE", true);
+	}
+	else
+		define("IS_SCTP_MODE", false);
+
 	// Operating System Detection
 	$supported_operating_systems = array("Linux", array("Solaris", "Sun"), "FreeBSD", "BSD");
 	$uname_s = strtolower(trim(shell_exec("uname -s")));
