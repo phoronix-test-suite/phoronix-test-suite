@@ -41,6 +41,15 @@ if(IS_SCTP_MODE)
 if(empty($TO_RUN))
 	pts_exit("\nThe test, suite name, or saved file name must be supplied.\n");
 
+if(is_test($TO_RUN))
+{
+	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));
+	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
+
+	if(empty($test_title))
+		pts_exit($TO_RUN . " is not a test.");
+}
+
 // Make sure tests are installed
 pts_verify_test_installation($TO_RUN);
 

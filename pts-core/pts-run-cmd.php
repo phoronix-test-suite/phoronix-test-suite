@@ -158,7 +158,7 @@ switch($COMMAND)
 			}
 			else
 			{
-				if($COMMAND == "LIST_ALL_TESTS" || !in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED", "STANDALONE", "SCTP")))
+				if(!empty($name) && ($COMMAND == "LIST_ALL_TESTS" || !in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED", "STANDALONE", "SCTP"))))
 					printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 			}
 		}
@@ -222,7 +222,9 @@ switch($COMMAND)
 			{
 			 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
-				printf("%-18ls - %-30ls\n", $identifier, $name);
+
+				if(!empty($name))
+					printf("%-18ls - %-30ls\n", $identifier, $name);
 			}
 		}
 		echo "\n";
@@ -246,7 +248,11 @@ switch($COMMAND)
 				$test_times_run = "";
 			}
 
-			printf("%-22ls - %-20ls %-20ls %-3ls\n", $identifier, $test_time_install, $test_time_lastrun, $test_times_run);
+			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
+
+			if(!empty($name))
+				printf("%-22ls - %-20ls %-20ls %-3ls\n", $identifier, $test_time_install, $test_time_lastrun, $test_times_run);
 		}
 		echo "\n";
 		break;
@@ -296,7 +302,6 @@ switch($COMMAND)
 		else if(is_test($pts_test_type))
 		{
 			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($ARG_1));
-
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 			$test_sw_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 			$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
@@ -311,6 +316,9 @@ switch($COMMAND)
 			$test_estimated_length = $xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
 			$test_dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 			$test_projecturl = $xml_parser->getXMLValue(P_TEST_PROJECTURL);
+
+			if(empty($test_title))
+				pts_exit($ARG_1 . " is not a Phoronix Test Suite test.");
 
 			if(!empty($test_sw_version))
 				$test_title .= " " . $test_sw_version;

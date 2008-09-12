@@ -10,6 +10,8 @@ Phoronix Test Suite
 - pts-core: Drop PTS_USER_DIR usage
 - pts-core: Add support for having tests and suites stored locally within ~/.phoronix-test-suite/ as an option for users installing new tests/suites or third-party files
 - pts-core: Add support so that a test profile can extend another test, for Cascading Test Profile support. This is similar to inheritance in programming languages or Cascading Style Sheets.
+- pts-core: Add in support for Self-Contained Test Profiles (SCTP) that initiate the Phoronix Test Suite and runs a stand-alone test
+- pts-core: A test profile isn't real: likely incomplete or just a base test within a Self-Contained Test Profile extension
 - tandem_Xml: Add a pts_test_tandem_XmlReader object that extends tandem_XmlReader but takes advantage of the handleXmlZeroTagFallback
 - tandem_Xml: Add fallback function handler support when a tag isn't found
 - documentation: Add basic documentation concerning the Self-Contained Test Profiles (SCTP) XML tags that are added
