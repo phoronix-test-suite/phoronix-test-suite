@@ -150,8 +150,8 @@ switch($COMMAND)
 			{
 				$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 				$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
-				$test_download_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
-				$test_environment_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
+				$test_download_size = pts_estimated_download_size($identifier);
+				$test_environment_size = pts_test_estimated_environment_size($identifier);
 				$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 
 				printf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $identifier, $test_version, $version, $status, $license, $test_download_size, $test_environment_size, $test_maintainer);
@@ -311,8 +311,8 @@ switch($COMMAND)
 			$test_license = $xml_parser->getXMLValue(P_TEST_LICENSE);
 			$test_status = $xml_parser->getXMLValue(P_TEST_STATUS);
 			$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
-			$test_download_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
-			$test_environment_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
+			$test_download_size = pts_estimated_download_size($ARG_1);
+			$test_environment_size = pts_test_estimated_environment_size($ARG_1);
 			$test_estimated_length = $xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
 			$test_dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 			$test_projecturl = $xml_parser->getXMLValue(P_TEST_PROJECTURL);
