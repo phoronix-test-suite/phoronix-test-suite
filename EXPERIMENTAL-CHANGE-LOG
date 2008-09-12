@@ -9,3 +9,4 @@ Phoronix Test Suite
 - pts-core: Provide new architecture for test/suite checking through the type handler
 - pts-core: Drop PTS_USER_DIR usage
 - pts-core: Add support for having tests and suites stored locally within ~/.phoronix-test-suite/ as an option for users installing new tests/suites or third-party files
+- tandem_Xml: Add fallback function handler support when a tag isn't found

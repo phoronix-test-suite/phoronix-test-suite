@@ -100,14 +100,19 @@ class tandem_XmlReader
 	}
 	function getXMLValue($XML_TAG)
 	{
-		return $this->getValue($XML_TAG, $this->XML_DATA);
+		return $this->getValue($XML_TAG);
 	}
 	function isDefined($XML_TAG)
 	{
-		return $this->getValue($XML_TAG, $this->XML_DATA) != null;
+		return $this->getValue($XML_TAG) != null;
 	}
-	function getValue($XML_TAG, $XML_MATCH, $DO_CACHE = TRUE)
+	function getValue($FULL_XML_TAG, $XML_TAG = null, $XML_MATCH = null, $DO_CACHE = TRUE)
 	{
+		if($XML_TAG == null)
+			$XML_TAG = $FULL_XML_TAG;
+		if($XML_MATCH == null)
+			$XML_MATCH = $this->XML_DATA;
+
 		if($this->XML_CACHE_TAGS == TRUE && $DO_CACHE && isset($GLOBALS["XML_CACHE"]["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG]))
 		{
 			$XML_MATCH = $GLOBALS["XML_CACHE"]["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG];
@@ -121,7 +126,7 @@ class tandem_XmlReader
 				if(count($new_match) > 1)
 					$XML_MATCH = $new_match[1];
 				else
-					$XML_MATCH = null;
+					$XML_MATCH = $this->handleXmlZeroTagFallback($FULL_XML_TAG);
 			}
 
 			if($this->XML_CACHE_TAGS == TRUE && $DO_CACHE)
@@ -129,6 +134,12 @@ class tandem_XmlReader
 		}
 
 		return $XML_MATCH;
+	}
+	private function handleXmlZeroTagFallback($XML_TAG)
+	{
+		$fallback_value = null;
+
+		return $fallback_value;
 	}
 	function getXMLValues($XML_TAG)
 	{
@@ -144,7 +155,7 @@ class tandem_XmlReader
 		$this_xml = $XML_MATCH;
 
 		for($i = 0; $i < count($xml_steps) - 2; $i++)
-			$this_xml = $this->getValue($xml_steps[$i], $this_xml, FALSE);
+			$this_xml = $this->getValue($XML_TAG, $xml_steps[$i], $this_xml, FALSE);
 
 		$next_xml_step = $xml_steps[count($xml_steps) - 2];
 		preg_match_all("'<$next_xml_step>(.*?)</$next_xml_step>'si", $this_xml, $xml_matches);
@@ -157,7 +168,7 @@ class tandem_XmlReader
 		{
 			if($extraction_tags_count == 1)
 			{
-				$this_item = $this->getValue($extraction_tags[0], $xml_matches[1][$i], FALSE);
+				$this_item = $this->getValue($XML_TAG, $extraction_tags[0], $xml_matches[1][$i], FALSE);
 				array_push($return_array, $this_item);
 			}
 			else
@@ -169,7 +180,7 @@ class tandem_XmlReader
 				}
 				foreach($extraction_tags as $extract)
 				{
-					$this_item = $this->getValue($extract, $xml_matches[1][$i], FALSE);
+					$this_item = $this->getValue($XML_TAG, $extract, $xml_matches[1][$i], FALSE);
 					array_push($return_array[$extract], $this_item);
 				}
 			}
