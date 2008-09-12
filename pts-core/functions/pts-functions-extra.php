@@ -50,7 +50,7 @@ function pts_tests_in_suite($object)
 	$type = pts_test_type($object);
 	$tests = array();
 
-	if($type == "TEST_SUITE")
+	if($type == TYPE_TEST_SUITE)
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents(XML_SUITE_DIR . $object . ".xml"));
 		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
@@ -59,7 +59,7 @@ function pts_tests_in_suite($object)
 			foreach(pts_tests_in_suite($test) as $sub_test)
 				array_push($tests, $sub_test);
 	}
-	else if($type == "TEST")
+	else if($type == TYPE_TEST)
 		return array($object);
 
 	return array_unique($tests);
@@ -68,7 +68,7 @@ function pts_print_format_tests($object, $steps = -1)
 {
 	// Print out a text tree that shows the suites and tests within an object
 	$steps++;
-	if(pts_test_type($object) == "TEST_SUITE")
+	if(pts_test_type($object) == TYPE_TEST_SUITE)
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents(XML_SUITE_DIR . $object . ".xml"));
 		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));

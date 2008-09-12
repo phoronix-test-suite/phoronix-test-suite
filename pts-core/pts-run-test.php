@@ -83,7 +83,7 @@ else
 	{
 		$save_option = true;
 
-		if($TO_RUN_TYPE == "TEST")
+		if($TO_RUN_TYPE == TYPE_TEST)
 		{
 			$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
 			$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
@@ -161,7 +161,7 @@ if($SAVE_RESULTS)
 	$RESULTS_IDENTIFIER = pts_prompt_results_identifier($result_identifiers);
 }
 
-if($TO_RUN_TYPE == "TEST")
+if($TO_RUN_TYPE == TYPE_TEST)
 {
 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
@@ -318,7 +318,7 @@ if($TO_RUN_TYPE == "TEST")
 		unset($xml_parser);
 	}
 }
-else if($TO_RUN_TYPE == "TEST_SUITE")
+else if($TO_RUN_TYPE == TYPE_TEST_SUITE)
 {
 	echo pts_string_header("Test Suite: " . $TO_RUN);
 

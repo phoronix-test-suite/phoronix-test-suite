@@ -268,7 +268,7 @@ switch($COMMAND)
 		break;
 	case "INFO":
 		$pts_test_type = pts_test_type($ARG_1);
-		if($pts_test_type == "TEST_SUITE")
+		if($pts_test_type == TYPE_TEST_SUITE)
 		{
 			$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $ARG_1 . ".xml");
 			$suite_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
@@ -297,7 +297,7 @@ switch($COMMAND)
 		
 			echo "\n";
 		}
-		else if($pts_test_type == "TEST")
+		else if($pts_test_type == TYPE_TEST)
 		{
 			$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $ARG_1 . ".xml");
 

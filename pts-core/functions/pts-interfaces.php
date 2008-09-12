@@ -211,4 +211,11 @@ define("P_GRAPH_MARKCOUNT", "PhoronixTestSuite/Graphs/Other/NumberOfMarks"); // 
 define("P_GRAPH_WATERMARK", "PhoronixTestSuite/Graphs/Other/Watermark"); // Graph watermark
 define("P_GRAPH_BORDER", "PhoronixTestSuite/Graphs/Other/Border"); // Graph border bool
 
+//
+// Define Types
+//
+
+define("TYPE_TEST", "TEST"); // Type is test
+define("TYPE_TEST_SUITE", "TEST_SUITE"); // Type is a test suite
+
 ?>

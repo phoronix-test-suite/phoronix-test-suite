@@ -166,7 +166,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 	// Verify tests are installed
 	$type = pts_test_type($TO_VERIFY);
 
-	if($type == "TEST")
+	if($type == TYPE_TEST)
 	{
 		if(!is_file(TEST_ENV_DIR . $TO_VERIFY . "/pts-install.xml"))
 			array_push($NEEDS_INSTALLING, $TO_VERIFY);
@@ -176,7 +176,7 @@ function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
 				define("TEST_INSTALL_PASS", true);
 		}
 	}
-	else if($type == "TEST_SUITE")
+	else if($type == TYPE_TEST_SUITE)
 	{
 		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_VERIFY . ".xml");
 		$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
@@ -216,7 +216,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 	{
 		$test_type = pts_test_type($tests_to_run[$i]);
 
-		if($test_type == "TEST_SUITE")
+		if($test_type == TYPE_TEST_SUITE)
 		{
 			$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $tests_to_run[$i] . ".xml");
 
@@ -226,7 +226,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 
 			pts_recurse_call_tests($tests_in_suite, $sub_arguments, $save_results, $tandem_xml, $results_identifier, $sub_arguments_description);
 		}
-		else if($test_type == "TEST")
+		else if($test_type == TYPE_TEST)
 		{
 			$test_result = pts_run_test($tests_to_run[$i], $arguments_array[$i], $arguments_description[$i]);
 			$GLOBALS["TEST_IDENTIFIER"] = null;

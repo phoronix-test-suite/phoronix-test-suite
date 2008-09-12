@@ -73,9 +73,9 @@ function pts_test_type($identifier)
 	if(!empty($identifier))
 	{
 		if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
-			$test_type = "TEST";
+			$test_type = TYPE_TEST;
 		else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
-			$test_type = "TEST_SUITE";
+			$test_type = TYPE_TEST_SUITE;
 	}
 
 	return $test_type;

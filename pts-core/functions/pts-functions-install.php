@@ -26,14 +26,14 @@ function pts_recurse_install_test($TO_INSTALL, &$INSTALL_OBJ)
 	// Recurse call to install a test/suite and to handle the PTS External Dependencies
 	$type = pts_test_type($TO_INSTALL);
 
-	if($type == "TEST")
+	if($type == TYPE_TEST)
 	{
 		if(is_array($INSTALL_OBJ))
 			pts_install_external_dependencies_list($TO_INSTALL, $INSTALL_OBJ);
 		else
 			pts_install_test($TO_INSTALL);
 	}
-	else if($type == "TEST_SUITE")
+	else if($type == TYPE_TEST_SUITE)
 	{
 		if(!getenv("SILENT_INSTALL") && !is_array($INSTALL_OBJ))
 			echo "Installing Test Suite: " . $TO_INSTALL . "\n";
@@ -350,7 +350,7 @@ function pts_install_test($identifier)
 {
 	// Install a test
 	$installed = false;
-	if(pts_test_type($identifier) == "TEST")
+	if(pts_test_type($identifier) == TYPE_TEST)
 	{
 		if(!pts_test_architecture_supported($identifier))
 		{
@@ -391,7 +391,7 @@ function pts_install_test($identifier)
 						{
 							$total_download_size = pts_estimated_download_size($argv[1]);
 
-							if($total_download_size > 0 && pts_test_type($argv[1]) == "TEST_SUITE")
+							if($total_download_size > 0 && pts_test_type($argv[1]) == TYPE_TEST_SUITE)
 								echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
 						}
 
@@ -557,7 +557,7 @@ function pts_install_packages_on_distribution_process($install_objects)
 function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 {
 	// Install from a list of external dependencies
-	if(pts_test_type($identifier) != "TEST")
+	if(pts_test_type($identifier) != TYPE_TEST)
 		return;
 
 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
@@ -690,12 +690,12 @@ function pts_estimated_download_size($identifier)
 	$type = pts_test_type($identifier);
 	$estimated_size = 0;
 
-	if($type == "TEST")
+	if($type == TYPE_TEST)
 	{
 	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
 		$estimated_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
 	}
-	else if($type == "TEST_SUITE")
+	else if($type == TYPE_TEST_SUITE)
 	{
 		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $identifier . ".xml");
 		$suite_tests = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
