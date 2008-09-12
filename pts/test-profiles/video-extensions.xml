@@ -6,7 +6,6 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>24.0</DownloadSize>
 		<EnvironmentSize>30.0</EnvironmentSize>
 		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
 		<Extends>video-sample</Extends>

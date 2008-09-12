@@ -6,7 +6,6 @@
 		<License>NON-FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>25</DownloadSize>
 		<EnvironmentSize>55</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.unigine.com/</ProjectURL>

@@ -2,7 +2,6 @@
 	<TestProfile>
 		<Version>1.1.0</Version>
 		<Maintainer>apaige</Maintainer>
-		<DownloadSize>0.3</DownloadSize>
 		<EnvironmentSize>5</EnvironmentSize>
 		<ProjectURL>http://www.wavpack.com/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>

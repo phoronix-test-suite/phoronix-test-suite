@@ -2,7 +2,6 @@
 	<TestProfile>
 		<Version>1.1.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>2.8</DownloadSize>
 		<EnvironmentSize>6</EnvironmentSize>
 		<ProjectURL>http://www.vorbis.com/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>

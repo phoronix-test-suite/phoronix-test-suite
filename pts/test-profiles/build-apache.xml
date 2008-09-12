@@ -2,7 +2,6 @@
 	<TestProfile>
 		<Version>1.1.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>5.8</DownloadSize>
 		<ProjectURL>http://www.apache.org/</ProjectURL>
 		<Extends>timed-build</Extends>
 	</TestProfile>

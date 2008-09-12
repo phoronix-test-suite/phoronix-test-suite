@@ -6,7 +6,6 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>1.30</DownloadSize>
 		<EnvironmentSize>5.0</EnvironmentSize>
 		<ProjectURL>http://git.kernel.dk/?p=fio.git;a=summary</ProjectURL>
 	</TestProfile>

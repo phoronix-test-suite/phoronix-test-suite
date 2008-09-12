@@ -6,7 +6,6 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Andrew Schofield</Maintainer>
-		<DownloadSize>1</DownloadSize>
 		<EnvironmentSize>2</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 	</TestProfile>

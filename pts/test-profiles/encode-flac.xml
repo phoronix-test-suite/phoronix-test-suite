@@ -2,7 +2,6 @@
 	<TestProfile>
 		<Version>1.1.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
-		<DownloadSize>2</DownloadSize>
 		<EnvironmentSize>9</EnvironmentSize>
 		<ProjectURL>http://flac.sourceforge.net/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>
