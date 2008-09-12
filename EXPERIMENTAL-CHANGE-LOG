@@ -9,5 +9,6 @@ Phoronix Test Suite
 - pts-core: Provide new architecture for test/suite checking through the type handler
 - pts-core: Drop PTS_USER_DIR usage
 - pts-core: Add support for having tests and suites stored locally within ~/.phoronix-test-suite/ as an option for users installing new tests/suites or third-party files
+- pts-core: Add support so that a test profile can extend another test, for Cascading Test Profile support. This is similar to inheritance in programming languages or Cascading Style Sheets.
 - tandem_Xml: Add a pts_test_tandem_XmlReader object that extends tandem_XmlReader but takes advantage of the handleXmlZeroTagFallback
 - tandem_Xml: Add fallback function handler support when a tag isn't found

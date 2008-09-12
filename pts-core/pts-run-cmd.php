@@ -218,7 +218,7 @@ switch($COMMAND)
 
 			if(is_test($identifier))
 			{
-			 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
+			 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 				printf("%-18ls - %-30ls\n", $identifier, $name);
 			}
@@ -293,7 +293,7 @@ switch($COMMAND)
 		}
 		else if(is_test($pts_test_type))
 		{
-			$xml_parser = new tandem_XmlReader(pts_location_test($ARG_1));
+			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($ARG_1));
 
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 			$test_sw_version = $xml_parser->getXMLValue(P_TEST_VERSION);

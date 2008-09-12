@@ -519,7 +519,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 	if(!is_test($identifier))
 		return;
 
-	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
+	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 
@@ -597,7 +597,7 @@ function pts_test_architecture_supported($identifier)
 
 	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$archs = $xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS);
 
 		if(!empty($archs))
@@ -626,7 +626,7 @@ function pts_test_platform_supported($identifier)
 
 	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$platforms = $xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
 
 		if(!empty($platforms))
@@ -650,7 +650,7 @@ function pts_estimated_download_size($identifier)
 
 	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$estimated_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
 	}
 	else if(is_suite($identifier))
@@ -671,7 +671,7 @@ function pts_test_estimated_environment_size($identifier)
 
 	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 	}
 

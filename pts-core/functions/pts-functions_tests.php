@@ -64,7 +64,7 @@ function pts_test_profile_version($identifier)
 
 	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 	}
 
@@ -145,7 +145,7 @@ function pts_test_identifier_to_name($identifier)
 
 	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 	}
 

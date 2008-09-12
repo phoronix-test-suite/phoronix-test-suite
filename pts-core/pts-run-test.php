@@ -85,7 +85,7 @@ else
 
 		if(is_test($TO_RUN))
 		{
-			$xml_parser = new tandem_XmlReader(pts_location_test($TO_RUN));
+			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));
 			$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 
 			if($result_format == "NO_RESULT")
@@ -163,7 +163,7 @@ if($SAVE_RESULTS)
 
 if(is_test($TO_RUN))
 {
-	$xml_parser = new tandem_XmlReader(pts_location_test($TO_RUN));
+	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
 	$settings_argument = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGUMENTNAME);
@@ -311,7 +311,7 @@ if(is_test($TO_RUN))
 
 	if($SAVE_RESULTS)
 	{
-		$xml_parser = new tandem_XmlReader(pts_location_test($TO_RUN);
+		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN);
 		$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 		$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 		$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);

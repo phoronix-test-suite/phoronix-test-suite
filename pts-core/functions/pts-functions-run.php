@@ -216,7 +216,7 @@ function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $r
 
 	if((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2))
 	{
-		$xml_parser = new tandem_XmlReader(pts_location_test($test));
+		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test));
 		$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 		$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 		$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
@@ -316,7 +316,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$GLOBALS["TEST_IDENTIFIER"] = $test_identifier;
 	pts_module_process("__pre_test_run");
 
-	$xml_parser = new tandem_XmlReader(pts_location_test($test_identifier));
+	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test_identifier));
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));

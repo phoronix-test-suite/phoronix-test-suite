@@ -108,7 +108,7 @@ class tandem_XmlReader
 	{
 		return $this->getValue($XML_TAG) != null;
 	}
-	function getValue($FULL_XML_TAG, $XML_TAG = null, $XML_MATCH = null, $DO_CACHE = TRUE)
+	function getValue($FULL_XML_TAG, $XML_TAG = null, $XML_MATCH = null, $DO_CACHE = TRUE, $FALLBACK_PROCESS = FALSE)
 	{
 		if($XML_TAG == null)
 			$XML_TAG = $FULL_XML_TAG;
@@ -128,7 +128,10 @@ class tandem_XmlReader
 				if(count($new_match) > 1)
 					$XML_MATCH = $new_match[1];
 				else
-					$XML_MATCH = $this->handleXmlZeroTagFallback($FULL_XML_TAG);
+					if(!$FALLBACK_PROCESS)
+						$XML_MATCH = $this->handleXmlZeroTagFallback($FULL_XML_TAG);
+					else
+						$XML_MATCH = $this->NO_TAG_FALLBACK_VALUE;
 			}
 
 			if($this->XML_CACHE_TAGS == TRUE && $DO_CACHE)
