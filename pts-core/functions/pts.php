@@ -21,8 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "1.2.0");
-define("PTS_CODENAME", "MALVIK");
+define("PTS_VERSION", "1.4.0a0");
+define("PTS_CODENAME", "ORKDAL");
 define("PTS_TYPE", "DESKTOP");
 
 ?>
