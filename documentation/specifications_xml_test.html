@@ -63,6 +63,16 @@ list them in this tag with each architecture delimited by a comma.<br>
 <strong>Description:</strong> If the test software is limited to running on select operating systems, 
 list them in this tag with each OS being delimited by a comma.<br>
 <strong>Supported Values:</strong> Linux, Solaris, FreeBSD, BSD</p>
+<p><strong>Tag:</strong> Extends<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_CTPEXTENDS<br>
+<strong>Required:</strong> No - Defaults to assume there is no extension<br>
+<strong>Description:</strong> If the test relies upon another test within the Phoronix Test Suite, list its 
+name in this tag. This is similar to extends in programming languages in the capabilities that it provides. 
+When running a test that extends another one, it will require all test extensions be built as well as the 
+PATH environment variable will contain each of the test directories below this test. This is part of the 
+Cascading Test Profiles functionality.<br>
+<strong>Supported Values:</strong> ( Any name of another test identifer shipping with the Phoronix Test Suite. )</p>
 <p><strong>Tag:</strong> RequiresRoot<br>
 <strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
 <strong>Internal Reference:</strong> P_TEST_ROOTNEEDED<br>
