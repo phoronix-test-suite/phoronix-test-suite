@@ -14,6 +14,7 @@ Phoronix Test Suite
 - pts-core: A test profile isn't real: likely incomplete or just a base test within a Self-Contained Test Profile extension
 - pts-core: Report identifiers of test profiles being extended to the test profiles being run
 - pts-core: Drop PTS shared download support for test profiles, instead they should be using the Cascading Test Profiles functionality
+- pts-core: Don't allow the user to save a test result file if it's the same name as a real test profile or test suite
 - pts: Switch all audio encoding tests to extend a timed-audio-encode base test instead of all tests having some of the same code copied throughout
 - pts: Switch all build tests to extend a timed-build base test instead of all tests having some of the same code copied throughout
 - pts: Switch all video tests to extend a video-sample base test instead of all tests having some of the same code copied throughout

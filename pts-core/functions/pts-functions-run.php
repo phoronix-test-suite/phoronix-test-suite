@@ -104,33 +104,52 @@ function pts_prompt_save_file_name($check_env = true)
 	// Prompt to save a file when running a test
 	if($check_env && ($save_name = getenv("TEST_RESULTS_NAME")) != FALSE)
 	{
-		$PROPOSED_FILE_NAME = $save_name;
+		$CUSTOM_TITLE = $save_name;
+		$PROPOSED_FILE_NAME = pts_input_string_to_identifier($save_name);
 		echo "Saving Results To: " . $PROPOSED_FILE_NAME . "\n";
 	}
 	else
 	{
 		if(!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
 		{
+			$is_reserved_word = false;
+
 			do
 			{
+				if($is_reserved_word)
+				{
+					echo "\n\nThe name of the saved file cannot be the same as a test/suite: " . $PROPOSED_FILE_NAME . "\n";
+					$is_reserved_word = false;
+				}
+
 				echo "Enter a name to save these results: ";
 				$PROPOSED_FILE_NAME = trim(fgets(STDIN));
+				$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
+				$PROPOSED_FILE_NAME = pts_input_string_to_identifier($PROPOSED_FILE_NAME);
+
+				if(is_test($PROPOSED_FILE_NAME) || is_suite($PROPOSED_FILE_NAME))
+					$is_reserved_word = true;
 			}
-			while(empty($PROPOSED_FILE_NAME));
+			while(empty($PROPOSED_FILE_NAME) || $is_reserved_word);
 		}
 		else
 			$PROPOSED_FILE_NAME = "";
 	}
 
-	$PROPOSED_FILE_NAME = pts_swap_user_variables($PROPOSED_FILE_NAME);
-
-	$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
-	$PROPOSED_FILE_NAME = trim(str_replace(array(' ', '/', '&', '\''), "", strtolower($PROPOSED_FILE_NAME))); // Clean up name
-
 	if(empty($PROPOSED_FILE_NAME))
+	{
 		$PROPOSED_FILE_NAME = date("Y-m-d-Hi");
+		$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
+	}
 
 	return array($PROPOSED_FILE_NAME, $CUSTOM_TITLE);
+}
+function pts_input_string_to_identifier($input)
+{
+	$input = pts_swap_user_variables($input);
+	$input = trim(str_replace(array(' ', '/', '&', '\''), "", strtolower($input)));
+
+	return $input;
 }
 function pts_verify_test_installation($TO_RUN)
 {
