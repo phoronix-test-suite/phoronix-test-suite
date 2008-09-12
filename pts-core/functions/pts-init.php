@@ -81,7 +81,7 @@ function pts_init()
 		define("IS_SCTP_MODE", false);
 
 	// Operating System Detection
-	$supported_operating_systems = array("Linux", array("Solaris", "Sun"), "FreeBSD", "BSD");
+	$supported_operating_systems = array("Linux", array("Solaris", "Sun"), "FreeBSD", "BSD", array("MacOSX", "Darwin"));
 	$uname_s = strtolower(trim(shell_exec("uname -s")));
 
 	foreach($supported_operating_systems as $os_check)
