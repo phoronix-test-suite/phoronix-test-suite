@@ -135,8 +135,21 @@ function pts_prompt_save_file_name($check_env = true)
 function pts_verify_test_installation($TO_RUN)
 {
 	// Verify a test is installed
+	$tests = pts_test_objects($TO_RUN);
 	$needs_installing = array();
-	pts_recurse_verify_installation($TO_RUN, $needs_installing);
+
+	foreach($tests as $test)
+	{
+		if(!is_file(TEST_ENV_DIR . $test . "/pts-install.xml"))
+		{
+			array_push($needs_installing, $test);
+		}
+		else
+		{
+			if(!defined("TEST_INSTALL_PASS"))
+				define("TEST_INSTALL_PASS", true);
+		}
+	}
 
 	if(count($needs_installing) > 0)
 	{
@@ -160,48 +173,6 @@ function pts_verify_test_installation($TO_RUN)
 		if(!defined("TEST_INSTALL_PASS") || getenv("SILENT_INSTALL") == FALSE)
 			pts_exit();
 	}
-}
-function pts_recurse_verify_installation($TO_VERIFY, &$NEEDS_INSTALLING)
-{
-	// Verify tests are installed
-	$type = pts_test_type($TO_VERIFY);
-
-	if($type == TYPE_TEST)
-	{
-		if(!is_file(TEST_ENV_DIR . $TO_VERIFY . "/pts-install.xml"))
-			array_push($NEEDS_INSTALLING, $TO_VERIFY);
-		else
-		{
-			if(!defined("TEST_INSTALL_PASS"))
-				define("TEST_INSTALL_PASS", true);
-		}
-	}
-	else if($type == TYPE_TEST_SUITE)
-	{
-		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_VERIFY . ".xml");
-		$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-
-		foreach($tests_in_suite as $test)
-			pts_recurse_verify_installation($test, $NEEDS_INSTALLING);
-	}
-	else if(is_file(pts_input_correct_results_path($TO_VERIFY)))
-	{
-		$xml_parser = new tandem_XmlReader(pts_input_correct_results_path($TO_VERIFY));
-		$tests_in_suite = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-		foreach($tests_in_suite as $test)
-			pts_recurse_verify_installation($test, $NEEDS_INSTALLING);
-	}
-	else if(pts_is_global_id($TO_VERIFY))
-	{
-		$xml_parser = new tandem_XmlReader(pts_global_download_xml($TO_VERIFY));
-		$tests_in_suite = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-		foreach($tests_in_suite as $test)
-			pts_recurse_verify_installation($test, $NEEDS_INSTALLING);
-	}
-	//else
-	//	echo "\nNot recognized: $TO_VERIFY.\n";
 }
 function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
 {
