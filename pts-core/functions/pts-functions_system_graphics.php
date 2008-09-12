@@ -307,6 +307,12 @@ function graphics_anisotropic_level()
 
 	return $af_level;
 }
+function set_video_resolution($width, $height)
+{
+	shell_exec("xrandr -s " . $width . "x" . $height . " 2>&1");
+
+	return xrandr_screen_resolution() == array($width, $height); // Check if video resolution set worked
+}
 function set_nvidia_extension($attribute, $value)
 {
 	// Sets an object in NVIDIA's NV Extension

@@ -27,4 +27,5 @@ Phoronix Test Suite
 - pts: Improve the reported environment size for many of the test profiles
 - tandem_Xml: Add a pts_test_tandem_XmlReader object that extends tandem_XmlReader but takes advantage of the handleXmlZeroTagFallback
 - tandem_Xml: Add fallback function handler support when a tag isn't found
+- graphics_event_checker: Add graphics_event_checker module that makes sure the graphics system isn't messed up or having unintended options enabled while tests are running
 - documentation: Add basic documentation concerning the Self-Contained Test Profiles (SCTP) XML tags that are added
