@@ -6,7 +6,8 @@ Phoronix Test Suite 1.2.1
 - pts-core: Add initial support for remote MD5 check support (though formal support will come with Orkdal)
 - pts-core: Fix merging of results when supplying a Phoronix Global ID
 - pts: MD5 check-sum fixes for unigine-sanctuary and unigine-tropics
-- pts: Fix a system script bugg in unigine-tropics
+- pts: Fix a system script bug in unigine-tropics
+- documentation: Fix typo in Debian APT sources file
 
 Phoronix Test Suite 1.2.0
 September 3, 2008
