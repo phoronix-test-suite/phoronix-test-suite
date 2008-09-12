@@ -308,110 +308,109 @@ function pts_remove_local_download_test_files($identifier)
 }
 function pts_install_test($identifier)
 {
+	if(!is_test($identifier))
+		return;
+
 	// Install a test
 	$installed = false;
-	if(pts_test_type($identifier) == TYPE_TEST)
+	if(!pts_test_architecture_supported($identifier))
 	{
-		if(!pts_test_architecture_supported($identifier))
+		echo pts_string_header($identifier . " is not supported on this architecture: " . kernel_arch());
+	}
+	else if(!pts_test_platform_supported($identifier))
+	{
+		echo pts_string_header($identifier . " is not supported by this operating system (" . OPERATING_SYSTEM . ").");
+	}
+	else
+	{
+		// TODO: clean up validate-install and put in pts_validate_test_install
+		$custom_validated_output = "";
+		if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.sh"))
 		{
-			echo pts_string_header($identifier . " is not supported on this architecture: " . kernel_arch());
+			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/validate-install.sh " . TEST_ENV_DIR . $identifier);
 		}
-		else if(!pts_test_platform_supported($identifier))
+		else if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.php"))
 		{
-			echo pts_string_header($identifier . " is not supported by this operating system (" . OPERATING_SYSTEM . ").");
+			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/validate-install.php " . TEST_ENV_DIR . $identifier);
+		}
+
+		if(!empty($custom_validated_output))
+		{
+			$custom_validated_output = trim($custom_validated_output);
+
+			if(!pts_string_bool($custom_validated_output))
+				$installed = false;
 		}
 		else
 		{
-			// TODO: clean up validate-install and put in pts_validate_test_install
-			$custom_validated_output = "";
-			if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.sh"))
+			if(pts_test_needs_updated_install($identifier) || defined("PTS_FORCE_INSTALL"))
 			{
-				$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/validate-install.sh " . TEST_ENV_DIR . $identifier);
-			}
-			else if(is_file(TEST_RESOURCE_DIR . $identifier . "/validate-install.php"))
-			{
-				$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/validate-install.php " . TEST_ENV_DIR . $identifier);
-			}
-
-			if(!empty($custom_validated_output))
-			{
-				$custom_validated_output = trim($custom_validated_output);
-
-				if(!pts_string_bool($custom_validated_output))
-					$installed = false;
-			}
-			else
-			{
-
-				if(pts_test_needs_updated_install($identifier) || defined("PTS_FORCE_INSTALL"))
+				if(!defined("PTS_TOTAL_SIZE_MSG"))
 				{
-					if(!defined("PTS_TOTAL_SIZE_MSG"))
+					if(isset($argv[1]))
 					{
-						if(isset($argv[1]))
-						{
-							$total_download_size = pts_estimated_download_size($argv[1]);
+						$total_download_size = pts_estimated_download_size($argv[1]);
 
-							if($total_download_size > 0 && pts_test_type($argv[1]) == TYPE_TEST_SUITE)
-								echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
-						}
-
-						define("PTS_TOTAL_SIZE_MSG", 1);
+						if($total_download_size > 0 && pts_test_type($argv[1]) == TYPE_TEST_SUITE)
+							echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
 					}
 
-					if(!is_dir(TEST_ENV_DIR))
-						mkdir(TEST_ENV_DIR);
+					define("PTS_TOTAL_SIZE_MSG", 1);
+				}
 
-					if(!is_dir(TEST_ENV_DIR . $identifier))
-						mkdir(TEST_ENV_DIR . $identifier);
+				if(!is_dir(TEST_ENV_DIR))
+					mkdir(TEST_ENV_DIR);
 
-					if(!is_dir(TEST_ENV_DIR . "pts-shared"))
-						mkdir(TEST_ENV_DIR . "pts-shared");
+				if(!is_dir(TEST_ENV_DIR . $identifier))
+					mkdir(TEST_ENV_DIR . $identifier);
 
-					pts_download_test_files($identifier);
+				if(!is_dir(TEST_ENV_DIR . "pts-shared"))
+					mkdir(TEST_ENV_DIR . "pts-shared");
 
-					if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh") || is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
+				pts_download_test_files($identifier);
+
+				if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh") || is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
+				{
+					pts_module_process("__pre_test_install");
+					$install_header = "Installing Test: " . $identifier;
+
+					if(($size = pts_estimated_download_size($identifier)) > 0)
+						$install_header .= "\nEstimated Install Size: " . $size . " MB";
+
+					echo pts_string_header($install_header);
+
+					if(!empty($size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
 					{
-						pts_module_process("__pre_test_install");
-						$install_header = "Installing Test: " . $identifier;
-
-						if(($size = pts_estimated_download_size($identifier)) > 0)
-							$install_header .= "\nEstimated Install Size: " . $size . " MB";
-
-						echo pts_string_header($install_header);
-
-						if(!empty($size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
-						{
-							echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test to be installed.");
-							pts_exit();
-						}
-
-						if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh"))
-						{
-							echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/install.sh " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
-						}
-						else if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
-						{
-							echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/install.php " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
-						}
-						pts_test_generate_install_xml($identifier);
-						pts_module_process("__post_test_install");
-
-						if(pts_string_bool(pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
-							pts_remove_local_download_test_files($identifier); // Remove original downloaded files
+						echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test to be installed.");
+						pts_exit();
 					}
-					else
+
+					if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.sh"))
 					{
-						echo "No installation script found for " . $identifier . "\n";
-						$installed = true;
-						pts_test_generate_install_xml($identifier);
+						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . TEST_RESOURCE_DIR . $identifier . "/install.sh " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
 					}
+					else if(is_file(TEST_RESOURCE_DIR . $identifier . "/install.php"))
+					{
+						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . TEST_RESOURCE_DIR . $identifier . "/install.php " . TEST_ENV_DIR . $identifier, array("HOME" => TEST_ENV_DIR . $identifier)) . "\n";
+					}
+					pts_test_generate_install_xml($identifier);
+					pts_module_process("__post_test_install");
+
+					if(pts_string_bool(pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
+						pts_remove_local_download_test_files($identifier); // Remove original downloaded files
 				}
 				else
 				{
+					echo "No installation script found for " . $identifier . "\n";
 					$installed = true;
-					if(!getenv("SILENT_INSTALL"))
-						echo "Already Installed: " . $identifier . "\n";
+					pts_test_generate_install_xml($identifier);
 				}
+			}
+			else
+			{
+				$installed = true;
+				if(!getenv("SILENT_INSTALL"))
+					echo "Already Installed: " . $identifier . "\n";
 			}
 		}
 	}
