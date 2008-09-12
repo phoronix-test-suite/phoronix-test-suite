@@ -30,6 +30,7 @@ require_once("pts-core/functions/pts-interfaces.php");
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
 require_once("pts-core/functions/pts-functions_tests.php");
+require_once("pts-core/functions/pts-functions_types.php");
 require_once("pts-core/functions/pts-functions_modules.php");
 
 define("XML_PROFILE_DIR", PTS_DIR . "pts/test-profiles/");
