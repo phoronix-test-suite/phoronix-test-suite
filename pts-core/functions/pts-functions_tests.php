@@ -62,9 +62,9 @@ function pts_test_profile_version($identifier)
 	// Checks PTS profile version
 	$version = "";
 
-	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
+	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
 		$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 	}
 
@@ -143,9 +143,9 @@ function pts_test_identifier_to_name($identifier)
 
 	$name = false;
 
-	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
+	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
 		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 	}
 

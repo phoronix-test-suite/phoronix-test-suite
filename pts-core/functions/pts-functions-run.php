@@ -185,11 +185,9 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 
 	for($i = 0; $i < count($tests_to_run); $i++)
 	{
-		$test_type = pts_test_type($tests_to_run[$i]);
-
-		if($test_type == TYPE_TEST_SUITE)
+		if(is_suite($tests_to_run[$i]))
 		{
-			$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $tests_to_run[$i] . ".xml");
+			$xml_parser = new tandem_XmlReader(pts_location_suite($tests_to_run[$i]));
 
 			$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 			$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
@@ -197,7 +195,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 
 			pts_recurse_call_tests($tests_in_suite, $sub_arguments, $save_results, $tandem_xml, $results_identifier, $sub_arguments_description);
 		}
-		else if($test_type == TYPE_TEST)
+		else if(is_test($tests_to_run[$i]))
 		{
 			$test_result = pts_run_test($tests_to_run[$i], $arguments_array[$i], $arguments_description[$i]);
 			$GLOBALS["TEST_IDENTIFIER"] = null;
@@ -218,7 +216,7 @@ function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $r
 
 	if((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2))
 	{
-		$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $test . ".xml");
+		$xml_parser = new tandem_XmlReader(pts_location_test($test));
 		$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 		$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 		$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
@@ -318,7 +316,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$GLOBALS["TEST_IDENTIFIER"] = $test_identifier;
 	pts_module_process("__pre_test_run");
 
-	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $test_identifier . ".xml");
+	$xml_parser = new tandem_XmlReader(pts_location_test($test_identifier));
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));

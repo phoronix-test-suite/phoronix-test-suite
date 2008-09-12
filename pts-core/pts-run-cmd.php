@@ -216,13 +216,10 @@ switch($COMMAND)
 			$install_file_arr = explode("/", $install_file);
 			$identifier = $install_file_arr[count($install_file_arr) - 2];
 
-			$test_profile_file = XML_PROFILE_DIR . $identifier . ".xml";
-
-			if(is_file($test_profile_file))
+			if(is_test($identifier))
 			{
-			 	$xml_parser = new tandem_XmlReader($test_profile_file);
+			 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
 				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
-
 				printf("%-18ls - %-30ls\n", $identifier, $name);
 			}
 		}

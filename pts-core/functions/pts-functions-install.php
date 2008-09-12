@@ -351,7 +351,7 @@ function pts_install_test($identifier)
 					{
 						$total_download_size = pts_estimated_download_size($argv[1]);
 
-						if($total_download_size > 0 && pts_test_type($argv[1]) == TYPE_TEST_SUITE)
+						if($total_download_size > 0 && is_suite($argv[1]))
 							echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
 					}
 
@@ -516,10 +516,10 @@ function pts_install_packages_on_distribution_process($install_objects)
 function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 {
 	// Install from a list of external dependencies
-	if(pts_test_type($identifier) != TYPE_TEST)
+	if(!is_test($identifier))
 		return;
 
-	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
+	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
 	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 
@@ -595,9 +595,9 @@ function pts_test_architecture_supported($identifier)
 	// Check if the system's architecture is supported by a test
 	$supported = true;
 
-	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
+	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
 		$archs = $xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS);
 
 		if(!empty($archs))
@@ -624,9 +624,9 @@ function pts_test_platform_supported($identifier)
 	// Check if the system's OS is supported by a test
 	$supported = true;
 
-	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
+	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
 		$platforms = $xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
 
 		if(!empty($platforms))
@@ -646,17 +646,16 @@ function pts_test_platform_supported($identifier)
 function pts_estimated_download_size($identifier)
 {
 	// Estimate the size of files to be downloaded
-	$type = pts_test_type($identifier);
 	$estimated_size = 0;
 
-	if($type == TYPE_TEST)
+	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
+	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
 		$estimated_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE);
 	}
-	else if($type == TYPE_TEST_SUITE)
+	else if(is_suite($identifier))
 	{
-		$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $identifier . ".xml");
+		$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
 		$suite_tests = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 		foreach($suite_tests as $test)
@@ -670,9 +669,9 @@ function pts_test_estimated_environment_size($identifier)
 	// Estimate the environment size of a test
 	$size = "";
 
-	if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+	if(is_test($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $identifier . ".xml");
+	 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
 		$size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 	}
 

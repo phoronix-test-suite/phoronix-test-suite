@@ -48,9 +48,9 @@ function pts_print_format_tests($object, $steps = -1)
 {
 	// Print out a text tree that shows the suites and tests within an object
 	$steps++;
-	if(pts_test_type($object) == TYPE_TEST_SUITE)
+	if(is_suite($object))
 	{
-		$xml_parser = new tandem_XmlReader(@file_get_contents(XML_SUITE_DIR . $object . ".xml"));
+		$xml_parser = new tandem_XmlReader(@file_get_contents(pts_location_suite($object)));
 		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 		if($steps > 0)

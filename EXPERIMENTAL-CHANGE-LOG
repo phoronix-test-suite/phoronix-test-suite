@@ -6,4 +6,5 @@ Phoronix Test Suite
 - pts-core: Add test type caching support
 - pts-core: Create the unified PTS test/suite type handler
 - pts-core: Clean-up some test installation functions
+- pts-core: Provide new architecture for test/suite checking through the type handler
 

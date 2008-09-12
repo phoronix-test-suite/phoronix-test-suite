@@ -83,9 +83,9 @@ else
 	{
 		$save_option = true;
 
-		if($TO_RUN_TYPE == TYPE_TEST)
+		if(is_test($TO_RUN))
 		{
-			$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
+			$xml_parser = new tandem_XmlReader(pts_location_test($TO_RUN));
 			$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 
 			if($result_format == "NO_RESULT")
@@ -161,9 +161,9 @@ if($SAVE_RESULTS)
 	$RESULTS_IDENTIFIER = pts_prompt_results_identifier($result_identifiers);
 }
 
-if($TO_RUN_TYPE == TYPE_TEST)
+if(is_test($TO_RUN))
 {
-	$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
+	$xml_parser = new tandem_XmlReader(pts_location_test($TO_RUN));
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
 	$settings_argument = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGUMENTNAME);
@@ -311,18 +311,18 @@ if($TO_RUN_TYPE == TYPE_TEST)
 
 	if($SAVE_RESULTS)
 	{
-		$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $TO_RUN . ".xml");
+		$xml_parser = new tandem_XmlReader(pts_location_test($TO_RUN);
 		$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 		$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 		$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 		unset($xml_parser);
 	}
 }
-else if($TO_RUN_TYPE == TYPE_TEST_SUITE)
+else if(is_suite($TO_RUN))
 {
 	echo pts_string_header("Test Suite: " . $TO_RUN);
 
-	$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $TO_RUN . ".xml");
+	$xml_parser = new tandem_XmlReader(pts_location_suite($TO_RUN));
 
 	if($SAVE_RESULTS)
 	{
