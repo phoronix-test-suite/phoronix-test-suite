@@ -35,6 +35,8 @@ if(IS_BATCH_MODE)
 {
 	array_push($TEST_PROPERTIES, "PTS_BATCH_MODE");
 }
+if(IS_SCTP_MODE)
+	$TO_RUN = basename($TO_RUN);
 
 if(empty($TO_RUN))
 	pts_exit("\nThe test, suite name, or saved file name must be supplied.\n");
@@ -67,14 +69,6 @@ if(!$TO_RUN_TYPE)
 		define("GLOBAL_COMPARISON", 1);
 		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", pts_global_download_xml($TO_RUN));
 	}
-	else if(IS_SCTP_MODE)
-	{
-		$SAVE_RESULTS = true;
-		$TO_RUN_TYPE = "SCTP_COMPARISON";
-		$TO_RUN = basename($TO_RUN);
-		$PROPOSED_FILE_NAME = $TO_RUN;
-		$RES_NULL = null;
-	}
 	else
 	{
 		pts_exit("\nNot Recognized: $TO_RUN \n\n");
@@ -83,7 +77,15 @@ if(!$TO_RUN_TYPE)
 else
 {
 	echo "\n";
-	if(getenv("PTS_SAVE_RESULTS") == "NO")
+	if(IS_SCTP_MODE)
+	{
+		$SAVE_RESULTS = true;
+		$CUSTOM_TILE = $TO_RUN;
+		$TO_RUN_TYPE = "SCTP_COMPARISON";
+		$PROPOSED_FILE_NAME = $TO_RUN;
+		$RES_NULL = null;
+	}
+	else if(getenv("PTS_SAVE_RESULTS") == "NO")
 		$SAVE_RESULTS = FALSE;
 	else if(getenv("TEST_RESULTS_NAME") != FALSE)
 		$SAVE_RESULTS = TRUE;

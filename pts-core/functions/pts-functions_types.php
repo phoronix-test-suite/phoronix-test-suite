@@ -123,8 +123,6 @@ function pts_location_test($identifier)
 			else if($type == TYPE_BASE_TEST)
 				$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
 		}
-		else if(IS_SCTP_MODE)
-			$location = SCTP_FILE;
 
 		$GLOBALS["PTS_VAR_CACHE"]["TEST_LOCATION"][$identifier] = $location;
 	}
@@ -156,8 +154,6 @@ function pts_location_test_resources($identifier)
 			else if($type == TYPE_BASE_TEST && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
 				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
 		}
-		else if(IS_SCTP_MODE)
-			$location = SCTP_FILE;
 
 		$GLOBALS["PTS_VAR_CACHE"]["TEST_RESOURCE_LOCATION"][$identifier] = $location;
 	}

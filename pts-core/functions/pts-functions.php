@@ -33,6 +33,9 @@ require_once("pts-core/functions/pts-functions_tests.php");
 require_once("pts-core/functions/pts-functions_types.php");
 require_once("pts-core/functions/pts-functions_modules.php");
 
+if(IS_SCTP_MODE)
+	require_once("pts-core/functions/pts-functions-sctp.php");
+
 // User's home directory for storing results, module files, test installations, etc.
 define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
 
@@ -619,6 +622,21 @@ function pts_format_time_string($time, $format = "SECONDS")
 	}
 
 	return implode(", ", $formatted_time);
+}
+function pts_evaluate_script_type($script)
+{
+	$script = explode("\n", trim($script));
+	$script_eval = trim($script[0]);
+	$script_type = false;
+
+	if(strpos($script_eval, "<?php") !== FALSE)
+		$script_type = "PHP";
+	else if(strpos($script_eval, "#!/bin/sh") !== FALSE)
+		$script_type = "SH";
+	else if(strpos($script_eval, "<") !== FALSE && strpos($script_eval, ">") !== FALSE)
+		$script_type = "XML";
+
+	return $script_type;
 }
 function pts_set_environment_variable($name, $value)
 {

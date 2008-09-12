@@ -71,6 +71,8 @@ switch($COMMAND)
 		{
 			pts_exit("\nThe test or suite name to install must be supplied.\n");
 		}
+		else if(IS_SCTP_MODE)
+			$ARG_1 = basename($ARG_1);
 
 		if($COMMAND == "FORCE_INSTALL_TEST")
 			define("PTS_FORCE_INSTALL", 1);

@@ -166,6 +166,10 @@ function pts_extended_init()
 	}
 	else
 		define("IS_BATCH_MODE", false);
+
+	// Self-Contained Test Profile Routines
+	if(IS_SCTP_MODE)
+		generate_sctp_layer();
 }
 function __autoload($to_load)
 {

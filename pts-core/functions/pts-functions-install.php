@@ -403,6 +403,7 @@ function pts_install_test($identifier)
 					{
 						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "install.php " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier)) . "\n";
 					}
+
 					pts_test_generate_install_xml($identifier);
 					pts_module_process("__post_test_install");
 
