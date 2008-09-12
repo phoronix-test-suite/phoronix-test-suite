@@ -39,7 +39,7 @@ function pts_start_install($TO_INSTALL)
 }
 function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
 {
-	$tests = pts_contained_tests($TO_INSTALL);
+	$tests = pts_contained_tests($TO_INSTALL, TRUE);
 
 	foreach($tests as $test)
 		pts_install_external_dependencies_list($test, $PLACE_LIST);
