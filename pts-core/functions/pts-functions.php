@@ -68,14 +68,22 @@ if(function_exists("pts_module_start_process"))
 function pts_test_type($identifier)
 {
 	// Determine type of test based on identifier
-
-	$test_type = false;
-	if(!empty($identifier))
+	if(isset($GLOBALS["PTS_VAR_CACHE"]["TEST_TYPE"][$identifier]))
 	{
-		if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
-			$test_type = TYPE_TEST;
-		else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
-			$test_type = TYPE_TEST_SUITE;
+		$test_type = $GLOBALS["PTS_VAR_CACHE"]["TEST_TYPE"][$identifier];
+	}
+	else
+	{
+		$test_type = false;
+		if(!empty($identifier))
+		{
+			if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+				$test_type = TYPE_TEST;
+			else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
+				$test_type = TYPE_TEST_SUITE;
+
+			$GLOBALS["PTS_VAR_CACHE"]["TEST_TYPE"][$identifier] = $test_type;
+		}
 	}
 
 	return $test_type;

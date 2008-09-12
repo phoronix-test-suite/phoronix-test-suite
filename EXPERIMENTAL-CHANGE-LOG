@@ -3,3 +3,4 @@ PHORONIX TEST SUITE EXPERIMENTAL CHANGE-LOG
 Phoronix Test Suite
 
 - pts-core: Change test/suite type strings to define statements
+- pts-core: Add test type caching support
