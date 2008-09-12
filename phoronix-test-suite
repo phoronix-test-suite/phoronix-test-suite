@@ -23,6 +23,7 @@
 
 # Full path to root directory of the actual Phoronix Test Suite code
 export PTS_DIR=`pwd`
+CALL_DIR=`pwd`
 
 if [ $PTS_DIR != `pwd` ]
 then
@@ -57,6 +58,13 @@ EOT
 exit
 fi
 
+# Check if being called from a Self Contained test profile
+export SCTP_FILE=`echo $CALL_DIR/$1 | sed 's:\./::g'`
+if [ -e $SCTP_FILE ]
+then
+	echo "SELF CONTAINED TEST PROFILE!!!!"
+	exit
+fi
 
 case "$1" in
 "install")
