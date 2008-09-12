@@ -276,7 +276,7 @@ switch($COMMAND)
 			$suite_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
 			$suite_description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
 			$suite_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-			$unique_tests = count(pts_tests_in_suite($ARG_1));
+			$unique_tests = count(pts_test_objects($ARG_1));
 
 			echo pts_string_header($suite_name);
 
@@ -375,7 +375,7 @@ switch($COMMAND)
 			 	$xml_parser = new tandem_XmlReader($suite_file);
 				$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 				$identifier = basename($suite_file, ".xml");
-				$tests = pts_tests_in_suite($identifier);
+				$tests = pts_test_objects($identifier);
 
 				if(in_array($ARG_1, $tests))
 					array_push($associated_suites, $identifier);

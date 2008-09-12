@@ -44,26 +44,6 @@ function pts_remove_saved_result($identifier)
 	}
 	return $return_value;
 }
-function pts_tests_in_suite($object)
-{
-	// Find tests contained within a suite
-	$type = pts_test_type($object);
-	$tests = array();
-
-	if($type == TYPE_TEST_SUITE)
-	{
-		$xml_parser = new tandem_XmlReader(@file_get_contents(XML_SUITE_DIR . $object . ".xml"));
-		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
-
-		foreach($tests_in_suite as $test)
-			foreach(pts_tests_in_suite($test) as $sub_test)
-				array_push($tests, $sub_test);
-	}
-	else if($type == TYPE_TEST)
-		return array($object);
-
-	return array_unique($tests);
-}
 function pts_print_format_tests($object, $steps = -1)
 {
 	// Print out a text tree that shows the suites and tests within an object
