@@ -135,7 +135,7 @@ function pts_prompt_save_file_name($check_env = true)
 function pts_verify_test_installation($TO_RUN)
 {
 	// Verify a test is installed
-	$tests = pts_test_objects($TO_RUN);
+	$tests = pts_contained_tests($TO_RUN);
 	$needs_installing = array();
 
 	foreach($tests as $test)

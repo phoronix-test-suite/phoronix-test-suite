@@ -265,16 +265,15 @@ switch($COMMAND)
 
 		break;
 	case "INFO":
-		$pts_test_type = pts_test_type($ARG_1);
-		if($pts_test_type == TYPE_TEST_SUITE)
+		if(is_suite($ARG_1))
 		{
-			$xml_parser = new tandem_XmlReader(XML_SUITE_DIR . $ARG_1 . ".xml");
+			$xml_parser = new tandem_XmlReader(pts_location_suite($ARG_1));
 			$suite_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 			$suite_maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
 			$suite_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
 			$suite_description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
 			$suite_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-			$unique_tests = count(pts_test_objects($ARG_1));
+			$unique_tests = count(pts_contained_tests($ARG_1));
 
 			echo pts_string_header($suite_name);
 
@@ -295,9 +294,9 @@ switch($COMMAND)
 		
 			echo "\n";
 		}
-		else if($pts_test_type == TYPE_TEST)
+		else if(is_test($pts_test_type))
 		{
-			$xml_parser = new tandem_XmlReader(XML_PROFILE_DIR . $ARG_1 . ".xml");
+			$xml_parser = new tandem_XmlReader(pts_location_test($ARG_1));
 
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 			$test_sw_version = $xml_parser->getXMLValue(P_TEST_VERSION);
@@ -373,7 +372,7 @@ switch($COMMAND)
 			 	$xml_parser = new tandem_XmlReader($suite_file);
 				$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 				$identifier = basename($suite_file, ".xml");
-				$tests = pts_test_objects($identifier);
+				$tests = pts_contained_tests($identifier);
 
 				if(in_array($ARG_1, $tests))
 					array_push($associated_suites, $identifier);
