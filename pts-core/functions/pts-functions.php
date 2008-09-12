@@ -41,7 +41,7 @@ define("TEST_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
 define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("MODULE_DIR", PTS_DIR . "pts-core/modules/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
-define("PTS_USER_DIR", getenv("PTS_USER_DIR"));
+define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
 define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 pts_config_init();

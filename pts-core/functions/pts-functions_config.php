@@ -226,6 +226,21 @@ function pts_find_home($path)
 	}
 	return $path;
 }
+function pts_user_home()
+{
+	// Gets the system user's home directory
+	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
+	{
+		$userinfo = posix_getpwuid(posix_getuid());
+		$userhome = $userinfo["dir"];
+	}
+	else
+	{
+		$userhome = getenv("HOME");
+	}
+
+	return $userhome . "/";
+}
 function pts_current_user()
 {
 	// Current system user

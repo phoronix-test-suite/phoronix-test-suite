@@ -7,4 +7,5 @@ Phoronix Test Suite
 - pts-core: Create the unified PTS test/suite type handler
 - pts-core: Clean-up some test installation functions
 - pts-core: Provide new architecture for test/suite checking through the type handler
+- pts-core: Drop PTS_USER_DIR usage
 

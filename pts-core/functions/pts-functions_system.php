@@ -98,21 +98,6 @@ function pts_user_name()
 
 	return $username;
 }
-function pts_user_home()
-{
-	// Gets the system user's home directory
-	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
-	{
-		$userinfo = posix_getpwuid(posix_getuid());
-		$userhome = $userinfo["dir"];
-	}
-	else
-	{
-		$userhome = getenv("HOME");
-	}
-
-	return $userhome . '/';
-}
 function pts_disk_total()
 {
 	// Returns amoung of disk space
