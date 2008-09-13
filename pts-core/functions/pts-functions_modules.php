@@ -39,7 +39,6 @@ function pts_module_start_process()
 	// Enable the toggling of the system screensaver by default.
 	// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
 	array_push($GLOBALS["PTS_MODULES"], "toggle_screensaver");
-	array_push($GLOBALS["PTS_MODULES"], "gpu_error_counter"); // Check for GPU errors
 
 	pts_load_modules();
 	pts_module_process("__startup");

@@ -31,6 +31,11 @@ class graphics_event_checker extends pts_module_interface
 	static $start_video_resolution = array(-1, -1);
 	static $start_vertical_sync = FALSE;
 
+	// GPU Errors (Currently NVIDIA-only)
+	static $error_pointer = 0;
+	static $error_count = 0; // Number of GPU errors that were detected
+	static $error_analysis = array(); // Array of error break down. For each array index is for a test where an error happened, it's TEST_NAME => ERROR_COUNT
+
 	public static function __pre_run_process()
 	{
 		if(count(read_xdpy_monitor_info()) > 1)
@@ -54,6 +59,8 @@ class graphics_event_checker extends pts_module_interface
 		}
 		else if(IS_NVIDIA_GRAPHICS)
 		{
+			self::$error_pointer = self::nvidia_gpu_error_count(); // Set the error pointer
+
 			if(read_nvidia_extension("SyncToVBlank") == "1")
 				self::$start_vertical_sync = TRUE;
 		}
@@ -63,18 +70,50 @@ class graphics_event_checker extends pts_module_interface
 	}
 	public static function __interim_test_run()
 	{
-		self::check_video_resolution();
+		self::check_video_events();
 	}
 	public static function __post_test_run()
 	{
-		self::check_video_resolution();
+		self::check_video_events();
 	}
 	public static function __shutdown()
 	{
-		self::check_video_resolution();
+		self::check_video_events();
+
+		if(self::$error_count > 0)
+		{
+			$error_breakdown = "\n";
+			foreach(self::$error_analysis as $test => $error_count)
+				$error_breakdown .= "\n" . $test . ": " . $error_count;
+
+			echo pts_string_header("GPU Errors: " . $error_count . $error_breakdown);
+		}
 	}
 
+	private static function check_video_events()
+	{
+		// Check for video resolution changes
+		self::check_video_resolution();
 
+		if(IS_NVIDIA_GRAPHICS)
+		{
+			$current_error_position = self::nvidia_gpu_error_count();
+
+			if($current_error_position > self::$error_pointer && !empty($GLOBALS["TEST_IDENTIFIER"]))
+			{
+				// GPU Error(s) Happened During The Test
+				$this_test = $GLOBALS["TEST_IDENTIFIER"];
+				$this_error_count = $current_error_position - self::$error_pointer;
+
+				if(isset(self::$error_analysis[$this_test]))
+					$this_error_count += self::$error_analysis[$this_test];
+
+				self::$error_analysis[$this_test] = $this_error_count; // Tally up errors for this test
+				self::$error_count += $this_error_count; // Add to total error count
+				self::$error_pointer = $current_error_position; // Reset the pointer
+			}
+		}
+	}
 	private static function check_video_resolution()
 	{
 		$current_res = xrandr_screen_resolution();
@@ -91,6 +130,15 @@ class graphics_event_checker extends pts_module_interface
 			echo "\nThe video resolution had changed during testing and it was not properly reset! Now resetting to $reset_width x $reset_height from $video_width x $video_height.\n";
 			set_video_resolution($reset_width, $reset_height);
 		}
+	}
+	protected static function nvidia_gpu_error_count()
+	{
+		$count = read_nvidia_extension("GPUErrors");
+
+		if($count == null || !is_numeric($count))
+			$count = 0;
+
+		return $count;
 	}
 }
 
