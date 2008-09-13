@@ -1,5 +1,12 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite 1.2.2
+September 13, 2008 (Hot-Fix Release)
+
+- pts-core: Fix MD5 checksum regression
+- pts: Fix a bug that caused unigine-tropics to fail with the data path
+- pts: Fix a bug that caused unigine-sanctuary to fail with the data path
+
 Phoronix Test Suite 1.2.1
 September 12, 2008
 
