@@ -257,13 +257,13 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 {
 	$valid = true;
 
-	if(!empty($verified_md5))
+	if(!is_file($filename))
 	{
-		if(!is_file($filename))
-		{
-			$valid = false;
-		}
-		else
+		$valid = false;
+	}
+	else
+	{
+		if(!empty($verified_md5))
 		{
 			$real_md5 = md5_file($filename);
 
