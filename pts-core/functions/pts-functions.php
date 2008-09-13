@@ -76,6 +76,21 @@ register_shutdown_function("pts_shutdown");
 // Etc
 $PTS_GLOBAL_ID = 1;
 
+// Check For Updates
+if(substr(pts_read_user_config(P_OPTION_TESTCORE_LASTTIME, date("Y-m-d")), 0, 10) != date("Y-m-d"))
+{
+	// Once a day check if there is a new PTS version
+	$latest_reported_version = trim(@file_get_contents("http://www.phoronix-test-suite.com/LATEST"));
+	$current_e = explode(".", PTS_VERSION);
+	$latest_e = explode(".", $latest_reported_version);
+
+	if($latest_reported_version != PTS_VERSION && $latest_e[0] >= $current_e[0] && $latest_e[1] >= $current_e[1])
+	{
+		// New version of PTS is available
+		echo pts_string_header("Currently you're using an outdated version of the Phoronix Test Suite.\nThe version in use is v" . PTS_VERSION . ", but the latest is v" . $latest_reported_version . ".\nPlease visit http://www.phoronix-test-suite.com/ to update this software.");
+	}
+}
+
 // PTS Modules Support
 if(function_exists("pts_module_start_process"))
 	pts_module_start_process();

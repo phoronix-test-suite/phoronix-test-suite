@@ -89,7 +89,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 	// Determine last version run of the Phoronix Test Suite
 	$last_version = pts_read_user_config(P_OPTION_TESTCORE_LASTVERSION, PTS_VERSION, $read_config);
 	$last_time = pts_read_user_config(P_OPTION_TESTCORE_LASTTIME, date("Y-m-d H:i:s"), $read_config);
-	if(defined("PTS_END_TIME") && !defined("PTS_EXIT"))
+	if(defined("PTS_END_TIME"))
 	{
 		$last_version = PTS_VERSION;
 		$last_time = date("Y-m-d H:i:s");
