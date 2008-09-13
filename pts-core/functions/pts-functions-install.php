@@ -383,8 +383,12 @@ function pts_install_test($identifier)
 					if(!empty($pre_install_message))
 					{
 						echo "\n" . $pre_install_message . "\n";
-						echo "\nHit Any Key To Continue Installation...\n";
-						fgets(STDIN);
+
+						if(!IS_BATCH_MODE)
+						{
+							echo "\nHit Any Key To Continue Installation...\n";
+							fgets(STDIN);
+						}
 					}
 
 					if(is_file(pts_location_test_resources($identifier) . "install.sh"))

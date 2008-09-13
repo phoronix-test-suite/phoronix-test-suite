@@ -416,8 +416,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if(!empty($pre_run_message))
 	{
 		echo $pre_run_message . "\n";
-		echo "\nHit Any Key To Continue Benchmarking...\n";
-		fgets(STDIN);
+
+		if(!IS_BATCH_MODE)
+		{
+			echo "\nHit Any Key To Continue Benchmarking...\n";
+			fgets(STDIN);
+		}
 	}
 
 	pts_debug_message("cd $to_execute && ./$execute_binary $pts_test_arguments");
