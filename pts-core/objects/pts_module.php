@@ -64,6 +64,10 @@ class pts_module
 
 		return $value;
 	}
+	public static function set_option($identifier, $value)
+	{
+		pts_module_config_init(array(self::module_name() . "__" . $identifier => $value));
+	}
 	public static function save_file($file, $contents = NULL, $append = false)
 	{
 		// Saves a file for a module
