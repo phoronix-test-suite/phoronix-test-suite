@@ -378,6 +378,15 @@ function pts_install_test($identifier)
 						pts_exit();
 					}
 
+					$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+					$pre_install_message = $xml_parser->getXMLValue(P_TEST_PREINSTALLMSG);
+					if(!empty($pre_install_message))
+					{
+						echo "\n" . $pre_install_message . "\n";
+						echo "\nHit Any Key To Continue Installation...\n";
+						fgets(STDIN);
+					}
+
 					if(is_file(pts_location_test_resources($identifier) . "install.sh"))
 					{
 						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . pts_location_test_resources($identifier) . "install.sh " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier)) . "\n";
