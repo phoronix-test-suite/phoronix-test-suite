@@ -298,7 +298,7 @@ function system_line_voltage($type)
 function main_system_hardware_string()
 {
 	// Returns the motherboard
-	$vendor = read_system_hal(array("system.hardware.vendor", "system.board.vendor"));
+	$vendor = read_system_hal(array("system.hardware.vendor", "system.board.vendor", "pci.subsys_vendor"));
 	$product = read_system_hal(array("system.hardware.product", "system.board.product"));
 	$version = read_system_hal("system.hardware.version");
 
