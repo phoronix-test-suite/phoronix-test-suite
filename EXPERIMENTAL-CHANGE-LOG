@@ -23,6 +23,7 @@ Phoronix Test Suite
 - pts-core: When running a test (or suite that contains a test) on an unsupported architecture or platform, don't abruptly exit
 - pts-core: Add module_setup() to pts_module_interface for returning an array of objects that can be configured by the end-user
 - pts-core: Add support for persistent configuration options that end-users can easily adjust for PTS modules by running "phoronix-test-suite module-setup MODULE-NAME" that are stored to ~/.phoronix-test-suite/modules-config.xml
+- pts-core: Add PTS_EXIT module return type for having the Phoronix Test Suite stop immediately and prematurely (this should only be used in the event of reaching a fatal bug or other problem)
 - pts: Switch all audio encoding tests to extend a timed-audio-encode base test instead of all tests having some of the same code copied throughout
 - pts: Switch all build tests to extend a timed-build base test instead of all tests having some of the same code copied throughout
 - pts: Switch all video tests to extend a video-sample base test instead of all tests having some of the same code copied throughout
