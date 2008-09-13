@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
@@ -20,7 +20,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>-video_app opengl -sound_app null -data_path ../data -system_script sanctuary/unigine.cpp -engine_config ../data/unigine.cfg -video_mode -1 -video_fullscreen 1 -video_multisample 0 -extern_define PHORONIX</Arguments>
+			<Arguments>-video_app opengl -sound_app null -system_script sanctuary/unigine.cpp -engine_config ../data/unigine.cfg -video_mode -1 -video_fullscreen 1 -video_multisample 0 -extern_define PHORONIX</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
