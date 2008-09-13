@@ -24,7 +24,7 @@
 
 // PTS Module Return Types
 define("PTS_MODULE_UNLOAD", "PTS_MODULE_UNLOAD");
-define("PTS_EXIT", "PTS_EXIT");
+define("PTS_QUIT", "PTS_QUIT");
 
 function pts_module_start_process()
 {
@@ -173,7 +173,7 @@ function pts_module_process($process)
 					// Unload the PTS module
 					unset($GLOBALS["PTS_MODULES"][$module_index]);
 					break;
-				case PTS_EXIT:
+				case PTS_QUIT:
 					// Stop the Phoronix Test Suite immediately
 					pts_exit();
 					break;
