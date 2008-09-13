@@ -30,6 +30,7 @@ Phoronix Test Suite
 - pts: Improve the reported environment size for many of the test profiles
 - pts: Update compress-7zip test profile to use p7zip 4.58
 - pts: Add World of Padman test profile (named padman)
+- pts: Add padman to ioquake3-games test suite
 - tandem_Xml: Add a pts_test_tandem_XmlReader object that extends tandem_XmlReader but takes advantage of the handleXmlZeroTagFallback
 - tandem_Xml: Add fallback function handler support when a tag isn't found
 - graphics_event_checker: Add graphics_event_checker module that makes sure the graphics system isn't messed up or having unintended options enabled while tests are running
