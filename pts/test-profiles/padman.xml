@@ -1,0 +1,36 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Game</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>612</EnvironmentSize>
+		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.worldofpadman.com/</ProjectURL>
+	</TestProfile>
+	<TestInformation>
+		<Title>World of Padman</Title>
+		<Version>1.2</Version>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Frames Per Second</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>World of Padman is an open-source game using the ioquake3 engine. What makes this game different from other first-person shooters is that it's a cartoon-style action game.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<Arguments>+timedemo 1 +set demodone "quit" +set demoloop1 "demo pts; set nextdemo vstr demodone" +vstr demoloop1</Arguments>
+		</Default>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>auto-resolution</Identifier>
+			<Menu>
+				<Entry>
+					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+					<Value>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>

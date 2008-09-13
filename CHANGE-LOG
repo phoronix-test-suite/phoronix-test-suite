@@ -1,12 +1,15 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite 1.2.1
+September 12, 2008
 
 - pts-core: Improve formatting for systems with multiple CPUs but of different models
 - pts-core: Add initial support for remote MD5 check support (though formal support will come with Orkdal)
 - pts-core: Fix merging of results when supplying a Phoronix Global ID
 - pts: MD5 check-sum fixes for unigine-sanctuary and unigine-tropics
 - pts: Fix a system script bug in unigine-tropics
+- pts: Update image-magick download links for source file
+- pts: Have the fio test profile remove the dead iometer.1.0 file after testing
 - documentation: Fix typo in Debian APT sources file
 
 Phoronix Test Suite 1.2.0
