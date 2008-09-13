@@ -24,12 +24,12 @@
 class graphics_event_checker extends pts_module_interface
 {
 	const module_name = "Graphics Event Checker";
-	const module_version = "0.0.1";
+	const module_version = "0.0.2";
 	const module_description = "This module checks a number of events prior to and and after running a test to make sure the graphics sub-system wasn't put in a sour or unintended state. For instance, it makes sure syncing to vBlank isn't forced through the driver and that a graphics test hadn't ended prematurely where it left the resolution in an incorrect mode.";
 	const module_author = "Michael Larabel";
 
 	static $start_video_resolution = array(-1, -1);
-	static $start_vertical_sync = -1;
+	static $start_vertical_sync = FALSE;
 
 	public static function __pre_run_process()
 	{
@@ -47,12 +47,15 @@ class graphics_event_checker extends pts_module_interface
 			$vsync_val = read_amd_pcsdb("AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,VSyncControl"); // Check for vSync
 			if($vsync_val == "0x00000002" || $vsync_val == "0x00000003")
 				self::$start_vertical_sync = TRUE;
-			else
-				self::$start_vertical_sync = FALSE;
 
 			$catalyst_ai_val = read_amd_pcsdb("AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,CatalystAI"); // Check for Catalyst AI
 			if($catalyst_ai_val == "0x00000001" || $catalyst_ai_val == "0x00000002")
 				echo "\nCatalyst AI is enabled, which will use driver-specific optimizations in some tests that may offer extra performance enhancements.\n";
+		}
+		else if(IS_NVIDIA_GRAPHICS)
+		{
+			if(read_nvidia_extension("SyncToVBlank") == "1")
+				self::$start_vertical_sync = TRUE;
 		}
 
 		if(self::$start_vertical_sync == TRUE)
@@ -76,7 +79,7 @@ class graphics_event_checker extends pts_module_interface
 	{
 		$current_res = xrandr_screen_resolution();
 
-		if($current_res != self::$start_video_resolution)
+		if($current_res != self::$start_video_resolution && self::$start_video_resolution != array(-1, -1))
 		{
 			$video_width = $current_res[0];
 			$video_height = $current_res[1];
