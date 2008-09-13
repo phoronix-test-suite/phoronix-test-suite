@@ -38,4 +38,5 @@ Phoronix Test Suite
 - tandem_Xml: Add fallback function handler support when a tag isn't found
 - graphics_event_checker: Add graphics_event_checker module that makes sure the graphics system isn't messed up or having unintended options enabled while tests are running
 - graphics_event_checker: Merge the gpu_error_counter module functionality into the graphics_event_checker module
+- timed_screenshot: A module that takes a screenshot while tests are running at a pre-defined interval
 - documentation: Add basic documentation concerning the Self-Contained Test Profiles (SCTP) XML tags that are added
