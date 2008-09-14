@@ -603,8 +603,11 @@ switch($COMMAND)
 			pts_exit("\nTwo saved result profile names must be supplied.\n");
 		}
 
-		$BASE_FILE = pts_find_file($BASE_FILE);
-		$MERGE_FROM_FILE = pts_find_file($MERGE_FROM_FILE);
+		$BASE_FILE = pts_find_result_file($BASE_FILE);
+		$MERGE_FROM_FILE = pts_find_result_file($MERGE_FROM_FILE);
+
+		if($BASE_FILE == FALSE || $MERGE_FROM_FILE == FALSE)
+			pts_exit($BASE_FILE . " or " . $MERGE_FROM_FILE . " couldn't be found.");
 
 		if(!empty($MERGE_TO) && !is_dir(SAVE_RESULTS_DIR . $MERGE_TO))
 			$MERGE_TO .= "/composite.xml";
@@ -632,8 +635,11 @@ switch($COMMAND)
 	case "ANALYZE_RESULTS":
 		require_once("pts-core/functions/pts-functions-merge.php");
 
-		$BASE_FILE = pts_find_file($ARG_1);
+		$BASE_FILE = pts_find_result_file($ARG_1);
 		$SAVE_TO = $ARG_2;
+
+		if($BASE_FILE == FALSE)
+			pts_exit($BASE_FILE . " couldn't be found.");
 
 		if(!empty($SAVE_TO) && !is_dir(SAVE_RESULTS_DIR . $SAVE_TO))
 			$SAVE_TO .= "/composite.xml";

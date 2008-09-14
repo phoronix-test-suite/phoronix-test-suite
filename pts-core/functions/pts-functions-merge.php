@@ -21,22 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_find_file($file)
-{
-	// PTS Find A Saved File
-	if(is_file($file))
-		$USE_FILE = $file;
-	else if(is_file(SAVE_RESULTS_DIR . $file . "/composite.xml"))
-		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
-	else if(pts_is_global_id($file))
-		$USE_FILE = "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $file;
-	else
-	{
-		pts_exit("File: " . $file . " couldn't be found. Exiting...");
-	}
-
-	return $USE_FILE;
-}
 function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 {
 	// Merge two test results

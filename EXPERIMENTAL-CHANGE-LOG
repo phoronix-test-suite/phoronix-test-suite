@@ -29,6 +29,7 @@ Phoronix Test Suite
 - pts-core: Add fall-back support for reading the PCI subsystem vendor if the motherboard vendor can't be determined using the other HAL information
 - pts-core: Add a PreInstallMessage tag for test profiles that will be shown to the user prior to installing the test
 - pts-core: Don't have PreRunMessage or PreInstallMessage hang when in batch mode
+- pts-core: pts_find_file() -> pts_find_result_file()
 - pts: Switch all audio encoding tests to extend a timed-audio-encode base test instead of all tests having some of the same code copied throughout
 - pts: Switch all build tests to extend a timed-build base test instead of all tests having some of the same code copied throughout
 - pts: Switch all video tests to extend a video-sample base test instead of all tests having some of the same code copied throughout
