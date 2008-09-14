@@ -135,15 +135,18 @@ function read_pci($desc, $clean_string = true)
 			$sub_pci_info = substr($pci_info, $pos + strlen($desc[$i]));
 			$EOL = strpos($sub_pci_info, "\n");
 
-			if(($temp = strpos($sub_pci_info, '/')) < $EOL && $temp > 0)
-				if(($temp = strpos($sub_pci_info, ' ', ($temp + 2))) < $EOL && $temp > 0)
+			if($clean_string)
+			{
+				if(($temp = strpos($sub_pci_info, '/')) < $EOL && $temp > 0)
+					if(($temp = strpos($sub_pci_info, ' ', ($temp + 2))) < $EOL && $temp > 0)
+						$EOL = $temp;
+
+				if(($temp = strpos($sub_pci_info, '(')) < $EOL && $temp > 0)
 					$EOL = $temp;
 
-			if(($temp = strpos($sub_pci_info, '(')) < $EOL && $temp > 0)
-				$EOL = $temp;
-
-			if(($temp = strpos($sub_pci_info, '[')) < $EOL && $temp > 0)
-				$EOL = $temp;
+				if(($temp = strpos($sub_pci_info, '[')) < $EOL && $temp > 0)
+					$EOL = $temp;
+			}
 
 			$sub_pci_info = trim(substr($sub_pci_info, 0, $EOL));
 

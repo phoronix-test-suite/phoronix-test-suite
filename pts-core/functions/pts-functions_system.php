@@ -181,6 +181,25 @@ function motherboard_chipset_string()
 		}
 	}
 
+	if($bridge != "Unknown")
+	{
+		// Attempt to detect Southbridge (if applicable)
+		$southbridge = read_pci(array("ISA bridge", "SATA controller"), FALSE);
+
+		if(($start_cut = strpos($southbridge, "(")) > 0 && ($end_cut = strpos($southbridge, ")", $start_cut + 1)) > 0)
+		{
+			$southbridge_extract = substr($southbridge, $start_cut + 1, $end_cut - $start_cut - 1);
+
+			if(strpos($southbridge_extract, "rev") === FALSE)
+			{
+				$southbridge_extract = explode(" ", $southbridge_extract);
+				$southbridge_clean = $southbridge_extract[0];
+
+				$info .= " + " . $southbridge_clean;
+			}
+		}
+	}
+
 	return $info;
 }
 function compiler_version()
