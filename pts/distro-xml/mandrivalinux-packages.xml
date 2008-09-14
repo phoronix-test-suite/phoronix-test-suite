@@ -117,17 +117,17 @@
 		</Package>
 		<Package>
 			<GenericName>openal-devel</GenericName>
-			<PackageName>libopenal0 libopenal0-devel</PackageName>
+			<PackageName>openal-devel</PackageName>
 			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-devel</GenericName>
-			<PackageName>taglib-devel</PackageName>
+			<PackageName>libvorbis-devel</PackageName>
 			<FileCheck>/usr/include/taglib/vorbisfile.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jam</GenericName>
-			<PackageName>boost-jam</PackageName>
+			<PackageName>ftjam</PackageName>
 			<FileCheck>/usr/bin/bjam</FileCheck>
 		</Package>
 	</ExternalDependencies>
