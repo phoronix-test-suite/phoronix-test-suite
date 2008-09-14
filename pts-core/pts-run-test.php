@@ -57,24 +57,15 @@ if(!$TO_RUN_TYPE)
 {
 	if(is_file(SAVE_RESULTS_DIR . $TO_RUN . "/composite.xml"))
 	{
-		$SAVE_RESULTS = true;
 		$TO_RUN_TYPE = "LOCAL_COMPARISON";
-		$PROPOSED_FILE_NAME = $TO_RUN;
-		$RES_NULL = null;
 	}
 	else if(is_file(pts_input_correct_results_path($TO_RUN)))
 	{
-		$SAVE_RESULTS = true;
 		$TO_RUN_TYPE = "LOCAL_COMPARISON";
-		$PROPOSED_FILE_NAME = $TO_RUN;
-		$RES_NULL = null;
 	}
 	else if(pts_is_global_id($TO_RUN))
 	{
-		$SAVE_RESULTS = true;
 		$TO_RUN_TYPE = "GLOBAL_COMPARISON";
-		$PROPOSED_FILE_NAME = $TO_RUN;
-		$RES_NULL = null;
 		define("GLOBAL_COMPARISON", 1);
 		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", pts_global_download_xml($TO_RUN));
 	}
@@ -82,6 +73,10 @@ if(!$TO_RUN_TYPE)
 	{
 		pts_exit("\nNot Recognized: $TO_RUN \n\n");
 	}
+
+	$SAVE_RESULTS = true;
+	$PROPOSED_FILE_NAME = $TO_RUN;
+	$RES_NULL = null;
 }
 else
 {
