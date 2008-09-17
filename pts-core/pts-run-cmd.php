@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2008, Michael Larabel
-	tandem_XmlReader.php: The main code for supporting options aside from the test execution itself.
+	pts-run-cmd.php: The main code for supporting options aside from the test execution itself.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -159,7 +159,8 @@ switch($COMMAND)
 			else
 			{
 				if(!empty($name) && ($COMMAND == "LIST_ALL_TESTS" || !in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED", "STANDALONE", "SCTP"))))
-					printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+					if(pts_test_architecture_supported($identifier) && pts_test_platform_supported($identifier))
+						printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
 			}
 		}
 		echo "\n";

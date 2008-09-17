@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2008, Michael Larabel
-	tandem_XmlReader.php: The main code for running tests.
+	pts-run-test.php: The main code for running tests.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

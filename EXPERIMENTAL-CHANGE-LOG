@@ -32,6 +32,7 @@ Phoronix Test Suite
 - pts-core: pts_find_file() -> pts_find_result_file()
 - pts-core: Add initial support for detecting the motherboard Southbridge where applicable
 - pts-core: Omit OEM in read_hal()
+- pts-core: With list-tests, don't list tests that aren't compliant with the running system's architecture and platform
 - pts: Switch all audio encoding tests to extend a timed-audio-encode base test instead of all tests having some of the same code copied throughout
 - pts: Switch all build tests to extend a timed-build base test instead of all tests having some of the same code copied throughout
 - pts: Switch all video tests to extend a video-sample base test instead of all tests having some of the same code copied throughout
