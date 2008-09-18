@@ -215,6 +215,7 @@ if(is_test($TO_RUN))
 						echo "\n";
 
 					echo $settings_name[$option_count] . ":\n";
+					$first_try = true;
 					do
 					{
 						echo "\n";
@@ -223,7 +224,16 @@ if(is_test($TO_RUN))
 							echo ($i + 1) . ": " . $option_names[$i] . "\n";
 						}
 						echo "\nPlease Enter Your Choice: ";
-						$bench_choice = trim(fgets(STDIN));
+
+						if($first_try && ($auto_opt = getenv(strtoupper($TO_RUN) . "_" . $option_count)) != FALSE)
+						{
+							$bench_choice = $auto_opt;
+							echo $bench_choice . "\n";
+						}
+						else
+							$bench_choice = trim(fgets(STDIN));
+
+						$first_try = false;
 					}
 					while(($bench_choice < 1 || $bench_choice > count($option_names)) && !in_array($bench_choice, $option_names));
 
