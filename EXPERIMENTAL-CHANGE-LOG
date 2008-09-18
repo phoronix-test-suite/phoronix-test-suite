@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE EXPERIMENTAL CHANGE-LOG
 
-Phoronix Test Suite
+Phoronix Test Suite 1.4.0 Alpha 1
+September 18, 2008
 
 - pts-core: Change test/suite type strings to define statements
 - pts-core: Add test type caching support
