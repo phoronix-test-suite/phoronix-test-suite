@@ -236,20 +236,71 @@ function graphics_antialiasing_level()
 	else if(IS_ATI_GRAPHICS)
 	{
 		$ati_fsaa = read_amd_pcsdb("OpenGL,AntiAliasSamples");
+		$ati_fsaa_filter = read_amd_pcsdb("OpenGL,AAF");
 
 		if(!empty($ati_fsaa))
 		{
-			switch($ati_fsaa)
+			if($ati_fsaa_filter == "0x00000000")
 			{
-				case "0x00000002":
-					$aa_level = "2x";
-					break;
-				case "0x00000004":
-					$aa_level = "4x";
-					break;
-				case "0x00000008":
-					$aa_level = "8x";
-					break;
+				// Filter: Box
+				switch($ati_fsaa)
+				{
+					case "0x00000002":
+						$aa_level = "2x Box";
+						break;
+					case "0x00000004":
+						$aa_level = "4x Box";
+						break;
+					case "0x00000008":
+						$aa_level = "8x Box";
+						break;
+				}
+			}
+			else if($ati_fsaa_filter == "0x00000001")
+			{
+				// Filter: Narrow-tent
+				switch($ati_fsaa)
+				{
+					case "0x00000002":
+						$aa_level = "4x Narrow-tent";
+						break;
+					case "0x00000004":
+						$aa_level = "8x Narrow-tent";
+						break;
+					case "0x00000008":
+						$aa_level = "12x Narrow-tent";
+						break;
+				}
+			}
+			else if($ati_fsaa_filter == "0x00000002")
+			{
+				// Filter: Wide-tent
+				switch($ati_fsaa)
+				{
+					case "0x00000002":
+						$aa_level = "6x Wide-tent";
+						break;
+					case "0x00000004":
+						$aa_level = "8x Wide-tent";
+						break;
+					case "0x00000008":
+						$aa_level = "16x Wide-tent";
+						break;
+				}
+
+			}
+			else if($ati_fsaa_filter == "0x00000003")
+			{
+				// Filter: Edge-detect
+				switch($ati_fsaa)
+				{
+					case "0x00000004":
+						$aa_level = "12x Edge-detect";
+						break;
+					case "0x00000008":
+						$aa_level = "24x Edge-detect";
+						break;
+				}
 			}
 		}
 	}
