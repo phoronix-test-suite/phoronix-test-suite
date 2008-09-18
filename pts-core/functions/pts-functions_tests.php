@@ -255,5 +255,9 @@ function pts_test_platform_supported($identifier)
 
 	return $supported;
 }
+function pts_test_supported($identifier)
+{
+	return pts_test_architecture_supported($identifier) && pts_test_platform_supported($identifier);
+}
 
 ?>
