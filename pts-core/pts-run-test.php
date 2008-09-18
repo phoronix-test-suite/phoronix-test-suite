@@ -440,8 +440,10 @@ if($SAVE_RESULTS)
 		$aa_level = graphics_antialiasing_level();
 		$af_level = graphics_anisotropic_level();
 
-		if(!empty($aa_level) && !empty($af_level))
-			$test_notes .= " \nAntialiasing: $aa_level Anisotropic Filtering: $af_level.";
+		if(!empty($aa_level))
+			$test_notes .= " \nAntialiasing: $aa_level.";
+		if(!empty($af_level))
+			$test_notes .= " \nAnisotropic Filtering: $af_level.";
 	}
 
 	$id = pts_request_new_id();
