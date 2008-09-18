@@ -19,7 +19,7 @@ September 18, 2008
 - pts-core: Add Mac OS X operating system detection support (using the IS_MACOSX define)
 - pts-core: Improve VirtualBox virtualization detection for guest operating systems running
 - pts-core: Add $COMPILER and $VIDEO_DRIVER user variables when saving the results and supplying the test identifier
-- pts-core: Let the size of files being downloaded be specified individually within the test's downloads.xml profile instead of a generic one throug the test profile XML file
+- pts-core: Let the size of files being downloaded be specified individually within the test's downloads.xml profile instead of a generic one through the test profile XML file
 - pts-core: When downloading files for tests, don't first download the file to the PTS temporary directory, but just rename it initially within the test's environment directory
 - pts-core: When running a test (or suite that contains a test) on an unsupported architecture or platform, don't abruptly exit
 - pts-core: Add module_setup() to pts_module_interface for returning an array of objects that can be configured by the end-user
