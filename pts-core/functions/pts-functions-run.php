@@ -138,9 +138,12 @@ function pts_prompt_save_file_name($check_env = true)
 			$PROPOSED_FILE_NAME = "";
 	}
 
-	if(empty($PROPOSED_FILE_NAME))
+	if(!isset($PROPOSED_FILE_NAME) || empty($PROPOSED_FILE_NAME))
 	{
 		$PROPOSED_FILE_NAME = date("Y-m-d-Hi");
+	}
+	if(!isset($PROPOSED_FILE_NAME) || empty($CUSTOM_TITLE))
+	{
 		$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
 	}
 
