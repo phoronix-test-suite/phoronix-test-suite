@@ -3,6 +3,7 @@ PHORONIX TEST SUITE EXPERIMENTAL CHANGE-LOG
 Phoronix Test Suite
 
 - pts-core: Improve AMD motherboard chipset detection
+- pts-core: Add detection support for ATI/AMD Southbridge parts
 - pts: Update pcqs-memory test profile
 
 Phoronix Test Suite 1.4.0 Alpha 1

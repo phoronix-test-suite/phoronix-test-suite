@@ -198,6 +198,13 @@ function motherboard_chipset_string()
 				$info .= " + " . $southbridge_clean;
 			}
 		}
+		else if(($start_cut = strpos($southbridge, "SB")) > 0)
+		{
+			$southbridge_extract = substr($southbridge, $start_cut);
+			$southbridge_extract = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
+
+			$info .= " + " . $southbridge_extract;
+		}
 	}
 
 	return $info;
