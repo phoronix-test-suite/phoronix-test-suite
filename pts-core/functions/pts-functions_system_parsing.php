@@ -132,7 +132,7 @@ function read_pci($desc, $clean_string = true)
 
 		if(($pos = strpos($pci_info, $desc[$i])) !== FALSE)
 		{
-			$sub_pci_info = substr($pci_info, $pos + strlen($desc[$i]));
+			$sub_pci_info = str_replace(array("[AMD]"), "", substr($pci_info, $pos + strlen($desc[$i])));
 			$EOL = strpos($sub_pci_info, "\n");
 
 			if($clean_string)
