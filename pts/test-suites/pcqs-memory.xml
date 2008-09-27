@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>Memory</TestType>
 		<Title>PCQS Memory Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -12,8 +12,8 @@
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
-		<Test>openarena</Test>
-		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Test>lightsmark</Test>
+		<Arguments>$VIDEO_WIDTHx$VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
@@ -32,28 +32,6 @@
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
-		<Test>ramspeed</Test>
-		<Arguments>ADD -b 3 -l 10</Arguments>
-		<Description>Integer Add</Description>
-	</RunTest>
-	<RunTest>
-		<Test>ramspeed</Test>
-		<Arguments>COPY -b 3 -l 10</Arguments>
-		<Description>Integer Copy</Description>
-	</RunTest>
-	<RunTest>
-		<Test>ramspeed</Test>
-		<Arguments>SCALE -b 3 -l 10</Arguments>
-		<Description>Integer Scale</Description>
-	</RunTest>
-	<RunTest>
-		<Test>ramspeed</Test>
-		<Arguments>ADD -b 6 -l 10</Arguments>
-		<Description>Floating-Point Add</Description>
-	</RunTest>
-	<RunTest>
-		<Test>memory-bandwidth</Test>
-		<Arguments>TEST_READ</Arguments>
-		<Description>RAM Sequential Read</Description>
+		<Test>memory</Test>
 	</RunTest>
 </PhoronixTestSuite>
