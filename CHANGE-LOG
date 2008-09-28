@@ -4,6 +4,7 @@ Phoronix Test Suite 1.2.2
 September 13, 2008 (Hot-Fix Release)
 
 - pts-core: Fix MD5 checksum regression
+- pts-core: Add support for installing the Phoronix Certification & Qualification Suite once agreeing to the terms
 - pts: Fix a bug that caused unigine-tropics to fail with the data path
 - pts: Move PCQS tests out of tree
 - pts: Fix a bug that caused unigine-sanctuary to fail with the data path

@@ -79,6 +79,26 @@ switch($COMMAND)
 
 		$ARG_1 = strtolower($ARG_1);
 
+		if(strpos($ARG_1, "pcqs") !== FALSE && !is_file(XML_SUITE_LOCAL_DIR . "pcqs-license.txt"))
+		{
+			// Install the Phoronix Certification & Qualification Suite
+			$agreement = wordwrap(file_get_contents("http://www.phoronix-test-suite.com/pcqs/pcqs-license.txt"), 65);
+
+			if(strpos($agreement, "PCQS") == FALSE)
+				pts_exit("An error occurred while connecting to the Phoronix Test Suite Server. Please try again later.");
+
+			echo "\n\n" . $agreement;
+			$agree = pts_bool_question("Do you agree to these terms in full and wish to proceed (y/n)?", false);
+
+			if($agree)
+			{
+				shell_exec("cd " . XML_SUITE_LOCAL_DIR . " && wget http://www.phoronix-test-suite.com/pcqs/download-pcqs.php -O pcqs-suite.tar && tar -xf pcqs-suite.tar && rm -f pcqs-suite.tar");
+				echo pts_string_header("The Phoronix Certification & Qualification Suite is now installed.");
+			}
+			else
+				pts_exit(pts_string_header("In order to run PCQS you must agree to the listed terms."));
+		}
+
 		pts_module_process("__pre_install_process");
 
 		// Any external dependencies?
