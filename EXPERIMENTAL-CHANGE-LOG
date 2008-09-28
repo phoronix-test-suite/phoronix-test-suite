@@ -8,6 +8,7 @@ Phoronix Test Suite
 - pts-core: When rebuilding the modules-config.xml table, check if the module exists for each identifier otherwise remove it from the list
 - pts-core: Add IS_FIRST_RUN_TODAY that is set to TRUE if this is the first time PTS has been run that day
 - pts: Update pcqs-memory test profile
+- update_checker: Move code to check for PTS updates out of pts-core and into its own module
 
 Phoronix Test Suite 1.4.0 Alpha 1
 September 18, 2008

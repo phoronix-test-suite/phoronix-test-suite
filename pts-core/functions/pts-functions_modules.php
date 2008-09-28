@@ -40,6 +40,8 @@ function pts_module_start_process()
 	// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
 	array_push($GLOBALS["PTS_MODULES"], "toggle_screensaver");
 
+	array_push($GLOBALS["PTS_MODULES"], "update_checker"); // Check for new PTS versions
+
 	pts_load_modules();
 	pts_module_process("__startup");
 	register_shutdown_function("pts_module_process", "__shutdown");
