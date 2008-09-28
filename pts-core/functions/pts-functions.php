@@ -497,7 +497,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 function pts_clean_information_string($str)
 {
 	// Clean a string containing hardware information of some common things to change/strip out
-	$remove_phrases = array("corporation ", " technologies", ",", " technology", " incorporation", "version ", "computer ", "processor ", "genuine ", "unknown device ", "(r)", "(tm)", "inc. ", "inc ", "/pci/sse2/3dnow!", "/pci/sse2", "co. ltd", "co. ltd.", "northbridge only dual slot pci-e_gfx and ht3 k8 part", "northbridge only dual slot pci-e_gfx and ht1 k8 part", "host bridge");
+	$remove_phrases = array("corporation ", " technologies", ",", " technology", " incorporation", "version ", "computer ", "processor ", "genuine ", "unknown device ", "(r)", "(tm)", "inc. ", "inc ", "/pci/sse2/3dnow!", "/pci/sse2", "co. ltd", "co. ltd.", "northbridge only dual slot pci-e_gfx and ht3 k8 part", "northbridge only dual slot pci-e_gfx and ht1 k8 part", "host bridge", "dram controller");
 	$str = str_ireplace($remove_phrases, " ", $str);
 
 	$change_phrases = array("Memory Controller Hub" => "MCH", "Advanced Micro Devices" => "AMD", "MICRO-STAR INTERNATIONAL" => "MSI", "Silicon Integrated Systems" => "SiS", "Integrated Graphics Controller" => "IGP");
