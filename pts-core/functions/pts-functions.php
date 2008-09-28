@@ -77,7 +77,7 @@ register_shutdown_function("pts_shutdown");
 $PTS_GLOBAL_ID = 1;
 
 // Check For Updates
-if(substr(pts_read_user_config(P_OPTION_TESTCORE_LASTTIME, date("Y-m-d")), 0, 10) != date("Y-m-d"))
+if(IS_FIRST_RUN_TODAY)
 {
 	// Once a day check if there is a new PTS version
 	$latest_reported_version = trim(@file_get_contents("http://www.phoronix-test-suite.com/LATEST"));
