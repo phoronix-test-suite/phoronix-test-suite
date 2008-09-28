@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2004-2008, Michael Larabel
-	update_override.php: This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.
+	update_checker.php: This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
