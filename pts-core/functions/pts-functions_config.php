@@ -170,9 +170,12 @@ function pts_module_config_init($SetOptions = NULL)
 
 	for($i = 0; $i < count($option_module); $i++)
 	{
-		$config->addXmlObject(P_MODULE_OPTION_NAME, $i, $option_module[$i]);
-		$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $option_identifier[$i]);
-		$config->addXmlObject(P_MODULE_OPTION_VALUE, $i, $option_value[$i]);
+		if(pts_module_type($option_module[$i]) != "")
+		{
+			$config->addXmlObject(P_MODULE_OPTION_NAME, $i, $option_module[$i]);
+			$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $option_identifier[$i]);
+			$config->addXmlObject(P_MODULE_OPTION_VALUE, $i, $option_value[$i]);
+		}
 	}
 
 	file_put_contents(PTS_USER_DIR . "modules-config.xml", $config->getXML());

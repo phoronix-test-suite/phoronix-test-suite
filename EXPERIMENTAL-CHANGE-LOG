@@ -5,6 +5,7 @@ Phoronix Test Suite
 - pts-core: Improve AMD motherboard chipset detection
 - pts-core: Add detection support for ATI/AMD Southbridge parts
 - pts-core: Strip "Host Bridge" in pts_clean_information_string()
+- pts-core: When rebuilding the modules-config.xml table, check if the module exists for each identifier otherwise remove it from the list
 - pts: Update pcqs-memory test profile
 
 Phoronix Test Suite 1.4.0 Alpha 1
