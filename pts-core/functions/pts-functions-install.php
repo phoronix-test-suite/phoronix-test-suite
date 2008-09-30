@@ -116,7 +116,7 @@ function pts_download_test_files($identifier)
 					{
 						if($dc_file[$f] == $package_filename[$i] && $dc_md5[$f] == $package_md5[$i])
 						{
-							echo shell_exec("cd " . $download_location . " && wget " . PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i] . " -O " . $package_filename[$i] . ".temp");
+							echo pts_download(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $download_location);
 
 							if(!pts_validate_md5_download_file($download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
 								@unlink($download_location . $package_filename[$i] . ".temp");
@@ -180,7 +180,7 @@ function pts_download_test_files($identifier)
 						}
 
 						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
-						echo shell_exec("cd " . $download_location . " && wget " . $url . " -O " . $package_filename[$i] . ".temp");
+						echo pts_download($url, $download_location . $package_filename[$i] . ".temp");
 
 						if(!pts_validate_md5_download_file($download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
 						{

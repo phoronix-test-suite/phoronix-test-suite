@@ -92,7 +92,8 @@ switch($COMMAND)
 
 			if($agree)
 			{
-				shell_exec("cd " . XML_SUITE_LOCAL_DIR . " && wget http://www.phoronix-test-suite.com/pcqs/download-pcqs.php -O pcqs-suite.tar && tar -xf pcqs-suite.tar && rm -f pcqs-suite.tar");
+				pts_download("http://www.phoronix-test-suite.com/pcqs/download-pcqs.php", XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
+				shell_exec("cd " . XML_SUITE_LOCAL_DIR . " && tar -xf pcqs-suite.tar && rm -f pcqs-suite.tar");
 				echo pts_string_header("The Phoronix Certification & Qualification Suite is now installed.");
 			}
 			else

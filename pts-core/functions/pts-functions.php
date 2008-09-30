@@ -701,5 +701,19 @@ function pts_user_message($message)
 		}
 	}
 }
+function pts_download($download, $to)
+{
+	$to_file = basename($to);
+	$to_dir = dirname($to);
+	$download_output = "";
+
+	if(strpos($to_file, ".") === FALSE)
+		$to_file = basename($download);
+
+	// wget download
+	$download_output = shell_exec("cd " . $to_dir . " && wget " . $download . " -O " . $to_file);
+
+	return $download_output;
+}
 
 ?>
