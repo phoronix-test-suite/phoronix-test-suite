@@ -119,10 +119,8 @@ switch($COMMAND)
 		if($COMMAND == "FORCE_INSTALL_ALL")
 			define("PTS_FORCE_INSTALL", 1);
 
-		foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_profile_file)
+		foreach(pts_available_tests_array() as $test)
 		{
-			$test = basename($test_profile_file, ".xml");
-
 			// Any external dependencies?
 			pts_install_package_on_distribution($test);
 
@@ -158,13 +156,12 @@ switch($COMMAND)
 	case "LIST_TESTS":
 	case "LIST_ALL_TESTS":
 		echo pts_string_header("Phoronix Test Suite - Tests");
-		foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_profile_file)
+		foreach(pts_available_tests_array() as $identifier)
 		{
-		 	$xml_parser = new tandem_XmlReader($test_profile_file);
+		 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
 			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 			$license = $xml_parser->getXMLValue(P_TEST_LICENSE);
 			$status = $xml_parser->getXMLValue(P_TEST_STATUS);
-			$identifier = basename($test_profile_file, ".xml");
 
 			if(IS_DEBUG_MODE)
 			{
@@ -187,12 +184,11 @@ switch($COMMAND)
 		break;
 	case "LIST_SUITES":
 		echo pts_string_header("Phoronix Test Suite - Suites");
-		foreach(glob(XML_SUITE_DIR . "*.xml") as $test_suite_file)
+		foreach(pts_available_suites_array() as $identifier)
 		{
-		 	$xml_parser = new tandem_XmlReader($test_suite_file);
+		 	$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
 			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 			$test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-			$identifier = basename($test_suite_file, ".xml");
 
 			if(IS_DEBUG_MODE)
 			{

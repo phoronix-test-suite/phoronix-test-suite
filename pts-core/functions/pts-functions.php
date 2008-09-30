@@ -217,7 +217,6 @@ function pts_save_result($save_to = null, $save_results = null)
 			if(is_file("/proc/cpuinfo"))
 			{
 				$file = file_get_contents("/proc/cpuinfo");
-
 				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/cpuinfo", $file);
 			}
 		}
@@ -518,7 +517,7 @@ function pts_string_header($heading, $char = '=')
 		if(($line_length = strlen($line)) > $header_size)
 			$header_size = $line_length;
 
-	$terminal_width = trim(shell_exec("tput cols"));
+	$terminal_width = trim(shell_exec("tput cols 2>&1"));
 
 	if($header_size > $terminal_width && $terminal_width > 1)
 		$header_size = $terminal_width;
