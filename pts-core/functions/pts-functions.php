@@ -689,7 +689,7 @@ function pts_debug_message($message)
 	}
 }
 function pts_user_message($message)
-[
+{
 	if(!empty($message))
 	{
 		echo $message . "\n";
