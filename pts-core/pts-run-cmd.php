@@ -158,7 +158,7 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite - Tests");
 		foreach(pts_available_tests_array() as $identifier)
 		{
-		 	$xml_parser = new tandem_XmlReader(pts_location_test($identifier));
+		 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 			$license = $xml_parser->getXMLValue(P_TEST_LICENSE);
 			$status = $xml_parser->getXMLValue(P_TEST_STATUS);
