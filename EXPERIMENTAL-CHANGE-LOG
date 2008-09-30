@@ -18,6 +18,7 @@ Phoronix Test Suite
 - pts-core: Add PostRunMessage tag to the suite specification for showing the user a message before testing begins (similar to PostRunMessage in tests)
 - pts-core: Add support for OS-specific test profiles through <OS_PREFIX>_<test> name but is accessible by just running <test>
 - pts-core: Don't call wget directly to download files but use pts_download()
+- pts-core: Add support for using curl to download files instead of just wget
 - pts: Move pcqs tests out of tree
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module
 

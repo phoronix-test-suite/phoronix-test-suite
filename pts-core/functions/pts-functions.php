@@ -710,8 +710,16 @@ function pts_download($download, $to)
 	if(strpos($to_file, ".") === FALSE)
 		$to_file = basename($download);
 
-	// wget download
-	$download_output = shell_exec("cd " . $to_dir . " && wget " . $download . " -O " . $to_file);
+	if(IS_MACOSX)
+	{
+		// curl download
+		$download_output = shell_exec("cd " . $to_dir . " && curl " . $download . " > " . $to_file);
+	}
+	else
+	{
+		// wget download
+		$download_output = shell_exec("cd " . $to_dir . " && wget " . $download . " -O " . $to_file);
+	}
 
 	return $download_output;
 }
