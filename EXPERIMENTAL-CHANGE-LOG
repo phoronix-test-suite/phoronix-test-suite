@@ -11,6 +11,7 @@ Phoronix Test Suite
 - pts-core: Add IS_FIRST_RUN_TODAY that is set to TRUE if this is the first time PTS has been run that day
 - pts-core: Add pts_available_tests_array(), pts_installed_tests_array(), and pts_available_suites_array()
 - pts-core: Use pts_test_tandem_XmlReader() in list-tests option
+- pts-core: Fix regression that caused info <test> with a valid test identifier not to be recognized
 - pts: Move pcqs tests out of tree
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module
 

@@ -310,7 +310,7 @@ switch($COMMAND)
 		
 			echo "\n";
 		}
-		else if(is_test($pts_test_type))
+		else if(is_test($ARG_1))
 		{
 			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($ARG_1));
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
