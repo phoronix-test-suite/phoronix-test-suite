@@ -113,6 +113,8 @@ function pts_init()
 	}
 	else
 		define("IS_UNKNOWN", false);
+
+	define("OS_PREFIX", strtolower(OPERATING_SYSTEM) . "_");
 }
 function pts_extended_init()
 {

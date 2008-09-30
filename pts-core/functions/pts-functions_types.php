@@ -22,8 +22,10 @@
 */
 
 define("TYPE_TEST", "TEST"); // Type is test
+define("TYPE_OS_TEST", "OS_TEST"); // Type is OS-specific test
 define("TYPE_TEST_SUITE", "TEST_SUITE"); // Type is a test suite
 define("TYPE_LOCAL_TEST", "LOCAL_TEST"); // Type is test
+define("TYPE_OS_LOCAL_TEST", "OS_LOCAL_TEST"); // Type is test
 define("TYPE_LOCAL_TEST_SUITE", "LOCAL_TEST_SUITE"); // Type is a test suite
 define("TYPE_SCTP_TEST", "LOCAL_SCTP_TEST"); // Type is a SCTP test
 define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a SCTP test
@@ -38,7 +40,7 @@ function is_test($object)
 {
 	$type = pts_test_type($object);
 
-	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_SCTP_TEST || $type == TYPE_BASE_TEST;
+	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || TYPE_OS_TEST || $type == TYPE_OS_LOCAL_TEST || $type == TYPE_SCTP_TEST || $type == TYPE_BASE_TEST;
 }
 function pts_test_type($identifier)
 {
@@ -57,10 +59,14 @@ function pts_test_type($identifier)
 		}
 		else if(!empty($identifier))
 		{
-			if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml"))
+			if(is_file(XML_PROFILE_LOCAL_DIR . OS_PREFIX . $identifier . ".xml"))
+				$test_type = TYPE_OS_LOCAL_TEST;
+			else if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml"))
 				$test_type = TYPE_LOCAL_TEST;
 			else if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml"))
 				$test_type = TYPE_LOCAL_TEST_SUITE;
+			else if(is_file(XML_PROFILE_DIR . OS_PREFIX . $identifier . ".xml"))
+				$test_type = TYPE_OS_TEST;
 			else if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 				$test_type = TYPE_TEST;
 			else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
@@ -118,8 +124,12 @@ function pts_location_test($identifier)
 
 			if($type == TYPE_TEST)
 				$location = XML_PROFILE_DIR . $identifier . ".xml";
+			else if($type == TYPE_OS_TEST)
+				$location = XML_PROFILE_DIR . OS_PREFIX . $identifier . ".xml";
 			else if($type == TYPE_LOCAL_TEST)
 				$location = XML_PROFILE_LOCAL_DIR . $identifier . ".xml";
+			else if($type == TYPE_OS_LOCAL_TEST)
+				$location = XML_PROFILE_LOCAL_DIR . OS_PREFIX . $identifier . ".xml";
 			else if($type == TYPE_BASE_TEST)
 				$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
 		}
@@ -147,9 +157,13 @@ function pts_location_test_resources($identifier)
 		{
 			$type = pts_test_type($identifier);
 
-			if($type == TYPE_TEST && is_dir(TEST_RESOURCE_DIR . $identifier))
+			if($type == TYPE_OS_TEST && is_dir(TEST_RESOURCE_DIR . OS_PREFIX . $identifier))
+				$location = TEST_RESOURCE_DIR . OS_PREFIX . $identifier . "/";
+			else if(($type == TYPE_TEST || $type == TYPE_OS_TEST) && is_dir(TEST_RESOURCE_DIR . $identifier))
 				$location = TEST_RESOURCE_DIR . $identifier . "/";
-			else if($type == TYPE_LOCAL_TEST && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
+			else if($type == TYPE_OS_LOCAL_TEST && is_dir(TEST_RESOURCE_LOCAL_DIR . OS_PREFIX . $identifier))
+				$location = TEST_RESOURCE_LOCAL_DIR . OS_PREFIX . $identifier . "/";
+			else if(($type == TYPE_LOCAL_TEST || $type == TYPE_OS_LOCAL_TEST) && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
 				$location = TEST_RESOURCE_LOCAL_DIR . $identifier . "/";
 			else if($type == TYPE_BASE_TEST && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
 				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
