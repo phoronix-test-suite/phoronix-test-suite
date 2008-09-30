@@ -339,6 +339,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));
 	$ignore_first_run = $xml_parser->getXMLValue(P_TEST_IGNOREFIRSTRUN);
 	$pre_run_message = $xml_parser->getXMLValue(P_TEST_PRERUNMSG);
+	$post_run_message = $xml_parser->getXMLValue(P_TEST_POSTRUNMSG);
 	$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
 	$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 	$result_quantifier = $xml_parser->getXMLValue(P_TEST_QUANTIFIER);
@@ -416,16 +417,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		pts_exec(PHP_BIN . " " . pts_location_test_resources($test_identifier) . "/pre.php " . $test_directory, pts_run_additional_vars($test_identifier));
 	}
 
-	if(!empty($pre_run_message))
-	{
-		echo $pre_run_message . "\n";
-
-		if(!IS_BATCH_MODE)
-		{
-			echo "\nHit Any Key To Continue Benchmarking...\n";
-			fgets(STDIN);
-		}
-	}
+	pts_user_message($pre_run_message);
 
 	pts_debug_message("cd $to_execute && ./$execute_binary $pts_test_arguments");
 	for($i = 0; $i < $times_to_run; $i++)
@@ -578,6 +570,8 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	}
 	else
 		echo "\n\n";
+
+	pts_user_message($post_run_message);
 
 	pts_process_remove($test_identifier);
 	pts_module_process("__post_test_run");

@@ -688,5 +688,18 @@ function pts_debug_message($message)
 			$GLOBALS["DEBUG_CONTENTS"] = $output;
 	}
 }
+function pts_user_message($message)
+[
+	if(!empty($message))
+	{
+		echo $message . "\n";
+
+		if(!IS_BATCH_MODE)
+		{
+			echo "\nHit Any Key To Continue...\n";
+			fgets(STDIN);
+		}
+	}
+}
 
 ?>

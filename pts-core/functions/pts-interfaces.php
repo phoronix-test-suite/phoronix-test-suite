@@ -37,8 +37,9 @@ define("P_TEST_PROPORTION", "PhoronixTestSuite/TestInformation/Proportion"); // 
 define("P_TEST_EXECUTABLE", "PhoronixTestSuite/TestInformation/Executable"); // Executable
 define("P_TEST_RUNCOUNT", "PhoronixTestSuite/TestInformation/TimesToRun"); // Run count
 define("P_TEST_IGNOREFIRSTRUN", "PhoronixTestSuite/TestInformation/IgnoreFirstRun"); // Ignore first run?
-define("P_TEST_PRERUNMSG", "PhoronixTestSuite/TestInformation/PreRunMessage"); // Pre-run message
 define("P_TEST_PREINSTALLMSG", "PhoronixTestSuite/TestInformation/PreInstallMessage"); // Pre-run message
+define("P_TEST_PRERUNMSG", "PhoronixTestSuite/TestInformation/PreRunMessage"); // Pre-run message
+define("P_TEST_POSTRUNMSG", "PhoronixTestSuite/TestInformation/PostRunMessage"); // Pre-run message
 
 define("P_TEST_PTSVERSION", "PhoronixTestSuite/TestProfile/Version"); // PTS Test version
 define("P_TEST_HARDWARE_TYPE", "PhoronixTestSuite/TestProfile/TestType"); // Test type
