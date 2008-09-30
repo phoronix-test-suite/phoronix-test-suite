@@ -230,14 +230,11 @@ switch($COMMAND)
 		break;
 	case "LIST_INSTALLED_TESTS":
 		echo pts_string_header("Phoronix Test Suite - Installed Tests");
-		foreach(glob(TEST_ENV_DIR . "*/pts-install.xml") as $install_file)
+		foreach(pts_installed_tests_array() as $identifier)
 		{
-			$install_file_arr = explode("/", $install_file);
-			$identifier = $install_file_arr[count($install_file_arr) - 2];
-
 			if(is_test($identifier))
 			{
-			 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+			 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test(TEST_ENV_DIR . $identifier . "/pts-install.xml"));
 				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 
 				if(!empty($name))
@@ -249,12 +246,9 @@ switch($COMMAND)
 	case "LIST_TEST_USAGE":
 		echo pts_string_header("Phoronix Test Suite - Test Usage");
 		printf("%-22ls   %-20ls %-20ls %-3ls\n", "TEST", "INSTALL TIME", "LAST RUN", "TIMES RUN");
-		foreach(glob(TEST_ENV_DIR . "*/pts-install.xml") as $install_file)
+		foreach(pts_installed_tests_array() as $identifier)
 		{
-			$install_file_arr = explode("/", $install_file);
-			$identifier = $install_file_arr[count($install_file_arr) - 2];
-
-			$xml_parser = new tandem_XmlReader($install_file);
+			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test(TEST_ENV_DIR . $identifier . "/pts-install.xml"));
 			$test_time_install = $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);
 			$test_time_lastrun = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
 			$test_times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
@@ -391,9 +385,9 @@ switch($COMMAND)
 			}
 
 			$associated_suites = array();
-			foreach(glob(XML_SUITE_DIR . "*.xml") as $suite_file)
+			foreach(pts_available_suites_array() as $identifier)
 			{
-			 	$xml_parser = new tandem_XmlReader($suite_file);
+			 	$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
 				$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 				$identifier = basename($suite_file, ".xml");
 				$tests = pts_contained_tests($identifier);

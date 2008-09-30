@@ -9,7 +9,7 @@ Phoronix Test Suite
 - pts-core: When rebuilding the modules-config.xml table, check if the module exists for each identifier otherwise remove it from the list
 - pts-core: Add support for installing the Phoronix Certification & Qualification Suite with user agreement support
 - pts-core: Add IS_FIRST_RUN_TODAY that is set to TRUE if this is the first time PTS has been run that day
-- pts-core: Add pts_available_tests_array() and pts_available_suites_array()
+- pts-core: Add pts_available_tests_array(), pts_installed_tests_array(), and pts_available_suites_array()
 - pts-core: Use pts_test_tandem_XmlReader() in list-tests option
 - pts: Move pcqs tests out of tree
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module

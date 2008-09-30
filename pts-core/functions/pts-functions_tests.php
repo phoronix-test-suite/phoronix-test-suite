@@ -271,6 +271,18 @@ function pts_available_tests_array()
 
 	return $tests;
 }
+function pts_installed_tests_array()
+{
+	$tests = glob(TEST_ENV_DIR . "*/pts-install.xml");
+
+	for($i = 0; $i < count($tests); $i++)
+	{
+		$install_file_arr = explode("/", $tests[$i]);
+		$tests[$i] = $install_file_arr[count($install_file_arr) - 2];
+	}
+
+	return $tests;
+}
 function pts_available_suites_array()
 {
 	$suites = glob(XML_SUITE_DIR . "*.xml");
