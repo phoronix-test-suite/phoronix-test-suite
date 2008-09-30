@@ -380,16 +380,9 @@ function pts_install_test($identifier)
 
 					$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 					$pre_install_message = $xml_parser->getXMLValue(P_TEST_PREINSTALLMSG);
-					if(!empty($pre_install_message))
-					{
-						echo "\n" . $pre_install_message . "\n";
+					$post_install_message = $xml_parser->getXMLValue(P_TEST_POSTINSTALLMSG);
 
-						if(!IS_BATCH_MODE)
-						{
-							echo "\nHit Any Key To Continue Installation...\n";
-							fgets(STDIN);
-						}
-					}
+					pts_user_message($pre_install_message);
 
 					if(is_file(pts_location_test_resources($identifier) . "install.sh"))
 					{
@@ -399,6 +392,8 @@ function pts_install_test($identifier)
 					{
 						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "install.php " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier)) . "\n";
 					}
+
+					pts_user_message($post_install_message);
 
 					pts_test_generate_install_xml($identifier);
 					pts_module_process("__post_test_install");

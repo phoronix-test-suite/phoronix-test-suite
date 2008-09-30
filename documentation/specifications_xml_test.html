@@ -187,6 +187,19 @@ benchmarking environment directory, this is the string of the file-name.</p>
 <strong>Description:</strong> If the test is being run multiple times, should the first value be 
 ignored. If the value is set to 1, the first result will be void.<br>
 <strong>Supported Values:</strong> 0, 1</p>
+<p><strong>Tag:</strong> PreInstallMessage<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_PREINSTALLMSG<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If the user needs to be alerted about something dealing with this 
+test, this tag can contain a string that will be shown to the user before the 
+test is installed but after the files are downloaded.</p>
+<p><strong>Tag:</strong> PostInstallMessage<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_POSTINSTALLMSG<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If the user needs to be alerted about something dealing with this 
+test, this tag can contain a string that will be shown to the user after the test installation script has been executed.</p>
 <p><strong>Tag:</strong> PreRunMessage<br>
 <strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
 <strong>Internal Reference:</strong> P_TEST_PRERUNMSG<br>
@@ -201,13 +214,6 @@ test begins.</p>
 <strong>Description:</strong> If the user needs to be alerted about something dealing with this 
 test, this tag can contain a string that will be shown to the user after the 
 test ends.</p>
-<p><strong>Tag:</strong> PreInstallMessage<br>
-<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
-<strong>Internal Reference:</strong> P_TEST_PREINSTALLMSG<br>
-<strong>Required:</strong> No<br>
-<strong>Description:</strong> If the user needs to be alerted about something dealing with this 
-test, this tag can contain a string that will be shown to the user before the 
-test is installed but after the files are downloaded.</p>
 <h2>PhoronixTestSuite/TestSettings/Default/</h2>
 <p><strong>Tag:</strong> Arguments<br>
 <strong>Location:</strong> PhoronixTestSuite/TestSettings/Default/<br>
