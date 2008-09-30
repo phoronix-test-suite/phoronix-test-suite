@@ -40,7 +40,7 @@ function is_test($object)
 {
 	$type = pts_test_type($object);
 
-	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || TYPE_OS_TEST || $type == TYPE_OS_LOCAL_TEST || $type == TYPE_SCTP_TEST || $type == TYPE_BASE_TEST;
+	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_OS_TEST || $type == TYPE_OS_LOCAL_TEST || $type == TYPE_SCTP_TEST || $type == TYPE_BASE_TEST;
 }
 function pts_test_type($identifier)
 {
