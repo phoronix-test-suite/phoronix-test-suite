@@ -358,6 +358,9 @@ else if(is_suite($TO_RUN))
 	$TEST_RUN = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 	$TEST_ARGS = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
 	$TEST_ARGS_DESCRIPTION = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
+
+	$SUITE_PRE_RUN_MESSAGE = $xml_parser->getXMLArrayValues(P_SUITE_PRERUNMSG);
+
 	unset($xml_parser);
 }
 else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE == "LOCAL_COMPARISON"))
@@ -399,6 +402,11 @@ if($SAVE_RESULTS && (!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMP
 
 	if(!empty($new_test_description))
 		$test_description = $new_test_description;
+}
+
+if(is_suite($TO_RUN))
+{
+	pts_user_message($SUITE_PRE_RUN_MESSAGE);
 }
 
 // Run the test process
