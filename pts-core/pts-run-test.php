@@ -360,6 +360,7 @@ else if(is_suite($TO_RUN))
 	$TEST_ARGS_DESCRIPTION = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
 
 	$SUITE_PRE_RUN_MESSAGE = $xml_parser->getXMLArrayValues(P_SUITE_PRERUNMSG);
+	$SUITE_POST_RUN_MESSAGE = $xml_parser->getXMLArrayValues(P_SUITE_POSTRUNMSG);
 
 	unset($xml_parser);
 }
@@ -411,6 +412,11 @@ if(is_suite($TO_RUN))
 
 // Run the test process
 pts_recurse_call_tests($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
+
+if(is_suite($TO_RUN))
+{
+	pts_user_message($SUITE_POST_RUN_MESSAGE);
+}
 
 define("PTS_TESTING_DONE", 1);
 pts_module_process("__post_run_process");

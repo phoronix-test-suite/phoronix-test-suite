@@ -15,6 +15,7 @@ Phoronix Test Suite
 - pts-core: Add PostRunMessage tag for showing the user a message after the test has run
 - pts-core: Add PostInstallMessage tag for showing the user a message after the test has run
 - pts-core: Add PreRunMessage tag to the suite specification for showing the user a message before testing begins (similar to PreRunMessage in tests)
+- pts-core: Add PostRunMessage tag to the suite specification for showing the user a message before testing begins (similar to PostRunMessage in tests)
 - pts: Move pcqs tests out of tree
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module
 

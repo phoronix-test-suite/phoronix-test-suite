@@ -91,6 +91,7 @@ define("P_SUITE_DESCRIPTION", "PhoronixTestSuite/SuiteInformation/Description");
 define("P_SUITE_MAINTAINER", "PhoronixTestSuite/SuiteInformation/Maintainer"); // Suite maintainer
 define("P_SUITE_TYPE", "PhoronixTestSuite/SuiteInformation/TestType"); // Suite Type
 define("P_SUITE_PRERUNMSG", "PhoronixTestSuite/SuiteInformation/PreRunMessage"); // Pre-run message
+define("P_SUITE_POSTRUNMSG", "PhoronixTestSuite/SuiteInformation/PostRunMessage"); // Post-run message
 
 define("P_SUITE_TEST_NAME", "PhoronixTestSuite/RunTest/Test"); // Names of tests in suite
 define("P_SUITE_TEST_ARGUMENTS", "PhoronixTestSuite/RunTest/Arguments"); // Arguments of tests in suite
