@@ -114,7 +114,7 @@ case "$OPTION_HANDLE" in
 "remove-all-results")
 	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_ALL_RESULTS
 	;;
-"upload" | "upload-result" | "upload-saved-result")
+"upload" | "upload-result" | "upload-results" | "upload-saved-result")
 	$PHP_BIN pts-core/pts-run-cmd.php UPLOAD_RESULT $OPTION_ARG
 	;;
 "make-download-cache")
@@ -224,7 +224,7 @@ Result Viewing Options:
 	remove-result <saved name>: Remove this saved result file
 	remove-all-results: Removes all saved results
 	merge-results <saved Name 1 / Global ID> <saved Name 2 / Global ID> <save name>: Merge two sets of results
-	upload <saved name>: Upload a saved set of results to Phoronix Global
+	upload-results <saved name>: Upload a saved set of results to Phoronix Global
 	login: Enter your Phoronix Global log-in information for uploading results
 
 Module Options:

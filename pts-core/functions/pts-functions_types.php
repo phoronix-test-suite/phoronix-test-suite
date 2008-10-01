@@ -252,14 +252,14 @@ function pts_contained_tests($object, $include_extensions = FALSE)
 
 	return array_unique($tests);
 }
-function pts_find_result_file($file)
+function pts_find_result_file($file, $check_global = true)
 {
 	// PTS Find A Saved File
 	if(is_file($file))
 		$USE_FILE = $file;
 	else if(is_file(SAVE_RESULTS_DIR . $file . "/composite.xml"))
 		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
-	else if(pts_is_global_id($file))
+	else if($check_global && pts_is_global_id($file))
 		$USE_FILE = "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $file;
 	else
 		$USE_FILE = FALSE;

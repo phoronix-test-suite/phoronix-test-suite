@@ -530,22 +530,16 @@ switch($COMMAND)
 	case "UPLOAD_RESULT":
 		require_once("pts-core/functions/pts-functions-run.php");
 
-		if(is_file($ARG_1))
-			$USE_FILE = $ARG_1;
-		else if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
-			$USE_FILE = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml";
-		else
+		$USE_FILE = pts_find_result_file($ARG_1, FALSE);
+
+		if($USE_FILE == FALSE)
 		{
 			echo "\nThis result doesn't exist!\n";
 			exit(0);
 		}
 
-		echo "\nTags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
-		$tags_input = trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
+		$tags_input = pts_promt_user_tags();
 		echo "\n";
-
-		if(empty($tags_input))
-			$tags_input = pts_global_auto_tags(array($RESULTS_IDENTIFIER));
 
 		$upload_url = pts_global_upload_result($USE_FILE, $tags_input);
 
