@@ -21,7 +21,6 @@
 		<Option>
 			<DisplayName>Type</DisplayName>
 			<Identifier>run-type</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>Write</Name>

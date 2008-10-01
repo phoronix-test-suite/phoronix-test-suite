@@ -21,7 +21,7 @@
 		<Option>
 			<DisplayName>Disk To Read</DisplayName>
 			<Identifier>disk-to-read</Identifier>
-			<ArgumentName>-t </ArgumentName>
+			<ArgumentPrefix>-t </ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>First SATA Disk (sda)</Name>

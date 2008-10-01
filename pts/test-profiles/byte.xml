@@ -21,7 +21,7 @@
 		<Option>
 			<DisplayName>Computational Test</DisplayName>
 			<Identifier>compute-test</Identifier>
-			<ArgumentName>TEST_</ArgumentName>
+			<ArgumentPrefix>TEST_</ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>Dhrystone 2</Name>

@@ -35,7 +35,7 @@
 		<Option>
 			<DisplayName>HDR</DisplayName>
 			<Identifier>hdr-rendering</Identifier>
-			<ArgumentName>+r_hdr </ArgumentName>
+			<ArgumentPrefix>+r_hdr </ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>Yes</Name>

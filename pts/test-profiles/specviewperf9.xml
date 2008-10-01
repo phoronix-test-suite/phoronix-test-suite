@@ -22,7 +22,6 @@
 		<Option>
 			<DisplayName>SPECViewPerf Test</DisplayName>
 			<Identifier>run-test</Identifier>
-			<ArgumentName></ArgumentName>
 			<Menu>
 				<Entry>
 					<Name>3dsmax-04</Name>

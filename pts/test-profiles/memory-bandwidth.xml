@@ -21,7 +21,7 @@
 		<Option>
 			<DisplayName>Memory Test</DisplayName>
 			<Identifier>memory-test</Identifier>
-			<ArgumentName>TEST_</ArgumentName>
+			<ArgumentPrefix>TEST_</ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>L2 Cache Sequential Read</Name>

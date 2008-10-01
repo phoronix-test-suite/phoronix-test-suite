@@ -24,7 +24,7 @@
 		<Option>
 			<DisplayName>Time To Loop</DisplayName>
 			<Identifier>time-to-loop</Identifier>
-			<ArgumentName>-loop </ArgumentName>
+			<ArgumentPrefix>-loop </ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>5 Seconds</Name>

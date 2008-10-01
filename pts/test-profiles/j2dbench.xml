@@ -21,7 +21,7 @@
 		<Option>
 			<DisplayName>Rendering Test</DisplayName>
 			<Identifier>rendering-test</Identifier>
-			<ArgumentName>TEST_</ArgumentName>
+			<ArgumentPrefix>TEST_</ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>All Rendering Tests</Name>

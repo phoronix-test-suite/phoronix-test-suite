@@ -26,7 +26,7 @@
 		<Option>
 			<DisplayName>Quality Setting</DisplayName>
 			<Identifier>quality-setting</Identifier>
-			<ArgumentName>--fps_test=</ArgumentName>
+			<ArgumentPrefix>--fps_test=</ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>High</Name>

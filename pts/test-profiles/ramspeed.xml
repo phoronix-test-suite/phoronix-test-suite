@@ -23,7 +23,7 @@
 		<Option>
 			<DisplayName>Type</DisplayName>
 			<Identifier>run-type</Identifier>
-			<ArgumentName></ArgumentName>
+			<ArgumentPrefix></ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>Copy</Name>
@@ -50,7 +50,7 @@
 		<Option>
 			<DisplayName>Benchmark</DisplayName>
 			<Identifier>benchmark</Identifier>
-			<ArgumentName>-b </ArgumentName>
+			<ArgumentPrefix>-b </ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>Integer</Name>
@@ -65,7 +65,7 @@
 		<Option>
 			<DisplayName>Length</DisplayName>
 			<Identifier>length</Identifier>
-			<ArgumentName>-l </ArgumentName>
+			<ArgumentPrefix>-l </ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>3 Times</Name>

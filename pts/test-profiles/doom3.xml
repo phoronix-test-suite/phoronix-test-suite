@@ -35,7 +35,7 @@
 		<Option>
 			<DisplayName>Quality</DisplayName>
 			<Identifier>game-quality</Identifier>
-			<ArgumentName>+set com_machineSpec </ArgumentName>
+			<ArgumentPrefix>+set com_machineSpec </ArgumentPrefix>
 			<Menu>
 				<Entry>
 					<Name>Low</Name>
