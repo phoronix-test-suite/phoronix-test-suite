@@ -212,9 +212,9 @@ switch($COMMAND)
 			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
 				include_once($module_file);
 
-			eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
-			eval("\$module_version = " . $module . "::module_version;");
-			eval("\$module_author = " . $module . "::module_author;");
+			$module_name = pts_php_module_call($module, "module_name");
+			$module_version = pts_php_module_call($module, "module_version");
+			$module_author = pts_php_module_call($module, "module_author");
 
 			printf("%-19ls - %-25ls [Author: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
 		}
@@ -440,11 +440,11 @@ switch($COMMAND)
 
 			if($module_type == "PHP")
 			{
-				eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
-				eval("\$module_version = " . $module . "::module_version;");
-				eval("\$module_author = " . $module . "::module_author;");
-				eval("\$module_description = " . $module . "::module_description;");
-				eval("\$module_information = " . $module . "::module_info();");
+				$module_name = pts_php_module_call($module, "module_name");
+				$module_version = pts_php_module_call($module, "module_version");
+				$module_author = pts_php_module_call($module, "module_author");
+				$module_description = pts_php_module_call($module, "module_description");
+				$module_information = pts_php_module_call($module, "module_information");
 			}
 			else if($module_type == "SH")
 			{
@@ -481,9 +481,9 @@ switch($COMMAND)
 			if(!in_array($module, $GLOBALS["PTS_MODULES"]) && !class_exists($module))
 				include(MODULE_DIR . $module . ".php");
 
-			eval("\$module_name = " . $module . "::module_name;"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
-			eval("\$module_description = " . $module . "::module_description;");
-			eval("\$module_setup = " . $module . "::module_setup();");
+			$module_name = pts_php_module_call($module, "module_name");
+			$module_description = pts_php_module_call($module, "module_description");
+			$module_setup = pts_php_module_call($module, "module_setup");
 
 			echo pts_string_header("Module: " . $module_name);
 			echo $module_description . "\n";

@@ -23,6 +23,7 @@ Phoronix Test Suite
 - pts-core: Clean-up SH module calls by using the new pts_sh_module_call()
 - pts-core: Add pts_remove() as a recursive file/directory removing function
 - pts-core: Fix fatal error with list-modules when a module unloads itself and is then re-included
+- pts-core: Clean-up PHP module calls by using the new pts_php_module_call()
 - pts: Move pcqs tests out of tree
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module
 

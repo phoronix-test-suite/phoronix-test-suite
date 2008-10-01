@@ -161,6 +161,12 @@ function pts_sh_module_call($module, $process)
 	if(is_file($module_file))
 		return trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
 }
+function pts_php_module_call($module, $process)
+{
+	eval("\$module_val = " . $module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+
+	return $module_val;
+}
 function pts_module_process($process)
 {
 	// Run a module process on all registered modules
@@ -170,9 +176,9 @@ function pts_module_process($process)
 		$MODULE_RESPONSE = null;
 
 		if(pts_module_type($module) == "PHP")
-			eval("\$MODULE_RESPONSE = " . $module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+			$MODULE_RESPONSE = pts_php_module_call($module, $process);
 		else
-			pts_sh_module_call($module, $process);
+			$MODULE_RESPONSE = pts_sh_module_call($module, $process);
 
 		if(!empty($MODULE_RESPONSE))
 		{
