@@ -32,6 +32,9 @@ then
 	exit
 fi
 
+rm -rf $INSTALL_PREFIX/share/phoronix-test-suite/
+rm -rf $INSTALL_PREFIX/share/doc/phoronix-test-suite/
+
 mkdir -p $INSTALL_PREFIX/bin/
 mkdir -p $INSTALL_PREFIX/share/man/man1/
 mkdir -p $INSTALL_PREFIX/share/phoronix-test-suite/
