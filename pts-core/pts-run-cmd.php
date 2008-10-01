@@ -221,9 +221,9 @@ switch($COMMAND)
 		foreach(glob(MODULE_DIR . "*.sh") as $module_file)
 		{
 		 	$module = basename($module_file, ".sh");
-			$module_name = trim(shell_exec("sh " . $module_file . " module_name"));
-			$module_version = trim(shell_exec("sh " . $module_file . " module_version"));
-			$module_author = trim(shell_exec("sh " . $module_file . " module_author"));
+			$module_name = pts_sh_module_call($module, "module_name");
+			$module_version = pts_sh_module_call($module, "module_version");
+			$module_author = pts_sh_module_call($module, "module_author");
 
 			printf("%-19ls - %-25ls [Author: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
 		}
@@ -448,11 +448,11 @@ switch($COMMAND)
 			}
 			else if($module_type == "SH")
 			{
-				$module_name = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_name"));
-				$module_version = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_version"));
-				$module_author = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_author"));
-				$module_description = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_description"));
-				$module_information = trim(shell_exec("sh " . MODULE_DIR . $module . ".sh module_info"));
+				$module_name = pts_sh_module_call($module, "module_name");
+				$module_version = pts_sh_module_call($module, "module_version");
+				$module_author = pts_sh_module_call($module, "module_author");
+				$module_description = pts_sh_module_call($module, "module_description");
+				$module_information = pts_sh_module_call($module, "module_info");
 			}
 
 			echo pts_string_header("Module: " . $module_name);
@@ -528,7 +528,7 @@ switch($COMMAND)
 			$URL = false;
 
 		if($URL != FALSE)
-			shell_exec("sh pts-core/scripts/launch-browser.sh $URL &");
+			shell_exec("sh pts-core/scripts/launch-browser.sh $URL 2>&1");
 		else
 			echo "\n$ARG_1 was not found.\n";
 		break;

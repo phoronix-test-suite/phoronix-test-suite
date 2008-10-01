@@ -154,6 +154,13 @@ function pts_module_processes()
 	return array("__startup", "__pre_install_process", "__pre_test_install", "__post_test_install", "__post_install_process", 
 			"__pre_run_process", "__pre_test_run", "__interim_test_run", "__post_test_run", "__post_run_process", "__shutdown");
 }
+function pts_sh_module_call($module, $process)
+{
+	$module_file = MODULE_DIR . $module . ".sh";
+
+	if(is_file($module_file))
+		return trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
+}
 function pts_module_process($process)
 {
 	// Run a module process on all registered modules
@@ -165,7 +172,7 @@ function pts_module_process($process)
 		if(pts_module_type($module) == "PHP")
 			eval("\$MODULE_RESPONSE = " . $module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 		else
-			shell_exec("sh " . MODULE_DIR . $module . ".sh " . $process);
+			pts_sh_module_call($module, $process);
 
 		if(!empty($MODULE_RESPONSE))
 		{

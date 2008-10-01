@@ -20,6 +20,7 @@ Phoronix Test Suite
 - pts-core: Don't call wget directly to download files but use pts_download()
 - pts-core: Set user-agent in pts_download() to PhoronixTestSuite/<PTS Codename>
 - pts-core: Add support for using curl to download files instead of just wget
+- pts-core: Clean-up SH module calls by using the new pts_sh_module_call()
 - pts: Move pcqs tests out of tree
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module
 
