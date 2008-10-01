@@ -31,6 +31,7 @@ Phoronix Test Suite
 - pts-core: Various minor improvements in pts-run-cmd.php
 - pts-core: Move test option handling to using pts_test_options() and new pts_test_option() objects
 - pts-core: Fix regression from Alpha 1 that caused no test information to be reported with list-test-usage option
+- pts-core: Add ArgumentPrefix tag to test profile support as a replacement to using the ArgumentName tag
 - pts: Move pcqs tests out of tree
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module
 - install-sh: Remove the Phoronix Test Suite shared and documentation files prior to copying over new files, in case some files were changed removed in new release

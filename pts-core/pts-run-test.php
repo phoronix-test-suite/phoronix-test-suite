@@ -271,9 +271,6 @@ if(is_test($TO_RUN))
 				$USER_ARGS .= $o->get_option_prefix() . $o->get_option_value(($bench_choice - 1)) . " ";
 			}
 		}
-		$TEST_RUN = array($TO_RUN);
-		$TEST_ARGS = array($USER_ARGS);
-		$TEST_ARGS_DESCRIPTION = array($TEXT_ARGS);
 	}
 	else
 	{
@@ -320,7 +317,9 @@ if(is_test($TO_RUN))
 		for($i = 0; $i < count($TEST_ARGS); $i++) // needed at this time to fill up the array same size as the number of options present
 			array_push($TEST_RUN, $TO_RUN);
 	}
-
+	print_r($TEST_ARGS);
+	print_r($TEST_ARGS_DESCRIPTION);
+	exit;
 	if($SAVE_RESULTS)
 	{
 		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));
