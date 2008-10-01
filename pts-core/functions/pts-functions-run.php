@@ -149,6 +149,26 @@ function pts_prompt_save_file_name($check_env = true)
 
 	return array($PROPOSED_FILE_NAME, $CUSTOM_TITLE);
 }
+function pts_promt_user_tags($default_tags = "")
+{
+	$tags_input = "";
+
+	if(!IS_BATCH_MODE)
+	{
+		echo "\nTags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
+		$tags_input .= trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
+	}
+
+	if(empty($tags_input))
+	{
+		if(!is_array($default_tags) && !empty($default_tags))
+			$default_tags = array($default_tags);
+
+		$tags_input = pts_global_auto_tags($default_tags);
+	}
+
+	return $tags_input;
+}
 function pts_input_string_to_identifier($input)
 {
 	$input = pts_swap_user_variables($input);
