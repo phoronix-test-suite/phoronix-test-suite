@@ -359,8 +359,8 @@ else if(is_suite($TO_RUN))
 	$TEST_ARGS = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
 	$TEST_ARGS_DESCRIPTION = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
 
-	$SUITE_PRE_RUN_MESSAGE = $xml_parser->getXMLArrayValues(P_SUITE_PRERUNMSG);
-	$SUITE_POST_RUN_MESSAGE = $xml_parser->getXMLArrayValues(P_SUITE_POSTRUNMSG);
+	$SUITE_PRE_RUN_MESSAGE = $xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
+	$SUITE_POST_RUN_MESSAGE = $xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
 
 	unset($xml_parser);
 }
