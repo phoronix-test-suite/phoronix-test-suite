@@ -421,39 +421,18 @@ switch($COMMAND)
 
 			if(is_file(MODULE_DIR . $module . ".php"))
 			{
-				$module_type = "PHP";
-
 				if(!in_array($module, $GLOBALS["PTS_MODULES"]) && !class_exists($module))
-					include(MODULE_DIR . $module . ".php");
-			}
-			else if(is_file(MODULE_DIR . $module . ".sh"))
-			{
-				$module_type = "SH";
-			}
-			else
-			{
-				$module_type = "UNKNOWN";
+					include_once(MODULE_DIR . $module . ".php");
 			}
 
 			if(in_array($module, $GLOBALS["PTS_MODULES"]))
 				$pre_message = "** This module is currently loaded. **\n";
 
-			if($module_type == "PHP")
-			{
-				$module_name = pts_php_module_call($module, "module_name");
-				$module_version = pts_php_module_call($module, "module_version");
-				$module_author = pts_php_module_call($module, "module_author");
-				$module_description = pts_php_module_call($module, "module_description");
-				$module_information = pts_php_module_call($module, "module_information");
-			}
-			else if($module_type == "SH")
-			{
-				$module_name = pts_sh_module_call($module, "module_name");
-				$module_version = pts_sh_module_call($module, "module_version");
-				$module_author = pts_sh_module_call($module, "module_author");
-				$module_description = pts_sh_module_call($module, "module_description");
-				$module_information = pts_sh_module_call($module, "module_info");
-			}
+			$module_name = pts_module_call($module, "module_name");
+			$module_version = pts_module_call($module, "module_version");
+			$module_author = pts_module_call($module, "module_author");
+			$module_description = pts_module_call($module, "module_description");
+			$module_information = pts_module_call($module, "module_information");
 
 			echo pts_string_header("Module: " . $module_name);
 			echo $pre_message;

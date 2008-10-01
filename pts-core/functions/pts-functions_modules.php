@@ -154,6 +154,15 @@ function pts_module_processes()
 	return array("__startup", "__pre_install_process", "__pre_test_install", "__post_test_install", "__post_install_process", 
 			"__pre_run_process", "__pre_test_run", "__interim_test_run", "__post_test_run", "__post_run_process", "__shutdown");
 }
+function pts_module_call($module, $process)
+{
+	if(pts_module_type($module) == "PHP")
+		$module_response = pts_php_module_call($module, $process);
+	else
+		$module_response = pts_sh_module_call($module, $process);
+
+	return $module_response;
+}
 function pts_sh_module_call($module, $process)
 {
 	$module_file = MODULE_DIR . $module . ".sh";
@@ -163,7 +172,10 @@ function pts_sh_module_call($module, $process)
 }
 function pts_php_module_call($module, $process)
 {
-	eval("\$module_val = " . $module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+	if(method_exists($module, $process))
+		eval("\$module_val = " . $module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+	else
+		eval("\$module_val = " . $module . "::" . $process . ";");
 
 	return $module_val;
 }
@@ -175,10 +187,7 @@ function pts_module_process($process)
 		$GLOBALS["PTS_MODULE_CURRENT"] = $module;
 		$MODULE_RESPONSE = null;
 
-		if(pts_module_type($module) == "PHP")
-			$MODULE_RESPONSE = pts_php_module_call($module, $process);
-		else
-			$MODULE_RESPONSE = pts_sh_module_call($module, $process);
+		$MODULE_RESPONSE = pts_module_call($module, $process);
 
 		if(!empty($MODULE_RESPONSE))
 		{
