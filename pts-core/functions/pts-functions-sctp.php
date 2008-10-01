@@ -27,7 +27,7 @@ function sctp_test_directory()
 }
 function remote_sctp_test_files()
 {
-	shell_exec("rm -rf " . sctp_test_directory() . " 2>&1");
+	return pts_remove(sctp_test_directory());
 }
 function generate_sctp_layer()
 {

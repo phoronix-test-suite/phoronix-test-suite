@@ -701,6 +701,26 @@ function pts_user_message($message)
 		}
 	}
 }
+function pts_remove($object)
+{
+	if(!file_exists($object))
+		return FALSE;
+
+	if(is_file($object))
+		return unlink($object);
+
+	$directory = dir($object);
+	while(($entry = $directory->read()) !== FALSE)
+	{
+		if($entry != "." && $entry != "..")
+		{
+			pts_remove($object . "/" . $entry);
+		}
+	}
+	$directory->close();
+
+	return rmdir($object);
+}
 function pts_download($download, $to)
 {
 	$to_file = basename($to);
