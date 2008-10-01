@@ -152,6 +152,7 @@ else
 	}
 }
 
+define("SAVE_FILE_NAME", $PROPOSED_FILE_NAME);
 $RESULTS = new tandem_XmlWriter();
 $RESULTS_IDENTIFIER = "";
 
@@ -399,6 +400,7 @@ if(is_suite($TO_RUN))
 }
 
 // Run the test process
+
 pts_recurse_call_tests($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
 
 if(is_suite($TO_RUN))

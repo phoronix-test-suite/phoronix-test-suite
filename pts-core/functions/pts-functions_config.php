@@ -110,6 +110,7 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 
 	$config->addXmlObject(P_OPTION_TEST_SLEEPTIME, 4, pts_read_user_config(P_OPTION_TEST_SLEEPTIME, "8", $read_config));
 	$config->addXmlObject(P_OPTION_LOG_VSYSDETAILS, 4, pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "FALSE", $read_config));
+	$config->addXmlObject(P_OPTION_LOG_BENCHMARKFILES, 4, pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE", $read_config));
 
 	$config->addXmlObject(P_OPTION_BATCH_SAVERESULTS, 5, $BatchOptions[0]);
 	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 5, $BatchOptions[1]);

@@ -511,6 +511,14 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		if(is_file($benchmark_log_file))
 		{
+			if(defined("TEST_RESULTS_IDENTIFIER") && pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")))
+			{
+				$backup_log_dir = SAVE_RESULTS_DIR . SAVE_FILE_NAME . "/benchmark-logs/" . TEST_RESULTS_IDENTIFIER . "/";
+				$backup_filename = basename($benchmark_log_file);
+				@mkdir($backup_log_dir, 0777, TRUE);
+				@copy($benchmark_log_file, $backup_log_dir . $backup_filename);
+			}
+
 			@unlink($benchmark_log_file);
 		}
 	}
