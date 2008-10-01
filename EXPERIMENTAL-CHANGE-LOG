@@ -26,6 +26,7 @@ Phoronix Test Suite
 - pts-core: Clean-up PHP module calls by using the new pts_php_module_call()
 - pts-core: Add pts_module_call() as a meta function for pts_sh_module_call() and pts_php_module_call()
 - pts-core: Move Phoronix Global tag creation code into pts_promt_user_tags()
+- pts-core: Move test note creation code for saved results into pts_generate_test_notes()
 - pts: Move pcqs tests out of tree
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module
 - install-sh: Remove the Phoronix Test Suite shared and documentation files prior to copying over new files, in case some files were changed removed in new release

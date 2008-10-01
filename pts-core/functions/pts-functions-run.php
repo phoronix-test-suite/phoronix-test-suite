@@ -169,6 +169,47 @@ function pts_promt_user_tags($default_tags = "")
 
 	return $tags_input;
 }
+function pts_generate_test_notes()
+{
+	$check_processes = array(
+		"Compiz" => array("compiz", "compiz.real"),
+		"Firefox" => array("firefox", "mozilla-firefox", "mozilla-firefox-bin", "firefox-bin"),
+		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin", "thunderbird-bin"),
+		"BOINC" => array("boinc", "boinc_client")
+		);
+
+	$test_notes = pts_process_running_string($check_processes);
+
+	// Power Saving Technologies?
+	$cpu_savings = pts_processor_power_savings_enabled();
+	if(!empty($cpu_savings))
+	{
+		$test_notes .= " \n" . $cpu_savings;
+	}
+
+	$cpu_mode = pts_report_power_mode();
+	if(!empty($cpu_mode))
+	{
+		$test_notes .= " \n" . $cpu_mode;
+	}
+
+	$virtualized = pts_report_virtualized_mode();
+	if(!empty($virtualized))
+		$test_notes .= " \n" . $virtualized;
+
+	if($test_type == "Graphics" || $test_type == "System")
+	{
+		$aa_level = graphics_antialiasing_level();
+		$af_level = graphics_anisotropic_level();
+
+		if(!empty($aa_level))
+			$test_notes .= " \nAntialiasing: $aa_level.";
+		if(!empty($af_level))
+			$test_notes .= " \nAnisotropic Filtering: $af_level.";
+	}
+
+	return $test_notes;
+}
 function pts_input_string_to_identifier($input)
 {
 	$input = pts_swap_user_variables($input);
