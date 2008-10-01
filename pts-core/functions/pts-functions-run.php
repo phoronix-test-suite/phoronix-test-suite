@@ -754,30 +754,26 @@ function pts_test_options($identifier)
 
 	for($option_count = 0; $option_count < count($settings_name); $option_count++)
 	{
-		if(!empty($settings_menu[$option_count]))
+		$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
+		$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
+		$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
+		pts_auto_process_test_option($settings_identifier[$option_count], $option_names, $option_values);
+
+		$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
+		$prefix = $settings_argument_prefix[$option_count];
+
+		if(empty($prefix)) // Backwards compatibility
+			$prefix = $settings_argument[$option_count]; // Drop this when ArgumentName has been removed from PTS entirely
+
+		$user_option->set_option_prefix($prefix);
+		$user_option->set_option_postfix($settings_argument_postfix[$option_count]);
+
+		for($i = 0; $i < count($option_names) && $i < count($option_values); $i++)
 		{
-			$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
-			$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
-			$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
-			pts_auto_process_test_option($settings_identifier[$option_count], $option_names, $option_values);
-
-			$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
-
-			$prefix = $settings_argument_prefix[$option_count];
-
-			if(empty($prefix)) // Backwards compatibility
-				$prefix = $settings_argument[$option_count]; // Drop this when ArgumentName has been removed from PTS entirely
-
-			$user_option->set_option_prefix($prefix);
-			$user_option->set_option_postfix($settings_argument_postfix[$option_count]);
-
-			for($i = 0; $i < count($option_names) && $i < count($option_values); $i++)
-			{
-				$user_option->add_option($option_names[$i], $option_values[$i]);
-			}
-
-			array_push($test_options, $user_option);
+			$user_option->add_option($option_names[$i], $option_values[$i]);
 		}
+
+		array_push($test_options, $user_option);
 	}
 
 	return $test_options;
