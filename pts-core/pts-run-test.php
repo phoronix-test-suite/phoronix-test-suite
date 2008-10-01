@@ -202,7 +202,7 @@ if(is_test($TO_RUN))
 				}
 				while(empty($value));
 
-				$USER_ARGS .= $o->get_option_prefix() . $value;
+				$USER_ARGS .= $o->get_option_prefix() . $value . $o->get_option_postfix();
 			}
 			else
 			{
@@ -268,9 +268,12 @@ if(is_test($TO_RUN))
 				if($this_option_pos < (count($test_options) - 1))
 					$TEXT_ARGS .= " - ";
 
-				$USER_ARGS .= $o->get_option_prefix() . $o->get_option_value(($bench_choice - 1)) . " ";
+				$USER_ARGS .= $o->get_option_prefix() . $o->get_option_value(($bench_choice - 1)) . $o->get_option_postfix() . " ";
 			}
 		}
+		$TEST_RUN = array($TO_RUN);
+		$TEST_ARGS = array($USER_ARGS);
+		$TEST_ARGS_DESCRIPTION = array($TEXT_ARGS);
 	}
 	else
 	{
@@ -290,7 +293,7 @@ if(is_test($TO_RUN))
 			for($i = 0; $i < $o->option_count(); $i++)
 			{
 				// A bit redundant processing, but will ensure against malformed XML problems and extra stuff added
-				$this_arg = $o->get_option_prefix() . $o->get_option_value($i);
+				$this_arg = $o->get_option_prefix() . $o->get_option_value($i) . $o->get_option_postfix();
 				$this_arg_description = $o->get_name() . ": " . $o->get_option_name($i);
 
 				if(($cut_point = strpos($this_arg_description, "(")) > 1 && strpos($this_arg_description, ")") > $cut_point)
@@ -317,9 +320,7 @@ if(is_test($TO_RUN))
 		for($i = 0; $i < count($TEST_ARGS); $i++) // needed at this time to fill up the array same size as the number of options present
 			array_push($TEST_RUN, $TO_RUN);
 	}
-	print_r($TEST_ARGS);
-	print_r($TEST_ARGS_DESCRIPTION);
-	exit;
+
 	if($SAVE_RESULTS)
 	{
 		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));

@@ -746,6 +746,7 @@ function pts_test_options($identifier)
 	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
 	$settings_argument = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGUMENTNAME); // TODO: Use of ArgumentName has been deprecated in PTS 1.4+
 	$settings_argument_prefix = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPREFIX);
+	$settings_argument_postfix = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPOSTFIX);
 	$settings_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
 	$settings_menu = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
 
@@ -768,6 +769,7 @@ function pts_test_options($identifier)
 				$prefix = $settings_argument[$option_count]; // Drop this when ArgumentName has been removed from PTS entirely
 
 			$user_option->set_option_prefix($prefix);
+			$user_option->set_option_postfix($settings_argument_postfix[$option_count]);
 
 			for($i = 0; $i < count($option_names) && $i < count($option_values); $i++)
 			{

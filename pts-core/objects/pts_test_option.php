@@ -26,6 +26,7 @@ class pts_test_option
 	var $identifier = "";
 	var $option_name = "";
 	var $prefix = "";
+	var $postfix = "";
 	var $options = array();
 
 	public function __construct($identifier, $option)
@@ -36,6 +37,10 @@ class pts_test_option
 	public function set_option_prefix($prefix)
 	{
 		$this->prefix = $prefix;
+	}
+	public function set_option_postfix($postfix)
+	{
+		$this->postfix = $postfix;
 	}
 	public function get_identifier()
 	{
@@ -48,6 +53,10 @@ class pts_test_option
 	public function get_option_prefix()
 	{
 		return $this->prefix;
+	}
+	public function get_option_postfix()
+	{
+		return $this->postfix;
 	}
 	public function add_option($name, $value)
 	{
