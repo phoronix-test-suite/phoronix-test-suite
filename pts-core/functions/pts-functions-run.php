@@ -467,32 +467,35 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
 	$TEST_RESULTS_ARRAY = array();
 
+	$extra_runtime_variables = pts_run_additional_vars($test_identifier);
+
 	if(is_file(pts_location_test_resources($test_identifier) . "pre.sh"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec("sh " . pts_location_test_resources($test_identifier) . "/pre.sh " . $test_directory, pts_run_additional_vars($test_identifier));
+		pts_exec("sh " . pts_location_test_resources($test_identifier) . "/pre.sh " . $test_directory, $extra_runtime_variables);
 	}
 	if(is_file(pts_location_test_resources($test_identifier) . "/pre.php"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec(PHP_BIN . " " . pts_location_test_resources($test_identifier) . "/pre.php " . $test_directory, pts_run_additional_vars($test_identifier));
+		pts_exec(PHP_BIN . " " . pts_location_test_resources($test_identifier) . "/pre.php " . $test_directory, $extra_runtime_variables);
 	}
 
 	pts_user_message($pre_run_message);
 
-	pts_debug_message("cd $to_execute && ./$execute_binary $pts_test_arguments");
 	for($i = 0; $i < $times_to_run; $i++)
 	{
+		$benchmark_log_file = TEST_ENV_DIR . $test_identifier . "/" . $test_identifier . "-" . THIS_RUN_TIME . "-" . $i . ".log";
+		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array("LOG_FILE" => $benchmark_log_file));
 		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
-		echo $test_results = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $pts_test_arguments, pts_run_additional_vars($test_identifier));
+		echo $test_results = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $pts_test_arguments, $test_extra_runtime_variables);
 
 		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
 			if(is_file(pts_location_test_resources($test_identifier) . "parse-results.php"))
 			{
-				$test_results = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . pts_location_test_resources($test_identifier) . "parse-results.php \"" . $test_results . "\"", pts_run_additional_vars($test_identifier));
+				$test_results = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . pts_location_test_resources($test_identifier) . "parse-results.php \"" . $test_results . "\"", $test_extra_runtime_variables);
 			}
 
 			if(!empty($test_results))
@@ -509,11 +512,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	if(is_file(pts_location_test_resources($test_identifier) . "post.sh"))
 	{
-		pts_exec("sh " . pts_location_test_resources($test_identifier) . "post.sh " . $test_directory, pts_run_additional_vars($test_identifier));
+		pts_exec("sh " . pts_location_test_resources($test_identifier) . "post.sh " . $test_directory, $extra_runtime_variables);
 	}
 	if(is_file(pts_location_test_resources($test_identifier) . "post.php"))
 	{
-		pts_exec(PHP_BIN . " " . pts_location_test_resources($test_identifier) . "post.php " . $test_directory, pts_run_additional_vars($test_identifier));
+		pts_exec(PHP_BIN . " " . pts_location_test_resources($test_identifier) . "post.php " . $test_directory, $extra_runtime_variables);
 	}
 
 	// End
