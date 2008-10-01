@@ -423,13 +423,6 @@ pts_module_process("__post_run_process");
 
 if($SAVE_RESULTS)
 {
-	$check_processes = array(
-		"Compiz" => array("compiz", "compiz.real"),
-		"Firefox" => array("firefox", "mozilla-firefox", "mozilla-firefox-bin", "firefox-bin"),
-		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin", "thunderbird-bin"),
-		"BOINC" => array("boinc", "boinc_client")
-		);
-
 	$test_notes = pts_generate_test_notes();
 
 	$id = pts_request_new_id();
