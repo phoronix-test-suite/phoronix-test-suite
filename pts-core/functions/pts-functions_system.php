@@ -141,12 +141,12 @@ function os_version()
 function kernel_string()
 {
 	// Returns kernel
-	return trim(shell_exec("uname -r"));
+	return trim(shell_exec("uname -r 2>&1"));
 }
 function kernel_arch()
 {
 	// Find out the kernel archiecture
-	$kernel_arch = trim(shell_exec("uname -m"));
+	$kernel_arch = trim(shell_exec("uname -m 2>&1"));
 
 	if($kernel_arch == "X86-64")
 		$kernel_arch = "x86_64";
@@ -257,7 +257,7 @@ function operating_system_release()
 		}
 
 		if($os == "Unknown")
-			$os = shell_exec("uname -s");
+			$os = shell_exec("uname -s 2>&1");
 	}
 	else
 		$os = $vendor . " " . $version;
