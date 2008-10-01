@@ -179,53 +179,55 @@ if(is_test($TO_RUN))
 {
 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
-	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
-	$settings_argument = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGUMENTNAME);
-	$settings_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
-	$settings_menu = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
-	$test_title_shown = false;
+	$test_options = pts_test_options($TO_RUN);
 
 	if(!IS_BATCH_MODE)
 	{
 		$USER_ARGS = "";
 		$TEXT_ARGS = "";
-		for($option_count = 0; $option_count < count($settings_name); $option_count++)
+		echo pts_string_header("Test Configuration: " . $test_title);
+
+		for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
 		{
-			$this_identifier = $settings_identifier[$option_count];
+			$o = $test_options[$this_option_pos];
+			$option_count = $o->option_count();
 
-			if(!empty($settings_menu[$option_count]))
+			if($option_count == 0)
 			{
-				$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
-				$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
-				$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
-				pts_auto_process_test_option($this_identifier, $option_names, $option_values);
-
-				if(count($option_values) == 1)
+				// User inputs their option
+				do
 				{
+					echo "\n" . $o->get_name() . "\n" . "Enter Value: ";
+					$value = strtolower(trim(fgets(STDIN)));
+				}
+				while(empty($value));
+
+				$USER_ARGS .= $o->get_option_prefix() . $value;
+			}
+			else
+			{
+				if($option_count == 1)
+				{
+					// Only one option in menu, so auto-select it
 					$bench_choice = 1;
 				}
 				else
 				{
-					if(!$test_title_shown)
-					{
-						echo pts_string_header("Test Configuration: " . $test_title);
-						$test_title_shown = true;
-					}
-					else
-						echo "\n";
-
-					echo $settings_name[$option_count] . ":\n";
+					// Have the user select the desired option
+					echo "\n" . $o->get_name() . ":\n";
+					$all_option_names = $o->get_all_option_names();
 					$first_try = true;
+
 					do
 					{
 						echo "\n";
-						for($i = 0; $i < count($option_names); $i++)
+						for($i = 0; $i < $option_count; $i++)
 						{
-							echo ($i + 1) . ": " . $option_names[$i] . "\n";
+							echo ($i + 1) . ": " . $o->get_option_name($i) . "\n";
 						}
 						echo "\nPlease Enter Your Choice: ";
 
-						if($first_try && ($auto_opt = getenv(strtoupper($TO_RUN) . "_" . $option_count)) != FALSE)
+						if($first_try && ($auto_opt = getenv(strtoupper($TO_RUN) . "_" . $this_option_pos)) != FALSE)
 						{
 							$bench_choice = $auto_opt;
 							echo $bench_choice . "\n";
@@ -235,46 +237,38 @@ if(is_test($TO_RUN))
 
 						$first_try = false;
 					}
-					while(($bench_choice < 1 || $bench_choice > count($option_names)) && !in_array($bench_choice, $option_names));
+					while(($bench_choice < 1 || $bench_choice > $option_count) && !in_array($bench_choice, $all_option_names));
 
-					if(!is_numeric($bench_choice) && in_array($bench_choice, $option_names))
-						for($i = 0; $i < count($option_names); $i++)
-							if($option_names[$i] == $bench_choice)
+					if(!is_numeric($bench_choice) && in_array($bench_choice, $all_option_names))
+					{
+						$match_made = false;
+
+						for($i = 0; $i < $option_count && !$match_made; $i++)
+						{
+							if($o->get_option_name($i) == $bench_choice)
+							{
 								$bench_choice = ($i + 1);
+								$match_made = true;
+							}
+						}
+					}
 				}
-				$option_display_name = $option_names[($bench_choice - 1)];
 
-				if(($cut_point = strpos($option_display_name, '(')) > 1 && strpos($option_display_name, ')') > $cut_point)
+				// Format the selected option
+				$option_display_name = $o->get_option_name(($bench_choice - 1));
+
+				if(($cut_point = strpos($option_display_name, "(")) > 1 && strpos($option_display_name, ")") > $cut_point)
 					$option_display_name = substr($option_display_name, 0, $cut_point);
 
-				if(count($settings_name) > 1)
-					$TEXT_ARGS .= $settings_name[$option_count] . ": ";
+				if(count($test_options) > 1)
+					$TEXT_ARGS .= $o->get_name() . ": ";
 
 				$TEXT_ARGS .= $option_display_name;
 
-				if($option_count < count($settings_name) - 1)
+				if($this_option_pos < (count($test_options) - 1))
 					$TEXT_ARGS .= " - ";
 
-				$USER_ARGS .= $settings_argument[$option_count] . $option_values[($bench_choice - 1)] . " ";
-			}
-			else
-			{
-				if(!$test_title_shown)
-				{
-					echo pts_string_header("Test Configuration: " . $test_title);
-					$test_title_shown = true;
-				}
-				else
-					echo "\n";
-
-				do
-				{
-					echo $settings_name[$option_count] . "\n" . "Enter Value: ";
-					$value = strtolower(trim(fgets(STDIN)));
-				}
-				while(empty($value));
-
-				$USER_ARGS .= $settings_argument[$option_count] . $value;
+				$USER_ARGS .= $o->get_option_prefix() . $o->get_option_value(($bench_choice - 1)) . " ";
 			}
 		}
 		$TEST_RUN = array($TO_RUN);
@@ -288,38 +282,32 @@ if(is_test($TO_RUN))
 		$batch_all_args_description = array();
 		$description_separate = " ";
 
-		for($option_count = 0; $option_count < count($settings_name); $option_count++)
+		for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
 		{
-			$this_identifier = $settings_identifier[$option_count];
-			if(!empty($settings_menu[$option_count]))
+			$o = $test_options[$this_option_pos];
+			$option_count = $o->option_count();
+
+			$option_args = array();
+			$option_args_description = array();
+
+			for($i = 0; $i < $o->option_count(); $i++)
 			{
-				$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
-				$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
-				$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
-				pts_auto_process_test_option($this_identifier, $option_names, $option_values);
+				// A bit redundant processing, but will ensure against malformed XML problems and extra stuff added
+				$this_arg = $o->get_option_prefix() . $o->get_option_value($i);
+				$this_arg_description = $o->get_name() . ": " . $o->get_option_name($i);
 
-				$option_args = array();
-				$option_args_description = array();
+				if(($cut_point = strpos($this_arg_description, "(")) > 1 && strpos($this_arg_description, ")") > $cut_point)
+					$this_arg_description = substr($this_arg_description, 0, $cut_point);
 
-				for($i = 0; $i < count($option_names) && $i < count($option_values); $i++)
-				{
-					// A bit redundant processing, but will ensure against malformed XML problems and extra stuff added
-					$this_arg = $settings_argument[$option_count] . $option_values[$i];
-					$this_arg_description = $settings_name[$option_count] . ": " . $option_names[$i];
-
-					if(($cut_point = strpos($this_arg_description, '(')) > 1 && strpos($this_arg_description, ')') > $cut_point)
-						$this_arg_description = substr($this_arg_description, 0, $cut_point);
-
-					array_push($option_args, $this_arg);
-					array_push($option_args_description, $this_arg_description);
-				}
-
-				if($i > 1)
-					$description_separate = " - ";
-
-				array_push($batch_all_args_real, $option_args);
-				array_push($batch_all_args_description, $option_args_description);
+				array_push($option_args, $this_arg);
+				array_push($option_args_description, $this_arg_description);
 			}
+
+			if($i > 1)
+				$description_separate = " - ";
+
+			array_push($batch_all_args_real, $option_args);
+			array_push($batch_all_args_description, $option_args_description);
 		}
 
 		$TEST_ARGS = array();

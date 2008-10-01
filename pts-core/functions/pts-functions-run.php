@@ -740,4 +740,38 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 		}
 	}
 }
+function pts_test_options($identifier)
+{
+	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
+	$settings_argument = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGUMENTNAME);
+	$settings_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
+	$settings_menu = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
+
+	$test_options = array();
+
+	for($option_count = 0; $option_count < count($settings_name); $option_count++)
+	{
+		if(!empty($settings_menu[$option_count]))
+		{
+			$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
+			$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
+			$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
+			pts_auto_process_test_option($settings_identifier[$option_count], $option_names, $option_values);
+
+			$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
+			$user_option->set_option_prefix($settings_argument[$option_count]);
+
+			for($i = 0; $i < count($option_names) && $i < count($option_values); $i++)
+			{
+				$user_option->add_option($option_names[$i], $option_values[$i]);
+			}
+
+			array_push($test_options, $user_option);
+		}
+	}
+
+	return $test_options;
+}
+
 ?>
