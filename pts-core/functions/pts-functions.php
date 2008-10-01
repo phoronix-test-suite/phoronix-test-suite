@@ -706,6 +706,7 @@ function pts_download($download, $to)
 	$to_file = basename($to);
 	$to_dir = dirname($to);
 	$download_output = "";
+	$user_agent = "PhoronixTestSuite/" . PTS_CODENAME;
 
 	if(strpos($to_file, ".") === FALSE)
 		$to_file = basename($download);
@@ -713,12 +714,12 @@ function pts_download($download, $to)
 	if(IS_MACOSX)
 	{
 		// curl download
-		$download_output = shell_exec("cd " . $to_dir . " && curl " . $download . " > " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && curl --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
 	}
 	else
 	{
 		// wget download
-		$download_output = shell_exec("cd " . $to_dir . " && wget " . $download . " -O " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && wget --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
 	}
 
 	return $download_output;
