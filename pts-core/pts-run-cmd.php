@@ -250,7 +250,7 @@ switch($COMMAND)
 		printf("%-22ls   %-20ls %-20ls %-3ls\n", "TEST", "INSTALL TIME", "LAST RUN", "TIMES RUN");
 		foreach(pts_installed_tests_array() as $identifier)
 		{
-			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test(TEST_ENV_DIR . $identifier . "/pts-install.xml"));
+			$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml");
 			$test_time_install = $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);
 			$test_time_lastrun = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
 			$test_times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
