@@ -42,14 +42,13 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
 		{
+			$saved_identifier = basename($saved_results_file, ".xml");
 			$xml_parser = new tandem_XmlReader($saved_results_file);
 			$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 			$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
 			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 			$results_xml = new tandem_XmlReader($raw_results[0]);
 			$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
-			$dirpath = explode("/", dirname($saved_results_file));
-			$saved_identifier = array_pop($dirpath);
 
 			if(!empty($title))
 			{
@@ -120,6 +119,7 @@ switch($COMMAND)
 		if($COMMAND == "FORCE_INSTALL_ALL")
 			define("PTS_FORCE_INSTALL", 1);
 
+		pts_module_process("__pre_install_process");
 		foreach(pts_available_tests_array() as $test)
 		{
 			// Any external dependencies?
@@ -128,6 +128,7 @@ switch($COMMAND)
 			// Install tests
 			pts_start_install($test);
 		}
+		pts_module_process("__post_install_process");
 		break;
 	case "INSTALL_EXTERNAL_DEPENDENCIES":
 		require_once("pts-core/functions/pts-functions-install.php");
@@ -323,11 +324,12 @@ switch($COMMAND)
 			$test_license = $xml_parser->getXMLValue(P_TEST_LICENSE);
 			$test_status = $xml_parser->getXMLValue(P_TEST_STATUS);
 			$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
-			$test_download_size = pts_estimated_download_size($ARG_1);
-			$test_environment_size = pts_test_estimated_environment_size($ARG_1);
 			$test_estimated_length = $xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
 			$test_dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 			$test_projecturl = $xml_parser->getXMLValue(P_TEST_PROJECTURL);
+
+			$test_download_size = pts_estimated_download_size($ARG_1);
+			$test_environment_size = pts_test_estimated_environment_size($ARG_1);
 
 			if(empty($test_title))
 				pts_exit($ARG_1 . " is not a Phoronix Test Suite test.");
@@ -499,12 +501,7 @@ switch($COMMAND)
 		}
 		break;
 	case "SHOW_RESULT":
-		if(is_file(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml"))
-			$URL = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml";
-		//else if(pts_is_global_id($ARG_1))
-		//	$URL = "http://global.phoronix-test-suite.com/index.php?k=profile&u=" . trim($ARG_1);
-		else
-			$URL = false;
+		$URL =  pts_find_result_file($ARG_1);
 
 		if($URL != FALSE)
 			shell_exec("sh pts-core/scripts/launch-browser.sh $URL 2>&1");
@@ -555,8 +552,7 @@ switch($COMMAND)
 		{
 			foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
 			{
-				$dirpath = explode('/', dirname($saved_results_file));
-				$saved_identifier = array_pop($dirpath);
+				$saved_identifier = basename($saved_results_file, ".xml");
 				pts_remove_saved_result($saved_identifier);
 			}
 			echo "\n";
