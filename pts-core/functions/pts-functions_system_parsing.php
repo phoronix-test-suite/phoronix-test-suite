@@ -535,7 +535,7 @@ function read_hddtemp($disk = null)
 		{
 			$unit = substr($info, $end_pos + 2, 1);
 			if($unit == "F")
-				$temperature = ($temperature - 32) * 5 / 9;
+				$temperature = pts_trim_double((($temperature - 32) * 5 / 9));
 
 			$hdd_temperature = $temperature;
 		}

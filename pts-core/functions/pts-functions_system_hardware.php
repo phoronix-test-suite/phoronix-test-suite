@@ -189,6 +189,11 @@ function system_line_voltage($type)
 
 	return $voltage;
 }
+function system_hdd_temperature($disk = null)
+{
+	// Attempt to read temperature using hddtemp
+	return read_hddtemp($disk);
+}
 function system_power_mode()
 {
 	// Returns the power mode

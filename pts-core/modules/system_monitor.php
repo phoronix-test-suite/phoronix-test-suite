@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.2.0";
+	const module_version = "1.2.1";
 	const module_description = "This module contains sensor monitoring support.";
 	const module_author = "Michael Larabel";
 
@@ -66,6 +66,11 @@ class system_monitor extends pts_module_interface
 		{	
 			define("MONITOR_CPU_TEMP", 1);
 			pts_module::save_file(".s/CPU_TEMPERATURE");
+		}
+		if(in_array("hdd.temp", $to_show)  || $monitor_temp)
+		{	
+			define("MONITOR_HDD_TEMP", 1);
+			pts_module::save_file(".s/HDD_TEMPERATURE");
 		}
 		if(in_array("sys.temp", $to_show)  || $monitor_temp)
 		{	
@@ -177,6 +182,19 @@ class system_monitor extends pts_module_interface
 			if(is_array($this_array) && !empty($this_array[0]))
 			{
 				array_push($device, "CPU");
+				array_push($type, "Thermal");
+				array_push($unit, "°C");
+				array_push($m_array, $this_array);
+				array_push($type_index["THERMAL"], count($m_array) - 1);
+			}
+		}
+		if(defined("MONITOR_HDD_TEMP"))
+		{
+			$this_array = self::parse_monitor_log(".s/HDD_TEMPERATURE");
+
+			if(is_array($this_array) && !empty($this_array[0]))
+			{
+				array_push($device, "HDD");
 				array_push($type, "Thermal");
 				array_push($unit, "°C");
 				array_push($m_array, $this_array);
@@ -486,6 +504,13 @@ class system_monitor extends pts_module_interface
 			if($temp != -1)
 				pts_module::save_file(".s/CPU_TEMPERATURE", $temp, true);
 		}
+		if(defined("MONITOR_HDD_TEMP"))
+		{
+			$temp = system_hdd_temperature();
+
+			if($temp != -1)
+				pts_module::save_file(".s/HDD_TEMPERATURE", $temp, true);
+		}
 		if(defined("MONITOR_SYS_TEMP"))
 		{
 			$temp = system_temperature();
@@ -603,7 +628,7 @@ class system_monitor extends pts_module_interface
 	}
 	private function monitor_arguments()
 	{
-		return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "all.memory", "gpu.temp", "cpu.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.freq", "gpu.usage", "cpu.usage", "system.memory", "swap.memory", "total.memory");
+		return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "all.memory", "gpu.temp", "cpu.temp", "hdd.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.freq", "gpu.usage", "cpu.usage", "system.memory", "swap.memory", "total.memory");
 	}
 }
 
