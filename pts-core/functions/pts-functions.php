@@ -193,7 +193,7 @@ function pts_save_result($save_to = null, $save_results = null)
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-		if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || getenv("SAVE_SYSTEM_DETAILS") != FALSE))
+		if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || IS_PCQS_MODE || getenv("SAVE_SYSTEM_DETAILS") != FALSE))
 		{
 			// Save verbose system information here
 			if(!is_dir($save_to_dir . "/system-details/"))
