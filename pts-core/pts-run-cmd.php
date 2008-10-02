@@ -434,7 +434,7 @@ switch($COMMAND)
 			$module_version = pts_module_call($module, "module_version");
 			$module_author = pts_module_call($module, "module_author");
 			$module_description = pts_module_call($module, "module_description");
-			$module_information = pts_module_call($module, "module_information");
+			$module_information = pts_module_call($module, "module_info");
 
 			echo pts_string_header("Module: " . $module_name);
 			echo $pre_message;
