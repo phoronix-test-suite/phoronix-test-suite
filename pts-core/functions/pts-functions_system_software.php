@@ -203,6 +203,9 @@ function pts_process_running_bool($process)
 	else
 		$running = false;
 
+	if(IS_MACOSX)
+		$running = false;
+
 	return $running;
 }
 function pts_process_running_string($process_arr)
