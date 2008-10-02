@@ -578,7 +578,7 @@ class system_monitor extends pts_module_interface
 		{
 			$usage = graphics_gpu_usage();
 
-			if($usage != "")
+			if($usage != -1)
 				pts_module::save_file(".s/GPU_USAGE", $usage, true);
 		}
 		if(defined("MONITOR_CPU_USAGE"))

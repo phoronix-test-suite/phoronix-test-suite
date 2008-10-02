@@ -792,7 +792,7 @@ function opengl_version()
 function graphics_gpu_usage()
 {
 	// Determine GPU usage
-	$gpu_usage = 0;
+	$gpu_usage = -1;
 
 	if(IS_ATI_GRAPHICS)
 	{
