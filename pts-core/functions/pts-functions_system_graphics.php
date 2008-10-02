@@ -96,7 +96,7 @@ function graphics_monitor_count()
 		}
 		else if(IS_ATI_GRAPHICS)
 		{
-			$amdpcsdb_enabled_monitors = amd_pcsdb_parser("SYSTEM/BUSID-*/DDX,EnableMonitor");
+			$amdpcsdb_enabled_monitors = read_amd_pcsdb("SYSTEM/BUSID-*/DDX,EnableMonitor");
 
 			if(!is_array($amdpcsdb_enabled_monitors))
 				$amdpcsdb_enabled_monitors = array($amdpcsdb_enabled_monitors);
@@ -152,7 +152,7 @@ function graphics_monitor_layout()
 			// Something went wrong with xdpy information, go to fallback support
 			if(IS_ATI_GRAPHICS)
 			{
-				$amdpcsdb_monitor_layout = amd_pcsdb_parser("SYSTEM/BUSID-*/DDX,DesktopSetup");
+				$amdpcsdb_monitor_layout = read_amd_pcsdb("SYSTEM/BUSID-*/DDX,DesktopSetup");
 
 				if(!is_array($amdpcsdb_monitor_layout))
 					$amdpcsdb_monitor_layout = array($amdpcsdb_monitor_layout);
@@ -613,7 +613,7 @@ function graphics_processor_string()
 
 	if(IS_ATI_GRAPHICS)
 	{
-		$crossfire_status = amd_pcsdb_parser("SYSTEM/Crossfire/chain/*,Enable");
+		$crossfire_status = read_amd_pcsdb("SYSTEM/Crossfire/chain/*,Enable");
 		$crossfire_card_count = 0;
 
 		if(!is_array($crossfire_status))
