@@ -699,7 +699,7 @@ function pts_global_auto_tags($extra_attr = NULL)
 	if(kernel_arch() == "x86_64")
 		array_push($tags_array, "64-bit Linux");
 
-	$os = operating_system_release()();
+	$os = operating_system_release();
 	if($os != "Unknown")
 		array_push($tags_array, $os);
 
