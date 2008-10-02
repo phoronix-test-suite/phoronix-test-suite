@@ -43,9 +43,12 @@ function filesystem_type()
 {
 	// Determine file-system type
 	$fs = shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null");
+	
+	if(IS_MACOSX)
+		$fs = read_osx_system_profiler("SPSerialATADataType", "FileSystem");
 
 	if(empty($fs) || IS_BSD)
-		return "Unknown";
+		$fs = "Unknown";
 
 	return $fs;
 }
@@ -85,7 +88,22 @@ function os_vendor()
 function os_version()
 {
 	// Returns OS version
-	return read_lsb("Release");
+	$os_version = read_lsb("Release");
+	
+	if(IS_MACOSX)
+	{
+		$os = read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
+		
+		$start_pos = strpos($os, ".");
+		$end_pos = strrpos($os, ".");
+		$start_pos = strrpos(substr($os, 0, $start_pos), " ");
+		$end_pos = strpos($os, " ", $end_pos);
+		
+		$os_version = substr($os, $start_pos + 1, $end_pos - $start_pos);
+	}
+	
+	
+	return $os_version;
 }
 function operating_system_release()
 {
@@ -131,6 +149,14 @@ function operating_system_release()
 
 	if(($break_point = strpos($os, ":")) > 0)
 		$os = substr($os, $break_point + 1);
+		
+	if(IS_MACOSX)
+	{
+		$os = read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
+		
+		if(($cut_point = strpos($os, "(")) > 0)
+			$os = substr($os, 0, $cut_point);
+	}
 
 	$os = trim($os);
 

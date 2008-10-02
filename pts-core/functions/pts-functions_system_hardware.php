@@ -24,6 +24,11 @@
 function main_system_hardware_string()
 {
 	// Returns the motherboard / system model name or number
+	if(IS_MACOSX)
+	{
+		return read_osx_system_profiler("SPHardwareDataType", "ModelName");	
+	}
+	
 	$vendor = read_system_hal(array("system.hardware.vendor", "system.board.vendor", "pci.subsys_vendor"));
 	$product = read_system_hal(array("system.hardware.product", "system.board.product"));
 	$version = read_system_hal("system.hardware.version");
@@ -109,6 +114,19 @@ function motherboard_chipset_string()
 			$info .= " + " . $southbridge_extract;
 		}
 	}
+	
+	if(IS_MACOSX)
+	{
+		$sb_vendor = read_osx_system_profiler("SPSerialATADataType", "Vendor");
+		$sb_product = read_osx_system_profiler("SPSerialATADataType", "Product");
+		
+		if(($cut_point = strpos($sb_product, " ")) > 0)
+			$sb_product = substr($sb_product, 0, $cut_point);
+			
+		// TODO: Can't find Northbridge
+			
+		$info = $sb_vendor . " " . $sb_product;
+	}
 
 	return $info;
 }
@@ -136,6 +154,16 @@ function memory_mb_capacity()
 	else if(IS_BSD)
 	{
 		$info = floor(read_sysctl("hw.realmem") / 1048576);
+	}
+	else if(IS_MACOSX)
+	{
+		$info = read_osx_system_profiler("SPHardwareDataType", "Memory");
+		$info = explode(" ", $info);
+		
+		if(isset($info[1]) && $info[1] == "GB")
+			$info = $info[0] * 1024;
+		else
+			$info = $info[0];
 	}
 	else
 		$info = "Unknown";

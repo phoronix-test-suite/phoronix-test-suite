@@ -543,5 +543,30 @@ function read_hddtemp($disk = null)
 
 	return $hdd_temperature;
 }
+function read_osx_system_profiler($data_type, $object)
+{
+	$info = trim(shell_exec("system_profiler " . $data_type . " 2>&1"));
+	$lines = explode("\n", $info);
+	$value = FALSE;
+
+	for($i = 0; $i < count($lines) && $value == FALSE; $i++)
+	{
+		$line = explode(":", $lines[$i]);
+		$line_object = str_replace(" ", "", $line[0]);
+		
+		if(($cut_point = strpos($line_object, "(")) > 0)
+			$line_object = substr($line_object, 0, $cut_point);
+		
+		if($line_object == $object && isset($line[1]))
+		{
+			$this_value = trim($line[1]);
+			
+			if(!empty($this_value))
+				$value = $this_value;
+		}
+	}
+	
+	return $value;
+}
 
 ?>

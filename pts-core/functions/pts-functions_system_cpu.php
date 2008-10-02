@@ -39,9 +39,13 @@ function cpu_core_count()
 	{
 		$info = read_sysctl("hw.ncpu");
 	}
+	else if(IS_MACOSX)
+	{
+		$info = read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
+	}
 	else
 	{
-		$processors = 1;
+		$info = 1;
 	}
 
 	return $info;
@@ -114,6 +118,12 @@ function processor_string()
 		{
 			$info = read_sysctl("hw.model");
 			$info = append_processor_frequency(pts_clean_information_string($info), 0);
+		}
+		else if(IS_MACOSX)
+		{
+			$info = read_osx_system_profiler("SPHardwareDataType", "ProcessorName");
+			$info = append_processor_frequency(pts_clean_information_string($info), 0);
+
 		}
 		else
 			$info = "Unknown";
@@ -231,6 +241,15 @@ function current_processor_frequency($cpu_core = 0)
 	{
 		$info = read_sysctl("dev.cpu.0.freq");
 		$info = pts_trim_double(intval($info) / 1000, 2);
+	}
+	else if(IS_MACOSX)
+	{
+		$info = read_osx_system_profiler("SPHardwareDataType", "ProcessorSpeed");
+		
+		if(($cut_point = strpos($info, " ")) > 0)
+			$info = substr($info, 0, $cut_point);
+
+		$info = pts_trim_double($info, 2);
 	}
 	else
 		$info = 0;

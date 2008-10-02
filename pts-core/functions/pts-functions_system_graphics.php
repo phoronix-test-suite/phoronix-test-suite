@@ -497,6 +497,16 @@ function xrandr_screen_resolution()
 
 	return $info;
 }
+function osx_screen_resolution()
+{
+	$resolution = array();
+	$info = read_osx_system_profiler("SPDisplaysDataType", "Resolution");
+	$info = explode(" ", $info);
+	$resolution[0] = trim($info[0]);
+	$resolution[1] = trim($info[2]);
+
+	return $resolution;
+}
 function current_screen_resolution()
 {
 	// Return the current screen resolution
@@ -511,12 +521,24 @@ function current_screen_width()
 {
 	// Current screen width
 	$resolution = xrandr_screen_resolution();
+	
+	if(IS_MACOSX)
+	{
+		$resolution = osx_screen_resolution();
+	}
+	
 	return $resolution[0];
 }
 function current_screen_height()
 {
 	// Current screen height
 	$resolution = xrandr_screen_resolution();
+	
+	if(IS_MACOSX)
+	{
+		$resolution = osx_screen_resolution();
+	}
+	
 	return $resolution[1];
 }
 function graphics_processor_stock_frequency()
@@ -691,8 +713,16 @@ function graphics_processor_string()
 	{
 		$info .= " " . $video_ram . "MB";
 	}
-
+	
+	$clean_phrases = array("OpenGL Engine");
+	$info = str_replace($clean_phrases, "", $info);
+	
 	$info = pts_clean_information_string($info);
+	
+	if(IS_MACOSX)
+	{
+		$info .= " " . $video_ram . "MB";	
+	}
 
 	return $info;
 }
@@ -705,6 +735,12 @@ function graphics_subsystem_version()
 		$info = shell_exec("X -version 2>&1");
 
 	$pos = strrpos($info, "Release Date");
+	
+	if($pos == FALSE)
+	{
+		$pos = strrpos($info, "Build Date");
+	}
+	
 	$info = trim(substr($info, 0, $pos));
 
 	if($pos === FALSE)
@@ -756,6 +792,15 @@ function graphics_memory_capacity()
 				if($info > 65535)
 					$video_ram = intval($info) / 1024;
 			}
+		}
+		else if(IS_MACOSX)
+		{
+			$info = read_osx_system_profiler("SPDisplaysDataType", "VRAM");
+			$info = explode(" ", $info);
+			$video_ram = $info[0];
+			
+			if($info[1] == "GB")
+				$video_ram *= 1024;
 		}
 	}
 
