@@ -39,6 +39,7 @@ Phoronix Test Suite
 - pts-core: If SAVE_BENCHMARK_LOGS environmental variable is set, is the same as setting SaveBenchmarkLogs to TRUE for that run
 - pts-core: If SAVE_SYSTEM_DETAILS environmental variable is set, is the same as setting SaveSystemDetails to TRUE for that run
 - pts-core: Start on IS_PCQS_MODE define
+- pts-core: Cleanup pts-functions_system.php and move most of it to pts-functions_system_hardware.php and pts-functions_system_software.php
 - pts: Move pcqs tests out of tree
 - pts: Switch all relevant test profiles using ArgumentName to using ArgumentPrefix
 - pts: Move the byte test profile to using the new $LOG_FILE capability for an example and for testing

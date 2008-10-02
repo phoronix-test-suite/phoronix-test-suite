@@ -308,7 +308,7 @@ function pts_current_user()
 	$pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User");
 
 	if($pts_user == "Default User")
-		$pts_user = pts_user_name();
+		$pts_user = pts_system_user_name();
 
 	return $pts_user;
 }

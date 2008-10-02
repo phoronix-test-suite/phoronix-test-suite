@@ -83,7 +83,7 @@ if(function_exists("pts_module_start_process"))
 // Phoronix Test Suite - Functions
 function pts_copy($from, $to)
 {
-	// Copy file
+	// Copies a file
 	if(!is_file($to) || md5_file($from) != md5_file($to))
 		copy($from, $to);
 }
