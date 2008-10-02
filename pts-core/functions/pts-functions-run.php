@@ -187,13 +187,13 @@ function pts_generate_test_notes()
 		$test_notes .= " \n" . $cpu_savings;
 	}
 
-	$cpu_mode = pts_report_power_mode();
+	$cpu_mode = system_power_mode();
 	if(!empty($cpu_mode))
 	{
 		$test_notes .= " \n" . $cpu_mode;
 	}
 
-	$virtualized = pts_report_virtualized_mode();
+	$virtualized = system_virtualized_mode();
 	if(!empty($virtualized))
 		$test_notes .= " \n" . $virtualized;
 
@@ -699,7 +699,7 @@ function pts_global_auto_tags($extra_attr = NULL)
 	if(kernel_arch() == "x86_64")
 		array_push($tags_array, "64-bit Linux");
 
-	$os = os_vendor();
+	$os = operating_system_release()();
 	if($os != "Unknown")
 		array_push($tags_array, $os);
 

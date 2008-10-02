@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_report_virtualized_mode()
+function system_virtualized_mode()
 {
 	// Reports if system is running virtualized
 	$virtualized = "";
@@ -151,7 +151,7 @@ function pts_vendor_identifier()
 
 	return strtolower($vendor);
 }
-function pts_system_user_name()
+function system_user_name()
 {
 	// Gets the system user's name
 	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))

@@ -112,7 +112,7 @@ function motherboard_chipset_string()
 
 	return $info;
 }
-function pts_disk_total()
+function system_disk_total()
 {
 	// Returns amoung of disk space
 	return ceil(disk_total_space("/") / 1073741824);
@@ -189,7 +189,7 @@ function system_line_voltage($type)
 
 	return $voltage;
 }
-function pts_report_power_mode()
+function system_power_mode()
 {
 	// Returns the power mode
 	$power_state = read_acpi("/ac_adapter/AC/state", "state");
