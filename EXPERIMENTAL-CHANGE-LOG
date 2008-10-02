@@ -42,6 +42,7 @@ Phoronix Test Suite
 - pts-core: Cleanup pts-functions_system.php and move most of it to pts-functions_system_hardware.php and pts-functions_system_software.php
 - pts-core: Drop $OS from pts_env_variables() as instead test profile maintainers should use $OPERATING_SYSTEM
 - pts-core: Switch back to using read_amd_pcsdb() with read_amd_pcsdb_direct_parser() fallback instead of just read_amd_pcsdb_direct_parser() in hopes AMD doesn't break aticonfig again
+- pts-core: Add support for using hddtemp to read hard disk drive temperature on Linux
 - pts: Move pcqs tests out of tree
 - pts: Switch all relevant test profiles using ArgumentName to using ArgumentPrefix
 - pts: Move the byte test profile to using the new $LOG_FILE capability for an example and for testing

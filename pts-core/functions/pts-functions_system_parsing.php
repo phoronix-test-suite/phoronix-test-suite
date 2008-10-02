@@ -513,5 +513,35 @@ function read_system_memory_usage($TYPE = "TOTAL", $READ = "USED")
 
 	return $mem_usage;
 }
+function read_hddtemp($disk = null)
+{
+	// Read hard drive temperature using hddtemp
+	$hdd_temperature = -1;
+
+	if(empty($disk))
+	{
+		// TODO: Have it determine what disks are present and whether it's sdX or hdX, etc...
+		$disk = "/dev/sda";
+	}
+
+	// For most situations this won't work since hddtemp usually requires root access
+	$info = trim(shell_exec("hddtemp " . $disk . " 2>&1"));
+
+	if(($start_pos = strrpos($info, ": ")) > 0 && ($end_pos = strrpos($info, "°")) > $start_pos)
+	{
+		$temperature = substr($info, ($start_pos + 2), ($end_pos - $start_pos - 2));
+
+		if(is_numeric($temperature))
+		{
+			$unit = substr($info, $end_pos + 2, 1);
+			if($unit == "F")
+				$temperature = ($temperature - 32) * 5 / 9;
+
+			$hdd_temperature = $temperature;
+		}
+	}
+
+	return $hdd_temperature;
+}
 
 ?>
