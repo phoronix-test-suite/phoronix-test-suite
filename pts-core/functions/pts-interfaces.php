@@ -173,7 +173,7 @@ define("P_OPTION_PROMPT_DOWNLOADLOC", "PhoronixTestSuite/Options/General/PromptF
 define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/General/LoadModules"); // Modules to load by default
 
 define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Testing/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
-define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/Testing/LogVerboseSystemDetails"); // Log verbose system details?
+define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/Testing/SaveSystemDetails"); // Log verbose system details?
 define("P_OPTION_LOG_BENCHMARKFILES", "PhoronixTestSuite/Options/Testing/SaveBenchmarkLogs"); // Save benchmark logs?
 
 define("P_OPTION_TEST_REMOVEDOWNLOADS", "PhoronixTestSuite/Options/Installation/RemoveDownloadFiles"); // Remove downloaded files after test is installed
