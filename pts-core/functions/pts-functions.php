@@ -299,7 +299,6 @@ function pts_env_variables()
 		"VIDEO_MONITOR_LAYOUT" => graphics_monitor_layout(),
 		"VIDEO_MONITOR_SIZES" => graphics_monitor_resolutions(),
 		"OPERATING_SYSTEM" => pts_vendor_identifier(),
-		"OS" => os_vendor(),
 		"OS_VERSION" => os_version(),
 		"OS_ARCH" => kernel_arch(),
 		"OS_TYPE" => OPERATING_SYSTEM,
