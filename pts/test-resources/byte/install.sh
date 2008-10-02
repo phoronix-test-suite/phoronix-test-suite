@@ -12,18 +12,18 @@ cd bm/
 
 case \"\$1\" in
 \"TEST_DHRY2\")
-	./Run dhry2 > ../result
+	./Run dhry2 > \$LOG_FILE
 	;;
 \"TEST_REGISTER\")
-	./Run register > ../result
+	./Run register > \$LOG_FILE
 	;;
 \"TEST_INT\")
-	./Run int > ../result
+	./Run int > \$LOG_FILE
 	;;
 \"TEST_FLOAT\")
-	./Run float > ../result
+	./Run float > \$LOG_FILE
 	;;
 esac
 
-cat ../result | grep lps" > byte
+cat \$LOG_FILE | grep lps" > byte
 chmod +x byte

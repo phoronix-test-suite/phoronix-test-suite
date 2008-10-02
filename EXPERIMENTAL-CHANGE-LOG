@@ -38,6 +38,7 @@ Phoronix Test Suite
 - pts-core: In user-config.xml, change LogVerboseSystemDetails tag to SaveSystemDetails
 - pts: Move pcqs tests out of tree
 - pts: Switch all relevant test profiles using ArgumentName to using ArgumentPrefix
+- pts: Move the byte test profile to using the new $LOG_FILE capability for an example and for testing
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module
 - install-sh: Remove the Phoronix Test Suite shared and documentation files prior to copying over new files, in case some files were changed removed in new release
 

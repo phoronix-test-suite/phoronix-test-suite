@@ -1,6 +1,6 @@
 <?php
 
-$file = @file_get_contents("result");
+$file = @file_get_contents(getenv("LOG_FILE"));
 $results = trim(substr($file, 0, strrpos($file, "INDEX VALUES")));
 $results = trim(substr($results, 0, strrpos($results, "(")));
 
