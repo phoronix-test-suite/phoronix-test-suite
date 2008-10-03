@@ -176,7 +176,7 @@ function pts_save_result($save_to = null, $save_results = null)
 				else
 					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 
-				if(pts_gd_available())
+				if(pts_gd_available() && getenv("SVG_DEBUG") == FALSE)
 				{
 					// Render to PNG
 					$t->setRenderer("PNG");
@@ -184,7 +184,12 @@ function pts_save_result($save_to = null, $save_results = null)
 				}
 				else
 				{
-					echo "\nThe PHP GD extension is missing, so the experimental SVG rendering engine is being used.\n";
+					if(!defined("PHP_SVG_TEXT"))
+					{
+						echo "\nThe PHP GD extension is missing, so the experimental SVG rendering engine is being used.\n";
+						define("PHP_SVG_TEXT", 1);
+					}
+
 					// Render to SVG
 					$t->setRenderer("SVG");
 					pts_copy(RESULTS_VIEWER_DIR . "pts-svg-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");

@@ -63,6 +63,14 @@ list them in this tag with each architecture delimited by a comma.<br>
 <strong>Description:</strong> If the test software is limited to running on select operating systems, 
 list them in this tag with each OS being delimited by a comma.<br>
 <strong>Supported Values:</strong> Linux, Solaris, FreeBSD, BSD</p>
+<p><strong>Tag:</strong> UnsupportedPlatforms<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_UNSUPPORTEDPLATFORMS<br>
+<strong>Required:</strong> No - Defaults to assume all operating systems are supported<br>
+<strong>Description:</strong> If the test software is limited to running on select operating systems, 
+list the ones NOT supported by this test. This tag is the opposite of SupportedPlatforms. Operating systems 
+not listed here are assumed to be supported.<br>
+<strong>Supported Values:</strong> Linux, Solaris, FreeBSD, BSD</p>
 <p><strong>Tag:</strong> Extends<br>
 <strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
 <strong>Internal Reference:</strong> P_TEST_CTPEXTENDS<br>
