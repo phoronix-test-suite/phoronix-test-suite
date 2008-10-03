@@ -73,7 +73,7 @@ class pts_Graph
 	var $graph_maximum_value;
 
 	var $graph_output = null;
-	var $graph_renderer;
+	var $graph_renderer = "PNG";
 	var $graph_data = array();
 	var $graph_data_title = array();
 	var $graph_color_paint_index = -1;
@@ -85,7 +85,7 @@ class pts_Graph
 	var $graph_top_end;
 	var $graph_left_end;
 
-	public function __construct($Title, $SubTitle, $YTitle, $Renderer = "PNG")
+	public function __construct($Title, $SubTitle, $YTitle)
 	{
 		$this->graph_title = $Title;
 		$this->graph_sub_title = $SubTitle;
@@ -100,7 +100,9 @@ class pts_Graph
 			putenv("GDFONTPATH=" . $font_env);
 		else
 			putenv("GDFONTPATH=" . getcwd());
-
+	}
+	public function setRenderer($Renderer)
+	{
 		if($Renderer == "SVG")
 			$this->graph_renderer = "SVG";
 		else
@@ -230,7 +232,7 @@ class pts_Graph
 			$text_y = $CenterY + round($ttf_width / 2);
 		}
 
-		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
+		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String, "CENTER");
 	}
 	protected function find_longest_string($arr_string)
 	{
@@ -290,7 +292,7 @@ class pts_Graph
 		$text_x = $RightX - $ttf_width;
 		$text_y = $CenterY + round($ttf_height / 2);
 
-		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
+		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String, "RIGHT");
 	}
 	protected function write_text_left($String, $Size, $Color, $LeftX, $CenterY, $Rotate = FALSE)
 	{
@@ -317,7 +319,7 @@ class pts_Graph
 			$Rotation = 270;
 		}
 
-		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
+		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String, "LEFT");
 	}
 
 	//
@@ -534,13 +536,24 @@ class pts_Graph
 			if(function_exists("imageantialias"))
 				imageantialias($img, true);
 		}
+		else if($this->graph_renderer == "SVG")
+		{
+			$img = "<?xml version=\"1.0\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"" . $width . "\" height=\"" . $height . "\">\n\n";
+		}
 
 		return $img;
 	}
-	protected function render_image(&$img_object, $output_file, $quality)
+	protected function render_image(&$img_object, $output_file = null, $quality = 0)
 	{
 		if($this->graph_renderer == "PNG")
 			imagepng($img_object, $output_file, $quality);
+		else if($this->graph_renderer == "SVG")
+		{
+			$img_object .= "\n\n</svg>";
+
+			if($output_file != null)
+				@file_put_contents($output_file, $img_object);
+		}
 	}
 	protected function read_png_image($File)
 	{
@@ -553,33 +566,72 @@ class pts_Graph
 	{
 		if($this->graph_renderer == "PNG")
 			imagedestroy($img_object);
+		else if($this->graph_renderer == "SVG")
+			$img_object = null;
 	}
 	protected function convert_hex_to_type($Hex)
 	{
 		if($this->graph_renderer == "PNG")
 			$color = imagecolorallocate($this->graph_image, hexdec(substr($Hex, 1, 2)), hexdec(substr($Hex, 3, 2)), hexdec(substr($Hex, 5, 2)));
+		else if($this->graph_renderer == "SVG")
+			$color = $Hex;
 
 		return $color;
 	}
-	protected function write_image_text(&$img_object, $font_size, $rotation, $text_x, $text_y, $color, $font, $string)
+	protected function write_image_text(&$img_object, $font_size, $rotation, $text_x, $text_y, $color, $font, $string, $orientation = "LEFT")
 	{
 		if($this->graph_renderer == "PNG")
 			imagettftext($img_object, $font_size, $rotation, $text_x, $text_y, $color, $font, $string);
+		else if($this->graph_renderer == "SVG")
+		{
+			$baseline = "middle";
+
+			if($rotation != 0)
+			{
+				$text_y = (0 - ($text_y / 2));
+				$text_x = $text_y + 5;
+			}
+
+			switch($orientation)
+			{
+				case "CENTER":
+					$text_anchor = "middle";
+					$baseline = "text-before-edge";
+					break;
+				case "RIGHT":
+					$text_anchor = "end";
+					break;
+				case "LEFT":
+				default:
+					$text_anchor = "start";
+					break;
+
+			}
+
+			// TODO: Implement $font through style="font-family: $font;"
+			$img_object .= "<text x=\"" . $text_x . "\" y=\"" . $text_y . "\" fill=\"" . $color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\" >" . $string . "</text>\n";
+		}
 	}
 	protected function draw_rectangle(&$img_object, $x1, $y1, $width, $height, $background_color)
 	{
 		if($this->graph_renderer == "PNG")
 			imagefilledrectangle($img_object, $x1, $y1, $width, $height, $background_color);
+		else if($this->graph_renderer == "SVG")
+			$img_object .= "<rect x=\"" . $x1 . "\" y=\"" . $y1 . "\" width=\"" . ($width - $x1) . "\" height=\"" . ($height - $y1) . "\" fill=\"" . $background_color . "\" />\n";
 	}
 	protected function draw_rectangle_border(&$img_object, $x1, $y1, $width, $height, $color)
 	{
 		if($this->graph_renderer == "PNG")
 			imagerectangle($img_object, $x1, $y1, $width, $height, $color);
+		else if($this->graph_renderer == "SVG")
+			$img_object .= "<rect x=\"" . $x1 . "\" y=\"" . $y1 . "\" width=\"" . ($width - $x1) . "\" height=\"" . ($height - $y1) . "\" fill=\"transparent\" stroke=\"" . $color . "\" stroke-width=\"1px\" />\n";
 	}
 	protected function draw_line(&$img_object, $left_start, $top_start, $from_left, $from_top, $color)
 	{
 		if($this->graph_renderer == "PNG")
 			imageline($img_object, $left_start, $top_start, $from_left, $from_top, $color);
+		else if($this->graph_renderer == "SVG")
+			$img_object .= "<line x1=\"" . $left_start . "\" y1=\"" . $top_start . "\" x2=\"" . $from_left . "\" y2=\"" . $from_top . "\" stroke=\"" . $color . "\" stroke-width=\"1px\" />\n";
 	}
 	protected function return_ttf_string_dimensions($String, $Font, $Size, $Big = FALSE)
 	{
@@ -591,6 +643,12 @@ class pts_Graph
 			if($Big)
 				$box_array = imagettfbbox($Size, 0, $Font, "AZ@![]()@|_");
 			$box_height = $box_array[1] - $box_array[7];
+		}
+		else if($this->graph_renderer == "SVG")
+		{
+			// TODO: This really could be improved
+			$box_height = 0;
+			$box_width = 0;
 		}
 
 		// Width x Height
