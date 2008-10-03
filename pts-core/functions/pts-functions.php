@@ -176,7 +176,7 @@ function pts_save_result($save_to = null, $save_results = null)
 				else
 					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 
-				if(pts_gd_available() && FALSE)
+				if(pts_gd_available())
 				{
 					// Render to PNG
 					$t->setRenderer("PNG");
