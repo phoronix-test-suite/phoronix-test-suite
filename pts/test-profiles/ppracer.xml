@@ -9,6 +9,7 @@
 		<EnvironmentSize>23.3</EnvironmentSize>
 		<SupportedArchitectures>x86</SupportedArchitectures>
 		<ProjectURL>http://developer.berlios.de/projects/ppracer/</ProjectURL>
+		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Planet Penguin Racer</Title>
