@@ -108,6 +108,10 @@ class pts_Graph
 		else
 			$this->graph_renderer = "PNG";
 	}
+	public function getRenderer()
+	{
+		return $this->graph_renderer;
+	}
 
 	//
 	// Load Functions

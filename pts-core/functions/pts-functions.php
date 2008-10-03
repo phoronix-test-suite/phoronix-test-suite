@@ -99,7 +99,6 @@ function pts_gd_available()
 		}
 		else	*/
 			$gd_available = false;
-			echo "\nThe PHP GD extension must be loaded in order for the graphs to display!\n";
 	}
 	else
 		$gd_available = true;
@@ -130,9 +129,6 @@ function pts_save_result($save_to = null, $save_results = null)
 	pts_copy(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl", SAVE_RESULTS_DIR . "pts-results-viewer/pts-results-viewer.xsl");
 	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
 	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
-
-	if(!is_file($save_to_dir . "/pts-results-viewer.xsl") && !is_link($save_to_dir . "/pts-results-viewer.xsl"))
-		link(SAVE_RESULTS_DIR . "pts-results-viewer/pts-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
 	
 	if($save_to == null || $save_results == null)
 		$bool = true;
@@ -142,53 +138,64 @@ function pts_save_result($save_to = null, $save_results = null)
 
 		if($save_name == "composite")
 		{
-			if(pts_gd_available())
+			if(!is_dir($save_to_dir . "/result-graphs"))
 			{
-				if(!is_dir($save_to_dir . "/result-graphs"))
+				mkdir($save_to_dir . "/result-graphs");
+			}
+
+			$xml_reader = new tandem_XmlReader($save_results);
+			$results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
+			$results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
+			$results_attributes = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+			$results_scale = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
+			$results_proportion = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
+			$results_result_format = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
+			$results_raw = $xml_reader->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+
+			$results_identifiers = array();
+			$results_values = array();
+
+			foreach($results_raw as $result_raw)
+			{
+				$xml_results = new tandem_XmlReader($result_raw);
+				array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
+				array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
+			}
+
+			for($i = 0; $i < count($results_name); $i++)
+			{
+				if(strlen($results_version[$i]) > 2)
+					$results_name[$i] .= " v" . $results_version[$i];
+
+				if($results_result_format[$i] == "LINE_GRAPH")
+					$t = new pts_LineGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+				else if($results_result_format[$i] == "PASS_FAIL")
+					$t = new pts_PassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+				else if($results_result_format[$i] == "MULTI_PASS_FAIL")
+					$t = new pts_MultiPassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+				else
+					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+
+				if(pts_gd_available() && FALSE)
 				{
-					mkdir($save_to_dir . "/result-graphs");
+					// Render to PNG
+					$t->setRenderer("PNG");
+					pts_copy(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
+				}
+				else
+				{
+					echo "\nThe PHP GD extension is missing, so the experimental SVG rendering engine is being used.\n";
+					// Render to SVG
+					$t->setRenderer("SVG");
+					pts_copy(RESULTS_VIEWER_DIR . "pts-svg-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
 				}
 
-				$xml_reader = new tandem_XmlReader($save_results);
-				$results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
-				$results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
-				$results_attributes = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
-				$results_scale = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
-				$results_proportion = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
-				$results_result_format = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
-				$results_raw = $xml_reader->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
-
-				$results_identifiers = array();
-				$results_values = array();
-
-				foreach($results_raw as $result_raw)
-				{
-					$xml_results = new tandem_XmlReader($result_raw);
-					array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
-					array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
-				}
-
-				for($i = 0; $i < count($results_name); $i++)
-				{
-					if(strlen($results_version[$i]) > 2)
-						$results_name[$i] .= " v" . $results_version[$i];
-
-					if($results_result_format[$i] == "LINE_GRAPH")
-						$t = new pts_LineGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-					else if($results_result_format[$i] == "PASS_FAIL")
-						$t = new pts_PassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-					else if($results_result_format[$i] == "MULTI_PASS_FAIL")
-						$t = new pts_MultiPassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-					else
-						$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-
-					$t->loadGraphIdentifiers($results_identifiers[$i]);
-					$t->loadGraphValues($results_values[$i]);
-					$t->loadGraphProportion($results_proportion[$i]);
-					$t->loadGraphVersion(PTS_VERSION);
-					$t->save_graph($save_to_dir . "/result-graphs/" . ($i + 1) . ".png");
-					$t->renderGraph();
-				}
+				$t->loadGraphIdentifiers($results_identifiers[$i]);
+				$t->loadGraphValues($results_values[$i]);
+				$t->loadGraphProportion($results_proportion[$i]);
+				$t->loadGraphVersion(PTS_VERSION);
+				$t->save_graph($save_to_dir . "/result-graphs/" . ($i + 1) . "." . strtolower($t->getRenderer()));
+				$t->renderGraph();
 			}
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
