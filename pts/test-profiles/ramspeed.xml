@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.72</EnvironmentSize>
 		<ProjectURL>http://www.alasir.com/software/ramspeed/</ProjectURL>
+		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>RAMspeed</Title>

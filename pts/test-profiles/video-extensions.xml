@@ -9,6 +9,7 @@
 		<EnvironmentSize>30.0</EnvironmentSize>
 		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
 		<Extends>video-sample</Extends>
+		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>MPlayer Video Playback Tests</Title>

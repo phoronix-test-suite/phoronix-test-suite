@@ -1,13 +1,14 @@
 <PhoronixTestSuite>
 	<TestProfile>
 		<Version>1.0.0</Version>
-                <TestType>Graphics</TestType>
+		<TestType>Graphics</TestType>
 		<SoftwareType>Other</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.12</EnvironmentSize>
 		<ProjectURL>http://www.freedesktop.org/</ProjectURL>
+		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Render Bench</Title>

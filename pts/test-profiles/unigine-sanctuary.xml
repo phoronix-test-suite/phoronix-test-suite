@@ -9,6 +9,7 @@
 		<EnvironmentSize>55</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.unigine.com/</ProjectURL>
+		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Unigine Sanctuary</Title>

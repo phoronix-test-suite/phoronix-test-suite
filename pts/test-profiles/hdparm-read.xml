@@ -7,6 +7,7 @@
 		<Status>UNVERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<ProjectURL>http://sourceforge.net/projects/hdparm/</ProjectURL>
+		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>hdparm Timed Disk Reads</Title>

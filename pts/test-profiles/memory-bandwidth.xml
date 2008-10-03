@@ -7,6 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.05</EnvironmentSize>
+		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Bandwidth</Title>

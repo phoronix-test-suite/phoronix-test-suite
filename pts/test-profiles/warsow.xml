@@ -9,6 +9,7 @@
 		<EnvironmentSize>195</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.warsow.net/</ProjectURL>
+		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Warsow</Title>

@@ -2,24 +2,32 @@
 
 unzip -o UrbanTerror_41_FULL.zip
 
-cd UrbanTerror/
+mv UrbanTerror/ UrbanTerror_/
+cd UrbanTerror_/
 chmod +x ioUrbanTerror.i386
 chmod +x ioUrbanTerror.x86_64
+chmod +x ioUrbanTerror.app/Contents/MacOS/ioUrbanTerror.ub
 cd ..
 
 tar -xvf urbanterror-q3ut4-2.tar.gz
-mv -f autoexec.cfg UrbanTerror/q3ut4/
-mv -f pts1.dm_68 UrbanTerror/q3ut4/demos/
+mv -f autoexec.cfg UrbanTerror_/q3ut4/
+mv -f pts1.dm_68 UrbanTerror_/q3ut4/demos/
 
 echo "#!/bin/sh
-cd UrbanTerror/
+cd UrbanTerror_/
 
-case \$OS_ARCH in
-	\"x86_64\" )
-	./ioUrbanTerror.x86_64 \$@ 2>&1 | grep fps
-	;;
-	* )
-	./ioUrbanTerror.i386 \$@ 2>&1 | grep fps
-	;;
-esac" > urbanterror
+if [ \$OS_TYPE = \"MacOSX\" ]
+then
+	mkdir -p ~/Library/Application\ Support/Quake3
+	./ioUrbanTerror.app/Contents/MacOS/ioUrbanTerror.ub \$@ 2>&1 | grep fps
+else
+	case \$OS_ARCH in
+		\"x86_64\" )
+			./ioUrbanTerror.x86_64 \$@ 2>&1 | grep fps
+			;;
+		* )
+			./ioUrbanTerror.i386 \$@ 2>&1 | grep fps
+			;;
+	esac
+fi" > urbanterror
 chmod +x urbanterror

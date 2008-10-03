@@ -8,6 +8,7 @@
 		<Maintainer>Andrew Schofield</Maintainer>
 		<EnvironmentSize>22</EnvironmentSize>
 		<ProjectURL>http://mrbayes.csit.fsu.edu/</ProjectURL>
+		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed MrBayes Analysis</Title>
