@@ -29,6 +29,9 @@ then
 elif [ pts`which mozilla` != pts ]
 then
 	mozilla "$1"
+elif [ -x /Applications/Firefox.app/Contents/MacOS/firefox ]
+then
+	/Applications/Firefox.app/Contents/MacOS/firefox "$1"
 elif [ -x /Applications/Safari.app/Contents/MacOS/Safari ]
 then
 	/Applications/Safari.app/Contents/MacOS/Safari "$1"
