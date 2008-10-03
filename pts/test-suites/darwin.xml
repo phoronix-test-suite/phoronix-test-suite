@@ -1,0 +1,103 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<Title>Universe Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The Darwin test suite contains some of the leading Phoronix Test Suite tests known to run properly and reliably on Apple's Mac OS X operating system. This test suite could be considered the universe test suite for this Apple operating system.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>nexuiz</Test>
+		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>urbanterror</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>xplane9</Test>
+		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT --no_sound</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>
+	</RunTest>
+	<RunTest>
+		<Test>j2dbench</Test>
+		<Arguments>TEST_GRAPHICS</Arguments>
+		<Description>Vector Graphics</Description>
+	</RunTest>
+	<RunTest>
+		<Test>j2dbench</Test>
+		<Arguments>TEST_TEXT</Arguments>
+		<Description>Text Rendering</Description>
+	</RunTest>
+	<RunTest>
+		<Test>encode-mp3</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-ogg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>mencoder</Test>
+	</RunTest>
+	<RunTest>
+		<Test>ffmpeg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-imagemagick</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-7zip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-gzip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-pbzip2</Test>
+	</RunTest>
+	<RunTest>
+		<Test>bonnie</Test>
+		<Arguments>SEQ_CREATE</Arguments>
+		<Description>Sequential Create</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bonnie</Test>
+		<Arguments>RAND_READ</Arguments>
+		<Description>Random Read</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bonnie</Test>
+		<Arguments>RAND_DELETE</Arguments>
+		<Description>Random Delete</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_DHRY2</Arguments>
+		<Description>Dhrystone 2</Description>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>tandem-xml</Test>
+		<Arguments>WRITE</Arguments>
+		<Description>Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>sunflow</Test>
+	</RunTest>
+	<RunTest>
+		<Test>java-scimark2</Test>
+		<Arguments>TEST_FFT</Arguments>
+		<Description>FFT Performance</Description>
+	</RunTest>
+</PhoronixTestSuite>
