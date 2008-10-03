@@ -45,7 +45,7 @@ Phoronix Test Suite
 - pts-core: Add support for using hddtemp to read hard disk drive temperature on Linux
 - pts-core: graphics_gpu_usage() returns -1 on failure
 - pts-core: Add support for reading software and hardware information on Mac OS X
-- pts-core: Add Safari, Firefox browser launch support on Mac OS X
+- pts-core: Use open command to launch web browser on Mac OS X
 - pts-core: Add UnsupportedPlatforms tag to test profiles, which is evaluated the opposite of SupportedPlatforms
 - pts-core: Add PlatformSpecific tag to download file XML for OS-specific files
 - pts-core: Add ArchitectureSpecific tag to download file XML for hardware architecture-specific files
