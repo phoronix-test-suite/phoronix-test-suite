@@ -73,6 +73,7 @@ class pts_Graph
 	var $graph_maximum_value;
 
 	var $graph_output = null;
+	var $graph_renderer;
 	var $graph_data = array();
 	var $graph_data_title = array();
 	var $graph_color_paint_index = -1;
@@ -84,7 +85,7 @@ class pts_Graph
 	var $graph_top_end;
 	var $graph_left_end;
 
-	public function __construct($Title, $SubTitle, $YTitle)
+	public function __construct($Title, $SubTitle, $YTitle, $Renderer = "PNG")
 	{
 		$this->graph_title = $Title;
 		$this->graph_sub_title = $SubTitle;
@@ -99,6 +100,11 @@ class pts_Graph
 			putenv("GDFONTPATH=" . $font_env);
 		else
 			putenv("GDFONTPATH=" . getcwd());
+
+		if($Renderer == "SVG")
+			$this->graph_renderer = "SVG";
+		else
+			$this->graph_renderer = "PNG";
 	}
 
 	//
@@ -142,7 +148,7 @@ class pts_Graph
 	}
 	public function setGraphBackgroundPNG($File)
 	{
-		$IMG = @imagecreatefrompng($File);
+		$IMG = $this->read_png_image($File);
 
 		if($IMG != FALSE)
 			$this->graph_body_image = $IMG;
@@ -183,22 +189,6 @@ class pts_Graph
 
 		return $maximum;
 	}
-	protected function convert_hex_to_gd($Hex)
-	{
-		return imagecolorallocate($this->graph_image, hexdec(substr($Hex, 1, 2)), hexdec(substr($Hex, 3, 2)), hexdec(substr($Hex, 5, 2)));
-	}
-	protected function return_ttf_string_dimensions($String, $Font, $Size, $Big = FALSE)
-	{
-		$box_array = imagettfbbox($Size, 0, $Font, $String);
-		$box_width = $box_array[4] - $box_array[6];
-
-		if($Big)
-			$box_array = imagettfbbox($Size, 0, $Font, "AZ@![]()@|_");
-		$box_height = $box_array[1] - $box_array[7];
-
-		// Width x Height
-		return array($box_width, $box_height);
-	}
 	protected function return_ttf_string_width($String, $Font, $Size)
 	{
 		$dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
@@ -209,7 +199,7 @@ class pts_Graph
 		$dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
 		return $dimensions[1];
 	}
-	protected function gd_write_text_center($String, $Size, $Color, $CenterX, $CenterY, $Rotate = FALSE, $Big = FALSE)
+	protected function write_text_center($String, $Size, $Color, $CenterX, $CenterY, $Rotate = FALSE, $Big = FALSE)
 	{
 		if(empty($String))
 			return;
@@ -240,7 +230,7 @@ class pts_Graph
 			$text_y = $CenterY + round($ttf_width / 2);
 		}
 
-		imagettftext($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
+		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
 	}
 	protected function find_longest_string($arr_string)
 	{
@@ -280,7 +270,7 @@ class pts_Graph
 			$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
 		}
 	}
-	protected function gd_write_text_right($String, $Size, $Color, $RightX, $CenterY, $Rotate = FALSE)
+	protected function write_text_right($String, $Size, $Color, $RightX, $CenterY, $Rotate = FALSE)
 	{
 		if(empty($String))
 			return;
@@ -300,9 +290,9 @@ class pts_Graph
 		$text_x = $RightX - $ttf_width;
 		$text_y = $CenterY + round($ttf_height / 2);
 
-		imagettftext($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
+		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
 	}
-	protected function gd_write_text_left($String, $Size, $Color, $LeftX, $CenterY, $Rotate = FALSE)
+	protected function write_text_left($String, $Size, $Color, $LeftX, $CenterY, $Rotate = FALSE)
 	{
 		if(empty($String))
 			return;
@@ -327,7 +317,7 @@ class pts_Graph
 			$Rotation = 270;
 		}
 
-		imagettftext($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
+		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String);
 	}
 
 	//
@@ -340,33 +330,28 @@ class pts_Graph
 	protected function render_graph_init()
 	{
 		$this->update_graph_dimensions();
-		$this->graph_image = imagecreate($this->graph_attr_width, $this->graph_attr_height);
+		$this->graph_image = $this->init_blank_image($this->graph_attr_width, $this->graph_attr_height);
 
-		imageinterlace($this->graph_image, true);
+		// Initalize Colors
 
-		if(function_exists("imageantialias"))
-			imageantialias($this->graph_image, true);
-
-		// Initalize GD Colors
-
-		$this->graph_color_notches = $this->convert_hex_to_gd($this->graph_color_notches);
-		$this->graph_color_text = $this->convert_hex_to_gd($this->graph_color_text);
-		$this->graph_color_border = $this->convert_hex_to_gd($this->graph_color_border);
-		$this->graph_color_main_headers = $this->convert_hex_to_gd($this->graph_color_main_headers);
-		$this->graph_color_headers = $this->convert_hex_to_gd($this->graph_color_headers);
-		$this->graph_color_background = $this->convert_hex_to_gd($this->graph_color_background);
-		$this->graph_color_body = $this->convert_hex_to_gd($this->graph_color_body);
-		$this->graph_color_body_text = $this->convert_hex_to_gd($this->graph_color_body_text);
-		$this->graph_color_body_light = $this->convert_hex_to_gd($this->graph_color_body_light);
+		$this->graph_color_notches = $this->convert_hex_to_type($this->graph_color_notches);
+		$this->graph_color_text = $this->convert_hex_to_type($this->graph_color_text);
+		$this->graph_color_border = $this->convert_hex_to_type($this->graph_color_border);
+		$this->graph_color_main_headers = $this->convert_hex_to_type($this->graph_color_main_headers);
+		$this->graph_color_headers = $this->convert_hex_to_type($this->graph_color_headers);
+		$this->graph_color_background = $this->convert_hex_to_type($this->graph_color_background);
+		$this->graph_color_body = $this->convert_hex_to_type($this->graph_color_body);
+		$this->graph_color_body_text = $this->convert_hex_to_type($this->graph_color_body_text);
+		$this->graph_color_body_light = $this->convert_hex_to_type($this->graph_color_body_light);
 
 		for($i = 0; $i < count($this->graph_color_paint); $i++)
-			$this->graph_color_paint[$i] = $this->convert_hex_to_gd($this->graph_color_paint[$i]);
+			$this->graph_color_paint[$i] = $this->convert_hex_to_type($this->graph_color_paint[$i]);
 
 		// Background Color
-		imagefilledrectangle($this->graph_image, 0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background);
+		$this->draw_rectangle($this->graph_image, 0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background);
 
 		if($this->graph_attr_big_border == TRUE)
-			imagerectangle($this->graph_image, 0, 0, $this->graph_attr_width - 1, $this->graph_attr_height - 1, $this->graph_color_border);
+			$this->draw_rectangle_border($this->graph_image, 0, 0, $this->graph_attr_width - 1, $this->graph_attr_height - 1, $this->graph_color_border);
 	}
 	protected function render_graph_base()
 	{
@@ -376,23 +361,23 @@ class pts_Graph
 			$this->graph_top_start = $this->graph_top_start + 8 + ($num_key_lines * 11);
 		}
 
-		imagefilledrectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body);
-		imagerectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches);
+		$this->draw_rectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body);
+		$this->draw_rectangle_border($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches);
 
-		if($this->graph_body_image != FALSE)
+		if($this->graph_body_image != FALSE && $this->graph_renderer == "PNG")
 		{
 			imagecopymerge($this->graph_image, $this->graph_body_image, $this->graph_left_start + (($this->graph_left_end - $this->graph_left_start) / 2) - imagesx($this->graph_body_image) / 2, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2) - imagesy($this->graph_body_image) / 2, 0, 0, imagesx($this->graph_body_image), imagesy($this->graph_body_image), 95);
 
 		}
 
 		// Text
-		$this->gd_write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 7);
-		$this->gd_write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 1, $this->graph_top_start - 7);
-		$this->gd_write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 4);
-		$this->gd_write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 26, FALSE, TRUE);
+		$this->write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 7);
+		$this->write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 1, $this->graph_top_start - 7);
+		$this->write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 4);
+		$this->write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 26, FALSE, TRUE);
 
 		if(!empty($this->graph_y_title) && !$this->graph_y_title_hide)
-			$this->gd_write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
+			$this->write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
 	}
 	protected function render_graph_value_ticks()
 	{
@@ -406,18 +391,18 @@ class pts_Graph
 		{
 			$px_from_top = $this->graph_top_end - ($tick_width * $i);
 
-			imageline($this->graph_image, $px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
+			$this->draw_line($this->graph_image, $px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
 
-			$this->gd_write_text_right($display_value, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2);
+			$this->write_text_right($display_value, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2);
 
 			if($i != 0 && $this->graph_background_lines == TRUE)
 			{
 				$line_width = 6;
 				for($y = $px_from_left_end + $line_width; $y < $this->graph_left_end; $y += ($line_width * 2))
 					if($y + $line_width < $this->graph_left_end)
-						imageline($this->graph_image, $y, $px_from_top, $y += $line_width, $px_from_top, $this->graph_color_body_light);
+						$this->draw_line($this->graph_image, $y, $px_from_top, $y += $line_width, $px_from_top, $this->graph_color_body_light);
 					else
-						imageline($this->graph_image, $y, $px_from_top, $y += ($this->graph_left_end - $y) - 1, $px_from_top, $this->graph_color_body_light);
+						$this->draw_line($this->graph_image, $y, $px_from_top, $y += ($this->graph_left_end - $y) - 1, $px_from_top, $this->graph_color_body_light);
 			}
 
 			$display_value += $this->trim_double($this->graph_maximum_value / $this->graph_attr_marks, 2);
@@ -477,10 +462,10 @@ class pts_Graph
 
 				$component_x = $this->graph_left_start + 15 + (($this->graph_left_end - $this->graph_left_start) / 4) * $key_offset;
 
-				$this->gd_write_text_left($this->graph_data_title[$i], $this->graph_font_size_key, $this_color, $component_x, $component_y);
+				$this->write_text_left($this->graph_data_title[$i], $this->graph_font_size_key, $this_color, $component_x, $component_y);
 
-				imagefilledrectangle($this->graph_image, $component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color);
-				imagerectangle($this->graph_image, $component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this->graph_color_notches);
+				$this->draw_rectangle($this->graph_image, $component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color);
+				$this->draw_rectangle_border($this->graph_image, $component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this->graph_color_notches);
 
 				if($key_counter % 4 == 0)
 					$component_y -= 12;
@@ -493,13 +478,13 @@ class pts_Graph
 		if(empty($this->graph_watermark_text))
 			return;
 
-		$this->gd_write_text_right($this->graph_watermark_text, 10, $this->graph_color_text, $this->graph_left_end - 2,  $this->graph_top_start + 8);
+		$this->write_text_right($this->graph_watermark_text, 10, $this->graph_color_text, $this->graph_left_end - 2,  $this->graph_top_start + 8);
 
 	}
 	protected function return_graph_image()
 	{
-		Imagepng($this->graph_image, $this->graph_output, 5);
-		ImageDestroy($this->graph_image);
+		$this->render_image($this->graph_image, $this->graph_output, 5);
+		$this->deinit_image($this->graph_image);
 	}
 	public function save_graph($file)
 	{
@@ -528,6 +513,88 @@ class pts_Graph
 			$return = $return[0];
 
 		return $return;
+	}
+
+
+
+
+
+	//
+	// Renderer-specific Functions
+	//
+
+	protected function init_blank_image($width, $height)
+	{
+		if($this->graph_renderer == "PNG")
+		{
+			$img = imagecreate($width, $height);
+
+			imageinterlace($img, true);
+
+			if(function_exists("imageantialias"))
+				imageantialias($img, true);
+		}
+
+		return $img;
+	}
+	protected function render_image(&$img_object, $output_file, $quality)
+	{
+		if($this->graph_renderer == "PNG")
+			imagepng($img_object, $output_file, $quality);
+	}
+	protected function read_png_image($File)
+	{
+		if($this->graph_renderer == "PNG")
+			$img = @imagecreatefrompng($File);
+
+		return $img;
+	}
+	protected function deinit_image(&$img_object)
+	{
+		if($this->graph_renderer == "PNG")
+			imagedestroy($img_object);
+	}
+	protected function convert_hex_to_type($Hex)
+	{
+		if($this->graph_renderer == "PNG")
+			$color = imagecolorallocate($this->graph_image, hexdec(substr($Hex, 1, 2)), hexdec(substr($Hex, 3, 2)), hexdec(substr($Hex, 5, 2)));
+
+		return $color;
+	}
+	protected function write_image_text(&$img_object, $font_size, $rotation, $text_x, $text_y, $color, $font, $string)
+	{
+		if($this->graph_renderer == "PNG")
+			imagettftext($img_object, $font_size, $rotation, $text_x, $text_y, $color, $font, $string);
+	}
+	protected function draw_rectangle(&$img_object, $x1, $y1, $width, $height, $background_color)
+	{
+		if($this->graph_renderer == "PNG")
+			imagefilledrectangle($img_object, $x1, $y1, $width, $height, $background_color);
+	}
+	protected function draw_rectangle_border(&$img_object, $x1, $y1, $width, $height, $color)
+	{
+		if($this->graph_renderer == "PNG")
+			imagerectangle($img_object, $x1, $y1, $width, $height, $color);
+	}
+	protected function draw_line(&$img_object, $left_start, $top_start, $from_left, $from_top, $color)
+	{
+		if($this->graph_renderer == "PNG")
+			imageline($img_object, $left_start, $top_start, $from_left, $from_top, $color);
+	}
+	protected function return_ttf_string_dimensions($String, $Font, $Size, $Big = FALSE)
+	{
+		if($this->graph_renderer == "PNG")
+		{
+			$box_array = imagettfbbox($Size, 0, $Font, $String);
+			$box_width = $box_array[4] - $box_array[6];
+
+			if($Big)
+				$box_array = imagettfbbox($Size, 0, $Font, "AZ@![]()@|_");
+			$box_height = $box_array[1] - $box_array[7];
+		}
+
+		// Width x Height
+		return array($box_width, $box_height);
 	}
 }
 

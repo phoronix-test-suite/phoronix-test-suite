@@ -60,17 +60,17 @@ class pts_BarGraph extends pts_CustomGraph
 			$px_bound_right = $px_bound_left + $this->identifier_width;
 
 			if($i == 0)
-				imageline($this->graph_image, $px_bound_left, $px_from_top_start, $px_bound_left, $px_from_top_end, $this->graph_color_notches);
+				$this->draw_line($this->graph_image, $px_bound_left, $px_from_top_start, $px_bound_left, $px_from_top_end, $this->graph_color_notches);
 
 			if($i == (count($this->graph_identifiers) - 1) && $px_bound_right != $this->graph_left_end)
 				$px_bound_right = $this->graph_left_end;
 
-			imageline($this->graph_image, $px_bound_right, $px_from_top_start, $px_bound_right, $px_from_top_end, $this->graph_color_notches);
+			$this->draw_line($this->graph_image, $px_bound_right, $px_from_top_start, $px_bound_right, $px_from_top_end, $this->graph_color_notches);
 
 			if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
-				$this->gd_write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, TRUE);
+				$this->write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, TRUE);
 			else
-				$this->gd_write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end - 5, FALSE, TRUE);
+				$this->write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end - 5, FALSE, TRUE);
 		}
 	}
 	protected function render_graph_bars()
@@ -98,11 +98,11 @@ class pts_BarGraph extends pts_CustomGraph
 				if($value_plot_top < 1)
 					$value_plot_top = 1;
 
-				imagerectangle($this->graph_image, $px_bound_left, $value_plot_top - 1, $px_bound_right, $this->graph_top_end - 1, $this->graph_color_body_light);
-				imagefilledrectangle($this->graph_image, $px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end - 1, $paint_color);
+				$this->draw_rectangle_border($this->graph_image, $px_bound_left, $value_plot_top - 1, $px_bound_right, $this->graph_top_end - 1, $this->graph_color_body_light);
+				$this->draw_rectangle($this->graph_image, $px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end - 1, $paint_color);
 
 				if($graph_size > 20)
-					$this->gd_write_text_center($this->graph_data[$i_o][$i], $font_size, $this->graph_color_body_text, $px_bound_left + (($px_bound_right - $px_bound_left) / 2), $value_plot_top + 3);
+					$this->write_text_center($this->graph_data[$i_o][$i], $font_size, $this->graph_color_body_text, $px_bound_left + (($px_bound_right - $px_bound_left) / 2), $value_plot_top + 3);
 			}
 		}
 	}
