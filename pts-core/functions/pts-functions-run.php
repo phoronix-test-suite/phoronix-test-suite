@@ -510,6 +510,10 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 			{
 				$test_results = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . pts_location_test_resources($test_identifier) . "parse-results.php \"" . $test_results . "\"", $test_extra_runtime_variables_post);
 			}
+			else if(is_file(pts_location_test_resources($test_identifier) . "parse-results.sh"))
+			{
+				$test_results = pts_exec("cd " .  $test_directory . " && sh " . pts_location_test_resources($test_identifier) . "parse-results.sh \"" . $test_results . "\"", $test_extra_runtime_variables_post);
+			}
 
 			if(!empty($test_results))
 			{
