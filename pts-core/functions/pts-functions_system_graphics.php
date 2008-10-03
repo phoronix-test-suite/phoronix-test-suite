@@ -453,7 +453,16 @@ function xrandr_available_modes()
 
 	if(count($available_modes) < 2)
 	{
-		$available_modes = array(array(800, 600), array(1024, 768), array(1280, 1024), array(1680, 1050), array(1600, 1200), array(1920, 1080));
+		$stock_modes = array(array(800, 600), array(1024, 768), array(1280, 1024), array(1280, 960), array(1400, 1050), array(1680, 1050), array(1600, 1200), array(1920, 1080), array(2560, 1600));
+		$available_modes = array();
+
+		$video_width = current_screen_width();
+		$video_height = current_screen_height();
+
+		for($i = 0; $i < count($stock_modes); $i++)
+			if($stock_modes[$i][0] <= $video_width && $stock_modes[$i][1] <= $video_height)
+				array_push($available_modes, $stock_modes[$i]);
+		
 	}
 	else
 	{
