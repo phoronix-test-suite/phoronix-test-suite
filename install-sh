@@ -26,6 +26,17 @@ else
 	INSTALL_PREFIX="$1"
 fi
 
+# Ensure the user is in the correct directory
+if [ ! -f pts-core/pts-run-cmd.php ] || [ ! -f pts-core/pts-run-test.php ]
+then
+	cat <<'EOT'
+
+To install the Phoronix Test Suite you must first change directories to phoronix-test-suite/. For support visit: http://www.phoronix-test-suite.com/
+
+EOT
+exit
+fi
+
 if [ ! -w $INSTALL_PREFIX ]
 then
 	echo "\nERROR: $INSTALL_PREFIX is not writable. Run this installer as root or specify a different directory prefix as the first argument sent to this script.\n"

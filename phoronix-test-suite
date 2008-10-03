@@ -32,6 +32,17 @@ then
 	cd $PTS_DIR
 fi
 
+# Ensure the user is in the correct directory
+if [ ! -f pts-core/pts-run-cmd.php ] || [ ! -f pts-core/pts-run-test.php ]
+then
+	cat <<'EOT'
+
+To run the Phoronix Test Suite locally you must first change directories to phoronix-test-suite/ or install the program using the install-sh script. For support visit: http://www.phoronix-test-suite.com/
+
+EOT
+exit
+fi
+
 # Determine PHP binary location
 if [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ]
 then
@@ -54,7 +65,7 @@ then
 PHP5 CLI Must Be Installed To Run The Phoronix Test Suite!
 Only PHP For The Command Line Is Needed, Not A Complete PHP w/ Web Server Installation
 The PHP CLI package is usually called php-cli or php5-cli. Also required is the PHP GD library (php-gd)
-For support visit: http://www.phoronix.com/forums/forumdisplay.php?f=49
+For support visit: http://www.phoronix-test-suite.com/
 
 EOT
 exit
