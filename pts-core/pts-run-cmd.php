@@ -179,7 +179,7 @@ switch($COMMAND)
 			{
 				if(!empty($name) && ($COMMAND == "LIST_ALL_TESTS" || !in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED", "STANDALONE", "SCTP"))))
 					if(pts_test_supported($identifier))
-						printf("%-18ls - %-30ls [Status: %s, License: %s]\n", $identifier, $name, $status, $license);
+						printf("%-18ls - %-36ls [%s, %10ls]\n", $identifier, $name, $status, $license);
 			}
 		}
 		echo "\n";
