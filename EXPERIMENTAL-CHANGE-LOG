@@ -47,6 +47,7 @@ Phoronix Test Suite
 - pts-core: Add support for reading software and hardware information on Mac OS X
 - pts-core: Add Safari, Firefox browser launch support on Mac OS X
 - pts-core: Add UnsupportedPlatforms tag to test profiles, which is evaluated the opposite of SupportedPlatforms
+- pts-core: Add PlatformSpecific tag to download file XML for OS-specific files
 - pts: Move pcqs tests out of tree
 - pts: Switch all relevant test profiles using ArgumentName to using ArgumentPrefix
 - pts: Move the byte test profile to using the new $LOG_FILE capability for an example and for testing

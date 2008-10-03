@@ -63,6 +63,7 @@ function pts_download_test_files($identifier)
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
+		$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
 		$header_displayed = false;
 
 		if(strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != FALSE)
@@ -84,7 +85,20 @@ function pts_download_test_files($identifier)
 
 			$download_location = TEST_ENV_DIR . $identifier . "/";
 
-			if(!is_file($download_location . $package_filename[$i]))
+			$file_exempt = false;
+
+			if(!empty($package_platform[$i]))
+			{
+				$platforms = explode(",", $package_platform[$i]);
+
+				foreach($platforms as $key => $value)
+					$platforms[$key] = trim($value);
+
+				if(!in_array(OPERATING_SYSTEM, $platforms))
+					$file_exempt = true;
+			}
+
+			if(!is_file($download_location . $package_filename[$i]) && !$file_exempt)
 			{
 				if(!$header_displayed)
 				{

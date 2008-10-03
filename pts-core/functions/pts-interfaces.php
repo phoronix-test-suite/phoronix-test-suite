@@ -108,6 +108,7 @@ define("P_DOWNLOADS_PACKAGE_URL", "PhoronixTestSuite/Downloads/Package/URL"); //
 define("P_DOWNLOADS_PACKAGE_MD5", "PhoronixTestSuite/Downloads/Package/MD5"); // MD5 for PTS to verify
 define("P_DOWNLOADS_PACKAGE_FILENAME", "PhoronixTestSuite/Downloads/Package/FileName"); // Local file-name for PTS to save package as
 define("P_DOWNLOADS_PACKAGE_FILESIZE", "PhoronixTestSuite/Downloads/Package/FileSize"); // The size of the file to be downloaded (in bytes)
+define("P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC", "PhoronixTestSuite/Downloads/Package/PlatformSpecific"); // If this package is needed for a specific platform, list the platforms ere
 // DROPPED IN PTS 1.4, USE CTP INSTEAD: define("P_DOWNLOADS_PACKAGE_DESTINATION", "PhoronixTestSuite/Downloads/Package/DownloadTo"); // Location to save file to
 
 //
