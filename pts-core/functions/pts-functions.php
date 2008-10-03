@@ -225,6 +225,15 @@ function pts_save_result($save_to = null, $save_results = null)
 			if(strpos($file, "not found") == FALSE)
 				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/sensors", $file);
 
+			if(IS_MACOSX)
+			{
+				// system_profiler (Mac OS X)
+				$file = shell_exec("system_profiler 2>&1");
+
+				if(strpos($file, "not found") == FALSE)
+					@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/system_profiler", $file);
+			}
+
 			// cpuinfo
 			if(is_file("/proc/cpuinfo"))
 			{

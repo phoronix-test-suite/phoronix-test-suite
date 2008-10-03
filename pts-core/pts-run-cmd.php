@@ -200,7 +200,7 @@ switch($COMMAND)
 				printf("%-26ls - %-32ls %-4ls  %-12ls\n", $identifier, $name, $version, $type);
 			}
 			else
-				printf("%-26ls - %-32ls [Type: %s]\n", $identifier, $name, $test_type);
+				printf("%-22ls - %-32ls [Type: %s]\n", $identifier, $name, $test_type);
 		}
 		echo "\n";
 		break;
@@ -217,7 +217,7 @@ switch($COMMAND)
 			$module_version = pts_php_module_call($module, "module_version");
 			$module_author = pts_php_module_call($module, "module_author");
 
-			printf("%-19ls - %-25ls [Author: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
+			printf("%-22ls - %-30ls [%s]\n", $module, $module_name . " v" . $module_version, $module_author);
 		}
 		foreach(glob(MODULE_DIR . "*.sh") as $module_file)
 		{
@@ -226,7 +226,7 @@ switch($COMMAND)
 			$module_version = pts_sh_module_call($module, "module_version");
 			$module_author = pts_sh_module_call($module, "module_author");
 
-			printf("%-19ls - %-25ls [Author: %s]\n", $module, $module_name . " v" . $module_version, $module_author);
+			printf("%-22ls - %-30ls [%s]\n", $module, $module_name . " v" . $module_version, $module_author);
 		}
 		echo "\n";
 		break;
