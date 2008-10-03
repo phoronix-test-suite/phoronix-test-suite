@@ -485,7 +485,10 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	for($i = 0; $i < $times_to_run; $i++)
 	{
 		$benchmark_log_file = TEST_ENV_DIR . $test_identifier . "/" . $test_identifier . "-" . THIS_RUN_TIME . "-" . ($i + 1) . ".log";
-		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array("LOG_FILE" => $benchmark_log_file));
+		$start_timer = PTS_DIR . "pts-core/scripts/timer-start.sh";
+		$stop_timer = PTS_DIR . "pts-core/scripts/timer-stop.sh";
+		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array("LOG_FILE" => $benchmark_log_file, "TIMER_START" => $start_timer, "TIMER_STOP" => $stop_timer));
+
 		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
@@ -493,9 +496,19 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
+			$test_extra_runtime_variables_post = $test_extra_runtime_variables;
+			if(is_file(TEST_ENV_DIR . $test_identifier . "/pts-timer"))
+			{
+				$run_time = trim(file_get_contents(TEST_ENV_DIR . $test_identifier . "/pts-timer"));
+				unlink(TEST_ENV_DIR . $test_identifier . "/pts-timer");
+
+				if(is_numeric($run_time))
+					$test_extra_runtime_variables_post = array_merge($test_extra_runtime_variables_post, array("TIMER_RESULT" => $run_time));
+			}
+
 			if(is_file(pts_location_test_resources($test_identifier) . "parse-results.php"))
 			{
-				$test_results = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . pts_location_test_resources($test_identifier) . "parse-results.php \"" . $test_results . "\"", $test_extra_runtime_variables);
+				$test_results = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . pts_location_test_resources($test_identifier) . "parse-results.php \"" . $test_results . "\"", $test_extra_runtime_variables_post);
 			}
 
 			if(!empty($test_results))
