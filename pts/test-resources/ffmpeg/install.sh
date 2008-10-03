@@ -9,9 +9,7 @@ cd ..
 
 echo "#!/bin/sh
 
-echo \"#!/bin/sh
-./ffmpeg-may27-2008/ffmpeg -i \$TEST_EXTENDS/pts-trondheim.avi -y -target ntsc-vcd /dev/null\" > encode-process
-chmod +x encode-process
-
-/usr/bin/time -f \"Encoding Time: %e Seconds\" ./encode-process 2>&1 | grep Seconds" > ffmpeg
+\$TIMER_START
+./ffmpeg-may27-2008/ffmpeg -i \$TEST_EXTENDS/pts-trondheim.avi -y -target ntsc-vcd /dev/null 2>&1
+\$TIMER_STOP" > ffmpeg
 chmod +x ffmpeg

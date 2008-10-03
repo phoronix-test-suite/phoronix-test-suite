@@ -11,15 +11,10 @@ make install
 cd ..
 rm -rf lzma-4.32.6
 
-cat > lzma_process <<EOT
-#!/bin/sh
-./lzma_/bin/lzma -q -c ./compressfile > /dev/null
-EOT
-chmod +x lzma_process
-
-
 cat > compress-lzma <<EOT
 #!/bin/sh
-/usr/bin/time -f "LZMA Compress Time: %e Seconds" ./lzma_process 2>&1
+\$TIMER_START
+./lzma_/bin/lzma -q -c ./compressfile > /dev/null 2>&1
+\$TIMER_STOP
 EOT
 chmod +x compress-lzma

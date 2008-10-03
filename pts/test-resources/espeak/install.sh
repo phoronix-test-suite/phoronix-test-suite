@@ -13,5 +13,7 @@ rm -rf espeak-1.37-source/
 
 echo "#!/bin/sh
 cd espeak_/bin/
-LD_LIBRARY_PATH=$THIS_DIR/espeak_/lib/:\$LD_LIBRARY_PATH /usr/bin/time -f \"eSpeak Synthesis Time: %e Seconds\" ./espeak -f ../../gutenberg-science.txt -w /dev/null 2>&1" > espeak
+\$TIMER_START
+LD_LIBRARY_PATH=$THIS_DIR/espeak_/lib/:\$LD_LIBRARY_PATH ./espeak -f ../../gutenberg-science.txt -w /dev/null 2>&1
+\$TIMER_STOP" > espeak
 chmod +x espeak

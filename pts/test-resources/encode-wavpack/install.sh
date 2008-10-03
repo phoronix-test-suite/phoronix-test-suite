@@ -12,9 +12,7 @@ cd ..
 rm -rf wavpack-4.41.0/
 
 echo "#!/bin/sh
-./wavpack_/bin/wavpack -q -r -hhx2 -o - \$TEST_EXTENDS/pts-trondheim.wav >/dev/null" > wavpack_process
-chmod +x wavpack_process
-
-echo "#!/bin/sh
-/usr/bin/time -f \"WAV To WavPack Encode Time: %e Seconds\" ./wavpack_process 2>&1" > encode-wavpack
+\$TIMER_START
+./wavpack_/bin/wavpack -q -r -hhx2 -o - \$TEST_EXTENDS/pts-trondheim.wav > /dev/null 2>&1
+\$TIMER_STOP" > encode-wavpack
 chmod +x encode-wavpack

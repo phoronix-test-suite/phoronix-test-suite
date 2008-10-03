@@ -12,5 +12,7 @@ cd ..
 rm -rf lame-398/
 
 echo "#!/bin/sh
-/usr/bin/time -f \"WAV To MP3 Encode Time: %e Seconds\" ./lame_/bin/lame --silent -h \$TEST_EXTENDS/pts-trondheim.wav /dev/null 2>&1" > lame
+\$TIMER_START
+./lame_/bin/lame --silent -h \$TEST_EXTENDS/pts-trondheim.wav /dev/null 2>&1
+\$TIMER_STOP" > lame
 chmod +x lame

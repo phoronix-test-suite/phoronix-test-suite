@@ -42,5 +42,7 @@ cp yafray_/etc/gram.yafray .
 
 echo "#!/bin/sh
 export LD_LIBRARY_PATH=\"$THIS_DIR/yafray_/lib/:\$LD_LIBRARY_PATH\"
-/usr/bin/time -f \"Render Time: %e Seconds\" ./yafray_/bin/yafray -c \$NUM_CPU_CORES YBtest.xml 2>&1 | grep Seconds" > yafray-run
+\$TIMER_START
+./yafray_/bin/yafray -c \$NUM_CPU_CORES YBtest.xml 2>&1
+\$TIMER_STOP" > yafray-run
 chmod +x yafray-run

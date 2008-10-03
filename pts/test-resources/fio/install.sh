@@ -7,6 +7,8 @@ cd ..
 
 echo "#!/bin/sh
 cd fio/
-/usr/bin/time -f \"Total fio Run-Time: %e Seconds\" ./fio \$@ 2>&1
+\$TIMER_START
+./fio \$@ 2>&1
+\$TIMER_STOP
 rm -f iometer.1.0" > fio-run
 chmod +x fio-run

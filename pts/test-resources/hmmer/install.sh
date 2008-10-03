@@ -23,7 +23,9 @@ chmod +x hmmpfam
 
 cat>hmmer<<EOT
 #!/bin/sh
-/usr/bin/time -f "Pfam search time: %e seconds" ./hmmpfam 2>&1 | grep seconds
+\$TIMER_START
+./hmmpfam 2>&1
+\$TIMER_STOP
 EOT
 chmod +x hmmer
 

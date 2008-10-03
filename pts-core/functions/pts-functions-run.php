@@ -514,10 +514,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 			{
 				$test_results = pts_exec("cd " .  $test_directory . " && sh " . pts_location_test_resources($test_identifier) . "parse-results.sh \"" . $test_results . "\"", $test_extra_runtime_variables_post);
 			}
+			else if(isset($run_time) && is_numeric($run_time))
+				$test_results = $run_time;
 
 			if(!empty($test_results))
 			{
-				array_push($TEST_RESULTS_ARRAY, $test_results);
+				array_push($TEST_RESULTS_ARRAY, trim($test_results));
 			}
 		}
 		if($times_to_run > 1 && $i < ($times_to_run - 1))

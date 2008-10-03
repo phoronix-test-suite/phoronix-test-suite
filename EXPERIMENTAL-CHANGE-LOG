@@ -55,6 +55,7 @@ Phoronix Test Suite
 - pts: Move pcqs tests out of tree
 - pts: Switch all relevant test profiles using ArgumentName to using ArgumentPrefix
 - pts: Move the byte test profile to using the new $LOG_FILE capability for an example and for testing
+- pts: Move over all relevent tests to using the new universal micro-timer functionality
 - pts_Graph: Provide experimental SVG rendering support for graphing objects, more tweaking, testing, and improvements still needed
 - update_checker: Move code to check for PTS updates out of pts-core and into its own module
 - system_monitor: Add support for monitoring hard drive temperature using hdd.temp through system_hdd_temperature() within pts-core

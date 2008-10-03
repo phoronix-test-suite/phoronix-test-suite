@@ -46,7 +46,9 @@ chmod +x mb
 
 cat>mrbayes<<EOT
 #!/bin/sh
-/usr/bin/time -f "MrBayes Analysis Time: %e Seconds" ./mb 2>&1 | grep Seconds
+\$TIMER_START
+./mb 2>&1
+\$TIMER_STOP
 EOT
 chmod +x mrbayes
 

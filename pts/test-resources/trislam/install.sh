@@ -8,5 +8,7 @@ cd ..
 
 echo "#!/bin/sh
 cd trislam/
-/usr/bin/time -f \"Triangle Slammer Run-Time: %e Seconds\" ./trislam 2>&1" > trislam-run
+\$TIMER_START
+./trislam 2>&1
+\$TIMER_STOP" > trislam-run
 chmod +x trislam-run

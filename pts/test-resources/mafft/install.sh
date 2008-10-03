@@ -27,6 +27,8 @@ chmod +x align
 
 cat>mafft<<EOT
 #!/bin/sh
-/usr/bin/time -f "Sequence Alignment Time: %e Seconds" ./align 2>&1 | grep Seconds
+\$TIMER_START
+./align 2>&1
+\$TIMER_STOP
 EOT
 chmod +x mafft

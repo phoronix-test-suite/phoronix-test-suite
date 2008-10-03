@@ -12,10 +12,7 @@ cd ..
 rm -rf mac-3.99-u4-b5-s4/
 
 echo "#!/bin/sh
-./ape_/bin/mac \$TEST_EXTENDS/pts-trondheim.wav /dev/null -c4000 1>/dev/null 2>/dev/null
-exit 0" > ape_process
-chmod +x ape_process
-
-echo "#!/bin/sh
-/usr/bin/time -f \"WAV To APE Encode Time: %e Seconds\" ./ape_process 2>&1" > encode-ape
+\$TIMER_START
+./ape_/bin/mac \$TEST_EXTENDS/pts-trondheim.wav /dev/null -c4000 > /dev/null 2>&1
+\$TIMER_STOP" > encode-ape
 chmod +x encode-ape
