@@ -173,6 +173,7 @@ function pts_estimated_download_size($identifier)
 				$xml_parser = new tandem_XmlReader(pts_location_test_resources($test) . "downloads.xml");
 				$package_filesize_bytes = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILESIZE);
 				$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
+				$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
 
 				for($i = 0; $i < count($package_filesize_bytes); $i++)
 				{
@@ -187,6 +188,21 @@ function pts_estimated_download_size($identifier)
 							$platforms[$key] = trim($value);
 
 						if(!in_array(OPERATING_SYSTEM, $platforms))
+							$file_exempt = true;
+					}
+					if(!empty($package_architecture[$i]))
+					{
+						$architectures = explode(",", $package_architecture[$i]);
+
+						foreach($architectures as $key => $value)
+							$architectures[$key] = trim($value);
+
+						$this_arch = kernel_arch();
+
+						if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
+							$this_arch = "x86";
+
+						if(!in_array($this_arch, $architectures))
 							$file_exempt = true;
 					}
 

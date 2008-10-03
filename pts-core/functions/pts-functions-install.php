@@ -64,6 +64,7 @@ function pts_download_test_files($identifier)
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
 		$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
+		$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
 		$header_displayed = false;
 
 		if(strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != FALSE)
@@ -95,6 +96,21 @@ function pts_download_test_files($identifier)
 					$platforms[$key] = trim($value);
 
 				if(!in_array(OPERATING_SYSTEM, $platforms))
+					$file_exempt = true;
+			}
+			if(!empty($package_architecture[$i]))
+			{
+				$architectures = explode(",", $package_architecture[$i]);
+
+				foreach($architectures as $key => $value)
+					$architectures[$key] = trim($value);
+
+				$this_arch = kernel_arch();
+
+				if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
+					$this_arch = "x86";
+
+				if(!in_array($this_arch, $architectures))
 					$file_exempt = true;
 			}
 
