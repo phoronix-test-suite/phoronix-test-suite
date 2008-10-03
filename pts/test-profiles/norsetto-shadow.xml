@@ -11,7 +11,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Norsetto Shadow</Title>
-		<TimesToRun>2</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of Norsetto Shadow, which is a basic OpenGL demo.</Description>

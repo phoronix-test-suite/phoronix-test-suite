@@ -13,7 +13,7 @@
 	<TestInformation>
 		<Title>Unreal Tournament 2004 Demo</Title>
 		<Version>3334</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ExternalDependencies>libstdcpp5</ExternalDependencies>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

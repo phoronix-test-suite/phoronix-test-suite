@@ -10,6 +10,7 @@
 		<TimesToRun>1</TimesToRun>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ResultScale>Seconds</ResultScale>
+		<TimesToRun>2</TimesToRun>
 		<Proportion>LIB</Proportion>
 	</TestInformation>
 </PhoronixTestSuite>

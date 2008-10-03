@@ -15,6 +15,7 @@
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Operations / Second</ResultScale>
 		<Proportion>HIB</Proportion>
+		<TimesToRun>1</TimesToRun>
 		<Description>This benchmark tests the system's hard disk.</Description>
                 <ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>

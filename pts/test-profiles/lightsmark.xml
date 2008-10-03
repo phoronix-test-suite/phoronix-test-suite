@@ -14,7 +14,7 @@
 	<TestInformation>
 		<Title>Lightsmark</Title>
 		<Version>2008</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ExternalDependencies>glut, glew, freeimage</ExternalDependencies>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

@@ -12,7 +12,7 @@
 	<TestInformation>
 		<Title>Bandwidth</Title>
 		<Version>0.13</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>2</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This benchmark tests the system memory (RAM) and CPU Level 2 cache performance.</Description>

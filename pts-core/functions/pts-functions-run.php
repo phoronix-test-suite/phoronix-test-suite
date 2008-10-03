@@ -413,7 +413,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		return array(0);
 
 	if(empty($times_to_run) || !is_int($times_to_run))
-		$times_to_run = 1;
+		$times_to_run = 3;
 
 	if(strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_") // Currently tests that output multiple results in one run can only be run once
 		$times_to_run = 1;

@@ -14,7 +14,7 @@
 		<Title>x11perf</Title>
 		<Version>1.5</Version>
 		<ExternalDependencies>glut, build-utilities, xorg-development</ExternalDependencies>
-		<TimesToRun>2</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Operations / Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>x11perf is a very basic performance/regression test for X.Org.</Description>

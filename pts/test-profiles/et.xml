@@ -14,7 +14,7 @@
 	<TestInformation>
 		<Title>Enemy Territory</Title>
 		<Version>2.60</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>Wolfenstein: Enemy Territory is a world War II era first person shooter that was released for free by Splash Damage using the id Tech 3 engine.</Description>

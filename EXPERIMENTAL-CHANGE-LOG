@@ -52,6 +52,7 @@ Phoronix Test Suite
 - pts-core: When RandR detection fails in xrandr_available_modes(), apply some logic to sort the stock modes that should work
 - pts-core: Add in a micro-timer framework that is platform universal
 - pts-core: Implement support for parse-results.sh
+- pts-core: Default to 3 runs for each test
 - pts: Move pcqs tests out of tree
 - pts: Switch all relevant test profiles using ArgumentName to using ArgumentPrefix
 - pts: Move the byte test profile to using the new $LOG_FILE capability for an example and for testing

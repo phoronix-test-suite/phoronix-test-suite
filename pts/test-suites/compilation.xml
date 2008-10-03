@@ -15,7 +15,4 @@
 	<RunTest>
 		<Test>build-imagemagick</Test>
 	</RunTest>
-	<RunTest>
-		<Test>build-linux-kernel</Test>
-	</RunTest>
 </PhoronixTestSuite>
