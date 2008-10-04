@@ -591,6 +591,7 @@ class pts_Graph
 			imagettftext($img_object, $font_size, $rotation, $text_x, $text_y, $color, $font, $string);
 		else if($this->graph_renderer == "SVG")
 		{
+			$font_size += 1;
 			$baseline = "middle";
 
 			if($rotation != 0)
