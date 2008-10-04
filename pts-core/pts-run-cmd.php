@@ -42,7 +42,7 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
 		{
-			$saved_identifier = basename($saved_results_file, ".xml");
+			$saved_identifier = array_pop(explode("/", dirname($saved_results_file)));
 			$xml_parser = new tandem_XmlReader($saved_results_file);
 			$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 			$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
