@@ -567,6 +567,20 @@ switch($COMMAND)
 		else
 			echo "\nThis result doesn't exist!\n";
 		break;
+	case "REMOVE_INSTALLED_TEST":
+		if(is_file(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml"))
+		{
+			if(pts_bool_question("Are you sure you wish to remove the test " . $ARG_1 . " (y/N)?", false))
+			{
+				pts_remove(TEST_ENV_DIR . $ARG_1);
+				echo "\nThe " . $ARG_1 . " test has been removed.\n\n";
+			}
+			else
+				echo "\n";
+		}
+		else
+			echo "\n" . $ARG_1 . " is not installed.\n\n";
+		break;
 	case "SYS_INFO":
 		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\nSystem Information");
 		echo "Hardware:\n" . pts_hw_string() . "\n\n";

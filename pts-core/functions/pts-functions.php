@@ -729,17 +729,20 @@ function pts_remove($object)
 	if(is_file($object))
 		return unlink($object);
 
-	$directory = dir($object);
-	while(($entry = $directory->read()) !== FALSE)
+	if(is_dir($object))
 	{
-		if($entry != "." && $entry != "..")
+		$directory = dir($object);
+		while(($entry = $directory->read()) !== FALSE)
 		{
-			pts_remove($object . "/" . $entry);
+			if($entry != "." && $entry != "..")
+			{
+				pts_remove($object . "/" . $entry);
+			}
 		}
+		$directory->close();
 	}
-	$directory->close();
 
-	return rmdir($object);
+	return @rmdir($object);
 }
 function pts_download($download, $to)
 {

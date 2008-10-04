@@ -122,6 +122,9 @@ case "$OPTION_HANDLE" in
 "remove-result")
 	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_RESULT $OPTION_ARG
 	;;
+"remove-installed-test")
+	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_INSTALLED_TEST $OPTION_ARG
+	;;
 "remove-all-results")
 	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_ALL_RESULTS
 	;;
