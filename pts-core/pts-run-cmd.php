@@ -236,7 +236,7 @@ switch($COMMAND)
 		{
 			if(is_test($identifier))
 			{
-			 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test(TEST_ENV_DIR . $identifier . "/pts-install.xml"));
+			 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 
 				if(!empty($name))
