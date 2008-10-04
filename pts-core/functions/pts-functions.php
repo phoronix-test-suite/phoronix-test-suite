@@ -751,7 +751,7 @@ function pts_download($download, $to)
 	if(strpos($to_file, ".") === FALSE)
 		$to_file = basename($download);
 
-	if(IS_MACOSX)
+	if(is_executable("/usr/bin/curl"))
 	{
 		// curl download
 		$download_output = shell_exec("cd " . $to_dir . " && curl --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
