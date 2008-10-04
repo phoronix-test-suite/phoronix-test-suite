@@ -208,39 +208,6 @@ class pts_Graph
 		$dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
 		return $dimensions[1];
 	}
-	protected function write_text_center($String, $Size, $Color, $CenterX, $CenterY, $Rotate = FALSE, $Big = FALSE)
-	{
-		if(empty($String))
-			return;
-
-		$Font = $this->graph_font;
-
-		$ttf_dimensions = $this->return_ttf_string_dimensions(strtoupper($String), $Font, $Size, $Big);
-		$ttf_height = $ttf_dimensions[1];
-
-		$ttf_dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size, $Big);
-		$ttf_width = $ttf_dimensions[0];
-
-		if($CenterX == "TRUE_CENTER")
-			$CenterX = $this->graph_attr_width / 2;
-		else if($CenterX == "GRAPH_CENTER")
-			$CenterX = $this->return_graph_x_center();
-
-		if($Rotate == FALSE)
-		{
-			$Rotation = 0;
-			$text_x = $CenterX - round($ttf_width / 2);
-			$text_y = $CenterY + $ttf_height;
-		}
-		else
-		{
-			$Rotation = 90;
-			$text_x = $CenterX + $ttf_height;
-			$text_y = $CenterY + round($ttf_width / 2);
-		}
-
-		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String, "CENTER");
-	}
 	protected function find_longest_string($arr_string)
 	{
 		$longest_string = "";
@@ -253,10 +220,6 @@ class pts_Graph
 				$px_length = $new_length;
 			}
 		return $longest_string;
-	}
-	protected function return_graph_x_center()
-	{
-		return $this->graph_left_start + (($this->graph_left_end - $this->graph_left_start) / 2);
 	}
 	protected function update_graph_dimensions($width = -1, $height = -1, $recalculate_offsets = false)
 	{
@@ -279,59 +242,11 @@ class pts_Graph
 			$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
 		}
 	}
-	protected function write_text_right($String, $Size, $Color, $RightX, $CenterY, $Rotate = FALSE)
-	{
-		if(empty($String))
-			return;
-
-		$Font = $this->graph_font;
-
-		$ttf_dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
-
-		$ttf_width = $ttf_dimensions[0];
-		$ttf_height = $ttf_dimensions[1];
-
-		if($Rotate == FALSE)
-			$Rotation = 0;
-		else
-			$Rotation = 90;
-
-		$text_x = $RightX - $ttf_width;
-		$text_y = $CenterY + round($ttf_height / 2);
-
-		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String, "RIGHT");
-	}
-	protected function write_text_left($String, $Size, $Color, $LeftX, $CenterY, $Rotate = FALSE)
-	{
-		if(empty($String))
-			return;
-
-		$Font = $this->graph_font;
-
-		$ttf_dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
-
-		$ttf_width = $ttf_dimensions[0];
-		$ttf_height = $ttf_dimensions[1];
-
-		if($Rotate == FALSE)
-		{
-			$text_x = $LeftX;
-			$text_y = $CenterY + round($ttf_height / 2);
-			$Rotation = 0;
-		}
-		else
-		{
-			$text_x = $LeftX - round($ttf_height / 4);
-			$text_y = $CenterY + round($ttf_height / 2);
-			$Rotation = 270;
-		}
-
-		$this->write_image_text($this->graph_image, $Size, $Rotation, $text_x, $text_y, $Color, $Font, $String, "LEFT");
-	}
 
 	//
 	// Render Functions
 	//
+
 	protected function render_graph_pre_init()
 	{
 		return;
@@ -380,13 +295,13 @@ class pts_Graph
 		}
 
 		// Text
-		$this->write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 7);
-		$this->write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 1, $this->graph_top_start - 7);
-		$this->write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 4);
-		$this->write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, "GRAPH_CENTER", 26, FALSE, TRUE);
+		$this->write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 7, $this->graph_left_start + 1, $this->graph_top_start - 7);
+		$this->write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 1, $this->graph_top_start - 7, $this->graph_left_end - 1, $this->graph_top_start - 7);
+		$this->write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 4, $this->graph_left_end, 4);
+		$this->write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, 26, $this->graph_left_end, 26, FALSE, TRUE);
 
 		if(!empty($this->graph_y_title) && !$this->graph_y_title_hide)
-			$this->write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2), TRUE);
+			$this->write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start, 3, $this->graph_top_end, TRUE);
 	}
 	protected function render_graph_value_ticks()
 	{
@@ -402,7 +317,7 @@ class pts_Graph
 
 			$this->draw_line($this->graph_image, $px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
 
-			$this->write_text_right($display_value, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2);
+			$this->write_text_right($display_value, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2, $px_from_left_start - 1, $px_from_top - 2);
 
 			if($i != 0 && $this->graph_background_lines == TRUE)
 			{
@@ -471,7 +386,7 @@ class pts_Graph
 
 				$component_x = $this->graph_left_start + 15 + (($this->graph_left_end - $this->graph_left_start) / 4) * $key_offset;
 
-				$this->write_text_left($this->graph_data_title[$i], $this->graph_font_size_key, $this_color, $component_x, $component_y);
+				$this->write_text_left($this->graph_data_title[$i], $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
 
 				$this->draw_rectangle($this->graph_image, $component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color);
 				$this->draw_rectangle_border($this->graph_image, $component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this->graph_color_notches);
@@ -487,7 +402,7 @@ class pts_Graph
 		if(empty($this->graph_watermark_text))
 			return;
 
-		$this->write_text_right($this->graph_watermark_text, 10, $this->graph_color_text, $this->graph_left_end - 2,  $this->graph_top_start + 8);
+		$this->write_text_right($this->graph_watermark_text, 10, $this->graph_color_text, $this->graph_left_end - 2,  $this->graph_top_start + 8, $this->graph_left_end - 2,  $this->graph_top_start + 8);
 
 	}
 	protected function return_graph_image()
@@ -585,40 +500,178 @@ class pts_Graph
 
 		return $color;
 	}
-	protected function write_image_text(&$img_object, $font_size, $rotation, $text_x, $text_y, $color, $font, $string, $orientation = "LEFT")
+	protected function write_text_left($text_string, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = FALSE)
 	{
+		if(empty($text_string))
+			return;
+
 		if($this->graph_renderer == "PNG")
-			imagettftext($img_object, $font_size, $rotation, $text_x, $text_y, $color, $font, $string);
+		{
+			$ttf_dimensions = $this->return_ttf_string_dimensions($text_string, $this->graph_font, $font_size);
+			$ttf_width = $ttf_dimensions[0];
+			$ttf_height = $ttf_dimensions[1];
+
+			if($rotate == FALSE)
+			{
+				$text_x = $bound_x1;
+				$text_y = $bound_y1 + round($ttf_height / 2);
+				$rotation = 0;
+			}
+			else
+			{
+				$text_x = $bound_x1 - round($ttf_height / 4);
+				$text_y = $bound_y1 + round($ttf_height / 2);
+				$rotation = 270;
+			}
+			imagettftext($this->graph_image, $font_size, $rotation, $text_x, $text_y, $font_color, $this->graph_font, $text_string);
+		}
 		else if($this->graph_renderer == "SVG")
 		{
-			$font_size += 1;
-			$baseline = "middle";
+			$ttf_dimensions = $this->return_ttf_string_dimensions($text_string, $this->graph_font, $font_size);
+			$ttf_width = $ttf_dimensions[0];
+			$ttf_height = $ttf_dimensions[1];
 
-			if($rotation != 0)
+			if($rotate == FALSE)
 			{
-				$text_y = (0 - ($text_y / 2));
-				$text_x = $text_y + 5;
+				$text_x = $bound_x1;
+				$text_y = $bound_y1 + round($ttf_height / 2);
+				$rotation = 0;
 			}
-
-			switch($orientation)
+			else
 			{
-				case "CENTER":
-					$text_anchor = "middle";
-					$baseline = "text-before-edge";
-					break;
-				case "RIGHT":
-					$text_anchor = "end";
-					break;
-				case "LEFT":
-				default:
-					$text_anchor = "start";
-					break;
-
+				$text_x = $bound_x1 - round($ttf_height / 4);
+				$text_y = $bound_y1 + round($ttf_height / 2);
+				$rotation = 270;
 			}
-
-			// TODO: Implement $font through style="font-family: $font;"
-			$img_object .= "<text x=\"" . $text_x . "\" y=\"" . $text_y . "\" fill=\"" . $color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\" >" . $string . "</text>\n";
+			$this->write_svg_text($this->graph_image, $font_size, $rotation, $text_x, $text_y, $font_color, $this->graph_font, $text_string, "LEFT");
 		}
+	}
+	protected function write_text_right($text_string, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = FALSE)
+	{
+		if(empty($text_string))
+			return;
+
+		if($this->graph_renderer == "PNG")
+		{
+			$ttf_dimensions = $this->return_ttf_string_dimensions($text_string, $this->graph_font, $font_size);
+			$ttf_width = $ttf_dimensions[0];
+			$ttf_height = $ttf_dimensions[1];
+
+			if($rotate_text == FALSE)
+				$rotation = 0;
+			else
+				$rotation = 90;
+
+			$text_x = $bound_x2 - $ttf_width;
+			$text_y = $bound_y1 + round($ttf_height / 2);
+
+			imagettftext($this->graph_image, $font_size, $rotation, $text_x, $text_y, $font_color, $this->graph_font, $text_string);
+		}
+		else if($this->graph_renderer == "SVG")
+		{
+			$ttf_dimensions = $this->return_ttf_string_dimensions($text_string, $this->graph_font, $font_size);
+			$ttf_width = $ttf_dimensions[0];
+			$ttf_height = $ttf_dimensions[1];
+
+			if($rotate_text == FALSE)
+				$rotation = 0;
+			else
+				$rotation = 90;
+
+			$text_x = $bound_x2 - $ttf_width;
+			$text_y = $bound_y1 + round($ttf_height / 2);
+
+			$this->write_svg_text($this->graph_image, $font_size, $rotation, $text_x, $text_y, $font_color, $this->graph_font, $text_string, "RIGHT");
+		}
+	}
+	protected function write_text_center($text_string, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = FALSE, $big_type = FALSE)
+	{
+		if(empty($text_string))
+			return;
+
+		if($this->graph_renderer == "PNG")
+		{
+		//	$font_size = $this->graph_font_size_bars;
+		//	while($this->return_ttf_string_width($this->trim_double($this->graph_maximum_value, 3), $this->graph_font, $font_size) > ($bar_width - 6))
+		//		$font_size -= 0.5;
+
+			$ttf_dimensions = $this->return_ttf_string_dimensions(strtoupper($text_string), $this->graph_font, $font_size, $big_type);
+			$ttf_height = $ttf_dimensions[1];
+
+			$ttf_dimensions = $this->return_ttf_string_dimensions($text_string, $this->graph_font, $font_size, $big_type);
+			$ttf_width = $ttf_dimensions[0];
+
+			if($rotate_text == FALSE)
+			{
+				$rotation = 0;
+				$text_x = (($bound_x2 - $bound_x1) / 2) + $bound_x1 - round($ttf_width / 2);
+				$text_y = $bound_y1 + $ttf_height;
+			}
+			else
+			{
+				$rotation = 90;
+				$text_x = $bound_x1 + $ttf_height;
+				$text_y = (($bound_y2 - $bound_y1) / 2) + $bound_y1 + round($ttf_width / 2);
+			}
+
+			imagettftext($this->graph_image, $font_size, $rotation, $text_x, $text_y, $font_color, $this->graph_font, $text_string);
+		}
+		else if($this->graph_renderer == "SVG")
+		{
+		//	$font_size = $this->graph_font_size_bars;
+		//	while($this->return_ttf_string_width($this->trim_double($this->graph_maximum_value, 3), $this->graph_font, $font_size) > ($bar_width - 6))
+		//		$font_size -= 0.5;
+
+			$ttf_dimensions = $this->return_ttf_string_dimensions(strtoupper($text_string), $this->graph_font, $font_size, $big_type);
+			$ttf_height = $ttf_dimensions[1];
+
+			$ttf_dimensions = $this->return_ttf_string_dimensions($text_string, $this->graph_font, $font_size, $big_type);
+			$ttf_width = $ttf_dimensions[0];
+
+			if($rotate_text == FALSE)
+			{
+				$rotation = 0;
+				$text_x = (($bound_x2 - $bound_x1) / 2) + $bound_x1 - round($ttf_width / 2);
+				$text_y = $bound_y1 + $ttf_height;
+			}
+			else
+			{
+				$rotation = 90;
+				$text_x = $bound_x1 + $ttf_height;
+				$text_y = (($bound_y2 - $bound_y1) / 2) + $bound_y1 + round($ttf_width / 2);
+			}
+
+			$this->write_svg_text($this->graph_image, $font_size, $rotation, $text_x, $text_y, $font_color, $this->graph_font, $text_string, "CENTER");
+		}
+	}
+	protected function write_svg_text(&$img_object, $font_size, $rotation, $text_x, $text_y, $color, $font, $string, $orientation = "LEFT")
+	{
+		$font_size += 1;
+		$baseline = "middle";
+
+		if($rotation != 0)
+		{
+			$text_y = (0 - ($text_y / 2));
+			$text_x = $text_y + 5;
+		}
+
+		switch($orientation)
+		{
+			case "CENTER":
+				$text_anchor = "middle";
+				$baseline = "text-before-edge";
+				break;
+			case "RIGHT":
+				$text_anchor = "end";
+				break;
+			case "LEFT":
+			default:
+				$text_anchor = "start";
+				break;
+		}
+
+		// TODO: Implement $font through style="font-family: $font;"
+			$img_object .= "<text x=\"" . $text_x . "\" y=\"" . $text_y . "\" fill=\"" . $color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\" >" . $string . "</text>\n";
 	}
 	protected function draw_rectangle(&$img_object, $x1, $y1, $width, $height, $background_color)
 	{

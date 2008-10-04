@@ -68,19 +68,15 @@ class pts_BarGraph extends pts_CustomGraph
 			$this->draw_line($this->graph_image, $px_bound_right, $px_from_top_start, $px_bound_right, $px_from_top_end, $this->graph_color_notches);
 
 			if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
-				$this->write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, TRUE);
+				$this->write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, TRUE);
 			else
-				$this->write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end - 5, FALSE, TRUE);
+				$this->write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $px_from_top_end - 5, $px_bound_right, $px_from_top_end - 5, FALSE, TRUE);
 		}
 	}
 	protected function render_graph_bars()
 	{
  		$bar_count = count($this->graph_data);
 		$bar_width = floor($this->identifier_width / $bar_count) - ($bar_count * 16);
-
-		$font_size = $this->graph_font_size_bars;
-		while($this->return_ttf_string_width($this->trim_double($this->graph_maximum_value, 3), $this->graph_font, $font_size) > ($bar_width - 6))
-			$font_size -= 0.5;
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -102,7 +98,7 @@ class pts_BarGraph extends pts_CustomGraph
 				$this->draw_rectangle($this->graph_image, $px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end - 1, $paint_color);
 
 				if($graph_size > 20)
-					$this->write_text_center($this->graph_data[$i_o][$i], $font_size, $this->graph_color_body_text, $px_bound_left + (($px_bound_right - $px_bound_left) / 2), $value_plot_top + 3);
+					$this->write_text_center($this->graph_data[$i_o][$i], $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left, $value_plot_top + 3, $px_bound_right, $value_plot_top + 3);
 			}
 		}
 	}

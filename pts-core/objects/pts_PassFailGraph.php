@@ -77,7 +77,7 @@ class pts_PassFailGraph extends pts_CustomGraph
 				$this->draw_rectangle_border($this->graph_image, $this_horizontal_start, $this_vertical_start, $this_horizontal_end, $this_vertical_end, $this->graph_color_body_light);
 				$this->draw_rectangle($this->graph_image, $this_horizontal_start + 1, $this_vertical_start + 1, $this_horizontal_end - 1, $this_vertical_end - 1, $paint_color);
 
-				$this->write_text_center($this_identifier, $font_size, $this->graph_color_body_text, $this_horizontal_start + (($this_horizontal_end - $this_horizontal_start) / 2), $this_vertical_start + (($this_vertical_end - $this_vertical_start) / 2) - ($this->return_ttf_string_height($this_identifier, $this->graph_font, $font_size) / 2));
+				$this->write_text_center($this_identifier, $font_size, $this->graph_color_body_text, $this_horizontal_start, $this_vertical_start + (($this_vertical_end - $this_vertical_start) / 2) - ($this->return_ttf_string_height($this_identifier, $this->graph_font, $font_size) / 2), $this_horizontal_end, $this_vertical_start + (($this_vertical_end - $this_vertical_start) / 2) - ($this->return_ttf_string_height($this_identifier, $this->graph_font, $font_size) / 2));
 			}
 		}
 	}
