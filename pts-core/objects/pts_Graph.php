@@ -624,7 +624,17 @@ class pts_Graph
 		if($this->graph_renderer == "PNG")
 			imagefilledrectangle($img_object, $x1, $y1, $width, $height, $background_color);
 		else if($this->graph_renderer == "SVG")
-			$img_object .= "<rect x=\"" . $x1 . "\" y=\"" . $y1 . "\" width=\"" . ($width - $x1) . "\" height=\"" . ($height - $y1) . "\" fill=\"" . $background_color . "\" />\n";
+		{
+			$width = $width - $x1;
+			$height = $height - $y1;
+
+			if($width < 0)
+				$x1 += $width;
+			if($height < 0)
+				$y1 += $height;
+
+			$img_object .= "<rect x=\"" . $x1 . "\" y=\"" . $y1 . "\" width=\"" . abs($width) . "\" height=\"" . abs($height) . "\" fill=\"" . $background_color . "\" />\n";
+		}
 	}
 	protected function draw_rectangle_border(&$img_object, $x1, $y1, $width, $height, $color)
 	{
