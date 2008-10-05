@@ -79,7 +79,7 @@ then
 	OPTION_ARG=$SCTP_FILE
 fi
 
-case "$OPTION_HANDLE" in
+case "$1" in
 "install")
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $OPTION_ARG
 	;;
