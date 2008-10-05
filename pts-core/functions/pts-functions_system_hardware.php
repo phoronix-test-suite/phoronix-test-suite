@@ -89,7 +89,7 @@ function motherboard_chipset_string()
 		}
 	}
 
-	if(isset($bridge) && $bridge != "Unknown")
+	if(!isset($bridge) || $bridge != "Unknown")
 	{
 		// Attempt to detect Southbridge (if applicable)
 		$southbridge = read_pci(array("ISA bridge", "SATA controller"), FALSE);
