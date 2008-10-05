@@ -90,7 +90,7 @@ function pts_generate_download_cache()
 	
 	foreach(array_merge($normal_downloads, $base_downloads) as $downloads_file)
 	{
-		$test = array_pop(explode("/", dirname($saved_results_file)));
+		$test = array_pop(explode("/", dirname($downloads_file)));
 		$xml_parser = new tandem_XmlReader($downloads_file);
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
