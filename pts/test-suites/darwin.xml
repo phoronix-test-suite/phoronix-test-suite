@@ -2,7 +2,7 @@
 	<SuiteInformation>
 		<Version>1.0.0</Version>
 		<TestType>System</TestType>
-		<Title>Universe Test Suite</Title>
+		<Title>Darwin Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Darwin test suite contains some of the leading Phoronix Test Suite tests known to run properly and reliably on Apple's Mac OS X operating system. This test suite could be considered the universe test suite for this Apple operating system.</Description>
 	</SuiteInformation>
