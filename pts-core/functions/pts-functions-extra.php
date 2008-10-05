@@ -85,7 +85,10 @@ function pts_generate_download_cache()
 	$xml_writer = new tandem_XmlWriter();
 	$xml_writer->addXmlObject(P_CACHE_PTS_VERSION, -1, PTS_VERSION);
 	$file_counter = 0;
-	foreach(glob(TEST_RESOURCE_DIR . "*/downloads.xml") as $downloads_file)
+	$normal_downloads = glob(TEST_RESOURCE_DIR . "*/downloads.xml");
+	$base_downloads = glob(TEST_RESOURCE_DIR . "base/*/downloads.xml");
+	
+	foreach(array_merge($normal_downloads, $base_downloads) as $downloads_file)
 	{
 		$test = substr($downloads_file, strlen(TEST_RESOURCE_DIR), 0 - 14);
 		$xml_parser = new tandem_XmlReader($downloads_file);
