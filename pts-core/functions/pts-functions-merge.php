@@ -107,7 +107,7 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 		}
 		if($original_suite_version != $new_suite_version)
 		{
-			//pts_exit("Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n");
+			// echo "Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n";
 		}
 	}
 

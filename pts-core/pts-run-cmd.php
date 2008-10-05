@@ -68,49 +68,52 @@ switch($COMMAND)
 
 		if(empty($ARG_1))
 		{
-			pts_exit("\nThe test or suite name to install must be supplied.\n");
+			echo "\nThe test or suite name to install must be supplied.\n";
 		}
-		else if(IS_SCTP_MODE)
-			$ARG_1 = basename($ARG_1);
-
-		if($COMMAND == "FORCE_INSTALL_TEST")
-			define("PTS_FORCE_INSTALL", 1);
-
-		$ARG_1 = strtolower($ARG_1);
-
-		if(strpos($ARG_1, "pcqs") !== FALSE && !is_file(XML_SUITE_LOCAL_DIR . "pcqs-license.txt"))
+		else
 		{
-			// Install the Phoronix Certification & Qualification Suite
-			$agreement = wordwrap(file_get_contents("http://www.phoronix-test-suite.com/pcqs/pcqs-license.txt"), 65);
+			if(IS_SCTP_MODE)
+				$ARG_1 = basename($ARG_1);
 
-			if(strpos($agreement, "PCQS") == FALSE)
-				pts_exit("An error occurred while connecting to the Phoronix Test Suite Server. Please try again later.");
+			if($COMMAND == "FORCE_INSTALL_TEST")
+				define("PTS_FORCE_INSTALL", 1);
 
-			echo "\n\n" . $agreement;
-			$agree = pts_bool_question("Do you agree to these terms in full and wish to proceed (y/n)?", false);
+			$ARG_1 = strtolower($ARG_1);
 
-			if($agree)
+			if(strpos($ARG_1, "pcqs") !== FALSE && !is_file(XML_SUITE_LOCAL_DIR . "pcqs-license.txt"))
 			{
-				pts_download("http://www.phoronix-test-suite.com/pcqs/download-pcqs.php", XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
-				shell_exec("cd " . XML_SUITE_LOCAL_DIR . " && tar -xf pcqs-suite.tar && rm -f pcqs-suite.tar");
-				echo pts_string_header("The Phoronix Certification & Qualification Suite is now installed.");
+				// Install the Phoronix Certification & Qualification Suite
+				$agreement = wordwrap(file_get_contents("http://www.phoronix-test-suite.com/pcqs/pcqs-license.txt"), 65);
+
+				if(strpos($agreement, "PCQS") == FALSE)
+					pts_exit("An error occurred while connecting to the Phoronix Test Suite Server. Please try again later.");
+
+				echo "\n\n" . $agreement;
+				$agree = pts_bool_question("Do you agree to these terms in full and wish to proceed (y/n)?", false);
+
+				if($agree)
+				{
+					pts_download("http://www.phoronix-test-suite.com/pcqs/download-pcqs.php", XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
+					shell_exec("cd " . XML_SUITE_LOCAL_DIR . " && tar -xf pcqs-suite.tar && rm -f pcqs-suite.tar");
+					echo pts_string_header("The Phoronix Certification & Qualification Suite is now installed.");
+				}
+				else
+					pts_exit(pts_string_header("In order to run PCQS you must agree to the listed terms."));
 			}
-			else
-				pts_exit(pts_string_header("In order to run PCQS you must agree to the listed terms."));
+
+			pts_module_process("__pre_install_process");
+
+			// Any external dependencies?
+			echo "\n";
+			pts_install_package_on_distribution($ARG_1);
+
+			// Install tests
+			pts_start_install($ARG_1);
+			pts_module_process("__post_install_process");
+
+			if(getenv("SILENT_INSTALL") !== FALSE)
+				define("PTS_EXIT", 1);
 		}
-
-		pts_module_process("__pre_install_process");
-
-		// Any external dependencies?
-		echo "\n";
-		pts_install_package_on_distribution($ARG_1);
-
-		// Install tests
-		pts_start_install($ARG_1);
-		pts_module_process("__post_install_process");
-
-		if(getenv("SILENT_INSTALL") !== FALSE)
-			define("PTS_EXIT", 1);
 		break;
 	case "FORCE_INSTALL_ALL":
 	case "INSTALL_ALL":
@@ -135,20 +138,22 @@ switch($COMMAND)
 
 		if(empty($ARG_1))
 		{
-			pts_exit("\nThe test or suite name to install external dependencies for must be supplied.\n");
-		}
-
-		if($ARG_1 == "phoronix-test-suite" || $ARG_1 == "pts" || $ARG_1 == "trondheim-pts")
-		{
-			$pts_dependencies = array("php-gd", "php-extras", "build-utilities");
-			$packages_to_install = array();
-			$continue_install = pts_package_generic_to_distro_name($packages_to_install, $pts_dependencies);
-
-			if($continue_install)
-				pts_install_packages_on_distribution_process($packages_to_install);
+			echo "\nThe test or suite name to install external dependencies for must be supplied.\n";
 		}
 		else
-			pts_install_package_on_distribution($ARG_1);
+		{
+			if($ARG_1 == "phoronix-test-suite" || $ARG_1 == "pts" || $ARG_1 == "trondheim-pts")
+			{
+				$pts_dependencies = array("php-gd", "php-extras", "build-utilities");
+				$packages_to_install = array();
+				$continue_install = pts_package_generic_to_distro_name($packages_to_install, $pts_dependencies);
+
+				if($continue_install)
+					pts_install_packages_on_distribution_process($packages_to_install);
+			}
+			else
+				pts_install_package_on_distribution($ARG_1);
+		}
 		break;
 	case "MAKE_DOWNLOAD_CACHE":
 		echo pts_string_header("Phoronix Test Suite - Generating Download Cache");
@@ -332,82 +337,86 @@ switch($COMMAND)
 			$test_environment_size = pts_test_estimated_environment_size($ARG_1);
 
 			if(empty($test_title))
-				pts_exit($ARG_1 . " is not a Phoronix Test Suite test.");
-
-			if(!empty($test_sw_version))
-				$test_title .= " " . $test_sw_version;
-
-			echo pts_string_header($test_title);
-
-			$test_maintainer = explode("|", $test_maintainer);
-			if(count($test_maintainer) == 2)
-				$test_maintainer = trim($test_maintainer[0]) . " <" . trim($test_maintainer[1]) . ">";
-			else
-				$test_maintainer = $test_maintainer[0];
-
-			echo "Test Version: " . $test_version . "\n";
-			echo "Maintainer: " . $test_maintainer . "\n";
-			echo "Test Type: " . $test_type . "\n";
-			echo "Software Type: " . $test_app_type . "\n";
-			echo "License Type: " . $test_license . "\n";
-			echo "Test Status: " . $test_status . "\n";
-			echo "Project Web-Site: " . $test_projecturl . "\n";
-
-			if(!empty($test_download_size))
-				echo "Download Size: " . $test_download_size . " MB\n";
-			if(!empty($test_environment_size))
-				echo "Environment Size: " . $test_environment_size . " MB\n";
-			if(!empty($test_estimated_length))
-				echo "Estimated Length: " . pts_estimated_time_string($test_estimated_length) . "\n";
-
-			echo "\nDescription: " . $test_description . "\n";
-
-			if(is_file(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml"))
 			{
-				$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml", FALSE);
-				$last_run = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
-
-				if($last_run == "0000-00-00 00:00:00")
-					$last_run = "Never";
-
-				echo "\nTest Installed: Yes\n";
-				echo "Last Run: " . $last_run . "\n";
-
-				if($last_run != "Never")
-					echo "Times Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) . "\n";
+				echo $ARG_1 . " is not a Phoronix Test Suite test.";
 			}
 			else
-				echo "\nTest Installed: No\n";
-
-			if(!empty($test_dependencies))
 			{
-				echo "\nSoftware Dependencies:\n";
-				foreach(explode(',', $test_dependencies) as $dependency)
-					if(($title = pts_dependency_name(trim($dependency)) )!= "")
-						echo "- " . $title . "\n";
+				if(!empty($test_sw_version))
+					$test_title .= " " . $test_sw_version;
+
+				echo pts_string_header($test_title);
+
+				$test_maintainer = explode("|", $test_maintainer);
+				if(count($test_maintainer) == 2)
+					$test_maintainer = trim($test_maintainer[0]) . " <" . trim($test_maintainer[1]) . ">";
+				else
+					$test_maintainer = $test_maintainer[0];
+
+				echo "Test Version: " . $test_version . "\n";
+				echo "Maintainer: " . $test_maintainer . "\n";
+				echo "Test Type: " . $test_type . "\n";
+				echo "Software Type: " . $test_app_type . "\n";
+				echo "License Type: " . $test_license . "\n";
+				echo "Test Status: " . $test_status . "\n";
+				echo "Project Web-Site: " . $test_projecturl . "\n";
+
+				if(!empty($test_download_size))
+					echo "Download Size: " . $test_download_size . " MB\n";
+				if(!empty($test_environment_size))
+					echo "Environment Size: " . $test_environment_size . " MB\n";
+				if(!empty($test_estimated_length))
+					echo "Estimated Length: " . pts_estimated_time_string($test_estimated_length) . "\n";
+
+				echo "\nDescription: " . $test_description . "\n";
+
+				if(is_file(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml"))
+				{
+					$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml", FALSE);
+					$last_run = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
+
+					if($last_run == "0000-00-00 00:00:00")
+						$last_run = "Never";
+
+					echo "\nTest Installed: Yes\n";
+					echo "Last Run: " . $last_run . "\n";
+
+					if($last_run != "Never")
+						echo "Times Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) . "\n";
+				}
+				else
+					echo "\nTest Installed: No\n";
+
+				if(!empty($test_dependencies))
+				{
+					echo "\nSoftware Dependencies:\n";
+					foreach(explode(',', $test_dependencies) as $dependency)
+						if(($title = pts_dependency_name(trim($dependency)) )!= "")
+							echo "- " . $title . "\n";
+				}
+
+				$associated_suites = array();
+				foreach(pts_available_suites_array() as $identifier)
+				{
+				 	$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
+					$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
+					$identifier = basename($suite_file, ".xml");
+					$tests = pts_contained_tests($identifier);
+
+					if(in_array($ARG_1, $tests))
+						array_push($associated_suites, $identifier);
+				}
+
+				if(count($associated_suites) > 0)
+				{
+					asort($associated_suites);
+					echo "\nSuites Using This Test:\n";
+					foreach($associated_suites as $suite)
+						echo "- " . $suite . "\n";
+				}
+
+				echo "\n";
 			}
-
-			$associated_suites = array();
-			foreach(pts_available_suites_array() as $identifier)
-			{
-			 	$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
-				$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
-				$identifier = basename($suite_file, ".xml");
-				$tests = pts_contained_tests($identifier);
-
-				if(in_array($ARG_1, $tests))
-					array_push($associated_suites, $identifier);
-			}
-
-			if(count($associated_suites) > 0)
-			{
-				asort($associated_suites);
-				echo "\nSuites Using This Test:\n";
-				foreach($associated_suites as $suite)
-					echo "- " . $suite . "\n";
-			}
-
-			echo "\n";
 		}
 		else
 		{
@@ -595,37 +604,43 @@ switch($COMMAND)
 
 		if(empty($BASE_FILE) || empty($MERGE_FROM_FILE))
 		{
-			pts_exit("\nTwo saved result profile names must be supplied.\n");
+			echo "\nTwo saved result profile names must be supplied.\n";
 		}
-
-		$BASE_FILE = pts_find_result_file($BASE_FILE);
-		$MERGE_FROM_FILE = pts_find_result_file($MERGE_FROM_FILE);
-
-		if($BASE_FILE == FALSE || $MERGE_FROM_FILE == FALSE)
-			pts_exit($BASE_FILE . " or " . $MERGE_FROM_FILE . " couldn't be found.");
-
-		if(!empty($MERGE_TO) && !is_dir(SAVE_RESULTS_DIR . $MERGE_TO))
-			$MERGE_TO .= "/composite.xml";
 		else
-			$MERGE_TO = null;
-
-		if(empty($MERGE_TO))
 		{
-			do
+			$BASE_FILE = pts_find_result_file($BASE_FILE);
+			$MERGE_FROM_FILE = pts_find_result_file($MERGE_FROM_FILE);
+
+			if($BASE_FILE == FALSE || $MERGE_FROM_FILE == FALSE)
 			{
-				$rand_file = rand(1000, 9999);
-				$MERGE_TO = "merge-" . $rand_file . '/';
+				echo "\n" . $BASE_FILE . " or " . $MERGE_FROM_FILE . " couldn't be found.\n";
 			}
-			while(is_dir(SAVE_RESULTS_DIR . $MERGE_TO));
+			else
+			{
+				if(!empty($MERGE_TO) && !is_dir(SAVE_RESULTS_DIR . $MERGE_TO))
+					$MERGE_TO .= "/composite.xml";
+				else
+					$MERGE_TO = null;
 
-			$MERGE_TO .= "composite.xml";
+				if(empty($MERGE_TO))
+				{
+					do
+					{
+						$rand_file = rand(1000, 9999);
+						$MERGE_TO = "merge-" . $rand_file . '/';
+					}
+					while(is_dir(SAVE_RESULTS_DIR . $MERGE_TO));
+
+					$MERGE_TO .= "composite.xml";
+				}
+
+				// Merge Results
+				$MERGED_RESULTS = pts_merge_test_results(file_get_contents($BASE_FILE), file_get_contents($MERGE_FROM_FILE));
+				pts_save_result($MERGE_TO, $MERGED_RESULTS);
+				echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $MERGE_TO . "\n\n";
+				display_web_browser(SAVE_RESULTS_DIR . $MERGE_TO);
+			}
 		}
-
-		// Merge Results
-		$MERGED_RESULTS = pts_merge_test_results(file_get_contents($BASE_FILE), file_get_contents($MERGE_FROM_FILE));
-		pts_save_result($MERGE_TO, $MERGED_RESULTS);
-		echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $MERGE_TO . "\n\n";
-		display_web_browser(SAVE_RESULTS_DIR . $MERGE_TO);
 		break;
 	case "ANALYZE_RESULTS":
 		require_once("pts-core/functions/pts-functions-merge.php");
@@ -634,30 +649,34 @@ switch($COMMAND)
 		$SAVE_TO = $ARG_2;
 
 		if($BASE_FILE == FALSE)
-			pts_exit($BASE_FILE . " couldn't be found.");
-
-		if(!empty($SAVE_TO) && !is_dir(SAVE_RESULTS_DIR . $SAVE_TO))
-			$SAVE_TO .= "/composite.xml";
-		else
-			$SAVE_TO = null;
-
-		if(empty($SAVE_TO))
 		{
-			do
-			{
-				$rand_file = rand(1000, 9999);
-				$SAVE_TO = "analyze-" . $rand_file . '/';
-			}
-			while(is_dir(SAVE_RESULTS_DIR . $SAVE_TO));
-
-			$SAVE_TO .= "composite.xml";
+			echo "\n" . $BASE_FILE . " couldn't be found.\n";
 		}
+		else
+		{
+			if(!empty($SAVE_TO) && !is_dir(SAVE_RESULTS_DIR . $SAVE_TO))
+				$SAVE_TO .= "/composite.xml";
+			else
+				$SAVE_TO = null;
 
-		// Analyze Results
-		$SAVED_RESULTS = pts_merge_batch_tests_to_line_comparison(@file_get_contents($BASE_FILE));
-		pts_save_result($SAVE_TO, $SAVED_RESULTS);
-		echo "Results Saved To: " . SAVE_RESULTS_DIR . $SAVE_TO . "\n\n";
-		display_web_browser(SAVE_RESULTS_DIR . $SAVE_TO);
+			if(empty($SAVE_TO))
+			{
+				do
+				{
+					$rand_file = rand(1000, 9999);
+					$SAVE_TO = "analyze-" . $rand_file . '/';
+				}
+				while(is_dir(SAVE_RESULTS_DIR . $SAVE_TO));
+
+				$SAVE_TO .= "composite.xml";
+			}
+
+			// Analyze Results
+			$SAVED_RESULTS = pts_merge_batch_tests_to_line_comparison(@file_get_contents($BASE_FILE));
+			pts_save_result($SAVE_TO, $SAVED_RESULTS);
+			echo "Results Saved To: " . SAVE_RESULTS_DIR . $SAVE_TO . "\n\n";
+			display_web_browser(SAVE_RESULTS_DIR . $SAVE_TO);
+		}
 		break;
 	case "TEST_MODULE":
 		$module = strtolower($ARG_1);

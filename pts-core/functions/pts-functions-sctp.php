@@ -35,7 +35,7 @@ function generate_sctp_layer()
 	$test_directory = sctp_test_directory();
 
 	if(!$xml_parser->isDefined(P_TEST_TITLE))
-				pts_exit("\n" . SCTP_FILE . " is not a valid self-contained test profile!\n");
+		pts_exit("\n" . SCTP_FILE . " is not a valid self-contained test profile!\n");
 
 	if(!is_dir(PTS_TEMP_DIR . "sctp/"))
 		mkdir(PTS_TEMP_DIR . "sctp/");

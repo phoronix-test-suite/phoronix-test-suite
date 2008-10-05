@@ -412,8 +412,8 @@ function pts_install_test($identifier)
 
 					if(!empty($size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
 					{
-						echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test to be installed.");
-						pts_exit();
+						echo "\nThere is not enough space (at " . TEST_ENV_DIR . ") for this test to be installed.\n";
+						return FALSE;
 					}
 
 					$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
