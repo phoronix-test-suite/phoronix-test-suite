@@ -706,7 +706,7 @@ class pts_Graph
 	}
 	protected function return_ttf_string_dimensions($String, $Font, $Size, $Big = FALSE)
 	{
-		if($this->graph_renderer == "PNG")
+		if($this->graph_renderer == "PNG" && function_exists("imagettfbbox"))
 		{
 			$box_array = imagettfbbox($Size, 0, $Font, $String);
 			$box_width = $box_array[4] - $box_array[6];
