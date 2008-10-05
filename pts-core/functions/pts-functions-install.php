@@ -126,7 +126,7 @@ function pts_download_test_files($identifier)
 						if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
 						{
 							echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
-							pts_exit();
+							return FALSE;
 						}
 					}
 					echo pts_string_header("Downloading Files For: " . $identifier . $download_append);
@@ -253,7 +253,8 @@ function pts_download_test_files($identifier)
 
 						if(!$try_again)
 						{
-							pts_exit("\nDownload of Needed Test Dependencies Failed! Exiting.\n\n");
+							echo "\nDownload of Needed Test Dependencies Failed! Exiting.\n\n";
+							return FALSE;
 						}
 					}
 					while(!$file_downloaded);
@@ -261,6 +262,7 @@ function pts_download_test_files($identifier)
 			}
 		}
 	}
+	return TRUE;
 }
 function pts_local_download_test_files($identifier)
 {
@@ -390,7 +392,13 @@ function pts_install_test($identifier)
 				if(!is_dir(TEST_ENV_DIR . $identifier))
 					mkdir(TEST_ENV_DIR . $identifier);
 
-				pts_download_test_files($identifier);
+				$download_test_files = pts_download_test_files($identifier);
+
+				if($download_test_files == FALSE)
+				{
+					echo "\nInstallation of " . $identifier . " test failed.\n";
+					return FALSE;
+				}
 
 				if(is_file(pts_location_test_resources($identifier) . "install.sh") || is_file(pts_location_test_resources($identifier) . "install.php"))
 				{

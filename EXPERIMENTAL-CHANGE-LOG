@@ -56,6 +56,7 @@ Phoronix Test Suite
 - pts-core: Reformat list-tests for better alignment and not showing redundant information
 - pts-core: Add remove-installed-test to remove a test installation
 - pts-core: Add a index.html forwarder to each result file and have the launch browser script open that, since on some systems .xml opens up in an editor instead of browser by default
+- pts-core: When installing a suite and a test fails to download a file due to an MD5 mismatch, continue on with next test instead of exiting
 - pts: Move pcqs tests out of tree
 - pts: Switch all relevant test profiles using ArgumentName to using ArgumentPrefix
 - pts: Move the byte test profile to using the new $LOG_FILE capability for an example and for testing
