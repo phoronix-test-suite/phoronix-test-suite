@@ -67,7 +67,7 @@ if(!$TO_RUN_TYPE)
 	{
 		$TO_RUN_TYPE = "GLOBAL_COMPARISON";
 		define("GLOBAL_COMPARISON", 1);
-		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", pts_global_download_xml($TO_RUN));
+		pts_save_result($TO_RUN . "/composite.xml", pts_global_download_xml($TO_RUN));
 	}
 	else
 	{

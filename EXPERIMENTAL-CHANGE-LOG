@@ -2,6 +2,7 @@ PHORONIX TEST SUITE EXPERIMENTAL CHANGE-LOG
 
 Phoronix Test Suite
 
+- pts-core: Fix regression that broke compatibility to run phoronix-test-suite benchmark <Phoronix Global ID>
 - pts-core: Embed hidden information in the SVG graph files that identify the test, GlobalID, and user, to provide new end-user options in the future
 - pts_Graph: Set viewbox in SVG renderer
 
