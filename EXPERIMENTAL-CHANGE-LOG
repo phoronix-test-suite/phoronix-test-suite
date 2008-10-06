@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE EXPERIMENTAL CHANGE-LOG
 
+Phoronix Test Suite
+
+- pts_Graph: Set viewbox in SVG renderer
+
 Phoronix Test Suite 1.4.0 Alpha 2
 October 6, 2008
 
