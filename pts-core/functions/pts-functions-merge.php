@@ -101,7 +101,7 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 
 	if(!defined("GLOBAL_COMPARISON") && getenv("PTS_MERGE") != "custom")
 	{
-		if($original_suite_name != $new_suite_name)
+		if($original_suite_name != $new_suite_name && !pts_global_valid_id_string($original_suite_name) && !pts_global_valid_id_string($new_suite_name))
 		{
 			echo pts_string_header("Note: The test(s) don't match: " . $original_suite_name . " - " . $new_suite_name . ".\nNot all test results may be compatible.");
 		}
