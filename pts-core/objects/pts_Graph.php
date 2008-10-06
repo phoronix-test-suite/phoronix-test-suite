@@ -85,6 +85,8 @@ class pts_Graph
 	var $graph_top_end;
 	var $graph_left_end;
 
+	var $graph_user_identifiers = array();
+
 	public function __construct($Title, $SubTitle, $YTitle)
 	{
 		$this->graph_title = $Title;
@@ -438,9 +440,10 @@ class pts_Graph
 
 		return $return;
 	}
-
-
-
+	function add_user_identifier($identifier, $value)
+	{
+		$this->graph_user_identifiers[$identifier] = $value;
+	}
 
 
 	//
@@ -460,7 +463,12 @@ class pts_Graph
 		}
 		else if($this->graph_renderer == "SVG")
 		{
-			$img = "<?xml version=\"1.0\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewbox=\"0 0 " . $width . " " . $height . "\" width=\"" . $width . "\" height=\"" . $height . "\">\n\n";
+			$img = "<?xml version=\"1.0\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n";
+
+			foreach($this->graph_user_identifiers as $key => $value)
+				$img .= "<!-- " . $key . ": " . $value . " -->\n";
+
+			$img .= "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewbox=\"0 0 " . $width . " " . $height . "\" width=\"" . $width . "\" height=\"" . $height . "\">\n\n";
 		}
 
 		return $img;

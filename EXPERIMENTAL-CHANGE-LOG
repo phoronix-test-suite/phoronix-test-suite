@@ -2,6 +2,7 @@ PHORONIX TEST SUITE EXPERIMENTAL CHANGE-LOG
 
 Phoronix Test Suite
 
+- pts-core: Embed hidden information in the SVG graph files that identify the test, GlobalID, and user, to provide new end-user options in the future
 - pts_Graph: Set viewbox in SVG renderer
 
 Phoronix Test Suite 1.4.0 Alpha 2

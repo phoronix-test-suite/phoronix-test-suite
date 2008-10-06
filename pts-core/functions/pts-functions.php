@@ -144,7 +144,9 @@ function pts_save_result($save_to = null, $save_results = null)
 			}
 
 			$xml_reader = new tandem_XmlReader($save_results);
+			$results_suite_name = $xml_reader->getXMLValue(P_RESULTS_SUITE_NAME);
 			$results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
+			$results_testname = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 			$results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
 			$results_attributes = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 			$results_scale = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
@@ -199,6 +201,11 @@ function pts_save_result($save_to = null, $save_results = null)
 				$t->loadGraphValues($results_values[$i]);
 				$t->loadGraphProportion($results_proportion[$i]);
 				$t->loadGraphVersion(PTS_VERSION);
+
+				$t->add_user_identifier("Test", $results_testname[$i]);
+				$t->add_user_identifier("Identifier", $results_suite_name);
+				$t->add_user_identifier("User", pts_current_user());
+
 				$t->save_graph($save_to_dir . "/result-graphs/" . ($i + 1) . "." . strtolower($t->getRenderer()));
 				$t->renderGraph();
 			}
