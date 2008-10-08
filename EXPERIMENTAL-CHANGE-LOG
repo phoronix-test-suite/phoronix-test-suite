@@ -5,6 +5,8 @@ Phoronix Test Suite
 - pts-core: Fix regression that broke compatibility to run phoronix-test-suite benchmark <Phoronix Global ID>
 - pts-core: Embed hidden information in the SVG graph files that identify the test, GlobalID, and user, to provide new end-user options in the future
 - pts-core: Don't complain about test mismatch in merge function if using a Global ID
+- pts-core: Prepatory work for SVG-driven test execution / identification
+- pts-core: Add support for reading hard disk model number and true disk capacity
 - pts_Graph: Set viewbox in SVG renderer
 
 Phoronix Test Suite 1.4.0 Alpha 2

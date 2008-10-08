@@ -26,6 +26,20 @@ require("pts-core/functions/pts-functions-run.php");
 require("pts-core/functions/pts-functions-merge.php");
 
 $TO_RUN = strtolower($argv[1]);
+
+if(is_file($argv[1]) && substr(basename($argv[1]), -4) == ".svg")
+{
+	// Image graph result driven test selection
+	$svg_parser = new tandem_XmlReader($argv[1]);
+	$svg_test = $svg_parser->getStatement("Test");
+	$svg_identifier = $svg_parser->getStatement("Identifier");
+
+	if(!empty($svg_test) && !empty($svg_identifier))
+	{
+		// TODO: Implement checks and then prompt user whether they want to run the test, suite, or global ID that the SVG references	
+	}
+}
+
 $TO_RUN_TYPE = pts_test_type($TO_RUN);
 $MODULE_STORE = implode(";", $GLOBALS["PTS_MODULE_VAR_STORE"]);
 $TEST_PROPERTIES = array();

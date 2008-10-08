@@ -461,18 +461,24 @@ function pts_trim_double($double, $accuracy = 2)
 
 	if(count($return) == 1)
 		$return[1] = "00";
-
-	if(count($return) == 2)
+	else if(count($return) == 2)
 	{
-		$strlen = strlen($return[1]);
+		if($accuracy == 0)
+		{
+			$return = $return[0];
+		}
+		else
+		{
+			$strlen = strlen($return[1]);
 
-		if($strlen > $accuracy)
-			$return[1] = substr($return[1], 0, $accuracy);
-		else if($strlen < $accuracy)
-			for($i = $strlen; $i < $accuracy; $i++)
-				$return[1] .= '0';
+			if($strlen > $accuracy)
+				$return[1] = substr($return[1], 0, $accuracy);
+			else if($strlen < $accuracy)
+				for($i = $strlen; $i < $accuracy; $i++)
+					$return[1] .= '0';
 
-		$return = $return[0] . "." . $return[1];
+			$return = $return[0] . "." . $return[1];
+		}
 	}
 	else
 		$return = $return[0];
