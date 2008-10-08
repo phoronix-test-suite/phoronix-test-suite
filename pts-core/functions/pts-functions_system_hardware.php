@@ -197,7 +197,7 @@ function system_hard_disks()
 
 							if($disk_size % 100 == 10)
 								$disk_size -= 10;
-							if($disk_size % 90 == 10)
+							if($disk_size % 100 == 90)
 								$disk_size += 10;
 						}
 
