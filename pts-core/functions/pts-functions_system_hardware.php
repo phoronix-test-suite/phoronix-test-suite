@@ -211,23 +211,26 @@ function system_hard_disks()
 	$disks = array();
 	for($i = 0; $i < count($disks_formatted); $i++)
 	{
-		$times_found = 1;
-
-		for($j = ($i + 1); $j < count($disks_formatted); $j++)
+		if(!empty($disks_formatted[$i]))
 		{
-			if($disks_formatted[$i] == $disks_formatted[$j] && !empty($disks_formatted[$i]))
+			$times_found = 1;
+
+			for($j = ($i + 1); $j < count($disks_formatted); $j++)
 			{
-				$times_found++;
-				$disks_formatted[$j] = "";
+				if($disks_formatted[$i] == $disks_formatted[$j])
+				{
+					$times_found++;
+					$disks_formatted[$j] = "";
+				}
 			}
+
+			if($times_found > 1)
+				$disk = $times_found . " x " . $disks_formatted[$i];
+			else
+				$disk = $disks_formatted[$i];
+
+			array_push($disks, $disk);
 		}
-
-		if($times_found > 1)
-			$disk = $times_found . " x " . $disks_formatted[$i];
-		else
-			$disk = $disks_formatted[$i];
-
-		array_push($disks, $disk);			
 	}
 
 	if(count($disks) == 0)
