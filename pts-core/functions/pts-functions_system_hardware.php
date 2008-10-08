@@ -189,11 +189,11 @@ function system_hard_disks()
 						if($disk_r[1] == "MB")
 							$disk_size /= 1024;
 
-						if($disk_size % 10 != 0)
+						if($disk_size % 20 != 0)
 						{
 							$disk_size *= 1.01;
-							$mod = $disk_size % 10;
-							$disk_size += (10 - $mod);
+							$mod = $disk_size % 20;
+							$disk_size += (20 - $mod);
 						}
 
 						$disk_size = pts_trim_double($disk_size, 0);
