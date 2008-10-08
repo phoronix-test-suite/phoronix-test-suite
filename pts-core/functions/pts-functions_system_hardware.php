@@ -141,7 +141,7 @@ function system_hard_disks()
 	do
 	{
 		// Calculate disk names
-		$search_disk_strings = array("ATA-7", "ATA-8");
+		$search_disk_strings = array("ATA-6", "ATA-7", "ATA-8");
 		$start_point = -1;
 
 		for($i = 0; $i < count($search_disk_strings) && $start_point == -1; $i++)
@@ -243,7 +243,7 @@ function system_hard_disks()
 	}
 
 	if(count($disks) == 0)
-		$disks = system_disk_total();
+		$disks = system_disk_total() . "GB";
 	else
 		$disks = implode(" + ", $disks);
 
