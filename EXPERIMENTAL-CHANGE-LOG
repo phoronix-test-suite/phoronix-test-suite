@@ -7,6 +7,7 @@ Phoronix Test Suite
 - pts-core: Don't complain about test mismatch in merge function if using a Global ID
 - pts-core: Prepatory work for SVG-driven test execution / identification
 - pts-core: Add support for reading hard disk model number and true disk capacity
+- pts-core: Fix CPU frequency detection for Intel Xeon LV processors and potentially other CPU families
 - pts_Graph: Set viewbox in SVG renderer
 
 Phoronix Test Suite 1.4.0 Alpha 2

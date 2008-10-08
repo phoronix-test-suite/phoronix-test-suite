@@ -161,7 +161,7 @@ function processor_frequency($cpu_core = 0)
 		else
 			$info = $cpu_speeds[0];
 
-		$info = pts_trim_double(intval($info) / 1000, 2);
+		$info = pts_trim_double($info / 1000, 2);
 	}
 	else
 		$info = current_processor_frequency($cpu_core);
