@@ -346,19 +346,19 @@ function pts_test_version_compatible($version_compare = "")
 
 	if(!empty($version_compare))
 	{
-		$current = explode(".", preg_replace("/[^.0-9]/", "", PTS_VERSION));
+		$current = preg_replace("/[^0-9]/", "", PTS_VERSION);
 
 		$version_compare = explode("-", $version_compare);	
-		$support_begins = explode(".", preg_replace("/[^.0-9]/", "", trim($version_compare[0])));
+		$support_begins = preg_replace("/[^0-9]/", "", trim($version_compare[0]));
 
 		if(count($version_compare) == 2)
 			$support_ends = trim($version_compare[1]);
 		else
 			$support_ends = PTS_VERSION;
 
-		$support_ends = explode(".", preg_replace("/[^.0-9]/", "", $support_ends));
+		$support_ends = preg_replace("/[^0-9]/", "", $support_ends);
 
-		if($current[0] >= $support_begins[0] && $current[0] <= $support_ends[0] && $current[1] >= $support_begins[1] && $current[1] <= $support_ends[1] && $current[2] >= $support_begins[2] && $current[2] <= $support_ends[2])
+		if($current >= $support_begins && $current <= $support_ends)
 			$compatible = true;
 		else
 			$compatible = false;
