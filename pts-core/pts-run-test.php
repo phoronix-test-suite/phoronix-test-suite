@@ -36,7 +36,7 @@ if(is_file($argv[1]) && substr(basename($argv[1]), -4) == ".svg")
 
 	if(!empty($svg_test) && !empty($svg_identifier))
 	{
-		// TODO: Implement checks and then prompt user whether they want to run the test, suite, or global ID that the SVG references	
+		// TODO: Implement checks and then prompt user whether they want to run the test, suite, or global ID that the SVG references
 	}
 }
 
@@ -364,6 +364,10 @@ else if(is_suite($TO_RUN))
 
 	$SUITE_PRE_RUN_MESSAGE = $xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
 	$SUITE_POST_RUN_MESSAGE = $xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
+	$SUITE_RUN_MODE = $xml_parser->getXMLValue(P_SUITE_RUNMODE);
+
+	if($SUITE_RUN_MODE == "PCQS")
+		define("IS_PCQS_MODE", true);
 
 	unset($xml_parser);
 }

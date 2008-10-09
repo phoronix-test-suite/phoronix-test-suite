@@ -530,7 +530,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		if(is_file($benchmark_log_file))
 		{
-			if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || IS_PCQS_MODE || getenv("SAVE_BENCHMARK_LOGS") != FALSE))
+			if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || (defined("IS_PCQS_MODE") && IS_PCQS_MODE) || getenv("SAVE_BENCHMARK_LOGS") != FALSE))
 			{
 				$backup_log_dir = SAVE_RESULTS_DIR . SAVE_FILE_NAME . "/benchmark-logs/" . TEST_RESULTS_IDENTIFIER . "/";
 				$backup_filename = basename($benchmark_log_file);

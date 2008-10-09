@@ -212,7 +212,7 @@ function pts_save_result($save_to = null, $save_results = null)
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-		if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || IS_PCQS_MODE || getenv("SAVE_SYSTEM_DETAILS") != FALSE))
+		if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || (defined("IS_PCQS_MODE") && IS_PCQS_MODE) || getenv("SAVE_SYSTEM_DETAILS") != FALSE))
 		{
 			// Save verbose system information here
 			if(!is_dir($save_to_dir . "/system-details/"))
@@ -530,7 +530,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 function pts_clean_information_string($str)
 {
 	// Clean a string containing hardware information of some common things to change/strip out
-	$remove_phrases = array("corporation ", " technologies", ",", " technology", " incorporation", "version ", "computer ", "processor ", "genuine ", "unknown device ", "(r)", "(tm)", "inc. ", "inc ", "/pci/sse2/3dnow!", "/pci/sse2", "co. ltd", "co. ltd.", "limited.", "northbridge only dual slot pci-e_gfx and ht3 k8 part", "northbridge only dual slot pci-e_gfx and ht1 k8 part", "host bridge", "dram controller");
+	$remove_phrases = array("corporation ", " technologies", ",", " technology", " incorporation", "version ", "computer ", "processor ", "genuine ", "unknown device ", "(r)", "(tm)", "inc. ", "inc ", "/pci/sse2/3dnow!", "/pci/sse2", "co. ltd", "co. ltd.", "limited.", "memory controller", "northbridge only dual slot pci-e_gfx and ht3 k8 part", "northbridge only dual slot pci-e_gfx and ht1 k8 part", "host bridge", "dram controller");
 	$str = str_ireplace($remove_phrases, " ", $str);
 
 	$change_phrases = array("Memory Controller Hub" => "MCH", "Advanced Micro Devices" => "AMD", "MICRO-STAR INTERNATIONAL" => "MSI", "Silicon Integrated Systems" => "SiS", "Integrated Graphics Controller" => "IGP");
@@ -568,8 +568,8 @@ function pts_exit($string = "")
 function pts_version_comparable($old, $new)
 {
 	// Checks if there's a major version difference between two strings, if so returns false. If the same or only a minor difference, returns true.
-	$old = explode(".", $old);
-	$new = explode(".", $new);
+	$old = explode(".", preg_replace("/[^.0-9]/", "", $old));
+	$new = explode(".", preg_replace("/[^.0-9]/", "", $new));
 	$compare = true;
 
 	if(count($old) >= 2 && count($new) >= 2)

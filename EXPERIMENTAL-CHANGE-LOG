@@ -9,6 +9,7 @@ Phoronix Test Suite
 - pts-core: Add support for reading hard disk model number and true disk capacity
 - pts-core: Fix CPU frequency detection for Intel Xeon LV processors and potentially other CPU families
 - pts-core: If PTS micro-timer is less than three seconds, return zero as the test likely failed
+- pts-core: Add RunMode tag to suite XML and if it's set to "PCQS", enable IS_PCQS_MODE
 - pts_Graph: Set viewbox in SVG renderer
 
 Phoronix Test Suite 1.4.0 Alpha 2

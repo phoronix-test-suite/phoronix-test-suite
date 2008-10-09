@@ -177,8 +177,6 @@ function pts_extended_init()
 		define("IS_FIRST_RUN_TODAY", true);
 	else
 		define("IS_FIRST_RUN_TODAY", false);
-
-	define("IS_PCQS_MODE", false);
 }
 function __autoload($to_load)
 {
