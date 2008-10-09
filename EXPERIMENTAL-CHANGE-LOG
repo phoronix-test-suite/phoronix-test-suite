@@ -11,6 +11,7 @@ Phoronix Test Suite
 - pts-core: If PTS micro-timer is less than three seconds, return zero as the test likely failed
 - pts-core: Add RunMode tag to suite XML and if it's set to "PCQS", enable IS_PCQS_MODE
 - pts-core: Add RequiresCoreVersion tag if the test profile is only compatible with select versions of the Phoronix Test Suite
+- pts-core: Keep a running average how long it takes to run a given test. This is stored in the AverageRunTime tag within the pts-install.xml
 - pts_Graph: Set viewbox in SVG renderer
 
 Phoronix Test Suite 1.4.0 Alpha 2

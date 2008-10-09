@@ -97,7 +97,7 @@ function pts_test_generate_install_xml($identifier)
 
 	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
 }
-function pts_test_refresh_install_xml($identifier)
+function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 {
 	// Refresh the pts-install.xml for a test
 	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
@@ -105,12 +105,23 @@ function pts_test_refresh_install_xml($identifier)
 	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
 		$xml_writer = new tandem_XmlWriter();
 
+		$test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
+		if(!is_numeric($test_duration))
+		{
+			$test_duration = $this_test_duration;
+		}
+		if(is_numeric($this_test_duration) && $this_test_duration > 0)
+		{
+			$test_duration = ceil((($test_duration * $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN)) + $this_test_duration) / ($xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1));
+		}
+
 		$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $xml_parser->getXMLValue(P_INSTALL_TEST_NAME));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_VERSION, 1, $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, date("Y-m-d H:i:s"));
-		$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1);
+		$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, ($xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1));
+		$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $test_duration, 2);
 
 		file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
 		return TRUE;

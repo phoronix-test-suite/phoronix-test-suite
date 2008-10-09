@@ -469,6 +469,9 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	$extra_runtime_variables = pts_run_additional_vars($test_identifier);
 
+	// Start
+
+	$time_test_start = time();
 	if(is_file(pts_location_test_resources($test_identifier) . "pre.sh"))
 	{
 		echo "\nRunning Pre-Test Scripts...\n";
@@ -552,6 +555,8 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	}
 
 	// End
+	$time_test_end = time();
+
 	if(empty($result_scale) && is_file($test_directory . "pts-results-scale"))
 			$result_scale = trim(@file_get_contents($test_directory . "pts-results-scale"));
 
@@ -671,7 +676,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	pts_process_remove($test_identifier);
 	pts_module_process("__post_test_run");
-	pts_test_refresh_install_xml($test_identifier);
+	pts_test_refresh_install_xml($test_identifier, ($time_test_end - $time_test_start));
 
 	// 0 = main end result
 	return array($END_RESULT);
