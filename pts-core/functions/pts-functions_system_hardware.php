@@ -29,7 +29,7 @@ function main_system_hardware_string()
 		return read_osx_system_profiler("SPHardwareDataType", "ModelName");	
 	}
 	
-	$vendor = read_system_hal(array("system.hardware.vendor", "system.board.vendor", "pci.subsys_vendor"));
+	$vendor = read_system_hal(array("system.hardware.vendor", "system.board.vendor"));
 	$product = read_system_hal(array("system.hardware.product", "system.board.product"));
 	$version = read_system_hal("system.hardware.version");
 
