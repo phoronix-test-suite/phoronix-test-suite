@@ -349,6 +349,10 @@ function pts_install_test($identifier)
 	{
 		echo pts_string_header($identifier . " is not supported by this operating system (" . OPERATING_SYSTEM . ").");
 	}
+	else if(!pts_test_version_supported($identifier))
+	{
+		echo pts_string_header($identifier . " is not supported by this version of the Phoronix Test Suite (" . PTS_VERSION . ").");
+	}
 	else
 	{
 		// TODO: clean up validate-install and put in pts_validate_test_install
@@ -454,6 +458,8 @@ function pts_install_test($identifier)
 			}
 		}
 	}
+
+	return $installed;
 }
 function pts_external_dependency_generic($Name)
 {

@@ -118,6 +118,15 @@ this benchmark to run in total.<br>
 of the software being used for testing.<br>
 <strong>Supported Values:</strong> ( The URL must start with http:// and be a 
 valid address )</p>
+<p><strong>Tag:</strong> RequiresCoreVersion<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_SUPPORTS_COREVERSION<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If this test profile will only work with specific versions 
+of the Phoronix Test Suite, they should be specified in this tag.<br>
+<strong>Supported Values:</strong> ( Values must be in the PTS version format of X.X.X. If this test 
+profile requires version 1.4.0 of the Phoronix Test Suite or later, the value would simply be <em>1.4.0</em>. If 
+it requires a version between 1.4.0 and 1.8.0, it must be written as <em>1.4.0 - 1.8.0</em>. )</p>
 <h2>PhoronixTestSuite/TestInformation/</h2>
 <p><strong>Tag:</strong> Title<br>
 <strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>

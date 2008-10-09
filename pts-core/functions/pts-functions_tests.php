@@ -300,9 +300,24 @@ function pts_test_platform_supported($identifier)
 
 	return $supported;
 }
+function pts_test_version_supported($identifier)
+{
+	// Check if the test profile's version is compatible with pts-core
+	$supported = true;
+
+	if(is_test($identifier))
+	{
+	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+		$requires_core_version = $xml_parser->getXMLValue(P_TEST_SUPPORTS_COREVERSION);
+
+		$supported = pts_test_version_compatible($requires_core_version);
+	}
+
+	return $supported;
+}
 function pts_test_supported($identifier)
 {
-	return pts_test_architecture_supported($identifier) && pts_test_platform_supported($identifier);
+	return pts_test_architecture_supported($identifier) && pts_test_platform_supported($identifier) && pts_test_version_supported($identifier);
 }
 function pts_available_tests_array()
 {

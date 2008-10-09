@@ -57,6 +57,7 @@ define("P_TEST_DOWNLOADSIZE", "PhoronixTestSuite/TestProfile/DownloadSize"); // 
 define("P_TEST_ENVIRONMENTSIZE", "PhoronixTestSuite/TestProfile/EnvironmentSize"); // Estimated size of capacity needed for testing environment (in MB)
 define("P_TEST_ESTIMATEDTIME", "PhoronixTestSuite/TestProfile/EstimatedLength"); // Estimated length of time it takes the test to complete (in minutes)
 define("P_TEST_PROJECTURL", "PhoronixTestSuite/TestProfile/ProjectURL"); // Estimated length of time it takes the test to complete (in minutes)
+define("P_TEST_SUPPORTS_COREVERSION", "PhoronixTestSuite/TestProfile/RequiresCoreVersion"); // If the test profile is bound to specific versions of the Phoronix Test Suite (pts-core)
 
 define("P_TEST_DEFAULTARGUMENTS", "PhoronixTestSuite/TestSettings/Default/Arguments"); // Default arguments
 define("P_TEST_POSSIBLEPATHS", "PhoronixTestSuite/TestSettings/Default/PossiblePaths"); // Possible paths
