@@ -269,6 +269,9 @@ switch($COMMAND)
 			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 
+			if(empty($test_times_run))
+				$test_times_run = 0;
+
 			if(!empty($name))
 				printf("%-22ls - %-20ls %-20ls %-3ls\n", $identifier, $test_time_install, $test_time_lastrun, $test_times_run);
 		}
@@ -374,6 +377,7 @@ switch($COMMAND)
 				{
 					$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml", FALSE);
 					$last_run = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
+					$avg_time = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
 
 					if($last_run == "0000-00-00 00:00:00")
 						$last_run = "Never";
@@ -381,6 +385,8 @@ switch($COMMAND)
 					echo "\nTest Installed: Yes\n";
 					echo "Last Run: " . $last_run . "\n";
 
+					if($avg_time > 0)
+						echo "Average Run-Time: " . $avg_time . " Seconds\n";
 					if($last_run != "Never")
 						echo "Times Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) . "\n";
 				}
