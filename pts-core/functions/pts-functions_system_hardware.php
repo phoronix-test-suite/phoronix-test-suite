@@ -66,7 +66,7 @@ function main_system_hardware_string()
 function motherboard_chipset_string()
 {
 	// Returns motherboard chipset
-	$info = read_pci("Host bridge");
+	$info = read_pci(array("RAM memory", "Host bridge"));
 
 	if(count(explode(" ", $info)) == 1)
 	{
