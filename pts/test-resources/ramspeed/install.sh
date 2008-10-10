@@ -5,23 +5,23 @@ tar -xvf ramspeed-2.5.1.tar.gz
 echo "#!/bin/sh
 
 rm -f *.result
-./ramspeed \$@ > \$THIS_RUN_TIME.result
+./ramspeed \$@ > \$LOG_FILE
 
 case \"\$1\" in
 \"COPY\")
-	cat \$THIS_RUN_TIME.result | grep \"Copy\"
+	cat \$LOG_FILE | grep \"Copy\"
 	;;
 \"SCALE\")
-	cat \$THIS_RUN_TIME.result | grep \"Scale\"
+	cat \$LOG_FILE | grep \"Scale\"
 	;;
 \"ADD\")
-	cat \$THIS_RUN_TIME.result | grep \"Add\"
+	cat \$LOG_FILE | grep \"Add\"
 	;;
 \"TRIAD\")
-	cat \$THIS_RUN_TIME.result | grep \"Triad\"
+	cat \$LOG_FILE | grep \"Triad\"
 	;;
 \"AVERAGE\")
-	cat \$THIS_RUN_TIME.result | grep \"AVERAGE\"
+	cat \$LOG_FILE | grep \"AVERAGE\"
 	;;
 esac
 " > ramspeed-benchmark

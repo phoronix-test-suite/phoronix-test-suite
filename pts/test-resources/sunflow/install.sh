@@ -15,6 +15,5 @@ else
 	JAVA_VM_MEMORY=256M
 fi
 
-java -server -Xmx\$JAVA_VM_MEMORY -jar sunflow.jar -bench
-" > sunflow-benchmark
+java -server -Xmx\$JAVA_VM_MEMORY -jar sunflow.jar -bench > \$LOG_FILE 2>&1" > sunflow-benchmark
 chmod +x sunflow-benchmark

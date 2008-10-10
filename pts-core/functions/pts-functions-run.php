@@ -497,6 +497,9 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		echo $test_results = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $pts_test_arguments, $test_extra_runtime_variables);
 
+		if(is_file($benchmark_log_file) && trim($test_results) == "")
+			echo file_get_contents($benchmark_log_file);
+
 		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
 		{
 			$test_extra_runtime_variables_post = $test_extra_runtime_variables;
@@ -507,6 +510,10 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 				if(is_numeric($run_time))
 					$test_extra_runtime_variables_post = array_merge($test_extra_runtime_variables_post, array("TIMER_RESULT" => $run_time));
+			}
+			if(is_file($benchmark_log_file))
+			{
+				$test_results = "";
 			}
 
 			if(is_file(pts_location_test_resources($test_identifier) . "parse-results.php"))

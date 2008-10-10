@@ -7,12 +7,12 @@ cd X-Plane_900r3_timedemo/
 
 case \$OS_TYPE in
 	\"MacOSX\" )
-	./X-Plane.app/Contents/MacOS/X-Plane \$@ > /dev/null
+	./X-Plane.app/Contents/MacOS/X-Plane \$@
 	;;
 	* )
-	./X-Plane-i686 \$@ > /dev/null
+	./X-Plane-i686 \$@
 	;;
 esac
 
-grep FRAMERATE Log.txt" > xplane9
+grep FRAMERATE Log.txt > \$LOG_FILE" > xplane9
 chmod +x xplane9

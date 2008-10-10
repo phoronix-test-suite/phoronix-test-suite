@@ -8,5 +8,5 @@ cd ..
 
 echo "#!/bin/sh
 cd x11perf-1.5/
-./x11perf \$@" > x11perf
+./x11perf \$@ > \$LOG_FILE" > x11perf
 chmod +x x11perf

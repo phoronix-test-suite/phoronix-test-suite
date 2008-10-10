@@ -1,6 +1,6 @@
 <?php
-
-$BENCHMARK_RESULTS = substr($argv[1], 0, strrpos($argv[1], "/sec"));
+$log_file = file_get_contents(getenv("LOG_FILE"));
+$BENCHMARK_RESULTS = substr($log_file, 0, strrpos($log_file, "/sec"));
 $BENCHMARK_RESULTS = trim(substr($BENCHMARK_RESULTS, strrpos($BENCHMARK_RESULTS, " ")));
 
 if(substr($BENCHMARK_RESULTS, 0, 1) == "(")

@@ -10,26 +10,26 @@ cd scimark2_files/
 
 rm -f *.result
 
-./scimark2 -large  > \$THIS_RUN_TIME.result
+./scimark2 -large  > \$LOG_FILE
 
 case \"\$1\" in
 \"TEST_COMPOSITE\")
-	cat \$THIS_RUN_TIME.result | grep \"Composite Score\"
+	cat \$LOG_FILE | grep \"Composite Score\"
 	;;
 \"TEST_FFT\")
-	cat \$THIS_RUN_TIME.result | grep \"FFT\"
+	cat \$LOG_FILE | grep \"FFT\"
 	;;
 \"TEST_SOR\")
-	cat \$THIS_RUN_TIME.result | grep \"SOR\"
+	cat \$LOG_FILE | grep \"SOR\"
 	;;
 \"TEST_MONTE\")
-	cat \$THIS_RUN_TIME.result | grep \"MonteCarlo\"
+	cat \$LOG_FILE | grep \"MonteCarlo\"
 	;;
 \"TEST_SPARSE\")
-	cat \$THIS_RUN_TIME.result | grep \"Sparse matmult\"
+	cat \$LOG_FILE | grep \"Sparse matmult\"
 	;;
 \"TEST_DENSE\")
-	cat \$THIS_RUN_TIME.result | grep \"LU\"
+	cat \$LOG_FILE | grep \"LU\"
 	;;
 esac" > scimark2
 chmod +x scimark2
