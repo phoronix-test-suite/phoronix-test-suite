@@ -1,6 +1,7 @@
 <?php
 
-$BENCHMARK_RESULTS = substr($argv[1], strrpos($argv[1], "rsa 4096 bits") + 13);
+$log_file = file_get_contents(getenv("LOG_FILE"));
+$BENCHMARK_RESULTS = substr($log_file, strrpos($log_file, "rsa 4096 bits") + 13);
 
 $i = 0;
 foreach(explode(" ", $BENCHMARK_RESULTS) as $item)

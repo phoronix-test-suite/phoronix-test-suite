@@ -16,5 +16,5 @@ echo \$1 > TEST_TYPE
 BONNIERAM=\$((\$SYS_MEMORY * 2))
 rm -rf scratch_dir/
 mkdir scratch_dir/
-./bonnie_/sbin/bonnie++ -d scratch_dir/ -s \$BONNIERAM 2>&1" > bonnie
+./bonnie_/sbin/bonnie++ -d scratch_dir/ -s \$BONNIERAM > \$LOG_FILE 2>&1" > bonnie
 chmod +x bonnie

@@ -1,6 +1,6 @@
 <?php
 
-$results = trim($argv[1]);
+$results = trim(file_get_contents(getenv("LOG_FILE")));
 $BENCHMARK_RESULTS = trim(substr($results, strrpos($results, "\n") + 1));
 
 $test_parts = explode(",", $BENCHMARK_RESULTS);

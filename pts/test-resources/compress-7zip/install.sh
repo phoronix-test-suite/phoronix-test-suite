@@ -6,5 +6,5 @@ make -j $NUM_CPU_JOBS
 cd ..
 
 echo "#!/bin/sh
-./p7zip_4.58/bin/7za b" > compress-7zip
+./p7zip_4.58/bin/7za b > \$LOG_FILE 2>&1" > compress-7zip
 chmod +x compress-7zip
