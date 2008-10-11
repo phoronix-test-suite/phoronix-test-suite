@@ -12,7 +12,7 @@
 	<TestInformation>
 		<Title>OpenSSL</Title>
 		<SubTitle>RSA 4096-bit Performance</SubTitle>
-		<Version>0.9.8h</Version>
+		<Version>0.9.8i</Version>
 		<TimesToRun>4</TimesToRun>
 		<ResultScale>Signs Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
