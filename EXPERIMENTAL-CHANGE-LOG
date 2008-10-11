@@ -16,6 +16,7 @@ Phoronix Test Suite
 - pts-core: Don't pass $test_results as an argument to parse-results.sh or parse-results.php with tests using $LOG_FILE
 - pts: Move more test profiles to using $LOG_FILE for result information
 - pts: Update openssl test profile to OpenSSL version 0.9.8i
+- pts: Update encode-mp3 test profile to LAME version 3.98.2
 - pts_Graph: Set viewbox in SVG renderer
 
 Phoronix Test Suite 1.4.0 Alpha 2

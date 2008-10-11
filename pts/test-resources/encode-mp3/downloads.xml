@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://voxel.dl.sourceforge.net/sourceforge/lame/lame-398.tar.gz, http://voxel.dl.sourceforge.net/sourceforge/lame/lame-398.tar.gz, http://internap.dl.sourceforge.net/sourceforge/lame/lame-398.tar.gz, http://transact.dl.sourceforge.net/sourceforge/lame/lame-398.tar.gz</URL>
-			<MD5>f44b9f8e1b5d8835d0a77f9cc9cedd1c</MD5>
-			<FileSize>1415983</FileSize>
+			<URL>http://superb-east.dl.sourceforge.net/sourceforge/lame/lame-398-2.tar.gz, http://internap.dl.sourceforge.net/sourceforge/lame/lame-398-2.tar.gz, http://internode.dl.sourceforge.net/sourceforge/lame/lame-398-2.tar.gz, http://dfn.dl.sourceforge.net/sourceforge/lame/lame-398-2.tar.gz</URL>
+			<MD5>719dae0ee675d0c16e0e89952930ed35</MD5>
+			<FileSize>1327643</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
