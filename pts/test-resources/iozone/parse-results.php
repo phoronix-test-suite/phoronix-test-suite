@@ -1,7 +1,9 @@
 <?php
 
+$log_file = file_get_contents(getenv("LOG_FILE"));
+
 // find the line with "reclean" on it
-$BENCHMARK_RESULTS = substr($argv[1], strrpos($argv[1], "reclen"));
+$BENCHMARK_RESULTS = substr($log_file, strrpos($log_file, "reclen"));
 // skip to the next line
 $BENCHMARK_RESULTS = substr($BENCHMARK_RESULTS, 1+strpos($BENCHMARK_RESULTS, "\n"));
 // remove stuff after this line

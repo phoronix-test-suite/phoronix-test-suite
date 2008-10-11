@@ -7,6 +7,7 @@ cd ..
 
 cat > compliance-ogl << 'EOT'
 #!/bin/sh
-LD_LIBRARY_PATH=glew/lib:$LD_LIBRARY_PATH ./glew/bin/glewinfo | grep GL_VERSION
+LD_LIBRARY_PATH=glew/lib:$LD_LIBRARY_PATH ./glew/bin/glewinfo > \$LOG_FILE
+cat \$LOG_FILE | grep GL_VERSION
 EOT
 chmod +x compliance-ogl

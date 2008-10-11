@@ -14,5 +14,5 @@ esac
 
 echo "#!/bin/sh
 iozone_ram=\$((\$SYS_MEMORY * 2))
-iozone3_308/src/current/iozone -s \${iozone_ram}M \$@ 2>&1" > ../../../iozone
+iozone3_308/src/current/iozone -s \${iozone_ram}M \$@ > \$LOG_FILE 2>&1" > ../../../iozone
 chmod +x ../../../iozone
