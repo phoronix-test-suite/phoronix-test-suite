@@ -252,12 +252,13 @@ switch($COMMAND)
 		break;
 	case "LIST_TEST_USAGE":
 		echo pts_string_header("Phoronix Test Suite - Test Usage");
-		printf("%-22ls   %-20ls %-20ls %-3ls\n", "TEST", "INSTALL TIME", "LAST RUN", "TIMES RUN");
+		printf("%-18ls   %-8ls %-13ls %-11ls %-3ls\n", "TEST", "VERSION", "INSTALL DATE", "LAST RUN", "TIMES RUN");
 		foreach(pts_installed_tests_array() as $identifier)
 		{
 			$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml");
-			$test_time_install = $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);
-			$test_time_lastrun = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
+			$test_time_install = substr($xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME), 0, 10);
+			$test_time_lastrun = substr($xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME), 0, 10);
+			$test_version = $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
 			$test_times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
 
 			if($test_time_lastrun == "0000-00-00 00:00:00")
@@ -273,7 +274,7 @@ switch($COMMAND)
 				$test_times_run = 0;
 
 			if(!empty($name))
-				printf("%-22ls - %-20ls %-20ls %-3ls\n", $identifier, $test_time_install, $test_time_lastrun, $test_times_run);
+				printf("%-18ls - %-8ls %-13ls %-11ls %-3ls\n", $identifier, $test_version, $test_time_install, $test_time_lastrun, $test_times_run);
 		}
 		echo "\n";
 		break;
