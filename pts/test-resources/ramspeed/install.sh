@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf ramspeed-2.5.1.tar.gz
+tar -xvf ramspeed-2.5.2.tar.gz
 
 echo "#!/bin/sh
 
@@ -27,7 +27,7 @@ esac
 " > ramspeed-benchmark
 chmod +x ramspeed-benchmark
 
-cd ramspeed-2.5.1/
+cd ramspeed-2.5.2/
 cat build.sh | grep -v "read ANS" > build_pts.sh
 chmod +x build_pts.sh
 ./build_pts.sh

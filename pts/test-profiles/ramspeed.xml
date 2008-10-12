@@ -12,7 +12,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>RAMspeed</Title>
-		<Version>2.5.1</Version>
+		<Version>2.5.2</Version>
 		<Executable>ramspeed-benchmark</Executable>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>MB/s</ResultScale>

@@ -18,6 +18,7 @@ Phoronix Test Suite
 - pts: Update openssl test profile to OpenSSL version 0.9.8i
 - pts: Update encode-mp3 test profile to LAME version 3.98.2
 - pts: Update sqlite test profile to SQLite version 3.6.3
+- pts: Update ramspeed test profile to RAMspeed version 2.5.2
 - pts_Graph: Set viewbox in SVG renderer
 
 Phoronix Test Suite 1.4.0 Alpha 2
