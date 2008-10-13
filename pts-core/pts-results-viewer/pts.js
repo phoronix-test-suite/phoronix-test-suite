@@ -23,7 +23,12 @@ function setImagesFromURL()
 
 	for(i = 0; i < imgarray.length; i++)
 	{
-		html += "<p align=\"center\"><img src=\"" + imgarray[i] + "\" /></p>";
+		var exsplit = imgarray[i].split(".");
+
+		if(exsplit[1] == "svg")
+			html += "<p align=\"center\"><object type=\"image/svg+xml\" data=\"" + imgarray[i] + "\" /></p>";
+		else
+			html += "<p align=\"center\"><img src=\"" + imgarray[i] + "\" /></p>";
 	}
 
 	document.getElementById("pts_monitor").innerHTML = html;

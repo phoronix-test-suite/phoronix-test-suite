@@ -415,56 +415,58 @@ class system_monitor extends pts_module_interface
 
 			if(trim($info_report) != "")
 			{
-				if(pts_gd_available())
+				$image_list = array();
+				pts_module::copy_file(RESULTS_VIEWER_DIR . "pts-monitor-viewer.html", "pts-monitor-viewer.html");
+				pts_module::copy_file(RESULTS_VIEWER_DIR . "pts.js", "pts-monitor-viewer/pts.js");
+				pts_module::copy_file(RESULTS_VIEWER_DIR . "pts-viewer.css", "pts-monitor-viewer/pts-viewer.css");
+
+				$image_count = 0;
+				foreach($type_index as $key => $sub_array)
 				{
-					$image_list = array();
-					pts_module::copy_file(RESULTS_VIEWER_DIR . "pts-monitor-viewer.html", "pts-monitor-viewer.html");
-					pts_module::copy_file(RESULTS_VIEWER_DIR . "pts.js", "pts-monitor-viewer/pts.js");
-					pts_module::copy_file(RESULTS_VIEWER_DIR . "pts-viewer.css", "pts-monitor-viewer/pts-viewer.css");
-
-					$image_count = 0;
-					foreach($type_index as $key => $sub_array)
+					if(count($sub_array) > 0)
 					{
-						if(count($sub_array) > 0)
+						$time_minutes = floor($time_diff / 60);
+						if($time_minutes == 0)
+							$time_minutes = 1;
+
+						$graph_title = $type[$sub_array[0]] . " Monitor";
+						$graph_unit = $unit[$sub_array[0]];
+						$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
+						$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
+
+						if(isset($GLOBALS["TO_RUN"]))
+							$sub_title .= $GLOBALS["TO_RUN"];
+						else
+							$sub_title .= date("g:i A");
+
+						$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
+
+						if(pts_gd_available() && getenv("SVG_DEBUG") == FALSE)
+							$t->setRenderer("PNG");
+						else
+							$t->setRenderer("SVG");
+
+						$first_run = true;
+						foreach($sub_array as $id_point)
 						{
-							$time_minutes = floor($time_diff / 60);
-							if($time_minutes == 0)
-								$time_minutes = 1;
+							$t->loadGraphValues($m_array[$id_point], $device[$id_point]);
 
-							$graph_title = $type[$sub_array[0]] . " Monitor";
-							$graph_unit = $unit[$sub_array[0]];
-							$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
-							$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
-
-							if(isset($GLOBALS["TO_RUN"]))
-								$sub_title .= $GLOBALS["TO_RUN"];
-							else
-								$sub_title .= date("g:i A");
-
-							$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
-
-							$first_run = true;
-							foreach($sub_array as $id_point)
+							if($first_run)
 							{
-								$t->loadGraphValues($m_array[$id_point], $device[$id_point]);
-
-								if($first_run)
-								{
-									$t->loadGraphIdentifiers($m_array[$id_point]);
-									$t->hideGraphIdentifiers();
-									$first_run = false;
-								}
+								$t->loadGraphIdentifiers($m_array[$id_point]);
+								$t->hideGraphIdentifiers();
+								$first_run = false;
 							}
-							$t->loadGraphVersion(PTS_VERSION);
-							$t->save_graph(pts_module::save_dir() . THIS_RUN_TIME . '-' . $image_count . ".png");
-							$t->renderGraph();
-
-							array_push($image_list, THIS_RUN_TIME . '-' . $image_count . ".png");
-							$image_count++;
 						}
+						$t->loadGraphVersion(PTS_VERSION);
+						$t->save_graph(pts_module::save_dir() . THIS_RUN_TIME . '-' . $image_count . "." . strtolower($t->getRenderer()));
+						$t->renderGraph();
+
+						array_push($image_list, THIS_RUN_TIME . '-' . $image_count . "." . strtolower($t->getRenderer()));
+						$image_count++;
 					}
-					$url = implode($image_list, ",");
 				}
+				$url = implode($image_list, ",");
 			}
 		}
 
