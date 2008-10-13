@@ -52,6 +52,17 @@ function filesystem_type()
 
 	return $fs;
 }
+function system_hostname()
+{
+	$hostname = "Unknown";
+
+	if(is_executable("/bin/hostname"))
+	{
+		$hostname = trim(shell_exec("/bin/hostname 2>&1"));
+	}
+
+	return $hostname;
+}
 function compiler_version()
 {
 	// Returns version of the compiler (if present)

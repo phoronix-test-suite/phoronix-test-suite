@@ -17,6 +17,7 @@ Phoronix Test Suite
 - pts-core: Change format of list-test-usage
 - pts-core: When running list-suites, don't show suites that aren't supported at all by the installed software/hardware and indicate only partially supported suites
 - pts-core: Add average run-time to list-test-usage
+- pts-core: Restructure the end-user run-time variables code and add support for $HOSTNAME
 - pts: Move more test profiles to using $LOG_FILE for result information
 - pts: Update openssl test profile to OpenSSL version 0.9.8i
 - pts: Update encode-mp3 test profile to LAME version 3.98.2

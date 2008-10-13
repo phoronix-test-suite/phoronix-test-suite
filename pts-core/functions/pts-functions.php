@@ -339,6 +339,32 @@ function pts_env_variables()
 
 	return $var_array;
 }
+function pts_user_runtime_variables()
+{
+	if(isset($GLOBALS["PTS_VAR_CACHE"]["USER_RUN_VARIABLES"]))
+	{
+		$var_array = $GLOBALS["PTS_VAR_CACHE"]["USER_RUN_VARIABLES"];
+	}
+	else
+	{
+		$var_array = array(
+		"VIDEO_RESOLUTION" => current_screen_resolution(),
+		"VIDEO_CARD" => graphics_processor_string(),
+		"VIDEO_DRIVER" => opengl_version(),
+		"OPERATING_SYSTEM" => pts_vendor_identifier(),
+		"PROCESSOR" => processor_string(),
+		"MOTHERBOARD" => main_system_hardware_string(),
+		"CHIPSET" => motherboard_chipset_string(),
+		"KERNEL_VERSION" => kernel_string(),
+		"COMPILER" => compiler_version(),
+		"HOSTNAME" => system_hostname()
+		);
+
+		$GLOBALS["PTS_VAR_CACHE"]["USER_RUN_VARIABLES"] = $var_array;
+	}
+
+	return $var_array;
+}
 function pts_input_correct_results_path($path)
 {
 	// Correct an input path for an XML file
