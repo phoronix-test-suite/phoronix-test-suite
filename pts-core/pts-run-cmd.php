@@ -283,7 +283,7 @@ switch($COMMAND)
 			$test_avg_runtime = pts_format_time_string($xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME), "SECONDS", false);
 			$test_times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
 
-			if($test_time_lastrun == "0000-00-00 00:00:00")
+			if($test_time_lastrun == "0000-00-00")
 			{
 				$test_time_lastrun = "NEVER";
 				$test_times_run = "";
@@ -294,6 +294,9 @@ switch($COMMAND)
 
 			if(empty($test_times_run))
 				$test_times_run = 0;
+
+			if(empty($test_avg_runtime))
+				$test_avg_runtime = "N/A";
 
 			if(!empty($name))
 				printf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $test_version, $test_time_install, $test_time_lastrun, $test_avg_runtime, $test_times_run);
