@@ -11,7 +11,7 @@
 	<TestInformation>
 		<Title>Timed Gzip Compression</Title>
 		<TimesToRun>3</TimesToRun>
-		<SubTitle>512MB File Compression</SubTitle>
+		<SubTitle>2GB File Compression</SubTitle>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test measures the time needed to compress a file using Gzip compression.</Description>

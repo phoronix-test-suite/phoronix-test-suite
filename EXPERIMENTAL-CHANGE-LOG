@@ -24,6 +24,7 @@ Phoronix Test Suite
 - pts: Update ramspeed test profile to RAMspeed version 2.5.2
 - pts: With gnupg test profile use a 2GB file to encrypt instead of 1GB
 - pts: With compress-gzip test profile use a 2GB file to compress instead of 1GB
+- pts: With compress-lzma test profile use a 2GB file to compress instead of 1GB
 - pts_Graph: Set viewbox in SVG renderer
 
 Phoronix Test Suite 1.4.0 Alpha 2

@@ -11,7 +11,7 @@
 	<TestInformation>
 		<Title>Timed LZMA Compression</Title>
 		<TimesToRun>3</TimesToRun>
-		<SubTitle>128MB File Compression</SubTitle>
+		<SubTitle>2GB File Compression</SubTitle>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
