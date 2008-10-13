@@ -14,6 +14,6 @@
 		<SubTitle>512MB File Compression</SubTitle>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>This test measures the time needed to compress a single 512MB file using Gzip compression.</Description>
+		<Description>This test measures the time needed to compress a file using Gzip compression.</Description>
 	</TestInformation>
 </PhoronixTestSuite>
