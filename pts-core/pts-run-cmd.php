@@ -744,6 +744,9 @@ switch($COMMAND)
 					echo $constant . " = " . $constant_value . "\n";
 			}
 
+			echo "\nEnd-User Run-Time Variables:\n";
+			foreach(pts_user_runtime_variables() as $var => $var_value)
+				echo $var . " = " . $var_value . "\n";
 			echo "\nEnvironmental Variables (accessible via test scripts):\n";
 			foreach(pts_env_variables() as $var => $var_value)
 				echo $var . " = " . $var_value . "\n";
