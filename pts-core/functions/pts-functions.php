@@ -351,7 +351,7 @@ function pts_user_runtime_variables()
 		"VIDEO_RESOLUTION" => current_screen_resolution(),
 		"VIDEO_CARD" => graphics_processor_string(),
 		"VIDEO_DRIVER" => opengl_version(),
-		"OPERATING_SYSTEM" => pts_vendor_identifier(),
+		"OPERATING_SYSTEM" => operating_system_release(),
 		"PROCESSOR" => processor_string(),
 		"MOTHERBOARD" => main_system_hardware_string(),
 		"CHIPSET" => motherboard_chipset_string(),
