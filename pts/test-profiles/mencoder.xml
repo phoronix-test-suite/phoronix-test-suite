@@ -13,7 +13,7 @@
 	<TestInformation>
 		<Title>Mencoder</Title>
 		<Version>1.0-rc2</Version>
-		<SubTitle>89MB AVI To LAVC Encoding</SubTitle>
+		<SubTitle>AVI To LAVC</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

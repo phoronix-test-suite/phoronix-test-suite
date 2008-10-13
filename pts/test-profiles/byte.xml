@@ -9,7 +9,7 @@
 		<EnvironmentSize>0.5</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
-		<Title>BYTE Unix Benchmarks</Title>
+		<Title>BYTE Unix Benchmark</Title>
 		<Version>3.6</Version>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>LPS</ResultScale>

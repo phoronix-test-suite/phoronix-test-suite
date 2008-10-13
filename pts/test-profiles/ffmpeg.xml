@@ -12,7 +12,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>FFmpeg</Title>
-		<SubTitle>89MB AVI To NTSC VCD</SubTitle>
+		<SubTitle>AVI To NTSC VCD</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

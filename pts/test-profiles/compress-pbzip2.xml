@@ -17,6 +17,6 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>This test measures the time needed to compress a single 512MB file using BZIP2 compression.</Description>
+		<Description>This test measures the time needed to compress a file using BZIP2 compression.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

@@ -6,7 +6,7 @@
 		<Extends>timed-build</Extends>
 	</TestProfile>
 	<TestInformation>
-		<Title>ImageMagick Compilation</Title>
+		<Title>Timed ImageMagick Compilation</Title>
 		<Version>6.4.0</Version>
 		<Executable>time-compile-imagemagick</Executable>
 		<Description>This test times how long it takes to build ImageMagick.</Description>
