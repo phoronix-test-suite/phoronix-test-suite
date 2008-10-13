@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -13,6 +13,6 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>A simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula.</Description>
+		<Description>A simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula. This test can be used for showcasing how to write a basic test profile.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

@@ -27,6 +27,7 @@ Phoronix Test Suite
 - pts: With compress-lzma test profile use a 2GB file to compress instead of 1GB
 - pts: With compress-pbzip2 test profile use a 2GB file to compress instead of 1GB
 - pts_Graph: Set viewbox in SVG renderer
+- documentation: Update profile writing how-to with latest pts-core features
 
 Phoronix Test Suite 1.4.0 Alpha 2
 October 6, 2008

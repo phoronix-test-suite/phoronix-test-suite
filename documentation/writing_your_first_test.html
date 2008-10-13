@@ -42,7 +42,7 @@ and the file-name would be <em>sample-program.xml</em>. Our (very basic) profile
 below.</p>
 <blockquote>&lt;PhoronixTestSuite&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TestProfile&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Version&gt;1.0&lt;/Version&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Version&gt;1.1.0&lt;/Version&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TestType&gt;Processor&lt;/TestType&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;SoftwareType&gt;Utility&lt;/SoftwareType&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;License&gt;FREE&lt;/License&gt;<br>
@@ -54,8 +54,7 @@ below.</p>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TimesToRun&gt;3&lt;/TimesToRun&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ResultScale&gt;Seconds&lt;/ResultScale&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Proportion&gt;LIB&lt;/Proportion&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Description&gt;A simple C++ program that calculates Pi to 8,765,4321 digits 
-using the Leibniz formula.&lt;/Description&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Description&gt;A simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula. This test can be used for showcasing how to write a basic test profile.&lt;/Description&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ExternalDependencies&gt;build-utilities&lt;/ExternalDependencies&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/TestInformation&gt;<br>
 &lt;/PhoronixTestSuite&gt;</blockquote>
@@ -83,9 +82,12 @@ Below is the <em>install.sh</em> for the <em>sample-program</em>.</p>
 tar -xjf sample-pi-program-1.tar.bz2<br />
 g++ sample-pi-program.cpp -o sample-pi-program<br />
 echo &quot;#!/bin/sh<br />
-time -f \&quot;Pi Calculation Time: %e Seconds\&quot; ./sample-pi-program 2&gt;&amp;1 
-| grep Seconds&quot; &gt; sample-program<br>
+\$TIMER_START<br />
+./sample-pi-program 2&gt;&amp;1<br />
+\$TIMER_STOP<br />
+&quot; &gt; sample-program<br>
 chmod +x sample-program</blockquote>
+<p>Phoronix Test Suite 1.4 and later provides an integrated multi-platform micro-timer framework that provides the <em>$TIMER_START</em> and <em>$TIMER_STOP</em> functionality.</p>
 <p>This install file builds the code with GCC, and then creates a small script 
 that is run by the Phoronix Test Suite, which times how long it takes to run the 
 software. Where does the source-code come into play? Well, it needs to be downloaded 
@@ -104,13 +106,8 @@ is done, and verification of MD5 check-sums. Below is the <em>downloads.xml</em>
 <p>The final step in the profile writing process is to write a parser to strip 
 all information but the reported result from the standard output. The standard 
 output is submitted to <em>parse-results.sh</em> or <em>parse-results.php</em> as the first argument 
-in quotes. In the case of <em>sample-program</em>, all that's done inside parse-results.php 
-is:</p>
-<blockquote>&lt;?php<br>
-$BENCHMARK_RESULTS = substr($argv[1], strrpos($argv[1], &quot;Pi Calculation Time:&quot;) 
-+ 20);<br>
-echo trim(substr($BENCHMARK_RESULTS, 0, strpos($BENCHMARK_RESULTS, &quot;Seconds&quot;)));<br>
-?&gt;</blockquote>
+in quotes or using <em>$LOG_FILE</em> if the test profile writes to that variable's location.</p>
+<p>If the test profile uses the integrated micro-timer framework with <em>$TIMER_START</em> and <em>$TIMER_STOP</em> but no parse-results file is provided, the Phoronix Test Suite will automatically use the difference between <em>$TIMER_START</em> and <em>$TIMER_STOP</em> and use that as the test result. This is the time (in seconds) that elapsed between starting and stopping the timer.</p>
 <p>After that, with all the files in their correct locations, just run: <em>phoronix-test-suite 
 benchmark sample-program</em>. The Phoronix Test Suite should now handle the rest by 
 installing the test, running the test, and recording the results (if you so choose). 
