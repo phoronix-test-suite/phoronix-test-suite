@@ -166,7 +166,6 @@ else
 	}
 }
 
-define("SAVE_FILE_NAME", $PROPOSED_FILE_NAME);
 $RESULTS = new tandem_XmlWriter();
 $RESULTS_IDENTIFIER = "";
 
@@ -188,6 +187,11 @@ if($SAVE_RESULTS)
 		$result_identifiers = array();
 
 	$RESULTS_IDENTIFIER = pts_prompt_results_identifier($result_identifiers);
+	define("SAVE_FILE_NAME", $PROPOSED_FILE_NAME);
+}
+else
+{
+	define("SAVE_FILE_NAME", null);
 }
 
 if(is_test($TO_RUN))
