@@ -10,7 +10,7 @@
 	<TestInformation>
 		<Title>Ogg Encoding</Title>
 		<Version>1.2.0</Version>
-		<SubTitle>78MB WAV File To Ogg</SubTitle>
+		<SubTitle>WAV To Ogg</SubTitle>
 		<Executable>oggenc</Executable>
 		<Description>This test times how long it takes to encode a sample WAV file to Ogg format.</Description>
 	</TestInformation>

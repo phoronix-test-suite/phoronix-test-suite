@@ -10,7 +10,7 @@
 	<TestInformation>
 		<Title>LAME MP3 Encoding</Title>
 		<Version>3.98.2</Version>
-		<SubTitle>78MB WAV File To MP3</SubTitle>
+		<SubTitle>WAV To MP3</SubTitle>
 		<Executable>lame</Executable>
 		<Description>LAME is an MP3 encoder licensed under the LGPL. This test measures the time required to encode a WAV file to MP3 format.</Description>
 	</TestInformation>

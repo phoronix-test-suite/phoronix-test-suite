@@ -11,7 +11,7 @@
 	<TestInformation>
 		<Title>FLAC Audio Encoding</Title>
 		<Version>1.2.1</Version>
-		<SubTitle>78MB WAV File To FLAC</SubTitle>
+		<SubTitle>WAV To FLAC</SubTitle>
 		<Executable>flac</Executable>
 		<Description>This test times how long it takes to encode a sample WAV file to FLAC format.</Description>
 	</TestInformation>

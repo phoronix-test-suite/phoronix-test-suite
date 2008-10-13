@@ -10,7 +10,7 @@
 	<TestInformation>
 		<Title>WavPack Audio Encoding</Title>
 		<Version>4.41.0</Version>
-		<SubTitle>78MB WAV File To WavPack</SubTitle>
+		<SubTitle>WAV To WavPack</SubTitle>
 		<Executable>encode-wavpack</Executable>
 		<Description>This test times how long it takes to encode a sample WAV file to WavPack format.</Description>
 	</TestInformation>

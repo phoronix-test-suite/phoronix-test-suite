@@ -10,7 +10,7 @@
 	<TestInformation>
 		<Title>Monkey Audio Encoding</Title>
 		<Version>3.99u4b5</Version>
-		<SubTitle>78MB WAV File To APE</SubTitle>
+		<SubTitle>WAV To APE</SubTitle>
 		<Executable>encode-ape</Executable>
 		<Description>This test times how long it takes to encode a sample WAV file to APE format.</Description>
 	</TestInformation>
