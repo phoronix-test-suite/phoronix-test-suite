@@ -15,6 +15,6 @@
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>This test measures the time needed to compress a single 128MB file using LZMA compression.</Description>
+		<Description>This test measures the time needed to compress a file using LZMA compression.</Description>
 	</TestInformation>
 </PhoronixTestSuite>
