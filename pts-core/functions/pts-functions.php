@@ -620,7 +620,7 @@ function pts_is_valid_download_url($string, $basename = NULL)
 
 	return $is_valid;
 }
-function pts_format_time_string($time, $format = "SECONDS")
+function pts_format_time_string($time, $format = "SECONDS", $standard_version = true)
 {
 	// Format an elapsed time string
 	if($format == "MINUTES")
@@ -636,34 +636,54 @@ function pts_format_time_string($time, $format = "SECONDS")
 
 		if($time_hours > 0)
 		{
-			$formatted_part = $time_hours . " Hour";
+			if($standard_version)
+			{
+				$formatted_part = $time_hours . " Hour";
 
-			if($time_hours > 1)
-				$formatted_part .= "s";
+				if($time_hours > 1)
+					$formatted_part .= "s";
+			}
+			else
+				$formatted_part = $time_hours . "h";
 
 			array_push($formatted_time, $formatted_part);
 		}
 		if($time_minutes > 0)
 		{
-			$formatted_part = $time_minutes . " Minute";
+			if($standard_version)
+			{
+				$formatted_part = $time_minutes . " Minute";
 
-			if($time_minutes > 1)
-				$formatted_part .= "s";
+				if($time_minutes > 1)
+					$formatted_part .= "s";
+			}
+			else
+				$formatted_part = $time_minutes . "m";
 
 			array_push($formatted_time, $formatted_part);
 		}
 		if($time_seconds > 0)
 		{
-			$formatted_part = $time_seconds . " Second";
+			if($standard_version)
+			{
+				$formatted_part = $time_seconds . " Second";
 
-			if($time_seconds > 1)
-				$formatted_part .= "s";
+				if($time_seconds > 1)
+					$formatted_part .= "s";
+			}
+			else
+				$formatted_part = $time_seconds . "s";
 
 			array_push($formatted_time, $formatted_part);
 		}
 	}
 
-	return implode(", ", $formatted_time);
+	if($standard_version)
+		$time_string = implode(", ", $formatted_time);
+	else
+		$time_string = implode("", $formatted_time);
+
+	return $time_string;
 }
 function pts_evaluate_script_type($script)
 {
