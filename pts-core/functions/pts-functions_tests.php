@@ -326,6 +326,26 @@ function pts_test_version_supported($identifier)
 
 	return $supported;
 }
+function pts_suite_supported($identifier)
+{
+	$tests = pts_contained_tests($identifier, TRUE);
+	$original_size = count($tests);
+
+	for($i = 0; $i < $original_size; $i++)
+		if(!pts_test_supported($tests[$i]))
+			unset($tests[$i]);
+
+	$supported_size = count($tests);
+
+	if($supported_size == 0)
+		$return_code = 0;
+	else if($supported_size != $original_size)
+		$return_code = 1;
+	else
+		$return_code = 2;
+
+	return $return_code;
+}
 function pts_test_supported($identifier)
 {
 	return pts_test_architecture_supported($identifier) && pts_test_platform_supported($identifier) && pts_test_version_supported($identifier);
