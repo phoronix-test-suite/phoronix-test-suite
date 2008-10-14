@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE EXPERIMENTAL CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Improve detection of graphics cards using common open-source drivers
+
 Phoronix Test Suite 1.4.0 Alpha 3
 October 14, 2008
 

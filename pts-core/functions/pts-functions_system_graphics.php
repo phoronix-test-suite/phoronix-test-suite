@@ -691,23 +691,24 @@ function graphics_processor_string()
 
 	if(empty($info) || strpos($info, "Mesa ") !== FALSE || $info == "Software Rasterizer")
 	{
-		$info_pci = read_pci("VGA compatible controller", false);
-
-		if(!empty($info_pci) && $info_pci != "Unknown")
-			$info = $info_pci;
-
-		if(($start_pos = strpos($info, " DRI ")) > 0)
-			$info = substr($info, $start_pos + 5);
-	}
-
-	if(strpos($info, "Unknown") !== FALSE)
-	{
 		$log_parse = shell_exec("cat /var/log/Xorg.0.log | grep Chipset");
 		$log_parse = substr($log_parse, strpos($log_parse, "Chipset") + 8);
 		$log_parse = substr($log_parse, 0, strpos($log_parse, "found"));
 
 		if(strpos($log_parse, "ATI") !== FALSE || strpos($log_parse, "NVIDIA") !== FALSE || strpos($log_parse, "VIA") !== FALSE || strpos($log_parse, "Intel") !== FALSE)
+		{
 			$info = $log_parse;
+		}
+		else
+		{
+			$info_pci = read_pci("VGA compatible controller", false);
+
+			if(!empty($info_pci) && $info_pci != "Unknown")
+				$info = $info_pci;
+
+			if(($start_pos = strpos($info, " DRI ")) > 0)
+				$info = substr($info, $start_pos + 5);
+		}
 	}
 
 	if(IS_BSD && $info == "Unknown")
