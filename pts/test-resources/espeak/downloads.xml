@@ -6,9 +6,9 @@
 			<FileSize>250250</FileSize>
 		</Package>
 		<Package>
-			<URL>http://kent.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip, http://superb-west.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip, http://superb-east.dl.sourceforge.net/sourceforge/espeak/espeak-1.37-source.zip</URL>
-			<MD5>5c7b292d0537232868b4ac1317d76c02</MD5>
-			<FileSize>1292986</FileSize>
+			<URL>http://master.dl.sourceforge.net/sourceforge/espeak/espeak-1.39-source.zip, http://voxel.dl.sourceforge.net/sourceforge/espeak/espeak-1.39-source.zip, http://internap.dl.sourceforge.net/sourceforge/espeak/espeak-1.39-source.zip</URL>
+			<MD5>7cda8008ebb4d8f1311de4b5a544261e</MD5>
+			<FileSize>1322962</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
