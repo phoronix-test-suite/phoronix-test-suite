@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<ProjectURL>http://www.imagemagick.org/</ProjectURL>
 		<Extends>timed-build</Extends>

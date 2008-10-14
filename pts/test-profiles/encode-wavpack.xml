@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<Maintainer>apaige</Maintainer>
 		<EnvironmentSize>5</EnvironmentSize>
 		<ProjectURL>http://www.wavpack.com/</ProjectURL>
