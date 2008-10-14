@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Improve detection of graphics cards using common open-source drivers
 - pts: Update espeak test profile with eSpeak engine 1.39
+- pts: Change run-count for gtkperf test profile from 2000 to 5000
 
 Phoronix Test Suite 1.4.0 Alpha 3
 October 14, 2008

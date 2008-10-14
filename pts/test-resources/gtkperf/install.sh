@@ -112,7 +112,7 @@ case "$1" in
 	;;
 esac
 
-./gtkperf_env/bin/gtkperf -a -c 2000 -t $test > $LOG_FILE
+./gtkperf_env/bin/gtkperf -a -c 5000 -t $test > $LOG_FILE
 
 EOT
 
