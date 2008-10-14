@@ -27,14 +27,15 @@ function extension_present($source, $item)
 }
 
 $ogl_results = array();
+$log_file = file_get_contents(getenv("LOG_FILE"));
 
-array_push($ogl_results, extension_present($argv[1], "GL_VERSION_1_1"));
-array_push($ogl_results, extension_present($argv[1], "GL_VERSION_1_2"));
-array_push($ogl_results, extension_present($argv[1], "GL_VERSION_1_3"));
-array_push($ogl_results, extension_present($argv[1], "GL_VERSION_1_4"));
-array_push($ogl_results, extension_present($argv[1], "GL_VERSION_1_5"));
-array_push($ogl_results, extension_present($argv[1], "GL_VERSION_2_0"));
-array_push($ogl_results, extension_present($argv[1], "GL_VERSION_2_1"));
+array_push($ogl_results, extension_present($log_file, "GL_VERSION_1_1"));
+array_push($ogl_results, extension_present($log_file, "GL_VERSION_1_2"));
+array_push($ogl_results, extension_present($log_file, "GL_VERSION_1_3"));
+array_push($ogl_results, extension_present($log_file, "GL_VERSION_1_4"));
+array_push($ogl_results, extension_present($log_file, "GL_VERSION_1_5"));
+array_push($ogl_results, extension_present($log_file, "GL_VERSION_2_0"));
+array_push($ogl_results, extension_present($log_file, "GL_VERSION_2_1"));
 
 echo implode(",", $ogl_results);
 

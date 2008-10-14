@@ -112,7 +112,7 @@ case "$1" in
 	;;
 esac
 
-./gtkperf_env/bin/gtkperf -a -c 2000 -t $test | grep "Total"
+./gtkperf_env/bin/gtkperf -a -c 2000 -t $test > $LOG_FILE
 
 EOT
 

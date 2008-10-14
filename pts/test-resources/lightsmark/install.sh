@@ -11,5 +11,5 @@ case \$OS_ARCH in
 	cd Lightsmark2008.2.0/bin/pc-linux32/
 	;;
 esac
-./backend \$@ 2>&1" > lightsmark
+./backend \$@ > \$LOG_FILE 2>&1" > lightsmark
 chmod +x lightsmark

@@ -8,6 +8,6 @@ mv demos/ tremulous_/tremulous/base/
 
 echo "#!/bin/sh
 cd tremulous_/tremulous/
-./tremulous.x86 \$@ 2>&1 | grep fps
-" > tremulous
+./tremulous.x86 \$@ > \$LOG_FILE 2>&1
+cat \$LOG_FILE | grep fps" > tremulous
 chmod +x tremulous
