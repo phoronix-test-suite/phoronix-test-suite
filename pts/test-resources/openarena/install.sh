@@ -10,10 +10,11 @@ cd openarena-0.8.0/
 
 case \$OS_ARCH in
 	\"x86_64\" )
-	./openarena.x86_64 \$@ 2>&1 | grep fps
+	./openarena.x86_64 \$@ > \$LOG_FILE 2>&1
 	;;
 	* )
-	./openarena.i386 \$@ 2>&1 | grep fps
+	./openarena.i386 \$@ > \$LOG_FILE 2>&1
 	;;
-esac" > openarena
+esac
+cat \$LOG_FILE | grep fps" > openarena
 chmod +x openarena

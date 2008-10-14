@@ -10,14 +10,15 @@ chmod +x warsow.i386
 cd ..
 
 echo "#!/bin/sh
+rm -f .warsow/basewsw/1.log
 cd warsow_0.42_unified/
 case \$OS_ARCH in
 	\"x86_64\" )
-	./warsow.x86_64 +logconsole 1 \$@ | grep seconds
+	./warsow.x86_64 \$@ > \$LOG_FILE 2>&1
 	;;
 	* )
-	./warsow.i386 +logconsole 1 \$@ | grep seconds
+	./warsow.i386 \$@ > \$LOG_FILE 2>&1
 	;;
 esac
-cat ../.warsow/basewsw/1.log | grep seconds" > warsow
+cat \$LOG_FILE | grep seconds" > warsow
 chmod +x warsow

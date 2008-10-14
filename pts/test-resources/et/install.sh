@@ -10,6 +10,5 @@ mv -f railgun.dm_83 et_/etmain/demos/
 
 echo "#!/bin/sh
 cd et_/
-./bin/Linux/x86/et.x86 \$@ 2>&1 | grep fps
-" > et
+./bin/Linux/x86/et.x86 \$@ > \$LOG_FILE 2>&1" > et
 chmod +x et

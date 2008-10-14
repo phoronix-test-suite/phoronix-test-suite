@@ -21,7 +21,8 @@ mv -f System/* System/
 
 echo "#!/bin/sh
 cd System/
-./ut2004-bin \$@" > ut2004-demo
+./ut2004-bin \$@ > \$LOG_FILE 2>&1
+cat \$LOG_FILE" > ut2004-demo
 chmod +x ut2004-demo
 
 echo "causeevent flyby

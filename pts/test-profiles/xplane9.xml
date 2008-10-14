@@ -13,7 +13,7 @@
 	<TestInformation>
 		<Title>X-Plane</Title>
 		<Version>9.00</Version>
-		<TimesToRun>2</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<ExternalDependencies>openal-devel</ExternalDependencies>
 		<Proportion>HIB</Proportion>

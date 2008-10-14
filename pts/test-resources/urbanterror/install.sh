@@ -19,15 +19,16 @@ cd UrbanTerror_/
 if [ \$OS_TYPE = \"MacOSX\" ]
 then
 	mkdir -p ~/Library/Application\ Support/Quake3
-	./ioUrbanTerror.app/Contents/MacOS/ioUrbanTerror.ub \$@ 2>&1 | grep fps
+	./ioUrbanTerror.app/Contents/MacOS/ioUrbanTerror.ub \$@ > \$LOG_FILE 2>&1
 else
 	case \$OS_ARCH in
 		\"x86_64\" )
-			./ioUrbanTerror.x86_64 \$@ 2>&1 | grep fps
+			./ioUrbanTerror.x86_64 \$@ > \$LOG_FILE 2>&1
 			;;
 		* )
-			./ioUrbanTerror.i386 \$@ 2>&1 | grep fps
+			./ioUrbanTerror.i386 \$@ > \$LOG_FILE 2>&1
 			;;
 	esac
-fi" > urbanterror
+fi
+cat \$LOG_FILE | grep fps" > urbanterror
 chmod +x urbanterror

@@ -47,10 +47,11 @@ cd wop-install/
 
 case \$OS_ARCH in
 	\"x86_64\" )
-	./WoP32 \$@ 2>&1 | grep fps
+	./WoP32 \$@ > \$LOG_FILE 2>&1
 	;;
 	* )
-	./WoP64 \$@ 2>&1 | grep fps
+	./WoP64 \$@ > \$LOG_FILE 2>&1
 	;;
-esac" > padman
+esac
+cat \$LOG_FILE | grep fps" > padman
 chmod +x padman

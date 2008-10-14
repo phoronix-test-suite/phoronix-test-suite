@@ -4,7 +4,8 @@ unzip -o ETQW-client-1.5-full.x86.run
 
 echo "#!/bin/sh
 cd data
-./etqw.x86 \$@ | grep fps" > etqw
+./etqw.x86 \$@ > \$LOG_FILE 2>&1
+cat \$LOG_FILE | grep fps" > etqw
 chmod +x etqw
 
 tar -jxvf etqw-files-3.tar.bz2
@@ -52,7 +53,8 @@ fi
 if [ -f etqw-game-files.tar ]
   then
      tar -k -C $1/data/base -xvf $1/etqw-game-files.tar
-fi
-echo  "copy ET:QW Game Files (*.mega) in bases/megatextures
+  else
+     echo  "copy ET:QW Game Files (*.mega) in bases/megatextures
 copy ET:QW Game Files(*.pk4) in bases"
+fi
 
