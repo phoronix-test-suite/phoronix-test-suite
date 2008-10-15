@@ -590,6 +590,9 @@ class pts_Graph
 			$ttf_width = $ttf_dimensions[0];
 			$ttf_height = $ttf_dimensions[1];
 
+			$bound_x1 -= 2;
+			$bound_x2 -= 2;
+
 			if($rotate_text == FALSE)
 				$rotation = 0;
 			else
