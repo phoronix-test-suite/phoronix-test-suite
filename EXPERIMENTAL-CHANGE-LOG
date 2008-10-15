@@ -3,6 +3,7 @@ PHORONIX TEST SUITE EXPERIMENTAL CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Improve detection of graphics cards using common open-source drivers
+- pts-core: Fix regression in pts_trim_double() that would return an array instead of float-formatted string
 - pts: Update espeak test profile with eSpeak engine 1.39
 - pts: Change run-count for gtkperf test profile from 2000 to 5000
 - pts_Graph: Write Y-axis title horizontally along the top of the graph instead of vertically
