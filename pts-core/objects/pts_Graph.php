@@ -29,9 +29,9 @@ class pts_Graph
 	var $graph_attr_height = 300; // Graph height
 	var $graph_attr_big_border = FALSE; // Border around graph or not
 
-	var $graph_left_start = 28; // Distance in px to start graph from left side
+	var $graph_left_start = 20; // Distance in px to start graph from left side
 	var $graph_left_end_opp = 10; // Distance in px to end graph from right side
-	var $graph_top_start = 58; // Distance in px to start graph from top side
+	var $graph_top_start = 60; // Distance in px to start graph from top side
 	var $graph_top_end_opp = 22; // Distance in px to end graph from bottom side
 
 	// Colors
@@ -138,9 +138,9 @@ class pts_Graph
 	public function loadGraphProportion($data)
 	{
 		if($data == "LIB")
-			$this->graph_proportion = "* Less is better";
+			$this->graph_proportion = "Less Is Better";
 		//else if($data == "HIB")
-		//	$this->graph_proportion = "* More is better";
+		//	$this->graph_proportion = "More Is Better";
 	}
 	public function loadGraphData($data_array)
 	{
@@ -235,9 +235,6 @@ class pts_Graph
 			$this->graph_attr_height = $height;
 		}
 
-		if(empty($this->graph_y_title) || $this->graph_y_title_hide)
-			$this->graph_left_start = $this->graph_top_end_opp - 5;
-
 		if($recalculate_offsets)
 		{
 			$this->graph_top_end = $this->graph_attr_height - $this->graph_top_end_opp;
@@ -297,13 +294,25 @@ class pts_Graph
 		}
 
 		// Text
-		$this->write_text_left($this->graph_proportion, 7, $this->graph_color_body_light, $this->graph_left_start + 1, $this->graph_top_start - 7, $this->graph_left_start + 1, $this->graph_top_start - 7);
-		$this->write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end - 1, $this->graph_top_start - 7, $this->graph_left_end - 1, $this->graph_top_start - 7);
+		$this->write_text_right($this->graph_version, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9);
 		$this->write_text_center($this->graph_title, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 4, $this->graph_left_end, 4);
 		$this->write_text_center($this->graph_sub_title, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, 26, $this->graph_left_end, 26, FALSE, TRUE);
 
 		if(!empty($this->graph_y_title) && !$this->graph_y_title_hide)
-			$this->write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start, 3, $this->graph_top_end, TRUE);
+		{
+			$str = $this->graph_y_title;
+
+			if(!empty($this->graph_proportion))
+			{
+				if(!empty($str))
+					$str .= ", ";
+
+				$str .= $this->graph_proportion;
+			}
+
+			$this->write_text_left($str, 7, $this->graph_color_main_headers, $this->graph_left_start, $this->graph_top_start - 9, $this->graph_left_start, $this->graph_top_start - 9);
+			//$this->write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start, 3, $this->graph_top_end, TRUE);
+		}
 	}
 	protected function render_graph_value_ticks()
 	{
