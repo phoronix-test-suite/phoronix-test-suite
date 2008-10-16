@@ -1,0 +1,71 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<Title>OpenSolaris Nevada Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The Nevada test suite (named after the SXCE code-name) is designed to house the most prominent tests that are compatible with Sun Microsystem's OpenSolaris / Solaris Express Community Edition operating systems.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>j2dbench</Test>
+		<Arguments>TEST_GRAPHICS</Arguments>
+		<Description>Vector Graphics</Description>
+	</RunTest>
+	<RunTest>
+		<Test>j2dbench</Test>
+		<Arguments>TEST_TEXT</Arguments>
+		<Description>Text Rendering</Description>
+	</RunTest>
+	<RunTest>
+		<Test>encode-mp3</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-ogg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-7zip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-gzip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>bonnie</Test>
+		<Arguments>SEQ_CREATE</Arguments>
+		<Description>Sequential Create</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bonnie</Test>
+		<Arguments>RAND_READ</Arguments>
+		<Description>Random Read</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bonnie</Test>
+		<Arguments>RAND_DELETE</Arguments>
+		<Description>Random Delete</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_DHRY2</Arguments>
+		<Description>Dhrystone 2</Description>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sunflow</Test>
+	</RunTest>
+	<RunTest>
+		<Test>java-scimark2</Test>
+		<Arguments>TEST_FFT</Arguments>
+		<Description>FFT Performance</Description>
+	</RunTest>
+</PhoronixTestSuite>

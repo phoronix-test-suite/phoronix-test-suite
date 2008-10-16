@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts: Fix compress-* test profiles with the proper 2GB file size
 - pts: OpenSolaris External Dependencies XML was named opensolaris-package.xml when it should be named opensolaris-packages.xml, now fixed
 - pts: Update all test profiles as to whether they support Solaris/OpenSolaris
+- pts: Add nevada test suite for key OpenSolaris tests
 - pts_Graph: Write Y-axis title horizontally along the top of the graph instead of vertically
 
 Phoronix Test Suite 1.4.0 Alpha 3
