@@ -157,7 +157,7 @@ function pts_promt_user_tags($default_tags = "")
 
 	return $tags_input;
 }
-function pts_generate_test_notes()
+function pts_generate_test_notes($test_type)
 {
 	$check_processes = array(
 		"Compiz" => array("compiz", "compiz.real"),

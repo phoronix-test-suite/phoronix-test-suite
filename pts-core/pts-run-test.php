@@ -435,7 +435,7 @@ pts_module_process("__post_run_process");
 
 if($SAVE_RESULTS)
 {
-	$test_notes = pts_generate_test_notes();
+	$test_notes = pts_generate_test_notes($test_type);
 
 	$id = pts_request_new_id();
 	$RESULTS->setXslBinding("pts-results-viewer.xsl");
