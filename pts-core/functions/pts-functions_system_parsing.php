@@ -568,5 +568,50 @@ function read_osx_system_profiler($data_type, $object)
 	
 	return $value;
 }
+function read_sun_ddu_dmi_info($object)
+{
+	// Read Sun's Device Driver Utility for OpenSolaris
+	$values = array();
+
+	if(is_executable("/usr/ddu/bin/dmi_info"))
+	{
+		$info = shell_exec("/usr/ddu/bin/dmi_info 2>&1");
+		$lines = explode("\n", $info);
+
+		$objects = explode(",", $object);
+		$this_section = "";
+		if(count($objects) == 2)
+		{
+			$section = $objects[0];
+			$object = $objects[1];
+		}
+		else
+		{
+			$section = "";
+			$object = $objects[0];
+		}
+
+		foreach($lines as $line)
+		{
+			$line = explode(":", $line);
+			$line_object = str_replace(" ", "", $line[0]);
+
+			if(count($line) > 1)
+				$this_value = trim($line[1]);
+			else
+				$this_value = "";
+
+			if(empty($this_value) && !empty($section))
+			{
+				$this_section = $line_object;
+			}
+
+			if($line_object == $object && $this_section == $section && !empty($this_value))
+				array_push($values, $this_value);
+		}
+	}
+
+	return $values;
+}
 
 ?>
