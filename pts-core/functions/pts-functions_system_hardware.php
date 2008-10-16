@@ -47,11 +47,15 @@ function main_system_hardware_string()
 		$version = read_system_hal("system.hardware.version");
 
 		if($vendor != "Unknown")
+		{
 			$info = $vendor;
+		}
 		else
+		{
 			$info = "";
+		}
 
-		if($product == "Unknown" || empty($product) || (strpos($version, ".") === FALSE && $version != "Unknown"))
+		if($product == "Unknown" || empty($product) || (strpos($version, ".") === false && $version != "Unknown"))
 		{
 			$product = $version;
 		}
@@ -66,7 +70,9 @@ function main_system_hardware_string()
 			$fw_version = explode(" ", read_system_hal("system.firmware.version"));
 
 			if(count($fw_version) > 1)
+			{
 				$info = $fw_version[0] . " " . $fw_version[1];
+			}
 		}
 
 		if(empty($info))
@@ -86,7 +92,9 @@ function motherboard_chipset_string()
 		$sb_product = read_osx_system_profiler("SPSerialATADataType", "Product");
 		
 		if(($cut_point = strpos($sb_product, " ")) > 0)
+		{
 			$sb_product = substr($sb_product, 0, $cut_point);
+		}
 			
 		// TODO: Can't find Northbridge
 			
@@ -120,13 +128,13 @@ function motherboard_chipset_string()
 		if(!isset($bridge) || $bridge != "Unknown")
 		{
 			// Attempt to detect Southbridge (if applicable)
-			$southbridge = read_pci(array("ISA bridge", "SATA controller"), FALSE);
+			$southbridge = read_pci(array("ISA bridge", "SATA controller"), false);
 
 			if(($start_cut = strpos($southbridge, "(")) > 0 && ($end_cut = strpos($southbridge, ")", $start_cut + 1)) > 0)
 			{
 				$southbridge_extract = substr($southbridge, $start_cut + 1, $end_cut - $start_cut - 1);
 
-				if(strpos($southbridge_extract, "rev") === FALSE)
+				if(strpos($southbridge_extract, "rev") === false)
 				{
 					$southbridge_extract = explode(" ", $southbridge_extract);
 					$southbridge_clean = $southbridge_extract[0];
@@ -161,8 +169,12 @@ function system_hard_disks()
 		$start_point = -1;
 
 		for($i = 0; $i < count($search_disk_strings) && $start_point == -1; $i++)
+		{
 			if(($tmp_pointer = strpos($dmesg_ata, $search_disk_strings[$i])) > 0)
+			{
 				$start_point = $tmp_pointer + strlen($search_disk_strings[$i]) + 1;
+			}
+		}
 
 		if($start_point != -1)
 		{
@@ -203,7 +215,9 @@ function system_hard_disks()
 						$disk_size = $disk_r[0];
 
 						if($disk_r[1] == "MB")
+						{
 							$disk_size /= 1024;
+						}
 
 						if($disk_size > 10 && $disk_size % 10 != 0)
 						{
@@ -212,13 +226,16 @@ function system_hard_disks()
 							$disk_size += (10 - $mod);
 
 							if($disk_size % 100 == 10)
+							{
 								$disk_size -= 10;
+							}
 							if($disk_size % 100 == 90)
+							{
 								$disk_size += 10;
+							}
 						}
 
 						$disk_size = pts_trim_double($disk_size, 0);
-
 						array_push($disks_capacities, $disk_size);
 					}
 				}
@@ -250,18 +267,26 @@ function system_hard_disks()
 			}
 
 			if($times_found > 1)
+			{
 				$disk = $times_found . " x " . $disks_formatted[$i];
+			}
 			else
+			{
 				$disk = $disks_formatted[$i];
+			}
 
 			array_push($disks, $disk);
 		}
 	}
 
 	if(count($disks) == 0)
+	{
 		$disks = system_disk_total() . "GB";
+	}
 	else
+	{
 		$disks = implode(" + ", $disks);
+	}
 
 	return $disks;
 }
@@ -296,12 +321,18 @@ function memory_mb_capacity()
 		$info = explode(" ", $info);
 		
 		if(isset($info[1]) && $info[1] == "GB")
+		{
 			$info = $info[0] * 1024;
+		}
 		else
+		{
 			$info = $info[0];
+		}
 	}
 	else
+	{
 		$info = "Unknown";
+	}
 
 	return $info;
 }
@@ -315,11 +346,15 @@ function system_temperature()
 		$temp_c = read_acpi("/thermal_zone/THM1/temperature", "temperature"); // if it is THM1 that is for the system, in most cases it should be
 
 		if(($end = strpos($temp_c, ' ')) > 0)
+		{
 			$temp_c = substr($temp_c, 0, $end);
+		}
 	}
 
 	if(empty($temp_c))
+	{
 		$temp_c = -1;
+	}
 
 	return $temp_c;
 }
@@ -348,7 +383,9 @@ function system_line_voltage($type)
 	}
 
 	if(empty($voltage))
+	{
 		$voltage = -1;
+	}
 
 	return $voltage;
 }
@@ -364,7 +401,9 @@ function system_power_mode()
 	$return_status = "";
 
 	if($power_state == "off-line")
+	{
 		$return_status = "This computer was running on battery power.";
+	}
 
 	return $return_status;
 }

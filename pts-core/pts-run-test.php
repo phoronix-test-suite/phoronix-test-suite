@@ -36,7 +36,8 @@ if(is_file($argv[1]) && substr(basename($argv[1]), -4) == ".svg")
 
 	if(!empty($svg_test) && !empty($svg_identifier))
 	{
-		// TODO: Implement checks and then prompt user whether they want to run the test, suite, or global ID that the SVG references
+		// TODO: Implement checks and then prompt user whether they want to
+		// run the test, suite, or global ID that the SVG references
 	}
 }
 
@@ -50,10 +51,14 @@ if(IS_BATCH_MODE)
 	array_push($TEST_PROPERTIES, "PTS_BATCH_MODE");
 }
 if(IS_SCTP_MODE)
+{
 	$TO_RUN = basename($TO_RUN);
+}
 
 if(empty($TO_RUN))
+{
 	pts_exit("\nThe test, suite name, or saved file name must be supplied.\n");
+}
 
 if(is_test($TO_RUN))
 {
@@ -61,7 +66,9 @@ if(is_test($TO_RUN))
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 
 	if(empty($test_title))
+	{
 		pts_exit($TO_RUN . " is not a test.");
+	}
 }
 
 // Make sure tests are installed
@@ -104,9 +111,13 @@ else
 		$RES_NULL = null;
 	}
 	else if(getenv("PTS_SAVE_RESULTS") == "NO")
-		$SAVE_RESULTS = FALSE;
-	else if(getenv("TEST_RESULTS_NAME") != FALSE)
-		$SAVE_RESULTS = TRUE;
+	{
+		$SAVE_RESULTS = false;
+	}
+	else if(getenv("TEST_RESULTS_NAME") != false)
+	{
+		$SAVE_RESULTS = true;
+	}
 	else
 	{
 		$save_option = true;
@@ -117,13 +128,19 @@ else
 			$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 
 			if($result_format == "NO_RESULT")
+			{
 				$save_option = false;
+			}
 		}
 
 		if($save_option)
+		{
 			$SAVE_RESULTS = pts_bool_question("Would you like to save these test results (Y/n)?", true, "SAVE_RESULTS");
+		}
 		else
+		{
 			$SAVE_RESULTS = false;
+		}
 	}
 
 	if($SAVE_RESULTS)
@@ -142,12 +159,18 @@ else
 				if($TO_RUN_TYPE != "GLOBAL_COMPARISON")
 				{
 					if($test_suite != $TO_RUN)
+					{
 						$is_validated = false;
+					}
 					else
+					{
 						$is_validated = true;
+					}
 				}
 				else
+				{
 					$is_validated = true; //TODO: add type comparison check when doing a global comparison
+				}
 			}
 			else
 			{
@@ -157,7 +180,7 @@ else
 			if(!$is_validated)
 			{
 				echo pts_string_header("This saved file-name is associated with a different test ($test_suite) from $TO_RUN. Enter a new name for saving the results.");
-				$FILE_NAME = pts_prompt_save_file_name(FALSE);
+				$FILE_NAME = pts_prompt_save_file_name(false);
 				$PROPOSED_FILE_NAME = $FILE_NAME[0];
 				$CUSTOM_TITLE = $FILE_NAME[1];
 			}
@@ -184,7 +207,9 @@ if($SAVE_RESULTS)
 		}
 	}
 	else
+	{
 		$result_identifiers = array();
+	}
 
 	$RESULTS_IDENTIFIER = pts_prompt_results_identifier($result_identifiers);
 	define("SAVE_FILE_NAME", $PROPOSED_FILE_NAME);
@@ -246,13 +271,15 @@ if(is_test($TO_RUN))
 						}
 						echo "\nPlease Enter Your Choice: ";
 
-						if($first_try && ($auto_opt = getenv(strtoupper($TO_RUN) . "_" . $this_option_pos)) != FALSE)
+						if($first_try && ($auto_opt = getenv(strtoupper($TO_RUN) . "_" . $this_option_pos)) != false)
 						{
 							$bench_choice = $auto_opt;
 							echo $bench_choice . "\n";
 						}
 						else
+						{
 							$bench_choice = trim(fgets(STDIN));
+						}
 
 						$first_try = false;
 					}
@@ -277,15 +304,21 @@ if(is_test($TO_RUN))
 				$option_display_name = $o->get_option_name(($bench_choice - 1));
 
 				if(($cut_point = strpos($option_display_name, "(")) > 1 && strpos($option_display_name, ")") > $cut_point)
+				{
 					$option_display_name = substr($option_display_name, 0, $cut_point);
+				}
 
 				if(count($test_options) > 1)
+				{
 					$TEXT_ARGS .= $o->get_name() . ": ";
+				}
 
 				$TEXT_ARGS .= $option_display_name;
 
 				if($this_option_pos < (count($test_options) - 1))
+				{
 					$TEXT_ARGS .= " - ";
+				}
 
 				$USER_ARGS .= $o->get_option_prefix() . $o->get_option_value(($bench_choice - 1)) . $o->get_option_postfix() . " ";
 			}
@@ -316,14 +349,18 @@ if(is_test($TO_RUN))
 				$this_arg_description = $o->get_name() . ": " . $o->get_option_name($i);
 
 				if(($cut_point = strpos($this_arg_description, "(")) > 1 && strpos($this_arg_description, ")") > $cut_point)
+				{
 					$this_arg_description = substr($this_arg_description, 0, $cut_point);
+				}
 
 				array_push($option_args, $this_arg);
 				array_push($option_args_description, $this_arg_description);
 			}
 
 			if($i > 1)
+			{
 				$description_separate = " - ";
+			}
 
 			array_push($batch_all_args_real, $option_args);
 			array_push($batch_all_args_description, $option_args_description);
@@ -337,7 +374,9 @@ if(is_test($TO_RUN))
 
 		$TEST_RUN = array();
 		for($i = 0; $i < count($TEST_ARGS); $i++) // needed at this time to fill up the array same size as the number of options present
+		{
 			array_push($TEST_RUN, $TO_RUN);
+		}
 	}
 
 	if($SAVE_RESULTS)
@@ -371,7 +410,9 @@ else if(is_suite($TO_RUN))
 	$SUITE_RUN_MODE = $xml_parser->getXMLValue(P_SUITE_RUNMODE);
 
 	if($SUITE_RUN_MODE == "PCQS")
+	{
 		define("IS_PCQS_MODE", true);
+	}
 
 	unset($xml_parser);
 }
@@ -392,8 +433,12 @@ else if($SAVE_RESULTS && ($TO_RUN_TYPE == "GLOBAL_COMPARISON" || $TO_RUN_TYPE ==
 	unset($xml_parser);
 
 	foreach(explode(";", $test_previous_properties) as $test_prop)
+	{
 		if(!in_array($test_prop, $TEST_PROPERTIES))
+		{
 			array_push($TEST_PROPERTIES, $test_prop);
+		}
+	}
 
 	pts_module_process_extensions($test_extensions);
 }
@@ -405,7 +450,9 @@ else
 if($SAVE_RESULTS && (!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE") == "TRUE"))
 {
 	if(empty($test_description))
+	{
 		$test_description = "N/A";
+	}
 
 	echo pts_string_header("If you wish, enter a new description below.\nPress ENTER to proceed without changes.", "#");
 	echo "Current Description: " . $test_description;
@@ -413,7 +460,9 @@ if($SAVE_RESULTS && (!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMP
 	$new_test_description = trim(fgets(STDIN));
 
 	if(!empty($new_test_description))
+	{
 		$test_description = $new_test_description;
+	}
 }
 
 if(is_suite($TO_RUN))
@@ -475,7 +524,9 @@ if($SAVE_RESULTS)
 				display_web_browser($upload_url, "Do you want to launch Phoronix Global", true);
 			}
 			else
+			{
 				echo "\nResults Failed To Upload.\n";
+			}
 		}
 		echo "\n";
 	}

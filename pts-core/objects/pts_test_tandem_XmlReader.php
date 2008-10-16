@@ -41,7 +41,9 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 				$test_below_tag = $test_below_parser->getXMLValue($XML_TAG);
 
 				if(!empty($test_below_tag))
+				{
 					$fallback_value = $test_below_tag;
+				}
 			}
 		}
 

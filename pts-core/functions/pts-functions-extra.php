@@ -31,10 +31,14 @@ function pts_remove_saved_result($identifier)
 		@unlink(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 
 		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/result-graphs/*.png") as $remove_file)
+		{
 			@unlink($remove_file);
+		}
 
 		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/test-*.xml") as $remove_file)
+		{
 			@unlink($remove_file);
+		}
 
 		@unlink(SAVE_RESULTS_DIR . $identifier . "/pts-results-viewer.xsl");
 		@rmdir(SAVE_RESULTS_DIR . $identifier . "/result-graphs/");
@@ -54,12 +58,18 @@ function pts_print_format_tests($object, $steps = -1)
 		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 		if($steps > 0)
+		{
 			asort($tests_in_suite);
+		}
 
 		if($steps == 0)
+		{
 			echo $object . "\n";
+		}
 		else
+		{
 			echo str_repeat("  ", $steps) . "+ " . $object . "\n";
+		}
 
 		foreach($tests_in_suite as $test)
 		{
@@ -67,7 +77,9 @@ function pts_print_format_tests($object, $steps = -1)
 		}
 	}
 	else
+	{
 		echo str_repeat("  ", $steps) . "* " . $object . "\n";
+	}
 }
 function pts_generate_download_cache()
 {
@@ -79,7 +91,9 @@ function pts_generate_download_cache()
 	else
 	{
 		if(is_file(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto"))
+		{
 			unlink(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto");
+		}
 	}
 
 	$xml_writer = new tandem_XmlWriter();
@@ -103,7 +117,9 @@ function pts_generate_download_cache()
 		for($i = 0; $i < count($package_url); $i++)
 		{
 			if(empty($package_filename[$i]))
+			{
 				$package_filename[$i] = basename($package_url[$i]);
+			}
 
 			if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && (empty($package_md5[$i]) || md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) == $package_md5[$i]))
 			{
@@ -121,7 +137,9 @@ function pts_generate_download_cache()
 							echo "\tCaching: " . $package_filename[$i] . "\n";
 
 							if(copy(TEST_ENV_DIR . $test . "/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+							{
 								$cached = true;
+							}
 						}
 					}
 				}
@@ -174,23 +192,35 @@ function pts_estimated_time_string($time)
 	$strlen_time = strlen($time);
 
 	if(strlen($time_trim = str_replace("~", "", $time)) != $strlen_time)
+	{
 		$formatted_string = "Approximately " . $time_trim;
+	}
 	else if(strlen($time_trim = str_replace(array('l'), '', $time)) != $strlen_time)
+	{
 		$formatted_string = "Less Than " . $time_trim;
+	}
 	else if(strlen($time_trim = str_replace(array('g'), '', $time)) != $strlen_time)
+	{
 		$formatted_string = "Greater Than " . $time_trim;
+	}
 	else if(strlen($time_trim = str_replace("-", ", ", $time)) != $strlen_time)
 	{
 		$time_trim = explode(",", $time_trim);
 
 		for($i = 0; $i < count($time_trim); $i++)
+		{
 			$time_trim[$i] = trim($time_trim[$i]);
+		}
 
 		if(count($time_trim) == 2)
+		{
 			$formatted_string = $time_trim[0] . " to " . $time_trim[1];
+		}
 	}
 	else
+	{
 		$formatted_string = $time;
+	}
 
 	$formatted_string .= " Minutes";
 

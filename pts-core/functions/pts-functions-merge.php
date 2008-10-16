@@ -141,7 +141,9 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 	else
 	{
 		if(!pts_version_comparable($original_pts_version[0], $new_pts_version[0]))
+		{
 			echo pts_string_header("PTS Versions Do Not Match! For accurate results, you should only test against the same version!");
+		}
 
 		for($i = 0; $i < count($original_system_hardware); $i++)
 		{
@@ -299,12 +301,18 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 
 	// Some other work
 	if(!empty($suite_properties))
+	{
 		$suite_properties = explode(";", $suite_properties);
+	}
 	else
+	{
 		$suite_properties = array();
+	}
 
 	if(!in_array("BATCH_LINE_ANALYSIS", $suite_properties)) // analysis type
+	{
 		array_push($suite_properties, "BATCH_LINE_ANALYSIS");
+	}
 
 	// Write the new merge
 
@@ -355,11 +363,13 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 
 						$removed = false;
 						for($j = 0; $j < count($r_n_test_attributes) && !$removed; $j++)
+						{
 							if($r_o_test_attributes[$i] == $r_n_test_attributes[$j])
 							{
 								unset($r_n_test_attributes[$j]);
 								$removed = true;
 							}
+						}
 
 						unset($r_o_test_attributes[$i]);
 					}
@@ -378,7 +388,9 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 							$similar_attributes_text = trim($r_o_test_attributes_1[0]) . " Analysis";
 
 							if(!empty($similar_attributes_text_add))
+							{
 								$similar_attributes_text .= " [" . $similar_attributes_text_add . "]";
+							}
 						}
 
 						$USE_ID = pts_request_new_id();

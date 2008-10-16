@@ -30,12 +30,16 @@ function pts_directory()
 	$dir = getenv("PTS_DIR");
 
 	if($dir == ".")
+	{
 		$dir = "";
+	}
 
 	if(!empty($dir))
 	{
 		if(substr($dir, -1) != "/")
+		{
 			$dir .= "/";
+		}
 	}
 	
 	return $dir;
@@ -55,12 +59,12 @@ function pts_init()
 	define("PTS_START_TIME", THIS_RUN_TIME);
 
 	// Run in debug mode?
-	if(($debug_file = getenv("DEBUG_FILE")) != FALSE || getenv("DEBUG") == "1" || getenv("PTS_DEBUG") == "1")
+	if(($debug_file = getenv("DEBUG_FILE")) != false || getenv("DEBUG") == "1" || getenv("PTS_DEBUG") == "1")
 	{
 		define("PTS_DEBUG_MODE", 1);
 		define("IS_DEBUG_MODE", true);
 
-		if($debug_file != FALSE)
+		if($debug_file != false)
 		{
 			define("PTS_DEBUG_FILE", $debug_file);
 			$GLOBALS["DEBUG_CONTENTS"] = "";
@@ -69,16 +73,20 @@ function pts_init()
 		error_reporting(E_ALL | E_STRICT); // Set error reporting to all and strict
 	}
 	else
+	{
 		define("IS_DEBUG_MODE", false);
+	}
 
 	// Self-Contained Test Profile
-	if(($sctp_file = getenv("SCTP_FILE")) != FALSE && is_file($sctp_file))
+	if(($sctp_file = getenv("SCTP_FILE")) != false && is_file($sctp_file))
 	{
 		define("SCTP_FILE", $sctp_file);
 		define("IS_SCTP_MODE", true);
 	}
 	else
+	{
 		define("IS_SCTP_MODE", false);
+	}
 
 	// Operating System Detection
 	$supported_operating_systems = array("Linux", array("Solaris", "Sun"), "FreeBSD", "BSD", array("MacOSX", "Darwin"));
@@ -87,14 +95,16 @@ function pts_init()
 	foreach($supported_operating_systems as $os_check)
 	{
 		if(!is_array($os_check))
+		{
 			$os_check = array($os_check);
+		}
 
 		$is_os = false;
 		$os_title = $os_check[0];
 
 		for($i = 0; $i < count($os_check) && !$is_os; $i++)
 		{
-			if(strpos($uname_s, strtolower($os_check[$i])) !== FALSE) // Check for OS
+			if(strpos($uname_s, strtolower($os_check[$i])) !== false) // Check for OS
 			{
 				define("OPERATING_SYSTEM", $os_title);
 				define("IS_" . strtoupper($os_title), true);
@@ -103,7 +113,9 @@ function pts_init()
 		}
 
 		if(!$is_os)
+		{
 			define("IS_" . strtoupper($os_title), false);
+		}
 	}
 
 	if(!defined("OPERATING_SYSTEM"))
@@ -112,7 +124,9 @@ function pts_init()
 		define("IS_UNKNOWN", true);
 	}
 	else
+	{
 		define("IS_UNKNOWN", false);
+	}
 
 	define("OS_PREFIX", strtolower(OPERATING_SYSTEM) . "_");
 }
@@ -127,9 +141,13 @@ function pts_extended_init()
 		@file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto", "A download cache is used for conserving time and bandwidth by eliminating the need for the Phoronix Test Suite to download files that have already been downloaded once. A download cache can also be transferred between PCs running the Phoronix Test Suite. For more information on this feature, view the included documentation. To generate a download cache, run:\n\nphoronix-test-suite make-download-cache\n");
 	}
 	if(!is_dir(XML_SUITE_LOCAL_DIR))
+	{
 		@mkdir(XML_SUITE_LOCAL_DIR);
+	}
 	if(!is_dir(TEST_RESOURCE_LOCAL_DIR))
+	{
 		@mkdir(TEST_RESOURCE_LOCAL_DIR);
+	}
 	if(!is_dir(XML_PROFILE_LOCAL_DIR))
 	{
 		@mkdir(XML_PROFILE_LOCAL_DIR);
@@ -139,50 +157,78 @@ function pts_extended_init()
 	// OpenGL / graphics detection
 	$opengl_driver = opengl_version();
 
-	if(strpos($opengl_driver, "NVIDIA") !== FALSE)
+	if(strpos($opengl_driver, "NVIDIA") !== false)
+	{
 		define("IS_NVIDIA_GRAPHICS", true);
-	else if(strpos($opengl_driver, "fglrx") !== FALSE)
+	}
+	else if(strpos($opengl_driver, "fglrx") !== false)
+	{
 		define("IS_ATI_GRAPHICS", true);
-	else if(strpos($opengl_driver, "Mesa") !== FALSE)
+	}
+	else if(strpos($opengl_driver, "Mesa") !== false)
+	{
 		define("IS_MESA_GRAPHICS", true);
+	}
 	else
+	{
 		define("IS_UNKNOWN_GRAPHICS", true);
+	}
 
 	if(!defined("IS_NVIDIA_GRAPHICS"))
+	{
 		define("IS_NVIDIA_GRAPHICS", false);
+	}
 	if(!defined("IS_ATI_GRAPHICS"))
+	{
 		define("IS_ATI_GRAPHICS", false);
+	}
 	if(!defined("IS_MESA_GRAPHICS"))
+	{
 		define("IS_MESA_GRAPHICS", false);
+	}
 	if(!defined("IS_UNKNOWN_GRAPHICS"))
+	{
 		define("IS_UNKNOWN_GRAPHICS", false);
+	}
 
 	// Check for batch mode
-	if(getenv("PTS_BATCH_MODE") != FALSE)
+	if(getenv("PTS_BATCH_MODE") != false)
 	{
 		if(pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "FALSE")
+		{
 			pts_exit(pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup"));
+		}
 
 		define("PTS_BATCH_MODE", "1");
 		define("IS_BATCH_MODE", true);
 	}
 	else
+	{
 		define("IS_BATCH_MODE", false);
+	}
 
 	// Self-Contained Test Profile Routines
 	if(IS_SCTP_MODE)
+	{
 		generate_sctp_layer();
+	}
 
 	if(substr(pts_read_user_config(P_OPTION_TESTCORE_LASTTIME, date("Y-m-d")), 0, 10) != date("Y-m-d"))
+	{
 		define("IS_FIRST_RUN_TODAY", true);
+	}
 	else
+	{
 		define("IS_FIRST_RUN_TODAY", false);
+	}
 }
 function __autoload($to_load)
 {
 	// Autoload needed objects
 	if(is_file(PTS_DIR . "pts-core/objects/" . $to_load . ".php"))
-		require_once(PTS_DIR . "pts-core/objects/" . $to_load . ".php");
+	{
+		include_once(PTS_DIR . "pts-core/objects/" . $to_load . ".php");
+	}
 }
 
 ?>

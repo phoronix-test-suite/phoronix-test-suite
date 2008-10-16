@@ -34,7 +34,7 @@ class tandem_XmlWriter
 	var $FORMAT_XML;
 	var $XSL_BINDING = null;
 
-	function __construct($READ_FROM_XML = "", $NOT_IMPLEMENTED = "", $NICE_FORMATTING = TRUE)
+	function __construct($READ_FROM_XML = "", $NOT_IMPLEMENTED = "", $NICE_FORMATTING = true)
 	{
 		$this->FORMAT_XML = $NICE_FORMATTING;
 	}
@@ -46,21 +46,29 @@ class tandem_XmlWriter
 	{
 		$this->XML_CHECKSUM = true;
 	}
-	function addXmlObject($XML_LOCATION, $UNIQUE_IDENTIFIER = 0, $XML_VALUE, $STD_STEP = null, $STEP_ID = null)
+	function addXmlObject($XML_LOCATION, $UNIQUE_IDENTIFIER = 0, $XML_VALUE = "", $STD_STEP = null, $STEP_ID = null)
 	{
 		$xml_array = array();
 		$alt_step = -1;
 		$steps = 0;
 		
 		if($STD_STEP == null)
+		{
 			$STD_STEP = 2;
+		}
 		if($STEP_ID == null)
+		{
 			$STEP_ID = $UNIQUE_IDENTIFIER;
+		}
 
-		if(array_search("$UNIQUE_IDENTIFIER,$XML_LOCATION", $this->XML_STRING_PATHS) !== FALSE)
+		if(array_search($UNIQUE_IDENTIFIER . "," . $XML_LOCATION, $this->XML_STRING_PATHS) !== false)
+		{
 			$alt_step = 2;
+		}
 		else
-			array_push($this->XML_STRING_PATHS, "$UNIQUE_IDENTIFIER,$XML_LOCATION");
+		{
+			array_push($this->XML_STRING_PATHS, $UNIQUE_IDENTIFIER . "," . $XML_LOCATION);
+		}
 
 		$xml_steps = explode('/', $XML_LOCATION);
 		foreach(array_reverse($xml_steps) as $current_tag)
@@ -72,12 +80,18 @@ class tandem_XmlWriter
 				$xml_array = $XML_VALUE;
 			}
 			if(!empty($current_tag))
+			{
 				$xml_array = array("$current_tag" => $xml_array);
+			}
 
 			if($steps == $STD_STEP)
-				$xml_array = array("id_$UNIQUE_IDENTIFIER" => $xml_array);
+			{
+				$xml_array = array("id_" . $UNIQUE_IDENTIFIER => $xml_array);
+			}
 			if($steps == $alt_step)
-				$xml_array = array("id_$STEP_ID" => $xml_array);
+			{
+				$xml_array = array("id_" . $STEP_ID => $xml_array);
+			}
 		}
 
 		$this->XML_OBJECTS = array_merge_recursive($this->XML_OBJECTS, $xml_array);
@@ -93,7 +107,7 @@ class tandem_XmlWriter
 
 		foreach($statements_to_print as $statement)
 		{
-			$return_string .= "<!-- $statement -->" . "\n";
+			$return_string .= "<!-- " . $statement . " -->\n";
 		}
 
 		return $return_string;
@@ -105,7 +119,9 @@ class tandem_XmlWriter
 		$this->addStatement("Generated", date("Y-m-d H:i:s"));
 
 		if($this->XML_CHECKSUM)
+		{
 			$this->addStatement("Checksum", md5($formatted_xml));
+		}
 
 		return "<?xml version=\"1.0\"?>\n" . $this->getXSL() . $this->getXMLStatements() . $formatted_xml;
 	}
@@ -128,7 +144,7 @@ class tandem_XmlWriter
 		{
 			if(!is_array($value))
 			{
-				$formatted_xml .= $this->getXMLTabs($TIMES_DEEP) . "<$key>$value</$key>" . $this->getXMLBreaks();
+				$formatted_xml .= $this->getXMLTabs($TIMES_DEEP) . "<" . $key . ">" . $value . "</" . $key . ">" . $this->getXMLBreaks();
 			}
 			else
 			{
@@ -138,9 +154,9 @@ class tandem_XmlWriter
 				}
 				else
 				{
-					$formatted_xml .= $this->getXMLTabs($TIMES_DEEP) . "<$key>" . $this->getXMLBreaks();
+					$formatted_xml .= $this->getXMLTabs($TIMES_DEEP) . "<" . $key . ">" . $this->getXMLBreaks();
 					$formatted_xml .= $this->getXMLBelow($value, $TIMES_DEEP + 1);
-					$formatted_xml .= $this->getXMLTabs($TIMES_DEEP) . "</$key>" . $this->getXMLBreaks();
+					$formatted_xml .= $this->getXMLTabs($TIMES_DEEP) . "</" . $key . ">" . $this->getXMLBreaks();
 				}
 			}
 		}
@@ -149,20 +165,26 @@ class tandem_XmlWriter
 	}
 	function getXMLTabs($TIMES_DEEP)
 	{
-		if($this->FORMAT_XML !== TRUE)
+		if($this->FORMAT_XML !== true)
+		{
 			return;
+		}
 
 		$return_format = "";
 
 		for($i = 0; $i < $TIMES_DEEP; $i++)
+		{
 			$return_format .= "\t";
+		}
 
 		return $return_format;
 	}
 	function getXMLBreaks()
 	{
-		if($this->FORMAT_XML !== TRUE)
+		if($this->FORMAT_XML !== true)
+		{
 			return;
+		}
 
 		return "\n";
 	}

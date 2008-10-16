@@ -136,7 +136,9 @@ function processor_string()
 
 		}
 		else
+		{
 			$info = "Unknown";
+		}
 	}
 
 	return $info;
@@ -147,7 +149,9 @@ function append_processor_frequency($cpu_string, $cpu_core = 0)
 	if(($freq = processor_frequency($cpu_core)) > 0)
 	{
 		if(($strip_point = strpos($cpu_string, '@')) > 0)
+		{
 			$cpu_string = trim(substr($cpu_string, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
+		}
 
 		$cpu_string .= " @ " . $freq . "GHz";
 	}
@@ -167,14 +171,20 @@ function processor_frequency($cpu_core = 0)
 		$cpu_speeds = read_cpuinfo("cpu MHz");
 
 		if(count($cpu_speeds) > $cpu_core)
+		{
 			$info = $cpu_speeds[$cpu_core];
+		}
 		else
+		{
 			$info = $cpu_speeds[0];
+		}
 
 		$info = pts_trim_double($info / 1000, 2);
 	}
 	else
+	{
 		$info = current_processor_frequency($cpu_core);
+	}
 
 	return $info;
 }
@@ -188,11 +198,15 @@ function processor_temperature()
 		$temp_c = read_acpi("/thermal_zone/THM0/temperature", "temperature"); // if it is THM0 that is for the CPU, in most cases it should be
 
 		if(($end = strpos($temp_c, ' ')) > 0)
+		{
 			$temp_c = substr($temp_c, 0, $end);
+		}
 	}
 
 	if(empty($temp_c))
+	{
 		$temp_c = -1;
+	}
 
 	return $temp_c;
 }
@@ -211,12 +225,18 @@ function pts_processor_power_savings_enabled()
 		{
 			$cpu = processor_string();
 
-			if(strpos($cpu, "AMD") !== FALSE)
+			if(strpos($cpu, "AMD") !== false)
+			{
 				$return_string = "AMD Cool n Quiet was enabled.";
-			else if(strpos($cpu, "Intel") !== FALSE)
+			}
+			else if(strpos($cpu, "Intel") !== false)
+			{
 				$return_string = "Intel SpeedStep Technology was enabled.";
+			}
 			else
+			{
 				$return_string = "The CPU was in a power-savings mode.";
+			}
 		}
 	}
 	return $return_string;
@@ -234,9 +254,13 @@ function current_processor_frequency($cpu_core = 0)
 		$cpu_speeds = read_cpuinfo("cpu MHz");
 
 		if(count($cpu_speeds) > $cpu_core)
+		{
 			$info = $cpu_speeds[$cpu_core];
+		}
 		else
+		{
 			$info = $cpu_speeds[0];
+		}
 
 		$info = pts_trim_double(intval($info), 2);
 	}
@@ -257,12 +281,16 @@ function current_processor_frequency($cpu_core = 0)
 		$info = read_osx_system_profiler("SPHardwareDataType", "ProcessorSpeed");
 		
 		if(($cut_point = strpos($info, " ")) > 0)
+		{
 			$info = substr($info, 0, $cut_point);
+		}
 
 		$info = pts_trim_double($info, 2);
 	}
 	else
+	{
 		$info = 0;
+	}
 
 	return $info;
 }
@@ -275,7 +303,9 @@ function cpu_load_array()
 
 	$load = array();
 	for($i = 1; $i < 6; $i++)
+	{
 		array_push($load, $stat_break[$i]);
+	}
 
 	return $load;
 }
@@ -292,12 +322,18 @@ function current_processor_usage()
 	}
 
 	if(array_sum($end_load) == 0)
+	{
 		$percent = 0;
+	}
 	else
+	{
 		$percent = 100 - (($end_load[(count($end_load) - 1)] * 100) / array_sum($end_load));
+	}
 
 	if(!is_numeric($percent) || $percent < 0 || $percent > 100)
+	{
 		$percent = -1;
+	}
 
 	return pts_trim_double($percent);
 }

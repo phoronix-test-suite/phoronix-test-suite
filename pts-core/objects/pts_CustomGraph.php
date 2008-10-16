@@ -26,9 +26,14 @@ class pts_CustomGraph extends pts_Graph
 	function __construct($Title, $SubTitle, $YTitle)
 	{
 		if(is_file(PTS_USER_DIR . "graph-config.xml"))
+		{
 			$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
+		}
 		else
+		{
 			$file = "";
+		}
+
 		$read_config = new tandem_XmlReader($file);
 
 		$this->graph_attr_width = pts_read_graph_config(P_GRAPH_SIZE_WIDTH, null, $read_config); // Graph width

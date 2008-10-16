@@ -54,7 +54,9 @@ class pts_module_option
 		$question_string = $this->get_question();
 
 		if($this->default_value != null)
+		{
 			$question_string .= " [" . $this->default_value . "]";
+		}
 
 		$question_string .= ": ";
 
@@ -66,12 +68,16 @@ class pts_module_option
 		if(is_array($this->option_supported_values))
 		{
 			if(in_array($input, $this->option_supported_values))
+			{
 				$supported = true;
+			}
 		}
 		else if($this->option_supported_values == OPTION_NUMERIC)
 		{
 			if(is_numeric($input))
+			{
 				$supported = true;
+			}
 		}
 		else if(empty($input) && $this->default_value != null)
 		{

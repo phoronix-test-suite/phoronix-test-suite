@@ -28,31 +28,41 @@ function pts_start_install($TO_INSTALL)
 	}
 	else
 	{
-		$tests = pts_contained_tests($TO_INSTALL, TRUE);
+		$tests = pts_contained_tests($TO_INSTALL, true);
 
 		if(count($tests) == 0)
 		{
 			$exit_message = "";
 
 			if(!getenv("SILENT_INSTALL"))
+			{
 				$exit_message = "\nNot recognized: $TO_INSTALL\n";
+			}
 
 			pts_exit($exit_message);
 		}
 	}
 
 	foreach($tests as $test)
+	{
 		pts_install_test($test);
+	}
 }
 function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
 {
 	if(IS_SCTP_MODE)
+	{
 		$tests = array($TO_INSTALL);
+	}
 	else
-		$tests = pts_contained_tests($TO_INSTALL, TRUE);
+	{
+		$tests = pts_contained_tests($TO_INSTALL, true);
+	}
 	
 	foreach($tests as $test)
+	{
 		pts_install_external_dependencies_list($test, $PLACE_LIST);
+	}
 }
 function pts_download_test_files($identifier)
 {
@@ -67,7 +77,7 @@ function pts_download_test_files($identifier)
 		$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
 		$header_displayed = false;
 
-		if(strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != FALSE)
+		if(strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != false)
 		{
 			$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
 			$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
@@ -82,7 +92,9 @@ function pts_download_test_files($identifier)
 		for($i = 0; $i < count($package_url); $i++)
 		{
 			if(empty($package_filename[$i]))
+			{
 				$package_filename[$i] = basename($package_url[$i]);
+			}
 
 			$download_location = TEST_ENV_DIR . $identifier . "/";
 
@@ -93,25 +105,35 @@ function pts_download_test_files($identifier)
 				$platforms = explode(",", $package_platform[$i]);
 
 				foreach($platforms as $key => $value)
+				{
 					$platforms[$key] = trim($value);
+				}
 
 				if(!in_array(OPERATING_SYSTEM, $platforms))
+				{
 					$file_exempt = true;
+				}
 			}
 			if(!empty($package_architecture[$i]))
 			{
 				$architectures = explode(",", $package_architecture[$i]);
 
 				foreach($architectures as $key => $value)
+				{
 					$architectures[$key] = trim($value);
+				}
 
 				$this_arch = kernel_arch();
 
 				if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
+				{
 					$this_arch = "x86";
+				}
 
 				if(!in_array($this_arch, $architectures))
+				{
 					$file_exempt = true;
+				}
 			}
 
 			if(!is_file($download_location . $package_filename[$i]) && !$file_exempt)
@@ -126,7 +148,7 @@ function pts_download_test_files($identifier)
 						if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
 						{
 							echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
-							return FALSE;
+							return false;
 						}
 					}
 					echo pts_string_header("Downloading Files For: " . $identifier . $download_append);
@@ -135,9 +157,13 @@ function pts_download_test_files($identifier)
 				}
 
 				if($package_url[$i] == $package_filename[$i])
+				{
 					$urls = array();
+				}
 				else
+				{
 					$urls = explode(",", $package_url[$i]);
+				}
 
 				if(count($dc_file) > 0 && count($dc_md5) > 0)
 				{
@@ -149,7 +175,9 @@ function pts_download_test_files($identifier)
 							echo pts_download(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $download_location);
 
 							if(!pts_validate_md5_download_file($download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
+							{
 								@unlink($download_location . $package_filename[$i] . ".temp");
+							}
 							else
 							{
 								shell_exec("cd " . $download_location . " && mv " . $package_filename[$i] . ".temp " . $package_filename[$i]);
@@ -165,13 +193,17 @@ function pts_download_test_files($identifier)
 					echo "Copying Cached File: " . $package_filename[$i] . "\n";
 
 					if(copy(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $download_location . $package_filename[$i]))
+					{
 						$urls = array();
+					}
 				}
 
 				if(($c = count($urls)) > 0)
 				{
 					if($c > 1)
+					{
 						shuffle($urls);
+					}
 
 					$fail_count = 0;
 					$try_again = true;
@@ -195,9 +227,13 @@ function pts_download_test_files($identifier)
 							while(($mirror_choice < 1 || $mirror_choice > count($urls)) && !pts_is_valid_download_url($mirror_choice, $package_filename[$i]));
 
 							if(is_numeric($mirror_choice))
+							{
 								$url = $urls[($mirror_choice - 1)];
+							}
 							else
+							{
 								$url = $mirror_choice;
+							}
 						}
 						else
 						{
@@ -215,7 +251,9 @@ function pts_download_test_files($identifier)
 						if(!pts_validate_md5_download_file($download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
 						{
 							if(is_file($download_location . $package_filename[$i] . ".temp"))
+							{
 								unlink($download_location . $package_filename[$i] . ".temp");
+							}
 
 							$file_downloaded = false;
 							$fail_count++;
@@ -236,16 +274,22 @@ function pts_download_test_files($identifier)
 									$try_again = pts_bool_question("Would you like to try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN");
 
 									if($try_again)
+									{
 										array_push($urls, $url);
+									}
 									else
+									{
 										$try_again = false;
+									}
 								}
 							}
 						}
 						else
 						{
 							if(is_file($download_location . $package_filename[$i] . ".temp"))
+							{
 								shell_exec("cd " . $download_location . " && mv " . $package_filename[$i] . ".temp " . $package_filename[$i]);
+							}
 
 							$file_downloaded = true;
 							$fail_count = 0;
@@ -254,7 +298,7 @@ function pts_download_test_files($identifier)
 						if(!$try_again)
 						{
 							echo "\nDownload of Needed Test Dependencies Failed! Exiting.\n\n";
-							return FALSE;
+							return false;
 						}
 					}
 					while(!$file_downloaded);
@@ -262,7 +306,7 @@ function pts_download_test_files($identifier)
 			}
 		}
 	}
-	return TRUE;
+	return true;
 }
 function pts_local_download_test_files($identifier)
 {
@@ -277,7 +321,9 @@ function pts_local_download_test_files($identifier)
 		for($i = 0; $i < count($package_url); $i++)
 		{
 			if(empty($package_filename[$i]))
+			{
 				$package_filename[$i] = basename($package_url[$i]);
+			}
 
 			array_push($downloaded_files, $package_filename[$i]);
 		}
@@ -317,7 +363,9 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 				}
 			}
 			else if($real_md5 != $verified_md5)
+			{
 				$valid = false;
+			}
 		}
 	}
 
@@ -331,13 +379,17 @@ function pts_remove_local_download_test_files($identifier)
 		$file_location = TEST_ENV_DIR . $identifier . "/" . $test_file;
 
 		if(is_file($file_location))
+		{
 			@unlink($file_location);
+		}
 	}
 }
 function pts_install_test($identifier)
 {
 	if(!is_test($identifier))
+	{
 		return;
+	}
 
 	// Install a test
 	$installed = false;
@@ -371,7 +423,9 @@ function pts_install_test($identifier)
 			$custom_validated_output = trim($custom_validated_output);
 
 			if(!pts_string_bool($custom_validated_output))
+			{
 				$installed = false;
+			}
 		}
 		else
 		{
@@ -384,24 +438,30 @@ function pts_install_test($identifier)
 						$total_download_size = pts_estimated_download_size($argv[1]);
 
 						if($total_download_size > 0 && is_suite($argv[1]))
+						{
 							echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
+						}
 					}
 
 					define("PTS_TOTAL_SIZE_MSG", 1);
 				}
 
 				if(!is_dir(TEST_ENV_DIR))
+				{
 					mkdir(TEST_ENV_DIR);
+				}
 
 				if(!is_dir(TEST_ENV_DIR . $identifier))
+				{
 					mkdir(TEST_ENV_DIR . $identifier);
+				}
 
 				$download_test_files = pts_download_test_files($identifier);
 
-				if($download_test_files == FALSE)
+				if($download_test_files == false)
 				{
 					echo "\nInstallation of " . $identifier . " test failed.\n";
-					return FALSE;
+					return false;
 				}
 
 				if(is_file(pts_location_test_resources($identifier) . "install.sh") || is_file(pts_location_test_resources($identifier) . "install.php"))
@@ -410,14 +470,16 @@ function pts_install_test($identifier)
 					$install_header = "Installing Test: " . $identifier;
 
 					if(($size = pts_estimated_download_size($identifier)) > 0)
+					{
 						$install_header .= "\nEstimated Install Size: " . $size . " MB";
+					}
 
 					echo pts_string_header($install_header);
 
 					if(!empty($size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
 					{
 						echo "\nThere is not enough space (at " . TEST_ENV_DIR . ") for this test to be installed.\n";
-						return FALSE;
+						return false;
 					}
 
 					$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
@@ -441,7 +503,9 @@ function pts_install_test($identifier)
 					pts_module_process("__post_test_install");
 
 					if(pts_string_bool(pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
+					{
 						pts_remove_local_download_test_files($identifier); // Remove original downloaded files
+					}
 				}
 				else
 				{
@@ -454,7 +518,9 @@ function pts_install_test($identifier)
 			{
 				$installed = true;
 				if(!getenv("SILENT_INSTALL"))
+				{
 					echo "Already Installed: " . $identifier . "\n";
+				}
 			}
 		}
 	}
@@ -485,7 +551,9 @@ function pts_external_dependency_generic($Name)
 				if(pts_file_missing_check(explode(",", $file_check[$selection])))
 				{
 					if($PTS_MANUAL_SUPPORT == 0)
+					{
 						$PTS_MANUAL_SUPPORT = 1;
+					}
 
 					echo pts_string_header($title[$selection] . "\nPossible Package Names: " . $possible_packages[$selection]);
 				}
@@ -516,7 +584,9 @@ function pts_file_missing_check($file_arr)
 			$file[$i] = trim($file[$i]);
 
 			if(is_file($file[$i]) || is_dir($file[$i]) || is_link($file[$i]))
+			{
 				$file_is_there = true;
+			}
 		}
 		$file_missing = $file_missing || !$file_is_there;
 	}
@@ -526,8 +596,10 @@ function pts_file_missing_check($file_arr)
 function pts_install_package_on_distribution($identifier)
 {
 	// PTS External Dependencies install on distribution
-	if(getenv("SILENT_INSTALL") == FALSE)
+	if(getenv("SILENT_INSTALL") == false)
+	{
 		echo "Checking For Needed External Dependencies.\n";
+	}
 
 	$identifier = strtolower($identifier);
 	$install_objects = array();
@@ -540,7 +612,9 @@ function pts_install_packages_on_distribution_process($install_objects)
 	if(!empty($install_objects))
 	{
 		if(is_array($install_objects))
+		{
 			$install_objects = implode(" ", $install_objects);
+		}
 
 		$distribution = pts_vendor_identifier();
 
@@ -549,21 +623,27 @@ function pts_install_packages_on_distribution_process($install_objects)
 			echo "\nThe following dependencies will be installed: \n";
 
 			foreach(explode(" ", $install_objects) as $obj)
+			{
 				echo "- " . $obj . "\n";
+			}
 
 			echo "\nThis process may take several minutes.\n";
 
 			echo shell_exec("cd " . SCRIPT_DISTRO_DIR . " && sh install-" . $distribution . "-packages.sh " . $install_objects);
 		}
 		else
+		{
 			echo "Distribution install script not found!";
+		}
 	}
 }
 function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 {
 	// Install from a list of external dependencies
 	if(!is_test($identifier))
+	{
 		return;
+	}
 
 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
@@ -574,14 +654,18 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 		$dependencies = explode(",", $dependencies);
 
 		for($i = 0; $i < count($dependencies); $i++)
+		{
 			$dependencies[$i] = trim($dependencies[$i]);
+		}
 
 		if(!defined("PTS_EXDEP_FIRST_RUN"))
 		{
 			array_push($dependencies, "php-extras");
 
 			if(kernel_arch() == "x86_64")
+			{
 				array_push($dependencies, "linux-32bit-libraries");
+			}
 
 			define("PTS_EXDEP_FIRST_RUN", 1);
 		}
@@ -595,7 +679,9 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 			}
 
 			if(!empty($package_string))
+			{
 				echo "\nSome additional dependencies are required to run or more of these tests, and they could not be installed automatically for your distribution. Below are the software packages that must be installed for the test(s) to run properly.\n\n" . $package_string;
+			}
 		}
 	}
 }
@@ -613,6 +699,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 
 		for($i = 0; $i < count($generic_package); $i++)
+		{
 			if(!empty($generic_package[$i]) && in_array($generic_package[$i], $generic_names))
 			{
 				if(!in_array($distro_package[$i], $package_install_array))
@@ -623,12 +710,17 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 						$add_dependency = pts_file_missing_check($files);
 					}
 					else
+					{
 						$add_dependency = true;
+					}
 
 					if($add_dependency)
+					{
 						array_push($package_install_array, $distro_package[$i]);
+					}
 				}
 			}
+		}
 		$generated = true;
 	}
 

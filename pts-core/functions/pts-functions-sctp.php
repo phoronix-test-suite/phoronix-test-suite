@@ -35,12 +35,18 @@ function generate_sctp_layer()
 	$test_directory = sctp_test_directory();
 
 	if(!$xml_parser->isDefined(P_TEST_TITLE))
+	{
 		pts_exit("\n" . SCTP_FILE . " is not a valid self-contained test profile!\n");
+	}
 
 	if(!is_dir(PTS_TEMP_DIR . "sctp/"))
+	{
 		mkdir(PTS_TEMP_DIR . "sctp/");
+	}
 	if(!is_dir($test_directory))
+	{
 		mkdir($test_directory);
+	}
 
 	$sctp_stages = array("install" => P_TEST_SCTP_INSTALLSCRIPT, "downloads" => P_TEST_SCTP_DOWNLOADS, "parse-results" => P_TEST_SCTP_RESULTSPARSER, "pre" => P_TEST_SCTP_PRERUN, "post" => P_TEST_SCTP_POSTRUN);
 	foreach($sctp_stages as $stage_file => $stage_point)

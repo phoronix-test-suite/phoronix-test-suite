@@ -36,33 +36,45 @@ function read_acpi($point, $match)
 			$this_attribute = trim($line[0]);
 
 			if(count($line) > 1)
+			{
 				$this_value = trim($line[1]);
+			}
 			else
+			{
 				$this_value = "";
+			}
 
 			if($this_attribute == $match)
+			{
 				$value = $this_value;
+			}
 		}
 	}
 
 	return $value;
 }
-function read_hal($name, $UDI = NULL)
+function read_hal($name, $UDI = null)
 {
 	// Read HAL - Hardware Abstraction Layer
 	$info = "Unknown";
 
 	if(!is_array($name))
+	{
 		$name = array($name);
+	}
 
 	for($i = 0; $i < count($name) && $info == "Unknown"; $i++)
 	{
 		if(empty($UDI))
+		{
 			$info = shell_exec("lshal 2>&1 | grep \"" . $name[$i] . "\"");
+		}
 		else
+		{
 			$info = shell_exec("lshal -u $UDI 2>&1 | grep \"" . $name[$i] . "\"");
+		}
 
-		if(($pos = strpos($info, $name[$i] . " = '")) !== FALSE)
+		if(($pos = strpos($info, $name[$i] . " = '")) !== false)
 		{
 			$info = substr($info, $pos + strlen($name[$i] . " = '"));
 			$info = trim(substr($info, 0, strpos($info, "'")));
@@ -70,7 +82,9 @@ function read_hal($name, $UDI = NULL)
 
 		$remove_words = array("empty", "unknow", "system manufacturer", "system version", "system name", "system product name", "to be filled by o.e.m.", "not applicable", "oem");
 		if(empty($info) || in_array(strtolower($info), $remove_words))
+		{
 			$info = "Unknown";
+		}
 	}
 
 	return $info;
@@ -81,7 +95,9 @@ function read_system_hal($name)
 	$hal = read_hal($name, "/org/freedesktop/Hal/devices/computer");
 
 	if($hal == "Unknown")
+	{
 		$hal = read_hal($name);
+	}
 
 	return $hal;
 }
@@ -93,7 +109,9 @@ function read_sensors($attributes)
 	$sensors_lines = explode("\n", $sensors);
 
 	if(!is_array($attributes))
+	{
 		$attributes = array($attributes);
+	}
 
 	for($j = 0; $j < count($attributes) && empty($value); $j++)
 	{
@@ -109,7 +127,9 @@ function read_sensors($attributes)
 				$this_value = substr($this_remainder, 0, strpos($this_remainder, ' '));
 
 				if(is_numeric($this_value))
+				{
 					$value = $this_value;
+				}
 			}
 		}
 	}
@@ -123,14 +143,18 @@ function read_pci($desc, $clean_string = true)
 	$info = "Unknown";
 
 	if(!is_array($desc))
+	{
 		$desc = array($desc);
+	}
 
 	for($i = 0; $i < count($desc) && $info == "Unknown"; $i++)
 	{
 		if(substr($desc[$i], -1) != ":")
+		{
 			$desc[$i] .= ":";
+		}
 
-		if(($pos = strpos($pci_info, $desc[$i])) !== FALSE)
+		if(($pos = strpos($pci_info, $desc[$i])) !== false)
 		{
 			$sub_pci_info = str_replace(array("[AMD]"), "", substr($pci_info, $pos + strlen($desc[$i])));
 			$EOL = strpos($sub_pci_info, "\n");
@@ -138,20 +162,30 @@ function read_pci($desc, $clean_string = true)
 			if($clean_string)
 			{
 				if(($temp = strpos($sub_pci_info, '/')) < $EOL && $temp > 0)
+				{
 					if(($temp = strpos($sub_pci_info, ' ', ($temp + 2))) < $EOL && $temp > 0)
+					{
 						$EOL = $temp;
+					}
+				}
 
 				if(($temp = strpos($sub_pci_info, '(')) < $EOL && $temp > 0)
+				{
 					$EOL = $temp;
+				}
 
 				if(($temp = strpos($sub_pci_info, '[')) < $EOL && $temp > 0)
+				{
 					$EOL = $temp;
+				}
 			}
 
 			$sub_pci_info = trim(substr($sub_pci_info, 0, $EOL));
 
 			if(($strlen = strlen($sub_pci_info)) >= 6 && $strlen < 96)
+			{
 				$info = pts_clean_information_string($sub_pci_info);
+			}
 		}
 	}
 
@@ -162,7 +196,7 @@ function read_lsb($desc)
 	// Read LSB Release information, Linux Standards Base
 	$info = shell_exec("lsb_release -a 2>&1");
 
-	if(($pos = strrpos($info, $desc . ':')) === FALSE)
+	if(($pos = strrpos($info, $desc . ':')) === false)
 	{
 		$info = "Unknown";
 	}
@@ -179,7 +213,7 @@ function read_sysctl($desc)
 	// Read sysctl, used by *BSDs
 	$info = shell_exec("sysctl $desc 2>&1");
 
-	if(strpos($info, $desc . ":") !== FALSE)
+	if(strpos($info, $desc . ":") !== false)
 	{
 		$info = trim(substr($info, strlen($desc) + 2));
 	}
@@ -205,12 +239,18 @@ function read_cpuinfo($attribute)
 			$this_attribute = trim($line[0]);
 
 			if(count($line) > 1)
+			{
 				$this_value = trim($line[1]);
+			}
 			else
+			{
 				$this_value = "";
+			}
 
 			if($this_attribute == $attribute)
+			{
 				array_push($cpuinfo_matches, $this_value);
+			}
 		}
 	}
 
@@ -220,7 +260,7 @@ function read_nvidia_extension($attribute)
 {
 	// Read NVIDIA's NV Extension
 	$info = shell_exec("nvidia-settings --query " . $attribute . " 2>&1");
-	$nv_info = NULL;
+	$nv_info = null;
 
 	if(($pos = strpos($info, $attribute)) > 0)
 	{
@@ -238,8 +278,12 @@ function read_xdpy_monitor_info()
 	$monitor_info = array();
 
 	foreach(explode("\n", $info) as $xdpyinfo_line)
-		if(!empty($xdpyinfo_line) && strpos($xdpyinfo_line, "0x0") == FALSE)
+	{
+		if(!empty($xdpyinfo_line) && strpos($xdpyinfo_line, "0x0") == false)
+		{
 			array_push($monitor_info, $xdpyinfo_line);
+		}
+	}
 
 	return $monitor_info;
 }
@@ -250,8 +294,12 @@ function read_amd_graphics_adapters()
 	$adapters = array();
 
 	foreach(explode("\n", $info) as $line)
+	{
 		if(($last_point = strrpos($line, ".")) > 0)
+		{
 			array_push($adapters, substr($line, $last_point + 3));
+		}
+	}
 
 	return $adapters;
 }
@@ -261,7 +309,7 @@ function read_amd_pcsdb($attribute)
 	$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
 	$ati_info = "";
 
-	if(($pos = strpos($info, ":")) > 0 && strpos($info, "Error") === FALSE)
+	if(($pos = strpos($info, ":")) > 0 && strpos($info, "Error") === false)
 	{
 		$ati_info = substr($info, $pos + 2);
 		$ati_info = substr($ati_info, 0, strpos($ati_info, " "));
@@ -291,7 +339,9 @@ function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 		$is_in_prefix = false;
 
 		if(is_file("/etc/ati/amdpcsdb"))
+		{
 			$amdpcsdb_file = explode("\n", file_get_contents("/etc/ati/amdpcsdb"));
+		}
 
 		for($l = 0; $l < count($amdpcsdb_file) && ($find_once == false || $last_found_section_count == -1); $l++)
 		{
@@ -317,7 +367,9 @@ function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 					$this_section_count++;
 				}
 				else
+				{
 					$is_in_prefix = false;
+				}
 			}
 			else if($is_in_prefix && $this_section_count != $last_found_section_count && count(($key_components = explode("=", $line))) == 2)
 			{
@@ -353,9 +405,13 @@ function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 	}
 
 	if(count($attribute_values) == 0)
+	{
 		$attribute_values = "";
+	}
 	else if(count($attribute_values) == 1)
+	{
 		$attribute_values = $attribute_values[0];
+	}
 
 	return $attribute_values;
 }
@@ -425,7 +481,7 @@ function read_ati_overdrive($attribute, $adapter = 0)
 	{
 		$info = shell_exec("aticonfig --adapter=" . $adapter . " --od-gettemperature 2>&1");
 
-		if(($start = strpos($info, "Temperature -")) !== FALSE)
+		if(($start = strpos($info, "Temperature -")) !== false)
 		{
 			$info = substr($info, $start + 14);
 			$value = substr($info, 0, strpos($info, " C"));
@@ -435,7 +491,7 @@ function read_ati_overdrive($attribute, $adapter = 0)
 	{
 		$info = shell_exec("aticonfig --adapter=" . $adapter . " --od-getclocks 2>&1");
 
-		if(strpos($info, "GPU") !== FALSE)
+		if(strpos($info, "GPU") !== false)
 		{
 			foreach(explode("\n", $info) as $line)
 			{
@@ -454,9 +510,13 @@ function read_ati_overdrive($attribute, $adapter = 0)
 						$od_value_r = explode(" ", $od_value);
 
 						if(count($od_value_r) == 1)
+						{
 							$value = $od_value_r[0];
+						}
 						else
-							$value = $od_value_r;												
+						{
+							$value = $od_value_r;
+						}											
 					}
 				}
 			}
@@ -481,11 +541,17 @@ function read_system_memory_usage($TYPE = "TOTAL", $READ = "USED")
 			$line_type = trim($line_parts[0]);
 
 			if($TYPE == "MEMORY" && $line_type == "Mem")
+			{
 				$grab_line = $line_parts[1];
+			}
 			else if($TYPE == "SWAP" && $line_type == "Swap")
+			{
 				$grab_line = $line_parts[1];
+			}
 			else if($TYPE == "TOTAL" && $line_type == "Total")
+			{
 				$grab_line = $line_parts[1];
+			}
 		}
 	}
 
@@ -497,17 +563,23 @@ function read_system_memory_usage($TYPE = "TOTAL", $READ = "USED")
 		if($READ == "USED")
 		{
 			if(count($mem_parts) >= 2 && is_numeric($mem_parts[1]))
+			{
 				$mem_usage = $mem_parts[1];
+			}
 		}
 		else if($READ == "TOTAL")
 		{
 			if(count($mem_parts) >= 1 && is_numeric($mem_parts[0]))
+			{
 				$mem_usage = $mem_parts[0];
+			}
 		}
 		else if($READ == "FREE")
 		{
 			if(count($mem_parts) >= 3 && is_numeric($mem_parts[2]))
+			{
 				$mem_usage = $mem_parts[2];
+			}
 		}
 	}
 
@@ -535,7 +607,9 @@ function read_hddtemp($disk = null)
 		{
 			$unit = substr($info, $end_pos + 2, 1);
 			if($unit == "F")
+			{
 				$temperature = pts_trim_double((($temperature - 32) * 5 / 9));
+			}
 
 			$hdd_temperature = $temperature;
 		}
@@ -547,22 +621,26 @@ function read_osx_system_profiler($data_type, $object)
 {
 	$info = trim(shell_exec("system_profiler " . $data_type . " 2>&1"));
 	$lines = explode("\n", $info);
-	$value = FALSE;
+	$value = false;
 
-	for($i = 0; $i < count($lines) && $value == FALSE; $i++)
+	for($i = 0; $i < count($lines) && $value == false; $i++)
 	{
 		$line = explode(":", $lines[$i]);
 		$line_object = str_replace(" ", "", $line[0]);
 		
 		if(($cut_point = strpos($line_object, "(")) > 0)
+		{
 			$line_object = substr($line_object, 0, $cut_point);
+		}
 		
 		if($line_object == $object && isset($line[1]))
 		{
 			$this_value = trim($line[1]);
 			
 			if(!empty($this_value))
+			{
 				$value = $this_value;
+			}
 		}
 	}
 	
@@ -597,9 +675,13 @@ function read_sun_ddu_dmi_info($object)
 			$line_object = str_replace(" ", "", $line[0]);
 
 			if(count($line) > 1)
+			{
 				$this_value = trim($line[1]);
+			}
 			else
+			{
 				$this_value = "";
+			}
 
 			if(empty($this_value) && !empty($section))
 			{
@@ -607,7 +689,9 @@ function read_sun_ddu_dmi_info($object)
 			}
 
 			if($line_object == $object && $this_section == $section && !empty($this_value))
+			{
 				array_push($values, $this_value);
+			}
 		}
 	}
 

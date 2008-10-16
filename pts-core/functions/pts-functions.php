@@ -34,7 +34,9 @@ require_once("pts-core/functions/pts-functions_types.php");
 require_once("pts-core/functions/pts-functions_modules.php");
 
 if(IS_SCTP_MODE)
-	require_once("pts-core/functions/pts-functions-sctp.php");
+{
+	include_once("pts-core/functions/pts-functions-sctp.php");
+}
 
 // User's home directory for storing results, module files, test installations, etc.
 define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
@@ -78,14 +80,18 @@ $PTS_GLOBAL_ID = 1;
 
 // PTS Modules Support
 if(function_exists("pts_module_start_process"))
+{
 	pts_module_start_process();
+}
 
 // Phoronix Test Suite - Functions
 function pts_copy($from, $to)
 {
 	// Copies a file
 	if(!is_file($to) || md5_file($from) != md5_file($to))
+	{
 		copy($from, $to);
+	}
 }
 function pts_gd_available()
 {
@@ -101,14 +107,16 @@ function pts_gd_available()
 			$gd_available = false;
 	}
 	else
+	{
 		$gd_available = true;
+	}
 
 	return $gd_available;
 }
 function pts_save_result($save_to = null, $save_results = null)
 {
 	// Saves PTS result file
-	if(strpos($save_to, ".xml") === FALSE)
+	if(strpos($save_to, ".xml") === false)
 	{
 		$save_to .= ".xml";
 	}
@@ -116,9 +124,13 @@ function pts_save_result($save_to = null, $save_results = null)
 	$save_to_dir = dirname(SAVE_RESULTS_DIR . $save_to);
 
 	if(!is_dir(SAVE_RESULTS_DIR))
+	{
 		mkdir(SAVE_RESULTS_DIR);
+	}
 	if($save_to_dir != '.' && !is_dir($save_to_dir))
+	{
 		mkdir($save_to_dir);
+	}
 
 	if(!is_dir(SAVE_RESULTS_DIR . "pts-results-viewer"))
 	{
@@ -131,7 +143,9 @@ function pts_save_result($save_to = null, $save_results = null)
 	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
 	
 	if($save_to == null || $save_results == null)
+	{
 		$bool = true;
+	}
 	else
 	{
 		$save_name = basename($save_to, ".xml");
@@ -167,18 +181,28 @@ function pts_save_result($save_to = null, $save_results = null)
 			for($i = 0; $i < count($results_name); $i++)
 			{
 				if(strlen($results_version[$i]) > 2)
+				{
 					$results_name[$i] .= " v" . $results_version[$i];
+				}
 
 				if($results_result_format[$i] == "LINE_GRAPH")
+				{
 					$t = new pts_LineGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+				}
 				else if($results_result_format[$i] == "PASS_FAIL")
+				{
 					$t = new pts_PassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+				}
 				else if($results_result_format[$i] == "MULTI_PASS_FAIL")
+				{
 					$t = new pts_MultiPassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+				}
 				else
+				{
 					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+				}
 
-				if(pts_gd_available() && getenv("SVG_DEBUG") == FALSE)
+				if(pts_gd_available() && getenv("SVG_DEBUG") == false)
 				{
 					// Render to PNG
 					$t->setRenderer("PNG");
@@ -212,33 +236,43 @@ function pts_save_result($save_to = null, $save_results = null)
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-		if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || (defined("IS_PCQS_MODE") && IS_PCQS_MODE) || getenv("SAVE_SYSTEM_DETAILS") != FALSE))
+		if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || (defined("IS_PCQS_MODE") && IS_PCQS_MODE) || getenv("SAVE_SYSTEM_DETAILS") != false))
 		{
 			// Save verbose system information here
 			if(!is_dir($save_to_dir . "/system-details/"))
+			{
 				mkdir($save_to_dir . "/system-details/");
+			}
 			if(!is_dir($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER))
+			{
 				mkdir($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER);
+			}
 
 			// lspci
 			$file = shell_exec("lspci 2>&1");
 
-			if(strpos($file, "not found") == FALSE)
+			if(strpos($file, "not found") == false)
+			{
 				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/lspci", $file);
+			}
 
 			// sensors
 			$file = shell_exec("sensors 2>&1");
 
-			if(strpos($file, "not found") == FALSE)
+			if(strpos($file, "not found") == false)
+			{
 				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/sensors", $file);
+			}
 
 			if(IS_MACOSX)
 			{
 				// system_profiler (Mac OS X)
 				$file = shell_exec("system_profiler 2>&1");
 
-				if(strpos($file, "not found") == FALSE)
+				if(strpos($file, "not found") == false)
+				{
 					@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/system_profiler", $file);
+				}
 			}
 
 			// cpuinfo
@@ -257,17 +291,20 @@ function pts_process_register($process)
 {
 	// Register a process as active
 	if(!is_dir(TEST_ENV_DIR))
+	{
 		mkdir(TEST_ENV_DIR);
+	}
 	if(!is_dir(TEST_ENV_DIR . ".processes"))
+	{
 		mkdir(TEST_ENV_DIR . ".processes");
+	}
 
 	return file_put_contents(TEST_ENV_DIR . ".processes/" . $process . ".p", getmypid());
 }
 function pts_process_remove($process)
 {
 	// Remove a process from being active, if present
-	if(is_file(TEST_ENV_DIR . ".processes/" . $process . ".p"))
-		return @unlink(TEST_ENV_DIR . ".processes/" . $process . ".p");
+	return is_file(TEST_ENV_DIR . ".processes/" . $process . ".p") && @unlink(TEST_ENV_DIR . ".processes/" . $process . ".p");
 }
 function pts_process_active($process)
 {
@@ -279,27 +316,41 @@ function pts_process_active($process)
 		$ps = trim(shell_exec("ps -p $pid 2>&1"));
 
 		if(strpos($ps, "php") > 0)
+		{
 			$active = true;
+		}
 		else
+		{
 			pts_process_remove($process);
+		}
 	}
 	return $active;
 }
-function display_web_browser($URL, $alt_text = NULL, $default_open = FALSE)
+function display_web_browser($URL, $alt_text = null, $default_open = false)
 {
 	// Launch the web browser
-	if($alt_text == NULL)
+	if($alt_text == null)
+	{
 		$text = "Do you want to view the results in your web browser";
+	}
 	else
+	{
 		$text = $alt_text;
+	}
 
 	if(!$default_open)
+	{
 		$view_results = pts_bool_question($text . " (y/N)?", false, "OPEN_BROWSER");
+	}
 	else
+	{
 		$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
+	}
 
 	if($view_results)
+	{
 		shell_exec("sh pts-core/scripts/launch-browser.sh \"" . $URL . "\" 2>&1");
+	}
 }
 function pts_env_variables()
 {
@@ -368,11 +419,11 @@ function pts_user_runtime_variables()
 function pts_input_correct_results_path($path)
 {
 	// Correct an input path for an XML file
-	if(strpos($path, "/") === FALSE)
+	if(strpos($path, "/") === false)
 	{
 		$path = SAVE_RESULTS_DIR . $path;
 	}
-	if(strpos($path, ".xml") === FALSE)
+	if(strpos($path, ".xml") === false)
 	{
 		$path = $path . ".xml";
 	}
@@ -384,9 +435,13 @@ function pts_variables_export_string($vars = null)
 	$return_string = "";
 
 	if($vars == null)
+	{
 		$vars = pts_env_variables();
+	}
 	else
+	{
 		$vars = array_merge(pts_env_variables(), $vars);
+	}
 
 	foreach($vars as $name => $var)
 	{
@@ -403,14 +458,22 @@ function pts_run_additional_vars($identifier)
 	$ctp_extension_string = "";
 	$extends = pts_test_extends_below($identifier);
 	foreach($extends as $extended_test)
+	{
 		if(is_dir(TEST_ENV_DIR . $extended_test . "/"))
+		{
 			$ctp_extension_string .= TEST_ENV_DIR . $extended_test . ":";
+		}
+	}
 
 	if(!empty($ctp_extension_string))
+	{
 		$extra_vars["PATH"] = $ctp_extension_string . "\$PATH";
+	}
 
 	if(count($extends) > 0)
+	{
 		$extra_vars["TEST_EXTENDS"] = TEST_ENV_DIR . $extends[0];
+	}
 
 	return $extra_vars;
 }
@@ -435,7 +498,9 @@ function pts_global_upload_result($result_file, $tags = "")
 	$switch_tags = array("Benchmark>" => "B>", "Results>" => "R>", "Group>" => "G>", "Entry>" => "E>", "Identifier>" => "I>", "Value>" => "V>", "System>" => "S>", "Attributes>" => "A>");
 
 	foreach($switch_tags as $f => $t)
+	{
 		$test_results = str_replace($f, $t, $test_results);
+	}
 
 	$ToUpload = base64_encode($test_results);
 	$GlobalUser = pts_current_user();
@@ -449,11 +514,13 @@ function pts_global_upload_result($result_file, $tags = "")
 	$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
 
 	$stream_context = stream_context_create($http_parameters);
-	$opened_url = @fopen("http://www.phoronix-test-suite.com/global/user-upload.php", "rb", FALSE, $stream_context);
+	$opened_url = @fopen("http://www.phoronix-test-suite.com/global/user-upload.php", "rb", false, $stream_context);
 	$response = @stream_get_contents($opened_url);
 
 	if($response !== false)
+	{
 		$return_stream = $response;
+	}
 
 	return $return_stream;
 }
@@ -473,10 +540,14 @@ function pts_global_valid_id_string($global_id)
 	$is_valid = true;
 
 	if(count(explode("-", $global_id)) < 3) // Global IDs should have three (or more) dashes
+	{
 		$is_valid = false;
+	}
 
-	if(strlen($global_id) < 13) // Shorted Possible ID would be X-000-000-000
+	if(strlen($global_id) < 13) // Shortest Possible ID would be X-000-000-000
+	{
 		$is_valid = false;
+	}
 
 	return $is_valid;
 }
@@ -486,22 +557,32 @@ function pts_trim_double($double, $accuracy = 2)
 	$return = explode(".", $double);
 
 	if(count($return) == 1)
+	{
 		$return[1] = "00";
+	}
 	
 	if(count($return) == 2 && $accuracy > 0)
 	{
 		$strlen = strlen($return[1]);
 
 		if($strlen > $accuracy)
+		{
 			$return[1] = substr($return[1], 0, $accuracy);
+		}
 		else if($strlen < $accuracy)
+		{
 			for($i = $strlen; $i < $accuracy; $i++)
+			{
 				$return[1] .= '0';
+			}
+		}
 
 		$return = $return[0] . "." . $return[1];
 	}
 	else
+	{
 		$return = $return[0];
+	}
 
 	return $return;
 }
@@ -524,9 +605,13 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 		}
 
 		if(isset($auto_answer))
+		{
 			$answer = $auto_answer == "TRUE" || $auto_answer == "1";
+		}
 		else
+		{
 			$answer = $default;
+		}
 	}
 	else
 	{
@@ -538,11 +623,17 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 		while($input != "y" && $input != "n" && $input != "");
 
 		if($input == "y")
+		{
 			$answer = true;
+		}
 		else if($input == "n")
+		{
 			$answer = false;
+		}
 		else
+		{
 			$answer = $default;
+		}
 	}
 
 	return $answer;
@@ -556,7 +647,9 @@ function pts_clean_information_string($str)
 	$change_phrases = array("Memory Controller Hub" => "MCH", "Advanced Micro Devices" => "AMD", "MICRO-STAR INTERNATIONAL" => "MSI", "Silicon Integrated Systems" => "SiS", "Integrated Graphics Controller" => "IGP");
 
 	foreach($change_phrases as $original_phrase => $new_phrase)
+	{
 		$str = str_ireplace($original_phrase, $new_phrase, $str);
+	}
 
 	$str = trim(preg_replace("/\s+/", " ", $str));
 
@@ -568,13 +661,19 @@ function pts_string_header($heading, $char = '=')
 	$header_size = 36;
 
 	foreach(explode("\n", $heading) as $line)
+	{
 		if(($line_length = strlen($line)) > $header_size)
+		{
 			$header_size = $line_length;
+		}
+	}
 
 	$terminal_width = trim(shell_exec("tput cols 2>&1"));
 
 	if($header_size > $terminal_width && $terminal_width > 1)
+	{
 		$header_size = $terminal_width;
+	}
 
 	return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";
 }
@@ -593,8 +692,12 @@ function pts_version_comparable($old, $new)
 	$compare = true;
 
 	if(count($old) >= 2 && count($new) >= 2)
+	{
 		if($old[0] != $new[0] || $old[1] != $new[1])
+		{
 			$compare = false;
+		}
+	}
 
 	return $compare;	
 }
@@ -609,14 +712,20 @@ function pts_shutdown()
 	if(IS_DEBUG_MODE && defined("PTS_DEBUG_FILE"))
 	{
 		if(!is_dir(PTS_USER_DIR . "debug-messages/"))
+		{
 			mkdir(PTS_USER_DIR . "debug-messages/");
+		}
 
 		if(file_put_contents(PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE, $GLOBALS["DEBUG_CONTENTS"]))
+		{
 			echo "\nDebug Message Saved To: " . PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE . "\n";
+		}
 	}
 
 	if(IS_SCTP_MODE)
+	{
 		remote_sctp_test_files();
+	}
 
 	// Remove process
 	pts_process_remove("phoronix-test-suite");
@@ -627,16 +736,20 @@ function pts_string_bool($string)
 	$string = strtolower($string);
 	return $string == "true" || $string == "1" || $string == "on";
 }
-function pts_is_valid_download_url($string, $basename = NULL)
+function pts_is_valid_download_url($string, $basename = null)
 {
 	// Checks for valid download URL
 	$is_valid = true;
 
-	if(strpos($string, "://") == FALSE)
-		$is_valid = FALSE;
+	if(strpos($string, "://") == false)
+	{
+		$is_valid = false;
+	}
 
 	if(!empty($basename) && $basename != basename($string))
-		$is_valid = FALSE;
+	{
+		$is_valid = false;
+	}
 
 	return $is_valid;
 }
@@ -644,7 +757,9 @@ function pts_format_time_string($time, $format = "SECONDS", $standard_version = 
 {
 	// Format an elapsed time string
 	if($format == "MINUTES")
+	{
 		$time *= 60;
+	}
 
 	$formatted_time = array();
 
@@ -661,10 +776,14 @@ function pts_format_time_string($time, $format = "SECONDS", $standard_version = 
 				$formatted_part = $time_hours . " Hour";
 
 				if($time_hours > 1)
+				{
 					$formatted_part .= "s";
+				}
 			}
 			else
+			{
 				$formatted_part = $time_hours . "h";
+			}
 
 			array_push($formatted_time, $formatted_part);
 		}
@@ -675,10 +794,14 @@ function pts_format_time_string($time, $format = "SECONDS", $standard_version = 
 				$formatted_part = $time_minutes . " Minute";
 
 				if($time_minutes > 1)
+				{
 					$formatted_part .= "s";
+				}
 			}
 			else
+			{
 				$formatted_part = $time_minutes . "m";
+			}
 
 			array_push($formatted_time, $formatted_part);
 		}
@@ -689,19 +812,27 @@ function pts_format_time_string($time, $format = "SECONDS", $standard_version = 
 				$formatted_part = $time_seconds . " Second";
 
 				if($time_seconds > 1)
+				{
 					$formatted_part .= "s";
+				}
 			}
 			else
+			{
 				$formatted_part = $time_seconds . "s";
+			}
 
 			array_push($formatted_time, $formatted_part);
 		}
 	}
 
 	if($standard_version)
+	{
 		$time_string = implode(", ", $formatted_time);
+	}
 	else
+	{
 		$time_string = implode("", $formatted_time);
+	}
 
 	return $time_string;
 }
@@ -711,20 +842,28 @@ function pts_evaluate_script_type($script)
 	$script_eval = trim($script[0]);
 	$script_type = false;
 
-	if(strpos($script_eval, "<?php") !== FALSE)
+	if(strpos($script_eval, "<?php") !== false)
+	{
 		$script_type = "PHP";
-	else if(strpos($script_eval, "#!/bin/sh") !== FALSE)
+	}
+	else if(strpos($script_eval, "#!/bin/sh") !== false)
+	{
 		$script_type = "SH";
-	else if(strpos($script_eval, "<") !== FALSE && strpos($script_eval, ">") !== FALSE)
+	}
+	else if(strpos($script_eval, "<") !== false && strpos($script_eval, ">") !== false)
+	{
 		$script_type = "XML";
+	}
 
 	return $script_type;
 }
 function pts_set_environment_variable($name, $value)
 {
 	// Sets an environmental variable
-	if(getenv($name) == FALSE)
+	if(getenv($name) == false)
+	{
 		putenv($name . "=" . $value);
+	}
 }
 function pts_proximity_match($search, $match_to)
 {
@@ -733,16 +872,20 @@ function pts_proximity_match($search, $match_to)
 	$is_match = true;
 
 	if(count($search) == 1)
+	{
 		$is_match = false;
+	}
 
 	for($i = 0; $i < count($search) && $is_match && !empty($search[$i]); $i++)
 	{
-		if(($match_point = strpos($match_to, $search[$i])) !== FALSE && ($i > 0 || $match_point == 0))
+		if(($match_point = strpos($match_to, $search[$i])) !== false && ($i > 0 || $match_point == 0))
 		{
 			$match_to = substr($match_to, ($match_point + strlen($search[$i])));
 		}
 		else
+		{
 			$is_match = false;
+		}
 	}
 
 	return $is_match;
@@ -753,13 +896,19 @@ function pts_debug_message($message)
 	if(IS_DEBUG_MODE)
 	{
 		if(strpos($message, "$") > 0)
+		{
 			foreach(pts_env_variables() as $key => $value)
+			{
 				$message = str_replace("$" . $key, $value, $message);
+			}
+		}
 
 		echo "DEBUG: " . ($output = $message . "\n");
 
 		if(defined("PTS_DEBUG_FILE"))
+		{
 			$GLOBALS["DEBUG_CONTENTS"] = $output;
+		}
 	}
 }
 function pts_user_message($message)
@@ -778,15 +927,19 @@ function pts_user_message($message)
 function pts_remove($object)
 {
 	if(!file_exists($object))
-		return FALSE;
+	{
+		return false;
+	}
 
 	if(is_file($object))
+	{
 		return unlink($object);
+	}
 
 	if(is_dir($object))
 	{
 		$directory = dir($object);
-		while(($entry = $directory->read()) !== FALSE)
+		while(($entry = $directory->read()) !== false)
 		{
 			if($entry != "." && $entry != "..")
 			{
@@ -805,8 +958,10 @@ function pts_download($download, $to)
 	$download_output = "";
 	$user_agent = "PhoronixTestSuite/" . PTS_CODENAME;
 
-	if(strpos($to_file, ".") === FALSE)
+	if(strpos($to_file, ".") === false)
+	{
 		$to_file = basename($download);
+	}
 
 	if(is_executable("/usr/bin/curl"))
 	{

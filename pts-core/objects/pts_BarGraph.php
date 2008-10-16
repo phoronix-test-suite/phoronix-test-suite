@@ -60,17 +60,25 @@ class pts_BarGraph extends pts_CustomGraph
 			$px_bound_right = $px_bound_left + $this->identifier_width;
 
 			if($i == 0)
+			{
 				$this->draw_line($this->graph_image, $px_bound_left, $px_from_top_start, $px_bound_left, $px_from_top_end, $this->graph_color_notches);
+			}
 
 			if($i == (count($this->graph_identifiers) - 1) && $px_bound_right != $this->graph_left_end)
+			{
 				$px_bound_right = $this->graph_left_end;
+			}
 
 			$this->draw_line($this->graph_image, $px_bound_right, $px_from_top_start, $px_bound_right, $px_from_top_end, $this->graph_color_notches);
 
 			if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
-				$this->write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, TRUE);
+			{
+				$this->write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, true);
+			}
 			else
-				$this->write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $px_from_top_end - 5, $px_bound_right, $px_from_top_end - 5, FALSE, TRUE);
+			{
+				$this->write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $px_from_top_end - 5, $px_bound_right, $px_from_top_end - 5, false, true);
+			}
 		}
 	}
 	protected function render_graph_bars()
@@ -92,13 +100,17 @@ class pts_BarGraph extends pts_CustomGraph
 				$px_bound_right = $px_bound_left + $bar_width;
 
 				if($value_plot_top < 1)
+				{
 					$value_plot_top = 1;
+				}
 
 				$this->draw_rectangle_border($this->graph_image, $px_bound_left, $value_plot_top - 1, $px_bound_right, $this->graph_top_end - 1, $this->graph_color_body_light);
 				$this->draw_rectangle($this->graph_image, $px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end - 1, $paint_color);
 
 				if($graph_size > 20)
+				{
 					$this->write_text_center($this->graph_data[$i_o][$i], $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left, $value_plot_top + 3, $px_bound_right, $value_plot_top + 3);
+				}
 			}
 		}
 	}

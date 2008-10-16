@@ -24,23 +24,33 @@
 function pts_config_init()
 {
 	if(!is_dir(PTS_USER_DIR))
+	{
 		mkdir(PTS_USER_DIR);
+	}
 	if(!is_dir(PTS_TEMP_DIR))
+	{
 		mkdir(PTS_TEMP_DIR);
+	}
 
 	pts_user_config_init();
 	pts_graph_config_init();
 }
-function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions = NULL)
+function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions = null)
 {
 	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
 	if(is_file(PTS_USER_DIR . "user-config.xml"))
+	{
 		$file = file_get_contents(PTS_USER_DIR . "user-config.xml");
+	}
 	else if(is_file(ETC_DIR . "user-config-template.xml"))
+	{
 		$file = file_get_contents(ETC_DIR . "user-config-template.xml");
+	}
 	else
+	{
 		$file = "";
+	}
 
 	$read_config = new tandem_XmlReader($file);
 
@@ -54,17 +64,25 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 		$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
 
 		if($agree)
+		{
 			echo "\n";
+		}
 		else
+		{
 			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
+		}
 	}
 
-	if($UserName == NULL)
+	if($UserName == null)
+	{
 		$UserName = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User", $read_config);
-	if($UploadKey == NULL)
+	}
+	if($UploadKey == null)
+	{
 		$UploadKey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "", $read_config);
+	}
 
-	if($BatchOptions == NULL || !is_array($BatchOptions))
+	if($BatchOptions == null || !is_array($BatchOptions))
 	{
 		$BatchOptions = array();
 		$BatchOptions[0] = pts_read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE", $read_config);
@@ -126,14 +144,18 @@ function pts_user_config_init($UserName = NULL, $UploadKey = NULL, $BatchOptions
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
 }
-function pts_module_config_init($SetOptions = NULL)
+function pts_module_config_init($SetOptions = null)
 {
 	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
 	if(is_file(PTS_USER_DIR . "modules-config.xml"))
+	{
 		$file = file_get_contents(PTS_USER_DIR . "modules-config.xml");
+	}
 	else
+	{
 		$file = "";
+	}
 
 	$module_config_parser = new tandem_XmlReader($file);
 	$option_module = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_NAME);
@@ -185,9 +207,13 @@ function pts_config_bool_to_string($bool)
 {
 	// Evaluate a string to boolean type
 	if($bool == true)
+	{
 		$bool_return = "TRUE";
+	}
 	else
+	{
 		$bool_return = "FALSE";
+	}
 
 	return $bool_return;
 }
@@ -196,13 +222,19 @@ function pts_graph_config_init()
 	// Initialize the graph configuration file
 
 	if(is_file(PTS_USER_DIR . "graph-config.xml"))
+	{
 		$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
+	}
 	else if(is_file(RESULTS_VIEWER_DIR . "graph-config-template.xml"))
+	{
 		$file = file_get_contents(RESULTS_VIEWER_DIR . "graph-config-template.xml");
+	}
 	else
+	{
 		$file = "";
-	$read_config = new tandem_XmlReader($file);
+	}
 
+	$read_config = new tandem_XmlReader($file);
 	$config = new tandem_XmlWriter();
 
 	// Size of Graph
@@ -259,20 +291,26 @@ function pts_read_config($config_file, $xml_pointer, $value, $tandem_xml)
 		$temp_value = $tandem_xml->getXmlValue($xml_pointer);
 
 		if(!empty($temp_value))
+		{
 			$value = $temp_value;
+		}
 	}
 	else
 	{
 		if(is_file(PTS_USER_DIR . $config_file))
-			if(($file = file_get_contents(PTS_USER_DIR . $config_file)) != FALSE)
+		{
+			if(($file = file_get_contents(PTS_USER_DIR . $config_file)) != false)
 			{
 				$xml_parser = new tandem_XmlReader($file);
 				unset($file);
 				$temp_value = $xml_parser->getXmlValue($xml_pointer);
 
 				if(!empty($temp_value))
+				{
 					$value = $temp_value;
+				}
 			}
+		}
 	}
 
 	return $value;
@@ -280,7 +318,7 @@ function pts_read_config($config_file, $xml_pointer, $value, $tandem_xml)
 function pts_find_home($path)
 {
 	// Find home directory if needed
-	if(strpos($path, "~/") !== FALSE)
+	if(strpos($path, "~/") !== false)
 	{
 		$home_path = pts_user_home();
 		$path = str_replace("~/", $home_path, $path);
@@ -308,7 +346,9 @@ function pts_current_user()
 	$pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User");
 
 	if($pts_user == "Default User")
+	{
 		$pts_user = system_user_name();
+	}
 
 	return $pts_user;
 }
@@ -318,10 +358,14 @@ function pts_download_cache()
 	$dir = getenv("PTS_DOWNLOAD_CACHE");
 
 	if(empty($dir))
+	{
 		$dir = pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/");
+	}
 
 	if(substr($dir, -1) != '/')
+	{
 			$dir .= '/';
+	}
 
 	return $dir;
 }

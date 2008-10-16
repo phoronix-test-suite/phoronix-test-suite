@@ -30,23 +30,23 @@ function pts_module_start_process()
 {
 	// Process initially called when PTS starts up
 	$GLOBALS["PTS_MODULES"] = array();
-	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
+	$GLOBALS["PTS_MODULE_CURRENT"] = false;
 	$GLOBALS["PTS_MODULE_VAR_STORE"] = array();
 
-	if(getenv("PTS_IGNORE_MODULES") !== FALSE)
-		return;
+	if(getenv("PTS_IGNORE_MODULES") == false)
+	{
+		// Enable the toggling of the system screensaver by default.
+		// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
+		array_push($GLOBALS["PTS_MODULES"], "toggle_screensaver");
 
-	// Enable the toggling of the system screensaver by default.
-	// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
-	array_push($GLOBALS["PTS_MODULES"], "toggle_screensaver");
+		array_push($GLOBALS["PTS_MODULES"], "update_checker"); // Check for new PTS versions
 
-	array_push($GLOBALS["PTS_MODULES"], "update_checker"); // Check for new PTS versions
-
-	pts_load_modules();
-	pts_module_process("__startup");
-	register_shutdown_function("pts_module_process", "__shutdown");
+		pts_load_modules();
+		pts_module_process("__startup");
+		register_shutdown_function("pts_module_process", "__shutdown");
+	}
 }
-function pts_auto_detect_modules($load_here = FALSE)
+function pts_auto_detect_modules($load_here = false)
 {
 	// Auto detect modules to load
 	$module_variables_file = @file_get_contents(MODULE_DIR . "module-variables.txt");
@@ -61,15 +61,19 @@ function pts_auto_detect_modules($load_here = FALSE)
 			$env_var = trim($module_var[0]);
 			$module = trim($module_var[1]);
 
-			if(!in_array($module, $GLOBALS["PTS_MODULES"]) && ($e = getenv($env_var)) != FALSE && !empty($e))
+			if(!in_array($module, $GLOBALS["PTS_MODULES"]) && ($e = getenv($env_var)) != false && !empty($e))
 			{
 				if(IS_DEBUG_MODE)
+				{
 					echo "Attempting To Add Module: " . $module . "\n";
+				}
 
 				pts_attach_module($module);
 
 				if($load_here)
+				{
 					pts_load_module($module);
+				}
 			}
 		}
 	}
@@ -80,25 +84,35 @@ function pts_load_modules()
 
 	// Check for modules to auto-load from the configuration file
 	if(strlen(($load_modules = pts_read_user_config(P_OPTION_LOAD_MODULES, ""))) > 0)
+	{
 		foreach(explode(",", $load_modules) as $module)
 		{
 			$module_r = explode("=", $module);
 
 			if(count($module_r) == 2)
+			{
 				pts_set_environment_variable(trim($module_r[0]), trim($module_r[1]));
+			}
 			else
+			{
 				pts_attach_module($module);
+			}
 		}
+	}
 
 	// Check for modules to load manually in PTS_MODULES
-	if(($load_modules = getenv("PTS_MODULES")) !== FALSE)
+	if(($load_modules = getenv("PTS_MODULES")) !== false)
+	{
 		foreach(explode(",", $load_modules) as $module)
 		{
 			$module = trim($module);
 
 			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
+			{
 				pts_attach_module($module);
+			}
 		}
+	}
 
 	// Detect modules to load automatically
 	pts_auto_detect_modules();
@@ -106,11 +120,15 @@ function pts_load_modules()
 	// Clean-up modules list
 	array_unique($GLOBALS["PTS_MODULES"]);
 	for($i = 0; $i < count($GLOBALS["PTS_MODULES"]); $i++)
+	{
 		if(!is_file(MODULE_DIR . $GLOBALS["PTS_MODULES"][$i] . ".php"))
+		{
 			unset($GLOBALS["PTS_MODULES"][$i]);
+		}
+	}
 
 	// Reset counter
-	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
+	$GLOBALS["PTS_MODULE_CURRENT"] = false;
 
 	// Load the modules
 	$module_store_list = array();
@@ -119,14 +137,24 @@ function pts_load_modules()
 		pts_load_module($module);
 
 		if(pts_module_type($module) == "PHP")
+		{
 			eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
+		}
 		else
+		{
 			$module_store_vars = array();
+		}
 
 		if(is_array($module_store_vars) && count($module_store_vars) > 0)
+		{
 			foreach($module_store_vars as $store_var)
+			{
 				if(!in_array($store_var, $module_store_list))
+				{
 					array_push($module_store_list, $store_var);
+				}
+			}
+		}
 	}
 
 	// Should any of the module options be saved to the results?
@@ -134,8 +162,10 @@ function pts_load_modules()
 	{
 		$var_value = getenv($var);
 
-		if($var_value != FALSE && !empty($var_value))
+		if($var_value != false && !empty($var_value))
+		{
 			array_push($GLOBALS["PTS_MODULE_VAR_STORE"], $var . "=" . $var_value);
+		}
 	}
 }
 function pts_attach_module($module)
@@ -146,8 +176,7 @@ function pts_attach_module($module)
 function pts_load_module($module)
 {
 	// Load the actual file needed that contains the module
-	if(pts_module_type($module) == "PHP")
-		@include(MODULE_DIR . $module . ".php");
+	return pts_module_type($module) == "PHP" && @include(MODULE_DIR . $module . ".php");
 }
 function pts_module_processes()
 {
@@ -157,9 +186,13 @@ function pts_module_processes()
 function pts_module_call($module, $process)
 {
 	if(pts_module_type($module) == "PHP")
+	{
 		$module_response = pts_php_module_call($module, $process);
+	}
 	else
+	{
 		$module_response = pts_sh_module_call($module, $process);
+	}
 
 	return $module_response;
 }
@@ -167,15 +200,18 @@ function pts_sh_module_call($module, $process)
 {
 	$module_file = MODULE_DIR . $module . ".sh";
 
-	if(is_file($module_file))
-		return trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
+	return is_file($module_file) && trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
 }
 function pts_php_module_call($module, $process)
 {
 	if(method_exists($module, $process))
+	{
 		eval("\$module_val = " . $module . "::" . $process . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+	}
 	else
+	{
 		eval("\$module_val = " . $module . "::" . $process . ";");
+	}
 
 	return $module_val;
 }
@@ -204,7 +240,7 @@ function pts_module_process($process)
 			}
 		}
 	}
-	$GLOBALS["PTS_MODULE_CURRENT"] = FALSE;
+	$GLOBALS["PTS_MODULE_CURRENT"] = false;
 }
 function pts_module_process_extensions($extensions)
 {
@@ -234,11 +270,17 @@ function pts_module_type($name)
 	else
 	{
 		if(is_file(MODULE_DIR . $name . ".php"))
+		{
 			$type = "PHP";
+		}
 		else if(is_file(MODULE_DIR . $name . ".sh"))
+		{
 			$type = "SH";
+		}
 		else
+		{
 			$type = null;
+		}
 
 		$GLOBALS["PTS_VAR_CACHE"]["MODULE_TYPES"][$name] = $type;
 	}

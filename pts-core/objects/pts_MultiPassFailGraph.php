@@ -25,11 +25,11 @@ class pts_MultiPassFailGraph extends pts_CustomGraph
 {
 	public function __construct($Title, $SubTitle, $YTitle)
 	{
-		$this->graph_y_title_hide = TRUE;
+		$this->graph_y_title_hide = true;
 		parent::__construct($Title, $SubTitle, $YTitle, true);
 		$this->graph_type = "MULTI_PASS_FAIL";
 		$this->graph_value_type = "ABSTRACT";
-		$this->graph_hide_identifiers = TRUE;
+		$this->graph_hide_identifiers = true;
 	}
 	protected function render_graph_passfail()
 	{
@@ -48,10 +48,14 @@ class pts_MultiPassFailGraph extends pts_CustomGraph
 		$main_font_size = $this->graph_font_size_bars;
 		$main_greatest_length = $this->find_longest_string($this->graph_identifiers);
 		while(($this->return_ttf_string_width($main_greatest_length, $this->graph_font, $main_font_size) > ($main_width - 8)) || $this->return_ttf_string_height($main_greatest_length, $this->graph_font, $main_font_size) > ($line_height - 4))
+		{
 			$main_font_size -= 0.5;
+		}
 
 		if(($new_size = $this->return_ttf_string_width($main_greatest_length, $this->graph_font, $main_font_size)) < ($main_width - 12))
+		{
 			$main_width = $new_size + 10;
+		}
 
 		$identifiers_total_width = $graph_width - $main_width - 2;
 
@@ -59,7 +63,9 @@ class pts_MultiPassFailGraph extends pts_CustomGraph
 		$identifiers_width = floor($identifiers_total_width / count($headings));
 		$headings_font_size = $this->graph_font_size_bars;
 		while(($this->return_ttf_string_width($this->find_longest_string($headings), $this->graph_font, $headings_font_size) > ($identifiers_width - 2)) || $this->return_ttf_string_height($this->graph_maximum_value, $this->graph_font, $headings_font_size) > ($line_height - 4))
+		{
 			$headings_font_size -= 0.5;
+		}
 
 		for($j = 0; $j < count($this->graph_data[0]); $j++)
 		{
@@ -68,19 +74,27 @@ class pts_MultiPassFailGraph extends pts_CustomGraph
 			for($i = 0; $i < count($headings) && $i < count($results); $i++)
 			{
 				if($results[$i] == "PASS")
+				{
 					$paint_color = $pass_color;
+				}
 				else
+				{
 					$paint_color = $fail_color;
+				}
 
 				$this_bottom_end = $this->graph_top_start + $vertical_border + (($j + 1) * $line_height) + $heading_height + 1;
 
 				if($this_bottom_end >= $this->graph_top_end - $vertical_border)
+				{
 					$this_bottom_end = $this->graph_top_end - $vertical_border - 1;
+				}
 				else if($j == (count($this->graph_data[0]) - 1) && $this_bottom_end < $this->graph_top_end - $vertical_border)
+				{
 					$this_bottom_end = $this->graph_top_end - $vertical_border - 1;
+				}
 
 				$this->draw_rectangle($this->graph_image, $this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this_bottom_end, $paint_color);
-				$this->write_text_center($results[$i], $this->graph_font_size_bars, $this->graph_color_body_text, $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - $identifiers_width, $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2),  $this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2));
+				$this->write_text_center($results[$i], $this->graph_font_size_bars, $this->graph_color_body_text, $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - $identifiers_width, $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2), $this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2));
 			}
 		}
 
@@ -96,7 +110,7 @@ class pts_MultiPassFailGraph extends pts_CustomGraph
 		for($i = 0; $i < count($this->graph_identifiers); $i++)
 		{
 			$this->draw_line($this->graph_image, $this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_color_body_light);
-			$this->write_text_right($this->graph_identifiers[$i], $main_font_size, $this->graph_color_headers, $this->graph_left_start + $horizontal_border + $main_width, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2, $this->graph_left_start + $horizontal_border + $main_width, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2, FALSE);
+			$this->write_text_right($this->graph_identifiers[$i], $main_font_size, $this->graph_color_headers, $this->graph_left_start + $horizontal_border + $main_width, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2, $this->graph_left_start + $horizontal_border + $main_width, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2, false);
 		}
 
 		$this->draw_line($this->graph_image, $this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_color_body_light);

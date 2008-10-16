@@ -27,15 +27,23 @@ function system_virtualized_mode()
 	$virtualized = "";
 	$gpu = graphics_processor_string();
 
-	if(strpos(processor_string(), "QEMU") !== FALSE)
+	if(strpos(processor_string(), "QEMU") !== false)
+	{
 		$virtualized = "QEMU";
-	else if(strpos($gpu, "VMware") !== FALSE)
+	}
+	else if(strpos($gpu, "VMware") !== false)
+	{
 		$virtualized = "VMware";
-	else if(strpos($gpu, "VirtualBox") !== FALSE || strpos(main_system_hardware_string(), "VirtualBox") !== FALSE)
+	}
+	else if(strpos($gpu, "VirtualBox") !== false || strpos(main_system_hardware_string(), "VirtualBox") !== false)
+	{
 		$virtualized = "VirtualBox";
+	}
 
 	if(!empty($virtualized))
+	{
 		$virtualized = "This system was using " . $virtualized . " virtualization.";
+	}
 
 	return $virtualized;
 }
@@ -45,10 +53,14 @@ function filesystem_type()
 	$fs = shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null");
 	
 	if(IS_MACOSX)
+	{
 		$fs = read_osx_system_profiler("SPSerialATADataType", "FileSystem");
+	}
 
 	if(empty($fs) || IS_BSD)
+	{
 		$fs = "Unknown";
+	}
 
 	return $fs;
 }
@@ -69,8 +81,10 @@ function compiler_version()
 	$info = shell_exec("gcc -dumpversion 2>&1");
 	$gcc_info = "N/A";
 
-	if(strpos($info, '.') !== FALSE)
+	if(strpos($info, '.') !== false)
+	{
 		$gcc_info = "GCC " . trim($info);
+	}
 
 	return $gcc_info;
 }
@@ -80,9 +94,13 @@ function kernel_arch()
 	$kernel_arch = trim(shell_exec("uname -m 2>&1"));
 
 	if($kernel_arch == "X86-64")
+	{
 		$kernel_arch = "x86_64";
+	}
 	else if($kernel_arch == "i86pc")
+	{
 		$kernel_arch = "i686";
+	}
 
 	return $kernel_arch;
 }
@@ -153,20 +171,28 @@ function operating_system_release()
 		}
 
 		if($os == "Unknown")
+		{
 			$os = shell_exec("uname -s 2>&1");
+		}
 	}
 	else
+	{
 		$os = $vendor . " " . $version;
+	}
 
 	if(($break_point = strpos($os, ":")) > 0)
+	{
 		$os = substr($os, $break_point + 1);
+	}
 		
 	if(IS_MACOSX)
 	{
 		$os = read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
 		
 		if(($cut_point = strpos($os, "(")) > 0)
+		{
 			$os = substr($os, 0, $cut_point);
+		}
 	}
 
 	$os = trim($os);
@@ -183,7 +209,9 @@ function pts_vendor_identifier()
 		$vendor = operating_system_release();
 
 		if(($spos = strpos($vendor, " ")) > 1)
+		{
 			$vendor = substr($vendor, 0, $spos);
+		}
 	}
 
 	return strtolower($vendor);
@@ -210,12 +238,18 @@ function pts_process_running_bool($process)
 	$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
 
 	if(!empty($running))
+	{
 		$running = true;
+	}
 	else
+	{
 		$running = false;
+	}
 
 	if(IS_MACOSX || IS_SOLARIS)
+	{
 		$running = false;
+	}
 
 	return $running;
 }
@@ -226,16 +260,24 @@ function pts_process_running_string($process_arr)
 	$p_string = "";
 
 	if(!is_array($process_arr))
+	{
 		$process_arr = array($process_arr);
+	}
 
 	foreach($process_arr as $p_name => $p_process)
 	{
 		if(!is_array($p_process))
+		{
 			$p_process = array($p_process);
+		}
 
 		foreach($p_process as $process)
+		{
 			if(pts_process_running_bool($process))
+			{
 				array_push($p, $p_name);
+			}
+		}
 	}
 
 	$p = array_keys(array_flip($p));
@@ -247,17 +289,25 @@ function pts_process_running_string($process_arr)
 			$p_string .= $p[$i];
 
 			if($i != ($p_count - 1) && $p_count > 2)
+			{
 				$p_string .= ",";
+			}
 			$p_string .= " ";
 
 			if($i == ($p_count - 2))
+			{
 				$p_string .= "and ";
+			}
 		}
 
 		if($p_count == 1)
+		{
 			$p_string .= "was";
+		}
 		else
+		{
 			$p_string .= "were";
+		}
 
 		$p_string .= " running on this system. ";
 	}

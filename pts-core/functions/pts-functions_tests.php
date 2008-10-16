@@ -25,12 +25,7 @@
 function pts_test_needs_updated_install($identifier)
 {
 	// Checks if test needs updating
-	$needs_install = FALSE;
-
-	if(!is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml")  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier))
-		$needs_install = TRUE;
-
-	return $needs_install;
+	return !is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml")  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier);
 }
 function pts_test_checksum_installer($identifier)
 {
@@ -38,9 +33,13 @@ function pts_test_checksum_installer($identifier)
 	$md5_checksum = "";
 
 	if(is_file(pts_location_test_resources($identifier) . "install.php"))
+	{
 		$md5_checksum = md5_file(pts_location_test_resources($identifier) . "install.php");
+	}
 	else if(is_file(pts_location_test_resources($identifier) . "install.sh"))
+	{
 		$md5_checksum = md5_file(pts_location_test_resources($identifier) . "install.sh");
+	}
 
 	return $md5_checksum;
 }
@@ -51,7 +50,7 @@ function pts_test_installed_checksum_installer($identifier)
 
 	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
+	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
 		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
 	}
 
@@ -77,7 +76,7 @@ function pts_test_installed_profile_version($identifier)
 
 	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
+	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
 		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
 	}
 
@@ -102,7 +101,7 @@ function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 	// Refresh the pts-install.xml for a test
 	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
 	{
-	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", FALSE);
+	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
 		$xml_writer = new tandem_XmlWriter();
 
 		$test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
@@ -124,24 +123,26 @@ function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 		$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $test_duration, 2);
 
 		file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 }
 function pts_test_name_to_identifier($name)
 {
 	// Convert test name to identifier
-	if(empty($name))
-		return false;
-
 	$identifier = false;
 
-	foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_profile_file)
+	if(!empty($name))
 	{
-	 	$xml_parser = new tandem_XmlReader($test_profile_file);
+		foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_profile_file)
+		{
+		 	$xml_parser = new tandem_XmlReader($test_profile_file);
 
-		if($xml_parser->getXMLValue(P_TEST_TITLE) == $name)
-			$identifier = basename($test_profile_file, ".xml");
+			if($xml_parser->getXMLValue(P_TEST_TITLE) == $name)
+			{
+				$identifier = basename($test_profile_file, ".xml");
+			}
+		}
 	}
 
 	return $identifier;
@@ -149,12 +150,9 @@ function pts_test_name_to_identifier($name)
 function pts_test_identifier_to_name($identifier)
 {
 	// Convert identifier to test name
-	if(empty($identifier))
-		return false;
-
 	$name = false;
 
-	if(is_test($identifier))
+	if(!empty($identifier) && is_test($identifier))
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
@@ -167,7 +165,7 @@ function pts_estimated_download_size($identifier)
 	// Estimate the size of files to be downloaded
 	$estimated_size = 0;
 
-	foreach(pts_contained_tests($identifier, TRUE) as $test)
+	foreach(pts_contained_tests($identifier, true) as $test)
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test));
 		$this_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE); // TODO: The DownloadSize tag has been deprecates as of Phoronix Test Suite 1.4.0
@@ -196,25 +194,35 @@ function pts_estimated_download_size($identifier)
 						$platforms = explode(",", $package_platform[$i]);
 
 						foreach($platforms as $key => $value)
+						{
 							$platforms[$key] = trim($value);
+						}
 
 						if(!in_array(OPERATING_SYSTEM, $platforms))
+						{
 							$file_exempt = true;
+						}
 					}
 					if(!empty($package_architecture[$i]))
 					{
 						$architectures = explode(",", $package_architecture[$i]);
 
 						foreach($architectures as $key => $value)
+						{
 							$architectures[$key] = trim($value);
+						}
 
 						$this_arch = kernel_arch();
 
 						if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
+						{
 							$this_arch = "x86";
+						}
 
 						if(!in_array($this_arch, $architectures))
+						{
 							$file_exempt = true;
+						}
 					}
 
 					if(is_numeric($package_filesize_bytes[$i]) && !$file_exempt)
@@ -233,13 +241,15 @@ function pts_test_estimated_environment_size($identifier)
 	// Estimate the environment size of a test or suite
 	$estimated_size = 0;
 
-	foreach(pts_contained_tests($identifier, TRUE) as $test)
+	foreach(pts_contained_tests($identifier, true) as $test)
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$this_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 
 		if(!empty($this_size) && is_numeric($this_size))
+		{
 			$estimated_size += $this_size;
+		}
 	}
 
 	return $estimated_size;
@@ -259,15 +269,21 @@ function pts_test_architecture_supported($identifier)
 			$archs = explode(",", $archs);
 
 			foreach($archs as $key => $value)
+			{
 				$archs[$key] = trim($value);
+			}
 
 			$this_arch = kernel_arch();
 
 			if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
+			{
 				$this_arch = "x86";
+			}
 
 			if(!in_array($this_arch, $archs))
+			{
 				$supported = false;
+			}
 		}
 	}
 
@@ -291,20 +307,28 @@ function pts_test_platform_supported($identifier)
 				$un_platforms = explode(",", $un_platforms);
 
 				foreach($un_platforms as $key => $value)
+				{
 					$un_platforms[$key] = trim($value);
+				}
 
 				if(in_array(OPERATING_SYSTEM, $un_platforms))
+				{
 					$supported = false;
+				}
 			}
 			if(!empty($platforms))
 			{
 				$platforms = explode(",", $platforms);
 
 				foreach($platforms as $key => $value)
+				{
 					$platforms[$key] = trim($value);
+				}
 
 				if(!in_array(OPERATING_SYSTEM, $platforms))
+				{
 					$supported = false;
+				}
 			}
 		}
 	}
@@ -328,19 +352,29 @@ function pts_test_version_supported($identifier)
 }
 function pts_suite_supported($identifier)
 {
-	$tests = pts_contained_tests($identifier, TRUE);
+	$tests = pts_contained_tests($identifier, true);
 	$supported_size = $original_size = count($tests);
 
 	for($i = 0; $i < $original_size; $i++)
+	{
 		if(!pts_test_supported(@$tests[$i]))
+		{
 			$supported_size--;
+		}
+	}
 
 	if($supported_size == 0)
+	{
 		$return_code = 0;
+	}
 	else if($supported_size != $original_size)
+	{
 		$return_code = 1;
+	}
 	else
+	{
 		$return_code = 2;
+	}
 
 	return $return_code;
 }
@@ -356,7 +390,9 @@ function pts_available_tests_array()
 	asort($tests);
 
 	for($i = 0; $i < count($tests); $i++)
+	{
 		$tests[$i] = basename($tests[$i], ".xml");
+	}
 
 	return $tests;
 }
@@ -380,7 +416,9 @@ function pts_available_suites_array()
 	asort($suites);
 
 	for($i = 0; $i < count($suites); $i++)
+	{
 		$suites[$i] = basename($suites[$i], ".xml");
+	}
 
 	return $suites;
 }
@@ -396,16 +434,24 @@ function pts_test_version_compatible($version_compare = "")
 		$support_begins = preg_replace("/[^0-9]/", "", trim($version_compare[0]));
 
 		if(count($version_compare) == 2)
+		{
 			$support_ends = trim($version_compare[1]);
+		}
 		else
+		{
 			$support_ends = PTS_VERSION;
+		}
 
 		$support_ends = preg_replace("/[^0-9]/", "", $support_ends);
 
 		if($current >= $support_begins && $current <= $support_ends)
+		{
 			$compatible = true;
+		}
 		else
+		{
 			$compatible = false;
+		}
 	}
 
 	return $compatible;	

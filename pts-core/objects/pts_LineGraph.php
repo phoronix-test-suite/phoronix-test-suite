@@ -30,8 +30,8 @@ class pts_LineGraph extends pts_CustomGraph
 	{
 		parent::__construct($Title, $SubTitle, $YTitle);
 		$this->graph_type = "LINE_GRAPH";
-		$this->graph_show_key = TRUE;
-		$this->graph_background_lines = TRUE;
+		$this->graph_show_key = true;
+		$this->graph_background_lines = true;
 	}
 	protected function render_graph_pre_init()
 	{
@@ -63,9 +63,13 @@ class pts_LineGraph extends pts_CustomGraph
 			$this->draw_line($this->graph_image, $px_from_left, $px_from_top_start, $px_from_left, $px_from_top_end, $this->graph_color_notches);
 
 			if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
-				$this->write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2, TRUE);
+			{
+				$this->write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2, true);
+			}
 			else
+			{
 				$this->write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2);
+			}
 		}
 	}
 	protected function renderGraphLines()
@@ -84,10 +88,14 @@ class pts_LineGraph extends pts_CustomGraph
 				$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
 				if($px_from_left > $this->graph_left_end)
+				{
 					$px_from_left = $this->graph_left_end - 1;
+				}
 
 				if($value_plot_top >= $this->graph_top_end)
+				{
 					$value_plot_top = $this->graph_top_end - 1;
+				}
 
 				if($previous_placement != -1 && $previous_offset != -1)
 				{

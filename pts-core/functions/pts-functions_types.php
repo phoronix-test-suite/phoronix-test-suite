@@ -60,19 +60,33 @@ function pts_test_type($identifier)
 		else if(!empty($identifier))
 		{
 			if(is_file(XML_PROFILE_LOCAL_DIR . OS_PREFIX . $identifier . ".xml"))
+			{
 				$test_type = TYPE_OS_LOCAL_TEST;
+			}
 			else if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml"))
+			{
 				$test_type = TYPE_LOCAL_TEST;
+			}
 			else if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml"))
+			{
 				$test_type = TYPE_LOCAL_TEST_SUITE;
+			}
 			else if(is_file(XML_PROFILE_DIR . OS_PREFIX . $identifier . ".xml"))
+			{
 				$test_type = TYPE_OS_TEST;
+			}
 			else if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+			{
 				$test_type = TYPE_TEST;
+			}
 			else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
+			{
 				$test_type = TYPE_TEST_SUITE;
+			}
 			else if(is_file(XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml"))
+			{
 				$test_type = TYPE_BASE_TEST;
+			}
 
 			$GLOBALS["PTS_VAR_CACHE"]["TEST_TYPE"][$identifier] = $test_type;
 		}
@@ -94,9 +108,13 @@ function pts_location_suite($identifier)
 			$type = pts_test_type($identifier);
 
 			if($type == TYPE_TEST_SUITE)
+			{
 				$location = XML_SUITE_DIR . $identifier . ".xml";
+			}
 			else if($type == TYPE_LOCAL_TEST_SUITE)
+			{
 				$location = XML_SUITE_LOCAL_DIR . $identifier . ".xml";
+			}
 		}
 
 		$GLOBALS["PTS_VAR_CACHE"]["SUITE_LOCATION"][$identifier] = $location;
@@ -123,15 +141,25 @@ function pts_location_test($identifier)
 			$type = pts_test_type($identifier);
 
 			if($type == TYPE_TEST)
+			{
 				$location = XML_PROFILE_DIR . $identifier . ".xml";
+			}
 			else if($type == TYPE_OS_TEST)
+			{
 				$location = XML_PROFILE_DIR . OS_PREFIX . $identifier . ".xml";
+			}
 			else if($type == TYPE_LOCAL_TEST)
+			{
 				$location = XML_PROFILE_LOCAL_DIR . $identifier . ".xml";
+			}
 			else if($type == TYPE_OS_LOCAL_TEST)
+			{
 				$location = XML_PROFILE_LOCAL_DIR . OS_PREFIX . $identifier . ".xml";
+			}
 			else if($type == TYPE_BASE_TEST)
+			{
 				$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
+			}
 		}
 
 		$GLOBALS["PTS_VAR_CACHE"]["TEST_LOCATION"][$identifier] = $location;
@@ -158,15 +186,25 @@ function pts_location_test_resources($identifier)
 			$type = pts_test_type($identifier);
 
 			if($type == TYPE_OS_TEST && is_dir(TEST_RESOURCE_DIR . OS_PREFIX . $identifier))
+			{
 				$location = TEST_RESOURCE_DIR . OS_PREFIX . $identifier . "/";
+			}
 			else if(($type == TYPE_TEST || $type == TYPE_OS_TEST) && is_dir(TEST_RESOURCE_DIR . $identifier))
+			{
 				$location = TEST_RESOURCE_DIR . $identifier . "/";
+			}
 			else if($type == TYPE_OS_LOCAL_TEST && is_dir(TEST_RESOURCE_LOCAL_DIR . OS_PREFIX . $identifier))
+			{
 				$location = TEST_RESOURCE_LOCAL_DIR . OS_PREFIX . $identifier . "/";
+			}
 			else if(($type == TYPE_LOCAL_TEST || $type == TYPE_OS_LOCAL_TEST) && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
+			{
 				$location = TEST_RESOURCE_LOCAL_DIR . $identifier . "/";
+			}
 			else if($type == TYPE_BASE_TEST && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
+			{
 				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
+			}
 		}
 
 		$GLOBALS["PTS_VAR_CACHE"]["TEST_RESOURCE_LOCATION"][$identifier] = $location;
@@ -188,9 +226,13 @@ function pts_test_extends_below($object)
 			if(!empty($test_extends))
 			{
 				if(!in_array($test_extends, $extensions) && is_test($test_extends))
+				{
 					array_push($extensions, $test_extends);
+				}
 				else
+				{
 					$test_extends = null;
+				}
 			}
 		}
 	}
@@ -198,7 +240,7 @@ function pts_test_extends_below($object)
 
 	return $extensions;
 }
-function pts_contained_tests($object, $include_extensions = FALSE)
+function pts_contained_tests($object, $include_extensions = false)
 {
 	// Provide an array containing the location(s) of all test(s) for the supplied object name
 	$tests = array();
@@ -209,16 +251,24 @@ function pts_contained_tests($object, $include_extensions = FALSE)
 		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 		foreach($tests_in_suite as $test)
+		{
 			foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+			{
 				array_push($tests, $sub_test);
+			}
+		}
 	}
 	else if(is_test($object)) // Object is a test
 	{
 		if($include_extensions)
 		{
 			foreach(pts_test_extends_below($object) as $extension)
+			{
 				if(!in_array($extension, $tests))
+				{
 					array_push($tests, $extension);
+				}
+			}
 		}
 		array_push($tests, $object);
 	}
@@ -228,8 +278,12 @@ function pts_contained_tests($object, $include_extensions = FALSE)
 		$tests_in_file = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($tests_in_file as $test)
+		{
 			foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+			{
 				array_push($tests, $sub_test);
+			}
+		}
 	}
 	else if(is_file(SAVE_RESULTS_DIR . $object . "/composite.xml")) // Object is a saved results file
 	{
@@ -237,8 +291,12 @@ function pts_contained_tests($object, $include_extensions = FALSE)
 		$tests_in_save = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($tests_in_save as $test)
+		{
 			foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+			{
 				array_push($tests, $sub_test);
+			}
+		}
 	}
 	else if(pts_is_global_id($object)) // Object is a Phoronix Global file
 	{
@@ -246,8 +304,12 @@ function pts_contained_tests($object, $include_extensions = FALSE)
 		$tests_in_global = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($tests_in_global as $test)
+		{
 			foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+			{
 				array_push($tests, $sub_test);
+			}
+		}
 	}
 
 	return array_unique($tests);
@@ -256,13 +318,21 @@ function pts_find_result_file($file, $check_global = true)
 {
 	// PTS Find A Saved File
 	if(is_file($file))
+	{
 		$USE_FILE = $file;
+	}
 	else if(is_file(SAVE_RESULTS_DIR . $file . "/composite.xml"))
+	{
 		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
+	}
 	else if($check_global && pts_is_global_id($file))
+	{
 		$USE_FILE = "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $file;
+	}
 	else
-		$USE_FILE = FALSE;
+	{
+		$USE_FILE = false;
+	}
 
 	return $USE_FILE;
 }

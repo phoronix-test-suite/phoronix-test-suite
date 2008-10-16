@@ -43,11 +43,11 @@ class pts_module_interface
 	// General Functions
 	//
 
-	public static function __startup($obj = NULL)
+	public static function __startup($obj = null)
 	{
 		return;
 	}
-	public static function __shutdown($obj = NULL)
+	public static function __shutdown($obj = null)
 	{
 		return;
 	}
@@ -56,19 +56,19 @@ class pts_module_interface
 	// Installation Functions
 	//
 
-	public static function __pre_install_process($obj = NULL)
+	public static function __pre_install_process($obj = null)
 	{
 		return;
 	}
-	public static function __pre_test_install($obj = NULL)
+	public static function __pre_test_install($obj = null)
 	{
 		return;
 	}
-	public static function __post_test_install($obj = NULL)
+	public static function __post_test_install($obj = null)
 	{
 		return;
 	}
-	public static function __post_install_process($obj = NULL)
+	public static function __post_install_process($obj = null)
 	{
 		return;
 	}
@@ -77,23 +77,23 @@ class pts_module_interface
 	// Run Functions
 	//
 
-	public static function __pre_run_process($obj = NULL)
+	public static function __pre_run_process($obj = null)
 	{
 		return;
 	}
-	public static function __pre_test_run($obj = NULL)
+	public static function __pre_test_run($obj = null)
 	{
 		return;
 	}
-	public static function __interim_test_run($obj = NULL)
+	public static function __interim_test_run($obj = null)
 	{
 		return;
 	}
-	public static function __post_test_run($obj = NULL)
+	public static function __post_test_run($obj = null)
 	{
 		return;
 	}
-	public static function __post_run_process($obj = NULL)
+	public static function __post_run_process($obj = null)
 	{
 		return;
 	}

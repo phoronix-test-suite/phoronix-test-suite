@@ -28,7 +28,9 @@ class pts_module
 		$prefix_dir = PTS_USER_DIR . "module-files/";
 
 		if(!is_dir($prefix_dir))
+		{
 			mkdir($prefix_dir);
+		}
 
 		return $prefix_dir . str_replace("_", "-", self::module_name()) . "/";
 	}
@@ -58,7 +60,9 @@ class pts_module
 			for($i = 0; $i < count($module_options) && $value == ""; $i++)
 			{
 				if($module_options[$i]->get_identifier() == $identifier)
+				{
 					$value = $module_options[$i]->get_default_value();
+				}
 			}
 		}
 
@@ -68,40 +72,54 @@ class pts_module
 	{
 		pts_module_config_init(array(self::module_name() . "__" . $identifier => $value));
 	}
-	public static function save_file($file, $contents = NULL, $append = false)
+	public static function save_file($file, $contents = null, $append = false)
 	{
 		// Saves a file for a module
 
 		$save_base_dir = self::save_dir();
 
 		if(!is_dir($save_base_dir))
+		{
 			mkdir($save_base_dir);
+		}
 
 		if(($extra_dir = dirname($file)) != "." && !is_dir($save_base_dir . $extra_dir))
+		{
 			mkdir($save_base_dir . $extra_dir);
+		}
 
 		if($append)
 		{
 			if(is_file($save_base_dir . $file))
-				if(file_put_contents($save_base_dir . $file, $contents . "\n", FILE_APPEND) != FALSE)
+			{
+				if(file_put_contents($save_base_dir . $file, $contents . "\n", FILE_APPEND) != false)
+				{
 					return $save_base_dir . $file;
+				}
+			}
 		}
 		else
 		{
-			if(file_put_contents($save_base_dir . $file, $contents) != FALSE)
+			if(file_put_contents($save_base_dir . $file, $contents) != false)
+			{
 				return $save_base_dir . $file;
+			}
 		}
 
-		return FALSE;
+		return false;
 	}
 	public static function read_file($file)
 	{
 		$file = self::save_dir() . $file;
 
 		if(is_file($file))
+		{
 			$file = file_get_contents($file);
+		}
 		else
-			$file = FALSE;
+		{
+			$file = false;
+		}
 
 		return $file;		
 	}
@@ -109,8 +127,7 @@ class pts_module
 	{
 		$file = self::save_dir() . $file;
 
-		if(is_file($file))
-			return unlink($file);
+		return is_file($file) && unlink($file);
 	}
 	public static function copy_file($from_file, $to_file)
 	{
@@ -119,16 +136,24 @@ class pts_module
 		$save_base_dir = self::save_dir();
 
 		if(!is_dir($save_base_dir))
+		{
 			mkdir($save_base_dir);
+		}
 
 		if(($extra_dir = dirname($to_file)) != "." && !is_dir($save_base_dir . $extra_dir))
+		{
 			mkdir($save_base_dir . $extra_dir);
+		}
 
 		if(is_file($from_file) && (!is_file($save_base_dir . $to_file) || md5_file($from_file) != md5_file($save_base_dir . $to_file)))
+		{
 			if(copy($from_file, $save_base_dir . $to_file))
+			{
 				return $save_base_dir . $to_file;
+			}
+		}
 
-		return FALSE;
+		return false;
 	}
 	public static function pts_fork_function($function)
 	{
@@ -137,7 +162,9 @@ class pts_module
 	public static function pts_timed_function($time, $function)
 	{
 		if($time <= 5 || $time > 300)
+		{
 			return;
+		}
 
 		if(function_exists("pcntl_fork"))
 		{
@@ -158,22 +185,28 @@ class pts_module
 						eval(self::module_name() . "::" . $function . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 
 						if($time > 0)
+						{
 							sleep($time);
+						}
 						else if($time == -1)
+						{
 							$loop_continue = false;
+						}
 					}
 					exit(0);
 				}
 			}
 		}
 		else
+		{
 			echo pts_string_header("NOTICE: php-pcntl must be installed for the " . self::module_name() . " module.");
+		}
 	}
 	private static function module_name()
 	{
 		$module_name = "unknown";
 
-		if($GLOBALS["PTS_MODULE_CURRENT"] != FALSE)
+		if($GLOBALS["PTS_MODULE_CURRENT"] != false)
 		{
 			$module_name = $GLOBALS["PTS_MODULE_CURRENT"];
 		}
@@ -182,8 +215,12 @@ class pts_module
 			$bt = debug_backtrace();
 
 			for($i = 0; $i < count($bt) && $module_name == "unknown"; $i++)
+			{
 				if($bt[$i]["class"] != "pts_module")
+				{
 					$module_name = $bt[$i]["class"];
+				}
+			}
 		}
 
 		return $module_name;
