@@ -329,7 +329,7 @@ switch($COMMAND)
 			$test_avg_runtime = pts_format_time_string($xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME), "SECONDS", false);
 			$test_times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
 
-			if($test_time_lastrun == "0000-00-00")
+			if($test_time_lastrun == "0000-00-00" || $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME) == $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME))
 			{
 				$test_time_lastrun = "NEVER";
 				$test_times_run = "";
