@@ -53,5 +53,10 @@ function pts_sw_string()
 
 	return $sw_string;
 }
+function pts_system_identifier_string()
+{
+	$components = array(processor_string(), main_system_hardware_string(), operating_system_release(), compiler_version());
+	return base64_encode(implode("__", $components));
+}
 
 ?>

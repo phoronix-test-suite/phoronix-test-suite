@@ -25,7 +25,7 @@
 function pts_test_needs_updated_install($identifier)
 {
 	// Checks if test needs updating
-	return !is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml")  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier);
+	return !is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml")  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != pts_system_identifier_string();
 }
 function pts_test_checksum_installer($identifier)
 {
@@ -55,6 +55,19 @@ function pts_test_installed_checksum_installer($identifier)
 	}
 
 	return $version;
+}
+function pts_test_installed_system_identifier($identifier)
+{
+	// Read installer checksum of installed tests
+	$value = "";
+
+	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
+	{
+	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
+		$value = $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
+	}
+
+	return $value;
 }
 function pts_test_profile_version($identifier)
 {
@@ -90,6 +103,7 @@ function pts_test_generate_install_xml($identifier)
 	$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $identifier);
 	$xml_writer->addXmlObject(P_INSTALL_TEST_VERSION, 1, pts_test_profile_version($identifier));
 	$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, pts_test_checksum_installer($identifier));
+	$xml_writer->addXmlObject(P_INSTALL_TEST_SYSIDENTIFY, 1, pts_system_identifier_string());
 	$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, date("Y-m-d H:i:s"));
 	$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, "0000-00-00 00:00:00");
 	$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, "0");
@@ -117,6 +131,7 @@ function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 		$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $xml_parser->getXMLValue(P_INSTALL_TEST_NAME));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_VERSION, 1, $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM));
+		$xml_writer->addXmlObject(P_INSTALL_TEST_SYSIDENTIFY, 1, $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, date("Y-m-d H:i:s"));
 		$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, ($xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1));

@@ -214,6 +214,7 @@ define("P_MODULE_OPTION_VALUE", "PhoronixTestSuite/Modules/Option/Value"); // Th
 define("P_INSTALL_TEST_NAME", "PhoronixTestSuite/TestInstallation/Environment/Name"); // Name of test
 define("P_INSTALL_TEST_VERSION", "PhoronixTestSuite/TestInstallation/Environment/Version"); // PTS Version of test
 define("P_INSTALL_TEST_CHECKSUM", "PhoronixTestSuite/TestInstallation/Environment/CheckSum"); // MD5 check-sum of executable
+define("P_INSTALL_TEST_SYSIDENTIFY", "PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier"); // String identifying the system
 define("P_INSTALL_TEST_INSTALLTIME", "PhoronixTestSuite/TestInstallation/History/InstallTime"); // Time of test install
 define("P_INSTALL_TEST_LASTRUNTIME", "PhoronixTestSuite/TestInstallation/History/LastRunTime"); // Time the test last run
 define("P_INSTALL_TEST_TIMESRUN", "PhoronixTestSuite/TestInstallation/History/TimesRun"); // Time the test last run
