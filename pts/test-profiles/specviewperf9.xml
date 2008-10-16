@@ -8,7 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>1800</EnvironmentSize>
 		<ProjectURL>http://www.spec.org/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>SPECViewPerf</Title>

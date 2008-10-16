@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.vdrift.net/</ProjectURL>
+		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>vDrift</Title>

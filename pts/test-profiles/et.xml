@@ -9,7 +9,7 @@
 		<EnvironmentSize>275</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.idsoftware.com/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Enemy Territory</Title>

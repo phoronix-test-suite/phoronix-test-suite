@@ -7,7 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<ProjectURL>http://ati.amd.com/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>ATI fgl_glxgears</Title>

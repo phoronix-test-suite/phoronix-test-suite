@@ -8,7 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.12</EnvironmentSize>
 		<ProjectURL>http://www.freedesktop.org/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Render Bench</Title>

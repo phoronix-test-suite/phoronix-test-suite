@@ -9,6 +9,7 @@
 		<EnvironmentSize>746</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.nexuiz.com/</ProjectURL>
+		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Nexuiz</Title>

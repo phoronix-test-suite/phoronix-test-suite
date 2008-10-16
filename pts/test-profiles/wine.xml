@@ -7,6 +7,7 @@
 		<Status>UNVERIFIED</Status>
 		<Maintainer>Stefan Doesinger</Maintainer>
 		<ProjectURL>http://www.winehq.org/</ProjectURL>
+		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Wine Conformance Tests</Title>

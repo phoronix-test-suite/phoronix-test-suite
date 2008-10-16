@@ -8,7 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>5.0</EnvironmentSize>
 		<ProjectURL>http://git.kernel.dk/?p=fio.git;a=summary</ProjectURL>
-		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Flexible IO Tester</Title>

@@ -9,7 +9,7 @@
 		<EnvironmentSize>3.2</EnvironmentSize>
 		<SupportedArchitectures>x86</SupportedArchitectures>
 		<ProjectURL>http://fract.sourceforge.net/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>FRACT</Title>

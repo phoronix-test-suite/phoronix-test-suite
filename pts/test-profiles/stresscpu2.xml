@@ -8,7 +8,7 @@
 		<Maintainer>Andrew Schofield</Maintainer>
 		<EnvironmentSize>2</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>StressCPU2 Stress-Test</Title>
