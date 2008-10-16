@@ -329,13 +329,11 @@ function pts_test_version_supported($identifier)
 function pts_suite_supported($identifier)
 {
 	$tests = pts_contained_tests($identifier, TRUE);
-	$original_size = count($tests);
+	$supported_size = $original_size = count($tests);
 
 	for($i = 0; $i < $original_size; $i++)
-		if(!pts_test_supported($tests[$i]))
-			unset($tests[$i]);
-
-	$supported_size = count($tests);
+		if(!pts_test_supported(@$tests[$i]))
+			$supported_size--;
 
 	if($supported_size == 0)
 		$return_code = 0;
