@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for detecting php binary at /usr/php/bin/php
 - pts-core: Improve OpenSolaris hardware detection with motherboard and processor
 - pts-core: Make micro-timer framework use $PHP_BIN instead of php so that it can run on OpenSolaris
+- pts-core: Fix bug in pts_contained_tests() that caused Phoronix Global IDs to not be detected
 - pts: Update espeak test profile with eSpeak engine 1.39
 - pts: Change run-count for gtkperf test profile from 2000 to 5000
 - pts: Fix compress-* test profiles with the proper 2GB file size
