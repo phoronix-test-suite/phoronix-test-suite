@@ -24,41 +24,55 @@
 function main_system_hardware_string()
 {
 	// Returns the motherboard / system model name or number
+	$info = "";
 	if(IS_MACOSX)
 	{
-		return read_osx_system_profiler("SPHardwareDataType", "ModelName");	
+		$info = read_osx_system_profiler("SPHardwareDataType", "ModelName");	
 	}
-	
-	$vendor = read_system_hal(array("system.hardware.vendor", "system.board.vendor"));
-	$product = read_system_hal(array("system.hardware.product", "system.board.product"));
-	$version = read_system_hal("system.hardware.version");
-
-	if($vendor != "Unknown")
-		$info = $vendor;
-	else
-		$info = "";
-
-	if($product == "Unknown" || empty($product) || (strpos($version, ".") === FALSE && $version != "Unknown"))
+	else if(IS_SOLARIS)
 	{
-		$product = $version;
-	}
+		$manufacturer = read_sun_ddu_dmi_info("MotherBoardInformation,Manufacturer");
+		$product = read_sun_ddu_dmi_info("MotherBoardInformation,Product");
 
-	if(!empty($product) && $product != "Unknown")
-	{
-		$info .= " " . $product;
+		if(count($manufacturer) == 1 && count($product) == 1)
+		{
+			$info = $manufacturer[0] . " " . $product[0];
+		}
 	}
 
 	if(empty($info))
-	{
-		$fw_version = explode(" ", read_system_hal("system.firmware.version"));
+	{	
+		$vendor = read_system_hal(array("system.hardware.vendor", "system.board.vendor"));
+		$product = read_system_hal(array("system.hardware.product", "system.board.product"));
+		$version = read_system_hal("system.hardware.version");
 
-		if(count($fw_version) > 1)
-			$info = $fw_version[0] . " " . $fw_version[1];
-	}
+		if($vendor != "Unknown")
+			$info = $vendor;
+		else
+			$info = "";
 
-	if(empty($info))
-	{
-		$info = read_hal("pci.subsys_vendor");
+		if($product == "Unknown" || empty($product) || (strpos($version, ".") === FALSE && $version != "Unknown"))
+		{
+			$product = $version;
+		}
+
+		if(!empty($product) && $product != "Unknown")
+		{
+			$info .= " " . $product;
+		}
+
+		if(empty($info))
+		{
+			$fw_version = explode(" ", read_system_hal("system.firmware.version"));
+
+			if(count($fw_version) > 1)
+				$info = $fw_version[0] . " " . $fw_version[1];
+		}
+
+		if(empty($info))
+		{
+			$info = read_hal("pci.subsys_vendor");
+		}
 	}
 
 	return pts_clean_information_string($info);
@@ -66,55 +80,6 @@ function main_system_hardware_string()
 function motherboard_chipset_string()
 {
 	// Returns motherboard chipset
-	$info = read_pci(array("RAM memory", "Host bridge"));
-
-	if(count(explode(" ", $info)) == 1)
-	{
-		$bridge = read_pci(array("Bridge", "PCI bridge"));
-
-		if($bridge != "Unknown")
-		{
-			$match = false;
-			$break_words = array("Ethernet", "PCI", "High", "USB");
-
-			for($i = 0; $i < count($break_words) && !$match; $i++)
-			{
-				if(($pos = strpos($bridge, $break_words[$i])) > 0)
-				{
-					$bridge = trim(substr($bridge, 0, $pos));
-					$info = $bridge;
-					$match = true;
-				}
-			}
-		}
-	}
-
-	if(!isset($bridge) || $bridge != "Unknown")
-	{
-		// Attempt to detect Southbridge (if applicable)
-		$southbridge = read_pci(array("ISA bridge", "SATA controller"), FALSE);
-
-		if(($start_cut = strpos($southbridge, "(")) > 0 && ($end_cut = strpos($southbridge, ")", $start_cut + 1)) > 0)
-		{
-			$southbridge_extract = substr($southbridge, $start_cut + 1, $end_cut - $start_cut - 1);
-
-			if(strpos($southbridge_extract, "rev") === FALSE)
-			{
-				$southbridge_extract = explode(" ", $southbridge_extract);
-				$southbridge_clean = $southbridge_extract[0];
-
-				$info .= " + " . $southbridge_clean;
-			}
-		}
-		else if(($start_cut = strpos($southbridge, "SB")) > 0)
-		{
-			$southbridge_extract = substr($southbridge, $start_cut);
-			$southbridge_extract = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
-
-			$info .= " + " . $southbridge_extract;
-		}
-	}
-	
 	if(IS_MACOSX)
 	{
 		$sb_vendor = read_osx_system_profiler("SPSerialATADataType", "Vendor");
@@ -126,6 +91,57 @@ function motherboard_chipset_string()
 		// TODO: Can't find Northbridge
 			
 		$info = $sb_vendor . " " . $sb_product;
+	}
+	else
+	{
+		$info = read_pci(array("RAM memory", "Host bridge"));
+
+		if(count(explode(" ", $info)) == 1)
+		{
+			$bridge = read_pci(array("Bridge", "PCI bridge"));
+
+			if($bridge != "Unknown")
+			{
+				$match = false;
+				$break_words = array("Ethernet", "PCI", "High", "USB");
+
+				for($i = 0; $i < count($break_words) && !$match; $i++)
+				{
+					if(($pos = strpos($bridge, $break_words[$i])) > 0)
+					{
+						$bridge = trim(substr($bridge, 0, $pos));
+						$info = $bridge;
+						$match = true;
+					}
+				}
+			}
+		}
+
+		if(!isset($bridge) || $bridge != "Unknown")
+		{
+			// Attempt to detect Southbridge (if applicable)
+			$southbridge = read_pci(array("ISA bridge", "SATA controller"), FALSE);
+
+			if(($start_cut = strpos($southbridge, "(")) > 0 && ($end_cut = strpos($southbridge, ")", $start_cut + 1)) > 0)
+			{
+				$southbridge_extract = substr($southbridge, $start_cut + 1, $end_cut - $start_cut - 1);
+
+				if(strpos($southbridge_extract, "rev") === FALSE)
+				{
+					$southbridge_extract = explode(" ", $southbridge_extract);
+					$southbridge_clean = $southbridge_extract[0];
+
+					$info .= " + " . $southbridge_clean;
+				}
+			}
+			else if(($start_cut = strpos($southbridge, "SB")) > 0)
+			{
+				$southbridge_extract = substr($southbridge, $start_cut);
+				$southbridge_extract = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
+
+				$info .= " + " . $southbridge_extract;
+			}
+		}
 	}
 
 	return $info;

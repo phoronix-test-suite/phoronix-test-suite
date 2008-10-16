@@ -110,8 +110,18 @@ function processor_string()
 	{
 		if(IS_SOLARIS)
 		{
-			$info = trim(shell_exec("dmesg 2>&1 | grep cpu0"));
-			$info = substr($info, strrpos($info, "cpu0:") + 6);
+			$dmi_cpu = read_sun_ddu_dmi_info("ProcessorName");
+			if(count($dmi_cpu) > 0)
+			{
+				//TODO: Add in support for reading multiple CPUs, similar to the code from above
+				$info = $dmi_cpu[0];
+			}
+			else
+			{
+				$info = trim(shell_exec("dmesg 2>&1 | grep cpu0"));
+				$info = substr($info, strrpos($info, "cpu0:") + 6);
+			}
+
 			$info = append_processor_frequency(pts_clean_information_string($info), 0);
 		}
 		else if(IS_BSD)

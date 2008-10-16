@@ -214,7 +214,7 @@ function pts_process_running_bool($process)
 	else
 		$running = false;
 
-	if(IS_MACOSX)
+	if(IS_MACOSX || IS_SOLARIS)
 		$running = false;
 
 	return $running;
