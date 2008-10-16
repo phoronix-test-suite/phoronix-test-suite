@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Track motherboard, processor, OS, and compiler version when a test is installed, and if any one ends up getting changed, force re-install of that test
 - pts: Update espeak test profile with eSpeak engine 1.39
 - pts: Change run-count for gtkperf test profile from 2000 to 5000
+- pts: Drop etc/ folder full of XML template files
 - pts: Fix compress-* test profiles with the proper 2GB file size
 - pts: OpenSolaris External Dependencies XML was named opensolaris-package.xml when it should be named opensolaris-packages.xml, now fixed
 - pts: Update all test profiles as to whether they support Solaris/OpenSolaris

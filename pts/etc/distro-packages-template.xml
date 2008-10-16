@@ -1,9 +1,0 @@
-<PhoronixTestSuite>
-	<ExternalDependencies>
-		<Package>
-			<GenericName></GenericName>
-			<PackageName></PackageName>
-			<FileCheck></FileCheck>
-		</Package>
-	</ExternalDependencies>
-</PhoronixTestSuite>
