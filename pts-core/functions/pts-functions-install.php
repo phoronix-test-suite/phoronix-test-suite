@@ -586,8 +586,6 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 			define("PTS_EXDEP_FIRST_RUN", 1);
 		}
 
-		$vendor = pts_vendor_identifier();
-
 		if(!pts_package_generic_to_distro_name($INSTALL_OBJ, $dependencies))
 		{
 			$package_string = "";
