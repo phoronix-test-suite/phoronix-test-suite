@@ -229,7 +229,11 @@ if(is_test($TO_RUN))
 	{
 		$USER_ARGS = "";
 		$TEXT_ARGS = "";
-		echo pts_string_header("Test Configuration: " . $test_title);
+
+		if(count($test_options) > 0)
+		{
+			echo pts_string_header("Test Configuration: " . $test_title);
+		}
 
 		for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
 		{
