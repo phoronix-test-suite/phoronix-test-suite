@@ -179,7 +179,7 @@ function pts_promt_user_tags($default_tags = "")
 }
 function pts_add_test_note($note)
 {
-	if(!empty($note))
+	if(!empty($note) && !in_array($note, $GLOBALS["TEST_NOTES_ARRAY"]))
 		array_push($GLOBALS["TEST_NOTES_ARRAY"], $note);
 }
 function pts_generate_test_notes($test_type)
@@ -427,6 +427,32 @@ function pts_save_test_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = n
 	}
 	return $REAL_FILE_NAME;
 }
+function pts_call_test_script($test_identifier, $script_name, $print_string = "", $pass_argument = "", $extra_vars = null)
+{
+	$result = null;
+	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
+
+	if(is_file(($run_file = pts_location_test_resources($test_identifier) . $script_name . ".php")) || is_file(($run_file = pts_location_test_resources($test_identifier) . $script_name . ".sh")))
+	{
+		$file_extension = substr($run_file, (strrpos($run_file, ".") + 1));
+
+		if(!empty($print_string))
+		{
+			echo $print_string;
+		}
+
+		if($file_extension == "php")
+		{
+			$result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
+		}
+		else if($file_extension == "sh")
+		{
+			$result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
+		}
+	}
+
+	return $result;
+}
 function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "")
 {
 	// Do the actual test running process
@@ -532,16 +558,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	// Start
 
 	$time_test_start = time();
-	if(is_file(pts_location_test_resources($test_identifier) . "pre.sh"))
-	{
-		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec("sh " . pts_location_test_resources($test_identifier) . "/pre.sh " . $test_directory, $extra_runtime_variables);
-	}
-	if(is_file(pts_location_test_resources($test_identifier) . "/pre.php"))
-	{
-		echo "\nRunning Pre-Test Scripts...\n";
-		pts_exec(PHP_BIN . " " . pts_location_test_resources($test_identifier) . "/pre.php " . $test_directory, $extra_runtime_variables);
-	}
+	echo pts_call_test_script($test_identifier, "pre", null, $test_directory, $extra_runtime_variables);
 
 	pts_user_message($pre_run_message);
 
@@ -580,15 +597,9 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 				$test_results = "";
 			}
 
-			if(is_file(pts_location_test_resources($test_identifier) . "parse-results.php"))
-			{
-				$test_results = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . pts_location_test_resources($test_identifier) . "parse-results.php \"" . $test_results . "\"", $test_extra_runtime_variables_post);
-			}
-			else if(is_file(pts_location_test_resources($test_identifier) . "parse-results.sh"))
-			{
-				$test_results = pts_exec("cd " .  $test_directory . " && sh " . pts_location_test_resources($test_identifier) . "parse-results.sh \"" . $test_results . "\"", $test_extra_runtime_variables_post);
-			}
-			else if(isset($run_time) && is_numeric($run_time))
+			$test_results = pts_call_test_script($test_identifier, "parse-results", null, $test_results, $test_extra_runtime_variables_post);
+
+			if(empty($test_results) && isset($run_time) && is_numeric($run_time))
 			{
 				$test_results = $run_time;
 			}
@@ -618,14 +629,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 	}
 
-	if(is_file(pts_location_test_resources($test_identifier) . "post.sh"))
-	{
-		pts_exec("cd " .  $test_directory . " && sh " . pts_location_test_resources($test_identifier) . "post.sh " . $test_directory, $extra_runtime_variables);
-	}
-	if(is_file(pts_location_test_resources($test_identifier) . "post.php"))
-	{
-		pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . pts_location_test_resources($test_identifier) . "post.php " . $test_directory, $extra_runtime_variables);
-	}
+	echo pts_call_test_script($test_identifier, "post", "\nRunning Post-Test Scripts...\n", $test_directory, $extra_runtime_variables);
 
 	// End
 	$time_test_end = time();

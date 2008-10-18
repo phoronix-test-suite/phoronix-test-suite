@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts_add_test_note() function for reporting items to list in the test notes of saved results
 - pts-core: Allow test profiles to append a test note to a results file by writing the information to pts-test-note in the test installation directory
 - pts-core: Change directory to the test installation directory before running post.sh / post.php
+- pts-core: Unify running pre/post/parse-results script running with pts_call_test_script()
 - pts: Update espeak test profile with eSpeak engine 1.39
 - pts: Change run-count for gtkperf test profile from 2000 to 5000
 - pts: Drop etc/ folder full of XML template files
