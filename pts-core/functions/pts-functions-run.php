@@ -620,11 +620,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	if(is_file(pts_location_test_resources($test_identifier) . "post.sh"))
 	{
-		pts_exec("sh " . pts_location_test_resources($test_identifier) . "post.sh " . $test_directory, $extra_runtime_variables);
+		pts_exec("cd " .  $test_directory . " && sh " . pts_location_test_resources($test_identifier) . "post.sh " . $test_directory, $extra_runtime_variables);
 	}
 	if(is_file(pts_location_test_resources($test_identifier) . "post.php"))
 	{
-		pts_exec(PHP_BIN . " " . pts_location_test_resources($test_identifier) . "post.php " . $test_directory, $extra_runtime_variables);
+		pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . pts_location_test_resources($test_identifier) . "post.php " . $test_directory, $extra_runtime_variables);
 	}
 
 	// End
