@@ -217,6 +217,9 @@ function pts_extended_init()
 	{
 		define("IS_FIRST_RUN_TODAY", false);
 	}
+
+	// Additional Setup
+	$GLOBALS["TEST_NOTES_ARRAY"] = array();
 }
 function __autoload($to_load)
 {

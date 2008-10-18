@@ -177,6 +177,11 @@ function pts_promt_user_tags($default_tags = "")
 
 	return $tags_input;
 }
+function pts_add_test_note($note)
+{
+	if(!empty($note))
+		array_push($GLOBALS["TEST_NOTES_ARRAY"], $note);
+}
 function pts_generate_test_notes($test_type)
 {
 	$check_processes = array(
@@ -186,26 +191,12 @@ function pts_generate_test_notes($test_type)
 		"BOINC" => array("boinc", "boinc_client")
 		);
 
-	$test_notes = pts_process_running_string($check_processes);
+	pts_add_test_note(pts_process_running_string($check_processes));
 
 	// Power Saving Technologies?
-	$cpu_savings = pts_processor_power_savings_enabled();
-	if(!empty($cpu_savings))
-	{
-		$test_notes .= " \n" . $cpu_savings;
-	}
-
-	$cpu_mode = system_power_mode();
-	if(!empty($cpu_mode))
-	{
-		$test_notes .= " \n" . $cpu_mode;
-	}
-
-	$virtualized = system_virtualized_mode();
-	if(!empty($virtualized))
-	{
-		$test_notes .= " \n" . $virtualized;
-	}
+	pts_add_test_note(pts_processor_power_savings_enabled());
+	pts_add_test_note(system_power_mode());
+	pts_add_test_note(system_virtualized_mode());
 
 	if($test_type == "Graphics" || $test_type == "System")
 	{
@@ -214,15 +205,15 @@ function pts_generate_test_notes($test_type)
 
 		if(!empty($aa_level))
 		{
-			$test_notes .= " \nAntialiasing: $aa_level.";
+			pts_add_test_note(" \nAntialiasing: $aa_level.");
 		}
 		if(!empty($af_level))
 		{
-			$test_notes .= " \nAnisotropic Filtering: $af_level.";
+			pts_add_test_note(" \nAnisotropic Filtering: $af_level.");
 		}
 	}
 
-	return $test_notes;
+	return implode(" \n", $GLOBALS["TEST_NOTES_ARRAY"]);
 }
 function pts_input_string_to_identifier($input)
 {
