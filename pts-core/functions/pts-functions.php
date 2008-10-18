@@ -26,6 +26,7 @@ require_once("pts-core/functions/pts.php");
 require_once("pts-core/functions/pts-init.php");
 
 // Load Main Functions
+require_once("pts-core/objects/pts-generic-classes.php");
 require_once("pts-core/functions/pts-interfaces.php");
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
