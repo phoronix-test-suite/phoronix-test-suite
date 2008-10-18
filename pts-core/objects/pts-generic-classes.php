@@ -21,5 +21,18 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+class pts_test_result
+{
+	var $final_test_result;
+
+	public function __construct($final_result = 0)
+	{
+		$this->final_test_result = $final_result;
+	}
+	public function get_result()
+	{
+		return $this->final_test_result;
+	}
+}
 
 ?>

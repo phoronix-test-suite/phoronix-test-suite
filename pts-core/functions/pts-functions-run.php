@@ -307,9 +307,9 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 		{
 			$test_result = pts_run_test($tests_to_run[$i], $arguments_array[$i], $arguments_description[$i]);
 			$GLOBALS["TEST_IDENTIFIER"] = null;
-			// test_result[0] == the main result
+			$end_result = $test_result->get_result();
 
-			if($save_results && count($test_result) > 0 && ((is_numeric($test_result[0]) && $test_result[0] > 0) || (!is_numeric($test_result[0]) && strlen($test_result[0]) > 2)))
+			if($save_results && count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
 			{
 				pts_record_test_result($tandem_xml, $tests_to_run[$i], $arguments_array[$i], $results_identifier, $test_result, $arguments_description[$i], pts_request_new_id());
 			}
@@ -324,7 +324,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $result, $description, $tandem_id = 128)
 {
 	// Do the actual recording of the test result and other relevant information for the given test
-	$test_result = $result[0];
+	$test_result = $result->get_result();
 
 	if((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2))
 	{
@@ -463,7 +463,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	if(($test_type == "Graphics" && getenv("DISPLAY") == false) || getenv("NO_" . strtoupper($test_type) . "_TESTS") != false)
 	{
-		return array(0);
+		return new pts_test_result();
 	}
 
 	if(empty($times_to_run) || !is_int($times_to_run))
@@ -777,8 +777,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	pts_module_process("__post_test_run");
 	pts_test_refresh_install_xml($test_identifier, ($time_test_end - $time_test_start));
 
-	// 0 = main end result
-	return array($END_RESULT);
+	return new pts_test_result($END_RESULT);
 }
 function pts_global_auto_tags($extra_attr = null)
 {
