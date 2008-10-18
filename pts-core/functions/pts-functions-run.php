@@ -432,22 +432,34 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 	$result = null;
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 
-	if(is_file(($run_file = pts_location_test_resources($test_identifier) . $script_name . ".php")) || is_file(($run_file = pts_location_test_resources($test_identifier) . $script_name . ".sh")))
+	foreach(pts_contained_tests($test_identifier, true) as $this_test)
 	{
-		$file_extension = substr($run_file, (strrpos($run_file, ".") + 1));
+		if(is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".php")) || is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".sh")))
+		{
+			$file_extension = substr($run_file, (strrpos($run_file, ".") + 1));
 
-		if(!empty($print_string))
-		{
-			echo $print_string;
-		}
+			if(!empty($print_string))
+			{
+				echo $print_string;
+			}
 
-		if($file_extension == "php")
-		{
-			$result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
-		}
-		else if($file_extension == "sh")
-		{
-			$result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
+			if($file_extension == "php")
+			{
+				$this_result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
+			}
+			else if($file_extension == "sh")
+			{
+				$this_result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
+			}
+			else
+			{
+				$this_result = null;
+			}
+
+			if(trim($this_result) != "")
+			{
+				$result = $this_result;
+			}
 		}
 	}
 
@@ -558,7 +570,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	// Start
 
 	$time_test_start = time();
-	echo pts_call_test_script($test_identifier, "pre", null, $test_directory, $extra_runtime_variables);
+	echo pts_call_test_script($test_identifier, "pre", "\nRunning Pre-Test Scripts...\n", $test_directory, $extra_runtime_variables);
 
 	pts_user_message($pre_run_message);
 

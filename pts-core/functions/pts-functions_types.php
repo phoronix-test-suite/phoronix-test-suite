@@ -238,7 +238,7 @@ function pts_test_extends_below($object)
 	}
 	while(!empty($test_extends));
 
-	return $extensions;
+	return array_reverse($extensions);
 }
 function pts_contained_tests($object, $include_extensions = false)
 {
