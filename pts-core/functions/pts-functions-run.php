@@ -630,6 +630,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	// End
 	$time_test_end = time();
 
+	if(is_file($test_directory . "/pts-test-note"))
+	{
+		pts_add_test_note(trim(@file_get_contents($test_directory . "/pts-test-note")));
+		unlink($test_directory . "/pts-test-note");
+	}
 	if(empty($result_scale) && is_file($test_directory . "pts-results-scale"))
 	{
 			$result_scale = trim(@file_get_contents($test_directory . "pts-results-scale"));
