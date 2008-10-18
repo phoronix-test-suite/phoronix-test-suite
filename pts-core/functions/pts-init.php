@@ -155,41 +155,37 @@ function pts_extended_init()
 	}
 
 	// OpenGL / graphics detection
+	$graphics_detection = array("NVIDIA", array("ATI", "fglrx"), "Mesa");
 	$opengl_driver = opengl_version();
+	$found_gpu_match = false;
 
-	if(strpos($opengl_driver, "NVIDIA") !== false)
+	foreach($graphics_detection as $gpu_check)
 	{
-		define("IS_NVIDIA_GRAPHICS", true);
-	}
-	else if(strpos($opengl_driver, "fglrx") !== false)
-	{
-		define("IS_ATI_GRAPHICS", true);
-	}
-	else if(strpos($opengl_driver, "Mesa") !== false)
-	{
-		define("IS_MESA_GRAPHICS", true);
-	}
-	else
-	{
-		define("IS_UNKNOWN_GRAPHICS", true);
+		if(!is_array($gpu_check))
+		{
+			$gpu_check = array($gpu_check);
+		}
+
+		$is_this = false;
+		$gpu_title = $gpu_check[0];
+
+		for($i = 0; $i < count($gpu_check) && !$is_this; $i++)
+		{
+			if(stripos($opengl_driver, $gpu_check[$i]) !== false) // Check for GPU
+			{
+				define("IS_" . strtoupper($gpu_title) . "_GRAPHICS", true);
+				$is_this = true;
+				$found_gpu_match = true;
+			}
+		}
+
+		if(!$is_this)
+		{
+			define("IS_" . strtoupper($gpu_title) . "_GRAPHICS", false);
+		}
 	}
 
-	if(!defined("IS_NVIDIA_GRAPHICS"))
-	{
-		define("IS_NVIDIA_GRAPHICS", false);
-	}
-	if(!defined("IS_ATI_GRAPHICS"))
-	{
-		define("IS_ATI_GRAPHICS", false);
-	}
-	if(!defined("IS_MESA_GRAPHICS"))
-	{
-		define("IS_MESA_GRAPHICS", false);
-	}
-	if(!defined("IS_UNKNOWN_GRAPHICS"))
-	{
-		define("IS_UNKNOWN_GRAPHICS", false);
-	}
+	define("IS_UNKNOWN_GRAPHICS", ($found_gpu_match == false));
 
 	// Check for batch mode
 	if(getenv("PTS_BATCH_MODE") != false)
