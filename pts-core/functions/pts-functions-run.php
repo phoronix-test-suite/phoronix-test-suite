@@ -346,6 +346,7 @@ function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $r
 			else if(is_file(TEST_ENV_DIR . $test . "/pts-test-description"))
 			{
 				$description = @file_get_contents(TEST_ENV_DIR . $test . "/pts-test-description");
+				unlink(TEST_ENV_DIR . $test . "/pts-results-description");
 			}
 			else
 			{
@@ -355,10 +356,12 @@ function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $r
 		if(empty($test_version) && is_file(TEST_ENV_DIR . $test . "/pts-test-version"))
 		{
 			$test_version = @file_get_contents(TEST_ENV_DIR . $test . "/pts-test-version");
+			unlink(TEST_ENV_DIR . $test . "/pts-test-version");
 		}
 		if(empty($result_scale) && is_file(TEST_ENV_DIR . $test . "/pts-results-scale"))
 		{
 			$result_scale = trim(@file_get_contents(TEST_ENV_DIR . $test . "/pts-results-scale"));
+			unlink(TEST_ENV_DIR . $test . "/pts-results-scale");
 		}
 		if(empty($result_format))
 		{

@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Unify pts_test_generate_install_xml() and pts_test_refresh_install_xml() into pts_test_refresh_install_xml()
 - pts-core: Don't report "Test Configuration" header for tests where there are no configuration options
 - pts-core: Add and implement pts_test_result() class
+- pts-core: Delete pts-results-description, pts-test-version, and pts-results-scale after reading them
 - pts: Update espeak test profile with eSpeak engine 1.39
 - pts: Change run-count for gtkperf test profile from 2000 to 5000
 - pts: Drop etc/ folder full of XML template files
