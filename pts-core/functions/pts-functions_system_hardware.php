@@ -27,7 +27,7 @@ function main_system_hardware_string()
 	$info = "";
 	if(IS_MACOSX)
 	{
-		$info = read_osx_system_profiler("SPHardwareDataType", "ModelName");	
+		$info = read_osx_system_profiler("SPHardwareDataType", "ModelName");
 	}
 	else if(IS_SOLARIS)
 	{
@@ -156,126 +156,140 @@ function motherboard_chipset_string()
 }
 function system_hard_disks()
 {
-	$dmesg_ata = shell_exec("dmesg 2>&1 | grep ATA");
-	$dmesg_sectors = shell_exec("dmesg 2>&1 | grep \"hardware sectors\"");
 	$disks = array();
-	$disks_identifiers = array();
-	$disks_capacities = array();
-
-	do
+	if(IS_MACOSX)
 	{
-		// Calculate disk names
-		$search_disk_strings = array("ATA-6", "ATA-7", "ATA-8");
-		$start_point = -1;
+		// TODO: Support reading non-SATA drives and more than one drive
+		$capacity = read_osx_system_profiler("SPSerialATADataType", "Capacity");
+		$model = read_osx_system_profiler("SPSerialATADataType", "Model");
 
-		for($i = 0; $i < count($search_disk_strings) && $start_point == -1; $i++)
+		if(!empty($capacity) && !empty($model))
 		{
-			if(($tmp_pointer = strpos($dmesg_ata, $search_disk_strings[$i])) > 0)
-			{
-				$start_point = $tmp_pointer + strlen($search_disk_strings[$i]) + 1;
-			}
+			$disks = array($capacity . " " . $model);
 		}
+	}
+	else
+	{
+		$dmesg_ata = shell_exec("dmesg 2>&1 | grep ATA");
+		$dmesg_sectors = shell_exec("dmesg 2>&1 | grep \"hardware sectors\"");
+		$disks_identifiers = array();
+		$disks_capacities = array();
 
-		if($start_point != -1)
+		do
 		{
-			$dmesg_ata = substr($dmesg_ata, $start_point);
-			$dmesg_line = substr($dmesg_ata, 0, strpos($dmesg_ata, "\n"));
+			// Calculate disk names
+			$search_disk_strings = array("ATA-6", "ATA-7", "ATA-8");
+			$start_point = -1;
 
-			$cut_points = array(",");
-			$cut_point_used = false;
-			for($i = 0; $i < count($cut_points) && $cut_point_used == false; $i++)
+			for($i = 0; $i < count($search_disk_strings) && $start_point == -1; $i++)
 			{
-				if(($tmp_pointer = strpos($dmesg_line, $cut_points[$i])) > 0)
+				if(($tmp_pointer = strpos($dmesg_ata, $search_disk_strings[$i])) > 0)
 				{
-					$dmesg_line = substr($dmesg_line, 0, $tmp_pointer);
+					$start_point = $tmp_pointer + strlen($search_disk_strings[$i]) + 1;
 				}
 			}
 
-			array_push($disks, trim($dmesg_line));
-		}
-	}
-	while($start_point != -1);
-
-	foreach(explode("\n", $dmesg_sectors) as $sector_line)
-	{
-		// Calculate disk sizes
-		if(($start_bracket = strrpos($sector_line, "[")) > 0 && ($end_bracket = strrpos($sector_line, "]")) > $start_bracket)
-		{
-			$identifier = substr($sector_line, $start_bracket + 1, ($end_bracket - $start_bracket - 1));
-
-			if(count(glob("/dev/" . $identifier)) == 1 && !in_array($identifier, $disks_identifiers))
+			if($start_point != -1)
 			{
-				// Disk is still present on system
-				if(($start_size = strrpos($sector_line, "(")) > 0 && ($end_size = strrpos($sector_line, ")")) > $start_size)
+				$dmesg_ata = substr($dmesg_ata, $start_point);
+				$dmesg_line = substr($dmesg_ata, 0, strpos($dmesg_ata, "\n"));
+
+				$cut_points = array(",");
+				$cut_point_used = false;
+				for($i = 0; $i < count($cut_points) && $cut_point_used == false; $i++)
 				{
-					$disk_r = explode(" ", substr($sector_line, $start_size + 1, ($end_size - $start_size - 1)));
-
-					if(is_numeric($disk_r[0]))
+					if(($tmp_pointer = strpos($dmesg_line, $cut_points[$i])) > 0)
 					{
-						$disk_size = $disk_r[0];
-
-						if($disk_r[1] == "MB")
-						{
-							$disk_size /= 1024;
-						}
-
-						if($disk_size > 10 && $disk_size % 10 != 0)
-						{
-							$disk_size *= 1.01;
-							$mod = $disk_size % 10;
-							$disk_size += (10 - $mod);
-
-							if($disk_size % 100 == 10)
-							{
-								$disk_size -= 10;
-							}
-							if($disk_size % 100 == 90)
-							{
-								$disk_size += 10;
-							}
-						}
-
-						$disk_size = pts_trim_double($disk_size, 0);
-						array_push($disks_capacities, $disk_size);
+						$dmesg_line = substr($dmesg_line, 0, $tmp_pointer);
 					}
 				}
-				array_push($disks_identifiers, $identifier);
+
+				array_push($disks, trim($dmesg_line));
 			}
 		}
-	}
+		while($start_point != -1);
 
-	$disks_formatted = array();
-	for($i = 0; $i < count($disks) && $i < count($disks_capacities); $i++)
-	{
-		array_push($disks_formatted, $disks_capacities[$i] . "GB " . $disks[$i]);
-	}
-
-	$disks = array();
-	for($i = 0; $i < count($disks_formatted); $i++)
-	{
-		if(!empty($disks_formatted[$i]))
+		foreach(explode("\n", $dmesg_sectors) as $sector_line)
 		{
-			$times_found = 1;
-
-			for($j = ($i + 1); $j < count($disks_formatted); $j++)
+			// Calculate disk sizes
+			if(($start_bracket = strrpos($sector_line, "[")) > 0 && ($end_bracket = strrpos($sector_line, "]")) > $start_bracket)
 			{
-				if($disks_formatted[$i] == $disks_formatted[$j])
+				$identifier = substr($sector_line, $start_bracket + 1, ($end_bracket - $start_bracket - 1));
+
+				if(count(glob("/dev/" . $identifier)) == 1 && !in_array($identifier, $disks_identifiers))
 				{
-					$times_found++;
-					$disks_formatted[$j] = "";
+					// Disk is still present on system
+					if(($start_size = strrpos($sector_line, "(")) > 0 && ($end_size = strrpos($sector_line, ")")) > $start_size)
+					{
+						$disk_r = explode(" ", substr($sector_line, $start_size + 1, ($end_size - $start_size - 1)));
+
+						if(is_numeric($disk_r[0]))
+						{
+							$disk_size = $disk_r[0];
+
+							if($disk_r[1] == "MB")
+							{
+								$disk_size /= 1024;
+							}
+
+							if($disk_size > 10 && $disk_size % 10 != 0)
+							{
+								$disk_size *= 1.01;
+								$mod = $disk_size % 10;
+								$disk_size += (10 - $mod);
+
+								if($disk_size % 100 == 10)
+								{
+									$disk_size -= 10;
+								}
+								if($disk_size % 100 == 90)
+								{
+									$disk_size += 10;
+								}
+							}
+
+							$disk_size = pts_trim_double($disk_size, 0);
+							array_push($disks_capacities, $disk_size);
+						}
+					}
+					array_push($disks_identifiers, $identifier);
 				}
 			}
+		}
 
-			if($times_found > 1)
-			{
-				$disk = $times_found . " x " . $disks_formatted[$i];
-			}
-			else
-			{
-				$disk = $disks_formatted[$i];
-			}
+		$disks_formatted = array();
+		for($i = 0; $i < count($disks) && $i < count($disks_capacities); $i++)
+		{
+			array_push($disks_formatted, $disks_capacities[$i] . "GB " . $disks[$i]);
+		}
 
-			array_push($disks, $disk);
+		$disks = array();
+		for($i = 0; $i < count($disks_formatted); $i++)
+		{
+			if(!empty($disks_formatted[$i]))
+			{
+				$times_found = 1;
+
+				for($j = ($i + 1); $j < count($disks_formatted); $j++)
+				{
+					if($disks_formatted[$i] == $disks_formatted[$j])
+					{
+						$times_found++;
+						$disks_formatted[$j] = "";
+					}
+				}
+
+				if($times_found > 1)
+				{
+					$disk = $times_found . " x " . $disks_formatted[$i];
+				}
+				else
+				{
+					$disk = $disks_formatted[$i];
+				}
+
+				array_push($disks, $disk);
+			}
 		}
 	}
 
