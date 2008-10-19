@@ -402,7 +402,7 @@ function system_power_mode()
 
 	if($power_state == "off-line")
 	{
-		$return_status = "This computer was running on battery power.";
+		$return_status = "This computer was running on battery power";
 	}
 
 	return $return_status;

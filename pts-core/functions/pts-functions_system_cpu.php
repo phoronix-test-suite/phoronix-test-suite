@@ -227,15 +227,15 @@ function pts_processor_power_savings_enabled()
 
 			if(strpos($cpu, "AMD") !== false)
 			{
-				$return_string = "AMD Cool n Quiet was enabled.";
+				$return_string = "AMD Cool n Quiet was enabled";
 			}
 			else if(strpos($cpu, "Intel") !== false)
 			{
-				$return_string = "Intel SpeedStep Technology was enabled.";
+				$return_string = "Intel SpeedStep Technology was enabled";
 			}
 			else
 			{
-				$return_string = "The CPU was in a power-savings mode.";
+				$return_string = "The CPU was in a power-savings mode";
 			}
 		}
 	}

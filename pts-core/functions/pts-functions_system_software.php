@@ -42,7 +42,7 @@ function system_virtualized_mode()
 
 	if(!empty($virtualized))
 	{
-		$virtualized = "This system was using " . $virtualized . " virtualization.";
+		$virtualized = "This system was using " . $virtualized . " virtualization";
 	}
 
 	return $virtualized;
@@ -309,7 +309,7 @@ function pts_process_running_string($process_arr)
 			$p_string .= "were";
 		}
 
-		$p_string .= " running on this system. ";
+		$p_string .= " running on this system";
 	}
 
 	return $p_string;

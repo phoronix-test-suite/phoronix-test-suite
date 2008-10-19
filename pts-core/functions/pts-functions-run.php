@@ -205,15 +205,15 @@ function pts_generate_test_notes($test_type)
 
 		if(!empty($aa_level))
 		{
-			pts_add_test_note(" \nAntialiasing: $aa_level.");
+			pts_add_test_note("Antialiasing: $aa_level");
 		}
 		if(!empty($af_level))
 		{
-			pts_add_test_note(" \nAnisotropic Filtering: $af_level.");
+			pts_add_test_note("Anisotropic Filtering: $af_level");
 		}
 	}
 
-	return implode(" \n", $GLOBALS["TEST_NOTES_ARRAY"]);
+	return implode(". \n", $GLOBALS["TEST_NOTES_ARRAY"]);
 }
 function pts_input_string_to_identifier($input)
 {
