@@ -21,6 +21,7 @@ Phoronix Test Suite (Git)
 - pts-core: Move ExternalDependencies tag location from TestInformation to Test Profile block (This breaks compatibility with earlier test profiles!)
 - pts-core: Start reordering and optimizing pts-functions-run.php code
 - pts-core: Allow select objects to be exposed to PTS modules when calling them, by passing them as the second argument in pts_module_call()
+- pts-core: When removing a saved result, remove the SVG files too (just not PNG)
 - pts: Update espeak test profile with eSpeak engine 1.39
 - pts: Change run-count for gtkperf test profile from 2000 to 5000
 - pts: Drop etc/ folder full of XML template files

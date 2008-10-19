@@ -34,6 +34,10 @@ function pts_remove_saved_result($identifier)
 		{
 			@unlink($remove_file);
 		}
+		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/result-graphs/*.svg") as $remove_file)
+		{
+			@unlink($remove_file);
+		}
 
 		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/test-*.xml") as $remove_file)
 		{
