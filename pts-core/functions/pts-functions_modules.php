@@ -286,5 +286,9 @@ function pts_module_type($name)
 
 	return $type;
 }
+function pts_attached_modules()
+{
+	return $GLOBALS["PTS_MODULES"];
+}
 
 ?>

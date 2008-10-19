@@ -255,17 +255,7 @@ function pts_estimated_download_size($identifier)
 							$architectures[$key] = trim($value);
 						}
 
-						$this_arch = kernel_arch();
-
-						if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
-						{
-							$this_arch = "x86";
-						}
-
-						if(!in_array($this_arch, $architectures))
-						{
-							$file_exempt = true;
-						}
+						$file_exempt = !pts_cpu_arch_compatible($architectures);
 					}
 
 					if(is_numeric($package_filesize_bytes[$i]) && !$file_exempt)
@@ -316,17 +306,7 @@ function pts_test_architecture_supported($identifier)
 				$archs[$key] = trim($value);
 			}
 
-			$this_arch = kernel_arch();
-
-			if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
-			{
-				$this_arch = "x86";
-			}
-
-			if(!in_array($this_arch, $archs))
-			{
-				$supported = false;
-			}
+			$supported = pts_cpu_arch_compatible($archs);
 		}
 	}
 
@@ -499,5 +479,71 @@ function pts_test_version_compatible($version_compare = "")
 
 	return $compatible;	
 }
+function pts_call_test_script($test_identifier, $script_name, $print_string = "", $pass_argument = "", $extra_vars = null, $use_ctp = true)
+{
+	$result = null;
+	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 
+	if($use_ctp)
+	{
+		$tests_r = pts_contained_tests($test_identifier, true);
+	}
+	else
+	{
+		$tests_r = array($test_identifier);
+	}
+
+	foreach($tests_r as $this_test)
+	{
+		if(is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".php")) || is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".sh")))
+		{
+			$file_extension = substr($run_file, (strrpos($run_file, ".") + 1));
+
+			if(!empty($print_string))
+			{
+				echo $print_string;
+			}
+
+			if($file_extension == "php")
+			{
+				$this_result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
+			}
+			else if($file_extension == "sh")
+			{
+				$this_result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
+			}
+			else
+			{
+				$this_result = null;
+			}
+
+			if(trim($this_result) != "")
+			{
+				$result = $this_result;
+			}
+		}
+	}
+
+	return $result;
+}
+function pts_cpu_arch_compatible($check_against)
+{
+	$compatible = true;
+	$this_arch = kernel_arch();
+
+	if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
+	{
+		$this_arch = "x86";
+	}
+	if(!is_array($check_against))
+	{
+		$check_against = array($check_against);
+	}
+	if(!in_array($this_arch, $check_against))
+	{
+		$compatible = false;
+	}
+
+	return $compatible;
+}
 ?>

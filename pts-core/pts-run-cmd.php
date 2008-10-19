@@ -278,7 +278,7 @@ switch($COMMAND)
 		{
 		 	$module = basename($module_file, ".php");
 
-			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
+			if(!in_array($module, pts_attached_modules()))
 			{
 				include_once($module_file);
 			}
@@ -547,13 +547,13 @@ switch($COMMAND)
 
 			if(is_file(MODULE_DIR . $module . ".php"))
 			{
-				if(!in_array($module, $GLOBALS["PTS_MODULES"]) && !class_exists($module))
+				if(!in_array($module, pts_attached_modules()) && !class_exists($module))
 				{
 					include_once(MODULE_DIR . $module . ".php");
 				}
 			}
 
-			if(in_array($module, $GLOBALS["PTS_MODULES"]))
+			if(in_array($module, pts_attached_modules()))
 			{
 				$pre_message = "** This module is currently loaded. **\n";
 			}
@@ -589,7 +589,7 @@ switch($COMMAND)
 		 	$module = $ARG_1;
 			$pre_message = "";
 
-			if(!in_array($module, $GLOBALS["PTS_MODULES"]) && !class_exists($module))
+			if(!in_array($module, pts_attached_modules()) && !class_exists($module))
 			{
 				include(MODULE_DIR . $module . ".php");
 			}

@@ -366,44 +366,6 @@ function pts_save_test_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = n
 	}
 	return $REAL_FILE_NAME;
 }
-function pts_call_test_script($test_identifier, $script_name, $print_string = "", $pass_argument = "", $extra_vars = null)
-{
-	$result = null;
-	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
-
-	foreach(pts_contained_tests($test_identifier, true) as $this_test)
-	{
-		if(is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".php")) || is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".sh")))
-		{
-			$file_extension = substr($run_file, (strrpos($run_file, ".") + 1));
-
-			if(!empty($print_string))
-			{
-				echo $print_string;
-			}
-
-			if($file_extension == "php")
-			{
-				$this_result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
-			}
-			else if($file_extension == "sh")
-			{
-				$this_result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
-			}
-			else
-			{
-				$this_result = null;
-			}
-
-			if(trim($this_result) != "")
-			{
-				$result = $this_result;
-			}
-		}
-	}
-
-	return $result;
-}
 function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "")
 {
 	// Do the actual test running process
@@ -719,7 +681,7 @@ function pts_global_auto_tags($extra_attr = null)
 		array_push($tags_array, "NVIDIA");
 	}
 
-	if(kernel_arch() == "x86_64")
+	if(kernel_arch() == "x86_64" && IS_LINUX)
 	{
 		array_push($tags_array, "64-bit Linux");
 	}

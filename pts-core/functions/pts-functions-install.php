@@ -123,17 +123,7 @@ function pts_download_test_files($identifier)
 					$architectures[$key] = trim($value);
 				}
 
-				$this_arch = kernel_arch();
-
-				if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
-				{
-					$this_arch = "x86";
-				}
-
-				if(!in_array($this_arch, $architectures))
-				{
-					$file_exempt = true;
-				}
+				$file_exempt = !pts_cpu_arch_compatible($architectures);
 			}
 
 			if(!is_file($download_location . $package_filename[$i]) && !$file_exempt)
@@ -408,15 +398,7 @@ function pts_install_test($identifier)
 	else
 	{
 		// TODO: clean up validate-install and put in pts_validate_test_install
-		$custom_validated_output = "";
-		if(is_file(pts_location_test_resources($identifier) . "validate-install.sh"))
-		{
-			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . pts_location_test_resources($identifier) . "validate-install.sh " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier));
-		}
-		else if(is_file(pts_location_test_resources($identifier) . "/validate-install.php"))
-		{
-			$custom_validated_output = pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "validate-install.php " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier));
-		}
+		$custom_validated_output = pts_call_test_script($identifier, "validate-install", "\nValidating Installation...\n", TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
 
 		if(!empty($custom_validated_output))
 		{
@@ -488,14 +470,7 @@ function pts_install_test($identifier)
 
 					pts_user_message($pre_install_message);
 
-					if(is_file(pts_location_test_resources($identifier) . "install.sh"))
-					{
-						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && sh " . pts_location_test_resources($identifier) . "install.sh " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier)) . "\n";
-					}
-					else if(is_file(pts_location_test_resources($identifier) . "/install.php"))
-					{
-						echo pts_exec("cd " .  TEST_ENV_DIR . $identifier . "/ && " . PHP_BIN . " " . pts_location_test_resources($identifier) . "install.php " . TEST_ENV_DIR . $identifier, pts_run_additional_vars($identifier)) . "\n";
-					}
+					echo pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
 
 					pts_user_message($post_install_message);
 
