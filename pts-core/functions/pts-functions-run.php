@@ -641,7 +641,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 	}
 
-	echo pts_call_test_script($test_identifier, "post", "\nRunning Post-Test Scripts...\n", $test_directory, $extra_runtime_variables);
+	echo pts_call_test_script($test_identifier, "post", null, $test_directory, $extra_runtime_variables);
 
 	// End
 	$time_test_end = time();

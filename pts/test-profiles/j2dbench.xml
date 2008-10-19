@@ -7,11 +7,11 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Tao Zhang</Maintainer>
 		<ProjectURL>http://www.java.net/</ProjectURL>
+		<Extends>java-environment</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>Java 2D Microbenchmark</Title>
 		<Version>1.0</Version>
-		<ExternalDependencies>java</ExternalDependencies>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Units Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

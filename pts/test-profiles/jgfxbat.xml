@@ -7,12 +7,12 @@
 		<Status>VERIFIED</Status>
 		<EnvironmentSize>0.4</EnvironmentSize>
 		<Maintainer>Tao Zhang</Maintainer>
+		<Extends>java-environment</Extends>
 		<ProjectURL>http://www.java.net/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>Java Graphics Basic Acceptance Test</Title>
 		<Version>2.0</Version>
-		<ExternalDependencies>java</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultFormat>PASS_FAIL</ResultFormat>
 		<Description>This test runs a series of automated performance/quality sub-tests that exercise the OpenGL-based Java 2D pipeline in order to verify the quality of OpenGL drivers.</Description>
