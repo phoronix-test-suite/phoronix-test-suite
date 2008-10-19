@@ -68,17 +68,16 @@ class graphics_event_checker extends pts_module_interface
 		if(self::$start_vertical_sync == TRUE)
 			echo "\nYour video driver is forcing vertical sync to be enabled. This will limit the system's frame-rate performance potential in any graphical tests!\n";
 	}
-	public static function __interim_test_run()
+	public static function __interim_test_run($pts_test_result)
 	{
-		self::check_video_events();
+		self::check_video_events($pts_test_result);
 	}
-	public static function __post_test_run()
+	public static function __post_test_run($pts_test_result)
 	{
-		self::check_video_events();
+		self::check_video_events($pts_test_result);
 	}
 	public static function __shutdown()
 	{
-		self::check_video_events();
 
 		if(self::$error_count > 0)
 		{
@@ -90,7 +89,7 @@ class graphics_event_checker extends pts_module_interface
 		}
 	}
 
-	private static function check_video_events()
+	private static function check_video_events($pts_test_result = "")
 	{
 		// Check for video resolution changes
 		self::check_video_resolution();
@@ -99,10 +98,10 @@ class graphics_event_checker extends pts_module_interface
 		{
 			$current_error_position = self::nvidia_gpu_error_count();
 
-			if($current_error_position > self::$error_pointer && !empty($GLOBALS["TEST_IDENTIFIER"]))
+			if($current_error_position > self::$error_pointer && is_object($pts_test_result))
 			{
 				// GPU Error(s) Happened During The Test
-				$this_test = $GLOBALS["TEST_IDENTIFIER"];
+				$this_test = $pts_test_result->get_attribute("TEST_IDENTIFIER");
 				$this_error_count = $current_error_position - self::$error_pointer;
 
 				if(isset(self::$error_analysis[$this_test]))

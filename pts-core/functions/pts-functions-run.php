@@ -297,12 +297,11 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 		else if(is_test($tests_to_run[$i]))
 		{
 			$test_result = pts_run_test($tests_to_run[$i], $arguments_array[$i], $arguments_description[$i]);
-			$GLOBALS["TEST_IDENTIFIER"] = null;
 			$end_result = $test_result->get_result();
 
 			if($save_results && count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
 			{
-				pts_record_test_result($tandem_xml, $tests_to_run[$i], $arguments_array[$i], $results_identifier, $test_result, $arguments_description[$i], pts_request_new_id());
+				pts_record_test_result($tandem_xml, $test_result, $results_identifier, pts_request_new_id());
 			}
 
 			if($i != (count($tests_to_run) - 1))
@@ -312,76 +311,22 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 		}
 	}
 }
-function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $result, $description, $tandem_id = 128)
+function pts_record_test_result(&$tandem_xml, $result, $identifier, $tandem_id = 128)
 {
 	// Do the actual recording of the test result and other relevant information for the given test
-	$test_result = $result->get_result();
 
-	if((is_numeric($test_result) && $test_result > 0) || (!is_numeric($test_result) && strlen($test_result) > 2))
-	{
-		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test));
-		$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
-		$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
-		$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
-		$proportion = $xml_parser->getXMLValue(P_TEST_PROPORTION);
+	$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_attribute("TEST_TITLE"));
+	$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_attribute("TEST_VERSION"));
+	$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_attribute("TEST_DESCRIPTION"));
+	$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
+	$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_result_proportion());
+	$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
+	$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_attribute("TEST_IDENTIFIER"));
+	$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
+	$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
+	$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
 
-		if(empty($description))
-		{
-			$default_test_descriptor = $xml_parser->getXMLValue(P_TEST_SUBTITLE);
-
-			if(!empty($default_test_descriptor))
-			{
-				$description = $default_test_descriptor;
-			}
-			else if(is_file(TEST_ENV_DIR . $test . "/pts-test-description"))
-			{
-				$description = @file_get_contents(TEST_ENV_DIR . $test . "/pts-test-description");
-				unlink(TEST_ENV_DIR . $test . "/pts-results-description");
-			}
-			else
-			{
-				$description = "Phoronix Test Suite v" . PTS_VERSION;
-			}
-		}
-		if(empty($test_version) && is_file(TEST_ENV_DIR . $test . "/pts-test-version"))
-		{
-			$test_version = @file_get_contents(TEST_ENV_DIR . $test . "/pts-test-version");
-			unlink(TEST_ENV_DIR . $test . "/pts-test-version");
-		}
-		if(empty($result_format))
-		{
-			$result_format = "BAR_GRAPH";
-		}
-
-		unset($xml_parser);
-		$pts_vars = pts_env_variables();
-
-		foreach($pts_vars as $key => $value)
-		{
-			$description = str_replace("$" . $key, $value, $description);
-		}
-
-		foreach($pts_vars as $key => $value)
-		{
-			if($key != "VIDEO_MEMORY" && $key != "NUM_CPU_CORES" && $key != "NUM_CPU_JOBS")
-			{
-				$arguments = str_replace("$" . $key, $value, $arguments);
-			}
-		}
-
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $test_title);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $test_version);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $description);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $proportion);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result_format);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $test);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $arguments);
-		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
-		$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_result, 5);
-
-		$GLOBALS["TEST_RAN"] = true;
-	}
+	$GLOBALS["TEST_RAN"] = true;
 }
 function pts_save_test_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)
 {
@@ -471,17 +416,17 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	}
 	pts_process_register($test_identifier);
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
-	$GLOBALS["TEST_IDENTIFIER"] = $test_identifier;
-	pts_module_process("__pre_test_run");
 
 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test_identifier));
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
+	$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));
 	$ignore_first_run = $xml_parser->getXMLValue(P_TEST_IGNOREFIRSTRUN);
 	$pre_run_message = $xml_parser->getXMLValue(P_TEST_PRERUNMSG);
 	$post_run_message = $xml_parser->getXMLValue(P_TEST_POSTRUNMSG);
 	$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
+	$result_proportion = $xml_parser->getXMLValue(P_TEST_PROPORTION);
 	$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 	$result_quantifier = $xml_parser->getXMLValue(P_TEST_QUANTIFIER);
 	$arg_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
@@ -494,11 +439,16 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		return $pts_test_result;
 	}
 
-	if(strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_") // Currently tests that output multiple results in one run can only be run once
+	if(empty($result_format))
+	{
+		$result_format = "BAR_GRAPH";
+	}
+	else if(strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_") // Currently tests that output multiple results in one run can only be run once
 	{
 		$times_to_run = 1;
 	}
-	else if(empty($times_to_run) || !is_int($times_to_run))
+	
+	if(empty($times_to_run) || !is_int($times_to_run))
 	{
 		$times_to_run = 3;
 	}
@@ -546,10 +496,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	}
 
 	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
-
 	$extra_runtime_variables = pts_run_additional_vars($test_identifier);
 
 	// Start
+	$pts_test_result->set_attribute("TEST_TITLE", $test_title);
+	$pts_test_result->set_attribute("TEST_IDENTIFIER", $test_identifier);
+	pts_module_process("__pre_test_run", $pts_test_result);
 
 	$time_test_start = time();
 	echo pts_call_test_script($test_identifier, "pre", "\nRunning Pre-Test Scripts...\n", $test_directory, $extra_runtime_variables);
@@ -605,7 +557,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 		if($times_to_run > 1 && $i < ($times_to_run - 1))
 		{
-			pts_module_process("__interim_test_run");
+			pts_module_process("__interim_test_run", $pts_test_result);
 			sleep(1); // Rest for a moment between tests
 		}
 
@@ -643,10 +595,39 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		$result_quantifier = trim(@file_get_contents($test_directory . "pts-results-quantifier"));
 		unlink($test_directory . "pts-results-quantifier");
 	}
+	if(empty($test_version) && is_file($test_directory . "pts-test-version"))
+	{
+		$test_version = @file_get_contents($test_directory . "pts-test-version");
+		unlink($test_directory . "pts-test-version");
+	}
+	if(empty($arguments_description))
+	{
+		$default_test_descriptor = $xml_parser->getXMLValue(P_TEST_SUBTITLE);
 
+		if(!empty($default_test_descriptor))
+		{
+			$arguments_description = $default_test_descriptor;
+		}
+		else if(is_file($test_directory . "pts-test-description"))
+		{
+			$arguments_description = @file_get_contents($test_directory . "pts-test-description");
+			unlink($test_directory . "pts-test-description");
+		}
+		else
+		{
+			$arguments_description = "Phoronix Test Suite v" . PTS_VERSION;
+		}
+	}
 	foreach(pts_env_variables() as $key => $value)
 	{
 		$arguments_description = str_replace("$" . $key, $value, $arguments_description);
+	}
+	foreach(pts_env_variables() as $key => $value)
+	{
+		if($key != "VIDEO_MEMORY" && $key != "NUM_CPU_CORES" && $key != "NUM_CPU_JOBS")
+		{
+			$extra_arguments = str_replace("$" . $key, $value, $extra_arguments);
+		}
 	}
 
 	$RETURN_STRING = $test_title . ":\n";
@@ -658,7 +639,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	}
 
 	// Result Calculation
+	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
+	$pts_test_result->set_attribute("TEST_VERSION", $test_version);
+	$pts_test_result->set_attribute("EXTRA_ARGUMENTS", $extra_arguments);
 	$pts_test_result->set_result_format($result_format);
+	$pts_test_result->set_result_proportion($result_proportion);
 	$pts_test_result->set_result_scale($result_scale);
 	$pts_test_result->set_result_quantifier($result_quantifier);
 	$pts_test_result->calculate_end_result($RETURN_STRING); // Process results

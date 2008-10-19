@@ -26,8 +26,10 @@ class pts_test_result
 	var $result;
 	var $result_scale;
 	var $result_format;
+	var $result_proportion;
 	var $result_quantifier;
 	var $trial_results;
+	var $attributes;
 
 	public function __construct($result = 0, $result_scale = "", $result_format = "")
 	{
@@ -36,7 +38,9 @@ class pts_test_result
 		$this->result_format = $result_format;
 
 		$this->trial_results = array();
+		$this->attributes = array();
 		$this->result_quantifier = null;
+		$this->result_proportion = null;
 	}
 	public function set_result($result)
 	{
@@ -50,9 +54,17 @@ class pts_test_result
 	{
 		$this->result_format = $result_format;
 	}
+	public function set_result_proportion($result_proportion)
+	{
+		$this->result_proportion = $result_proportion;
+	}
 	public function set_result_quantifier($result_quantifier)
 	{
 		$this->result_quantifier = $result_quantifier;
+	}
+	public function set_attribute($name, $value)
+	{
+		$this->attributes[$name] = $value;
 	}
 	public function get_result()
 	{
@@ -61,6 +73,21 @@ class pts_test_result
 	public function get_result_scale()
 	{
 		return $this->result_scale;
+	}
+	public function get_result_format()
+	{
+		return $this->result_format;
+	}
+	public function get_result_proportion()
+	{
+		return $this->result_proportion;
+	}
+	public function get_attribute($name)
+	{
+		if(isset($this->attributes[$name]) && !empty($this->attributes[$name]))
+		{
+			return $this->attributes[$name];
+		}
 	}
 	public function add_trial_run_result($result)
 	{
