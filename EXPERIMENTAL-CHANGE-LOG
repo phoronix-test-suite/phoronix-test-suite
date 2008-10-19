@@ -30,6 +30,7 @@ Phoronix Test Suite (Git)
 - pts: Add nevada test suite for key OpenSolaris tests
 - pts: Add java-environment base test that provides the java external dependency and reports Java version to test notes
 - pts: Update the location of the ExternalDependencies tag in all relevant test profiles
+- pts: Set TimesToRun to 5 in timed-audio-encode base test
 - pts_Graph: Write Y-axis title horizontally along the top of the graph instead of vertically
 
 Phoronix Test Suite 1.4.0 Alpha 3

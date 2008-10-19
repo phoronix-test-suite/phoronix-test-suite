@@ -7,7 +7,7 @@
 		<Status>VERIFIED</Status>
 	</TestProfile>
 	<TestInformation>
-		<TimesToRun>3</TimesToRun>
+		<TimesToRun>5</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 	</TestInformation>
