@@ -780,7 +780,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	pts_user_message($post_run_message);
 
 	pts_process_remove($test_identifier);
-	pts_module_process("__post_test_run");
+	pts_module_process("__post_test_run", $pts_test_result);
 	pts_test_refresh_install_xml($test_identifier, ($time_test_end - $time_test_start));
 
 	return $pts_test_result;
