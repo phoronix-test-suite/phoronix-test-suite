@@ -7,6 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>18.4</EnvironmentSize>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.sqlite.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>

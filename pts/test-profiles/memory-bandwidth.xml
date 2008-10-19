@@ -7,6 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.05</EnvironmentSize>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
@@ -16,7 +17,6 @@
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This benchmark tests the system memory (RAM) and CPU Level 2 cache performance.</Description>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 	<TestSettings>
 		<Option>

@@ -8,12 +8,12 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.11</EnvironmentSize>
 		<ProjectURL>http://gtkperf.sourceforge.net/</ProjectURL>
+		<ExternalDependencies>gtk-development, build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>GtkPerf</Title>
 		<Version>0.40</Version>
-		<ExternalDependencies>gtk-development, build-utilities</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

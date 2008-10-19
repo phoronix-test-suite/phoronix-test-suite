@@ -8,13 +8,13 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>4.5</EnvironmentSize>
 		<ProjectURL>http://compression.ca/pbzip2/</ProjectURL>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Parallel BZIP2 Compression</Title>
 		<Version>1.0.2</Version>
 		<SubTitle>2GB File Compression</SubTitle>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

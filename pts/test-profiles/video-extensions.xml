@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>30.0</EnvironmentSize>
 		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
+		<ExternalDependencies>build-utilities, xorg-development, xorg-video</ExternalDependencies>
 		<Extends>video-sample</Extends>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
@@ -18,6 +19,5 @@
 		<ResultScale>GL, GL2, X-Video, XvMC</ResultScale>
 		<Description>This is a test of playing back a short video file with different video extensions supported by X.Org and MPlayer.</Description>
 		<ResultFormat>MULTI_PASS_FAIL</ResultFormat>
-		<ExternalDependencies>build-utilities, xorg-development, xorg-video</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>

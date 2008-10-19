@@ -1,5 +1,5 @@
 <PhoronixTestSuite>
-	<TestInformation>
+	<TestProfile>
 		<ExternalDependencies>java</ExternalDependencies>
-	</TestInformation>
+	</TestProfile>
 </PhoronixTestSuite>

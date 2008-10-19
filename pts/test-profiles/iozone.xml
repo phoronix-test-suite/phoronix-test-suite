@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>2.3</EnvironmentSize>
 		<ProjectURL>http://www.iozone.org/</ProjectURL>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
@@ -17,7 +18,6 @@
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>The IOzone benchmark tests your hard disk drive / file-system performance.</Description>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 	<TestSettings>
 		<Default>

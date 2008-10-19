@@ -29,7 +29,6 @@ define("P_TEST_TITLE", "PhoronixTestSuite/TestInformation/Title"); // Test title
 define("P_TEST_SUBTITLE", "PhoronixTestSuite/TestInformation/SubTitle"); // Subtitle
 define("P_TEST_VERSION", "PhoronixTestSuite/TestInformation/Version"); // Test version
 define("P_TEST_DESCRIPTION", "PhoronixTestSuite/TestInformation/Description"); // Test description
-define("P_TEST_EXDEP", "PhoronixTestSuite/TestInformation/ExternalDependencies"); // Test description
 define("P_TEST_SCALE", "PhoronixTestSuite/TestInformation/ResultScale"); // Result scale
 define("P_TEST_QUANTIFIER", "PhoronixTestSuite/TestInformation/ResultQuantifier"); // Result quantifier
 define("P_TEST_RESULTFORMAT", "PhoronixTestSuite/TestInformation/ResultFormat"); // Result format
@@ -51,6 +50,7 @@ define("P_TEST_STATUS", "PhoronixTestSuite/TestProfile/Status"); // The status o
 define("P_TEST_SUPPORTEDARCHS", "PhoronixTestSuite/TestProfile/SupportedArchitectures"); // The system architectures supported by this test
 define("P_TEST_SUPPORTEDPLATFORMS", "PhoronixTestSuite/TestProfile/SupportedPlatforms"); // The OS software platforms supported by this test
 define("P_TEST_UNSUPPORTEDPLATFORMS", "PhoronixTestSuite/TestProfile/UnsupportedPlatforms"); // The OS software platforms NOT supported by this test
+define("P_TEST_EXDEP", "PhoronixTestSuite/TestProfile/ExternalDependencies"); // Test external dependencies
 define("P_TEST_CTPEXTENDS", "PhoronixTestSuite/TestProfile/Extends"); // Does this test profile extend another test? (Cascading Test Profiles)
 define("P_TEST_ROOTNEEDED", "PhoronixTestSuite/TestProfile/RequiresRoot"); // Is root access needed? (TODO: Implement RequiresRoot)
 define("P_TEST_DOWNLOADSIZE", "PhoronixTestSuite/TestProfile/DownloadSize"); // Estimated size of capacity needed for downloads (in MB)

@@ -9,6 +9,7 @@
 		<EnvironmentSize>16</EnvironmentSize>
 		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
 		<Extends>video-sample</Extends>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
@@ -19,6 +20,5 @@
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test uses mplayer's mencoder utility and the libavcodec family for testing the system's audio/video encoding performance.</Description>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>

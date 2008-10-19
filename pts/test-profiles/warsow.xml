@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>195</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ExternalDependencies>xorg-development</ExternalDependencies>
 		<ProjectURL>http://www.warsow.net/</ProjectURL>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
@@ -16,7 +17,6 @@
 		<Version>0.42</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
-		<ExternalDependencies>xorg-development</ExternalDependencies>
 		<Proportion>HIB</Proportion>
 		<Description>This is a benchmark of Warsow, a popular open-source first-person shooter. This game uses the QFusion engine.</Description>
 	</TestInformation>

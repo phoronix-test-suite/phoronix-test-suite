@@ -7,6 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>2.5</EnvironmentSize>
+		<ExternalDependencies>build-utilities, glut</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
@@ -15,6 +16,5 @@
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of Norsetto Shadow, which is a basic OpenGL demo.</Description>
-		<ExternalDependencies>build-utilities, glut</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>

@@ -71,6 +71,14 @@ list them in this tag with each OS being delimited by a comma.<br>
 list the ones NOT supported by this test. This tag is the opposite of SupportedPlatforms. Operating systems 
 not listed here are assumed to be supported.<br>
 <strong>Supported Values:</strong> Linux, Solaris, FreeBSD, BSD</p>
+<p><strong>Tag:</strong> ExternalDependencies<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_EXDEP<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The external dependencies needed for the test. Multiple dependencies 
+need to be delimited by a comma.<br>
+<strong>Supported Values:</strong> ( See pts/distro-xml/generic-packages.xml for a list of currently 
+supported external dependencies. )</p>
 <p><strong>Tag:</strong> Extends<br>
 <strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
 <strong>Internal Reference:</strong> P_TEST_CTPEXTENDS<br>
@@ -148,15 +156,7 @@ the graph results. Otherwise the test options (if applicable) are displayed.</p>
 <strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
 <strong>Internal Reference:</strong> P_TEST_DESCRIPTION<br>
 <strong>Required:</strong> Recommended<br>
-<strong>Description:</strong> A few sentence description of the test.</p>
-<p><strong>Tag:</strong> ExternalDependencies<br>
-<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
-<strong>Internal Reference:</strong> P_TEST_EXDEP<br>
-<strong>Required:</strong> No<br>
-<strong>Description:</strong> The external dependencies needed for the test. Multiple dependencies 
-need to be delimited by a comma.<br>
-<strong>Supported Values:</strong> ( See pts/distro-xml/generic-packages.xml for a list of currently 
-supported external dependencies. )</p>
+<strong>Description:</strong> A few sentence description of the test.</p>
 <p><strong>Tag:</strong> ResultScale<br>
 <strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
 <strong>Internal Reference:</strong> P_TEST_SCALE<br>

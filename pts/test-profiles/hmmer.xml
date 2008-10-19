@@ -6,6 +6,7 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Andrew Schofield</Maintainer>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<EnvironmentSize>707</EnvironmentSize>
 		<ProjectURL>http://hmmer.janelia.org/</ProjectURL>
 	</TestProfile>
@@ -14,7 +15,6 @@
 		<Version>2.3.2</Version>
 		<SubTitle>Pfam Database Search</SubTitle>
 		<ResultScale>Seconds</ResultScale>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<Description>This test searches through the Pfam database of profile hidden markov models. The search finds the domain structure of Drosophila Sevenless protein.</Description>
 		<Proportion>LIB</Proportion>

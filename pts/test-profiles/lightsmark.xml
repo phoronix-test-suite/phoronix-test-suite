@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.7</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ExternalDependencies>glut, glew, freeimage</ExternalDependencies>
 		<ProjectURL>http://www.dee.cz/lightsmark/</ProjectURL>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
@@ -15,7 +16,6 @@
 		<Title>Lightsmark</Title>
 		<Version>2008</Version>
 		<TimesToRun>3</TimesToRun>
-		<ExternalDependencies>glut, glew, freeimage</ExternalDependencies>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within the Lightsmark 2008. Lightsmark is an OpenGL real-time global illumination and penumbra shadow benchmark.</Description>

@@ -6,12 +6,12 @@
 		<License>FREE</License>
 		<Status>UNVERIFIED</Status>
 		<Maintainer>Stefan Doesinger</Maintainer>
+		<ExternalDependencies>glut, libpng-development, git, xorg-development, bison, flex, build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.winehq.org/</ProjectURL>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Wine Conformance Tests</Title>
-		<ExternalDependencies>glut, libpng-development, git, xorg-development, bison, flex, build-utilities</ExternalDependencies>
 		<Description>This test runs the Wine Direct3D conformance tests.</Description>
 	</TestInformation>
 	<TestSettings>

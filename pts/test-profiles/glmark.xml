@@ -8,12 +8,12 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>1.5</EnvironmentSize>
 		<ProjectURL>https://sourceforge.net/projects/glmark</ProjectURL>
+		<ExternalDependencies>sdl-development, glut, build-utilities, glew</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>GLMark</Title>
 		<Version>0.5.2</Version>
-		<ExternalDependencies>sdl-development, glut, build-utilities, glew</ExternalDependencies>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

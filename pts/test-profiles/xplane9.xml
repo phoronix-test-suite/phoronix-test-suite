@@ -9,6 +9,7 @@
 		<EnvironmentSize>855</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.x-plane.com/</ProjectURL>
+		<ExternalDependencies>openal-devel</ExternalDependencies>
 		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
@@ -16,7 +17,6 @@
 		<Version>9.00</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
-		<ExternalDependencies>openal-devel</ExternalDependencies>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of X-Plane, a realistic multi-platform flight simulator designed for personal computers. This is commercial closed-source software, but this X-Plane 9.0 benchmark has been kindly made available for free. X-Plane is the product of Austin Meyer and Laminar Research.</Description>
 	</TestInformation>

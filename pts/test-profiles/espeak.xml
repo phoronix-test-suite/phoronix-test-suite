@@ -8,13 +8,13 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>2.2</EnvironmentSize>
 		<ProjectURL>http://espeak.sourceforge.net/</ProjectURL>
+		<ExternalDependencies>portaudio-development, build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>eSpeak Speech Engine</Title>
 		<Version>1.39</Version>
 		<SubTitle>Text-To-Speech Synthesis</SubTitle>
-		<ExternalDependencies>portaudio-development, build-utilities</ExternalDependencies>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

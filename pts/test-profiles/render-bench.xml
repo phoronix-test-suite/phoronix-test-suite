@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.12</EnvironmentSize>
 		<ProjectURL>http://www.freedesktop.org/</ProjectURL>
+		<ExternalDependencies>build-essential, imlib2-development</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
@@ -15,7 +16,6 @@
 		<Executable>render-bench-test</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
-		<ExternalDependencies>build-essential, imlib2-development</ExternalDependencies>
 		<Description>This test runs render_bench, which tests the performance of X.Org and the video driver's RENDER extension.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

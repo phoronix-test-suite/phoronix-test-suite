@@ -7,13 +7,13 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>8.6</EnvironmentSize>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.7-zip.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>7-Zip Compression</Title>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average MIPS</ResultScale>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of 7-Zip using p7zip with the integrated benchmark feature.</Description>
 	</TestInformation>

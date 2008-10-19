@@ -7,6 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.5</EnvironmentSize>
+                <ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestProfile>
 	<TestInformation>
 		<Title>BYTE Unix Benchmark</Title>
@@ -15,7 +16,6 @@
 		<ResultScale>LPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test runs the ANSI C version of SciMark 2.0, which is a benchmark for scientific and numerical computing developed by programmers at the National Institute of Standards and Technology. This test is made up of Fast Foruier Transform, Jacobi Successive Over-relaxation, Monte Carlo, Sparse Matrix Multiply, and dense LU matrix factorization benchmarks.</Description>
-                <ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 	<TestSettings>
 		<Option>

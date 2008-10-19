@@ -9,6 +9,7 @@
 		<EnvironmentSize>3.2</EnvironmentSize>
 		<SupportedArchitectures>x86</SupportedArchitectures>
 		<ProjectURL>http://fract.sourceforge.net/</ProjectURL>
+		<ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
@@ -18,7 +19,6 @@
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test uses the FRACT benchmark.</Description>
-		<ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>
 		<PreRunMessage>Once the benchmark completes, you must close the opened window for the testing process to continue.</PreRunMessage>
 	</TestInformation>
 </PhoronixTestSuite>

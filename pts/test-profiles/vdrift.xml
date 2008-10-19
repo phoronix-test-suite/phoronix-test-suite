@@ -7,6 +7,7 @@
 		<Status>BROKEN</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ExternalDependencies>sdl-development, build-utilities, glew, jam, scons, vorbis-devel</ExternalDependencies>
 		<ProjectURL>http://www.vdrift.net/</ProjectURL>
 		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>
@@ -15,7 +16,6 @@
 		<Version>2008-08-05</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
-		<ExternalDependencies>sdl-development, build-utilities, glew, jam, scons, vorbis-devel</ExternalDependencies>
 		<Proportion>HIB</Proportion>
 		<Description>This test calculates the average frame-rate within vDrift, which is an open-source drift racing game.</Description>
 	</TestInformation>

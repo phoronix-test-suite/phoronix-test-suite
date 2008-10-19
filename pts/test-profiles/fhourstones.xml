@@ -8,6 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.1</EnvironmentSize>
 		<ProjectURL>http://homepages.cwi.nl/~tromp/c4/fhour.html</ProjectURL>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
@@ -19,6 +20,5 @@
 		<ResultScale>Kpos / sec</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This integer benchmark solves positions in the game of connect-4, as played on a vertical 7x6 board. By default, it uses a 64Mb transposition table with the twobig replacement strategy. Positions are represented as 64-bit bitboards, and the hash function is computed using a single 64-bit modulo operation, giving 64-bit machines a slight edge. The alpha-beta searcher sorts moves dynamically based on the history heuristic.</Description>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>

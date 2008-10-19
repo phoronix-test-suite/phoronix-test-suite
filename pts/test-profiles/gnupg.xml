@@ -7,6 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>8.4</EnvironmentSize>
+                <ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.gnupg.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
@@ -17,6 +18,5 @@
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test times how long it takes to encrypt a file using GnuPG of a file.</Description>
-                <ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestInformation>
 </PhoronixTestSuite>
