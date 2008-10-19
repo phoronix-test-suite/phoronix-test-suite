@@ -220,6 +220,7 @@ function pts_extended_init()
 
 	// Additional Setup
 	$GLOBALS["TEST_NOTES_ARRAY"] = array();
+	$GLOBALS["TEST_RESULTS_TEXT"] = "";
 }
 function __autoload($to_load)
 {

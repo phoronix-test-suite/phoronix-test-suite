@@ -462,15 +462,16 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "")
 {
 	// Do the actual test running process
+	$pts_test_result = new pts_test_result();
+
 	if(pts_process_active($test_identifier))
 	{
 		echo "\nThis test (" . $test_identifier . ") is already running... Please wait until the first instance is finished.\n";
-		return 0;
+		return $pts_test_result;
 	}
 	pts_process_register($test_identifier);
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 	$GLOBALS["TEST_IDENTIFIER"] = $test_identifier;
-	$pts_test_result = new pts_test_result();
 	pts_module_process("__pre_test_run");
 
 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test_identifier));
@@ -533,7 +534,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if(!isset($to_execute) || empty($to_execute))
 	{
 		echo "The test executable for " . $test_identifier . " could not be found. Skipping test.\n\n";
-		return;
+		return $pts_test_result;
 	}
 
 	if(pts_test_needs_updated_install($test_identifier))
@@ -545,7 +546,6 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	}
 
 	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
-	$TEST_RESULTS_ARRAY = array();
 
 	$extra_runtime_variables = pts_run_additional_vars($test_identifier);
 
@@ -600,7 +600,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 			if(!empty($test_results))
 			{
-				array_push($TEST_RESULTS_ARRAY, trim($test_results));
+				$pts_test_result->add_trial_run_result(trim($test_results));
 			}
 		}
 		if($times_to_run > 1 && $i < ($times_to_run - 1))
@@ -657,112 +657,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		$RETURN_STRING .= "\n";
 	}
 
-	if($result_format == "PASS_FAIL" || $result_format == "MULTI_PASS_FAIL")
-	{
-		$RETURN_STRING .= "(" . $result_scale . ")\n";
-		$END_RESULT = -1;
-		$i = 1;
-
-		if(count($TEST_RESULTS_ARRAY) == 1)
-		{
-			$END_RESULT = $TEST_RESULTS_ARRAY[0];
-		}
-		else
-		{
-			foreach($TEST_RESULTS_ARRAY as $result)
-			{
-				if($result == "FALSE" || $result == "0" || $result == "FAIL")
-				{
-					$this_result = "FAIL";
-
-					if($END_RESULT == -1 || $END_RESULT == "PASS")
-					{
-						$END_RESULT = "FAIL";
-					}
-				}
-				else
-				{
-					$this_result = "PASS";
-
-					if($END_RESULT == -1)
-					{
-						$END_RESULT = "PASS";
-					}
-				}
-
-				$RETURN_STRING .= "Trial $i: " . $this_result . "\n";
-				$i++;
-			}
-		}
-
-		$RETURN_STRING .= "\nFinal: " . $END_RESULT . "\n";
-	}
-	else if($result_format == "NO_RESULT")
-	{
-		$RETURN_STRING = null;
-		$END_RESULT = 0;
-	}
-	else
-	{
-		// Result is of a normal numerical type
-
-		if($result_quantifier == "MAX")
-		{
-			$max_value = $TEST_RESULTS_ARRAY[0];
-			foreach($TEST_RESULTS_ARRAY as $result)
-			{
-				if($result > $max_value)
-				{
-					$max_value = $result;
-				}
-
-				$RETURN_STRING .= $result . " " . $result_scale . "\n";
-			}
-			$RETURN_STRING .= "\nMaximum: " . $max_value . " " . $result_scale;
-			$END_RESULT = $max_value;
-		}
-		else if($result_quantifier == "MIN")
-		{
-			$min_value = $TEST_RESULTS_ARRAY[0];
-			foreach($TEST_RESULTS_ARRAY as $result)
-			{
-				if($result < $min_value)
-				{
-					$min_value = $result;
-				}
-
-				$RETURN_STRING .= $result . " " . $result_scale . "\n";
-			}
-			$RETURN_STRING .= "\nMinimum: " . $min_value . " " . $result_scale;
-			$END_RESULT = $min_value;
-		}
-		else
-		{
-			// assume AVG
-			$TOTAL_RESULT = 0;
-			foreach($TEST_RESULTS_ARRAY as $result)
-			{
-				$TOTAL_RESULT += trim($result);
-				$RETURN_STRING .= $result . " " . $result_scale . "\n";
-			}
-
-			if(count($TEST_RESULTS_ARRAY) > 0)
-			{
-				$END_RESULT = pts_trim_double($TOTAL_RESULT / count($TEST_RESULTS_ARRAY), 2);
-			}
-			else
-			{
-				$END_RESULT = pts_trim_double($TOTAL_RESULT, 2);
-			}
-
-			$RETURN_STRING .= "\nAverage: " . $END_RESULT . " " . $result_scale;
-		}
-	}
-
-	if(!isset($GLOBALS["TEST_RESULTS_TEXT"]))
-	{
-		$GLOBALS["TEST_RESULTS_TEXT"] = "";
-	}
+	// Result Calculation
+	$pts_test_result->set_result_format($result_format);
+	$pts_test_result->set_result_scale($result_scale);
+	$pts_test_result->set_result_quantifier($result_quantifier);
+	$pts_test_result->calculate_end_result($RETURN_STRING); // Process results
 
 	if(!empty($RETURN_STRING))
 	{
@@ -773,9 +672,6 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	{
 		echo "\n\n";
 	}
-
-	$pts_test_result->set_result($END_RESULT);
-	$pts_test_result->set_result_scale($result_scale);
 
 	pts_user_message($post_run_message);
 
