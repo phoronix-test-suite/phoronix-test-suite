@@ -21,6 +21,50 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+class pts_test_file_download
+{
+	var $url;
+	var $filename;
+	var $filesize;
+	var $md5;
+
+	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null)
+	{
+		if(empty($filename))
+		{
+			$filename = basename($url);
+		}
+		if($filename == $url)
+		{
+			$url = "";
+		}	
+		if(!is_numeric($filesize))
+		{
+			$filesize = 0;
+		}
+
+		$this->url = $url;
+		$this->filename = $filename;
+		$this->filesize = $filesize;
+		$this->md5 = $md5;
+	}
+	public function get_download_url_array()
+	{
+		return array_map("trim", explode(",", $this->url));
+	}
+	public function get_filename()
+	{
+		return $this->filename;
+	}
+	public function get_filesize()
+	{
+		return $this->filesize;
+	}
+	public function get_md5()
+	{
+		return $this->md5;
+	}
+}
 class pts_test_result
 {
 	var $result;

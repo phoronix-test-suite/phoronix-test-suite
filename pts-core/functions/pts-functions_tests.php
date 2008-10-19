@@ -207,7 +207,6 @@ function pts_estimated_download_size($identifier)
 {
 	// Estimate the size of files to be downloaded
 	$estimated_size = 0;
-
 	foreach(pts_contained_tests($identifier, true) as $test)
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test));
@@ -219,50 +218,10 @@ function pts_estimated_download_size($identifier)
 		}
 		else
 		{
-			// The work for calculating the download size post 1.4.0.
-			if(is_file(pts_location_test_resources($test) . "downloads.xml"))
+			// The work for calculating the download size in 1.4.0+
+			foreach(pts_objects_test_downloads($test) as $download_object)
 			{
-				$xml_parser = new tandem_XmlReader(pts_location_test_resources($test) . "downloads.xml");
-				$package_filesize_bytes = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILESIZE);
-				$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
-				$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
-
-				for($i = 0; $i < count($package_filesize_bytes); $i++)
-				{
-
-					$file_exempt = false;
-
-					if(!empty($package_platform[$i]))
-					{
-						$platforms = explode(",", $package_platform[$i]);
-
-						foreach($platforms as $key => $value)
-						{
-							$platforms[$key] = trim($value);
-						}
-
-						if(!in_array(OPERATING_SYSTEM, $platforms))
-						{
-							$file_exempt = true;
-						}
-					}
-					if(!empty($package_architecture[$i]))
-					{
-						$architectures = explode(",", $package_architecture[$i]);
-
-						foreach($architectures as $key => $value)
-						{
-							$architectures[$key] = trim($value);
-						}
-
-						$file_exempt = !pts_cpu_arch_compatible($architectures);
-					}
-
-					if(is_numeric($package_filesize_bytes[$i]) && !$file_exempt)
-					{
-						$estimated_size += pts_trim_double($package_filesize_bytes[$i] / 1048576);
-					}
-				}
+				$estimated_size += pts_trim_double($download_object->get_filesize() / 1048576);
 			}
 		}
 	}
@@ -546,4 +505,56 @@ function pts_cpu_arch_compatible($check_against)
 
 	return $compatible;
 }
+function pts_objects_test_downloads($test_identifier)
+{
+	$obj_r = array();
+
+	if(is_file(($download_xml_file = pts_location_test_resources($test_identifier) . "downloads.xml")))
+	{
+		$xml_parser = new tandem_XmlReader($download_xml_file);
+		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
+		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
+		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
+		$package_filesize = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILESIZE);
+		$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
+		$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
+
+		for($i = 0; $i < count($package_url); $i++)
+		{
+			$file_exempt = false;
+
+			if(!empty($package_platform[$i]))
+			{
+				$platforms = explode(",", $package_platform[$i]);
+
+				foreach($platforms as $key => $value)
+				{
+					$platforms[$key] = trim($value);
+				}
+
+				$file_exempt = !in_array(OPERATING_SYSTEM, $platforms);
+			}
+
+			if(!empty($package_architecture[$i]))
+			{
+				$architectures = explode(",", $package_architecture[$i]);
+
+				foreach($architectures as $key => $value)
+				{
+					$architectures[$key] = trim($value);
+				}
+
+				$file_exempt = !pts_cpu_arch_compatible($architectures);
+			}
+
+			if(!$file_exempt)
+			{
+				array_push($obj_r, new pts_test_file_download($package_url[$i], $package_filename[$i], $package_filesize[$i], $package_md5[$i]));
+			}
+		}
+	}
+
+	return $obj_r;
+}
+
 ?>

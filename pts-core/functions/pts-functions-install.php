@@ -67,14 +67,10 @@ function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
 function pts_download_test_files($identifier)
 {
 	// Download needed files for a test
-	if(is_file(pts_location_test_resources($identifier) . "downloads.xml"))
+	$download_packages = pts_objects_test_downloads($identifier);
+
+	if(count($download_packages) > 0)
 	{
-		$xml_parser = new tandem_XmlReader(pts_location_test_resources($identifier) . "downloads.xml");
-		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
-		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
-		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
-		$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
-		$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
 		$header_displayed = false;
 
 		if(strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != false)
@@ -89,44 +85,13 @@ function pts_download_test_files($identifier)
 			$dc_md5 = array();
 		}
 
-		for($i = 0; $i < count($package_url); $i++)
+		for($i = 0; $i < count($download_packages); $i++)
 		{
-			if(empty($package_filename[$i]))
-			{
-				$package_filename[$i] = basename($package_url[$i]);
-			}
-
 			$download_location = TEST_ENV_DIR . $identifier . "/";
+			$package_filename = $download_packages[$i]->get_filename();
+			$download_destination = $download_location . $package_filename;
 
-			$file_exempt = false;
-
-			if(!empty($package_platform[$i]))
-			{
-				$platforms = explode(",", $package_platform[$i]);
-
-				foreach($platforms as $key => $value)
-				{
-					$platforms[$key] = trim($value);
-				}
-
-				if(!in_array(OPERATING_SYSTEM, $platforms))
-				{
-					$file_exempt = true;
-				}
-			}
-			if(!empty($package_architecture[$i]))
-			{
-				$architectures = explode(",", $package_architecture[$i]);
-
-				foreach($architectures as $key => $value)
-				{
-					$architectures[$key] = trim($value);
-				}
-
-				$file_exempt = !pts_cpu_arch_compatible($architectures);
-			}
-
-			if(!is_file($download_location . $package_filename[$i]) && !$file_exempt)
+			if(!is_file($download_destination))
 			{
 				if(!$header_displayed)
 				{
@@ -146,55 +111,44 @@ function pts_download_test_files($identifier)
 					$header_displayed = true;
 				}
 
-				if($package_url[$i] == $package_filename[$i])
-				{
-					$urls = array();
-				}
-				else
-				{
-					$urls = explode(",", $package_url[$i]);
-				}
+				$urls = $download_packages[$i]->get_download_url_array();
+				$package_md5 = $download_packages[$i]->get_md5();
 
 				if(count($dc_file) > 0 && count($dc_md5) > 0)
 				{
 					$cache_search = true;
 					for($f = 0; $f < count($dc_file) && $cache_search; $f++)
 					{
-						if($dc_file[$f] == $package_filename[$i] && $dc_md5[$f] == $package_md5[$i])
+						if($dc_file[$f] == $package_filename && $dc_md5[$f] == $package_md5)
 						{
-							echo pts_download(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $download_location);
+							echo pts_download(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $download_location);
 
-							if(!pts_validate_md5_download_file($download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
+							if(!pts_validate_md5_download_file($download_destination . ".temp", $package_md5))
 							{
-								@unlink($download_location . $package_filename[$i] . ".temp");
+								@unlink($download_destination . ".temp");
 							}
 							else
 							{
-								shell_exec("cd " . $download_location . " && mv " . $package_filename[$i] . ".temp " . $package_filename[$i]);
+								shell_exec("cd " . $download_location . " && mv " . $package_filename . ".temp " . $package_filename);
 								$urls = array();
 							}
-
 							$cache_search = false;
 						}
 					}
 				}
-				else if(pts_validate_md5_download_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $package_md5[$i]))
+				else if(pts_validate_md5_download_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $package_md5))
 				{
-					echo "Copying Cached File: " . $package_filename[$i] . "\n";
+					echo "Copying Cached File: " . $package_filename . "\n";
 
-					if(copy(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i], $download_location . $package_filename[$i]))
+					if(copy(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $download_destination))
 					{
 						$urls = array();
 					}
 				}
 
-				if(($c = count($urls)) > 0)
+				if(count($urls) > 0)
 				{
-					if($c > 1)
-					{
-						shuffle($urls);
-					}
-
+					shuffle($urls);
 					$fail_count = 0;
 					$try_again = true;
 
@@ -208,13 +162,12 @@ function pts_download_test_files($identifier)
 								echo "\nAvailable Download Mirrors:\n\n";
 								for($j = 0; $j < count($urls); $j++)
 								{
-									$urls[$j] = trim($urls[$j]);
 									echo ($j + 1) . ": " . $urls[$j] . "\n";
 								}
 								echo "\nEnter Your Preferred Mirror: ";
 								$mirror_choice = trim(fgets(STDIN));
 							}
-							while(($mirror_choice < 1 || $mirror_choice > count($urls)) && !pts_is_valid_download_url($mirror_choice, $package_filename[$i]));
+							while(($mirror_choice < 1 || $mirror_choice > count($urls)) && !pts_is_valid_download_url($mirror_choice, $package_filename));
 
 							if(is_numeric($mirror_choice))
 							{
@@ -230,19 +183,19 @@ function pts_download_test_files($identifier)
 							// Auto-select mirror
 							do
 							{
-								$url = trim(array_pop($urls));
+								$url = array_pop($urls);
 							}
 							while(!pts_is_valid_download_url($url));
 						}
 
-						echo "\n\nDownloading File: " . $package_filename[$i] . "\n\n";
-						echo pts_download($url, $download_location . $package_filename[$i] . ".temp");
+						echo "\n\nDownloading File: " . $package_filename . "\n\n";
+						echo pts_download($url, $download_destination . ".temp");
 
-						if(!pts_validate_md5_download_file($download_location . $package_filename[$i] . ".temp", $package_md5[$i]))
+						if(!pts_validate_md5_download_file($download_destination . ".temp", $package_md5))
 						{
-							if(is_file($download_location . $package_filename[$i] . ".temp"))
+							if(is_file($download_destination . ".temp"))
 							{
-								unlink($download_location . $package_filename[$i] . ".temp");
+								unlink($download_destination . ".temp");
 							}
 
 							$file_downloaded = false;
@@ -276,9 +229,9 @@ function pts_download_test_files($identifier)
 						}
 						else
 						{
-							if(is_file($download_location . $package_filename[$i] . ".temp"))
+							if(is_file($download_destination . ".temp"))
 							{
-								shell_exec("cd " . $download_location . " && mv " . $package_filename[$i] . ".temp " . $package_filename[$i]);
+								shell_exec("cd " . $download_location . " && mv " . $package_filename . ".temp " . $package_filename);
 							}
 
 							$file_downloaded = true;
@@ -297,29 +250,6 @@ function pts_download_test_files($identifier)
 		}
 	}
 	return true;
-}
-function pts_local_download_test_files($identifier)
-{
-	// Names of files downloaded to the local test installation folder for the test
-	$downloaded_files = array();
-	if(is_file(pts_location_test_resources($identifier) . "downloads.xml"))
-	{
-		$xml_parser = new tandem_XmlReader(pts_location_test_resources($identifier) . "downloads.xml");
-		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
-		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
-
-		for($i = 0; $i < count($package_url); $i++)
-		{
-			if(empty($package_filename[$i]))
-			{
-				$package_filename[$i] = basename($package_url[$i]);
-			}
-
-			array_push($downloaded_files, $package_filename[$i]);
-		}
-	}
-
-	return $downloaded_files;
 }
 function pts_validate_md5_download_file($filename, $verified_md5)
 {
@@ -364,9 +294,9 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 function pts_remove_local_download_test_files($identifier)
 {
 	// Remove locally downloaded files for a given test
-	foreach(pts_local_download_test_files($identifier) as $test_file)
+	foreach(pts_objects_test_downloads($identifier) as $test_file)
 	{
-		$file_location = TEST_ENV_DIR . $identifier . "/" . $test_file;
+		$file_location = TEST_ENV_DIR . $identifier . "/" . $test_file->get_filename();
 
 		if(is_file($file_location))
 		{
