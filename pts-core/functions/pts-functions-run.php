@@ -322,7 +322,6 @@ function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $r
 		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test));
 		$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 		$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
-		$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
 		$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 		$proportion = $xml_parser->getXMLValue(P_TEST_PROPORTION);
 
@@ -349,11 +348,6 @@ function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $r
 			$test_version = @file_get_contents(TEST_ENV_DIR . $test . "/pts-test-version");
 			unlink(TEST_ENV_DIR . $test . "/pts-test-version");
 		}
-		if(empty($result_scale) && is_file(TEST_ENV_DIR . $test . "/pts-results-scale"))
-		{
-			$result_scale = trim(@file_get_contents(TEST_ENV_DIR . $test . "/pts-results-scale"));
-			unlink(TEST_ENV_DIR . $test . "/pts-results-scale");
-		}
 		if(empty($result_format))
 		{
 			$result_format = "BAR_GRAPH";
@@ -378,7 +372,7 @@ function pts_record_test_result(&$tandem_xml, $test, $arguments, $identifier, $r
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $test_title);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $test_version);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $description);
-		$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result_scale);
+		$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $proportion);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result_format);
 		$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $test);
@@ -476,6 +470,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	pts_process_register($test_identifier);
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 	$GLOBALS["TEST_IDENTIFIER"] = $test_identifier;
+	$pts_test_result = new pts_test_result();
 	pts_module_process("__pre_test_run");
 
 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test_identifier));
@@ -495,22 +490,16 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	if(($test_type == "Graphics" && getenv("DISPLAY") == false) || getenv("NO_" . strtoupper($test_type) . "_TESTS") != false)
 	{
-		return new pts_test_result();
-	}
-
-	if(empty($times_to_run) || !is_int($times_to_run))
-	{
-		$times_to_run = 3;
+		return $pts_test_result;
 	}
 
 	if(strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_") // Currently tests that output multiple results in one run can only be run once
 	{
 		$times_to_run = 1;
 	}
-
-	if(empty($execute_binary))
+	else if(empty($times_to_run) || !is_int($times_to_run))
 	{
-		$execute_binary = $test_identifier;
+		$times_to_run = 3;
 	}
 
 	if(!empty($test_type))
@@ -523,29 +512,22 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 	}
 
-	if(empty($result_quantifier))
+	if(empty($execute_binary))
 	{
-		if(is_file($test_directory . "pts-result-quantifier"))
-		{
-			$result_quantifier = @trim(file_get_contents($test_directory . "pts-result-quantifier"));
-		}
+		$execute_binary = $test_identifier;
 	}
 
-	if(is_file($test_directory . $execute_binary) || is_link($test_directory . $execute_binary))
-	{
-		$to_execute = $test_directory;
-	}
-	else
-	{
-		foreach(explode(',', $execute_path) as $execute_path_check)
-		{
-			$execute_path_check = trim($execute_path_check);
+	$execute_path_check = explode(",", $execute_path);
+	array_push($execute_path_check, $test_directory);
 
-			if(is_file($execute_path_check . $execute_binary) || is_link($execute_path_check . $execute_binary))
-			{
-				$to_execute = $execute_path_check;
-			}
-		}
+	while(count($execute_path_check) > 0)
+	{
+		$path_check = trim(array_pop($execute_path_check));
+
+		if(is_file($path_check . $execute_binary) || is_link($path_check . $execute_binary))
+		{
+			$to_execute = $path_check;
+		}	
 	}
 
 	if(!isset($to_execute) || empty($to_execute))
@@ -649,11 +631,17 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if(is_file($test_directory . "/pts-test-note"))
 	{
 		pts_add_test_note(trim(@file_get_contents($test_directory . "/pts-test-note")));
-		unlink($test_directory . "/pts-test-note");
+		unlink($test_directory . "pts-test-note");
 	}
 	if(empty($result_scale) && is_file($test_directory . "pts-results-scale"))
 	{
-			$result_scale = trim(@file_get_contents($test_directory . "pts-results-scale"));
+		$result_scale = trim(@file_get_contents($test_directory . "pts-results-scale"));
+		unlink($test_directory . "pts-results-scale");
+	}
+	if(empty($result_quantifier) && is_file($test_directory . "pts-results-quantifier"))
+	{
+		$result_quantifier = trim(@file_get_contents($test_directory . "pts-results-quantifier"));
+		unlink($test_directory . "pts-results-quantifier");
 	}
 
 	foreach(pts_env_variables() as $key => $value)
@@ -786,13 +774,16 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		echo "\n\n";
 	}
 
+	$pts_test_result->set_result($END_RESULT);
+	$pts_test_result->set_result_scale($result_scale);
+
 	pts_user_message($post_run_message);
 
 	pts_process_remove($test_identifier);
 	pts_module_process("__post_test_run");
 	pts_test_refresh_install_xml($test_identifier, ($time_test_end - $time_test_start));
 
-	return new pts_test_result($END_RESULT);
+	return $pts_test_result;
 }
 function pts_global_auto_tags($extra_attr = null)
 {

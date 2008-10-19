@@ -23,15 +23,29 @@
 
 class pts_test_result
 {
-	var $final_test_result;
+	var $result;
+	var $result_scale;
 
-	public function __construct($final_result = 0)
+	public function __construct($result = 0, $result_scale = "")
 	{
-		$this->final_test_result = $final_result;
+		$this->result = $result;
+		$this->result_scale = $result_scale;
+	}
+	public function set_result($result)
+	{
+		$this->result = $result;
+	}
+	public function set_result_scale($result_scale)
+	{
+		$this->result_scale = $result_scale;
 	}
 	public function get_result()
 	{
-		return $this->final_test_result;
+		return $this->result;
+	}
+	public function get_result_scale()
+	{
+		return $this->result_scale;
 	}
 }
 
