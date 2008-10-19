@@ -24,6 +24,7 @@ Phoronix Test Suite (Git)
 - pts-core: When removing a saved result, remove the SVG files too (just not PNG)
 - pts-core: Support for reading HDD model on Mac OS X (currently SATA only and limited to a single drive)
 - pts-core: Rework downloads.xml code to use pts_objects_test_downloads() with pts_test_file_download() class
+- pts-core: Clean-up test install code and move External Dependencies code to pts-functions-install_dependencies.php
 - pts: Update espeak test profile with eSpeak engine 1.39
 - pts: Change run-count for gtkperf test profile from 2000 to 5000
 - pts: Drop etc/ folder full of XML template files
