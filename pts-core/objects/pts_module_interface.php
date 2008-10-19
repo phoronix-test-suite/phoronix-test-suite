@@ -58,18 +58,22 @@ class pts_module_interface
 
 	public static function __pre_install_process($obj = null)
 	{
+		// Passed is an array of the test identifiers for all tests about to be installed
 		return;
 	}
 	public static function __pre_test_install($obj = null)
 	{
+		// Passed as the first argument to this function is the test identifier for the name of the test about to be installed
 		return;
 	}
 	public static function __post_test_install($obj = null)
 	{
+		// Passed as the first argument to this function is the test identifier for the name of the test just installed
 		return;
 	}
 	public static function __post_install_process($obj = null)
 	{
+		// Passed is an array of the test identifiers for all tests that were supposed to be just installed
 		return;
 	}
 
@@ -79,22 +83,27 @@ class pts_module_interface
 
 	public static function __pre_run_process($obj = null)
 	{
+		// Passed is an array of test identifiers for all tests scheduled to run
 		return;
 	}
 	public static function __pre_test_run($obj = null)
 	{
+		// Passed is a read-only copy of the current pts_test_result for the given test
 		return;
 	}
 	public static function __interim_test_run($obj = null)
 	{
+		// Passed is a read-only copy of the current pts_test_result for the given test
 		return;
 	}
 	public static function __post_test_run($obj = null)
 	{
+		// Passed is a read-only copy of the current pts_test_result for the given test
 		return;
 	}
 	public static function __post_run_process($obj = null)
 	{
+		// Passed is an array of test identifiers for all tests that were scheduled to run
 		return;
 	}
 }

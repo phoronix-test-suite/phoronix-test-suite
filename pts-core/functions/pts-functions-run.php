@@ -278,7 +278,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 	// Call the tests
 	if(!defined("PTS_RECURSE_CALL"))
 	{
-		pts_module_process("__pre_run_process");
+		pts_module_process("__pre_run_process", $tests_to_run);
 		define("PTS_RECURSE_CALL", 1);
 	}
 

@@ -44,10 +44,12 @@ function pts_start_install($TO_INSTALL)
 		}
 	}
 
+	pts_module_process("__pre_install_process", $tests);
 	foreach($tests as $test)
 	{
 		pts_install_test($test);
 	}
+	pts_module_process("__post_install_process", $tests);
 }
 function pts_download_test_files($identifier)
 {

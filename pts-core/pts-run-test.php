@@ -484,7 +484,7 @@ if(is_suite($TO_RUN))
 }
 
 define("PTS_TESTING_DONE", 1);
-pts_module_process("__post_run_process");
+pts_module_process("__post_run_process", $TEST_RUN);
 
 if($SAVE_RESULTS)
 {

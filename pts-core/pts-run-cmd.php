@@ -129,15 +129,12 @@ switch($COMMAND)
 				}
 			}
 
-			pts_module_process("__pre_install_process");
-
 			// Any external dependencies?
 			echo "\n";
 			pts_install_package_on_distribution($ARG_1);
 
 			// Install tests
 			pts_start_install($ARG_1);
-			pts_module_process("__post_install_process");
 
 			if(getenv("SILENT_INSTALL") !== false)
 			{
