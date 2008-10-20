@@ -93,11 +93,6 @@
 		<Description>Write Performance</Description>
 	</RunTest>
 	<RunTest>
-		<Test>sunflow</Test>
-	</RunTest>
-	<RunTest>
-		<Test>java-scimark2</Test>
-		<Arguments>TEST_FFT</Arguments>
-		<Description>FFT Performance</Description>
+		<Test>java</Test>
 	</RunTest>
 </PhoronixTestSuite>
