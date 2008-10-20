@@ -791,7 +791,7 @@ class pts_Graph
 		}
 
 		// TODO: Implement $font through style="font-family: $font;"
-			$img_object .= "<text x=\"" . $text_x . "\" y=\"" . $text_y . "\" fill=\"" . $color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\" >" . $string . "</text>\n";
+			$img_object .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\" >" . $string . "</text>\n";
 	}
 	protected function draw_rectangle(&$img_object, $x1, $y1, $width, $height, $background_color)
 	{
@@ -813,7 +813,7 @@ class pts_Graph
 				$y1 += $height;
 			}
 
-			$img_object .= "<rect x=\"" . $x1 . "\" y=\"" . $y1 . "\" width=\"" . abs($width) . "\" height=\"" . abs($height) . "\" fill=\"" . $background_color . "\" />\n";
+			$img_object .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . abs(round($width)) . "\" height=\"" . abs(round($height)) . "\" fill=\"" . $background_color . "\" />\n";
 		}
 	}
 	protected function draw_rectangle_border(&$img_object, $x1, $y1, $width, $height, $color)
@@ -824,7 +824,7 @@ class pts_Graph
 		}
 		else if($this->graph_renderer == "SVG")
 		{
-			$img_object .= "<rect x=\"" . $x1 . "\" y=\"" . $y1 . "\" width=\"" . ($width - $x1) . "\" height=\"" . ($height - $y1) . "\" fill=\"transparent\" stroke=\"" . $color . "\" stroke-width=\"1px\" />\n";
+			$img_object .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . round($width - $x1) . "\" height=\"" . round($height - $y1) . "\" fill=\"transparent\" stroke=\"" . $color . "\" stroke-width=\"1px\" />\n";
 		}
 	}
 	protected function draw_line(&$img_object, $left_start, $top_start, $from_left, $from_top, $color)
@@ -835,7 +835,7 @@ class pts_Graph
 		}
 		else if($this->graph_renderer == "SVG")
 		{
-			$img_object .= "<line x1=\"" . $left_start . "\" y1=\"" . $top_start . "\" x2=\"" . $from_left . "\" y2=\"" . $from_top . "\" stroke=\"" . $color . "\" stroke-width=\"1px\" />\n";
+			$img_object .= "<line x1=\"" . round($left_start) . "\" y1=\"" . round($top_start) . "\" x2=\"" . round($from_left) . "\" y2=\"" . round($from_top) . "\" stroke=\"" . $color . "\" stroke-width=\"1px\" />\n";
 		}
 	}
 	protected function return_ttf_string_dimensions($String, $Font, $Size, $Big = false)

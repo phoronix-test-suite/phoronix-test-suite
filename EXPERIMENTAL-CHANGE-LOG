@@ -38,6 +38,7 @@ Phoronix Test Suite (Git)
 - pts: Update the location of the ExternalDependencies tag in all relevant test profiles
 - pts: Set TimesToRun to 5 in timed-audio-encode base test
 - pts_Graph: Write Y-axis title horizontally along the top of the graph instead of vertically
+- pts_Graph: Round all dimensions and coordinates when using the SVG renderer
 
 Phoronix Test Suite 1.4.0 Alpha 3
 October 14, 2008
