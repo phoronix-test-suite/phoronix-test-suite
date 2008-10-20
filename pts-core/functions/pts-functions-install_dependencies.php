@@ -21,6 +21,19 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_install_package_on_distribution($identifier)
+{
+	// PTS External Dependencies install on distribution
+	if(getenv("SILENT_INSTALL") == false)
+	{
+		echo "Checking For Needed External Dependencies.\n";
+	}
+
+	$identifier = strtolower($identifier);
+	$install_objects = array();
+	pts_start_install_dependencies($identifier, $install_objects);
+	pts_install_packages_on_distribution_process($install_objects);
+}
 function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
 {
 	if(IS_SCTP_MODE)
@@ -95,10 +108,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 	{
 		$dependencies = explode(",", $dependencies);
 
-		for($i = 0; $i < count($dependencies); $i++)
-		{
-			$dependencies[$i] = trim($dependencies[$i]);
-		}
+		$dependencies = array_map("trim", $dependencies);
 
 		if(!defined("PTS_EXDEP_FIRST_RUN"))
 		{
@@ -167,19 +177,6 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 	}
 
 	return $generated;
-}
-function pts_install_package_on_distribution($identifier)
-{
-	// PTS External Dependencies install on distribution
-	if(getenv("SILENT_INSTALL") == false)
-	{
-		echo "Checking For Needed External Dependencies.\n";
-	}
-
-	$identifier = strtolower($identifier);
-	$install_objects = array();
-	pts_start_install_dependencies($identifier, $install_objects);
-	pts_install_packages_on_distribution_process($install_objects);
 }
 function pts_install_packages_on_distribution_process($install_objects)
 {

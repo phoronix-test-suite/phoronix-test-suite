@@ -31,13 +31,50 @@ if(is_file($argv[1]) && substr(basename($argv[1]), -4) == ".svg")
 {
 	// Image graph result driven test selection
 	$svg_parser = new tandem_XmlReader($argv[1]);
-	$svg_test = $svg_parser->getStatement("Test");
-	$svg_identifier = $svg_parser->getStatement("Identifier");
+	$svg_test = array_pop($svg_parser->getStatement("Test"));
+	$svg_identifier = array_pop($svg_parser->getStatement("Identifier"));
 
 	if(!empty($svg_test) && !empty($svg_identifier))
 	{
-		// TODO: Implement checks and then prompt user whether they want to
-		// run the test, suite, or global ID that the SVG references
+		$run_options = array();
+		if(is_test($svg_test))
+		{
+			array_push($run_options, array($svg_test, "Run this test (" . $svg_test . ")"));
+		}
+
+		if(is_suite($svg_identifier))
+		{
+			array_push($run_options, array($svg_identifier, "Run this suite (" . $svg_identifier . ")"));
+		}
+		else if(pts_is_global_id($svg_identifier))
+		{
+			array_push($run_options, array($svg_identifier, "Run this Phoronix Global comparison (" . $svg_identifier . ")"));
+		}
+
+		$run_option_count = count($run_options);
+		if($run_option_count > 0)
+		{
+			if($run_option_count == 1)
+			{
+				$TO_RUN = $run_options[0][0];
+			}
+			else
+			{
+				do
+				{
+					echo "\n";
+					for($i = 0; $i < $run_option_count; $i++)
+					{
+						echo ($i + 1) . ": " . $run_options[$i][1] . "\n";
+					}
+					echo "\nPlease Enter Your Choice: ";
+
+					$run_choice = trim(fgets(STDIN));
+				}
+				while($run_choice < 1 || $run_choice > $run_option_count);
+				$TO_RUN = $run_options[($run_choice - 1)][0];
+			}
+		}
 	}
 }
 

@@ -211,10 +211,7 @@ function pts_estimated_time_string($time)
 	{
 		$time_trim = explode(",", $time_trim);
 
-		for($i = 0; $i < count($time_trim); $i++)
-		{
-			$time_trim[$i] = trim($time_trim[$i]);
-		}
+		$time_trim = array_map("trim", $time_trim);
 
 		if(count($time_trim) == 2)
 		{
