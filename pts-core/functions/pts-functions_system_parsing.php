@@ -646,6 +646,52 @@ function read_osx_system_profiler($data_type, $object)
 	
 	return $value;
 }
+function read_dmidecode($type, $sub_type, $object, $find_once = false)
+{
+	// Read Linux dmidecode
+	$value = array();
+
+	if(is_readable("/dev/mem"))
+	{
+		$dmidecode = shell_exec("dmidecode --type " . $type . " 2>&1");
+		$sub_type = "\n" . $sub_type . "\n";
+
+		do
+		{
+			$sub_type_start = strpos($dmidecode, $sub_type);
+
+			if($sub_type_start !== false)
+			{
+				$dmidecode = substr($dmidecode, ($sub_type_start + strlen($sub_type)));
+				$dmidecode_section = substr($dmidecode, 0, strpos($dmidecode, "\n\n"));
+				$dmidecode = substr($dmidecode, strlen($dmidecode_section));
+				$dmidecode_elements = explode("\n", $dmidecode_section);
+
+				for($i = 0; $i < count($dmidecode_elements) && ($find_once == false || $value == false); $i++)
+				{
+					$dmidecode_r = explode(":", $dmidecode_elements[$i]);
+
+					if(trim($dmidecode_r[0]) == $object && isset($dmidecode_r[1]))
+					{
+						array_push($value, trim($dmidecode_r[1]));
+					}
+				}
+			}
+		}
+		while($sub_type_start !== false && $find_once == false);
+	}
+
+	if(count($value) == 0)
+	{
+		$value = false;
+	}
+	else if($fine_once != false && count($value) == 1)
+	{
+		$value = $value[0];
+	}
+
+	return $value;
+}
 function read_sun_ddu_dmi_info($object)
 {
 	// Read Sun's Device Driver Utility for OpenSolaris
