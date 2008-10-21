@@ -667,13 +667,15 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false)
 				$dmidecode = substr($dmidecode, strlen($dmidecode_section));
 				$dmidecode_elements = explode("\n", $dmidecode_section);
 
-				for($i = 0; $i < count($dmidecode_elements) && ($find_once == false || $value == false); $i++)
+				$found_in_section = false;
+				for($i = 0; $i < count($dmidecode_elements) && $found_in_section == false; $i++)
 				{
 					$dmidecode_r = explode(":", $dmidecode_elements[$i]);
 
 					if(trim($dmidecode_r[0]) == $object && isset($dmidecode_r[1]))
 					{
 						array_push($value, trim($dmidecode_r[1]));
+						$found_in_section = true;
 					}
 				}
 			}
@@ -685,7 +687,7 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false)
 	{
 		$value = false;
 	}
-	else if($fine_once != false && count($value) == 1)
+	else if($find_once != false && count($value) == 1)
 	{
 		$value = $value[0];
 	}

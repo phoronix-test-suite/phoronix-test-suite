@@ -34,7 +34,7 @@ function pts_hw_string()
 	$hw_string = "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . "), ";
 	$hw_string .= "Motherboard: " . main_system_hardware_string() . ", ";
 	$hw_string .= "Chipset: " . motherboard_chipset_string() . ", ";
-	$hw_string .= "System Memory: " . memory_mb_capacity() . "MB, ";
+	$hw_string .= "System Memory: " . system_memory_string() . ", ";
 	$hw_string .= "Disk: " . system_hard_disks() . ", ";
 	$hw_string .= "Graphics: " . graphics_processor_string() . graphics_frequency_string() . ", ";
 	$hw_string .= "Screen Resolution: " . current_screen_resolution() . " ";

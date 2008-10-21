@@ -309,6 +309,42 @@ function system_disk_total()
 	// Returns amoung of disk space
 	return ceil(disk_total_space("/") / 1073741824);
 }
+function system_memory_string()
+{
+	$mem_string = null;
+
+	$mem_size = read_dmidecode("memory", "Memory Device", "Size");
+	$mem_speed = read_dmidecode("memory", "Memory Device", "Speed", true);
+	$mem_type = read_dmidecode("memory", "Memory Device", "Type", true);
+
+	if($mem_size != false && $mem_speed != false && $mem_type != false)
+	{
+		$mem_count = count($mem_size);
+
+		if(($cut = strpos($mem_speed, " (")) > 0)
+		{
+			$mem_speed = substr($mem_speed, 0, $cut );
+		}
+
+		$mem_prefix = $mem_type . "-" . str_replace(" ", "", $mem_speed);
+
+		if($mem_count > 1 && count(array_unique($mem_size)) > 1)
+		{
+			$mem_string = implode(" + ", $mem_size) . " " . $mem_prefix;
+		}
+		else
+		{
+			$mem_string = $mem_count . " x " . $mem_size[0] . " " . $mem_prefix; 
+		}
+	}
+
+	if(empty($mem_string))
+	{
+		$mem_string = memory_mb_capacity() . "MB";
+	}
+
+	return $mem_string;
+}
 function memory_mb_capacity()
 {
 	// Returns physical memory capacity
