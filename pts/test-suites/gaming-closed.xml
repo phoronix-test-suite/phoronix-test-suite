@@ -1,16 +1,11 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<TestType>System</TestType>
 		<Title>Closed-Source Gaming</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The gaming test suite is made up of all game tests that are available for free download but are not under an open-source license, this does include free demos for retail games.</Description>
 	</SuiteInformation>
-	<RunTest>
-		<Test>et</Test>
-		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
 	<RunTest>
 		<Test>etqw-demo</Test>
 		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>

@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<TestType>System</TestType>
 		<Title>Universe Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -14,8 +14,5 @@
 	</RunTest>
 	<RunTest>
 		<Test>opengl-demos</Test>
-	</RunTest>
-	<RunTest>
-		<Test>opengl-workstation</Test>
 	</RunTest>
 </PhoronixTestSuite>
