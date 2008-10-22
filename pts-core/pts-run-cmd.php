@@ -680,6 +680,7 @@ switch($COMMAND)
 		if(!empty($upload_url))
 		{
 			echo "Results Uploaded To: " . $upload_url . "\n\n";
+			pts_module_process("__event_global_upload", $upload_url);
 		}
 		else
 		{

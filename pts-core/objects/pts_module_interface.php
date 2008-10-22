@@ -106,6 +106,17 @@ class pts_module_interface
 		// Passed is an array of test identifiers for all tests that were scheduled to run
 		return;
 	}
+
+	//
+	// Event-driven Functions
+	//
+
+
+	public static function __event_global_upload($obj = null)
+	{
+		// Passed is a string of the URL for the test results uploaded to Phoronix Global
+		return;
+	}
 }
 
 ?>

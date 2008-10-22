@@ -562,6 +562,7 @@ if($SAVE_RESULTS)
 			if(!empty($upload_url))
 			{
 				echo "\nResults Uploaded To: " . $upload_url . "\n";
+				pts_module_process("__event_global_upload", $upload_url);
 				display_web_browser($upload_url, "Do you want to launch Phoronix Global", true);
 			}
 			else

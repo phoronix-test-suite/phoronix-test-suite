@@ -29,6 +29,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support for running a test from a PTS graph file that's rendered as an SVG and then the user will be prompted with available choices
 - pts-core: Add support for reading DMI information from dmidecode where available through the read_dmidecode() function
 - pts-core: Add Linux support for reading DIMM speed, capacity, and bank information through DMI
+- pts-core: Add __event_global_upload to PTS modules support for calling this function and passing the Phoronix Global URL when results have been uploaded
 - pts: Update espeak test profile with eSpeak engine 1.39
 - pts: Change run-count for gtkperf test profile from 2000 to 5000
 - pts: Drop etc/ folder full of XML template files
