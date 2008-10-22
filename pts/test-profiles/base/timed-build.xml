@@ -8,7 +8,7 @@
 	</TestProfile>
 	<TestInformation>
 		<SubTitle>Time To Compile</SubTitle>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<TimesToRun>2</TimesToRun>
 		<Proportion>LIB</Proportion>

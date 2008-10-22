@@ -323,7 +323,7 @@ function system_memory_string()
 
 		if(($cut = strpos($mem_speed, " (")) > 0)
 		{
-			$mem_speed = substr($mem_speed, 0, $cut );
+			$mem_speed = substr($mem_speed, 0, $cut);
 		}
 
 		$mem_prefix = $mem_type . "-" . str_replace(" ", "", $mem_speed);
