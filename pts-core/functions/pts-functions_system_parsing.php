@@ -646,13 +646,16 @@ function read_osx_system_profiler($data_type, $object)
 	
 	return $value;
 }
-function read_dmidecode($type, $sub_type, $object, $find_once = false)
+function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore = null)
 {
 	// Read Linux dmidecode
 	$value = array();
 
 	if(is_readable("/dev/mem"))
 	{
+		if(!is_array($ignore))
+			$ignore = array($ignore);
+
 		$dmidecode = shell_exec("dmidecode --type " . $type . " 2>&1");
 		$sub_type = "\n" . $sub_type . "\n";
 
@@ -672,7 +675,7 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false)
 				{
 					$dmidecode_r = explode(":", $dmidecode_elements[$i]);
 
-					if(trim($dmidecode_r[0]) == $object && isset($dmidecode_r[1]))
+					if(trim($dmidecode_r[0]) == $object && isset($dmidecode_r[1]) && !in_array(trim($dmidecode_r[1]), $ignore))
 					{
 						array_push($value, trim($dmidecode_r[1]));
 						$found_in_section = true;

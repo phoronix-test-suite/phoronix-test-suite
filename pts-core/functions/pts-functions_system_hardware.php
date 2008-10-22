@@ -44,7 +44,7 @@ function main_system_hardware_string()
 	{	
 		$vendor = read_system_hal(array("system.hardware.vendor", "system.board.vendor"));
 		$product = read_system_hal(array("system.hardware.product", "system.board.product"));
-		$version = read_system_hal("system.hardware.version");
+		$version = read_system_hal(array("system.hardware.version", "smbios.system.version"));
 
 		if($vendor != "Unknown")
 		{
@@ -313,8 +313,8 @@ function system_memory_string()
 {
 	$mem_string = null;
 
-	$mem_size = read_dmidecode("memory", "Memory Device", "Size");
-	$mem_speed = read_dmidecode("memory", "Memory Device", "Speed", true);
+	$mem_size = read_dmidecode("memory", "Memory Device", "Size", false, "Not Installed");
+	$mem_speed = read_dmidecode("memory", "Memory Device", "Speed", true, "Unknown");
 	$mem_type = read_dmidecode("memory", "Memory Device", "Type", true);
 
 	if($mem_size != false && $mem_speed != false && $mem_type != false)
