@@ -1,5 +1,210 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite 1.4.0 Beta 1
+October 23, 2008
+
+- pts-core: Improve detection of graphics cards using common open-source drivers
+- pts-core: Fix regression in pts_trim_double() that would return an array instead of float-formatted string
+- pts-core: Add support for detecting php binary at /usr/php/bin/php
+- pts-core: Improve OpenSolaris hardware detection with motherboard and processor
+- pts-core: Make micro-timer framework use $PHP_BIN instead of php so that it can run on OpenSolaris
+- pts-core: Fix bug in pts_contained_tests() that caused Phoronix Global IDs to not be detected
+- pts-core: Track motherboard, processor, OS, and compiler version when a test is installed, and if any one ends up getting changed, force re-install of that test
+- pts-core: Unify pts_test_generate_install_xml() and pts_test_refresh_install_xml() into pts_test_refresh_install_xml()
+- pts-core: Don't report "Test Configuration" header for tests where there are no configuration options
+- pts-core: Add and implement pts_test_result() class
+- pts-core: Delete pts-results-description, pts-test-version, and pts-results-scale after reading them
+- pts-core: Add pts_add_test_note() function for reporting items to list in the test notes of saved results
+- pts-core: Allow test profiles to append a test note to a results file by writing the information to pts-test-note in the test installation directory
+- pts-core: Change directory to the test installation directory before running post.sh / post.php
+- pts-core: Unify running pre/post/parse-results script running with pts_call_test_script()
+- pts-core: Support pts_call_test_script() using Cascading Test Profiles so that extended pre/post/parse-results scripts can be run
+- pts-core: Move ExternalDependencies tag location from TestInformation to Test Profile block (This breaks compatibility with earlier test profiles!)
+- pts-core: Start reordering and optimizing pts-functions-run.php code
+- pts-core: Allow select objects to be exposed to PTS modules when calling them, by passing them as the second argument in pts_module_call()
+- pts-core: When removing a saved result, remove the SVG files too (just not PNG)
+- pts-core: Support for reading HDD model on Mac OS X (currently SATA only and limited to a single drive)
+- pts-core: Rework downloads.xml code to use pts_objects_test_downloads() with pts_test_file_download() class
+- pts-core: Clean-up test install code and move External Dependencies code to pts-functions-install_dependencies.php
+- pts-core: Pass select variables to PTS modules and describe the functionality in pts_module_interface
+- pts-core: Support for running a test from a PTS graph file that's rendered as an SVG and then the user will be prompted with available choices
+- pts-core: Add support for reading DMI information from dmidecode where available through the read_dmidecode() function
+- pts-core: Add Linux support for reading DIMM speed, capacity, and bank information through DMI
+- pts-core: Add __event_global_upload to PTS modules support for calling this function and passing the Phoronix Global URL when results have been uploaded
+- pts: Update espeak test profile with eSpeak engine 1.39
+- pts: Change run-count for gtkperf test profile from 2000 to 5000
+- pts: Drop etc/ folder full of XML template files
+- pts: Fix compress-* test profiles with the proper 2GB file size
+- pts: OpenSolaris External Dependencies XML was named opensolaris-package.xml when it should be named opensolaris-packages.xml, now fixed
+- pts: Update all test profiles as to whether they support Solaris/OpenSolaris
+- pts: Add nevada test suite for key OpenSolaris tests
+- pts: Add java-environment base test that provides the java external dependency and reports Java version to test notes
+- pts: Update the location of the ExternalDependencies tag in all relevant test profiles
+- pts: Set TimesToRun to 5 in timed-audio-encode base test
+- pts: Add bork test profile for Java Bork File Encrypter test
+- pts: Set TimesToRun to 3 for timed-build instead of 1
+- pts_Graph: Write Y-axis title horizontally along the top of the graph instead of vertically
+- pts_Graph: Round all dimensions and coordinates when using the SVG renderer
+
+Phoronix Test Suite 1.4.0 Alpha 3
+October 14, 2008
+
+- pts-core: Fix regression that broke compatibility to run phoronix-test-suite benchmark <Phoronix Global ID>
+- pts-core: Embed hidden information in the SVG graph files that identify the test, GlobalID, and user, to provide new end-user options in the future
+- pts-core: Don't complain about test mismatch in merge function if using a Global ID
+- pts-core: Prepatory work for SVG-driven test execution / identification
+- pts-core: Add support for reading hard disk model number and true disk capacity
+- pts-core: Fix CPU frequency detection for Intel Xeon LV processors and potentially other CPU families
+- pts-core: If PTS micro-timer is less than three seconds, return zero as the test likely failed
+- pts-core: Add RunMode tag to suite XML and if it's set to "PCQS", enable IS_PCQS_MODE
+- pts-core: Add RequiresCoreVersion tag if the test profile is only compatible with select versions of the Phoronix Test Suite
+- pts-core: Keep a running average how long it takes to run a given test. This is stored in the AverageRunTime tag within the pts-install.xml
+- pts-core: Show average run-time with info <test> command
+- pts-core: Don't pass $test_results as an argument to parse-results.sh or parse-results.php with tests using $LOG_FILE
+- pts-core: Change format of list-test-usage
+- pts-core: When running list-suites, don't show suites that aren't supported at all by the installed software/hardware and indicate only partially supported suites
+- pts-core: Add average run-time to list-test-usage
+- pts-core: Restructure the end-user run-time variables code and add support for $HOSTNAME
+- pts-core: Dump end-user run-time variables with diagnostics option
+- pts: Move more test profiles to using $LOG_FILE for result information
+- pts: Update openssl test profile to OpenSSL version 0.9.8i
+- pts: Update encode-mp3 test profile to LAME version 3.98.2
+- pts: Update sqlite test profile to SQLite version 3.6.3
+- pts: Update ramspeed test profile to RAMspeed version 2.5.2
+- pts: With gnupg test profile use a 2GB file to encrypt instead of 1GB
+- pts: With compress-gzip test profile use a 2GB file to compress instead of 1GB
+- pts: With compress-lzma test profile use a 2GB file to compress instead of 1GB
+- pts: With compress-pbzip2 test profile use a 2GB file to compress instead of 1GB
+- pts: Many test profile updates
+- pts: Mandatory major version bump for most test profiles
+- pts_Graph: Set viewbox in SVG renderer
+- documentation: Update profile writing how-to with latest pts-core features
+- system_monitor: Add support for using the SVG renderer in pts_Graph
+
+Phoronix Test Suite 1.4.0 Alpha 2
+October 6, 2008
+
+- pts-core: Improve AMD motherboard chipset detection
+- pts-core: Add detection support for ATI/AMD Southbridge parts
+- pts-core: Strip "Host Bridge" in pts_clean_information_string()
+- pts-core: Strip "DRAM Controller" in pts_clean_information_string()
+- pts-core: When rebuilding the modules-config.xml table, check if the module exists for each identifier otherwise remove it from the list
+- pts-core: Add support for installing the Phoronix Certification & Qualification Suite with user agreement support
+- pts-core: Add IS_FIRST_RUN_TODAY that is set to TRUE if this is the first time PTS has been run that day
+- pts-core: Add pts_available_tests_array(), pts_installed_tests_array(), and pts_available_suites_array()
+- pts-core: Use pts_test_tandem_XmlReader() in list-tests option
+- pts-core: Fix regression that caused info <test> with a valid test identifier not to be recognized
+- pts-core: Add PostRunMessage tag for showing the user a message after the test has run
+- pts-core: Add PostInstallMessage tag for showing the user a message after the test has run
+- pts-core: Add PreRunMessage tag to the suite specification for showing the user a message before testing begins (similar to PreRunMessage in tests)
+- pts-core: Add PostRunMessage tag to the suite specification for showing the user a message before testing begins (similar to PostRunMessage in tests)
+- pts-core: Add support for OS-specific test profiles through <OS_PREFIX>_<test> name but is accessible by just running <test>
+- pts-core: Don't call wget directly to download files but use pts_download()
+- pts-core: Set user-agent in pts_download() to PhoronixTestSuite/<PTS Codename>
+- pts-core: Add support for using curl to download files instead of just wget
+- pts-core: Clean-up SH module calls by using the new pts_sh_module_call()
+- pts-core: Add pts_remove() as a recursive file/directory removing function
+- pts-core: Fix fatal error with list-modules when a module unloads itself and is then re-included
+- pts-core: Clean-up PHP module calls by using the new pts_php_module_call()
+- pts-core: Add pts_module_call() as a meta function for pts_sh_module_call() and pts_php_module_call()
+- pts-core: Move Phoronix Global tag creation code into pts_promt_user_tags()
+- pts-core: Move test note creation code for saved results into pts_generate_test_notes()
+- pts-core: Update upload-results to use new functions
+- pts-core: Various minor improvements in pts-run-cmd.php
+- pts-core: Move test option handling to using pts_test_options() and new pts_test_option() objects
+- pts-core: Fix regression from Alpha 1 that caused no test information to be reported with list-test-usage option
+- pts-core: Add ArgumentPrefix tag to test profile support as a replacement to using the ArgumentName tag
+- pts-core: Add ArgumentPostfix tag that is a string to be post-fixed to the end of the argument, similar to ArgumentName/ArgumentPrefix
+- pts-core: Add $LOG_FILE environmental variable during testing that the test profiles can write their log file / results to
+- pts-core: Add option to user-config.xml in SaveBenchmarkLogs with setting to TRUE will backup any tests utilizing the log file ($LOG_FILE)
+- pts-core: In user-config.xml, change LogVerboseSystemDetails tag to SaveSystemDetails
+- pts-core: If SAVE_BENCHMARK_LOGS environmental variable is set, is the same as setting SaveBenchmarkLogs to TRUE for that run
+- pts-core: If SAVE_SYSTEM_DETAILS environmental variable is set, is the same as setting SaveSystemDetails to TRUE for that run
+- pts-core: Start on IS_PCQS_MODE define
+- pts-core: Cleanup pts-functions_system.php and move most of it to pts-functions_system_hardware.php and pts-functions_system_software.php
+- pts-core: Drop $OS from pts_env_variables() as instead test profile maintainers should use $OPERATING_SYSTEM
+- pts-core: Switch back to using read_amd_pcsdb() with read_amd_pcsdb_direct_parser() fallback instead of just read_amd_pcsdb_direct_parser() in hopes AMD doesn't break aticonfig again
+- pts-core: Add support for using hddtemp to read hard disk drive temperature on Linux
+- pts-core: graphics_gpu_usage() returns -1 on failure
+- pts-core: Add support for reading software and hardware information on Mac OS X
+- pts-core: Use open command to launch web browser on Mac OS X
+- pts-core: Add UnsupportedPlatforms tag to test profiles, which is evaluated the opposite of SupportedPlatforms
+- pts-core: Add PlatformSpecific tag to download file XML for OS-specific files
+- pts-core: Add ArchitectureSpecific tag to download file XML for hardware architecture-specific files
+- pts-core: When RandR detection fails in xrandr_available_modes(), apply some logic to sort the stock modes that should work
+- pts-core: Add in a micro-timer framework that is platform universal
+- pts-core: Implement support for parse-results.sh
+- pts-core: Default to 3 runs for each test
+- pts-core: Reformat list-tests for better alignment and not showing redundant information
+- pts-core: Add remove-installed-test to remove a test installation
+- pts-core: Add a index.html forwarder to each result file and have the launch browser script open that, since on some systems .xml opens up in an editor instead of browser by default
+- pts-core: When installing a suite and a test fails to download a file due to an MD5 mismatch, continue on with next test instead of exiting
+- pts-core: Avoid overusing pts_exit() and replace with improved logic
+- pts-core: Add support for backing up downloads to the cache from base tests being extended
+- pts: Move pcqs tests out of tree
+- pts: Switch all relevant test profiles using ArgumentName to using ArgumentPrefix
+- pts: Move the byte test profile to using the new $LOG_FILE capability for an example and for testing
+- pts: Move over all relevant tests to using the new universal micro-timer functionality
+- pts: Add darwin test suite for the main Mac OS X tests
+- pts: Add mac-packages.xml that contains the location of the OpenAL framework since it ships by default with OS X so suppress the warning message
+- pts_Graph: Provide experimental SVG rendering support for graphing objects, more tweaking, testing, and improvements still needed
+- update_checker: Move code to check for PTS updates out of pts-core and into its own module
+- system_monitor: Add support for monitoring hard drive temperature using hdd.temp through system_hdd_temperature() within pts-core
+- install-sh: Remove the Phoronix Test Suite shared and documentation files prior to copying over new files, in case some files were changed removed in new release
+
+Phoronix Test Suite 1.4.0 Alpha 1
+September 18, 2008
+
+- pts-core: Change test/suite type strings to define statements
+- pts-core: Add test type caching support
+- pts-core: Create the unified PTS test/suite type handler
+- pts-core: Clean-up some test installation functions
+- pts-core: Provide new architecture for test/suite checking through the type handler
+- pts-core: Drop PTS_USER_DIR usage
+- pts-core: Add support for having tests and suites stored locally within ~/.phoronix-test-suite/ as an option for users installing new tests/suites or third-party files
+- pts-core: Add support so that a test profile can extend another test, for Cascading Test Profile support. This is similar to inheritance in programming languages or Cascading Style Sheets.
+- pts-core: Add in support for Self-Contained Test Profiles (SCTP) that initiate the Phoronix Test Suite and runs a stand-alone test
+- pts-core: A test profile isn't real: likely incomplete or just a base test within a Self-Contained Test Profile extension
+- pts-core: Report identifiers of test profiles being extended to the test profiles being run
+- pts-core: Drop PTS shared download support for test profiles, instead they should be using the Cascading Test Profiles functionality
+- pts-core: Don't allow the user to save a test result file if it's the same name as a real test profile or test suite
+- pts-core: Add Mac OS X operating system detection support (using the IS_MACOSX define)
+- pts-core: Improve VirtualBox virtualization detection for guest operating systems running
+- pts-core: Add $COMPILER and $VIDEO_DRIVER user variables when saving the results and supplying the test identifier
+- pts-core: Let the size of files being downloaded be specified individually within the test's downloads.xml profile instead of a generic one through the test profile XML file
+- pts-core: When downloading files for tests, don't first download the file to the PTS temporary directory, but just rename it initially within the test's environment directory
+- pts-core: When running a test (or suite that contains a test) on an unsupported architecture or platform, don't abruptly exit
+- pts-core: Add module_setup() to pts_module_interface for returning an array of objects that can be configured by the end-user
+- pts-core: Add support for persistent configuration options that end-users can easily adjust for PTS modules by running "phoronix-test-suite module-setup MODULE-NAME" that are stored to ~/.phoronix-test-suite/modules-config.xml
+- pts-core: Add pts_module::set_option() function to allow a module itself to set a persistent configuration option
+- pts-core: Add PTS_QUIT module return type for having the Phoronix Test Suite stop immediately and prematurely (this should only be used in the event of reaching a fatal bug or other problem)
+- pts-core: Have the Phoronix Test Suite check once a day to see if the version in use is the latest version, otherwise inform the user of an available update
+- pts-core: Add fall-back support for reading the PCI subsystem vendor if the motherboard vendor can't be determined using the other HAL information
+- pts-core: Add a PreInstallMessage tag for test profiles that will be shown to the user prior to installing the test
+- pts-core: Don't have PreRunMessage or PreInstallMessage hang when in batch mode
+- pts-core: pts_find_file() -> pts_find_result_file()
+- pts-core: Add initial support for detecting the motherboard Southbridge where applicable
+- pts-core: Omit OEM in read_hal()
+- pts-core: With list-tests, don't list tests that aren't compliant with the running system's architecture and platform
+- pts-core: Add support so test options can be set as an environment variable by using <TEST NAME UPPER_CASE>_<NUM OPTION>=<INDEX OF REQUEST>
+- pts-core: Switch to using php_uname() in pts-init.php
+- pts-core: Add support for reading all ATI forced anti-aliasing types: Box, Narrow-tent, Wide-tent, and Edge-detect
+- pts: Switch all audio encoding tests to extend a timed-audio-encode base test instead of all tests having some of the same code copied throughout
+- pts: Switch all build tests to extend a timed-build base test instead of all tests having some of the same code copied throughout
+- pts: Switch all video tests to extend a video-sample base test instead of all tests having some of the same code copied throughout
+- pts: Change all current and relevant test profiles shipping the Phoronix Test Suite to using the FileSize tags within their downloads.xml files
+- pts: Improve the reported environment size for many of the test profiles
+- pts: Update compress-7zip test profile to use p7zip 4.58
+- pts: Add World of Padman test profile (named padman)
+- pts: Add padman to ioquake3-games test suite
+- pts: Update Mandriva Linux packages XML file (Thanks To Stéphane Téletchéa)
+- tandem_Xml: Add a pts_test_tandem_XmlReader object that extends tandem_XmlReader but takes advantage of the handleXmlZeroTagFallback
+- tandem_Xml: Add fallback function handler support when a tag isn't found
+- graphics_event_checker: Add graphics_event_checker module that makes sure the graphics system isn't messed up or having unintended options enabled while tests are running
+- graphics_event_checker: Merge the gpu_error_counter module functionality into the graphics_event_checker module
+- timed_screenshot: A module that takes a screenshot while tests are running at a pre-defined interval
+- documentation: Add basic documentation concerning the Self-Contained Test Profiles (SCTP) XML tags that are added
+
 Phoronix Test Suite 1.2.2
 September 13, 2008 (Hot-Fix Release)
 

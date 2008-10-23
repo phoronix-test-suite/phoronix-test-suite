@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "1.4.0a3");
+define("PTS_VERSION", "1.4.0b1");
 define("PTS_CODENAME", "ORKDAL");
 define("PTS_TYPE", "DESKTOP");
 
