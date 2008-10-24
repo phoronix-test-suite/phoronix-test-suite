@@ -193,7 +193,7 @@ function pts_module_call($module, $process, $object_pass = null)
 	{
 		$module_response = pts_php_module_call($module, $process, $object_pass);
 	}
-	else
+	else if(in_array($process, pts_module_processes()))
 	{
 		$module_response = pts_sh_module_call($module, $process);
 	}
