@@ -6,7 +6,7 @@
 			<FileSize>4734599</FileSize>
 		</Package>
 		<Package>
-			<URL>http://us3.php.net/get/php-5.2.5.tar.bz2/from/us2.php.net/mirror</URL>
+			<URL>http://it.php.net/distributions/php-5.2.5.tar.bz2, http://no2.php.net/distributions/php-5.2.5.tar.bz2, http://us.php.net/distributions/php-5.2.5.tar.bz2, http://us2.php.net/distributions/php-5.2.5.tar.bz2, http://au.php.net/distributions/php-5.2.5.tar.bz2</URL>
 			<MD5>1fe14ca892460b09f06729941a1bb605</MD5>
 			<FileName>php-5.2.5.tar.bz2</FileName>
 			<FileSize>7773024</FileSize>
