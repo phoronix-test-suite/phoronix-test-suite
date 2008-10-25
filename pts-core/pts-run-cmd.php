@@ -56,32 +56,6 @@ else
 
 switch($COMMAND)
 {
-	case "LIST_SAVED_RESULTS":
-		echo pts_string_header("Phoronix Test Suite - Saved Results");
-		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
-		{
-			$saved_identifier = array_pop(explode("/", dirname($saved_results_file)));
-			$xml_parser = new tandem_XmlReader($saved_results_file);
-			$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
-			$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
-			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
-			$results_xml = new tandem_XmlReader($raw_results[0]);
-			$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
-
-			if(!empty($title))
-			{
-				echo $title . "\n";
-				printf("Saved Name: %-18ls Test: %-18ls \n", $saved_identifier, $suite);
-
-				foreach($identifiers as $id)
-				{
-					echo "\t- " . $id . "\n";
-				}
-
-				echo "\n";
-			}
-		}
-		break;
 	case "FORCE_INSTALL_TEST":
 	case "INSTALL_TEST":
 		include_once("pts-core/functions/pts-functions-install.php");
@@ -349,6 +323,66 @@ switch($COMMAND)
 			{
 				printf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $test_version, $test_time_install, $test_time_lastrun, $test_avg_runtime, $test_times_run);
 			}
+		}
+		echo "\n";
+		break;
+	case "LIST_SAVED_RESULTS":
+		echo pts_string_header("Phoronix Test Suite - Saved Results");
+		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
+		{
+			$saved_identifier = array_pop(explode("/", dirname($saved_results_file)));
+			$xml_parser = new tandem_XmlReader($saved_results_file);
+			$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
+			$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+			$results_xml = new tandem_XmlReader($raw_results[0]);
+			$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
+
+			if(!empty($title))
+			{
+				echo $title . "\n";
+				printf("Saved Name: %-18ls Test: %-18ls \n", $saved_identifier, $suite);
+
+				foreach($identifiers as $id)
+				{
+					echo "\t- " . $id . "\n";
+				}
+
+				echo "\n";
+			}
+		}
+		break;
+	case "RESULT_INFO":
+		if(is_file(($saved_results_file = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml")))
+		{
+			$xml_parser = new tandem_XmlReader($saved_results_file);
+			$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
+			$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+			$results_unique_tests = array_unique($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE));
+			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+			$results_xml = new tandem_XmlReader($raw_results[0]);
+			$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
+
+			echo "\nTitle: " . $title . "\nIdentifier: " . $ARG_1 . "\nTest: " . $suite . "\n";
+
+			echo "\nTest Result Identifiers:\n";
+			foreach($identifiers as $id)
+			{
+				echo "- " . $id . "\n";
+			}
+
+			if(count($results_unique_tests) > 1)
+			{
+				echo "\nContained Tests:\n";
+				foreach($results_unique_tests as $test)
+				{
+					echo "- " . $test . "\n";
+				}
+			}
+		}
+		else
+		{
+			echo "\n" . $ARG_1 . " isn't a valid results file.\n";
 		}
 		echo "\n";
 		break;

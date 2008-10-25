@@ -161,6 +161,9 @@ case "$1" in
 "list-results" | "list-saved-results" | "list-test-results")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
 	;;
+"result-info" | "results-info")
+	$PHP_BIN pts-core/pts-run-cmd.php RESULT_INFO $OPTION_ARG
+	;;
 "show-result" | "show-results" | "view-result" | "view-results")
 	$PHP_BIN pts-core/pts-run-cmd.php SHOW_RESULT $OPTION_ARG
 	;;
