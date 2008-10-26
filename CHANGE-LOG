@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Only call a PTS SH module if the command being called is in pts_module_processes() but no pts_module_events() support
 - pts-core: Add result-info option for showing basic information about a saved result file
 - pts: Update build-php php-5.2.5 download links
+- pts: Add new mirrors for lzma-4.32.6.tar.gz in compress-lzma test profile since current ones have been removed
 
 Phoronix Test Suite 1.4.0 Beta 1
 October 23, 2008

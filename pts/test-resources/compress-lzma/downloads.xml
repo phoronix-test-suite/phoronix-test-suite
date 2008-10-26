@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://tukaani.org/lzma/lzma-4.32.6.tar.gz, http://download.snake.de/distfiles/lzma-4.32.6.tar.gz</URL>
+			<URL>http://mirror.mcs.anl.gov/pub/gentoo/distfiles/lzma-4.32.6.tar.gz, http://www.gtlib.gatech.edu/pub/gentoo/distfiles/lzma-4.32.6.tar.gz, http://mirror.gentoo.no/distfiles/lzma-4.32.6.tar.gz, http://gentoo.virginmedia.com/distfiles/lzma-4.32.6.tar.gz</URL>
 			<MD5>211d6207fdd7f20eaaae1bbdeb357d3a</MD5>
 			<FileSize>478661</FileSize>
 		</Package>
