@@ -49,7 +49,8 @@ define("SCRIPT_DISTRO_DIR", PTS_DIR . "pts/distro-scripts/");
 // Misc Locations
 define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("MODULE_DIR", PTS_DIR . "pts-core/modules/");
-define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/pts-results-viewer/");
+define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/results-viewer/");
+define("TEST_LIBRARIES_DIR", PTS_DIR . "pts-core/test-libraries/");
 define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 // Test & Suite Locations

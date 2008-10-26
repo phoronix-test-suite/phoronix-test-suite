@@ -473,8 +473,8 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	for($i = 0; $i < $times_to_run; $i++)
 	{
 		$benchmark_log_file = TEST_ENV_DIR . $test_identifier . "/" . $test_identifier . "-" . THIS_RUN_TIME . "-" . ($i + 1) . ".log";
-		$start_timer = PTS_DIR . "pts-core/test-libraries/timer-start.sh";
-		$stop_timer = PTS_DIR . "pts-core/test-libraries/timer-stop.sh";
+		$start_timer = TEST_LIBRARIES_DIR . "timer-start.sh";
+		$stop_timer = TEST_LIBRARIES_DIR . "timer-stop.sh";
 		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array("LOG_FILE" => $benchmark_log_file, "TIMER_START" => $start_timer, "TIMER_STOP" => $stop_timer, "PHP_BIN" => PHP_BIN));
 
 		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");

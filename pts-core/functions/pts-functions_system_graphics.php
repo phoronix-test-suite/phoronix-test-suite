@@ -869,7 +869,7 @@ function graphics_memory_capacity()
 		{
 			// Attempt Video RAM detection using X log
 			// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
-			// xf86-video-ati and xf86-video-radeonhd also report their memory information in a similar format
+			// xf86-video-ati, xf86-video-intel, and xf86-video-radeonhd also report their memory information in a similar format
 
 			$info = shell_exec("cat /var/log/Xorg.0.log | grep -i VideoRAM");
 
