@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Only call a PTS SH module if the command being called is in pts_module_processes() but no pts_module_events() support
 - pts-core: Add result-info option for showing basic information about a saved result file
 - pts-core: Improve motherboard detection for vendors that report a version string of "1234567890" (such as Super Micro)
+- pts-core: Move timer-start.sh and timer-stop.sh from pts-core/scripts/ to pts-core/test-libraries/
 - pts: Update build-php php-5.2.5 download links
 - pts: Add new mirrors for lzma-4.32.6.tar.gz in compress-lzma test profile since current ones have been removed
 
