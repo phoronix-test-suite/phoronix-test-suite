@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts_extract_file() for extracting a tar file that abstracts the shell_exec command
 - pts-core: Add pts_run_shell_script() for extracting a sh script that abstracts the shell_exec command
 - pts-core: Add base/ support to locally stored test profiles and resources
+- pts-core: Create TEST_ENV_DIR and SAVE_RESULTS_DIR directories on start-up
 - pts: Update build-php php-5.2.5 download links
 - pts: Add new mirrors for lzma-4.32.6.tar.gz in compress-lzma test profile since current ones have been removed
 
