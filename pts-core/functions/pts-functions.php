@@ -266,6 +266,14 @@ function pts_save_result($save_to = null, $save_results = null)
 				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/sensors", $file);
 			}
 
+			// dmesg
+			$file = shell_exec("dmesg 2>&1");
+
+			if(strpos($file, "not found") == false)
+			{
+				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/dmesg", $file);
+			}
+
 			if(IS_MACOSX)
 			{
 				// system_profiler (Mac OS X)
