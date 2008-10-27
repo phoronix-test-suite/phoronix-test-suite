@@ -344,7 +344,7 @@ function display_web_browser($URL, $alt_text = null, $default_open = false)
 
 	if($view_results)
 	{
-		shell_exec("sh pts-core/scripts/launch-browser.sh \"" . $URL . "\" 2>&1");
+		pts_run_shell_script("pts-core/scripts/launch-browser.sh", $URL);
 	}
 }
 function pts_env_variables()

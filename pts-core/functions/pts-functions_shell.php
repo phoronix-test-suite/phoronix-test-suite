@@ -107,5 +107,14 @@ function pts_extract_file($file, $remove_afterwards = false)
 		pts_remove($file);
 	}
 }
+function pts_run_shell_script($file, $arguments = "")
+{
+	if(is_array($arguments))
+	{
+		$arguments = implode(" ", $arguments);
+	}
+
+	return shell_exec("sh " . $file . " ". $arguments . " 2>&1");
+}
 
 ?>

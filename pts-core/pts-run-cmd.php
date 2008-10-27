@@ -672,7 +672,7 @@ switch($COMMAND)
 
 		if($URL != false)
 		{
-			shell_exec("sh pts-core/scripts/launch-browser.sh $URL 2>&1");
+			pts_run_shell_script("pts-core/scripts/launch-browser.sh", $URL);
 		}
 		else
 		{
