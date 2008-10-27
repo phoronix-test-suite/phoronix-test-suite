@@ -245,6 +245,11 @@ function pts_save_result($save_to = null, $save_results = null)
 				mkdir($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER);
 			}
 
+			if(is_file("/var/log/Xorg.0.log"))
+			{
+				pts_copy("/var/log/Xorg.0.log", $save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/Xorg.0.log");
+			}
+
 			// lspci
 			$file = shell_exec("lspci 2>&1");
 
