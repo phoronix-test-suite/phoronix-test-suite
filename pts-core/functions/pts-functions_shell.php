@@ -83,7 +83,29 @@ function pts_copy($from, $to)
 }
 function pts_move_file($from, $to, $change_directory = "")
 {
-	return shell_exec("cd " . $change_directory . " && mv " . $from . " " . $to);
+	return shell_exec("cd " . $change_directory . " && mv " . $from . " " . $to . " 2>&1");
+}
+function pts_extract_file($file, $remove_afterwards = false)
+{
+	$file_name = basename($file);
+	$file_path = dirname($file);
+
+	switch(array_pop(explode(".", $file_name)))
+	{
+		case "tar":
+			$extract_cmd = "tar -xf";
+			break;
+		default:
+			$extract_cmd = "";
+			break;
+	}
+
+	shell_exec("cd " . $file_path . " && " . $extract_cmd . " " . $file_name . " 2>&1");
+
+	if($remove_afterwards == true)
+	{
+		pts_remove($file);
+	}
 }
 
 ?>

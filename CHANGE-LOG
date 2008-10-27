@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rename pts-core/pts-results-viewer/ to pts-core/results-viewer/
 - pts-core: Move some abstracted shell commands to new pts-functions_shell.php file
 - pts-core: Add pts_move_file() function for moving a file that abstracts the shell_exec command
+- pts-core: Add pts_extract_file() for extracting a tar file that abstracts the shell_exec command
 - pts: Update build-php php-5.2.5 download links
 - pts: Add new mirrors for lzma-4.32.6.tar.gz in compress-lzma test profile since current ones have been removed
 
