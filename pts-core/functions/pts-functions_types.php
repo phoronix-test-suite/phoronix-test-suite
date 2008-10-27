@@ -24,7 +24,8 @@
 define("TYPE_TEST", "TEST"); // Type is test
 define("TYPE_OS_TEST", "OS_TEST"); // Type is OS-specific test
 define("TYPE_TEST_SUITE", "TEST_SUITE"); // Type is a test suite
-define("TYPE_LOCAL_TEST", "LOCAL_TEST"); // Type is test
+define("TYPE_LOCAL_TEST", "LOCAL_TEST"); // Type is local test
+define("TYPE_LOCAL_BASE_TEST", "LOCAL_TEST"); // Type is local base test
 define("TYPE_OS_LOCAL_TEST", "OS_LOCAL_TEST"); // Type is test
 define("TYPE_LOCAL_TEST_SUITE", "LOCAL_TEST_SUITE"); // Type is a test suite
 define("TYPE_SCTP_TEST", "LOCAL_SCTP_TEST"); // Type is a SCTP test
@@ -40,7 +41,7 @@ function is_test($object)
 {
 	$type = pts_test_type($object);
 
-	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_OS_TEST || $type == TYPE_OS_LOCAL_TEST || $type == TYPE_SCTP_TEST || $type == TYPE_BASE_TEST;
+	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_LOCAL_BASE_TEST || $type == TYPE_OS_TEST || $type == TYPE_OS_LOCAL_TEST || $type == TYPE_SCTP_TEST || $type == TYPE_BASE_TEST;
 }
 function pts_test_type($identifier)
 {
@@ -66,6 +67,10 @@ function pts_test_type($identifier)
 			else if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml"))
 			{
 				$test_type = TYPE_LOCAL_TEST;
+			}
+			else if(is_file(XML_PROFILE_LOCAL_CTP_BASE_DIR . $identifier . ".xml"))
+			{
+				$test_type = TYPE_LOCAL_BASE_TEST;
 			}
 			else if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml"))
 			{
@@ -160,6 +165,10 @@ function pts_location_test($identifier)
 			{
 				$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
 			}
+			else if($type == TYPE_LOCAL_BASE_TEST)
+			{
+				$location = XML_PROFILE_LOCAL_CTP_BASE_DIR . $identifier . ".xml";
+			}
 		}
 
 		$GLOBALS["PTS_VAR_CACHE"]["TEST_LOCATION"][$identifier] = $location;
@@ -204,6 +213,10 @@ function pts_location_test_resources($identifier)
 			else if($type == TYPE_BASE_TEST && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
 			{
 				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
+			}
+			else if($type == TYPE_LOCAL_BASE_TEST && is_dir(TEST_RESOURCE_LOCAL_CTP_BASE_DIR . $identifier))
+			{
+				$location = TEST_RESOURCE_LOCAL_CTP_BASE_DIR . $identifier . "/";
 			}
 		}
 

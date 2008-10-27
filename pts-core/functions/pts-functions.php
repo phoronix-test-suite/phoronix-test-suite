@@ -61,8 +61,10 @@ define("XML_SUITE_DIR", PTS_DIR . "pts/test-suites/");
 define("TEST_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
 define("TEST_RESOURCE_CTP_BASE_DIR", TEST_RESOURCE_DIR . "base/");
 define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
+define("XML_PROFILE_LOCAL_CTP_BASE_DIR", XML_PROFILE_LOCAL_DIR . "base/");
 define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
 define("TEST_RESOURCE_LOCAL_DIR", PTS_USER_DIR . "test-resources/");
+define("TEST_RESOURCE_LOCAL_CTP_BASE_DIR", TEST_RESOURCE_LOCAL_DIR . "base/");
 
 pts_config_init();
 define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
