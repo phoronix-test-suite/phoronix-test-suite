@@ -116,7 +116,7 @@ function pts_download_test_files($identifier)
 							}
 							else
 							{
-								shell_exec("cd " . $download_location . " && mv " . $package_filename . ".temp " . $package_filename);
+								pts_move_file($package_filename . ".temp", $package_filename, $download_location);
 								$urls = array();
 							}
 							$cache_search = false;
@@ -218,7 +218,7 @@ function pts_download_test_files($identifier)
 						{
 							if(is_file($download_destination . ".temp"))
 							{
-								shell_exec("cd " . $download_location . " && mv " . $package_filename . ".temp " . $package_filename);
+								pts_move_file($package_filename . ".temp", $package_filename, $download_location);
 							}
 
 							$file_downloaded = true;
