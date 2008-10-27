@@ -28,6 +28,7 @@ require_once("pts-core/functions/pts-init.php");
 // Load Main Functions
 require_once("pts-core/objects/pts-generic-classes.php");
 require_once("pts-core/functions/pts-interfaces.php");
+require_once("pts-core/functions/pts-functions_shell.php");
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
 require_once("pts-core/functions/pts-functions_tests.php");
@@ -87,14 +88,6 @@ if(function_exists("pts_module_start_process"))
 }
 
 // Phoronix Test Suite - Functions
-function pts_copy($from, $to)
-{
-	// Copies a file
-	if(!is_file($to) || md5_file($from) != md5_file($to))
-	{
-		copy($from, $to);
-	}
-}
 function pts_gd_available()
 {
 	// Checks if PHP GD library is available for image rendering
@@ -925,58 +918,6 @@ function pts_user_message($message)
 			fgets(STDIN);
 		}
 	}
-}
-function pts_remove($object)
-{
-	if(!file_exists($object))
-	{
-		return false;
-	}
-
-	if(is_file($object))
-	{
-		return unlink($object);
-	}
-
-	if(is_dir($object))
-	{
-		$directory = dir($object);
-		while(($entry = $directory->read()) !== false)
-		{
-			if($entry != "." && $entry != "..")
-			{
-				pts_remove($object . "/" . $entry);
-			}
-		}
-		$directory->close();
-	}
-
-	return @rmdir($object);
-}
-function pts_download($download, $to)
-{
-	$to_file = basename($to);
-	$to_dir = dirname($to);
-	$download_output = "";
-	$user_agent = "PhoronixTestSuite/" . PTS_CODENAME;
-
-	if(strpos($to_file, ".") === false)
-	{
-		$to_file = basename($download);
-	}
-
-	if(is_executable("/usr/bin/curl"))
-	{
-		// curl download
-		$download_output = shell_exec("cd " . $to_dir . " && curl --fail --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
-	}
-	else
-	{
-		// wget download
-		$download_output = shell_exec("cd " . $to_dir . " && wget --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
-	}
-
-	return $download_output;
 }
 
 ?>

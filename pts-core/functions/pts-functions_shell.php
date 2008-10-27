@@ -1,0 +1,85 @@
+<?php
+
+/*
+	Phoronix Test Suite
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008, Phoronix Media
+	Copyright (C) 2008, Michael Larabel
+	pts-functions_shell.php: Functions for shell (and similar) commands that are abstracted
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+function pts_download($download, $to)
+{
+	$to_file = basename($to);
+	$to_dir = dirname($to);
+	$download_output = "";
+	$user_agent = "PhoronixTestSuite/" . PTS_CODENAME;
+
+	if(strpos($to_file, ".") === false)
+	{
+		$to_file = basename($download);
+	}
+
+	if(is_executable("/usr/bin/curl"))
+	{
+		// curl download
+		$download_output = shell_exec("cd " . $to_dir . " && curl --fail --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
+	}
+	else
+	{
+		// wget download
+		$download_output = shell_exec("cd " . $to_dir . " && wget --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
+	}
+
+	return $download_output;
+}
+function pts_remove($object)
+{
+	if(!file_exists($object))
+	{
+		return false;
+	}
+
+	if(is_file($object))
+	{
+		return unlink($object);
+	}
+
+	if(is_dir($object))
+	{
+		$directory = dir($object);
+		while(($entry = $directory->read()) !== false)
+		{
+			if($entry != "." && $entry != "..")
+			{
+				pts_remove($object . "/" . $entry);
+			}
+		}
+		$directory->close();
+	}
+
+	return @rmdir($object);
+}
+function pts_copy($from, $to)
+{
+	// Copies a file
+	if(!is_file($to) || md5_file($from) != md5_file($to))
+	{
+		copy($from, $to);
+	}
+}
+
+?>
