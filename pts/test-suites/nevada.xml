@@ -61,6 +61,11 @@
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
+		<Test>tandem-xml</Test>
+		<Arguments>WRITE</Arguments>
+		<Description>Write Performance</Description>
+	</RunTest>
+	<RunTest>
 		<Test>java</Test>
 	</RunTest>
 </PhoronixTestSuite>
