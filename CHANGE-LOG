@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Improve RAM model/speed/type identification
 - pts-core: Fix showing Phoronix Global URLs in browser (reported by Marox)
 - pts: Switch tandem-xml test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts: Switch pts-graph test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)

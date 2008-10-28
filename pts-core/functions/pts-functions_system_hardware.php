@@ -313,9 +313,9 @@ function system_memory_string()
 {
 	$mem_string = null;
 
-	$mem_size = read_dmidecode("memory", "Memory Device", "Size", false, "Not Installed");
+	$mem_size = read_dmidecode("memory", "Memory Device", "Size", false, array("Not Installed", "No Module Installed"));
 	$mem_speed = read_dmidecode("memory", "Memory Device", "Speed", true, "Unknown");
-	$mem_type = read_dmidecode("memory", "Memory Device", "Type", true);
+	$mem_type = read_dmidecode("memory", "Memory Device", "Type", true, "Unknown");
 
 	if($mem_size != false && $mem_speed != false && $mem_type != false)
 	{
@@ -326,7 +326,14 @@ function system_memory_string()
 			$mem_speed = substr($mem_speed, 0, $cut);
 		}
 
-		$mem_prefix = $mem_type . "-" . str_replace(" ", "", $mem_speed);
+		if(!empty($mem_type) && !empty($mem_speed))
+		{
+			$mem_prefix = $mem_type . "-" . str_replace(" ", "", $mem_speed);
+		}
+		else
+		{
+			$mem_prefix = "";
+		}
 
 		if($mem_count > 1 && count(array_unique($mem_size)) > 1)
 		{
