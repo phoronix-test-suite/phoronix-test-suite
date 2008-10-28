@@ -13,6 +13,7 @@
 	<TestInformation>
 		<Title>Bork File Encrypter</Title>
 		<Version>1.4</Version>
+		<SubTitle>File Encryption Time</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
