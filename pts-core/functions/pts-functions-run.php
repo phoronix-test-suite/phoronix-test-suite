@@ -194,6 +194,24 @@ function pts_generate_test_notes($test_type)
 
 	pts_add_test_note(pts_process_running_string($check_processes));
 
+	// Check if Security Enhanced Linux was enforcing, permissive, or disabled
+	if(is_file("/etc/sysconfig/selinux"))
+	{
+		$selinux_file = file_get_contents("/etc/sysconfig/selinux");
+		if(stripos($selinux_file, "selinux=disabled") === false)
+		{
+			pts_add_test_note("SELinux was enabled.");
+		}
+	}
+	else if(is_file("/boot/grub/menu.lst"))
+	{
+		$grub_file = file_get_contents("/boot/grub/menu.lst");
+		if(stripos($grub_file, "selinux=1") !== false)
+		{
+			pts_add_test_note("SELinux was enabled.");
+		}
+	}
+
 	// Power Saving Technologies?
 	pts_add_test_note(pts_processor_power_savings_enabled());
 	pts_add_test_note(system_power_mode());
