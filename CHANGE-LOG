@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix showing Phoronix Global URLs in browser (reported by Marox)
 - pts-core: Add Tracker (trackerd) to $check_processes
 - pts-core: Add support for checking if SELinux is enabled/running
+- pts-core: Improve reporting of system RAM information when not all DMI data is present
 - pts: Switch tandem-xml test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts: Switch pts-graph test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts_Graph: Support resizing the font size in write_text_center() if it's too large to fit within the bounding box
