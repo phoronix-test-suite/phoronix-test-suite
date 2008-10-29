@@ -38,7 +38,7 @@ class update_checker extends pts_module_interface
 			$current_e = explode(".", PTS_VERSION);
 			$latest_e = explode(".", $latest_reported_version);
 
-			if($latest_reported_version != PTS_VERSION && $latest_e[0] >= $current_e[0] && $latest_e[1] >= $current_e[1])
+			if($latest_reported_version != PTS_VERSION && $latest_e[0] >= $current_e[0] && ($latest_e[1] > $current_e[1] || ($latest_e[1] == $current_e[1] && $latest_e[2] >= $current_e[2])))
 			{
 				// New version of PTS is available
 				echo pts_string_header("Currently you're using an outdated version of the Phoronix Test Suite.\nThe version in use is v" . PTS_VERSION . ", but the latest is v" . $latest_reported_version . ".\nPlease visit http://www.phoronix-test-suite.com/ to update this software.");
