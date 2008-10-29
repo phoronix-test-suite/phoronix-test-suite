@@ -711,9 +711,13 @@ class pts_Graph
 
 		if($this->graph_renderer == "PNG")
 		{
-		//	$font_size = $this->graph_font_size_bars;
-		//	while($this->return_ttf_string_width($this->trim_double($this->graph_maximum_value, 3), $this->graph_font, $font_size) > ($bar_width - 6))
-		//		$font_size -= 0.5;
+			if($bound_x1 != $bound_x2)
+			{
+				while($this->return_ttf_string_width($this->trim_double($text_string, 2), $this->graph_font, $font_size) > abs($bound_x2 - $bound_x1 - 3))
+				{
+					$font_size -= 0.5;
+				}
+			}
 
 			$ttf_dimensions = $this->return_ttf_string_dimensions(strtoupper($text_string), $this->graph_font, $font_size, $big_type);
 			$ttf_height = $ttf_dimensions[1];
