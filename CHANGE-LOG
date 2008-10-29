@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts: Switch tandem-xml test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts: Switch pts-graph test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts: Add additional run-time tests for x11perf test profile
+- pts: Update insertion count to 12,500 for sqlite test profile
 - pts_Graph: Support resizing the font size in write_text_center() if it's too large to fit within the bounding box
 - update_checker: Fix version recognition / comparison
 - documentation: Bring all documentation up-to-date with Orkdal
