@@ -355,7 +355,7 @@ function system_memory_string()
 		$mem_string = memory_mb_capacity() . "MB";
 	}
 
-	return $mem_string;
+	return trim($mem_string);
 }
 function memory_mb_capacity()
 {

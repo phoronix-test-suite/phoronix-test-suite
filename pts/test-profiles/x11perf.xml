@@ -21,7 +21,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>-time 25 -repeat 1</Arguments>
+			<Arguments>-time 30 -repeat 1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Test</DisplayName>
@@ -40,12 +40,24 @@
 					<Value>-aatrapezoid300</Value>
 				</Entry>
 				<Entry>
+					<Name>500px Copy From Window To Window</Name>
+					<Value>-copywinwin500</Value>
+				</Entry>
+				<Entry>
 					<Name>500px Compositing From Pixmap To Window</Name>
 					<Value>-comppixwin500</Value>
 				</Entry>
 				<Entry>
 					<Name>500px Compositing From Window To Window</Name>
 					<Value>-compwinwin500</Value>
+				</Entry>
+				<Entry>
+					<Name>Copy 500x500 From Pixmap To Pixmap</Name>
+					<Value>-copypixpix500</Value>
+				</Entry>
+				<Entry>
+					<Name>PutImage XY 500x500 Square</Name>
+					<Value>-putimagexy500</Value>
 				</Entry>
 				<Entry>
 					<Name>Char in 80-char aa line</Name>
