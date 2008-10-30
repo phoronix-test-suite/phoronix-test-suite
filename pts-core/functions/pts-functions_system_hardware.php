@@ -313,21 +313,30 @@ function system_memory_string()
 {
 	$mem_string = null;
 
-	$mem_size = read_dmidecode("memory", "Memory Device", "Size", false, array("Not Installed", "No Module Installed"));
-	$mem_speed = read_dmidecode("memory", "Memory Device", "Speed", true, "Unknown");
-	$mem_type = read_dmidecode("memory", "Memory Device", "Type", true, "Unknown");
+	if(IS_MACOSX)
+	{
+		$mem_size = read_osx_system_profiler("SPMemoryDataType", "Size", true);
+		$mem_speed = read_osx_system_profiler("SPMemoryDataType", "Speed");
+		$mem_type = read_osx_system_profiler("SPMemoryDataType", "Speed");
+	}
+	else
+	{
+		$mem_size = read_dmidecode("memory", "Memory Device", "Size", false, array("Not Installed", "No Module Installed"));
+		$mem_speed = read_dmidecode("memory", "Memory Device", "Speed", true, "Unknown");
+		$mem_type = read_dmidecode("memory", "Memory Device", "Type", true, "Unknown");
+	}
 
-	if($mem_size != false)
+	if($mem_size != false && (!is_array($mem_size) || count($mem_size) != 0))
 	{
 		$mem_count = count($mem_size);
 
-		if(($cut = strpos($mem_speed, " (")) > 0)
-		{
-			$mem_speed = substr($mem_speed, 0, $cut);
-		}
-
 		if(!empty($mem_type))
 		{
+			if(($cut = strpos($mem_type, " ")) > 0)
+			{
+				$mem_type = substr($mem_typr, 0, $cut);
+			}
+
 			$mem_prefix = $mem_type;
 		}
 		else
@@ -337,6 +346,11 @@ function system_memory_string()
 
 		if(!empty($mem_speed))
 		{
+			if(($cut = strpos($mem_speed, " (")) > 0)
+			{
+				$mem_speed = substr($mem_speed, 0, $cut);
+			}
+
 			$mem_prefix .= "-" . str_replace(" ", "", $mem_speed);
 		}
 
