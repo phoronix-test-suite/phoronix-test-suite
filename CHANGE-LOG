@@ -11,6 +11,8 @@ Phoronix Test Suite (Git)
 - pts: Switch pts-graph test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts: Add additional run-time tests for x11perf test profile
 - pts: Update insertion count to 12,500 for sqlite test profile
+- pts: Update unigine-tropics test profile against Tropics 1.1 from Unigine Corp
+- pts: Update unigine-sanctuary test profile against Sanctuary 2.1 from Unigine Corp
 - pts_Graph: Support resizing the font size in write_text_center() if it's too large to fit within the bounding box
 - update_checker: Fix version recognition / comparison
 - documentation: Bring all documentation up-to-date with Orkdal
@@ -173,7 +175,7 @@ October 6, 2008
 - pts-core: Add remove-installed-test to remove a test installation
 - pts-core: Add a index.html forwarder to each result file and have the launch browser script open that, since on some systems .xml opens up in an editor instead of browser by default
 - pts-core: When installing a suite and a test fails to download a file due to an MD5 mismatch, continue on with next test instead of exiting
-- pts-core: Avoid overusing pts_exit() and replace with improved logic
+- pts-core: Avoid over-using pts_exit() and replace with improved logic
 - pts-core: Add support for backing up downloads to the cache from base tests being extended
 - pts: Move pcqs tests out of tree
 - pts: Switch all relevant test profiles using ArgumentName to using ArgumentPrefix
