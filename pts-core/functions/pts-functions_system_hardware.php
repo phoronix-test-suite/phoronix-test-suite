@@ -334,7 +334,7 @@ function system_memory_string()
 		{
 			if(($cut = strpos($mem_type, " ")) > 0)
 			{
-				$mem_type = substr($mem_typr, 0, $cut);
+				$mem_type = substr($mem_type, 0, $cut);
 			}
 
 			$mem_prefix = $mem_type;
