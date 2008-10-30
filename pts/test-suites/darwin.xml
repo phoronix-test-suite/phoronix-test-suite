@@ -56,9 +56,6 @@
 		<Test>compress-gzip</Test>
 	</RunTest>
 	<RunTest>
-		<Test>compress-pbzip2</Test>
-	</RunTest>
-	<RunTest>
 		<Test>bonnie</Test>
 		<Arguments>SEQ_CREATE</Arguments>
 		<Description>Sequential Create</Description>
