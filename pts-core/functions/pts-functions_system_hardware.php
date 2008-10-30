@@ -317,7 +317,7 @@ function system_memory_string()
 	{
 		$mem_size = read_osx_system_profiler("SPMemoryDataType", "Size", true);
 		$mem_speed = read_osx_system_profiler("SPMemoryDataType", "Speed");
-		$mem_type = read_osx_system_profiler("SPMemoryDataType", "Speed");
+		$mem_type = read_osx_system_profiler("SPMemoryDataType", "Type");
 	}
 	else
 	{
