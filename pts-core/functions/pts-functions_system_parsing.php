@@ -617,13 +617,21 @@ function read_hddtemp($disk = null)
 
 	return $hdd_temperature;
 }
-function read_osx_system_profiler($data_type, $object)
+function read_osx_system_profiler($data_type, $object, $multiple_objects = false)
 {
 	$info = trim(shell_exec("system_profiler " . $data_type . " 2>&1"));
 	$lines = explode("\n", $info);
-	$value = false;
 
-	for($i = 0; $i < count($lines) && $value == false; $i++)
+	if($multiple_objects)
+	{
+		$value = array();
+	}
+	else
+	{
+		$value = false;
+	}
+
+	for($i = 0; $i < count($lines) && ($value == false || $multiple_objects); $i++)
 	{
 		$line = explode(":", $lines[$i]);
 		$line_object = str_replace(" ", "", $line[0]);
@@ -639,7 +647,14 @@ function read_osx_system_profiler($data_type, $object)
 			
 			if(!empty($this_value))
 			{
-				$value = $this_value;
+				if($multiple_objects)
+				{
+					array_push($value, $this_value);
+				}
+				else
+				{
+					$value = $this_value;
+				}
 			}
 		}
 	}
