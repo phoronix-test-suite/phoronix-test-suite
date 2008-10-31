@@ -1,0 +1,12 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<ProjectURL>http://www.humus.name/</ProjectURL>
+		<Extends>wine-unstable</Extends>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
+	</TestProfile>
+	<TestInformation>
+		<ResultScale>Frames Per Second</ResultScale>
+		<Proportion>HIB</Proportion>
+		<TimesToRun>3</TimesToRun>
+	</TestInformation>
+</PhoronixTestSuite>

@@ -20,6 +20,7 @@ Phoronix Test Suite (Git)
 - pts: Update unigine-sanctuary test profile against Sanctuary 2.1 from Unigine Corp
 - pts: Drop test profile named wine for running WINE git code since it looks like it's never used anymore and poorly named
 - pts: Add wine-unstable base test profile that provides WINE 1.1.7
+- pts: Add wine-humus-tests base test profile that extends wine-unstable and provides functionality for Humus.name tests
 - pts_Graph: Support resizing the font size in write_text_center() if it's too large to fit within the bounding box
 - update_checker: Fix version recognition / comparison
 - documentation: Bring all documentation up-to-date with Orkdal
