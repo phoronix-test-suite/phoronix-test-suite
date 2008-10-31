@@ -23,7 +23,6 @@
 
 require_once("pts-core/functions/pts-functions_system_software.php");
 require_once("pts-core/functions/pts-functions_system_hardware.php");
-
 require_once("pts-core/functions/pts-functions_system_parsing.php");
 require_once("pts-core/functions/pts-functions_system_cpu.php");
 require_once("pts-core/functions/pts-functions_system_graphics.php");
@@ -31,27 +30,31 @@ require_once("pts-core/functions/pts-functions_system_graphics.php");
 function pts_hw_string()
 {
 	// Returns string of hardware information
-	$hw_string = "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . "), ";
-	$hw_string .= "Motherboard: " . main_system_hardware_string() . ", ";
-	$hw_string .= "Chipset: " . motherboard_chipset_string() . ", ";
-	$hw_string .= "System Memory: " . system_memory_string() . ", ";
-	$hw_string .= "Disk: " . system_hard_disks() . ", ";
-	$hw_string .= "Graphics: " . graphics_processor_string() . graphics_frequency_string() . ", ";
-	$hw_string .= "Screen Resolution: " . current_screen_resolution() . " ";
+	$hardware = array();
 
-	return $hw_string;
+	array_push($hardware, "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . ")");
+	array_push($hardware, "Motherboard: " . main_system_hardware_string());
+	array_push($hardware, "Chipset: " . motherboard_chipset_string());
+	array_push($hardware, "System Memory: " . system_memory_string());
+	array_push($hardware, "Disk: " . system_hard_disks());
+	array_push($hardware, "Graphics: " . graphics_processor_string() . graphics_frequency_string());
+	array_push($hardware, "Screen Resolution: " . current_screen_resolution());
+
+	return implode(", ", $hardware);
 }
 function pts_sw_string()
 {
 	// Returns string of software information
-	$sw_string = "OS: " . operating_system_release() . ", ";
-	$sw_string .= "Kernel: " . kernel_string() . " (" . kernel_arch() . "), ";
-	$sw_string .= "X.Org Server: " . graphics_subsystem_version() . ", ";
-	$sw_string .= "OpenGL: " . opengl_version() . ", ";
-	$sw_string .= "Compiler: " . compiler_version() . ", ";
-	$sw_string .= "File-System: " . filesystem_type() . " ";
+	$software = array();
 
-	return $sw_string;
+	array_push($software, "OS: " . operating_system_release());
+	array_push($software, "Kernel: " . kernel_string() . " (" . kernel_arch() . ")");
+	array_push($software, "X.Org Server: " . graphics_subsystem_version());
+	array_push($software, "OpenGL: " . opengl_version());
+	array_push($software, "Compiler: " . compiler_version());
+	array_push($software, "File-System: " . filesystem_type());
+
+	return implode(", ", $software);
 }
 function pts_system_identifier_string()
 {

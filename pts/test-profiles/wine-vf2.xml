@@ -6,6 +6,6 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Humus Volumetric Fogging 2</Title>
-		<Description>This test uses WINE and runs an OpenGL volumetric fogging demo. The average FPS is recorded after running multiple 30 second runs.</Description>
+		<Description>This test uses WINE and runs an OpenGL volumetric fogging demo.</Description>
 	</TestInformation>
 </PhoronixTestSuite>
