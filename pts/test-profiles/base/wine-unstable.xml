@@ -1,0 +1,11 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<TestType>System</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<ExternalDependencies>glut, libpng-development, xorg-development, bison, flex, build-utilities</ExternalDependencies>
+	</TestProfile>
+	<TestInformation>
+		<SubTitle>WINE v1.1.7</SubTitle>
+	</TestInformation>
+</PhoronixTestSuite>
