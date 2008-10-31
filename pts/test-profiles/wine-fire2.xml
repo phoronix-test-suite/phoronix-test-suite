@@ -6,6 +6,6 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Humus Fire2</Title>
-		<Description>This test uses WINE and runs an fire creation test using a standard particle system. The average FPS is recorded after running multiple 30 second runs.</Description>
+		<Description>This test uses WINE and runs an fire creation test using a standard particle system.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

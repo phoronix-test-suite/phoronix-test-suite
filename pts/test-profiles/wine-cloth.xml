@@ -6,6 +6,6 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Humus Cloth</Title>
-		<Description>This test uses WINE and runs an OpenGL demo with cloth physics. The average FPS is recorded after running multiple 30 second runs.</Description>
+		<Description>This test uses WINE and runs an OpenGL demo with cloth physics.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

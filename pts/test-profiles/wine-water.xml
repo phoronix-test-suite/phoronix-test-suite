@@ -6,6 +6,6 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Humus Water</Title>
-		<Description>This test uses WINE and runs an OpenGL demo with a water scene. The average FPS is recorded after running multiple 30 second runs.</Description>
+		<Description>This test uses WINE and runs an OpenGL demo with a water scene.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

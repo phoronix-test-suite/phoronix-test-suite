@@ -6,6 +6,6 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Humus Metaballs</Title>
-		<Description>This test uses WINE and runs an OpenGL demo with implementing the marching cubes algorithm for constructing a polygonal model from an isosurface. The average FPS is recorded after running multiple 30 second runs.</Description>
+		<Description>This test uses WINE and runs an OpenGL demo with implementing the marching cubes algorithm for constructing a polygonal model from an isosurface.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

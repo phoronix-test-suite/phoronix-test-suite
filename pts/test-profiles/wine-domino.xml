@@ -6,6 +6,6 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Humus Domino</Title>
-		<Description>This test uses WINE and runs an OpenGL demo with dominos. The average FPS is recorded after running multiple 30 second runs.</Description>
+		<Description>This test uses WINE and runs an OpenGL demo with dominos.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

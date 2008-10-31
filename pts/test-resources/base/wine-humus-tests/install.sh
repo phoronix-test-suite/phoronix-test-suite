@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "#!/bin/sh
-sleep 30
+sleep 60
 killall -9 \$1
 " > humus-kill-process
 chmod +x humus-kill-process
