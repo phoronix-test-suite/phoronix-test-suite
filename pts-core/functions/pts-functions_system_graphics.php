@@ -763,7 +763,7 @@ function graphics_processor_string()
 
 	if(empty($info) || strpos($info, "Mesa ") !== false || $info == "Software Rasterizer")
 	{
-		$log_parse = shell_exec("cat /var/log/Xorg.0.log | grep Chipset");
+		$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep Chipset");
 		$log_parse = substr($log_parse, strpos($log_parse, "Chipset") + 8);
 		$log_parse = substr($log_parse, 0, strpos($log_parse, "found"));
 
