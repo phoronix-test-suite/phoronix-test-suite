@@ -795,7 +795,7 @@ class pts_Graph
 		}
 
 		// TODO: Implement $font through style="font-family: $font;"
-			$img_object .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\" >" . $string . "</text>\n";
+			$img_object .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\">" . $string . "</text>\n";
 	}
 	protected function draw_rectangle(&$img_object, $x1, $y1, $width, $height, $background_color)
 	{

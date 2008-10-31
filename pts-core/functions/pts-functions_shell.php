@@ -21,6 +21,32 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function display_web_browser($URL, $alt_text = null, $default_open = false)
+{
+	// Launch the web browser
+	if($alt_text == null)
+	{
+		$text = "Do you want to view the results in your web browser";
+	}
+	else
+	{
+		$text = $alt_text;
+	}
+
+	if(!$default_open)
+	{
+		$view_results = pts_bool_question($text . " (y/N)?", false, "OPEN_BROWSER");
+	}
+	else
+	{
+		$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
+	}
+
+	if($view_results)
+	{
+		pts_run_shell_script("pts-core/scripts/launch-browser.sh", $URL);
+	}
+}
 function pts_download($download, $to)
 {
 	$to_file = basename($to);

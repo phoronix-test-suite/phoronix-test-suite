@@ -20,6 +20,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+
 require_once("pts-core/functions/pts-functions-install_dependencies.php");
 
 function pts_start_install($TO_INSTALL)
