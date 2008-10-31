@@ -1,0 +1,30 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<Title>WINE Graphics Tests</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite consists of all graphics / video tests that rely upon WINE for running Windows programs.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>wine-cloth</Test>
+	</RunTest>
+	<RunTest>
+		<Test>wine-domino</Test>
+	</RunTest>
+	<RunTest>
+		<Test>wine-fire2</Test>
+	</RunTest>
+	<RunTest>
+		<Test>wine-hdr</Test>
+	</RunTest>
+	<RunTest>
+		<Test>wine-metaballs</Test>
+	</RunTest>
+	<RunTest>
+		<Test>wine-vf2</Test>
+	</RunTest>
+	<RunTest>
+		<Test>wine-water</Test>
+	</RunTest>
+</PhoronixTestSuite>

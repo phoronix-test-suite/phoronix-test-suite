@@ -2,6 +2,7 @@
 	<TestProfile>
 		<ProjectURL>http://www.humus.name/</ProjectURL>
 		<Extends>wine-unstable</Extends>
+		<Status>VERIFIED</Status>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
