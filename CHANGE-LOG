@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - pts: Add wine-unstable base test profile that provides WINE 1.1.7
 - pts: Add wine-humus-tests base test profile that extends wine-unstable and provides functionality for Humus.name tests
 - pts: Add wine-vf2 test for a WINE-driven OpenGL Volumetric Fogging test
+- pts: Add wine-cloth test that uses WINE
 - pts_Graph: Support resizing the font size in write_text_center() if it's too large to fit within the bounding box
 - update_checker: Fix version recognition / comparison
 - documentation: Bring all documentation up-to-date with Orkdal
