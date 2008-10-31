@@ -229,11 +229,13 @@ function pts_test_extends_below($object)
 {
 	// Process Extensions / Cascading Test Profiles
 	$extensions = array();
+	$test_extends = $object;
+
 	do
 	{
-		if(is_test($object))
+		if(is_test($test_extends))
 		{
-			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($object));
+			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test_extends));
 			$test_extends = $xml_parser->getXMLValue(P_TEST_CTPEXTENDS);
 
 			if(!empty($test_extends))
@@ -247,6 +249,10 @@ function pts_test_extends_below($object)
 					$test_extends = null;
 				}
 			}
+		}
+		else
+		{
+			$test_extends = null;
 		}
 	}
 	while(!empty($test_extends));
