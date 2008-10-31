@@ -319,6 +319,12 @@ function system_memory_string()
 		$mem_speed = read_osx_system_profiler("SPMemoryDataType", "Speed");
 		$mem_type = read_osx_system_profiler("SPMemoryDataType", "Type");
 	}
+	else if(IS_SOLARIS)
+	{
+		$mem_size = read_sun_ddu_dmi_info("MemoryDevice*,InstalledSize");
+		$mem_type = read_sun_ddu_dmi_info("MemoryDevice*,MemoryDeviceType");
+		$mem_speed = false;
+	}
 	else
 	{
 		$mem_size = read_dmidecode("memory", "Memory Device", "Size", false, array("Not Installed", "No Module Installed"));

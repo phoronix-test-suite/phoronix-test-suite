@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add -L argument to curl to follow download links
 - pts-core: Add support in read_osx_system_profiler() to read multiple objects
 - pts-core: Add support for reading detailed RAM information on Mac OS X
+- pts-core: Add support for reading detailed RAM information on OpenSolaris using DMI
 - pts: Switch tandem-xml test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts: Switch pts-graph test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts: Add additional run-time tests for x11perf test profile
