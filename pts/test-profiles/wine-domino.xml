@@ -1,0 +1,11 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Extends>wine-humus-tests</Extends>
+	</TestProfile>
+	<TestInformation>
+		<Title>Humus Domino</Title>
+		<Description>This test uses WINE and runs an OpenGL demo with dominos. The average FPS is recorded after running multiple 30 second runs.</Description>
+	</TestInformation>
+</PhoronixTestSuite>
