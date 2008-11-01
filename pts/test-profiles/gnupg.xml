@@ -14,7 +14,7 @@
 		<Title>GnuPG</Title>
 		<Version>1.4.9</Version>
 		<SubTitle>2GB File Encryption</SubTitle>
-		<TimesToRun>3</TimesToRun>
+		<TimesToRun>4</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test times how long it takes to encrypt a file using GnuPG of a file.</Description>
