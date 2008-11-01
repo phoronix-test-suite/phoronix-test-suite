@@ -2,9 +2,9 @@
 	<SuiteInformation>
 		<Version>1.0.1</Version>
 		<TestType>Memory</TestType>
-		<Title>System Memory Test Suite</Title>
+		<Title>Memory Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
-		<Description>The memory test suite contains tests designed to gauge the system's memory performance.</Description>
+		<Description>The system memory test suite consists of tests designed to test the computer's system memory (RAM) performance. Among these tests are RAMspeed and Bandwidth.</Description>
 	</SuiteInformation>
 	<RunTest>
 		<Test>ramspeed</Test>

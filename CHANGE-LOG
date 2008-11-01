@@ -30,6 +30,7 @@ Phoronix Test Suite (Git)
 - pts: Add wine-metaballs test that uses WINE
 - pts: Add wine-water test that uses WINE
 - pts: Add wine-graphics test suite that contains all WINE graphics tests
+- pts: Drop system-memory test suite since it's basically the same as the memory test suite
 - pts_Graph: Support resizing the font size in write_text_center() if it's too large to fit within the bounding box
 - update_checker: Fix version recognition / comparison
 - documentation: Bring all documentation up-to-date with Orkdal
