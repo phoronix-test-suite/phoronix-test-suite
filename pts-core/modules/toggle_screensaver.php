@@ -79,17 +79,23 @@ class toggle_screensaver extends pts_module_interface
 	public static function __pre_run_process()
 	{
 		if(!self::$screensaver_halted)
+		{
 			shell_exec("xdg-screensaver reset 2>&1");
+		}
 	}
 	public static function __pre_test_run()
 	{
 		if(!self::$screensaver_halted)
+		{
 			shell_exec("xdg-screensaver reset 2>&1");
+		}
 	}
 	public static function __post_run_process()
 	{
 		if(!self::$screensaver_halted)
+		{
 			shell_exec("xdg-screensaver reset 2>&1");
+		}
 	}
 }
 

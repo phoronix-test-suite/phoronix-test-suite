@@ -347,7 +347,6 @@ class pts_Graph
 			}
 
 			$this->write_text_left($str, 7, $this->graph_color_main_headers, $this->graph_left_start, $this->graph_top_start - 9, $this->graph_left_start, $this->graph_top_start - 9);
-			//$this->write_text_center($this->graph_y_title, $this->graph_font_size_axis_heading, $this->graph_color_headers, 3, $this->graph_top_start, 3, $this->graph_top_end, true);
 		}
 	}
 	protected function render_graph_value_ticks()
@@ -795,7 +794,7 @@ class pts_Graph
 		}
 
 		// TODO: Implement $font through style="font-family: $font;"
-			$img_object .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\">" . $string . "</text>\n";
+		$img_object .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\">" . $string . "</text>\n";
 	}
 	protected function draw_rectangle(&$img_object, $x1, $y1, $width, $height, $background_color)
 	{
@@ -857,7 +856,7 @@ class pts_Graph
 		}
 		else if($this->graph_renderer == "SVG")
 		{
-			// TODO: This really could be improved
+			// TODO: This needs to be implemented
 			$box_height = 0;
 			$box_width = 0;
 		}

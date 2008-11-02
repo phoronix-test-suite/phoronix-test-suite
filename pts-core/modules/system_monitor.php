@@ -35,7 +35,9 @@ class system_monitor extends pts_module_interface
 		$info .= "\nMonitoring these sensors are as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). Below are all of the sensors supported by this version of the Phoronix Test Suite.\n\n";
 		$info .= "Supported Options:\n";
 		foreach(self::monitor_arguments() as $arg)
+		{
 			$info .= "  - " . $arg . "\n";
+		}
 
 		return $info;
 	}

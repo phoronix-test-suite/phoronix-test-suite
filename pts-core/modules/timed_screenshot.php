@@ -26,7 +26,7 @@ class timed_screenshot extends pts_module_interface
 	const module_name = "Timed Screenshot";
 	const module_version = "0.1.0";
 	const module_description = "This is a module that will take a screenshot of the system at a pre-defined interval. ImageMagick must be installed onto the system prior to using this module.";
-	const module_author = "Phoronix Media";
+	const module_author = "Michael Larabel";
 
 	static $screenshot_count = 0;
 	static $screenshot_interval = 15;
