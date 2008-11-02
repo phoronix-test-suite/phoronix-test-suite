@@ -36,6 +36,7 @@ Phoronix Test Suite (Git)
 - pts: Add Qt4 development files to external dependencies through qt4-development generic name
 - pts: Ensure all *-devel generic names are now named *-development
 - pts: Add qgears2 test profile for a Qt graphics test that can test XRender and OpenGL
+- pts: Add xrender test suite for tests that use the X11 RENDER extension
 - update_checker: Fix version recognition / comparison
 - documentation: Bring all documentation up-to-date with Orkdal
 

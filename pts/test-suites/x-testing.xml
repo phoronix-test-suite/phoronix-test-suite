@@ -12,9 +12,9 @@
 		<Description>500px Compositing From Pixmap To Window</Description>
 	</RunTest>
 	<RunTest>
-		<Test>render-bench</Test>
+		<Test>trislam</Test>
 	</RunTest>
 	<RunTest>
-		<Test>trislam</Test>
+		<Test>xrender</Test>
 	</RunTest>
 </PhoronixTestSuite>
