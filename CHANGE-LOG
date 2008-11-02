@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for reading detailed RAM information on OpenSolaris using DMI
 - pts-core: Fix bug that caused installation of multiple Cascading Test Profiles to only go one level deep
 - pts-core: Rework code to pts_hw_string() and pts_sw_string()
+- pts-core: Add timed kill infrasturcture to kill a process from a test script by calling $TIMED_KILL <process_name> <time_in_seconds>
 - pts: Switch tandem-xml test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts: Switch pts-graph test profile to using $PHP_BIN instead of calling php (thus allows it to run where PHP isn't part of their path, such as Solaris)
 - pts: Add additional run-time tests for x11perf test profile
