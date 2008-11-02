@@ -130,5 +130,10 @@
 			<PackageName>dev-util/ftjam</PackageName>
 			<FileCheck>/usr/bin/jam</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>qt4-development</GenericName>
+			<PackageName>>=x11-libs/qt-4</PackageName>
+			<FileCheck>/usr/lib/qt4/bin/qmake</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -135,5 +135,10 @@
 			<PackageName>jam</PackageName>
 			<FileCheck>/usr/bin/jam</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>qt4-development</GenericName>
+			<PackageName>qt4-devel</PackageName>
+			<FileCheck>/usr/bin/qmake-qt4</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

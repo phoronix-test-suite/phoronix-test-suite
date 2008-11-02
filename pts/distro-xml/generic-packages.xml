@@ -174,5 +174,11 @@
 			<PossibleNames>jam</PossibleNames>
 			<FileCheck>/usr/bin/jam</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>qt4-development</GenericName>
+			<Title>Qt4 Development Files</Title>
+			<PossibleNames>libqt4-dev, libqt4-devel, qt4-devel</PossibleNames>
+			<FileCheck>/usr/lib/qt4/bin/qmake</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
