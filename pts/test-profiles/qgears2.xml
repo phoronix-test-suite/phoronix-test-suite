@@ -1,0 +1,59 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Other</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>0.42</EnvironmentSize>
+		<ProjectURL>http://zrusin.blogspot.com/</ProjectURL>
+		<ExternalDependencies>build-essential, qt4-development</ExternalDependencies>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
+	</TestProfile>
+	<TestInformation>
+		<Title>QGears2</Title>
+		<Executable>qgears2-run</Executable>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Frames Per Second</ResultScale>
+		<Description>This test runs qgears2, which is a test written by Zack Rusin and is based upon cairogears. This test can see how well different rendering backends perform and uses Qt4.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Rendering</DisplayName>
+			<Identifier>render-backend</Identifier>
+			<Menu>
+				<Entry>
+					<Name>CPU-based Raster</Name>
+					<Value>-image</Value>
+				</Entry>
+				<Entry>
+					<Name>XRender Extension</Name>
+					<Value>-render</Value>
+				</Entry>
+				<Entry>
+					<Name>OpenGL</Name>
+					<Value>-gl</Value>
+				</Entry>
+			</Menu>
+		</Option>
+		<Option>
+			<DisplayName>Test</DisplayName>
+			<Identifier>test-mode</Identifier>
+			<Menu>
+				<Entry>
+					<Name>Gears</Name>
+					<Value>GEARSFANCY</Value>
+				</Entry>
+				<Entry>
+					<Name>Text</Name>
+					<Value>TEXT</Value>
+				</Entry>
+				<Entry>
+					<Name>Image Scaling</Name>
+					<Value>COMPO</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>
