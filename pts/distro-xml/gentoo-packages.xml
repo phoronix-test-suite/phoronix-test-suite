@@ -86,17 +86,17 @@
 			<FileCheck>/usr/bin/scons</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>zlib-devel</GenericName>
+			<GenericName>zlib-development</GenericName>
 			<PackageName>sys-libs/zlib</PackageName>
 			<FileCheck>/usr/include/zlib.h</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>jpeg-devel</GenericName>
+			<GenericName>jpeg-development</GenericName>
 			<PackageName>media-libs/jpeg</PackageName>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>libaio-devel</GenericName>
+			<GenericName>libaio-development</GenericName>
 			<PackageName>dev-libs/libaio</PackageName>
 			<FileCheck>/usr/include/libaio.h</FileCheck>
 		</Package>
@@ -116,12 +116,12 @@
 			<FileCheck>/usr/lib/libstdc++.so.5 OR /usr/lib/libstdc++-v3/libstdc++.so.5</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>openal-devel</GenericName>
+			<GenericName>openal-development</GenericName>
 			<PackageName>media-libs/openal</PackageName>
 			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>vorbis-devel</GenericName>
+			<GenericName>vorbis-development</GenericName>
 			<PackageName>media-libs/taglib</PackageName>
 			<FileCheck>/usr/include/taglib/vorbisfile.h</FileCheck>
 		</Package>

@@ -7,7 +7,7 @@
 		<Status>BROKEN</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<ExternalDependencies>sdl-development, build-utilities, glew, jam, scons, vorbis-devel</ExternalDependencies>
+		<ExternalDependencies>sdl-development, build-utilities, glew, jam, scons, vorbis-development</ExternalDependencies>
 		<ProjectURL>http://www.vdrift.net/</ProjectURL>
 		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>

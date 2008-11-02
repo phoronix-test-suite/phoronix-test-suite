@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Package>
-			<GenericName>openal-devel</GenericName>
+			<GenericName>openal-development</GenericName>
 			<FileCheck>/System/Library/Frameworks/OpenAL.framework/Headers/al.h</FileCheck>
 		</Package>
 	</ExternalDependencies>

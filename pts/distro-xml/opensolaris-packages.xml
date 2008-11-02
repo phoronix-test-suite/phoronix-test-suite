@@ -61,12 +61,12 @@
 			<FileCheck>/usr/bin/java</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>zlib-devel</GenericName>
+			<GenericName>zlib-development</GenericName>
 			<PackageName>SUNWzlib</PackageName>
 			<FileCheck>/usr/include/zlib.h</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>jpeg-devel</GenericName>
+			<GenericName>jpeg-development</GenericName>
 			<PackageName>SUNWjpg</PackageName>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
