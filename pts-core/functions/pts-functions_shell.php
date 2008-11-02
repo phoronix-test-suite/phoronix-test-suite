@@ -116,10 +116,22 @@ function pts_extract_file($file, $remove_afterwards = false)
 	$file_name = basename($file);
 	$file_path = dirname($file);
 
-	switch(array_pop(explode(".", $file_name)))
+	switch(substr($file_name, strpos($file_name, ".") + 1))
 	{
 		case "tar":
 			$extract_cmd = "tar -xf";
+			break;
+		case "tar.gz":
+			$extract_cmd = "tar -zxf";
+			break;
+		case "tar.bz2":
+			$extract_cmd = "tar -jxf";
+			break;
+		case "tar.bz2":
+			$extract_cmd = "tar -jxf";
+			break;
+		case "zip":
+			$extract_cmd = "zip -O";
 			break;
 		default:
 			$extract_cmd = "";

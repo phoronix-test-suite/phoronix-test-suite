@@ -97,7 +97,6 @@ function motherboard_chipset_string()
 		}
 			
 		// TODO: Can't find Northbridge
-			
 		$info = $sb_vendor . " " . $sb_product;
 	}
 	else
@@ -287,7 +286,6 @@ function system_hard_disks()
 				{
 					$disk = $disks_formatted[$i];
 				}
-
 				array_push($disks, $disk);
 			}
 		}

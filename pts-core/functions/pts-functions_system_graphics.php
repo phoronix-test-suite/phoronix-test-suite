@@ -404,7 +404,6 @@ function set_amd_pcsdb($attribute, $value)
 	if(!empty($value) && IS_ATI_GRAPHICS)
 	{
 		$DISPLAY = substr(getenv("DISPLAY"), 1, 1);
-		
 		$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
 	}
 }

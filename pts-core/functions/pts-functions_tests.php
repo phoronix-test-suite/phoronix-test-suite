@@ -318,17 +318,6 @@ function pts_test_installed_profile_version($identifier)
 function pts_test_generate_install_xml($identifier)
 {
 	// Generate an install XML for pts-install.xml
-	/*$xml_writer = new tandem_XmlWriter();
-
-	$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $identifier);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_VERSION, 1, pts_test_profile_version($identifier));
-	$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, pts_test_checksum_installer($identifier));
-	$xml_writer->addXmlObject(P_INSTALL_TEST_SYSIDENTIFY, 1, pts_system_identifier_string());
-	$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, date("Y-m-d H:i:s"));
-	$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, "0000-00-00 00:00:00");
-	$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, "0");
-
-	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());*/
 	return pts_test_refresh_install_xml($identifier, 0, true);
 }
 function pts_test_refresh_install_xml($identifier, $this_test_duration = 0, $new_install = false)
