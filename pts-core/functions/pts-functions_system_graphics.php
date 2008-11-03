@@ -919,88 +919,27 @@ function opengl_version()
 		$info = str_replace(array(" Release"), "", $info);
 	}
 
-	if(str_replace(array("NVIDIA", "ATI", "AMD", "Radeon", "Intel"), "", $info) == $info)
-	{
-		if(is_file("/proc/dri/0/name"))
-		{
-			$driver_info = file_get_contents("/proc/dri/0/name");
-			$driver_info = substr($driver_info, 0, strpos($driver_info, ' '));
-			$info .= " ($driver_info)";
-		}
-	}
-
 	return $info;
 }
 function xorg_ddx_driver_info()
 {
 	$ddx_info = "";
 
-	if(IS_ATI_GRAPHICS)
+	if(is_file("/proc/dri/0/name"))
 	{
-		$version = read_xorg_module_version("fglrx_drv.so");
+		$driver_info = file_get_contents("/proc/dri/0/name");
+		$driver_name = substr($driver_info, 0, strpos($driver_info, " "));
 
-		if(!empty($version))
+		if($driver_name == "i915")
 		{
-			$ddx_info = "fglrx " . $version;
+			$driver_name = "intel";
 		}
-	}
-	else if(IS_MESA_GRAPHICS)
-	{
-		$gpu = graphics_processor_string();
 
-		if(strpos($gpu, "ATI"))
+		$driver_version = read_xorg_module_version($driver_name);
+
+		if(!empty($driver_version))
 		{
-			$version = read_xorg_module_version("radeon_drv.so");
-
-			if(!empty($version))
-			{
-				$ddx_info = "xf86-video-radeon " . $version;
-			}
-			else
-			{
-				$version = read_xorg_module_version("radeonhd_drv.so");
-
-				if(!empty($version))
-				{
-					$ddx_info = "xf86-video-radeonhd " . $version;
-				}
-			}
-		}
-		else if(strpos($gpu, "NVIDIA"))
-		{
-			$version = read_xorg_module_version("nv_drv.so");
-
-			if(!empty($version))
-			{
-				$ddx_info = "xf86-video-nv " . $version;
-			}
-			else
-			{
-				$version = read_xorg_module_version("nouveau_drv.so");
-
-				if(!empty($version))
-				{
-					$ddx_info = "xf86-video-nouveau " . $version;
-				}
-			}
-		}
-		else if(strpos($gpu, "Intel"))
-		{
-			$version = read_xorg_module_version("intel_drv.so");
-
-			if(!empty($version))
-			{
-				$ddx_info = "xf86-video-intel " . $version;
-			}
-		}
-		else if(strpos($gpu, "VIA"))
-		{
-			$version = read_xorg_module_version("openchrome_drv.so");
-
-			if(!empty($version))
-			{
-				$ddx_info = "xf86-video-openchrome " . $version;
-			}
+			$ddx_info = $driver_name . " " . $driver_version;
 		}
 	}
 
