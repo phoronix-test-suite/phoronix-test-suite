@@ -50,6 +50,12 @@ function pts_sw_string()
 	array_push($software, "OS: " . operating_system_release());
 	array_push($software, "Kernel: " . kernel_string() . " (" . kernel_arch() . ")");
 	array_push($software, "X.Org Server: " . graphics_subsystem_version());
+
+	if(($ddx = xorg_ddx_driver_info()) != "")
+	{
+		array_push($software, "X.Org Driver: " . $ddx);
+	}
+
 	array_push($software, "OpenGL: " . opengl_version());
 	array_push($software, "Compiler: " . compiler_version());
 	array_push($software, "File-System: " . filesystem_type());

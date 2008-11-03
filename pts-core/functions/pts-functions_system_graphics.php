@@ -931,6 +931,81 @@ function opengl_version()
 
 	return $info;
 }
+function xorg_ddx_driver_info()
+{
+	$ddx_info = "";
+
+	if(IS_ATI_GRAPHICS)
+	{
+		$version = read_xorg_module_version("fglrx_drv.so");
+
+		if(!empty($version))
+		{
+			$ddx_info = "fglrx " . $version;
+		}
+	}
+	else if(IS_MESA_GRAPHICS)
+	{
+		$gpu = graphics_processor_string();
+
+		if(strpos($gpu, "ATI"))
+		{
+			$version = read_xorg_module_version("radeon_drv.so");
+
+			if(!empty($version))
+			{
+				$ddx_info = "xf86-video-radeon " . $version;
+			}
+			else
+			{
+				$version = read_xorg_module_version("radeonhd_drv.so");
+
+				if(!empty($version))
+				{
+					$ddx_info = "xf86-video-radeonhd " . $version;
+				}
+			}
+		}
+		else if(strpos($gpu, "NVIDIA"))
+		{
+			$version = read_xorg_module_version("nv_drv.so");
+
+			if(!empty($version))
+			{
+				$ddx_info = "xf86-video-nv " . $version;
+			}
+			else
+			{
+				$version = read_xorg_module_version("nouveau_drv.so");
+
+				if(!empty($version))
+				{
+					$ddx_info = "xf86-video-nouveau " . $version;
+				}
+			}
+		}
+		else if(strpos($gpu, "Intel"))
+		{
+			$version = read_xorg_module_version("intel_drv.so");
+
+			if(!empty($version))
+			{
+				$ddx_info = "xf86-video-intel " . $version;
+			}
+		}
+		else if(strpos($gpu, "VIA"))
+		{
+			$version = read_xorg_module_version("openchrome_drv.so");
+
+			if(!empty($version))
+			{
+				$ddx_info = "xf86-video-openchrome " . $version;
+			}
+		}
+	}
+
+	return $ddx_info;
+}
 function graphics_gpu_usage()
 {
 	// Determine GPU usage

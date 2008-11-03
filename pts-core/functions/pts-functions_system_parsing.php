@@ -617,6 +617,28 @@ function read_hddtemp($disk = null)
 
 	return $hdd_temperature;
 }
+function read_xorg_module_version($module)
+{
+	$module_version = false;
+	if(is_file("/var/log/Xorg.0.log"))
+	{
+		$xorg_log = @file_get_contents("/var/log/Xorg.0.log");
+
+		if(($module_start = strpos($xorg_log, $module)) > 0)
+		{
+			$xorg_log = substr($xorg_log, $module_start);
+			$temp_version = substr($xorg_log, strpos($xorg_log, "module version =") + 17);
+			$temp_version = substr($temp_version, 0, strpos($temp_version, "\n"));
+
+			if(is_numeric(str_replace(".", "", $temp_version)))
+			{
+				$module_version = $temp_version;
+			}
+		}
+	}
+
+	return $module_version;
+}
 function read_osx_system_profiler($data_type, $object, $multiple_objects = false)
 {
 	$info = trim(shell_exec("system_profiler " . $data_type . " 2>&1"));
