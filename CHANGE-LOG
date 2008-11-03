@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for reading X.Org module / driver versions using read_xorg_module_version()
 - pts-core: Where applicable, report X.Org DDX driver and version to software information string
 - pts-core: Fix RAM detection on Dell servers where "<OUT OF SPEC>" was string and then failed the XML to render (reported by pjwelsh)
+- pts-core: Add "not specified" to HAL $remove_words
 
 Phoronix Test Suite 1.4.0
 November 3, 2008
