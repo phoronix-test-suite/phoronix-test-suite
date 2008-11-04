@@ -942,6 +942,16 @@ function xorg_ddx_driver_info()
 			$ddx_info = $driver_name . " " . $driver_version;
 		}
 	}
+	else if(IS_MESA_GRAPHICS && stripos(graphics_processor_string(), "NVIDIA") !== false)
+	{
+		// xf86-video-nv is an open-source driver but currently doesn't support DRI
+		$nv_driver_version = read_xorg_module_version("nv_drv.so");
+
+		if(!empty($nv_driver_version))
+		{
+			$ddx_info = "nv " . $nv_driver_version;
+		}
+	}
 
 	return $ddx_info;
 }
