@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix RAM detection on Dell servers where "<OUT OF SPEC>" was string and then failed the XML to render (reported by pjwelsh)
 - pts-core: Add "not specified" to HAL $remove_words
 - pts: Add gcc-g++ to external dependencies support for Cent OS and Fedora (reported by pjwelsh)
+- pts: Report 2D EXA/XAA acceleration mode in the test notes when running gtkperf test
 
 Phoronix Test Suite 1.4.0
 November 3, 2008
