@@ -188,8 +188,7 @@ function pts_generate_test_notes($test_type)
 		"Compiz" => array("compiz", "compiz.real"),
 		"Firefox" => array("firefox", "mozilla-firefox", "mozilla-firefox-bin", "firefox-bin"),
 		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin", "thunderbird-bin"),
-		"BOINC" => array("boinc", "boinc_client"),
-		"Tracker" => array("trackerd")
+		"BOINC" => array("boinc", "boinc_client")
 		);
 
 	pts_add_test_note(pts_process_running_string($check_processes));
