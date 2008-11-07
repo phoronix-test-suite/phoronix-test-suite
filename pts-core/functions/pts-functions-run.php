@@ -194,7 +194,7 @@ function pts_generate_test_notes($test_type)
 	pts_add_test_note(pts_process_running_string($check_processes));
 
 	// Check if Security Enhanced Linux was enforcing, permissive, or disabled
-	if(is_file("/etc/sysconfig/selinux"))
+	if(is_file("/etc/sysconfig/selinux") && is_readable("/boot/grub/menu.lst"))
 	{
 		$selinux_file = file_get_contents("/etc/sysconfig/selinux");
 		if(stripos($selinux_file, "selinux=disabled") === false)
@@ -202,7 +202,7 @@ function pts_generate_test_notes($test_type)
 			pts_add_test_note("SELinux was enabled.");
 		}
 	}
-	else if(is_file("/boot/grub/menu.lst"))
+	else if(is_file("/boot/grub/menu.lst") && is_readable("/boot/grub/menu.lst"))
 	{
 		$grub_file = file_get_contents("/boot/grub/menu.lst");
 		if(stripos($grub_file, "selinux=1") !== false)
