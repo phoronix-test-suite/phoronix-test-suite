@@ -99,7 +99,7 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 	}
 	unset($OLD_RESULTS, $original_xml_reader, $original_results_raw);
 
-	if(!defined("GLOBAL_COMPARISON") && getenv("PTS_MERGE") != "custom")
+	if(!pts_is_assignment("GLOBAL_COMPARISON") && getenv("PTS_MERGE") != "custom")
 	{
 		if($original_suite_name != $new_suite_name && !pts_global_valid_id_string($original_suite_name) && !pts_global_valid_id_string($new_suite_name))
 		{

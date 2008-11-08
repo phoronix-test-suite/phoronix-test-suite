@@ -124,7 +124,7 @@ if(!$TO_RUN_TYPE)
 	else if(pts_is_global_id($TO_RUN))
 	{
 		$TO_RUN_TYPE = "GLOBAL_COMPARISON";
-		define("GLOBAL_COMPARISON", 1);
+		pts_set_assignment("GLOBAL_COMPARISON", 1);
 		pts_save_result($TO_RUN . "/composite.xml", pts_global_download_xml($TO_RUN));
 	}
 	else
@@ -249,11 +249,11 @@ if($SAVE_RESULTS)
 	}
 
 	$RESULTS_IDENTIFIER = pts_prompt_results_identifier($result_identifiers);
-	define("SAVE_FILE_NAME", $PROPOSED_FILE_NAME);
+	pts_set_assignment("SAVE_FILE_NAME", $PROPOSED_FILE_NAME);
 }
 else
 {
-	define("SAVE_FILE_NAME", null);
+	pts_set_assignment("SAVE_FILE_NAME", null);
 }
 
 if(is_test($TO_RUN))
@@ -452,7 +452,7 @@ else if(is_suite($TO_RUN))
 
 	if($SUITE_RUN_MODE == "PCQS")
 	{
-		define("IS_PCQS_MODE", true);
+		pts_set_assignment("IS_PCQS_MODE", true);
 	}
 
 	unset($xml_parser);
@@ -520,7 +520,7 @@ if(is_suite($TO_RUN))
 	pts_user_message($SUITE_POST_RUN_MESSAGE);
 }
 
-define("PTS_TESTING_DONE", 1);
+pts_set_assignment("PTS_TESTING_DONE", 1);
 pts_module_process("__post_run_process", $TEST_RUN);
 
 if($SAVE_RESULTS)

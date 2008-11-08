@@ -329,7 +329,7 @@ function pts_install_test($identifier)
 		}
 		else
 		{
-			if(pts_test_needs_updated_install($identifier) || defined("PTS_FORCE_INSTALL"))
+			if(pts_test_needs_updated_install($identifier) || pts_is_assignment("PTS_FORCE_INSTALL"))
 			{
 				if(!defined("PTS_TOTAL_SIZE_MSG"))
 				{

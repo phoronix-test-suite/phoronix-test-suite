@@ -180,7 +180,7 @@ class pts_module
 				{
 					$loop_continue = true;
 
-					while(!defined("PTS_TESTING_DONE") && !defined("PTS_END_TIME") && pts_process_active("phoronix-test-suite") && $loop_continue)
+					while(!pts_is_assignment("PTS_TESTING_DONE") && !defined("PTS_END_TIME") && pts_process_active("phoronix-test-suite") && $loop_continue)
 					{
 						eval(self::module_name() . "::" . $function . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 

@@ -73,7 +73,7 @@ switch($COMMAND)
 
 			if($COMMAND == "FORCE_INSTALL_TEST")
 			{
-				define("PTS_FORCE_INSTALL", 1);
+				pts_set_assignment("PTS_FORCE_INSTALL", 1);
 			}
 
 			$ARG_1 = strtolower($ARG_1);
@@ -122,7 +122,7 @@ switch($COMMAND)
 
 		if($COMMAND == "FORCE_INSTALL_ALL")
 		{
-			define("PTS_FORCE_INSTALL", 1);
+			pts_set_assignment("PTS_FORCE_INSTALL", 1);
 		}
 
 		pts_module_process("__pre_install_process");

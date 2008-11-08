@@ -144,21 +144,23 @@ function pts_save_result($save_to = null, $save_results = null)
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-		if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || (defined("IS_PCQS_MODE") && IS_PCQS_MODE) || getenv("SAVE_SYSTEM_DETAILS") != false))
+		if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || pts_read_assignment("IS_PCQS_MODE") != false || getenv("SAVE_SYSTEM_DETAILS") != false))
 		{
+			$test_results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER");
+
 			// Save verbose system information here
 			if(!is_dir($save_to_dir . "/system-details/"))
 			{
 				mkdir($save_to_dir . "/system-details/");
 			}
-			if(!is_dir($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER))
+			if(!is_dir($save_to_dir . "/system-details/" . $test_results_identifier))
 			{
-				mkdir($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER);
+				mkdir($save_to_dir . "/system-details/" . $test_results_identifier);
 			}
 
 			if(is_file("/var/log/Xorg.0.log"))
 			{
-				pts_copy("/var/log/Xorg.0.log", $save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/Xorg.0.log");
+				pts_copy("/var/log/Xorg.0.log", $save_to_dir . "/system-details/" . $test_results_identifier . "/Xorg.0.log");
 			}
 
 			// lspci
@@ -166,7 +168,7 @@ function pts_save_result($save_to = null, $save_results = null)
 
 			if(strpos($file, "not found") == false)
 			{
-				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/lspci", $file);
+				@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/lspci", $file);
 			}
 
 			// sensors
@@ -174,7 +176,7 @@ function pts_save_result($save_to = null, $save_results = null)
 
 			if(strpos($file, "not found") == false)
 			{
-				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/sensors", $file);
+				@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/sensors", $file);
 			}
 
 			// dmesg
@@ -182,7 +184,7 @@ function pts_save_result($save_to = null, $save_results = null)
 
 			if(strpos($file, "not found") == false)
 			{
-				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/dmesg", $file);
+				@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/dmesg", $file);
 			}
 
 			if(IS_MACOSX)
@@ -192,7 +194,7 @@ function pts_save_result($save_to = null, $save_results = null)
 
 				if(strpos($file, "not found") == false)
 				{
-					@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/system_profiler", $file);
+					@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/system_profiler", $file);
 				}
 			}
 
@@ -200,7 +202,7 @@ function pts_save_result($save_to = null, $save_results = null)
 			if(is_file("/proc/cpuinfo"))
 			{
 				$file = file_get_contents("/proc/cpuinfo");
-				@file_put_contents($save_to_dir . "/system-details/" . TEST_RESULTS_IDENTIFIER . "/cpuinfo", $file);
+				@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/cpuinfo", $file);
 			}
 		}
 		file_put_contents($save_to_dir . "/index.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=composite.xml\"></HEAD><BODY></BODY></HTML>");

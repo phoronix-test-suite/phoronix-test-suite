@@ -84,10 +84,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 		$RESULTS_IDENTIFIER = pts_swap_user_variables($RESULTS_IDENTIFIER);
 	}
 
-	if(!defined("TEST_RESULTS_IDENTIFIER"))
-	{
-		define("TEST_RESULTS_IDENTIFIER", $RESULTS_IDENTIFIER);
-	}
+	pts_set_assignment_once("TEST_RESULTS_IDENTIFIER", $RESULTS_IDENTIFIER);
 
 	return $RESULTS_IDENTIFIER;
 }
@@ -257,10 +254,7 @@ function pts_verify_test_installation($TO_RUN)
 		}
 		else
 		{
-			if(!defined("TEST_INSTALL_PASS"))
-			{
-				define("TEST_INSTALL_PASS", true);
-			}
+			pts_set_assignment_once("TEST_INSTALL_PASS", true);
 		}
 	}
 
@@ -285,7 +279,7 @@ function pts_verify_test_installation($TO_RUN)
 			echo pts_string_header($message);
 		}
 
-		if(!defined("TEST_INSTALL_PASS") || getenv("SILENT_INSTALL") == false)
+		if(!pts_is_assignment("TEST_INSTALL_PASS") || getenv("SILENT_INSTALL") == false)
 		{
 			pts_exit();
 		}
@@ -294,10 +288,10 @@ function pts_verify_test_installation($TO_RUN)
 function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
 {
 	// Call the tests
-	if(!defined("PTS_RECURSE_CALL"))
+	if(!pts_is_assignment("PTS_RECURSE_CALL"))
 	{
 		pts_module_process("__pre_run_process", $tests_to_run);
-		define("PTS_RECURSE_CALL", 1);
+		pts_set_assignment("PTS_RECURSE_CALL", 1);
 	}
 
 	for($i = 0; $i < count($tests_to_run); $i++)
@@ -435,11 +429,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if(!empty($test_type))
 	{
 		$test_name = "TEST_" . strtoupper($test_type);
-
-		if(!defined($test_name))
-		{
-			define($test_name, 1);
-		}
+		pts_set_assignment_once($test_name, 1);
 	}
 
 	if(empty($execute_binary))
@@ -543,9 +533,9 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		if(is_file($benchmark_log_file))
 		{
-			if(defined("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || (defined("IS_PCQS_MODE") && IS_PCQS_MODE) || getenv("SAVE_BENCHMARK_LOGS") != false))
+			if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") != false || getenv("SAVE_BENCHMARK_LOGS") != false))
 			{
-				$backup_log_dir = SAVE_RESULTS_DIR . SAVE_FILE_NAME . "/benchmark-logs/" . TEST_RESULTS_IDENTIFIER . "/";
+				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment(SAVE_FILE_NAME) . "/benchmark-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
 				$backup_filename = basename($benchmark_log_file);
 				@mkdir($backup_log_dir, 0777, true);
 				@copy($benchmark_log_file, $backup_log_dir . $backup_filename);
