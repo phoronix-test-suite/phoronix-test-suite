@@ -400,7 +400,14 @@ function memory_mb_capacity()
 	}
 	else if(IS_BSD)
 	{
-		$info = floor(read_sysctl("hw.realmem") / 1048576);
+		$mem_size = read_sysctl("hw.realmem");
+
+		if($mem_size == "Unknown")
+		{
+			$mem_size = read_sysctl("hw.physmem");
+		}
+
+		$info = floor($mem_size / 1048576);
 	}
 	else if(IS_MACOSX)
 	{
