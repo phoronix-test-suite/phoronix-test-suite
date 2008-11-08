@@ -693,7 +693,7 @@ function pts_set_assignment($assignment, $value)
 }
 function pts_read_assignment($assignment)
 {
-	$value = null;
+	$value = false;
 
 	if(isset($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]))
 	{
@@ -701,6 +701,10 @@ function pts_read_assignment($assignment)
 	}
 
 	return $value;
+}
+function pts_is_assignment($assignment)
+{
+	return isset($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]) && !empty($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]);
 }
 function pts_clear_assignments()
 {
