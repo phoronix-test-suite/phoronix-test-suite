@@ -89,7 +89,7 @@ function pts_init()
 	}
 
 	// Operating System Detection
-	$supported_operating_systems = array("Linux", array("Solaris", "Sun"), "FreeBSD", "BSD", array("MacOSX", "Darwin"));
+	$supported_operating_systems = array("Linux", array("Solaris", "Sun"), "BSD", array("MacOSX", "Darwin"));
 	$uname_s = strtolower(php_uname("s"));
 
 	foreach($supported_operating_systems as $os_check)
