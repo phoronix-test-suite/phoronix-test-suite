@@ -213,7 +213,7 @@ function read_sysctl($desc)
 	// Read sysctl, used by *BSDs
 	$info = shell_exec("sysctl $desc 2>&1");
 
-	if(($point = strpos($info, $desc . ":")) !== false || ($point = strpos($info, $desc . "=")) !== false)
+	if(($point = strpos($info, ":")) > 0 || ($point = strpos($info, "=")) > 0)
 	{
 		$info = trim(substr($info, $point + 1));
 	}
