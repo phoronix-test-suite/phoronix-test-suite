@@ -39,6 +39,10 @@ function main_system_hardware_string()
 			$info = $manufacturer[0] . " " . $product[0];
 		}
 	}
+	else if(IS_BSD)
+	{
+		$info = trim(read_sysctl("hw.vendor") . " " . read_sysctl("hw.version"));
+	}
 
 	if(empty($info))
 	{	
