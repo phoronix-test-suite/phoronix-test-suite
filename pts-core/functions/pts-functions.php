@@ -687,5 +687,24 @@ function pts_user_message($message)
 		}
 	}
 }
+function pts_set_assignment($assignment, $value)
+{
+	$GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment] = $value;
+}
+function pts_read_assignment($assignment)
+{
+	$value = null;
+
+	if(isset($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]))
+	{
+		$value = $GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment];
+	}
+
+	return $value;
+}
+function pts_clear_assignments()
+{
+	$GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"] = array();
+}
 
 ?>

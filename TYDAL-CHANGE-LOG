@@ -1,0 +1,4 @@
+
+Phoronix Test Suite (Git)
+
+- pts-core: Add pts_set_assignment(), pts_read_assignment(), and pts_clear_assignments() to replace some of the define statements with new mechanism
