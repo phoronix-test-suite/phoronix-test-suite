@@ -400,11 +400,11 @@ function memory_mb_capacity()
 	}
 	else if(IS_BSD)
 	{
-		$mem_size = read_sysctl("hw.realmem");
+		$mem_size = read_sysctl("hw.physmem");
 
 		if($mem_size == "Unknown")
 		{
-			$mem_size = read_sysctl("hw.physmem");
+			$mem_size = read_sysctl("hw.realmem");
 		}
 
 		$info = floor($mem_size / 1048576);
