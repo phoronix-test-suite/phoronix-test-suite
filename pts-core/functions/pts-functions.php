@@ -687,6 +687,13 @@ function pts_user_message($message)
 		}
 	}
 }
+function pts_set_assignment_once($assignment, $value)
+{
+	if(!pts_is_assignment($assignment))
+	{
+		pts_set_assignment($assignment, $value);
+	}
+}
 function pts_set_assignment($assignment, $value)
 {
 	$GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment] = $value;
@@ -704,7 +711,7 @@ function pts_read_assignment($assignment)
 }
 function pts_is_assignment($assignment)
 {
-	return isset($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]) && !empty($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]);
+	return isset($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]);
 }
 function pts_clear_assignments()
 {
