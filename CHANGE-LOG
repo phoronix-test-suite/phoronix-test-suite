@@ -8,6 +8,8 @@ Phoronix Test Suite (Git)
 - pts-core: Add "not specified" to HAL $remove_words
 - pts-core: Rever trackerd from $check_process until better method is determined
 - pts-core: Fix read warnings in SELinux detection
+- pts-core: Improve *BSD operating system functions
+- pts-core: Add support for OpenBSD 4.4
 - pts: Add gcc-g++ to external dependencies support for Cent OS and Fedora (reported by pjwelsh)
 - pts: Report 2D EXA/XAA acceleration mode in the test notes when running gtkperf test
 
