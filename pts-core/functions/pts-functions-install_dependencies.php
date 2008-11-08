@@ -110,7 +110,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 
 		$dependencies = array_map("trim", $dependencies);
 
-		if(!defined("PTS_EXDEP_FIRST_RUN"))
+		if(!pts_is_assignment("PTS_EXDEP_FIRST_RUN"))
 		{
 			array_push($dependencies, "php-extras");
 
@@ -119,7 +119,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 				array_push($dependencies, "linux-32bit-libraries");
 			}
 
-			define("PTS_EXDEP_FIRST_RUN", 1);
+			pts_set_assignment("PTS_EXDEP_FIRST_RUN", 1);
 		}
 
 		if(!pts_package_generic_to_distro_name($INSTALL_OBJ, $dependencies))

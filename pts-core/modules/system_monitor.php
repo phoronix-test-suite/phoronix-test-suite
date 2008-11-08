@@ -61,82 +61,82 @@ class system_monitor extends pts_module_interface
 
 		if(in_array("gpu.temp", $to_show)  || $monitor_temp)
 		{
-			define("MONITOR_GPU_TEMP", 1);
+			pts_set_assignment("MONITOR_GPU_TEMP", 1);
 			pts_module::save_file(".s/GPU_TEMPERATURE");
 		}
 		if(in_array("cpu.temp", $to_show)  || $monitor_temp)
 		{	
-			define("MONITOR_CPU_TEMP", 1);
+			pts_set_assignment("MONITOR_CPU_TEMP", 1);
 			pts_module::save_file(".s/CPU_TEMPERATURE");
 		}
 		if(in_array("hdd.temp", $to_show)  || $monitor_temp)
 		{	
-			define("MONITOR_HDD_TEMP", 1);
+			pts_set_assignment("MONITOR_HDD_TEMP", 1);
 			pts_module::save_file(".s/HDD_TEMPERATURE");
 		}
 		if(in_array("sys.temp", $to_show)  || $monitor_temp)
 		{	
-			define("MONITOR_SYS_TEMP", 1);
+			pts_set_assignment("MONITOR_SYS_TEMP", 1);
 			pts_module::save_file(".s/SYS_TEMPERATURE");
 		}
 		if(in_array("battery.power", $to_show) || $monitor_power)
 		{	
-			define("MONITOR_BATTERY_POWER", 1);
+			pts_set_assignment("MONITOR_BATTERY_POWER", 1);
 			pts_module::save_file(".s/BATTERY_POWER");
 		}
 		if(in_array("cpu.voltage", $to_show) || $monitor_voltage)
 		{	
-			define("MONITOR_CPU_VOLTAGE", 1);
+			pts_set_assignment("MONITOR_CPU_VOLTAGE", 1);
 			pts_module::save_file(".s/CPU_VOLTAGE");
 		}
 		if(in_array("v3.voltage", $to_show) || $monitor_voltage)
 		{
-			define("MONITOR_V3_VOLTAGE", 1);
+			pts_set_assignment("MONITOR_V3_VOLTAGE", 1);
 			pts_module::save_file(".s/V3_VOLTAGE");
 		}
 		if(in_array("v5.voltage", $to_show) || $monitor_voltage)
 		{
-			define("MONITOR_V5_VOLTAGE", 1);
+			pts_set_assignment("MONITOR_V5_VOLTAGE", 1);
 			pts_module::save_file(".s/V5_VOLTAGE");
 		}
 		if(in_array("v12.voltage", $to_show) || $monitor_voltage)
 		{
-			define("MONITOR_V12_VOLTAGE", 1);
+			pts_set_assignment("MONITOR_V12_VOLTAGE", 1);
 			pts_module::save_file(".s/V12_VOLTAGE");
 		}
 		if(in_array("cpu.freq", $to_show) || $monitor_freq)
 		{
-			define("MONITOR_CPU_FREQ", 1);
+			pts_set_assignment("MONITOR_CPU_FREQ", 1);
 			pts_module::save_file(".s/CPU_FREQ");
 		}
 		if(in_array("gpu.freq", $to_show) || $monitor_freq)
 		{
-			define("MONITOR_GPU_FREQ", 1);
+			pts_set_assignment("MONITOR_GPU_FREQ", 1);
 			pts_module::save_file(".s/GPU_FREQ");
 		}
 		if(in_array("gpu.usage", $to_show) || $monitor_usage)
 		{
-			define("MONITOR_GPU_USAGE", 1);
+			pts_set_assignment("MONITOR_GPU_USAGE", 1);
 			pts_module::save_file(".s/GPU_USAGE");
 		}
 		if(in_array("cpu.usage", $to_show) || $monitor_usage)
 		{
-			define("MONITOR_CPU_USAGE", 1);
+			pts_set_assignment("MONITOR_CPU_USAGE", 1);
 			pts_module::save_file(".s/CPU_USAGE");
 		}
 		if(in_array("system.memory", $to_show) || $monitor_memory)
 		{
-			define("MONITOR_SYS_MEMORY", 1);
+			pts_set_assignment("MONITOR_SYS_MEMORY", 1);
 			pts_module::save_file(".s/SYS_MEMORY");
 		}
 		if(in_array("swap.memory", $to_show) || $monitor_memory)
 		{
-			define("MONITOR_SWAP_MEMORY", 1);
+			pts_set_assignment("MONITOR_SWAP_MEMORY", 1);
 			pts_module::save_file(".s/SWAP_MEMORY");
 		}
 		if(in_array("total.memory", $to_show) || $monitor_memory)
 		{
-			define("MONITOR_TOTAL_MEMORY", 1);
+			pts_set_assignment("MONITOR_TOTAL_MEMORY", 1);
 			pts_module::save_file(".s/TOTAL_MEMORY");
 		}
 	}
@@ -164,7 +164,7 @@ class system_monitor extends pts_module_interface
 		$type_index["USAGE"] = array();
 		$type_index["MEMORY"] = array();
 
-		if(defined("MONITOR_GPU_TEMP"))
+		if(pts_is_assignment("MONITOR_GPU_TEMP"))
 		{
 			$this_array = self::parse_monitor_log(".s/GPU_TEMPERATURE");
 
@@ -177,7 +177,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["THERMAL"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_CPU_TEMP"))
+		if(pts_is_assignment("MONITOR_CPU_TEMP"))
 		{
 			$this_array = self::parse_monitor_log(".s/CPU_TEMPERATURE");
 
@@ -190,7 +190,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["THERMAL"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_HDD_TEMP"))
+		if(pts_is_assignment("MONITOR_HDD_TEMP"))
 		{
 			$this_array = self::parse_monitor_log(".s/HDD_TEMPERATURE");
 
@@ -203,7 +203,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["THERMAL"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_SYS_TEMP"))
+		if(pts_is_assignment("MONITOR_SYS_TEMP"))
 		{
 			$this_array = self::parse_monitor_log(".s/SYS_TEMPERATURE");
 
@@ -216,7 +216,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["THERMAL"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_BATTERY_POWER"))
+		if(pts_is_assignment("MONITOR_BATTERY_POWER"))
 		{
 			$this_array = self::parse_monitor_log(".s/BATTERY_POWER");
 
@@ -229,7 +229,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["POWER"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_CPU_VOLTAGE"))
+		if(pts_is_assignment("MONITOR_CPU_VOLTAGE"))
 		{
 			$this_array = self::parse_monitor_log(".s/CPU_VOLTAGE");
 
@@ -242,7 +242,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["VOLTAGE"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_V3_VOLTAGE"))
+		if(pts_is_assignment("MONITOR_V3_VOLTAGE"))
 		{
 			$this_array = self::parse_monitor_log(".s/V3_VOLTAGE");
 
@@ -255,7 +255,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["VOLTAGE"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_V5_VOLTAGE"))
+		if(pts_is_assignment("MONITOR_V5_VOLTAGE"))
 		{
 			$this_array = self::parse_monitor_log(".s/V5_VOLTAGE");
 
@@ -268,7 +268,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["VOLTAGE"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_V12_VOLTAGE"))
+		if(pts_is_assignment("MONITOR_V12_VOLTAGE"))
 		{
 			$this_array = self::parse_monitor_log(".s/V12_VOLTAGE");
 
@@ -281,7 +281,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["VOLTAGE"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_CPU_FREQ"))
+		if(pts_is_assignment("MONITOR_CPU_FREQ"))
 		{
 			$this_array = self::parse_monitor_log(".s/CPU_FREQ");
 
@@ -294,7 +294,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["FREQUENCY"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_GPU_FREQ"))
+		if(pts_is_assignment("MONITOR_GPU_FREQ"))
 		{
 			$this_array = self::parse_monitor_log(".s/GPU_FREQ");
 
@@ -307,7 +307,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["FREQUENCY"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_GPU_USAGE"))
+		if(pts_is_assignment("MONITOR_GPU_USAGE"))
 		{
 			$this_array = self::parse_monitor_log(".s/GPU_USAGE");
 
@@ -320,7 +320,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["USAGE"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_CPU_USAGE"))
+		if(pts_is_assignment("MONITOR_CPU_USAGE"))
 		{
 			$this_array = self::parse_monitor_log(".s/CPU_USAGE");
 
@@ -333,7 +333,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["USAGE"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_SYS_MEMORY"))
+		if(pts_is_assignment("MONITOR_SYS_MEMORY"))
 		{
 			$this_array = self::parse_monitor_log(".s/SYS_MEMORY");
 
@@ -346,7 +346,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["MEMORY"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_SWAP_MEMORY"))
+		if(pts_is_assignment("MONITOR_SWAP_MEMORY"))
 		{
 			$this_array = self::parse_monitor_log(".s/SWAP_MEMORY");
 
@@ -359,7 +359,7 @@ class system_monitor extends pts_module_interface
 				array_push($type_index["MEMORY"], count($m_array) - 1);
 			}
 		}
-		if(defined("MONITOR_TOTAL_MEMORY"))
+		if(pts_is_assignment("MONITOR_TOTAL_MEMORY"))
 		{
 			$this_array = self::parse_monitor_log(".s/TOTAL_MEMORY");
 
@@ -493,35 +493,35 @@ class system_monitor extends pts_module_interface
 
 	public function pts_monitor_update()
 	{
-		if(defined("MONITOR_GPU_TEMP"))
+		if(pts_is_assignment("MONITOR_GPU_TEMP"))
 		{
 			$temp = graphics_processor_temperature();
 
 			if($temp != -1)
 				pts_module::save_file(".s/GPU_TEMPERATURE", $temp, true);
 		}
-		if(defined("MONITOR_CPU_TEMP"))
+		if(pts_is_assignment("MONITOR_CPU_TEMP"))
 		{
 			$temp = processor_temperature();
 
 			if($temp != -1)
 				pts_module::save_file(".s/CPU_TEMPERATURE", $temp, true);
 		}
-		if(defined("MONITOR_HDD_TEMP"))
+		if(pts_is_assignment("MONITOR_HDD_TEMP"))
 		{
 			$temp = system_hdd_temperature();
 
 			if($temp != -1)
 				pts_module::save_file(".s/HDD_TEMPERATURE", $temp, true);
 		}
-		if(defined("MONITOR_SYS_TEMP"))
+		if(pts_is_assignment("MONITOR_SYS_TEMP"))
 		{
 			$temp = system_temperature();
 
 			if($temp != -1)
 				pts_module::save_file(".s/SYS_TEMPERATURE", $temp, true);
 		}
-		if(defined("MONITOR_BATTERY_POWER"))
+		if(pts_is_assignment("MONITOR_BATTERY_POWER"))
 		{
 			$state = read_acpi("/battery/BAT0/state", "charging state");
 			$power = read_acpi("/battery/BAT0/state", "present rate");
@@ -535,77 +535,77 @@ class system_monitor extends pts_module_interface
 					pts_module::save_file(".s/BATTERY_POWER", $power, true);
 			}
 		}
-		if(defined("MONITOR_CPU_VOLTAGE"))
+		if(pts_is_assignment("MONITOR_CPU_VOLTAGE"))
 		{
 			$voltage = system_line_voltage("CPU");
 
 			if($voltage != -1)
 				pts_module::save_file(".s/GPU_VOLTAGE", $voltage, true);
 		}
-		if(defined("MONITOR_V3_VOLTAGE"))
+		if(pts_is_assignment("MONITOR_V3_VOLTAGE"))
 		{
 			$voltage = system_line_voltage("V3");
 
 			if($voltage != -1)
 				pts_module::save_file(".s/V3_VOLTAGE", $voltage, true);
 		}
-		if(defined("MONITOR_V5_VOLTAGE"))
+		if(pts_is_assignment("MONITOR_V5_VOLTAGE"))
 		{
 			$voltage = system_line_voltage("V5");
 
 			if($voltage != -1)
 				pts_module::save_file(".s/V5_VOLTAGE", $voltage, true);
 		}
-		if(defined("MONITOR_V12_VOLTAGE"))
+		if(pts_is_assignment("MONITOR_V12_VOLTAGE"))
 		{
 			$voltage = system_line_voltage("V12");
 
 			if($voltage != -1)
 				pts_module::save_file(".s/V12_VOLTAGE", $voltage, true);
 		}
-		if(defined("MONITOR_CPU_FREQ"))
+		if(pts_is_assignment("MONITOR_CPU_FREQ"))
 		{
 			$speed = current_processor_frequency();
 
 			if($speed > 0)
 				pts_module::save_file(".s/CPU_FREQ", $speed, true);
 		}
-		if(defined("MONITOR_GPU_FREQ"))
+		if(pts_is_assignment("MONITOR_GPU_FREQ"))
 		{
 			$speed = graphics_processor_frequency();
 
 			if(!empty($speed[0]))
 				pts_module::save_file(".s/GPU_FREQ", $speed[0], true);
 		}
-		if(defined("MONITOR_GPU_USAGE"))
+		if(pts_is_assignment("MONITOR_GPU_USAGE"))
 		{
 			$usage = graphics_gpu_usage();
 
 			if($usage != -1)
 				pts_module::save_file(".s/GPU_USAGE", $usage, true);
 		}
-		if(defined("MONITOR_CPU_USAGE"))
+		if(pts_is_assignment("MONITOR_CPU_USAGE"))
 		{
 			$usage = current_processor_usage();
 
 			if($usage != -1)
 				pts_module::save_file(".s/CPU_USAGE", $usage, true);
 		}
-		if(defined("MONITOR_SYS_MEMORY"))
+		if(pts_is_assignment("MONITOR_SYS_MEMORY"))
 		{
 			$usage = read_physical_memory_usage();
 
 			if($usage != -1)
 				pts_module::save_file(".s/SYS_MEMORY", $usage, true);
 		}
-		if(defined("MONITOR_SWAP_MEMORY"))
+		if(pts_is_assignment("MONITOR_SWAP_MEMORY"))
 		{
 			$usage = read_swap_usage();
 
 			if($usage != -1)
 				pts_module::save_file(".s/SWAP_MEMORY", $usage, true);
 		}
-		if(defined("MONITOR_TOTAL_MEMORY"))
+		if(pts_is_assignment("MONITOR_TOTAL_MEMORY"))
 		{
 			$usage = read_total_memory_usage();
 

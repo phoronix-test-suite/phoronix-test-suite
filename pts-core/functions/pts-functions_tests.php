@@ -118,10 +118,10 @@ function pts_save_result($save_to = null, $save_results = null)
 				}
 				else
 				{
-					if(!defined("PHP_SVG_TEXT"))
+					if(!pts_is_assignment("PHP_SVG_TEXT"))
 					{
 						echo "\nThe PHP GD extension is missing, so the experimental SVG rendering engine is being used.\n";
-						define("PHP_SVG_TEXT", 1);
+						pts_set_assignment("PHP_SVG_TEXT", 1);
 					}
 
 					// Render to SVG

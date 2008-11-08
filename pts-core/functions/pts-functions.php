@@ -717,5 +717,9 @@ function pts_clear_assignments()
 {
 	$GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"] = array();
 }
+function pts_clear_assignment($assignment)
+{
+	unset($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]);
+}
 
 ?>

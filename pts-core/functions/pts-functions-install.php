@@ -331,7 +331,7 @@ function pts_install_test($identifier)
 		{
 			if(pts_test_needs_updated_install($identifier) || pts_is_assignment("PTS_FORCE_INSTALL"))
 			{
-				if(!defined("PTS_TOTAL_SIZE_MSG"))
+				if(!pts_is_assignment("PTS_TOTAL_SIZE_MSG"))
 				{
 					if(isset($argv[1]))
 					{
@@ -343,7 +343,7 @@ function pts_install_test($identifier)
 						}
 					}
 
-					define("PTS_TOTAL_SIZE_MSG", 1);
+					pts_set_assignment("PTS_TOTAL_SIZE_MSG", 1);
 				}
 
 				if(!is_dir(TEST_ENV_DIR))
