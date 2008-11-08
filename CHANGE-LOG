@@ -1,12 +1,13 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 1.4.1
+November 8, 2008
 
 - pts-core: Add support for reading X.Org module / driver versions using read_xorg_module_version()
 - pts-core: Where applicable, report X.Org DDX driver and version to software information string
 - pts-core: Fix RAM detection on Dell servers where "<OUT OF SPEC>" was string and then failed the XML to render (reported by pjwelsh)
 - pts-core: Add "not specified" to HAL $remove_words
-- pts-core: Rever trackerd from $check_process until better method is determined
+- pts-core: Revert trackerd from $check_process until better method is determined
 - pts-core: Fix read warnings in SELinux detection
 - pts-core: Improve *BSD operating system functions
 - pts-core: Add support for OpenBSD 4.4
