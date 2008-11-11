@@ -67,7 +67,7 @@ function graphics_processor_temperature()
 		}
 	}
 
-	if(empty($temp_c) || !is_numeric($temp_c))
+	if(empty($temp_c) || $temp_c < 0)
 	{
 		$temp_c = -1;
 	}
