@@ -152,7 +152,7 @@ function pts_extended_init()
 
 	// OpenGL / graphics detection
 	$graphics_detection = array("NVIDIA", array("ATI", "fglrx"), "Mesa");
-	$opengl_driver = opengl_version();
+	$opengl_driver = opengl_version() . " " . xorg_ddx_driver_info();
 	$found_gpu_match = false;
 
 	foreach($graphics_detection as $gpu_check)
