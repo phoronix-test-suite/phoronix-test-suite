@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix bug in xorg_ddx_driver_info() that could have caused some driver versions to be misreported
 - pts-core: Potential fix for possible regression in IS_*_GRAPHICS setup
 - pts-core: Temperature reporting fix in graphics_processor_temperature() that made it look like sometimes there was no sensor
+- pts-core: Add "00" to HAL $remove_words
 - pts: Fix openal-development external dependency for ubuntu-packages.xml due to package name change in Ubuntu 8.10
 - pts: Set file size to 256MB with compress-lzma test profile
 
