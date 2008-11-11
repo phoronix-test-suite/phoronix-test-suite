@@ -132,8 +132,8 @@
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
-			<PackageName>libopenal0a libopenal-dev</PackageName>
-			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
+			<PackageName>libopenal-dev</PackageName>
+			<FileCheck>/usr/include/AL/al.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>

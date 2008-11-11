@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix bug in xorg_ddx_driver_info() that could have caused some driver versions to be misreported
+- pts: Fix openal-development external dependency for ubuntu-packages.xml due to package name change in Ubuntu 8.10
 
 Phoronix Test Suite 1.4.1
 November 8, 2008
