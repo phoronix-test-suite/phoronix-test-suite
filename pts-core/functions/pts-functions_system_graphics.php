@@ -935,6 +935,8 @@ function xorg_ddx_driver_info()
 			$driver_name = "intel";
 		}
 
+		$driver_name .= "_drv";
+
 		$driver_version = read_xorg_module_version($driver_name);
 
 		if(!empty($driver_version))
