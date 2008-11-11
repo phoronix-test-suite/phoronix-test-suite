@@ -90,6 +90,10 @@ if(function_exists("pts_module_start_process"))
 }
 
 // Phoronix Test Suite - Functions
+function p_str($str_o)
+{
+	return $str_o;
+}
 function pts_gd_available()
 {
 	// Checks if PHP GD library is available for image rendering
@@ -444,7 +448,7 @@ function pts_exit($string = "")
 {
 	// Have PTS exit abruptly
 	define("PTS_EXIT", 1);
-	echo $string;
+	echo p_str($string);
 	exit(0);
 }
 function pts_version_comparable($old, $new)
