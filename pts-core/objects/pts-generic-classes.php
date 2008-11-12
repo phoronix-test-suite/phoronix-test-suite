@@ -65,6 +65,51 @@ class pts_test_file_download
 		return $this->md5;
 	}
 }
+class pts_test_profile_details
+{
+	var $identifier;
+	var $name;
+	var $version;
+	var $license;
+	var $status;
+	var $test_version;
+	var $test_download_size = false;
+	var $test_environment_size = false;
+	var $test_maintainer = false;
+
+	public function __construct($identifier)
+	{
+		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+		$this->identifier = $identifier;
+		$this->name = $xml_parser->getXMLValue(P_TEST_TITLE);
+		$this->license = $xml_parser->getXMLValue(P_TEST_LICENSE);
+		$this->status = $xml_parser->getXMLValue(P_TEST_STATUS);
+		$this->test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
+		$this->version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
+
+		if(IS_DEBUG_MODE)
+		{
+			$this->test_download_size = pts_estimated_download_size($identifier);
+			$this->test_environment_size = pts_test_estimated_environment_size($identifier);
+			$this->test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
+		}
+	}
+	public function __toString()
+	{
+		$str = "";
+
+		if(IS_DEBUG_MODE)
+		{
+			$str = sprintf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $this->identifier, $this->test_version, $this->version, $this->status, $this->license, $this->test_download_size, $this->test_environment_size, $this->test_maintainer);
+		}
+		else if(!empty($this->name) && (pts_read_assignment("COMMAND") == "LIST_ALL_TESTS" || !in_array($this->status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED", "STANDALONE", "SCTP"))))
+		{
+			$str = sprintf("%-18ls - %-36ls [%s, %10ls]\n", $this->identifier, $this->name, $this->status, $this->license);
+		}
+
+		return $str;
+	}
+}
 class pts_test_result
 {
 	var $result;

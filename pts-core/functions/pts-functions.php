@@ -92,6 +92,7 @@ if(function_exists("pts_module_start_process"))
 // Phoronix Test Suite - Functions
 function p_str($str_o)
 {
+	//  $_ENV["LANG"]
 	return $str_o;
 }
 function pts_gd_available()
@@ -448,7 +449,7 @@ function pts_exit($string = "")
 {
 	// Have PTS exit abruptly
 	define("PTS_EXIT", 1);
-	echo p_str($string);
+	echo $string;
 	exit(0);
 }
 function pts_version_comparable($old, $new)

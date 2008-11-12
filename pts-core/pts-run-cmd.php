@@ -26,6 +26,7 @@ require("pts-core/functions/pts-functions.php");
 require("pts-core/functions/pts-functions-extra.php");
 
 $COMMAND = $argv[1];
+pts_set_assignment("COMMAND", $COMMAND);
 
 if(isset($argv[2]))
 {
@@ -172,30 +173,9 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite - Tests");
 		foreach(pts_available_tests_array() as $identifier)
 		{
-		 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
-			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
-			$license = $xml_parser->getXMLValue(P_TEST_LICENSE);
-			$status = $xml_parser->getXMLValue(P_TEST_STATUS);
-
-			if(IS_DEBUG_MODE)
+			if(pts_test_supported($identifier) || IS_DEBUG_MODE)
 			{
-				$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
-				$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
-				$test_download_size = pts_estimated_download_size($identifier);
-				$test_environment_size = pts_test_estimated_environment_size($identifier);
-				$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
-
-				printf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $identifier, $test_version, $version, $status, $license, $test_download_size, $test_environment_size, $test_maintainer);
-			}
-			else
-			{
-				if(!empty($name) && ($COMMAND == "LIST_ALL_TESTS" || !in_array($status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED", "STANDALONE", "SCTP"))))
-				{
-					if(pts_test_supported($identifier))
-					{
-						printf("%-18ls - %-36ls [%s, %10ls]\n", $identifier, $name, $status, $license);
-					}
-				}
+				echo new pts_test_profile_details($identifier);
 			}
 		}
 		echo "\n";
