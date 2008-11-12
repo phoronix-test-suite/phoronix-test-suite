@@ -133,7 +133,7 @@ case "$1" in
 	$PHP_BIN pts-core/pts-run-cmd.php MAKE_DOWNLOAD_CACHE
 	;;
 "list-tests" | "list-all-tests")
-	$PHP_BIN pts-core/pts-run-cmd.php LIST_TESTS
+	$PHP_BIN pts-core/phoronix-test-suite.php LIST_TESTS
 	;;
 "list-suites")
 	$PHP_BIN pts-core/pts-run-cmd.php LIST_SUITES
