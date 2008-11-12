@@ -202,29 +202,11 @@ switch($COMMAND)
 		break;
 	case "LIST_MODULES":
 		echo pts_string_header("Phoronix Test Suite - Modules");
-		foreach(glob(MODULE_DIR . "*.php") as $module_file)
+		$available_modules = array_merge(glob(MODULE_DIR . "*.sh"), glob(MODULE_DIR . "*.php"));
+		asort($available_modules);
+		foreach($available_modules as $module_file)
 		{
-		 	$module = basename($module_file, ".php");
-
-			if(!in_array($module, pts_attached_modules()))
-			{
-				include_once($module_file);
-			}
-
-			$module_name = pts_php_module_call($module, "module_name");
-			$module_version = pts_php_module_call($module, "module_version");
-			$module_author = pts_php_module_call($module, "module_author");
-
-			printf("%-22ls - %-30ls [%s]\n", $module, $module_name . " v" . $module_version, $module_author);
-		}
-		foreach(glob(MODULE_DIR . "*.sh") as $module_file)
-		{
-		 	$module = basename($module_file, ".sh");
-			$module_name = pts_sh_module_call($module, "module_name");
-			$module_version = pts_sh_module_call($module, "module_version");
-			$module_author = pts_sh_module_call($module, "module_author");
-
-			printf("%-22ls - %-30ls [%s]\n", $module, $module_name . " v" . $module_version, $module_author);
+			echo new pts_user_module_details($module_file);
 		}
 		echo "\n";
 		break;

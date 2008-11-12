@@ -5,3 +5,4 @@ Phoronix Test Suite (Git)
 - pts-core: Switch over relevant define statements to using new PTS assignment functions for program-wide option-specific variable constants
 - pts-core: Add pts_test_profile_details class
 - pts-core: Add pts_test_suite_details class
+- pts-core: Add pts_user_module_details class

@@ -116,6 +116,34 @@ class pts_test_suite_details
 		return $str;
 	}
 }
+class pts_user_module_details
+{
+	var $identifier;
+	var $name;
+	var $module;
+	var $version;
+	var $author;
+
+	public function __construct($module_file_path)
+	{
+		$module = basename(substr($module_file_path, 0, strrpos($module_file_path, ".")));
+		$this->module = $module;
+
+		if(!in_array($module, pts_attached_modules()) && substr($module_file_path, -3) == "php")
+		{
+			include_once($module_file_path);
+		}
+
+		$this->name = pts_module_call($module, "module_name");
+		$this->version = pts_module_call($module, "module_version");
+		$this->author = pts_module_call($module, "module_author");
+	}
+	public function __toString()
+	{
+		return sprintf("%-22ls - %-30ls [%s]\n", $this->module, $this->name . " v" . $this->version, $this->author);
+	}
+
+}
 class pts_test_profile_details
 {
 	var $identifier;

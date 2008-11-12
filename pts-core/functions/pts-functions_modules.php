@@ -193,7 +193,7 @@ function pts_module_call($module, $process, $object_pass = null)
 	{
 		$module_response = pts_php_module_call($module, $process, $object_pass);
 	}
-	else if(in_array($process, pts_module_processes()))
+	else if(pts_module_type($module) == "SH")
 	{
 		$module_response = pts_sh_module_call($module, $process);
 	}
@@ -203,8 +203,14 @@ function pts_module_call($module, $process, $object_pass = null)
 function pts_sh_module_call($module, $process)
 {
 	$module_file = MODULE_DIR . $module . ".sh";
+	$module_return = "";
 
-	return is_file($module_file) && trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
+	if(is_file($module_file))
+	{
+		$module_return = trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
+	}
+
+	return $module_return;
 }
 function pts_php_module_call($module, $process, $object_pass = null)
 {
