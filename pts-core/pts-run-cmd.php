@@ -226,36 +226,7 @@ switch($COMMAND)
 		printf("%-18ls   %-8ls %-13ls %-11ls %-13ls %-10ls\n", "TEST", "VERSION", "INSTALL DATE", "LAST RUN", "AVG RUN-TIME", "TIMES RUN");
 		foreach(pts_installed_tests_array() as $identifier)
 		{
-			$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml");
-			$test_time_install = substr($xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME), 0, 10);
-			$test_time_lastrun = substr($xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME), 0, 10);
-			$test_version = $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
-			$test_avg_runtime = pts_format_time_string($xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME), "SECONDS", false);
-			$test_times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
-
-			if($test_time_lastrun == "0000-00-00" || $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME) == $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME))
-			{
-				$test_time_lastrun = "NEVER";
-				$test_times_run = "";
-			}
-
-			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
-			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
-
-			if(empty($test_times_run))
-			{
-				$test_times_run = 0;
-			}
-
-			if(empty($test_avg_runtime))
-			{
-				$test_avg_runtime = "N/A";
-			}
-
-			if(!empty($name))
-			{
-				printf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $test_version, $test_time_install, $test_time_lastrun, $test_avg_runtime, $test_times_run);
-			}
+			echo new pts_test_usage_details($identifier);
 		}
 		echo "\n";
 		break;
