@@ -5,7 +5,6 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2008, Michael Larabel
-	phoronix-test-suite.php: The main code for initalizing the Phoronix Test Suite (pts-core) client
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,25 +20,27 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-require("pts-core/functions/pts-functions.php");
-
-pts_set_assignment("COMMAND", getenv("PTS_COMMAND"));
-
-$pass_args = array();
-for($i = 2; $i < $argc; $i++)
+class refresh_graphs
 {
-	if(isset($argv[$i]))
+	public static function run($r)
 	{
-		array_push($pass_args, $argv[$i]);
-	}
-}
+		$identifier = $r[0];
 
-$COMMAND = $argv[1];
-if(is_file("pts-core/options/" . strtolower($COMMAND) . ".php"))
-{
-	include_once("pts-core/options/" . strtolower($COMMAND) . ".php");
-	eval(strtolower($COMMAND) . "::run(\$pass_args);");
+		if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
+		{
+			$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
+
+			if(pts_save_result($identifier . "/composite.xml", $composite_xml))
+			{
+				echo "\nThe Phoronix Test Suite Graphs Have Been Re-Rendered.\n";
+				display_web_browser(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
+			}
+		}
+		else
+		{
+			echo pts_string_header($identifier . " was not found.");
+		}
+	}
 }
 
 ?>

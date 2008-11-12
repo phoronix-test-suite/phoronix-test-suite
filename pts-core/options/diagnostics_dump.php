@@ -5,7 +5,6 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2008, Michael Larabel
-	phoronix-test-suite.php: The main code for initalizing the Phoronix Test Suite (pts-core) client
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,25 +20,32 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-require("pts-core/functions/pts-functions.php");
-
-pts_set_assignment("COMMAND", getenv("PTS_COMMAND"));
-
-$pass_args = array();
-for($i = 2; $i < $argc; $i++)
+class diagnostics_dump
 {
-	if(isset($argv[$i]))
+	public static function run()
 	{
-		array_push($pass_args, $argv[$i]);
-	}
-}
+		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n" . "Diagnostics Dump");
+		$pts_defined_constants = get_defined_constants(true);
+		foreach($pts_defined_constants["user"] as $constant => $constant_value)
+		{
+			if(substr($constant, 0, 2) != "P_" && substr($constant, 0, 3) != "IS_")
+			{
+				echo $constant . " = " . $constant_value . "\n";
+			}
+		}
 
-$COMMAND = $argv[1];
-if(is_file("pts-core/options/" . strtolower($COMMAND) . ".php"))
-{
-	include_once("pts-core/options/" . strtolower($COMMAND) . ".php");
-	eval(strtolower($COMMAND) . "::run(\$pass_args);");
+		echo "\nEnd-User Run-Time Variables:\n";
+		foreach(pts_user_runtime_variables() as $var => $var_value)
+		{
+			echo $var . " = " . $var_value . "\n";
+		}
+		echo "\nEnvironmental Variables (accessible via test scripts):\n";
+		foreach(pts_env_variables() as $var => $var_value)
+		{
+			echo $var . " = " . $var_value . "\n";
+		}
+		echo "\n";
+	}
 }
 
 ?>

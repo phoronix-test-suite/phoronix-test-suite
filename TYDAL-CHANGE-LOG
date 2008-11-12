@@ -12,4 +12,5 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts_test_result_info_details class
 - pts-core: Readjust pts-run-cmd.php code to not be reliant on some items
 - pts-core: Drop pts-functions-extras.php and move those functions to other files
-- pts-core: Start migrating all commands into options/ classes and using the new phoronix-test-suite.php interface
+- pts-core: Modularize all Phoronix Test Suite run-time user options into options/ classes and using phoronix-test-suite.php interface
+- pts-core: Remove pts-run-cmd.php now that all options are modularized

@@ -5,7 +5,6 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2008, Michael Larabel
-	phoronix-test-suite.php: The main code for initalizing the Phoronix Test Suite (pts-core) client
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,25 +20,35 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-require("pts-core/functions/pts-functions.php");
-
-pts_set_assignment("COMMAND", getenv("PTS_COMMAND"));
-
-$pass_args = array();
-for($i = 2; $i < $argc; $i++)
+class install_external_dependencies
 {
-	if(isset($argv[$i]))
+	public static function run($r)
 	{
-		array_push($pass_args, $argv[$i]);
-	}
-}
+		include_once("pts-core/functions/pts-functions-install.php");
 
-$COMMAND = $argv[1];
-if(is_file("pts-core/options/" . strtolower($COMMAND) . ".php"))
-{
-	include_once("pts-core/options/" . strtolower($COMMAND) . ".php");
-	eval(strtolower($COMMAND) . "::run(\$pass_args);");
+		if(empty($r[0]))
+		{
+			echo "\nThe test or suite name to install external dependencies for must be supplied.\n";
+		}
+		else
+		{
+			if($r[0] == "phoronix-test-suite" || $r[0] == "pts" || $r[0] == "trondheim-pts")
+			{
+				$pts_dependencies = array("php-gd", "php-extras", "build-utilities");
+				$packages_to_install = array();
+				$continue_install = pts_package_generic_to_distro_name($packages_to_install, $pts_dependencies);
+
+				if($continue_install)
+				{
+					pts_install_packages_on_distribution_process($packages_to_install);
+				}
+			}
+			else
+			{
+				pts_install_package_on_distribution($r[0]);
+			}
+		}
+	}
 }
 
 ?>

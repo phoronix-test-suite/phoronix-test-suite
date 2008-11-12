@@ -85,13 +85,13 @@ fi
 export PTS_COMMAND=$1
 case "$1" in
 "install" | "force-install")
-	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_TEST $OPTION_ARG
 	;;
 "install-dependencies")
-	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_EXTERNAL_DEPENDENCIES $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_EXTERNAL_DEPENDENCIES $OPTION_ARG
 	;;
 "install-all" | "force-install-all")
-	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_ALL
+	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_ALL
 	;;
 "run")
 	$PHP_BIN pts-core/pts-run-test.php $OPTION_ARG
@@ -102,95 +102,95 @@ case "$1" in
 	;;
 "benchmark")
 	export SILENT_INSTALL=1
-	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_TEST $OPTION_ARG
 	$PHP_BIN pts-core/pts-run-test.php $OPTION_ARG
 	;;
 "batch-benchmark")
 	export PTS_BATCH_MODE=1
 	export SILENT_INSTALL=1
-	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_TEST $OPTION_ARG
 	$PHP_BIN pts-core/pts-run-test.php $OPTION_ARG
 	;;
 "merge-results")
-	$PHP_BIN pts-core/pts-run-cmd.php MERGE_RESULTS $OPTION_ARG $3 $4
+	$PHP_BIN pts-core/phoronix-test-suite.php MERGE_RESULTS $OPTION_ARG $3 $4
 	;;
 "analyze" | "analyze-results")
-	$PHP_BIN pts-core/pts-run-cmd.php ANALYZE_RESULTS $OPTION_ARG $3
+	$PHP_BIN pts-core/phoronix-test-suite.php ANALYZE_RESULTS $OPTION_ARG $3
 	;;
 "remove-result")
-	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_RESULT $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php REMOVE_RESULT $OPTION_ARG
 	;;
 "remove-installed-test")
-	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_INSTALLED_TEST $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php REMOVE_INSTALLED_TEST $OPTION_ARG
 	;;
 "remove-all-results")
-	$PHP_BIN pts-core/pts-run-cmd.php REMOVE_ALL_RESULTS
+	$PHP_BIN pts-core/phoronix-test-suite.php REMOVE_ALL_RESULTS
 	;;
 "upload" | "upload-result" | "upload-results" | "upload-saved-result")
-	$PHP_BIN pts-core/pts-run-cmd.php UPLOAD_RESULT $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php UPLOAD_RESULT $OPTION_ARG
 	;;
 "make-download-cache")
-	$PHP_BIN pts-core/pts-run-cmd.php MAKE_DOWNLOAD_CACHE
+	$PHP_BIN pts-core/phoronix-test-suite.php MAKE_DOWNLOAD_CACHE
 	;;
 "list-tests" | "list-all-tests")
 	$PHP_BIN pts-core/phoronix-test-suite.php LIST_TESTS
 	;;
 "list-suites")
-	$PHP_BIN pts-core/pts-run-cmd.php LIST_SUITES
+	$PHP_BIN pts-core/phoronix-test-suite.php LIST_SUITES
 	;;
 "list-modules")
-	$PHP_BIN pts-core/pts-run-cmd.php LIST_MODULES
+	$PHP_BIN pts-core/phoronix-test-suite.php LIST_MODULES
 	;;
 "list-possible-dependencies")
-	$PHP_BIN pts-core/pts-run-cmd.php LIST_POSSIBLE_EXTERNAL_DEPENDENCIES
+	$PHP_BIN pts-core/phoronix-test-suite.php LIST_POSSIBLE_DEPENDENCIES
 	;;
 "list-installed-tests")
-	$PHP_BIN pts-core/pts-run-cmd.php LIST_INSTALLED_TESTS
+	$PHP_BIN pts-core/phoronix-test-suite.php LIST_INSTALLED_TESTS
 	;;
 "list-usage" | "list-test-usage")
-	$PHP_BIN pts-core/pts-run-cmd.php LIST_TEST_USAGE
+	$PHP_BIN pts-core/phoronix-test-suite.php LIST_TEST_USAGE
 	;;
 "list-results" | "list-saved-results" | "list-test-results")
-	$PHP_BIN pts-core/pts-run-cmd.php LIST_SAVED_RESULTS
+	$PHP_BIN pts-core/phoronix-test-suite.php LIST_SAVED_RESULTS
 	;;
 "result-info" | "results-info")
-	$PHP_BIN pts-core/pts-run-cmd.php RESULT_INFO $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php RESULT_INFORMATION $OPTION_ARG
 	;;
 "show-result" | "show-results" | "view-result" | "view-results")
-	$PHP_BIN pts-core/pts-run-cmd.php SHOW_RESULT $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php SHOW_RESULT $OPTION_ARG
 	;;
 "info" | "suite-info" | "test-info")
-	$PHP_BIN pts-core/pts-run-cmd.php INFO $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php INFORMATION $OPTION_ARG
 	;;
 "module-info")
-	$PHP_BIN pts-core/pts-run-cmd.php MODULE_INFO $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php MODULE_INFORMATION $OPTION_ARG
 	;;
 "module-setup")
-	$PHP_BIN pts-core/pts-run-cmd.php MODULE_SETUP $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php MODULE_SETUP $OPTION_ARG
 	;;
 "system-info" | "system-information")
-	$PHP_BIN pts-core/pts-run-cmd.php SYS_INFO
+	$PHP_BIN pts-core/phoronix-test-suite.php SYSTEM_INFORMATION
 	;;
 "diagnostics")
-	$PHP_BIN pts-core/pts-run-cmd.php DIAGNOSTICS_DUMP
+	$PHP_BIN pts-core/phoronix-test-suite.php DIAGNOSTICS_DUMP
 	;;
 "clone")
-	$PHP_BIN pts-core/pts-run-cmd.php CLONE $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php CLONE_GLOBAL_RESULT $OPTION_ARG
 	;;
 "initial-config")
-	$PHP_BIN pts-core/pts-run-cmd.php INITIAL_CONFIG
+	$PHP_BIN pts-core/phoronix-test-suite.php INITIAL_CONFIG
 	;;
 "version")
-	$PHP_BIN pts-core/pts-run-cmd.php VERSION
+	$PHP_BIN pts-core/phoronix-test-suite.php CORE_VERSION
 	;;
 "login")
-	$PHP_BIN pts-core/pts-run-cmd.php LOGIN
+	$PHP_BIN pts-core/phoronix-test-suite.php GLOBAL_LOGIN
 	;;
 "batch-setup")
-	$PHP_BIN pts-core/pts-run-cmd.php BATCH_SETUP
+	$PHP_BIN pts-core/phoronix-test-suite.php BATCH_SETUP
 	;;
 "refresh-graph" | "refresh-graphs" | "refresh-result")
-	$PHP_BIN pts-core/pts-run-cmd.php REFRESH_GRAPHS $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php REFRESH_GRAPHS $OPTION_ARG
 	;;
 "test-module" | "debug-module")
 	if [ "$1" = "debug-module" ]
@@ -199,7 +199,7 @@ case "$1" in
 	fi
 
 	export PTS_IGNORE_MODULES=1
-	$PHP_BIN pts-core/pts-run-cmd.php TEST_MODULE $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php TEST_MODULE $OPTION_ARG
 	;;
 "sensors" | "sensor-options")
 	echo "\nThis option was dropped from the Phoronix Test Suite. For more information and the replacement option, view the latest documentation.\n"
