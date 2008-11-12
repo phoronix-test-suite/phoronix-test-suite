@@ -337,7 +337,7 @@ function pts_record_test_result(&$tandem_xml, $result, $identifier, $tandem_id =
 	$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
 	$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
 
-	$GLOBALS["TEST_RAN"] = true;
+	pts_set_assignment("TEST_RAN", true);
 }
 function pts_save_test_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)
 {

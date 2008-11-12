@@ -33,7 +33,7 @@ then
 fi
 
 # Ensure the user is in the correct directory
-if [ ! -f pts-core/pts-run-cmd.php ] || [ ! -f pts-core/pts-run-test.php ]
+if [ ! -f pts-core/phoronix-test-suite.php ]
 then
 	cat <<'EOT'
 
@@ -94,22 +94,22 @@ case "$1" in
 	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_ALL
 	;;
 "run")
-	$PHP_BIN pts-core/pts-run-test.php $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php RUN_TEST $OPTION_ARG
 	;;
 "batch-run")
 	export PTS_BATCH_MODE=1
-	$PHP_BIN pts-core/pts-run-test.php $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php RUN_TEST $OPTION_ARG
 	;;
 "benchmark")
 	export SILENT_INSTALL=1
 	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_TEST $OPTION_ARG
-	$PHP_BIN pts-core/pts-run-test.php $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php RUN_TEST $OPTION_ARG
 	;;
 "batch-benchmark")
 	export PTS_BATCH_MODE=1
 	export SILENT_INSTALL=1
 	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_TEST $OPTION_ARG
-	$PHP_BIN pts-core/pts-run-test.php $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php RUN_TEST $OPTION_ARG
 	;;
 "merge-results")
 	$PHP_BIN pts-core/phoronix-test-suite.php MERGE_RESULTS $OPTION_ARG $3 $4
