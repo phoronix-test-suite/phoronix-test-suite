@@ -258,6 +258,43 @@ class pts_test_usage_details
 		return $str;
 	}
 }
+class pts_test_results_details
+{
+	var $saved_identifier;
+	var $title;
+	var $suite;
+	var $identifiers_r;
+
+	public function __construct($saved_results_file)
+	{
+		$this->saved_identifier = array_pop(explode("/", dirname($saved_results_file)));
+
+		$xml_parser = new tandem_XmlReader($saved_results_file);
+		$this->title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
+		$this->suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+
+		$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+		$results_xml = new tandem_XmlReader($raw_results[0]);
+		$this->identifiers_r = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
+	}
+	public function __toString()
+	{
+		$str = "";
+
+		if(!empty($this->title))
+		{
+			$str .= $title . "\n";
+			$str .= sprintf("Saved Name: %-18ls Test: %-18ls \n", $this->saved_identifier, $this->suite);
+
+			foreach($this->identifiers_r as $id)
+			{
+				$str .= "\t- " . $id . "\n";
+			}
+		}
+
+		return $str;
+	}
+}
 class pts_test_result
 {
 	var $result;

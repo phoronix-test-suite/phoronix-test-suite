@@ -234,27 +234,9 @@ switch($COMMAND)
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
 		{
-			$saved_identifier = array_pop(explode("/", dirname($saved_results_file)));
-			$xml_parser = new tandem_XmlReader($saved_results_file);
-			$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
-			$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
-			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
-			$results_xml = new tandem_XmlReader($raw_results[0]);
-			$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
-
-			if(!empty($title))
-			{
-				echo $title . "\n";
-				printf("Saved Name: %-18ls Test: %-18ls \n", $saved_identifier, $suite);
-
-				foreach($identifiers as $id)
-				{
-					echo "\t- " . $id . "\n";
-				}
-
-				echo "\n";
-			}
+			echo new pts_test_results_details($saved_results_file);
 		}
+		echo "\n";
 		break;
 	case "RESULT_INFO":
 		if(is_file(($saved_results_file = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml")))
