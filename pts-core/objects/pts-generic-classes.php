@@ -189,6 +189,29 @@ class pts_test_profile_details
 		return $str;
 	}
 }
+class pts_installed_test_details
+{
+	var $identifier;
+	var $name;
+
+	public function __construct($identifier)
+	{
+		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+		$this->identifier = $identifier;
+		$this->name = $xml_parser->getXMLValue(P_TEST_TITLE);
+	}
+	public function __toString()
+	{
+		$str = "";
+
+		if(!empty($this->name))
+		{
+			$str = sprintf("%-18ls - %-30ls\n", $this->identifier, $this->name);
+		}
+
+		return $str;
+	}
+}
 class pts_test_result
 {
 	var $result;

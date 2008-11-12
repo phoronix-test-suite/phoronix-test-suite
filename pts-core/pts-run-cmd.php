@@ -216,13 +216,7 @@ switch($COMMAND)
 		{
 			if(is_test($identifier))
 			{
-			 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
-				$name = $xml_parser->getXMLValue(P_TEST_TITLE);
-
-				if(!empty($name))
-				{
-					printf("%-18ls - %-30ls\n", $identifier, $name);
-				}
+			 	echo new pts_installed_test_details($identifier);
 			}
 		}
 		echo "\n";
