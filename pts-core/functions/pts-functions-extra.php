@@ -52,7 +52,7 @@ function pts_remove_saved_result($identifier)
 	}
 	return $return_value;
 }
-function pts_print_format_tests($object, $steps = -1)
+function pts_print_format_tests($object, &$write_buffer, $steps = -1)
 {
 	// Print out a text tree that shows the suites and tests within an object
 	$steps++;
@@ -68,21 +68,21 @@ function pts_print_format_tests($object, $steps = -1)
 
 		if($steps == 0)
 		{
-			echo $object . "\n";
+			$write_buffer .= $object . "\n";
 		}
 		else
 		{
-			echo str_repeat("  ", $steps) . "+ " . $object . "\n";
+			$write_buffer .= str_repeat("  ", $steps) . "+ " . $object . "\n";
 		}
 
 		foreach($tests_in_suite as $test)
 		{
-			echo pts_print_format_tests($test, $steps);
+			$write_buffer .= pts_print_format_tests($test, $write_buffer, $steps);
 		}
 	}
 	else
 	{
-		echo str_repeat("  ", $steps) . "* " . $object . "\n";
+		$write_buffer .= str_repeat("  ", $steps) . "* " . $object . "\n";
 	}
 }
 function pts_generate_download_cache()

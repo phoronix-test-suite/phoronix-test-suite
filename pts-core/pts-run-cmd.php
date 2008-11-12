@@ -265,35 +265,8 @@ switch($COMMAND)
 	case "INFO":
 		if(is_suite($ARG_1))
 		{
-			$xml_parser = new tandem_XmlReader(pts_location_suite($ARG_1));
-			$suite_name = $xml_parser->getXMLValue(P_SUITE_TITLE);
-			$suite_maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
-			$suite_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
-			$suite_description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
-			$suite_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-			$unique_tests = count(pts_contained_tests($ARG_1));
-
-			echo pts_string_header($suite_name);
-
-			$suite_maintainer = explode("|", $suite_maintainer);
-			if(count($suite_maintainer) == 2)
-			{
-				$suite_maintainer = trim($suite_maintainer[0]) . " <" . trim($suite_maintainer[1]) . ">";
-			}
-			else
-			{
-				$suite_maintainer = $suite_maintainer[0];
-			}
-
-			echo "Suite Version: " . $suite_version . "\n";
-			echo "Maintainer: " . $suite_maintainer . "\n";
-			echo "Suite Type: " . $suite_type . "\n";
-			echo "Unique Tests: " . $unique_tests . "\n";
-			echo "Suite Description: " . $suite_description . "\n";
-			echo "\n";
-
-			echo pts_print_format_tests($ARG_1);
-		
+			$suite = new pts_test_suite_details($ARG_1);
+			echo $suite->info_string();		
 			echo "\n";
 		}
 		else if(is_test($ARG_1))

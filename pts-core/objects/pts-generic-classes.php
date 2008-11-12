@@ -70,9 +70,12 @@ class pts_test_suite_details
 	var $identifier;
 	var $identifier_show_prefix;
 	var $name;
+	var $maintainer;
+	var $description;
 	var $version;
 	var $type;
 	var $test_type;
+	var $unique_tests;
 	var $only_partially_supported = false;
 
 	public function __construct($identifier)
@@ -83,6 +86,9 @@ class pts_test_suite_details
 		$this->test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 		$this->version = $xml_parser->getXMLValue(P_SUITE_VERSION);
 		$this->type = $xml_parser->getXMLValue(P_SUITE_TYPE);
+		$this->maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
+		$this->description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
+		$this->unique_tests = count(pts_contained_tests($identifier));
 
 		$suite_support_code = pts_suite_supported($identifier);
 
@@ -99,6 +105,31 @@ class pts_test_suite_details
 	public function partially_supported()
 	{
 		return $this->only_partially_supported;
+	}
+	public function info_string()
+	{
+		$str = "\n";
+
+		$suite_maintainer = explode("|", $this->maintainer);
+		if(count($suite_maintainer) == 2)
+		{
+			$suite_maintainer = trim($suite_maintainer[0]) . " <" . trim($suite_maintainer[1]) . ">";
+		}
+		else
+		{
+			$suite_maintainer = $suite_maintainer[0];
+		}
+
+		$str .= "Suite Version: " . $this->version . "\n";
+		$str .= "Maintainer: " . $this->maintainer . "\n";
+		$str .= "Suite Type: " . $this->test_type . "\n";
+		$str .= "Unique Tests: " . $this->unique_tests . "\n";
+		$str .= "Suite Description: " . $this->description . "\n";
+		$str .= "\n";
+
+		pts_print_format_tests($this->identifier, $str);
+
+		return $str;
 	}
 	public function __toString()
 	{
