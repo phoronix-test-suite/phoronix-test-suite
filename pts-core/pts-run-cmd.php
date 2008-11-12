@@ -284,40 +284,10 @@ switch($COMMAND)
 		break;
 	case "MODULE_INFO":
 		$ARG_1 = strtolower($ARG_1);
-		if(is_file(MODULE_DIR . $ARG_1 . ".php") || is_file(MODULE_DIR . $ARG_1 . ".sh"))
+		if(is_file(($path = MODULE_DIR . $ARG_1 . ".php")) || is_file(($path = MODULE_DIR . $ARG_1 . ".sh")))
 		{
-		 	$module = $ARG_1;
-			$pre_message = "";
-
-			if(is_file(MODULE_DIR . $module . ".php"))
-			{
-				if(!in_array($module, pts_attached_modules()) && !class_exists($module))
-				{
-					include_once(MODULE_DIR . $module . ".php");
-				}
-			}
-
-			if(in_array($module, pts_attached_modules()))
-			{
-				$pre_message = "** This module is currently loaded. **\n";
-			}
-
-			$module_name = pts_module_call($module, "module_name");
-			$module_version = pts_module_call($module, "module_version");
-			$module_author = pts_module_call($module, "module_author");
-			$module_description = pts_module_call($module, "module_description");
-			$module_information = pts_module_call($module, "module_info");
-
-			echo pts_string_header("Module: " . $module_name);
-			echo $pre_message;
-			echo "Version: " . $module_version . "\n";
-			echo "Author: " . $module_author . "\n";
-			echo "Description: " . $module_description . "\n";
-
-			if(!empty($module_information))
-			{
-				echo "\n" . $module_information . "\n";
-			}
+			$module = new pts_user_module_details($path);
+			echo $module->info_string();
 
 			echo "\n";
 		}

@@ -154,13 +154,15 @@ class pts_user_module_details
 	var $module;
 	var $version;
 	var $author;
+	var $description;
+	var $information;
 
 	public function __construct($module_file_path)
 	{
 		$module = basename(substr($module_file_path, 0, strrpos($module_file_path, ".")));
 		$this->module = $module;
 
-		if(!in_array($module, pts_attached_modules()) && substr($module_file_path, -3) == "php")
+		if(!class_exists($module) && substr($module_file_path, -3) == "php")
 		{
 			include_once($module_file_path);
 		}
@@ -168,6 +170,30 @@ class pts_user_module_details
 		$this->name = pts_module_call($module, "module_name");
 		$this->version = pts_module_call($module, "module_version");
 		$this->author = pts_module_call($module, "module_author");
+		$this->description = pts_module_call($module, "module_description");
+		$this->information = pts_module_call($module, "module_info");
+	}
+	public function info_string()
+	{
+		$str = "";
+
+		$str .= pts_string_header("Module: " . $this->name);
+
+		if(in_array($this->module, pts_attached_modules()))
+		{
+			$str .= "** This module is currently loaded. **\n";
+		}
+
+		$str .= "Version: " . $this->version . "\n";
+		$str .= "Author: " . $this->author . "\n";
+		$str .= "Description: " . $this->description . "\n";
+
+		if(!empty($this->information))
+		{
+			$str .= "\n" . $this->information . "\n";
+		}
+
+		return $str;
 	}
 	public function __toString()
 	{
