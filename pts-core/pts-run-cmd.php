@@ -23,7 +23,6 @@
 
 
 require("pts-core/functions/pts-functions.php");
-require("pts-core/functions/pts-functions-extra.php");
 
 $COMMAND = $argv[1];
 pts_set_assignment("COMMAND", getenv("PTS_COMMAND"));
@@ -162,6 +161,7 @@ switch($COMMAND)
 		}
 		break;
 	case "MAKE_DOWNLOAD_CACHE":
+		include_once("pts-core/functions/pts-functions-install.php");
 		echo pts_string_header("Phoronix Test Suite - Generating Download Cache");
 		pts_generate_download_cache();
 		echo "\n";

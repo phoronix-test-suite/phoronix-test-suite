@@ -767,5 +767,90 @@ function pts_objects_test_downloads($test_identifier)
 
 	return $obj_r;
 }
+function pts_remove_saved_result($identifier)
+{
+	// Remove a saved result file
+	$return_value = false;
+
+	if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
+	{
+		@unlink(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
+
+		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/result-graphs/*.png") as $remove_file)
+		{
+			@unlink($remove_file);
+		}
+		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/result-graphs/*.svg") as $remove_file)
+		{
+			@unlink($remove_file);
+		}
+
+		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/test-*.xml") as $remove_file)
+		{
+			@unlink($remove_file);
+		}
+
+		@unlink(SAVE_RESULTS_DIR . $identifier . "/pts-results-viewer.xsl");
+		@rmdir(SAVE_RESULTS_DIR . $identifier . "/result-graphs/");
+		@rmdir(SAVE_RESULTS_DIR . $identifier);
+		echo "Removed: $identifier\n";
+		$return_value = true;
+	}
+	return $return_value;
+}
+function pts_print_format_tests($object, &$write_buffer, $steps = -1)
+{
+	// Print out a text tree that shows the suites and tests within an object
+	$steps++;
+	if(is_suite($object))
+	{
+		$xml_parser = new tandem_XmlReader(@file_get_contents(pts_location_suite($object)));
+		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+
+		if($steps > 0)
+		{
+			asort($tests_in_suite);
+		}
+
+		if($steps == 0)
+		{
+			$write_buffer .= $object . "\n";
+		}
+		else
+		{
+			$write_buffer .= str_repeat("  ", $steps) . "+ " . $object . "\n";
+		}
+
+		foreach($tests_in_suite as $test)
+		{
+			$write_buffer .= pts_print_format_tests($test, $write_buffer, $steps);
+		}
+	}
+	else
+	{
+		$write_buffer .= str_repeat("  ", $steps) . "* " . $object . "\n";
+	}
+}
+function pts_dependency_name($dependency)
+{
+	// Find the name of a dependency
+	$return_title = "";
+	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
+		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+
+		for($i = 0; $i < count($title) && empty($return_title); $i++)
+		{
+			if($dependency == $package_name[$i])
+			{
+				$return_title = $title[$i];
+			}
+		}
+	}
+
+	return $return_title;
+}
 
 ?>

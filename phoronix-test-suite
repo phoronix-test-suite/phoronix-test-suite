@@ -159,7 +159,7 @@ case "$1" in
 "show-result" | "show-results" | "view-result" | "view-results")
 	$PHP_BIN pts-core/pts-run-cmd.php SHOW_RESULT $OPTION_ARG
 	;;
-"info" | "suite-info" | "suite-information" | "test-info" | "test-information")
+"info" | "suite-info" | "test-info")
 	$PHP_BIN pts-core/pts-run-cmd.php INFO $OPTION_ARG
 	;;
 "module-info")
