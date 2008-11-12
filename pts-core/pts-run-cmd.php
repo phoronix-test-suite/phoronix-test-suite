@@ -167,7 +167,6 @@ switch($COMMAND)
 		echo "\n";
 		break;
 	case "LIST_TESTS":
-	case "LIST_ALL_TESTS":
 		echo pts_string_header("Phoronix Test Suite - Tests");
 		foreach(pts_available_tests_array() as $identifier)
 		{
