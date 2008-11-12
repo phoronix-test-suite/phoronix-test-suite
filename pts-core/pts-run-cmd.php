@@ -241,30 +241,7 @@ switch($COMMAND)
 	case "RESULT_INFO":
 		if(is_file(($saved_results_file = SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml")))
 		{
-			$xml_parser = new tandem_XmlReader($saved_results_file);
-			$title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
-			$suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
-			$results_unique_tests = array_unique($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE));
-			$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
-			$results_xml = new tandem_XmlReader($raw_results[0]);
-			$identifiers = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
-
-			echo "\nTitle: " . $title . "\nIdentifier: " . $ARG_1 . "\nTest: " . $suite . "\n";
-
-			echo "\nTest Result Identifiers:\n";
-			foreach($identifiers as $id)
-			{
-				echo "- " . $id . "\n";
-			}
-
-			if(count($results_unique_tests) > 1)
-			{
-				echo "\nContained Tests:\n";
-				foreach($results_unique_tests as $test)
-				{
-					echo "- " . $test . "\n";
-				}
-			}
+			echo new pts_test_result_info_details($saved_results_file);
 		}
 		else
 		{

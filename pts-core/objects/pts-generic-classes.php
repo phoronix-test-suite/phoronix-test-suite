@@ -295,6 +295,48 @@ class pts_test_results_details
 		return $str;
 	}
 }
+class pts_test_result_info_details
+{
+	var $saved_results_file;
+	var $saved_identifier;
+	var $title;
+	var $suite;
+	var $unique_tests_r;
+	var $identifiers_r;
+
+	public function __construct($saved_results_file)
+	{
+		$xml_parser = new tandem_XmlReader($saved_results_file);
+		$this->saved_results_file = $saved_resilts_file;
+		$this->saved_identifier = array_pop(explode("/", dirname($saved_results_file)));
+		$this->title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
+		$this->suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+		$this->unique_tests_r = array_unique($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE));
+		$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+		$results_xml = new tandem_XmlReader($raw_results[0]);
+		$this->identifiers_r = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
+	}
+	public function __toString()
+	{
+		$str = "\nTitle: " . $this->title . "\nIdentifier: " . $this->saved_identifier . "\nTest: " . $this->suite . "\n";
+		$str .= "\nTest Result Identifiers:\n";
+		foreach($this->identifiers_r as $id)
+		{
+			$str .= "- " . $id . "\n";
+		}
+
+		if(count($this->unique_tests_r) > 1)
+		{
+			$str .= "\nContained Tests:\n";
+			foreach($this->unique_tests_r as $test)
+			{
+				$str .= "- " . $test . "\n";
+			}
+		}
+
+		return $str;
+	}
+}
 class pts_test_result
 {
 	var $result;

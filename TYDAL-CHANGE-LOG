@@ -9,3 +9,4 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts_installed_test_details class
 - pts-core: Add pts_test_usage_details class
 - pts-core: Add pts_test_results_details class
+- pts-core: Add pts_test_result_info_details class
