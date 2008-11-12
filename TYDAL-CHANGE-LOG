@@ -10,3 +10,4 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts_test_usage_details class
 - pts-core: Add pts_test_results_details class
 - pts-core: Add pts_test_result_info_details class
+- pts-core: Readjust pts-run-cmd.php code to not be reliant on some items

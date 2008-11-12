@@ -65,7 +65,7 @@ if [ "X$PHP_BIN" = "X" ]
 then
 	cat <<'EOT'
 
-PHP5 CLI Must Be Installed To Run The Phoronix Test Suite!
+PHP5 CLI Must Be Installed To Run The Phoronix Test Suite.
 Only PHP For The Command Line Is Needed, Not A Complete PHP w/ Web Server Installation
 The PHP CLI package is usually called php-cli or php5-cli. Also required is the PHP GD library (php-gd)
 For support visit: http://www.phoronix-test-suite.com/
@@ -82,21 +82,16 @@ then
 	OPTION_ARG=$SCTP_FILE
 fi
 
+export PTS_COMMAND=$1
 case "$1" in
-"install")
+"install" | "force-install")
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_TEST $OPTION_ARG
-	;;
-"force-install")
-	$PHP_BIN pts-core/pts-run-cmd.php FORCE_INSTALL_TEST $OPTION_ARG
 	;;
 "install-dependencies")
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_EXTERNAL_DEPENDENCIES $OPTION_ARG
 	;;
-"install-all")
+"install-all" | "force-install-all")
 	$PHP_BIN pts-core/pts-run-cmd.php INSTALL_ALL
-	;;
-"force-install-all")
-	$PHP_BIN pts-core/pts-run-cmd.php FORCE_INSTALL_ALL
 	;;
 "run")
 	$PHP_BIN pts-core/pts-run-test.php $OPTION_ARG

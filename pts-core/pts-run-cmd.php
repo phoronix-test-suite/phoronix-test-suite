@@ -26,7 +26,7 @@ require("pts-core/functions/pts-functions.php");
 require("pts-core/functions/pts-functions-extra.php");
 
 $COMMAND = $argv[1];
-pts_set_assignment("COMMAND", $COMMAND);
+pts_set_assignment("COMMAND", getenv("PTS_COMMAND"));
 
 if(isset($argv[2]))
 {
@@ -57,7 +57,6 @@ else
 
 switch($COMMAND)
 {
-	case "FORCE_INSTALL_TEST":
 	case "INSTALL_TEST":
 		include_once("pts-core/functions/pts-functions-install.php");
 
@@ -72,7 +71,7 @@ switch($COMMAND)
 				$ARG_1 = basename($ARG_1);
 			}
 
-			if($COMMAND == "FORCE_INSTALL_TEST")
+			if(pts_read_assignment("COMMAND") == "force-install")
 			{
 				pts_set_assignment("PTS_FORCE_INSTALL", 1);
 			}
@@ -117,11 +116,10 @@ switch($COMMAND)
 			}
 		}
 		break;
-	case "FORCE_INSTALL_ALL":
 	case "INSTALL_ALL":
 		include_once("pts-core/functions/pts-functions-install.php");
 
-		if($COMMAND == "FORCE_INSTALL_ALL")
+		if(pts_read_assignment("COMMAND") == "force-install-all")
 		{
 			pts_set_assignment("PTS_FORCE_INSTALL", 1);
 		}
@@ -668,7 +666,7 @@ switch($COMMAND)
 		echo "\nPhoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n\n";
 		break;
 	default:
-		echo "Phoronix Test Suite: Internal Error.\nCommand Not Recognized (" . $COMMAND . ").\n";
+		echo "Phoronix Test Suite: Internal Error.\nCommand Not Recognized (" . pts_read_assignment("COMMAND") . ").\n";
 }
 
 ?>
