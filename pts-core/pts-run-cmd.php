@@ -266,139 +266,16 @@ switch($COMMAND)
 		if(is_suite($ARG_1))
 		{
 			$suite = new pts_test_suite_details($ARG_1);
-			echo $suite->info_string();		
+			echo $suite->info_string();
+		
 			echo "\n";
 		}
 		else if(is_test($ARG_1))
 		{
-			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($ARG_1));
-			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
-			$test_sw_version = $xml_parser->getXMLValue(P_TEST_VERSION);
-			$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
-			$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
-			$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
-			$test_app_type = $xml_parser->getXMLValue(P_TEST_SOFTWARE_TYPE);
-			$test_license = $xml_parser->getXMLValue(P_TEST_LICENSE);
-			$test_status = $xml_parser->getXMLValue(P_TEST_STATUS);
-			$test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
-			$test_estimated_length = $xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
-			$test_dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
-			$test_projecturl = $xml_parser->getXMLValue(P_TEST_PROJECTURL);
-
-			$test_download_size = pts_estimated_download_size($ARG_1);
-			$test_environment_size = pts_test_estimated_environment_size($ARG_1);
-
-			if(empty($test_title))
-			{
-				echo $ARG_1 . " is not a Phoronix Test Suite test.";
-			}
-			else
-			{
-				if(!empty($test_sw_version))
-				{
-					$test_title .= " " . $test_sw_version;
-				}
-
-				echo pts_string_header($test_title);
-
-				$test_maintainer = explode("|", $test_maintainer);
-				if(count($test_maintainer) == 2)
-				{
-					$test_maintainer = trim($test_maintainer[0]) . " <" . trim($test_maintainer[1]) . ">";
-				}
-				else
-				{
-					$test_maintainer = $test_maintainer[0];
-				}
-
-				echo "Test Version: " . $test_version . "\n";
-				echo "Maintainer: " . $test_maintainer . "\n";
-				echo "Test Type: " . $test_type . "\n";
-				echo "Software Type: " . $test_app_type . "\n";
-				echo "License Type: " . $test_license . "\n";
-				echo "Test Status: " . $test_status . "\n";
-				echo "Project Web-Site: " . $test_projecturl . "\n";
-
-				if(!empty($test_download_size))
-				{
-					echo "Download Size: " . $test_download_size . " MB\n";
-				}
-				if(!empty($test_environment_size))
-				{
-					echo "Environment Size: " . $test_environment_size . " MB\n";
-				}
-				if(!empty($test_estimated_length))
-				{
-					echo "Estimated Length: " . pts_estimated_time_string($test_estimated_length) . "\n";
-				}
-
-				echo "\nDescription: " . $test_description . "\n";
-
-				if(is_file(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml"))
-				{
-					$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $ARG_1 . "/pts-install.xml", false);
-					$last_run = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
-					$avg_time = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
-
-					if($last_run == "0000-00-00 00:00:00")
-					{
-						$last_run = "Never";
-					}
-
-					echo "\nTest Installed: Yes\n";
-					echo "Last Run: " . $last_run . "\n";
-
-					if($avg_time > 0)
-					{
-						echo "Average Run-Time: " . $avg_time . " Seconds\n";
-					}
-					if($last_run != "Never")
-					{
-						echo "Times Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) . "\n";
-					}
-				}
-				else
-				{
-					echo "\nTest Installed: No\n";
-				}
-
-				if(!empty($test_dependencies))
-				{
-					echo "\nSoftware Dependencies:\n";
-					foreach(explode(',', $test_dependencies) as $dependency)
-					{
-						if(($title = pts_dependency_name(trim($dependency)) )!= "")
-						{
-							echo "- " . $title . "\n";
-						}
-					}
-				}
-
-				$associated_suites = array();
-				foreach(pts_available_suites_array() as $identifier)
-				{
-				 	$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
-					$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
-					$tests = pts_contained_tests($identifier);
-
-					if(in_array($ARG_1, $tests))
-					{
-						array_push($associated_suites, $identifier);
-					}
-				}
-
-				if(count($associated_suites) > 0)
-				{
-					asort($associated_suites);
-					echo "\nSuites Using This Test:\n";
-					foreach($associated_suites as $suite)
-					{
-						echo "- " . $suite . "\n";
-					}
-				}
-
-				echo "\n";
-			}
+			$suite = new pts_test_profile_details($ARG_1);
+			echo $suite->info_string();
+		
+			echo "\n";
 		}
 		else
 		{
