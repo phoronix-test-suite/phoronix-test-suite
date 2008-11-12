@@ -185,37 +185,14 @@ switch($COMMAND)
 		$has_partially_supported_suite = false;
 		foreach(pts_available_suites_array() as $identifier)
 		{
-		 	$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
-			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
-			$test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
+			$suite_info = new pts_test_suite_details($identifier);
 
-			if(IS_DEBUG_MODE)
+			if($has_partially_supported_suite == false && $suite_info->partially_supported())
 			{
-				$version = $xml_parser->getXMLValue(P_SUITE_VERSION);
-				$type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-
-				printf("%-26ls - %-32ls %-4ls  %-12ls\n", $identifier, $name, $version, $type);
+				$has_partially_supported_suite = true;
 			}
-			else
-			{
-				$suite_support_code = pts_suite_supported($identifier);
 
-				if($suite_support_code > 0)
-				{
-					$identifier_prefix = " ";
-					if($suite_support_code == 1)
-					{
-						$identifier_prefix = "*";
-
-						if(!$has_partially_supported_suite)
-						{
-							$has_partially_supported_suite = true;
-						}
-					}
-
-					printf("%-24ls - %-32ls [Type: %s]\n", $identifier_prefix . " " . $identifier, $name, $test_type);
-				}
-			}
+			echo $suite_info;
 		}
 		echo "\n";
 		if($has_partially_supported_suite)

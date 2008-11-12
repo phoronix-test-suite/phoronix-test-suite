@@ -65,6 +65,57 @@ class pts_test_file_download
 		return $this->md5;
 	}
 }
+class pts_test_suite_details
+{
+	var $identifier;
+	var $identifier_show_prefix;
+	var $name;
+	var $version;
+	var $type;
+	var $test_type;
+	var $only_partially_supported = false;
+
+	public function __construct($identifier)
+	{
+		$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
+		$this->identifier = $identifier;
+		$this->name = $xml_parser->getXMLValue(P_SUITE_TITLE);
+		$this->test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
+		$this->version = $xml_parser->getXMLValue(P_SUITE_VERSION);
+		$this->type = $xml_parser->getXMLValue(P_SUITE_TYPE);
+
+		$suite_support_code = pts_suite_supported($identifier);
+
+		$this->identifier_show_prefix = " ";
+		if($suite_support_code > 0)
+		{
+			if($suite_support_code == 1)
+			{
+				$this->identifier_show_prefix = "*";
+				$this->only_partially_supported = true;
+			}
+		}
+	}
+	public function partially_supported()
+	{
+		return $this->only_partially_supported;
+	}
+	public function __toString()
+	{
+		$str = "";
+
+		if(IS_DEBUG_MODE)
+		{
+			$str = sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $this->identifier_show_prefix . " " . $this->identifier, $this->name, $this->version, $this->type);
+		}
+		else if(!empty($this->name))
+		{
+			$str = sprintf("%-24ls - %-32ls [Type: %s]\n", $this->identifier_show_prefix . " " . $this->identifier, $this->name, $this->test_type);
+		}
+
+		return $str;
+	}
+}
 class pts_test_profile_details
 {
 	var $identifier;
