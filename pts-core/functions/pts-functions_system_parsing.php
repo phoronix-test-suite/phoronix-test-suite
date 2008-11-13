@@ -63,9 +63,9 @@ function read_hal($name, $UDI = null)
 	{
 		$name = array($name);
 	}
-	if(empty($remove_words) && is_file(STATIC_DIR . "hal-remove-words.txt"))
+	if(empty($remove_words) && is_file(STATIC_DIR . "hal-values-remove.txt"))
 	{
-		$word_file = trim(file_get_contents(STATIC_DIR . "hal-remove-words.txt"));
+		$word_file = trim(file_get_contents(STATIC_DIR . "hal-values-remove.txt"));
 		$remove_words = array_map("trim", explode("\n", $word_file));
 	}
 
