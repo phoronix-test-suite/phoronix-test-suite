@@ -20,3 +20,4 @@ Phoronix Test Suite (Git)
 - pts-core: Add static/hal-values-remove.txt to contain a list of all HAL strings to remove if found, instead of having it coded within an array
 - pts-core: Add static/info-strings-remove.txt to contain a list of all information strings to remove if found, instead of having it coded within an array
 - pts-core: Add static/info-strings-replace.txt to contain a list of all information strings to replace with another value if found, instead of having it coded within an array
+- pts-core: Move module-variables.txt to STATIC_DIR

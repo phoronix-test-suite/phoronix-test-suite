@@ -49,7 +49,7 @@ function pts_module_start_process()
 function pts_auto_detect_modules($load_here = false)
 {
 	// Auto detect modules to load
-	$module_variables_file = @file_get_contents(MODULE_DIR . "module-variables.txt");
+	$module_variables_file = @file_get_contents(STATIC_DIR . "module-variables.txt");
 	$module_variables = explode("\n", $module_variables_file);
 
 	foreach($module_variables as $module_var)
