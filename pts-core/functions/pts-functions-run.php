@@ -181,12 +181,28 @@ function pts_add_test_note($note)
 }
 function pts_generate_test_notes($test_type)
 {
-	$check_processes = array(
-		"Compiz" => array("compiz", "compiz.real"),
-		"Firefox" => array("firefox", "mozilla-firefox", "mozilla-firefox-bin", "firefox-bin"),
-		"Thunderbird" => array("thunderbird", "mozilla-thunderbird", "mozilla-thunderbird-bin", "thunderbird-bin"),
-		"BOINC" => array("boinc", "boinc_client")
-		);
+	static $check_processes = null;
+
+	if(empty($check_processes) && is_file(STATIC_DIR . "process-reporting-checks.txt"))
+	{
+		$word_file = trim(file_get_contents(STATIC_DIR . "process-reporting-checks.txt"));
+		$processes_r = array_map("trim", explode("\n", $word_file));
+		$check_processes = array();
+
+		foreach($processes_r as $p)
+		{
+			$p = explode("=", $p);
+			$p_title = trim($p[0]);
+			$p_names = array_map("trim", explode(",", $p[1]));
+
+			$check_processes[$p_title] = array();
+
+			foreach($p_names as $p_name)
+			{
+				array_push($check_processes[$p_title], $p_name);
+			}
+		}
+	}
 
 	pts_add_test_note(pts_process_running_string($check_processes));
 

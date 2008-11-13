@@ -21,3 +21,4 @@ Phoronix Test Suite (Git)
 - pts-core: Add static/info-strings-remove.txt to contain a list of all information strings to remove if found, instead of having it coded within an array
 - pts-core: Add static/info-strings-replace.txt to contain a list of all information strings to replace with another value if found, instead of having it coded within an array
 - pts-core: Move module-variables.txt to STATIC_DIR
+- pts-core: Add static/process-reporting-checks.txt to contain a list of processes to check for and report to the results viewer, instead of having it coded within an array
