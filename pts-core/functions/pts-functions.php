@@ -135,14 +135,11 @@ function pts_process_active($process)
 function pts_env_variables()
 {
 	// The PTS environmental variables passed during the testing process, etc
+	static $env_variables = null;
 
-	if(isset($GLOBALS["PTS_VAR_CACHE"]["ENV_VARIABLES"]))
+	if(empty($env_variables))
 	{
-		$var_array = $GLOBALS["PTS_VAR_CACHE"]["ENV_VARIABLES"];
-	}
-	else
-	{
-		$var_array = array(
+		$env_variables = array(
 		"PTS_TYPE" => PTS_TYPE,
 		"PTS_VERSION" => PTS_VERSION,
 		"PTS_CODENAME" => PTS_CODENAME,
@@ -164,21 +161,17 @@ function pts_env_variables()
 		"OS_TYPE" => OPERATING_SYSTEM,
 		"THIS_RUN_TIME" => THIS_RUN_TIME
 		);
-
-		$GLOBALS["PTS_VAR_CACHE"]["ENV_VARIABLES"] = $var_array;
 	}
 
-	return $var_array;
+	return $env_variables;
 }
 function pts_user_runtime_variables()
 {
-	if(isset($GLOBALS["PTS_VAR_CACHE"]["USER_RUN_VARIABLES"]))
+	static $runtime_variables = null;
+
+	if(empty($runtime_variables))
 	{
-		$var_array = $GLOBALS["PTS_VAR_CACHE"]["USER_RUN_VARIABLES"];
-	}
-	else
-	{
-		$var_array = array(
+		$runtime_variables = array(
 		"VIDEO_RESOLUTION" => current_screen_resolution(),
 		"VIDEO_CARD" => graphics_processor_string(),
 		"VIDEO_DRIVER" => opengl_version(),
@@ -190,11 +183,9 @@ function pts_user_runtime_variables()
 		"COMPILER" => compiler_version(),
 		"HOSTNAME" => system_hostname()
 		);
-
-		$GLOBALS["PTS_VAR_CACHE"]["USER_RUN_VARIABLES"] = $var_array;
 	}
 
-	return $var_array;
+	return $runtime_variables;
 }
 function pts_input_correct_results_path($path)
 {
