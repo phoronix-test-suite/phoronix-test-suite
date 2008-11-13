@@ -46,7 +46,6 @@ function pts_save_result($save_to = null, $save_results = null)
 	}
 
 	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
-	pts_copy(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl", SAVE_RESULTS_DIR . "pts-results-viewer/pts-results-viewer.xsl");
 	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
 	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
 	
@@ -115,6 +114,7 @@ function pts_save_result($save_to = null, $save_results = null)
 					// Render to PNG
 					$t->setRenderer("PNG");
 					pts_copy(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
+					file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted("PNG"));
 				}
 				else
 				{
@@ -126,7 +126,7 @@ function pts_save_result($save_to = null, $save_results = null)
 
 					// Render to SVG
 					$t->setRenderer("SVG");
-					pts_copy(RESULTS_VIEWER_DIR . "pts-svg-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
+					file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted("SVG"));
 				}
 
 				$t->loadGraphIdentifiers($results_identifiers[$i]);
@@ -209,6 +209,22 @@ function pts_save_result($save_to = null, $save_results = null)
 	}
 
 	return $bool;
+}
+function pts_get_results_viewer_xsl_formatted($format_type = "PNG")
+{
+	$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
+
+	if($format_type == "SVG")
+	{
+		$graph_string = "<object type=\"image/svg+xml\"><xsl:attribute name=\"data\">result-graphs/<xsl:number value=\"position()\" />.svg</xsl:attribute></object>";
+	}
+	else
+	{
+		// Default to PNG
+		$graph_string = "<img><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />.png</xsl:attribute></img>";
+	}
+
+	return str_replace("<!-- GRAPH TAGS -->", $graph_string, $raw_xsl);
 }
 function pts_global_upload_result($result_file, $tags = "")
 {

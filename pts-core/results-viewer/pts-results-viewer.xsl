@@ -67,7 +67,7 @@
 									</xsl:for-each>
 								</xsl:if>
 						</div>
-						<div class="pts_benchmark_img_area"><img><xsl:attribute name="src">result-graphs/<xsl:number value="position()" />.png</xsl:attribute></img></div>
+						<div class="pts_benchmark_img_area"><!-- GRAPH TAGS --></div>
 					</xsl:for-each>
 				</div>
 
