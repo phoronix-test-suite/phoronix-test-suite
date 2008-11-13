@@ -1,0 +1,5 @@
+Memory Controller Hub = MCH
+Advanced Micro Devices = AMD
+MICRO-STAR INTERNATIONAL = MSI
+Silicon Integrated Systems = SiS
+Integrated Graphics Controller = IGP

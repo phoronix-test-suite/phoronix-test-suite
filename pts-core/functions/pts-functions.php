@@ -388,18 +388,29 @@ function pts_clean_information_string($str)
 {
 	// Clean a string containing hardware information of some common things to change/strip out
 	static $remove_phrases = null;
+	static $change_phrases = null;
 
 	if(empty($remove_phrases) && is_file(STATIC_DIR . "info-strings-remove.txt"))
 	{
 		$word_file = trim(file_get_contents(STATIC_DIR . "info-strings-remove.txt"));
 		$remove_phrases = array_map("trim", explode("\n", $word_file));
 	}
+	if(empty($change_phrases) && is_file(STATIC_DIR . "info-strings-replace.txt"))
+	{
+		$word_file = trim(file_get_contents(STATIC_DIR . "info-strings-replace.txt"));
+		$phrases_r = array_map("trim", explode("\n", $word_file));
+		$change_phrases = array();
+
+		foreach($phrases_r as $phrase)
+		{
+			$phrase_r = explode("=", $phrase);
+			$change_phrases[trim($phrase_r[1])] = trim($phrase_r[0]);
+		}
+	}
 
 	$str = str_ireplace($remove_phrases, " ", $str);
 
-	$change_phrases = array("Memory Controller Hub" => "MCH", "Advanced Micro Devices" => "AMD", "MICRO-STAR INTERNATIONAL" => "MSI", "Silicon Integrated Systems" => "SiS", "Integrated Graphics Controller" => "IGP");
-
-	foreach($change_phrases as $original_phrase => $new_phrase)
+	foreach($change_phrases as $new_phrase => $original_phrase)
 	{
 		$str = str_ireplace($original_phrase, $new_phrase, $str);
 	}
