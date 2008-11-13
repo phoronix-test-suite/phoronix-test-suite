@@ -21,9 +21,16 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Initalize common / needed PTS start-up work
-pts_init();
+function pts_init()
+{
+	pts_basic_init(); // Initalize common / needed PTS start-up work
 
+	pts_config_init();
+	define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
+	define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
+	define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
+	pts_extended_init();
+}
 function pts_directory()
 {
 	// Read PTS directory
@@ -44,7 +51,7 @@ function pts_directory()
 	
 	return $dir;
 }
-function pts_init()
+function pts_basic_init()
 {
 	// Initialize The Phoronix Test Suite
 
@@ -52,7 +59,6 @@ function pts_init()
 	date_default_timezone_set("UTC");
 
 	// PTS Defines
-	define("PTS_DIR", pts_directory());
 	define("PTS_TEMP_DIR", "/tmp/phoronix-test-suite/");
 	define("PHP_BIN", getenv("PHP_BIN"));
 	define("THIS_RUN_TIME", time());

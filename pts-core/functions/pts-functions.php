@@ -21,7 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Start Phoronix Test Suite
 require_once("pts-core/functions/pts.php");
 require_once("pts-core/functions/pts-init.php");
 
@@ -41,6 +40,7 @@ if(IS_SCTP_MODE)
 }
 
 // User's home directory for storing results, module files, test installations, etc.
+define("PTS_DIR", pts_directory());
 define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
 
 // Distribution External Dependency Locations
@@ -65,29 +65,6 @@ define("XML_PROFILE_LOCAL_CTP_BASE_DIR", XML_PROFILE_LOCAL_DIR . "base/");
 define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
 define("TEST_RESOURCE_LOCAL_DIR", PTS_USER_DIR . "test-resources/");
 define("TEST_RESOURCE_LOCAL_CTP_BASE_DIR", TEST_RESOURCE_LOCAL_DIR . "base/");
-
-pts_config_init();
-define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
-define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
-define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
-pts_extended_init();
-
-// Register PTS Process
-if(pts_process_active("phoronix-test-suite"))
-{
-	echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running...\nFor proper results, only run one instance at a time.");
-}
-pts_process_register("phoronix-test-suite");
-register_shutdown_function("pts_shutdown");
-
-// Etc
-$PTS_GLOBAL_ID = 1;
-
-// PTS Modules Support
-if(function_exists("pts_module_start_process"))
-{
-	pts_module_start_process();
-}
 
 // Phoronix Test Suite - Functions
 function p_str($str_o)

@@ -197,6 +197,10 @@ function pts_module_call($module, $process, $object_pass = null)
 	{
 		$module_response = pts_sh_module_call($module, $process);
 	}
+	else
+	{
+		$module_response = "";
+	}
 
 	return $module_response;
 }

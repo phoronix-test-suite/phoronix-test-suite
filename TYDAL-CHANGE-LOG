@@ -15,3 +15,4 @@ Phoronix Test Suite (Git)
 - pts-core: Modularize all Phoronix Test Suite run-time user options into options/ classes and using phoronix-test-suite.php interface
 - pts-core: Remove pts-run-cmd.php now that all options are modularized
 - pts-core: Remove pts-run-test.php now that now that its code is modularized as option run_test
+- pts-core: Relocate initialization code to be called from phoronix-test-suite.php
