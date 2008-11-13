@@ -56,11 +56,17 @@ function read_acpi($point, $match)
 function read_hal($name, $UDI = null)
 {
 	// Read HAL - Hardware Abstraction Layer
+	static $remove_words = null;
 	$info = "Unknown";
 
 	if(!is_array($name))
 	{
 		$name = array($name);
+	}
+	if(empty($remove_words) && is_file(STATIC_DIR . "hal-remove-words.txt"))
+	{
+		$word_file = trim(file_get_contents(STATIC_DIR . "hal-remove-words.txt"));
+		$remove_words = array_map("trim", explode("\n", $word_file));
 	}
 
 	for($i = 0; $i < count($name) && $info == "Unknown"; $i++)
@@ -80,7 +86,6 @@ function read_hal($name, $UDI = null)
 			$info = trim(substr($info, 0, strpos($info, "'")));
 		}
 
-		$remove_words = array("empty", "unknow", "system manufacturer", "system version", "system name", "system product name", "to be filled by o.e.m.", "not applicable", "not specified", "oem", "00", "none", "1234567890");
 		if(empty($info) || in_array(strtolower($info), $remove_words))
 		{
 			$info = "Unknown";

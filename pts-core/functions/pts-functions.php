@@ -52,6 +52,7 @@ define("ETC_DIR", PTS_DIR . "pts/etc/");
 define("MODULE_DIR", PTS_DIR . "pts-core/modules/");
 define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/results-viewer/");
 define("TEST_LIBRARIES_DIR", PTS_DIR . "pts-core/test-libraries/");
+define("STATIC_DIR", PTS_DIR . "pts-core/static/");
 define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 // Test & Suite Locations

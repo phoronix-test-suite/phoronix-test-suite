@@ -1,0 +1,13 @@
+empty
+unknow
+system manufacturer
+system version
+system name
+system product name
+to be filled by o.e.m.
+not applicable
+not specified
+oem
+00
+none
+1234567890

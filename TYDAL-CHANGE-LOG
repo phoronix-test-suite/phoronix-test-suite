@@ -16,3 +16,5 @@ Phoronix Test Suite (Git)
 - pts-core: Remove pts-run-cmd.php now that all options are modularized
 - pts-core: Remove pts-run-test.php now that now that its code is modularized as option run_test
 - pts-core: Relocate initialization code to be called from phoronix-test-suite.php
+- pts-core: Add STATIC_DIR (pts-core/static/) for some static files
+- pts-core: Add static/hal-remove-words.txt to contain a list of all HAL strings to remove if found, instead of having it coded within an array
