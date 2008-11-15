@@ -42,8 +42,6 @@ if(function_exists("pts_module_start_process"))
 // Etc
 $PTS_GLOBAL_ID = 1;
 
-pts_set_assignment("COMMAND", getenv("PTS_COMMAND"));
-
 $pass_args = array();
 for($i = 2; $i < $argc; $i++)
 {
@@ -53,11 +51,6 @@ for($i = 2; $i < $argc; $i++)
 	}
 }
 
-$COMMAND = $argv[1];
-if(is_file("pts-core/options/" . strtolower($COMMAND) . ".php"))
-{
-	include_once("pts-core/options/" . strtolower($COMMAND) . ".php");
-	eval(strtolower($COMMAND) . "::run(\$pass_args);");
-}
+pts_run_option_command($argv[1], $pass_args, getenv("PTS_COMMAND"));
 
 ?>

@@ -68,6 +68,31 @@ define("TEST_RESOURCE_LOCAL_DIR", PTS_USER_DIR . "test-resources/");
 define("TEST_RESOURCE_LOCAL_CTP_BASE_DIR", TEST_RESOURCE_LOCAL_DIR . "base/");
 
 // Phoronix Test Suite - Functions
+function pts_run_option_command($command, $pass_args = null, $command_descriptor = "")
+{
+	if(empty($command_descriptor))
+	{
+		$command_descriptor = $command;
+	}
+	if(!empty($pass_args) && !is_array($pass_args))
+	{
+		$pass_args = array($pass_args);
+	}
+	$command = strtolower($command);
+
+	pts_clear_assignments();
+	pts_set_assignment("COMMAND", $command_descriptor);
+
+	if(is_file("pts-core/options/" . $command . ".php"))
+	{
+		if(!class_exists($command, false))
+		{
+			include_once("pts-core/options/" . $command . ".php");
+		}
+
+		eval($command . "::run(\$pass_args);");
+	}
+}
 function p_str($str_o)
 {
 	//  $_ENV["LANG"]

@@ -24,3 +24,4 @@ Phoronix Test Suite (Git)
 - pts-core: Add static/process-reporting-checks.txt to contain a list of processes to check for and report to the results viewer, instead of having it coded within an array
 - pts-core: Switch a few global variables to static
 - pts-core: Unify the XSL for the PTS Results Viewer and use a PHP function to insert the respective PNG/SVG markup when saving the results
+- pts-core: Add pts_run_option_command() for modularizing executing PTS tasks
