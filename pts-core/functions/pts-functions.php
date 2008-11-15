@@ -90,7 +90,9 @@ function pts_run_option_command($command, $pass_args = null, $command_descriptor
 			include_once("pts-core/options/" . $command . ".php");
 		}
 
+		pts_module_process("__pre_option_process", $command);
 		eval($command . "::run(\$pass_args);");
+		pts_module_process("__post_option_process", $command);
 	}
 }
 function p_str($str_o)

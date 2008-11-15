@@ -33,11 +33,7 @@ if(pts_process_active("phoronix-test-suite"))
 pts_process_register("phoronix-test-suite");
 register_shutdown_function("pts_shutdown");
 
-// Module start process
-if(function_exists("pts_module_start_process"))
-{
-	pts_module_start_process();
-}
+pts_module_startup_init(); // Initialize the PTS module system
 
 // Etc
 $PTS_GLOBAL_ID = 1;

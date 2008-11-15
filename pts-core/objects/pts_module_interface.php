@@ -53,6 +53,19 @@ class pts_module_interface
 	}
 
 	//
+	// Option Functions
+	//
+
+	public static function __pre_option_process($obj = null)
+	{
+		return;
+	}
+	public static function __post_option_process($obj = null)
+	{
+		return;
+	}
+
+	//
 	// Installation Functions
 	//
 
@@ -110,7 +123,6 @@ class pts_module_interface
 	//
 	// Event-driven Functions
 	//
-
 
 	public static function __event_global_upload($obj = null)
 	{

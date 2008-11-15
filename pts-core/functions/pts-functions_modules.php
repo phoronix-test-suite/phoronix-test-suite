@@ -26,7 +26,7 @@
 define("PTS_MODULE_UNLOAD", "PTS_MODULE_UNLOAD");
 define("PTS_QUIT", "PTS_QUIT");
 
-function pts_module_start_process()
+function pts_module_startup_init()
 {
 	// Process initially called when PTS starts up
 	$GLOBALS["PTS_MODULES"] = array();

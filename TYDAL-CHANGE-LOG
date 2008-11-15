@@ -25,3 +25,4 @@ Phoronix Test Suite (Git)
 - pts-core: Switch a few global variables to static
 - pts-core: Unify the XSL for the PTS Results Viewer and use a PHP function to insert the respective PNG/SVG markup when saving the results
 - pts-core: Add pts_run_option_command() for modularizing executing PTS tasks
+- pts-core: Add __pre_option_process() and __post_option_process() to PTS module system
