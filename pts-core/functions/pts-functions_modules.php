@@ -180,8 +180,8 @@ function pts_load_module($module)
 }
 function pts_module_processes()
 {
-	return array("__startup", "__pre_install_process", "__pre_test_install", "__post_test_install", "__post_install_process", 
-			"__pre_run_process", "__pre_test_run", "__interim_test_run", "__post_test_run", "__post_run_process", "__shutdown");
+	return array("__startup", "__pre_option_process", "__pre_install_process", "__pre_test_install", "__post_test_install", "__post_install_process", 
+			"__pre_run_process", "__pre_test_run", "__interim_test_run", "__post_test_run", "__post_run_process", "__post_option_process", "__shutdown");
 }
 function pts_module_events()
 {

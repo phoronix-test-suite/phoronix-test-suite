@@ -58,10 +58,12 @@ class pts_module_interface
 
 	public static function __pre_option_process($obj = null)
 	{
+		// Passed is a string containing the name of the option command about to be run
 		return;
 	}
 	public static function __post_option_process($obj = null)
 	{
+		// Passed is a string containing the name of the option after it has run
 		return;
 	}
 

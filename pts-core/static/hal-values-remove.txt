@@ -1,4 +1,5 @@
 empty
+null
 unknow
 system manufacturer
 system version
