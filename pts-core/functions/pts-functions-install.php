@@ -316,16 +316,11 @@ function pts_install_test($identifier)
 	else
 	{
 		// TODO: clean up validate-install and put in pts_validate_test_install
-		$custom_validated_output = pts_call_test_script($identifier, "validate-install", "\nValidating Installation...\n", TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
+		$custom_validated_output = trim(pts_call_test_script($identifier, "validate-install", "\nValidating Installation...\n", TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false));
 
-		if(!empty($custom_validated_output))
+		if(!empty($custom_validated_output) && !pts_string_bool($custom_validated_output))
 		{
-			$custom_validated_output = trim($custom_validated_output);
-
-			if(!pts_string_bool($custom_validated_output))
-			{
-				$installed = false;
-			}
+			$installed = false;
 		}
 		else
 		{

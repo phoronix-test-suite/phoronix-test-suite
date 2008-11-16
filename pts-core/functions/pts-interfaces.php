@@ -62,7 +62,6 @@ define("P_TEST_SUPPORTS_COREVERSION", "PhoronixTestSuite/TestProfile/RequiresCor
 define("P_TEST_DEFAULTARGUMENTS", "PhoronixTestSuite/TestSettings/Default/Arguments"); // Default arguments
 define("P_TEST_POSSIBLEPATHS", "PhoronixTestSuite/TestSettings/Default/PossiblePaths"); // Possible paths
 define("P_TEST_OPTIONS_DISPLAYNAME", "PhoronixTestSuite/TestSettings/Option/DisplayName"); // The option names to show to the end-user
-define("P_TEST_OPTIONS_ARGUMENTNAME", "PhoronixTestSuite/TestSettings/Option/ArgumentName"); // TODO: This option has been deprecated in Phoronix Test Suite 1.4. Switch to ArgumentPrefix instead.
 define("P_TEST_OPTIONS_ARGPREFIX", "PhoronixTestSuite/TestSettings/Option/ArgumentPrefix"); // The option argument prefix
 define("P_TEST_OPTIONS_ARGPOSTFIX", "PhoronixTestSuite/TestSettings/Option/ArgumentPostfix"); // The option argument postfix
 define("P_TEST_OPTIONS_IDENTIFIER", "PhoronixTestSuite/TestSettings/Option/Identifier"); // Identifiers for each option
