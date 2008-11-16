@@ -183,8 +183,10 @@ define("P_OPTION_LOG_BENCHMARKFILES", "PhoronixTestSuite/Options/Testing/SaveBen
 define("P_OPTION_TEST_REMOVEDOWNLOADS", "PhoronixTestSuite/Options/Installation/RemoveDownloadFiles"); // Remove downloaded files after test is installed
 
 define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/FileManagement/EnvironmentDirectory"); // Results save directory
-define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/CacheDirectory"); // Directory for reading/writing to download cache
 define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/ResultsDirectory"); // Results save directory
+
+define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/CacheDirectory"); // Directory for reading/writing to download cache
+define("P_OPTION_CACHE_SEARCHMEDIA", "PhoronixTestSuite/Options/FileManagement/SearchMediaForCache"); // Search /media/ devices for a remote download cache
 
 define("P_OPTION_BATCH_CONFIGURED", "PhoronixTestSuite/Options/BatchMode/Configured"); // Batch mode has been configured
 define("P_OPTION_BATCH_SAVERESULTS", "PhoronixTestSuite/Options/BatchMode/SaveResults"); // Batch mode save results

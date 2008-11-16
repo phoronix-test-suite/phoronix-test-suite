@@ -60,6 +60,7 @@ function pts_download_test_files($identifier)
 	if(count($download_packages) > 0)
 	{
 		$header_displayed = false;
+		$cache_directories = array(PTS_DOWNLOAD_CACHE_DIR);
 
 		if(strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != false)
 		{
@@ -71,6 +72,14 @@ function pts_download_test_files($identifier)
 		{
 			$dc_file = array();
 			$dc_md5 = array();
+		}
+
+		if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
+		{
+			foreach(glob("/media/*/download-cache/") as $dir)
+			{
+				array_push($cache_directories, $dir);
+			}
 		}
 
 		for($i = 0; $i < count($download_packages); $i++)
@@ -124,13 +133,21 @@ function pts_download_test_files($identifier)
 						}
 					}
 				}
-				else if(pts_validate_md5_download_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $package_md5))
+				else
 				{
-					echo "Copying Cached File: " . $package_filename . "\n";
-
-					if(copy(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $download_destination))
+					$used_cache = false;
+					for($i = 0; $i < count($cache_directories) && $used_cache == false; $i++)
 					{
-						$urls = array();
+						if(pts_validate_md5_download_file($cache_directories[$i] . $package_filename, $package_md5))
+						{
+							echo "Copying Cached File: " . $package_filename . "\n";
+
+							if(copy($cache_directories[$i] . $package_filename, $download_destination))
+							{
+								$urls = array();
+								$used_cache = true;
+							}
+						}
 					}
 				}
 

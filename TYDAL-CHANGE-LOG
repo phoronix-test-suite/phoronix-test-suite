@@ -30,3 +30,4 @@ Phoronix Test Suite (Git)
 - pts-core: Only install external dependencies for tests that are supported on the system (such as with platform and architecture limitations)
 - pts-core: Fix for URL empty bug (reported by Stef Telford and Bene18)
 - pts-core: Drop ArgumentName profile tag code that's been deprecated since PTS 1.4+ in favor of ArgumentPrefix
+- pts-core: Add SearchMediaForCache option that's enabled by default in user-config.xml to automatically search for download caches on removable devices (within /media/)
