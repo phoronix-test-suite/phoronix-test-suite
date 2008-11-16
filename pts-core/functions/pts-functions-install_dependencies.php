@@ -47,7 +47,10 @@ function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
 	
 	foreach($tests as $test)
 	{
-		pts_install_external_dependencies_list($test, $PLACE_LIST);
+		if(pts_test_supported($test))
+		{
+			pts_install_external_dependencies_list($test, $PLACE_LIST);
+		}
 	}
 }
 function pts_external_dependency_generic($Name)
