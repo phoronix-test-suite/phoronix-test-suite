@@ -134,7 +134,7 @@ function pts_download_test_files($identifier)
 					}
 				}
 
-				if(count($urls) > 0)
+				if(count($urls) > 0 && $urls[0] != "")
 				{
 					shuffle($urls);
 					$fail_count = 0;
@@ -196,7 +196,7 @@ function pts_download_test_files($identifier)
 							}
 							else
 							{
-								if(count($urls) > 0)
+								if(count($urls) > 0 && $urls[0] != "")
 								{
 									echo "Attempting to re-download from another mirror.\n";
 								}

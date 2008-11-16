@@ -28,3 +28,4 @@ Phoronix Test Suite (Git)
 - pts-core: Add __pre_option_process() and __post_option_process() to PTS module system
 - pts-core: Add "null" to hal-values-remove.txt
 - pts-core: Only install external dependencies for tests that are supported on the system (such as with platform and architecture limitations)
+- pts-core: Fix for URL empty bug (reported by Stef Telford and Bene18)
