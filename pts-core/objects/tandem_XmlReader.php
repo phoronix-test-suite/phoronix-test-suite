@@ -35,6 +35,8 @@ class tandem_XmlReader
 
 	var $NO_TAG_FALLBACK_VALUE = null;
 
+	static $cache = null;
+
 	function __construct($XML, $DO_CACHE = true)
 	{
 		if(is_file($XML))
@@ -51,9 +53,9 @@ class tandem_XmlReader
 			$this->XML_FILE_TIME = filemtime($XML);
 			$this->XML_FILE_NAME = $XML;
 
-			if($this->XML_CACHE_FILE == true && isset($GLOBALS["XML_CACHE"]["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME]))
+			if($this->XML_CACHE_FILE == true && isset(self::$cache["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME]))
 			{
-				$this->XML_DATA = $GLOBALS["XML_CACHE"]["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME];
+				$this->XML_DATA = self::$cache["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME];
 			}
 
 			if(empty($this->XML_DATA))
@@ -62,7 +64,7 @@ class tandem_XmlReader
 
 				if($this->XML_CACHE_FILE == true)
 				{
-					$GLOBALS["XML_CACHE"]["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME] = $this->XML_DATA;
+					self::$cache["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME] = $this->XML_DATA;
 				}
 			}
 		}
@@ -123,9 +125,9 @@ class tandem_XmlReader
 			$XML_MATCH = $this->XML_DATA;
 		}
 
-		if($this->XML_CACHE_TAGS == true && $DO_CACHE && isset($GLOBALS["XML_CACHE"]["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG]))
+		if($this->XML_CACHE_TAGS == true && $DO_CACHE && isset(self::$cache["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG]))
 		{
-			$XML_MATCH = $GLOBALS["XML_CACHE"]["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG];
+			$XML_MATCH = self::$cache["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG];
 		}
 		else
 		{
@@ -152,7 +154,7 @@ class tandem_XmlReader
 
 			if($this->XML_CACHE_TAGS == true && $DO_CACHE)
 			{
-				$GLOBALS["XML_CACHE"]["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG] = $XML_MATCH;
+				self::$cache["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG] = $XML_MATCH;
 			}
 		}
 
