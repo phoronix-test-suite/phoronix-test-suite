@@ -32,4 +32,5 @@ Phoronix Test Suite (Git)
 - pts-core: Drop ArgumentName profile tag code that's been deprecated since PTS 1.4+ in favor of ArgumentPrefix
 - pts-core: Add SearchMediaForCache option that's enabled by default in user-config.xml to automatically search for download caches on removable devices (mounted within /media/)
 - pts-core: Use static variable for PTS type caching
+- pts-core: Branch out classes from pts-generic-classes.php
 - tandem_XmlReader: Switch caching from using a GLOBALS variable to using a static variable within the XML reading class
