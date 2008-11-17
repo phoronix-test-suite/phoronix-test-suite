@@ -752,30 +752,52 @@ function pts_set_assignment_once($assignment, $value)
 }
 function pts_set_assignment($assignment, $value)
 {
-	$GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment] = $value;
+	pts_assignment("SET", $assignment, $value);
 }
 function pts_read_assignment($assignment)
 {
-	$value = false;
-
-	if(isset($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]))
-	{
-		$value = $GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment];
-	}
-
-	return $value;
+	return pts_assignment("READ", $assignment);
 }
 function pts_is_assignment($assignment)
 {
-	return isset($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]);
+	return pts_assignment("IS_SET", $assignment);
 }
 function pts_clear_assignments()
 {
-	$GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"] = array();
+	pts_assignment("CLEAR_ALL");
 }
 function pts_clear_assignment($assignment)
 {
-	unset($GLOBALS["PTS_VAR_CACHE"]["ASSIGNMENTS"][$assignment]);
+	pts_assignment("CLEAR", $assignment);
+}
+function pts_assignment($process, $assignment = null, $value = null)
+{
+	static $assignments;
+	$return = false;
+
+	switch($process)
+	{
+		case "SET":
+			$assignments[$assignment] = $value;
+			break;
+		case "READ":
+			if(isset($assignments[$assignment]))
+			{
+				$return = $assignments[$assignment];
+			}
+			break;
+		case "IS_SET":
+			$return = isset($assignments[$assignment]);
+			break;
+		case "CLEAR":
+			unset($assignments[$assignment]);
+			break;
+		case "CLEAR_ALL":
+			$assignments = array();
+			break;
+	}
+
+	return $return;
 }
 
 ?>
