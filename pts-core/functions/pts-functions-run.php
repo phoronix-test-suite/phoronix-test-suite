@@ -225,7 +225,7 @@ function pts_generate_test_notes($test_type)
 	}
 
 	// Power Saving Technologies?
-	pts_add_test_note(pts_processor_power_savings_enabled());
+	pts_add_test_note(hw_cpu_power_savings_enabled());
 	pts_add_test_note(system_power_mode());
 	pts_add_test_note(system_virtualized_mode());
 
@@ -665,7 +665,7 @@ function pts_global_auto_tags($extra_attr = null)
 		}
 	}
 
-	switch(cpu_core_count())
+	switch(hw_cpu_core_count())
 	{
 		case 1:
 			array_push($tags_array, "Single Core");
@@ -681,7 +681,7 @@ function pts_global_auto_tags($extra_attr = null)
 			break;
 	}
 
-	$cpu_type = processor_string();
+	$cpu_type = hw_cpu_string();
 	if(strpos($cpu_type, "Intel") !== false)
 	{
 		array_push($tags_array, "Intel");

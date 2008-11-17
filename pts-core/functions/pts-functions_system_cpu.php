@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function cpu_core_count()
+function hw_cpu_core_count()
 {
 	// Returns number of cores present on the system
 	if(IS_LINUX)
@@ -50,12 +50,12 @@ function cpu_core_count()
 
 	return $info;
 }
-function cpu_job_count()
+function hw_cpu_job_count()
 {
 	// Number of CPU jobs to tell the tests to use
-	return cpu_core_count() * 2;
+	return hw_cpu_core_count() * 2;
 }
-function processor_string()
+function hw_cpu_string()
 {
 	// Returns the processor name / frequency information
 	$info = "";
@@ -71,12 +71,12 @@ function processor_string()
 		if($physical_cpu_count == 1 || empty($physical_cpu_count))
 		{
 			// Just one processor
-			$info = append_processor_frequency(pts_clean_information_string($cpu_strings[0]));
+			$info = $cpu_strings[0];
 		}
 		else if($physical_cpu_count > 1 && count($cpu_strings_unique) == 1)
 		{
 			// Multiple processors, same model
-			$info = $physical_cpu_count . " x " . append_processor_frequency(pts_clean_information_string($cpu_strings[0]));
+			$info = $physical_cpu_count . " x " . $cpu_strings[0];
 		}
 		else if($physical_cpu_count > 1 && count($cpu_strings_unique) > 1)
 		{
@@ -90,7 +90,7 @@ function processor_string()
 			{
 				if($current_string != $cpu_strings[$i] || $i == (count($physical_cpu_ids) - 1))
 				{
-					array_push($cpus, $current_count . " x " . append_processor_frequency(pts_clean_information_string($current_string), $i));
+					array_push($cpus, $current_count . " x " . $current_string);
 
 					$current_string = $cpu_strings[$i];
 					$current_count = 0;
@@ -121,44 +121,42 @@ function processor_string()
 				$info = trim(shell_exec("dmesg 2>&1 | grep cpu0"));
 				$info = substr($info, strrpos($info, "cpu0:") + 6);
 			}
-
-			$info = append_processor_frequency(pts_clean_information_string($info), 0);
 		}
 		else if(IS_BSD)
 		{
 			$info = read_sysctl("hw.model");
-			$info = append_processor_frequency(pts_clean_information_string($info), 0);
 		}
 		else if(IS_MACOSX)
 		{
 			$info = read_osx_system_profiler("SPHardwareDataType", "ProcessorName");
-			$info = append_processor_frequency(pts_clean_information_string($info), 0);
 
 		}
-		else
+	}
+
+	if(!empty($info))
+	{
+		$info = pts_clean_information_string($info);
+		$cpu_core_read = 0; // for now default to the first core frequency to read
+
+		// Append the processor frequency to string
+		if(($freq = hw_cpu_default_frequency($cpu_core_read)) > 0)
 		{
-			$info = "Unknown";
+			if(($strip_point = strpos($info, "@")) > 0)
+			{
+				$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
+			}
+
+			$info .= " @ " . $freq . "GHz";
 		}
+	}
+	else
+	{
+		$info = "Unknown";
 	}
 
 	return $info;
 }
-function append_processor_frequency($cpu_string, $cpu_core = 0)
-{
-	// Append the processor frequency to a string
-	if(($freq = processor_frequency($cpu_core)) > 0)
-	{
-		if(($strip_point = strpos($cpu_string, '@')) > 0)
-		{
-			$cpu_string = trim(substr($cpu_string, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
-		}
-
-		$cpu_string .= " @ " . $freq . "GHz";
-	}
-
-	return $cpu_string;
-}
-function processor_frequency($cpu_core = 0)
+function hw_cpu_default_frequency($cpu_core = 0)
 {
 	// Find out the processor frequency
 	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
@@ -183,12 +181,12 @@ function processor_frequency($cpu_core = 0)
 	}
 	else
 	{
-		$info = current_processor_frequency($cpu_core);
+		$info = hw_cpu_current_frequency($cpu_core);
 	}
 
 	return $info;
 }
-function processor_temperature()
+function hw_cpu_temperature()
 {
 	// Read the processor temperature
 	$temp_c = read_sensors(array("CPU Temp", "Core 0"));
@@ -210,7 +208,7 @@ function processor_temperature()
 
 	return $temp_c;
 }
-function pts_processor_power_savings_enabled()
+function hw_cpu_power_savings_enabled()
 {
 	// Report string if CPU power savings feature is enabled
 	$return_string = "";
@@ -223,7 +221,7 @@ function pts_processor_power_savings_enabled()
 
 		if($min < $max)
 		{
-			$cpu = processor_string();
+			$cpu = hw_cpu_string();
 
 			if(strpos($cpu, "AMD") !== false)
 			{
@@ -241,7 +239,7 @@ function pts_processor_power_savings_enabled()
 	}
 	return $return_string;
 }
-function current_processor_frequency($cpu_core = 0)
+function hw_cpu_current_frequency($cpu_core = 0)
 {
 	// Determine the current processor frequency
 	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
@@ -294,7 +292,7 @@ function current_processor_frequency($cpu_core = 0)
 
 	return $info;
 }
-function cpu_load_array()
+function hw_cpu_load_array()
 {
 	// CPU load array
 	$stat = @file_get_contents("/proc/stat");
@@ -309,12 +307,12 @@ function cpu_load_array()
 
 	return $load;
 }
-function current_processor_usage()
+function hw_cpu_usage()
 {
 	// Determine current percentage for processor usage
-	$start_load = cpu_load_array();
+	$start_load = hw_cpu_load_array();
 	sleep(1);
-	$end_load = cpu_load_array();
+	$end_load = hw_cpu_load_array();
 	
 	for($i = 0; $i < count($end_load); $i++)
 	{

@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.2.2";
+	const module_version = "1.3.0";
 	const module_description = "This module contains sensor monitoring support.";
 	const module_author = "Michael Larabel";
 
@@ -502,7 +502,7 @@ class system_monitor extends pts_module_interface
 		}
 		if(pts_is_assignment("MONITOR_CPU_TEMP"))
 		{
-			$temp = processor_temperature();
+			$temp = hw_cpu_temperature();
 
 			if($temp != -1)
 				pts_module::save_file(".s/CPU_TEMPERATURE", $temp, true);
@@ -565,7 +565,7 @@ class system_monitor extends pts_module_interface
 		}
 		if(pts_is_assignment("MONITOR_CPU_FREQ"))
 		{
-			$speed = current_processor_frequency();
+			$speed = hw_cpu_current_frequency();
 
 			if($speed > 0)
 				pts_module::save_file(".s/CPU_FREQ", $speed, true);
@@ -586,7 +586,7 @@ class system_monitor extends pts_module_interface
 		}
 		if(pts_is_assignment("MONITOR_CPU_USAGE"))
 		{
-			$usage = current_processor_usage();
+			$usage = hw_cpu_usage();
 
 			if($usage != -1)
 				pts_module::save_file(".s/CPU_USAGE", $usage, true);

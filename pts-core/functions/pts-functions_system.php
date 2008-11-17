@@ -32,7 +32,7 @@ function pts_hw_string()
 	// Returns string of hardware information
 	$hardware = array();
 
-	array_push($hardware, "Processor: " . processor_string() . " (Total Cores: " . cpu_core_count() . ")");
+	array_push($hardware, "Processor: " . hw_cpu_string() . " (Total Cores: " . hw_cpu_core_count() . ")");
 	array_push($hardware, "Motherboard: " . main_system_hardware_string());
 	array_push($hardware, "Chipset: " . motherboard_chipset_string());
 	array_push($hardware, "System Memory: " . system_memory_string());
@@ -64,7 +64,7 @@ function pts_sw_string()
 }
 function pts_system_identifier_string()
 {
-	$components = array(processor_string(), main_system_hardware_string(), operating_system_release(), compiler_version());
+	$components = array(hw_cpu_string(), main_system_hardware_string(), operating_system_release(), compiler_version());
 	return base64_encode(implode("__", $components));
 }
 

@@ -27,7 +27,7 @@ function system_virtualized_mode()
 	$virtualized = "";
 	$gpu = graphics_processor_string();
 
-	if(strpos(processor_string(), "QEMU") !== false)
+	if(strpos(hw_cpu_string(), "QEMU") !== false)
 	{
 		$virtualized = "QEMU";
 	}
