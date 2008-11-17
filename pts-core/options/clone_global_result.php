@@ -37,7 +37,7 @@ class clone_global_result
 				pts_save_result($identifier . "/composite.xml", pts_global_download_xml($ARG_1));
 				// TODO: re-render the XML file and generate the graphs through that save
 				echo "Result Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
-				//display_web_browser(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");
+				//pts_display_web_browser(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");
 			}
 			else
 			{

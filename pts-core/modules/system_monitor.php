@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.2.1";
+	const module_version = "1.2.2";
 	const module_description = "This module contains sensor monitoring support.";
 	const module_author = "Michael Larabel";
 
@@ -483,7 +483,7 @@ class system_monitor extends pts_module_interface
 		{
 			$file = pts_module::save_file("link-latest.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=pts-monitor-viewer.html#$url\"></HEAD><BODY></BODY></HTML>");
 			if($file != FALSE)
-				display_web_browser($file);
+				pts_display_web_browser($file);
 		}
 	}
 

@@ -33,7 +33,7 @@ class refresh_graphs
 			if(pts_save_result($identifier . "/composite.xml", $composite_xml))
 			{
 				echo "\nThe Phoronix Test Suite Graphs Have Been Re-Rendered.\n";
-				display_web_browser(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
+				pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 			}
 		}
 		else

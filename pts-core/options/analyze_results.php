@@ -60,7 +60,7 @@ class analyze_results
 			$SAVED_RESULTS = pts_merge_batch_tests_to_line_comparison(@file_get_contents($BASE_FILE));
 			pts_save_result($SAVE_TO, $SAVED_RESULTS);
 			echo "Results Saved To: " . SAVE_RESULTS_DIR . $SAVE_TO . "\n\n";
-			display_web_browser(SAVE_RESULTS_DIR . $SAVE_TO);
+			pts_display_web_browser(SAVE_RESULTS_DIR . $SAVE_TO);
 		}
 	}
 }

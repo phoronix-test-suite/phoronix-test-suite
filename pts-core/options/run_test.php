@@ -551,7 +551,7 @@ class run_test
 			{
 				pts_save_test_file($PROPOSED_FILE_NAME, $RESULTS);
 				echo "Results Saved To: " . SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml\n";
-				display_web_browser(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/index.html");
+				pts_display_web_browser(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/index.html");
 
 				$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
 
@@ -564,7 +564,7 @@ class run_test
 					{
 						echo "\nResults Uploaded To: " . $upload_url . "\n";
 						pts_module_process("__event_global_upload", $upload_url);
-						display_web_browser("\"" . $upload_url . "\"", "Do you want to launch Phoronix Global", true);
+						pts_display_web_browser("\"" . $upload_url . "\"", "Do you want to launch Phoronix Global", true);
 					}
 					else
 					{
