@@ -21,18 +21,18 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function sctp_test_directory()
+function pts_sctp_test_directory()
 {
 	return PTS_TEMP_DIR . "sctp/" . basename(SCTP_FILE) . "/";
 }
-function remote_sctp_test_files()
+function pts_remove_sctp_test_files()
 {
-	return pts_remove(sctp_test_directory());
+	return pts_remove(pts_sctp_test_directory());
 }
-function generate_sctp_layer()
+function pts_generate_sctp_layer()
 {
 	$xml_parser = new tandem_XmlReader(SCTP_FILE);
-	$test_directory = sctp_test_directory();
+	$test_directory = pts_sctp_test_directory();
 
 	if(!$xml_parser->isDefined(P_TEST_TITLE))
 	{

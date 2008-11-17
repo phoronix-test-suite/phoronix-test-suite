@@ -505,7 +505,7 @@ function pts_shutdown()
 
 	if(IS_SCTP_MODE)
 	{
-		remote_sctp_test_files();
+		pts_remove_sctp_test_files();
 	}
 
 	// Remove process

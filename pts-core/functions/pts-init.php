@@ -208,7 +208,7 @@ function pts_extended_init()
 	// Self-Contained Test Profile Routines
 	if(IS_SCTP_MODE)
 	{
-		generate_sctp_layer();
+		pts_generate_sctp_layer();
 	}
 
 	if(substr(pts_read_user_config(P_OPTION_TESTCORE_LASTTIME, date("Y-m-d")), 0, 10) != date("Y-m-d"))
