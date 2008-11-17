@@ -46,11 +46,9 @@ function is_test($object)
 function pts_test_type($identifier)
 {
 	// Determine type of test based on identifier
-	if(isset($GLOBALS["PTS_VAR_CACHE"]["TEST_TYPE"][$identifier]))
-	{
-		$test_type = $GLOBALS["PTS_VAR_CACHE"]["TEST_TYPE"][$identifier];
-	}
-	else
+	static $cache;
+
+	if(!isset($cache[$identifier]))
 	{
 		$test_type = false;
 
@@ -92,22 +90,21 @@ function pts_test_type($identifier)
 			{
 				$test_type = TYPE_BASE_TEST;
 			}
-
-			$GLOBALS["PTS_VAR_CACHE"]["TEST_TYPE"][$identifier] = $test_type;
 		}
+
+		$cache[$identifier] = $test_type;
 	}
 
-	return $test_type;
+	return $cache[$identifier];
 }
 function pts_location_suite($identifier)
 {
-	if(isset($GLOBALS["PTS_VAR_CACHE"]["SUITE_LOCATION"][$identifier]))
-	{
-		$location = $GLOBALS["PTS_VAR_CACHE"]["SUITE_LOCATION"][$identifier];
-	}
-	else
+	static $cache;
+
+	if(!isset($cache[$identifier]))
 	{
 		$location = false;
+
 		if(is_suite($identifier))
 		{
 			$type = pts_test_type($identifier);
@@ -122,18 +119,16 @@ function pts_location_suite($identifier)
 			}
 		}
 
-		$GLOBALS["PTS_VAR_CACHE"]["SUITE_LOCATION"][$identifier] = $location;
+		$cache[$identifier] = $location;
 	}
 
-	return $location;
+	return $cache[$identifier];
 }
 function pts_location_test($identifier)
 {
-	if(isset($GLOBALS["PTS_VAR_CACHE"]["TEST_LOCATION"][$identifier]))
-	{
-		$location = $GLOBALS["PTS_VAR_CACHE"]["TEST_LOCATION"][$identifier];
-	}
-	else
+	static $cache;
+
+	if(!isset($cache[$identifier]))
 	{
 		$location = false;
 
@@ -171,18 +166,16 @@ function pts_location_test($identifier)
 			}
 		}
 
-		$GLOBALS["PTS_VAR_CACHE"]["TEST_LOCATION"][$identifier] = $location;
+		$cache[$identifier] = $location;
 	}
 
-	return $location;
+	return $cache[$identifier];
 }
 function pts_location_test_resources($identifier)
 {
-	if(isset($GLOBALS["PTS_VAR_CACHE"]["TEST_RESOURCE_LOCATION"][$identifier]))
-	{
-		$location = $GLOBALS["PTS_VAR_CACHE"]["TEST_RESOURCE_LOCATION"][$identifier];
-	}
-	else
+	static $cache;
+
+	if(!isset($cache[$identifier]))
 	{
 		$location = false;
 
@@ -220,10 +213,10 @@ function pts_location_test_resources($identifier)
 			}
 		}
 
-		$GLOBALS["PTS_VAR_CACHE"]["TEST_RESOURCE_LOCATION"][$identifier] = $location;
+		$cache[$identifier] = $location;
 	}
 
-	return $location;
+	return $cache[$identifier];
 }
 function pts_test_extends_below($object)
 {
