@@ -21,11 +21,28 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function system_virtualized_mode()
+function pts_vendor_identifier()
+{
+	// Returns the vendor identifier used with the External Dependencies and other distro-specific features
+	$vendor = sw_os_vendor();
+
+	if($vendor == "Unknown")
+	{
+		$vendor = sw_os_release();
+
+		if(($spos = strpos($vendor, " ")) > 1)
+		{
+			$vendor = substr($vendor, 0, $spos);
+		}
+	}
+
+	return strtolower($vendor);
+}
+function sw_os_virtualized_mode()
 {
 	// Reports if system is running virtualized
 	$virtualized = "";
-	$gpu = graphics_processor_string();
+	$gpu = hw_gpu_string();
 
 	if(strpos(hw_cpu_string(), "QEMU") !== false)
 	{
@@ -47,7 +64,7 @@ function system_virtualized_mode()
 
 	return $virtualized;
 }
-function filesystem_type()
+function sw_os_filesystem()
 {
 	// Determine file-system type
 	$fs = shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null");
@@ -64,7 +81,7 @@ function filesystem_type()
 
 	return $fs;
 }
-function system_hostname()
+function sw_os_hostname()
 {
 	$hostname = "Unknown";
 
@@ -75,7 +92,7 @@ function system_hostname()
 
 	return $hostname;
 }
-function compiler_version()
+function sw_os_compiler()
 {
 	// Returns version of the compiler (if present)
 	$info = shell_exec("gcc -dumpversion 2>&1");
@@ -88,7 +105,7 @@ function compiler_version()
 
 	return $gcc_info;
 }
-function kernel_arch()
+function sw_os_architecture()
 {
 	// Find out the kernel archiecture
 	$kernel_arch = trim(shell_exec("uname -m 2>&1"));
@@ -104,17 +121,17 @@ function kernel_arch()
 
 	return $kernel_arch;
 }
-function kernel_string()
+function sw_os_kernel()
 {
 	// Returns kernel
 	return trim(shell_exec("uname -r 2>&1"));
 }
-function os_vendor()
+function sw_os_vendor()
 {
 	// Returns OS vendor
 	return read_lsb("Distributor ID");
 }
-function os_version()
+function sw_os_version()
 {
 	// Returns OS version
 	$os_version = read_lsb("Release");
@@ -134,10 +151,10 @@ function os_version()
 	
 	return $os_version;
 }
-function operating_system_release()
+function sw_os_release()
 {
 	// Determine the operating system release
-	$vendor = os_vendor();
+	$vendor = sw_os_vendor();
 	$version = os_version();
 
 	if($vendor == "Unknown" && $version == "Unknown")
@@ -199,7 +216,7 @@ function operating_system_release()
 
 	return $os;
 }
-function opengl_version()
+function sw_os_opengl()
 {
 	// OpenGL version
 	$info = shell_exec("glxinfo 2>&1 | grep version");
@@ -217,7 +234,7 @@ function opengl_version()
 
 	return $info;
 }
-function xorg_ddx_driver_info()
+function sw_xorg_ddx_driver_info()
 {
 	$ddx_info = "";
 
@@ -251,7 +268,7 @@ function xorg_ddx_driver_info()
 
 	return $ddx_info;
 }
-function graphics_subsystem_version()
+function sw_os_graphics_subsystem()
 {
 	// Find graphics subsystem version
 	if(IS_SOLARIS)
@@ -287,24 +304,7 @@ function graphics_subsystem_version()
 
 	return $info;
 }
-function pts_vendor_identifier()
-{
-	// Returns the vendor identifier used with the External Dependencies and other distro-specific features
-	$vendor = os_vendor();
-
-	if($vendor == "Unknown")
-	{
-		$vendor = operating_system_release();
-
-		if(($spos = strpos($vendor, " ")) > 1)
-		{
-			$vendor = substr($vendor, 0, $spos);
-		}
-	}
-
-	return strtolower($vendor);
-}
-function system_user_name()
+function sw_os_username()
 {
 	// Gets the system user's name
 	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
@@ -319,87 +319,5 @@ function system_user_name()
 
 	return $username;
 }
-function pts_process_running_bool($process)
-{
-	// Checks if process is running on the system
-	$running = shell_exec("ps -C " . strtolower($process) . " 2>&1");
-	$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
 
-	if(!empty($running))
-	{
-		$running = true;
-	}
-	else
-	{
-		$running = false;
-	}
-
-	if(IS_MACOSX || IS_SOLARIS)
-	{
-		$running = false;
-	}
-
-	return $running;
-}
-function pts_process_running_string($process_arr)
-{
-	// Format a nice string that shows processes running
-	$p = array();
-	$p_string = "";
-
-	if(!is_array($process_arr))
-	{
-		$process_arr = array($process_arr);
-	}
-
-	foreach($process_arr as $p_name => $p_process)
-	{
-		if(!is_array($p_process))
-		{
-			$p_process = array($p_process);
-		}
-
-		foreach($p_process as $process)
-		{
-			if(pts_process_running_bool($process))
-			{
-				array_push($p, $p_name);
-			}
-		}
-	}
-
-	$p = array_keys(array_flip($p));
-
-	if(($p_count = count($p)) > 0)
-	{
-		for($i = 0; $i < $p_count; $i++)
-		{
-			$p_string .= $p[$i];
-
-			if($i != ($p_count - 1) && $p_count > 2)
-			{
-				$p_string .= ",";
-			}
-			$p_string .= " ";
-
-			if($i == ($p_count - 2))
-			{
-				$p_string .= "and ";
-			}
-		}
-
-		if($p_count == 1)
-		{
-			$p_string .= "was";
-		}
-		else
-		{
-			$p_string .= "were";
-		}
-
-		$p_string .= " running on this system";
-	}
-
-	return $p_string;
-}
 ?>

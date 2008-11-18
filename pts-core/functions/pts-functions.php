@@ -182,8 +182,8 @@ function pts_env_variables()
 		"VIDEO_MONITOR_LAYOUT" => hw_gpu_monitor_layout(),
 		"VIDEO_MONITOR_SIZES" => hw_gpu_monitor_modes(),
 		"OPERATING_SYSTEM" => pts_vendor_identifier(),
-		"OS_VERSION" => os_version(),
-		"OS_ARCH" => kernel_arch(),
+		"OS_VERSION" => sw_os_version(),
+		"OS_ARCH" => sw_os_architecture(),
 		"OS_TYPE" => OPERATING_SYSTEM,
 		"THIS_RUN_TIME" => THIS_RUN_TIME
 		);
@@ -200,14 +200,14 @@ function pts_user_runtime_variables()
 		$runtime_variables = array(
 		"VIDEO_RESOLUTION" => hw_gpu_current_mode(),
 		"VIDEO_CARD" => hw_gpu_string(),
-		"VIDEO_DRIVER" => opengl_version(),
-		"OPERATING_SYSTEM" => operating_system_release(),
+		"VIDEO_DRIVER" => sw_os_opengl(),
+		"OPERATING_SYSTEM" => sw_os_release(),
 		"PROCESSOR" => hw_cpu_string(),
 		"MOTHERBOARD" => hw_sys_motherboard_string(),
 		"CHIPSET" => hw_sys_chipset_string(),
-		"KERNEL_VERSION" => kernel_string(),
-		"COMPILER" => compiler_version(),
-		"HOSTNAME" => system_hostname()
+		"KERNEL_VERSION" => sw_os_kernel(),
+		"COMPILER" => sw_os_compiler(),
+		"HOSTNAME" => sw_os_hostname()
 		);
 	}
 

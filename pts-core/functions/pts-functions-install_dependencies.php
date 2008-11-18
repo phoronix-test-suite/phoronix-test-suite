@@ -117,7 +117,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 		{
 			array_push($dependencies, "php-extras");
 
-			if(kernel_arch() == "x86_64")
+			if(sw_os_architecture() == "x86_64")
 			{
 				array_push($dependencies, "linux-32bit-libraries");
 			}

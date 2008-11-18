@@ -154,5 +154,88 @@ function pts_run_shell_script($file, $arguments = "")
 
 	return shell_exec("sh " . $file . " ". $arguments . " 2>&1");
 }
+function pts_process_running_bool($process)
+{
+	// Checks if process is running on the system
+	$running = shell_exec("ps -C " . strtolower($process) . " 2>&1");
+	$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
+
+	if(!empty($running))
+	{
+		$running = true;
+	}
+	else
+	{
+		$running = false;
+	}
+
+	if(IS_MACOSX || IS_SOLARIS)
+	{
+		$running = false;
+	}
+
+	return $running;
+}
+function pts_process_running_string($process_arr)
+{
+	// Format a nice string that shows processes running
+	$p = array();
+	$p_string = "";
+
+	if(!is_array($process_arr))
+	{
+		$process_arr = array($process_arr);
+	}
+
+	foreach($process_arr as $p_name => $p_process)
+	{
+		if(!is_array($p_process))
+		{
+			$p_process = array($p_process);
+		}
+
+		foreach($p_process as $process)
+		{
+			if(pts_process_running_bool($process))
+			{
+				array_push($p, $p_name);
+			}
+		}
+	}
+
+	$p = array_keys(array_flip($p));
+
+	if(($p_count = count($p)) > 0)
+	{
+		for($i = 0; $i < $p_count; $i++)
+		{
+			$p_string .= $p[$i];
+
+			if($i != ($p_count - 1) && $p_count > 2)
+			{
+				$p_string .= ",";
+			}
+			$p_string .= " ";
+
+			if($i == ($p_count - 2))
+			{
+				$p_string .= "and ";
+			}
+		}
+
+		if($p_count == 1)
+		{
+			$p_string .= "was";
+		}
+		else
+		{
+			$p_string .= "were";
+		}
+
+		$p_string .= " running on this system";
+	}
+
+	return $p_string;
+}
 
 ?>

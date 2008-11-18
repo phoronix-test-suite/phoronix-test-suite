@@ -348,7 +348,7 @@ function pts_current_user()
 
 	if($pts_user == "Default User")
 	{
-		$pts_user = system_user_name();
+		$pts_user = sw_os_username();
 	}
 
 	return $pts_user;

@@ -227,7 +227,7 @@ function pts_generate_test_notes($test_type)
 	// Power Saving Technologies?
 	pts_add_test_note(hw_cpu_power_savings_enabled());
 	pts_add_test_note(hw_sys_power_mode());
-	pts_add_test_note(system_virtualized_mode());
+	pts_add_test_note(sw_os_virtualized_mode());
 
 	if($test_type == "Graphics" || $test_type == "System")
 	{
@@ -705,12 +705,12 @@ function pts_global_auto_tags($extra_attr = null)
 		array_push($tags_array, "NVIDIA");
 	}
 
-	if(kernel_arch() == "x86_64" && IS_LINUX)
+	if(sw_os_architecture() == "x86_64" && IS_LINUX)
 	{
 		array_push($tags_array, "64-bit Linux");
 	}
 
-	$os = operating_system_release();
+	$os = sw_os_release();
 	if($os != "Unknown")
 	{
 		array_push($tags_array, $os);

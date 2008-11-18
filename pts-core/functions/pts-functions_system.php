@@ -47,24 +47,24 @@ function pts_sw_string()
 	// Returns string of software information
 	$software = array();
 
-	array_push($software, "OS: " . operating_system_release());
-	array_push($software, "Kernel: " . kernel_string() . " (" . kernel_arch() . ")");
-	array_push($software, "X.Org Server: " . graphics_subsystem_version());
+	array_push($software, "OS: " . sw_os_release());
+	array_push($software, "Kernel: " . sw_os_kernel() . " (" . sw_os_architecture() . ")");
+	array_push($software, "X.Org Server: " . sw_os_graphics_subsystem());
 
-	if(($ddx = xorg_ddx_driver_info()) != "")
+	if(($ddx = sw_xorg_ddx_driver_info()) != "")
 	{
 		array_push($software, "X.Org Driver: " . $ddx);
 	}
 
-	array_push($software, "OpenGL: " . opengl_version());
-	array_push($software, "Compiler: " . compiler_version());
-	array_push($software, "File-System: " . filesystem_type());
+	array_push($software, "OpenGL: " . sw_os_opengl());
+	array_push($software, "Compiler: " . sw_os_compiler());
+	array_push($software, "File-System: " . sw_os_filesystem());
 
 	return implode(", ", $software);
 }
 function pts_system_identifier_string()
 {
-	$components = array(hw_cpu_string(), hw_sys_motherboard_string(), operating_system_release(), compiler_version());
+	$components = array(hw_cpu_string(), hw_sys_motherboard_string(), sw_os_release(), sw_os_compiler());
 	return base64_encode(implode("__", $components));
 }
 
