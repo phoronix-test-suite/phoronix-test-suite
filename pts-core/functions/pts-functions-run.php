@@ -231,8 +231,8 @@ function pts_generate_test_notes($test_type)
 
 	if($test_type == "Graphics" || $test_type == "System")
 	{
-		$aa_level = graphics_antialiasing_level();
-		$af_level = graphics_anisotropic_level();
+		$aa_level = hw_gpu_aa_level();
+		$af_level = hw_gpu_af_level();
 
 		if(!empty($aa_level))
 		{
@@ -695,7 +695,7 @@ function pts_global_auto_tags($extra_attr = null)
 		array_push($tags_array, "VIA");
 	}
 
-	$gpu_type = graphics_processor_string();
+	$gpu_type = hw_gpu_string();
 	if(strpos($cpu_type, "ATI") !== false)
 	{
 		array_push($tags_array, "ATI");
@@ -750,7 +750,7 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 		switch($identifier)
 		{
 			case "auto-resolution":
-				$available_video_modes = xrandr_available_modes();
+				$available_video_modes = hw_gpu_xrandr_available_modes();
 				$format_name = $option_names[0];
 				$format_value = $option_values[0];
 				$option_names = array();

@@ -495,7 +495,7 @@ class system_monitor extends pts_module_interface
 	{
 		if(pts_is_assignment("MONITOR_GPU_TEMP"))
 		{
-			$temp = graphics_processor_temperature();
+			$temp = hw_gpu_temperature();
 
 			if($temp != -1)
 				pts_module::save_file(".s/GPU_TEMPERATURE", $temp, true);
@@ -572,14 +572,14 @@ class system_monitor extends pts_module_interface
 		}
 		if(pts_is_assignment("MONITOR_GPU_FREQ"))
 		{
-			$speed = graphics_processor_frequency();
+			$speed = hw_gpu_current_frequency();
 
 			if(!empty($speed[0]))
 				pts_module::save_file(".s/GPU_FREQ", $speed[0], true);
 		}
 		if(pts_is_assignment("MONITOR_GPU_USAGE"))
 		{
-			$usage = graphics_gpu_usage();
+			$usage = hw_gpu_core_usage();
 
 			if($usage != -1)
 				pts_module::save_file(".s/GPU_USAGE", $usage, true);

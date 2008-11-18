@@ -75,8 +75,8 @@ class graphics_override extends pts_module_interface
 
 				if(isset($nvidia_aa))
 				{
-					set_nvidia_extension("FSAA", $nvidia_aa);
-					set_nvidia_extension("FSAAAppControlled", 0);
+					hw_gpu_set_nvidia_extension("FSAA", $nvidia_aa);
+					hw_gpu_set_nvidia_extension("FSAAAppControlled", 0);
 				}
 			}
 			else if(IS_ATI_GRAPHICS)
@@ -103,8 +103,8 @@ class graphics_override extends pts_module_interface
 
 				if(isset($ati_aa))
 				{
-					set_amd_pcsdb("OpenGL,AntiAliasSamples", $ati_aa);
-					set_amd_pcsdb("OpenGL,AAF", "0x00000000");
+					hw_gpu_set_amd_pcsdb("OpenGL,AntiAliasSamples", $ati_aa);
+					hw_gpu_set_amd_pcsdb("OpenGL,AAF", "0x00000000");
 				}
 			}
 		}
@@ -135,8 +135,8 @@ class graphics_override extends pts_module_interface
 
 				if(isset($nvidia_af))
 				{
-					set_nvidia_extension("LogAniso", $nvidia_af);
-					set_nvidia_extension("LogAnisoAppControlled", 0);
+					hw_gpu_set_nvidia_extension("LogAniso", $nvidia_af);
+					hw_gpu_set_nvidia_extension("LogAnisoAppControlled", 0);
 				}
 			}
 			else if(IS_ATI_GRAPHICS)
@@ -161,7 +161,7 @@ class graphics_override extends pts_module_interface
 
 				if(isset($ati_af))
 				{
-					set_amd_pcsdb("OpenGL,AnisoDegree", $ati_af);
+					hw_gpu_set_amd_pcsdb("OpenGL,AnisoDegree", $ati_af);
 				}
 			}
 		}
@@ -173,25 +173,25 @@ class graphics_override extends pts_module_interface
 		{
 			if(self::$preset_aa !== FALSE)
 			{
-				set_nvidia_extension("FSAA", self::$preset_aa);
-				set_nvidia_extension("FSAAAppControlled", self::$preset_aa_control);
+				hw_gpu_set_nvidia_extension("FSAA", self::$preset_aa);
+				hw_gpu_set_nvidia_extension("FSAAAppControlled", self::$preset_aa_control);
 			}
 			if(self::$preset_af !== FALSE)
 			{
-				set_nvidia_extension("LogAniso", self::$preset_af);
-				set_nvidia_extension("LogAnisoAppControlled", self::$preset_af_control);
+				hw_gpu_set_nvidia_extension("LogAniso", self::$preset_af);
+				hw_gpu_set_nvidia_extension("LogAnisoAppControlled", self::$preset_af_control);
 			}
 		}
 		else if(IS_ATI_GRAPHICS)
 		{
 			if(self::$preset_aa !== FALSE)
 			{
-				set_amd_pcsdb("OpenGL,AntiAliasSamples", self::$preset_aa);
-				set_amd_pcsdb("OpenGL,AAF", self::$preset_aa_control);
+				hw_gpu_set_amd_pcsdb("OpenGL,AntiAliasSamples", self::$preset_aa);
+				hw_gpu_set_amd_pcsdb("OpenGL,AAF", self::$preset_aa_control);
 			}
 			if(self::$preset_af !== FALSE)
 			{
-				set_amd_pcsdb("OpenGL,AnisoDegree", self::$preset_af);
+				hw_gpu_set_amd_pcsdb("OpenGL,AnisoDegree", self::$preset_af);
 			}
 		}
 	}

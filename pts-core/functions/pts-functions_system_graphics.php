@@ -23,16 +23,16 @@
 
 define("DEFAULT_VIDEO_RAM_CAPACITY", 128);
 
-function graphics_frequency_string()
+function hw_gpu_frequency()
 {
 	// Report graphics frequency string
 	if(IS_ATI_GRAPHICS)
 	{
-		$freq = graphics_processor_stock_frequency();
+		$freq = hw_gpu_stock_frequency();
 	}
 	else
 	{
-		$freq = graphics_processor_frequency();
+		$freq = hw_gpu_current_frequency();
 	}
 
 	$freq_string = $freq[0] . "/" . $freq[1];
@@ -48,7 +48,7 @@ function graphics_frequency_string()
 
 	return $freq_string;
 }
-function graphics_processor_temperature()
+function hw_gpu_temperature()
 {
 	// Report graphics processor temperature
 	$temp_c = -1;
@@ -74,7 +74,7 @@ function graphics_processor_temperature()
 
 	return $temp_c;
 }
-function graphics_monitor_count()
+function hw_gpu_monitor_count()
 {
 	// Report number of connected/enabled monitors
 	$monitor_count = 0;
@@ -127,12 +127,12 @@ function graphics_monitor_count()
 
 	return $monitor_count;
 }
-function graphics_monitor_layout()
+function hw_gpu_monitor_layout()
 {
 	// Determine layout for multiple monitors
 	$monitor_layout = array("CENTER");
 
-	if(graphics_monitor_count() > 1)
+	if(hw_gpu_monitor_count() > 1)
 	{
 		$xdpy_monitors = read_xdpy_monitor_info();
 		$hit_0_0 = false;
@@ -207,14 +207,14 @@ function graphics_monitor_layout()
 
 	return implode(",", $monitor_layout);
 }
-function graphics_monitor_resolutions()
+function hw_gpu_monitor_modes()
 {
 	// Determine resolutions for each monitor
 	$resolutions = array();
 
-	if(graphics_monitor_count() == 1)
+	if(hw_gpu_monitor_count() == 1)
 	{
-		array_push($resolutions, current_screen_resolution());
+		array_push($resolutions, hw_gpu_current_mode());
 	}
 	else
 	{
@@ -228,7 +228,7 @@ function graphics_monitor_resolutions()
 
 	return implode(",", $resolutions);
 }
-function graphics_antialiasing_level()
+function hw_gpu_aa_level()
 {
 	// Determine AA level if over-rode
 	$aa_level = "";
@@ -333,7 +333,7 @@ function graphics_antialiasing_level()
 
 	return $aa_level;
 }
-function graphics_anisotropic_level()
+function hw_gpu_af_level()
 {
 	// Determine AF level if over-rode
 	$af_level = "";
@@ -384,13 +384,13 @@ function graphics_anisotropic_level()
 
 	return $af_level;
 }
-function set_video_resolution($width, $height)
+function hw_gpu_set_resolution($width, $height)
 {
 	shell_exec("xrandr -s " . $width . "x" . $height . " 2>&1");
 
-	return xrandr_screen_resolution() == array($width, $height); // Check if video resolution set worked
+	return hw_gpu_xrandr_mode() == array($width, $height); // Check if video resolution set worked
 }
-function set_nvidia_extension($attribute, $value)
+function hw_gpu_set_nvidia_extension($attribute, $value)
 {
 	// Sets an object in NVIDIA's NV Extension
 	if(IS_NVIDIA_GRAPHICS)
@@ -398,7 +398,7 @@ function set_nvidia_extension($attribute, $value)
 		shell_exec("nvidia-settings --assign " . $attribute . "=" . $value . " 2>&1");
 	}
 }
-function set_amd_pcsdb($attribute, $value)
+function hw_gpu_set_amd_pcsdb($attribute, $value)
 {
 	// Sets a value for AMD's PCSDB, Persistent Configuration Store Database
 	if(!empty($value) && IS_ATI_GRAPHICS)
@@ -407,43 +407,7 @@ function set_amd_pcsdb($attribute, $value)
 		$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
 	}
 }
-function sort_available_modes($modes)
-{
-	// Sort graphics card resolution modes
-	$mode_pixel_counts = array();
-	$sorted_modes = array();
-
-	foreach($modes as $this_mode)
-	{
-		if(count($this_mode) == 2)
-		{
-			array_push($mode_pixel_counts, $this_mode[0] * $this_mode[1]);
-		}
-		else
-		{
-			unset($this_mode);
-		}
-	}
-
-	sort($mode_pixel_counts);
-
-	for($i = 0; $i < count($mode_pixel_counts); $i++)
-	{
-		$hit = false;
-		for($j = 0; $j < count($modes) && !$hit; $j++)
-		{
-			if($modes[$j] != null && ($modes[$j][0] * $modes[$j][1]) == $mode_pixel_counts[$i])
-			{
-				array_push($sorted_modes, $modes[$j]);
-				$modes[$j] = null;
-				$hit = true;
-			}
-		}
-	}
-
-	return $sorted_modes;
-}
-function xrandr_available_modes()
+function hw_gpu_xrandr_available_modes()
 {
 	// XRandR available modes
 	$info = shell_exec("xrandr 2>&1");
@@ -488,8 +452,8 @@ function xrandr_available_modes()
 		$stock_modes = array(array(800, 600), array(1024, 768), array(1280, 1024), array(1280, 960), array(1400, 1050), array(1680, 1050), array(1600, 1200), array(1920, 1080), array(2560, 1600));
 		$available_modes = array();
 
-		$video_width = current_screen_width();
-		$video_height = current_screen_height();
+		$video_width = hw_gpu_screen_width();
+		$video_height = hw_gpu_screen_height();
 
 		for($i = 0; $i < count($stock_modes); $i++)
 		{
@@ -501,12 +465,45 @@ function xrandr_available_modes()
 	}
 	else
 	{
-		$available_modes = sort_available_modes($available_modes);
+		// Sort available modes in order
+		$modes = $available_modes;
+		$mode_pixel_counts = array();
+		$sorted_modes = array();
+
+		foreach($modes as $this_mode)
+		{
+			if(count($this_mode) == 2)
+			{
+				array_push($mode_pixel_counts, $this_mode[0] * $this_mode[1]);
+			}
+			else
+			{
+				unset($this_mode);
+			}
+		}
+
+		sort($mode_pixel_counts);
+
+		for($i = 0; $i < count($mode_pixel_counts); $i++)
+		{
+			$hit = false;
+			for($j = 0; $j < count($modes) && !$hit; $j++)
+			{
+				if($modes[$j] != null && ($modes[$j][0] * $modes[$j][1]) == $mode_pixel_counts[$i])
+				{
+					array_push($sorted_modes, $modes[$j]);
+					$modes[$j] = null;
+					$hit = true;
+				}
+			}
+		}
+
+		$available_modes = $modes;
 	}
 
 	return $available_modes;
 }
-function xrandr_screen_resolution()
+function hw_gpu_xrandr_mode()
 {
 	// Find the current screen resolution using XRandR
 	$info = shell_exec("xrandr 2>&1 | grep \"*\"");
@@ -545,7 +542,7 @@ function xrandr_screen_resolution()
 
 	return $info;
 }
-function osx_screen_resolution()
+function hw_gpu_osx_mode()
 {
 	$resolution = array();
 	$info = read_osx_system_profiler("SPDisplaysDataType", "Resolution");
@@ -555,10 +552,10 @@ function osx_screen_resolution()
 
 	return $resolution;
 }
-function current_screen_resolution()
+function hw_gpu_current_mode()
 {
 	// Return the current screen resolution
-	if(($width = current_screen_width()) != "Unknown" && ($height = current_screen_height()) != "Unknown")
+	if(($width = hw_gpu_screen_width()) != "Unknown" && ($height = hw_gpu_screen_height()) != "Unknown")
 	{
 		$resolution = $width . "x" . $height;
 	}
@@ -569,31 +566,31 @@ function current_screen_resolution()
 
 	return $resolution;
 }
-function current_screen_width()
+function hw_gpu_screen_width()
 {
 	// Current screen width
-	$resolution = xrandr_screen_resolution();
+	$resolution = hw_gpu_xrandr_mode();
 	
 	if(IS_MACOSX)
 	{
-		$resolution = osx_screen_resolution();
+		$resolution = hw_gpu_osx_mode();
 	}
 	
 	return $resolution[0];
 }
-function current_screen_height()
+function hw_gpu_screen_height()
 {
 	// Current screen height
-	$resolution = xrandr_screen_resolution();
+	$resolution = hw_gpu_xrandr_mode();
 	
 	if(IS_MACOSX)
 	{
-		$resolution = osx_screen_resolution();
+		$resolution = hw_gpu_osx_mode();
 	}
 	
 	return $resolution[1];
 }
-function graphics_processor_stock_frequency()
+function hw_gpu_stock_frequency()
 {
 	// Graphics processor stock frequency
 	$core_freq = 0;
@@ -636,7 +633,7 @@ function graphics_processor_stock_frequency()
 
 	return array($core_freq, $mem_freq);
 }
-function graphics_processor_frequency()
+function hw_gpu_current_frequency()
 {
 	// Graphics processor real/current frequency
 	$core_freq = 0;
@@ -679,11 +676,11 @@ function graphics_processor_frequency()
 
 	return array($core_freq, $mem_freq);
 }
-function graphics_processor_string()
+function hw_gpu_string()
 {
 	// Report graphics processor string
 	$info = shell_exec("glxinfo 2>&1 | grep renderer");
-	$video_ram = graphics_memory_capacity();
+	$video_ram = hw_gpu_memory_size();
 
 	if(($pos = strpos($info, "renderer string:")) > 0)
 	{
@@ -813,43 +810,7 @@ function graphics_processor_string()
 
 	return $info;
 }
-function graphics_subsystem_version()
-{
-	// Find graphics subsystem version
-	if(IS_SOLARIS)
-	{
-		$info = shell_exec("X :0 -version 2>&1");
-	}
-	else
-	{
-		$info = shell_exec("X -version 2>&1");
-	}
-
-	$pos = strrpos($info, "Release Date");
-	
-	if($pos == false)
-	{
-		$pos = strrpos($info, "Build Date");
-	}
-	
-	$info = trim(substr($info, 0, $pos));
-
-	if($pos === false)
-	{
-		$info = "Unknown";
-	}
-	else if(($pos = strrpos($info, "(")) === false)
-	{
-		$info = trim(substr($info, strrpos($info, " ")));
-	}
-	else
-	{
-		$info = trim(substr($info, strrpos($info, "Server") + 6));
-	}
-
-	return $info;
-}
-function graphics_memory_capacity()
+function hw_gpu_memory_size()
 {
 	// Graphics memory capacity
 	$video_ram = DEFAULT_VIDEO_RAM_CAPACITY;
@@ -903,59 +864,7 @@ function graphics_memory_capacity()
 
 	return $video_ram;
 }
-function opengl_version()
-{
-	// OpenGL version
-	$info = shell_exec("glxinfo 2>&1 | grep version");
-
-	if(($pos = strpos($info, "OpenGL version string:")) === false)
-	{
-		$info = "N/A";
-	}
-	else
-	{
-		$info = substr($info, $pos + 23);
-		$info = trim(substr($info, 0, strpos($info, "\n")));
-		$info = str_replace(array(" Release"), "", $info);
-	}
-
-	return $info;
-}
-function xorg_ddx_driver_info()
-{
-	$ddx_info = "";
-
-	if(is_file("/proc/dri/0/name"))
-	{
-		$driver_info = file_get_contents("/proc/dri/0/name");
-		$driver_name = substr($driver_info, 0, strpos($driver_info, " "));
-
-		if($driver_name == "i915")
-		{
-			$driver_name = "intel";
-		}
-
-		$driver_version = read_xorg_module_version($driver_name . "_drv");
-
-		if(!empty($driver_version))
-		{
-			$ddx_info = $driver_name . " " . $driver_version;
-		}
-	}
-	else if(IS_MESA_GRAPHICS && stripos(graphics_processor_string(), "NVIDIA") !== false)
-	{
-		// xf86-video-nv is an open-source driver but currently doesn't support DRI
-		$nv_driver_version = read_xorg_module_version("nv_drv.so");
-
-		if(!empty($nv_driver_version))
-		{
-			$ddx_info = "nv " . $nv_driver_version;
-		}
-	}
-
-	return $ddx_info;
-}
-function graphics_gpu_usage()
+function hw_gpu_core_usage()
 {
 	// Determine GPU usage
 	$gpu_usage = -1;

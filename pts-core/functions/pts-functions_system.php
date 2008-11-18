@@ -37,8 +37,8 @@ function pts_hw_string()
 	array_push($hardware, "Chipset: " . motherboard_chipset_string());
 	array_push($hardware, "System Memory: " . system_memory_string());
 	array_push($hardware, "Disk: " . system_hard_disks());
-	array_push($hardware, "Graphics: " . graphics_processor_string() . graphics_frequency_string());
-	array_push($hardware, "Screen Resolution: " . current_screen_resolution());
+	array_push($hardware, "Graphics: " . hw_gpu_string() . hw_gpu_frequency());
+	array_push($hardware, "Screen Resolution: " . hw_gpu_current_mode());
 
 	return implode(", ", $hardware);
 }

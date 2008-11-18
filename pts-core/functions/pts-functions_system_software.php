@@ -199,6 +199,94 @@ function operating_system_release()
 
 	return $os;
 }
+function opengl_version()
+{
+	// OpenGL version
+	$info = shell_exec("glxinfo 2>&1 | grep version");
+
+	if(($pos = strpos($info, "OpenGL version string:")) === false)
+	{
+		$info = "N/A";
+	}
+	else
+	{
+		$info = substr($info, $pos + 23);
+		$info = trim(substr($info, 0, strpos($info, "\n")));
+		$info = str_replace(array(" Release"), "", $info);
+	}
+
+	return $info;
+}
+function xorg_ddx_driver_info()
+{
+	$ddx_info = "";
+
+	if(is_file("/proc/dri/0/name"))
+	{
+		$driver_info = file_get_contents("/proc/dri/0/name");
+		$driver_name = substr($driver_info, 0, strpos($driver_info, " "));
+
+		if($driver_name == "i915")
+		{
+			$driver_name = "intel";
+		}
+
+		$driver_version = read_xorg_module_version($driver_name . "_drv");
+
+		if(!empty($driver_version))
+		{
+			$ddx_info = $driver_name . " " . $driver_version;
+		}
+	}
+	else if(IS_MESA_GRAPHICS && stripos(hw_gpu_string(), "NVIDIA") !== false)
+	{
+		// xf86-video-nv is an open-source driver but currently doesn't support DRI
+		$nv_driver_version = read_xorg_module_version("nv_drv.so");
+
+		if(!empty($nv_driver_version))
+		{
+			$ddx_info = "nv " . $nv_driver_version;
+		}
+	}
+
+	return $ddx_info;
+}
+function graphics_subsystem_version()
+{
+	// Find graphics subsystem version
+	if(IS_SOLARIS)
+	{
+		$info = shell_exec("X :0 -version 2>&1");
+	}
+	else
+	{
+		$info = shell_exec("X -version 2>&1");
+	}
+
+	$pos = strrpos($info, "Release Date");
+	
+	if($pos == false)
+	{
+		$pos = strrpos($info, "Build Date");
+	}
+	
+	$info = trim(substr($info, 0, $pos));
+
+	if($pos === false)
+	{
+		$info = "Unknown";
+	}
+	else if(($pos = strrpos($info, "(")) === false)
+	{
+		$info = trim(substr($info, strrpos($info, " ")));
+	}
+	else
+	{
+		$info = trim(substr($info, strrpos($info, "Server") + 6));
+	}
+
+	return $info;
+}
 function pts_vendor_identifier()
 {
 	// Returns the vendor identifier used with the External Dependencies and other distro-specific features
