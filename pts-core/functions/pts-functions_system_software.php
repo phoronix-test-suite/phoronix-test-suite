@@ -35,7 +35,7 @@ function system_virtualized_mode()
 	{
 		$virtualized = "VMware";
 	}
-	else if(strpos($gpu, "VirtualBox") !== false || strpos(main_system_hardware_string(), "VirtualBox") !== false)
+	else if(strpos($gpu, "VirtualBox") !== false || strpos(hw_sys_motherboard_string(), "VirtualBox") !== false)
 	{
 		$virtualized = "VirtualBox";
 	}

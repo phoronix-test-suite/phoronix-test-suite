@@ -509,14 +509,14 @@ class system_monitor extends pts_module_interface
 		}
 		if(pts_is_assignment("MONITOR_HDD_TEMP"))
 		{
-			$temp = system_hdd_temperature();
+			$temp = hw_sys_hdd_temperature();
 
 			if($temp != -1)
 				pts_module::save_file(".s/HDD_TEMPERATURE", $temp, true);
 		}
 		if(pts_is_assignment("MONITOR_SYS_TEMP"))
 		{
-			$temp = system_temperature();
+			$temp = hw_sys_temperature();
 
 			if($temp != -1)
 				pts_module::save_file(".s/SYS_TEMPERATURE", $temp, true);
@@ -537,28 +537,28 @@ class system_monitor extends pts_module_interface
 		}
 		if(pts_is_assignment("MONITOR_CPU_VOLTAGE"))
 		{
-			$voltage = system_line_voltage("CPU");
+			$voltage = hw_sys_line_voltage("CPU");
 
 			if($voltage != -1)
 				pts_module::save_file(".s/GPU_VOLTAGE", $voltage, true);
 		}
 		if(pts_is_assignment("MONITOR_V3_VOLTAGE"))
 		{
-			$voltage = system_line_voltage("V3");
+			$voltage = hw_sys_line_voltage("V3");
 
 			if($voltage != -1)
 				pts_module::save_file(".s/V3_VOLTAGE", $voltage, true);
 		}
 		if(pts_is_assignment("MONITOR_V5_VOLTAGE"))
 		{
-			$voltage = system_line_voltage("V5");
+			$voltage = hw_sys_line_voltage("V5");
 
 			if($voltage != -1)
 				pts_module::save_file(".s/V5_VOLTAGE", $voltage, true);
 		}
 		if(pts_is_assignment("MONITOR_V12_VOLTAGE"))
 		{
-			$voltage = system_line_voltage("V12");
+			$voltage = hw_sys_line_voltage("V12");
 
 			if($voltage != -1)
 				pts_module::save_file(".s/V12_VOLTAGE", $voltage, true);

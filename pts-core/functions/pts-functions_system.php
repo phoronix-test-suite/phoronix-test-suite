@@ -33,10 +33,10 @@ function pts_hw_string()
 	$hardware = array();
 
 	array_push($hardware, "Processor: " . hw_cpu_string() . " (Total Cores: " . hw_cpu_core_count() . ")");
-	array_push($hardware, "Motherboard: " . main_system_hardware_string());
-	array_push($hardware, "Chipset: " . motherboard_chipset_string());
-	array_push($hardware, "System Memory: " . system_memory_string());
-	array_push($hardware, "Disk: " . system_hard_disks());
+	array_push($hardware, "Motherboard: " . hw_sys_motherboard_string());
+	array_push($hardware, "Chipset: " . hw_sys_chipset_string());
+	array_push($hardware, "System Memory: " . hw_sys_memory_string());
+	array_push($hardware, "Disk: " . hw_sys_hdd_string());
 	array_push($hardware, "Graphics: " . hw_gpu_string() . hw_gpu_frequency());
 	array_push($hardware, "Screen Resolution: " . hw_gpu_current_mode());
 
@@ -64,7 +64,7 @@ function pts_sw_string()
 }
 function pts_system_identifier_string()
 {
-	$components = array(hw_cpu_string(), main_system_hardware_string(), operating_system_release(), compiler_version());
+	$components = array(hw_cpu_string(), hw_sys_motherboard_string(), operating_system_release(), compiler_version());
 	return base64_encode(implode("__", $components));
 }
 

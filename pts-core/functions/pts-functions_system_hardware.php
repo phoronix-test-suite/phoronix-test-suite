@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function main_system_hardware_string()
+function hw_sys_motherboard_string()
 {
 	// Returns the motherboard / system model name or number
 	$info = "";
@@ -87,7 +87,7 @@ function main_system_hardware_string()
 
 	return pts_clean_information_string($info);
 }
-function motherboard_chipset_string()
+function hw_sys_chipset_string()
 {
 	// Returns motherboard chipset
 	if(IS_MACOSX)
@@ -157,7 +157,7 @@ function motherboard_chipset_string()
 
 	return $info;
 }
-function system_hard_disks()
+function hw_sys_hdd_string()
 {
 	$disks = array();
 	if(IS_MACOSX)
@@ -297,7 +297,7 @@ function system_hard_disks()
 
 	if(count($disks) == 0)
 	{
-		$disks = system_disk_total() . "GB";
+		$disks = hw_sys_hdd_total() . "GB";
 	}
 	else
 	{
@@ -306,12 +306,12 @@ function system_hard_disks()
 
 	return $disks;
 }
-function system_disk_total()
+function hw_sys_hdd_total()
 {
 	// Returns amoung of disk space
 	return ceil(disk_total_space("/") / 1073741824);
 }
-function system_memory_string()
+function hw_sys_memory_string()
 {
 	$mem_string = null;
 
@@ -377,12 +377,12 @@ function system_memory_string()
 
 	if(empty($mem_string))
 	{
-		$mem_string = memory_mb_capacity() . "MB";
+		$mem_string = hw_sys_memory_capacity() . "MB";
 	}
 
 	return trim($mem_string);
 }
-function memory_mb_capacity()
+function hw_sys_memory_capacity()
 {
 	// Returns physical memory capacity
 	if(is_file("/proc/meminfo"))
@@ -430,7 +430,7 @@ function memory_mb_capacity()
 
 	return $info;
 }
-function system_temperature()
+function hw_sys_temperature()
 {
 	// Reads the system's temperature
 	$temp_c = read_sensors(array("Sys Temp", "Board Temp"));
@@ -452,7 +452,7 @@ function system_temperature()
 
 	return $temp_c;
 }
-function system_line_voltage($type)
+function hw_sys_line_voltage($type)
 {
 	// Reads the system's line voltages
 	if($type == "CPU")
@@ -483,12 +483,12 @@ function system_line_voltage($type)
 
 	return $voltage;
 }
-function system_hdd_temperature($disk = null)
+function hw_sys_hdd_temperature($disk = null)
 {
 	// Attempt to read temperature using hddtemp
 	return read_hddtemp($disk);
 }
-function system_power_mode()
+function hw_sys_power_mode()
 {
 	// Returns the power mode
 	$power_state = read_acpi("/ac_adapter/AC/state", "state");
@@ -500,21 +500,6 @@ function system_power_mode()
 	}
 
 	return $return_status;
-}
-function read_physical_memory_usage()
-{
-	// Amount of physical memory being used
-	return read_system_memory_usage("MEMORY");
-}
-function read_total_memory_usage()
-{
-	// Amount of total (physical + SWAP) memory being used
-	return read_system_memory_usage("TOTAL");
-}
-function read_swap_usage()
-{
-	// Amount of SWAP memory being used
-	return read_system_memory_usage("SWAP");
 }
 
 ?>

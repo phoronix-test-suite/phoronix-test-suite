@@ -688,6 +688,21 @@ function read_osx_system_profiler($data_type, $object, $multiple_objects = false
 	
 	return $value;
 }
+function read_physical_memory_usage()
+{
+	// Amount of physical memory being used
+	return read_system_memory_usage("MEMORY");
+}
+function read_total_memory_usage()
+{
+	// Amount of total (physical + SWAP) memory being used
+	return read_system_memory_usage("TOTAL");
+}
+function read_swap_usage()
+{
+	// Amount of SWAP memory being used
+	return read_system_memory_usage("SWAP");
+}
 function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore = null)
 {
 	// Read Linux dmidecode
