@@ -31,13 +31,13 @@ define("TYPE_LOCAL_TEST_SUITE", "LOCAL_TEST_SUITE"); // Type is a test suite
 define("TYPE_SCTP_TEST", "LOCAL_SCTP_TEST"); // Type is a SCTP test
 define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a SCTP test
 
-function is_suite($object)
+function pts_is_suite($object)
 {
 	$type = pts_test_type($object);
 
 	return $type == TYPE_TEST_SUITE || $type == TYPE_LOCAL_TEST_SUITE;
 }
-function is_test($object)
+function pts_is_test($object)
 {
 	$type = pts_test_type($object);
 
@@ -105,7 +105,7 @@ function pts_location_suite($identifier)
 	{
 		$location = false;
 
-		if(is_suite($identifier))
+		if(pts_is_suite($identifier))
 		{
 			$type = pts_test_type($identifier);
 
@@ -136,7 +136,7 @@ function pts_location_test($identifier)
 		{
 			$location = SCTP_FILE;
 		}
-		else if(is_test($identifier))
+		else if(pts_is_test($identifier))
 		{
 			$type = pts_test_type($identifier);
 
@@ -183,7 +183,7 @@ function pts_location_test_resources($identifier)
 		{
 			$location = PTS_TEMP_DIR . "sctp/" . basename(SCTP_FILE) . "/";
 		}
-		else if(is_test($identifier))
+		else if(pts_is_test($identifier))
 		{
 			$type = pts_test_type($identifier);
 
@@ -226,14 +226,14 @@ function pts_test_extends_below($object)
 
 	do
 	{
-		if(is_test($test_extends))
+		if(pts_is_test($test_extends))
 		{
 			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test_extends));
 			$test_extends = $xml_parser->getXMLValue(P_TEST_CTPEXTENDS);
 
 			if(!empty($test_extends))
 			{
-				if(!in_array($test_extends, $extensions) && is_test($test_extends))
+				if(!in_array($test_extends, $extensions) && pts_is_test($test_extends))
 				{
 					array_push($extensions, $test_extends);
 				}
@@ -257,7 +257,7 @@ function pts_contained_tests($object, $include_extensions = false)
 	// Provide an array containing the location(s) of all test(s) for the supplied object name
 	$tests = array();
 
-	if(is_suite($object)) // Object is suite
+	if(pts_is_suite($object)) // Object is suite
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents(pts_location_suite($object)));
 		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
@@ -270,7 +270,7 @@ function pts_contained_tests($object, $include_extensions = false)
 			}
 		}
 	}
-	else if(is_test($object)) // Object is a test
+	else if(pts_is_test($object)) // Object is a test
 	{
 		if($include_extensions)
 		{

@@ -98,7 +98,7 @@ function pts_external_dependency_generic($Name)
 function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 {
 	// Install from a list of external dependencies
-	if(!is_test($identifier))
+	if(!pts_is_test($identifier))
 	{
 		return;
 	}

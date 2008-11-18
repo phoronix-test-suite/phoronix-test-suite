@@ -33,6 +33,5 @@ Phoronix Test Suite (Git)
 - pts-core: Add SearchMediaForCache option that's enabled by default in user-config.xml to automatically search for download caches on removable devices (mounted within /media/)
 - pts-core: Use static variable for PTS type caching
 - pts-core: Branch out classes from pts-generic-classes.php
-- pts-core: Rename sctp_test_directory() -> pts_sctp_test_directory(), remote_sctp_test_files() -> pts_remove_sctp_test_files(), generate_sctp_layer() -> pts_generate_sctp_layer()
-- pts-core: Rename display_web_browser() -> pts_display_web_browser()
+- pts-core: Standardize all pts-core official functions with pts_, sw_, hw_, or read_ prefix
 - tandem_XmlReader: Switch caching from using a GLOBALS variable to using a static variable within the XML reading class

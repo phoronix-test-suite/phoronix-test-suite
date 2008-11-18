@@ -39,12 +39,12 @@ class run_test
 			if(!empty($svg_test) && !empty($svg_identifier))
 			{
 				$run_options = array();
-				if(is_test($svg_test))
+				if(pts_is_test($svg_test))
 				{
 					array_push($run_options, array($svg_test, "Run this test (" . $svg_test . ")"));
 				}
 
-				if(is_suite($svg_identifier))
+				if(pts_is_suite($svg_identifier))
 				{
 					array_push($run_options, array($svg_identifier, "Run this suite (" . $svg_identifier . ")"));
 				}
@@ -98,7 +98,7 @@ class run_test
 			pts_exit("\nThe test, suite name, or saved file name must be supplied.\n");
 		}
 
-		if(is_test($TO_RUN))
+		if(pts_is_test($TO_RUN))
 		{
 			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
@@ -160,7 +160,7 @@ class run_test
 			{
 				$save_option = true;
 
-				if(is_test($TO_RUN))
+				if(pts_is_test($TO_RUN))
 				{
 					$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));
 					$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
@@ -257,7 +257,7 @@ class run_test
 			pts_set_assignment("SAVE_FILE_NAME", null);
 		}
 
-		if(is_test($TO_RUN))
+		if(pts_is_test($TO_RUN))
 		{
 			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($TO_RUN));
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
@@ -430,7 +430,7 @@ class run_test
 				unset($xml_parser);
 			}
 		}
-		else if(is_suite($TO_RUN))
+		else if(pts_is_suite($TO_RUN))
 		{
 			echo pts_string_header("Test Suite: " . $TO_RUN);
 
@@ -507,7 +507,7 @@ class run_test
 			}
 		}
 
-		if(is_suite($TO_RUN))
+		if(pts_is_suite($TO_RUN))
 		{
 			pts_user_message($SUITE_PRE_RUN_MESSAGE);
 		}
@@ -516,7 +516,7 @@ class run_test
 
 		pts_recurse_call_tests($TEST_RUN, $TEST_ARGS, $SAVE_RESULTS, $RESULTS, $RESULTS_IDENTIFIER, $TEST_ARGS_DESCRIPTION);
 
-		if(is_suite($TO_RUN))
+		if(pts_is_suite($TO_RUN))
 		{
 			pts_user_message($SUITE_POST_RUN_MESSAGE);
 		}

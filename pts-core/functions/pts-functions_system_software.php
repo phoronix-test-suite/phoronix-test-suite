@@ -155,7 +155,7 @@ function sw_os_release()
 {
 	// Determine the operating system release
 	$vendor = sw_os_vendor();
-	$version = os_version();
+	$version = sw_os_version();
 
 	if($vendor == "Unknown" && $version == "Unknown")
 	{

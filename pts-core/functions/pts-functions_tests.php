@@ -312,7 +312,7 @@ function pts_test_profile_version($identifier)
 	// Checks PTS profile version
 	$version = "";
 
-	if(is_test($identifier))
+	if(pts_is_test($identifier))
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
@@ -422,7 +422,7 @@ function pts_test_identifier_to_name($identifier)
 	// Convert identifier to test name
 	$name = false;
 
-	if(!empty($identifier) && is_test($identifier))
+	if(!empty($identifier) && pts_is_test($identifier))
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
@@ -478,7 +478,7 @@ function pts_test_architecture_supported($identifier)
 	// Check if the system's architecture is supported by a test
 	$supported = true;
 
-	if(is_test($identifier))
+	if(pts_is_test($identifier))
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$archs = $xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS);
@@ -503,7 +503,7 @@ function pts_test_platform_supported($identifier)
 	// Check if the system's OS is supported by a test
 	$supported = true;
 
-	if(is_test($identifier))
+	if(pts_is_test($identifier))
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$platforms = $xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
@@ -549,7 +549,7 @@ function pts_test_version_supported($identifier)
 	// Check if the test profile's version is compatible with pts-core
 	$supported = true;
 
-	if(is_test($identifier))
+	if(pts_is_test($identifier))
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
 		$requires_core_version = $xml_parser->getXMLValue(P_TEST_SUPPORTS_COREVERSION);
@@ -818,7 +818,7 @@ function pts_print_format_tests($object, &$write_buffer, $steps = -1)
 {
 	// Print out a text tree that shows the suites and tests within an object
 	$steps++;
-	if(is_suite($object))
+	if(pts_is_suite($object))
 	{
 		$xml_parser = new tandem_XmlReader(@file_get_contents(pts_location_suite($object)));
 		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));

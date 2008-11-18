@@ -26,14 +26,14 @@ class information
 	{
 		$to_info = $r[0];
 
-		if(is_suite($to_info))
+		if(pts_is_suite($to_info))
 		{
 			$suite = new pts_test_suite_details($to_info);
 			echo $suite->info_string();
 		
 			echo "\n";
 		}
-		else if(is_test($to_info))
+		else if(pts_is_test($to_info))
 		{
 			$suite = new pts_test_profile_details($to_info);
 			echo $suite->info_string();

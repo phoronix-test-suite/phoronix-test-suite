@@ -128,7 +128,7 @@ function pts_prompt_save_file_name($check_env = true)
 				$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
 				$PROPOSED_FILE_NAME = pts_input_string_to_identifier($PROPOSED_FILE_NAME);
 
-				if(is_test($PROPOSED_FILE_NAME) || is_suite($PROPOSED_FILE_NAME))
+				if(pts_is_test($PROPOSED_FILE_NAME) || pts_is_suite($PROPOSED_FILE_NAME))
 				{
 					$is_reserved_word = true;
 				}
@@ -312,7 +312,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 
 	for($i = 0; $i < count($tests_to_run); $i++)
 	{
-		if(is_suite($tests_to_run[$i]))
+		if(pts_is_suite($tests_to_run[$i]))
 		{
 			$xml_parser = new tandem_XmlReader(pts_location_suite($tests_to_run[$i]));
 			$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
@@ -321,7 +321,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 
 			pts_recurse_call_tests($tests_in_suite, $sub_arguments, $save_results, $tandem_xml, $results_identifier, $sub_arguments_description);
 		}
-		else if(is_test($tests_to_run[$i]))
+		else if(pts_is_test($tests_to_run[$i]))
 		{
 			$test_result = pts_run_test($tests_to_run[$i], $arguments_array[$i], $arguments_description[$i]);
 			$end_result = $test_result->get_result();

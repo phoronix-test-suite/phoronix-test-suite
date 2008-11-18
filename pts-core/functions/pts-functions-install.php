@@ -311,7 +311,7 @@ function pts_remove_local_download_test_files($identifier)
 }
 function pts_install_test($identifier)
 {
-	if(!is_test($identifier))
+	if(!pts_is_test($identifier))
 	{
 		return;
 	}
@@ -349,7 +349,7 @@ function pts_install_test($identifier)
 					{
 						$total_download_size = pts_estimated_download_size($argv[1]);
 
-						if($total_download_size > 0 && is_suite($argv[1]))
+						if($total_download_size > 0 && pts_is_suite($argv[1]))
 						{
 							echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
 						}
