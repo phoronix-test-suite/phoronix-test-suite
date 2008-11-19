@@ -234,25 +234,35 @@ function sw_os_opengl()
 
 	return $info;
 }
-function sw_xorg_ddx_driver_info()
+function sw_xorg_dri_driver()
 {
-	$ddx_info = "";
+	$dri_driver = false;
 
 	if(is_file("/proc/dri/0/name"))
 	{
 		$driver_info = file_get_contents("/proc/dri/0/name");
-		$driver_name = substr($driver_info, 0, strpos($driver_info, " "));
+		$dri_driver = substr($driver_info, 0, strpos($driver_info, " "));
 
-		if($driver_name == "i915")
+		if($dri_driver == "i915")
 		{
-			$driver_name = "intel";
+			$dri_driver = "intel";
 		}
+	}
 
-		$driver_version = read_xorg_module_version($driver_name . "_drv");
+	return $dri_driver;
+}
+function sw_xorg_ddx_driver_info()
+{
+	$ddx_info = "";
+	$dri_driver = sw_xorg_dri_driver();
+
+	if(!empty($dri_driver))
+	{
+		$driver_version = read_xorg_module_version($dri_driver . "_drv");
 
 		if(!empty($driver_version))
 		{
-			$ddx_info = $driver_name . " " . $driver_version;
+			$ddx_info = $dri_driver . " " . $driver_version;
 		}
 	}
 	else if(IS_MESA_GRAPHICS && stripos(hw_gpu_string(), "NVIDIA") !== false)

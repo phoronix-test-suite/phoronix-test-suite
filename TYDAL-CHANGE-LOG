@@ -34,4 +34,5 @@ Phoronix Test Suite (Git)
 - pts-core: Use static variable for PTS type caching
 - pts-core: Branch out classes from pts-generic-classes.php
 - pts-core: Standardize all pts-core official functions with pts_, sw_, hw_, or read_ prefix
+- pts-core: Fix graphics constant warnings generated in pts_extended_init()
 - tandem_XmlReader: Switch caching from using a GLOBALS variable to using a static variable within the XML reading class

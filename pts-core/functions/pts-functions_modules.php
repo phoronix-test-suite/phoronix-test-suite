@@ -232,6 +232,7 @@ function pts_php_module_call($module, $process, $object_pass = null)
 function pts_module_process($process, $object_pass = null)
 {
 	// Run a module process on all registered modules
+	pts_debug_message($process);
 	foreach($GLOBALS["PTS_MODULES"] as $module_index => $module)
 	{
 		$GLOBALS["PTS_MODULE_CURRENT"] = $module;

@@ -491,7 +491,7 @@ class system_monitor extends pts_module_interface
 	// Extra Functions
 	//
 
-	public function pts_monitor_update()
+	public static function pts_monitor_update()
 	{
 		if(pts_is_assignment("MONITOR_GPU_TEMP"))
 		{
