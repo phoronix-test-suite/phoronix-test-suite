@@ -493,9 +493,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	pts_user_message($pre_run_message);
 
+	$runtime_identifier = pts_unique_runtime_identifier();
+
 	for($i = 0; $i < $times_to_run; $i++)
 	{
-		$benchmark_log_file = TEST_ENV_DIR . $test_identifier . "/" . $test_identifier . "-" . THIS_RUN_TIME . "-" . ($i + 1) . ".log";
+		$benchmark_log_file = TEST_ENV_DIR . $test_identifier . "/" . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
 		$start_timer = TEST_LIBRARIES_DIR . "timer-start.sh";
 		$stop_timer = TEST_LIBRARIES_DIR . "timer-stop.sh";
 		$timed_kill = TEST_LIBRARIES_DIR . "timed-kill.sh";

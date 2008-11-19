@@ -61,7 +61,6 @@ function pts_basic_init()
 	// PTS Defines
 	define("PTS_TEMP_DIR", "/tmp/phoronix-test-suite/");
 	define("PHP_BIN", getenv("PHP_BIN"));
-	define("THIS_RUN_TIME", time());
 	define("PTS_INIT_TIME", time());
 
 	// Run in debug mode?

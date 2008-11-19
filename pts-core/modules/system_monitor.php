@@ -459,11 +459,12 @@ class system_monitor extends pts_module_interface
 								$first_run = false;
 							}
 						}
+						$save_filename = pts_unique_runtime_identifier() . '-' . $image_count . "." . strtolower($t->getRenderer());
 						$t->loadGraphVersion(PTS_VERSION);
-						$t->save_graph(pts_module::save_dir() . THIS_RUN_TIME . '-' . $image_count . "." . strtolower($t->getRenderer()));
+						$t->save_graph(pts_module::save_dir() . $save_filename);
 						$t->renderGraph();
 
-						array_push($image_list, THIS_RUN_TIME . '-' . $image_count . "." . strtolower($t->getRenderer()));
+						array_push($image_list, $save_filename);
 						$image_count++;
 					}
 				}

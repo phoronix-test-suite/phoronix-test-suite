@@ -80,7 +80,7 @@ function pts_run_option_command($command, $pass_args = null, $command_descriptor
 	$command = strtolower($command);
 
 	pts_clear_assignments();
-	pts_set_assignment("START_TIME", time());
+	pts_set_assignment(array("START_TIME", "THIS_OPTION_IDENTIFIER"), time()); // For now THIS_OPTION_IDENTIFIER is also time
 	pts_set_assignment("COMMAND", $command_descriptor);
 
 	if(is_file("pts-core/options/" . $command . ".php"))
@@ -186,7 +186,7 @@ function pts_env_variables()
 		"OS_VERSION" => sw_os_version(),
 		"OS_ARCH" => sw_os_architecture(),
 		"OS_TYPE" => OPERATING_SYSTEM,
-		"THIS_RUN_TIME" => THIS_RUN_TIME
+		"THIS_RUN_TIME" => PTS_INIT_TIME
 		);
 	}
 
@@ -401,6 +401,19 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 	}
 
 	return $answer;
+}
+function pts_unique_runtime_identifier()
+{
+	if(pts_is_assignment("THIS_OPTION_IDENTIFIER"))
+	{
+		$identifier = pts_read_assignment("THIS_OPTION_IDENTIFIER");
+	}
+	else
+	{
+		$identifier = PTS_INIT_TIME;
+	}
+
+	return $identifier;
 }
 function pts_clean_information_string($str)
 {
@@ -758,10 +771,15 @@ function pts_user_message($message)
 }
 function pts_set_assignment_once($assignment, $value)
 {
+	$set_assignment = false;
+
 	if(!pts_is_assignment($assignment))
 	{
 		pts_set_assignment($assignment, $value);
+		$set_assignment = true;
 	}
+
+	return $set_assignment;
 }
 function pts_set_assignment($assignment, $value)
 {
