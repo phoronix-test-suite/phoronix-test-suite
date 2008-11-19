@@ -36,3 +36,4 @@ Phoronix Test Suite (Git)
 - pts-core: Standardize all pts-core official functions with pts_, sw_, hw_, or read_ prefix
 - pts-core: Fix graphics constant warnings generated in pts_extended_init()
 - tandem_XmlReader: Switch caching from using a GLOBALS variable to using a static variable within the XML reading class
+- system_monitor: Update it to work with new APIs
