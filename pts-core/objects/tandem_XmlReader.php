@@ -36,6 +36,7 @@ class tandem_XmlReader
 	var $NO_TAG_FALLBACK_VALUE = null;
 
 	static $cache = null;
+	var $use_php_preg_functions = false;
 
 	function __construct($XML, $DO_CACHE = true)
 	{
@@ -73,6 +74,11 @@ class tandem_XmlReader
 			$this->XML_CACHE_FILE = false;
 			$this->XML_CACHE_TAGS = false;
 			$this->XML_DATA = $XML;
+		}
+
+		if(function_exists("preg_match") && function_exists("preg_match_all"))
+		{
+			$this->use_php_preg_functions = true;
 		}
 	}
 	function getStatement($STATEMENT_NAME)
@@ -165,7 +171,7 @@ class tandem_XmlReader
 	{
 		$return = false;
 
-		if(function_exists("preg_match") && function_exists("preg_match_all"))
+		if($this->use_php_preg_functions)
 		{
 			if($DO_MULTIPLE)
 			{
