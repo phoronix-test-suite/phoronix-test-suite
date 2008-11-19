@@ -81,10 +81,15 @@ class tandem_XmlReader
 	}
 	function listStatements($SEARCH_DO = false, $SEARCH_QUERY = "")
 	{
-		preg_match_all("'<!--(.*?) -->'si", $this->XML_DATA, $statement_maches);
+		if(!function_exists("preg_match_all"))
+		{
+			return array(); // TODO: Write a software fallback for this parsing similar to parseXMLString()
+		}
+
+		preg_match_all("'<!--(.*?) -->'si", $this->XML_DATA, $statement_matches);
 		$return_array = array();
 
-		foreach($statement_maches[0] as $statement)
+		foreach($statement_matches[0] as $statement)
 		{
 			$name = substr($statement, 0, strpos($statement, ':'));
 			$name = trim(strstr($name, ' '));
@@ -133,13 +138,9 @@ class tandem_XmlReader
 		{
 			foreach(explode("/", $XML_TAG) as $xml_step)
 			{
-				preg_match("'<$xml_step>(.*?)</$xml_step>'si", $XML_MATCH, $new_match);
+				$XML_MATCH = $this->parseXMLString($xml_step, $XML_MATCH, false);
 
-				if(count($new_match) > 1)
-				{
-					$XML_MATCH = $new_match[1];
-				}
-				else
+				if($XML_MATCH == false)
 				{
 					if(!$FALLBACK_PROCESS)
 					{
@@ -159,6 +160,85 @@ class tandem_XmlReader
 		}
 
 		return $XML_MATCH;
+	}
+	function parseXMLString($TAG, $TO_PARSE, $DO_MULTIPLE = true)
+	{
+		$return = false;
+
+		if(function_exists("preg_match") && function_exists("preg_match_all"))
+		{
+			if($DO_MULTIPLE)
+			{
+				preg_match_all("'<" . $TAG . ">(.*?)</" . $TAG . ">'si", $TO_PARSE, $matches);
+
+				if(count($matches) >= 2)
+				{
+					$return = $matches[1];
+				}
+			}
+			else
+			{
+				preg_match("'<" . $TAG . ">(.*?)</" . $TAG . ">'si", $TO_PARSE, $match);
+
+				if(count($match) >= 2)
+				{
+					$return = $match[1];
+				}
+			}
+		}
+		else
+		{
+			$open_tag = "<" . $TAG . ">";
+			$close_tag  = "</" . $TAG . ">";
+
+			if($DO_MULTIPLE)
+			{
+				$temp_r = array();
+				$temp = $TO_PARSE;
+
+				do
+				{
+					$return = null;
+
+					if(($start = strpos($temp, $open_tag)) !== false)
+					{
+						$temp = substr($temp, $start + strlen($open_tag));
+
+						if(($end = strpos($temp, $close_tag)) !== false)
+						{
+							$return = substr($temp, 0, $end);
+							$temp = substr($temp, strlen($return) + strlen($close_tag));
+						}
+					}
+
+					if($return != null)
+					{
+						array_push($temp_r, $return);
+					}
+				}
+				while($return != null);
+
+				if(count($temp_r) > 0)
+				{
+					$return = $temp_r;
+				}
+			}
+			else
+			{
+				if(($start = strpos($TO_PARSE, $open_tag)) !== false)
+				{
+					$temp = substr($TO_PARSE, $start + strlen($open_tag));
+
+					if(($end = strpos($temp, $close_tag)) !== false)
+					{
+						$temp = substr($temp, 0, $end);
+						$return = $temp;
+					}
+				}
+			}
+		}
+
+		return $return;
 	}
 	function handleXmlZeroTagFallback($XML_TAG)
 	{
@@ -183,17 +263,17 @@ class tandem_XmlReader
 		}
 
 		$next_xml_step = $xml_steps[count($xml_steps) - 2];
-		preg_match_all("'<$next_xml_step>(.*?)</$next_xml_step>'si", $this_xml, $xml_matches);
+		$xml_matches = $this->parseXMLString($next_xml_step, $this_xml);
 
 		$return_array = array();
 		$extraction_tags = explode(',', end($xml_steps));
 		$extraction_tags_count = count($extraction_tags);
 
-		for($i = 0; $i < count($xml_matches[1]); $i++)
+		for($i = 0; $i < count($xml_matches); $i++)
 		{
 			if($extraction_tags_count == 1)
 			{
-				$this_item = $this->getValue($XML_TAG, $extraction_tags[0], $xml_matches[1][$i], false);
+				$this_item = $this->getValue($XML_TAG, $extraction_tags[0], $xml_matches[$i], false);
 				array_push($return_array, $this_item);
 			}
 			else
@@ -207,7 +287,7 @@ class tandem_XmlReader
 				}
 				foreach($extraction_tags as $extract)
 				{
-					$this_item = $this->getValue($XML_TAG, $extract, $xml_matches[1][$i], false);
+					$this_item = $this->getValue($XML_TAG, $extract, $xml_matches[$i], false);
 					array_push($return_array[$extract], $this_item);
 				}
 			}
@@ -228,4 +308,5 @@ class tandem_XmlReader
 		$this->setTagCaching($BOOL);
 	}
 }
+
 ?>
