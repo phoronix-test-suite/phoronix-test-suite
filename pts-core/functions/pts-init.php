@@ -62,7 +62,7 @@ function pts_basic_init()
 	define("PTS_TEMP_DIR", "/tmp/phoronix-test-suite/");
 	define("PHP_BIN", getenv("PHP_BIN"));
 	define("THIS_RUN_TIME", time());
-	define("PTS_START_TIME", THIS_RUN_TIME);
+	define("PTS_INIT_TIME", time());
 
 	// Run in debug mode?
 	if(($debug_file = getenv("DEBUG_FILE")) != false || getenv("DEBUG") == "1" || getenv("PTS_DEBUG") == "1")

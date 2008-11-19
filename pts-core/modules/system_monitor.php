@@ -150,7 +150,6 @@ class system_monitor extends pts_module_interface
 			return;
 
 		// Elapsed time
-		$time_diff = PTS_END_TIME - PTS_START_TIME;
 
 		$device = array();
 		$type = array();
@@ -427,7 +426,7 @@ class system_monitor extends pts_module_interface
 				{
 					if(count($sub_array) > 0)
 					{
-						$time_minutes = floor($time_diff / 60);
+						$time_minutes = floor(pts_time_elapsed() / 60);
 						if($time_minutes == 0)
 							$time_minutes = 1;
 
@@ -472,8 +471,8 @@ class system_monitor extends pts_module_interface
 			}
 		}
 
-		if($time_diff > 10 && count($m_array) > 0)
-			$info_report .= "\n\nElapsed Time: " . pts_format_time_string($time_diff);
+		if(count($m_array) > 0)
+			$info_report .= "\n\nElapsed Time: " . pts_format_time_string(pts_time_elapsed());
 
 		// terminal output
 		if(!empty($info_report))

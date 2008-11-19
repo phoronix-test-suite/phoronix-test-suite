@@ -80,6 +80,7 @@ function pts_run_option_command($command, $pass_args = null, $command_descriptor
 	$command = strtolower($command);
 
 	pts_clear_assignments();
+	pts_set_assignment("START_TIME", time());
 	pts_set_assignment("COMMAND", $command_descriptor);
 
 	if(is_file("pts-core/options/" . $command . ".php"))
@@ -533,6 +534,19 @@ function pts_is_valid_download_url($string, $basename = null)
 	}
 
 	return $is_valid;
+}
+function pts_time_elapsed()
+{
+	if(pts_is_assignment("START_TIME"))
+	{
+		$start_time = pts_read_assignment("START_TIME");
+	}
+	else
+	{
+		$start_time = PTS_INIT_TIME;
+	}
+
+	return (time() - $start_time);
 }
 function pts_format_time_string($time, $format = "SECONDS", $standard_version = true)
 {
