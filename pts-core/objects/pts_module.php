@@ -179,9 +179,10 @@ class pts_module
 				else
 				{
 					$loop_continue = true;
-
-					while(!pts_is_assignment("PTS_TESTING_DONE") && !defined("PTS_END_TIME") && pts_process_active("phoronix-test-suite") && $loop_continue)
+					$start_id = pts_unique_runtime_identifier();
+					while(!pts_is_assignment("PTS_TESTING_DONE") && ($start_id == pts_unique_runtime_identifier() || $start_id == PTS_INIT_TIME) && pts_process_active("phoronix-test-suite") && $loop_continue)
 					{
+						echo 11111;
 						eval(self::module_name() . "::" . $function . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 
 						if($time > 0)
