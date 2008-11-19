@@ -216,15 +216,21 @@ function read_lsb($desc)
 function read_sysctl($desc)
 {
 	// Read sysctl, used by *BSDs
-	$info = shell_exec("sysctl $desc 2>&1");
+	$info = "Unknown";
 
-	if(($point = strpos($info, ":")) > 0 || ($point = strpos($info, "=")) > 0)
+	if(!is_array($desc))
 	{
-		$info = trim(substr($info, $point + 1));
+		$desc = array($desc);
 	}
-	else
+
+	for($i = 0; $i < count($desc) && $info == "Unknown"; $i++)
 	{
-		$info = "Unknown";
+		$output = shell_exec("sysctl " . $desc[$i] . " 2>&1");
+
+		if((($point = strpos($output, ":")) > 0 || ($point = strpos($output, "=")) > 0) && strpos($output, "unknown oid") === false)
+		{
+			$info = trim(substr($output, $point + 1));
+		}
 	}
 
 	return $info;
