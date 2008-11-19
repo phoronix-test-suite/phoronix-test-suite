@@ -765,7 +765,15 @@ function pts_set_assignment_once($assignment, $value)
 }
 function pts_set_assignment($assignment, $value)
 {
-	pts_assignment("SET", $assignment, $value);
+	if(!is_array($assignment))
+	{
+		$assignment = array($assignment);
+	}
+
+	foreach($assignment as $this_assignment)
+	{
+		pts_assignment("SET", $this_assignment, $value);
+	}
 }
 function pts_read_assignment($assignment)
 {
