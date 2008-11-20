@@ -6,6 +6,7 @@
 		<ProjectURL>http://www.wavpack.com/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>
 		<EnvironmentSize>1.0</EnvironmentSize>
+		<UnsupportedPlatforms>BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>WavPack Audio Encoding</Title>

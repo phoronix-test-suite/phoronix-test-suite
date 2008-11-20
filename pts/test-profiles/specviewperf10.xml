@@ -9,7 +9,7 @@
 		<EnvironmentSize>1600</EnvironmentSize>
 		<ProjectURL>http://www.spec.org/</ProjectURL>
 		<ExternalDependencies>build-utilities, glut, csh, libpng-development</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>SPECViewPerf</Title>

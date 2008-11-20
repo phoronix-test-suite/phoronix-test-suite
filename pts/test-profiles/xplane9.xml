@@ -10,7 +10,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.x-plane.com/</ProjectURL>
 		<ExternalDependencies>openal-development</ExternalDependencies>
-		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>X-Plane</Title>

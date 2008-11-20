@@ -9,7 +9,7 @@
 		<EnvironmentSize>1.5</EnvironmentSize>
 		<ProjectURL>https://sourceforge.net/projects/glmark</ProjectURL>
 		<ExternalDependencies>sdl-development, glut, build-utilities, glew</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>GLMark</Title>

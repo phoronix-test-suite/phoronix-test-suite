@@ -10,7 +10,7 @@
 		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
 		<Extends>video-sample</Extends>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Mencoder</Title>

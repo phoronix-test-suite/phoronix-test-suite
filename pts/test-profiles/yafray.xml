@@ -9,7 +9,7 @@
 		<EnvironmentSize>28.9</EnvironmentSize>
 		<ProjectURL>http://www.yafray.org/</ProjectURL>
 		<ExternalDependencies>build-utilities, scons, zlib-development, jpeg-development</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>YafRay</Title>

@@ -10,7 +10,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>xorg-development</ExternalDependencies>
 		<ProjectURL>http://www.warsow.net/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Warsow</Title>

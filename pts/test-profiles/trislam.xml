@@ -9,7 +9,7 @@
 		<EnvironmentSize>0.8</EnvironmentSize>
 		<ProjectURL>http://graphcomp.com/pogl.cgi?v=0111s3B3</ProjectURL>
 		<ExternalDependencies>build-utilities, perl, perl-opengl</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Triangle Slammer</Title>

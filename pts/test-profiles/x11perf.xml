@@ -9,7 +9,7 @@
 		<EnvironmentSize>1.7</EnvironmentSize>
 		<ProjectURL>http://www.x.org/</ProjectURL>
 		<ExternalDependencies>glut, build-utilities, xorg-development</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>x11perf</Title>

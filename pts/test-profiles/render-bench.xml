@@ -9,7 +9,7 @@
 		<EnvironmentSize>0.12</EnvironmentSize>
 		<ProjectURL>http://www.freedesktop.org/</ProjectURL>
 		<ExternalDependencies>build-essential, imlib2-development</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Render Bench</Title>

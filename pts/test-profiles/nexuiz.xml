@@ -10,7 +10,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.nexuiz.com/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Nexuiz</Title>

@@ -4,7 +4,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
 		<Extends>timed-build</Extends>
-		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed MPlayer Compilation</Title>

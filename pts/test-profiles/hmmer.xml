@@ -9,6 +9,7 @@
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<EnvironmentSize>707</EnvironmentSize>
 		<ProjectURL>http://hmmer.janelia.org/</ProjectURL>
+		<UnsupportedPlatforms>BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed HMMer Search</Title>

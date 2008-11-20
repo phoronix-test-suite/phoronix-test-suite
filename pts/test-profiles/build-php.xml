@@ -5,6 +5,7 @@
 		<EnvironmentSize>49.3</EnvironmentSize>
 		<ProjectURL>http://www.php.net/</ProjectURL>
 		<Extends>timed-build</Extends>
+		<UnsupportedPlatforms>BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed PHP Compilation</Title>

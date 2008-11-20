@@ -10,7 +10,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>glut, glew, freeimage</ExternalDependencies>
 		<ProjectURL>http://www.dee.cz/lightsmark/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Lightsmark</Title>

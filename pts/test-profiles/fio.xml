@@ -9,7 +9,7 @@
 		<EnvironmentSize>5.0</EnvironmentSize>
 		<ProjectURL>http://git.kernel.dk/?p=fio.git;a=summary</ProjectURL>
 		<ExternalDependencies>build-utilities, libaio-development</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Flexible IO Tester</Title>

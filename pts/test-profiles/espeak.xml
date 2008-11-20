@@ -9,7 +9,7 @@
 		<EnvironmentSize>2.2</EnvironmentSize>
 		<ProjectURL>http://espeak.sourceforge.net/</ProjectURL>
 		<ExternalDependencies>portaudio-development, build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>eSpeak Speech Engine</Title>

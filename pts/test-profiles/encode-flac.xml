@@ -6,7 +6,7 @@
 		<ProjectURL>http://flac.sourceforge.net/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>
 		<EnvironmentSize>1.7</EnvironmentSize>
-		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>FLAC Audio Encoding</Title>

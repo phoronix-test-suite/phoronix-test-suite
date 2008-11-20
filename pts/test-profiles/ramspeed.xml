@@ -9,7 +9,7 @@
 		<EnvironmentSize>0.72</EnvironmentSize>
 		<ProjectURL>http://www.alasir.com/software/ramspeed/</ProjectURL>
                 <ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>RAMspeed</Title>
