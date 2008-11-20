@@ -144,9 +144,13 @@ function read_sensors($attributes)
 function read_pci($desc, $clean_string = true)
 {
 	// Read PCI bus information
-	$pci_info = shell_exec("lspci 2>&1");
+	static $pci_info = null;
 	$info = "Unknown";
 
+	if(empty($pci_info))
+	{
+		$pci_info = shell_exec("lspci 2>&1");
+	}
 	if(!is_array($desc))
 	{
 		$desc = array($desc);
@@ -199,16 +203,21 @@ function read_pci($desc, $clean_string = true)
 function read_lsb($desc)
 {
 	// Read LSB Release information, Linux Standards Base
-	$info = shell_exec("lsb_release -a 2>&1");
+	static $output = null;
 
-	if(($pos = strrpos($info, $desc . ':')) === false)
+	if(empty($output))
 	{
-		$info = "Unknown";
+		$output = shell_exec("lsb_release -a 2>&1");
+	}
+
+	if(($pos = strrpos($output, $desc . ":")) !== false)
+	{
+		$info = substr($output, $pos + strlen($desc) + 1);
+		$info = trim(substr($info, 0, strpos($info, "\n")));
 	}
 	else
 	{
-		$info = substr($info, $pos + strlen($desc) + 1);
-		$info = trim(substr($info, 0, strpos($info, "\n")));
+		$info = "Unknown";
 	}
 
 	return $info;

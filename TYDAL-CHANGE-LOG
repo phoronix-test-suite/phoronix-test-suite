@@ -38,6 +38,7 @@ Phoronix Test Suite (Git)
 - pts-core: PTS_START_TIME -> PTS_INIT_TIME and add pts_elapsed_time() function to return the time (in seconds) that the option or pts-core has been running
 - pts-core: Eliminate THIS_RUN_TIME constant and add preferred way of using pts_unique_runtime_identifier()
 - pts-core: Add fallback option support for read_sysctl()
+- pts-core: Add internal caching support for lspci and lsb_release information
 - tandem_XmlReader: Switch caching from using a GLOBALS variable to using a static variable within the XML reading class
 - tandem_XmlReader: Write internal regular expression matcher for systems where preg_match and preg_match_all aren't available
 - system_monitor: Update it to work with new APIs
