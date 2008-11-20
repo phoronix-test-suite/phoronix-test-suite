@@ -204,7 +204,10 @@ function pts_generate_test_notes($test_type)
 		}
 	}
 
-	pts_add_test_note(pts_process_running_string($check_processes));
+	if(!IS_BSD)
+	{
+		pts_add_test_note(pts_process_running_string($check_processes));
+	}
 
 	// Check if Security Enhanced Linux was enforcing, permissive, or disabled
 	if(is_file("/etc/sysconfig/selinux") && is_readable("/boot/grub/menu.lst"))

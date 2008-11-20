@@ -58,16 +58,19 @@ function pts_download($download, $to)
 	{
 		$to_file = basename($download);
 	}
-
-	if(is_executable("/usr/bin/curl"))
+	else if(is_executable("/usr/bin/curl") || is_executable("/usr/local/bin/curl"))
 	{
 		// curl download
 		$download_output = shell_exec("cd " . $to_dir . " && curl -L --fail --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
 	}
-	else
+	else if(is_executable("/usr/bin/wget") || is_executable("/usr/local/bin/wget"))
 	{
 		// wget download
 		$download_output = shell_exec("cd " . $to_dir . " && wget --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
+	}
+	else
+	{
+		$download_output = "No downloading application available.";
 	}
 
 	return $download_output;
