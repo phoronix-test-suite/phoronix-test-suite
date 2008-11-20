@@ -787,9 +787,14 @@ function hw_gpu_string()
 	{
 		$info = read_sysctl("dev.drm.0.%desc");
 
-		if($info == "Unknown")
+		if(empty($info))
 		{
 			$info = read_sysctl("dev.agp.0.%desc");
+		}
+
+		if(empty($info))
+		{
+			$info = "Unknown";
 		}
 	}
 

@@ -42,6 +42,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fixes in FreeBSD 7 support
 - pts-core: Return false on failure from read_pci() instead of "Unknown" string
 - pts-core: Return false on failure from read_lsb() instead of "Unknown" string
+- pts-core: Return false on failure from read_sysctl() instead of "Unknown" string
 - pts: Add External Dependencies support for FreeBSD using pkg_add command
 - pts: Update most test profiles to reflect whether they are supported on *BSD operating systems
 - tandem_XmlReader: Switch caching from using a GLOBALS variable to using a static variable within the XML reading class

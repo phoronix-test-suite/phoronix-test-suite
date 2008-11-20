@@ -25,6 +25,7 @@ function hw_sys_motherboard_string()
 {
 	// Returns the motherboard / system model name or number
 	$info = "";
+
 	if(IS_MACOSX)
 	{
 		$info = read_osx_system_profiler("SPHardwareDataType", "ModelName");
@@ -41,7 +42,10 @@ function hw_sys_motherboard_string()
 	}
 	else if(IS_BSD)
 	{
-		$info = trim(read_sysctl("hw.vendor") . " " . read_sysctl("hw.version"));
+		if(($vendor = read_sysctl("hw.vendor")) != false && ($version = read_sysctl("hw.version")) != false)
+		{
+			$info = trim($vendor . " " . $version);
+		}
 	}
 
 	if(empty($info))
@@ -402,7 +406,7 @@ function hw_sys_memory_capacity()
 	{
 		$mem_size = read_sysctl("hw.physmem");
 
-		if($mem_size == "Unknown")
+		if(empty($mem_size))
 		{
 			$mem_size = read_sysctl("hw.realmem");
 		}

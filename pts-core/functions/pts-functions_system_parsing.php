@@ -222,14 +222,14 @@ function read_lsb($desc)
 function read_sysctl($desc)
 {
 	// Read sysctl, used by *BSDs
-	$info = "Unknown";
+	$info = false;
 
 	if(!is_array($desc))
 	{
 		$desc = array($desc);
 	}
 
-	for($i = 0; $i < count($desc) && $info == "Unknown"; $i++)
+	for($i = 0; $i < count($desc) && empty($info); $i++)
 	{
 		$output = shell_exec("sysctl " . $desc[$i] . " 2>&1");
 

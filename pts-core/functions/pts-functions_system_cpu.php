@@ -24,6 +24,8 @@
 function hw_cpu_core_count()
 {
 	// Returns number of cores present on the system
+	$info = null;
+
 	if(IS_LINUX)
 	{
 		$processors = read_cpuinfo("processor");
@@ -43,7 +45,8 @@ function hw_cpu_core_count()
 	{
 		$info = read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
 	}
-	else
+
+	if(empty($info))
 	{
 		$info = 1;
 	}
@@ -125,6 +128,11 @@ function hw_cpu_string()
 		else if(IS_BSD)
 		{
 			$info = read_sysctl("hw.model");
+
+			if(empty($info))
+			{
+				$info = "Unknown";
+			}
 		}
 		else if(IS_MACOSX)
 		{
