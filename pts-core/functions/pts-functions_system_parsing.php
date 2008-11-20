@@ -145,7 +145,7 @@ function read_pci($desc, $clean_string = true)
 {
 	// Read PCI bus information
 	static $pci_info = null;
-	$info = "Unknown";
+	$info = false;
 
 	if(empty($pci_info))
 	{

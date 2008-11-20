@@ -111,7 +111,7 @@ function hw_sys_chipset_string()
 		{
 			$bridge = read_pci(array("Bridge", "PCI bridge"));
 
-			if($bridge != "Unknown")
+			if(!empty($bridge))
 			{
 				$match = false;
 				$break_words = array("Ethernet", "PCI", "High", "USB");
@@ -128,7 +128,7 @@ function hw_sys_chipset_string()
 			}
 		}
 
-		if(!isset($bridge) || $bridge != "Unknown")
+		if(!isset($bridge) || !empty($bridge))
 		{
 			// Attempt to detect Southbridge (if applicable)
 			$southbridge = read_pci(array("ISA bridge", "SATA controller"), false);

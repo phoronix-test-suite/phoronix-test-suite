@@ -771,7 +771,7 @@ function hw_gpu_string()
 		{
 			$info_pci = read_pci("VGA compatible controller", false);
 
-			if(!empty($info_pci) && $info_pci != "Unknown")
+			if(!empty($info_pci))
 			{
 				$info = $info_pci;
 			}
