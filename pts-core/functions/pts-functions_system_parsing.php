@@ -156,7 +156,7 @@ function read_pci($desc, $clean_string = true)
 		$desc = array($desc);
 	}
 
-	for($i = 0; $i < count($desc) && $info == "Unknown"; $i++)
+	for($i = 0; $i < count($desc) && empty($info); $i++)
 	{
 		if(substr($desc[$i], -1) != ":")
 		{
@@ -204,6 +204,7 @@ function read_lsb($desc)
 {
 	// Read LSB Release information, Linux Standards Base
 	static $output = null;
+	$info = false;
 
 	if(empty($output))
 	{
@@ -214,10 +215,6 @@ function read_lsb($desc)
 	{
 		$info = substr($output, $pos + strlen($desc) + 1);
 		$info = trim(substr($info, 0, strpos($info, "\n")));
-	}
-	else
-	{
-		$info = "Unknown";
 	}
 
 	return $info;

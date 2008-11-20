@@ -129,7 +129,14 @@ function sw_os_kernel()
 function sw_os_vendor()
 {
 	// Returns OS vendor
-	return read_lsb("Distributor ID");
+	$vendor = read_lsb("Distributor ID");
+
+	if(empty($vendor))
+	{
+		$vendor = "Unknown";
+	}
+
+	return $vendor;
 }
 function sw_os_version()
 {
@@ -146,6 +153,11 @@ function sw_os_version()
 		$end_pos = strpos($os, " ", $end_pos);
 		
 		$os_version = substr($os, $start_pos + 1, $end_pos - $start_pos);
+	}
+
+	if(empty($os_version))
+	{
+		$os_version = "Unknown";
 	}
 	
 	
