@@ -54,7 +54,7 @@ function hw_sys_motherboard_string()
 		$product = read_system_hal(array("system.hardware.product", "system.board.product"));
 		$version = read_system_hal(array("system.hardware.version", "smbios.system.version"));
 
-		if($vendor != "Unknown")
+		if(!empty($vendor))
 		{
 			$info = $vendor;
 		}
@@ -63,12 +63,12 @@ function hw_sys_motherboard_string()
 			$info = "";
 		}
 
-		if($product == "Unknown" || empty($product) || (strpos($version, ".") === false && $version != "Unknown"))
+		if(empty($product) || empty($product) || (strpos($version, ".") === false && !empty($version)))
 		{
 			$product = $version;
 		}
 
-		if(!empty($product) && $product != "Unknown")
+		if(!empty($product) && !empty($product))
 		{
 			$info .= " " . $product;
 		}
@@ -87,6 +87,11 @@ function hw_sys_motherboard_string()
 		{
 			$info = read_hal("pci.subsys_vendor");
 		}
+	}
+
+	if(empty($info))
+	{
+		$info = "Unknown";
 	}
 
 	return pts_clean_information_string($info);

@@ -57,7 +57,7 @@ function read_hal($name, $UDI = null)
 {
 	// Read HAL - Hardware Abstraction Layer
 	static $remove_words = null;
-	$info = "Unknown";
+	$info = false;
 
 	if(!is_array($name))
 	{
@@ -69,7 +69,7 @@ function read_hal($name, $UDI = null)
 		$remove_words = array_map("trim", explode("\n", $word_file));
 	}
 
-	for($i = 0; $i < count($name) && $info == "Unknown"; $i++)
+	for($i = 0; $i < count($name) && empty($info); $i++)
 	{
 		if(empty($UDI))
 		{
@@ -88,7 +88,7 @@ function read_hal($name, $UDI = null)
 
 		if(empty($info) || in_array(strtolower($info), $remove_words))
 		{
-			$info = "Unknown";
+			$info = false;
 		}
 	}
 
@@ -99,7 +99,7 @@ function read_system_hal($name)
 	// Read system HAL
 	$hal = read_hal($name, "/org/freedesktop/Hal/devices/computer");
 
-	if($hal == "Unknown")
+	if(empty($hal))
 	{
 		$hal = read_hal($name);
 	}
