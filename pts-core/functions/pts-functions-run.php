@@ -449,6 +449,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$execute_path = $xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS);
 	$default_arguments = $xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
 	$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
+	$root_required = $xml_parser->getXMLValue(P_TEST_ROOTNEEDED) == "TRUE";
 
 	if(($test_type == "Graphics" && getenv("DISPLAY") == false) || getenv("NO_" . strtoupper($test_type) . "_TESTS") != false)
 	{
@@ -522,6 +523,18 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	$runtime_identifier = pts_unique_runtime_identifier();
 
+	$execute_binary_prepend = "";
+
+	if($root_required)
+	{
+		$execute_binary_prepend = TEST_LIBRARIES_DIR . "root-access.sh";
+	}
+
+	if(!empty($execute_binary_prepend))
+	{
+		$execute_binary_prepend .= " ";
+	}
+
 	for($i = 0; $i < $times_to_run; $i++)
 	{
 		$benchmark_log_file = TEST_ENV_DIR . $test_identifier . "/" . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
@@ -533,7 +546,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
-		echo $test_results = pts_exec("cd " . $to_execute . " && ./" . $execute_binary . " " . $pts_test_arguments, $test_extra_runtime_variables);
+		echo $test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments, $test_extra_runtime_variables);
 
 		if(is_file($benchmark_log_file) && trim($test_results) == "")
 		{

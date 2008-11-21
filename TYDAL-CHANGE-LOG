@@ -46,8 +46,10 @@ Phoronix Test Suite (Git)
 - pts-core: Return false on failure from read_hal(), read_system_hal() instead of "Unknown" string
 - pts-core: Eliminate use of global variables in PTS modules support
 - pts-core: Finish eliminating use of all global variables throughout pts-core
+- pts-core: Implement RequiresRoot tag that has been part of the PTS test profile specification for some time
 - pts: Add External Dependencies support for FreeBSD using pkg_add command
 - pts: Update most test profiles to reflect whether they are supported on *BSD operating systems
+- pts: Enable hdparm test profile to use RequiresRoot capabilities
 - tandem_XmlReader: Switch caching from using a GLOBALS variable to using a static variable within the XML reading class
 - tandem_XmlReader: Write internal regular expression matcher for systems where preg_match and preg_match_all aren't available
 - system_monitor: Update it to work with new APIs

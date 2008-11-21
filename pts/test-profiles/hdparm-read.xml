@@ -1,22 +1,21 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.3</Version>
+		<Version>1.0.0</Version>
 		<TestType>Disk</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
-		<Status>UNVERIFIED</Status>
+		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<ProjectURL>http://sourceforge.net/projects/hdparm/</ProjectURL>
 		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<RequiresRoot>TRUE</RequiresRoot>
 	</TestProfile>
 	<TestInformation>
 		<Title>hdparm Timed Disk Reads</Title>
-		<Executable>hdparm-su</Executable>
-		<TimesToRun>3</TimesToRun>
+		<TimesToRun>5</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>hdparm is used for benchmarking the system's hard drive.</Description>
-		<Notes>On most systems, hdparm requires root access</Notes>
+		<Description>The hdparm utility is used for simple benchmarking the system's hard drive.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Option>
