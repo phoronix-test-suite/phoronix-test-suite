@@ -182,7 +182,6 @@ class pts_module
 					$start_id = pts_unique_runtime_identifier();
 					while(!pts_is_assignment("PTS_TESTING_DONE") && ($start_id == pts_unique_runtime_identifier() || $start_id == PTS_INIT_TIME) && pts_process_active("phoronix-test-suite") && $loop_continue)
 					{
-						echo 11111;
 						eval(self::module_name() . "::" . $function . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
 
 						if($time > 0)
@@ -207,9 +206,9 @@ class pts_module
 	{
 		$module_name = "unknown";
 
-		if($GLOBALS["PTS_MODULE_CURRENT"] != false)
+		if(($current = pts_module_current()) != false)
 		{
-			$module_name = $GLOBALS["PTS_MODULE_CURRENT"];
+			$module_name = $current;
 		}
 		else
 		{

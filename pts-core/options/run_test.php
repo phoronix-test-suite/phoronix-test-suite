@@ -81,7 +81,7 @@ class run_test
 		}
 
 		$TO_RUN_TYPE = pts_test_type($TO_RUN);
-		$MODULE_STORE = implode(";", $GLOBALS["PTS_MODULE_VAR_STORE"]);
+		$MODULE_STORE = pts_module_store_var("TO_STRING");
 		$TEST_PROPERTIES = array();
 
 		if(IS_BATCH_MODE)
@@ -482,7 +482,7 @@ class run_test
 				}
 			}
 
-			pts_module_process_extensions($test_extensions);
+			pts_module_process_extensions($test_extensions, $MODULE_STORE);
 		}
 		else
 		{

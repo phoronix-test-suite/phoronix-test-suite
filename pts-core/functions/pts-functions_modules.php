@@ -29,17 +29,13 @@ define("PTS_QUIT", "PTS_QUIT");
 function pts_module_startup_init()
 {
 	// Process initially called when PTS starts up
-	$GLOBALS["PTS_MODULES"] = array();
-	$GLOBALS["PTS_MODULE_CURRENT"] = false;
-	$GLOBALS["PTS_MODULE_VAR_STORE"] = array();
 
 	if(getenv("PTS_IGNORE_MODULES") == false)
 	{
 		// Enable the toggling of the system screensaver by default.
 		// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
-		array_push($GLOBALS["PTS_MODULES"], "toggle_screensaver");
-
-		array_push($GLOBALS["PTS_MODULES"], "update_checker"); // Check for new PTS versions
+		pts_attach_module("toggle_screensaver");
+		pts_attach_module("update_checker"); // Check for new PTS versions
 
 		pts_load_modules();
 		pts_module_process("__startup");
@@ -61,7 +57,7 @@ function pts_auto_detect_modules($load_here = false)
 			$env_var = trim($module_var[0]);
 			$module = trim($module_var[1]);
 
-			if(!in_array($module, $GLOBALS["PTS_MODULES"]) && ($e = getenv($env_var)) != false && !empty($e))
+			if(!in_array($module, pts_attached_modules()) && ($e = getenv($env_var)) != false && !empty($e))
 			{
 				if(IS_DEBUG_MODE)
 				{
@@ -107,7 +103,7 @@ function pts_load_modules()
 		{
 			$module = trim($module);
 
-			if(!in_array($module, $GLOBALS["PTS_MODULES"]))
+			if(!in_array($module, pts_attached_modules()))
 			{
 				pts_attach_module($module);
 			}
@@ -118,21 +114,14 @@ function pts_load_modules()
 	pts_auto_detect_modules();
 
 	// Clean-up modules list
-	array_unique($GLOBALS["PTS_MODULES"]);
-	for($i = 0; $i < count($GLOBALS["PTS_MODULES"]); $i++)
-	{
-		if(!is_file(MODULE_DIR . $GLOBALS["PTS_MODULES"][$i] . ".php"))
-		{
-			unset($GLOBALS["PTS_MODULES"][$i]);
-		}
-	}
+	pts_module("CLEAN");
 
 	// Reset counter
-	$GLOBALS["PTS_MODULE_CURRENT"] = false;
+	pts_module_activity("CLEAR_CURRENT");
 
 	// Load the modules
 	$module_store_list = array();
-	foreach($GLOBALS["PTS_MODULES"] as $module)
+	foreach(pts_attached_modules() as $module)
 	{
 		pts_load_module($module);
 
@@ -164,14 +153,14 @@ function pts_load_modules()
 
 		if($var_value != false && !empty($var_value))
 		{
-			array_push($GLOBALS["PTS_MODULE_VAR_STORE"], $var . "=" . $var_value);
+			pts_module_store_var("ADD", $var, $var_value);
 		}
 	}
 }
 function pts_attach_module($module)
 {
 	// Attach a module to be called routinely
-	array_push($GLOBALS["PTS_MODULES"], trim($module));
+	pts_module("ATTACH", trim($module));
 }
 function pts_load_module($module)
 {
@@ -233,9 +222,9 @@ function pts_module_process($process, $object_pass = null)
 {
 	// Run a module process on all registered modules
 	pts_debug_message($process);
-	foreach($GLOBALS["PTS_MODULES"] as $module_index => $module)
+	foreach(pts_attached_modules() as $module_index => $module)
 	{
-		$GLOBALS["PTS_MODULE_CURRENT"] = $module;
+		pts_module_activity("SET_CURRENT", $module);
 
 		$MODULE_RESPONSE = pts_module_call($module, $process, $object_pass);
 
@@ -245,7 +234,7 @@ function pts_module_process($process, $object_pass = null)
 			{
 				case PTS_MODULE_UNLOAD:
 					// Unload the PTS module
-					unset($GLOBALS["PTS_MODULES"][$module_index]);
+					pts_module("DETACH", $module_index);
 					break;
 				case PTS_QUIT:
 					// Stop the Phoronix Test Suite immediately
@@ -254,14 +243,14 @@ function pts_module_process($process, $object_pass = null)
 			}
 		}
 	}
-	$GLOBALS["PTS_MODULE_CURRENT"] = false;
+	pts_module_activity("CLEAR_CURRENT");
 }
-function pts_module_process_extensions($extensions)
+function pts_module_process_extensions($extensions, &$write_to)
 {
 	// Process extensions for modules
 	if(!empty($extensions))
 	{
-		$GLOBALS["MODULE_STORE"] = $extensions;
+		&$write_to = $extensions;
 		$extensions = explode(";", $extensions);
 
 		foreach($extensions as $ev)
@@ -276,12 +265,9 @@ function pts_module_process_extensions($extensions)
 function pts_module_type($name)
 {
 	// Determine the code type of a module
+	static $cache;
 
-	if(isset($GLOBALS["PTS_VAR_CACHE"]["MODULE_TYPES"][$name]))
-	{
-		$type = $GLOBALS["PTS_VAR_CACHE"]["MODULE_TYPES"][$name];
-	}
-	else
+	if(!isset($cache[$name]))
 	{
 		if(is_file(MODULE_DIR . $name . ".php"))
 		{
@@ -296,14 +282,101 @@ function pts_module_type($name)
 			$type = null;
 		}
 
-		$GLOBALS["PTS_VAR_CACHE"]["MODULE_TYPES"][$name] = $type;
+		$cache[$name] = $type;
 	}
 
-	return $type;
+	return $cache[$name];
 }
 function pts_attached_modules()
 {
-	return $GLOBALS["PTS_MODULES"];
+	return pts_module("ATTACHED");
+}
+function pts_module_current()
+{
+	return pts_module_activity("READ_CURRENT");
+}
+function pts_module($process, $value = null)
+{
+	static $module_r;
+	$return = false;
+
+	if(empty($module_r))
+	{
+		$module_r = array();
+	}
+
+	switch($process)
+	{
+		case "ATTACH":
+			array_push($module_r, $value);
+			break;
+		case "DETACH":
+			unset($module_r[$value]);
+			break;
+		case "ATTACHED":
+			$return = $module_r;
+			break;
+		case "CLEAN":
+			array_unique($module_r);
+			for($i = 0; $i < count($module_r); $i++)
+			{
+				if(!is_file(MODULE_DIR . $module_r[$i] . ".php"))
+				{
+					unset($module_r[$i]);
+				}
+			}
+			break;
+		case "CLEAR_ALL":
+			$assignments = array();
+			break;
+		case "IS_SET":
+			$return = isset($module_r[$i]);
+			break;
+	}
+
+	return $return;
+}
+function pts_module_store_var($process, $var = null, $value = null)
+{
+	static $var_r;
+	$return = false;
+
+	if(empty($var_r))
+	{
+		$var_r = array();
+	}
+
+	switch($process)
+	{
+		case "ADD":
+			array_push($var_r, $var . "=" . $value);
+			break;
+		case "TO_STRING":
+			$return = implode(";", $var_r);
+			break;
+	}
+
+	return $return;
+}
+function pts_module_activity($process, $value = null)
+{
+	static $current_module = false;
+	$return = false;
+
+	switch($process)
+	{
+		case "SET_CURRENT":
+			$current_module = $value;
+			break;
+		case "READ_CURRENT":
+			$return = $current_module;
+			break;
+		case "CLEAR_CURRENT":
+			$current_module = false;
+			break;
+	}
+
+	return $return;
 }
 
 ?>
