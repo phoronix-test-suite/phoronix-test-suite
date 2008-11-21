@@ -250,7 +250,7 @@ function pts_module_process_extensions($extensions, &$write_to)
 	// Process extensions for modules
 	if(!empty($extensions))
 	{
-		&$write_to = $extensions;
+		$write_to = $extensions;
 		$extensions = explode(";", $extensions);
 
 		foreach($extensions as $ev)
