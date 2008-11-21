@@ -176,8 +176,32 @@ function pts_promt_user_tags($default_tags = "")
 }
 function pts_add_test_note($note)
 {
-	if(!empty($note) && !in_array($note, $GLOBALS["TEST_NOTES_ARRAY"]))
-		array_push($GLOBALS["TEST_NOTES_ARRAY"], $note);
+	pts_test_note("ADD", $note);
+}
+function pts_test_note($process, $value = null)
+{
+	static $note_r;
+	$return = null;
+
+	if(empty($note_r))
+	{
+		$note_r = array();
+	}
+
+	switch($process)
+	{
+		case "ADD":
+			if(!empty($value) && !in_array($value, $note_r))
+			{
+				array_push($note_r, $value);
+			}
+			break;
+		case "TO_STRING":
+			$return = implode(". \n", $note_r);
+			break;
+	}
+
+	return $return;
 }
 function pts_generate_test_notes($test_type)
 {
@@ -247,7 +271,7 @@ function pts_generate_test_notes($test_type)
 		}
 	}
 
-	return implode(". \n", $GLOBALS["TEST_NOTES_ARRAY"]);
+	return pts_test_note("TO_STRING");
 }
 function pts_input_string_to_identifier($input)
 {
@@ -642,7 +666,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if(!empty($RETURN_STRING))
 	{
 		echo $this_result = pts_string_header($RETURN_STRING, "#");
-		$GLOBALS["TEST_RESULTS_TEXT"] .= $this_result;
+		pts_text_save_buffer($this_result);
 	}
 	else
 	{

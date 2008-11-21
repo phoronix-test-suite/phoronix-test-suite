@@ -72,7 +72,6 @@ function pts_basic_init()
 		if($debug_file != false)
 		{
 			define("PTS_DEBUG_FILE", $debug_file);
-			$GLOBALS["DEBUG_CONTENTS"] = "";
 		}
 
 		error_reporting(E_ALL | E_STRICT); // Set error reporting to all and strict
@@ -218,10 +217,6 @@ function pts_extended_init()
 	{
 		define("IS_FIRST_RUN_TODAY", false);
 	}
-
-	// Additional Setup
-	$GLOBALS["TEST_NOTES_ARRAY"] = array();
-	$GLOBALS["TEST_RESULTS_TEXT"] = "";
 }
 function __autoload($to_load)
 {

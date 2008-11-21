@@ -94,6 +94,7 @@ function pts_run_option_command($command, $pass_args = null, $command_descriptor
 		eval($command . "::run(\$pass_args);");
 		pts_module_process("__post_option_process", $command);
 	}
+	pts_clear_assignments();
 }
 function p_str($str_o)
 {
@@ -511,7 +512,7 @@ function pts_shutdown()
 			mkdir(PTS_USER_DIR . "debug-messages/");
 		}
 
-		if(file_put_contents(PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE, $GLOBALS["DEBUG_CONTENTS"]))
+		if(file_put_contents(PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE, pts_debug_message()))
 		{
 			echo "\nDebug Message Saved To: " . PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE . "\n";
 		}
@@ -735,10 +736,32 @@ function pts_estimated_time_string($time)
 
 	return $formatted_string;
 }
-function pts_debug_message($message)
+function pts_text_save_buffer($to_add)
 {
+	static $buffer = null;
+	$return = null;
+
+	if($to_add == false)
+	{
+		$return = $to_add;
+	}
+	else if(!empty($to_add))
+	{
+		$buffer .= $to_add;
+	}
+
+	return $return;
+}
+function pts_debug_message($message = null)
+{
+	static $debug_messages = "";
+
+	if(defined("PTS_END_TIME") && $message == null)
+	{
+		return $debug_messages;
+	}
 	// Writes a PTS debug message
-	if(IS_DEBUG_MODE)
+	if(IS_DEBUG_MODE && !empty($message))
 	{
 		if(strpos($message, "$") > 0)
 		{
@@ -752,7 +775,7 @@ function pts_debug_message($message)
 
 		if(defined("PTS_DEBUG_FILE"))
 		{
-			$GLOBALS["DEBUG_CONTENTS"] = $output;
+			$debug_messages .= $output;
 		}
 	}
 }

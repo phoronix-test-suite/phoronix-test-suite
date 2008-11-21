@@ -30,7 +30,7 @@ class email_results extends pts_module_interface
 
 	public static function __shutdown()
 	{
-		if(isset($GLOBALS["TEST_RESULTS_TEXT"]) && getenv("EMAIL_RESULTS_TO") != FALSE)
+		if(($buffer = pts_text_save_buffer($to_add)) != null && getenv("EMAIL_RESULTS_TO") != FALSE)
 		{
 			$email_to = trim(getenv("EMAIL_RESULTS_TO"));
 
@@ -38,7 +38,7 @@ class email_results extends pts_module_interface
 			$email_contents .= pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")");
 			$email_contents .= pts_hw_string() . "\n\n";
 			$email_contents .= pts_sw_string() . "\n";
-			$email_contents .= $GLOBALS["TEST_RESULTS_TEXT"];
+			$email_contents .= $buffer;
 
 			$email_contents = wordwrap($email_contents, 70);
 			@mail($email_to, "Phoronix Test Suite - Test Results", $email_contents);

@@ -435,8 +435,8 @@ class system_monitor extends pts_module_interface
 						$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
 						$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
 
-						if(isset($GLOBALS["TO_RUN"]))
-							$sub_title .= $GLOBALS["TO_RUN"];
+						if(($temp = pts_read_assignment("TO_RUN")) != false)
+							$sub_title .= $temp;
 						else
 							$sub_title .= date("g:i A");
 

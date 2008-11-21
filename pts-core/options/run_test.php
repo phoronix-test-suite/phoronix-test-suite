@@ -97,6 +97,7 @@ class run_test
 		{
 			pts_exit("\nThe test, suite name, or saved file name must be supplied.\n");
 		}
+		pts_set_assignment("TO_RUN", $TO_RUN);
 
 		if(pts_is_test($TO_RUN))
 		{
