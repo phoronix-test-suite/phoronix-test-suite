@@ -24,13 +24,13 @@
 class email_results extends pts_module_interface
 {
 	const module_name = "E-Mail Results";
-	const module_version = "0.0.1";
+	const module_version = "0.1.0";
 	const module_description = "This is a module that will email the test results to an individual with the recipient email address being set in the EMAIL_RESULTS_TO environmental variable.";
 	const module_author = "Michael Larabel";
 
-	public static function __shutdown()
+	public static function __post_option_process($process)
 	{
-		if(($buffer = pts_text_save_buffer($to_add)) != null && getenv("EMAIL_RESULTS_TO") != FALSE)
+		if(($buffer = pts_text_save_buffer($to_add)) != null && getenv("EMAIL_RESULTS_TO") != FALSE && $process == "run_test")
 		{
 			$email_to = trim(getenv("EMAIL_RESULTS_TO"));
 

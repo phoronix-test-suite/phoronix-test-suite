@@ -53,3 +53,4 @@ Phoronix Test Suite (Git)
 - tandem_XmlReader: Switch caching from using a GLOBALS variable to using a static variable within the XML reading class
 - tandem_XmlReader: Write internal regular expression matcher for systems where preg_match and preg_match_all aren't available
 - system_monitor: Update it to work with new APIs
+- graphics_override, email_results, toggle_screensaver: Update to take advantage of latest API

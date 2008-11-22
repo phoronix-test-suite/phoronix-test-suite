@@ -24,7 +24,7 @@
 class toggle_screensaver extends pts_module_interface
 {
 	const module_name = "Toggle Screensaver";
-	const module_version = "1.0.0";
+	const module_version = "1.0.1";
 	const module_description = "This module toggles the system's screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.";
 	const module_author = "Phoronix Media";
 
@@ -74,6 +74,13 @@ class toggle_screensaver extends pts_module_interface
 		{
 			// Restore the KDE Screensaver
 			shell_exec("dcop kdesktop KScreensaverIface enable true 2>&1");
+		}
+	}
+	public static function __pre_option_process()
+	{
+		if(!self::$screensaver_halted)
+		{
+			shell_exec("xdg-screensaver reset 2>&1");
 		}
 	}
 	public static function __pre_run_process()

@@ -166,9 +166,8 @@ class graphics_override extends pts_module_interface
 			}
 		}
 	}
-	public static function __shutdown()
+	public static function __post_option_process()
 	{
-
 		if(IS_NVIDIA_GRAPHICS)
 		{
 			if(self::$preset_aa !== FALSE)

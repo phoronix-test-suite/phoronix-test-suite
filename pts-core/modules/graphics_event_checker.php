@@ -24,7 +24,7 @@
 class graphics_event_checker extends pts_module_interface
 {
 	const module_name = "Graphics Event Checker";
-	const module_version = "0.0.2";
+	const module_version = "0.1.0";
 	const module_description = "This module checks a number of events prior to and and after running a test to make sure the graphics sub-system wasn't put in a sour or unintended state. For instance, it makes sure syncing to vBlank isn't forced through the driver and that a graphics test hadn't ended prematurely where it left the resolution in an incorrect mode.";
 	const module_author = "Michael Larabel";
 
@@ -76,9 +76,8 @@ class graphics_event_checker extends pts_module_interface
 	{
 		self::check_video_events($pts_test_result);
 	}
-	public static function __shutdown()
+	public static function __post_option_process()
 	{
-
 		if(self::$error_count > 0)
 		{
 			$error_breakdown = "\n";

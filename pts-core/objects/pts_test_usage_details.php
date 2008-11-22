@@ -39,7 +39,7 @@ class pts_test_usage_details
 		$this->average_run_time = pts_format_time_string($xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME), "SECONDS", false);
 		$this->times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
 
-		if($this->last_run_time == "0000-00-00" || $this->install_time == $this->last_run_time)
+		if($this->last_run_time == "0000-00-00" || empty($this->times_run))
 		{
 			$this->last_run_time = "NEVER";
 			$this->times_run = "";
