@@ -635,7 +635,7 @@ function pts_test_version_compatible($version_compare = "")
 {
 	$compatible = true;
 
-	if(!empty($version_compare))
+	if(!empty($version_compare) && function_exists("preg_replace"))
 	{
 		$current = preg_replace("/[^0-9]/", "", PTS_VERSION);
 

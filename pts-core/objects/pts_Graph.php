@@ -112,7 +112,7 @@ class pts_Graph
 	public function setRenderer($Renderer)
 	{
 		if($Renderer == "SVG")
-		{		
+		{
 			$this->graph_renderer = "SVG";
 			$this->graph_left_start += 10;
 		}

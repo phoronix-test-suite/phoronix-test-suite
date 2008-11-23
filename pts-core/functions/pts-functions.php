@@ -33,11 +33,6 @@ require_once("pts-core/functions/pts-functions_tests.php");
 require_once("pts-core/functions/pts-functions_types.php");
 require_once("pts-core/functions/pts-functions_modules.php");
 
-if(IS_SCTP_MODE)
-{
-	include_once("pts-core/functions/pts-functions-sctp.php");
-}
-
 // User's home directory for storing results, module files, test installations, etc.
 define("PTS_DIR", pts_directory());
 define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
@@ -447,7 +442,10 @@ function pts_clean_information_string($str)
 		$str = str_ireplace($original_phrase, $new_phrase, $str);
 	}
 
-	$str = trim(preg_replace("/\s+/", " ", $str));
+	if(function_exists("preg_replace"))
+	{
+		$str = trim(preg_replace("/\s+/", " ", $str));
+	}
 
 	return $str;
 }
@@ -483,8 +481,15 @@ function pts_exit($string = "")
 function pts_version_comparable($old, $new)
 {
 	// Checks if there's a major version difference between two strings, if so returns false. If the same or only a minor difference, returns true.
-	$old = explode(".", preg_replace("/[^.0-9]/", "", $old));
-	$new = explode(".", preg_replace("/[^.0-9]/", "", $new));
+
+	if(function_exists("preg_replace"))
+	{
+		$old = preg_replace("/[^.0-9]/", "", $old);
+		$new = preg_replace("/[^.0-9]/", "", $new);
+	}
+
+	$old = explode(".", $old);
+	$new = explode(".", $new);
 	$compare = true;
 
 	if(count($old) >= 2 && count($new) >= 2)

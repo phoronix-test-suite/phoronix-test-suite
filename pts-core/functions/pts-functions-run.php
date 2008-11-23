@@ -159,7 +159,14 @@ function pts_promt_user_tags($default_tags = "")
 	if(!IS_BATCH_MODE)
 	{
 		echo "\nTags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
-		$tags_input .= trim(preg_replace("/[^a-zA-Z0-9s, -]/", "", fgets(STDIN)));
+		$tags_input .= fgets(STDIN);
+
+		if(function_exists("preg_replace"))
+		{
+			$tags_input = preg_replace("/[^a-zA-Z0-9s, -]/", "", $tags_input);
+		}
+
+		$tags_input = trim($tags_input);
 	}
 
 	if(empty($tags_input))
