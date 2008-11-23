@@ -284,10 +284,10 @@ function pts_exec($exec, $extra_vars = null)
 function pts_request_new_id()
 {
 	// Request a new ID for a counter
-	global $PTS_GLOBAL_ID;
-	$PTS_GLOBAL_ID++;
+	static $id = 1;
+	$id++;
 
-	return $PTS_GLOBAL_ID;
+	return $id;
 }
 function pts_is_global_id($global_id)
 {

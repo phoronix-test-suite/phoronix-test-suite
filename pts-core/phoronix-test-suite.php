@@ -35,9 +35,7 @@ register_shutdown_function("pts_shutdown");
 
 pts_module_startup_init(); // Initialize the PTS module system
 
-// Etc
-$PTS_GLOBAL_ID = 1;
-
+// Read passed arguments
 $pass_args = array();
 for($i = 2; $i < $argc; $i++)
 {
@@ -47,6 +45,6 @@ for($i = 2; $i < $argc; $i++)
 	}
 }
 
-pts_run_option_command($argv[1], $pass_args, getenv("PTS_COMMAND"));
+pts_run_option_command($argv[1], $pass_args, getenv("PTS_COMMAND")); // Run command
 
 ?>

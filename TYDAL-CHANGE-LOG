@@ -1,5 +1,6 @@
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 1.6.0 Alpha 1
+November 22, 2008
 
 - pts-core: Add pts_set_assignment(), pts_read_assignment(), pts_is_assignment(), pts_set_assignment_once(), pts_clear_assignment() and pts_clear_assignments()
 - pts-core: Switch over relevant define statements to using new PTS assignment functions for program-wide option-specific variable constants
