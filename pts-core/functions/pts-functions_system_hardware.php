@@ -343,6 +343,11 @@ function hw_sys_memory_string()
 		$mem_type = read_dmidecode("memory", "Memory Device", "Type", true, "Unknown");
 	}
 
+	if(is_array($mem_type))
+	{
+		$mem_type = array_pop($mem_type);
+	}
+
 	if($mem_size != false && (!is_array($mem_size) || count($mem_size) != 0))
 	{
 		$mem_count = count($mem_size);

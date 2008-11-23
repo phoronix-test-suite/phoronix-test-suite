@@ -2,6 +2,7 @@
 Phoronix Test Suite (Git)
 
 - pts-core: Fix for Self-Contained Test Profiles (SCTP) support
+- pts-core: Fix in memory type detection
 
 Phoronix Test Suite 1.6.0 Alpha 1
 November 22, 2008
