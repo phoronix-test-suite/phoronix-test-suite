@@ -25,6 +25,11 @@ function pts_init()
 {
 	pts_basic_init(); // Initalize common / needed PTS start-up work
 
+	if(IS_SCTP_MODE)
+	{
+		include_once("pts-core/functions/pts-functions-sctp.php");
+	}
+
 	pts_config_init();
 	define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 	define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));

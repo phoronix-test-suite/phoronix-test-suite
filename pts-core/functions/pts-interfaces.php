@@ -75,14 +75,11 @@ define("P_TEST_OPTIONS_MENU_GROUP_VALUE", P_TEST_OPTIONS_MENU_GROUP . "/" . S_TE
 // SELF-CONTAINED TEST PROFILE SPECIFICATION
 //
 
-if(IS_SCTP_MODE)
-{
-	define("P_TEST_SCTP_INSTALLSCRIPT", "PhoronixTestSuite/SelfContained/Installation"); // Installation routine
-	define("P_TEST_SCTP_DOWNLOADS", "PhoronixTestSuite/SelfContained/Downloads"); // Downloads XML file
-	define("P_TEST_SCTP_RESULTSPARSER", "PhoronixTestSuite/SelfContained/ResultsParser"); // Results Parser
-	define("P_TEST_SCTP_PRERUN", "PhoronixTestSuite/SelfContained/PreRun"); // Pre-run script
-	define("P_TEST_SCTP_POSTRUN", "PhoronixTestSuite/SelfContained/PostRun"); // Pre-run script
-}
+define("P_TEST_SCTP_INSTALLSCRIPT", "PhoronixTestSuite/SelfContained/Installation"); // Installation routine
+define("P_TEST_SCTP_DOWNLOADS", "PhoronixTestSuite/SelfContained/Downloads"); // Downloads XML file
+define("P_TEST_SCTP_RESULTSPARSER", "PhoronixTestSuite/SelfContained/ResultsParser"); // Results Parser
+define("P_TEST_SCTP_PRERUN", "PhoronixTestSuite/SelfContained/PreRun"); // Pre-run script
+define("P_TEST_SCTP_POSTRUN", "PhoronixTestSuite/SelfContained/PostRun"); // Pre-run script
 
 //
 // TEST SUITE SPECIFICATION
