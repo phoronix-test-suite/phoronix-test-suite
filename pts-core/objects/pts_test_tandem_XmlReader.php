@@ -26,19 +26,19 @@
 
 class pts_test_tandem_XmlReader extends tandem_XmlReader
 {
-	function handleXmlZeroTagFallback($XML_TAG)
+	function handleXmlZeroTagFallback($xml_tag)
 	{
 		// Cascading Test Profiles for finding a tag within an XML file being extended by another XML file
-		$fallback_value = $this->NO_TAG_FALLBACK_VALUE;
+		$fallback_value = $this->tag_fallback_value;
 
-		if(!empty($this->XML_FILE_NAME))
+		if(!empty($this->xml_file_name))
 		{
 			$test_extends = $this->getValue(P_TEST_CTPEXTENDS, null, null, true, true);
 
 			if(!empty($test_extends) && pts_is_test($test_extends))
 			{
 				$test_below_parser = new pts_test_tandem_XmlReader(pts_location_test($test_extends));
-				$test_below_tag = $test_below_parser->getXMLValue($XML_TAG);
+				$test_below_tag = $test_below_parser->getXMLValue($xml_tag);
 
 				if(!empty($test_below_tag))
 				{

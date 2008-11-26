@@ -26,261 +26,251 @@
 
 class tandem_XmlReader
 {
-	var $XML_DATA = "";
-	var $XML_FILE_TIME = null;
-	var $XML_FILE_NAME = null;
+	var $xml_data = ""; // XML contents
+	var $xml_file_time = null; // File modification time
+	var $xml_file_name = null; // File name
 
-	var $XML_CACHE_FILE = false; // Cache the entire XML file being parsed
-	var $XML_CACHE_TAGS = true; // Cache the tags that are being called
+	var $xml_cache_file = false; // Cache the entire XML file being parsed?
+	var $xml_cache_tags = true; // Cache the tags that are being called?
 
-	var $NO_TAG_FALLBACK_VALUE = null;
+	var $tag_fallback_value = null; // Fallback value if tag is not present
 
-	static $cache = null;
-	var $use_php_preg_functions = false;
+	static $tag_cache = null; // The cache for the tag cache
+	static $file_cache = null; // The cache for the file cache
 
-	function __construct($XML, $DO_CACHE = true)
+	function __construct($read_xml, $cache_support = true)
 	{
-		if(is_file($XML))
+		if(is_readable($read_xml))
 		{
-			if(!$DO_CACHE)
+			if($cache_support)
 			{
-				$this->XML_CACHE_FILE = false;
-				$this->XML_CACHE_TAGS = false;
+				$this->xml_cache_file = false;
+				$this->xml_cache_tags = false;
 			}
 
-			// If you're going to be banging XML files hard through the course of the script, you'll want to flush the PHP file cache
+			// If you are going to be banging XML files hard through the course of the script, you will want to flush the PHP file cache
 			// clearstatcache();
 
-			$this->XML_FILE_TIME = filemtime($XML);
-			$this->XML_FILE_NAME = $XML;
+			$this->xml_file_time = filemtime($read_xml);
+			$this->xml_file_name = $read_xml;
 
-			if($this->XML_CACHE_FILE == true && isset(self::$cache["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME]))
+			if($this->xml_cache_file && isset(self::$file_cache[$this->xml_file_name][$this->xml_file_time]))
 			{
-				$this->XML_DATA = self::$cache["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME];
+				$this->xml_data = self::$file_cache[$this->xml_file_name][$this->xml_file_time];
 			}
 
-			if(empty($this->XML_DATA))
+			if(empty($this->xml_data))
 			{
-				$this->XML_DATA = file_get_contents($XML);
+				$this->xml_data = file_get_contents($read_xml);
 
-				if($this->XML_CACHE_FILE == true)
+				if($this->xml_cache_file)
 				{
-					self::$cache["FILE"][$this->XML_FILE_NAME][$this->XML_FILE_TIME] = $this->XML_DATA;
+					self::$file_cache[$this->xml_file_name][$this->xml_file_time] = $this->xml_data;
 				}
 			}
 		}
 		else
 		{
-			$this->XML_CACHE_FILE = false;
-			$this->XML_CACHE_TAGS = false;
-			$this->XML_DATA = $XML;
-		}
-
-		if(function_exists("preg_match") && function_exists("preg_match_all"))
-		{
-			$this->use_php_preg_functions = true;
+			$this->xml_cache_file = false;
+			$this->xml_cache_tags = false;
+			$this->xml_data = $read_xml;
 		}
 	}
-	function getStatement($STATEMENT_NAME)
+	function getStatement($statement)
 	{
-		return $this->listStatements(true, $STATEMENT_NAME);
+		return $this->listStatements(true, $statement);
 	}
-	function listStatements($SEARCH_DO = false, $SEARCH_QUERY = "")
+	function listStatements($perform_search = false, $search_query = "")
 	{
-		if(!function_exists("preg_match_all"))
+		$return_r = array();
+		$comment_statements = $this->parseLineCommentsFromFile();
+
+		foreach($comment_statements as $statement)
 		{
-			return array(); // TODO: Write a software fallback for this parsing similar to parseXMLString()
-		}
+			$name = substr($statement, 0, strpos($statement, ":"));
+			$name = trim(strstr($name, " "));
 
-		preg_match_all("'<!--(.*?) -->'si", $this->XML_DATA, $statement_matches);
-		$return_array = array();
-
-		foreach($statement_matches[0] as $statement)
-		{
-			$name = substr($statement, 0, strpos($statement, ':'));
-			$name = trim(strstr($name, ' '));
-
-			if($SEARCH_DO)
+			if($perform_search && !empty($search_query))
 			{
-				if($name == $SEARCH_QUERY)
+				if($name == $search_query)
 				{
-					$value = strstr($statement, ':');
-					$value = trim(substr($value, 1, strpos($value, "-->") - 1));
-
-					array_push($return_array, $value);
+					$value = trim(substr(strstr($statement, ":"), 1));
+					array_push($return_r, $value);
 				}
 			}
 			else
 			{
-				array_push($return_array, $name);
+				array_push($return_r, $name);
 			}
 		}
-		return $return_array;
+
+		return $return_r;
 	}
-	function getXMLValue($XML_TAG)
+	function getXMLValue($xml_tag)
 	{
-		return $this->getValue($XML_TAG);
+		return $this->getValue($xml_tag);
 	}
-	function isDefined($XML_TAG)
+	function isDefined($xml_tag)
 	{
-		return $this->getValue($XML_TAG) != null;
+		return $this->getValue($xml_tag) != null;
 	}
-	function getValue($FULL_XML_TAG, $XML_TAG = null, $XML_MATCH = null, $DO_CACHE = true, $FALLBACK_PROCESS = false)
+	function getValue($xml_path, $xml_tag = null, $xml_match = null, $cache_tag = true, $is_fallback_call = false)
 	{
-		if($XML_TAG == null)
+		if($xml_tag == null)
 		{
-			$XML_TAG = $FULL_XML_TAG;
+			$xml_tag = $xml_path;
 		}
-		if($XML_MATCH == null)
+		if($xml_match == null)
 		{
-			$XML_MATCH = $this->XML_DATA;
+			$xml_match = $this->xml_data;
 		}
 
-		if($this->XML_CACHE_TAGS == true && $DO_CACHE && isset(self::$cache["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG]))
+		if($this->xml_cache_tags && $cache_tag && isset(self::$tag_cache[$this->xml_file_name][$this->xml_file_time][$xml_tag]))
 		{
-			$XML_MATCH = self::$cache["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG];
+			$xml_match = self::$tag_cache[$this->xml_file_name][$this->xml_file_time][$xml_tag];
 		}
 		else
 		{
-			foreach(explode("/", $XML_TAG) as $xml_step)
+			foreach(explode("/", $xml_tag) as $xml_step)
 			{
-				$XML_MATCH = $this->parseXMLString($xml_step, $XML_MATCH, false);
+				$xml_match = $this->parseXMLString($xml_step, $xml_match, false);
 
-				if($XML_MATCH == false)
+				if($xml_match == false)
 				{
-					if(!$FALLBACK_PROCESS)
+					if($is_fallback_call != true)
 					{
-						$XML_MATCH = $this->handleXmlZeroTagFallback($FULL_XML_TAG);
+						$xml_match = $this->handleXmlZeroTagFallback($xml_path);
 					}
 					else
 					{
-						$XML_MATCH = $this->NO_TAG_FALLBACK_VALUE;
+						$xml_match = $this->tag_fallback_value;
 					}
 				}
 			}
 
-			if($this->XML_CACHE_TAGS == true && $DO_CACHE)
+			if($this->xml_cache_tags && $cache_tag)
 			{
-				self::$cache["TAGS"][$this->XML_FILE_NAME][$this->XML_FILE_TIME][$XML_TAG] = $XML_MATCH;
+				self::$tag_cache[$this->xml_file_name][$this->xml_file_time][$xml_tag] = $xml_match;
 			}
 		}
 
-		return $XML_MATCH;
+		return $xml_match;
 	}
-	function parseXMLString($TAG, $TO_PARSE, $DO_MULTIPLE = true)
+	function parseXMLString($xml_tag, $to_parse, $multi_search = true)
 	{
 		$return = false;
+		$temp_r = array();
+		$temp = $to_parse;
 
-		if($this->use_php_preg_functions)
+		$open_tag = "<" . $xml_tag . ">";
+		$close_tag  = "</" . $xml_tag . ">";
+		$open_tag_length = strlen($open_tag);
+		$close_tag_length = strlen($close_tag);
+
+		do
 		{
-			if($DO_MULTIPLE)
-			{
-				preg_match_all("'<" . $TAG . ">(.*?)</" . $TAG . ">'si", $TO_PARSE, $matches);
+			$return = null;
 
-				if(count($matches) >= 2)
+			if(($start = strpos($temp, $open_tag)) !== false)
+			{
+				$temp = substr($temp, $start + $open_tag_length);
+
+				if(($end = strpos($temp, $close_tag)) !== false)
 				{
-					$return = $matches[1];
+					$return = substr($temp, 0, $end);
+					$temp = substr($temp, strlen($return) + $close_tag_length);
 				}
 			}
-			else
-			{
-				preg_match("'<" . $TAG . ">(.*?)</" . $TAG . ">'si", $TO_PARSE, $match);
 
-				if(count($match) >= 2)
-				{
-					$return = $match[1];
-				}
+			if($return != null)
+			{
+				array_push($temp_r, $return);
 			}
 		}
-		else
+		while($return != null && $multi_search);
+
+		if(count($temp_r) > 0)
 		{
-			$open_tag = "<" . $TAG . ">";
-			$close_tag  = "</" . $TAG . ">";
+			$return = $temp_r;
 
-			if($DO_MULTIPLE)
+			if($multi_search == false)
 			{
-				$temp_r = array();
-				$temp = $TO_PARSE;
-
-				do
-				{
-					$return = null;
-
-					if(($start = strpos($temp, $open_tag)) !== false)
-					{
-						$temp = substr($temp, $start + strlen($open_tag));
-
-						if(($end = strpos($temp, $close_tag)) !== false)
-						{
-							$return = substr($temp, 0, $end);
-							$temp = substr($temp, strlen($return) + strlen($close_tag));
-						}
-					}
-
-					if($return != null)
-					{
-						array_push($temp_r, $return);
-					}
-				}
-				while($return != null);
-
-				if(count($temp_r) > 0)
-				{
-					$return = $temp_r;
-				}
-			}
-			else
-			{
-				if(($start = strpos($TO_PARSE, $open_tag)) !== false)
-				{
-					$temp = substr($TO_PARSE, $start + strlen($open_tag));
-
-					if(($end = strpos($temp, $close_tag)) !== false)
-					{
-						$temp = substr($temp, 0, $end);
-						$return = $temp;
-					}
-				}
+				$return = $return[0];
 			}
 		}
 
 		return $return;
 	}
-	function handleXmlZeroTagFallback($XML_TAG)
+	function parseLineCommentsFromFile($read_from = null)
 	{
-		return $this->NO_TAG_FALLBACK_VALUE;
-	}
-	function getXMLValues($XML_TAG)
-	{
-		return $this->getXMLArrayValues($XML_TAG);
-	}
-	function getXMLArrayValues($XML_TAG)
-	{
-		return $this->getArrayValues($XML_TAG, $this->XML_DATA);
-	}
-	function getArrayValues($XML_TAG, $XML_MATCH)
-	{
-		$xml_steps = explode("/", $XML_TAG);
-		$this_xml = $XML_MATCH;
-
-		for($i = 0; $i < count($xml_steps) - 2; $i++)
+		if(empty($read_from))
 		{
-			$this_xml = $this->getValue($XML_TAG, $xml_steps[$i], $this_xml, false);
+			$read_from = $this->xml_data;
 		}
 
-		$next_xml_step = $xml_steps[count($xml_steps) - 2];
-		$xml_matches = $this->parseXMLString($next_xml_step, $this_xml);
+		$return_r = array();
+		$temp = $read_from;
 
-		$return_array = array();
-		$extraction_tags = explode(',', end($xml_steps));
+		do
+		{
+			$return = null;
+
+			if(($start = strpos($temp, "<!--")) !== false)
+			{
+				$temp = substr($temp, $start + 4);
+
+				if(($end = strpos($temp, "-->")) !== false)
+				{
+					$return = substr($temp, 0, $end);
+					$temp = substr($temp, strlen($return) + 3);
+				}
+			}
+
+			if($return != null)
+			{
+				array_push($return_r, $return);
+			}
+		}
+		while($return != null);
+
+		return $return_r;
+	}
+	function handleXmlZeroTagFallback($xml_tag)
+	{
+		return $this->tag_fallback_value;
+	}
+	function getXMLValues($xml_tag)
+	{
+		return $this->getXMLArrayValues($xml_tag);
+	}
+	function getXMLArrayValues($xml_tag)
+	{
+		return $this->getArrayValues($xml_tag, $this->xml_data);
+	}
+	function getArrayValues($xml_tag, $xml_match)
+	{
+		$xml_steps = explode("/", $xml_tag);
+		$xml_steps_count = count($xml_steps);
+		$this_xml = $xml_match;
+
+		for($i = 0; $i < ($xml_steps_count - 2); $i++)
+		{
+			$this_xml = $this->getValue($xml_tag, $xml_steps[$i], $this_xml, false);
+		}
+
+		$xml_matches = $this->parseXMLString($xml_steps[($xml_steps_count - 2)], $this_xml);
+		$xml_matches_count = count($xml_matches);
+
+		$return_r = array();
+		$extraction_tags = explode(",", end($xml_steps));
 		$extraction_tags_count = count($extraction_tags);
 
-		for($i = 0; $i < count($xml_matches); $i++)
+		for($i = 0; $i < $xml_matches_count; $i++)
 		{
 			if($extraction_tags_count == 1)
 			{
-				$this_item = $this->getValue($XML_TAG, $extraction_tags[0], $xml_matches[$i], false);
-				array_push($return_array, $this_item);
+				$this_item = $this->getValue($xml_tag, $extraction_tags[0], $xml_matches[$i], false);
+				array_push($return_r, $this_item);
 			}
 			else
 			{
@@ -288,30 +278,31 @@ class tandem_XmlReader
 				{
 					foreach($extraction_tags as $extract)
 					{
-						$return_array[$extract] = array();
+						$return_r[$extract] = array();
 					}
 				}
+
 				foreach($extraction_tags as $extract)
 				{
-					$this_item = $this->getValue($XML_TAG, $extract, $xml_matches[$i], false);
-					array_push($return_array[$extract], $this_item);
+					$this_item = $this->getValue($xml_tag, $extract, $xml_matches[$i], false);
+					array_push($return_r[$extract], $this_item);
 				}
 			}
 		}
-		return $return_array;
+		return $return_r;
 	}
-	function setFileCaching($BOOL)
+	function setFileCaching($do_cache)
 	{
-		$this->XML_CACHE_FILE = ($BOOL == true);
+		$this->xml_cache_file = ($do_cache == true);
 	}
-	function setTagCaching($BOOL)
+	function setTagCaching($do_cache)
 	{
-		$this->XML_CACHE_TAGS = ($BOOL == true);
+		$this->xml_cache_tags = ($do_cache == true);
 	}
-	function setCaching($BOOL)
+	function setCaching($do_cache)
 	{
-		$this->setFileCaching($BOOL);
-		$this->setTagCaching($BOOL);
+		$this->setFileCaching($do_cache);
+		$this->setTagCaching($do_cache);
 	}
 }
 
