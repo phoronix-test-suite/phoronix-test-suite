@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for Self-Contained Test Profiles (SCTP) support
 - pts-core: Fix in memory type detection
 - pts-core: Improve usability for those without the PHP preg_* functions
+- pts-core: When rendering graph results, report the PTS version number from the results file, not current PTS_VERSION
 - tandem_XmlReader: Major performance improvements and optimizations
 
 Phoronix Test Suite 1.6.0 Alpha 1
