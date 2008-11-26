@@ -228,6 +228,19 @@ function sw_os_release()
 
 	return $os;
 }
+function sw_desktop_environment()
+{
+	$desktop = false;
+
+	if(pts_process_running_bool("gnome-panel"))
+	{
+		$gnome_version = array_pop(explode(" ", trim(shell_exec("gnome-about --version"))));
+
+		$desktop = "GNOME " . $gnome_version;
+	}
+
+	return $desktop;
+}
 function sw_os_opengl()
 {
 	// OpenGL version

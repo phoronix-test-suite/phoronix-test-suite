@@ -49,6 +49,12 @@ function pts_sw_string()
 
 	array_push($software, "OS: " . sw_os_release());
 	array_push($software, "Kernel: " . sw_os_kernel() . " (" . sw_os_architecture() . ")");
+
+	if(($desktop = sw_desktop_environment()) != "")
+	{
+		array_push($software, "Desktop: " . $desktop);
+	}
+
 	array_push($software, "X.Org Server: " . sw_os_graphics_subsystem());
 
 	if(($ddx = sw_xorg_ddx_driver_info()) != "")

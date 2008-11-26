@@ -163,19 +163,7 @@ function pts_process_running_bool($process)
 	$running = shell_exec("ps -C " . strtolower($process) . " 2>&1");
 	$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
 
-	if(!empty($running))
-	{
-		$running = true;
-	}
-	else
-	{
-		$running = false;
-	}
-
-	if(IS_MACOSX || IS_SOLARIS)
-	{
-		$running = false;
-	}
+	$running = !empty($running) && !IS_MACOSX && !IS_SOLARIS;
 
 	return $running;
 }
