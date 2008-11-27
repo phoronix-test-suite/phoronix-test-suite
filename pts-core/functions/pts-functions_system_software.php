@@ -67,11 +67,13 @@ function sw_os_virtualized_mode()
 function sw_os_filesystem()
 {
 	// Determine file-system type
-	$fs = shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null");
-	
 	if(IS_MACOSX)
 	{
 		$fs = read_osx_system_profiler("SPSerialATADataType", "FileSystem");
+	}
+	else
+	{
+		$fs = shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null");
 	}
 
 	if(empty($fs) || IS_BSD)

@@ -23,10 +23,10 @@
 
 class pts_MultiPassFailGraph extends pts_CustomGraph
 {
-	public function __construct($Title, $SubTitle, $YTitle)
+	public function __construct($title, $sub_title, $y_axis_title)
 	{
 		$this->graph_y_title_hide = true;
-		parent::__construct($Title, $SubTitle, $YTitle, true);
+		parent::__construct($title, $sub_title, $y_axis_title);
 		$this->graph_type = "MULTI_PASS_FAIL";
 		$this->graph_value_type = "ABSTRACT";
 		$this->graph_hide_identifiers = true;

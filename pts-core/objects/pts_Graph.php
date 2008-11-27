@@ -87,11 +87,11 @@ class pts_Graph
 
 	var $graph_user_identifiers = array();
 
-	public function __construct($Title, $SubTitle, $YTitle)
+	public function __construct($title, $sub_title, $y_axis_title)
 	{
-		$this->graph_title = $Title;
-		$this->graph_sub_title = $SubTitle;
-		$this->graph_y_title = $YTitle;
+		$this->graph_title = $title;
+		$this->graph_sub_title = $sub_title;
+		$this->graph_y_title = $y_axis_title;
 
 		$this->update_graph_dimensions(-1, -1, true);
 
@@ -109,9 +109,9 @@ class pts_Graph
 			putenv("GDFONTPATH=" . getcwd());
 		}
 	}
-	public function setRenderer($Renderer)
+	public function setRenderer($renderer)
 	{
-		if($Renderer == "SVG")
+		if($renderer == "SVG")
 		{
 			$this->graph_renderer = "SVG";
 			$this->graph_left_start += 10;
@@ -175,13 +175,13 @@ class pts_Graph
 			array_push($this->graph_data_title, $data_title);
 		}
 	}
-	public function setGraphBackgroundPNG($File)
+	public function setGraphBackgroundPNG($file)
 	{
-		$IMG = $this->read_png_image($File);
+		$img = $this->read_png_image($file);
 
-		if($IMG != false)
+		if($img != false)
 		{
-			$this->graph_body_image = $IMG;
+			$this->graph_body_image = $img;
 		}
 	}
 
@@ -228,14 +228,14 @@ class pts_Graph
 
 		return $maximum;
 	}
-	protected function return_ttf_string_width($String, $Font, $Size)
+	protected function return_ttf_string_width($string, $font, $size)
 	{
-		$dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
+		$dimensions = $this->return_ttf_string_dimensions($string, $font, $size);
 		return $dimensions[0];
 	}
-	protected function return_ttf_string_height($String, $Font, $Size)
+	protected function return_ttf_string_height($string, $font, $size)
 	{
-		$dimensions = $this->return_ttf_string_dimensions($String, $Font, $Size);
+		$dimensions = $this->return_ttf_string_dimensions($string, $font, $size);
 		return $dimensions[1];
 	}
 	protected function find_longest_string($arr_string)
@@ -322,9 +322,9 @@ class pts_Graph
 		$this->draw_rectangle($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body);
 		$this->draw_rectangle_border($this->graph_image, $this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches);
 
-		if($this->graph_body_image != false && $this->graph_renderer == "PNG")
+		if($this->graph_body_image != false)
 		{
-			imagecopymerge($this->graph_image, $this->graph_body_image, $this->graph_left_start + (($this->graph_left_end - $this->graph_left_start) / 2) - imagesx($this->graph_body_image) / 2, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2) - imagesy($this->graph_body_image) / 2, 0, 0, imagesx($this->graph_body_image), imagesy($this->graph_body_image), 95);
+			$this->image_copy_merge($this->graph_image, $this->graph_body_image, $this->graph_left_start + (($this->graph_left_end - $this->graph_left_start) / 2) - imagesx($this->graph_body_image) / 2, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2) - imagesy($this->graph_body_image) / 2);
 		}
 
 		// Text
@@ -565,11 +565,11 @@ class pts_Graph
 			}
 		}
 	}
-	protected function read_png_image($File)
+	protected function read_png_image($file)
 	{
 		if($this->graph_renderer == "PNG")
 		{
-			$img = @imagecreatefrompng($File);
+			$img = @imagecreatefrompng($file);
 		}
 		else
 		{
@@ -589,15 +589,15 @@ class pts_Graph
 			$img_object = null;
 		}
 	}
-	protected function convert_hex_to_type($Hex)
+	protected function convert_hex_to_type($hex)
 	{
 		if($this->graph_renderer == "PNG")
 		{
-			$color = imagecolorallocate($this->graph_image, hexdec(substr($Hex, 1, 2)), hexdec(substr($Hex, 3, 2)), hexdec(substr($Hex, 5, 2)));
+			$color = imagecolorallocate($this->graph_image, hexdec(substr($hex, 1, 2)), hexdec(substr($hex, 3, 2)), hexdec(substr($hex, 5, 2)));
 		}
 		else if($this->graph_renderer == "SVG")
 		{
-			$color = $Hex;
+			$color = $hex;
 		}
 
 		return $color;
@@ -841,16 +841,32 @@ class pts_Graph
 			$img_object .= "<line x1=\"" . round($left_start) . "\" y1=\"" . round($top_start) . "\" x2=\"" . round($from_left) . "\" y2=\"" . round($from_top) . "\" stroke=\"" . $color . "\" stroke-width=\"1px\" />\n";
 		}
 	}
-	protected function return_ttf_string_dimensions($String, $Font, $Size, $Big = false)
+	protected function image_copy_merge(&$img_object, $source_img_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1)
+	{
+		if($this->graph_renderer == "PNG")
+		{
+			if($width == -1)
+			{
+				$width = imagesx($source_img_object);
+			}
+			if($height == -1)
+			{
+				$height = imagesy($source_img_object);
+			}
+
+			imagecopy($img_object, $source_img_object, $to_x, $to_y, $source_x, $source_y, $width, $height);
+		}
+	}
+	protected function return_ttf_string_dimensions($string, $font, $size, $Big = false)
 	{
 		if($this->graph_renderer == "PNG" && function_exists("imagettfbbox"))
 		{
-			$box_array = imagettfbbox($Size, 0, $Font, $String);
+			$box_array = imagettfbbox($size, 0, $font, $string);
 			$box_width = $box_array[4] - $box_array[6];
 
 			if($Big)
 			{
-				$box_array = imagettfbbox($Size, 0, $Font, "AZ@![]()@|_");
+				$box_array = imagettfbbox($size, 0, $font, "AZ@![]()@|_");
 			}
 			$box_height = $box_array[1] - $box_array[7];
 		}

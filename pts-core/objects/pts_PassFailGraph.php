@@ -23,9 +23,9 @@
 
 class pts_PassFailGraph extends pts_CustomGraph
 {
-	public function __construct($Title, $SubTitle, $YTitle)
+	public function __construct($title, $sub_title, $y_axis_title)
 	{
-		parent::__construct($Title, $SubTitle, $YTitle);
+		parent::__construct($title, $sub_title, $y_axis_title);
 		$this->graph_type = "PASS_FAIL";
 		$this->graph_value_type = "ABSTRACT";
 		$this->graph_hide_identifiers = true;
