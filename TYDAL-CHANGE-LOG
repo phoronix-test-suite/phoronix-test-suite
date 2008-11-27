@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: When rendering graph results, report the PTS version number from the results file, not current PTS_VERSION
 - pts-core: Add support for detecting and reporting the desktop environment / version in use
 - pts-core: Add support for dynamically loading objects from sub-directories of pts-core/objects/
+- pts-core: Add validate-result mode that PTS test profiles can implement
 - tandem_XmlReader: Major performance improvements and optimizations
 - pts_Graph: Various changes to the graphing object
 

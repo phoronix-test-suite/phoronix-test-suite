@@ -585,6 +585,13 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 				$test_results = $run_time;
 			}
 
+			$validate_result = trim(pts_call_test_script($test_identifier, "validate-result", null, $test_results, $test_extra_runtime_variables_post));
+
+			if(!empty($validate_result) && !pts_string_bool($validate_result))
+			{
+				$test_results = null;
+			}
+
 			if(!empty($test_results))
 			{
 				$pts_test_result->add_trial_run_result(trim($test_results));
