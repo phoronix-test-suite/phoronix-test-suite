@@ -230,13 +230,52 @@ function sw_os_release()
 }
 function sw_desktop_environment()
 {
-	$desktop = false;
+	$desktop = null;
+	$desktop_environment = null;
+	$desktop_version = null;
 
 	if(pts_process_running_bool("gnome-panel"))
 	{
-		$gnome_version = array_pop(explode(" ", trim(shell_exec("gnome-about --version"))));
+		// GNOME
+		$desktop_environment = "GNOME";
+		$desktop_version = array_pop(explode(" ", trim(shell_exec("gnome-about --version 2>&1"))));
+	}
+	else if(pts_process_running_bool("kded4"))
+	{
+		// KDE 4.x
+		$desktop_environment = "KDE";
 
-		$desktop = "GNOME " . $gnome_version;
+		$kde_output = trim(shell_exec("kde4-config --version 2>&1"));
+		$kde_lines = explode("\n", $kde_output);
+
+		for($i = 0; $i < count($kde_lines) && empty($desktop_version); $i++)
+		{
+			$line_segments = explode(":", $kde_lines[$i]);
+
+			if($line_segments[0] == "KDE" && isset($line_segments[1]))
+			{
+				$v = trim($line_segments[1]);
+
+				if(($cut = strpos($v, " ")) > 0)
+				{
+					$v = substr($v, 0, $cut);
+				}
+
+				$desktop_version = $v;
+			}
+		}
+
+	}
+
+	if(!empty($desktop_environment))
+	{
+		$desktop = $desktop_environment;
+		$version_check = str_replace(array(".", 1, 2, 3, 4, 5, 6, 7, 8, 9, 0), "", $desktop_version);
+
+		if(!empty($desktop_version) && empty($version_check))
+		{
+			$desktop .= " " . $desktop_version;
+		}
 	}
 
 	return $desktop;
