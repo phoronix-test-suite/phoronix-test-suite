@@ -142,11 +142,11 @@ function pts_save_result($save_to = null, $save_results = null)
 				$t->loadGraphProportion($results_proportion[$i]);
 				$t->loadGraphVersion($results_pts_version);
 
-				$t->add_user_identifier("Test", $results_testname[$i]);
-				$t->add_user_identifier("Identifier", $results_suite_name);
-				$t->add_user_identifier("User", pts_current_user());
+				$t->addInternalIdentifier("Test", $results_testname[$i]);
+				$t->addInternalIdentifier("Identifier", $results_suite_name);
+				$t->addInternalIdentifier("User", pts_current_user());
 
-				$t->save_graph($save_to_dir . "/result-graphs/" . ($i + 1) . "." . strtolower($t->getRenderer()));
+				$t->saveGraphToFile($save_to_dir . "/result-graphs/" . ($i + 1) . "." . strtolower($t->getRenderer()));
 				$t->renderGraph();
 			}
 		}

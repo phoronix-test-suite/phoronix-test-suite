@@ -277,7 +277,7 @@ function sw_desktop_environment()
 
 		if(($open = strpos($xfce_output, "(")) > 0)
 		{
-			$xfce_output = substr($xfce_output, strpos($xfce_output, " ", $open));
+			$xfce_output = substr($xfce_output, strpos($xfce_output, " ", $open) + 1);
 			$desktop_version = substr($xfce_output, 0, strpos($xfce_output, ")"));
 		}
 	}

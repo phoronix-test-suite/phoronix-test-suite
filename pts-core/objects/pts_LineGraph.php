@@ -40,15 +40,12 @@ class pts_LineGraph extends pts_CustomGraph
 		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
 
 		$longest_string = $this->find_longest_string($this->graph_identifiers);
-
-		while($this->return_ttf_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) > ($this->identifier_width - 2) && $this->graph_font_size_identifiers > $this->minimum_identifier_font)
-		{
-			$this->graph_font_size_identifiers -= 0.5;
-		}
+		$width = $this->identifier_width - 2;
+		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $width);
 
 		if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
 		{
-			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->return_ttf_string_width($longest_string, $this->graph_font, 9));
+			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->ttf_string_width($longest_string, $this->graph_font, 9));
 		}
 	}
 	protected function render_graph_identifiers()
@@ -99,26 +96,23 @@ class pts_LineGraph extends pts_CustomGraph
 
 				if($previous_placement != -1 && $previous_offset != -1)
 				{
-					$this->draw_line($this->graph_image, $previous_offset, $previous_placement, $px_from_left, $value_plot_top, $paint_color);
-					$this->draw_line($this->graph_image, $previous_offset, $previous_placement + 1, $px_from_left, $value_plot_top + 1, $paint_color);
+					$this->draw_line($this->graph_image, $previous_offset, $previous_placement, $px_from_left, $value_plot_top, $paint_color, 2);
 				}
 
 				if($i == 0)
 				{
-					$this->draw_line($this->graph_image, $this->graph_left_start + 1, $value_plot_top, $px_from_left, $value_plot_top, $paint_color);
-					$this->draw_line($this->graph_image, $this->graph_left_start + 1, $value_plot_top + 1, $px_from_left, $value_plot_top + 1, $paint_color);
+					$this->draw_line($this->graph_image, $this->graph_left_start + 1, $value_plot_top, $px_from_left, $value_plot_top, $paint_color, 2);
 				}
 				else if($i == ($point_counter - 1))
 				{
-					$this->draw_line($this->graph_image, $px_from_left, $value_plot_top, $this->graph_left_end - 1, $value_plot_top, $paint_color);
-					$this->draw_line($this->graph_image, $px_from_left, $value_plot_top + 1, $this->graph_left_end - 1, $value_plot_top + 1, $paint_color);
+					$this->draw_line($this->graph_image, $px_from_left, $value_plot_top, $this->graph_left_end - 1, $value_plot_top, $paint_color, 2);
 				}
 
 				$previous_placement = $value_plot_top;
 				$previous_offset = $px_from_left;
 			}
 
-			if($point_counter < 14)
+			if($point_counter < 10)
 			{
 				$previous_placement = -1;
 				$previous_offset = -1;

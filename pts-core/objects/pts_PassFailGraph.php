@@ -57,10 +57,9 @@ class pts_PassFailGraph extends pts_CustomGraph
 		$identifier_height = floor(($graph_height - (($identifiers_per_column - 1) * $spacing)) / $identifiers_per_column);
 		$identifier_width = floor(($graph_width - (($columns - 1) * $spacing)) / $columns);
 
-		while($this->return_ttf_string_width($this->graph_maximum_value, $this->graph_font, $font_size) > ($identifier_width - 8) || $this->return_ttf_string_height($this->graph_maximum_value, $this->graph_font, $font_size) > ($identifier_height - 4))
-		{
-			$font_size -= 0.5;
-		}
+		$width = $identifier_width - 8;
+		$height = $line_height - 4;
+		$main_font_size = $this->text_size_bounds($this->graph_maximum_value, $this->graph_font, $font_size, 4, $width, $height);
 
 		for($c = 0; $c < $columns; $c++)
 		{
@@ -87,7 +86,7 @@ class pts_PassFailGraph extends pts_CustomGraph
 				$this->draw_rectangle_border($this->graph_image, $this_horizontal_start, $this_vertical_start, $this_horizontal_end, $this_vertical_end, $this->graph_color_body_light);
 				$this->draw_rectangle($this->graph_image, $this_horizontal_start + 1, $this_vertical_start + 1, $this_horizontal_end - 1, $this_vertical_end - 1, $paint_color);
 
-				$this->write_text_center($this_identifier, $font_size, $this->graph_color_body_text, $this_horizontal_start, $this_vertical_start + (($this_vertical_end - $this_vertical_start) / 2) - ($this->return_ttf_string_height($this_identifier, $this->graph_font, $font_size) / 2), $this_horizontal_end, $this_vertical_start + (($this_vertical_end - $this_vertical_start) / 2) - ($this->return_ttf_string_height($this_identifier, $this->graph_font, $font_size) / 2));
+				$this->write_text_center($this_identifier, $font_size, $this->graph_color_body_text, $this_horizontal_start, $this_vertical_start + (($this_vertical_end - $this_vertical_start) / 2) - ($this->ttf_string_height($this_identifier, $this->graph_font, $font_size) / 2), $this_horizontal_end, $this_vertical_start + (($this_vertical_end - $this_vertical_start) / 2) - ($this->ttf_string_height($this_identifier, $this->graph_font, $font_size) / 2));
 			}
 		}
 	}

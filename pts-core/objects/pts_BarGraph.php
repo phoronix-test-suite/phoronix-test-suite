@@ -38,15 +38,12 @@ class pts_BarGraph extends pts_CustomGraph
 		$this->identifier_width = floor(($this->graph_left_end - $this->graph_left_start) / $identifier_count);
 
 		$longest_string = $this->find_longest_string($this->graph_identifiers);
-
-		while($this->return_ttf_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) > ($this->identifier_width - 8) && $this->graph_font_size_identifiers > $this->minimum_identifier_font)
-		{
-			$this->graph_font_size_identifiers -= 0.5;
-		}
+		$width = $this->identifier_width - 8;
+		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $width);
 
 		if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
 		{
-			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->return_ttf_string_width($longest_string, $this->graph_font, 9));
+			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->ttf_string_width($longest_string, $this->graph_font, 9));
 		}
 	}
 	protected function render_graph_identifiers()
