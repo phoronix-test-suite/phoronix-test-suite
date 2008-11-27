@@ -268,6 +268,19 @@ function sw_desktop_environment()
 		}
 
 	}
+	else if(pts_process_running_bool("xfce4-session"))
+	{
+		// Xfce 4.x
+		$desktop_environment = "Xfce";
+
+		$xfce_output = trim(shell_exec("xfce4-session --version 2>&1"));
+
+		if(($open = strpos($xfce_output, "(")) > 0)
+		{
+			$xfce_output = substr($xfce_output, strpos($xfce_output, " ", $open));
+			$desktop_version = substr($xfce_output, 0, strpos($xfce_output, ")"));
+		}
+	}
 
 	if(!empty($desktop_environment))
 	{
