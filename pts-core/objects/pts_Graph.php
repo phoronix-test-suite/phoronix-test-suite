@@ -191,7 +191,7 @@ class pts_Graph
 		// Make room for tick markings, left hand side
 		if($this->graph_value_type == "NUMERICAL")
 		{
-			$this->graph_left_start += $this->ttf_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+			$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
 		}
 
 		if($this->graph_hide_identifiers == true)
@@ -271,19 +271,19 @@ class pts_Graph
 
 		return $maximum;
 	}
-	protected function ttf_string_width($string, $font, $size)
+	protected function text_string_width($string, $font, $size)
 	{
-		$dimensions = $this->ttf_string_dimensions($string, $font, $size);
+		$dimensions = $this->text_string_dimensions($string, $font, $size);
 		return $dimensions[0];
 	}
-	protected function ttf_string_height($string, $font, $size)
+	protected function text_string_height($string, $font, $size)
 	{
-		$dimensions = $this->ttf_string_dimensions($string, $font, $size);
+		$dimensions = $this->text_string_dimensions($string, $font, $size);
 		return $dimensions[1];
 	}
 	protected function text_size_bounds($string, $font, $font_size, $minimum_font_size, $bound_width, $bound_height = -1)
 	{
-		while($font_size > $minimum_font_size && ($this->ttf_string_width($string, $font, $font_size) > $bound_width || ($bound_height > 0 && $this->ttf_string_height($string, $font, $font_size) > $bound_height)))
+		while($font_size > $minimum_font_size && ($this->text_string_width($string, $font, $font_size) > $bound_width || ($bound_height > 0 && $this->text_string_height($string, $font, $font_size) > $bound_height)))
 		{
 			$font_size -= 0.5;
 		}
@@ -620,7 +620,7 @@ class pts_Graph
 
 		if($this->graph_renderer == "PNG")
 		{
-			$ttf_dimensions = $this->ttf_string_dimensions($text_string, $this->graph_font, $font_size);
+			$ttf_dimensions = $this->text_string_dimensions($text_string, $this->graph_font, $font_size);
 			$ttf_width = $ttf_dimensions[0];
 			$ttf_height = $ttf_dimensions[1];
 
@@ -640,7 +640,7 @@ class pts_Graph
 		}
 		else if($this->graph_renderer == "SVG")
 		{
-			$ttf_dimensions = $this->ttf_string_dimensions($text_string, $this->graph_font, $font_size);
+			$ttf_dimensions = $this->text_string_dimensions($text_string, $this->graph_font, $font_size);
 			$ttf_width = $ttf_dimensions[0];
 			$ttf_height = $ttf_dimensions[1];
 
@@ -668,7 +668,7 @@ class pts_Graph
 
 		if($this->graph_renderer == "PNG")
 		{
-			$ttf_dimensions = $this->ttf_string_dimensions($text_string, $this->graph_font, $font_size);
+			$ttf_dimensions = $this->text_string_dimensions($text_string, $this->graph_font, $font_size);
 			$ttf_width = $ttf_dimensions[0];
 			$ttf_height = $ttf_dimensions[1];
 
@@ -688,7 +688,7 @@ class pts_Graph
 		}
 		else if($this->graph_renderer == "SVG")
 		{
-			$ttf_dimensions = $this->ttf_string_dimensions($text_string, $this->graph_font, $font_size);
+			$ttf_dimensions = $this->text_string_dimensions($text_string, $this->graph_font, $font_size);
 			$ttf_width = $ttf_dimensions[0];
 			$ttf_height = $ttf_dimensions[1];
 
@@ -721,16 +721,16 @@ class pts_Graph
 		{
 			if($bound_x1 != $bound_x2)
 			{
-				while($this->ttf_string_width($this->trim_double($text_string, 2), $this->graph_font, $font_size) > abs($bound_x2 - $bound_x1 - 3))
+				while($this->text_string_width($this->trim_double($text_string, 2), $this->graph_font, $font_size) > abs($bound_x2 - $bound_x1 - 3))
 				{
 					$font_size -= 0.5;
 				}
 			}
 
-			$ttf_dimensions = $this->ttf_string_dimensions(strtoupper($text_string), $this->graph_font, $font_size, $big_type);
+			$ttf_dimensions = $this->text_string_dimensions(strtoupper($text_string), $this->graph_font, $font_size, $big_type);
 			$ttf_height = $ttf_dimensions[1];
 
-			$ttf_dimensions = $this->ttf_string_dimensions($text_string, $this->graph_font, $font_size, $big_type);
+			$ttf_dimensions = $this->text_string_dimensions($text_string, $this->graph_font, $font_size, $big_type);
 			$ttf_width = $ttf_dimensions[0];
 
 			if($rotate_text == false)
@@ -751,13 +751,13 @@ class pts_Graph
 		else if($this->graph_renderer == "SVG")
 		{
 		//	$font_size = $this->graph_font_size_bars;
-		//	while($this->ttf_string_width($this->trim_double($this->graph_maximum_value, 3), $this->graph_font, $font_size) > ($bar_width - 6))
+		//	while($this->text_string_width($this->trim_double($this->graph_maximum_value, 3), $this->graph_font, $font_size) > ($bar_width - 6))
 		//		$font_size -= 0.5;
 
-			$ttf_dimensions = $this->ttf_string_dimensions(strtoupper($text_string), $this->graph_font, $font_size, $big_type);
+			$ttf_dimensions = $this->text_string_dimensions(strtoupper($text_string), $this->graph_font, $font_size, $big_type);
 			$ttf_height = $ttf_dimensions[1];
 
-			$ttf_dimensions = $this->ttf_string_dimensions($text_string, $this->graph_font, $font_size, $big_type);
+			$ttf_dimensions = $this->text_string_dimensions($text_string, $this->graph_font, $font_size, $big_type);
 			$ttf_width = $ttf_dimensions[0];
 
 			if($rotate_text == false)
@@ -872,7 +872,7 @@ class pts_Graph
 			imagecopy($img_object, $source_img_object, $to_x, $to_y, $source_x, $source_y, $width, $height);
 		}
 	}
-	protected function ttf_string_dimensions($string, $font, $size, $Big = false)
+	protected function text_string_dimensions($string, $font, $size, $Big = false)
 	{
 		if($this->graph_renderer == "PNG" && function_exists("imagettfbbox"))
 		{

@@ -43,7 +43,7 @@ class pts_BarGraph extends pts_CustomGraph
 
 		if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
 		{
-			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->ttf_string_width($longest_string, $this->graph_font, 9));
+			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->text_string_width($longest_string, $this->graph_font, 9));
 		}
 	}
 	protected function render_graph_identifiers()
