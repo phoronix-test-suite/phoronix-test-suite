@@ -228,7 +228,7 @@ function __autoload($to_load)
 	// Autoload needed objects
 	static $sub_objects = null;
 
-	if($sub_objects == null)
+	if($sub_objects == null && !is_array($sub_objects))
 	{
 		$sub_objects = array();
 		$sub_object_files = glob(PTS_DIR . "pts-core/objects/*/*.php");
@@ -247,6 +247,7 @@ function __autoload($to_load)
 	else if(isset($sub_objects[$to_load]))
 	{
 		include_once($sub_objects[$to_load]);
+		unset($sub_objects[$to_load]);
 	}
 }
 
