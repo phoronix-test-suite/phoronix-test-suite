@@ -85,7 +85,12 @@ function hw_sys_motherboard_string()
 
 		if(empty($info))
 		{
-			$info = read_hal("pci.subsys_vendor");
+			$pci_vendor = read_hal("pci.subsys_vendor");
+
+			if(strpos($pci_vendor, "(") === false)
+			{
+				$info = $pci_vendor;
+			}
 		}
 	}
 
