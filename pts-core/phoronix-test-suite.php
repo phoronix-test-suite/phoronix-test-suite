@@ -44,7 +44,11 @@ for($i = 2; $i < $argc; $i++)
 		array_push($pass_args, $argv[$i]);
 	}
 }
+pts_run_option_next($argv[1], $pass_args, getenv("PTS_COMMAND"));
 
-pts_run_option_command($argv[1], $pass_args, getenv("PTS_COMMAND")); // Run command
+while(($current_option = pts_run_option_next(false)) != false)
+{
+	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_descriptor()); // Run command
+}
 
 ?>

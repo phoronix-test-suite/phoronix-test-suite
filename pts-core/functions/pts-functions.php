@@ -64,16 +64,6 @@ define("TEST_RESOURCE_LOCAL_CTP_BASE_DIR", TEST_RESOURCE_LOCAL_DIR . "base/");
 // Phoronix Test Suite - Functions
 function pts_run_option_command($command, $pass_args = null, $command_descriptor = "")
 {
-	if(empty($command_descriptor))
-	{
-		$command_descriptor = $command;
-	}
-	if(!empty($pass_args) && !is_array($pass_args))
-	{
-		$pass_args = array($pass_args);
-	}
-	$command = strtolower($command);
-
 	pts_clear_assignments();
 	pts_set_assignment(array("START_TIME", "THIS_OPTION_IDENTIFIER"), time()); // For now THIS_OPTION_IDENTIFIER is also time
 	pts_set_assignment("COMMAND", $command_descriptor);
@@ -90,6 +80,34 @@ function pts_run_option_command($command, $pass_args = null, $command_descriptor
 		pts_module_process("__post_option_process", $command);
 	}
 	pts_clear_assignments();
+}
+function pts_run_option_next($command = false, $pass_args = null, $command_descriptor = "")
+{
+	static $options;
+	$return = null;
+
+	if(!is_array($options))
+	{
+		$options = array();
+	}
+
+	if($command == false)
+	{
+		if(count($options) == 0)
+		{
+			$return = false;
+		}
+		else
+		{
+			$return = array_shift($options);
+		}
+	}
+	else
+	{
+		array_push($options, new pts_run_option($command, $pass_args, $command_descriptor));
+	}
+
+	return $return;
 }
 function p_str($str_o)
 {

@@ -13,6 +13,8 @@ Phoronix Test Suite (Git)
 - pts-core: Rename analyze option to analyze-batch
 - pts-core: Add analyze-all-runs option to generate a candlestick graph showing the distribution of results from all trial runs
 - pts-core: Update phoronix-test-suite text
+- pts-core: Rework the pts_run_option interface to set options to run next
+- pts-core: Change benchmark option to using the revised pts_run_option interface to avoid double pts-core initalization
 - pts: Add adjustable file size support for bonnie test profile
 - tandem_XmlReader: Major performance improvements and optimizations
 - bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API
