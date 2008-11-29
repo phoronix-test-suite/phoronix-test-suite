@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>System</TestType>
 		<Title>Darwin Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -57,18 +57,18 @@
 	</RunTest>
 	<RunTest>
 		<Test>bonnie</Test>
-		<Arguments>SEQ_CREATE</Arguments>
-		<Description>Sequential Create</Description>
+		<Arguments>SEQ_CREATE 4096</Arguments>
+		<Description>4GB Sequential Create</Description>
 	</RunTest>
 	<RunTest>
 		<Test>bonnie</Test>
-		<Arguments>RAND_READ</Arguments>
-		<Description>Random Read</Description>
+		<Arguments>RAND_READ 4096</Arguments>
+		<Description>4GB Random Read</Description>
 	</RunTest>
 	<RunTest>
 		<Test>bonnie</Test>
-		<Arguments>RAND_DELETE</Arguments>
-		<Description>Random Delete</Description>
+		<Arguments>RAND_DELETE 4096</Arguments>
+		<Description>4GB Random Delete</Description>
 	</RunTest>
 	<RunTest>
 		<Test>gnupg</Test>
