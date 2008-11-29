@@ -57,15 +57,15 @@ class pts_LineGraph extends pts_CustomGraph
 		{
 			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
-			$this->draw_line($this->graph_image, $px_from_left, $px_from_top_start, $px_from_left, $px_from_top_end, $this->graph_color_notches);
+			$this->graph_image->draw_line($px_from_left, $px_from_top_start, $px_from_left, $px_from_top_end, $this->graph_color_notches);
 
 			if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
 			{
-				$this->write_text_left($this->graph_identifiers[$i], 9, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2, true);
+				$this->graph_image->write_text_left($this->graph_identifiers[$i], $this->graph_font, 9, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2, true);
 			}
 			else
 			{
-				$this->write_text_center($this->graph_identifiers[$i], $this->graph_font_size_identifiers, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2);
+				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2);
 			}
 		}
 	}
@@ -96,16 +96,16 @@ class pts_LineGraph extends pts_CustomGraph
 
 				if($previous_placement != -1 && $previous_offset != -1)
 				{
-					$this->draw_line($this->graph_image, $previous_offset, $previous_placement, $px_from_left, $value_plot_top, $paint_color, 2);
+					$this->graph_image->draw_line($previous_offset, $previous_placement, $px_from_left, $value_plot_top, $paint_color, 2);
 				}
 
 				if($i == 0)
 				{
-					$this->draw_line($this->graph_image, $this->graph_left_start + 1, $value_plot_top, $px_from_left, $value_plot_top, $paint_color, 2);
+					$this->graph_image->draw_line($this->graph_left_start + 1, $value_plot_top, $px_from_left, $value_plot_top, $paint_color, 2);
 				}
 				else if($i == ($point_counter - 1))
 				{
-					$this->draw_line($this->graph_image, $px_from_left, $value_plot_top, $this->graph_left_end - 1, $value_plot_top, $paint_color, 2);
+					$this->graph_image->draw_line($px_from_left, $value_plot_top, $this->graph_left_end - 1, $value_plot_top, $paint_color, 2);
 				}
 
 				$previous_placement = $value_plot_top;
@@ -137,9 +137,9 @@ class pts_LineGraph extends pts_CustomGraph
 	}
 	protected function render_graph_pointer($x, $y)
 	{
-		$this->draw_line($this->graph_image, $x - 5, $y - 5, $x + 5, $y + 5, $this->graph_color_notches);
-		$this->draw_line($this->graph_image, $x + 5, $y - 5, $x - 5, $y + 5, $this->graph_color_notches);
-		$this->draw_rectangle($this->graph_image, $x - 2, $y - 2, $x + 3, $y + 3, $this->graph_color_notches);
+		$this->graph_image->draw_line($x - 5, $y - 5, $x + 5, $y + 5, $this->graph_color_notches);
+		$this->graph_image->draw_line($x + 5, $y - 5, $x - 5, $y + 5, $this->graph_color_notches);
+		$this->graph_image->draw_rectangle($x - 2, $y - 2, $x + 3, $y + 3, $this->graph_color_notches);
 	}
 }
 

@@ -93,8 +93,8 @@ class pts_MultiPassFailGraph extends pts_CustomGraph
 					$this_bottom_end = $this->graph_top_end - $vertical_border - 1;
 				}
 
-				$this->draw_rectangle($this->graph_image, $this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this_bottom_end, $paint_color);
-				$this->write_text_center($results[$i], $this->graph_font_size_bars, $this->graph_color_body_text, $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - $identifiers_width, $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2), $this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2));
+				$this->graph_image->draw_rectangle($this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this_bottom_end, $paint_color);
+				$this->graph_image->write_text_center($results[$i], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_body_text, $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - $identifiers_width, $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2), $this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2));
 			}
 		}
 
@@ -102,21 +102,21 @@ class pts_MultiPassFailGraph extends pts_CustomGraph
 		$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $this->graph_font, $headings_font_size);
 		for($i = 0; $i < count($headings); $i++)
 		{
-			$this->draw_line($this->graph_image, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
-			$this->write_text_center($headings[$i], $headings_font_size, $this->graph_color_headers, $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - $identifiers_width, $this->graph_top_start + $vertical_border + ($heading_height / 2) - ($line_ttf_height / 2), $this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($heading_height / 2) - ($line_ttf_height / 2));
+			$this->graph_image->draw_line($this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
+			$this->graph_image->write_text_center($headings[$i], $this->graph_font, $headings_font_size, $this->graph_color_headers, $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - $identifiers_width, $this->graph_top_start + $vertical_border + ($heading_height / 2) - ($line_ttf_height / 2), $this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($heading_height / 2) - ($line_ttf_height / 2));
 		}
 
 		$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $this->graph_font, $main_font_size);
 		for($i = 0; $i < count($this->graph_identifiers); $i++)
 		{
-			$this->draw_line($this->graph_image, $this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_color_body_light);
-			$this->write_text_right($this->graph_identifiers[$i], $main_font_size, $this->graph_color_headers, $this->graph_left_start + $horizontal_border + $main_width, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2, $this->graph_left_start + $horizontal_border + $main_width, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2, false);
+			$this->graph_image->draw_line($this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_color_body_light);
+			$this->graph_image->write_text_right($this->graph_identifiers[$i], $this->graph_font, $main_font_size, $this->graph_color_headers, $this->graph_left_start + $horizontal_border + $main_width, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2, $this->graph_left_start + $horizontal_border + $main_width, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2, false);
 		}
 
-		$this->draw_line($this->graph_image, $this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_color_body_light);
-		$this->draw_line($this->graph_image, $this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_start + $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
-		$this->draw_line($this->graph_image, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
-		$this->draw_line($this->graph_image, $this->graph_left_start + $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
+		$this->graph_image->draw_line($this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_color_body_light);
+		$this->graph_image->draw_line($this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_start + $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
+		$this->graph_image->draw_line($this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
+		$this->graph_image->draw_line($this->graph_left_start + $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
 	}
 	protected function render_graph_result()
 	{

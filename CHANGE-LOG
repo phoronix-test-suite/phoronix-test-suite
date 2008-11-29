@@ -10,6 +10,8 @@ November 13, 2008
 - pts-core: Add "none" to HAL $remove_words
 - pts: Fix openal-development external dependency for ubuntu-packages.xml due to package name change in Ubuntu 8.10
 - pts: Set file size to 256MB with compress-lzma test profile
+- bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API
+- pts_Graph: Switch from internal image rendering functions to using bilde_renderer
 
 Phoronix Test Suite 1.4.1
 November 8, 2008
