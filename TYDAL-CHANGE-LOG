@@ -10,7 +10,9 @@ Phoronix Test Suite (Git)
 - pts-core: Add validate-result mode that PTS test profiles can implement
 - pts-core: Fix reporting erroneous motherboard string (Found on QEMU virtualized system)
 - tandem_XmlReader: Major performance improvements and optimizations
+- bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API
 - pts_Graph: Various changes to the graphing object
+- pts_Graph: Switch from internal image rendering functions to using bilde_renderer
 
 Phoronix Test Suite 1.6.0 Alpha 1
 November 22, 2008
