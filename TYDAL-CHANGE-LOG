@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for dynamically loading objects from sub-directories of pts-core/objects/
 - pts-core: Add validate-result mode that PTS test profiles can implement
 - pts-core: Fix reporting erroneous motherboard string (Found on QEMU virtualized system)
+- pts-core: Add and implement RawString to XML results specification for storing raw result values from all trial runs
 - tandem_XmlReader: Major performance improvements and optimizations
 - bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API
 - pts_Graph: Various changes to the graphing object

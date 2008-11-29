@@ -55,12 +55,14 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 
 	$new_results_identifiers = array();
 	$new_results_values = array();
+	$new_results_rawvalues = array();
 
 	foreach($new_results_raw as $new_result_raw)
 	{
 		$new_xml_results = new tandem_XmlReader($new_result_raw);
 		array_push($new_results_identifiers, $new_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
 		array_push($new_results_values, $new_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
+		array_push($new_results_rawvalues, $new_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
 	}
 	unset($NEW_RESULTS, $new_xml_reader, $new_results_raw);
 
@@ -90,12 +92,14 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 
 	$original_results_identifiers = array();
 	$original_results_values = array();
+	$original_results_rawvalues = array();
 
 	foreach($original_results_raw as $original_result_raw)
 	{
 		$original_xml_results = new tandem_XmlReader($original_result_raw);
 		array_push($original_results_identifiers, $original_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
 		array_push($original_results_values, $original_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
+		array_push($original_results_rawvalues, $original_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
 	}
 	unset($OLD_RESULTS, $original_xml_reader, $original_results_raw);
 
@@ -192,11 +196,13 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 				{
 					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $original_results_identifiers[$r_o][$o], 5, "o-$r_o-$o");
 					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $original_results_values[$r_o][$o], 5, "o-$r_o-$o");
+					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $original_results_rawvalues[$r_o][$o], 5, "o-$r_o-$o");
 				}
 				for($o = 0; $o < count($new_results_identifiers[$r_n]); $o++)
 				{
 					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $new_results_identifiers[$r_n][$o], 5, "n-$r_n-$o");
 					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$r_n][$o], 5, "n-$r_n-$o");
+					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $new_results_rawvalues[$r_n][$o], 5, "n-$r_n-$o");
 				}
 
 				$original_results_identifiers[$r_o] = "";
@@ -226,6 +232,7 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 			{
 				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $original_results_identifiers[$r_o][$o], 5, "o-$r_o-$o-s");
 				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $original_results_values[$r_o][$o], 5, "o-$r_o-$o-s");
+				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $original_results_rawvalues[$r_o][$o], 5, "o-$r_o-$o-s");
 			}
 
 			$original_results_identifiers[$r_o] = "";
@@ -249,6 +256,7 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 			{
 				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $new_results_identifiers[$r_n][$o], 5, "n-$r_n-$o-s");
 				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$r_n][$o], 5, "n-$r_n-$o-s");
+				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $new_results_rawvalues[$r_n][$o], 5, "n-$r_n-$o-s");
 			}
 
 			$new_results_identifiers[$r_n] = "";
@@ -291,12 +299,14 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 
 	$results_identifiers = array();
 	$results_values = array();
+	$results_rawvalues = array();
 
 	foreach($results_raw as $result_raw)
 	{
 		$xml_results = new tandem_XmlReader($result_raw);
 		array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
 		array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
+		array_push($results_rawvalues, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
 	}
 
 	// Some other work
@@ -408,6 +418,7 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 							$show_attribute = trim(array_pop(explode(":", $test_attribute)));
 							$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $show_attribute, 5, "o-$r_o-$o");
 							$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $results_values[$r_o][$o], 5, "o-$r_o-$o");
+							$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $results_rawvalues[$r_o][$o], 5, "o-$r_o-$o");
 						}
 					}
 
@@ -416,6 +427,7 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 						$show_attribute = trim(array_pop(explode(":", array_pop($r_n_test_attributes))));
 						$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $show_attribute, 5, "n-$r_n-$o");
 						$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $results_values[$r_n][$o], 5, "n-$r_n-$o");
+						$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $results_rawvalues[$r_n][$o], 5, "n-$r_n-$o");
 					}
 					$results_testname[$r_n] = null;
 					$has_merged = true;

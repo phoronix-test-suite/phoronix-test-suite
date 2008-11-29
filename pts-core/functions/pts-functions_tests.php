@@ -85,12 +85,14 @@ function pts_save_result($save_to = null, $save_results = null)
 
 			$results_identifiers = array();
 			$results_values = array();
+			$results_rawvalues = array();
 
 			foreach($results_raw as $result_raw)
 			{
 				$xml_results = new tandem_XmlReader($result_raw);
 				array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
 				array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
+				array_push($results_rawvalues, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
 			}
 
 			for($i = 0; $i < count($results_name); $i++)
@@ -139,6 +141,7 @@ function pts_save_result($save_to = null, $save_results = null)
 
 				$t->loadGraphIdentifiers($results_identifiers[$i]);
 				$t->loadGraphValues($results_values[$i]);
+				// use $results_rawvalues[$i]
 				$t->loadGraphProportion($results_proportion[$i]);
 				$t->loadGraphVersion($results_pts_version);
 

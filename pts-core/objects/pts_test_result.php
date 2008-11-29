@@ -81,6 +81,14 @@ class pts_test_result
 	{
 		return $this->result_proportion;
 	}
+	public function get_trial_results()
+	{
+		return $this->trial_results;
+	}
+	public function get_trial_results_string()
+	{
+		return implode(":", $this->get_trial_results());
+	}
 	public function get_attribute($name)
 	{
 		if(isset($this->attributes[$name]) && !empty($this->attributes[$name]))
@@ -90,6 +98,8 @@ class pts_test_result
 	}
 	public function add_trial_run_result($result)
 	{
+		$result = trim($result);
+
 		if(!empty($result))
 		{
 			array_push($this->trial_results, $result);

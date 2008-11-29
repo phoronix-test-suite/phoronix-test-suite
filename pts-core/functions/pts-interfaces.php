@@ -162,6 +162,8 @@ define("S_RESULTS_RESULTS_GROUP_IDENTIFIER", "Group/Entry/Identifier"); // From 
 define("P_RESULTS_RESULTS_GROUP_IDENTIFIER", P_RESULTS_RESULTS_GROUP . "/" . S_RESULTS_RESULTS_GROUP_IDENTIFIER); // Full path to the results identifier
 define("S_RESULTS_RESULTS_GROUP_VALUE", "Group/Entry/Value"); // From inside the XML results group, the results values
 define("P_RESULTS_RESULTS_GROUP_VALUE", P_RESULTS_RESULTS_GROUP . "/" . S_RESULTS_RESULTS_GROUP_VALUE); // Full path to the results values
+define("S_RESULTS_RESULTS_GROUP_RAW", "Group/Entry/RawString"); // From inside the XML results group, the results raw string
+define("P_RESULTS_RESULTS_GROUP_RAW", P_RESULTS_RESULTS_GROUP . "/" . S_RESULTS_RESULTS_GROUP_RAW); // Full path to the results raw string
 
 //
 // USER CONFIGURATION SPECIFICATION
