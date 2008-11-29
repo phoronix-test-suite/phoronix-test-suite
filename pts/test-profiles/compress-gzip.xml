@@ -9,7 +9,7 @@
 		<ProjectURL>http://www.gzip.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
-		<Title>Timed Gzip Compression</Title>
+		<Title>Gzip Compression</Title>
 		<TimesToRun>3</TimesToRun>
 		<SubTitle>2GB File Compression</SubTitle>
 		<ResultScale>Seconds</ResultScale>

@@ -10,7 +10,7 @@
 		<Maintainer>apaige</Maintainer>
 	</TestProfile>
 	<TestInformation>
-		<Title>Timed LZMA Compression</Title>
+		<Title>LZMA Compression</Title>
 		<TimesToRun>3</TimesToRun>
 		<SubTitle>256MB File Compression</SubTitle>
 		<ResultScale>Seconds</ResultScale>

@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add and implement RawString to XML results specification for storing raw result values from all trial runs
 - pts-core: Rename analyze option to analyze-batch
 - pts-core: Add analyze-all-runs option to generate a candlestick graph showing the distribution of results from all trial runs
+- pts-core: Update phoronix-test-suite text
 - pts: Add adjustable file size support for bonnie test profile
 - tandem_XmlReader: Major performance improvements and optimizations
 - bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API
