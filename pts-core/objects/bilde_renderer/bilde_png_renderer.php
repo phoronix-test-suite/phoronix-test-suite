@@ -127,7 +127,14 @@ class bilde_png_renderer extends bilde_renderer
 	{
 		for($i = 0; $i < $line_width; $i++)
 		{
-			imageline($this->image, $start_x, $start_y + $i, $end_x, $end_y + $i, $color);
+			if($start_x == $end_x)
+			{
+				imageline($this->image, $start_x + $i, $start_y, $end_x + $i, $end_y, $color);
+			}
+			else
+			{
+				imageline($this->image, $start_x, $start_y + $i, $end_x, $end_y + $i, $color);
+			}
 		}
 	}
 

@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Various changes to the graphing object
 - pts_Graph: Switch from internal image rendering functions to using bilde_renderer
 - pts_Graph: Add loadGraphRawValues() for storing raw result data from RawString
+- pts_CandleStickGraph: A new graph type that displays results from all test runs and is modeled after Japanese Candlestick charting
 
 Phoronix Test Suite 1.6.0 Alpha 1
 November 22, 2008
