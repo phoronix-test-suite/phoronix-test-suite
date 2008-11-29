@@ -141,7 +141,7 @@ function pts_save_result($save_to = null, $save_results = null)
 
 				$t->loadGraphIdentifiers($results_identifiers[$i]);
 				$t->loadGraphValues($results_values[$i]);
-				// use $results_rawvalues[$i]
+				$t->loadGraphRawValues($results_rawvalues[$i]);
 				$t->loadGraphProportion($results_proportion[$i]);
 				$t->loadGraphVersion($results_pts_version);
 

@@ -75,6 +75,7 @@ abstract class pts_Graph
 	var $graph_output = null;
 	var $graph_renderer = "PNG";
 	var $graph_data = array();
+	var $graph_data_raw = array();
 	var $graph_data_title = array();
 	var $graph_color_paint_index = -1;
 	var $graph_identifiers;
@@ -174,6 +175,10 @@ abstract class pts_Graph
 		{
 			array_push($this->graph_data_title, $data_title);
 		}
+	}
+	public function loadGraphRawValues($data_array)
+	{
+		array_push($this->graph_data_raw, $data_array);
 	}
 	public function setGraphBackgroundPNG($file)
 	{
