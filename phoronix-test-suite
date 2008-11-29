@@ -114,8 +114,8 @@ case "$1" in
 "merge-results")
 	$PHP_BIN pts-core/phoronix-test-suite.php MERGE_RESULTS $OPTION_ARG $3 $4
 	;;
-"analyze" | "analyze-results")
-	$PHP_BIN pts-core/phoronix-test-suite.php ANALYZE_RESULTS $OPTION_ARG $3
+"analyze-batch")
+	$PHP_BIN pts-core/phoronix-test-suite.php ANALYZE_BATCH $OPTION_ARG $3
 	;;
 "remove-result")
 	$PHP_BIN pts-core/phoronix-test-suite.php REMOVE_RESULT $OPTION_ARG
@@ -201,8 +201,8 @@ case "$1" in
 	export PTS_IGNORE_MODULES=1
 	$PHP_BIN pts-core/phoronix-test-suite.php TEST_MODULE $OPTION_ARG
 	;;
-"sensors" | "sensor-options")
-	echo "\nThis option was dropped from the Phoronix Test Suite. For more information and the replacement option, view the latest documentation.\n"
+"sensors" | "sensor-options" | "analyze" | "analyze-results")
+	echo "\nThis option was dropped or changed in the Phoronix Test Suite.\nFor more information and the replacement option, view the documentation.\n"
 	;;
 *)
 	cat <<'EOT'
@@ -228,7 +228,7 @@ Batch Testing Options:
 	batch-setup: Setup the batch mode options
 	batch-run <suite OR test>: Run the specified test(s) in batch mode
 	batch-benchmark <suite OR test OR saved file>: Install and run the test(s) in batch mode
-	analyze <suite / test / saved file / Global ID>: Provide an analysis of the results generated from a batch run
+	analyze-batch <suite / test / saved file / Global ID>: Provide an analysis of the results generated from a batch run
 
 Result Viewing Options:
 	list-results: List all saved results

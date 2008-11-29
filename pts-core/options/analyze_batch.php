@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class analyze_results
+class analyze_batch
 {
 	public static function run($r)
 	{
