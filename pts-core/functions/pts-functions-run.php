@@ -329,7 +329,7 @@ function pts_verify_test_installation($TO_RUN)
 			echo pts_string_header($message);
 		}
 
-		if(!pts_is_assignment("TEST_INSTALL_PASS") || getenv("SILENT_INSTALL") == false)
+		if(!pts_is_assignment("TEST_INSTALL_PASS") && pts_read_assignment("COMMAND") != "benchmark")
 		{
 			pts_exit();
 		}

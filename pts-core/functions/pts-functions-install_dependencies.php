@@ -24,7 +24,7 @@
 function pts_install_package_on_distribution($identifier)
 {
 	// PTS External Dependencies install on distribution
-	if(getenv("SILENT_INSTALL") == false)
+	if(pts_read_assignment("COMMAND") != "benchmark")
 	{
 		echo "Checking For Needed External Dependencies.\n";
 	}

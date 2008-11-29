@@ -101,12 +101,10 @@ case "$1" in
 	$PHP_BIN pts-core/phoronix-test-suite.php RUN_TEST $OPTION_ARG
 	;;
 "benchmark")
-	export SILENT_INSTALL=1
 	$PHP_BIN pts-core/phoronix-test-suite.php BENCHMARK $OPTION_ARG
 	;;
 "batch-benchmark")
 	export PTS_BATCH_MODE=1
-	export SILENT_INSTALL=1
 	$PHP_BIN pts-core/phoronix-test-suite.php BENCHMARK $OPTION_ARG
 	;;
 "merge-results")

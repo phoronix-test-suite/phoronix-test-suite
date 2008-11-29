@@ -37,7 +37,7 @@ function pts_start_install($TO_INSTALL)
 		{
 			$exit_message = "";
 
-			if(!getenv("SILENT_INSTALL"))
+			if(pts_read_assignment("COMMAND") != "benchmark")
 			{
 				$exit_message = "\nNot recognized: $TO_INSTALL\n";
 			}
@@ -422,7 +422,7 @@ function pts_install_test($identifier)
 			else
 			{
 				$installed = true;
-				if(!getenv("SILENT_INSTALL"))
+				if(pts_read_assignment("COMMAND") != "benchmark")
 				{
 					echo "Already Installed: " . $identifier . "\n";
 				}

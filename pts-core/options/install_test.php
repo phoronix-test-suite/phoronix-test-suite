@@ -76,11 +76,6 @@ class install_test
 
 			// Install tests
 			pts_start_install($test);
-
-			if(getenv("SILENT_INSTALL") !== false)
-			{
-				define("PTS_EXIT", 1);
-			}
 		}
 	}
 }
