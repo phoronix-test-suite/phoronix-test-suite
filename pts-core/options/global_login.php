@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class global_login
+class global_login implements pts_option_interface
 {
-	public static function run()
+	public static function run($r)
 	{
 		echo "\nIf you haven't already registered for your free Phoronix Global account, you can do so at http://global.phoronix-test-suite.com/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";
 		echo "User-Name: ";

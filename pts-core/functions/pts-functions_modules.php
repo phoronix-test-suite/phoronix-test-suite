@@ -378,5 +378,13 @@ function pts_module_activity($process, $value = null)
 
 	return $return;
 }
+function pts_set_environment_variable($name, $value)
+{
+	// Sets an environmental variable
+	if(getenv($name) == false)
+	{
+		putenv($name . "=" . $value);
+	}
+}
 
 ?>

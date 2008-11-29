@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class core_version
+class core_version implements pts_option_interface
 {
-	public static function run()
+	public static function run($r)
 	{
 		echo "\nPhoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n\n";
 	}

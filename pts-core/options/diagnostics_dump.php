@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class diagnostics_dump
+class diagnostics_dump implements pts_option_interface
 {
-	public static function run()
+	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\n" . "Diagnostics Dump");
 		$pts_defined_constants = get_defined_constants(true);

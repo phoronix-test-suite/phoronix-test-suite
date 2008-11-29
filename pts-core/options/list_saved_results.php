@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_saved_results
+class list_saved_results implements pts_option_interface
 {
-	public static function run()
+	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)

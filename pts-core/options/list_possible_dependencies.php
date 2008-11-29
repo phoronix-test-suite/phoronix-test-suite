@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_possible_dependencies
+class list_possible_dependencies implements pts_option_interface
 {
-	public static function run()
+	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Possible External Dependencies");
 		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");

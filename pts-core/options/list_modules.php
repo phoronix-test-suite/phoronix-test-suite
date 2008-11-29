@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_modules
+class list_modules implements pts_option_interface
 {
-	public static function run()
+	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Modules");
 		$available_modules = array_merge(glob(MODULE_DIR . "*.sh"), glob(MODULE_DIR . "*.php"));

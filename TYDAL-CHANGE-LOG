@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rework the pts_run_option interface to set options to run next
 - pts-core: Change benchmark option to using the revised pts_run_option interface to avoid double pts-core initalization
 - pts-core: Eliminate use of SILENT_INSTALL environmental variable
+- pts-core: Ensure all PTS options extend the pts_option_interface
 - pts: Add adjustable file size support for bonnie test profile
 - tandem_XmlReader: Major performance improvements and optimizations
 - bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API

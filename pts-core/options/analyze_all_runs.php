@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class analyze_all_runs
+class analyze_all_runs implements pts_option_interface
 {
 	public static function run($r)
 	{

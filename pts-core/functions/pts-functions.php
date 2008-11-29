@@ -689,14 +689,6 @@ function pts_evaluate_script_type($script)
 
 	return $script_type;
 }
-function pts_set_environment_variable($name, $value)
-{
-	// Sets an environmental variable
-	if(getenv($name) == false)
-	{
-		putenv($name . "=" . $value);
-	}
-}
 function pts_proximity_match($search, $match_to)
 {
 	// Proximity search in $search string for * against $match_to

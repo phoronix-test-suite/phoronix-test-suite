@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_installed_tests
+class list_installed_tests implements pts_option_interface
 {
-	public static function run()
+	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Installed Tests");
 		foreach(pts_installed_tests_array() as $identifier)

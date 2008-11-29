@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class remove_installed_test
+class remove_installed_test implements pts_option_interface
 {
 	public static function run($r)
 	{

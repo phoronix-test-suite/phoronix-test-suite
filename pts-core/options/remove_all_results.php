@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class remove_all_results
+class remove_all_results implements pts_option_interface
 {
-	public static function run()
+	public static function run($r)
 	{
 		$remove_all = pts_bool_question("Are you sure you wish to remove all saved results (Y/n)?", true);
 

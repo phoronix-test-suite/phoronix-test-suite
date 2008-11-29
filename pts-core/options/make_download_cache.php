@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class make_download_cache
+class make_download_cache implements pts_option_interface
 {
-	public static function run()
+	public static function run($r)
 	{
 		include_once("pts-core/functions/pts-functions-install.php");
 		echo pts_string_header("Phoronix Test Suite - Generating Download Cache");

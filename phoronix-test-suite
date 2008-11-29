@@ -67,7 +67,7 @@ then
 
 PHP5 CLI Must Be Installed To Run The Phoronix Test Suite.
 Only PHP For The Command Line Is Needed, Not A Complete PHP w/ Web Server Installation
-The PHP CLI package is usually called php-cli or php5-cli. Also required is the PHP GD library (php-gd)
+The PHP CLI package is usually called php-cli or php5-cli. Also recommended is the PHP GD library (php-gd)
 For support visit: http://www.phoronix-test-suite.com/
 
 EOT
@@ -90,21 +90,18 @@ case "$1" in
 "install-dependencies")
 	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_EXTERNAL_DEPENDENCIES $OPTION_ARG
 	;;
-"install-all" | "force-install-all")
-	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_ALL
-	;;
-"run")
+"run" | "batch-run")
+	if [ "$1" = "batch-run" ]
+	then
+		export PTS_BATCH_MODE=1
+	fi
 	$PHP_BIN pts-core/phoronix-test-suite.php RUN_TEST $OPTION_ARG
 	;;
-"batch-run")
-	export PTS_BATCH_MODE=1
-	$PHP_BIN pts-core/phoronix-test-suite.php RUN_TEST $OPTION_ARG
-	;;
-"benchmark")
-	$PHP_BIN pts-core/phoronix-test-suite.php BENCHMARK $OPTION_ARG
-	;;
-"batch-benchmark")
-	export PTS_BATCH_MODE=1
+"benchmark" | "batch-benchmark")
+	if [ "$1" = "batch-benchmark" ]
+	then
+		export PTS_BATCH_MODE=1
+	fi
 	$PHP_BIN pts-core/phoronix-test-suite.php BENCHMARK $OPTION_ARG
 	;;
 "merge-results")
@@ -175,6 +172,9 @@ case "$1" in
 	;;
 "clone")
 	$PHP_BIN pts-core/phoronix-test-suite.php CLONE_GLOBAL_RESULT $OPTION_ARG
+	;;
+"install-all" | "force-install-all")
+	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_ALL
 	;;
 "initial-config")
 	$PHP_BIN pts-core/phoronix-test-suite.php INITIAL_CONFIG

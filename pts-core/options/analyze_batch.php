@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class analyze_batch
+class analyze_batch implements pts_option_interface
 {
 	public static function run($r)
 	{
