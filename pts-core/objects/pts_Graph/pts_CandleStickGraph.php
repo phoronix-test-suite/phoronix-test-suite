@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2008, Michael Larabel
-	pts_BarGraph.php: The bar graph object that extends pts_Graph.php.
+	pts_CandleStickGraph.php: Models a Japanese Candlestick chart
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

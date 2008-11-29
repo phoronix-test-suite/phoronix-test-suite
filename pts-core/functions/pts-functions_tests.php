@@ -114,6 +114,10 @@ function pts_save_result($save_to = null, $save_results = null)
 				{
 					$t = new pts_MultiPassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 				}
+				else if(pts_read_assignment("GRAPH_RENDER_TYPE") == "CANDLESTICK")
+				{
+					$t = new pts_CandleStickGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+				}
 				else
 				{
 					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);

@@ -117,6 +117,9 @@ case "$1" in
 "analyze-batch")
 	$PHP_BIN pts-core/phoronix-test-suite.php ANALYZE_BATCH $OPTION_ARG $3
 	;;
+"analyze-all-runs")
+	$PHP_BIN pts-core/phoronix-test-suite.php ANALYZE_ALL_RUNS $OPTION_ARG
+	;;
 "remove-result")
 	$PHP_BIN pts-core/phoronix-test-suite.php REMOVE_RESULT $OPTION_ARG
 	;;
@@ -228,7 +231,6 @@ Batch Testing Options:
 	batch-setup: Setup the batch mode options
 	batch-run <suite OR test>: Run the specified test(s) in batch mode
 	batch-benchmark <suite OR test OR saved file>: Install and run the test(s) in batch mode
-	analyze-batch <suite / test / saved file / Global ID>: Provide an analysis of the results generated from a batch run
 
 Result Viewing Options:
 	list-results: List all saved results
@@ -238,6 +240,10 @@ Result Viewing Options:
 	merge-results <saved Name 1 / Global ID> <saved Name 2 / Global ID> <save name>: Merge two sets of results
 	upload-results <saved name>: Upload a saved set of results to Phoronix Global
 	login: Enter your Phoronix Global log-in information for uploading results
+
+Analytical Options:
+	analyze-batch <saved name>: Provide an analysis of the results generated from a batch run
+	analyze-all-runs <saved name>: Generate a candlestick graph showing the distribution of results from all trial runs
 
 Module Options:
 	list-modules: List all installed/available PTS modules

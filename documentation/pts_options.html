@@ -71,10 +71,6 @@ will be run in the Phoronix Test Suite batch mode.</p>
 <p><strong>batch-benchmark &lt;To Run&gt;</strong></p>
 <p>This option and its arguments are equivalent to the benchmark option, but the 
 process will be run in the Phoronix Test Suite batch mode.</p>
-<p><strong>analyze-batch &lt;Saved Name&gt;</strong></p>
-<p>This option will analyze a batch results file and plot out the performance impact 
-from the different options onto a line graph (i.e. to see the impact that changing the video 
-resolution has on the system's performance).</p>
 <h2>Test Options</h2>
 <p><strong>list-tests</strong></p>
 <p>This option will list all available tests. The name, title, status, and license 
@@ -129,6 +125,19 @@ be supplied or the Phoronix Global ID or saved local file name.</p>
 <p>This option allows you to log-in to your Phoronix Global account and will store 
 this information automatically. A new Phoronix Global account can be created (for free) 
 at http://global.phoronix-test-suite.com/.</p>
+<h2>Analytical Options</h2>
+<p><strong>analyze-batch &lt;Saved Name&gt;</strong></p>
+<p>This option will analyze a batch results file and plot out the performance impact 
+from the different options onto a line graph (i.e. to see the impact that changing the video 
+resolution has on the system's performance).</p>
+<p><strong>analyze-all-runs &lt;Saved Name&gt;</strong></p>
+<p>This option will generate a candlestick graph showing the distribution of results from all trial runs. The 
+candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing 
+stock data it's numerical result data from all trial runs.</p>
+<p>The tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of 
+all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. 
+Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value 
+is greater.</p>
 <h2>Module Options</h2>
 <p><strong>list-modules</strong></p>
 <p>This option will list all modules that are installed / present in the <em>pts-core/modules/</em> directory. 
