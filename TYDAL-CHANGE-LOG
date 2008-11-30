@@ -24,6 +24,7 @@ Phoronix Test Suite (Git)
 - pts-core: Remove DownloadSize tag that was deprecated from the test profiles since PTS 1.4 since it's been replaced in the downloads.xml specification
 - pts-core: Update CSS and XSL for results viewer, fix table column alignment bug
 - pts: Add adjustable file size support for bonnie test profile
+- pts: Update sqlite test profile to version 3.6.6.2
 - tandem_XmlReader: Major performance improvements and optimizations
 - bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API
 - pts_Graph: Various changes to the graphing object

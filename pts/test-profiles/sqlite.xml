@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
@@ -12,8 +12,9 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>SQLite</Title>
-		<Version>3.6.3</Version>
+		<Version>3.6.6.2</Version>
 		<TimesToRun>3</TimesToRun>
+		<Executable>sqlite-benchmark</Executable>
 		<SubTitle>12,500 INSERTs</SubTitle>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
