@@ -117,19 +117,18 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, $UserName);
 	$config->addXmlObject(P_OPTION_GLOBAL_UPLOADKEY, 0, $UploadKey);
 
-	$config->addXmlObject(P_OPTION_RESULTS_DIRECTORY, 1, pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/", $read_config));
-	$config->addXmlObject(P_OPTION_TEST_ENVIRONMENT, 1, pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/", $read_config));
-	$config->addXmlObject(P_OPTION_CACHE_DIRECTORY, 1, pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/", $read_config));
-	$config->addXmlObject(P_OPTION_CACHE_SEARCHMEDIA, 1, pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE", $read_config));
-
 	$config->addXmlObject(P_OPTION_LOAD_MODULES, 2, pts_read_user_config(P_OPTION_LOAD_MODULES, "", $read_config));
-	$config->addXmlObject(P_OPTION_PROMPT_DOWNLOADLOC, 2, pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE", $read_config));
 
 	$config->addXmlObject(P_OPTION_TEST_REMOVEDOWNLOADS, 3, pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE", $read_config));
+	$config->addXmlObject(P_OPTION_CACHE_SEARCHMEDIA, 3, pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE", $read_config));
+	$config->addXmlObject(P_OPTION_PROMPT_DOWNLOADLOC, 3, pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE", $read_config));
+	$config->addXmlObject(P_OPTION_TEST_ENVIRONMENT, 3, pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/", $read_config));
+	$config->addXmlObject(P_OPTION_CACHE_DIRECTORY, 3, pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/", $read_config));
 
 	$config->addXmlObject(P_OPTION_TEST_SLEEPTIME, 4, pts_read_user_config(P_OPTION_TEST_SLEEPTIME, "8", $read_config));
 	$config->addXmlObject(P_OPTION_LOG_VSYSDETAILS, 4, pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_LOG_BENCHMARKFILES, 4, pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE", $read_config));
+	$config->addXmlObject(P_OPTION_RESULTS_DIRECTORY, 4, pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/", $read_config));
 
 	$config->addXmlObject(P_OPTION_BATCH_SAVERESULTS, 5, $BatchOptions[0]);
 	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 5, $BatchOptions[1]);

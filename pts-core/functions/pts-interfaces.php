@@ -172,20 +172,18 @@ define("P_RESULTS_RESULTS_GROUP_RAW", P_RESULTS_RESULTS_GROUP . "/" . S_RESULTS_
 define("P_OPTION_GLOBAL_USERNAME", "PhoronixTestSuite/GlobalDatabase/UserName"); // Phoronix Global user-name
 define("P_OPTION_GLOBAL_UPLOADKEY", "PhoronixTestSuite/GlobalDatabase/UploadKey"); // Phoronix Global upload key
 
-define("P_OPTION_PROMPT_DOWNLOADLOC", "PhoronixTestSuite/Options/General/PromptForDownloadMirror"); // Results save directory
 define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/General/LoadModules"); // Modules to load by default
 
 define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Testing/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
 define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/Testing/SaveSystemDetails"); // Log verbose system details?
 define("P_OPTION_LOG_BENCHMARKFILES", "PhoronixTestSuite/Options/Testing/SaveBenchmarkLogs"); // Save benchmark logs?
+define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/Testing/ResultsDirectory"); // Results save directory
 
 define("P_OPTION_TEST_REMOVEDOWNLOADS", "PhoronixTestSuite/Options/Installation/RemoveDownloadFiles"); // Remove downloaded files after test is installed
-
-define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/FileManagement/EnvironmentDirectory"); // Results save directory
-define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/ResultsDirectory"); // Results save directory
-
-define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/FileManagement/CacheDirectory"); // Directory for reading/writing to download cache
-define("P_OPTION_CACHE_SEARCHMEDIA", "PhoronixTestSuite/Options/FileManagement/SearchMediaForCache"); // Search /media/ devices for a remote download cache
+define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/Installation/EnvironmentDirectory"); // Results save directory
+define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/Installation/CacheDirectory"); // Directory for reading/writing to download cache
+define("P_OPTION_CACHE_SEARCHMEDIA", "PhoronixTestSuite/Options/Installation/SearchMediaForCache"); // Search /media/ devices for a remote download cache
+define("P_OPTION_PROMPT_DOWNLOADLOC", "PhoronixTestSuite/Options/Installation/PromptForDownloadMirror"); // Results save directory
 
 define("P_OPTION_BATCH_CONFIGURED", "PhoronixTestSuite/Options/BatchMode/Configured"); // Batch mode has been configured
 define("P_OPTION_BATCH_SAVERESULTS", "PhoronixTestSuite/Options/BatchMode/SaveResults"); // Batch mode save results

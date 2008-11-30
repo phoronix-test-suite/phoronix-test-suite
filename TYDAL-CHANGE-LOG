@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts-core: Eliminate use of SILENT_INSTALL environmental variable
 - pts-core: Ensure all PTS options extend the pts_option_interface
 - pts-core: Allow pts_Graph to set the default image renderer for blide_renderer
+- pts-core: Adjust some tag locations within the user-config.xml (NOTE: USERS MAY NEED TO UPDATE THEIR SETTINGS)
 - pts: Add adjustable file size support for bonnie test profile
 - tandem_XmlReader: Major performance improvements and optimizations
 - bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API
