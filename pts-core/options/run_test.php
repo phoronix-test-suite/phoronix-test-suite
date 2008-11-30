@@ -31,52 +31,11 @@ class run_test implements pts_option_interface
 
 		if(is_file($r[0]) && substr(basename($r[0]), -4) == ".svg")
 		{
-			// Image graph result driven test selection
-			$svg_parser = new tandem_XmlReader($r[0]);
-			$svg_test = array_pop($svg_parser->getStatement("Test"));
-			$svg_identifier = array_pop($svg_parser->getStatement("Identifier"));
+			$test_extracted = pts_prompt_svg_result_options($r[0]);
 
-			if(!empty($svg_test) && !empty($svg_identifier))
+			if(!empty($test_extracted))
 			{
-				$run_options = array();
-				if(pts_is_test($svg_test))
-				{
-					array_push($run_options, array($svg_test, "Run this test (" . $svg_test . ")"));
-				}
-
-				if(pts_is_suite($svg_identifier))
-				{
-					array_push($run_options, array($svg_identifier, "Run this suite (" . $svg_identifier . ")"));
-				}
-				else if(pts_is_global_id($svg_identifier))
-				{
-					array_push($run_options, array($svg_identifier, "Run this Phoronix Global comparison (" . $svg_identifier . ")"));
-				}
-
-				$run_option_count = count($run_options);
-				if($run_option_count > 0)
-				{
-					if($run_option_count == 1)
-					{
-						$TO_RUN = $run_options[0][0];
-					}
-					else
-					{
-						do
-						{
-							echo "\n";
-							for($i = 0; $i < $run_option_count; $i++)
-							{
-								echo ($i + 1) . ": " . $run_options[$i][1] . "\n";
-							}
-							echo "\nPlease Enter Your Choice: ";
-
-							$run_choice = trim(fgets(STDIN));
-						}
-						while($run_choice < 1 || $run_choice > $run_option_count);
-						$TO_RUN = $run_options[($run_choice - 1)][0];
-					}
-				}
+				$TO_RUN = $test_extracted;
 			}
 		}
 
@@ -188,43 +147,13 @@ class run_test implements pts_option_interface
 				$PROPOSED_FILE_NAME = $FILE_NAME[0];
 				$CUSTOM_TITLE = $FILE_NAME[1];
 
-				do
+				$validate_r = pts_validate_save_results_name($PROPOSED_FILE_NAME, $TO_RUN, $TO_RUN_TYPE);
+
+				if($PROPOSED_FILE_NAME != $validare_r[0] && !empty($validate_r[1]))
 				{
-					if(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"))
-					{
-						$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml");
-						$test_suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
-
-						if($TO_RUN_TYPE != "GLOBAL_COMPARISON")
-						{
-							if($test_suite != $TO_RUN)
-							{
-								$is_validated = false;
-							}
-							else
-							{
-								$is_validated = true;
-							}
-						}
-						else
-						{
-							$is_validated = true; //TODO: add type comparison check when doing a global comparison
-						}
-					}
-					else
-					{
-						$is_validated = true;
-					}
-
-					if(!$is_validated)
-					{
-						echo pts_string_header("This saved file-name is associated with a different test ($test_suite) from $TO_RUN. Enter a new name for saving the results.");
-						$FILE_NAME = pts_prompt_save_file_name(false);
-						$PROPOSED_FILE_NAME = $FILE_NAME[0];
-						$CUSTOM_TITLE = $FILE_NAME[1];
-					}
+					$PROPOSED_FILE_NAME = $validate_r[0];
+					$CUSTOM_TITLE = $validate_r[1];
 				}
-				while(!$is_validated);
 			}
 		}
 
@@ -270,51 +199,11 @@ class run_test implements pts_option_interface
 			}
 			else
 			{
-				// Batch mode for single test
-				$batch_all_args_real = array();
-				$batch_all_args_description = array();
-				$description_separate = " ";
-				$test_options = pts_test_options($TO_RUN);
-
-				for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
-				{
-					$o = $test_options[$this_option_pos];
-					$option_count = $o->option_count();
-
-					$option_args = array();
-					$option_args_description = array();
-
-					for($i = 0; $i < $o->option_count(); $i++)
-					{
-						// A bit redundant processing, but will ensure against malformed XML problems and extra stuff added
-						$this_arg = $o->get_option_prefix() . $o->get_option_value($i) . $o->get_option_postfix();
-						$this_arg_description = $o->get_name() . ": " . $o->get_option_name($i);
-
-						if(($cut_point = strpos($this_arg_description, "(")) > 1 && strpos($this_arg_description, ")") > $cut_point)
-						{
-							$this_arg_description = substr($this_arg_description, 0, $cut_point);
-						}
-
-						array_push($option_args, $this_arg);
-						array_push($option_args_description, $this_arg_description);
-					}
-
-					if($i > 1)
-					{
-						$description_separate = " - ";
-					}
-
-					array_push($batch_all_args_real, $option_args);
-					array_push($batch_all_args_description, $option_args_description);
-				}
-
-				$TEST_ARGS = array();
-				pts_all_combos($TEST_ARGS, "", $batch_all_args_real, 0);
-
-				$TEST_ARGS_DESCRIPTION = array();
-				pts_all_combos($TEST_ARGS_DESCRIPTION, "", $batch_all_args_description, 0, $description_separate);
+				$option_output = pts_generate_batch_run_options($TO_RUN);
 
 				$TEST_RUN = array();
+				$TEST_ARGS = $option_output[0];
+				$TEST_ARGS_DESCRIPTION = $option_output[1];
 				for($i = 0; $i < count($TEST_ARGS); $i++) // needed at this time to fill up the array same size as the number of options present
 				{
 					array_push($TEST_RUN, $TO_RUN);

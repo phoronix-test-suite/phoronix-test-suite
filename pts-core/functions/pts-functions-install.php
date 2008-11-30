@@ -39,9 +39,9 @@ function pts_start_install($TO_INSTALL)
 
 			if(pts_read_assignment("COMMAND") != "benchmark")
 			{
-				$exit_message = "\nNot recognized: $TO_INSTALL\n";
+				echo pts_string_header("\nNot recognized: $TO_INSTALL\n");
 			}
-			pts_exit($exit_message);
+			return false;
 		}
 	}
 
@@ -528,4 +528,4 @@ function pts_generate_download_cache()
 	file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml", $cache_xml);
 }
 
-?>
+?>TO
