@@ -25,6 +25,7 @@ Phoronix Test Suite (Git)
 - pts-core: Update CSS and XSL for results viewer, fix table column alignment bug
 - pts: Add adjustable file size support for bonnie test profile
 - pts: Update sqlite test profile to version 3.6.6.2
+- pts: Update iozone test profile to version 3.315 and add size user option
 - tandem_XmlReader: Major performance improvements and optimizations
 - bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API
 - pts_Graph: Various changes to the graphing object

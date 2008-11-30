@@ -1,7 +1,7 @@
 #!/bin/sh
 
-tar -xvf iozone3_308.tar
-cd iozone3_308/src/current/
+tar -xvf iozone3_315.tar
+cd iozone3_315/src/current/
 
 case $OS_ARCH in
 	"x86_64" )
@@ -13,6 +13,5 @@ case $OS_ARCH in
 esac
 
 echo "#!/bin/sh
-iozone_ram=\$((\$SYS_MEMORY * 2))
-iozone3_308/src/current/iozone -s \${iozone_ram}M \$@ > \$LOG_FILE 2>&1" > ../../../iozone
+iozone3_315/src/current/iozone \$@ > \$LOG_FILE 2>&1" > ../../../iozone
 chmod +x ../../../iozone

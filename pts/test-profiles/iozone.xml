@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
 		<TestType>Disk</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -13,7 +13,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>IOzone</Title>
-		<Version>3.308</Version>
+		<Version>3.315</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
@@ -23,6 +23,29 @@
 		<Default>
 			<Arguments>-r 1</Arguments>
 		</Default>
+		<Option>
+			<DisplayName>Size</DisplayName>
+			<Identifier>size</Identifier>
+			<ArgumentPrefix>-s </ArgumentPrefix>
+			<Menu>
+				<Entry>
+					<Name>512MB</Name>
+					<Value>512M</Value>
+				</Entry>
+				<Entry>
+					<Name>2GB</Name>
+					<Value>2048M</Value>
+				</Entry>
+				<Entry>
+					<Name>4GB</Name>
+					<Value>4096M</Value>
+				</Entry>
+				<Entry>
+					<Name>8GB</Name>
+					<Value>8192M</Value>
+				</Entry>
+			</Menu>
+		</Option>
 		<Option>
 			<DisplayName>Disk Test</DisplayName>
 			<Identifier>test</Identifier>
