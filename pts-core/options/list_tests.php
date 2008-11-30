@@ -27,7 +27,7 @@ class list_tests implements pts_option_interface
 		echo pts_string_header("Phoronix Test Suite - Tests");
 		foreach(pts_available_tests_array() as $identifier)
 		{
-			if(pts_test_supported($identifier) || IS_DEBUG_MODE)
+			if(pts_test_supported($identifier) || IS_DEBUG_MODE || pts_read_assignment("COMMAND") == "list-all-tests")
 			{
 				echo new pts_test_profile_details($identifier);
 			}
