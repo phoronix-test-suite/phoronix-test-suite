@@ -88,6 +88,113 @@ function pts_prompt_results_identifier($current_identifiers = null)
 
 	return $RESULTS_IDENTIFIER;
 }
+function pts_prompt_test_options($identifier)
+{
+	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
+
+	$USER_ARGS = "";
+	$TEXT_ARGS = "";
+	$test_options = pts_test_options($identifier);
+
+	if(count($test_options) > 0)
+	{
+		echo pts_string_header("Test Configuration: " . $test_title);
+	}
+
+	for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
+	{
+		$o = $test_options[$this_option_pos];
+		$option_count = $o->option_count();
+
+		if($option_count == 0)
+		{
+			// User inputs their option
+			do
+			{
+				echo "\n" . $o->get_name() . "\n" . "Enter Value: ";
+				$value = strtolower(trim(fgets(STDIN)));
+			}
+			while(empty($value));
+
+			$USER_ARGS .= $o->get_option_prefix() . $value . $o->get_option_postfix();
+		}
+		else
+		{
+			if($option_count == 1)
+			{
+				// Only one option in menu, so auto-select it
+				$bench_choice = 1;
+			}
+			else
+			{
+				// Have the user select the desired option
+				echo "\n" . $o->get_name() . ":\n";
+				$all_option_names = $o->get_all_option_names();
+				$first_try = true;
+
+				do
+				{
+					echo "\n";
+					for($i = 0; $i < $option_count; $i++)
+					{
+						echo ($i + 1) . ": " . $o->get_option_name($i) . "\n";
+					}
+					echo "\nPlease Enter Your Choice: ";
+
+					if($first_try && ($auto_opt = getenv(strtoupper($identifier) . "_" . $this_option_pos)) != false)
+					{
+						$bench_choice = $auto_opt;
+						echo $bench_choice . "\n";
+					}
+					else
+					{
+						$bench_choice = trim(fgets(STDIN));
+					}
+					$first_try = false;
+				}
+				while(($bench_choice < 1 || $bench_choice > $option_count) && !in_array($bench_choice, $all_option_names));
+
+				if(!is_numeric($bench_choice) && in_array($bench_choice, $all_option_names))
+				{
+					$match_made = false;
+
+					for($i = 0; $i < $option_count && !$match_made; $i++)
+					{
+						if($o->get_option_name($i) == $bench_choice)
+						{
+							$bench_choice = ($i + 1);
+							$match_made = true;
+						}
+					}
+				}
+			}
+
+			// Format the selected option
+			$option_display_name = $o->get_option_name(($bench_choice - 1));
+
+			if(($cut_point = strpos($option_display_name, "(")) > 1 && strpos($option_display_name, ")") > $cut_point)
+			{
+				$option_display_name = substr($option_display_name, 0, $cut_point);
+			}
+
+			if(count($test_options) > 1)
+			{
+				$TEXT_ARGS .= $o->get_name() . ": ";
+			}
+			$TEXT_ARGS .= $option_display_name;
+
+			if($this_option_pos < (count($test_options) - 1))
+			{
+				$TEXT_ARGS .= " - ";
+			}
+
+			$USER_ARGS .= $o->get_option_prefix() . $o->get_option_value(($bench_choice - 1)) . $o->get_option_postfix() . " ";
+		}
+	}
+
+	return array($USER_ARGS, $TEXT_ARGS);
+}
 function pts_swap_user_variables($user_str)
 {
 	if(strpos($user_str, "$") !== false)

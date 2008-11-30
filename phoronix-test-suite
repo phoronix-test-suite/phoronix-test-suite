@@ -185,6 +185,9 @@ case "$1" in
 "version")
 	$PHP_BIN pts-core/phoronix-test-suite.php CORE_VERSION
 	;;
+"build-suite")
+	$PHP_BIN pts-core/phoronix-test-suite.php BUILD_SUITE
+	;;
 "login")
 	$PHP_BIN pts-core/phoronix-test-suite.php GLOBAL_LOGIN
 	;;
@@ -256,6 +259,7 @@ Miscellaneous Options:
 	info <suite / test>: Show detailed information about a test or suite
 	system-info: Show detected software and hardware information
 	diagnostics: Useful information when reporting a bug or problem
+	build-suite: Build your own test suite
 	version: Print the Phoronix Test Suite version and code-name
 EOT
 	;;

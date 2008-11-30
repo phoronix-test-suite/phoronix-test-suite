@@ -269,6 +269,35 @@ function pts_run_additional_vars($identifier)
 
 	return $extra_vars;
 }
+function pts_text_input($question)
+{
+	do
+	{
+		echo "\n" . $question . ": ";
+		$answer = trim(fgets(STDIN));
+	}
+	while(empty($answer));
+
+	return $answer;
+}
+function pts_text_select_menu($user_string, $options_r)
+{
+	$option_count = count($options_r);
+
+	do
+	{
+		echo "\n";
+		for($i = 0; $i < $option_count; $i++)
+		{
+				echo ($i + 1) . ": " . $options_r[$i] . "\n";
+		}
+		echo "\n" . $user_string . ": ";
+		$test_choice = trim(fgets(STDIN));
+	}
+	while(!(in_array($test_choice, $options_r) || isset($options_r[($test_choice - 1)]) && ($test_choice = $options_r[($test_choice - 1)]) != ""));
+
+	return $test_choice;
+}
 function pts_exec($exec, $extra_vars = null)
 {
 	// Same as shell_exec() but with the PTS env variables added in
