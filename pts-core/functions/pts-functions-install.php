@@ -136,13 +136,13 @@ function pts_download_test_files($identifier)
 				else
 				{
 					$used_cache = false;
-					for($i = 0; $i < count($cache_directories) && $used_cache == false; $i++)
+					for($j = 0; $j < count($cache_directories) && $used_cache == false; $j++)
 					{
-						if(pts_validate_md5_download_file($cache_directories[$i] . $package_filename, $package_md5))
+						if(pts_validate_md5_download_file($cache_directories[$j] . $package_filename, $package_md5))
 						{
 							echo "Copying Cached File: " . $package_filename . "\n";
 
-							if(copy($cache_directories[$i] . $package_filename, $download_destination))
+							if(copy($cache_directories[$j] . $package_filename, $download_destination))
 							{
 								$urls = array();
 								$used_cache = true;
@@ -238,7 +238,6 @@ function pts_download_test_files($identifier)
 							{
 								pts_move_file($package_filename . ".temp", $package_filename, $download_location);
 							}
-
 							$file_downloaded = true;
 							$fail_count = 0;
 						}

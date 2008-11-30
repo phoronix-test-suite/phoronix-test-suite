@@ -23,6 +23,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix regression in list-all-tests not listing unsupported tests
 - pts-core: Remove DownloadSize tag that was deprecated from the test profiles since PTS 1.4 since it's been replaced in the downloads.xml specification
 - pts-core: Update CSS and XSL for results viewer, fix table column alignment bug
+- pts-core: Fix recent regression in pts_download_test_files() that caused only the first file to be downloaded
 - pts: Add adjustable file size support for bonnie test profile
 - pts: Update sqlite test profile to version 3.6.6.2
 - pts: Update iozone test profile to version 3.315 and add size user option
