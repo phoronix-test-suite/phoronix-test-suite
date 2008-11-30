@@ -366,6 +366,17 @@ function pts_install_test($identifier)
 				{
 					mkdir(TEST_ENV_DIR . $identifier);
 				}
+				else
+				{
+					// Remove any files that were installed, since this test will be reinstalled and remove any old download files not used
+					$ignore_files = array("pts-install.xml");
+					foreach(pts_objects_test_downloads($identifier) as $one_package_object)
+					{
+						array_push($ignore_files, $one_package_object->get_filename());
+					}
+
+					pts_remove(TEST_ENV_DIR . $identifier, $ignore_files);
+				}
 
 				$download_test_files = pts_download_test_files($identifier);
 

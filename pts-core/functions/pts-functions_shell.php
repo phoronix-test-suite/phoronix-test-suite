@@ -75,7 +75,7 @@ function pts_download($download, $to)
 
 	return $download_output;
 }
-function pts_remove($object)
+function pts_remove($object, $ignore_files = null)
 {
 	if(!file_exists($object))
 	{
@@ -84,7 +84,14 @@ function pts_remove($object)
 
 	if(is_file($object))
 	{
-		return unlink($object);
+		if(is_array($ignore_files) && in_array(basename($object), $ignore_files))
+		{
+			return true;
+		}
+		else
+		{
+			return unlink($object);
+		}
 	}
 
 	if(is_dir($object))
@@ -94,7 +101,7 @@ function pts_remove($object)
 		{
 			if($entry != "." && $entry != "..")
 			{
-				pts_remove($object . "/" . $entry);
+				pts_remove($object . "/" . $entry, $ignore_files);
 			}
 		}
 		$directory->close();
