@@ -1,14 +1,14 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://download.tuxfamily.org/openarena/rel/080/oa080.zip</URL>
-			<MD5>61aaba81973900d5116a6842079c9c49</MD5>
-			<FileSize>324621647</FileSize>
+			<URL>http://download.tuxfamily.org/openarena/rel/081/oa081.zip</URL>
+			<MD5>49006bcb02b4e8ea3d06749e8f4e4887</MD5>
+			<FileSize>318927645</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/openarena-benchmark-files-3.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/openarena-benchmark-files-3.tar.gz</URL>
-			<MD5>507cd112945226024ceda3a678d852e2</MD5>
-			<FileSize>622443</FileSize>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/openarena-benchmark-files-4.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/openarena-benchmark-files-4.tar.gz</URL>
+			<MD5>81679f98354ac8f7891b1a038f1faa94</MD5>
+			<FileSize>405689</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
