@@ -308,6 +308,28 @@ function pts_remove_local_download_test_files($identifier)
 		}
 	}
 }
+function pts_setup_install_test_directory($identifier, $remove_old_files = false)
+{
+	if(!is_dir(TEST_ENV_DIR))
+	{
+		mkdir(TEST_ENV_DIR);
+	}
+
+	if(!is_dir(TEST_ENV_DIR . $identifier))
+	{
+		mkdir(TEST_ENV_DIR . $identifier);
+	}
+	else if($remove_old_files)
+	{
+		// Remove any files that were installed, since this test will be reinstalled and remove any old download files not used
+		$ignore_files = array("pts-install.xml");
+		foreach(pts_objects_test_downloads($identifier) as $download_object)
+		{
+			array_push($ignore_files, $download_object->get_filename());
+		}
+		pts_remove(TEST_ENV_DIR . $identifier, $ignore_files);
+	}
+}
 function pts_install_test($identifier)
 {
 	if(!pts_is_test($identifier))
@@ -357,27 +379,7 @@ function pts_install_test($identifier)
 					pts_set_assignment("PTS_TOTAL_SIZE_MSG", 1);
 				}
 
-				if(!is_dir(TEST_ENV_DIR))
-				{
-					mkdir(TEST_ENV_DIR);
-				}
-
-				if(!is_dir(TEST_ENV_DIR . $identifier))
-				{
-					mkdir(TEST_ENV_DIR . $identifier);
-				}
-				else
-				{
-					// Remove any files that were installed, since this test will be reinstalled and remove any old download files not used
-					$ignore_files = array("pts-install.xml");
-					foreach(pts_objects_test_downloads($identifier) as $one_package_object)
-					{
-						array_push($ignore_files, $one_package_object->get_filename());
-					}
-
-					pts_remove(TEST_ENV_DIR . $identifier, $ignore_files);
-				}
-
+				pts_setup_install_test_directory($identifier, true);
 				$download_test_files = pts_download_test_files($identifier);
 
 				if($download_test_files == false)

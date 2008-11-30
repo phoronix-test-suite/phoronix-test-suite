@@ -173,6 +173,9 @@ case "$1" in
 "clone")
 	$PHP_BIN pts-core/phoronix-test-suite.php CLONE_GLOBAL_RESULT $OPTION_ARG
 	;;
+"download-test-files")
+	$PHP_BIN pts-core/phoronix-test-suite.php DOWNLOAD_TEST_FILES $OPTION_ARG
+	;;
 "install-all" | "force-install-all")
 	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_ALL
 	;;
