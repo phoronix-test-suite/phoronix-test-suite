@@ -433,20 +433,10 @@ function pts_estimated_download_size($identifier)
 	$estimated_size = 0;
 	foreach(pts_contained_tests($identifier, true) as $test)
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test));
-		$this_size = $xml_parser->getXMLValue(P_TEST_DOWNLOADSIZE); // TODO: The DownloadSize tag has been deprecates as of Phoronix Test Suite 1.4.0
-
-		if(!empty($this_size) && is_numeric($this_size))
+		// The work for calculating the download size in 1.4.0+
+		foreach(pts_objects_test_downloads($test) as $download_object)
 		{
-			$estimated_size += $this_size;
-		}
-		else
-		{
-			// The work for calculating the download size in 1.4.0+
-			foreach(pts_objects_test_downloads($test) as $download_object)
-			{
-				$estimated_size += pts_trim_double($download_object->get_filesize() / 1048576);
-			}
+			$estimated_size += pts_trim_double($download_object->get_filesize() / 1048576);
 		}
 	}
 
