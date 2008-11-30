@@ -498,7 +498,7 @@ function hw_gpu_xrandr_available_modes()
 			}
 		}
 
-		$available_modes = $modes;
+		$available_modes = $sorted_modes;
 	}
 
 	return $available_modes;
