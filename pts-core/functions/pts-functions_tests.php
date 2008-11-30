@@ -123,25 +123,7 @@ function pts_save_result($save_to = null, $save_results = null)
 					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 				}
 
-				if(pts_gd_available() && getenv("SVG_DEBUG") == false)
-				{
-					// Render to PNG
-					$t->setRenderer("PNG");
-					pts_copy(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl", $save_to_dir . "/pts-results-viewer.xsl");
-					file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted("PNG"));
-				}
-				else
-				{
-					if(!pts_is_assignment("PHP_SVG_TEXT"))
-					{
-						echo "\nThe PHP GD extension is missing, so the experimental SVG rendering engine is being used.\n";
-						pts_set_assignment("PHP_SVG_TEXT", 1);
-					}
-
-					// Render to SVG
-					$t->setRenderer("SVG");
-					file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted("SVG"));
-				}
+				file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t->getRenderer()));
 
 				$t->loadGraphIdentifiers($results_identifiers[$i]);
 				$t->loadGraphValues($results_values[$i]);

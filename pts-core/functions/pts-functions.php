@@ -114,26 +114,6 @@ function p_str($str_o)
 	//  $_ENV["LANG"]
 	return $str_o;
 }
-function pts_gd_available()
-{
-	// Checks if PHP GD library is available for image rendering
-
-	if(!extension_loaded("gd"))
-	{
-	/*	if(dl("gd.so"))
-		{
-			$gd_available = true;
-		}
-		else	*/
-			$gd_available = false;
-	}
-	else
-	{
-		$gd_available = true;
-	}
-
-	return $gd_available;
-}
 function pts_process_register($process)
 {
 	// Register a process as active

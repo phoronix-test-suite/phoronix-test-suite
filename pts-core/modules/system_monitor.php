@@ -442,11 +442,6 @@ class system_monitor extends pts_module_interface
 
 						$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
 
-						if(pts_gd_available() && getenv("SVG_DEBUG") == FALSE)
-							$t->setRenderer("PNG");
-						else
-							$t->setRenderer("SVG");
-
 						$first_run = true;
 						foreach($sub_array as $id_point)
 						{

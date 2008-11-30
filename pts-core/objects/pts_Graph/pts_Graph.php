@@ -109,6 +109,30 @@ abstract class pts_Graph
 		{
 			putenv("GDFONTPATH=" . getcwd());
 		}
+
+		// Set a renderer
+		if(!extension_loaded("gd"))
+		{
+		/*	if(dl("gd.so"))
+			{
+				$gd_available = true;
+			}
+			else	*/
+				$gd_available = false;
+		}
+		else
+		{
+			$gd_available = true;
+		}
+
+		if($gd_available && getenv("SVG_DEBUG") == false)
+		{
+			$this->setRenderer("PNG");
+		}
+		else
+		{
+			$this->setRenderer("SVG");
+		}
 	}
 	public function setRenderer($renderer)
 	{

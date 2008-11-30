@@ -72,8 +72,8 @@ class pts_CandleStickGraph extends pts_BarGraph
 				}
 
 				$this->graph_image->draw_line($px_bound_center, $plot_wick_lowest, $px_bound_center, $plot_wick_highest, $this->graph_color_body_light, 1);
-				$this->graph_image->draw_rectangle_border($px_bound_left, $plot_body_low, $px_bound_right, $plot_body_high, $this->graph_color_body_light);
 				$this->graph_image->draw_rectangle($px_bound_left + 1, $plot_body_low - 1, $px_bound_right - 1, $plot_body_high + 1, $body_color);
+				$this->graph_image->draw_rectangle_border($px_bound_left, $plot_body_low, $px_bound_right, $plot_body_high, $this->graph_color_body_light);
 			}
 		}
 	}
