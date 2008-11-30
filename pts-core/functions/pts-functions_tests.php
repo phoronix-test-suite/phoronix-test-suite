@@ -640,14 +640,7 @@ function pts_test_version_compatible($version_compare = "")
 
 		$support_ends = preg_replace("/[^0-9]/", "", $support_ends);
 
-		if($current >= $support_begins && $current <= $support_ends)
-		{
-			$compatible = true;
-		}
-		else
-		{
-			$compatible = false;
-		}
+		$compatible = $current >= $support_begins && $current <= $support_ends;
 	}
 
 	return $compatible;	

@@ -30,23 +30,17 @@
 					<p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p>
 				</div>
 
-				<xsl:variable name="idcount"><xsl:value-of select="count(PhoronixTestSuite/System)" /></xsl:variable>
-				<xsl:variable name="idwidth"><xsl:value-of select="floor(815 div $idcount) - 3" /></xsl:variable>
-
 				<h1>System Hardware</h1>
-				<div class="pts_chart_box">
-				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_head"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><xsl:value-of select="AssociatedIdentifiers" /></div></xsl:for-each>
-				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_body"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><xsl:value-of select="Hardware" /></div></xsl:for-each>
+				<div class="pts_table_box">
+				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><xsl:value-of select="Hardware" /></div></div></div></xsl:for-each>
 				</div>
 				<h1>System Software</h1>
-				<div class="pts_chart_box">
-				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_head"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><xsl:value-of select="AssociatedIdentifiers" /></div></xsl:for-each>
-				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_body"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><xsl:value-of select="Software" /></div></xsl:for-each>
+				<div class="pts_table_box">
+				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><xsl:value-of select="Software" /></div></div></div></xsl:for-each>
 				</div>
 				<h1>Additional Details</h1>
-				<div class="pts_chart_box">
-				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_head"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><xsl:value-of select="AssociatedIdentifiers" /></div></xsl:for-each>
-				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_column_body"><xsl:attribute name="style">width: <xsl:value-of select="$idwidth" />px;</xsl:attribute><strong>Test Administrator:</strong> <xsl:value-of select="Author" /><br /><strong>Test Date/Time:</strong> <xsl:value-of select="TestDate" /> (UTC)<br /><strong>PTS Version:</strong> <xsl:value-of select="Version" /><br /><strong>Test Notes:</strong><br /><xsl:value-of select="TestNotes" /></div></xsl:for-each>
+				<div class="pts_table_box">
+				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><strong>Administrator:</strong> <xsl:value-of select="Author" /><br /><strong>Date:</strong> <xsl:value-of select="TestDate" /> (UTC)<br /><strong>PTS Version:</strong> <xsl:value-of select="Version" /><br /><strong>Test Notes:</strong><br /><xsl:value-of select="TestNotes" /></div></div></div></xsl:for-each>
 				</div>
 			</div>
 

@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix regression in hw_gpu_xrandr_available_modes()
 - pts-core: Fix regression in list-all-tests not listing unsupported tests
 - pts-core: Remove DownloadSize tag that was deprecated from the test profiles since PTS 1.4 since it's been replaced in the downloads.xml specification
+- pts-core: Update CSS and XSL for results viewer, fix table column alignment bug
 - pts: Add adjustable file size support for bonnie test profile
 - tandem_XmlReader: Major performance improvements and optimizations
 - bilde_renderer: New PTS-spawned abstracted image rendering interface that supports SVG and PNG rendering with a standard API

@@ -97,24 +97,19 @@ div.pts_column_head
 {	
 	font-size: 13px;
 	color: #FFF;
-	text-align: center;
-	margin: 0 3px;
 	background-color: #2b6b29;
 	font-weight: bold;
-	float: left;
-	border: solid #3B433A;
-	border-width: 1px;
+	display: table-row;
 }
 div.pts_column_body
 {	
 	font-size: 12px;
 	color: #000;
-	text-align: center;
-	margin: 0 3px;
-	background-color: #F8F8F8;
-	float: left;
-	border: solid #66695B;
-	border-width: 0 1px 1px;
+	display: table-row;
+}
+div.pts_column_body_text
+{
+	padding: 3px 4px;
 }
 h1
 {
@@ -122,6 +117,21 @@ h1
 	font-size: 21px;
 	color: #2b6b29;
 	font-weight: bold;
+}
+div.pts_table_box
+{
+	text-align: center;
+	background-color: #F8F8F8;
+	border: solid #2b6b29;
+	border-width: 0 0 1px 1px;
+	margin: 6px auto;
+	display: table;
+}
+div.pts_table_box_col
+{
+	border: solid #2b6b29;
+	border-width: 0 1px 0 0;
+	display: table-cell;
 }
 div.pts_chart_box
 {

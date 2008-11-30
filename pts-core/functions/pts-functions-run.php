@@ -128,10 +128,7 @@ function pts_prompt_save_file_name($check_env = true)
 				$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
 				$PROPOSED_FILE_NAME = pts_input_string_to_identifier($PROPOSED_FILE_NAME);
 
-				if(pts_is_test($PROPOSED_FILE_NAME) || pts_is_suite($PROPOSED_FILE_NAME))
-				{
-					$is_reserved_word = true;
-				}
+				$is_reserved_word = pts_is_test($PROPOSED_FILE_NAME) || pts_is_suite($PROPOSED_FILE_NAME);
 			}
 			while(empty($PROPOSED_FILE_NAME) || $is_reserved_word);
 		}
