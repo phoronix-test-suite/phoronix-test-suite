@@ -847,6 +847,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 		if($times_to_run > 1 && $i < ($times_to_run - 1))
 		{
+			echo pts_call_test_script($test_identifier, "interim", null, $test_directory, $extra_runtime_variables);
 			pts_module_process("__interim_test_run", $pts_test_result);
 			sleep(1); // Rest for a moment between tests
 		}

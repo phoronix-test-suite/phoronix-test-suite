@@ -23,7 +23,7 @@
 
 function pts_sctp_test_directory()
 {
-	return PTS_TEMP_DIR . "sctp/" . basename(SCTP_FILE) . "/";
+	return SCTP_DIR . basename(SCTP_FILE, ".sctp") . "/";
 }
 function pts_remove_sctp_test_files()
 {
@@ -39,16 +39,15 @@ function pts_generate_sctp_layer()
 		pts_exit("\n" . SCTP_FILE . " is not a valid self-contained test profile!\n");
 	}
 
-	if(!is_dir(PTS_TEMP_DIR . "sctp/"))
-	{
-		mkdir(PTS_TEMP_DIR . "sctp/");
-	}
 	if(!is_dir($test_directory))
 	{
 		mkdir($test_directory);
 	}
 
-	$sctp_stages = array("install" => P_TEST_SCTP_INSTALLSCRIPT, "downloads" => P_TEST_SCTP_DOWNLOADS, "parse-results" => P_TEST_SCTP_RESULTSPARSER, "pre" => P_TEST_SCTP_PRERUN, "post" => P_TEST_SCTP_POSTRUN);
+	$sctp_stages = array("install" => P_TEST_SCTP_INSTALLSCRIPT, "downloads" => P_TEST_SCTP_DOWNLOADS, "parse-results" => P_TEST_SCTP_RESULTSPARSER, 
+	"pre" => P_TEST_SCTP_PRERUN, "interim" => P_TEST_SCTP_INTERIMRUN, "post" => P_TEST_SCTP_POSTRUN, "validate-result" => P_TEST_SCTP_VALIDATE_RESULT, 
+	"validate-install" => P_TEST_SCTP_VALIDATE_INSTALL);
+
 	foreach($sctp_stages as $stage_file => $stage_point)
 	{
 		$object = $xml_parser->getXMLValue($stage_point);

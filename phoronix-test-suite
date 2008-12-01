@@ -24,7 +24,6 @@
 # Full path to root directory of the actual Phoronix Test Suite code
 export PTS_DIR=`pwd`
 CALL_DIR=`pwd`
-OPTION_HANDLE=$1
 OPTION_ARG=$2
 
 if [ $PTS_DIR != `pwd` ]
@@ -78,8 +77,9 @@ fi
 export SCTP_FILE=`echo $CALL_DIR/$1 | sed 's:\./::g'`
 if [ -e $SCTP_FILE ]
 then
-	OPTION_HANDLE="benchmark"
-	OPTION_ARG=$SCTP_FILE
+	export PTS_COMMAND="benchmark"
+	$PHP_BIN pts-core/phoronix-test-suite.php BENCHMARK $SCTP_FILE
+	exit
 fi
 
 export PTS_COMMAND=$1
@@ -133,6 +133,9 @@ case "$1" in
 	;;
 "list-suites")
 	$PHP_BIN pts-core/phoronix-test-suite.php LIST_SUITES
+	;;
+"convert-test-to-sctp")
+	$PHP_BIN pts-core/phoronix-test-suite.php CONVERT_TEST_PROFILE_TO_SCTP $OPTION_ARG
 	;;
 "list-modules")
 	$PHP_BIN pts-core/phoronix-test-suite.php LIST_MODULES

@@ -27,7 +27,7 @@ else
 fi
 
 # Ensure the user is in the correct directory
-if [ ! -f pts-core/pts-run-cmd.php ] || [ ! -f pts-core/pts-run-test.php ]
+if [ ! -f pts-core/phoronix-test-suite.php ]
 then
 	cat <<'EOT'
 
