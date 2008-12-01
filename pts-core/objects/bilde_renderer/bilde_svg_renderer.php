@@ -48,11 +48,11 @@ class bilde_svg_renderer extends bilde_renderer
 
 	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
-		$text_dimensions = $this->text_string_dimensions($text_string, $this->graph_font, $font_size);
+		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
 		$text_height = $text_dimensions[1];
 
-		if($rotate == false)
+		if($rotate_text == false)
 		{
 			$text_x = $bound_x1;
 			$text_y = $bound_y1 + round($text_height / 2);
@@ -69,7 +69,7 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
-		$text_dimensions = $this->text_string_dimensions($text_string, $this->graph_font, $font_size);
+		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
 		$text_height = $text_dimensions[1];
 
@@ -92,10 +92,10 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
-		$text_dimensions = $this->text_string_dimensions(strtoupper($text_string), $this->graph_font, $font_size, $big_type);
+		$text_dimensions = $this->text_string_dimensions(strtoupper($text_string), $font_type, $font_size, $big_type);
 		$text_height = $text_dimensions[1];
 
-		$text_dimensions = $this->text_string_dimensions($text_string, $this->graph_font, $font_size, $big_type);
+		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size, $big_type);
 		$text_width = $text_dimensions[0];
 
 		if($rotate_text == false)
@@ -136,7 +136,7 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
 	{
-		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y + $i) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y + $i) . "\" stroke=\"" . $color . "\" stroke-width=\"" . $line_width . "px\" />\n";
+		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" stroke=\"" . $color . "\" stroke-width=\"" . $line_width . "px\" />\n";
 	}
 
 	public function png_image_to_type($file)

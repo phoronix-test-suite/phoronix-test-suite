@@ -72,6 +72,7 @@ class install_test implements pts_option_interface
 
 			// Any external dependencies?
 			echo "\n";
+
 			pts_install_package_on_distribution($test);
 
 			// Install tests

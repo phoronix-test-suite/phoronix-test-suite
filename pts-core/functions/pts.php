@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "1.6.0a1");
+define("PTS_VERSION", "1.6.0a2");
 define("PTS_CODENAME", "TYDAL");
 define("PTS_TYPE", "DESKTOP");
 

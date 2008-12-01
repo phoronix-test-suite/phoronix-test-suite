@@ -528,4 +528,4 @@ function pts_generate_download_cache()
 	file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml", $cache_xml);
 }
 
-?>TO
+?>

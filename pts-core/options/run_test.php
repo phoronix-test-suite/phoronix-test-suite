@@ -149,7 +149,7 @@ class run_test implements pts_option_interface
 
 				$validate_r = pts_validate_save_results_name($PROPOSED_FILE_NAME, $TO_RUN, $TO_RUN_TYPE);
 
-				if($PROPOSED_FILE_NAME != $validare_r[0] && !empty($validate_r[1]))
+				if($PROPOSED_FILE_NAME != $validate_r[0] && !empty($validate_r[1]))
 				{
 					$PROPOSED_FILE_NAME = $validate_r[0];
 					$CUSTOM_TITLE = $validate_r[1];

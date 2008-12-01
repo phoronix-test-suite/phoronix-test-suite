@@ -1,5 +1,6 @@
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 1.6.0 Alpha 2
+December 2, 2008
 
 - pts-core: Fix for Self-Contained Test Profiles (SCTP) support
 - pts-core: Fix in memory type detection
@@ -14,7 +15,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add analyze-all-runs option to generate a candlestick graph showing the distribution of results from all trial runs
 - pts-core: Update phoronix-test-suite text
 - pts-core: Rework the pts_run_option interface to set options to run next
-- pts-core: Change benchmark option to using the revised pts_run_option interface to avoid double pts-core initalization
+- pts-core: Change benchmark option to using the revised pts_run_option interface to avoid double pts-core initialization
 - pts-core: Eliminate use of SILENT_INSTALL environmental variable
 - pts-core: Ensure all PTS options extend the pts_option_interface
 - pts-core: Allow pts_Graph to set the default image renderer for blide_renderer

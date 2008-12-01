@@ -856,7 +856,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		{
 			if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") != false || getenv("SAVE_BENCHMARK_LOGS") != false))
 			{
-				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment(SAVE_FILE_NAME) . "/benchmark-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
+				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/benchmark-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
 				$backup_filename = basename($benchmark_log_file);
 				@mkdir($backup_log_dir, 0777, true);
 				@copy($benchmark_log_file, $backup_log_dir . $backup_filename);
