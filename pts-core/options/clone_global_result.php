@@ -34,7 +34,7 @@ class clone_global_result implements pts_option_interface
 		{
 			if(pts_is_global_id($identifier))
 			{
-				pts_save_result($identifier . "/composite.xml", pts_global_download_xml($ARG_1));
+				pts_save_result($identifier . "/composite.xml", pts_global_download_xml($identifier));
 				// TODO: re-render the XML file and generate the graphs through that save
 				echo "Result Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
 				//pts_display_web_browser(SAVE_RESULTS_DIR . $ARG_1 . "/composite.xml");
