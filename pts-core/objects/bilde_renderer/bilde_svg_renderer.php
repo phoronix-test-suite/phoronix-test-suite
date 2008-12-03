@@ -92,10 +92,10 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
-		$text_dimensions = $this->text_string_dimensions(strtoupper($text_string), $font_type, $font_size, $big_type);
+		$text_dimensions = $this->text_string_dimensions(strtoupper($text_string), $font_type, $font_size);
 		$text_height = $text_dimensions[1];
 
-		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size, $big_type);
+		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
 
 		if($rotate_text == false)
@@ -165,7 +165,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$font_size += 1.5;
 		$baseline = "middle";
 
-		if($rotate_text != 0)
+		if($rotation != 0)
 		{
 			$text_y = (0 - ($text_y / 2));
 			$text_x = $text_y + 5;

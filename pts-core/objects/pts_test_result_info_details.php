@@ -32,7 +32,7 @@ class pts_test_result_info_details
 	public function __construct($saved_results_file)
 	{
 		$xml_parser = new tandem_XmlReader($saved_results_file);
-		$this->saved_results_file = $saved_resilts_file;
+		$this->saved_results_file = $saved_results_file;
 		$this->saved_identifier = array_pop(explode("/", dirname($saved_results_file)));
 		$this->title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 		$this->suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
