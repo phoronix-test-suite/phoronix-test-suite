@@ -93,10 +93,10 @@ class bilde_png_renderer extends bilde_renderer
 			}
 		}
 
-		$text_dimensions = $this->text_string_dimensions(strtoupper($text_string), $font_type, $font_size, $big_type);
+		$text_dimensions = $this->text_string_dimensions(strtoupper($text_string), $font_type, $font_size);
 		$text_height = $text_dimensions[1];
 
-		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size, $big_type);
+		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
 
 		if($rotate_text == false)

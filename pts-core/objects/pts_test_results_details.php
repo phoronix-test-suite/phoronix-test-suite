@@ -45,7 +45,7 @@ class pts_test_results_details
 
 		if(!empty($this->title))
 		{
-			$str .= $title . "\n";
+			$str .= $this->title . "\n";
 			$str .= sprintf("Saved Name: %-18ls Test: %-18ls \n", $this->saved_identifier, $this->suite);
 
 			foreach($this->identifiers_r as $id)

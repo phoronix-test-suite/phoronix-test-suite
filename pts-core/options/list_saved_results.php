@@ -27,7 +27,7 @@ class list_saved_results implements pts_option_interface
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
 		{
-			echo new pts_test_results_details($saved_results_file);
+			echo new pts_test_results_details($saved_results_file) . "\n";
 		}
 		echo "\n";
 	}
