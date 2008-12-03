@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Various PHP notice fixes
 - pts-core: Fix fatal error in list-installed-tests option
 - pts-core: Disable SCTP until the new version is working
+- pts-core: Fix regression that disabled benchmarking against Phoronix Global by simply supplying the global ID
 - pts: Add filesystem test suite
 
 Phoronix Test Suite 1.6.0 Alpha 2

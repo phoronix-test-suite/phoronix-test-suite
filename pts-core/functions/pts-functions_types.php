@@ -312,7 +312,7 @@ function pts_contained_tests($object, $include_extensions = false)
 	}
 	else if(pts_is_global_id($object)) // Object is a Phoronix Global file
 	{
-		$xml_parser = new tandem_XmlReader(pts_global_download_xml($TO_INSTALL));
+		$xml_parser = new tandem_XmlReader(pts_global_download_xml($object));
 		$tests_in_global = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($tests_in_global as $test)
