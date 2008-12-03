@@ -27,7 +27,7 @@ class list_installed_tests implements pts_option_interface
 		echo pts_string_header("Phoronix Test Suite - Installed Tests");
 		foreach(pts_installed_tests_array() as $identifier)
 		{
-			if(is_test($identifier))
+			if(pts_is_test($identifier))
 			{
 			 	echo new pts_installed_test_details($identifier);
 			}

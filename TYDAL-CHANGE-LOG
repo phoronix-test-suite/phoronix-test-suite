@@ -1,6 +1,8 @@
 
 Phoronix Test Suite (Git)
 
+- pts-core: Fix fatal error in list-installed-tests option
+- pts-core: Disable SCTP until the new version is working
 - pts-core: Cut down on use of pts_exit() command due to the new option architecture, instead use returns appropriately
 - pts: Add filesystem test suite
 

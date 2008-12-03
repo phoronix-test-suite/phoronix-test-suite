@@ -74,13 +74,13 @@ exit
 fi
 
 # Check if being called from a Self Contained test profile
-export SCTP_FILE=`echo $CALL_DIR/$1 | sed 's:\./::g'`
-if [ -e $SCTP_FILE ]
-then
-	export PTS_COMMAND="benchmark"
-	$PHP_BIN pts-core/phoronix-test-suite.php BENCHMARK $SCTP_FILE
-	exit
-fi
+# export SCTP_FILE=`echo $CALL_DIR/$1 | sed 's:\./::g'`
+# if [ -e $SCTP_FILE ]
+# then
+# 	export PTS_COMMAND="benchmark"
+# 	$PHP_BIN pts-core/phoronix-test-suite.php BENCHMARK $SCTP_FILE
+# 	exit
+# fi
 
 export PTS_COMMAND=$1
 case "$1" in
