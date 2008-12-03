@@ -539,6 +539,7 @@ function pts_verify_test_installation($identifier)
 	// Verify a test is installed
 	$tests = pts_contained_tests($identifier);
 	$needs_installing = array();
+	$valid_op = true;
 
 	foreach($tests as $test)
 	{
@@ -578,9 +579,11 @@ function pts_verify_test_installation($identifier)
 
 		if(!pts_is_assignment("TEST_INSTALL_PASS") && pts_read_assignment("COMMAND") != "benchmark")
 		{
-			pts_exit();
+			$valid_op = false;
 		}
 	}
+
+	return $valid_op;
 }
 function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
 {

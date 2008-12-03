@@ -27,6 +27,12 @@ class run_test implements pts_option_interface
 		require("pts-core/functions/pts-functions-run.php");
 		require("pts-core/functions/pts-functions-merge.php");
 
+		if(IS_BATCH_MODE && pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "FALSE")
+		{
+			echo pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup");
+			return false;
+		}
+
 		$TO_RUN = strtolower($r[0]);
 
 		if(is_file($r[0]) && substr(basename($r[0]), -4) == ".svg")
@@ -54,7 +60,8 @@ class run_test implements pts_option_interface
 
 		if(empty($TO_RUN))
 		{
-			pts_exit("\nThe test, suite name, or saved file name must be supplied.\n");
+			echo pts_string_header("The test, suite, or saved file name must be supplied.");
+			return false;
 		}
 		pts_set_assignment("TO_RUN", $TO_RUN);
 
@@ -65,12 +72,18 @@ class run_test implements pts_option_interface
 
 			if(empty($test_title))
 			{
-				pts_exit($TO_RUN . " is not a test.");
+				echo pts_string_header($TO_RUN . " is not a test.");
+				return false;
 			}
 		}
 
 		// Make sure tests are installed
-		pts_verify_test_installation($TO_RUN);
+		$verify_result = pts_verify_test_installation($TO_RUN);
+
+		if($verify_result == false)
+		{
+			return false;
+		}
 
 		if(!$TO_RUN_TYPE)
 		{
@@ -90,7 +103,8 @@ class run_test implements pts_option_interface
 			}
 			else
 			{
-				pts_exit("\nNot Recognized: $TO_RUN \n\n");
+				echo pts_string_header("Not Recognized: " . $TO_RUN);
+				return false;
 			}
 
 			$SAVE_RESULTS = true;
@@ -275,7 +289,8 @@ class run_test implements pts_option_interface
 		}
 		else
 		{
-			pts_exit("\nUnrecognized option: " . $TO_RUN_TYPE . "\n");
+			echo pts_string_header("\nUnrecognized option: " . $TO_RUN_TYPE . "\n");
+			return false;
 		}
 
 		if($SAVE_RESULTS && (!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE") == "TRUE"))

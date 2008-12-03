@@ -33,34 +33,6 @@ require_once("pts-core/functions/pts-functions_tests.php");
 require_once("pts-core/functions/pts-functions_types.php");
 require_once("pts-core/functions/pts-functions_modules.php");
 
-// User's home directory for storing results, module files, test installations, etc.
-define("PTS_DIR", pts_directory());
-define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
-
-// Distribution External Dependency Locations
-define("XML_DISTRO_DIR", PTS_DIR . "pts/distro-xml/");
-define("SCRIPT_DISTRO_DIR", PTS_DIR . "pts/distro-scripts/");
-
-// Misc Locations
-define("ETC_DIR", PTS_DIR . "pts/etc/");
-define("MODULE_DIR", PTS_DIR . "pts-core/modules/");
-define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/results-viewer/");
-define("TEST_LIBRARIES_DIR", PTS_DIR . "pts-core/test-libraries/");
-define("STATIC_DIR", PTS_DIR . "pts-core/static/");
-define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
-
-// Test & Suite Locations
-define("XML_PROFILE_DIR", PTS_DIR . "pts/test-profiles/");
-define("XML_PROFILE_CTP_BASE_DIR", XML_PROFILE_DIR . "base/");
-define("XML_SUITE_DIR", PTS_DIR . "pts/test-suites/");
-define("TEST_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
-define("TEST_RESOURCE_CTP_BASE_DIR", TEST_RESOURCE_DIR . "base/");
-define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
-define("XML_PROFILE_LOCAL_CTP_BASE_DIR", XML_PROFILE_LOCAL_DIR . "base/");
-define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
-define("TEST_RESOURCE_LOCAL_DIR", PTS_USER_DIR . "test-resources/");
-define("TEST_RESOURCE_LOCAL_CTP_BASE_DIR", TEST_RESOURCE_LOCAL_DIR . "base/");
-
 // Phoronix Test Suite - Functions
 function pts_run_option_command($command, $pass_args = null, $command_descriptor = "")
 {

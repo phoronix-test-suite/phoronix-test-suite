@@ -52,7 +52,8 @@ class install_test implements pts_option_interface
 
 				if(strpos($agreement, "PCQS") == false)
 				{
-					pts_exit("An error occurred while connecting to the Phoronix Test Suite Server. Please try again later.");
+					echo pts_string_header("An error occurred while connecting to the Phoronix Test Suite server. Try again later.");
+					return false;
 				}
 
 				echo "\n\n" . $agreement;
@@ -66,7 +67,8 @@ class install_test implements pts_option_interface
 				}
 				else
 				{
-					pts_exit(pts_string_header("In order to run PCQS you must agree to the listed terms."));
+					pts_string_header("In order to run PCQS you must agree to the listed terms.");
+					return false;
 				}
 			}
 
