@@ -8,15 +8,17 @@
 		<RunMode>PCQS</RunMode>
 	</SuiteInformation>
 	<RunTest>
-		<Test>gaming</Test>
+		<Test>nexuiz</Test>
+		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>padman</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>unigine</Test>
-	</RunTest>
-	<RunTest>
-		<Test>lightsmark</Test>
-		<Arguments>$VIDEO_WIDTHx$VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>build-imagemagick</Test>
@@ -25,74 +27,28 @@
 		<Test>build-apache</Test>
 	</RunTest>
 	<RunTest>
-		<Test>compression</Test>
+		<Test>compress-7zip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-pbzip2</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-lzma</Test>
 	</RunTest>
 	<RunTest>
 		<Test>encode-mp3</Test>
 	</RunTest>
 	<RunTest>
-		<Test>encode-ogg</Test>
-	</RunTest>
-	<RunTest>
 		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
-		<Test>mencoder</Test>
-	</RunTest>
-	<RunTest>
 		<Test>gnupg</Test>
-	</RunTest>
-	<RunTest>
-		<Test>openssl</Test>
-	</RunTest>
-	<RunTest>
-		<Test>byte</Test>
-		<Arguments>TEST_DHRY2</Arguments>
-		<Description>Dhrystone 2</Description>
-	</RunTest>
-	<RunTest>
-		<Test>fhourstones</Test>
 	</RunTest>
 	<RunTest>
 		<Test>sunflow</Test>
 	</RunTest>
 	<RunTest>
 		<Test>bork</Test>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>RAND_CREATE 1024</Arguments>
-		<Description>1GB Random Create</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>RAND_READ 1024</Arguments>
-		<Description>1GB Random Read</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>RAND_DELETE 4096</Arguments>
-		<Description>4GB Random Delete</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>SEQ_CREATE 4096</Arguments>
-		<Description>4GB Sequential Create</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>SEQ_READ 4096</Arguments>
-		<Description>4GB Sequential Read</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>SEQ_CREATE 8192</Arguments>
-		<Description>8GB Sequential Create</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>SEQ_READ 8192</Arguments>
-		<Description>8GB Sequential Read</Description>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
@@ -108,10 +64,5 @@
 		<Test>fio</Test>
 		<Arguments>examples/iometer-file-access-server</Arguments>
 		<Description>Intel IOMeter File Server Access Pattern</Description>
-	</RunTest>
-	<RunTest>
-		<Test>fio</Test>
-		<Arguments>examples/netio</Arguments>
-		<Description>Example Network Job</Description>
 	</RunTest>
 </PhoronixTestSuite>
