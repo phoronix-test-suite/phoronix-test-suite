@@ -88,7 +88,7 @@ case "$1" in
 	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_TEST $OPTION_ARG
 	;;
 "install-dependencies")
-	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_EXTERNAL_DEPENDENCIES $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_DEPENDENCIES $OPTION_ARG
 	;;
 "run" | "batch-run")
 	if [ "$1" = "batch-run" ]
@@ -122,7 +122,7 @@ case "$1" in
 "remove-all-results")
 	$PHP_BIN pts-core/phoronix-test-suite.php REMOVE_ALL_RESULTS
 	;;
-"upload" | "upload-result" | "upload-results" | "upload-saved-result")
+"upload" | "upload-result" | "upload-results")
 	$PHP_BIN pts-core/phoronix-test-suite.php UPLOAD_RESULT $OPTION_ARG
 	;;
 "make-download-cache")
@@ -135,7 +135,7 @@ case "$1" in
 	$PHP_BIN pts-core/phoronix-test-suite.php LIST_SUITES
 	;;
 "convert-test-to-sctp")
-	$PHP_BIN pts-core/phoronix-test-suite.php CONVERT_TEST_PROFILE_TO_SCTP $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php CONVERT_TEST_TO_SCTP $OPTION_ARG
 	;;
 "list-modules")
 	$PHP_BIN pts-core/phoronix-test-suite.php LIST_MODULES
@@ -146,32 +146,32 @@ case "$1" in
 "list-installed-tests")
 	$PHP_BIN pts-core/phoronix-test-suite.php LIST_INSTALLED_TESTS
 	;;
-"list-usage" | "list-test-usage")
+"list-test-usage")
 	$PHP_BIN pts-core/phoronix-test-suite.php LIST_TEST_USAGE
 	;;
 "list-results" | "list-saved-results" | "list-test-results")
 	$PHP_BIN pts-core/phoronix-test-suite.php LIST_SAVED_RESULTS
 	;;
-"result-info" | "results-info")
-	$PHP_BIN pts-core/phoronix-test-suite.php RESULT_INFORMATION $OPTION_ARG
+"result-info")
+	$PHP_BIN pts-core/phoronix-test-suite.php RESULT_INFO $OPTION_ARG
 	;;
 "show-result" | "show-results" | "view-result" | "view-results")
 	$PHP_BIN pts-core/phoronix-test-suite.php SHOW_RESULT $OPTION_ARG
 	;;
 "info" | "suite-info" | "test-info")
-	$PHP_BIN pts-core/phoronix-test-suite.php INFORMATION $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php INFO $OPTION_ARG
 	;;
 "module-info")
-	$PHP_BIN pts-core/phoronix-test-suite.php MODULE_INFORMATION $OPTION_ARG
+	$PHP_BIN pts-core/phoronix-test-suite.php MODULE_INFO $OPTION_ARG
 	;;
 "module-setup")
 	$PHP_BIN pts-core/phoronix-test-suite.php MODULE_SETUP $OPTION_ARG
 	;;
-"system-info" | "system-information")
-	$PHP_BIN pts-core/phoronix-test-suite.php SYSTEM_INFORMATION
+"system-info")
+	$PHP_BIN pts-core/phoronix-test-suite.php SYSTEM_INFO
 	;;
 "diagnostics")
-	$PHP_BIN pts-core/phoronix-test-suite.php DIAGNOSTICS_DUMP
+	$PHP_BIN pts-core/phoronix-test-suite.php DIAGNOSTICS
 	;;
 "clone")
 	$PHP_BIN pts-core/phoronix-test-suite.php CLONE_GLOBAL_RESULT $OPTION_ARG

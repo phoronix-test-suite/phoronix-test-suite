@@ -20,19 +20,23 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class result_information implements pts_option_interface
+class module_info implements pts_option_interface
 {
 	public static function run($r)
 	{
-		if(is_file(($saved_results_file = SAVE_RESULTS_DIR . $r[0] . "/composite.xml")))
+		$module = strtolower($r[0]);
+
+		if(is_file(($path = MODULE_DIR . $module . ".php")) || is_file(($path = MODULE_DIR . $module . ".sh")))
 		{
-			echo new pts_test_result_info_details($saved_results_file);
+			$module = new pts_user_module_details($path);
+			echo $module->info_string();
+
+			echo "\n";
 		}
 		else
 		{
-			echo "\n" . $r[0] . " isn't a valid results file.\n";
+			echo "\n" . $module . " is not recognized.\n";
 		}
-		echo "\n";
 	}
 }
 

@@ -20,22 +20,33 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class module_information implements pts_option_interface
+class install_dependencies implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$module = strtolower($r[0]);
+		pts_load_function_set("install");
 
-		if(is_file(($path = MODULE_DIR . $module . ".php")) || is_file(($path = MODULE_DIR . $module . ".sh")))
+		if(empty($r[0]))
 		{
-			$module = new pts_user_module_details($path);
-			echo $module->info_string();
-
-			echo "\n";
+			echo "\nThe test or suite name to install external dependencies for must be supplied.\n";
 		}
 		else
 		{
-			echo "\n" . $module . " is not recognized.\n";
+			if($r[0] == "phoronix-test-suite" || $r[0] == "pts" || $r[0] == "trondheim-pts")
+			{
+				$pts_dependencies = array("php-gd", "php-extras", "build-utilities");
+				$packages_to_install = array();
+				$continue_install = pts_package_generic_to_distro_name($packages_to_install, $pts_dependencies);
+
+				if($continue_install)
+				{
+					pts_install_packages_on_distribution_process($packages_to_install);
+				}
+			}
+			else
+			{
+				pts_install_package_on_distribution($r[0]);
+			}
 		}
 	}
 }

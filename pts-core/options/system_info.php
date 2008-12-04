@@ -20,30 +20,13 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class information implements pts_option_interface
+class system_info implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$to_info = $r[0];
-
-		if(pts_is_suite($to_info))
-		{
-			$suite = new pts_test_suite_details($to_info);
-			echo $suite->info_string();
-		
-			echo "\n";
-		}
-		else if(pts_is_test($to_info))
-		{
-			$suite = new pts_test_profile_details($to_info);
-			echo $suite->info_string();
-		
-			echo "\n";
-		}
-		else
-		{
-			echo "\n" . $to_info . " is not recognized.\n";
-		}
+		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\nSystem Information");
+		echo "Hardware:\n" . pts_hw_string() . "\n\n";
+		echo "Software:\n" . pts_sw_string() . "\n\n";
 	}
 }
 

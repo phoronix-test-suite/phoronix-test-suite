@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix regression in clone command that didn't download the XML from Phoronix Global
 - pts-core: Add pts-functions_io.php and pts-functions_global.php
 - pts-core: Add pts_load_function_set() for loading functions within PTS options
+- pts-core: Rename various options
 - pts: Add filesystem test suite
 
 Phoronix Test Suite 1.6.0 Alpha 2

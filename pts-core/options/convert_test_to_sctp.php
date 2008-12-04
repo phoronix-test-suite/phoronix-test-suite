@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class convert_test_profile_to_sctp implements pts_option_interface
+class convert_test_to_sctp implements pts_option_interface
 {
 	public static function run($r)
 	{
