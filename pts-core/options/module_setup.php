@@ -32,7 +32,7 @@ class module_setup implements pts_option_interface
 
 			if(!in_array($module, pts_attached_modules()) && !class_exists($module))
 			{
-				include(MODULE_DIR . $module . ".php");
+				include_once(MODULE_DIR . $module . ".php");
 			}
 
 			$module_name = pts_php_module_call($module, "module_name");

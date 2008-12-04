@@ -265,6 +265,12 @@ function pts_unique_runtime_identifier()
 
 	return $identifier;
 }
+function pts_load_function_set($title)
+{
+	$function_file = "pts-core/functions/pts-functions-" . $title . ".php";
+
+	return is_file($function_file) && include_once($function_file);
+}
 function pts_clean_information_string($str)
 {
 	// Clean a string containing hardware information of some common things to change/strip out

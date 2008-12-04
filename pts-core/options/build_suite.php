@@ -24,7 +24,7 @@ class build_suite implements pts_option_interface
 {
 	public static function run($r)
 	{
-		include_once("pts-core/functions/pts-functions-run.php");
+		pts_load_function_set("run");
 		echo pts_string_header("Test Suite Creation Utility");
 
 		$suite_name = pts_text_input("Enter name of suite");

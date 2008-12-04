@@ -24,7 +24,7 @@ class merge_results implements pts_option_interface
 {
 	public static function run($r)
 	{
-		include_once("pts-core/functions/pts-functions-merge.php");
+		pts_load_function_set("merge");
 
 		$BASE_FILE = $r[0];
 		$MERGE_FROM_FILE = $r[1];

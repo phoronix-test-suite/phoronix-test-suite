@@ -24,7 +24,7 @@ class install_external_dependencies implements pts_option_interface
 {
 	public static function run($r)
 	{
-		include_once("pts-core/functions/pts-functions-install.php");
+		pts_load_function_set("install");
 
 		if(empty($r[0]))
 		{

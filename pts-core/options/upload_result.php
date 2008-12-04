@@ -24,7 +24,7 @@ class upload_result implements pts_option_interface
 {
 	public static function run($r)
 	{
-		include_once("pts-core/functions/pts-functions-run.php");
+		pts_load_function_set("run");
 
 		$USE_FILE = pts_find_result_file($r[0], false);
 

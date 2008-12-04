@@ -24,7 +24,7 @@ class make_download_cache implements pts_option_interface
 {
 	public static function run($r)
 	{
-		include_once("pts-core/functions/pts-functions-install.php");
+		pts_load_function_set("install");
 		echo pts_string_header("Phoronix Test Suite - Generating Download Cache");
 		pts_generate_download_cache();
 		echo "\n";

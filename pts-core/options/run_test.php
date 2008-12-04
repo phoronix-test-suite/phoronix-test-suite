@@ -24,8 +24,8 @@ class run_test implements pts_option_interface
 {
 	public static function run($r)
 	{
-		require("pts-core/functions/pts-functions-run.php");
-		require("pts-core/functions/pts-functions-merge.php");
+		pts_load_function_set("run");
+		pts_load_function_set("merge");
 
 		if(IS_BATCH_MODE && pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "FALSE")
 		{

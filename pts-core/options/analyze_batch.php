@@ -24,7 +24,7 @@ class analyze_batch implements pts_option_interface
 {
 	public static function run($r)
 	{
-		include_once("pts-core/functions/pts-functions-merge.php");
+		pts_load_function_set("merge");
 
 		$BASE_FILE = pts_find_result_file($r[0]);
 		$SAVE_TO = $r[1];
