@@ -167,6 +167,11 @@ function hw_sys_chipset_string()
 				$info .= " + " . $southbridge_extract;
 			}
 		}
+
+		if(empty($info))
+		{
+			$info = "Unknown";
+		}
 	}
 
 	return $info;

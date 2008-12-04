@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Disable SCTP until the new version is working
 - pts-core: Fix regression that disabled benchmarking against Phoronix Global by simply supplying the global ID
 - pts-core: Fix regression in clone command that didn't download the XML from Phoronix Global
+- pts-core: Add pts-functions_io.php and pts-functions_global.php
 - pts: Add filesystem test suite
 
 Phoronix Test Suite 1.6.0 Alpha 2

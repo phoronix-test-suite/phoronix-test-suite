@@ -26,9 +26,11 @@ require_once("pts-core/functions/pts-init.php");
 
 // Load Main Functions
 require_once("pts-core/functions/pts-interfaces.php");
+require_once("pts-core/functions/pts-functions_io.php");
 require_once("pts-core/functions/pts-functions_shell.php");
 require_once("pts-core/functions/pts-functions_config.php");
 require_once("pts-core/functions/pts-functions_system.php");
+require_once("pts-core/functions/pts-functions_global.php");
 require_once("pts-core/functions/pts-functions_tests.php");
 require_once("pts-core/functions/pts-functions_types.php");
 require_once("pts-core/functions/pts-functions_modules.php");
@@ -85,45 +87,6 @@ function p_str($str_o)
 {
 	//  $_ENV["LANG"]
 	return $str_o;
-}
-function pts_process_register($process)
-{
-	// Register a process as active
-	if(!is_dir(TEST_ENV_DIR))
-	{
-		mkdir(TEST_ENV_DIR);
-	}
-	if(!is_dir(TEST_ENV_DIR . ".processes"))
-	{
-		mkdir(TEST_ENV_DIR . ".processes");
-	}
-
-	return file_put_contents(TEST_ENV_DIR . ".processes/" . $process . ".p", getmypid());
-}
-function pts_process_remove($process)
-{
-	// Remove a process from being active, if present
-	return is_file(TEST_ENV_DIR . ".processes/" . $process . ".p") && @unlink(TEST_ENV_DIR . ".processes/" . $process . ".p");
-}
-function pts_process_active($process)
-{
-	// Register a process as active
-	$active = false;
-	if(is_file(TEST_ENV_DIR . ".processes/" . $process . ".p") && !IS_SOLARIS)
-	{
-		$pid = trim(@file_get_contents(TEST_ENV_DIR . ".processes/" . $process . ".p"));
-		$ps = trim(shell_exec("ps -p $pid 2>&1"));
-
-		if(strpos($ps, "php") > 0)
-		{
-			$active = true;
-		}
-		else
-		{
-			pts_process_remove($process);
-		}
-	}
-	return $active;
 }
 function pts_env_variables()
 {
@@ -241,35 +204,6 @@ function pts_run_additional_vars($identifier)
 
 	return $extra_vars;
 }
-function pts_text_input($question)
-{
-	do
-	{
-		echo "\n" . $question . ": ";
-		$answer = trim(fgets(STDIN));
-	}
-	while(empty($answer));
-
-	return $answer;
-}
-function pts_text_select_menu($user_string, $options_r)
-{
-	$option_count = count($options_r);
-
-	do
-	{
-		echo "\n";
-		for($i = 0; $i < $option_count; $i++)
-		{
-				echo ($i + 1) . ": " . $options_r[$i] . "\n";
-		}
-		echo "\n" . $user_string . ": ";
-		$test_choice = trim(fgets(STDIN));
-	}
-	while(!(in_array($test_choice, $options_r) || isset($options_r[($test_choice - 1)]) && ($test_choice = $options_r[($test_choice - 1)]) != ""));
-
-	return $test_choice;
-}
 function pts_exec($exec, $extra_vars = null)
 {
 	// Same as shell_exec() but with the PTS env variables added in
@@ -282,33 +216,6 @@ function pts_request_new_id()
 	$id++;
 
 	return $id;
-}
-function pts_is_global_id($global_id)
-{
-	// Checks if a string is a valid Phoronix Global ID
-	return pts_global_valid_id_string($global_id) && trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id)) == "REMOTE_FILE";
-}
-function pts_global_download_xml($global_id)
-{
-	// Download a saved test result from Phoronix Global
-	return @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $global_id);
-}
-function pts_global_valid_id_string($global_id)
-{
-	// Basic checking to see if the string is possibly a Global ID
-	$is_valid = true;
-
-	if(count(explode("-", $global_id)) < 3) // Global IDs should have three (or more) dashes
-	{
-		$is_valid = false;
-	}
-
-	if(strlen($global_id) < 13) // Shortest Possible ID would be X-000-000-000
-	{
-		$is_valid = false;
-	}
-
-	return $is_valid;
 }
 function pts_trim_double($double, $accuracy = 2)
 {
@@ -344,58 +251,6 @@ function pts_trim_double($double, $accuracy = 2)
 	}
 
 	return $return;
-}
-function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
-{
-	// Prompt user for yes/no question
-	if(defined("IS_BATCH_MODE") && IS_BATCH_MODE)
-	{
-		switch($question_id)
-		{
-			case "SAVE_RESULTS":
-				$auto_answer = pts_read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE");
-				break;
-			case "OPEN_BROWSER":
-				$auto_answer = pts_read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE");
-				break;
-			case "UPLOAD_RESULTS":
-				$auto_answer = pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE");
-				break;
-		}
-
-		if(isset($auto_answer))
-		{
-			$answer = $auto_answer == "TRUE" || $auto_answer == "1";
-		}
-		else
-		{
-			$answer = $default;
-		}
-	}
-	else
-	{
-		do
-		{
-			echo $question . " ";
-			$input = trim(strtolower(fgets(STDIN)));
-		}
-		while($input != "y" && $input != "n" && $input != "");
-
-		if($input == "y")
-		{
-			$answer = true;
-		}
-		else if($input == "n")
-		{
-			$answer = false;
-		}
-		else
-		{
-			$answer = $default;
-		}
-	}
-
-	return $answer;
 }
 function pts_unique_runtime_identifier()
 {
@@ -447,28 +302,6 @@ function pts_clean_information_string($str)
 	}
 
 	return $str;
-}
-function pts_string_header($heading, $char = '=')
-{
-	// Return a string header
-	$header_size = 36;
-
-	foreach(explode("\n", $heading) as $line)
-	{
-		if(($line_length = strlen($line)) > $header_size)
-		{
-			$header_size = $line_length;
-		}
-	}
-
-	$terminal_width = trim(shell_exec("tput cols 2>&1"));
-
-	if($header_size > $terminal_width && $terminal_width > 1)
-	{
-		$header_size = $terminal_width;
-	}
-
-	return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";
 }
 function pts_exit($string = "")
 {
@@ -566,89 +399,6 @@ function pts_time_elapsed()
 
 	return (time() - $start_time);
 }
-function pts_format_time_string($time, $format = "SECONDS", $standard_version = true)
-{
-	// Format an elapsed time string
-	if($format == "MINUTES")
-	{
-		$time *= 60;
-	}
-
-	$formatted_time = array();
-
-	if($time > 0)
-	{
-		$time_hours = floor($time / 3600);
-		$time_minutes = floor(($time - ($time_hours * 3600)) / 60);
-		$time_seconds = $time % 60;
-
-		if($time_hours > 0)
-		{
-			if($standard_version)
-			{
-				$formatted_part = $time_hours . " Hour";
-
-				if($time_hours > 1)
-				{
-					$formatted_part .= "s";
-				}
-			}
-			else
-			{
-				$formatted_part = $time_hours . "h";
-			}
-
-			array_push($formatted_time, $formatted_part);
-		}
-		if($time_minutes > 0)
-		{
-			if($standard_version)
-			{
-				$formatted_part = $time_minutes . " Minute";
-
-				if($time_minutes > 1)
-				{
-					$formatted_part .= "s";
-				}
-			}
-			else
-			{
-				$formatted_part = $time_minutes . "m";
-			}
-
-			array_push($formatted_time, $formatted_part);
-		}
-		if($time_seconds > 0)
-		{
-			if($standard_version)
-			{
-				$formatted_part = $time_seconds . " Second";
-
-				if($time_seconds > 1)
-				{
-					$formatted_part .= "s";
-				}
-			}
-			else
-			{
-				$formatted_part = $time_seconds . "s";
-			}
-
-			array_push($formatted_time, $formatted_part);
-		}
-	}
-
-	if($standard_version)
-	{
-		$time_string = implode(", ", $formatted_time);
-	}
-	else
-	{
-		$time_string = implode("", $formatted_time);
-	}
-
-	return $time_string;
-}
 function pts_evaluate_script_type($script)
 {
 	$script = explode("\n", trim($script));
@@ -694,43 +444,6 @@ function pts_proximity_match($search, $match_to)
 	}
 
 	return $is_match;
-}
-function pts_estimated_time_string($time)
-{
-	// Estimated time that it will take for the test to complete
-	$strlen_time = strlen($time);
-
-	if(strlen($time_trim = str_replace("~", "", $time)) != $strlen_time)
-	{
-		$formatted_string = "Approximately " . $time_trim;
-	}
-	else if(strlen($time_trim = str_replace(array('l'), '', $time)) != $strlen_time)
-	{
-		$formatted_string = "Less Than " . $time_trim;
-	}
-	else if(strlen($time_trim = str_replace(array('g'), '', $time)) != $strlen_time)
-	{
-		$formatted_string = "Greater Than " . $time_trim;
-	}
-	else if(strlen($time_trim = str_replace("-", ", ", $time)) != $strlen_time)
-	{
-		$time_trim = explode(",", $time_trim);
-
-		$time_trim = array_map("trim", $time_trim);
-
-		if(count($time_trim) == 2)
-		{
-			$formatted_string = $time_trim[0] . " to " . $time_trim[1];
-		}
-	}
-	else
-	{
-		$formatted_string = $time;
-	}
-
-	$formatted_string .= " Minutes";
-
-	return $formatted_string;
 }
 function pts_text_save_buffer($to_add)
 {
