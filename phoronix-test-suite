@@ -221,49 +221,49 @@ URL: http://www.phoronix-test-suite.com/
 =================================
 
 Installation Options:
-	install <suite / test>: Install or update the specified suite/test(s)
-	install-dependencies <suite / test>: Install the external (distribution-level) dependencies
-	install-all: Install or update all available tests
-	list-installed-tests: List all tests that are installed
+    install <suite / test>: Install or update the specified suite/test(s)
+    install-dependencies <suite / test>: Install the distribution dependencies
+    install-all: Install or update all available tests
+    list-installed-tests: List all tests that are installed
 
 Testing Options:
-	benchmark <suite / test / saved file / Global ID>: Install and then run the test(s)
-	run <suite / test / saved file / Global ID>: Run the specified test(s)
-	list-tests: List all tests and relevant information
-	list-suites: List all suites and relevant information
+    benchmark <suite / test>: Install and then run the test(s)
+    run <suite / test>: Run the specified test(s)
+    list-tests: List all tests and relevant information
+    list-suites: List all suites and relevant information
 
 Batch Testing Options:
-	batch-setup: Setup the batch mode options
-	batch-run <suite / test>: Run the specified test(s) in batch mode
-	batch-benchmark <suite / test / saved file>: Install and run the test(s) in batch mode
+    batch-setup: Setup the batch mode options
+    batch-run <suite / test>: Run the specified test(s) in batch mode
+    batch-benchmark <suite / test>: Install and run the test(s) in batch mode
 
 Result Viewing Options:
-	list-results: List all saved results
-	show-result <saved name>: Show this result file in your web browser
-	remove-result <saved name>: Remove this saved result file
-	remove-all-results: Removes all saved results
-	merge-results <saved name / Global ID> <saved name / Global ID>: Merge two sets of results
+    list-results: List all saved results
+    show-result <saved name>: Show this result file in your web browser
+    remove-result <saved name>: Remove this saved result file
+    remove-all-results: Removes all saved results
+    merge-results <saved name> <saved name>: Merge two sets of results
 
 Phoronix Global Options:
-	upload-results <saved name>: Upload a saved set of results to Phoronix Global
-	login: Enter your Phoronix Global log-in information for uploading results
+    upload-results <saved name>: Upload saved results to Phoronix Global
+    login: Enter your Phoronix Global log-in information for uploading results
 
 Analytical Options:
-	analyze-batch <saved name>: Provide an analysis of the results generated from a batch run
-	analyze-all-runs <saved name>: Generate a candlestick graph from all trial runs
+    analyze-batch <saved name>: Analysis of a batch run
+    analyze-all-runs <saved name>: A candlestick graph from all trial runs
 
 Module Options:
-	list-modules: List all installed/available PTS modules
-	module-info: Show detailed information on a PTS module
-	module-setup: Configure the end-user options for a PTS module
+    list-modules: List all installed/available PTS modules
+    module-info: Show detailed information on a PTS module
+    module-setup: Configure the end-user options for a PTS module
 
 Miscellaneous Options:
-	make-download-cache: Backup all downloaded test files to ~/.phoronix-test-suite/download-cache/
-	info <suite / test>: Show detailed information about a test or suite
-	system-info: Show detected software and hardware information
-	diagnostics: Useful information when reporting a bug or problem
-	build-suite: Build your own test suite
-	version: Print the Phoronix Test Suite version and code-name
+    make-download-cache: Backup all downloaded test files
+    info <suite / test>: Show detailed information about a test or suite
+    system-info: Show detected software and hardware information
+    diagnostics: Useful information when reporting a bug or problem
+    build-suite: Build your own test suite
+    version: Print the Phoronix Test Suite version and code-name
 EOT
-	;;
+;;
 esac

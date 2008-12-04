@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts-functions_io.php and pts-functions_global.php
 - pts-core: Add pts_load_function_set() for loading functions within PTS options
 - pts-core: Rename various options
+- pts-core: Shorten phoronix-test-suite text
 - pts: Add filesystem test suite
 
 Phoronix Test Suite 1.6.0 Alpha 2
