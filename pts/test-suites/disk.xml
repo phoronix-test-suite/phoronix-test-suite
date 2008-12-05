@@ -1,30 +1,20 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<TestType>Hard Disk</TestType>
 		<Title>Hard Disk Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The disk suite contains Phoronix Test Suite tests designed to test the system's disk (HDD) performance.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>SEQ_CREATE 4096</Arguments>
-		<Description>4GB Sequential Create</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>RAND_READ 4096</Arguments>
-		<Description>4GB Random Read</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>RAND_DELETE 4096</Arguments>
-		<Description>4GB Random Delete</Description>
-	</RunTest>
-	<RunTest>
 		<Test>iozone</Test>
 		<Arguments>-s 4096M -i0</Arguments>
 		<Description>4GB Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 4096M -i0 -i1</Arguments>
+		<Description>4GB Read Performance</Description>
 	</RunTest>
 	<RunTest>
 		<Test>fio</Test>

@@ -16,11 +16,6 @@
 		<Test>compress-gzip</Test>
 	</RunTest>
 	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>RAND_READ 4096</Arguments>
-		<Description>4GB Random Read</Description>
-	</RunTest>
-	<RunTest>
 		<Test>iozone</Test>
 		<Arguments>-s 512M -i0</Arguments>
 		<Description>512MB Write Performance</Description>

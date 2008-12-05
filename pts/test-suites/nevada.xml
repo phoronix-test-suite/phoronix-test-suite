@@ -32,21 +32,6 @@
 		<Test>compress-gzip</Test>
 	</RunTest>
 	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>SEQ_CREATE 4096</Arguments>
-		<Description>4GB Sequential Create</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>RAND_READ 4096</Arguments>
-		<Description>4GB Random Read</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bonnie</Test>
-		<Arguments>RAND_DELETE 4096</Arguments>
-		<Description>4GB Random Delete</Description>
-	</RunTest>
-	<RunTest>
 		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
