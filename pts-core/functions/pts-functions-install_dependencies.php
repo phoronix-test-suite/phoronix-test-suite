@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_install_package_on_distribution($identifier)
+function pts_install_package_on_distribution($identifiers)
 {
 	// PTS External Dependencies install on distribution
 	if(pts_read_assignment("COMMAND") != "benchmark")
@@ -29,9 +29,19 @@ function pts_install_package_on_distribution($identifier)
 		echo "Checking For Needed External Dependencies.\n";
 	}
 
-	$identifier = strtolower($identifier);
 	$install_objects = array();
-	pts_start_install_dependencies($identifier, $install_objects);
+
+	if(!is_array($identifiers))
+	{
+		$identifiers = array($identifiers);
+	}
+
+	foreach($identifiers as $identifier)
+	{
+		pts_start_install_dependencies($identifier, $install_objects);
+	}
+	$install_objects = array_unique($install_objects);
+
 	pts_install_packages_on_distribution_process($install_objects);
 }
 function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)

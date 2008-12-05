@@ -22,30 +22,30 @@
 
 class install_test implements pts_option_interface
 {
-	public static function run($r)
+	public static function run($items_to_install)
 	{
 		pts_load_function_set("install");
-		$test = $r[0];
 
-		if(empty($test))
+		if(count($items_to_install) == 0)
 		{
-			echo "\nThe test or suite name to install must be supplied.\n";
+			echo "\nThe test, suite name, or saved identifier must be supplied.\n";
 		}
 		else
 		{
 			if(IS_SCTP_MODE)
 			{
-				$test = basename($test);
+				$items_to_install[0] = basename($items_to_install[0]);
 			}
+
+			$items_to_install = array_unique(array_map("strtolower", $items_to_install));
 
 			if(pts_read_assignment("COMMAND") == "force-install")
 			{
 				pts_set_assignment("PTS_FORCE_INSTALL", 1);
 			}
 
-			$test = strtolower($test);
-
-			if(strpos($test, "pcqs") !== false && !is_file(XML_SUITE_LOCAL_DIR . "pcqs-license.txt"))
+			// TODO: Search $items_to_install and look for pcqs match instead of only first argument
+			if(strpos($items_to_install[0], "pcqs") !== false && !is_file(XML_SUITE_LOCAL_DIR . "pcqs-license.txt"))
 			{
 				// Install the Phoronix Certification & Qualification Suite
 				$agreement = wordwrap(file_get_contents("http://www.phoronix-test-suite.com/pcqs/pcqs-license.txt"), 65);
@@ -72,13 +72,13 @@ class install_test implements pts_option_interface
 				}
 			}
 
-			// Any external dependencies?
 			echo "\n";
 
-			pts_install_package_on_distribution($test);
+			// Any external dependencies?
+			pts_install_package_on_distribution($items_to_install);
 
 			// Install tests
-			pts_start_install($test);
+			pts_start_install($items_to_install);
 		}
 	}
 }

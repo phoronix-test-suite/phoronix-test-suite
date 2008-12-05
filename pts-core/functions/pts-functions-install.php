@@ -23,15 +23,29 @@
 
 require_once("pts-core/functions/pts-functions-install_dependencies.php");
 
-function pts_start_install($TO_INSTALL)
+function pts_start_install($to_install)
 {
+	if(!is_array($to_install))
+	{
+		$to_install = array($to_install);
+	}
+
 	if(IS_SCTP_MODE)
 	{
-		$tests = array($TO_INSTALL);
+		$tests = array($to_install[0]);
 	}
 	else
 	{
-		$tests = pts_contained_tests($TO_INSTALL, true);
+		$tests = array();
+
+		foreach($to_install as $to_install_test)
+		{
+			foreach(pts_contained_tests($to_install_test, true) as $test)
+			{
+				array_push($tests, $test);
+			}
+		}
+		$tests = array_unique($tests);
 
 		if(count($tests) == 0)
 		{
