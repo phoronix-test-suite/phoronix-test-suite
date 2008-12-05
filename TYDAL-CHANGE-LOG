@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rename various options
 - pts-core: Shorten phoronix-test-suite text
 - pts-core: Add XSL-powered results overview chart to PTS Results Viewer
+- pts-core: Improve reporting of Xfce in sw_desktop_environment()
 - pts: Add filesystem test suite
 
 Phoronix Test Suite 1.6.0 Alpha 2

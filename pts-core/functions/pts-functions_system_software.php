@@ -268,7 +268,7 @@ function sw_desktop_environment()
 		}
 
 	}
-	else if(pts_process_running_bool("xfce4-session"))
+	else if(pts_process_running_bool("xfce4-session") || pts_process_running_bool("xfce-mcs-manager"))
 	{
 		// Xfce 4.x
 		$desktop_environment = "Xfce";
