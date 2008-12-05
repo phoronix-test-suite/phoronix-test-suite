@@ -48,7 +48,7 @@
 							<div class="pts_table_cell_header" style="text-align: left; text-indent: 2px;">Test</div>
 
 							<xsl:for-each select="PhoronixTestSuite/Benchmark">
-								<a><xsl:attribute name="href">#test-<xsl:value-of select="position()" /></xsl:attribute><div class="pts_table_cell_property"><xsl:value-of select="Name" /></div></a>
+								<a><xsl:attribute name="href">#test-<xsl:value-of select="position()" /></xsl:attribute><xsl:attribute name="title"><xsl:value-of select="Attributes" /></xsl:attribute><div class="pts_table_cell_property"><xsl:value-of select="Name" /></div></a>
 							</xsl:for-each>
 						</div>
 					<xsl:for-each select="PhoronixTestSuite/Benchmark[position()=1]/Results/Group/Entry">
