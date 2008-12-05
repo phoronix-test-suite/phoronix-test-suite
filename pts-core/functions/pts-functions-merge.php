@@ -103,7 +103,7 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 	}
 	unset($OLD_RESULTS, $original_xml_reader, $original_results_raw);
 
-	if(!pts_is_assignment("GLOBAL_COMPARISON") && getenv("PTS_MERGE") != "custom")
+	/*if(!pts_is_assignment("GLOBAL_COMPARISON") && getenv("PTS_MERGE") != "custom")
 	{
 		if($original_suite_name != $new_suite_name && !pts_global_valid_id_string($original_suite_name) && !pts_global_valid_id_string($new_suite_name))
 		{
@@ -113,7 +113,7 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 		{
 			// echo "Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n";
 		}
-	}
+	}*/
 
 	// Write the new merge
 

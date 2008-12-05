@@ -140,50 +140,6 @@ function pts_prompt_svg_result_options($svg_file)
 
 	return $test_to_run;
 }
-function pts_validate_save_results_name($proposed_save_name, $to_run, $to_run_type)
-{
-	$custom_title = null;
-
-	do
-	{
-		if(is_file(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml"))
-		{
-			$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml");
-			$test_suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
-
-			if($to_run_type != "GLOBAL_COMPARISON")
-			{
-				if($test_suite != $to_run)
-				{
-					$is_validated = false;
-				}
-				else
-				{
-					$is_validated = true;
-				}
-			}
-			else
-			{
-				$is_validated = true; //TODO: add type comparison check when doing a global comparison
-			}
-		}
-		else
-		{
-			$is_validated = true;
-		}
-
-		if(!$is_validated)
-		{
-			echo pts_string_header("This saved file-name is associated with a different test (" . $test_suite . ") from " . $to_run . ". Enter a new name for saving the results.");
-			$new_name = pts_prompt_save_file_name(false);
-			$proposed_save_name = $new_name[0];
-			$custom_title = $new_name[1];
-		}
-	}
-	while(!$is_validated);
-
-	return array($proposed_save_name, $custom_title);
-}
 function pts_prompt_test_options($identifier)
 {
 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
@@ -350,54 +306,73 @@ function pts_swap_user_variables($user_str)
 
 	return $user_str;
 }
-function pts_prompt_save_file_name($check_env = true)
+function pts_prompt_save_file_name($check_env = true, $to_run)
 {
 	// Prompt to save a file when running a test
-	if($check_env && ($save_name = getenv("TEST_RESULTS_NAME")) != false)
-	{
-		$CUSTOM_TITLE = $save_name;
-		$PROPOSED_FILE_NAME = pts_input_string_to_identifier($save_name);
-		echo "Saving Results To: " . $PROPOSED_FILE_NAME . "\n";
-	}
-	else
-	{
-		if(!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
-		{
-			$is_reserved_word = false;
+	$PROPOSED_FILE_NAME = null;
+	$CUSTOM_TITLE = null;
 
-			do
+	if($check_env != false)
+	{
+		if(!empty($check_env) || ($check_env = getenv("TEST_RESULTS_NAME")) != false)
+		{
+			$CUSTOM_TITLE = $check_env;
+			$PROPOSED_FILE_NAME = pts_input_string_to_identifier($check_env);
+			//echo "Saving Results To: " . $PROPOSED_FILE_NAME . "\n";
+		}
+	}
+
+	if(!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
+	{
+		$is_reserved_word = pts_is_test($PROPOSED_FILE_NAME) || pts_is_suite($PROPOSED_FILE_NAME);
+
+		while(empty($PROPOSED_FILE_NAME) || $is_reserved_word || !pts_validate_save_file_name($PROPOSED_FILE_NAME, $to_run))
+		{
+			if($is_reserved_word)
 			{
-				if($is_reserved_word)
-				{
-					echo "\n\nThe name of the saved file cannot be the same as a test/suite: " . $PROPOSED_FILE_NAME . "\n";
-					$is_reserved_word = false;
-				}
-
-				echo "Enter a name to save these results: ";
-				$PROPOSED_FILE_NAME = trim(fgets(STDIN));
-				$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
-				$PROPOSED_FILE_NAME = pts_input_string_to_identifier($PROPOSED_FILE_NAME);
-
-				$is_reserved_word = pts_is_test($PROPOSED_FILE_NAME) || pts_is_suite($PROPOSED_FILE_NAME);
+				echo "\n\nThe name of the saved file cannot be the same as a test/suite: " . $PROPOSED_FILE_NAME . "\n";
+				$is_reserved_word = false;
 			}
-			while(empty($PROPOSED_FILE_NAME) || $is_reserved_word);
-		}
-		else
-		{
-			$PROPOSED_FILE_NAME = "";
+
+			echo "Enter a name to save these results: ";
+			$PROPOSED_FILE_NAME = trim(fgets(STDIN));
+			$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
+			$PROPOSED_FILE_NAME = pts_input_string_to_identifier($PROPOSED_FILE_NAME);
+
+			$is_reserved_word = pts_is_test($PROPOSED_FILE_NAME) || pts_is_suite($PROPOSED_FILE_NAME);
 		}
 	}
 
-	if(!isset($PROPOSED_FILE_NAME) || empty($PROPOSED_FILE_NAME))
+	if(empty($PROPOSED_FILE_NAME))
 	{
 		$PROPOSED_FILE_NAME = date("Y-m-d-Hi");
 	}
-	if(!isset($PROPOSED_FILE_NAME) || empty($CUSTOM_TITLE))
+	if(empty($CUSTOM_TITLE))
 	{
 		$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
 	}
 
 	return array($PROPOSED_FILE_NAME, $CUSTOM_TITLE);
+}
+function pts_validate_save_file_name($proposed_save_name, $to_run)
+{
+	$is_validated = true;
+
+	if(is_file(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml");
+		$test_suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+
+		if(!pts_is_assignment("GLOBAL_COMPARISON"))
+		{
+			if($test_suite != $to_run && !pts_is_assignment("MULTI_TYPE_RUN"))
+			{
+				$is_validated = false;
+			}
+		}
+	}
+
+	return $is_validated;
 }
 function pts_promt_user_tags($default_tags = "")
 {
@@ -534,50 +509,72 @@ function pts_input_string_to_identifier($input)
 
 	return $input;
 }
-function pts_verify_test_installation($identifier)
+function pts_verify_test_installation($identifiers)
 {
 	// Verify a test is installed
-	$tests = pts_contained_tests($identifier);
+	$identifiers_o = $identifiers;
+	$tests = array();
+
+	if(!is_array($identifiers))
+	{
+		$identifiers = array($identifiers);	
+	}
+
+	foreach($identifiers as $identifier)
+	{
+		foreach(pts_contained_tests($identifier) as $this_test)
+		{
+			array_push($tests, $this_test);
+		}
+	}
+
+	$tests = array_unique($tests);
 	$needs_installing = array();
+	$pass_count = 0;
+	$fail_count = 0;
 	$valid_op = true;
 
 	foreach($tests as $test)
 	{
 		if(!is_file(TEST_ENV_DIR . $test . "/pts-install.xml"))
 		{
-			if(!pts_test_architecture_supported($test) || !pts_test_platform_supported($test))
+			$fail_count++;
+			if(pts_test_supported($test))
 			{
 				array_push($needs_installing, $test);
 			}
 		}
 		else
 		{
-			pts_set_assignment_once("TEST_INSTALL_PASS", true);
+			$pass_count++;
 		}
 	}
 
-	if(count($needs_installing) > 0)
+	if($fail_count > 0)
 	{
 		$needs_installing = array_unique($needs_installing);
 	
-		if(count($needs_installing) == 1)
+		if(count($needs_installing) > 0)
 		{
-			echo pts_string_header($needs_installing[0] . " isn't installed on this system.\nTo install this test, run: phoronix-test-suite install " . $needs_installing[0]);
-		}
-		else
-		{
-			$message = "Multiple tests need to be installed before proceeding:\n\n";
-			foreach($needs_installing as $single_package)
+			if(count($needs_installing) == 1)
 			{
-				$message .= "- " . $single_package . "\n";
+				echo pts_string_header($needs_installing[0] . " isn't installed.\nTo install, run: phoronix-test-suite install " . $needs_installing[0]);
 			}
+			else
+			{
+				$message = "Multiple tests need to be installed before proceeding:\n\n";
+				foreach($needs_installing as $single_package)
+				{
+					$message .= "- " . $single_package . "\n";
+				}
 
-			$message .= "\nTo install these tests, run: phoronix-test-suite install " . $identifier;
+				$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(" ", $identifiers);
 
-			echo pts_string_header($message);
+				echo pts_string_header($message);
+			}
 		}
 
-		if(!pts_is_assignment("TEST_INSTALL_PASS") && pts_read_assignment("COMMAND") != "benchmark")
+		if(pts_is_test($identifiers_o))
 		{
 			$valid_op = false;
 		}
@@ -608,11 +605,15 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 		else if(pts_is_test($tests_to_run[$i]))
 		{
 			$test_result = pts_run_test($tests_to_run[$i], $arguments_array[$i], $arguments_description[$i]);
-			$end_result = $test_result->get_result();
 
-			if($save_results && count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
+			if($test_result instanceof pts_test_result)
 			{
-				pts_record_test_result($tandem_xml, $test_result, $results_identifier, pts_request_new_id());
+				$end_result = $test_result->get_result();
+
+				if($save_results && count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
+				{
+					pts_record_test_result($tandem_xml, $test_result, $results_identifier, pts_request_new_id());
+				}
 			}
 
 			if($i != (count($tests_to_run) - 1))
@@ -957,6 +958,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	pts_process_remove($test_identifier);
 	pts_module_process("__post_test_run", $pts_test_result);
 	pts_test_refresh_install_xml($test_identifier, ($time_test_end - $time_test_start));
+
+	if($result_format == "NO_RESULT")
+	{
+		$pts_test_result = false;
+	}
 
 	return $pts_test_result;
 }

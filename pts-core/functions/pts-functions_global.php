@@ -31,6 +31,10 @@ function pts_global_download_xml($global_id)
 	// Download a saved test result from Phoronix Global
 	return @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $global_id);
 }
+function pts_clone_from_global($global_id)
+{
+	return pts_save_result($global_id . "/composite.xml", pts_global_download_xml($global_id));
+}
 function pts_global_valid_id_string($global_id)
 {
 	// Basic checking to see if the string is possibly a Global ID
