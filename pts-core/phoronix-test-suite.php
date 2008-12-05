@@ -25,6 +25,12 @@
 require("pts-core/functions/pts-functions.php");
 pts_init(); // Initalize the Phoronix Test Suite (pts-core) client
 
+$sent_command = strtolower(str_replace("-", "_", $argv[1]));
+if(!is_file("pts-core/options/" . $sent_command . ".php"))
+{
+	exit(3);
+}
+
 // Register PTS Process
 if(pts_process_active("phoronix-test-suite"))
 {
@@ -37,14 +43,15 @@ pts_module_startup_init(); // Initialize the PTS module system
 
 // Read passed arguments
 $pass_args = array();
-for($i = 2; $i < $argc; $i++)
+for($i = 3; $i < $argc; $i++)
 {
 	if(isset($argv[$i]))
 	{
 		array_push($pass_args, $argv[$i]);
 	}
 }
-pts_run_option_next($argv[1], $pass_args, getenv("PTS_COMMAND"));
+
+pts_run_option_next($sent_command, $pass_args, $argv[2]);
 
 while(($current_option = pts_run_option_next(false)) != false)
 {

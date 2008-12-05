@@ -24,22 +24,10 @@
 # Full path to root directory of the actual Phoronix Test Suite code
 export PTS_DIR=`pwd`
 CALL_DIR=`pwd`
-OPTION_ARG=$2
 
 if [ $PTS_DIR != `pwd` ]
 then
 	cd $PTS_DIR
-fi
-
-# Ensure the user is in the correct directory
-if [ ! -f pts-core/phoronix-test-suite.php ]
-then
-	cat <<'EOT'
-
-To run the Phoronix Test Suite locally you must first change directories to phoronix-test-suite/ or install the program using the install-sh script. For support visit: http://www.phoronix-test-suite.com/
-
-EOT
-exit
 fi
 
 # Determine PHP binary location
@@ -73,6 +61,17 @@ EOT
 exit
 fi
 
+# Ensure the user is in the correct directory
+if [ ! -f pts-core/phoronix-test-suite.php ]
+then
+	cat <<'EOT'
+
+To run the Phoronix Test Suite locally you must first change directories to phoronix-test-suite/ or install the program using the install-sh script. For support visit: http://www.phoronix-test-suite.com/
+
+EOT
+exit
+fi
+
 # Check if being called from a Self Contained test profile
 # export SCTP_FILE=`echo $CALL_DIR/$1 | sed 's:\./::g'`
 # if [ -e $SCTP_FILE ]
@@ -82,123 +81,47 @@ fi
 # 	exit
 # fi
 
-export PTS_COMMAND=$1
 case "$1" in
 "install" | "force-install")
-	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_TEST $OPTION_ARG
-	;;
-"install-dependencies")
-	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_DEPENDENCIES $OPTION_ARG
+	RUN_COMMAND="install_test"
 	;;
 "run" | "batch-run")
 	if [ "$1" = "batch-run" ]
 	then
 		export PTS_BATCH_MODE=1
 	fi
-	$PHP_BIN pts-core/phoronix-test-suite.php RUN_TEST $OPTION_ARG
+	RUN_COMMAND="run_test"
 	;;
-"benchmark" | "batch-benchmark")
-	if [ "$1" = "batch-benchmark" ]
-	then
-		export PTS_BATCH_MODE=1
-	fi
-	$PHP_BIN pts-core/phoronix-test-suite.php BENCHMARK $OPTION_ARG
+"batch-benchmark")
+	export PTS_BATCH_MODE=1
+	RUN_COMMAND="benchmark"
 	;;
-"merge-results")
-	$PHP_BIN pts-core/phoronix-test-suite.php MERGE_RESULTS $OPTION_ARG $3 $4
+"upload" | "upload-results")
+	RUN_COMMAND="upload_result"
 	;;
-"analyze-batch")
-	$PHP_BIN pts-core/phoronix-test-suite.php ANALYZE_BATCH $OPTION_ARG $3
+"list-all-tests")
+	RUN_COMMAND="list_tests"
 	;;
-"analyze-all-runs")
-	$PHP_BIN pts-core/phoronix-test-suite.php ANALYZE_ALL_RUNS $OPTION_ARG
+"list-results")
+	RUN_COMMAND="list_saved_results"
 	;;
-"remove-result")
-	$PHP_BIN pts-core/phoronix-test-suite.php REMOVE_RESULT $OPTION_ARG
-	;;
-"remove-installed-test")
-	$PHP_BIN pts-core/phoronix-test-suite.php REMOVE_INSTALLED_TEST $OPTION_ARG
-	;;
-"remove-all-results")
-	$PHP_BIN pts-core/phoronix-test-suite.php REMOVE_ALL_RESULTS
-	;;
-"upload" | "upload-result" | "upload-results")
-	$PHP_BIN pts-core/phoronix-test-suite.php UPLOAD_RESULT $OPTION_ARG
-	;;
-"make-download-cache")
-	$PHP_BIN pts-core/phoronix-test-suite.php MAKE_DOWNLOAD_CACHE
-	;;
-"list-tests" | "list-all-tests")
-	$PHP_BIN pts-core/phoronix-test-suite.php LIST_TESTS
-	;;
-"list-suites")
-	$PHP_BIN pts-core/phoronix-test-suite.php LIST_SUITES
-	;;
-"convert-test-to-sctp")
-	$PHP_BIN pts-core/phoronix-test-suite.php CONVERT_TEST_TO_SCTP $OPTION_ARG
-	;;
-"list-modules")
-	$PHP_BIN pts-core/phoronix-test-suite.php LIST_MODULES
-	;;
-"list-possible-dependencies")
-	$PHP_BIN pts-core/phoronix-test-suite.php LIST_POSSIBLE_DEPENDENCIES
-	;;
-"list-installed-tests")
-	$PHP_BIN pts-core/phoronix-test-suite.php LIST_INSTALLED_TESTS
-	;;
-"list-test-usage")
-	$PHP_BIN pts-core/phoronix-test-suite.php LIST_TEST_USAGE
-	;;
-"list-results" | "list-saved-results" | "list-test-results")
-	$PHP_BIN pts-core/phoronix-test-suite.php LIST_SAVED_RESULTS
-	;;
-"result-info")
-	$PHP_BIN pts-core/phoronix-test-suite.php RESULT_INFO $OPTION_ARG
-	;;
-"show-result" | "show-results" | "view-result" | "view-results")
-	$PHP_BIN pts-core/phoronix-test-suite.php SHOW_RESULT $OPTION_ARG
-	;;
-"info" | "suite-info" | "test-info")
-	$PHP_BIN pts-core/phoronix-test-suite.php INFO $OPTION_ARG
-	;;
-"module-info")
-	$PHP_BIN pts-core/phoronix-test-suite.php MODULE_INFO $OPTION_ARG
-	;;
-"module-setup")
-	$PHP_BIN pts-core/phoronix-test-suite.php MODULE_SETUP $OPTION_ARG
-	;;
-"system-info")
-	$PHP_BIN pts-core/phoronix-test-suite.php SYSTEM_INFO
-	;;
-"diagnostics")
-	$PHP_BIN pts-core/phoronix-test-suite.php DIAGNOSTICS
+"show-results" | "view-result" | "view-results")
+	RUN_COMMAND="show_result"
 	;;
 "clone")
-	$PHP_BIN pts-core/phoronix-test-suite.php CLONE_GLOBAL_RESULT $OPTION_ARG
+	RUN_COMMAND="clone_global_result"
 	;;
-"download-test-files")
-	$PHP_BIN pts-core/phoronix-test-suite.php DOWNLOAD_TEST_FILES $OPTION_ARG
-	;;
-"install-all" | "force-install-all")
-	$PHP_BIN pts-core/phoronix-test-suite.php INSTALL_ALL
-	;;
-"initial-config")
-	$PHP_BIN pts-core/phoronix-test-suite.php INITIAL_CONFIG
+"force-install-all")
+	RUN_COMMAND="install_all"
 	;;
 "version")
-	$PHP_BIN pts-core/phoronix-test-suite.php CORE_VERSION
-	;;
-"build-suite")
-	$PHP_BIN pts-core/phoronix-test-suite.php BUILD_SUITE
+	RUN_COMMAND="core_version"
 	;;
 "login")
-	$PHP_BIN pts-core/phoronix-test-suite.php GLOBAL_LOGIN
+	RUN_COMMAND="global_login"
 	;;
-"batch-setup")
-	$PHP_BIN pts-core/phoronix-test-suite.php BATCH_SETUP
-	;;
-"refresh-graph" | "refresh-graphs" | "refresh-result")
-	$PHP_BIN pts-core/phoronix-test-suite.php REFRESH_GRAPHS $OPTION_ARG
+"refresh-graph" | "refresh-result")
+	RUN_COMMAND="refresh_graphs"
 	;;
 "test-module" | "debug-module")
 	if [ "$1" = "debug-module" ]
@@ -207,12 +130,20 @@ case "$1" in
 	fi
 
 	export PTS_IGNORE_MODULES=1
-	$PHP_BIN pts-core/phoronix-test-suite.php TEST_MODULE $OPTION_ARG
+	RUN_COMMAND="test_module"
 	;;
-"sensors" | "sensor-options" | "analyze" | "analyze-results")
+"sensors" | "sensor-options" | "analyze" | "analyze-results" | "suite-info" | "test-info")
 	echo "\nThis option was dropped or changed in the Phoronix Test Suite.\nFor more information and the replacement option, view the documentation.\n"
+	exit
 	;;
 *)
+	RUN_COMMAND=$1
+esac
+
+$PHP_BIN pts-core/phoronix-test-suite.php $RUN_COMMAND $@
+
+if [ $? = 3 ]
+then
 	cat <<'EOT'
 
 =================================
@@ -264,6 +195,7 @@ Miscellaneous Options:
     diagnostics: Useful information when reporting a bug or problem
     build-suite: Build your own test suite
     version: Print the Phoronix Test Suite version and code-name
+
 EOT
-;;
-esac
+
+fi
