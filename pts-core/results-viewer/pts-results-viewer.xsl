@@ -42,6 +42,25 @@
 				<div class="pts_table_box">
 				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><strong>Administrator:</strong> <xsl:value-of select="Author" /><br /><strong>Date:</strong> <xsl:value-of select="TestDate" /> (UTC)<br /><strong>PTS Version:</strong> <xsl:value-of select="Version" /><br /><strong>Test Notes:</strong><br /><xsl:value-of select="TestNotes" /></div></div></div></xsl:for-each>
 				</div>
+				<h1>Results Overview</h1>
+				<div class="pts_results_table_box">
+						<div class="pts_table_col">
+							<div class="pts_table_cell_header" style="text-align: left; text-indent: 2px;">Test</div>
+
+							<xsl:for-each select="PhoronixTestSuite/Benchmark">
+								<a><xsl:attribute name="href">#test-<xsl:value-of select="position()" /></xsl:attribute><div class="pts_table_cell_property"><xsl:value-of select="Name" /></div></a>
+							</xsl:for-each>
+						</div>
+					<xsl:for-each select="PhoronixTestSuite/Benchmark[position()=1]/Results/Group/Entry">
+						<div class="pts_table_col">
+							<div class="pts_table_cell_header"><xsl:value-of select="Identifier" /></div>
+						<xsl:variable name="this_identify" select="Identifier" />
+							<xsl:for-each select="/PhoronixTestSuite/Benchmark/Results/Group/Entry[Identifier=$this_identify]">
+								<div class="pts_table_cell"><xsl:value-of select="Value" /></div>
+							</xsl:for-each>
+						</div>
+					</xsl:for-each>
+				</div>
 			</div>
 
 			<div class="pts_box">
@@ -49,13 +68,13 @@
 
 				<div id="pts_benchmark_area">
 					<xsl:for-each select="PhoronixTestSuite/Benchmark">
-						<div class="pts_benchmark_bar"><span class="pts_benchmark_bar_header"><xsl:value-of select="Name"/></span> <span class="pts_benchmark_bar_version">v<xsl:value-of select="Version"/></span><br /><strong><xsl:value-of select="Attributes"/></strong></div>
+						<div class="pts_benchmark_bar"><a><xsl:attribute name="name">test-<xsl:value-of select="position()" /></xsl:attribute></a><span class="pts_benchmark_bar_header"><xsl:value-of select="Name"/></span> <span class="pts_benchmark_bar_version"><xsl:value-of select="Version"/></span><br /><strong><xsl:value-of select="Attributes"/></strong></div>
 						<div class="pts_benchmark_text">
 								<xsl:if test="not(contains(ResultFormat,'MULTI_'))">
 									<xsl:for-each select="Results/Group">
 										<div style="padding: 5px 0;">
 											<xsl:for-each select="Entry">
-												<strong><xsl:value-of select="Identifier"/>:</strong><span style="padding-left: 5px;"><xsl:value-of select="Value"/></span><br />
+												<strong><xsl:value-of select="Identifier" />:</strong><span style="padding-left: 5px;"><xsl:value-of select="Value"/></span><br />
 											</xsl:for-each>
 										</div>
 									</xsl:for-each>

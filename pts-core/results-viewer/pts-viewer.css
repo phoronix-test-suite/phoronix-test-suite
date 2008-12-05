@@ -118,6 +118,43 @@ h1
 	color: #2b6b29;
 	font-weight: bold;
 }
+div.pts_results_table_box
+{
+	text-align: center;
+	background-color: #F8F8F8;
+	border: solid #2b6b29 1px;
+	margin: 20px auto;
+	display: table;
+}
+div.pts_results_table_box div.pts_table_col
+{
+	display: table-cell;
+}
+div.pts_table_col div.pts_table_cell
+{
+	height: 17px;
+	border: solid #2b6b29;
+	border-width: 1px 0 0 1px;
+	padding: 0 4px;
+}
+div.pts_table_col div.pts_table_cell_property
+{
+	height: 17px;
+	border: solid transparent;
+	background-color: #2b6b29;
+	color: #FFF;
+	border-width: 1px 0 0 1px;
+	padding: 0 4px 0 2px;
+	text-align: left;
+}
+div.pts_table_col div.pts_table_cell_header
+{
+	height: 18px;
+	background-color: #2b6b29;
+	color: #FFF;
+	padding: 0 4px;
+	font-weight: bold;
+}
 div.pts_table_box
 {
 	text-align: center;
