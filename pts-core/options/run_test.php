@@ -32,6 +32,15 @@ class run_test implements pts_option_interface
 			echo pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup");
 			return false;
 		}
+		
+		$MODULE_STORE = pts_module_store_var("TO_STRING");
+		$TEST_PROPERTIES = array();
+
+		if(!isset($r[0]) || empty($r[0]))
+		{
+			echo pts_string_header("The test, suite, or saved file name must be supplied.");
+			return false;
+		}
 
 		$TO_RUN = strtolower($r[0]);
 
@@ -46,23 +55,12 @@ class run_test implements pts_option_interface
 		}
 
 		$TO_RUN_TYPE = pts_test_type($TO_RUN);
-		$MODULE_STORE = pts_module_store_var("TO_STRING");
-		$TEST_PROPERTIES = array();
 
-		if(IS_BATCH_MODE)
-		{
-			array_push($TEST_PROPERTIES, "PTS_BATCH_MODE");
-		}
 		if(IS_SCTP_MODE)
 		{
 			$TO_RUN = basename($TO_RUN);
 		}
 
-		if(empty($TO_RUN))
-		{
-			echo pts_string_header("The test, suite, or saved file name must be supplied.");
-			return false;
-		}
 		pts_set_assignment("TO_RUN", $TO_RUN);
 
 		if(pts_is_test($TO_RUN))
@@ -218,7 +216,7 @@ class run_test implements pts_option_interface
 				$TEST_RUN = array();
 				$TEST_ARGS = $option_output[0];
 				$TEST_ARGS_DESCRIPTION = $option_output[1];
-				for($i = 0; $i < count($TEST_ARGS); $i++) // needed at this time to fill up the array same size as the number of options present
+				for($i = 0; $i < count($TEST_ARGS); $i++)
 				{
 					array_push($TEST_RUN, $TO_RUN);
 				}
@@ -330,6 +328,11 @@ class run_test implements pts_option_interface
 
 		if($SAVE_RESULTS)
 		{
+			if(IS_BATCH_MODE)
+			{
+				array_push($TEST_PROPERTIES, "PTS_BATCH_MODE");
+			}
+
 			$test_notes = pts_generate_test_notes($test_type);
 
 			$id = pts_request_new_id();
