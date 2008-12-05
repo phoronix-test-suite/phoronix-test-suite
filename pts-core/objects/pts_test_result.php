@@ -192,15 +192,21 @@ class pts_test_result
 			{
 				// assume AVG (average)
 				$TOTAL_RESULT = 0;
+				$TOTAL_COUNT = 0;
+
 				foreach($this->trial_results as $result)
 				{
-					$TOTAL_RESULT += trim($result);
-					$return_string .= $result . " " . $this->result_scale . "\n";
+					if(is_numeric($result))
+					{
+						$TOTAL_RESULT += trim($result);
+						$TOTAL_COUNT++;
+						$return_string .= $result . " " . $this->result_scale . "\n";
+					}
 				}
 
-				if(count($this->trial_results) > 0)
+				if($TOTAL_COUNT > 0)
 				{
-					$END_RESULT = pts_trim_double($TOTAL_RESULT / count($this->trial_results), 2);
+					$END_RESULT = pts_trim_double($TOTAL_RESULT / $TOTAL_COUNT, 2);
 				}
 				else
 				{

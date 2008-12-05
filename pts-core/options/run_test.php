@@ -43,7 +43,8 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
-		for($i = 0; $i < count($to_run_identifiers); $i++)
+		$start_identifier_count = count($to_run_identifiers);
+		for($i = 0; $i < $start_identifier_count; $i++)
 		{
 			// Clean up tests
 			$lower_identifier = strtolower($to_run_identifiers[$i]);
@@ -57,7 +58,7 @@ class run_test implements pts_option_interface
 				{
 					echo pts_string_header($lower_identifier . " is not a test.");
 					unset($to_run_identifiers[$i]);
-					break;
+					continue;
 				}
 			}
 
@@ -65,7 +66,7 @@ class run_test implements pts_option_interface
 			{
 				// Eliminate this test, it's not properly installed
 				unset($to_run_identifiers[$i]);
-				break;
+				continue;
 			}
 			
 			if(is_file($to_run_identifiers[$i]) && substr(basename($to_run_identifiers[$i]), -4) == ".svg")
@@ -114,7 +115,7 @@ class run_test implements pts_option_interface
 				else
 				{
 					echo pts_string_header("Not Recognized: " . $to_run);
-					break;
+					continue;
 				}
 
 				pts_set_assignment_once("AUTO_SAVE_NAME", $to_run);
@@ -233,7 +234,7 @@ class run_test implements pts_option_interface
 			else
 			{
 				echo pts_string_header("\nUnrecognized option: " . $to_run . "\n");
-				break;
+				continue;
 			}
 
 			for($i = 0; $i < count($TEST_ARGS) && $i < count($TEST_RUN); $i++)

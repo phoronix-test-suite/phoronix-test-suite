@@ -333,6 +333,10 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 				echo "\n\nThe name of the saved file cannot be the same as a test/suite: " . $PROPOSED_FILE_NAME . "\n";
 				$is_reserved_word = false;
 			}
+			else if(!pts_validate_save_file_name($PROPOSED_FILE_NAME, $to_run))
+			{
+				echo "\n\n" . $PROPOSED_FILE_NAME . " is associated with a different test/suite.\n";
+			}
 
 			echo "Enter a name to save these results: ";
 			$PROPOSED_FILE_NAME = trim(fgets(STDIN));
