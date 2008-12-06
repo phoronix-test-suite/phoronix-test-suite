@@ -93,6 +93,10 @@
 			<Identifier>rendering-size</Identifier>
 			<Menu>
 				<Entry>
+					<Name>32x32</Name>
+					<Value>32</Value>
+				</Entry>
+				<Entry>
 					<Name>64x64</Name>
 					<Value>64</Value>
 				</Entry>
@@ -103,10 +107,6 @@
 				<Entry>
 					<Name>256x256</Name>
 					<Value>256</Value>
-				</Entry>
-				<Entry>
-					<Name>512x512</Name>
-					<Value>512</Value>
 				</Entry>
 			</Menu>
 		</Option>
