@@ -112,7 +112,7 @@ class pts_LineGraph extends pts_CustomGraph
 				$previous_offset = $px_from_left;
 			}
 
-			if($point_counter < 10)
+			if($point_counter < 6)
 			{
 				$previous_placement = -1;
 				$previous_offset = -1;

@@ -263,7 +263,7 @@ class run_test implements pts_option_interface
 			pts_set_assignment("MULTI_TYPE_RUN", true);
 		}
 
-		$RESULTS = new tandem_XmlWriter();
+		$xml_results_writer = new tandem_XmlWriter();
 
 		echo "\n";
 		$save_results = false;
@@ -312,7 +312,7 @@ class run_test implements pts_option_interface
 					$result_identifiers = array();
 				}
 
-				$RESULTS_IDENTIFIER = pts_prompt_results_identifier($result_identifiers);
+				$results_identifier = pts_prompt_results_identifier($result_identifiers);
 				pts_set_assignment("SAVE_FILE_NAME", $PROPOSED_FILE_NAME);
 
 				// Prompt Description
@@ -363,7 +363,7 @@ class run_test implements pts_option_interface
 
 		if(!$save_results)
 		{
-			$RESULTS_IDENTIFIER = "";
+			$results_identifier = "";
 			$save_results = false;
 			pts_set_assignment("SAVE_FILE_NAME", null);
 		}
@@ -375,7 +375,7 @@ class run_test implements pts_option_interface
 			pts_user_message($PRE_RUN_MESSAGE);
 		}
 
-		pts_recurse_call_tests($test_names_r, $test_arguments_r, $save_results, $RESULTS, $RESULTS_IDENTIFIER, $test_arguments_description_r);
+		pts_recurse_call_tests($test_names_r, $test_arguments_r, $save_results, $xml_results_writer, $results_identifier, $test_arguments_description_r);
 
 		if(isset($POST_RUN_MESSAGE))
 		{
@@ -395,27 +395,27 @@ class run_test implements pts_option_interface
 			$test_notes = pts_generate_test_notes($test_type);
 
 			$id = pts_request_new_id();
-			$RESULTS->setXslBinding("pts-results-viewer.xsl");
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $id, pts_hw_string());
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $id, pts_sw_string());
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $id, pts_current_user());
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_DATE, $id, date("F j, Y h:i A"));
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_NOTES, $id, trim($test_notes));
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $id, PTS_VERSION);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $RESULTS_IDENTIFIER);
+			$xml_results_writer->setXslBinding("pts-results-viewer.xsl");
+			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $id, pts_hw_string());
+			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $id, pts_sw_string());
+			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $id, pts_current_user());
+			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, $id, date("F j, Y h:i A"));
+			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, $id, trim($test_notes));
+			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $id, PTS_VERSION);
+			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $results_identifier);
 
 			$id = pts_request_new_id();
-			$RESULTS->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $CUSTOM_TITLE);
-			$RESULTS->addXmlObject(P_RESULTS_SUITE_NAME, $id, pts_read_assignment("TO_RUN"));
-			$RESULTS->addXmlObject(P_RESULTS_SUITE_VERSION, $id, $test_version);
-			$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
-			$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
-			$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $MODULE_STORE);
-			$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $TEST_PROPERTIES));
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $CUSTOM_TITLE);
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, $id, pts_read_assignment("TO_RUN"));
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, $id, $test_version);
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $MODULE_STORE);
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $TEST_PROPERTIES));
 
 			if(pts_read_assignment("TEST_RAN") == true)
 			{
-				pts_save_test_file($PROPOSED_FILE_NAME, $RESULTS);
+				pts_save_test_file($PROPOSED_FILE_NAME, $xml_results_writer);
 				echo "Results Saved To: " . SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml\n";
 				pts_display_web_browser(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/index.html");
 
@@ -423,7 +423,7 @@ class run_test implements pts_option_interface
 
 				if($upload_results)
 				{
-					$tags_input = pts_promt_user_tags(array($RESULTS_IDENTIFIER));
+					$tags_input = pts_promt_user_tags(array($results_identifier));
 					$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml", $tags_input);
 
 					if(!empty($upload_url))
