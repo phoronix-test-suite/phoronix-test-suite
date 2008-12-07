@@ -21,87 +21,55 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
+function pts_merge_test_results($original_results_file, $new_results_file)
 {
 	// Merge two test results
 
 	// RE-READ LATEST RESULTS
-	$new_xml_reader = new tandem_XmlReader($NEW_RESULTS);
-	$new_system_hardware = $new_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);
-	$new_system_software = $new_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_SOFTWARE);
-	$new_system_author = $new_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_AUTHOR);
-	$new_system_notes = $new_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_NOTES);
-	$new_system_date = $new_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_DATE);
-	$new_pts_version = $new_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_PTSVERSION);
-	$new_associated_identifiers = $new_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
-	$new_results_raw = $new_xml_reader->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+	$new_results = new pts_result_file($new_results_file);
+	$new_system_hardware = $new_results->get_system_hardware();
+	$new_system_software = $new_results->get_system_software();
+	$new_system_author = $new_results->get_system_author();
+	$new_system_date = $new_results->get_system_date();
+	$new_pts_version = $new_results->get_system_pts_version();
+	$new_system_notes = $new_results->get_system_notes();
+	$new_associated_identifiers = $new_results->get_system_identifiers();
 
-	$new_suite_name = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_NAME);
-	$new_suite_version = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_VERSION);
-	$new_suite_title = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_TITLE);
-	$new_suite_description = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
-	$new_suite_extensions = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
-	$new_suite_properties = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
-	$new_suite_type = $new_xml_reader->getXMLValue(P_RESULTS_SUITE_TYPE);
+	$new_results_name = $new_results->get_results_name();
+	$new_results_version = $new_results->get_results_version();
+	$new_results_attributes = $new_results->get_results_attributes();
+	$new_results_scale = $new_results->get_results_scale();
+	$new_results_proportion = $new_results->get_results_proportion();
+	$new_results_testname = $new_results->get_results_test_name();
+	$new_results_arguments = $new_results->get_results_arguments();
+	$new_results_result_format = $new_results->get_results_format();
 
-	$new_results_name = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
-	$new_results_version = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
-	$new_results_attributes = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
-	$new_results_scale = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
-	$new_results_testname = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-	$new_results_arguments = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
-	$new_results_proportion = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
-	$new_results_result_format = $new_xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
-
-	$new_results_identifiers = array();
-	$new_results_values = array();
-	$new_results_rawvalues = array();
-
-	foreach($new_results_raw as $new_result_raw)
-	{
-		$new_xml_results = new tandem_XmlReader($new_result_raw);
-		array_push($new_results_identifiers, $new_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
-		array_push($new_results_values, $new_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
-		array_push($new_results_rawvalues, $new_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
-	}
-	unset($NEW_RESULTS, $new_xml_reader, $new_results_raw);
-
+	$new_results_identifiers = $new_results->get_results_identifiers();
+	$new_results_values = $new_results->get_results_values();
+	$new_results_rawvalues = $new_results->get_results_raw_values();
 
 	// READ ORIGINAL RESULTS
-	$original_xml_reader = new tandem_XmlReader($OLD_RESULTS);
-	$original_system_hardware = $original_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);
-	$original_system_software = $original_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_SOFTWARE);
-	$original_system_author = $original_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_AUTHOR);
-	$original_system_notes = $original_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_NOTES);
-	$original_system_date = $original_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_DATE);
-	$original_pts_version = $original_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_PTSVERSION);
-	$original_associated_identifiers = $original_xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
-	$original_results_raw = $original_xml_reader->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+	$original_results = new pts_result_file($original_results_file);
+	$original_system_hardware = $original_results->get_system_hardware();
+	$original_system_software = $original_results->get_system_software();
+	$original_system_author = $original_results->get_system_author();
+	$original_system_date = $original_results->get_system_date();
+	$original_pts_version = $original_results->get_system_pts_version();
+	$original_system_notes = $original_results->get_system_notes();
+	$original_associated_identifiers = $original_results->get_system_identifiers();
 
-	$original_suite_name = $original_xml_reader->getXMLValue(P_RESULTS_SUITE_NAME);
-	$original_suite_version = $original_xml_reader->getXMLValue(P_RESULTS_SUITE_VERSION);
+	$original_results_name = $original_results->get_results_name();
+	$original_results_version = $original_results->get_results_version();
+	$original_results_attributes = $original_results->get_results_attributes();
+	$original_results_scale = $original_results->get_results_scale();
+	$original_results_proportion = $original_results->get_results_proportion();
+	$original_results_testname = $original_results->get_results_test_name();
+	$original_results_arguments = $original_results->get_results_arguments();
+	$original_results_result_format = $original_results->get_results_format();
 
-	$original_results_name = $original_xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
-	$original_results_version = $original_xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
-	$original_results_attributes = $original_xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
-	$original_results_scale = $original_xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
-	$original_results_testname = $original_xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-	$original_results_arguments = $original_xml_reader->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
-	$original_results_proportion = $original_xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
-	$original_results_result_format = $original_xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
-
-	$original_results_identifiers = array();
-	$original_results_values = array();
-	$original_results_rawvalues = array();
-
-	foreach($original_results_raw as $original_result_raw)
-	{
-		$original_xml_results = new tandem_XmlReader($original_result_raw);
-		array_push($original_results_identifiers, $original_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
-		array_push($original_results_values, $original_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
-		array_push($original_results_rawvalues, $original_xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
-	}
-	unset($OLD_RESULTS, $original_xml_reader, $original_results_raw);
+	$original_results_identifiers = $original_results->get_results_identifiers();
+	$original_results_values = $original_results->get_results_values();
+	$original_results_rawvalues = $original_results->get_results_raw_values();
 
 	/*if(!pts_is_assignment("GLOBAL_COMPARISON") && getenv("PTS_MERGE") != "custom")
 	{
@@ -121,17 +89,17 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 
 	$RESULTS->setXslBinding("pts-results-viewer.xsl");
 
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_TITLE, 0, $new_suite_title);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_NAME, 0, $new_suite_name);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $new_suite_version);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $new_suite_description);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $new_suite_type);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $new_suite_extensions);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $new_suite_properties);
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_TITLE, 0, $new_results->get_suite_title());
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_NAME, 0, $new_results->get_suite_name());
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $new_results->get_suite_version());
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $new_results->get_suite_description());
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $new_results->get_suite_type());
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $new_results->get_suite_extensions());
+	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $new_results->get_suite_properties());
 
 	// Same hardware and software?
 	
-	if(count($original_system_hardware) == 1 && count($new_system_hardware) == 1 && $original_system_hardware[0] == $new_system_hardware[0] && $original_system_software[0] == $new_system_software[0] && $original_pts_version[0] == $new_pts_version[0] && $original_system_notes[0] == $new_system_notes[0])
+/*	if(count($original_system_hardware) == 1 && count($new_system_hardware) == 1 && $original_system_hardware[0] == $new_system_hardware[0] && $original_system_software[0] == $new_system_software[0] && $original_pts_version[0] == $new_pts_version[0] && $original_system_notes[0] == $new_system_notes[0])
 	{
 		$USE_ID = pts_request_new_id();
 		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $original_system_hardware[0]);
@@ -147,7 +115,7 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 		if(!pts_version_comparable($original_pts_version[0], $new_pts_version[0]))
 		{
 			echo pts_string_header("PTS Versions Do Not Match! For accurate results, you should only test against the same version!");
-		}
+		}*/
 
 		for($i = 0; $i < count($original_system_hardware); $i++)
 		{
@@ -171,7 +139,7 @@ function pts_merge_test_results($OLD_RESULTS, $NEW_RESULTS)
 			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $new_pts_version[$i]);
 			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $new_associated_identifiers[$i]);
 		}
-	}
+	//}
 
 	// Merge Results
 	$merge_count = 0;

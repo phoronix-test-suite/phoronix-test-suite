@@ -126,7 +126,6 @@ class pts_result_file
 		return $this->system_identifiers;
 	}
 
-
 	public function get_suite_name()
 	{
 		return $this->suite_name;
