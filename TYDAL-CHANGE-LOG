@@ -20,6 +20,7 @@ Phoronix Test Suite (Git)
 - pts: Remove bonnie test profile until clarifications made
 - pts: Add filesystem test suite
 - pts: Add jxrendermark as new X Render benchmark test profile
+- pts: Add prey retail game client test profile
 - system_monitor: Update sensors every 9 seconds
 
 Phoronix Test Suite 1.6.0 Alpha 2

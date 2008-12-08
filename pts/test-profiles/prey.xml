@@ -1,0 +1,37 @@
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Game</SoftwareType>
+		<License>NON-FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://www.prey.com/</ProjectURL>
+		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+	</TestProfile>
+	<TestInformation>
+		<Title>Prey</Title>
+		<Version>1.4.119</Version>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Frames Per Second</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This test calculates the average frame-rate within the Prey retail game from 3D Realms. This test requires a valid game key and game files found on the retail CD/DVD.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<Arguments>+set in_tty 0 +set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +timedemoquit pts</Arguments>
+			<PossiblePaths></PossiblePaths>
+		</Default>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>auto-resolution</Identifier>
+			<Menu>
+				<Entry>
+					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+					<Value>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>
