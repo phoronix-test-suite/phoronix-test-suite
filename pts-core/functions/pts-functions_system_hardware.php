@@ -94,12 +94,14 @@ function hw_sys_motherboard_string()
 		}
 	}
 
+	$info = pts_clean_information_string($info);
+
 	if(empty($info))
 	{
 		$info = "Unknown";
 	}
 
-	return pts_clean_information_string($info);
+	return $info;
 }
 function hw_sys_chipset_string()
 {
