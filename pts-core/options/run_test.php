@@ -32,6 +32,10 @@ class run_test implements pts_option_interface
 		{
 			pts_set_assignment("IS_BATCH_MODE", true);
 		}
+		if(getenv("PTS_DEFAULTS_MODE") != false)
+		{
+			pts_set_assignment("IS_DEFAULTS_MODE", true);
+		}
 
 		if(pts_read_assignment("IS_BATCH_MODE") != false && pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "FALSE")
 		{
@@ -164,20 +168,18 @@ class run_test implements pts_option_interface
 						array_push($TEST_RUN, $to_run);
 					}
 				}
-				else if(pts_read_assignment("DEFAULTS_MODE") == true)
+				else if(pts_read_assignment("IS_DEFAULTS_MODE") == true)
 				{
 					$option_output = pts_defaults_test_options($to_run);
 
-					$TEST_RUN = array($to_run);
-					$TEST_ARGS = array($option_output[0]);
-					$TEST_ARGS_DESCRIPTION = array($option_output[1]);
+					$TEST_RUN = array();
+					$TEST_ARGS = $option_output[0];
+					$TEST_ARGS_DESCRIPTION = $option_output[1];
 
 					for($i = 0; $i < count($TEST_ARGS); $i++)
 					{
 						array_push($TEST_RUN, $to_run);
 					}
-
-					print_r($option_output); exit;
 				}
 				else
 				{

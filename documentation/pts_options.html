@@ -56,9 +56,18 @@ only be used when debugging a test installation problem.</p>
 to run the test(s). This option is equivalent to running phoronix-test-suite with 
 the install option followed by the run option. The name of the test or suite must 
 be supplied or the Phoronix Global ID or saved local file name. Multiple arguments can be supplied to run additional tests at the same time and save the results in a suite-like fashion.</p>
+<p><strong>default-benchmark &lt;To Run&gt;</strong></p>
+<p>This option will install the selected test(s) (if needed) and will proceed 
+to run the test(s) in the defaults mode. This option is equivalent to running phoronix-test-suite with 
+the install option followed by the default-run option. The name of the test or suite must 
+be supplied or the Phoronix Global ID or saved local file name. Multiple arguments can be supplied to run additional tests at the same time and save the results in a suite-like fashion.</p>
 <p><strong>run &lt;To Run&gt;</strong></p>
 <p>This option will run the selected test(s). The name of the test or suite must 
 be supplied or the Phoronix Global ID or saved local file name. Multiple arguments can be supplied to run additional tests at the same time and save the results in a suite-like fashion.</p>
+<p><strong>default-run &lt;To Run&gt;</strong></p>
+<p>This option will run the selected test(s). The name of the test or suite must 
+be supplied or the Phoronix Global ID or saved local file name. Multiple arguments can be supplied to run additional tests at the same time and save the results in a suite-like fashion. 
+Unlike the normal <em>run</em> option, the <em>default-run</em> will not prompt the user to select from the available test options but will instead use the default options as automatically set by pts-core or the test profile. Use <em>batch-run</em> to automatically test all of the available options.</p>
 <h2>Batch Run Options</h2>
 <p><strong>batch-setup</strong></p>
 <p>This option is used to configure the batch mode options for the Phoronix Test 
