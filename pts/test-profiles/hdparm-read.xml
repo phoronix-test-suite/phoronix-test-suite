@@ -20,22 +20,8 @@
 	<TestSettings>
 		<Option>
 			<DisplayName>Disk To Read</DisplayName>
-			<Identifier>disk-to-read</Identifier>
+			<Identifier>auto-disks</Identifier>
 			<ArgumentPrefix>-t </ArgumentPrefix>
-			<Menu>
-				<Entry>
-					<Name>First SATA Disk (sda)</Name>
-					<Value>/dev/sda</Value>
-				</Entry>
-				<Entry>
-					<Name>Second SATA Disk (sdb)</Name>
-					<Value>/dev/sdb</Value>
-				</Entry>
-				<Entry>
-					<Name>Third SATA Disk (sdc)</Name>
-					<Value>/dev/sdc</Value>
-				</Entry>
-			</Menu>
 		</Option>
 	</TestSettings>
 </PhoronixTestSuite>

@@ -31,6 +31,10 @@ define("TYPE_LOCAL_TEST_SUITE", "LOCAL_TEST_SUITE"); // Type is a test suite
 define("TYPE_SCTP_TEST", "LOCAL_SCTP_TEST"); // Type is a SCTP test
 define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a SCTP test
 
+function pts_is_run_object($object)
+{
+	return pts_is_test($object) || pts_is_suite($object);
+}
 function pts_is_suite($object)
 {
 	$type = pts_test_type($object);

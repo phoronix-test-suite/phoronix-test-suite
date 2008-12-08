@@ -207,9 +207,9 @@ function pts_save_result($save_to = null, $save_results = null)
 
 	return $bool;
 }
-function pts_suite_test_types()
+function pts_subsystem_test_types()
 {
-	return array("System", "Processor", "Hard Disk", "Graphics", "Memory", "Network");
+	return array("System", "Processor", "Disk", "Graphics", "Memory", "Network");
 }
 function pts_get_results_viewer_xsl_formatted($format_type = "PNG")
 {

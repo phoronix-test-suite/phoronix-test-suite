@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.1</Version>
-		<TestType>Hard Disk</TestType>
+		<Version>1.1.2</Version>
+		<TestType>Disk</TestType>
 		<Title>Hard Disk Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The disk suite contains Phoronix Test Suite tests designed to test the system's disk (HDD) performance.</Description>

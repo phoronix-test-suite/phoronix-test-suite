@@ -402,7 +402,7 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 			$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
 			$PROPOSED_FILE_NAME = pts_input_string_to_identifier($PROPOSED_FILE_NAME);
 
-			$is_reserved_word = pts_is_test($PROPOSED_FILE_NAME) || pts_is_suite($PROPOSED_FILE_NAME);
+			$is_reserved_word = pts_is_run_object($PROPOSED_FILE_NAME);
 		}
 	}
 
@@ -1122,7 +1122,7 @@ function pts_all_combos(&$return_arr, $current_string, $options, $counter, $deli
 function pts_auto_process_test_option($identifier, &$option_names, &$option_values)
 {
 	// Some test items have options that are dynamically built
-	if(count($option_names) == 1 && count($option_values) == 1)
+	if(count($option_names) < 2 && count($option_values) < 2)
 	{
 		switch($identifier)
 		{
@@ -1144,6 +1144,52 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 					array_push($option_names, $this_name);
 					array_push($option_values, $this_value);
 				}
+			break;
+			case "auto-disk-partitions":
+				$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
+				$all_devices_count = count($all_devices);
+
+				for($i = 0; $i < $all_devices_count; $i++)
+				{
+					$last_char = substr($all_devices[$i], -1);
+
+					if(!is_numeric($last_char))
+					{
+						unset($all_devices[$i]);
+					}
+				}
+
+				$option_values = array();
+
+				foreach($all_devices as $partition)
+				{
+					array_push($option_values, $partition);
+				}
+
+				$option_names = $option_values;
+			break;
+			case "auto-disks":
+				$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
+				$all_devices_count = count($all_devices);
+
+				for($i = 0; $i < $all_devices_count; $i++)
+				{
+					$last_char = substr($all_devices[$i], -1);
+
+					if(is_numeric($last_char))
+					{
+						unset($all_devices[$i]);
+					}
+				}
+
+				$option_values = array();
+
+				foreach($all_devices as $disk)
+				{
+					array_push($option_values, $disk);
+				}
+
+				$option_names = $option_values;
 			break;
 		}
 	}
