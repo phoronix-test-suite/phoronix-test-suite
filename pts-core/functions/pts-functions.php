@@ -83,11 +83,6 @@ function pts_run_option_next($command = false, $pass_args = null, $command_descr
 
 	return $return;
 }
-function p_str($str_o)
-{
-	//  $_ENV["LANG"]
-	return $str_o;
-}
 function pts_env_variables()
 {
 	// The PTS environmental variables passed during the testing process, etc

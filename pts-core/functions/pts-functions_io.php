@@ -21,6 +21,12 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+function p_str($str_o)
+{
+	//  $_ENV["LANG"]
+	return $str_o;
+}
 function pts_text_input($question)
 {
 	do

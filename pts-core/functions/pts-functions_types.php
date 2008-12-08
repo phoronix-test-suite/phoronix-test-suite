@@ -30,6 +30,7 @@ define("TYPE_OS_LOCAL_TEST", "OS_LOCAL_TEST"); // Type is test
 define("TYPE_LOCAL_TEST_SUITE", "LOCAL_TEST_SUITE"); // Type is a test suite
 define("TYPE_SCTP_TEST", "LOCAL_SCTP_TEST"); // Type is a SCTP test
 define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a SCTP test
+define("TYPE_VIRT_SUITE_SUBSYSTEM", "VIRT_SUITE_SUBSYSTEM"); // Type is a virtual suite for a subsystem
 
 function pts_is_run_object($object)
 {
@@ -40,6 +41,10 @@ function pts_is_suite($object)
 	$type = pts_test_type($object);
 
 	return $type == TYPE_TEST_SUITE || $type == TYPE_LOCAL_TEST_SUITE;
+}
+function pts_is_virtual_suite($object)
+{
+	return pts_location_virtual_suite($object) != false;
 }
 function pts_is_test($object)
 {
@@ -124,6 +129,32 @@ function pts_location_suite($identifier)
 		}
 
 		$cache[$identifier] = $location;
+	}
+
+	return $cache[$identifier];
+}
+function pts_location_virtual_suite($identifier)
+{
+	static $cache;
+
+	if(!isset($cache[$identifier]))
+	{
+		$virtual_suite = false;
+
+		if(!pts_is_test($identifier) && !pts_is_suite($identifier))
+		{
+			// Check if object is a subsystem test type
+			foreach(pts_subsystem_test_types() as $type)
+			{
+				if(strtolower($type) == $identifier)
+				{
+					$virtual_suite = TYPE_VIRT_SUITE_SUBSYSTEM;
+					break;
+				}
+			}
+		}
+
+		$cache[$identifier] = $virtual_suite;
 	}
 
 	return $cache[$identifier];
@@ -327,8 +358,43 @@ function pts_contained_tests($object, $include_extensions = false)
 			}
 		}
 	}
+	/* else if(pts_is_virtual_suite($object))
+	{
+		foreach(pts_virtual_suite_tests($object) as $virt_test)
+		{
+			array_push($tests, $virt_test);
+		}
+	} */
 
 	return array_unique($tests);
+}
+function pts_virtual_suite_tests($object)
+{
+	$virtual_suite_type = pts_location_virtual_suite($object);
+	$contained_tests = array();
+
+	switch($virtual_suite_type)
+	{
+		case TYPE_VIRT_SUITE_SUBSYSTEM:
+			foreach(pts_available_tests_array() as $test)
+			{
+				$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test));
+				$type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
+
+				if(strtolower($type) == $object && pts_test_supported($test))
+				{
+					array_push($contained_tests, $test);
+				}
+			}
+			break;
+	}
+
+	if(count($contained_tests) > 0)
+	{
+		pts_set_assignment_once("IS_DEFAULTS_MODE", true); // Use the defaults mode for the suite
+	}
+
+	return $contained_tests;
 }
 function pts_find_result_file($file, $check_global = true)
 {
