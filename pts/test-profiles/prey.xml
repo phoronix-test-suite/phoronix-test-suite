@@ -21,7 +21,6 @@
 	<TestSettings>
 		<Default>
 			<Arguments>+set in_tty 0 +set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +timedemoquit pts</Arguments>
-			<PossiblePaths></PossiblePaths>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>

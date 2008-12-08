@@ -27,6 +27,7 @@ class pts_test_option
 	var $option_name = "";
 	var $prefix = "";
 	var $postfix = "";
+	var $default_entry = -1;
 	var $options = array();
 
 	public function __construct($identifier, $option)
@@ -41,6 +42,14 @@ class pts_test_option
 	public function set_option_postfix($postfix)
 	{
 		$this->postfix = $postfix;
+	}
+	public function set_option_default($default_node)
+	{
+		$default_node--;
+		if(isset($this->options[$default_node]))
+		{
+			$this->default_entry = $default_node;
+		}
 	}
 	public function get_identifier()
 	{
@@ -57,6 +66,17 @@ class pts_test_option
 	public function get_option_postfix()
 	{
 		return $this->postfix;
+	}
+	public function get_option_default()
+	{
+		$default = $this->default_entry;
+
+		if($default == -1)
+		{
+			$default = $this->option_count() - 1;
+		}
+
+		return $default;
 	}
 	public function add_option($name, $value)
 	{

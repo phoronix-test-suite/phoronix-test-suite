@@ -145,15 +145,7 @@ class run_test implements pts_option_interface
 
 			if(pts_is_test($to_run))
 			{
-				if(!IS_BATCH_MODE)
-				{
-					$option_output = pts_prompt_test_options($to_run);
-
-					$TEST_RUN = array($to_run);
-					$TEST_ARGS = array($option_output[0]);
-					$TEST_ARGS_DESCRIPTION = array($option_output[1]);
-				}
-				else
+				if(IS_BATCH_MODE)
 				{
 					$option_output = pts_generate_batch_run_options($to_run);
 
@@ -165,6 +157,29 @@ class run_test implements pts_option_interface
 					{
 						array_push($TEST_RUN, $to_run);
 					}
+				}
+				else if(pts_read_assignment("DEFAULTS_MODE") == true)
+				{
+					$option_output = pts_defaults_test_options($to_run);
+
+					$TEST_RUN = array($to_run);
+					$TEST_ARGS = array($option_output[0]);
+					$TEST_ARGS_DESCRIPTION = array($option_output[1]);
+
+					for($i = 0; $i < count($TEST_ARGS); $i++)
+					{
+						array_push($TEST_RUN, $to_run);
+					}
+
+					print_r($option_output); exit;
+				}
+				else
+				{
+					$option_output = pts_prompt_test_options($to_run);
+
+					$TEST_RUN = array($to_run);
+					$TEST_ARGS = array($option_output[0]);
+					$TEST_ARGS_DESCRIPTION = array($option_output[1]);
 				}
 
 				if($unique_test_names == 1)

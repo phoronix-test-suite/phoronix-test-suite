@@ -64,6 +64,7 @@ define("P_TEST_OPTIONS_DISPLAYNAME", "PhoronixTestSuite/TestSettings/Option/Disp
 define("P_TEST_OPTIONS_ARGPREFIX", "PhoronixTestSuite/TestSettings/Option/ArgumentPrefix"); // The option argument prefix
 define("P_TEST_OPTIONS_ARGPOSTFIX", "PhoronixTestSuite/TestSettings/Option/ArgumentPostfix"); // The option argument postfix
 define("P_TEST_OPTIONS_IDENTIFIER", "PhoronixTestSuite/TestSettings/Option/Identifier"); // Identifiers for each option
+define("P_TEST_OPTIONS_DEFAULTENTRY", "PhoronixTestSuite/TestSettings/Option/DefaultEntry"); // The menu entry number to use when running in the defaults mode
 define("P_TEST_OPTIONS_MENU_GROUP", "PhoronixTestSuite/TestSettings/Option/Menu"); // XML group containing the menu options for the test
 define("S_TEST_OPTIONS_MENU_GROUP_NAME", "Entry/Name"); // From inside the XML options menu group, the option name
 define("S_TEST_OPTIONS_MENU_GROUP_VALUE", "Entry/Value"); // From inside the XML options menu group, the option value

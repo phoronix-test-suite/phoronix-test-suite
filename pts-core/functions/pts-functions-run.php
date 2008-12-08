@@ -247,6 +247,65 @@ function pts_prompt_test_options($identifier)
 
 	return array($USER_ARGS, $TEXT_ARGS);
 }
+function pts_defaults_test_options($identifier)
+{
+	// Defaults mode for single test
+	$all_args_real = array();
+	$all_args_description = array();
+	$description_separate = " - ";
+	$test_options = pts_test_options($identifier);
+
+	for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
+	{
+		$o = $test_options[$this_option_pos];
+		$option_count = $o->option_count();
+
+		$option_args = array();
+		$option_args_description = array();
+
+		$default_entry = $o->get_option_default();
+
+		if($option_count == 2)
+		{
+			for($i = 0; $i < $option_count; $i++)
+			{
+				$this_arg = $o->get_option_prefix() . $o->get_option_value($i) . $o->get_option_postfix();
+				$this_arg_description = $o->get_name() . ": " . $o->get_option_name($i);
+
+				if(($cut_point = strpos($this_arg_description, "(")) > 1 && strpos($this_arg_description, ")") > $cut_point)
+				{
+					$this_arg_description = substr($this_arg_description, 0, $cut_point);
+				}
+
+				array_push($option_args, $this_arg);
+				array_push($option_args_description, $this_arg_description);
+			}
+		}
+		else
+		{
+			$this_arg = $o->get_option_prefix() . $o->get_option_value($default_entry) . $o->get_option_postfix();
+			$this_arg_description = $o->get_name() . ": " . $o->get_option_name($default_entry);
+
+			if(($cut_point = strpos($this_arg_description, "(")) > 1 && strpos($this_arg_description, ")") > $cut_point)
+			{
+				$this_arg_description = substr($this_arg_description, 0, $cut_point);
+			}
+			array_push($option_args, $this_arg);
+			array_push($option_args_description, $this_arg_description);
+		}
+
+		array_push($all_args_real, $option_args);
+		array_push($all_args_description, $option_args_description);
+	}
+
+	$TEST_ARGS = array();
+	pts_all_combos($TEST_ARGS, "", $all_args_real, 0);
+
+	$TEST_ARGS_DESCRIPTION = array();
+	pts_all_combos($TEST_ARGS_DESCRIPTION, "", $all_args_description, 0, $description_separate);
+
+	return array($TEST_ARGS, $TEST_ARGS_DESCRIPTION);
+}
 function pts_generate_batch_run_options($identifier)
 {
 	// Batch mode for single test
@@ -263,7 +322,7 @@ function pts_generate_batch_run_options($identifier)
 		$option_args = array();
 		$option_args_description = array();
 
-		for($i = 0; $i < $o->option_count(); $i++)
+		for($i = 0; $i < $option_count; $i++)
 		{
 			// A bit redundant processing, but will ensure against malformed XML problems and extra stuff added
 			$this_arg = $o->get_option_prefix() . $o->get_option_value($i) . $o->get_option_postfix();
@@ -1096,6 +1155,7 @@ function pts_test_options($identifier)
 	$settings_argument_prefix = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPREFIX);
 	$settings_argument_postfix = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPOSTFIX);
 	$settings_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
+	$settings_default = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DEFAULTENTRY);
 	$settings_menu = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
 
 	$test_options = array();
@@ -1117,6 +1177,8 @@ function pts_test_options($identifier)
 		{
 			$user_option->add_option($option_names[$i], $option_values[$i]);
 		}
+
+		$user_option->set_option_default($settings_default[$option_count]);
 
 		array_push($test_options, $user_option);
 	}

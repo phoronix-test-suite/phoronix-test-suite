@@ -278,6 +278,13 @@ to the Identifier tag selected by the user.</p>
 <strong>Internal Reference:</strong> P_TEST_OPTIONS_IDENTIFIER<br>
 <strong>Required:</strong> No<br>
 <strong>Description:</strong> The internal ID to describe this option.</p>
+<p><strong>Tag:</strong> DefaultEntry<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Option/<br>
+<strong>Internal Reference:</strong> P_TEST_OPTIONS_DEFAULTENTRY<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> The integer option (starting from 1) of the menu entry to select for that option when running in defaults mode. For tests that have no 
+menu options or just one, this tag isn't needed. For menus with two entries, both of them are used in the defaults mode. When dealing with more than two entries, use this 
+tag to select the option to use otherwise the last entry will automatically be used.</p>
 <p><strong>Tag:</strong> Name<br>
 <strong>Location:</strong> PhoronixTestSuite/TestSettings/Option/Menu/<br>
 <strong>Internal Reference:</strong> P_TEST_OPTIONS_MENU_GROUP_NAME<br>
