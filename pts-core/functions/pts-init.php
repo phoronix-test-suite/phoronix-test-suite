@@ -224,16 +224,6 @@ function pts_extended_init()
 
 	define("IS_UNKNOWN_GRAPHICS", ($found_gpu_match == false));
 
-	// Check for batch mode
-	if(getenv("PTS_BATCH_MODE") != false)
-	{
-		define("IS_BATCH_MODE", true);
-	}
-	else
-	{
-		define("IS_BATCH_MODE", false);
-	}
-
 	// Self-Contained Test Profile Routines
 	if(IS_SCTP_MODE)
 	{

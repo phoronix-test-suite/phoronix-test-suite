@@ -27,7 +27,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 	$RESULTS_IDENTIFIER = null;
 	$show_identifiers = array();
 
-	if(!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE")
+	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE")
 	{
 		if(is_array($current_identifiers) && count($current_identifiers) > 0)
 		{
@@ -381,7 +381,7 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 		}
 	}
 
-	if(!IS_BATCH_MODE || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
+	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
 	{
 		$is_reserved_word = pts_is_test($PROPOSED_FILE_NAME) || pts_is_suite($PROPOSED_FILE_NAME);
 
@@ -441,7 +441,7 @@ function pts_promt_user_tags($default_tags = "")
 {
 	$tags_input = "";
 
-	if(!IS_BATCH_MODE)
+	if(pts_read_assignment("IS_BATCH_MODE") == false)
 	{
 		echo "\nTags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
 		$tags_input .= fgets(STDIN);

@@ -500,7 +500,7 @@ function pts_user_message($message)
 	{
 		echo $message . "\n";
 
-		if(!IS_BATCH_MODE)
+		if(pts_read_assignment("IS_BATCH_MODE") == false)
 		{
 			echo "\nHit Any Key To Continue...\n";
 			fgets(STDIN);

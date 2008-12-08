@@ -53,7 +53,7 @@ function pts_text_select_menu($user_string, $options_r)
 function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 {
 	// Prompt user for yes/no question
-	if(defined("IS_BATCH_MODE") && IS_BATCH_MODE)
+	if(pts_read_assignment("IS_BATCH_MODE") != false)
 	{
 		switch($question_id)
 		{
