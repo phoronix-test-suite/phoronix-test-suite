@@ -352,7 +352,7 @@ function hw_sys_memory_string()
 	{
 		$mem_size = read_dmidecode("memory", "Memory Device", "Size", false, array("Not Installed", "No Module Installed"));
 		$mem_speed = read_dmidecode("memory", "Memory Device", "Speed", true, "Unknown");
-		$mem_type = read_dmidecode("memory", "Memory Device", "Type", true, "Unknown");
+		$mem_type = read_dmidecode("memory", "Memory Device", "Type", true, array("Unknown", "Other"));
 	}
 
 	if(is_array($mem_type))

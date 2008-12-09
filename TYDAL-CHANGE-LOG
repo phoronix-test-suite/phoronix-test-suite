@@ -23,6 +23,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add auto-disks and auto-disk-partitions to automatic population of test profile menus from identifiers
 - pts-core: Add initial functions needed for virtual suite support
 - pts-core: Don't report "6.00 PG" in motherboard string
+- pts-core: Improve detection of CPU processor temperature
 - pts: Remove bonnie test profile until clarifications made
 - pts: Add filesystem test suite
 - pts: Add jxrendermark as new X Render benchmark test profile

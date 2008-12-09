@@ -197,7 +197,7 @@ function hw_cpu_default_frequency($cpu_core = 0)
 function hw_cpu_temperature()
 {
 	// Read the processor temperature
-	$temp_c = read_sensors(array("CPU Temp", "Core 0"));
+	$temp_c = read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
 
 	if(empty($temp_c))
 	{

@@ -131,7 +131,7 @@ function read_sensors($attributes)
 				$this_remainder = trim(str_replace(array('+', '°'), ' ', $line[1]));
 				$this_value = substr($this_remainder, 0, strpos($this_remainder, ' '));
 
-				if(is_numeric($this_value))
+				if(is_numeric($this_value) && $this_value > 0)
 				{
 					$value = $this_value;
 				}
