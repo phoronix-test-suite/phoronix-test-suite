@@ -148,7 +148,7 @@ function pts_merge_test_results($original_results_file, $new_results_file)
 		$result_merged = false;
 		for($r_n = 0; $r_n < count($new_results_identifiers) && !$result_merged; $r_n++)
 		{
-			if(!empty($original_results_identifiers[$r_o]) && !empty($new_results_identifiers[$r_n]) && $original_results_testname[$r_o] == $new_results_testname[$r_n] && $original_results_arguments[$r_o] == $new_results_arguments[$r_n] && pts_version_comparable($original_results_version[$r_o], $new_results_version[$r_n]))
+			if(!empty($original_results_identifiers[$r_o]) && !empty($new_results_identifiers[$r_n]) && $original_results_testname[$r_o] == $new_results_testname[$r_n] && $original_results_arguments[$r_o] == $new_results_arguments[$r_n] && $original_results_attributes[$r_o] == $new_results_attributes[$r_n] && pts_version_comparable($original_results_version[$r_o], $new_results_version[$r_n]))
 			{
 				$USE_ID = pts_request_new_id();
 				$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$r_o]);
