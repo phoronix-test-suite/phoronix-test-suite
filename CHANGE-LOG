@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add result-file-to-suite option that will convert the relevant parts of a saved results file into a suite
+
 Phoronix Test Suite 1.6.0 Alpha 3
 December 11, 2008
 

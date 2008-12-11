@@ -20,27 +20,28 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class build_suite implements pts_option_interface
+class result_file_to_suite implements pts_option_interface
 {
 	public static function run($r)
 	{
 		pts_load_function_set("run");
 		echo pts_string_header("Test Suite Creation Utility");
 
+		$result_file = false;
+		if(count($r) != 0)
+		{
+			$result_file = $r[0];
+		}
+
+		while(($result_file = pts_find_result_file($result_file)) == false)
+		{
+			$result_file = pts_text_input("Enter name of result file");
+		}
+
 		$suite_name = pts_text_input("Enter name of suite");
 		$suite_test_type = pts_text_select_menu("Select test type", pts_subsystem_test_types());
 		$suite_maintainer = pts_text_input("Enter suite maintainer name");
 		$suite_description = pts_text_input("Enter suite description");
-
-		$possible_suites = pts_available_suites_array();
-		$possible_tests = array();
-		foreach(pts_available_tests_array() as $identifier)
-		{
-			if(pts_test_supported($identifier))
-			{
-				array_push($possible_tests, $identifier);
-			}
-		}
 
 		$xml_writer = new tandem_XmlWriter();
 		$xml_writer->addXmlObject(P_SUITE_TITLE, 0, $suite_name);
@@ -50,36 +51,25 @@ class build_suite implements pts_option_interface
 		$xml_writer->addXmlObject(P_SUITE_DESCRIPTION, 0, $suite_description);
 		$write_position = 1;
 
-		do
+		// Read results file
+		$xml_parser = new tandem_XmlReader($result_file);
+		$tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+		$arguments = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
+		$attributes = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+
+		for($i = 0; $i < count($tests); $i++)
 		{
-			switch($input_option)
+			$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $tests[$i]);
+
+			if(!empty($arguments[$i]) && !empty($attributes[$i]))
 			{
-				case "Add Test":
-					$test_to_add = pts_text_select_menu("Enter test name", $possible_tests);
-
-					$option_output = pts_prompt_test_options($test_to_add);
-
-					$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_to_add);
-
-					if(!empty($option_output[0]) && !empty($option_output[0]))
-					{
-						$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $write_position, $option_output[0]);
-						$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $write_position, $option_output[1]);
-					}
-					$write_position++;
-					break;
-				case "Add Sub-Suite":
-					$suite_to_add = pts_text_select_menu("Enter test suite", $possible_suites);
-
-					$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $suite_to_add);
-					$write_position++;
-					break;
+				$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $write_position, $arguments[$i]);
+				$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $write_position, $attributes[$i]);
 			}
-			echo "\nAvailable Options:\n";
-			$input_option = pts_text_select_menu("Select next operation", array("Add Test", "Add Sub-Suite", "Save & Exit"));
+			$write_position++;
 		}
-		while($input_option != "Save & Exit");
 
+		// Finish it off
 		$suite_identifier = pts_input_string_to_identifier(str_replace(" ", "-", strtolower($suite_name)));
 
 		if(is_file(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml"))
