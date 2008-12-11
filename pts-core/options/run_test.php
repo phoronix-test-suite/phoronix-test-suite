@@ -135,7 +135,6 @@ class run_test implements pts_option_interface
 				if(IS_SCTP_MODE)
 				{
 					pts_set_assignment_once("AUTO_SAVE_NAME", $to_run);
-					pts_set_assignment_once("AUTO_SAVE_NAME", $to_run);
 					$to_run_type = "SCTP_COMPARISON";
 				}
 				else

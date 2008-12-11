@@ -47,7 +47,6 @@ function pts_prompt_results_identifier($current_identifiers = null)
 			}
 
 			$show_identifiers = array_unique($show_identifiers);
-			sort($show_identifiers);
 
 			echo "\nCurrent Test Identifiers:\n";
 			foreach($show_identifiers as $identifier)
@@ -419,10 +418,9 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 }
 function pts_validate_save_file_name($proposed_save_name, $to_run)
 {
-	return true; // TODO: fix this function
 	$is_validated = true;
 
-	if(is_file(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml"))
+	if(is_file(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml") && !pts_is_assignment("AUTO_SAVE_NAME"))
 	{
 		$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml");
 		$test_suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);

@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add result-file-to-suite option that will convert the relevant parts of a saved results file into a suite
 - pts-core: Verify Attributes tag matches (instead of just the Arguments tag) when merging results
+- pts-core: Don't sort current test identifiers when being prompted to enter a new identifier
 
 Phoronix Test Suite 1.6.0 Alpha 3
 December 11, 2008
