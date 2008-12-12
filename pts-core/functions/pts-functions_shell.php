@@ -90,13 +90,13 @@ function pts_remove($object, $ignore_files = null)
 		}
 		else
 		{
-			return unlink($object);
+			return @unlink($object);
 		}
 	}
 
 	if(is_dir($object))
 	{
-		$directory = dir($object);
+		$directory = @dir($object);
 		while(($entry = $directory->read()) !== false)
 		{
 			if($entry != "." && $entry != "..")

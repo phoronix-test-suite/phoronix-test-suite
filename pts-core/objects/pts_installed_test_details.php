@@ -27,7 +27,7 @@ class pts_installed_test_details
 
 	public function __construct($identifier)
 	{
-		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+		$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
 		$this->name = $xml_parser->getXMLValue(P_TEST_TITLE);
 	}

@@ -61,7 +61,7 @@ class run_test implements pts_option_interface
 
 			if(pts_is_test($lower_identifier))
 			{
-				$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($lower_identifier));
+				$xml_parser = new pts_test_tandem_XmlReader($lower_identifier);
 				$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 
 				if(empty($test_title))
@@ -141,7 +141,7 @@ class run_test implements pts_option_interface
 				{
 					if(pts_is_test($to_run) && !pts_is_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE"))
 					{
-						$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($to_run));
+						$xml_parser = new pts_test_tandem_XmlReader($to_run);
 						$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 
 						if($result_format == "NO_RESULT")
@@ -191,7 +191,7 @@ class run_test implements pts_option_interface
 
 				if($unique_test_names == 1)
 				{
-					$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($to_run));
+					$xml_parser = new pts_test_tandem_XmlReader($to_run);
 					$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 					$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 					$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);

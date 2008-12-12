@@ -420,7 +420,7 @@ function pts_install_test($identifier)
 						return false;
 					}
 
-					$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+					$xml_parser = new pts_test_tandem_XmlReader($identifier);
 					$pre_install_message = $xml_parser->getXMLValue(P_TEST_PREINSTALLMSG);
 					$post_install_message = $xml_parser->getXMLValue(P_TEST_POSTINSTALLMSG);
 

@@ -141,7 +141,7 @@ function pts_prompt_svg_result_options($svg_file)
 }
 function pts_prompt_test_options($identifier)
 {
-	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 
 	$USER_ARGS = "";
@@ -754,7 +754,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	pts_process_register($test_identifier);
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 
-	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test_identifier));
+	$xml_parser = new pts_test_tandem_XmlReader($test_identifier);
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
@@ -1195,7 +1195,7 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 }
 function pts_test_options($identifier)
 {
-	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 	$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
 	$settings_argument_prefix = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPREFIX);
 	$settings_argument_postfix = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPOSTFIX);

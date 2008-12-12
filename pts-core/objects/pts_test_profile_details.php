@@ -42,7 +42,7 @@ class pts_test_profile_details
 
 	public function __construct($identifier)
 	{
-		$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+		$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
 		$this->name = $xml_parser->getXMLValue(P_TEST_TITLE);
 		$this->license = $xml_parser->getXMLValue(P_TEST_LICENSE);

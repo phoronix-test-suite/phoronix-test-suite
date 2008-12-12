@@ -26,6 +26,15 @@
 
 class pts_test_tandem_XmlReader extends tandem_XmlReader
 {
+	public function __construct($read_xml, $cache_support = true)
+	{
+		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
+		{
+			$read_xml = pts_location_test($read_xml);
+		}
+
+		parent::__construct($read_xml, $cache_support);
+	}
 	function handleXmlZeroTagFallback($xml_tag)
 	{
 		// Cascading Test Profiles for finding a tag within an XML file being extended by another XML file

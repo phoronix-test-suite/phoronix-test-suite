@@ -263,7 +263,7 @@ function pts_test_extends_below($object)
 	{
 		if(pts_is_test($test_extends))
 		{
-			$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test_extends));
+			$xml_parser = new pts_test_tandem_XmlReader($test_extends);
 			$test_extends = $xml_parser->getXMLValue(P_TEST_CTPEXTENDS);
 
 			if(!empty($test_extends))
@@ -378,7 +378,7 @@ function pts_virtual_suite_tests($object)
 		case TYPE_VIRT_SUITE_SUBSYSTEM:
 			foreach(pts_available_tests_array() as $test)
 			{
-				$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($test));
+				$xml_parser = new pts_test_tandem_XmlReader($test);
 				$type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 
 				if(strtolower($type) == $object && pts_test_supported($test))

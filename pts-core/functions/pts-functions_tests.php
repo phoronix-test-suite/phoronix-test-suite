@@ -315,7 +315,7 @@ function pts_test_profile_version($identifier)
 
 	if(pts_is_test($identifier))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 	}
 
@@ -425,7 +425,7 @@ function pts_test_identifier_to_name($identifier)
 
 	if(!empty($identifier) && pts_is_test($identifier))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 	}
 
@@ -453,7 +453,7 @@ function pts_test_estimated_environment_size($identifier)
 
 	foreach(pts_contained_tests($identifier, true) as $test)
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$this_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 
 		if(!empty($this_size) && is_numeric($this_size))
@@ -471,7 +471,7 @@ function pts_test_architecture_supported($identifier)
 
 	if(pts_is_test($identifier))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$archs = $xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS);
 
 		if(!empty($archs))
@@ -496,7 +496,7 @@ function pts_test_platform_supported($identifier)
 
 	if(pts_is_test($identifier))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$platforms = $xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
 		$un_platforms = $xml_parser->getXMLValue(P_TEST_UNSUPPORTEDPLATFORMS);
 
@@ -542,7 +542,7 @@ function pts_test_version_supported($identifier)
 
 	if(pts_is_test($identifier))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$requires_core_version = $xml_parser->getXMLValue(P_TEST_SUPPORTS_COREVERSION);
 
 		$supported = pts_test_version_compatible($requires_core_version);

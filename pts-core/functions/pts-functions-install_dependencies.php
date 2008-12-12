@@ -113,7 +113,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 		return;
 	}
 
-	$xml_parser = new pts_test_tandem_XmlReader(pts_location_test($identifier));
+	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 
