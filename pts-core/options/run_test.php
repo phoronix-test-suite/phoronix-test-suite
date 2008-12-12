@@ -202,7 +202,7 @@ class run_test implements pts_option_interface
 			{
 				echo pts_string_header("Test Suite: " . $to_run);
 
-				$xml_parser = new tandem_XmlReader(pts_location_suite($to_run));
+				$xml_parser = new pts_suite_tandem_XmlReader($to_run);
 
 				if($unique_test_names == 1)
 				{
@@ -272,7 +272,7 @@ class run_test implements pts_option_interface
 			{
 				echo pts_string_header("Comparison: " . $to_run);
 
-				$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $to_run . "/composite.xml");
+				$xml_parser = new pts_results_tandem_XmlReader($to_run);
 				$custom_title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 				$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
 				$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
@@ -361,7 +361,7 @@ class run_test implements pts_option_interface
 				// Prompt Identifiers
 				if(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"))
 				{
-					$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml");
+					$xml_parser = new pts_results_tandem_XmlReader($PROPOSED_FILE_NAME);
 					$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 					$result_identifiers = array();
 

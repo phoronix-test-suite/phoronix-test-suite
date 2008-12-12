@@ -422,7 +422,7 @@ function pts_validate_save_file_name($proposed_save_name, $to_run)
 
 	if(is_file(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml") && !pts_is_assignment("AUTO_SAVE_NAME"))
 	{
-		$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml");
+		$xml_parser = new pts_results_tandem_XmlReader($proposed_save_name);
 		$test_suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
 
 		if(!pts_is_assignment("GLOBAL_COMPARISON"))

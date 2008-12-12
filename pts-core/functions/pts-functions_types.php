@@ -294,7 +294,7 @@ function pts_contained_tests($object, $include_extensions = false)
 
 	if(pts_is_suite($object)) // Object is suite
 	{
-		$xml_parser = new tandem_XmlReader(@file_get_contents(pts_location_suite($object)));
+		$xml_parser = new pts_suite_tandem_XmlReader($object);
 		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 		foreach($tests_in_suite as $test)
@@ -334,7 +334,7 @@ function pts_contained_tests($object, $include_extensions = false)
 	}
 	else if(is_file(SAVE_RESULTS_DIR . $object . "/composite.xml")) // Object is a saved results file
 	{
-		$xml_parser = new tandem_XmlReader(SAVE_RESULTS_DIR . $object . "/composite.xml");
+		$xml_parser = new pts_suite_tandem_XmlReader($object);
 		$tests_in_save = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($tests_in_save as $test)
