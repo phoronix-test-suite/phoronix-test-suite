@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Verify Attributes tag matches (instead of just the Arguments tag) when merging results
 - pts-core: Don't sort current test identifiers when being prompted to enter a new identifier
 - pts-core: Add Mode tag to suite XML specification for allowing individual tests within a suite to be run in the batch or defaults mode
+- pts: Add more tests to netbook suite
 
 Phoronix Test Suite 1.6.0 Alpha 3
 December 11, 2008

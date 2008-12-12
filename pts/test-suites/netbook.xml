@@ -1,11 +1,17 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.1</Version>
+		<Version>1.1.2</Version>
 		<TestType>System</TestType>
 		<Title>Netbook Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite is designed to test various aspects of a netbook/net-top/UMPC computer.</Description>
 	</SuiteInformation>
+	<RunTest>
+		<Test>encode-mp3</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-ogg</Test>
+	</RunTest>
 	<RunTest>
 		<Test>mencoder</Test>
 	</RunTest>
@@ -44,6 +50,9 @@
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
 		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
@@ -52,9 +61,34 @@
 		<Description>Integer Add</Description>
 	</RunTest>
 	<RunTest>
-		<Test>sunflow</Test>
+		<Test>java</Test>
 	</RunTest>
 	<RunTest>
-		<Test>yafray</Test>
+		<Test>qgears2</Test>
+		<Arguments>-render GEARSFANCY</Arguments>
+		<Description>XRender + Gears</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-render TEXT</Arguments>
+		<Description>XRender + Text</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-render COMPO</Arguments>
+		<Description>XRender + Image Scaling</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-gl GEARSFANCY</Arguments>
+		<Description>OpenGL + Gears</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-gl COMPO</Arguments>
+		<Description>OpenGL + Image Scaling</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gui-toolkits</Test>
 	</RunTest>
 </PhoronixTestSuite>
