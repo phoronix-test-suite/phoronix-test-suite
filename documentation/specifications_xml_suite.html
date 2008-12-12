@@ -73,6 +73,12 @@ when running a suite) should be supplied as a value in this tag.</p>
 <strong>Required:</strong> No<br>
 <strong>Description:</strong> A short description describing this test and its options, which is 
 displayed on the graph in the PTS Results Viewer.</p>
+<p><strong>Tag:</strong> Mode<br>
+<strong>Location:</strong> PhoronixTestSuite/RunTest/<br>
+<strong>Internal Reference:</strong> P_SUITE_TEST_MODE<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If this tag is set to BATCH, it will run the test mentioned in the <em>Test</em> tag in batch mode. If this tag is set to 
+DEFAULTS, it will run the test mentioned in the <em>Test</em> tag in the defaults mode. The <em>Description</em> and <em>Arguments</em> tags are ignored when setting one of these modes. This tag doesn't affect the mode for other test runs within the specified suite.</p>
 <!-- END OF PTS AREA -->
 </div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 by <a href="http://www.phoronixmedia.com/">Phoronix Media</a>.</div></div></div>
 </body>

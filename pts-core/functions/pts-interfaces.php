@@ -98,6 +98,7 @@ define("P_SUITE_POSTRUNMSG", "PhoronixTestSuite/SuiteInformation/PostRunMessage"
 define("P_SUITE_RUNMODE", "PhoronixTestSuite/SuiteInformation/RunMode"); // Run-mode (currently, set to PCQS if it's a PCQS suite)
 
 define("P_SUITE_TEST_NAME", "PhoronixTestSuite/RunTest/Test"); // Names of tests in suite
+define("P_SUITE_TEST_MODE", "PhoronixTestSuite/RunTest/Mode"); // Modes (if available) for the test runs in suite
 define("P_SUITE_TEST_ARGUMENTS", "PhoronixTestSuite/RunTest/Arguments"); // Arguments of tests in suite
 define("P_SUITE_TEST_DESCRIPTION", "PhoronixTestSuite/RunTest/Description"); // Description of tests in suite
 

@@ -211,10 +211,6 @@ class run_test implements pts_option_interface
 					$test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 				}
 
-				$TEST_RUN = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-				$TEST_ARGS = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
-				$TEST_ARGS_DESCRIPTION = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
-
 				$PRE_RUN_MESSAGE = $xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
 				$POST_RUN_MESSAGE = $xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
 				$SUITE_RUN_MODE = $xml_parser->getXMLValue(P_SUITE_RUNMODE);
@@ -224,6 +220,52 @@ class run_test implements pts_option_interface
 					pts_set_assignment_once("IS_PCQS_MODE", true);
 				}
 
+				$TEST_RUN = array();
+				$TEST_ARGS = array();
+				$TEST_ARGS_DESCRIPTION = array();
+
+				$suite_run = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+				$suite_mode = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
+				$suite_args = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
+				$suite_args_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
+
+				for($i = 0; $i < count($suite_run); $i++)
+				{
+					$this_test = $suite_run[$i];
+
+					switch($suite_mode[$i])
+					{
+						case "BATCH":
+							$option_output = pts_generate_batch_run_options($this_test);
+							$temp_args = $option_output[0];
+							$temp_args_description = $option_output[1];
+
+							for($x = 0; $x < count($temp_args); $x++)
+							{
+								array_push($TEST_RUN, $this_test);
+								array_push($TEST_ARGS, $temp_args[$x]);
+								array_push($TEST_ARGS_DESCRIPTION, $temp_args_description[$x]);
+							}
+							break;
+						case "DEFAULTS":
+							$option_output = pts_defaults_test_options($this_test);
+							$temp_args = $option_output[0];
+							$temp_args_description = $option_output[1];
+
+							for($x = 0; $x < count($temp_args); $x++)
+							{
+								array_push($TEST_RUN, $this_test);
+								array_push($TEST_ARGS, $temp_args[$x]);
+								array_push($TEST_ARGS_DESCRIPTION, $temp_args_description[$x]);
+							}
+							break;
+						default:
+							array_push($TEST_RUN, $this_test);
+							array_push($TEST_ARGS, $suite_args[$i]);
+							array_push($TEST_ARGS_DESCRIPTION, $suite_args_description[$i]);
+							break;
+					}
+				}
 				unset($xml_parser);
 			}
 			else if($to_run_type == "GLOBAL_COMPARISON" || $to_run_type == "LOCAL_COMPARISON")
