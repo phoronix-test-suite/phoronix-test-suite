@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2004-2008, Michael Larabel
-	pts_test_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite with optimizations for handling test profiles
+	pts_suite_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite for test suites
 
 	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
 	A work in progress. This was originally designed for just some select needs in the past. No XML validation is done with this parser, etc.
@@ -24,39 +24,16 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_test_tandem_XmlReader extends tandem_XmlReader
+class pts_suite_tandem_XmlReader extends tandem_XmlReader
 {
 	public function __construct($read_xml, $cache_support = true)
 	{
 		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
 		{
-			$read_xml = pts_location_test($read_xml);
+			$read_xml = pts_location_suite($read_xml);
 		}
 
 		parent::__construct($read_xml, $cache_support);
-	}
-	function handleXmlZeroTagFallback($xml_tag)
-	{
-		// Cascading Test Profiles for finding a tag within an XML file being extended by another XML file
-		$fallback_value = $this->tag_fallback_value;
-
-		if(!empty($this->xml_file_name))
-		{
-			$test_extends = $this->getValue(P_TEST_CTPEXTENDS, null, null, true, true);
-
-			if(!empty($test_extends) && pts_is_test($test_extends))
-			{
-				$test_below_parser = new pts_test_tandem_XmlReader($test_extends);
-				$test_below_tag = $test_below_parser->getXMLValue($xml_tag);
-
-				if(!empty($test_below_tag))
-				{
-					$fallback_value = $test_below_tag;
-				}
-			}
-		}
-
-		return $fallback_value;
 	}
 }
 ?>

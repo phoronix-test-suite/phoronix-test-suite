@@ -35,7 +35,7 @@ class pts_test_suite_details
 
 	public function __construct($identifier)
 	{
-		$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
+		$xml_parser = new pts_suite_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
 		$this->name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 		$this->test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);

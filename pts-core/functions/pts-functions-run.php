@@ -657,7 +657,7 @@ function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results =
 	{
 		if(pts_is_suite($tests_to_run[$i]))
 		{
-			$xml_parser = new tandem_XmlReader(pts_location_suite($tests_to_run[$i]));
+			$xml_parser = new pts_suite_tandem_XmlReader($tests_to_run[$i]);
 			$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 			$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
 			$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);

@@ -148,7 +148,7 @@ class pts_test_profile_details
 		$associated_suites = array();
 		foreach(pts_available_suites_array() as $identifier)
 		{
-		 	$xml_parser = new tandem_XmlReader(pts_location_suite($identifier));
+		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
 			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 			$tests = pts_contained_tests($identifier);
 
