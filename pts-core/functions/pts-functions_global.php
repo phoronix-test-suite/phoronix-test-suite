@@ -52,5 +52,39 @@ function pts_global_valid_id_string($global_id)
 
 	return $is_valid;
 }
+function pts_global_upload_result($result_file, $tags = "")
+{
+	// Upload a test result to the Phoronix Global database
+	$test_results = file_get_contents($result_file);
+	$test_results = str_replace(array("\n", "\t"), "", $test_results);
+	$switch_tags = array("Benchmark>" => "B>", "Results>" => "R>", "Group>" => "G>", "Entry>" => "E>", "Identifier>" => "I>", "Value>" => "V>", "System>" => "S>", "Attributes>" => "A>");
+
+	foreach($switch_tags as $f => $t)
+	{
+		$test_results = str_replace($f, $t, $test_results);
+	}
+
+	$ToUpload = base64_encode($test_results);
+	$GlobalUser = pts_current_user();
+	$GlobalKey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "");
+	$tags = base64_encode($tags);
+	$return_stream = "";
+
+	$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags);
+	$upload_data = http_build_query($upload_data);
+
+	$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
+
+	$stream_context = stream_context_create($http_parameters);
+	$opened_url = @fopen("http://www.phoronix-test-suite.com/global/user-upload.php", "rb", false, $stream_context);
+	$response = @stream_get_contents($opened_url);
+
+	if($response !== false)
+	{
+		$return_stream = $response;
+	}
+
+	return $return_stream;
+}
 
 ?>

@@ -74,7 +74,7 @@ class pts_BarGraph extends pts_CustomGraph
 			}
 			else
 			{
-				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $px_from_top_end - 5, $px_bound_right, $px_from_top_end - 5, false, true);
+				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $px_from_top_end - 3, $px_bound_right, $px_from_top_end - 3, false, true);
 			}
 		}
 	}

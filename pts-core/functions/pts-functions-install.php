@@ -53,7 +53,7 @@ function pts_start_install($to_install)
 
 			if(pts_read_assignment("COMMAND") != "benchmark")
 			{
-				echo pts_string_header("\nNot recognized: " . $TO_INSTALL . "\n");
+				echo pts_string_header("\nNot recognized: " . $to_install[0] . "\n");
 			}
 			return false;
 		}

@@ -334,7 +334,7 @@ function pts_contained_tests($object, $include_extensions = false)
 	}
 	else if(is_file(SAVE_RESULTS_DIR . $object . "/composite.xml")) // Object is a saved results file
 	{
-		$xml_parser = new pts_suite_tandem_XmlReader($object);
+		$xml_parser = new pts_results_tandem_XmlReader($object);
 		$tests_in_save = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
 		foreach($tests_in_save as $test)
