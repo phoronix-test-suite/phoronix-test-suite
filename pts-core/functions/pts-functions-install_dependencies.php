@@ -21,6 +21,23 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_package_vendor_identifier()
+{
+	$vendor = pts_vendor_identifier();
+
+	if(!is_file(XML_DISTRO_DIR . $vendor . "-packages.xml") && !is_file(SCRIPT_DISTRO_DIR . "install-" . $vendor . "-packages.sh"))
+	{
+		// TODO: Move this out to an XML file instead of hard-coding the "links"
+		switch($vendor)
+		{
+			case "suselinux":
+				$vendor = "opensuse";
+				break;
+		}
+	}
+
+	return $vendor;
+}
 function pts_install_package_on_distribution($identifiers)
 {
 	// PTS External Dependencies install on distribution
@@ -153,7 +170,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 function pts_package_generic_to_distro_name(&$package_install_array, $generic_names)
 {
 	// Generic name to distribution package name
-	$vendor = pts_vendor_identifier();
+	$vendor = pts_package_vendor_identifier();
 	$generated = false;
 
 	if(is_file(XML_DISTRO_DIR . $vendor . "-packages.xml"))
@@ -201,9 +218,9 @@ function pts_install_packages_on_distribution_process($install_objects)
 			$install_objects = implode(" ", $install_objects);
 		}
 
-		$distribution = pts_vendor_identifier();
+		$distribution = pts_package_vendor_identifier();
 
-		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh") || is_link(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
+		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
 		{
 			echo "\nThe following dependencies will be installed: \n";
 
