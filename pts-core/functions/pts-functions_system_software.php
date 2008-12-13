@@ -24,7 +24,7 @@
 function pts_vendor_identifier()
 {
 	// Returns the vendor identifier used with the External Dependencies and other distro-specific features
-	$vendor = sw_os_vendor();
+	$vendor = str_replace(" ", "", sw_os_vendor());
 
 	if($vendor == "Unknown")
 	{

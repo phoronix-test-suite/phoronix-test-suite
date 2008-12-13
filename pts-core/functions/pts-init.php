@@ -111,7 +111,7 @@ function pts_basic_init()
 			define("PTS_DEBUG_FILE", $debug_file);
 		}
 
-		error_reporting(E_ALL | E_STRICT); // Set error reporting to all and strict
+		error_reporting(E_ALL | E_NOTICE); // Set error reporting to all and strict
 	}
 	else
 	{

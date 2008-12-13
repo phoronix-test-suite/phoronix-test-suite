@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Embed pts_location_test() into constructor of pts_test_tandem_XmlReader()
 - pts-core: Add pts_suite_tandem_XmlReader() object for providing pts_location_suite() in the constructor
 - pts-core: Add pts_results_tandem_XmlReader() object for providing file handling in the constructor
+- pts-core: Ensure no spaces in pts_vendor_identifier()
 - pts: Add more tests to netbook suite
 
 Phoronix Test Suite 1.6.0 Alpha 3
