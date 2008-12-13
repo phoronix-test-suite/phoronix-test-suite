@@ -804,7 +804,7 @@ function pts_print_format_tests($object, &$write_buffer, $steps = -1)
 	$steps++;
 	if(pts_is_suite($object))
 	{
-		$xml_parser = new tandem_XmlReader(@file_get_contents(pts_location_suite($object)));
+		$xml_parser = new pts_suite_tandem_XmlReader($object);
 		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 		if($steps > 0)

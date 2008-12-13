@@ -52,7 +52,7 @@ class result_file_to_suite implements pts_option_interface
 		$write_position = 1;
 
 		// Read results file
-		$xml_parser = new tandem_XmlReader($result_file);
+		$xml_parser = new pts_results_tandem_XmlReader($result_file);
 		$tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 		$arguments = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
 		$attributes = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
