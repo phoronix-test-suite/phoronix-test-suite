@@ -34,7 +34,7 @@ class analyze_all_runs implements pts_option_interface
 			if(pts_save_result($identifier . "/composite.xml", $composite_xml))
 			{
 				echo "\n" . $identifier . " has been re-rendered to show all test runs.\n";
-				pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
+				pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
 			}
 		}
 		else

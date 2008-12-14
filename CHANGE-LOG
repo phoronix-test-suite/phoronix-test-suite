@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts_results_tandem_XmlReader() object for providing file handling in the constructor
 - pts-core: Ensure no spaces in pts_vendor_identifier()
 - pts-core: Add support for abstracting the package vendor identifier (should fix OpenSuSE External Dependencies support on 11.1)
+- pts-core: When using pts_display_web_browser, point to the index.html redirect instead of directly to composite.xml
 - pts: Add more tests to netbook suite
 
 Phoronix Test Suite 1.6.0 Alpha 3
