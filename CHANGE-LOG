@@ -12,7 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Ensure no spaces in pts_vendor_identifier()
 - pts-core: Add support for abstracting the package vendor identifier (should fix OpenSuSE External Dependencies support on 11.1)
 - pts-core: When using pts_display_web_browser, point to the index.html redirect instead of directly to composite.xml
-- pts-core: Add pts-functions_vars.php
+- pts-core: Add pts-functions_vars.php, pts-functions_assignments.php
 - pts-core: Check all supplied arguments for a PCQS test when determining if PCQS needs to be installed
 - pts-core: Store aliases for distributions used in package identification in pts-core/static/software-vendor-aliases.txt
 - pts: Add more tests to netbook suite

@@ -35,6 +35,7 @@ require_once("pts-core/functions/pts-functions_tests.php");
 require_once("pts-core/functions/pts-functions_types.php");
 require_once("pts-core/functions/pts-functions_vars.php");
 require_once("pts-core/functions/pts-functions_modules.php");
+require_once("pts-core/functions/pts-functions_assignments.php");
 
 // Phoronix Test Suite - Functions
 function pts_run_option_command($command, $pass_args = null, $command_descriptor = "")
@@ -131,19 +132,6 @@ function pts_trim_double($double, $accuracy = 2)
 	}
 
 	return $return;
-}
-function pts_unique_runtime_identifier()
-{
-	if(pts_is_assignment("THIS_OPTION_IDENTIFIER"))
-	{
-		$identifier = pts_read_assignment("THIS_OPTION_IDENTIFIER");
-	}
-	else
-	{
-		$identifier = PTS_INIT_TIME;
-	}
-
-	return $identifier;
 }
 function pts_load_function_set($title)
 {
@@ -272,19 +260,6 @@ function pts_is_valid_download_url($string, $basename = null)
 
 	return $is_valid;
 }
-function pts_time_elapsed()
-{
-	if(pts_is_assignment("START_TIME"))
-	{
-		$start_time = pts_read_assignment("START_TIME");
-	}
-	else
-	{
-		$start_time = PTS_INIT_TIME;
-	}
-
-	return (time() - $start_time);
-}
 function pts_evaluate_script_type($script)
 {
 	$script = explode("\n", trim($script));
@@ -386,75 +361,6 @@ function pts_user_message($message)
 			fgets(STDIN);
 		}
 	}
-}
-function pts_set_assignment_once($assignment, $value)
-{
-	$set_assignment = false;
-
-	if(!pts_is_assignment($assignment))
-	{
-		pts_set_assignment($assignment, $value);
-		$set_assignment = true;
-	}
-
-	return $set_assignment;
-}
-function pts_set_assignment($assignment, $value)
-{
-	if(!is_array($assignment))
-	{
-		$assignment = array($assignment);
-	}
-
-	foreach($assignment as $this_assignment)
-	{
-		pts_assignment("SET", $this_assignment, $value);
-	}
-}
-function pts_read_assignment($assignment)
-{
-	return pts_assignment("READ", $assignment);
-}
-function pts_is_assignment($assignment)
-{
-	return pts_assignment("IS_SET", $assignment);
-}
-function pts_clear_assignments()
-{
-	pts_assignment("CLEAR_ALL");
-}
-function pts_clear_assignment($assignment)
-{
-	pts_assignment("CLEAR", $assignment);
-}
-function pts_assignment($process, $assignment = null, $value = null)
-{
-	static $assignments;
-	$return = false;
-
-	switch($process)
-	{
-		case "SET":
-			$assignments[$assignment] = $value;
-			break;
-		case "READ":
-			if(isset($assignments[$assignment]))
-			{
-				$return = $assignments[$assignment];
-			}
-			break;
-		case "IS_SET":
-			$return = isset($assignments[$assignment]);
-			break;
-		case "CLEAR":
-			unset($assignments[$assignment]);
-			break;
-		case "CLEAR_ALL":
-			$assignments = array();
-			break;
-	}
-
-	return $return;
 }
 
 ?>
