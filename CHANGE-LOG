@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: When using pts_display_web_browser, point to the index.html redirect instead of directly to composite.xml
 - pts-core: Add pts-functions_vars.php
 - pts-core: Check all supplied arguments for a PCQS test when determining if PCQS needs to be installed
+- pts-core: Store aliases for distributions used in package identification in pts-core/static/software-vendor-aliases.txt
 - pts: Add more tests to netbook suite
 
 Phoronix Test Suite 1.6.0 Alpha 3

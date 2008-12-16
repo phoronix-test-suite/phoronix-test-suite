@@ -21,23 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_package_vendor_identifier()
-{
-	$vendor = pts_vendor_identifier();
-
-	if(!is_file(XML_DISTRO_DIR . $vendor . "-packages.xml") && !is_file(SCRIPT_DISTRO_DIR . "install-" . $vendor . "-packages.sh"))
-	{
-		// TODO: Move this out to an XML file instead of hard-coding the "links"
-		switch($vendor)
-		{
-			case "suselinux":
-				$vendor = "opensuse";
-				break;
-		}
-	}
-
-	return $vendor;
-}
 function pts_install_package_on_distribution($identifiers)
 {
 	// PTS External Dependencies install on distribution

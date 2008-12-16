@@ -38,6 +38,37 @@ function pts_vendor_identifier()
 
 	return strtolower($vendor);
 }
+function pts_package_vendor_identifier()
+{
+	$os_vendor = pts_vendor_identifier();
+
+	if(!is_file(XML_DISTRO_DIR . $os_vendor . "-packages.xml") && !is_file(SCRIPT_DISTRO_DIR . "install-" . $os_vendor . "-packages.sh"))
+	{
+		if(is_file(STATIC_DIR . "software-vendor-aliases.txt"))
+		{
+			$vendors_alias_file = trim(file_get_contents(STATIC_DIR . "software-vendor-aliases.txt"));
+			$vendors_r = explode("\n", $vendors_alias_file);
+
+			foreach($vendors_r as $vendor)
+			{
+				$vendor_r = explode("=", $vendor);
+
+				if(count($vendor_r) == 2)
+				{
+					$to_replace = trim($vendor_r[0]);
+
+					if($os_vendor == $to_replace)
+					{
+						$os_vendor = trim($vendor_r[1]);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	return $vendor;
+}
 function sw_os_virtualized_mode()
 {
 	// Reports if system is running virtualized
