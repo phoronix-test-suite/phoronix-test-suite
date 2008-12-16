@@ -1121,11 +1121,12 @@ function pts_all_combos(&$return_arr, $current_string, $options, $counter, $deli
 function pts_auto_process_test_option($identifier, &$option_names, &$option_values)
 {
 	// Some test items have options that are dynamically built
-	if(count($option_names) < 2 && count($option_values) < 2)
+	switch($identifier)
 	{
-		switch($identifier)
-		{
-			case "auto-resolution":
+		case "auto-resolution":
+			// Base options off available screen resolutions
+			if(count($option_names) == 1 && count($option_values) == 1)
+			{
 				$available_video_modes = hw_gpu_xrandr_available_modes();
 				$format_name = $option_names[0];
 				$format_value = $option_values[0];
@@ -1143,54 +1144,52 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 					array_push($option_names, $this_name);
 					array_push($option_values, $this_value);
 				}
+			}
 			break;
-			case "auto-disk-partitions":
-				$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
-				$all_devices_count = count($all_devices);
+		case "auto-disk-partitions":
+			// Base options off available disk partitions
+			$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
+			$all_devices_count = count($all_devices);
 
-				for($i = 0; $i < $all_devices_count; $i++)
+			for($i = 0; $i < $all_devices_count; $i++)
+			{
+				$last_char = substr($all_devices[$i], -1);
+
+				if(!is_numeric($last_char))
 				{
-					$last_char = substr($all_devices[$i], -1);
-
-					if(!is_numeric($last_char))
-					{
-						unset($all_devices[$i]);
-					}
+					unset($all_devices[$i]);
 				}
+			}
 
-				$option_values = array();
-
-				foreach($all_devices as $partition)
-				{
-					array_push($option_values, $partition);
-				}
-
-				$option_names = $option_values;
+			$option_values = array();
+			foreach($all_devices as $partition)
+			{
+				array_push($option_values, $partition);
+			}
+			$option_names = $option_values;
 			break;
-			case "auto-disks":
-				$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
-				$all_devices_count = count($all_devices);
+		case "auto-disks":
+			// Base options off attached disks
+			$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
+			$all_devices_count = count($all_devices);
 
-				for($i = 0; $i < $all_devices_count; $i++)
+			for($i = 0; $i < $all_devices_count; $i++)
+			{
+				$last_char = substr($all_devices[$i], -1);
+
+				if(is_numeric($last_char))
 				{
-					$last_char = substr($all_devices[$i], -1);
-
-					if(is_numeric($last_char))
-					{
-						unset($all_devices[$i]);
-					}
+					unset($all_devices[$i]);
 				}
+			}
 
-				$option_values = array();
-
-				foreach($all_devices as $disk)
-				{
-					array_push($option_values, $disk);
-				}
-
-				$option_names = $option_values;
+			$option_values = array();
+			foreach($all_devices as $disk)
+			{
+				array_push($option_values, $disk);
+			}
+			$option_names = $option_values;
 			break;
-		}
 	}
 }
 function pts_test_options($identifier)
