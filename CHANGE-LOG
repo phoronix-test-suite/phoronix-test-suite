@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for abstracting the package vendor identifier (should fix OpenSuSE External Dependencies support on 11.1)
 - pts-core: When using pts_display_web_browser, point to the index.html redirect instead of directly to composite.xml
 - pts-core: Add pts-functions_vars.php
+- pts-core: Check all supplied arguments for a PCQS test when determining if PCQS needs to be installed
 - pts: Add more tests to netbook suite
 
 Phoronix Test Suite 1.6.0 Alpha 3

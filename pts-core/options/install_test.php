@@ -44,31 +44,34 @@ class install_test implements pts_option_interface
 				pts_set_assignment("PTS_FORCE_INSTALL", 1);
 			}
 
-			// TODO: Search $items_to_install and look for pcqs match instead of only first argument
-			if(strpos($items_to_install[0], "pcqs") !== false && !is_file(XML_SUITE_LOCAL_DIR . "pcqs-license.txt"))
+			foreach($items_to_install as $this_install)
 			{
-				// Install the Phoronix Certification & Qualification Suite
-				$agreement = wordwrap(file_get_contents("http://www.phoronix-test-suite.com/pcqs/pcqs-license.txt"), 65);
-
-				if(strpos($agreement, "PCQS") == false)
+				if(strpos($this_install, "pcqs-") !== false && !is_file(XML_SUITE_LOCAL_DIR . "pcqs-license.txt"))
 				{
-					echo pts_string_header("An error occurred while connecting to the Phoronix Test Suite server. Try again later.");
-					return false;
-				}
+					// Install the Phoronix Certification & Qualification Suite
+					$agreement = wordwrap(file_get_contents("http://www.phoronix-test-suite.com/pcqs/pcqs-license.txt"), 65);
 
-				echo "\n\n" . $agreement;
-				$agree = pts_bool_question("Do you agree to these terms in full and wish to proceed (y/n)?", false);
+					if(strpos($agreement, "PCQS") == false)
+					{
+						echo pts_string_header("An error occurred while connecting to the Phoronix Test Suite server. Try again later.");
+						return false;
+					}
 
-				if($agree)
-				{
-					pts_download("http://www.phoronix-test-suite.com/pcqs/download-pcqs.php", XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
-					pts_extract_file(XML_SUITE_LOCAL_DIR . "pcqs-suite.tar", true);
-					echo pts_string_header("The Phoronix Certification & Qualification Suite is now installed.");
-				}
-				else
-				{
-					pts_string_header("In order to run PCQS you must agree to the listed terms.");
-					return false;
+					echo "\n\n" . $agreement;
+					$agree = pts_bool_question("Do you agree to these terms in full and wish to proceed (y/n)?", false);
+
+					if($agree)
+					{
+						pts_download("http://www.phoronix-test-suite.com/pcqs/download-pcqs.php", XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
+						pts_extract_file(XML_SUITE_LOCAL_DIR . "pcqs-suite.tar", true);
+						echo pts_string_header("The Phoronix Certification & Qualification Suite is now installed.");
+						break;
+					}
+					else
+					{
+						pts_string_header("In order to run PCQS you must agree to the listed terms.");
+						return false;
+					}
 				}
 			}
 
