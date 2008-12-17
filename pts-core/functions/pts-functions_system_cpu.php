@@ -201,7 +201,9 @@ function hw_cpu_temperature()
 
 	if(empty($temp_c))
 	{
-		$temp_c = read_acpi("/thermal_zone/THM0/temperature", "temperature"); // if it is THM0 that is for the CPU, in most cases it should be
+		$temp_c = read_acpi(array(
+			"/thermal_zone/THM0/temperature", 
+			"/thermal_zone/TZ00/temperature"), "temperature");
 
 		if(($end = strpos($temp_c, ' ')) > 0)
 		{
