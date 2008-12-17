@@ -26,27 +26,35 @@ function read_acpi($point, $match)
 	// Read ACPI - Advanced Configuration and Power Interface
 	$value = "";
 
-	if(is_file("/proc/acpi" . $point))
+	if(!is_array($point))
 	{
-		$acpi_lines = explode("\n", file_get_contents("/proc/acpi" . $point));
+		$point = array($point);
+	}
 
-		for($i = 0; $i < count($acpi_lines) && $value == ""; $i++)
+	for($i = 0; $i < count($point) && empty($value); $i++)
+	{
+		if(is_file("/proc/acpi" . $point[$i]))
 		{
-			$line = explode(": ", $acpi_lines[$i]);
-			$this_attribute = trim($line[0]);
+			$acpi_lines = explode("\n", file_get_contents("/proc/acpi" . $point[$i]));
 
-			if(count($line) > 1)
+			for($i = 0; $i < count($acpi_lines) && $value == ""; $i++)
 			{
-				$this_value = trim($line[1]);
-			}
-			else
-			{
-				$this_value = "";
-			}
+				$line = explode(": ", $acpi_lines[$i]);
+				$this_attribute = trim($line[0]);
 
-			if($this_attribute == $match)
-			{
-				$value = $this_value;
+				if(count($line) > 1)
+				{
+					$this_value = trim($line[1]);
+				}
+				else
+				{
+					$this_value = "";
+				}
+
+				if($this_attribute == $match)
+				{
+					$value = $this_value;
+				}
 			}
 		}
 	}

@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Check all supplied arguments for a PCQS test when determining if PCQS needs to be installed
 - pts-core: Store aliases for distributions used in package identification in pts-core/static/software-vendor-aliases.txt
 - pts-core: Rework option counting in pts_auto_process_test_option()
+- pts-core: Add support for specifying multiple possible points in read_acpi() to provide some fallback support
 - pts: Add more tests to netbook suite
 
 Phoronix Test Suite 1.6.0 Alpha 3
