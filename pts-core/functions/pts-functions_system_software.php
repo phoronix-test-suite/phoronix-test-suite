@@ -67,7 +67,7 @@ function pts_package_vendor_identifier()
 		}
 	}
 
-	return $vendor;
+	return $os_vendor;
 }
 function sw_os_virtualized_mode()
 {
