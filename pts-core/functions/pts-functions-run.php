@@ -1190,6 +1190,36 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 			}
 			$option_names = $option_values;
 			break;
+		case "auto-file-select":
+			$names = $option_names;
+			$values = $option_values;
+			$option_names = array();
+			$option_values = array();
+
+			for($i = 0; $i < count($names) && $i < count($values); $i++)
+			{
+				if(is_file($values[$i]))
+				{
+					array_push($option_names, $names[$i]);
+					array_push($option_values, $values[$i]);
+				}
+			}
+			break;
+		case "auto-directory-select":
+			$names = $option_names;
+			$values = $option_values;
+			$option_names = array();
+			$option_values = array();
+
+			for($i = 0; $i < count($names) && $i < count($values); $i++)
+			{
+				if(is_dir($values[$i]))
+				{
+					array_push($option_names, $names[$i]);
+					array_push($option_values, $values[$i]);
+				}
+			}
+			break;
 	}
 }
 function pts_test_options($identifier)
