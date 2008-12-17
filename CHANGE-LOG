@@ -20,6 +20,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow reading from TZ00 thermal zone over ACPI for CPU temperature
 - pts-core: Add auto-file-select and auto-directory-selection options to PTS auto options support
 - pts: Add more tests to netbook suite
+- pts: Update download links in mrbayes and md-gromacs
 
 Phoronix Test Suite 1.6.0 Alpha 3
 December 11, 2008

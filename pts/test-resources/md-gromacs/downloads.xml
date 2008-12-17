@@ -6,12 +6,12 @@
 			<FileSize>8013789</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.fftw.org/fftw-3.1.2.tar.gz</URL>
+			<URL>ftp://ftp.fftw.org/pub/fftw/old/fftw-3.1.2.tar.gz</URL>
 			<MD5>08f2e21c9fd02f4be2bd53a62592afa4</MD5>
 			<FileSize>2736360</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.mcs.anl.gov/research/projects/mpich2/downloads/tarballs/mpich2-1.0.7.tar.gz</URL>
+			<URL>http://www.mcs.anl.gov/research/projects/mpich2/downloads/tarballs/1.0.7/mpich2-1.0.7.tar.gz</URL>
 			<MD5>c3beb9430d45347078a80cf1c6780509</MD5>
 			<FileSize>16565875</FileSize>
 		</Package>
