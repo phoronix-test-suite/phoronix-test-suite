@@ -256,7 +256,7 @@ function hw_sys_hdd_string()
 								$disk_size /= 1024;
 							}
 
-							if($disk_size > 10 && $disk_size % 10 != 0)
+							if($disk_size > 32 && $disk_size % 10 != 0)
 							{
 								$disk_size *= 1.01;
 								$mod = $disk_size % 10;
