@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Improve size detection of low-capacity hard disks
+- pts-core: Improve lspci support for distributions using /sbin/lspci (such as OpenSuSE)
 - pts_Graph: Tweak formatting of basic graph attributes
 
 Phoronix Test Suite 1.6.0 Beta 1

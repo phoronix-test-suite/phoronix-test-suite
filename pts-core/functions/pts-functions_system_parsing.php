@@ -157,7 +157,16 @@ function read_pci($desc, $clean_string = true)
 
 	if(empty($pci_info))
 	{
-		$pci_info = shell_exec("lspci 2>&1");
+		if(!is_executable("/usr/bin/lspci") && is_executable("/sbin/lspci"))
+		{
+			$lspci_cmd = "/sbin/lspci";
+		}
+		else
+		{
+			$lspci_cmd = "lspci";
+		}
+
+		$pci_info = shell_exec($lspci_cmd . " 2>&1");
 	}
 	if(!is_array($desc))
 	{
