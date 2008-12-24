@@ -78,10 +78,10 @@ function pts_define_directories()
 
 	// Test & Suite Locations
 	define("XML_PROFILE_DIR", PTS_DIR . "pts/test-profiles/");
-	define("XML_PROFILE_CTP_BASE_DIR", XML_PROFILE_DIR . "base/");
+	define("XML_PROFILE_CTP_BASE_DIR", PTS_DIR . "pts/base-test-profiles/");
 	define("XML_SUITE_DIR", PTS_DIR . "pts/test-suites/");
 	define("TEST_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
-	define("TEST_RESOURCE_CTP_BASE_DIR", TEST_RESOURCE_DIR . "base/");
+	define("TEST_RESOURCE_CTP_BASE_DIR", PTS_DIR . "pts/base-test-resources/");
 	define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
 	define("XML_PROFILE_LOCAL_CTP_BASE_DIR", XML_PROFILE_LOCAL_DIR . "base/");
 	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
