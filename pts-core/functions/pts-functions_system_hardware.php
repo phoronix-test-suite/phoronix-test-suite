@@ -148,6 +148,7 @@ function hw_sys_chipset_string()
 		{
 			// Attempt to detect Southbridge (if applicable)
 			$southbridge = read_pci(array("ISA bridge", "SATA controller"), false);
+			$southbridge_clean = null;
 
 			if(($start_cut = strpos($southbridge, "(")) > 0 && ($end_cut = strpos($southbridge, ")", $start_cut + 1)) > 0)
 			{
@@ -157,16 +158,22 @@ function hw_sys_chipset_string()
 				{
 					$southbridge_extract = explode(" ", $southbridge_extract);
 					$southbridge_clean = $southbridge_extract[0];
-
-					$info .= " + " . $southbridge_clean;
+				}
+				else if(($s = strpos($southbridge, "ICH")) > 0)
+				{
+					$southbridge_extract = substr($southbridge, $s);
+					$southbridge_clean = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
 				}
 			}
 			else if(($start_cut = strpos($southbridge, "SB")) > 0)
 			{
 				$southbridge_extract = substr($southbridge, $start_cut);
-				$southbridge_extract = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
+				$southbridge_clean = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
+			}
 
-				$info .= " + " . $southbridge_extract;
+			if(!empty($southbridge_clean))
+			{
+				$info .= " + " . $southbridge_clean;
 			}
 		}
 
