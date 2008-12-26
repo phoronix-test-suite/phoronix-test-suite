@@ -25,21 +25,31 @@ class bilde_svg_renderer extends bilde_renderer
 {
 	public function __construct($width, $height, $embed_identifiers = null)
 	{
-		$this->image = "<?xml version=\"1.0\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n";
-
-		if(is_array($embed_identifiers))
-		{
-			foreach($embed_identifiers as $key => $value)
-			{
-				$this->image .= "<!-- " . $key . ": " . $value . " -->\n";
-			}
-		}
-
-		$this->image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewbox=\"0 0 " . $width . " " . $height . "\" width=\"" . $width . "\" height=\"" . $height . "\">\n\n";
+		$this->image_width = $width;
+		$this->image_height = $height;
+		$this->embed_identifiers = $embed_identifiers;
+	}
+	public function resize_image($width, $height)
+	{
+		$this->image_width = $width;
+		$this->image_height = $height;
 	}
 	public function render_image($output_file = null, $quality = 0)
 	{
-		return $output_file != null && @file_put_contents($output_file, $this->image . "\n\n</svg>");
+		$svg_image = "<?xml version=\"1.0\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n";
+
+		if(is_array($this->embed_identifiers))
+		{
+			foreach($this->embed_identifiers as $key => $value)
+			{
+				$svg_image .= "<!-- " . $key . ": " . $value . " -->\n";
+			}
+		}
+
+		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n\n";
+		$svg_image .= $this->image . "\n\n</svg>";
+
+		return $output_file != null && @file_put_contents($output_file, $svg_image);
 	}
 	public function destroy_image()
 	{

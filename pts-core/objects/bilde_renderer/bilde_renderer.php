@@ -24,9 +24,13 @@
 abstract class bilde_renderer
 {
 	var $image;
+	var $image_width = -1;
+	var $image_height = -1;
+	var $embed_identifiers = null;
 
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
 	abstract function render_image($output_file = null, $quality = 0);
+	abstract function resize_image($width, $height);
 	abstract function destroy_image();
 
 	abstract function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false);

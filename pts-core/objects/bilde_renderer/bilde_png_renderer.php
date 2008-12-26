@@ -25,18 +25,21 @@ class bilde_png_renderer extends bilde_renderer
 {
 	public function __construct($width, $height, $embed_identifiers = "")
 	{
-		$this->image = imagecreate($width, $height);
-
-		imageinterlace($this->image, true);
-
-		if(function_exists("imageantialias"))
-		{
-			imageantialias($this->image, true);
-		}
+		$this->image = $this->init_new_gd_image($width, $height);
+		$this->image_width = $width;
+		$this->image_height = $height;
 	}
 	public function render_image($output_file = null, $quality = 0)
 	{
 		return imagepng($this->image, $output_file, $quality);
+	}
+	public function resize_image($width, $height)
+	{
+		$img = $this->image;
+		$this->image = $this->init_new_gd_image($width, $height);
+		$this->image_width = $width;
+		$this->image_height = $height;
+		$this->image_copy_merge($img, 0, 0);
 	}
 	public function destroy_image()
 	{
@@ -198,6 +201,22 @@ class bilde_png_renderer extends bilde_renderer
 		$box_height = $box_array[1] - $box_array[7];
 
 		return array($box_width, $box_height);
+	}
+
+	// Privates
+
+	private function init_new_gd_image($width, $height)
+	{
+		$img = imagecreate($width, $height);
+
+		imageinterlace($img, true);
+
+		if(function_exists("imageantialias"))
+		{
+			imageantialias($img, true);
+		}
+
+		return $img;
 	}
 }
 
