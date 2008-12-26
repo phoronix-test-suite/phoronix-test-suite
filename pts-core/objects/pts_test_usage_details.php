@@ -31,7 +31,7 @@ class pts_test_usage_details
 
 	public function __construct($identifier)
 	{
-		$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml");
+		$xml_parser = new pts_installed_test_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
 		$this->install_time = substr($xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME), 0, 10);
 		$this->last_run_time = substr($xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME), 0, 10);

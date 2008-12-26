@@ -107,7 +107,7 @@ class pts_test_profile_details
 
 		if(pts_test_installed($this->identifier))
 		{
-			$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $this->identifier . "/pts-install.xml", false);
+			$xml_parser = new pts_installed_test_tandem_XmlReader($this->identifier, false);
 			$last_run = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
 			$avg_time = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
 

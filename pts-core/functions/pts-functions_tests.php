@@ -255,7 +255,7 @@ function pts_test_installed_checksum_installer($identifier)
 
 	if(pts_test_installed($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
+	 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
 		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
 	}
 
@@ -281,7 +281,7 @@ function pts_test_installed_system_identifier($identifier)
 
 	if(pts_test_installed($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
+	 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
 		$value = $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
 	}
 
@@ -311,7 +311,7 @@ function pts_test_installed_profile_version($identifier)
 
 	if(pts_test_installed($identifier))
 	{
-	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
+	 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
 		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
 	}
 
@@ -325,7 +325,7 @@ function pts_test_generate_install_xml($identifier)
 function pts_test_refresh_install_xml($identifier, $this_test_duration = 0, $new_install = false)
 {
 	// Generate/refresh an install XML for pts-install.xml
- 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
+ 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
 	$xml_writer = new tandem_XmlWriter();
 
 	$test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
