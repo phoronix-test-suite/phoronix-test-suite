@@ -134,6 +134,29 @@ class bilde_svg_renderer extends bilde_renderer
 	{
 		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . round($width - $x1) . "\" height=\"" . round($height - $y1) . "\" fill=\"transparent\" stroke=\"" . $border_color . "\" stroke-width=\"1px\" />\n";
 	}
+	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0)
+	{
+		$point_pairs = array();
+		$this_pair = array();
+
+		foreach($points as $one_point)
+		{
+			array_push($this_pair, $one_point);
+
+			if(count($this_pair) == 2)
+			{
+				$pair = implode(",", $this_pair);
+				array_push($point_pairs, $pair);
+				$this_pair = array();
+			} 
+		}
+
+		$this->image .= "<polygon fill=\"" . $body_color . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" points=\"" . implode(" ", $point_pairs) . "\" />";
+	}
+	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0)
+	{
+		$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" />";
+	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
 	{
 		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" stroke=\"" . $color . "\" stroke-width=\"" . $line_width . "px\" />\n";

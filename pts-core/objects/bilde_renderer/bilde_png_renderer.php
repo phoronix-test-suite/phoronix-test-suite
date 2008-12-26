@@ -123,6 +123,28 @@ class bilde_png_renderer extends bilde_renderer
 	{
 		imagerectangle($this->image, $x1, $y1, $width, $height, $border_color);
 	}
+	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0)
+	{
+		$num_points = floor(count($points) / 2);
+
+		imagefilledpolygon($this->image, $points, $num_points, $body_color);
+
+		if($border_width > 0 && !empty($border_color))
+		{
+			// TODO: implement $border_width
+			imagepolygon($this->image, $points, $num_points, $border_color);
+		}
+	}
+	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0)
+	{
+		imagefilledellipse($this->image, $center_x, $center_y, $width, $height, $body_color);
+
+		if($border_width > 0 && !empty($border_color))
+		{
+			// TODO: implement $border_width
+			imageellipse($this->image, $center_x, $center_y, $width, $height, $border_color);
+		}
+	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
 	{
 		for($i = 0; $i < $line_width; $i++)

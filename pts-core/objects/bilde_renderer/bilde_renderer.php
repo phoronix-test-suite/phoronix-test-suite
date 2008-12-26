@@ -35,6 +35,8 @@ abstract class bilde_renderer
 
 	abstract function draw_rectangle($x1, $y1, $width, $height, $background_color);
 	abstract function draw_rectangle_border($x1, $y1, $width, $height, $border_color);
+	abstract function draw_polygon($points, $body_color, $border_color = null, $border_width = 0);
+	abstract function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0);
 	abstract function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1);
 
 	abstract function png_image_to_type($file);

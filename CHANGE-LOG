@@ -8,9 +8,10 @@ Phoronix Test Suite (Git)
 - pts-core: Improve motherboard southbridge detection for some Intel ICH Chipsets
 - pts-core: Add pts_test_installed() boolean function
 - pts-core: Add pts_installed_test_tandem_XmlReader object
-- pts_Graph: Tweak formatting of basic graph attributes
 - pts: Add UXA acceleration check to GtkPerf test note reporting
 - pts: Add 2d-test base profile that reports 2D acceleration mode using Cascading Test Profiles
+- pts_Graph: Tweak formatting of basic graph attributes
+- bilde_renderer: Add and implement draw_polygon and draw_ellipse to drawing API
 
 Phoronix Test Suite 1.6.0 Beta 1
 December 18, 2008
