@@ -219,6 +219,10 @@ function pts_get_results_viewer_xsl_formatted($format_type = "PNG")
 	{
 		$graph_string = "<object type=\"image/svg+xml\"><xsl:attribute name=\"data\">result-graphs/<xsl:number value=\"position()\" />.svg</xsl:attribute></object>";
 	}
+	else if($format_type == "SWF")
+	{
+		$graph_string = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\" id=\"objects\" width=\"580\" height=\"500\"><param name=\"movie\"><xsl:attribute name=\"value\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></param><embed width=\"580\" height=\"500\" type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></embed></object>";
+	}
 	else
 	{
 		// Default to PNG

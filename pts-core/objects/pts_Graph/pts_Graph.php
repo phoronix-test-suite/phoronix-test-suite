@@ -141,6 +141,10 @@ abstract class pts_Graph
 			$this->graph_renderer = "SVG";
 			$this->graph_left_start += 10;
 		}
+		else if($renderer == "SWF")
+		{
+			$this->graph_renderer = "SWF";
+		}
 		else
 		{
 			$this->graph_renderer = "PNG";
@@ -373,6 +377,10 @@ abstract class pts_Graph
 		else if($this->graph_renderer == "SVG")
 		{
 			$this->graph_image = new bilde_svg_renderer($this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
+		}
+		else if($this->graph_renderer == "SWF")
+		{
+			$this->graph_image = new bilde_swf_renderer($this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
 		}
 
 		// Initalize Colors
