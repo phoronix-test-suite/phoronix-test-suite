@@ -123,8 +123,6 @@ function pts_save_result($save_to = null, $save_results = null)
 					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 				}
 
-				file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t->getRenderer()));
-
 				$t->loadGraphIdentifiers($results_identifiers[$i]);
 				$t->loadGraphValues($results_values[$i]);
 				$t->loadGraphRawValues($results_rawvalues[$i]);
@@ -137,6 +135,8 @@ function pts_save_result($save_to = null, $save_results = null)
 
 				$t->saveGraphToFile($save_to_dir . "/result-graphs/" . ($i + 1) . "." . strtolower($t->getRenderer()));
 				$t->renderGraph();
+
+				file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t->getRenderer(), $t->graphWidth(), $t->graphHeight()));
 			}
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
@@ -211,7 +211,7 @@ function pts_subsystem_test_types()
 {
 	return array("System", "Processor", "Disk", "Graphics", "Memory", "Network");
 }
-function pts_get_results_viewer_xsl_formatted($format_type = "PNG")
+function pts_get_results_viewer_xsl_formatted($format_type = "PNG", $width, $height)
 {
 	$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
 
@@ -221,7 +221,7 @@ function pts_get_results_viewer_xsl_formatted($format_type = "PNG")
 	}
 	else if($format_type == "SWF")
 	{
-		$graph_string = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\" id=\"objects\" width=\"580\" height=\"500\"><param name=\"movie\"><xsl:attribute name=\"value\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></param><embed width=\"580\" height=\"500\" type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></embed></object>";
+		$graph_string = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\" id=\"objects\" width=\"" . $width . "\" height=\"" . $height . "\"><param name=\"movie\"><xsl:attribute name=\"value\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></param><embed width=\"" . $width . "\" height=\"" . $height . "\" type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></embed></object>";
 	}
 	else
 	{

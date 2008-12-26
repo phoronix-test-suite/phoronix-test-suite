@@ -110,7 +110,8 @@ abstract class pts_Graph
 			putenv("GDFONTPATH=" . getcwd());
 		}
 
-		// Set a renderer
+		// Determine renderers available
+		$ming_available = extension_loaded("ming");
 		if(!extension_loaded("gd"))
 		{
 		/*	if(dl("gd.so"))
@@ -124,8 +125,13 @@ abstract class pts_Graph
 		{
 			$gd_available = true;
 		}
-
-		if($gd_available && getenv("SVG_DEBUG") == false)
+		
+		// Set a renderer
+		if($ming_available && getenv("SWF_DEBUG") != false)
+		{
+			$this->setRenderer("SWF");
+		}
+		else if($gd_available && getenv("SVG_DEBUG") == false)
 		{
 			$this->setRenderer("PNG");
 		}
@@ -259,6 +265,14 @@ abstract class pts_Graph
 	public function saveGraphToFile($file)
 	{
 		$this->graph_output = $file;
+	}
+	public function graphWidth()
+	{
+		return $this->graph_attr_width;
+	}
+	public function graphHeight()
+	{
+		return $this->graph_attr_height;
 	}
 
 	//
