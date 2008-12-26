@@ -49,6 +49,18 @@ abstract class bilde_renderer
 	abstract function convert_hex_to_type($hex);
 	abstract function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false);
 
+	//
+	// Generic Functions
+	//
+
+	public function get_image_width()
+	{
+		return $this->image_width;
+	}
+	public function get_image_height()
+	{
+		return $this->image_height;
+	}
 	public function image_file_to_type($file)
 	{
 		$return_type = null;
