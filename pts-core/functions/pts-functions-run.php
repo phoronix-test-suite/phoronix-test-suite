@@ -598,7 +598,7 @@ function pts_verify_test_installation($identifiers)
 
 	foreach($tests as $test)
 	{
-		if(!is_file(TEST_ENV_DIR . $test . "/pts-install.xml"))
+		if(!pts_test_installed($test))
 		{
 			$fail_count++;
 			if(pts_test_supported($test))

@@ -25,7 +25,7 @@ class remove_installed_test implements pts_option_interface
 	public static function run($r)
 	{
 		$identifier = $r[0];
-		if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
+		if(pts_test_installed($identifier))
 		{
 			if(pts_bool_question("Are you sure you wish to remove the test " . $identifier . " (y/N)?", false))
 			{

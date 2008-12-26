@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Improve lspci support for distributions using /sbin/lspci (such as OpenSuSE)
 - pts-core: Move base test profiles and resources to pts/base-test-profiles/ and pts/base-test-resources/
 - pts-core: Improve motherboard southbridge detection for some Intel ICH Chipsets
+- pts-core: Add pts_test_installed() boolean function
 - pts_Graph: Tweak formatting of basic graph attributes
 - pts: Add UXA acceleration check to GtkPerf test note reporting
 

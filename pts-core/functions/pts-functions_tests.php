@@ -230,7 +230,7 @@ function pts_get_results_viewer_xsl_formatted($format_type = "PNG")
 function pts_test_needs_updated_install($identifier)
 {
 	// Checks if test needs updating
-	return !is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml")  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != pts_system_identifier_string();
+	return !pts_test_installed($identifier)  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != pts_system_identifier_string();
 }
 function pts_test_checksum_installer($identifier)
 {
@@ -253,7 +253,7 @@ function pts_test_installed_checksum_installer($identifier)
 	// Read installer checksum of installed tests
 	$version = "";
 
-	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
+	if(pts_test_installed($identifier))
 	{
 	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
 		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
@@ -279,7 +279,7 @@ function pts_test_installed_system_identifier($identifier)
 	// Read installer checksum of installed tests
 	$value = "";
 
-	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
+	if(pts_test_installed($identifier))
 	{
 	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
 		$value = $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
@@ -300,12 +300,16 @@ function pts_test_profile_version($identifier)
 
 	return $version;
 }
+function pts_test_installed($identifier)
+{
+	return is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml");
+}
 function pts_test_installed_profile_version($identifier)
 {
 	// Checks installed version
 	$version = "";
 
-	if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
+	if(pts_test_installed($identifier))
 	{
 	 	$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $identifier . "/pts-install.xml", false);
 		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);

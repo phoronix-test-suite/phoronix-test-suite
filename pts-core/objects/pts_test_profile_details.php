@@ -105,7 +105,7 @@ class pts_test_profile_details
 
 		$str .= "\nDescription: " . $this->description . "\n";
 
-		if(is_file(TEST_ENV_DIR . $this->identifier . "/pts-install.xml"))
+		if(pts_test_installed($this->identifier))
 		{
 			$xml_parser = new tandem_XmlReader(TEST_ENV_DIR . $this->identifier . "/pts-install.xml", false);
 			$last_run = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
