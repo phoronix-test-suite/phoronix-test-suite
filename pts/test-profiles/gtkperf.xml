@@ -10,6 +10,7 @@
 		<ProjectURL>http://gtkperf.sourceforge.net/</ProjectURL>
 		<ExternalDependencies>gtk-development, build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<Extends>2d-test</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>GtkPerf</Title>

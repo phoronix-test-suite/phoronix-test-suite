@@ -10,6 +10,7 @@
 		<ProjectURL>http://www.x.org/</ProjectURL>
 		<ExternalDependencies>glut, build-utilities, xorg-development</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<Extends>2d-test</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>x11perf</Title>

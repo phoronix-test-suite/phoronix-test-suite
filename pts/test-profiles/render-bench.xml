@@ -10,6 +10,7 @@
 		<ProjectURL>http://www.freedesktop.org/</ProjectURL>
 		<ExternalDependencies>build-essential, imlib2-development</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<Extends>2d-test</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>Render Bench</Title>
