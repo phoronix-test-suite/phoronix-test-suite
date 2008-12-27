@@ -422,6 +422,11 @@ function sw_os_graphics_subsystem()
 		$info = trim(substr($info, strrpos($info, "Server") + 6));
 	}
 
+	if($info != "Unknown")
+	{
+		$info = "X.Org Server " . $info;
+	}
+
 	return $info;
 }
 function sw_os_username()

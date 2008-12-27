@@ -55,7 +55,7 @@ function pts_sw_string()
 		array_push($software, "Desktop: " . $desktop);
 	}
 
-	array_push($software, "X.Org Server: " . sw_os_graphics_subsystem());
+	array_push($software, "Display Server: " . sw_os_graphics_subsystem());
 
 	if(($ddx = sw_xorg_ddx_driver_info()) != "")
 	{
