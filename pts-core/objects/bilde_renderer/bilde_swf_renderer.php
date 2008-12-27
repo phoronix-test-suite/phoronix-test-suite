@@ -132,7 +132,23 @@ class bilde_swf_renderer extends bilde_renderer
 	}
 	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0)
 	{
-		return; //TODO: Implement
+		if($width > $height)
+		{
+			$base_size = $width;
+		}
+		else
+		{
+			$base_size = $height;
+		}
+
+		$ellipse = new SWFShape();
+		$ellipse->setLine($border_width, $border_color[0], $border_color[1], $border_color[2]);
+		$ellipse->setRightFill($body_color[0], $body_color[1], $body_color[2]);
+		$ellipse->drawCircle($base_size / 2);
+		$added = $this->image->add($ellipse);
+
+		$added->moveTo($center_x, $center_y);
+		$added->scaleTo(($width / $base_size), ($height / $base_size));
 	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
 	{
