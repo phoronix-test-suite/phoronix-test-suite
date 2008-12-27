@@ -51,31 +51,28 @@ class bilde_swf_renderer extends bilde_renderer
 
 	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
-		return;
-		// TODO: Implement $font_type, $rotate_text support
-		$t = new SWFTextField();
-		$t->setFont($this->swf_font);
-		$t->setColor($font_color[0], $font_color[1], $font_color[2]);
-		$t->setHeight($font_size);
-		$t->setbounds(abs($bound_x1 - $bound_x2), abs($bound_y1 - $bound_y2));
-		$t->addString($text_string);
-
-		$added = $this->image->add($t);
-		$added->moveTo($bound_x1, $bound_y1);
+		$this->write_swf_text($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text, "LEFT");
 	}
 	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
-		// TODO: Properly implement
-		$this->write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text);
+		$this->write_swf_text($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text, "RIGHT");
 	}
 	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
-		// TODO: Properly implement
-		$this->write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text);
+		$this->write_swf_text($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text, "CENTER");
 	}
 
 	public function draw_rectangle($x1, $y1, $width, $height, $background_color)
 	{
+		/*
+		$points = array(
+		$x1, $y1,
+		$x1 + $height, $y1,
+		$x1 + $height, $y1 + $width,
+		$x1, $y1 + $width
+		);
+		$this->draw_polygon($points, $background_color, $background_color, 1);
+		*/
 		$rect = new SWFShape();
 		$rect->setLine(1, $background_color[0], $background_color[1], $background_color[2]);
 		$rect->setRightFill($background_color[0], $background_color[1], $background_color[2]);
@@ -180,6 +177,37 @@ class bilde_swf_renderer extends bilde_renderer
 	public function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false)
 	{
 		return array(0, 0);
+	}
+
+	// Privates
+
+	private function write_swf_text($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text, $orientation = "LEFT")
+	{
+		switch($orientation)
+		{
+			case "CENTER":
+				$align = SWFTEXTFIELD_ALIGN_CENTER;
+				break;
+			case "RIGHT":
+				$align = SWFTEXTFIELD_ALIGN_RIGHT;
+				break;
+			case "LEFT":
+			default:
+				$align = SWFTEXTFIELD_ALIGN_LEFT;
+				break;
+		}
+
+		// TODO: Implement $font_type, $rotate_text support
+		$t = new SWFTextField();
+		$t->setFont($this->swf_font);
+		$t->setColor($font_color[0], $font_color[1], $font_color[2]);
+		$t->setHeight($font_size);
+		$t->setBounds(abs($bound_x1 - $bound_x2), $font_size);
+		$t->align($align);
+		$t->addString($text_string);
+
+		$added = $this->image->add($t);
+		$added->moveTo($bound_x1, $bound_y1);
 	}
 }
 
