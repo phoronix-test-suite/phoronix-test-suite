@@ -193,6 +193,8 @@ class bilde_svg_renderer extends bilde_renderer
 		return array(0, 0); // TODO: implement
 	}
 
+	// Privates
+
 	private function write_svg_text($string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, $orientation = "LEFT")
 	{
 		$font_size += 1.5;

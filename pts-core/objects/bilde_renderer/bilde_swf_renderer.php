@@ -51,6 +51,7 @@ class bilde_swf_renderer extends bilde_renderer
 
 	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
+		return;
 		// TODO: Implement $font_type, $rotate_text support
 		$t = new SWFTextField();
 		$t->setFont($this->swf_font);
@@ -94,7 +95,40 @@ class bilde_swf_renderer extends bilde_renderer
 	}
 	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0)
 	{
-		return; //TODO: Implement
+		$poly = new SWFShape();
+		$poly->setLeftFill($body_color[0], $body_color[1], $body_color[2]);
+		if(!empty($border_color) && $border_width > 0)
+		{
+			$poly->setLine($border_width, $border_color[0], $border_color[1], $border_color[2]);
+		}
+
+
+		$point_pairs = array();
+		$this_pair = array();
+
+		foreach($points as $one_point)
+		{
+			array_push($this_pair, $one_point);
+
+			if(count($this_pair) == 2)
+			{
+				array_push($point_pairs, $this_pair);
+				$this_pair = array();
+			} 
+		}
+
+		if(count($point_pairs) > 1)
+		{
+			$poly->movePenTo($point_pairs[0][0], $point_pairs[0][1]);
+
+			for($i = 1; $i < count($point_pairs); $i++)
+			{
+				$poly->drawLineTo($point_pairs[$i][0], $point_pairs[$i][1]);
+			}
+			$poly->drawLineTo($point_pairs[0][0], $point_pairs[0][1]);
+		}
+
+		$this->image->add($poly);
 	}
 	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0)
 	{
@@ -105,7 +139,7 @@ class bilde_swf_renderer extends bilde_renderer
 		$line = new SWFShape();
 		$line->setLine(1, $color[0], $color[1], $color[2]);
 		$line->movePenTo($start_x, $start_y);
-		$line->drawLine(abs($start_x - $end_x), abs($start_y - $end_y));
+		$line->drawLineTo($end_x, $end_y);
 		$added = $this->image->add($line);
 	}
 

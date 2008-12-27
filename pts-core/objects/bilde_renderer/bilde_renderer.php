@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2008, Michael Larabel
-	bilde_renderer.php: The Phoronix Multi-Format Image Renderer
+	bilde_renderer.php: The Phoronix Multi-Format "Bilde" Image Renderer
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -133,7 +133,6 @@ abstract class bilde_renderer
 
 		return $return;
 	}
-	
 }
 
 ?>
