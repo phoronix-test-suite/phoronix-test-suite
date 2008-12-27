@@ -161,15 +161,17 @@ class bilde_swf_renderer extends bilde_renderer
 
 	public function png_image_to_type($file)
 	{
-		return false; //TODO: Implement
+		return new SWFBitmap(fopen($file, "rb"));
 	}
 	public function jpg_image_to_type($file)
 	{
-		return false; //TODO: Implement
+		return new SWFBitmap(fopen($file, "rb"));
 	}
 	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1)
 	{
-		return null; //TODO: Implement
+		// TODO: $source_x, $source_y, $width, $height need to be implemented
+		$added = $this->image->add($source_image_object);
+		$added->moveTo($to_x, $to_y);
 	}
 	public function convert_hex_to_type($hex)
 	{
