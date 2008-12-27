@@ -537,15 +537,8 @@ function read_ati_overdrive($attribute, $adapter = 0)
 
 					if($od_option == $attribute)
 					{
-						$od_value = trim($line_r[1]);
-
-						if(function_exists("preg_replace"))
-						{
-							$od_value = preg_replace("/\s+/", " ", $od_value);
-						}
-
+						$od_value = pts_trim_spaces($line_r[1]);
 						$od_value = str_replace(array("%"), "", $od_value);
-
 						$od_value_r = explode(" ", $od_value);
 
 						if(count($od_value_r) == 1)
@@ -596,11 +589,7 @@ function read_system_memory_usage($TYPE = "TOTAL", $READ = "USED")
 
 	if(!empty($grab_line))
 	{
-		if(function_exists("preg_replace"))
-		{
-			$grab_line = trim(preg_replace("/\s+/", " ", $grab_line));
-		}
-
+		$grab_line = pts_trim_spaces($grab_line);
 		$mem_parts = explode(" ", $grab_line);
 
 		if($READ == "USED")

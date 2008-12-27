@@ -9,12 +9,13 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts_test_installed() boolean function
 - pts-core: Add pts_installed_test_tandem_XmlReader object
 - pts-core: Clean up Display / X.Org server reported string
+- pts-core: Eliminate use of most preg_ functions
 - pts: Add UXA acceleration check to GtkPerf test note reporting
 - pts: Add 2d-test base profile that reports 2D acceleration mode using Cascading Test Profiles
 - pts_Graph: Tweak formatting of basic graph attributes
 - bilde_renderer: Add and implement draw_polygon and draw_ellipse to drawing API
 - bilde_renderer: Add support for dynamically resizing the image drawing buffer
-- bilde_renderer: Add experimental Adobe Flash / SWF renderer with partial support
+- bilde_renderer: Add experimental Adobe Flash / SWF renderer
 
 Phoronix Test Suite 1.6.0 Beta 1
 December 18, 2008

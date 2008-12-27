@@ -170,12 +170,7 @@ function pts_clean_information_string($str)
 		$str = str_ireplace($original_phrase, $new_phrase, $str);
 	}
 
-	if(function_exists("preg_replace"))
-	{
-		$str = trim(preg_replace("/\s+/", " ", $str));
-	}
-
-	return $str;
+	return pts_trim_spaces($str);
 }
 function pts_exit($string = "")
 {
@@ -188,14 +183,8 @@ function pts_version_comparable($old, $new)
 {
 	// Checks if there's a major version difference between two strings, if so returns false. If the same or only a minor difference, returns true.
 
-	if(function_exists("preg_replace"))
-	{
-		$old = preg_replace("/[^.0-9]/", "", $old);
-		$new = preg_replace("/[^.0-9]/", "", $new);
-	}
-
-	$old = explode(".", $old);
-	$new = explode(".", $new);
+	$old = explode(".", pts_remove_chars($old, true, true, false));
+	$new = explode(".", pts_remove_chars($new, true, true, false));
 	$compare = true;
 
 	if(count($old) >= 2 && count($new) >= 2)
@@ -242,6 +231,31 @@ function pts_string_bool($string)
 	// Used for evaluating if the user inputted a string that evaluates to true
 	$string = strtolower($string);
 	return $string == "true" || $string == "1" || $string == "on";
+}
+function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $keep_alpha = true)
+{
+	$string_r = str_split($string);
+	$new_string = "";
+
+	foreach($string_r as $char)
+	{
+		$i = ord($char);
+		if(($keep_numeric && $i > 47 && $i < 58) || ($keep_alpha && $i > 64 && $i < 91) || 
+		($keep_alpha && $i > 96 && $i < 123) || ($keep_decimal && $i == 46))
+		{
+			$new_string .= $char; 
+		}
+	}
+	return $new_string;
+}
+function pts_trim_spaces($string)
+{
+	while(strpos($string, "  ") !== false)
+	{
+		$string = str_replace("  ", "", $string);
+	}
+
+	return trim($string);
 }
 function pts_is_valid_download_url($string, $basename = null)
 {

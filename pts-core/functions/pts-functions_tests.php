@@ -613,12 +613,12 @@ function pts_test_version_compatible($version_compare = "")
 {
 	$compatible = true;
 
-	if(!empty($version_compare) && function_exists("preg_replace"))
+	if(!empty($version_compare))
 	{
-		$current = preg_replace("/[^0-9]/", "", PTS_VERSION);
+		$current = pts_remove_chars(PTS_VERSION, true, false, false);
 
 		$version_compare = explode("-", $version_compare);	
-		$support_begins = preg_replace("/[^0-9]/", "", trim($version_compare[0]));
+		$support_begins = pts_remove_chars(trim($version_compare[0]), true, false, false);
 
 		if(count($version_compare) == 2)
 		{
@@ -628,8 +628,7 @@ function pts_test_version_compatible($version_compare = "")
 		{
 			$support_ends = PTS_VERSION;
 		}
-
-		$support_ends = preg_replace("/[^0-9]/", "", $support_ends);
+		$support_ends = pts_remove_chars(trim($support_ends), true, false, false);
 
 		$compatible = $current >= $support_begins && $current <= $support_ends;
 	}

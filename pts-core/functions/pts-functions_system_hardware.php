@@ -378,7 +378,7 @@ function hw_sys_memory_string()
 				$mem_type = substr($mem_type, 0, $cut);
 			}
 
-			if(preg_replace("/[^a-zA-Z0-9s]/", "", $mem_type) == $mem_type)
+			if(pts_remove_chars($mem_type, true, false, true) == $mem_type)
 			{
 				$mem_prefix = $mem_type;
 			}

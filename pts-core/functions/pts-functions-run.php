@@ -449,6 +449,10 @@ function pts_promt_user_tags($default_tags = "")
 		{
 			$tags_input = preg_replace("/[^a-zA-Z0-9s, -]/", "", $tags_input);
 		}
+		else
+		{
+			$tags_input = pts_remove_chars($tags_input, true, true, true);
+		}
 
 		$tags_input = trim($tags_input);
 	}
