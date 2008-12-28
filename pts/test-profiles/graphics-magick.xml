@@ -7,6 +7,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Extends>photo-sample</Extends>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.graphicsmagick.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>

@@ -6,7 +6,7 @@ THIS_DIR=$(pwd)
 mkdir $THIS_DIR/gm_
 
 cd GraphicsMagick-1.3.3/
-./configure --prefix=$THIS_DIR/gm_ > /dev/null
+./configure --without-perl --prefix=$THIS_DIR/gm_ > /dev/null
 make -j $NUM_CPU_JOBS
 make install
 cd ..
