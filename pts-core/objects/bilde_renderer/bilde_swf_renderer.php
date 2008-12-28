@@ -64,15 +64,14 @@ class bilde_swf_renderer extends bilde_renderer
 
 	public function draw_rectangle($x1, $y1, $width, $height, $background_color)
 	{
-		/*
-		$points = array(
+	/*	$points = array(
 		$x1, $y1,
 		$x1 + $height, $y1,
 		$x1 + $height, $y1 + $width,
 		$x1, $y1 + $width
 		);
 		$this->draw_polygon($points, $background_color, $background_color, 1);
-		*/
+	*/
 		$rect = new SWFShape();
 		$rect->setLine(1, $background_color[0], $background_color[1], $background_color[2]);
 		$rect->setRightFill($background_color[0], $background_color[1], $background_color[2]);
@@ -85,6 +84,14 @@ class bilde_swf_renderer extends bilde_renderer
 	}
 	public function draw_rectangle_border($x1, $y1, $width, $height, $border_color)
 	{
+	/*	$points = array(
+		$x1, $y1,
+		$x1 + $height, $y1,
+		$x1 + $height, $y1 + $width,
+		$x1, $y1 + $width
+		);
+		$this->draw_polygon($points, null, $border_color, 1);
+	*/
 		$this->draw_line($x1, $y1, $x1 + $width, $y1, $border_color, 1);
 		$this->draw_line($x1, $y1, $x1, $y1 + $height, $border_color, 1);
 		$this->draw_line($x1 + $width, $y1, $x1 + $width, $y1 + $height, $border_color, 1);
@@ -93,7 +100,11 @@ class bilde_swf_renderer extends bilde_renderer
 	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0)
 	{
 		$poly = new SWFShape();
-		$poly->setLeftFill($body_color[0], $body_color[1], $body_color[2]);
+
+		if(!empty($body_color))
+		{
+			$poly->setLeftFill($body_color[0], $body_color[1], $body_color[2]);
+		}
 		if(!empty($border_color) && $border_width > 0)
 		{
 			$poly->setLine($border_width, $border_color[0], $border_color[1], $border_color[2]);

@@ -439,6 +439,7 @@ class run_test implements pts_option_interface
 			pts_user_message($PRE_RUN_MESSAGE);
 		}
 
+		// Run the actual tests
 		pts_recurse_call_tests($test_names_r, $test_arguments_r, $save_results, $xml_results_writer, $results_identifier, $test_arguments_description_r);
 
 		if(isset($POST_RUN_MESSAGE))

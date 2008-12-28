@@ -66,7 +66,8 @@ if [ ! -f pts-core/phoronix-test-suite.php ]
 then
 	cat <<'EOT'
 
-To run the Phoronix Test Suite locally you must first change directories to phoronix-test-suite/ or install the program using the install-sh script. For support visit: http://www.phoronix-test-suite.com/
+To run the Phoronix Test Suite locally you must first change directories to phoronix-test-suite/ 
+or install the program using the install-sh script. For support visit: http://www.phoronix-test-suite.com/
 
 EOT
 exit

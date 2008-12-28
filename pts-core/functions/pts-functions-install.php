@@ -426,7 +426,12 @@ function pts_install_test($identifier)
 
 					pts_user_message($pre_install_message);
 
-					echo pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
+					echo $install_log = pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
+
+					if(!empty($install_log))
+					{
+						@file_put_contents(TEST_ENV_DIR . $identifier . "/install.log", $install_log);
+					}
 
 					pts_user_message($post_install_message);
 

@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts_installed_test_tandem_XmlReader object
 - pts-core: Clean up Display / X.Org server reported string
 - pts-core: Eliminate use of most preg_ functions
+- pts-core: Archive installation output of tests in the test's directory in file install.log
 - pts: Add UXA acceleration check to GtkPerf test note reporting
 - pts: Add 2d-test base profile that reports 2D acceleration mode using Cascading Test Profiles
 - pts_Graph: Tweak formatting of basic graph attributes

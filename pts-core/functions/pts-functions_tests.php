@@ -125,6 +125,7 @@ function pts_save_result($save_to = null, $save_results = null)
 
 				if(getenv("REVERSE_GRAPH_PLOTTING") != false)
 				{
+					// Plot results in reverse order on graphs if REVERSE_GRAPH_PLOTTING env variable is set
 					$results_identifiers[$i] = array_reverse($results_identifiers[$i]);
 					$results_values[$i] = array_reverse($results_values[$i]);
 				}
