@@ -1,0 +1,9 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://download.softagency.net/MySQL/Downloads/MySQL-5.1/mysql-5.1.30.tar.gz, http://ftp.up.ac.za/pub/windows/MySQL/Downloads/MySQL-5.1/mysql-5.1.30.tar.gz, http://lsd.linux.cz/pub/mysql/Downloads/MySQL-5.1/mysql-5.1.30.tar.gz, http://distfiles.macports.org/mysql5/mysql-5.1.30.tar.gz</URL>
+			<MD5>b658e58887a74dce65224ae0fc8ee06a</MD5>
+			<FileSize>29050568</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

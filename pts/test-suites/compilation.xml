@@ -10,6 +10,9 @@
 		<Test>build-apache</Test>
 	</RunTest>
 	<RunTest>
+		<Test>build-mysql</Test>
+	</RunTest>
+	<RunTest>
 		<Test>build-php</Test>
 	</RunTest>
 	<RunTest>
