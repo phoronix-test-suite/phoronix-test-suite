@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts: Add UXA acceleration check to GtkPerf test note reporting
 - pts: Add 2d-test base profile that reports 2D acceleration mode using Cascading Test Profiles
 - pts: Add build-mysql test profile for timed build of MySQL 5.1
+- pts: Add system-disk test suite for real world disk / encryption tests
 - pts_Graph: Tweak formatting of basic graph attributes
 - bilde_renderer: Add and implement draw_polygon and draw_ellipse to drawing API
 - bilde_renderer: Add support for dynamically resizing the image drawing buffer
