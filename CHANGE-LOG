@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts: Add build-mysql test profile for timed build of MySQL 5.1
 - pts: Add system-disk test suite for real world disk / encryption tests
 - pts: Add libperl-dev to Ubuntu External Dependencies XML to perl package
+- pts: Add photo-sample base test profile for providing sample photographs
 - pts_Graph: Tweak formatting of basic graph attributes
 - bilde_renderer: Add and implement draw_polygon and draw_ellipse to drawing API
 - bilde_renderer: Add support for dynamically resizing the image drawing buffer
