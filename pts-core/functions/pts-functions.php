@@ -252,7 +252,7 @@ function pts_trim_spaces($string)
 {
 	while(strpos($string, "  ") !== false)
 	{
-		$string = str_replace("  ", "", $string);
+		$string = str_replace("  ", " ", $string);
 	}
 
 	return trim($string);
