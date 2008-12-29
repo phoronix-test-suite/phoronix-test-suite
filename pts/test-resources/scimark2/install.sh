@@ -14,22 +14,22 @@ rm -f *.result
 
 case \"\$1\" in
 \"TEST_COMPOSITE\")
-	cat \$LOG_FILE.result | grep \"Composite Score\"
+	cat \$LOG_FILE.result | grep \"Composite Score\" > \$LOG_FILE
 	;;
 \"TEST_FFT\")
-	cat \$LOG_FILE.result | grep \"FFT\"
+	cat \$LOG_FILE.result | grep \"FFT\" > \$LOG_FILE
 	;;
 \"TEST_SOR\")
-	cat \$LOG_FILE.result | grep \"SOR\"
+	cat \$LOG_FILE.result | grep \"SOR\" > \$LOG_FILE
 	;;
 \"TEST_MONTE\")
-	cat \$LOG_FILE.result | grep \"MonteCarlo\"
+	cat \$LOG_FILE.result | grep \"MonteCarlo\" > \$LOG_FILE
 	;;
 \"TEST_SPARSE\")
-	cat \$LOG_FILE.result | grep \"Sparse matmult\"
+	cat \$LOG_FILE.result | grep \"Sparse matmult\" > \$LOG_FILE
 	;;
 \"TEST_DENSE\")
-	cat \$LOG_FILE.result | grep \"LU\"
+	cat \$LOG_FILE.result | grep \"LU\" > \$LOG_FILE
 	;;
 esac" > scimark2
 chmod +x scimark2
