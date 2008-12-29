@@ -34,8 +34,9 @@ class bilde_svg_renderer extends bilde_renderer
 		$this->image_width = $width;
 		$this->image_height = $height;
 	}
-	public function render_image($output_file = null, $quality = 0)
+	public function render_image($output_file = null, $quality = 100)
 	{
+		// $quality is unused with SVG files
 		$svg_image = "<?xml version=\"1.0\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n";
 
 		if(is_array($this->embed_identifiers))

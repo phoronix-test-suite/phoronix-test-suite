@@ -29,7 +29,7 @@ abstract class bilde_renderer
 	var $embed_identifiers = null;
 
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
-	abstract function render_image($output_file = null, $quality = 0);
+	abstract function render_image($output_file = null, $quality = 100);
 	abstract function resize_image($width, $height);
 	abstract function destroy_image();
 

@@ -546,7 +546,7 @@ abstract class pts_Graph
 	}
 	protected function return_graph_image()
 	{
-		$this->graph_image->render_image($this->graph_output, 5);
+		$this->graph_image->render_image($this->graph_output, 85);
 		$this->graph_image->destroy_image();
 	}
 	protected function trim_double($double, $accuracy = 2)

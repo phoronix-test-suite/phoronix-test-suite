@@ -29,8 +29,9 @@ class bilde_png_renderer extends bilde_gd_renderer
 		$this->image_width = $width;
 		$this->image_height = $height;
 	}
-	public function render_image($output_file = null, $quality = 0)
+	public function render_image($output_file = null, $quality = 100)
 	{
+		$quality = floor(9 - (($quality / 100) * 9)); // calculate compression level
 		return imagepng($this->image, $output_file, $quality);
 	}
 }

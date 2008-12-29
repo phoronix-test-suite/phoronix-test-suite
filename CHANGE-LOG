@@ -23,6 +23,7 @@ Phoronix Test Suite (Git)
 - pts: Update lzma download link for compress-lzma test profile
 - pts_Graph: Tweak formatting of basic graph attributes
 - bilde_renderer: Add and implement draw_polygon and draw_ellipse to drawing API
+- bilde_renderer: When setting the image quality level to use with the render_image() function, base it on a 100-point scale
 - bilde_renderer: Add support for dynamically resizing the image drawing buffer
 - bilde_renderer: Add experimental Adobe Flash / SWF renderer
 - bilde_renderer: Add a generic abstract GD library renderer and then have bilde_png_renderer extend that

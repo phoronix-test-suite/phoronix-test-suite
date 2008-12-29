@@ -31,7 +31,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	}
 
 	/*
-	public function render_image($output_file = null, $quality = 0)
+	public function render_image($output_file = null, $quality = 100)
 	{
 		// To be implemented by the class extending bilde_gd_renderer
 	}
