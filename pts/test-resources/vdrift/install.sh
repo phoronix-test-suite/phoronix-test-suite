@@ -16,6 +16,6 @@ cd ..
 echo "#!/bin/sh
 
 cd vdrift-08-05-08/
-./build/vdrift -benchmark" > vdrift
+./build/vdrift -benchmark > \$LOG_FILE 2>&1" > vdrift
 chmod +x vdrift
 

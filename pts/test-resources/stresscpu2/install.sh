@@ -6,10 +6,10 @@ cat> launch <<'EOT'
 #!/bin/sh
 case $OS_ARCH in
     x86_64)
-    stresscpu2/stresscpu2_linux64 -t $@ | grep ERROR
+    stresscpu2/stresscpu2_linux64 -t $@ | grep ERROR > $LOG_FILE
     ;;
     i?86 | i86*)
-    stresscpu2/stresscpu2_linux32 -t $@ | grep ERROR
+    stresscpu2/stresscpu2_linux32 -t $@ | grep ERROR > $LOG_FILE
     ;;
 esac
 EOT
