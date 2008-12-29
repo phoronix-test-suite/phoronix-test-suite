@@ -77,37 +77,34 @@ function pts_download($download, $to)
 }
 function pts_remove($object, $ignore_files = null)
 {
-	if(!file_exists($object))
+	if(is_dir($object) && substr($object, -1) != "/")
 	{
-		return false;
+		$object .= "/";
 	}
 
-	if(is_file($object))
+	foreach(glob($object . "*") as $to_remove)
 	{
-		if(is_array($ignore_files) && in_array(basename($object), $ignore_files))
+		if(is_file($to_remove))
 		{
-			return true;
-		}
-		else
-		{
-			return @unlink($object);
-		}
-	}
-
-	if(is_dir($object))
-	{
-		$directory = @dir($object);
-		while(($entry = $directory->read()) !== false)
-		{
-			if($entry != "." && $entry != "..")
+			if(is_array($ignore_files) && in_array(basename($to_remove), $ignore_files))
 			{
-				pts_remove($object . "/" . $entry, $ignore_files);
+				continue; // Don't remove the file
+			}
+			else
+			{
+				@unlink($to_remove);
 			}
 		}
-		$directory->close();
-	}
+		else if(is_dir($to_remove))
+		{
+			pts_remove($to_remove, $ignore_files);
 
-	return @rmdir($object);
+			//if(count(glob($to_remove . "/*")) == 0)
+			//{
+				@rmdir($object);
+			//}
+		}
+	}
 }
 function pts_copy($from, $to)
 {

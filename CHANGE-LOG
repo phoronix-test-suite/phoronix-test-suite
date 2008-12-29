@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Archive installation output of tests in the test's directory in file install.log
 - pts-core: Add install-all-dependencies option to install all available external dependencies for that distribution
 - pts-core: When installing or running a test, only print to standard output if under 10KB
+- pts-core: Rewrite pts_remove() function
 - pts: Add UXA acceleration check to GtkPerf test note reporting
 - pts: Add 2d-test base profile that reports 2D acceleration mode using Cascading Test Profiles
 - pts: Add build-mysql test profile for timed build of MySQL 5.1
