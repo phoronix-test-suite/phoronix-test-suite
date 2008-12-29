@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Clean up Display / X.Org server reported string
 - pts-core: Eliminate use of most preg_ functions
 - pts-core: Archive installation output of tests in the test's directory in file install.log
+- pts-core: Add install-all-dependencies option to install all available external dependencies for that distribution
 - pts: Add UXA acceleration check to GtkPerf test note reporting
 - pts: Add 2d-test base profile that reports 2D acceleration mode using Cascading Test Profiles
 - pts: Add build-mysql test profile for timed build of MySQL 5.1

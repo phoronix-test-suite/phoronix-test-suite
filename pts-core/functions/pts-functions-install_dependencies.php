@@ -165,7 +165,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 
 		for($i = 0; $i < count($generic_package); $i++)
 		{
-			if(!empty($generic_package[$i]) && in_array($generic_package[$i], $generic_names))
+			if(!empty($generic_package[$i]) && ($generic_names == "all" || in_array($generic_package[$i], $generic_names)))
 			{
 				if(!in_array($distro_package[$i], $package_install_array))
 				{
