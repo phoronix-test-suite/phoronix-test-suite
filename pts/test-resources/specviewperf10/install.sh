@@ -20,36 +20,36 @@ threads \$NUM_CPU_CORES
 
 case \"\$1\" in
 \"3dsmax\")
-	./Run_3dsmax.csh
-	grep \"Composite Score\" results/3dsmax-04/*result.txt
+	./Run_3dsmax.csh > /dev/null 2>&1
+	cat results/3dsmax-04/*result.txt > \$LOG_FILE
 	;;
 \"catia\")
-	./Run_catia.csh
-	grep \"Composite Score\" results/catia-02/*result.txt
+	./Run_catia.csh > /dev/null 2>&1
+	cat results/catia-02/*result.txt > \$LOG_FILE
 	;;
 \"ensight\")
-	./Run_ensight.csh
-	grep \"Composite Score\" results/ensight-03/*result.txt
+	./Run_ensight.csh > /dev/null 2>&1
+	cat results/ensight-03/*result.txt > \$LOG_FILE
 	;;
 \"maya\")
-	./Run_maya.csh
-	grep \"Composite Score\" results/maya-02/*result.txt
+	./Run_maya.csh > /dev/null 2>&1
+	cat results/maya-02/*result.txt > \$LOG_FILE
 	;;
 \"proe\")
-	./Run_proe.csh
-	grep \"Composite Score\" results/proe-04/*result.txt
+	./Run_proe.csh > /dev/null 2>&1
+	cat results/proe-04/*result.txt > \$LOG_FILE
 	;;
 \"sw\")
-	./Run_sw.csh
-	grep \"Composite Score\" results/sw-01/*result.txt
+	./Run_sw.csh > /dev/null 2>&1
+	cat results/sw-01/*result.txt > \$LOG_FILE
 	;;
 \"tcvis\")
-	./Run_tcvis.csh
-	grep \"Composite Score\" results/tcvis-01/*result.txt
+	./Run_tcvis.csh > /dev/null 2>&1
+	cat results/tcvis-01/*result.txt > \$LOG_FILE
 	;;
 \"ugnx\")
-	./Run_ugnx.csh
-	grep \"Composite Score\" results/ugnx-01/*result.txt
+	./Run_ugnx.csh > /dev/null 2>&1
+	cat results/ugnx-01/*result.txt > \$LOG_FILE
 	;;
 esac" > specviewperf10
 chmod +x specviewperf10

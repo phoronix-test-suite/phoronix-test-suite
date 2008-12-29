@@ -30,9 +30,9 @@ case \"\$1\" in
 	    mkdir sum_results/3dsmax
 	fi
 
-	./Run_Viewset.csh 3dsmax-04 3dsmax results
+	./Run_Viewset.csh 3dsmax-04 3dsmax results > /dev/null 2>&1
 
-	grep \"Mean\" sum_results/3dsmax/summary.txt
+	cat sum_results/3dsmax/summary.txt > \$LOG_FILE
 	;;
 \"catia\")
 	if [ ! -e sum_results/catia ]
@@ -40,9 +40,9 @@ case \"\$1\" in
 	    mkdir sum_results/catia
 	fi
 
-	./Run_Viewset.csh catia-02 catia results
+	./Run_Viewset.csh catia-02 catia results > /dev/null 2>&1
 
-	grep \"Mean\" sum_results/catia/summary.txt
+	cat sum_results/catia/summary.txt > \$LOG_FILE
 	;;
 \"ensight\")
 	if [ ! -e sum_results/ensight ]
@@ -50,9 +50,9 @@ case \"\$1\" in
 	    mkdir sum_results/ensight
 	fi
 
-	./Run_Viewset.csh ensight-03 ensight results
+	./Run_Viewset.csh ensight-03 ensight results > /dev/null 2>&1
 
-	grep \"Mean\" sum_results/ensight/summary.txt
+	cat sum_results/ensight/summary.txt > \$LOG_FILE
 	;;
 \"light\")
 	if [ ! -e sum_results/light ]
@@ -60,9 +60,9 @@ case \"\$1\" in
 	    mkdir sum_results/light
 	fi
 
-	./Run_Viewset.csh light-08 light results
+	./Run_Viewset.csh light-08 light results > /dev/null 2>&1
 
-	grep \"Mean\" sum_results/light/summary.txt
+	cat sum_results/light/summary.txt > \$LOG_FILE
 	;;
 \"maya\")
 	if [ ! -e sum_results/maya ]
@@ -70,9 +70,9 @@ case \"\$1\" in
 	    mkdir sum_results/maya
 	fi
 
-	./Run_Viewset.csh maya-02 maya results
+	./Run_Viewset.csh maya-02 maya results > /dev/null 2>&1
 
-	grep \"Mean\" sum_results/maya/summary.txt
+	cat sum_results/maya/summary.txt > \$LOG_FILE
 	;;
 \"proe\")
 	if [ ! -e sum_results/proe ]
@@ -80,9 +80,9 @@ case \"\$1\" in
 	    mkdir sum_results/proe
 	fi
 
-	./Run_Viewset.csh proe-04 proe results
+	./Run_Viewset.csh proe-04 proe results > /dev/null 2>&1
 
-	grep \"Mean\" sum_results/proe/summary.txt
+	cat sum_results/proe/summary.txt > \$LOG_FILE
 	;;
 \"sw\")
 	if [ ! -e sum_results/sw ]
@@ -90,9 +90,9 @@ case \"\$1\" in
 	    mkdir sum_results/sw
 	fi
 
-	./Run_Viewset.csh sw-01 sw results
+	./Run_Viewset.csh sw-01 sw results > /dev/null 2>&1
 
-	grep \"Mean\" sum_results/sw/summary.txt
+	cat sum_results/sw/summary.txt > \$LOG_FILE
 	;;
 \"ugnx\")
 	if [ ! -e sum_results/ugnx ]
@@ -100,9 +100,9 @@ case \"\$1\" in
 	    mkdir sum_results/ugnx
 	fi
 
-	./Run_Viewset.csh ugnx-01 ugnx results
+	./Run_Viewset.csh ugnx-01 ugnx results > /dev/null 2>&1
 
-	grep \"Mean\" sum_results/ugnx/summary.txt
+	cat sum_results/ugnx/summary.txt > \$LOG_FILE
 	;;
 \"tcvis\")
 	if [ ! -e sum_results/tcvis ]
@@ -110,9 +110,9 @@ case \"\$1\" in
 	    mkdir sum_results/tcvis
 	fi
 
-	./Run_Viewset.csh tcvis-01 tcvis results
+	./Run_Viewset.csh tcvis-01 tcvis results > /dev/null 2>&1
 
-	grep \"Mean\" sum_results/tcvis/summary.txt
+	cat sum_results/tcvis/summary.txt > \$LOG_FILE
 	;;
 esac
 " > specviewperf9
