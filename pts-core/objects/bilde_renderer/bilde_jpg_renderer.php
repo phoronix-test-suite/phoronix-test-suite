@@ -21,14 +21,13 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class bilde_png_renderer extends bilde_gd_renderer
+class bilde_jpg_renderer extends bilde_gd_renderer
 {
-	public static $file_extension = "png";
+	public static $file_extension = "jpg";
 
 	public function render_image($output_file = null, $quality = 100)
 	{
-		$quality = floor(9 - (($quality / 100) * 9)); // calculate compression level
-		return imagepng($this->image, $output_file, $quality);
+		return imagejpeg($this->image, $output_file, $quality);
 	}
 }
 

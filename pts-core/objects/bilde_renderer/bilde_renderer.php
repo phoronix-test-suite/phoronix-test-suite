@@ -28,6 +28,8 @@ abstract class bilde_renderer
 	var $image_height = -1;
 	var $embed_identifiers = null;
 
+	public static $file_extension = "";
+
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
 	abstract function render_image($output_file = null, $quality = 100);
 	abstract function resize_image($width, $height);

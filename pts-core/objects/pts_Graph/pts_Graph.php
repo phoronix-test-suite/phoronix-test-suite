@@ -133,7 +133,14 @@ abstract class pts_Graph
 		}
 		else if($gd_available && getenv("SVG_DEBUG") == false)
 		{
-			$this->setRenderer("PNG");
+			if(getenv("JPG_DEBUG") !== false)
+			{
+				$this->setRenderer("JPG");
+			}
+			else
+			{
+				$this->setRenderer("PNG");
+			}
 		}
 		else
 		{
@@ -150,6 +157,10 @@ abstract class pts_Graph
 		else if($renderer == "SWF")
 		{
 			$this->graph_renderer = "SWF";
+		}
+		else if($renderer == "JPG")
+		{
+			$this->graph_renderer = "JPG";
 		}
 		else
 		{
@@ -391,6 +402,10 @@ abstract class pts_Graph
 		else if($this->graph_renderer == "SVG")
 		{
 			$this->graph_image = new bilde_svg_renderer($this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
+		}
+		else if($this->graph_renderer == "JPG")
+		{
+			$this->graph_image = new bilde_jpg_renderer($this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
 		}
 		else if($this->graph_renderer == "SWF")
 		{

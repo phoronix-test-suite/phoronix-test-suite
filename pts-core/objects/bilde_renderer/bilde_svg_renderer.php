@@ -23,6 +23,8 @@
 
 class bilde_svg_renderer extends bilde_renderer
 {
+	public static $file_extension = "svg";
+
 	public function __construct($width, $height, $embed_identifiers = null)
 	{
 		$this->image_width = $width;
