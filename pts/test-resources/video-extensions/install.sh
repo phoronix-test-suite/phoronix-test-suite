@@ -6,7 +6,7 @@ THIS_DIR=$(pwd)
 mkdir $THIS_DIR/mplayer_
 
 cd MPlayer-1.0rc2/
-./configure --enable-xv --enable-xvmc --prefix=$THIS_DIR/mplayer_ > /dev/null
+./configure --enable-xv --enable-xvmc --disable-ivtv --prefix=$THIS_DIR/mplayer_ > /dev/null
 make -j $NUM_CPU_JOBS
 make install
 cd ..
@@ -45,5 +45,5 @@ EOT
 
 echo "#!/bin/sh
 
-\$PHP_BIN mplayer-runner.php" > video-extensions
+\$PHP_BIN mplayer-runner.php > \$LOG_FILE 2>&1" > video-extensions
 chmod +x video-extensions
