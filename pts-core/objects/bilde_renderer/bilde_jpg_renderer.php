@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
 	Copyright (C) 2008, Michael Larabel
-	bilde_png_renderer: The PNG rendering implementation for bilde_renderer.
+	bilde_jpg_renderer: The JPEG rendering implementation for bilde_renderer.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

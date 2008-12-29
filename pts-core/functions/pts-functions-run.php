@@ -871,9 +871,14 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
 
-		echo $test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments, $test_extra_runtime_variables);
+		$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments, $test_extra_runtime_variables);
 
-		if(is_file($benchmark_log_file) && trim($test_results) == "")
+		if(strlen($test_results) < 10240)
+		{
+			echo $test_results;
+		}
+
+		if(is_file($benchmark_log_file) && trim($test_results) == "" && filesize($benchmark_log_file) < 10240)
 		{
 			echo file_get_contents($benchmark_log_file);
 		}
