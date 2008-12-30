@@ -75,6 +75,6 @@ EOT
 
 cat > compliance-sensors << 'EOT'
 #!/bin/sh
-php sensors-check
+php sensors-check > $LOG_FILE
 EOT
 chmod +x compliance-sensors

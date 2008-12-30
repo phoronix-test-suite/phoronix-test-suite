@@ -23,6 +23,7 @@ Phoronix Test Suite (Git)
 - pts: Add graphics-magick test profile for GraphicsMagick 1.3 image testing
 - pts: Add graphics-magick to multicore test suite due to its use of OpenMP
 - pts: Update lzma download link for compress-lzma test profile
+- pts: Adjust more test profiles from using $argv to $LOG_FILE
 - pts_Graph: Tweak formatting of basic graph attributes
 - bilde_renderer: Add and implement draw_polygon and draw_ellipse to drawing API
 - bilde_renderer: When setting the image quality level to use with the render_image() function, base it on a 100-point scale

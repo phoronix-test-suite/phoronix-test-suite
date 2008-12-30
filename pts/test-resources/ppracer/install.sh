@@ -77,5 +77,5 @@ tux_sphere_divisions = 15,
 };\" > pts-config.nut
 
 cd ppracer_/bin/
-./ppracer -c $THIS_DIR/pts-config.nut -a -f events/herring_run/snow_valley 2>&1" > ppracer
+./ppracer -c $THIS_DIR/pts-config.nut -a -f events/herring_run/snow_valley > \$LOG_FILE 2>&1" > ppracer
 chmod +x ppracer

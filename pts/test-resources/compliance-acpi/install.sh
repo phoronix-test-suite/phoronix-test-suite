@@ -60,6 +60,6 @@ EOT
 
 cat > compliance-acpi << 'EOT'
 #!/bin/sh
-php acpi-checks
+php acpi-checks > $LOG_FILE
 EOT
 chmod +x compliance-acpi

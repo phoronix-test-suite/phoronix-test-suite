@@ -10,16 +10,16 @@ echo "#!/bin/sh
 
 case \"\$1\" in
 \"TEST_L2READ\")
-	./bandwidth -l2read | grep \"L2 cache sequential read\"
+	./bandwidth -l2read | grep \"L2 cache sequential read\" > \$LOG_FILE
 	;;
 \"TEST_L2WRITE\")
-	./bandwidth -l2write | grep \"L2 cache sequential write\"
+	./bandwidth -l2write | grep \"L2 cache sequential write\" > \$LOG_FILE
 	;;
 \"TEST_READ\")
-	./bandwidth -read | grep \"Main memory sequential read\"
+	./bandwidth -read | grep \"Main memory sequential read\" > \$LOG_FILE
 	;;
 \"TEST_WRITE\")
-	./bandwidth -write | grep \"Main memory sequential write\"
+	./bandwidth -write | grep \"Main memory sequential write\" > \$LOG_FILE
 	;;
 esac
 " > memory-bandwidth
