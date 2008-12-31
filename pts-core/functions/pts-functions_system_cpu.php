@@ -24,34 +24,43 @@
 function hw_cpu_core_count()
 {
 	// Returns number of cores present on the system
-	$info = null;
+	static $core_count = 0;
 
-	if(IS_LINUX)
+	if($core_count == 0)
 	{
-		$processors = read_cpuinfo("processor");
-		$info = count($processors);
-	}
-	else if(IS_SOLARIS)
-	{
-		$info = trim(shell_exec("psrinfo"));
-		$info = explode("\n", $info);
-		$info = count($info);
-	}
-	else if(IS_BSD)
-	{
-		$info = read_sysctl("hw.ncpu");
-	}
-	else if(IS_MACOSX)
-	{
-		$info = read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
+		$info = 0;
+
+		if(IS_LINUX)
+		{
+			$processors = read_cpuinfo("processor");
+			$info = count($processors);
+		}
+		else if(IS_SOLARIS)
+		{
+			$info = trim(shell_exec("psrinfo"));
+			$info = explode("\n", $info);
+			$info = count($info);
+		}
+		else if(IS_BSD)
+		{
+			$info = read_sysctl("hw.ncpu");
+		}
+		else if(IS_MACOSX)
+		{
+			$info = read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
+		}
+
+		if(is_int($info) && $info > 0)
+		{
+			$core_count = $info;
+		}
+		else
+		{
+			$core_count = 1;
+		}
 	}
 
-	if(empty($info))
-	{
-		$info = 1;
-	}
-
-	return $info;
+	return $core_count;
 }
 function hw_cpu_job_count()
 {

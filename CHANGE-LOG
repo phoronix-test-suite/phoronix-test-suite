@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - pts-core: When installing or running a test, only print to standard output if under 10KB
 - pts-core: Rewrite pts_remove() function
 - pts-core: Allow reading CPU usage percent from individual cores
+- pts-core: Cache reading of hw_cpu_core_count() since that shouldn't change while pts-core is running
 - pts: Add UXA acceleration check to GtkPerf test note reporting
 - pts: Add 2d-test base profile that reports 2D acceleration mode using Cascading Test Profiles
 - pts: Add build-mysql test profile for timed build of MySQL 5.1

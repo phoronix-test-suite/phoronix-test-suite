@@ -123,6 +123,12 @@ class pts_module
 
 		return $file;		
 	}
+	public static function is_file($file)
+	{
+		$file = self::save_dir() . $file;
+
+		return is_file($file);
+	}
 	public static function remove_file($file)
 	{
 		$file = self::save_dir() . $file;
