@@ -324,7 +324,14 @@ abstract class pts_Graph
 
 		if(is_numeric($maximum))
 		{
-			$maximum = (floor(round($maximum * 1.35) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+			if($maximum <= 100 && $this->graph_y_title == "Percent")
+			{
+				$maximum = (ceil(100 / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+			}
+			else
+			{
+				$maximum = (floor(round($maximum * 1.35) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+			}
 		}
 
 		return $maximum;
