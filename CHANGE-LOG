@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add install-all-dependencies option to install all available external dependencies for that distribution
 - pts-core: When installing or running a test, only print to standard output if under 10KB
 - pts-core: Rewrite pts_remove() function
+- pts-core: Allow reading CPU usage percent from individual cores
 - pts: Add UXA acceleration check to GtkPerf test note reporting
 - pts: Add 2d-test base profile that reports 2D acceleration mode using Cascading Test Profiles
 - pts: Add build-mysql test profile for timed build of MySQL 5.1
@@ -211,7 +212,7 @@ November 8, 2008
 - pts: Add gcc-g++ to external dependencies support for Cent OS and Fedora (reported by pjwelsh)
 - pts: Report 2D EXA/XAA acceleration mode in the test notes when running gtkperf test
 
-Phoronix Test Suite 1.4.0
+Phoronix Test Suite 1.4.0 "Orkdal"
 November 3, 2008
 
 - pts-core: Improve RAM model/speed/type identification
@@ -498,7 +499,7 @@ September 12, 2008
 - pts: Have the fio test profile remove the dead iometer.1.0 file after testing
 - documentation: Fix typo in Debian APT sources file
 
-Phoronix Test Suite 1.2.0
+Phoronix Test Suite 1.2.0 "Malvik"
 September 3, 2008
 
 - pts-core: Fix for DEBUG_FILE not being detected
@@ -807,7 +808,7 @@ June 28, 2008
 - Add OpenSuSE External Dependencies support
 - Support PTS External Dependencies on non-LSB distributions
 
-Phoronix Test Suite 1.0.1
+Phoronix Test Suite 1.0.1 "Trondheim"
 June 19, 2008
 
 - Add encoding meta suite for all *-encoding suites

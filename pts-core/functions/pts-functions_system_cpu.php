@@ -302,11 +302,21 @@ function hw_cpu_current_frequency($cpu_core = 0)
 
 	return $info;
 }
-function hw_cpu_load_array()
+function hw_cpu_load_array($read_core = -1)
 {
 	// CPU load array
 	$stat = @file_get_contents("/proc/stat");
-	$stat = substr($stat, 0, strpos($stat, "\n"));
+
+	if($read_core > -1 && ($l = strpos($stat, "cpu" . $read_core)) !== false)
+	{
+		$start_line = $l;
+	}
+	else
+	{
+		$start_line = 0;
+	}
+
+	$stat = substr($stat, $start_line, strpos($stat, "\n"));
 	$stat_break = explode(" ", $stat);
 
 	$load = array();
@@ -317,12 +327,12 @@ function hw_cpu_load_array()
 
 	return $load;
 }
-function hw_cpu_usage()
+function hw_cpu_usage($core = -1)
 {
 	// Determine current percentage for processor usage
-	$start_load = hw_cpu_load_array();
+	$start_load = hw_cpu_load_array($core);
 	sleep(1);
-	$end_load = hw_cpu_load_array();
+	$end_load = hw_cpu_load_array($core);
 	
 	for($i = 0; $i < count($end_load); $i++)
 	{
