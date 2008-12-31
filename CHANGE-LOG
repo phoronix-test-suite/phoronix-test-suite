@@ -33,6 +33,7 @@ Phoronix Test Suite (Git)
 - bilde_renderer: Add experimental Adobe Flash / SWF renderer
 - bilde_renderer: Add a generic abstract GD library renderer and then have bilde_png_renderer extend that
 - bilde_renderer: Add a JPEG renderer using the GD library
+- system_monitor: When monitoring CPU usage, monitor the usage on each individual core (and still overall too)
 
 Phoronix Test Suite 1.6.0 Beta 1
 December 18, 2008

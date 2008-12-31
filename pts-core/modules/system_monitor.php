@@ -123,6 +123,14 @@ class system_monitor extends pts_module_interface
 		{
 			pts_set_assignment("MONITOR_CPU_USAGE", 1);
 			pts_module::save_file(".s/CPU_USAGE");
+
+			if(($cpu_count = hw_cpu_core_count()) > 1)
+			{
+				for($i = 0; $i < $cpu_count; $i++)
+				{
+					pts_module::save_file(".s/CPU_USAGE_" . $i);
+				}
+			}
 		}
 		if(in_array("system.memory", $to_show) || $monitor_memory)
 		{
@@ -330,6 +338,20 @@ class system_monitor extends pts_module_interface
 				array_push($unit, "Percent");
 				array_push($m_array, $this_array);
 				array_push($type_index["USAGE"], count($m_array) - 1);
+			}
+
+			for($i = 0; $i < hw_cpu_core_count() && pts_module::is_file(".s/CPU_USAGE_" . $i); $i++)
+			{
+				$this_array = self::parse_monitor_log(".s/CPU_USAGE_" . $i);
+
+				if(is_array($this_array) && !empty($this_array[0]))
+				{
+					array_push($device, "CPU " . ($i + 1));
+					array_push($type, "Usage");
+					array_push($unit, "Percent");
+					array_push($m_array, $this_array);
+					array_push($type_index["USAGE"], count($m_array) - 1);
+				}
 			}
 		}
 		if(pts_is_assignment("MONITOR_SYS_MEMORY"))
@@ -585,6 +607,14 @@ class system_monitor extends pts_module_interface
 
 			if($usage != -1)
 				pts_module::save_file(".s/CPU_USAGE", $usage, true);
+
+			for($i = 0; $i < hw_cpu_core_count() && pts_module::is_file(".s/CPU_USAGE_" . $i); $i++)
+			{
+				$usage = hw_cpu_usage($i);
+
+				if($usage != -1)
+					pts_module::save_file(".s/CPU_USAGE_" . $i, $usage, true);
+			}
 		}
 		if(pts_is_assignment("MONITOR_SYS_MEMORY"))
 		{
