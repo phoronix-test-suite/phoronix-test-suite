@@ -310,7 +310,7 @@ abstract class pts_Graph
 	}
 	protected function maximum_graph_value()
 	{
-		$maximum = $this->graph_attr_marks;
+		$maximum = 0;
 
 		foreach($this->graph_data as $graph_set)
 		{
@@ -328,6 +328,10 @@ abstract class pts_Graph
 			if($maximum <= 100 && $this->graph_y_title == "Percent")
 			{
 				$maximum = (ceil(100 / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+			}
+			else if($maximum < $this->graph_attr_marks)
+			{
+				$maximum = $maximum * 1.35;
 			}
 			else
 			{
