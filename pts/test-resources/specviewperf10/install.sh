@@ -13,12 +13,10 @@ echo "#!/bin/sh
 
 cd SPECViewperf10/viewperf/viewperf10.0/
 
-echo \"screenHeight  \$VIDEO_HEIGHT
-screenWidth  \$VIDEO_WIDTH
-threads \$NUM_CPU_CORES
-\" > viewperf.config
+echo \"screenHeight  \$2
+screenWidth  \$1\" > viewperf.config
 
-case \"\$1\" in
+case \"\$3\" in
 \"3dsmax\")
 	./Run_3dsmax.csh > /dev/null 2>&1
 	cat results/3dsmax-04/*result.txt > \$LOG_FILE

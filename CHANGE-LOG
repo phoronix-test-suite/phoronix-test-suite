@@ -26,6 +26,7 @@ Phoronix Test Suite (Git)
 - pts: Add graphics-magick to multicore test suite due to its use of OpenMP
 - pts: Update lzma download link for compress-lzma test profile
 - pts: Adjust more test profiles from using $argv to $LOG_FILE
+- pts: Update and fix specviewperf10 test profile
 - pts_Graph: Tweak formatting of basic graph attributes
 - pts_Graph: When rendering a graph on a percent basis, format scale for 100-point basis
 - pts_Graph: Add more stock colors to painter
