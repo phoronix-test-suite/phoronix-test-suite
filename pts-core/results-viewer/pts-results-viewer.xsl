@@ -88,7 +88,7 @@
 			</div>
 		</div>
 		<div id="pts_header_bottom">
-			<div id="pts_header_bottom_center">The <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a> is developed by <a href="http://www.phoronix.com/">Phoronix</a>, an Internet resource devoted to Linux hardware reviews, video driver articles, and much more.<br />Copyright &#xA9; 2008 by Phoronix Media.</div>
+			<div id="pts_header_bottom_center">The <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a> is developed by <a href="http://www.phoronix.com/">Phoronix</a>, an Internet resource devoted to Linux hardware reviews, video driver articles, and much more.<br />Copyright &#xA9; 2008 - 2009 by Phoronix Media.</div>
 		</div>
 
 	</body>
