@@ -1199,6 +1199,18 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 			}
 			$option_names = $option_values;
 			break;
+		case "auto-removable-media":
+			$removable_media = glob("/media/*/");
+
+			for($i = 0; $i < count($removable_media); $i++)
+			{
+				if(is_dir($removable_media[$i])) // add more checks later on
+				{
+					array_push($option_names, $removable_media[$i]);
+					array_push($option_values, $removable_media[$i]);
+				}
+			}
+			break;
 		case "auto-file-select":
 			$names = $option_names;
 			$values = $option_values;
