@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 1.6.0 Beta 2
+January 2, 2009
 
 - pts-core: Improve size detection of low-capacity hard disks
 - pts-core: Improve lspci support for distributions using /sbin/lspci (such as OpenSuSE)

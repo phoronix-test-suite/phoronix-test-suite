@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts.php: Version information for the Phoronix Test Suite.
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "1.6.0b1");
+define("PTS_VERSION", "1.6.0b2");
 define("PTS_CODENAME", "TYDAL");
 define("PTS_TYPE", "DESKTOP");
 
