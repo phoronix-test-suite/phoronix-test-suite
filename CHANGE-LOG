@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add FORCE_TIMES_TO_RUN environmental variable for forcing the number of times to run a test
+
 Phoronix Test Suite 1.6.0 Beta 2
 January 2, 2009
 

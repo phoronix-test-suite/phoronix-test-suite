@@ -794,6 +794,13 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	{
 		$times_to_run = 3;
 	}
+	if(($force_runs = getenv("FORCE_TIMES_TO_RUN")) != false)
+	{
+		if($force_runs > $times_to_run)
+		{
+			$times_to_run = $force_runs;
+		}
+	}
 
 	if(!empty($test_type))
 	{
