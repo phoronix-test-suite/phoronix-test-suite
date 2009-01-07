@@ -70,7 +70,7 @@ cp -r pts-core/ $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 sed 's:PTS_DIR=`pwd`:PTS_DIR='"$INSTALL_PREFIX"'\/share\/phoronix-test-suite:g' phoronix-test-suite > $DESTDIR$INSTALL_PREFIX/bin/phoronix-test-suite
 chmod +x $DESTDIR$INSTALL_PREFIX/bin/phoronix-test-suite
 
-echo "\nPhoronix Test Suite Installation Completed\n
+echo -e "\nPhoronix Test Suite Installation Completed\n
 Executable File: $INSTALL_PREFIX/bin/phoronix-test-suite
 Documentation: $INSTALL_PREFIX/share/doc/phoronix-test-suite/
 Phoronix Test Suite Files: $INSTALL_PREFIX/share/phoronix-test-suite/\n"
