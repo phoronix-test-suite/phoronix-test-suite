@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add FORCE_TIMES_TO_RUN environmental variable for forcing the number of times to run a test
 - pts: Add smokin-guns test profile for Quake 3 Smokin' Guns game
+- pts: Minor update to iozone test profile
 - install-sh: Add $DESTDIR support to make packaging easier
 
 Phoronix Test Suite 1.6.0 Beta 2

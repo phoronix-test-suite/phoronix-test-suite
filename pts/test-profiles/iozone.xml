@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.3.0</Version>
+		<Version>1.3.1</Version>
 		<TestType>Disk</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -27,22 +27,23 @@
 			<DisplayName>Size</DisplayName>
 			<Identifier>size</Identifier>
 			<ArgumentPrefix>-s </ArgumentPrefix>
+			<ArgumentPostfix>M</ArgumentPostfix>
 			<Menu>
 				<Entry>
 					<Name>512MB</Name>
-					<Value>512M</Value>
+					<Value>512</Value>
 				</Entry>
 				<Entry>
 					<Name>2GB</Name>
-					<Value>2048M</Value>
+					<Value>2048</Value>
 				</Entry>
 				<Entry>
 					<Name>4GB</Name>
-					<Value>4096M</Value>
+					<Value>4096</Value>
 				</Entry>
 				<Entry>
 					<Name>8GB</Name>
-					<Value>8192M</Value>
+					<Value>8192</Value>
 				</Entry>
 			</Menu>
 		</Option>
