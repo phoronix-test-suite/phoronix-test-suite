@@ -72,11 +72,6 @@ class result_file_to_pdf implements pts_option_interface
 		$placement = 1;
 		for($i = 1; $i <= count($tests); $i++)
 		{
-		/*	$pdf->SetFont("Arial", "B", 18);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->Ln(30 + (($i - 1) * 100));
-			$pdf->Cell(0, 0, $tests[$i], 0, 0, "L", true); */
-
 			if(is_file(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/" . $i . ".jpg"))
 			{
 				$pdf->Ln(100);
@@ -94,7 +89,6 @@ class result_file_to_pdf implements pts_option_interface
 			}
 			$placement++;
 		}
-
 
 		$pdf->Output($r[0] . ".pdf");
 		echo "\nSaved To: " . $r[0] . ".pdf\n\n";

@@ -52,8 +52,8 @@ if [ "X$PHP_BIN" = "X" ]
 then
 	cat <<'EOT'
 
-PHP5 CLI Must Be Installed To Run The Phoronix Test Suite.
-Only PHP For The Command Line Is Needed, Not A Complete PHP w/ Web Server Installation
+PHP 5.x CLI Must Be Installed To Run The Phoronix Test Suite.
+Only PHP For The Command Line Is Needed, Not A Complete PHP Web Server Installation
 The PHP CLI package is usually called php-cli or php5-cli. Also recommended is the PHP GD library (php-gd)
 For support visit: http://www.phoronix-test-suite.com/
 

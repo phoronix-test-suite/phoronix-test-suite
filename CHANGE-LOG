@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Miscellaneous fixes
 - pts: Add smokin-guns test profile for Quake 3 Smokin' Guns game
 - pts: Minor update to iozone test profile
+- pts: Update tcsh external dependency for Fedora
 - install-sh: Add $DESTDIR support to make packaging easier
 
 Phoronix Test Suite 1.6.0 Beta 2
