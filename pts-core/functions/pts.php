@@ -25,4 +25,16 @@ define("PTS_VERSION", "1.6.0b2");
 define("PTS_CODENAME", "TYDAL");
 define("PTS_TYPE", "DESKTOP");
 
+function pts_codename($full_string = false)
+{
+	$codename = PTS_CODENAME;
+
+	if($full_string)
+	{
+		$codename = "PhoronixTestSuite/" . ucwords(strtolower($codename));
+	}
+
+	return $codename;
+}
+
 ?>

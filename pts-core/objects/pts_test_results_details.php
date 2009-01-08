@@ -31,7 +31,7 @@ class pts_test_results_details
 	{
 		$this->saved_identifier = array_pop(explode("/", dirname($saved_results_file)));
 
-		$xml_parser = new tandem_XmlReader($saved_results_file);
+		$xml_parser = new pts_results_tandem_XmlReader($saved_results_file);
 		$this->title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 		$this->suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
 

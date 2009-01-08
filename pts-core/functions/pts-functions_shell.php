@@ -52,7 +52,7 @@ function pts_download($download, $to)
 	$to_file = basename($to);
 	$to_dir = dirname($to);
 	$download_output = "";
-	$user_agent = "PhoronixTestSuite/" . PTS_CODENAME;
+	$user_agent = pts_codename(true);
 
 	if(strpos($to_file, ".") === false)
 	{
