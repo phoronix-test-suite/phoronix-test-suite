@@ -13,7 +13,7 @@
 		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>virtual/glut</PackageName>
-			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
+			<FileCheck>/usr/lib/libglut.so.3 OR /usr/lib64/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
@@ -78,7 +78,7 @@
 		<Package>
 			<GenericName>freeimage</GenericName>
 			<PackageName>media-libs/freeimage</PackageName>
-			<FileCheck>/usr/lib/libfreeimage.so.3</FileCheck>
+			<FileCheck>/usr/lib/libfreeimage.so.3 OR /usr/lib64/libfreeimage.so.3</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>scons</GenericName>
@@ -113,12 +113,12 @@
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
 			<PackageName>=virtual/libstdc++-3.3</PackageName>
-			<FileCheck>/usr/lib/libstdc++.so.5 OR /usr/lib/libstdc++-v3/libstdc++.so.5</FileCheck>
+			<FileCheck>/usr/lib/libstdc++.so.5 OR /usr/lib/libstdc++-v3/libstdc++.so.5 OR /usr/lib64/libstdc++-v3/libstdc++.so.5</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
 			<PackageName>media-libs/openal</PackageName>
-			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
+			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0 OR /usr/lib/libopenal.so.1 OR /usr/lib64/libopenal.so.1</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
@@ -132,8 +132,8 @@
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>
-			<PackageName>>=x11-libs/qt-4</PackageName>
-			<FileCheck>/usr/lib/qt4/bin/qmake</FileCheck>
+			<PackageName>>=x11-libs/qt-core-4.4.2</PackageName>
+			<FileCheck>/usr/bin/qmake</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
