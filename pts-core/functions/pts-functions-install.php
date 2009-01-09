@@ -77,7 +77,6 @@ function pts_start_install($to_install)
 			echo pts_string_header($install_count . " Tests To Be Installed" . 
 			"\nEstimated Download Size: " . pts_estimated_download_size($will_be_installed) . " MB" .
 			"\nEstimated Install Size: " . pts_test_estimated_environment_size($will_be_installed) . " MB");
-			exit;
 		}
 	}
 	foreach($tests as $test)
