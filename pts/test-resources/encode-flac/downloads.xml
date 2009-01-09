@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://internap.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz, http://superb-east.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz, http://superb-west.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz</URL>
+			<URL>http://heanet.dl.sourceforge.net/sourceforge/sourceforge/flac/flac-1.2.1.tar.gz, http://jaist.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz, http://keihanna.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz</URL>
 			<MD5>153c8b15a54da428d1f0fadc756c22c7</MD5>
 			<FileSize>2009217</FileSize>
 		</Package>

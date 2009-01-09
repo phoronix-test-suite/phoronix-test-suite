@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://internap.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.58_src_all.tar.bz2, http://voxel.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.58_src_all.tar.bz2, http://ovh.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.58_src_all.tar.bz2</URL>
+			<URL>http://ovh.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.58_src_all.tar.bz2, http://surfnet.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.58_src_all.tar.bz2, http://switch.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.58_src_all.tar.bz2</URL>
 			<MD5>315b184102c17c4956f53218d973222d</MD5>
 			<FileSize>1948207</FileSize>
 		</Package>

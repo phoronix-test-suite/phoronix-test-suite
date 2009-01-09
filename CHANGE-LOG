@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts: Minor update to iozone test profile
 - pts: Update tcsh external dependency for Fedora (from ndim)
 - pts: Remove x bit from a few php scripts without #! (from ndim)
+- pts: Update download locations for several tests
 - install-sh: Add $DESTDIR support to make packaging easier
 
 Phoronix Test Suite 1.6.0 Beta 2

@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://internap.dl.sourceforge.net/sourceforge/bork/bork-1.4.zip, http://voxel.dl.sourceforge.net/sourceforge/bork/bork-1.4.zip, http://puzzle.dl.sourceforge.net/sourceforge/bork/bork-1.4.zip, http://surfnet.dl.sourceforge.net/sourceforge/bork/bork-1.4.zip</URL>
+			<URL>http://ufpr.dl.sourceforge.net/sourceforge/bork/bork-1.4.zip, http://osdn.dl.sourceforge.net/sourceforge/bork/bork-1.4.zip, http://easynews.dl.sourceforge.net/sourceforgebork/bork-1.4.zip</URL>
 			<MD5>8bbef446b89084142108888423310c72</MD5>
 			<FileSize>743599</FileSize>
 		</Package>

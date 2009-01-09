@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.speltips.org/~web1_mans/files/warsow_0.42_unified.zip, http://gedankenschlag.de/mirror/warsow_0.42_unified.zip, http://data.rodix.free.fr/warsow/files/warsow_0.42_unified.zip, http://mirror.nation64.de/warsow/warsow_0.42_unified.zip</URL>
+			<URL>http://data.rodix.free.fr/warsow/files/warsow_0.42_unified.zip, http://mirror.nation64.de/warsow/warsow_0.42_unified.zip, http://wahs.de/warsow/warsow_0.42_unified.zip, http://wahs.de/warsow/warsow_0.42_unified.zip</URL>
 			<MD5>cba5fe9b8af01b378e685959098fa84f</MD5>
 			<FileSize>193348129</FileSize>
 		</Package>

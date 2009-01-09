@@ -6,7 +6,7 @@
 			<FileSize>250250</FileSize>
 		</Package>
 		<Package>
-			<URL>http://master.dl.sourceforge.net/sourceforge/espeak/espeak-1.39-source.zip, http://voxel.dl.sourceforge.net/sourceforge/espeak/espeak-1.39-source.zip, http://internap.dl.sourceforge.net/sourceforge/espeak/espeak-1.39-source.zip</URL>
+			<URL>http://osdn.dl.sourceforge.net/sourceforge/espeak/espeak-1.39-source.zip, http://easynews.dl.sourceforge.net/sourceforge/espeak/espeak-1.39-source.zip, http://heanet.dl.sourceforge.net/sourceforge/espeak/espeak-1.39-source.zip</URL>
 			<MD5>7cda8008ebb4d8f1311de4b5a544261e</MD5>
 			<FileSize>1322962</FileSize>
 		</Package>
