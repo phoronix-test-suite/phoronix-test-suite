@@ -463,7 +463,7 @@ function pts_test_estimated_run_time($identifier)
 	// Estimate the time it takes (in seconds) to complete the given test
 	$estimated_length = 0;
 
-	foreach(pts_contained_tests($identifier, true) as $test)
+	foreach(pts_contained_tests($identifier) as $test)
 	{
 		if(pts_test_installed($test))
 		{
@@ -476,7 +476,8 @@ function pts_test_estimated_run_time($identifier)
 			}
 			else
 			{
-				return -1;
+				// TODO: Likely integrate with P_TEST_ESTIMATEDTIME from test profile
+				return -1; // TODO: no accurate calculation not available
 			}
 		}
 	}

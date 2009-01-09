@@ -130,12 +130,16 @@ function pts_string_header($heading, $char = '=')
 
 	return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";
 }
-function pts_format_time_string($time, $format = "SECONDS", $standard_version = true)
+function pts_format_time_string($time, $format = "SECONDS", $standard_version = true, $round_to = 0)
 {
 	// Format an elapsed time string
 	if($format == "MINUTES")
 	{
 		$time *= 60;
+	}
+	if($round_to > 0)
+	{
+		$time += $time % $round_to;
 	}
 
 	$formatted_time = array();

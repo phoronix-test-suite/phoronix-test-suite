@@ -445,7 +445,7 @@ class run_test implements pts_option_interface
 
 			if($estimated_length > 1)
 			{
-				echo pts_string_header("Estimated Run-Time: " . pts_format_time_string($estimated_length, "SECONDS") . "");
+				echo pts_string_header("Estimated Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60));
 			}
 		}
 
