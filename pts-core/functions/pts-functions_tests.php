@@ -241,7 +241,7 @@ function pts_get_results_viewer_xsl_formatted($format_type = "PNG", $width, $hei
 function pts_test_needs_updated_install($identifier)
 {
 	// Checks if test needs updating
-	return !pts_test_installed($identifier)  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != pts_system_identifier_string();
+	return !pts_test_installed($identifier)  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != pts_system_identifier_string() || pts_is_assignment("PTS_FORCE_INSTALL");
 }
 function pts_test_checksum_installer($identifier)
 {
@@ -447,7 +447,7 @@ function pts_test_estimated_environment_size($identifier)
 
 	foreach(pts_contained_tests($identifier, true) as $test)
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
+	 	$xml_parser = new pts_test_tandem_XmlReader($test);
 		$this_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
 
 		if(!empty($this_size) && is_numeric($this_size))

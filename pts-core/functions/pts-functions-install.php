@@ -60,6 +60,26 @@ function pts_start_install($to_install)
 	}
 
 	pts_module_process("__pre_install_process", $tests);
+	if(count($tests) > 1)
+	{
+		$will_be_installed = array();
+
+		foreach($tests as $test)
+		{
+			if(pts_test_needs_updated_install($test))
+			{
+				array_push($will_be_installed, $test);
+			}
+		}
+
+		if(($install_count = count($will_be_installed)) > 1)
+		{
+			echo pts_string_header($install_count . " Tests To Be Installed" . 
+			"\nEstimated Download Size: " . pts_estimated_download_size($will_be_installed) . " MB" .
+			"\nEstimated Install Size: " . pts_test_estimated_environment_size($will_be_installed) . " MB");
+			exit;
+		}
+	}
 	foreach($tests as $test)
 	{
 		pts_install_test($test);
@@ -376,7 +396,7 @@ function pts_install_test($identifier)
 		}
 		else
 		{
-			if(pts_test_needs_updated_install($identifier) || pts_is_assignment("PTS_FORCE_INSTALL"))
+			if(pts_test_needs_updated_install($identifier))
 			{
 				if(!pts_is_assignment("PTS_TOTAL_SIZE_MSG"))
 				{

@@ -287,84 +287,92 @@ function pts_test_extends_below($object)
 
 	return array_reverse($extensions);
 }
-function pts_contained_tests($object, $include_extensions = false)
+function pts_contained_tests($objects, $include_extensions = false)
 {
 	// Provide an array containing the location(s) of all test(s) for the supplied object name
 	$tests = array();
 
-	if(pts_is_suite($object)) // Object is suite
+	if(!is_array($objects))
 	{
-		$xml_parser = new pts_suite_tandem_XmlReader($object);
-		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
-
-		foreach($tests_in_suite as $test)
-		{
-			foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
-			{
-				array_push($tests, $sub_test);
-			}
-		}
+		$objects = array($objects);
 	}
-	else if(pts_is_test($object)) // Object is a test
+
+	foreach($objects as $object)
 	{
-		if($include_extensions)
+		if(pts_is_suite($object)) // Object is suite
 		{
-			foreach(pts_test_extends_below($object) as $extension)
+			$xml_parser = new pts_suite_tandem_XmlReader($object);
+			$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+
+			foreach($tests_in_suite as $test)
 			{
-				if(!in_array($extension, $tests))
+				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
 				{
-					array_push($tests, $extension);
+					array_push($tests, $sub_test);
 				}
 			}
 		}
-		array_push($tests, $object);
-	}
-	else if(is_file(($file_path = pts_input_correct_results_path($object)))) // Object is a local file
-	{
-		$xml_parser = new tandem_XmlReader($file_path);
-		$tests_in_file = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-		foreach($tests_in_file as $test)
+		else if(pts_is_test($object)) // Object is a test
 		{
-			foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+			if($include_extensions)
 			{
-				array_push($tests, $sub_test);
+				foreach(pts_test_extends_below($object) as $extension)
+				{
+					if(!in_array($extension, $tests))
+					{
+						array_push($tests, $extension);
+					}
+				}
+			}
+			array_push($tests, $object);
+		}
+		else if(is_file(($file_path = pts_input_correct_results_path($object)))) // Object is a local file
+		{
+			$xml_parser = new tandem_XmlReader($file_path);
+			$tests_in_file = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+
+			foreach($tests_in_file as $test)
+			{
+				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+				{
+					array_push($tests, $sub_test);
+				}
 			}
 		}
-	}
-	else if(is_file(SAVE_RESULTS_DIR . $object . "/composite.xml")) // Object is a saved results file
-	{
-		$xml_parser = new pts_results_tandem_XmlReader($object);
-		$tests_in_save = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-		foreach($tests_in_save as $test)
+		else if(is_file(SAVE_RESULTS_DIR . $object . "/composite.xml")) // Object is a saved results file
 		{
-			foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+			$xml_parser = new pts_results_tandem_XmlReader($object);
+			$tests_in_save = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+
+			foreach($tests_in_save as $test)
 			{
-				array_push($tests, $sub_test);
+				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+				{
+					array_push($tests, $sub_test);
+				}
 			}
 		}
-	}
-	else if(pts_is_global_id($object)) // Object is a Phoronix Global file
-	{
-		$xml_parser = new tandem_XmlReader(pts_global_download_xml($object));
-		$tests_in_global = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-		foreach($tests_in_global as $test)
+		else if(pts_is_global_id($object)) // Object is a Phoronix Global file
 		{
-			foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+			$xml_parser = new tandem_XmlReader(pts_global_download_xml($object));
+			$tests_in_global = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+
+			foreach($tests_in_global as $test)
 			{
-				array_push($tests, $sub_test);
+				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+				{
+					array_push($tests, $sub_test);
+				}
 			}
 		}
-	}
-	/* else if(pts_is_virtual_suite($object))
-	{
-		foreach(pts_virtual_suite_tests($object) as $virt_test)
+		/* else if(pts_is_virtual_suite($object))
 		{
-			array_push($tests, $virt_test);
-		}
-	} */
+			foreach(pts_virtual_suite_tests($object) as $virt_test)
+			{
+				array_push($tests, $virt_test);
+			}
+		} */
+	}
 
 	return array_unique($tests);
 }
