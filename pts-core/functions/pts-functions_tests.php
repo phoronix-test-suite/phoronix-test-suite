@@ -458,6 +458,31 @@ function pts_test_estimated_environment_size($identifier)
 
 	return $estimated_size;
 }
+function pts_test_estimated_run_time($identifier)
+{
+	// Estimate the time it takes (in seconds) to complete the given test
+	$estimated_length = 0;
+
+	foreach(pts_contained_tests($identifier, true) as $test)
+	{
+		if(pts_test_installed($test))
+		{
+		 	$xml_parser = new pts_installed_test_tandem_XmlReader($test);
+			$this_length = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
+
+			if(is_numeric($this_length) && $this_length > 0)
+			{
+				$estimated_length += $this_length;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+	}
+
+	return $estimated_length;
+}
 function pts_test_architecture_supported($identifier)
 {
 	// Check if the system's architecture is supported by a test

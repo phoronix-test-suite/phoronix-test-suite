@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add FORCE_TIMES_TO_RUN environmental variable for forcing the number of times to run a test
 - pts-core: Add result-file-to-pdf option that will read a results file and save a copy of it as an Adobe PDF file
 - pts-core: When installing multiple tests/suites, report the total install size and download size
+- pts-core: When running multiple tests/suites, report the estimated run length
 - pts-core: Miscellaneous fixes
 - pts: Add smokin-guns test profile for Quake 3 Smokin' Guns game
 - pts: Minor update to iozone test profile
