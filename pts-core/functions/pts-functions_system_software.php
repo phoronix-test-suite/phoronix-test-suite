@@ -170,13 +170,15 @@ function sw_os_architecture()
 	// Find out the kernel archiecture
 	$kernel_arch = trim(shell_exec("uname -m 2>&1"));
 
-	if($kernel_arch == "X86-64")
+
+	switch($kernel_arch)
 	{
-		$kernel_arch = "x86_64";
-	}
-	else if($kernel_arch == "i86pc")
-	{
-		$kernel_arch = "i686";
+		case "X86-64":
+			$kernel_arch = "x86_64";
+			break;
+		case "i86pc":
+			$kernel_arch = "i686";
+			break;
 	}
 
 	return $kernel_arch;
