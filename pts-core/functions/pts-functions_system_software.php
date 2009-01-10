@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-functions_system_software.php: System-level level functions
 
 	This program is free software; you can redistribute it and/or modify
@@ -105,6 +105,33 @@ function sw_os_filesystem()
 	else
 	{
 		$fs = trim(shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null"));
+
+		if(is_file("/etc/fstab") && is_readable("/etc/fstab"))
+		{
+			$fstab = file_get_contents("/etc/fstab");
+
+			switch($fs)
+			{
+				case "ext2/ext3":
+					$using_ext2 = strpos($fstab, "ext2") !== false;
+					$using_ext3 = strpos($fstab, "ext3") !== false;
+					$using_ext4 = strpos($fstab, "ext4") !== false;
+
+					if(!$using_ext2 && !$using_ext3 && $using_ext4)
+					{
+						$fs = "ext4";
+					}
+					else if(!$using_ext2 && !$using_ext4 && $using_ext3)
+					{
+						$fs = "ext3";
+					}
+					else if(!$using_ext3 && !$using_ext4 && $using_ext2)
+					{
+						$fs = "ext2";
+					}
+					break;
+			}
+		}
 	}
 
 	if(empty($fs) || IS_BSD)

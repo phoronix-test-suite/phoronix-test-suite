@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add result-file-to-pdf option that will read a results file and save a copy of it as an Adobe PDF file
 - pts-core: When installing multiple tests/suites, report the total install size and download size
 - pts-core: When running multiple tests/suites, report the estimated run length
+- pts-core: Improve detection of EXT2, EXT3, and EXT4 file-systems on Linux instead of just reporting "ext2/ext3"
 - pts-core: Miscellaneous fixes
 - pts: Add smokin-guns test profile for Quake 3 Smokin' Guns game
 - pts: Minor update to iozone test profile
