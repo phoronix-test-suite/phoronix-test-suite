@@ -104,7 +104,7 @@ function sw_os_filesystem()
 	}
 	else
 	{
-		$fs = shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null");
+		$fs = trim(shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null"));
 	}
 
 	if(empty($fs) || IS_BSD)

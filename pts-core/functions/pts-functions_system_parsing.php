@@ -738,7 +738,9 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore =
 	if(is_readable("/dev/mem"))
 	{
 		if(!is_array($ignore))
+		{
 			$ignore = array($ignore);
+		}
 
 		$dmidecode = shell_exec("dmidecode --type " . $type . " 2>&1");
 		$sub_type = "\n" . $sub_type . "\n";

@@ -427,7 +427,7 @@ function hw_sys_memory_capacity()
 	}
 	else if(IS_SOLARIS)
 	{
-		$info = shell_exec("prtconf | grep Memory");
+		$info = shell_exec("prtconf 2>&1 | grep Memory");
 		$info = substr($info, strpos($info, ":") + 2);
 		$info = substr($info, 0, strpos($info, "Megabytes"));
 	}
