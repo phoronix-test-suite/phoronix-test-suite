@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Battery monitor reading support through hw_sys_power_consumption_rate()
 - pts-core: Stabilize memory / SWAP reading API
 - pts-core: Miscellaneous fixes
+- pts-core: Copy ~/.Xauthority file to installed test directory upon installation
 - pts: Add smokin-guns test profile for Quake 3 Smokin' Guns game
 - pts: Minor update to iozone test profile
 - pts: Update tcsh external dependency for Fedora (from ndim)
