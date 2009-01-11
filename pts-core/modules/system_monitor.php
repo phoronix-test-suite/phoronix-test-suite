@@ -540,17 +540,10 @@ class system_monitor extends pts_module_interface
 		}
 		if(pts_is_assignment("MONITOR_BATTERY_POWER"))
 		{
-			$state = read_acpi(array("/battery/BAT0/state", "/battery/BAT1/state"), "charging state");
-			$power = read_acpi(array("/battery/BAT0/state", "/battery/BAT1/state"), "present rate");
+			$rate = hw_sys_power_consumption_rate();
 
-			if($state == "discharging")
-			{
-				if(($end = strpos($power, ' ')) > 0)
-					$power = substr($power, 0, $end);
-
-				if(!empty($power))
-					pts_module::save_file(".s/BATTERY_POWER", $power, true);
-			}
+			if($rate != -1)
+				pts_module::save_file(".s/BATTERY_POWER", $rate, true);
 		}
 		if(pts_is_assignment("MONITOR_CPU_VOLTAGE"))
 		{
