@@ -611,21 +611,21 @@ class system_monitor extends pts_module_interface
 		}
 		if(pts_is_assignment("MONITOR_SYS_MEMORY"))
 		{
-			$usage = read_physical_memory_usage();
+			$usage = sw_physical_memory_usage();
 
 			if($usage != -1)
 				pts_module::save_file(".s/SYS_MEMORY", $usage, true);
 		}
 		if(pts_is_assignment("MONITOR_SWAP_MEMORY"))
 		{
-			$usage = read_swap_usage();
+			$usage = sw_swap_memory_usage();
 
 			if($usage != -1)
 				pts_module::save_file(".s/SWAP_MEMORY", $usage, true);
 		}
 		if(pts_is_assignment("MONITOR_TOTAL_MEMORY"))
 		{
-			$usage = read_total_memory_usage();
+			$usage = sw_total_memory_usage();
 
 			if($usage != -1)
 				pts_module::save_file(".s/TOTAL_MEMORY", $usage, true);

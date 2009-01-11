@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: When running multiple tests/suites, report the estimated run length
 - pts-core: Improve detection of EXT2, EXT3, and EXT4 file-systems on Linux instead of just reporting "ext2/ext3"
 - pts-core: Battery monitor reading support through hw_sys_power_consumption_rate()
+- pts-core: Stabilize memory / SWAP reading API
 - pts-core: Miscellaneous fixes
 - pts: Add smokin-guns test profile for Quake 3 Smokin' Guns game
 - pts: Minor update to iozone test profile

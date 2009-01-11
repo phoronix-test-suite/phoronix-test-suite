@@ -473,5 +473,20 @@ function sw_os_username()
 
 	return $username;
 }
+function sw_physical_memory_usage()
+{
+	// Amount of physical memory being used
+	return read_system_memory_usage("MEMORY");
+}
+function sw_total_memory_usage()
+{
+	// Amount of total (physical + SWAP) memory being used
+	return read_system_memory_usage("TOTAL");
+}
+function sw_swap_memory_usage()
+{
+	// Amount of SWAP memory being used
+	return read_system_memory_usage("SWAP");
+}
 
 ?>
