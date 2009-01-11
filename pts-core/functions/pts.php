@@ -27,11 +27,11 @@ define("PTS_TYPE", "DESKTOP");
 
 function pts_codename($full_string = false)
 {
-	$codename = PTS_CODENAME;
+	$codename = ucwords(strtolower(PTS_CODENAME));
 
 	if($full_string)
 	{
-		$codename = "PhoronixTestSuite/" . ucwords(strtolower($codename));
+		$codename = "PhoronixTestSuite/" . $codename;
 	}
 
 	return $codename;

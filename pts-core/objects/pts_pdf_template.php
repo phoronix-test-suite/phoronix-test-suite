@@ -54,9 +54,10 @@ class pts_pdf_template extends FPDF
 	}
 	function Footer()
 	{
-		$this->SetY(-15);
-		$this->SetFont("Arial", "B", 9);
-		$this->Cell(0, 10, "http://www.phoronix-test-suite.com/", 0, 0, "C");
+		$this->SetY(-10);
+		$this->SetFont("Arial", "B", 7);
+		$this->Cell(0, 0, "Phoronix Test Suite v" . PTS_VERSION, 0, 0, "L");
+		$this->Cell(0, 0, "http://www.phoronix-test-suite.com/", 0, 0, "R");
 	}
 	function WriteHeader($Header)
 	{
