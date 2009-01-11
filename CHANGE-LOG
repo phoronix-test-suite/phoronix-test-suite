@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - pts: Update download locations for several tests
 - pts: Update Gentoo External Dependencies
 - install-sh: Add $DESTDIR support to make packaging easier
+- system_monitor: Add support for reading battery from BAT1
 
 Phoronix Test Suite 1.6.0 Beta 2
 January 2, 2009

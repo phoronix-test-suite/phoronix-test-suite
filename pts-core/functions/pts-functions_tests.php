@@ -123,7 +123,7 @@ function pts_save_result($save_to = null, $save_results = null)
 					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
 				}
 
-				if(getenv("REVERSE_GRAPH_PLOTTING") != false)
+				if(getenv("REVERSE_GRAPH_ORDER") != false)
 				{
 					// Plot results in reverse order on graphs if REVERSE_GRAPH_PLOTTING env variable is set
 					$results_identifiers[$i] = array_reverse($results_identifiers[$i]);

@@ -59,7 +59,7 @@ function pts_sw_string()
 
 	if(($ddx = sw_xorg_ddx_driver_info()) != "")
 	{
-		array_push($software, "X.Org Driver: " . $ddx);
+		array_push($software, "Display Driver: " . $ddx);
 	}
 
 	array_push($software, "OpenGL: " . sw_os_opengl());

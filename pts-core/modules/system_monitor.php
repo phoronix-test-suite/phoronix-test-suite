@@ -540,8 +540,8 @@ class system_monitor extends pts_module_interface
 		}
 		if(pts_is_assignment("MONITOR_BATTERY_POWER"))
 		{
-			$state = read_acpi("/battery/BAT0/state", "charging state");
-			$power = read_acpi("/battery/BAT0/state", "present rate");
+			$state = read_acpi(array("/battery/BAT0/state", "/battery/BAT1/state"), "charging state");
+			$power = read_acpi(array("/battery/BAT0/state", "/battery/BAT1/state"), "present rate");
 
 			if($state == "discharging")
 			{
