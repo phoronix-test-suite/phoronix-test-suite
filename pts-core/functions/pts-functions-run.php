@@ -127,7 +127,7 @@ function pts_prompt_svg_result_options($svg_file)
 					{
 						echo ($i + 1) . ": " . $run_options[$i][1] . "\n";
 					}
-					echo "\nPlease Enter Your Choice: ";
+					echo "\nEnter Your Choice: ";
 
 					$run_choice = trim(fgets(STDIN));
 				}
@@ -191,7 +191,7 @@ function pts_prompt_test_options($identifier)
 					{
 						echo ($i + 1) . ": " . $o->get_option_name($i) . "\n";
 					}
-					echo "\nPlease Enter Your Choice: ";
+					echo "\nEnter Your Choice: ";
 
 					if($first_try && ($auto_opt = getenv(strtoupper($identifier) . "_" . $this_option_pos)) != false)
 					{
@@ -752,7 +752,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	if(pts_process_active($test_identifier))
 	{
-		echo "\nThis test (" . $test_identifier . ") is already running... Please wait until the first instance is finished.\n";
+		echo "\nThis test (" . $test_identifier . ") is already running.\n";
 		return $pts_test_result;
 	}
 	pts_process_register($test_identifier);

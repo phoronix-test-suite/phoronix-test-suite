@@ -5,11 +5,6 @@
 			<MD5>73eea64f6f9702a78795d0d42843b7fe</MD5>
 			<FileSize>613587625</FileSize>
 		</Package>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/SPECViewPerf10-Configure.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/SPECViewPerf10-Configure.tar.gz</URL>
-			<MD5>dc12b96f04bcc6c837a399465694901a</MD5>
-			<FileSize>906</FileSize>
-		</Package>
 	</Downloads>
 </PhoronixTestSuite>
 

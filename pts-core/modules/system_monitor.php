@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2004-2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.3.0";
+	const module_version = "1.4.0";
 	const module_description = "This module contains sensor monitoring support.";
 	const module_author = "Michael Larabel";
 

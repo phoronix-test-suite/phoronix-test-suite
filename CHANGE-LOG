@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts: Remove x bit from a few php scripts without #! (from ndim)
 - pts: Update download locations for several tests
 - pts: Update Gentoo External Dependencies
+- pts: Improve configure / build process of specviewperf10 test profile
 - install-sh: Add $DESTDIR support to make packaging easier
 - system_monitor: Add support for reading battery from BAT1
 

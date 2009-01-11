@@ -1,12 +1,14 @@
 #!/bin/sh
 
-tar -xvf SPECViewPerf10-Configure.tar.gz
 tar -xvf SPECViewperf10.tgz
-
-cp -f SPECViewPerf10-Configure SPECViewperf10/viewperf/viewperf10.0/src/Configure
-chmod +x SPECViewperf10/viewperf/viewperf10.0/src/Configure
 cd SPECViewperf10/viewperf/viewperf10.0/src/
-./Configure
+(cd vpaux/libtk;make clean;make)
+(cd vpaux/libaux;make clean;make)
+if [ "$(uname -m)" = "x86_64" ]; then
+ echo 3|./Configure
+else
+ echo 1|./Configure
+fi
 cd $1
 
 echo "#!/bin/sh

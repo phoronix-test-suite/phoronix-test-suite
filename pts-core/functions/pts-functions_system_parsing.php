@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-functions_system_parsing.php: System functions that perform the actual system hardware/software parsing on Linux.
 
 	This program is free software; you can redistribute it and/or modify
