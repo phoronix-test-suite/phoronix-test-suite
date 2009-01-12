@@ -4,7 +4,7 @@ tar -xvf SPECViewperf10.tgz
 cd SPECViewperf10/viewperf/viewperf10.0/src/
 (cd vpaux/libtk;make clean;make)
 (cd vpaux/libaux;make clean;make)
-if [ "$(uname -m)" = "x86_64" ]; then
+if [ "$OS_ARCH" = "x86_64" ]; then
  echo 3|./Configure
 else
  echo 1|./Configure
