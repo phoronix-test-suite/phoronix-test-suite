@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - pts: Update Gentoo External Dependencies
 - pts: Improve configure / build process of specviewperf10 test profile
 - pts: Improve configure / build process of specviewperf9 test profile
+- pts: Updates to jxrendermark test profile
 - install-sh: Add $DESTDIR support to make packaging easier
 - system_monitor: Add support for reading battery from BAT1
 
