@@ -352,8 +352,15 @@ function hw_sys_memory_string()
 	else if(IS_SOLARIS)
 	{
 		$mem_size = read_sun_ddu_dmi_info("MemoryDevice*,InstalledSize");
+		$mem_speed = read_sun_ddu_dmi_info("MemoryDevice*,Speed");
 		$mem_type = read_sun_ddu_dmi_info("MemoryDevice*,MemoryDeviceType");
-		$mem_speed = false;
+
+		if(is_array($mem_speed) && count($mem_speed) > 0)
+		{
+			$mem_speed = array_pop($mem_speed);
+		}
+
+		$mem_speed = str_replace("MHZ", "MHz", $mem_speed);
 	}
 	else
 	{
