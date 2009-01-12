@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-functions_system_graphics.php: System functions related to graphics.
 
 	This program is free software; you can redistribute it and/or modify
@@ -757,6 +757,20 @@ function hw_gpu_string()
 		}
 	}
 
+	if(IS_SOLARIS)
+	{
+		if(($cut = strpos($info, "DRI ")) !== false)
+		{
+			$info = substr($info, ($cut + 4));
+		}
+		if(($cut = strpos($info, " Chipset")) !== false)
+		{
+			$info = substr($info, 0, $cut);
+		}
+
+		$info = $info;
+	}
+	
 	if(empty($info) || strpos($info, "Mesa ") !== false || $info == "Software Rasterizer")
 	{
 		$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep Chipset");
