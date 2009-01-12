@@ -1,12 +1,12 @@
 #!/bin/sh
 
-tar -xvf SPECViewPerf9-Configure.tar.gz
 tar -xvf SPECViewperf9.0.3.tar.gz
-
-cp -f SPECViewPerf9-Configure SPECViewperf9.0/src/Configure
-chmod +x SPECViewperf9.0/src/Configure
 cd SPECViewperf9.0/src
-./Configure
+if [ "$(uname -m)" = "x86_64" ]; then
+ echo 3|./Configure
+else
+ echo 1|./Configure
+fi
 cd ../..
 
 echo "#!/bin/sh
