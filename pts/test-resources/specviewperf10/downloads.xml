@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://spec.unipv.it/dist/gpc/opc/viewperf/unix/SPECViewperf10.tgz, ftp://ftpsv1.u-aizu.ac.jp/pub/spec/dist/gpc/opc/viewperf/unix/SPECViewperf10.tgz</URL>
+			<URL>ftp://spec.it.miami.edu/dist/gpc/opc/viewperf/unix/SPECViewperf10.tgz, ftp://spec.unipv.it/dist/gpc/opc/viewperf/unix/SPECViewperf10.tgz, ftp://ftpsv1.u-aizu.ac.jp/pub/spec/dist/gpc/opc/viewperf/unix/SPECViewperf10.tgz</URL>
 			<MD5>73eea64f6f9702a78795d0d42843b7fe</MD5>
 			<FileSize>613587625</FileSize>
 		</Package>
