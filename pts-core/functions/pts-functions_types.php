@@ -30,7 +30,9 @@ define("TYPE_OS_LOCAL_TEST", "OS_LOCAL_TEST"); // Type is test
 define("TYPE_LOCAL_TEST_SUITE", "LOCAL_TEST_SUITE"); // Type is a test suite
 define("TYPE_SCTP_TEST", "LOCAL_SCTP_TEST"); // Type is a SCTP test
 define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a SCTP test
+
 define("TYPE_VIRT_SUITE_SUBSYSTEM", "VIRT_SUITE_SUBSYSTEM"); // Type is a virtual suite for a subsystem
+define("TYPE_VIRT_SUITE_ALL", "VIRT_SUITE_ALL");
 
 function pts_is_run_object($object)
 {
@@ -141,15 +143,24 @@ function pts_location_virtual_suite($identifier)
 	{
 		$virtual_suite = false;
 
-		if(!pts_is_test($identifier) && !pts_is_suite($identifier))
+		// Ensure $identifier is not a real suite/test object
+		if(count(pts_contained_tests($identifier, false, false)) == 0)
 		{
-			// Check if object is a subsystem test type
-			foreach(pts_subsystem_test_types() as $type)
+			if($identifier == "all")
 			{
-				if(strtolower($type) == $identifier)
+				// All tests
+				$virtual_suite = TYPE_VIRT_SUITE_ALL;
+			}
+			else
+			{
+				// Check if object is a subsystem test type
+				foreach(pts_subsystem_test_types() as $type)
 				{
-					$virtual_suite = TYPE_VIRT_SUITE_SUBSYSTEM;
-					break;
+					if(strtolower($type) == $identifier)
+					{
+						$virtual_suite = TYPE_VIRT_SUITE_SUBSYSTEM;
+						break;
+					}
 				}
 			}
 		}
@@ -287,7 +298,7 @@ function pts_test_extends_below($object)
 
 	return array_reverse($extensions);
 }
-function pts_contained_tests($objects, $include_extensions = false)
+function pts_contained_tests($objects, $include_extensions = false, $check_extended = true)
 {
 	// Provide an array containing the location(s) of all test(s) for the supplied object name
 	$tests = array();
@@ -365,13 +376,13 @@ function pts_contained_tests($objects, $include_extensions = false)
 				}
 			}
 		}
-		/* else if(pts_is_virtual_suite($object))
+		else if($check_extended && pts_is_virtual_suite($object))
 		{
 			foreach(pts_virtual_suite_tests($object) as $virt_test)
 			{
 				array_push($tests, $virt_test);
 			}
-		} */
+		}
 	}
 
 	return array_unique($tests);
@@ -384,7 +395,7 @@ function pts_virtual_suite_tests($object)
 	switch($virtual_suite_type)
 	{
 		case TYPE_VIRT_SUITE_SUBSYSTEM:
-			foreach(pts_available_tests_array() as $test)
+			foreach(pts_supported_tests_array() as $test)
 			{
 				$xml_parser = new pts_test_tandem_XmlReader($test);
 				$type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
@@ -393,6 +404,12 @@ function pts_virtual_suite_tests($object)
 				{
 					array_push($contained_tests, $test);
 				}
+			}
+			break;
+		case TYPE_VIRT_SUITE_ALL:
+			foreach(pts_supported_tests_array() as $test)
+			{
+				array_push($contained_tests, $test);
 			}
 			break;
 	}

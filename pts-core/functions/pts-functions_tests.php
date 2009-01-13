@@ -616,6 +616,20 @@ function pts_available_tests_array()
 
 	return $tests;
 }
+function pts_supported_tests_array()
+{
+	$supported_tests = array();
+
+	foreach(pts_available_tests_array() as $identifier)
+	{
+		if(pts_test_supported($identifier))
+		{
+			array_push($supported_tests, $identifier);
+		}
+	}
+
+	return $supported_tests;
+}
 function pts_installed_tests_array()
 {
 	$tests = glob(TEST_ENV_DIR . "*/pts-install.xml");

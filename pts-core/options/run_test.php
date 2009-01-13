@@ -53,8 +53,7 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
-		$start_identifier_count = count($to_run_identifiers);
-		for($i = 0; $i < $start_identifier_count; $i++)
+		for($i = 0; $i < count($to_run_identifiers); $i++)
 		{
 			// Clean up tests
 			$lower_identifier = strtolower($to_run_identifiers[$i]);
@@ -70,6 +69,15 @@ class run_test implements pts_option_interface
 					unset($to_run_identifiers[$i]);
 					continue;
 				}
+			}
+			else if(pts_is_virtual_suite($lower_identifier))
+			{
+				foreach(pts_virtual_suite_tests($lower_identifier) as $virt_test)
+				{
+					array_push($to_run_identifiers, $virt_test);
+				}
+				unset($to_run_identifiers[$i]);
+				continue;
 			}
 
 			if(pts_verify_test_installation($lower_identifier) == false)
