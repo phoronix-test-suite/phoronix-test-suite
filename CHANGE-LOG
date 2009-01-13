@@ -5,6 +5,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Add support for installing and running virtual suites
 - pts-core: Add hardware subsystem and "all" virtual suites
 - pts-core: Deprecate install-all and force-install-all commands to be replaced by "install all" and "force-install all"
+- pts: Documentation updates
 
 Phoronix Test Suite 1.6.0 Beta 3
 January 12, 2009
