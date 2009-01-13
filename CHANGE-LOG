@@ -6,6 +6,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Add hardware subsystem and "all" virtual suites
 - pts-core: Deprecate install-all and force-install-all commands to be replaced by "install all" and "force-install all"
 - pts-core: Add results overview table to result-file-to-pdf generator
+- pts-core: Move graph generating code to pts_generate_graphs()
 - pts: Documentation updates
 - bilde_renderer: Add bilde_renderer::setup_renderer()
 

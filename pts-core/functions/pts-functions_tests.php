@@ -59,92 +59,7 @@ function pts_save_result($save_to = null, $save_results = null)
 
 		if($save_name == "composite")
 		{
-			if(!is_dir($save_to_dir . "/result-graphs"))
-			{
-				mkdir($save_to_dir . "/result-graphs");
-			}
-
-			$xml_reader = new tandem_XmlReader($save_results);
-
-			$results_pts_version = $xml_reader->getXMLValue(P_RESULTS_SYSTEM_PTSVERSION);
-			$results_suite_name = $xml_reader->getXMLValue(P_RESULTS_SUITE_NAME);
-
-			if(empty($results_pts_version))
-			{
-				$results_pts_version = PTS_VERSION;
-			}
-
-			$results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
-			$results_testname = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-			$results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
-			$results_attributes = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
-			$results_scale = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
-			$results_proportion = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
-			$results_result_format = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
-			$results_raw = $xml_reader->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
-
-			$results_identifiers = array();
-			$results_values = array();
-			$results_rawvalues = array();
-
-			foreach($results_raw as $result_raw)
-			{
-				$xml_results = new tandem_XmlReader($result_raw);
-				array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
-				array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
-				array_push($results_rawvalues, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
-			}
-
-			for($i = 0; $i < count($results_name); $i++)
-			{
-				if(strlen($results_version[$i]) > 2)
-				{
-					$results_name[$i] .= " v" . $results_version[$i];
-				}
-
-				if($results_result_format[$i] == "LINE_GRAPH")
-				{
-					$t = new pts_LineGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-				}
-				else if($results_result_format[$i] == "PASS_FAIL")
-				{
-					$t = new pts_PassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-				}
-				else if($results_result_format[$i] == "MULTI_PASS_FAIL")
-				{
-					$t = new pts_MultiPassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-				}
-				else if(pts_read_assignment("GRAPH_RENDER_TYPE") == "CANDLESTICK")
-				{
-					$t = new pts_CandleStickGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-				}
-				else
-				{
-					$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-				}
-
-				if(getenv("REVERSE_GRAPH_ORDER") != false)
-				{
-					// Plot results in reverse order on graphs if REVERSE_GRAPH_PLOTTING env variable is set
-					$results_identifiers[$i] = array_reverse($results_identifiers[$i]);
-					$results_values[$i] = array_reverse($results_values[$i]);
-				}
-
-				$t->loadGraphIdentifiers($results_identifiers[$i]);
-				$t->loadGraphValues($results_values[$i]);
-				$t->loadGraphRawValues($results_rawvalues[$i]);
-				$t->loadGraphProportion($results_proportion[$i]);
-				$t->loadGraphVersion($results_pts_version);
-
-				$t->addInternalIdentifier("Test", $results_testname[$i]);
-				$t->addInternalIdentifier("Identifier", $results_suite_name);
-				$t->addInternalIdentifier("User", pts_current_user());
-
-				$t->saveGraphToFile($save_to_dir . "/result-graphs/" . ($i + 1) . "." . strtolower($t->getRenderer()));
-				$t->renderGraph();
-
-				file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t->getRenderer(), $t->graphWidth(), $t->graphHeight()));
-			}
+			pts_generate_graphs($save_results, $save_to_dir);
 		}
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
@@ -213,6 +128,102 @@ function pts_save_result($save_to = null, $save_results = null)
 	}
 
 	return $bool;
+}
+function pts_generate_graphs($test_results, $save_to_dir = null)
+{
+	if(!empty($save_to_dir) && !is_dir($save_to_dir . "/result-graphs"))
+	{
+		mkdir($save_to_dir . "/result-graphs");
+	}
+
+	$xml_reader = new tandem_XmlReader($test_results);
+
+	$results_pts_version = $xml_reader->getXMLValue(P_RESULTS_SYSTEM_PTSVERSION);
+	$results_suite_name = $xml_reader->getXMLValue(P_RESULTS_SUITE_NAME);
+
+	if(empty($results_pts_version))
+	{
+		$results_pts_version = PTS_VERSION;
+	}
+
+	$results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
+	$results_testname = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+	$results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
+	$results_attributes = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+	$results_scale = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
+	$results_proportion = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
+	$results_result_format = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
+	$results_raw = $xml_reader->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+
+	$results_identifiers = array();
+	$results_values = array();
+	$results_rawvalues = array();
+
+	foreach($results_raw as $result_raw)
+	{
+		$xml_results = new tandem_XmlReader($result_raw);
+		array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
+		array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
+		array_push($results_rawvalues, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
+	}
+
+	for($i = 0; $i < count($results_name); $i++)
+	{
+		if(strlen($results_version[$i]) > 2)
+		{
+			$results_name[$i] .= " v" . $results_version[$i];
+		}
+
+		if($results_result_format[$i] == "LINE_GRAPH")
+		{
+			$t = new pts_LineGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+		}
+		else if($results_result_format[$i] == "PASS_FAIL")
+		{
+			$t = new pts_PassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+		}
+		else if($results_result_format[$i] == "MULTI_PASS_FAIL")
+		{
+			$t = new pts_MultiPassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+		}
+		else if(pts_read_assignment("GRAPH_RENDER_TYPE") == "CANDLESTICK")
+		{
+			$t = new pts_CandleStickGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+		}
+		else
+		{
+			$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+		}
+
+		if(getenv("REVERSE_GRAPH_ORDER") != false)
+		{
+			// Plot results in reverse order on graphs if REVERSE_GRAPH_PLOTTING env variable is set
+			$results_identifiers[$i] = array_reverse($results_identifiers[$i]);
+			$results_values[$i] = array_reverse($results_values[$i]);
+		}
+
+		$t->loadGraphIdentifiers($results_identifiers[$i]);
+		$t->loadGraphValues($results_values[$i]);
+		$t->loadGraphRawValues($results_rawvalues[$i]);
+		$t->loadGraphProportion($results_proportion[$i]);
+		$t->loadGraphVersion($results_pts_version);
+
+		$t->addInternalIdentifier("Test", $results_testname[$i]);
+		$t->addInternalIdentifier("Identifier", $results_suite_name);
+		$t->addInternalIdentifier("User", pts_current_user());
+
+		if(!empty($save_to_dir))
+		{
+			$t->saveGraphToFile($save_to_dir . "/result-graphs/" . ($i + 1) . "." . strtolower($t->getRenderer()));
+		}
+
+		$t->renderGraph();
+
+		if(!empty($save_to_dir))
+		{
+			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t->getRenderer(), $t->graphWidth(), $t->graphHeight()));
+		}
+	}
 }
 function pts_subsystem_test_types()
 {
