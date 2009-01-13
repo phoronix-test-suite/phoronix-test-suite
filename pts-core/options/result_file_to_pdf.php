@@ -54,6 +54,7 @@ class result_file_to_pdf implements pts_option_interface
 		$software_r = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_SOFTWARE);
 		$notes_r = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_NOTES);
 		//$date_r = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_DATE);
+		$tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 
 		$pdf->SetSubject($xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE) . " Benchmarks");
 		$pdf->SetKeywords(implode(", ", $identifiers));
@@ -67,8 +68,25 @@ class result_file_to_pdf implements pts_option_interface
 			$pdf->WriteText($notes_r[$i]);
 		}
 
+		if(count($identifiers) == 2)
+		{
+			$pdf->AddPage();
+			$results = array();
+
+			$results_raw = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+			$results_values = array();
+
+			for($i = 0; $i < count($results_raw); $i++)
+			{
+				$xml_results = new tandem_XmlReader($results_raw[$i]);
+				array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
+			}
+
+			$pdf->ResultTable($identifiers, $results_values, $tests);
+		}
+
+
 		$pdf->AddPage();
-		$tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 		$placement = 1;
 		for($i = 1; $i <= count($tests); $i++)
 		{
