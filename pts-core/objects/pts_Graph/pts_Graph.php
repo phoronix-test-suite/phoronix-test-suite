@@ -424,6 +424,8 @@ abstract class pts_Graph
 			$this->graph_image = new bilde_swf_renderer($this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
 		}
 
+		// TODO: Move all renderer code within pts_Graph to using bilde_renderer::setup_renderer()
+
 		// Initalize Colors
 
 		$this->graph_color_notches = $this->graph_image->convert_hex_to_type($this->graph_color_notches);

@@ -52,6 +52,76 @@ abstract class bilde_renderer
 	abstract function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false);
 
 	//
+	// Setup Functions
+	//
+
+	public function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = "")
+	{
+		// Setup directory for TTF Fonts
+		if(defined("FONT_DIR"))
+		{
+			putenv("GDFONTPATH=" . FONT_DIR);
+		}
+		else if(($font_env = getenv("FONT_DIR")) != false)
+		{
+			putenv("GDFONTPATH=" . $font_env);
+		}
+		else
+		{
+			putenv("GDFONTPATH=" . getcwd());
+		}
+
+		// Check if needed modules / extensions are available
+		$ming_available = extension_loaded("ming");
+		$gd_available = extension_loaded("gd"); // TODO: add check to see if dl() is permitted to load module
+
+		// Select a renderer
+		if(getenv("SVG_DEBUG") != false || $requested_renderer == "SVG")
+		{
+			$selected_renderer = "SVG";
+		}
+		if($ming_available && (getenv("SWF_DEBUG") != false || $requested_renderer == "SWF"))
+		{
+			$selected_renderer = "SWF";
+		}
+		else if($gd_available)
+		{
+			if(getenv("JPG_DEBUG") != false || $requested_renderer == "JPG")
+			{
+				$selected_renderer = "JPG";
+			}
+			else
+			{
+				$selected_renderer = "PNG";
+			}
+		}
+		else
+		{
+			$selected_renderer = "SVG";
+		}
+
+
+		// Declare the selected renderer
+		switch($selected_renderer)
+		{
+			case "PNG":
+				$renderer = new bilde_png_renderer($width, $height, $embed_identifiers);
+				break;
+			case "JPG":
+				$renderer = new bilde_jpg_renderer($width, $height, $embed_identifiers);
+				break;
+			case "SWF":
+				$renderer = new bilde_swf_renderer($width, $height, $embed_identifiers);
+				break;
+			case "SVG":
+				$renderer = new bilde_svg_renderer($width, $height, $embed_identifiers);
+				break;
+		}
+
+		return $renderer;
+	}
+
+	//
 	// Generic Functions
 	//
 

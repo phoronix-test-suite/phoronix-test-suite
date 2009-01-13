@@ -7,6 +7,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Deprecate install-all and force-install-all commands to be replaced by "install all" and "force-install all"
 - pts-core: Add results overview table to result-file-to-pdf generator
 - pts: Documentation updates
+- bilde_renderer: Add bilde_renderer::setup_renderer()
 
 Phoronix Test Suite 1.6.0 Beta 3
 January 12, 2009
