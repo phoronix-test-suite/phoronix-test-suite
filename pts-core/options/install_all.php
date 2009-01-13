@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,23 +24,8 @@ class install_all implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_load_function_set("install");
-
-		if(pts_read_assignment("COMMAND") == "force-install-all")
-		{
-			pts_set_assignment("PTS_FORCE_INSTALL", 1);
-		}
-
-		pts_module_process("__pre_install_process");
-		foreach(pts_available_tests_array() as $test)
-		{
-			// Any external dependencies?
-			pts_install_package_on_distribution($test);
-
-			// Install tests
-			pts_start_install($test);
-		}
-		pts_module_process("__post_install_process");
+		// This option is deprecated, instead of running "install-all" the user should run "install all"
+		pts_run_option_next("install_test", "all", "install");
 	}
 }
 
