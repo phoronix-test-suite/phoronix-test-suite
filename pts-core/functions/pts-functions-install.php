@@ -151,7 +151,9 @@ function pts_download_test_files($identifier)
 					{
 						if($dc_file[$f] == $package_filename && $dc_md5[$f] == $package_md5)
 						{
-							echo pts_download(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $download_location);
+							echo "Downloading From Remote Cache: " . $package_filename . "\n\n";
+							echo pts_download(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $download_destination . ".temp");
+							echo "\n";
 
 							if(!pts_validate_md5_download_file($download_destination . ".temp", $package_md5))
 							{
