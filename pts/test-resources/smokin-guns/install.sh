@@ -6,7 +6,7 @@ chmod +x smokinguns.x86
 cd ..
 
 
-tar -xvf smokinguns-benchmark-1.tar.gz
+tar -xvf smokinguns-benchmark-2.tar.gz
 mkdir -p ~/.smokinguns/smokinguns/
 mv -f q3config.cfg ~/.smokinguns/smokinguns/
 mv -f demos/ ~/.smokinguns/smokinguns/

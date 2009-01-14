@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts_Graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -196,7 +196,7 @@ abstract class pts_Graph
 	{
 		if($data == "LIB")
 		{
-			$this->graph_proportion = "Less Is Better";
+			$this->graph_proportion = "Fewer Are Better";
 		}
 		//else if($data == "HIB")
 		//	$this->graph_proportion = "More Is Better";
