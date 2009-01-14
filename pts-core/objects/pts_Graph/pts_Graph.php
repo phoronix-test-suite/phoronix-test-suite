@@ -153,7 +153,7 @@ abstract class pts_Graph
 		if($renderer == "SVG")
 		{
 			$this->graph_renderer = "SVG";
-			$this->graph_left_start += 10;
+			//$this->graph_left_start += 10;
 		}
 		else if($renderer == "SWF")
 		{
@@ -340,16 +340,6 @@ abstract class pts_Graph
 		}
 
 		return $maximum;
-	}
-	protected function text_string_width($string, $font, $size)
-	{
-		$dimensions = $this->text_string_dimensions($string, $font, $size);
-		return $dimensions[0];
-	}
-	protected function text_string_height($string, $font, $size)
-	{
-		$dimensions = $this->text_string_dimensions($string, $font, $size);
-		return $dimensions[1];
 	}
 	protected function text_size_bounds($string, $font, $font_size, $minimum_font_size, $bound_width, $bound_height = -1)
 	{
@@ -621,27 +611,17 @@ abstract class pts_Graph
 
 	protected function text_string_dimensions($string, $font, $size, $big = false)
 	{
-		// TODO: Switch to using bilde_renderer interface
-		if($this->graph_renderer == "PNG" && function_exists("imagettfbbox"))
-		{
-			$box_array = imagettfbbox($size, 0, $this->graph_font, $string);
-			$box_width = $box_array[4] - $box_array[6];
-
-			if($big)
-			{
-				$box_array = imagettfbbox($size, 0, $font, "AZ@![]()@|_");
-			}
-			$box_height = $box_array[1] - $box_array[7];
-		}
-		else if($this->graph_renderer == "SVG")
-		{
-			// TODO: This needs to be implemented
-			$box_height = 0;
-			$box_width = 0;
-		}
-
-		// Width x Height
-		return array($box_width, $box_height);
+		return bilde_renderer::soft_text_string_dimensions($string, $font, $size, $big);
+	}
+	protected function text_string_width($string, $font, $size)
+	{
+		$dimensions = $this->text_string_dimensions($string, $font, $size);
+		return $dimensions[0];
+	}
+	protected function text_string_height($string, $font, $size)
+	{
+		$dimensions = $this->text_string_dimensions($string, $font, $size);
+		return $dimensions[1];
 	}
 }
 

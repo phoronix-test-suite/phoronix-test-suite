@@ -155,10 +155,29 @@ abstract class bilde_renderer
 
 		return $return_type;
 	}
-	protected function soft_text_string_dimensions($text_string, $font_type, $font_size, $predefined_string = false)
+	public function soft_text_string_dimensions($text_string, $font_type, $font_size, $predefined_string = false)
 	{
-		// TODO: Needs To Be Implemented
-		return array(0, 0);
+		if(false && function_exists("imagettfbbox"))
+		{
+			$box_array = imagettfbbox($font_size, 0, $font_type, $text_string);
+			$box_width = $box_array[4] - $box_array[6];
+
+			if($predefined_string)
+			{
+				$box_array = imagettfbbox($font_size, 0, $font_type, "AZ@![]()@|_");
+			}
+
+			$box_height = $box_array[1] - $box_array[7];
+		}
+		else
+		{
+			// Basic calculation
+			$box_height = 0.75 * $font_size;
+			$box_width = 0.8 * strlen($text_string) * $font_size; // 0.8 now but should be about 1.18
+		}
+
+		// Width x Height
+		return array($box_width, $box_height);
 	}
 	protected function text_string_width($text_string, $font_type, $font_size)
 	{
