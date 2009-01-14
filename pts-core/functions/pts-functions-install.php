@@ -366,7 +366,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 
 	if(is_file(($xauth_file = pts_user_home() . ".Xauthority")))
 	{
-		pts_copy($xauth_file, TEST_ENV_DIR . $identifier . "/.Xauthority");
+		pts_symlink($xauth_file, TEST_ENV_DIR . $identifier . "/.Xauthority");
 	}
 }
 function pts_install_test($identifier)
@@ -432,7 +432,7 @@ function pts_install_test($identifier)
 					pts_module_process("__pre_test_install", $identifier);
 					$install_header = "Installing Test: " . $identifier;
 
-					if(($size = pts_estimated_download_size($identifier)) > 0)
+					if(($size = pts_test_estimated_environment_size($identifier)) > 0)
 					{
 						$install_header .= "\nEstimated Install Size: " . $size . " MB";
 					}

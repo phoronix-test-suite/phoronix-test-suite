@@ -114,6 +114,10 @@ function pts_copy($from, $to)
 		copy($from, $to);
 	}
 }
+function pts_symlink($from, $to)
+{
+	return symlink($from, $to);
+}
 function pts_move_file($from, $to, $change_directory = "")
 {
 	return shell_exec("cd " . $change_directory . " && mv " . $from . " " . $to . " 2>&1");
