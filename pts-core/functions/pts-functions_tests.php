@@ -243,7 +243,7 @@ function pts_get_results_viewer_xsl_formatted($format_type = "PNG", $width, $hei
 	}
 	else
 	{
-		// Default to PNG
+		// Default to img
 		$graph_string = "<img><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />." . strtolower($format_type) . "</xsl:attribute></img>";
 	}
 

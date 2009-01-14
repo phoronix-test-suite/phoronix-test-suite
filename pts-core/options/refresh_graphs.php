@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,11 +30,9 @@ class refresh_graphs implements pts_option_interface
 		{
 			$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 
-			if(pts_save_result($identifier . "/composite.xml", $composite_xml))
-			{
-				echo "\nThe Phoronix Test Suite Graphs Have Been Re-Rendered.\n";
-				pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
-			}
+			pts_generate_graphs($composite_xml, SAVE_RESULTS_DIR . $identifier . "/");
+			echo "\nThe Phoronix Test Suite Graphs Have Been Re-Rendered.\n";
+			pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
 		}
 		else
 		{

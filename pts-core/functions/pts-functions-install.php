@@ -175,6 +175,7 @@ function pts_download_test_files($identifier)
 						{
 							echo "Copying Cached File: " . $package_filename . "\n";
 
+							// TODO: possibly replace copy() operation with symlink()
 							if(copy($cache_directories[$j] . $package_filename, $download_destination))
 							{
 								$urls = array();
