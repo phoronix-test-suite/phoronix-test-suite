@@ -106,6 +106,11 @@ abstract class bilde_renderer
 
 		return $renderer;
 	}
+	public function render_to_file($output_file = null, $quality = 0)
+	{
+		$output_file = str_replace("BILDE_EXTENSION", strtolower($this->get_renderer()), $output_file);
+		return $this->render_image($output_file, $quality);
+	}
 
 	//
 	// Generic Functions

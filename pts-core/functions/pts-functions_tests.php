@@ -214,7 +214,7 @@ function pts_generate_graphs($test_results, $save_to_dir = null)
 
 		if(!empty($save_to_dir))
 		{
-			$t->saveGraphToFile($save_to_dir . "/result-graphs/" . ($i + 1) . "." . strtolower($t->getRenderer()));
+			$t->saveGraphToFile($save_to_dir . "/result-graphs/" . ($i + 1) . ".BILDE_EXTENSION");
 		}
 
 		$t->renderGraph();

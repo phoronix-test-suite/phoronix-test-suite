@@ -330,7 +330,7 @@ abstract class pts_Graph
 	{
 		$this->update_graph_dimensions();
 		$this->graph_image = bilde_renderer::setup_renderer($this->graph_renderer, $this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
-		$this->graph_renderer = $this->graph_image->get_renderer();
+		$this->setRenderer($this->graph_image->get_renderer());
 
 		// Initalize Colors
 		$this->graph_color_notches = $this->graph_image->convert_hex_to_type($this->graph_color_notches);
@@ -480,7 +480,7 @@ abstract class pts_Graph
 	}
 	protected function return_graph_image()
 	{
-		$this->graph_image->render_image($this->graph_output, 85);
+		$this->graph_image->render_to_file($this->graph_output, 85);
 		$this->graph_image->destroy_image();
 	}
 	protected function trim_double($double, $accuracy = 2)
