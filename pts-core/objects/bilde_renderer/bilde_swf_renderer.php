@@ -67,40 +67,21 @@ class bilde_swf_renderer extends bilde_renderer
 	{
 		$points = array(
 		$x1, $y1,
-		$x1 + $width, $y1,
-		$x1 + $width, $y1 + $height,
-		$x1, $y1 + $height
+		$width, $y1,
+		$width, $height,
+		$x1, $height
 		);
 		$this->draw_polygon($points, $background_color, $background_color, 1);
-	
-		/*
-		$rect = new SWFShape();
-		$rect->setLine(1, $background_color[0], $background_color[1], $background_color[2]);
-		$rect->setRightFill($background_color[0], $background_color[1], $background_color[2]);
-		$rect->movePenTo($x1, $y1);
-		$rect->drawLineTo($x1 + $width, $y1);
-		$rect->drawLineTo($x1 + $width, $y1 + $height);
-		$rect->drawLineTo($x1, $y1 + $height);
-		$rect->drawLineTo($x1, $y1);
-		$this->image->add($rect);
-		*/
 	}
 	public function draw_rectangle_border($x1, $y1, $width, $height, $border_color)
 	{
 		$points = array(
 		$x1, $y1,
-		$x1 + $width, $y1,
-		$x1 + $width, $y1 + $height,
-		$x1, $y1 + $height
+		$width, $y1,
+		$width, $height,
+		$x1, $height
 		);
 		$this->draw_polygon($points, null, $border_color, 1);
-	
-		/*
-		$this->draw_line($x1, $y1, $x1 + $width, $y1, $border_color, 1);
-		$this->draw_line($x1, $y1, $x1, $y1 + $height, $border_color, 1);
-		$this->draw_line($x1 + $width, $y1, $x1 + $width, $y1 + $height, $border_color, 1);
-		$this->draw_line($x1, $y1 + $height, $x1 + $width, $y1 + $height, $border_color, 1);
-		*/
 	}
 	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0)
 	{
@@ -205,6 +186,11 @@ class bilde_swf_renderer extends bilde_renderer
 				$align = SWFTEXTFIELD_ALIGN_CENTER;
 				break;
 			case "RIGHT":
+				if($bound_x1 == $bound_x2)
+				{
+					$bound_x1 -= $this->image_width;
+				}
+
 				$align = SWFTEXTFIELD_ALIGN_RIGHT;
 				break;
 			case "LEFT":
@@ -218,7 +204,12 @@ class bilde_swf_renderer extends bilde_renderer
 		$t->setFont($this->swf_font);
 		$t->setColor($font_color[0], $font_color[1], $font_color[2]);
 		$t->setHeight($font_size);
-		$t->setBounds(abs($bound_x1 - $bound_x2), $font_size);
+
+		if(($width = abs($bound_x1 - $bound_x2)) > 0)
+		{
+			$t->setBounds(abs($bound_x1 - $bound_x2), $font_size);
+		}
+
 		$t->align($align);
 		$t->addString($text_string);
 

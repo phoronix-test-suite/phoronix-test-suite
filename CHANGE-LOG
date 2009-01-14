@@ -4,12 +4,14 @@ Phoronix Test Suite 1.6.0 (Git)
 
 - pts-core: Add support for installing and running virtual suites
 - pts-core: Add hardware subsystem and "all" virtual suites
+- pts-core: Provide symlink for Xauthority instead of copy
 - pts-core: Deprecate install-all and force-install-all commands to be replaced by "install all" and "force-install all"
 - pts-core: Add results overview table to result-file-to-pdf generator
 - pts-core: Move graph generating code to pts_generate_graphs()
 - pts: Documentation updates
 - pts: Resolution fix for smokin-guns test profile
 - bilde_renderer: Add bilde_renderer::setup_renderer()
+- bilde_swf_renderer: Render rectangles, borders, and right-aligned text correctly
 
 Phoronix Test Suite 1.6.0 Beta 3
 January 12, 2009
