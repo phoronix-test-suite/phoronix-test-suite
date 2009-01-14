@@ -96,77 +96,10 @@ abstract class pts_Graph
 		$this->graph_y_title = $y_axis_title;
 
 		$this->update_graph_dimensions(-1, -1, true);
-
-		// Directory for TTF Fonts
-		if(defined("FONT_DIR"))
-		{
-			putenv("GDFONTPATH=" . FONT_DIR);
-		}
-		else if(($font_env = getenv("FONT_DIR")) != false)
-		{
-			putenv("GDFONTPATH=" . $font_env);
-		}
-		else
-		{
-			putenv("GDFONTPATH=" . getcwd());
-		}
-
-		// Determine renderers available
-		$ming_available = extension_loaded("ming");
-		if(!extension_loaded("gd"))
-		{
-		/*	if(dl("gd.so"))
-			{
-				$gd_available = true;
-			}
-			else	*/
-				$gd_available = false;
-		}
-		else
-		{
-			$gd_available = true;
-		}
-		
-		// Set a renderer
-		if($ming_available && getenv("SWF_DEBUG") != false)
-		{
-			$this->setRenderer("SWF");
-		}
-		else if($gd_available && getenv("SVG_DEBUG") == false)
-		{
-			if(getenv("JPG_DEBUG") !== false)
-			{
-				$this->setRenderer("JPG");
-			}
-			else
-			{
-				$this->setRenderer("PNG");
-			}
-		}
-		else
-		{
-			$this->setRenderer("SVG");
-		}
 	}
 	public function setRenderer($renderer)
 	{
-		if($renderer == "SVG")
-		{
-			$this->graph_renderer = "SVG";
-			//$this->graph_left_start += 10;
-		}
-		else if($renderer == "SWF")
-		{
-			$this->graph_renderer = "SWF";
-		}
-		else if($renderer == "JPG")
-		{
-			$this->graph_renderer = "JPG";
-		}
-		else
-		{
-			$this->graph_renderer = "PNG";
-		}
+		$this->graph_renderer = $renderer;
 	}
 	public function getRenderer()
 	{
@@ -396,28 +329,10 @@ abstract class pts_Graph
 	protected function render_graph_init()
 	{
 		$this->update_graph_dimensions();
-
-		if($this->graph_renderer == "PNG")
-		{
-			$this->graph_image = new bilde_png_renderer($this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
-		}
-		else if($this->graph_renderer == "SVG")
-		{
-			$this->graph_image = new bilde_svg_renderer($this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
-		}
-		else if($this->graph_renderer == "JPG")
-		{
-			$this->graph_image = new bilde_jpg_renderer($this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
-		}
-		else if($this->graph_renderer == "SWF")
-		{
-			$this->graph_image = new bilde_swf_renderer($this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
-		}
-
-		// TODO: Move all renderer code within pts_Graph to using bilde_renderer::setup_renderer()
+		$this->graph_image = bilde_renderer::setup_renderer($this->graph_renderer, $this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
+		$this->graph_renderer = $this->graph_image->get_renderer();
 
 		// Initalize Colors
-
 		$this->graph_color_notches = $this->graph_image->convert_hex_to_type($this->graph_color_notches);
 		$this->graph_color_text = $this->graph_image->convert_hex_to_type($this->graph_color_text);
 		$this->graph_color_border = $this->graph_image->convert_hex_to_type($this->graph_color_border);

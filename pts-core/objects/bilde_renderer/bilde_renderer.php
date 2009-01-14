@@ -23,12 +23,11 @@
 
 abstract class bilde_renderer
 {
+	var $renderer = "bilde_renderer";
 	var $image;
 	var $image_width = -1;
 	var $image_height = -1;
 	var $embed_identifiers = null;
-
-	public static $file_extension = "";
 
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
 	abstract function render_image($output_file = null, $quality = 100);
@@ -57,19 +56,7 @@ abstract class bilde_renderer
 
 	public function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = "")
 	{
-		// Setup directory for TTF Fonts
-		if(defined("FONT_DIR"))
-		{
-			putenv("GDFONTPATH=" . FONT_DIR);
-		}
-		else if(($font_env = getenv("FONT_DIR")) != false)
-		{
-			putenv("GDFONTPATH=" . $font_env);
-		}
-		else
-		{
-			putenv("GDFONTPATH=" . getcwd());
-		}
+		bilde_renderer::setup_font_directory();
 
 		// Check if needed modules / extensions are available
 		$ming_available = extension_loaded("ming");
@@ -80,7 +67,7 @@ abstract class bilde_renderer
 		{
 			$selected_renderer = "SVG";
 		}
-		if($ming_available && (getenv("SWF_DEBUG") != false || $requested_renderer == "SWF"))
+		else if($ming_available && (getenv("SWF_DEBUG") != false || $requested_renderer == "SWF"))
 		{
 			$selected_renderer = "SWF";
 		}
@@ -99,7 +86,6 @@ abstract class bilde_renderer
 		{
 			$selected_renderer = "SVG";
 		}
-
 
 		// Declare the selected renderer
 		switch($selected_renderer)
@@ -125,6 +111,29 @@ abstract class bilde_renderer
 	// Generic Functions
 	//
 
+	public function setup_font_directory()
+	{
+		// Setup directory for TTF Fonts
+		if(getenv("GDFONTPATH") == false)
+		{
+			if(defined("FONT_DIR"))
+			{
+				putenv("GDFONTPATH=" . FONT_DIR);
+			}
+			else if(($font_env = getenv("FONT_DIR")) != false)
+			{
+				putenv("GDFONTPATH=" . $font_env);
+			}
+			else
+			{
+				putenv("GDFONTPATH=" . getcwd());
+			}
+		}
+	}
+	public function get_renderer()
+	{
+		return $this->renderer;
+	}
 	public function get_image_width()
 	{
 		return $this->image_width;
@@ -157,7 +166,9 @@ abstract class bilde_renderer
 	}
 	public function soft_text_string_dimensions($text_string, $font_type, $font_size, $predefined_string = false)
 	{
-		if(false && function_exists("imagettfbbox"))
+		bilde_renderer::setup_font_directory();
+
+		if(function_exists("imagettfbbox"))
 		{
 			$box_array = imagettfbbox($font_size, 0, $font_type, $text_string);
 			$box_width = $box_array[4] - $box_array[6];

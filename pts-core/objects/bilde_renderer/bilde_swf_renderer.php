@@ -24,7 +24,7 @@
 class bilde_swf_renderer extends bilde_renderer
 {
 	var $swf_font = null;
-	public static $file_extension = "swf";
+	var $renderer = "SWF";
 
 	public function __construct($width, $height, $embed_identifiers = "")
 	{
