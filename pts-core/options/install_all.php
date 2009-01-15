@@ -25,7 +25,7 @@ class install_all implements pts_option_interface
 	public static function run($r)
 	{
 		// This option is deprecated, instead of running "install-all" the user should run "install all"
-		pts_run_option_next("install_test", "all", "install");
+		pts_run_option_next("install_test", "all");
 	}
 }
 

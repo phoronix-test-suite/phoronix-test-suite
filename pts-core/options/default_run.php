@@ -24,7 +24,7 @@ class default_run implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("run_test", $r, "run_test", array("IS_DEFAULTS_MODE" => true));
+		pts_run_option_next("run_test", $r, array("IS_DEFAULTS_MODE" => true));
 	}
 }
 

@@ -70,12 +70,11 @@ for($i = 2; $i < $argc; $i++)
 	}
 }
 
-pts_run_option_next($sent_command, $pass_args, $argv[1]);
+pts_run_option_next($sent_command, $pass_args);
 
 while(($current_option = pts_run_option_next(false)) != false)
 {
-	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), 
-	$current_option->get_descriptor(), $current_option->get_preset_assignments()); // Run command
+	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
 }
 
 ?>

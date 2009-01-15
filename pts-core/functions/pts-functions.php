@@ -38,10 +38,11 @@ require_once("pts-core/functions/pts-functions_modules.php");
 require_once("pts-core/functions/pts-functions_assignments.php");
 
 // Phoronix Test Suite - Functions
-function pts_run_option_command($command, $pass_args = null, $command_descriptor = "", $preset_assignments = "")
+function pts_run_option_command($command, $pass_args = null, $preset_assignments = "")
 {
 	pts_clear_assignments();
 	pts_set_assignment(array("START_TIME", "THIS_OPTION_IDENTIFIER"), time()); // For now THIS_OPTION_IDENTIFIER is also time
+	pts_set_assignment("COMMAND", $command);
 
 	if(is_array($preset_assignments))
 	{
@@ -64,7 +65,7 @@ function pts_run_option_command($command, $pass_args = null, $command_descriptor
 	}
 	pts_clear_assignments();
 }
-function pts_run_option_next($command = false, $pass_args = null, $command_descriptor = "", $set_assignments = "")
+function pts_run_option_next($command = false, $pass_args = null, $set_assignments = "")
 {
 	static $options;
 	$return = null;
@@ -87,7 +88,7 @@ function pts_run_option_next($command = false, $pass_args = null, $command_descr
 	}
 	else
 	{
-		array_push($options, new pts_run_option($command, $pass_args, $command_descriptor, $set_assignments));
+		array_push($options, new pts_run_option($command, $pass_args, $set_assignments));
 	}
 
 	return $return;

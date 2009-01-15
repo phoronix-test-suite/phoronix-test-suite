@@ -12,6 +12,8 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Support preset assignments through pts_run_option_next()
 - pts-core: Setup batch-benchmark, batch-run, default-run, default-benchmark to use option interface with new preset assignment capabilities
 - pts-core: Move all of the command / option handler into pts-core from phoronix-test-suite shell script and add option-command-aliases
+- pts-core: Eliminate use of COMMAND assignment
+- pts-core: Eliminate command descriptor from PTS run option API
 - pts: Documentation updates
 - pts: Resolution fix for smokin-guns test profile
 - pts_Graph: Switch font calculation to using bilde_renderer::soft_text_string_dimensions()

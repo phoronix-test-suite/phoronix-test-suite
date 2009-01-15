@@ -24,7 +24,7 @@ class force_install implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("install_test", $r, "install_test", array("PTS_FORCE_INSTALL" => true));
+		pts_run_option_next("install_test", $r, array("PTS_FORCE_INSTALL" => true));
 	}
 }
 

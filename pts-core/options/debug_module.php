@@ -24,7 +24,7 @@ class debug_module implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("test_module", $r, "debug_module", array("DEBUG_MODULE" => true));
+		pts_run_option_next("test_module", $r, array("DEBUG_MODULE" => true));
 	}
 }
 

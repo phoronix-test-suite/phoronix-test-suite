@@ -24,21 +24,11 @@ class pts_run_option
 {
 	var $command;
 	var $arguments;
-	var $descriptor;
 	var $preset_assignments;
 
-	public function __construct($command, $pass_args = null, $command_descriptor = "", $set_assignments = "")
+	public function __construct($command, $pass_args = null, $set_assignments = "")
 	{
 		$command = strtolower($command);
-
-		if(empty($command_descriptor))
-		{
-			$command_descriptor = $command;
-		}
-		else
-		{
-			$command_descriptor = strtolower($command_descriptor);
-		}
 
 		if(!empty($pass_args) && !is_array($pass_args))
 		{
@@ -53,7 +43,6 @@ class pts_run_option
 
 		$this->command = $command;
 		$this->arguments = $pass_args;
-		$this->descriptor = $command_descriptor;
 		$this->preset_assignments = $set_assignments;
 	}
 	public function get_command()
@@ -63,10 +52,6 @@ class pts_run_option
 	public function get_arguments()
 	{
 		return $this->arguments;
-	}
-	public function get_descriptor()
-	{
-		return $this->descriptor;
 	}
 	public function get_preset_assignments()
 	{
