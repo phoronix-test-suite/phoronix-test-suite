@@ -10,7 +10,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Move graph generating code to pts_generate_graphs()
 - pts-core: Fix for downloading files from remote download-cache directories
 - pts-core: Support preset assignments through pts_run_option_next()
-- pts-core: Setup batch-benchmark to use option interface with new preset assignment capabilities
+- pts-core: Setup batch-benchmark, default-run to use option interface with new preset assignment capabilities
 - pts: Documentation updates
 - pts: Resolution fix for smokin-guns test profile
 - pts_Graph: Switch font calculation to using bilde_renderer::soft_text_string_dimensions()

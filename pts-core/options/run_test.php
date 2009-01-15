@@ -27,12 +27,6 @@ class run_test implements pts_option_interface
 		pts_load_function_set("run");
 		pts_load_function_set("merge");
 
-		// Check for batch mode
-		if(getenv("PTS_DEFAULTS_MODE") != false)
-		{
-			pts_set_assignment("IS_DEFAULTS_MODE", true);
-		}
-
 		if(pts_read_assignment("IS_BATCH_MODE") != false && pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "FALSE")
 		{
 			echo pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup");
@@ -469,6 +463,10 @@ class run_test implements pts_option_interface
 			if(pts_read_assignment("IS_BATCH_MODE") != false)
 			{
 				array_push($TEST_PROPERTIES, "PTS_BATCH_MODE");
+			}
+			else if(pts_read_assignment("IS_DEFAULTS_MODE") != false)
+			{
+				array_push($TEST_PROPERTIES, "PTS_DEFAULTS_MODE");
 			}
 
 			$test_notes = pts_generate_test_notes($test_type);

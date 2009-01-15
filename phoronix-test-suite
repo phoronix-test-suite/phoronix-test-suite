@@ -86,14 +86,10 @@ case "$1" in
 "install" | "force-install")
 	RUN_COMMAND="install_test"
 	;;
-"run" | "batch-run" | "default-run")
+"run" | "batch-run")
 	if [ "$1" = "batch-run" ]
 	then
 		export PTS_BATCH_MODE=1
-	fi
-	if [ "$1" = "default-run" ]
-	then
-		export PTS_DEFAULTS_MODE=1
 	fi
 	RUN_COMMAND="run_test"
 	;;
