@@ -28,10 +28,6 @@ class run_test implements pts_option_interface
 		pts_load_function_set("merge");
 
 		// Check for batch mode
-		if(getenv("PTS_BATCH_MODE") != false)
-		{
-			pts_set_assignment("IS_BATCH_MODE", true);
-		}
 		if(getenv("PTS_DEFAULTS_MODE") != false)
 		{
 			pts_set_assignment("IS_DEFAULTS_MODE", true);

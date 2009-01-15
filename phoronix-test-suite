@@ -97,10 +97,6 @@ case "$1" in
 	fi
 	RUN_COMMAND="run_test"
 	;;
-"batch-benchmark")
-	export PTS_BATCH_MODE=1
-	RUN_COMMAND="benchmark"
-	;;
 "default-benchmark")
 	export PTS_DEFAULTS_MODE=1
 	RUN_COMMAND="benchmark"
