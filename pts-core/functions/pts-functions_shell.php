@@ -47,6 +47,11 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false)
 		pts_run_shell_script("pts-core/scripts/launch-browser.sh", $URL);
 	}
 }
+function pts_exec($exec, $extra_vars = null)
+{
+	// Same as shell_exec() but with the PTS env variables added in
+	return shell_exec(pts_variables_export_string($extra_vars) . $exec);
+}
 function pts_download($download, $to)
 {
 	$to_file = basename($to);

@@ -93,11 +93,6 @@ function pts_run_option_next($command = false, $pass_args = null, $set_assignmen
 
 	return $return;
 }
-function pts_exec($exec, $extra_vars = null)
-{
-	// Same as shell_exec() but with the PTS env variables added in
-	return shell_exec(pts_variables_export_string($extra_vars) . $exec);
-}
 function pts_request_new_id()
 {
 	// Request a new ID for a counter
