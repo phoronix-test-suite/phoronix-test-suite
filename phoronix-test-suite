@@ -78,7 +78,7 @@ fi
 # if [ -e $SCTP_FILE ]
 # then
 # 	export PTS_COMMAND="benchmark"
-# 	$PHP_BIN pts-core/phoronix-test-suite.php BENCHMARK $SCTP_FILE
+# 	$PHP_BIN pts-core/phoronix-test-suite.php benchmark $SCTP_FILE
 # 	exit
 # fi
 
@@ -89,5 +89,6 @@ case "$1" in
 	;;
 esac
 
+# Run The Phoronix Test Suite
 $PHP_BIN pts-core/phoronix-test-suite.php $@
 

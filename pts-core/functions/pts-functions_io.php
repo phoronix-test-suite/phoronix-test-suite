@@ -139,7 +139,7 @@ function pts_format_time_string($time, $format = "SECONDS", $standard_version = 
 	}
 	if($round_to > 0)
 	{
-		$time += $time % $round_to;
+		$time += $round_to - ($time % $round_to);
 	}
 
 	$formatted_time = array();

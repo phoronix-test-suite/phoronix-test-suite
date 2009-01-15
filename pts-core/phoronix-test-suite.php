@@ -48,6 +48,7 @@ if(!is_file("pts-core/options/" . $sent_command . ".php"))
 	{
 		// Show general options, since there are no valid commands
 		echo file_get_contents(STATIC_DIR . "general-options.txt");
+		exit;
 	}
 }
 

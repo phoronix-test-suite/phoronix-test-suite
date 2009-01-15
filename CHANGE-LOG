@@ -15,6 +15,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Eliminate use of COMMAND assignment
 - pts-core: Eliminate command descriptor from PTS run option API
 - pts-core: Move list of options on command failure out of phoronix-test-suite and into pts-core
+- pts-core: Fix round to calculation in pts_format_time_string()
 - pts: Documentation updates
 - pts: Resolution fix for smokin-guns test profile
 - pts_Graph: Switch font calculation to using bilde_renderer::soft_text_string_dimensions()
