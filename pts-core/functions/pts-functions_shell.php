@@ -116,7 +116,7 @@ function pts_copy($from, $to)
 }
 function pts_symlink($from, $to)
 {
-	return symlink($from, $to);
+	return @symlink($from, $to);
 }
 function pts_move_file($from, $to, $change_directory = "")
 {

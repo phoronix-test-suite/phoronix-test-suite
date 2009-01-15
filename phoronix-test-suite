@@ -82,58 +82,14 @@ fi
 # 	exit
 # fi
 
+# Command-specific conditions
 case "$1" in
-"install" | "force-install")
-	RUN_COMMAND="install_test"
-	;;
-"run")
-	RUN_COMMAND="run_test"
-	;;
-"upload" | "upload-results")
-	RUN_COMMAND="upload_result"
-	;;
-"list-all-tests")
-	RUN_COMMAND="list_tests"
-	;;
-"list-results")
-	RUN_COMMAND="list_saved_results"
-	;;
-"show-results" | "view-result" | "view-results")
-	RUN_COMMAND="show_result"
-	;;
-"clone")
-	RUN_COMMAND="clone_global_result"
-	;;
-"force-install-all")
-	RUN_COMMAND="install_all"
-	;;
-"version")
-	RUN_COMMAND="core_version"
-	;;
-"login")
-	RUN_COMMAND="global_login"
-	;;
-"refresh-graph" | "refresh-result")
-	RUN_COMMAND="refresh_graphs"
-	;;
 "test-module" | "debug-module")
-	if [ "$1" = "debug-module" ]
-	then
-		export PTS_DEBUG=1
-	fi
-
 	export PTS_IGNORE_MODULES=1
-	RUN_COMMAND="test_module"
 	;;
-"sensors" | "sensor-options" | "analyze" | "analyze-results" | "suite-info" | "test-info")
-	echo "\nThis option was dropped or changed in the Phoronix Test Suite.\nFor more information and the replacement option, view the documentation.\n"
-	exit
-	;;
-*)
-	RUN_COMMAND=$1
 esac
 
-$PHP_BIN pts-core/phoronix-test-suite.php $RUN_COMMAND $@
+$PHP_BIN pts-core/phoronix-test-suite.php $@
 
 if [ $? = 3 ]
 then

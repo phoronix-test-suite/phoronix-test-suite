@@ -26,9 +26,28 @@ require("pts-core/functions/pts-functions.php");
 pts_init(); // Initalize the Phoronix Test Suite (pts-core) client
 
 $sent_command = strtolower(str_replace("-", "_", $argv[1]));
+
 if(!is_file("pts-core/options/" . $sent_command . ".php"))
 {
-	exit(3);
+	$alias_file = trim(file_get_contents(STATIC_DIR . "option-command-aliases.txt"));
+	$alias_r = array_map("trim", explode("\n", $alias_file));
+	$replaced = false;
+
+	for($i = 0; $i < count($alias_r) && !$replaced; $i++)
+	{
+		$line_r = array_map("trim", explode("=", $alias_r[$i]));
+
+		if($line_r[0] == $sent_command && isset($line_r[1]))
+		{
+			$sent_command = trim($line_r[1]);
+			$replaced = true;
+		}
+	}
+
+	if(!$replaced)
+	{
+		exit(3);
+	}
 }
 
 // Register PTS Process
@@ -43,7 +62,7 @@ pts_module_startup_init(); // Initialize the PTS module system
 
 // Read passed arguments
 $pass_args = array();
-for($i = 3; $i < $argc; $i++)
+for($i = 2; $i < $argc; $i++)
 {
 	if(isset($argv[$i]))
 	{
@@ -51,7 +70,7 @@ for($i = 3; $i < $argc; $i++)
 	}
 }
 
-pts_run_option_next($sent_command, $pass_args, $argv[2]);
+pts_run_option_next($sent_command, $pass_args, $argv[1]);
 
 while(($current_option = pts_run_option_next(false)) != false)
 {

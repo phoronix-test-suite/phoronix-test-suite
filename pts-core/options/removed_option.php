@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2009, Phoronix Media
+	Copyright (C) 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,34 +20,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class test_module implements pts_option_interface
+class removed_option implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$module = strtolower($r[0]);
-		if(is_file(MODULE_DIR . $module . ".php") || is_file(MODULE_DIR . $module . ".sh"))
-		{
-			pts_load_module($module);
-			pts_attach_module($module);
-
-			echo pts_string_header("Starting Module Test Process");
-
-			foreach(pts_module_processes() as $process)
-			{
-				if(IS_DEBUG_MODE || pts_read_assignment("COMMAND") == "debug_module")
-				{
-					echo "Calling: " . $process . "()\n";
-				}
-
-				pts_module_process($process);
-				sleep(1);
-			}
-			echo "\n";
-		}
-		else
-		{
-			echo "\n" . $module . " is not recognized.\n";
-		}
+		echo "\nThis option was dropped or changed in the Phoronix Test Suite.\nFor more information on the replacement option, view the documentation.\n\n";
 	}
 }
 
