@@ -24,7 +24,7 @@ class benchmark implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("install_test", $r, "benchmark");
+		pts_run_option_next("install_test", $r, "benchmark", array("SILENCE_MESSAGES" => true));
 		pts_run_option_next("run_test", $r, "benchmark");
 	}
 }

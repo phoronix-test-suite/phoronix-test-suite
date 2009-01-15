@@ -39,11 +39,6 @@ class install_test implements pts_option_interface
 
 			$items_to_install = array_unique(array_map("strtolower", $items_to_install));
 
-			if(pts_read_assignment("COMMAND") == "force-install")
-			{
-				pts_set_assignment("PTS_FORCE_INSTALL", 1);
-			}
-
 			foreach($items_to_install as $this_install)
 			{
 				if(strpos($this_install, "pcqs-") !== false && !is_file(XML_SUITE_LOCAL_DIR . "pcqs-license.txt"))

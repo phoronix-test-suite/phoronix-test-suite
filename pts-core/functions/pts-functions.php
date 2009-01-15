@@ -42,7 +42,6 @@ function pts_run_option_command($command, $pass_args = null, $command_descriptor
 {
 	pts_clear_assignments();
 	pts_set_assignment(array("START_TIME", "THIS_OPTION_IDENTIFIER"), time()); // For now THIS_OPTION_IDENTIFIER is also time
-	pts_set_assignment("COMMAND", $command_descriptor);
 
 	if(is_array($preset_assignments))
 	{

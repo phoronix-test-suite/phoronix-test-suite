@@ -51,7 +51,7 @@ function pts_start_install($to_install)
 		{
 			$exit_message = "";
 
-			if(pts_read_assignment("COMMAND") != "benchmark")
+			if(!pts_is_assignment("SILENCE_MESSAGES"))
 			{
 				echo pts_string_header("\nNot recognized: " . $to_install[0] . "\n");
 			}
@@ -486,7 +486,7 @@ function pts_install_test($identifier)
 			else
 			{
 				$installed = true;
-				if(pts_read_assignment("COMMAND") != "benchmark")
+				if(!pts_is_assignment("SILENCE_MESSAGES"))
 				{
 					echo "Already Installed: " . $identifier . "\n";
 				}

@@ -20,12 +20,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class batch_benchmark implements pts_option_interface
+class force_install implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("install_test", $r, "benchmark", array("IS_BATCH_MODE" => true, "SILENCE_MESSAGES" => true));
-		pts_run_option_next("run_test", $r, "benchmark", array("IS_BATCH_MODE" => true));
+		pts_run_option_next("install_test", $r, "install_test", array("PTS_FORCE_INSTALL" => true));
 	}
 }
 

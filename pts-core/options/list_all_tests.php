@@ -20,12 +20,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class batch_benchmark implements pts_option_interface
+class list_all_tests implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("install_test", $r, "benchmark", array("IS_BATCH_MODE" => true, "SILENCE_MESSAGES" => true));
-		pts_run_option_next("run_test", $r, "benchmark", array("IS_BATCH_MODE" => true));
+		pts_run_option_next("list_tests", $r, "list_tests", array("LIST_ALL_TESTS" => true));
 	}
 }
 
