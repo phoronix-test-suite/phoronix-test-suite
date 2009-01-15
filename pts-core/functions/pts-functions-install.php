@@ -121,7 +121,7 @@ function pts_download_test_files($identifier)
 			$package_filename = $download_packages[$i]->get_filename();
 			$download_destination = $download_location . $package_filename;
 
-			if(!is_file($download_destination))
+			if(!is_file($download_destination) || (is_link($download_destination) && !is_file(readlink($download_destination))))
 			{
 				if(!$header_displayed)
 				{

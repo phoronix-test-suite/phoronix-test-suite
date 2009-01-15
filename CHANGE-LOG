@@ -14,6 +14,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Move all of the command / option handler into pts-core from phoronix-test-suite shell script and add option-command-aliases
 - pts-core: Eliminate use of COMMAND assignment
 - pts-core: Eliminate command descriptor from PTS run option API
+- pts-core: Move list of options on command failure out of phoronix-test-suite and into pts-core
 - pts: Documentation updates
 - pts: Resolution fix for smokin-guns test profile
 - pts_Graph: Switch font calculation to using bilde_renderer::soft_text_string_dimensions()
