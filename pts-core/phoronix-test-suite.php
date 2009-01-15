@@ -55,7 +55,8 @@ pts_run_option_next($sent_command, $pass_args, $argv[2]);
 
 while(($current_option = pts_run_option_next(false)) != false)
 {
-	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_descriptor()); // Run command
+	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), 
+	$current_option->get_descriptor(), $current_option->get_preset_assignments()); // Run command
 }
 
 ?>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-functions.php: General functions required for Phoronix Test Suite operation.
 
 	This program is free software; you can redistribute it and/or modify
@@ -38,11 +38,19 @@ require_once("pts-core/functions/pts-functions_modules.php");
 require_once("pts-core/functions/pts-functions_assignments.php");
 
 // Phoronix Test Suite - Functions
-function pts_run_option_command($command, $pass_args = null, $command_descriptor = "")
+function pts_run_option_command($command, $pass_args = null, $command_descriptor = "", $preset_assignments = "")
 {
 	pts_clear_assignments();
 	pts_set_assignment(array("START_TIME", "THIS_OPTION_IDENTIFIER"), time()); // For now THIS_OPTION_IDENTIFIER is also time
 	pts_set_assignment("COMMAND", $command_descriptor);
+
+	if(is_array($preset_assignments))
+	{
+		foreach($preset_assignments as $key => $assign)
+		{
+			pts_set_assignment_once($key, $assign);
+		}
+	}
 
 	if(is_file("pts-core/options/" . $command . ".php"))
 	{
@@ -57,7 +65,7 @@ function pts_run_option_command($command, $pass_args = null, $command_descriptor
 	}
 	pts_clear_assignments();
 }
-function pts_run_option_next($command = false, $pass_args = null, $command_descriptor = "")
+function pts_run_option_next($command = false, $pass_args = null, $command_descriptor = "", $set_assignments = "")
 {
 	static $options;
 	$return = null;
@@ -80,7 +88,7 @@ function pts_run_option_next($command = false, $pass_args = null, $command_descr
 	}
 	else
 	{
-		array_push($options, new pts_run_option($command, $pass_args, $command_descriptor));
+		array_push($options, new pts_run_option($command, $pass_args, $command_descriptor, $set_assignments));
 	}
 
 	return $return;

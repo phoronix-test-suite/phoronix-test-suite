@@ -9,6 +9,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Add results overview table to result-file-to-pdf generator
 - pts-core: Move graph generating code to pts_generate_graphs()
 - pts-core: Fix for downloading files from remote download-cache directories
+- pts-core: Support pre-set assignments through pts_run_option_next()
 - pts: Documentation updates
 - pts: Resolution fix for smokin-guns test profile
 - pts_Graph: Switch font calculation to using bilde_renderer::soft_text_string_dimensions()
