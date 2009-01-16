@@ -408,7 +408,10 @@ abstract class pts_Graph
 
 			$this->graph_image->draw_line($px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
 
-			$this->graph_image->write_text_right($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2, $px_from_left_start - 1, $px_from_top - 2);
+			if($display_value != 0)
+			{
+				$this->graph_image->write_text_right($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2, $px_from_left_start - 1, $px_from_top - 2);
+			}
 
 			if($i != 0 && $this->graph_background_lines == true)
 			{

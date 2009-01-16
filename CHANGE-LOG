@@ -20,6 +20,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts: Resolution fix for smokin-guns test profile
 - pts_Graph: Switch font calculation to using bilde_renderer::soft_text_string_dimensions()
 - pts_Graph: Switch to using new infrastructure in bilde_renderer
+- pts_Graph: Don't print market for tick when display value is 0
 - bilde_renderer: Add bilde_renderer::setup_renderer()
 - bilde_swf_renderer: Render rectangles, borders, and right-aligned text correctly
 - bilde_renderer: Add internal text/font width and height calculator
