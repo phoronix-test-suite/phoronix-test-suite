@@ -180,15 +180,15 @@ function pts_download_test_files($identifier)
 							{
 								// P_OPTION_CACHE_SYMLINK is disabled by default for now
 								echo "Linking Cached File: " . $package_filename . "\n";
-								$copy_sucess = pts_symlink($cache_directories[$j] . $package_filename, $download_destination);
+								pts_symlink($cache_directories[$j] . $package_filename, $download_destination);
 							}
 							else
 							{
 								echo "Copying Cached File: " . $package_filename . "\n";
-								$copy_sucess = copy($cache_directories[$j] . $package_filename, $download_destination);
+								copy($cache_directories[$j] . $package_filename, $download_destination);
 							}
 
-							if($copy_success)
+							if(is_file($download_destination))
 							{
 								$urls = array();
 								$used_cache = true;
