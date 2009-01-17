@@ -24,7 +24,7 @@
 function pts_prompt_results_identifier($current_identifiers = null)
 {
 	// Prompt for a results identifier
-	$RESULTS_IDENTIFIER = null;
+	$results_identifier = null;
 	$show_identifiers = array();
 
 	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE")
@@ -61,31 +61,31 @@ function pts_prompt_results_identifier($current_identifiers = null)
 		{
 			if($times_tried == 0 && ($env_identifier = getenv("TEST_RESULTS_IDENTIFIER")) != false)
 			{
-				$RESULTS_IDENTIFIER = $env_identifier;
-				echo "Test Identifier: " . $RESULTS_IDENTIFIER . "\n";
+				$results_identifier = $env_identifier;
+				echo "Test Identifier: " . $results_identifier . "\n";
 			}
 			else
 			{
 				echo "Enter a unique name for this test run: ";
-				$RESULTS_IDENTIFIER = trim(str_replace(array("/"), "", fgets(STDIN)));
+				$results_identifier = trim(str_replace(array("/"), "", fgets(STDIN)));
 			}
 			$times_tried++;
 		}
-		while(empty($RESULTS_IDENTIFIER) || in_array($RESULTS_IDENTIFIER, $show_identifiers));
+		while(empty($results_identifier) || in_array($results_identifier, $show_identifiers));
 	}
 
-	if(empty($RESULTS_IDENTIFIER))
+	if(empty($results_identifier))
 	{
-		$RESULTS_IDENTIFIER = date("Y-m-d H:i");
+		$results_identifier = date("Y-m-d H:i");
 	}
 	else
 	{
-		$RESULTS_IDENTIFIER = pts_swap_user_variables($RESULTS_IDENTIFIER);
+		$results_identifier = pts_swap_user_variables($results_identifier);
 	}
 
-	pts_set_assignment_once("TEST_RESULTS_IDENTIFIER", $RESULTS_IDENTIFIER);
+	pts_set_assignment_once("TEST_RESULTS_IDENTIFIER", $results_identifier);
 
-	return $RESULTS_IDENTIFIER;
+	return $results_identifier;
 }
 function pts_prompt_svg_result_options($svg_file)
 {
@@ -144,8 +144,8 @@ function pts_prompt_test_options($identifier)
 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 
-	$USER_ARGS = "";
-	$TEXT_ARGS = "";
+	$user_args = "";
+	$text_args = "";
 	$test_options = pts_test_options($identifier);
 
 	if(count($test_options) > 0)
@@ -168,7 +168,7 @@ function pts_prompt_test_options($identifier)
 			}
 			while(empty($value));
 
-			$USER_ARGS .= $o->get_option_prefix() . $value . $o->get_option_postfix();
+			$user_args .= $o->get_option_prefix() . $value . $o->get_option_postfix();
 		}
 		else
 		{
@@ -231,20 +231,20 @@ function pts_prompt_test_options($identifier)
 
 			if(count($test_options) > 1)
 			{
-				$TEXT_ARGS .= $o->get_name() . ": ";
+				$text_args .= $o->get_name() . ": ";
 			}
-			$TEXT_ARGS .= $option_display_name;
+			$text_args .= $option_display_name;
 
 			if($this_option_pos < (count($test_options) - 1))
 			{
-				$TEXT_ARGS .= " - ";
+				$text_args .= " - ";
 			}
 
-			$USER_ARGS .= $o->get_option_prefix() . $o->get_option_value(($bench_choice - 1)) . $o->get_option_postfix() . " ";
+			$user_args .= $o->get_option_prefix() . $o->get_option_value(($bench_choice - 1)) . $o->get_option_postfix() . " ";
 		}
 	}
 
-	return array($USER_ARGS, $TEXT_ARGS);
+	return array($user_args, $text_args);
 }
 function pts_defaults_test_options($identifier)
 {
@@ -297,13 +297,13 @@ function pts_defaults_test_options($identifier)
 		array_push($all_args_description, $option_args_description);
 	}
 
-	$TEST_ARGS = array();
-	pts_all_combos($TEST_ARGS, "", $all_args_real, 0);
+	$test_args = array();
+	pts_all_combos($test_args, "", $all_args_real, 0);
 
-	$TEST_ARGS_DESCRIPTION = array();
-	pts_all_combos($TEST_ARGS_DESCRIPTION, "", $all_args_description, 0, $description_separate);
+	$test_args_description = array();
+	pts_all_combos($test_args_description, "", $all_args_description, 0, $description_separate);
 
-	return array($TEST_ARGS, $TEST_ARGS_DESCRIPTION);
+	return array($test_args, $test_args_description);
 }
 function pts_generate_batch_run_options($identifier)
 {
@@ -344,13 +344,13 @@ function pts_generate_batch_run_options($identifier)
 		array_push($batch_all_args_description, $option_args_description);
 	}
 
-	$TEST_ARGS = array();
-	pts_all_combos($TEST_ARGS, "", $batch_all_args_real, 0);
+	$test_args = array();
+	pts_all_combos($test_args, "", $batch_all_args_real, 0);
 
-	$TEST_ARGS_DESCRIPTION = array();
-	pts_all_combos($TEST_ARGS_DESCRIPTION, "", $batch_all_args_description, 0, $description_separate);
+	$test_args_description = array();
+	pts_all_combos($test_args_description, "", $batch_all_args_description, 0, $description_separate);
 
-	return array($TEST_ARGS, $TEST_ARGS_DESCRIPTION);
+	return array($test_args, $test_args_description);
 }
 function pts_swap_user_variables($user_str)
 {
@@ -367,54 +367,54 @@ function pts_swap_user_variables($user_str)
 function pts_prompt_save_file_name($check_env = true, $to_run)
 {
 	// Prompt to save a file when running a test
-	$PROPOSED_FILE_NAME = null;
-	$CUSTOM_TITLE = null;
+	$proposed_name = null;
+	$custom_title = null;
 
 	if($check_env != false)
 	{
 		if(!empty($check_env) || ($check_env = getenv("TEST_RESULTS_NAME")) != false)
 		{
-			$CUSTOM_TITLE = $check_env;
-			$PROPOSED_FILE_NAME = pts_input_string_to_identifier($check_env);
-			//echo "Saving Results To: " . $PROPOSED_FILE_NAME . "\n";
+			$custom_title = $check_env;
+			$proposed_name = pts_input_string_to_identifier($check_env);
+			//echo "Saving Results To: " . $proposed_name . "\n";
 		}
 	}
 
 	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
 	{
-		$is_reserved_word = pts_is_test($PROPOSED_FILE_NAME) || pts_is_suite($PROPOSED_FILE_NAME);
+		$is_reserved_word = pts_is_test($proposed_name) || pts_is_suite($proposed_name);
 
-		while(empty($PROPOSED_FILE_NAME) || $is_reserved_word || !pts_validate_save_file_name($PROPOSED_FILE_NAME, $to_run))
+		while(empty($proposed_name) || $is_reserved_word || !pts_validate_save_file_name($proposed_name, $to_run))
 		{
 			if($is_reserved_word)
 			{
-				echo "\n\nThe name of the saved file cannot be the same as a test/suite: " . $PROPOSED_FILE_NAME . "\n";
+				echo "\n\nThe name of the saved file cannot be the same as a test/suite: " . $proposed_name . "\n";
 				$is_reserved_word = false;
 			}
-			else if(!pts_validate_save_file_name($PROPOSED_FILE_NAME, $to_run))
+			else if(!pts_validate_save_file_name($proposed_name, $to_run))
 			{
-				echo "\n\n" . $PROPOSED_FILE_NAME . " is associated with a different test/suite.\n";
+				echo "\n\n" . $proposed_name . " is associated with a different test/suite.\n";
 			}
 
 			echo "Enter a name to save these results: ";
-			$PROPOSED_FILE_NAME = trim(fgets(STDIN));
-			$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
-			$PROPOSED_FILE_NAME = pts_input_string_to_identifier($PROPOSED_FILE_NAME);
+			$proposed_name = trim(fgets(STDIN));
+			$custom_title = $proposed_name;
+			$proposed_name = pts_input_string_to_identifier($proposed_name);
 
-			$is_reserved_word = pts_is_run_object($PROPOSED_FILE_NAME);
+			$is_reserved_word = pts_is_run_object($proposed_name);
 		}
 	}
 
-	if(empty($PROPOSED_FILE_NAME))
+	if(empty($proposed_name))
 	{
-		$PROPOSED_FILE_NAME = date("Y-m-d-Hi");
+		$proposed_name = date("Y-m-d-Hi");
 	}
-	if(empty($CUSTOM_TITLE))
+	if(empty($custom_title))
 	{
-		$CUSTOM_TITLE = $PROPOSED_FILE_NAME;
+		$custom_title = $proposed_name;
 	}
 
-	return array($PROPOSED_FILE_NAME, $CUSTOM_TITLE);
+	return array($proposed_name, $custom_title);
 }
 function pts_validate_save_file_name($proposed_save_name, $to_run)
 {
@@ -650,13 +650,6 @@ function pts_verify_test_installation($identifiers)
 }
 function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
 {
-	// Call the tests
-	if(!pts_is_assignment("PTS_RECURSE_CALL"))
-	{
-		pts_module_process("__pre_run_process", $tests_to_run);
-		pts_set_assignment("PTS_RECURSE_CALL", 1);
-	}
-
 	for($i = 0; $i < count($tests_to_run); $i++)
 	{
 		if(pts_is_suite($tests_to_run[$i]))
@@ -707,43 +700,43 @@ function pts_record_test_result(&$tandem_xml, $result, $identifier, $tandem_id =
 
 	pts_set_assignment("TEST_RAN", true);
 }
-function pts_save_test_file($PROPOSED_FILE_NAME, &$RESULTS = null, $RAW_TEXT = null)
+function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
 {
 	// Save the test file
 	$j = 1;
-	while(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/test-" . $j . ".xml"))
+	while(is_file(SAVE_RESULTS_DIR . $proposed_name . "/test-" . $j . ".xml"))
 	{
 		$j++;
 	}
 
-	$REAL_FILE_NAME = $PROPOSED_FILE_NAME . "/test-" . $j . ".xml";
+	$real_name = $proposed_name . "/test-" . $j . ".xml";
 
-	if($RESULTS != null)
+	if($results != null)
 	{
-		$R_FILE = $RESULTS->getXML();
+		$r_file = $results->getXML();
 	}
-	else if($RAW_TEXT != null)
+	else if($raw_text != null)
 	{
-		$R_FILE = $RAW_TEXT;
+		$r_file = $raw_text;
 	}
 	else
 	{
 		return false;
 	}
 
-	pts_save_result($REAL_FILE_NAME, $R_FILE);
+	pts_save_result($real_name, $r_file);
 
-	if(!is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"))
+	if(!is_file(SAVE_RESULTS_DIR . $proposed_name . "/composite.xml"))
 	{
-		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $REAL_FILE_NAME));
+		pts_save_result($proposed_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name));
 	}
 	else
 	{
 		// Merge Results
-		$MERGED_RESULTS = pts_merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $REAL_FILE_NAME));
-		pts_save_result($PROPOSED_FILE_NAME . "/composite.xml", $MERGED_RESULTS);
+		$MERGED_RESULTS = pts_merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $proposed_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
+		pts_save_result($proposed_name . "/composite.xml", $MERGED_RESULTS);
 	}
-	return $REAL_FILE_NAME;
+	return $real_name;
 }
 function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "")
 {
@@ -1003,12 +996,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 	}
 
-	$RETURN_STRING = $test_title . ":\n";
-	$RETURN_STRING .= $arguments_description . "\n";
+	$return_string = $test_title . ":\n";
+	$return_string .= $arguments_description . "\n";
 
 	if(!empty($arguments_description))
 	{
-		$RETURN_STRING .= "\n";
+		$return_string .= "\n";
 	}
 
 	// Result Calculation
@@ -1019,11 +1012,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$pts_test_result->set_result_proportion($result_proportion);
 	$pts_test_result->set_result_scale($result_scale);
 	$pts_test_result->set_result_quantifier($result_quantifier);
-	$pts_test_result->calculate_end_result($RETURN_STRING); // Process results
+	$pts_test_result->calculate_end_result($return_string); // Process results
 
-	if(!empty($RETURN_STRING))
+	if(!empty($return_string))
 	{
-		echo $this_result = pts_string_header($RETURN_STRING, "#");
+		echo $this_result = pts_string_header($return_string, "#");
 		pts_text_save_buffer($this_result);
 	}
 	else

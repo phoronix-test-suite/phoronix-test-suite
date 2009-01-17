@@ -448,15 +448,15 @@ class run_test implements pts_option_interface
 		}
 
 		// Run the actual tests
+		pts_module_process("__pre_run_process", $test_names_r);
 		pts_recurse_call_tests($test_names_r, $test_arguments_r, $save_results, $xml_results_writer, $results_identifier, $test_arguments_description_r);
+		pts_set_assignment("PTS_TESTING_DONE", 1);
+		pts_module_process("__post_run_process", $test_names_r);
 
 		if(isset($POST_RUN_MESSAGE))
 		{
 			pts_user_message($POST_RUN_MESSAGE);
 		}
-
-		pts_set_assignment("PTS_TESTING_DONE", 1);
-		pts_module_process("__post_run_process", $test_names_r);
 
 		if($save_results)
 		{
