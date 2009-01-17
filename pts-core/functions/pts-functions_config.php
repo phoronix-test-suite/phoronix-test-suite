@@ -39,20 +39,7 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 {
 	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
-	if(is_file(PTS_USER_DIR . "user-config.xml"))
-	{
-		$file = file_get_contents(PTS_USER_DIR . "user-config.xml");
-	}
-	else if(is_file(ETC_DIR . "user-config-template.xml"))
-	{
-		$file = file_get_contents(ETC_DIR . "user-config-template.xml");
-	}
-	else
-	{
-		$file = "";
-	}
-
-	$read_config = new tandem_XmlReader($file);
+	$read_config = new pts_config_tandem_XmlReader();
 
 	$UserAgreement = pts_read_user_config(P_OPTION_USER_AGREEMENT, "", $read_config);
 	$UserAgreement_MD5 = md5_file("pts-core/user-agreement.txt");
@@ -299,19 +286,12 @@ function pts_read_config($config_file, $xml_pointer, $value, $tandem_xml)
 	}
 	else
 	{
-		if(is_file(PTS_USER_DIR . $config_file))
-		{
-			if(($file = file_get_contents(PTS_USER_DIR . $config_file)) != false)
-			{
-				$xml_parser = new tandem_XmlReader($file);
-				unset($file);
-				$temp_value = $xml_parser->getXmlValue($xml_pointer);
+		$xml_parser = new pts_config_tandem_XmlReader();
+		$temp_value = $xml_parser->getXmlValue($xml_pointer);
 
-				if(!empty($temp_value))
-				{
-					$value = $temp_value;
-				}
-			}
+		if(!empty($temp_value))
+		{
+			$value = $temp_value;
 		}
 	}
 
