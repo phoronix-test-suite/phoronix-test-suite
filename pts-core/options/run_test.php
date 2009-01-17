@@ -33,8 +33,8 @@ class run_test implements pts_option_interface
 			return false;
 		}
 		
-		$MODULE_STORE = pts_module_store_var("TO_STRING");
-		$TEST_PROPERTIES = array();
+		$module_store = pts_module_store_var("TO_STRING");
+		$test_properties = array();
 		$types_of_tests = array();
 
 		if(count($to_run_identifiers) == 0 || empty($to_run_identifiers[0]))
@@ -156,35 +156,35 @@ class run_test implements pts_option_interface
 				{
 					$option_output = pts_generate_batch_run_options($to_run);
 
-					$TEST_RUN = array();
-					$TEST_ARGS = $option_output[0];
-					$TEST_ARGS_DESCRIPTION = $option_output[1];
+					$test_run = array();
+					$test_args = $option_output[0];
+					$test_args_description = $option_output[1];
 
-					for($i = 0; $i < count($TEST_ARGS); $i++)
+					for($i = 0; $i < count($test_args); $i++)
 					{
-						array_push($TEST_RUN, $to_run);
+						array_push($test_run, $to_run);
 					}
 				}
 				else if(pts_read_assignment("IS_DEFAULTS_MODE") == true)
 				{
 					$option_output = pts_defaults_test_options($to_run);
 
-					$TEST_RUN = array();
-					$TEST_ARGS = $option_output[0];
-					$TEST_ARGS_DESCRIPTION = $option_output[1];
+					$test_run = array();
+					$test_args = $option_output[0];
+					$test_args_description = $option_output[1];
 
-					for($i = 0; $i < count($TEST_ARGS); $i++)
+					for($i = 0; $i < count($test_args); $i++)
 					{
-						array_push($TEST_RUN, $to_run);
+						array_push($test_run, $to_run);
 					}
 				}
 				else
 				{
 					$option_output = pts_prompt_test_options($to_run);
 
-					$TEST_RUN = array($to_run);
-					$TEST_ARGS = array($option_output[0]);
-					$TEST_ARGS_DESCRIPTION = array($option_output[1]);
+					$test_run = array($to_run);
+					$test_args = array($option_output[0]);
+					$test_args_description = array($option_output[1]);
 				}
 
 				if($unique_test_names == 1)
@@ -209,18 +209,18 @@ class run_test implements pts_option_interface
 					$test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
 				}
 
-				$PRE_RUN_MESSAGE = $xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
-				$POST_RUN_MESSAGE = $xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
-				$SUITE_RUN_MODE = $xml_parser->getXMLValue(P_SUITE_RUNMODE);
+				$pre_run_message = $xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
+				$post_run_message = $xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
+				$suite_run_mode = $xml_parser->getXMLValue(P_SUITE_RUNMODE);
 
-				if($SUITE_RUN_MODE == "PCQS")
+				if($suite_run_mode == "PCQS")
 				{
 					pts_set_assignment_once("IS_PCQS_MODE", true);
 				}
 
-				$TEST_RUN = array();
-				$TEST_ARGS = array();
-				$TEST_ARGS_DESCRIPTION = array();
+				$test_run = array();
+				$test_args = array();
+				$test_args_description = array();
 
 				$suite_run = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 				$suite_mode = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
@@ -240,9 +240,9 @@ class run_test implements pts_option_interface
 
 							for($x = 0; $x < count($temp_args); $x++)
 							{
-								array_push($TEST_RUN, $this_test);
-								array_push($TEST_ARGS, $temp_args[$x]);
-								array_push($TEST_ARGS_DESCRIPTION, $temp_args_description[$x]);
+								array_push($test_run, $this_test);
+								array_push($test_args, $temp_args[$x]);
+								array_push($test_args_description, $temp_args_description[$x]);
 							}
 							break;
 						case "DEFAULTS":
@@ -252,15 +252,15 @@ class run_test implements pts_option_interface
 
 							for($x = 0; $x < count($temp_args); $x++)
 							{
-								array_push($TEST_RUN, $this_test);
-								array_push($TEST_ARGS, $temp_args[$x]);
-								array_push($TEST_ARGS_DESCRIPTION, $temp_args_description[$x]);
+								array_push($test_run, $this_test);
+								array_push($test_args, $temp_args[$x]);
+								array_push($test_args_description, $temp_args_description[$x]);
 							}
 							break;
 						default:
-							array_push($TEST_RUN, $this_test);
-							array_push($TEST_ARGS, $suite_args[$i]);
-							array_push($TEST_ARGS_DESCRIPTION, $suite_args_description[$i]);
+							array_push($test_run, $this_test);
+							array_push($test_args, $suite_args[$i]);
+							array_push($test_args_description, $suite_args_description[$i]);
 							break;
 					}
 				}
@@ -277,21 +277,21 @@ class run_test implements pts_option_interface
 				$test_previous_properties = $xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
 				$test_version = $xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
 				$test_type = $xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
-				$TEST_RUN = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-				$TEST_ARGS = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
-				$TEST_ARGS_DESCRIPTION = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+				$test_run = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+				$test_args = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
+				$test_args_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 
 				pts_set_assignment_once("AUTO_SAVE_NAME", $to_run);
 
 				foreach(explode(";", $test_previous_properties) as $test_prop)
 				{
-					if(!in_array($test_prop, $TEST_PROPERTIES))
+					if(!in_array($test_prop, $test_properties))
 					{
-						array_push($TEST_PROPERTIES, $test_prop);
+						array_push($test_properties, $test_prop);
 					}
 				}
 
-				pts_module_process_extensions($test_extensions, $MODULE_STORE);
+				pts_module_process_extensions($test_extensions, $module_store);
 			}
 			else
 			{
@@ -299,16 +299,16 @@ class run_test implements pts_option_interface
 				continue;
 			}
 
-			for($i = 0; $i < count($TEST_ARGS) && $i < count($TEST_RUN); $i++)
+			for($i = 0; $i < count($test_args) && $i < count($test_run); $i++)
 			{
-				array_push($test_names_r, $TEST_RUN[$i]);
+				array_push($test_names_r, $test_run[$i]);
 
-				$argument = $TEST_ARGS[$i];
+				$argument = $test_args[$i];
 				array_push($test_arguments_r, $argument);
 
-				if(isset($TEST_ARGS_DESCRIPTION[$i]))
+				if(isset($test_args_description[$i]))
 				{
-					$argument = $TEST_ARGS_DESCRIPTION[$i];
+					$argument = $test_args_description[$i];
 				}
 				array_push($test_arguments_description_r, $argument);
 			}
@@ -342,9 +342,9 @@ class run_test implements pts_option_interface
 
 			if($save_results)
 			{
-				if($unique_test_names == 1 && ($ra = pts_read_assignment("AUTO_SAVE_NAME")) != false)
+				if($unique_test_names == 1 && ($asn = pts_read_assignment("AUTO_SAVE_NAME")) != false)
 				{
-					$auto_name = $ra;
+					$auto_name = $asn;
 				}
 				else
 				{
@@ -352,14 +352,14 @@ class run_test implements pts_option_interface
 				}
 
 				// Prompt Save File Name
-				$file_name_result = pts_prompt_save_file_name($auto_name, $TEST_RUN[0]);
-				$PROPOSED_FILE_NAME = $file_name_result[0];
-				$CUSTOM_TITLE = $file_name_result[1];
+				$file_name_result = pts_prompt_save_file_name($auto_name, $test_run[0]);
+				$proposed_file_name = $file_name_result[0];
+				$custom_title = $file_name_result[1];
 
 				// Prompt Identifiers
-				if(is_file(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml"))
+				if(is_file(SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml"))
 				{
-					$xml_parser = new pts_results_tandem_XmlReader($PROPOSED_FILE_NAME);
+					$xml_parser = new pts_results_tandem_XmlReader($proposed_file_name);
 					$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 					$result_identifiers = array();
 
@@ -375,7 +375,7 @@ class run_test implements pts_option_interface
 				}
 
 				$results_identifier = pts_prompt_results_identifier($result_identifiers);
-				pts_set_assignment("SAVE_FILE_NAME", $PROPOSED_FILE_NAME);
+				pts_set_assignment("SAVE_FILE_NAME", $proposed_file_name);
 
 				// Prompt Description
 
@@ -432,11 +432,6 @@ class run_test implements pts_option_interface
 
 		// Run the test process
 
-		if(isset($PRE_RUN_MESSAGE))
-		{
-			pts_user_message($PRE_RUN_MESSAGE);
-		}
-
 		if(count($test_names_r) > 1)
 		{
 			$estimated_length = pts_test_estimated_run_time($test_names_r);
@@ -447,26 +442,31 @@ class run_test implements pts_option_interface
 			}
 		}
 
+		if(isset($pre_run_message))
+		{
+			pts_user_message($pre_run_message);
+		}
+
 		// Run the actual tests
 		pts_module_process("__pre_run_process", $test_names_r);
 		pts_recurse_call_tests($test_names_r, $test_arguments_r, $save_results, $xml_results_writer, $results_identifier, $test_arguments_description_r);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_process("__post_run_process", $test_names_r);
 
-		if(isset($POST_RUN_MESSAGE))
+		if(isset($post_run_message))
 		{
-			pts_user_message($POST_RUN_MESSAGE);
+			pts_user_message($post_run_message);
 		}
 
 		if($save_results)
 		{
 			if(pts_read_assignment("IS_BATCH_MODE") != false)
 			{
-				array_push($TEST_PROPERTIES, "PTS_BATCH_MODE");
+				array_push($test_properties, "PTS_BATCH_MODE");
 			}
 			else if(pts_read_assignment("IS_DEFAULTS_MODE") != false)
 			{
-				array_push($TEST_PROPERTIES, "PTS_DEFAULTS_MODE");
+				array_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
 			$test_notes = pts_generate_test_notes($test_type);
@@ -482,26 +482,26 @@ class run_test implements pts_option_interface
 			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $results_identifier);
 
 			$id = pts_request_new_id();
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $CUSTOM_TITLE);
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $custom_title);
 			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, $id, pts_read_assignment("TO_RUN"));
 			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, $id, $test_version);
 			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
 			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $MODULE_STORE);
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $TEST_PROPERTIES));
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $module_store);
+			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $test_properties));
 
 			if(pts_read_assignment("TEST_RAN") == true)
 			{
-				pts_save_test_file($PROPOSED_FILE_NAME, $xml_results_writer);
-				echo "Results Saved To: " . SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml\n";
-				pts_display_web_browser(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/index.html");
+				pts_save_test_file($proposed_file_name, $xml_results_writer);
+				echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
+				pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
 
 				$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
 
 				if($upload_results)
 				{
 					$tags_input = pts_promt_user_tags(array($results_identifier));
-					$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $PROPOSED_FILE_NAME . "/composite.xml", $tags_input);
+					$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml", $tags_input);
 
 					if(!empty($upload_url))
 					{
