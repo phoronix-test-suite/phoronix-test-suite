@@ -175,10 +175,20 @@ function pts_download_test_files($identifier)
 					{
 						if(pts_validate_md5_download_file($cache_directories[$j] . $package_filename, $package_md5))
 						{
-							echo "Copying Cached File: " . $package_filename . "\n";
 
-							// TODO: possibly replace copy() operation with symlink()
-							if(copy($cache_directories[$j] . $package_filename, $download_destination))
+							if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
+							{
+								// P_OPTION_CACHE_SYMLINK is disabled by default for now
+								echo "Linking Cached File: " . $package_filename . "\n";
+								$copy_sucess = pts_symlink($cache_directories[$j] . $package_filename, $download_destination);
+							}
+							else
+							{
+								echo "Copying Cached File: " . $package_filename . "\n";
+								$copy_sucess = copy($cache_directories[$j] . $package_filename, $download_destination);
+							}
+
+							if($copy_success)
 							{
 								$urls = array();
 								$used_cache = true;

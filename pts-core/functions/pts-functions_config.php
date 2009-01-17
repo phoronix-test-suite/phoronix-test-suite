@@ -121,6 +121,7 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 
 	$config->addXmlObject(P_OPTION_TEST_REMOVEDOWNLOADS, 3, pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_CACHE_SEARCHMEDIA, 3, pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE", $read_config));
+	$config->addXmlObject(P_OPTION_CACHE_SYMLINK, 3, pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_PROMPT_DOWNLOADLOC, 3, pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_TEST_ENVIRONMENT, 3, pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/", $read_config));
 	$config->addXmlObject(P_OPTION_CACHE_DIRECTORY, 3, pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/", $read_config));

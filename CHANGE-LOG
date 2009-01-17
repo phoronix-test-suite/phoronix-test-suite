@@ -16,6 +16,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Eliminate command descriptor from PTS run option API
 - pts-core: Move list of options on command failure out of phoronix-test-suite and into pts-core
 - pts-core: Fix round to calculation in pts_format_time_string()
+- pts-core: Add SymLinkFilesFromCache option to user-config.xml for linking files from download-cache instead of copy
 - pts: Documentation updates
 - pts: Resolution fix for smokin-guns test profile
 - pts_Graph: Switch font calculation to using bilde_renderer::soft_text_string_dimensions()

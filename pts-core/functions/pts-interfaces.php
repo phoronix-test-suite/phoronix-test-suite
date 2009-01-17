@@ -187,6 +187,7 @@ define("P_OPTION_TEST_REMOVEDOWNLOADS", "PhoronixTestSuite/Options/Installation/
 define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/Installation/EnvironmentDirectory"); // Results save directory
 define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/Installation/CacheDirectory"); // Directory for reading/writing to download cache
 define("P_OPTION_CACHE_SEARCHMEDIA", "PhoronixTestSuite/Options/Installation/SearchMediaForCache"); // Search /media/ devices for a remote download cache
+define("P_OPTION_CACHE_SYMLINK", "PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache"); // Don't copy files from cache, but symlink to them
 define("P_OPTION_PROMPT_DOWNLOADLOC", "PhoronixTestSuite/Options/Installation/PromptForDownloadMirror"); // Results save directory
 define("P_OPTION_SCTP_DIRECTORY", "PhoronixTestSuite/Options/Installation/SelfContainedTestProfileDirectory"); // Directory for reading/writing to download cache
 
