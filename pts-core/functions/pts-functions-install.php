@@ -25,10 +25,7 @@ require_once("pts-core/functions/pts-functions-install_dependencies.php");
 
 function pts_start_install($to_install)
 {
-	if(!is_array($to_install))
-	{
-		$to_install = array($to_install);
-	}
+	$to_install = pts_to_array($to_install);
 
 	if(IS_SCTP_MODE)
 	{

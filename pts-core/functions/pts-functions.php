@@ -392,5 +392,14 @@ function pts_load_pdf_generator()
 
 	return $pdf_loader && include_once($pdf_loader);
 }
+function pts_to_array($var)
+{
+	if(!is_array($var))
+	{
+		$var = array($var);
+	}
+
+	return $var;
+}
 
 ?>

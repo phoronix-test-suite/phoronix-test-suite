@@ -580,11 +580,7 @@ function pts_verify_test_installation($identifiers)
 	// Verify a test is installed
 	$identifiers_o = $identifiers;
 	$tests = array();
-
-	if(!is_array($identifiers))
-	{
-		$identifiers = array($identifiers);	
-	}
+	$identifiers = pts_to_array($identifiers);
 
 	foreach($identifiers as $identifier)
 	{

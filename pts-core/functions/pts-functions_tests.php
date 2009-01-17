@@ -744,14 +744,11 @@ function pts_cpu_arch_compatible($check_against)
 {
 	$compatible = true;
 	$this_arch = sw_os_architecture();
+	$check_against = pts_to_array($check_against);
 
 	if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
 	{
 		$this_arch = "x86";
-	}
-	if(!is_array($check_against))
-	{
-		$check_against = array($check_against);
 	}
 	if(!in_array($this_arch, $check_against))
 	{

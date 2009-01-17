@@ -302,11 +302,7 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 {
 	// Provide an array containing the location(s) of all test(s) for the supplied object name
 	$tests = array();
-
-	if(!is_array($objects))
-	{
-		$objects = array($objects);
-	}
+	$objects = pts_to_array($objects);
 
 	foreach($objects as $object)
 	{

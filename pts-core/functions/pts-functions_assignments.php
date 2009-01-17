@@ -64,10 +64,7 @@ function pts_set_assignment_once($assignment, $value)
 }
 function pts_set_assignment($assignment, $value)
 {
-	if(!is_array($assignment))
-	{
-		$assignment = array($assignment);
-	}
+	$assignment = pts_to_array($assignment);
 
 	foreach($assignment as $this_assignment)
 	{

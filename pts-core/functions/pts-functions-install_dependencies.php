@@ -30,11 +30,7 @@ function pts_install_package_on_distribution($identifiers)
 	}
 
 	$install_objects = array();
-
-	if(!is_array($identifiers))
-	{
-		$identifiers = array($identifiers);
-	}
+	$identifiers = pts_to_array($identifiers);
 
 	foreach($identifiers as $identifier)
 	{

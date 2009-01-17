@@ -186,17 +186,11 @@ function pts_process_running_string($process_arr)
 	$p = array();
 	$p_string = "";
 
-	if(!is_array($process_arr))
-	{
-		$process_arr = array($process_arr);
-	}
+	$process_arr = pts_to_array($process_arr);
 
 	foreach($process_arr as $p_name => $p_process)
 	{
-		if(!is_array($p_process))
-		{
-			$p_process = array($p_process);
-		}
+		$p_process = pts_to_array($p_process);
 
 		foreach($p_process as $process)
 		{

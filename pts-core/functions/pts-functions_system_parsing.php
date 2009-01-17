@@ -25,11 +25,7 @@ function read_acpi($point, $match)
 {
 	// Read ACPI - Advanced Configuration and Power Interface
 	$value = "";
-
-	if(!is_array($point))
-	{
-		$point = array($point);
-	}
+	$point = pts_to_array($point);
 
 	for($i = 0; $i < count($point) && empty($value); $i++)
 	{
@@ -66,11 +62,8 @@ function read_hal($name, $UDI = null)
 	// Read HAL - Hardware Abstraction Layer
 	static $remove_words = null;
 	$info = false;
+	$name = pts_to_array($name);
 
-	if(!is_array($name))
-	{
-		$name = array($name);
-	}
 	if(empty($remove_words) && is_file(STATIC_DIR . "hal-values-remove.txt"))
 	{
 		$word_file = trim(file_get_contents(STATIC_DIR . "hal-values-remove.txt"));
@@ -120,11 +113,7 @@ function read_sensors($attributes)
 	$value = "";
 	$sensors = shell_exec("sensors 2>&1");
 	$sensors_lines = explode("\n", $sensors);
-
-	if(!is_array($attributes))
-	{
-		$attributes = array($attributes);
-	}
+	$attributes = pts_to_array($attributes);
 
 	for($j = 0; $j < count($attributes) && empty($value); $j++)
 	{
@@ -154,6 +143,7 @@ function read_pci($desc, $clean_string = true)
 	// Read PCI bus information
 	static $pci_info = null;
 	$info = false;
+	$desc = pts_to_array($desc);
 
 	if(empty($pci_info))
 	{
@@ -167,10 +157,6 @@ function read_pci($desc, $clean_string = true)
 		}
 
 		$pci_info = shell_exec($lspci_cmd . " 2>&1");
-	}
-	if(!is_array($desc))
-	{
-		$desc = array($desc);
 	}
 
 	for($i = 0; $i < count($desc) && empty($info); $i++)
@@ -240,11 +226,7 @@ function read_sysctl($desc)
 {
 	// Read sysctl, used by *BSDs
 	$info = false;
-
-	if(!is_array($desc))
-	{
-		$desc = array($desc);
-	}
+	$desc = pts_to_array($desc);
 
 	for($i = 0; $i < count($desc) && empty($info); $i++)
 	{
@@ -722,10 +704,7 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore =
 
 	if(is_readable("/dev/mem"))
 	{
-		if(!is_array($ignore))
-		{
-			$ignore = array($ignore);
-		}
+		$ignore = pts_to_array($ignore);
 
 		$dmidecode = shell_exec("dmidecode --type " . $type . " 2>&1");
 		$sub_type = "\n" . $sub_type . "\n";
