@@ -77,7 +77,7 @@ function pts_external_dependency_generic($Name)
 		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 
 		$selection = -1;
-		$PTS_MANUAL_SUPPORT = 0;
+		$pts_exdep_support = true;
 
 		for($i = 0; $i < count($title) && $selection == -1; $i++)
 		{
@@ -86,9 +86,9 @@ function pts_external_dependency_generic($Name)
 				$selection = $i;
 				if(pts_file_missing_check(explode(",", $file_check[$selection])))
 				{
-					if($PTS_MANUAL_SUPPORT == 0)
+					if($pts_exdep_support)
 					{
-						$PTS_MANUAL_SUPPORT = 1;
+						$pts_exdep_support = false;
 					}
 
 					echo pts_string_header($title[$selection] . "\nPossible Package Names: " . $possible_packages[$selection]);
@@ -96,7 +96,7 @@ function pts_external_dependency_generic($Name)
 			}
 		}
 
-		if($PTS_MANUAL_SUPPORT == 1)
+		if(!$pts_exdep_support)
 		{
 			echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
 			fgets(STDIN);

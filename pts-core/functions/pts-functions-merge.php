@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-functions-merge.php: Functions needed to merge test results.
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 function pts_merge_test_results($original_results_file, $new_results_file)
 {
 	// Merge two test results
+	// TODO: allow merging more than two test results at a time
 
 	// RE-READ LATEST RESULTS
 	$new_results = new pts_result_file($new_results_file);
@@ -85,61 +86,40 @@ function pts_merge_test_results($original_results_file, $new_results_file)
 
 	// Write the new merge
 
-	$RESULTS = new tandem_XmlWriter();
+	$results = new tandem_XmlWriter();
 
-	$RESULTS->setXslBinding("pts-results-viewer.xsl");
+	$results->setXslBinding("pts-results-viewer.xsl");
 
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_TITLE, 0, $new_results->get_suite_title());
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_NAME, 0, $new_results->get_suite_name());
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $new_results->get_suite_version());
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $new_results->get_suite_description());
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $new_results->get_suite_type());
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $new_results->get_suite_extensions());
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $new_results->get_suite_properties());
+	$results->addXmlObject(P_RESULTS_SUITE_TITLE, 0, $new_results->get_suite_title());
+	$results->addXmlObject(P_RESULTS_SUITE_NAME, 0, $new_results->get_suite_name());
+	$results->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $new_results->get_suite_version());
+	$results->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $new_results->get_suite_description());
+	$results->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $new_results->get_suite_type());
+	$results->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $new_results->get_suite_extensions());
+	$results->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $new_results->get_suite_properties());
 
-	// Same hardware and software?
-	
-/*	if(count($original_system_hardware) == 1 && count($new_system_hardware) == 1 && $original_system_hardware[0] == $new_system_hardware[0] && $original_system_software[0] == $new_system_software[0] && $original_pts_version[0] == $new_pts_version[0] && $original_system_notes[0] == $new_system_notes[0])
+	for($i = 0; $i < count($original_system_hardware); $i++)
 	{
 		$USE_ID = pts_request_new_id();
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $original_system_hardware[0]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $original_system_software[0]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $original_system_author[0]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, date("F j, Y h:i A"));
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $original_system_notes[0]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $original_pts_version[0]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $original_associated_identifiers[0] . ", " . $new_associated_identifiers[0]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $original_system_hardware[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $original_system_software[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $original_system_author[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $original_system_date[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $original_system_notes[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $original_pts_version[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $original_associated_identifiers[$i]);
 	}
-	else
+	for($i = 0; $i < count($new_system_hardware); $i++)
 	{
-		if(!pts_version_comparable($original_pts_version[0], $new_pts_version[0]))
-		{
-			echo pts_string_header("PTS Versions Do Not Match! For accurate results, you should only test against the same version!");
-		}*/
-
-		for($i = 0; $i < count($original_system_hardware); $i++)
-		{
-			$USE_ID = pts_request_new_id();
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $original_system_hardware[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $original_system_software[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $original_system_author[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $original_system_date[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $original_system_notes[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $original_pts_version[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $original_associated_identifiers[$i]);
-		}
-		for($i = 0; $i < count($new_system_hardware); $i++)
-		{
-			$USE_ID = pts_request_new_id();
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $new_system_hardware[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $new_system_software[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $new_system_author[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $new_system_date[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $new_system_notes[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $new_pts_version[$i]);
-			$RESULTS->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $new_associated_identifiers[$i]);
-		}
-	//}
+		$USE_ID = pts_request_new_id();
+		$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $new_system_hardware[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $new_system_software[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $new_system_author[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $new_system_date[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $new_system_notes[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $new_pts_version[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $new_associated_identifiers[$i]);
+	}
 
 	// Merge Results
 	$merge_count = 0;
@@ -151,26 +131,26 @@ function pts_merge_test_results($original_results_file, $new_results_file)
 			if(!empty($original_results_identifiers[$r_o]) && !empty($new_results_identifiers[$r_n]) && $original_results_testname[$r_o] == $new_results_testname[$r_n] && $original_results_arguments[$r_o] == $new_results_arguments[$r_n] && $original_results_attributes[$r_o] == $new_results_attributes[$r_n] && pts_version_comparable($original_results_version[$r_o], $new_results_version[$r_n]))
 			{
 				$USE_ID = pts_request_new_id();
-				$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$r_o]);
-				$RESULTS->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $original_results_version[$r_o]);
-				$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $original_results_attributes[$r_o]);
-				$RESULTS->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $original_results_scale[$r_o]);
-				$RESULTS->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $original_results_proportion[$r_o]);
-				$RESULTS->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $original_results_testname[$r_o]);
-				$RESULTS->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $original_results_arguments[$r_o]);
-				$RESULTS->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $original_results_result_format[$r_o]);
+				$results->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$r_o]);
+				$results->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $original_results_version[$r_o]);
+				$results->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $original_results_attributes[$r_o]);
+				$results->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $original_results_scale[$r_o]);
+				$results->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $original_results_proportion[$r_o]);
+				$results->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $original_results_testname[$r_o]);
+				$results->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $original_results_arguments[$r_o]);
+				$results->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $original_results_result_format[$r_o]);
 
 				for($o = 0; $o < count($original_results_identifiers[$r_o]); $o++)
 				{
-					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $original_results_identifiers[$r_o][$o], 5, "o-$r_o-$o");
-					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $original_results_values[$r_o][$o], 5, "o-$r_o-$o");
-					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $original_results_rawvalues[$r_o][$o], 5, "o-$r_o-$o");
+					$results->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $original_results_identifiers[$r_o][$o], 5, "o-$r_o-$o");
+					$results->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $original_results_values[$r_o][$o], 5, "o-$r_o-$o");
+					$results->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $original_results_rawvalues[$r_o][$o], 5, "o-$r_o-$o");
 				}
 				for($o = 0; $o < count($new_results_identifiers[$r_n]); $o++)
 				{
-					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $new_results_identifiers[$r_n][$o], 5, "n-$r_n-$o");
-					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$r_n][$o], 5, "n-$r_n-$o");
-					$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $new_results_rawvalues[$r_n][$o], 5, "n-$r_n-$o");
+					$results->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $new_results_identifiers[$r_n][$o], 5, "n-$r_n-$o");
+					$results->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$r_n][$o], 5, "n-$r_n-$o");
+					$results->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $new_results_rawvalues[$r_n][$o], 5, "n-$r_n-$o");
 				}
 
 				$original_results_identifiers[$r_o] = "";
@@ -187,20 +167,20 @@ function pts_merge_test_results($original_results_file, $new_results_file)
 		if(!empty($original_results_identifiers[$r_o]))
 		{
 			$USE_ID = pts_request_new_id();
-			$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$r_o]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $original_results_version[$r_o]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $original_results_attributes[$r_o]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $original_results_scale[$r_o]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $original_results_proportion[$r_o]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $original_results_testname[$r_o]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $original_results_arguments[$r_o]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $original_results_result_format[$r_o]);
+			$results->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $original_results_name[$r_o]);
+			$results->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $original_results_version[$r_o]);
+			$results->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $original_results_attributes[$r_o]);
+			$results->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $original_results_scale[$r_o]);
+			$results->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $original_results_proportion[$r_o]);
+			$results->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $original_results_testname[$r_o]);
+			$results->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $original_results_arguments[$r_o]);
+			$results->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $original_results_result_format[$r_o]);
 
 			for($o = 0; $o < count($original_results_identifiers[$r_o]); $o++)
 			{
-				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $original_results_identifiers[$r_o][$o], 5, "o-$r_o-$o-s");
-				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $original_results_values[$r_o][$o], 5, "o-$r_o-$o-s");
-				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $original_results_rawvalues[$r_o][$o], 5, "o-$r_o-$o-s");
+				$results->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $original_results_identifiers[$r_o][$o], 5, "o-$r_o-$o-s");
+				$results->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $original_results_values[$r_o][$o], 5, "o-$r_o-$o-s");
+				$results->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $original_results_rawvalues[$r_o][$o], 5, "o-$r_o-$o-s");
 			}
 
 			$original_results_identifiers[$r_o] = "";
@@ -211,27 +191,27 @@ function pts_merge_test_results($original_results_file, $new_results_file)
 		if(!empty($new_results_identifiers[$r_n]))
 		{
 			$USE_ID = pts_request_new_id();
-			$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $new_results_name[$r_n]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $new_results_version[$r_n]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $new_results_attributes[$r_n]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $new_results_scale[$r_n]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $new_results_proportion[$r_n]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $new_results_testname[$r_n]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $new_results_arguments[$r_n]);
-			$RESULTS->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $new_results_result_format[$r_n]);
+			$results->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $new_results_name[$r_n]);
+			$results->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $new_results_version[$r_n]);
+			$results->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $new_results_attributes[$r_n]);
+			$results->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $new_results_scale[$r_n]);
+			$results->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $new_results_proportion[$r_n]);
+			$results->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $new_results_testname[$r_n]);
+			$results->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $new_results_arguments[$r_n]);
+			$results->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, $new_results_result_format[$r_n]);
 
 			for($o = 0; $o < count($new_results_identifiers[$r_n]); $o++)
 			{
-				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $new_results_identifiers[$r_n][$o], 5, "n-$r_n-$o-s");
-				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$r_n][$o], 5, "n-$r_n-$o-s");
-				$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $new_results_rawvalues[$r_n][$o], 5, "n-$r_n-$o-s");
+				$results->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $new_results_identifiers[$r_n][$o], 5, "n-$r_n-$o-s");
+				$results->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $new_results_values[$r_n][$o], 5, "n-$r_n-$o-s");
+				$results->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $new_results_rawvalues[$r_n][$o], 5, "n-$r_n-$o-s");
 			}
 
 			$new_results_identifiers[$r_n] = "";
 		}
 	}
 
-	return $RESULTS->getXML();
+	return $results->getXML();
 }
 function pts_merge_batch_tests_to_line_comparison($RESULT)
 {
@@ -294,29 +274,29 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 
 	// Write the new merge
 
-	$RESULTS = new tandem_XmlWriter();
+	$results = new tandem_XmlWriter();
 
-	$RESULTS->setXslBinding("pts-results-viewer.xsl");
+	$results->setXslBinding("pts-results-viewer.xsl");
 
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_TITLE, 0, $suite_title);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_NAME, 0, $suite_name);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $suite_version);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $suite_description);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $suite_type);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $suite_extensions);
-	$RESULTS->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, implode(";", $suite_properties));
+	$results->addXmlObject(P_RESULTS_SUITE_TITLE, 0, $suite_title);
+	$results->addXmlObject(P_RESULTS_SUITE_NAME, 0, $suite_name);
+	$results->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $suite_version);
+	$results->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $suite_description);
+	$results->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $suite_type);
+	$results->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $suite_extensions);
+	$results->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, implode(";", $suite_properties));
 
 	// Write system information
 	for($i = 0; $i < count($system_hardware); $i++)
 	{
 		$USE_ID = pts_request_new_id();
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $system_hardware[$i]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $system_software[$i]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $system_author[$i]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $system_date[$i]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $system_notes[$i]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $pts_version[$i]);
-		$RESULTS->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $associated_identifiers[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $system_hardware[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $system_software[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $system_author[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $system_date[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $system_notes[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $pts_version[$i]);
+		$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $associated_identifiers[$i]);
 	}
 
 	// Merge Results
@@ -372,30 +352,30 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 						}
 
 						$USE_ID = pts_request_new_id();
-						$RESULTS->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $results_name[$r_o]);
-						$RESULTS->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $results_version[$r_o]);
-						$RESULTS->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $similar_attributes_text);
-						$RESULTS->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $results_scale[$r_o]);
-						$RESULTS->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $results_proportion[$r_o]);
-						$RESULTS->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $results_testname[$r_o]);
-						$RESULTS->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $results_arguments[$r_o]);
-						$RESULTS->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, "LINE_GRAPH");
+						$results->addXmlObject(P_RESULTS_TEST_TITLE, $USE_ID, $results_name[$r_o]);
+						$results->addXmlObject(P_RESULTS_TEST_VERSION, $USE_ID, $results_version[$r_o]);
+						$results->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $USE_ID, $similar_attributes_text);
+						$results->addXmlObject(P_RESULTS_TEST_SCALE, $USE_ID, $results_scale[$r_o]);
+						$results->addXmlObject(P_RESULTS_TEST_PROPORTION, $USE_ID, $results_proportion[$r_o]);
+						$results->addXmlObject(P_RESULTS_TEST_TESTNAME, $USE_ID, $results_testname[$r_o]);
+						$results->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $USE_ID, $results_arguments[$r_o]);
+						$results->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $USE_ID, "LINE_GRAPH");
 
 						for($o = 0; $o < count($results_identifiers[$r_o]); $o++)
 						{
 							$show_attribute = trim(array_pop(explode(":", $test_attribute)));
-							$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $show_attribute, 5, "o-$r_o-$o");
-							$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $results_values[$r_o][$o], 5, "o-$r_o-$o");
-							$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $results_rawvalues[$r_o][$o], 5, "o-$r_o-$o");
+							$results->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $show_attribute, 5, "o-$r_o-$o");
+							$results->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $results_values[$r_o][$o], 5, "o-$r_o-$o");
+							$results->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $results_rawvalues[$r_o][$o], 5, "o-$r_o-$o");
 						}
 					}
 
 					for($o = 0; $o < count($results_identifiers[$r_n]); $o++)
 					{
 						$show_attribute = trim(array_pop(explode(":", array_pop($r_n_test_attributes))));
-						$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $show_attribute, 5, "n-$r_n-$o");
-						$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $results_values[$r_n][$o], 5, "n-$r_n-$o");
-						$RESULTS->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $results_rawvalues[$r_n][$o], 5, "n-$r_n-$o");
+						$results->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $show_attribute, 5, "n-$r_n-$o");
+						$results->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $results_values[$r_n][$o], 5, "n-$r_n-$o");
+						$results->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $results_rawvalues[$r_n][$o], 5, "n-$r_n-$o");
 					}
 					$results_testname[$r_n] = null;
 					$has_merged = true;
@@ -413,7 +393,7 @@ function pts_merge_batch_tests_to_line_comparison($RESULT)
 		$results_testname[$r_o] = null;
 	}
 
-	return $RESULTS->getXML();
+	return $results->getXML();
 }
 
 ?>
