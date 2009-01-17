@@ -19,6 +19,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Add SymLinkFilesFromCache option to user-config.xml for linking files from download-cache instead of copy
 - pts: Documentation updates
 - pts: Resolution fix for smokin-guns test profile
+- pts: Add Pardus external dependencies support
 - pts_Graph: Switch font calculation to using bilde_renderer::soft_text_string_dimensions()
 - pts_Graph: Switch to using new infrastructure in bilde_renderer
 - pts_Graph: Don't print market for tick when display value is 0
