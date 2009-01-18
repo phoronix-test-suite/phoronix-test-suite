@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	bilde_swf_renderer: The SWF (Flash) rendering implementation for bilde_renderer.
 
 	This program is free software; you can redistribute it and/or modify
@@ -35,7 +35,7 @@ class bilde_swf_renderer extends bilde_renderer
 
 		$this->swf_font = new SWFFont("_sans"); // TODO: Implement better font support
 	}
-	public function render_image($output_file = null, $quality = 0)
+	public function render_image($output_file = null, $quality = 100)
 	{
 		return $this->image->save($output_file);
 	}

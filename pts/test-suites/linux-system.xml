@@ -1,0 +1,82 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Title>Linux System</Title>
+		<Version>1.0.0</Version>
+		<Maintainer>Michael Larabel</Maintainer>
+		<TestType>System</TestType>
+		<Description>A collection of tests designed to test the overall performance of a desktop computer.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>warsow</Test>
+		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>padman</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bork</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_DHRY2 </Arguments>
+		<Description>Dhrystone 2</Description>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_INT </Arguments>
+		<Description>Integer Arithmetic</Description>
+	</RunTest>
+	<RunTest>
+		<Test>encode-mp3</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-ogg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>ffmpeg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>fhourstones</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB </Arguments>
+		<Description>HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-lat 10x10-5% </Arguments>
+		<Description>Local Adaptive Thresholding</Description>
+	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_FFT </Arguments>
+		<Description>Fast Fourier Transform</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_SPARSE </Arguments>
+		<Description>Sparse Matrix Multiply</Description>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sunflow</Test>
+	</RunTest>
+	<RunTest>
+		<Test>yafray</Test>
+	</RunTest>
+</PhoronixTestSuite>
