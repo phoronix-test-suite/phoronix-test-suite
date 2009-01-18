@@ -765,7 +765,7 @@ function hw_gpu_string()
 		$log_parse = substr($log_parse, strpos($log_parse, "Chipset") + 8);
 		$log_parse = substr($log_parse, 0, strpos($log_parse, "found"));
 
-		if(strpos($log_parse, "(--)") === false && (strpos($log_parse, "ATI") !== false || strpos($log_parse, "NVIDIA") !== false || strpos($log_parse, "VIA") !== false || strpos($log_parse, "Intel") !== false))
+		if(strpos($log_parse, "(--)") === false && strlen(str_replace(array("ATI", "NVIDIA", "VIA", "Intel"), "", $log_parse)) != strlen($log_parse))
 		{
 			$info = $log_parse;
 		}
