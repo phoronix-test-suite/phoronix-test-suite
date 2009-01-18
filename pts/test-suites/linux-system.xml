@@ -7,11 +7,6 @@
 		<Description>A collection of tests designed to test the overall performance of a desktop computer.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>warsow</Test>
-		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
 		<Test>padman</Test>
 		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
