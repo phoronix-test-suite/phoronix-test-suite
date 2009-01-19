@@ -80,7 +80,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 	}
 	else
 	{
-		$results_identifier = pts_swap_user_variables($results_identifier);
+		$results_identifier = pts_swap_variables($results_identifier, "pts_user_runtime_variables");
 	}
 
 	pts_set_assignment_once("TEST_RESULTS_IDENTIFIER", $results_identifier);
@@ -352,18 +352,6 @@ function pts_generate_batch_run_options($identifier)
 
 	return array($test_args, $test_args_description);
 }
-function pts_swap_user_variables($user_str)
-{
-	if(strpos($user_str, "$") !== false)
-	{
-		foreach(pts_user_runtime_variables() as $key => $value)
-		{
-			$user_str = str_replace("$" . $key, $value, $user_str);
-		}
-	}
-
-	return $user_str;
-}
 function pts_prompt_save_file_name($check_env = true, $to_run)
 {
 	// Prompt to save a file when running a test
@@ -570,7 +558,7 @@ function pts_generate_test_notes($test_type)
 }
 function pts_input_string_to_identifier($input)
 {
-	$input = pts_swap_user_variables($input);
+	$input = pts_swap_variables($input, "pts_user_runtime_variables");
 	$input = trim(str_replace(array(' ', '/', '&', '\''), "", strtolower($input)));
 
 	return $input;

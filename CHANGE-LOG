@@ -18,6 +18,7 @@ Phoronix Test Suite 1.6.0 (Git)
 - pts-core: Fix round to calculation in pts_format_time_string()
 - pts-core: Add SymLinkFilesFromCache option to user-config.xml for linking files from download-cache instead of copy
 - pts-core: Improve GPU detection for some X Server / GPU configurations
+- pts-core: Add pts_swap_variables() for performing variable swaps
 - pts: Documentation updates
 - pts: Resolution fix for smokin-guns test profile
 - pts: Add Pardus external dependencies support

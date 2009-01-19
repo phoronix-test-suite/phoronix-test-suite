@@ -54,7 +54,7 @@ function pts_env_variables()
 
 	return $env_variables;
 }
-function pts_user_runtime_variables()
+function pts_user_runtime_variables($search_for = null)
 {
 	static $runtime_variables = null;
 
@@ -72,6 +72,17 @@ function pts_user_runtime_variables()
 		"COMPILER" => sw_os_compiler(),
 		"HOSTNAME" => sw_os_hostname()
 		);
+	}
+
+	if($search_for != null)
+	{
+		foreach($runtime_variables as $key => $value)
+		{
+			if($key == $search_for)
+			{
+				return $value;
+			}
+		}
 	}
 
 	return $runtime_variables;
@@ -123,6 +134,27 @@ function pts_run_additional_vars($identifier)
 	}
 
 	return $extra_vars;
+}
+function pts_swap_variables($user_str, $replace_function)
+{
+	if(!function_exists($replace_function))
+	{
+		return $user_str;
+	}
+
+	$offset = 0;
+	while($offset < strlen($user_str) && ($s = strpos($user_str, "$", $offset)) !== false)
+	{
+		$s++;
+		$var_name = substr($user_str, $s, (($e = strpos($user_str, " ", $s)) == false ? strlen($user_str) : $e) - $s);
+
+		$var_replacement = call_user_func($replace_function, $var_name);
+		$user_str = str_replace("$" . $var_name, $var_replacement, $user_str);
+
+		$offset = $s + strlen($var_replacement);
+	}
+
+	return $user_str;
 }
 
 ?>
