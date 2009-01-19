@@ -16,6 +16,7 @@
 		<Title>Render Bench</Title>
 		<Executable>render-bench-test</Executable>
 		<TimesToRun>3</TimesToRun>
+		<Proportion>LIB</Proportion>
 		<ResultScale>Seconds</ResultScale>
 		<Description>This test runs render_bench, which tests the performance of X.Org and the video driver's RENDER extension.</Description>
 	</TestInformation>

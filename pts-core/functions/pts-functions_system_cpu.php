@@ -176,7 +176,8 @@ function hw_cpu_string()
 function hw_cpu_default_frequency($cpu_core = 0)
 {
 	// Find out the processor frequency
-	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+	// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"))
 	{
 		$info = trim(file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"));
 		$info = pts_trim_double(intval($info) / 1000000, 2);
@@ -261,7 +262,8 @@ function hw_cpu_power_savings_enabled()
 function hw_cpu_current_frequency($cpu_core = 0)
 {
 	// Determine the current processor frequency
-	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq")) // The ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+	// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+	if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"))
 	{
 		$info = trim(file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"));
 		$info = pts_trim_double(intval($info) / 1000, 2);
