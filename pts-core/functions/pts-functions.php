@@ -184,7 +184,8 @@ function pts_exit($string = "")
 }
 function pts_version_comparable($old, $new)
 {
-	// Checks if there's a major version difference between two strings, if so returns false. If the same or only a minor difference, returns true.
+	// Checks if there's a major version difference between two strings, if so returns false.
+	// If the same or only a minor difference, returns true.
 
 	$old = explode(".", pts_remove_chars($old, true, true, false));
 	$new = explode(".", pts_remove_chars($new, true, true, false));

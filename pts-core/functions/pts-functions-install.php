@@ -364,7 +364,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 	}
 	else if($remove_old_files)
 	{
-		// Remove any files that were installed, since this test will be reinstalled and remove any old download files not used
+		// Remove any (old) files that were installed
 		$ignore_files = array("pts-install.xml");
 		foreach(pts_objects_test_downloads($identifier) as $download_object)
 		{

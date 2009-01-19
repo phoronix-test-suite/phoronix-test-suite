@@ -141,7 +141,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 
 			if(!empty($package_string))
 			{
-				echo "\nSome additional dependencies are required to run or more of these tests, and they could not be installed automatically for your distribution. Below are the software packages that must be installed for the test(s) to run properly.\n\n" . $package_string;
+				echo "\nSome additional dependencies are required, and they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed for the test(s) to run properly.\n\n" . $package_string;
 			}
 		}
 	}
