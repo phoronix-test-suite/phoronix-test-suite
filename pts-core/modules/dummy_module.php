@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2004-2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	dummy_module.php: A simple "dummy" module to demonstrate the PTS functions
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,13 +24,26 @@
 class dummy_module extends pts_module_interface
 {
 	const module_name = "Dummy Module";
-	const module_version = "1.0.0";
+	const module_version = "1.1.0";
 	const module_description = "This is a simple module intended for developers to just demonstrate some of the module functions.";
 	const module_author = "Phoronix Media";
 
 	public static function module_info()
 	{
 		return "This is a simple module intended for developers to just demonstrate some of the module functions.";
+	}
+	public static function user_commands()
+	{
+		return array("dummy_command" => "sample_command");
+	}
+
+	//
+	// User Commands
+	//
+
+	public static function sample_command()
+	{
+		echo "\nThis is a sample function running from a module!\n";
 	}
 
 	//

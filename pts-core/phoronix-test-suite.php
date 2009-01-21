@@ -29,18 +29,26 @@ $sent_command = strtolower(str_replace("-", "_", $argv[1]));
 
 if(!is_file("pts-core/options/" . $sent_command . ".php"))
 {
-	$alias_file = trim(file_get_contents(STATIC_DIR . "option-command-aliases.txt"));
-	$alias_r = array_map("trim", explode("\n", $alias_file));
 	$replaced = false;
 
-	for($i = 0; $i < count($alias_r) && !$replaced; $i++)
+	if(pts_module_valid_user_command($sent_command))
 	{
-		$line_r = array_map("trim", explode("=", $alias_r[$i]));
+		$replaced = true;
+	}
+	else
+	{
+		$alias_file = trim(file_get_contents(STATIC_DIR . "option-command-aliases.txt"));
+		$alias_r = array_map("trim", explode("\n", $alias_file));
 
-		if($line_r[0] == $sent_command && isset($line_r[1]))
+		for($i = 0; $i < count($alias_r) && !$replaced; $i++)
 		{
-			$sent_command = trim($line_r[1]);
-			$replaced = true;
+			$line_r = array_map("trim", explode("=", $alias_r[$i]));
+
+			if($line_r[0] == $sent_command && isset($line_r[1]))
+			{
+				$sent_command = trim($line_r[1]);
+				$replaced = true;
+			}
 		}
 	}
 

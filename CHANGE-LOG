@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Allow modules to be installed and loaded locally from ~/.phoronix-test-suite/modules/
+- pts-core: Add support for "user run commands" stored within PTS modules
 
 Phoronix Test Suite 1.6.0 "Tydal"
 January 20, 2008

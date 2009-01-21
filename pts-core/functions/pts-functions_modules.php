@@ -57,7 +57,7 @@ function pts_auto_detect_modules($load_here = false)
 			$env_var = trim($module_var[0]);
 			$module = trim($module_var[1]);
 
-			if(!in_array($module, pts_attached_modules()) && ($e = getenv($env_var)) != false && !empty($e))
+			if(!pts_module_attached($module) && ($e = getenv($env_var)) != false && !empty($e))
 			{
 				if(IS_DEBUG_MODE)
 				{
@@ -126,7 +126,7 @@ function pts_load_modules()
 		pts_load_module($module);
 
 		$module_type = pts_module_type($module);
-		if($module_type == "PHP" || $module_type == "PHP_LOCAL")
+		if($module_type == "PHP")
 		{
 			eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
 		}
@@ -166,9 +166,8 @@ function pts_attach_module($module)
 function pts_load_module($module)
 {
 	// Load the actual file needed that contains the module
-	$module_type = pts_module_type($module);
-	return ($module_type == "PHP" && include(MODULE_DIR . $module . ".php")) || 
-	($module_type == "PHP_LOCAL" && include(MODULE_LOCAL_DIR . $module . ".php"));
+	return pts_module_type($module) == "PHP" && ((is_file(MODULE_LOCAL_DIR . $module . ".php") && include_once(MODULE_LOCAL_DIR . $module . ".php")) || 
+	(is_file(MODULE_DIR . $module . ".php") && include_once(MODULE_DIR . $module . ".php")));
 }
 function pts_module_processes()
 {
@@ -179,11 +178,50 @@ function pts_module_events()
 {
 	return array("__event_global_upload");
 }
+function pts_module_valid_user_command($module, $command = null)
+{
+	$valid = false;
+
+	if($command == null && strpos($module, ".") != false)
+	{
+		$dot_r = explode(".", $module);
+
+		if(count($dot_r) == 2)
+		{
+			$module = $dot_r[0];
+			$command = $dot_r[1];
+		}
+	}
+
+	if(pts_module_type($module) == "PHP")
+	{
+		if(!pts_module_attached($module))
+		{
+			pts_attach_module($module);
+			pts_load_module($module);
+		}
+
+		$all_options = pts_php_module_call($module, "user_commands");
+
+		$valid = isset($all_options[$command]) && method_exists($module, $all_options[$command]);
+	}
+
+	return $valid;
+}
+function pts_module_run_user_command($module, $command)
+{
+	$all_options = pts_php_module_call($module, "user_commands");
+	
+	if(isset($all_options[$command]) && method_exists($module, $all_options[$command]))
+	{
+		pts_php_module_call($module, $all_options[$command]);
+	}
+}
 function pts_module_call($module, $process, $object_pass = null)
 {
 	$module_type = pts_module_type($module);
 
-	if($module_type == "PHP" || $module_type == "PHP_LOCAL")
+	if($module_type == "PHP")
 	{
 		$module_response = pts_php_module_call($module, $process, $object_pass);
 	}
@@ -276,7 +314,7 @@ function pts_module_type($name)
 	{
 		if(is_file(MODULE_LOCAL_DIR . $name . ".php"))
 		{
-			$type = "PHP_LOCAL";
+			$type = "PHP";
 		}
 		else if(is_file(MODULE_DIR . $name . ".php"))
 		{
@@ -295,6 +333,10 @@ function pts_module_type($name)
 	}
 
 	return $cache[$name];
+}
+function pts_module_attached($module)
+{
+	return in_array($module, pts_attached_modules());
 }
 function pts_attached_modules()
 {

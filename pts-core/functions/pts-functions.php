@@ -52,17 +52,25 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 		}
 	}
 
+	pts_module_process("__pre_option_process", $command);
+
 	if(is_file("pts-core/options/" . $command . ".php"))
 	{
 		if(!class_exists($command, false))
 		{
-			include_once("pts-core/options/" . $command . ".php");
+			include("pts-core/options/" . $command . ".php");
 		}
 
-		pts_module_process("__pre_option_process", $command);
 		eval($command . "::run(\$pass_args);");
-		pts_module_process("__post_option_process", $command);
 	}
+	else if(pts_module_valid_user_command($command))
+	{
+		$module_command = explode(".", $command);
+		pts_module_run_user_command($module_command[0], $module_command[1]);
+	}
+
+	pts_module_process("__post_option_process", $command);
+
 	pts_clear_assignments();
 }
 function pts_run_option_next($command = false, $pass_args = null, $set_assignments = "")
