@@ -97,7 +97,7 @@ abstract class pts_Graph
 
 		$this->update_graph_dimensions(-1, -1, true);
 	}
-	public function setRenderer($renderer)
+	public function requestRenderer($renderer)
 	{
 		$this->graph_renderer = $renderer;
 	}
@@ -330,7 +330,7 @@ abstract class pts_Graph
 	{
 		$this->update_graph_dimensions();
 		$this->graph_image = bilde_renderer::setup_renderer($this->graph_renderer, $this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
-		$this->setRenderer($this->graph_image->get_renderer());
+		$this->requestRenderer($this->graph_image->get_renderer());
 
 		// Initalize Colors
 		$this->graph_color_notches = $this->graph_image->convert_hex_to_type($this->graph_color_notches);

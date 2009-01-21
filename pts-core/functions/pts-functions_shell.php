@@ -274,5 +274,13 @@ function pts_process_active($process)
 	}
 	return $active;
 }
+function pts_set_environment_variable($name, $value)
+{
+	// Sets an environmental variable
+	if(getenv($name) == false)
+	{
+		putenv($name . "=" . $value);
+	}
+}
 
 ?>

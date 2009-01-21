@@ -71,6 +71,7 @@ function pts_define_directories()
 	// Misc Locations
 	define("ETC_DIR", PTS_DIR . "pts/etc/");
 	define("MODULE_DIR", PTS_DIR . "pts-core/modules/");
+	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
 	define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/results-viewer/");
 	define("TEST_LIBRARIES_DIR", PTS_DIR . "pts-core/test-libraries/");
 	define("STATIC_DIR", PTS_DIR . "pts-core/static/");
@@ -182,7 +183,9 @@ function pts_extended_init()
 		@file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto", "A download cache is used for conserving time and bandwidth by eliminating the need for the Phoronix Test Suite to download files that have already been downloaded once. A download cache can also be transferred between PCs running the Phoronix Test Suite. For more information on this feature, view the included documentation. To generate a download cache, run:\n\nphoronix-test-suite make-download-cache\n");
 	}
 
-	$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, XML_SUITE_LOCAL_DIR, TEST_RESOURCE_LOCAL_DIR, XML_PROFILE_LOCAL_DIR, SCTP_DIR);
+	$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, XML_SUITE_LOCAL_DIR, 
+	TEST_RESOURCE_LOCAL_DIR, XML_PROFILE_LOCAL_DIR, SCTP_DIR, MODULE_LOCAL_DIR);
+
 	foreach($directory_check as $dir)
 	{
 		if(!is_dir($dir))

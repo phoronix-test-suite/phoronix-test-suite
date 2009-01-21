@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-functions_modules.php: Functions related to PTS module loading/management.
 	Modules are optional add-ons that don't fit the requirements for entrance into pts-core but provide added functionality.
 
@@ -125,7 +125,8 @@ function pts_load_modules()
 	{
 		pts_load_module($module);
 
-		if(pts_module_type($module) == "PHP")
+		$module_type = pts_module_type($module);
+		if($module_type == "PHP" || $module_type == "PHP_LOCAL")
 		{
 			eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
 		}
@@ -165,7 +166,9 @@ function pts_attach_module($module)
 function pts_load_module($module)
 {
 	// Load the actual file needed that contains the module
-	return pts_module_type($module) == "PHP" && @include(MODULE_DIR . $module . ".php");
+	$module_type = pts_module_type($module);
+	return ($module_type == "PHP" && include(MODULE_DIR . $module . ".php")) || 
+	($module_type == "PHP_LOCAL" && include(MODULE_LOCAL_DIR . $module . ".php"));
 }
 function pts_module_processes()
 {
@@ -178,11 +181,13 @@ function pts_module_events()
 }
 function pts_module_call($module, $process, $object_pass = null)
 {
-	if(pts_module_type($module) == "PHP")
+	$module_type = pts_module_type($module);
+
+	if($module_type == "PHP" || $module_type == "PHP_LOCAL")
 	{
 		$module_response = pts_php_module_call($module, $process, $object_pass);
 	}
-	else if(pts_module_type($module) == "SH")
+	else if($module_type == "SH")
 	{
 		$module_response = pts_sh_module_call($module, $process);
 	}
@@ -269,7 +274,11 @@ function pts_module_type($name)
 
 	if(!isset($cache[$name]))
 	{
-		if(is_file(MODULE_DIR . $name . ".php"))
+		if(is_file(MODULE_LOCAL_DIR . $name . ".php"))
+		{
+			$type = "PHP_LOCAL";
+		}
+		else if(is_file(MODULE_DIR . $name . ".php"))
 		{
 			$type = "PHP";
 		}
@@ -377,14 +386,6 @@ function pts_module_activity($process, $value = null)
 	}
 
 	return $return;
-}
-function pts_set_environment_variable($name, $value)
-{
-	// Sets an environmental variable
-	if(getenv($name) == false)
-	{
-		putenv($name . "=" . $value);
-	}
 }
 
 ?>
