@@ -89,6 +89,10 @@ abstract class pts_Graph
 
 	var $graph_internal_identifiers = array();
 
+	// Internal Switches
+
+	var $graph_format_heading = "NORMAL";
+
 	public function __construct($title, $sub_title, $y_axis_title)
 	{
 		$this->graph_title = $title;
@@ -360,9 +364,26 @@ abstract class pts_Graph
 	}
 	protected function render_graph_heading()
 	{
+		// $this->graph_format_heading
+
+		if($this->graph_format_heading == "ALT1")
+		{
+			// Default to Alternate 1 style
+			$heading_text_color = $this->graph_image->convert_hex_to_type("#FFFFFF"); // TODO: Do more than white
+			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, 40, $this->graph_color_main_headers);
+			$this->graph_image->write_text_left($this->graph_title, $this->graph_font, ($this->graph_font_size_heading - 1), $heading_text_color, 4, 10, $this->graph_left_end, 10);
+			$this->graph_image->write_text_left($this->graph_sub_title, $this->graph_font, ($this->graph_font_size_sub_heading - 1), $heading_text_color, 4, 29, $this->graph_left_end, 29, false, true);
+
+			//$this->graph_image->image_copy_merge($this->graph_image->image_file_to_type(RESULTS_VIEWER_DIR . "pts-logo.png"), $this->graph_attr_width - 160, 3, 0, 0, 158, 40);
+		}
+		else
+		{
+			// Default to NORMAL
+			$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3);
+			$this->graph_image->write_text_center($this->graph_sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, 29, $this->graph_left_end, 29, false, true);
+		}
+
 		$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9);
-		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 4);
-		$this->graph_image->write_text_center($this->graph_sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, 30, $this->graph_left_end, 26, false, true);
 	}
 	protected function render_graph_base()
 	{
