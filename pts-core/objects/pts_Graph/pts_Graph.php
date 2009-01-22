@@ -168,41 +168,6 @@ abstract class pts_Graph
 			$this->graph_body_image = $img;
 		}
 	}
-	public function renderGraph()
-	{
-		$this->graph_maximum_value = $this->maximum_graph_value();
-
-		// Make room for tick markings, left hand side
-		if($this->graph_value_type == "NUMERICAL")
-		{
-			$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
-		}
-
-		if($this->graph_hide_identifiers == true)
-		{
-			$this->graph_top_end += $this->graph_top_end_opp / 2;
-		}
-
-		// Do the actual work
-		$this->render_graph_pre_init();
-		$this->render_graph_init();
-		$this->render_graph_base();
-
-		if(!$this->graph_hide_identifiers)
-		{
-			$this->render_graph_identifiers();
-		}
-
-		if($this->graph_value_type == "NUMERICAL")
-		{
-			$this->render_graph_value_ticks();
-		}
-
-		$this->render_graph_key();
-		$this->render_graph_result();
-		$this->render_graph_watermark();
-		$this->return_graph_image();
-	}
 	public function addInternalIdentifier($identifier, $value)
 	{
 		$this->graph_internal_identifiers[$identifier] = $value;
@@ -322,6 +287,43 @@ abstract class pts_Graph
 	// Render Functions
 	//
 
+
+	public function renderGraph()
+	{
+		$this->graph_maximum_value = $this->maximum_graph_value();
+
+		// Make room for tick markings, left hand side
+		if($this->graph_value_type == "NUMERICAL")
+		{
+			$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+		}
+
+		if($this->graph_hide_identifiers == true)
+		{
+			$this->graph_top_end += $this->graph_top_end_opp / 2;
+		}
+
+		// Do the actual work
+		$this->render_graph_pre_init();
+		$this->render_graph_init();
+		$this->render_graph_base();
+		$this->render_graph_heading();
+
+		if(!$this->graph_hide_identifiers)
+		{
+			$this->render_graph_identifiers();
+		}
+
+		if($this->graph_value_type == "NUMERICAL")
+		{
+			$this->render_graph_value_ticks();
+		}
+
+		$this->render_graph_key();
+		$this->render_graph_result();
+		$this->render_graph_watermark();
+		$this->return_graph_image();
+	}
 	protected function render_graph_pre_init()
 	{
 		return;
@@ -356,6 +358,12 @@ abstract class pts_Graph
 			$this->graph_image->draw_rectangle_border(0, 0, $this->graph_attr_width - 1, $this->graph_attr_height - 1, $this->graph_color_border);
 		}
 	}
+	protected function render_graph_heading()
+	{
+		$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9);
+		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 4);
+		$this->graph_image->write_text_center($this->graph_sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, 30, $this->graph_left_end, 26, false, true);
+	}
 	protected function render_graph_base()
 	{
 		if(count($this->graph_data_title) > 1 || $this->graph_show_key == true)
@@ -371,11 +379,6 @@ abstract class pts_Graph
 		{
 			$this->graph_image->image_copy_merge($this->graph_body_image, $this->graph_left_start + (($this->graph_left_end - $this->graph_left_start) / 2) - imagesx($this->graph_body_image) / 2, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2) - imagesy($this->graph_body_image) / 2);
 		}
-
-		// Text
-		$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9);
-		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 4);
-		$this->graph_image->write_text_center($this->graph_sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, 30, $this->graph_left_end, 26, false, true);
 
 		if(!empty($this->graph_y_title) && !$this->graph_y_title_hide)
 		{
