@@ -21,21 +21,22 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(PTS_PATH . "pts-core/functions/pts.php");
-require_once(PTS_PATH . "pts-core/functions/pts-init.php");
+require(PTS_PATH . "pts-core/functions/pts.php");
+require(PTS_PATH . "pts-core/functions/pts-init.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_basic.php");
 
 // Load Main Functions
-require_once(PTS_PATH . "pts-core/functions/pts-interfaces.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_io.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_shell.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_config.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_system.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_global.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_tests.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_types.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_vars.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_modules.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_assignments.php");
+require(PTS_PATH . "pts-core/functions/pts-interfaces.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_io.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_shell.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_config.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_system.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_global.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_tests.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_types.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_vars.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_modules.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_assignments.php");
 
 // Phoronix Test Suite - Functions
 function pts_run_option_command($command, $pass_args = null, $preset_assignments = "")
@@ -143,12 +144,6 @@ function pts_trim_double($double, $accuracy = 2)
 	}
 
 	return $return;
-}
-function pts_load_function_set($title)
-{
-	$function_file = PTS_PATH . "pts-core/functions/pts-includes-" . $title . ".php";
-
-	return is_file($function_file) && include_once($function_file);
 }
 function pts_clean_information_string($str)
 {

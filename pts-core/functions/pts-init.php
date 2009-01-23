@@ -221,32 +221,5 @@ function pts_extended_init()
 		define("IS_FIRST_RUN_TODAY", false);
 	}
 }
-function __autoload($to_load)
-{
-	// Autoload needed objects
-	static $sub_objects = null;
-
-	if($sub_objects == null && !is_array($sub_objects))
-	{
-		$sub_objects = array();
-		$sub_object_files = glob(PTS_PATH . "pts-core/objects/*/*.php");
-
-		foreach($sub_object_files as $file)
-		{
-			$object_name = basename($file, ".php");
-			$sub_objects[$object_name] = $file;
-		}
-	}
-
-	if(is_file(PTS_PATH . "pts-core/objects/" . $to_load . ".php"))
-	{
-		include_once(PTS_PATH . "pts-core/objects/" . $to_load . ".php");
-	}
-	else if(isset($sub_objects[$to_load]))
-	{
-		include_once($sub_objects[$to_load]);
-		unset($sub_objects[$to_load]);
-	}
-}
 
 ?>
