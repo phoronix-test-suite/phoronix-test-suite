@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2009, Phoronix Media
 	Copyright (C) 2008 - 2009, Michael Larabel
-	pts-functions-install.php: Functions needed for installing tests for PTS.
+	pts-includes-install.php: Functions needed for installing tests for PTS.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(PTS_PATH . "pts-core/functions/pts-functions-install_dependencies.php");
+require_once(PTS_PATH . "pts-core/functions/pts-includes-install_dependencies.php");
 
 function pts_start_install($to_install)
 {

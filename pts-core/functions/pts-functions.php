@@ -146,7 +146,7 @@ function pts_trim_double($double, $accuracy = 2)
 }
 function pts_load_function_set($title)
 {
-	$function_file = PTS_PATH . "pts-core/functions/pts-functions-" . $title . ".php";
+	$function_file = PTS_PATH . "pts-core/functions/pts-includes-" . $title . ".php";
 
 	return is_file($function_file) && include_once($function_file);
 }

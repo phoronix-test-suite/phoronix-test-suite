@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Setup PTS_PATH define for phoronix-test-suite directory
 - pts-core: Don't reinstall a test only when the reported CPU frequency changes, but the CPU model remains the same
 - pts-core: With result-file-to-pdf save the PDF to the home directory
+- pts-core: Rename function files that aren't loaded by default to use pts-includes- prefix
 - pts: Update compress-pbzip2 test profile to pbzip2 1.0.5
 - pts: Update memory-bandwidth test profile to version 0.15
 

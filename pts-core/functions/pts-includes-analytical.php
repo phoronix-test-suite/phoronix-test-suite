@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2009, Phoronix Media
 	Copyright (C) 2008 - 2009, Michael Larabel
-	pts-functions-analytical.php: Functions to analyze test results
+	pts-includes-analytical.php: Functions to analyze test results
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

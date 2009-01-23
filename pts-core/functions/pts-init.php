@@ -28,7 +28,7 @@ function pts_client_init()
 
 	if(IS_SCTP_MODE)
 	{
-		include(PTS_PATH . "pts-core/functions/pts-functions-sctp.php");
+		include(PTS_PATH . "pts-core/functions/pts-includes-sctp.php");
 	}
 
 	pts_config_init();
