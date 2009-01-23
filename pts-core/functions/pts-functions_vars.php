@@ -29,7 +29,6 @@ function pts_env_variables()
 	if(empty($env_variables))
 	{
 		$env_variables = array(
-		"PTS_TYPE" => PTS_TYPE,
 		"PTS_VERSION" => PTS_VERSION,
 		"PTS_CODENAME" => PTS_CODENAME,
 		"PTS_DIR" => PTS_PATH,

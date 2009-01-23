@@ -23,7 +23,6 @@
 
 define("PTS_VERSION", "1.8.0a0");
 define("PTS_CODENAME", "SELBU");
-define("PTS_TYPE", "DESKTOP");
 
 function pts_codename($full_string = false)
 {

@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2009, Phoronix Media
 	Copyright (C) 2008 - 2009, Michael Larabel
-	phoronix-test-suite.php: The main code for initalizing the Phoronix Test Suite (pts-core) client
+	phoronix-test-suite.php: The main code for initalizing the Phoronix Test Suite
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 */
 
 define("PTS_PATH", substr(($p = realpath(dirname(__FILE__))), 0, strrpos($p, "/")) . "/");
+define("PTS_MODE", "CLIENT");
 
 require(PTS_PATH . "pts-core/functions/pts-functions.php");
 pts_client_init(); // Initalize the Phoronix Test Suite (pts-core) client
