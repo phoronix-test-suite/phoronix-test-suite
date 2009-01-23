@@ -25,7 +25,7 @@ Result Viewing Options:
     show-result <saved name>: Show this result file in your web browser
     remove-result <saved name>: Remove this saved result file
     remove-all-results: Removes all saved results
-    merge-results <saved name> <saved name>: Merge two sets of results
+    merge-results <saved name> <saved name>: Merge multiple sets of results
 
 Phoronix Global Options:
     upload-results <saved name>: Upload saved results to Phoronix Global

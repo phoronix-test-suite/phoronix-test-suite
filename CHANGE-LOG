@@ -5,7 +5,8 @@ Phoronix Test Suite (Git)
 - pts-core: Allow modules to be installed and loaded locally from ~/.phoronix-test-suite/modules/
 - pts-core: Add support for "user run commands" stored within PTS modules
 - pts-core: Rewrite test result merging code to use new pts_result_file_merge_manager and pts_result_file_merge_test objects
-- pts-core: Allow unlimited number of test result files to be merged at once using pts_merge_test_results() (compared to previous limit of 2)
+- pts-core: Allow an unlimited number of test result files to be merged at once using pts_merge_test_results() (compared to previous limit of 2)
+- pts-core: Allow more than two test result files to be merged at once using the merge-results option
 
 Phoronix Test Suite 1.6.0 "Tydal"
 January 20, 2008
