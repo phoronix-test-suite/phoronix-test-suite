@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,18 +38,7 @@ class pts_result_file
 	var $suite_properties;
 	var $suite_type;
 
-	var $results_name;
-	var $results_version;
-	var $results_attributes;
-	var $results_scale;
-	var $results_test_name;
-	var $results_arguments;
-	var $results_proportion;
-	var $results_format;
-
-	var $results_identifiers;
-	var $results_values;
-	var $results_raw_values;
+	var $result_objects;
 
 	public function __construct($result_file)
 	{
@@ -71,30 +60,39 @@ class pts_result_file
 		$this->suite_properties = $xml_reader->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
 		$this->suite_type = $xml_reader->getXMLValue(P_RESULTS_SUITE_TYPE);
 
-		$this->results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
-		$this->results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
-		$this->results_attributes = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
-		$this->results_scale = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
-		$this->results_test_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-		$this->results_arguments = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
-		$this->results_proportion = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
-		$this->results_format = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
+		// Start on results work
+
+		$results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
+		$results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
+		$results_attributes = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+		$results_scale = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
+		$results_test_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+		$results_arguments = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
+		$results_proportion = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
+		$results_format = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
 
 		$results_identifiers = array();
 		$results_values = array();
-		$results_rawvalues = array();
+		$results_raw_values = array();
 
 		foreach($results_raw as $result_raw)
 		{
 			$xml_results = new tandem_XmlReader($result_raw);
 			array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
 			array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
-			array_push($results_rawvalues, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
+			array_push($results_raw_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
 		}
 
-		$this->results_identifiers = $results_identifiers;
-		$this->results_values = $results_values;
-		$this->results_raw_values = $results_rawvalues;
+		$this->result_objects = array();
+
+		for($i = 0; $i < count($results_name); $i++)
+		{
+			$test_object = new pts_result_file_merge_test($results_name[$i], $results_version[$i], $results_attributes[$i], 
+			$results_scale[$i], $results_test_name[$i], $results_arguments[$i], $results_proportion[$i], $results_format[$i], 
+			$results_identifiers[$i], $results_values[$i], $results_raw_values[$i]);
+
+			array_push($this->result_objects, $test_object);
+		}
 	}
 
 	public function get_system_hardware()
@@ -154,51 +152,9 @@ class pts_result_file
 	{
 		return $this->suite_type;
 	}
-
-	public function get_results_name()
+	public function get_result_objects()
 	{
-		return $this->results_name;
-	}
-	public function get_results_version()
-	{
-		return $this->results_version;
-	}
-	public function get_results_attributes()
-	{
-		return $this->results_attributes;
-	}
-	public function get_results_scale()
-	{
-		return $this->results_scale;
-	}
-	public function get_results_test_name()
-	{
-		return $this->results_test_name;
-	}
-	public function get_results_arguments()
-	{
-		return $this->results_arguments;
-	}
-	public function get_results_proportion()
-	{
-		return $this->results_proportion;
-	}
-	public function get_results_format()
-	{
-		return $this->results_format;
-	}
-
-	public function get_results_identifiers()
-	{
-		return $this->results_identifiers;
-	}
-	public function get_results_values()
-	{
-		return $this->results_values;
-	}
-	public function get_results_raw_values()
-	{
-		return $this->results_raw_values;
+		return $this->result_objects;
 	}
 }
 
