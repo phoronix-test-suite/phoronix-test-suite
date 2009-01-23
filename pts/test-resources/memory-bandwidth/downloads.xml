@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/bandwidth-0.13.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/bandwidth-0.13.tar.gz</URL>
-			<MD5>8c5abed2a9bf2e5fe0fa528388556086</MD5>
-			<FileSize>9402</FileSize>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/bandwidth-0.15.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/bandwidth-0.15.tar.gz</URL>
+			<MD5>3b155d43a34d5a37a2aa9cb312e57530</MD5>
+			<FileSize>16991</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-rm -rf bandwidth-0.13/
+rm -rf bandwidth-0.15/
 
-tar -xvf bandwidth-0.13.tar.gz
+tar -xvf bandwidth-0.15.tar.gz
 
 rm -f memory-bandwidth
 
@@ -25,10 +25,10 @@ esac
 " > memory-bandwidth
 chmod +x memory-bandwidth
 
-cd bandwidth-0.13/
+cd bandwidth-0.15/
 patch -p1 <<'EOT'
---- bandwidth-0.13/main.c	2007-08-13 02:36:55.000000000 +0200
-+++ bandwidth-0.13-patched/main.c	2008-04-07 03:23:59.000000000 +0200
+--- bandwidth-0.15/main.c	2007-08-13 02:36:55.000000000 +0200
++++ bandwidth-0.15-patched/main.c	2008-04-07 03:23:59.000000000 +0200
 @@ -403,9 +403,52 @@
  	free(a2);
  }

@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<TestType>Memory</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -12,7 +12,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Bandwidth</Title>
-		<Version>0.13</Version>
+		<Version>0.15</Version>
 		<TimesToRun>2</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
