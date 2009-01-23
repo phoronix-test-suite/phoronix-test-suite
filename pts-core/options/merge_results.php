@@ -67,7 +67,7 @@ class merge_results implements pts_option_interface
 				}
 
 				// Merge Results
-				$MERGED_RESULTS = pts_merge_test_results(file_get_contents($BASE_FILE), file_get_contents($MERGE_FROM_FILE));
+				$MERGED_RESULTS = pts_merge_test_results($BASE_FILE, $MERGE_FROM_FILE);
 				pts_save_result($MERGE_TO, $MERGED_RESULTS);
 				echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $MERGE_TO . "\n\n";
 				pts_display_web_browser(SAVE_RESULTS_DIR . $MERGE_TO);

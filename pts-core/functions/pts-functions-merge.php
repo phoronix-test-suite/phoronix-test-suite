@@ -21,85 +21,53 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_merge_test_results($original_results_file, $new_results_file)
+function pts_merge_test_results()
 {
-	// Merge two test results
-	// TODO: allow merging more than two test results at a time
-
-	// RE-READ LATEST RESULTS
-	$new_results = new pts_result_file($new_results_file);
-	$new_system_hardware = $new_results->get_system_hardware();
-	$new_system_software = $new_results->get_system_software();
-	$new_system_author = $new_results->get_system_author();
-	$new_system_date = $new_results->get_system_date();
-	$new_pts_version = $new_results->get_system_pts_version();
-	$new_system_notes = $new_results->get_system_notes();
-	$new_associated_identifiers = $new_results->get_system_identifiers();
-
-	// READ ORIGINAL RESULTS
-	$original_results = new pts_result_file($original_results_file);
-	$original_system_hardware = $original_results->get_system_hardware();
-	$original_system_software = $original_results->get_system_software();
-	$original_system_author = $original_results->get_system_author();
-	$original_system_date = $original_results->get_system_date();
-	$original_pts_version = $original_results->get_system_pts_version();
-	$original_system_notes = $original_results->get_system_notes();
-	$original_associated_identifiers = $original_results->get_system_identifiers();
-
-	/*
-	if(!pts_is_assignment("GLOBAL_COMPARISON") && getenv("PTS_MERGE") != "custom")
-	{
-		if($original_suite_name != $new_suite_name && !pts_global_valid_id_string($original_suite_name) && !pts_global_valid_id_string($new_suite_name))
-		{
-			echo pts_string_header("Note: The test(s) don't match: " . $original_suite_name . " - " . $new_suite_name .$original_results->get_result_objects() ".\nNot all test results may be compatible.");
-		}
-		if($original_suite_version != $new_suite_version)
-		{
-			// echo "Merge Failed! The test versions don't match: $original_suite_version - $new_suite_version\n";
-		}
-	}
-	*/
-
-	// Write the new merge
+	// Merge test results
+	$files_to_combine = func_get_args();
 
 	$results = new tandem_XmlWriter();
+	$test_result_manager = new pts_result_file_merge_manager();
 
 	$results->setXslBinding("pts-results-viewer.xsl");
 
-	$results->addXmlObject(P_RESULTS_SUITE_TITLE, 0, $new_results->get_suite_title());
-	$results->addXmlObject(P_RESULTS_SUITE_NAME, 0, $new_results->get_suite_name());
-	$results->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $new_results->get_suite_version());
-	$results->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $new_results->get_suite_description());
-	$results->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $new_results->get_suite_type());
-	$results->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $new_results->get_suite_extensions());
-	$results->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $new_results->get_suite_properties());
-
-	for($i = 0; $i < count($original_system_hardware); $i++)
+	for($merge_pos = 0; $merge_pos < count($files_to_combine); $merge_pos++)
 	{
-		$USE_ID = pts_request_new_id();
-		$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $original_system_hardware[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $original_system_software[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $original_system_author[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $original_system_date[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $original_system_notes[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $original_pts_version[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $original_associated_identifiers[$i]);
-	}
-	for($i = 0; $i < count($new_system_hardware); $i++)
-	{
-		$USE_ID = pts_request_new_id();
-		$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $new_system_hardware[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $new_system_software[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $new_system_author[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $new_system_date[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $new_system_notes[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $new_pts_version[$i]);
-		$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $new_associated_identifiers[$i]);
-	}
+		$this_result_file = new pts_result_file($files_to_combine[$merge_pos]);
 
-	$test_result_manager = new pts_result_file_merge_manager();
-	$test_result_manager->add_test_result_set($original_results->get_result_objects());
-	$test_result_manager->add_test_result_set($new_results->get_result_objects());
+		if($merge_pos == 0)
+		{
+			$results->addXmlObject(P_RESULTS_SUITE_TITLE, 0, $this_result_file->get_suite_title());
+			$results->addXmlObject(P_RESULTS_SUITE_NAME, 0, $this_result_file->get_suite_name());
+			$results->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $this_result_file->get_suite_version());
+			$results->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $this_result_file->get_suite_description());
+			$results->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $this_result_file->get_suite_type());
+			$results->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $this_result_file->get_suite_extensions());
+			$results->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $this_result_file->get_suite_properties());
+		}
+
+		$system_hardware = $this_result_file->get_system_hardware();
+		$system_software = $this_result_file->get_system_software();
+		$system_author = $this_result_file->get_system_author();
+		$system_date = $this_result_file->get_system_date();
+		$pts_version = $this_result_file->get_system_pts_version();
+		$system_notes = $this_result_file->get_system_notes();
+		$associated_identifiers = $this_result_file->get_system_identifiers();
+
+		for($i = 0; $i < count($system_hardware); $i++)
+		{
+			$USE_ID = pts_request_new_id();
+			$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $system_hardware[$i]);
+			$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $system_software[$i]);
+			$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $system_author[$i]);
+			$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $system_date[$i]);
+			$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $system_notes[$i]);
+			$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $pts_version[$i]);
+			$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $associated_identifiers[$i]);
+		}
+
+		$test_result_manager->add_test_result_set($this_result_file->get_result_objects());
+	}
 
 	$results_added = 0;
 	foreach($test_result_manager->get_results() as $result_object)
@@ -118,11 +86,11 @@ function pts_merge_test_results($original_results_file, $new_results_file)
 		$values = $result_object->get_values();
 		$raw_values = $result_object->get_values();
 
-		for($o = 0; $o < count($identifiers); $o++)
+		for($i = 0; $i < count($identifiers); $i++)
 		{
-			$results->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $identifiers[$o], 5, "o-$o-$results_added-r");
-			$results->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $values[$o], 5, "o-$o-$results_added-r");
-			$results->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $raw_values[$o], 5, "o-$o-$results_added-r");
+			$results->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $USE_ID, $identifiers[$i], 5, "o-$i-$results_added-r");
+			$results->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $USE_ID, $values[$i], 5, "o-$i-$results_added-r");
+			$results->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $USE_ID, $raw_values[$i], 5, "o-$i-$results_added-r");
 		}
 		$results_added++;
 	}

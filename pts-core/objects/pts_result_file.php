@@ -38,7 +38,7 @@ class pts_result_file
 	var $suite_properties;
 	var $suite_type;
 
-	var $result_objects;
+	var $result_objects = array();
 
 	public function __construct($result_file)
 	{
@@ -82,8 +82,6 @@ class pts_result_file
 			array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
 			array_push($results_raw_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
 		}
-
-		$this->result_objects = array();
 
 		for($i = 0; $i < count($results_name); $i++)
 		{
