@@ -239,7 +239,7 @@ function pts_string_bool($string)
 	$string = strtolower($string);
 	return $string == "true" || $string == "1" || $string == "on";
 }
-function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $keep_alpha = true)
+function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $keep_alpha = true, $keep_dash = false)
 {
 	$string_r = str_split($string);
 	$new_string = "";
@@ -248,7 +248,7 @@ function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $
 	{
 		$i = ord($char);
 		if(($keep_numeric && $i > 47 && $i < 58) || ($keep_alpha && $i > 64 && $i < 91) || 
-		($keep_alpha && $i > 96 && $i < 123) || ($keep_decimal && $i == 46))
+		($keep_alpha && $i > 96 && $i < 123) || ($keep_decimal && $i == 46) || ($keep_dash && $i == 45))
 		{
 			$new_string .= $char; 
 		}

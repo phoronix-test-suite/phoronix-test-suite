@@ -178,6 +178,10 @@ function pts_module_events()
 {
 	return array("__event_global_upload");
 }
+function pts_is_php_module($module)
+{
+	return is_file(MODULE_DIR . $module . ".php") || is_file(MODULE_LOCAL_DIR . $module . ".php");
+}
 function pts_module_valid_user_command($module, $command = null)
 {
 	$valid = false;

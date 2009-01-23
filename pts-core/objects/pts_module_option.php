@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts_module_option.php: The object for handling persistent module options that can be controlled by the end-user
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,21 +21,21 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("OPTION_NUMERIC", "OPTION_NUMERIC");
-
 class pts_module_option
 {
 	var $option_identifier;
 	var $option_question;
 	var $option_supported_values;
 	var $option_default_value;
+	var $option_function_check;
 
-	public function __construct($identifier, $question_string, $supported_values = null, $default_value = null)
+	public function __construct($identifier, $question_string, $supported_values = null, $default_value = null, $function_to_check = null)
 	{
 		$this->option_identifier = $identifier;
 		$this->option_question = $question_string;
 		$this->option_supported_values = $supported_values;
 		$this->option_default_value = $default_value;
+		$this->option_function_check = $function_to_check;
 	}
 	public function get_identifier()
 	{
@@ -65,6 +65,7 @@ class pts_module_option
 	public function is_supported_value($input)
 	{
 		$supported = false;
+
 		if(is_array($this->option_supported_values))
 		{
 			if(in_array($input, $this->option_supported_values))
@@ -72,20 +73,41 @@ class pts_module_option
 				$supported = true;
 			}
 		}
-		else if($this->option_supported_values == OPTION_NUMERIC)
-		{
-			if(is_numeric($input))
-			{
-				$supported = true;
-			}
-		}
-		else if(empty($input) && $this->default_value != null)
+		else if(empty($input) && $this->option_default_value != null)
 		{
 			$supported = true;
 		}
 		else
 		{
-			$supported = true;
+			switch($this->option_supported_values)
+			{
+				case "NUMERIC":
+					if(is_numeric($input))
+					{
+						$supported = true;
+					}
+					break;
+				case "NUMERIC_DASH":
+					if(!empty($input) && strlen(pts_remove_chars($input, true, false, false, true)) == strlen($input))
+					{
+						$supported = true;
+					}
+					break;
+				case "HTTP_URL":
+					if(substr($input, 0, 7) == "http://")
+					{
+						$supported = true;
+					}
+					break;
+				case "":
+					$supported = true;
+					break;
+			}
+		}
+
+		if($supported && !empty($this->option_function_check))
+		{
+			$supported = (call_user_func($this->option_function_check, $input) == true);
 		}
 
 		return $supported;

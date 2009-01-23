@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,13 +26,13 @@ class module_setup implements pts_option_interface
 	{
 		$module = strtolower($r[0]);
 
-		if(is_file(MODULE_DIR . $module . ".php"))
+		if(pts_is_php_module($module))
 		{
 			$pre_message = "";
 
 			if(!in_array($module, pts_attached_modules()) && !class_exists($module))
 			{
-				include_once(MODULE_DIR . $module . ".php");
+				pts_load_module($module);
 			}
 
 			$module_name = pts_php_module_call($module, "module_name");
@@ -44,13 +44,18 @@ class module_setup implements pts_option_interface
 
 			if(count($module_setup) == 0)
 			{
-				echo "\nThere are no options available for configuring with the " . $module . " module.";
+				echo "\nThere are no options available for configuring with the " . $module . " module.\n";
 			}
 			else
 			{
 				$set_options = array();
 				foreach($module_setup as $module_option)
 				{
+					if(!($module_option instanceOf pts_module_option))
+					{
+						continue;
+					}
+
 					do
 					{
 						echo "\n" . $module_option->get_formatted_question();
