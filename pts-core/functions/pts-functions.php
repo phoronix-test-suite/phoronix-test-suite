@@ -54,7 +54,7 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 
 	pts_module_process("__pre_option_process", $command);
 
-	if(is_file("pts-core/options/" . $command . ".php"))
+	if(is_file(PTS_PATH . "pts-core/options/" . $command . ".php"))
 	{
 		if(!class_exists($command, false))
 		{

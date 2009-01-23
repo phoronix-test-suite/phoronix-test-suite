@@ -28,7 +28,7 @@ pts_client_init(); // Initalize the Phoronix Test Suite (pts-core) client
 
 $sent_command = strtolower(str_replace("-", "_", $argv[1]));
 
-if(!is_file("pts-core/options/" . $sent_command . ".php"))
+if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 {
 	$replaced = false;
 

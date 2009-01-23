@@ -44,7 +44,7 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false)
 
 	if($view_results)
 	{
-		pts_run_shell_script("pts-core/scripts/launch-browser.sh", $URL);
+		pts_run_shell_script(PTS_PATH . "pts-core/scripts/launch-browser.sh", $URL);
 	}
 }
 function pts_exec($exec, $extra_vars = null)

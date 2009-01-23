@@ -42,12 +42,12 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 	$read_config = new pts_config_tandem_XmlReader();
 
 	$UserAgreement = pts_read_user_config(P_OPTION_USER_AGREEMENT, "", $read_config);
-	$UserAgreement_MD5 = md5_file("pts-core/user-agreement.txt");
+	$UserAgreement_MD5 = md5_file(PTS_PATH . "pts-core/user-agreement.txt");
 
 	if($UserAgreement != $UserAgreement_MD5)
 	{
 		echo pts_string_header("PHORONIX TEST SUITE - WELCOME");
-		echo wordwrap(file_get_contents("pts-core/user-agreement.txt"), 65);
+		echo wordwrap(file_get_contents(PTS_PATH . "pts-core/user-agreement.txt"), 65);
 		$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
 
 		if($agree)
