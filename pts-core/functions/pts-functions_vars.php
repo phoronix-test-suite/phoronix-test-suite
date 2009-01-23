@@ -32,7 +32,7 @@ function pts_env_variables()
 		"PTS_TYPE" => PTS_TYPE,
 		"PTS_VERSION" => PTS_VERSION,
 		"PTS_CODENAME" => PTS_CODENAME,
-		"PTS_DIR" => PTS_DIR,
+		"PTS_DIR" => PTS_PATH,
 		"FONT_DIR" => FONT_DIR,
 		"PHP_BIN" => PHP_BIN,
 		"NUM_CPU_CORES" => hw_cpu_core_count(),

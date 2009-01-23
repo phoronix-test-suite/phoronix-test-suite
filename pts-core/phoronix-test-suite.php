@@ -21,8 +21,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+define("PTS_PATH", substr(($p = realpath(dirname(__FILE__))), 0, strrpos($p, "/")) . "/");
+require(PTS_PATH . "pts-core/functions/pts-functions.php");
 
-require("pts-core/functions/pts-functions.php");
 pts_init(); // Initalize the Phoronix Test Suite (pts-core) client
 
 $sent_command = strtolower(str_replace("-", "_", $argv[1]));

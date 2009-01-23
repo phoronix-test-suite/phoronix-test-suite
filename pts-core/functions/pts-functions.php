@@ -21,21 +21,21 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once("pts-core/functions/pts.php");
-require_once("pts-core/functions/pts-init.php");
+require_once(PTS_PATH . "pts-core/functions/pts.php");
+require_once(PTS_PATH . "pts-core/functions/pts-init.php");
 
 // Load Main Functions
-require_once("pts-core/functions/pts-interfaces.php");
-require_once("pts-core/functions/pts-functions_io.php");
-require_once("pts-core/functions/pts-functions_shell.php");
-require_once("pts-core/functions/pts-functions_config.php");
-require_once("pts-core/functions/pts-functions_system.php");
-require_once("pts-core/functions/pts-functions_global.php");
-require_once("pts-core/functions/pts-functions_tests.php");
-require_once("pts-core/functions/pts-functions_types.php");
-require_once("pts-core/functions/pts-functions_vars.php");
-require_once("pts-core/functions/pts-functions_modules.php");
-require_once("pts-core/functions/pts-functions_assignments.php");
+require_once(PTS_PATH . "pts-core/functions/pts-interfaces.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_io.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_shell.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_config.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_system.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_global.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_tests.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_types.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_vars.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_modules.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_assignments.php");
 
 // Phoronix Test Suite - Functions
 function pts_run_option_command($command, $pass_args = null, $preset_assignments = "")
@@ -58,7 +58,7 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 	{
 		if(!class_exists($command, false))
 		{
-			include("pts-core/options/" . $command . ".php");
+			include(PTS_PATH . "pts-core/options/" . $command . ".php");
 		}
 
 		eval($command . "::run(\$pass_args);");
@@ -146,7 +146,7 @@ function pts_trim_double($double, $accuracy = 2)
 }
 function pts_load_function_set($title)
 {
-	$function_file = "pts-core/functions/pts-functions-" . $title . ".php";
+	$function_file = PTS_PATH . "pts-core/functions/pts-functions-" . $title . ".php";
 
 	return is_file($function_file) && include_once($function_file);
 }

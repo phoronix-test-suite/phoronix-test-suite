@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-init.php: Common start-up initialization functions for the Phoronix Test Suite.
 
 	This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@ function pts_init()
 
 	if(IS_SCTP_MODE)
 	{
-		include_once("pts-core/functions/pts-functions-sctp.php");
+		include(PTS_PATH . "pts-core/functions/pts-functions-sctp.php");
 	}
 
 	pts_config_init();
@@ -38,51 +38,30 @@ function pts_init()
 	define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
 	pts_extended_init();
 }
-function pts_directory()
-{
-	// Read PTS directory
-	$dir = getenv("PTS_DIR");
-
-	if($dir == ".")
-	{
-		$dir = "";
-	}
-
-	if(!empty($dir))
-	{
-		if(substr($dir, -1) != "/")
-		{
-			$dir .= "/";
-		}
-	}
-	
-	return $dir;
-}
 function pts_define_directories()
 {
 	// User's home directory for storing results, module files, test installations, etc.
-	define("PTS_DIR", pts_directory());
 	define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
 
 	// Distribution External Dependency Locations
-	define("XML_DISTRO_DIR", PTS_DIR . "pts/distro-xml/");
-	define("SCRIPT_DISTRO_DIR", PTS_DIR . "pts/distro-scripts/");
+	define("XML_DISTRO_DIR", PTS_PATH . "pts/distro-xml/");
+	define("SCRIPT_DISTRO_DIR", PTS_PATH . "pts/distro-scripts/");
 
 	// Misc Locations
-	define("ETC_DIR", PTS_DIR . "pts/etc/");
-	define("MODULE_DIR", PTS_DIR . "pts-core/modules/");
+	define("ETC_DIR", PTS_PATH . "pts/etc/");
+	define("MODULE_DIR", PTS_PATH . "pts-core/modules/");
 	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
-	define("RESULTS_VIEWER_DIR", PTS_DIR . "pts-core/results-viewer/");
-	define("TEST_LIBRARIES_DIR", PTS_DIR . "pts-core/test-libraries/");
-	define("STATIC_DIR", PTS_DIR . "pts-core/static/");
+	define("RESULTS_VIEWER_DIR", PTS_PATH . "pts-core/results-viewer/");
+	define("TEST_LIBRARIES_DIR", PTS_PATH . "pts-core/test-libraries/");
+	define("STATIC_DIR", PTS_PATH . "pts-core/static/");
 	define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 	// Test & Suite Locations
-	define("XML_PROFILE_DIR", PTS_DIR . "pts/test-profiles/");
-	define("XML_PROFILE_CTP_BASE_DIR", PTS_DIR . "pts/base-test-profiles/");
-	define("XML_SUITE_DIR", PTS_DIR . "pts/test-suites/");
-	define("TEST_RESOURCE_DIR", PTS_DIR . "pts/test-resources/");
-	define("TEST_RESOURCE_CTP_BASE_DIR", PTS_DIR . "pts/base-test-resources/");
+	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");
+	define("XML_PROFILE_CTP_BASE_DIR", PTS_PATH . "pts/base-test-profiles/");
+	define("XML_SUITE_DIR", PTS_PATH . "pts/test-suites/");
+	define("TEST_RESOURCE_DIR", PTS_PATH . "pts/test-resources/");
+	define("TEST_RESOURCE_CTP_BASE_DIR", PTS_PATH . "pts/base-test-resources/");
 	define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
 	define("XML_PROFILE_LOCAL_CTP_BASE_DIR", XML_PROFILE_LOCAL_DIR . "base/");
 	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
@@ -250,7 +229,7 @@ function __autoload($to_load)
 	if($sub_objects == null && !is_array($sub_objects))
 	{
 		$sub_objects = array();
-		$sub_object_files = glob(PTS_DIR . "pts-core/objects/*/*.php");
+		$sub_object_files = glob(PTS_PATH . "pts-core/objects/*/*.php");
 
 		foreach($sub_object_files as $file)
 		{
@@ -259,9 +238,9 @@ function __autoload($to_load)
 		}
 	}
 
-	if(is_file(PTS_DIR . "pts-core/objects/" . $to_load . ".php"))
+	if(is_file(PTS_PATH . "pts-core/objects/" . $to_load . ".php"))
 	{
-		include_once(PTS_DIR . "pts-core/objects/" . $to_load . ".php");
+		include_once(PTS_PATH . "pts-core/objects/" . $to_load . ".php");
 	}
 	else if(isset($sub_objects[$to_load]))
 	{

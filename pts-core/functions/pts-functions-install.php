@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once("pts-core/functions/pts-functions-install_dependencies.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions-install_dependencies.php");
 
 function pts_start_install($to_install)
 {

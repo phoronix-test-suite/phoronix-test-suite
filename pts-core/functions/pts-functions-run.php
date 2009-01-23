@@ -813,7 +813,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	{
 		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the " . $test_title . " test should be re-installed.");
 		// Auto reinstall
-		//require_once("pts-core/functions/pts-functions-run.php");
+		//require_once(PTS_PATH . "pts-core/functions/pts-functions-install.php");
 		//pts_install_test($test_identifier);
 	}
 
