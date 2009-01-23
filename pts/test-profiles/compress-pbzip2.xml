@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -13,7 +13,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Parallel BZIP2 Compression</Title>
-		<Version>1.0.2</Version>
+		<Version>1.0.5</Version>
 		<SubTitle>2GB File Compression</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

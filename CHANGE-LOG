@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow more than two test result files to be merged at once using the merge-results option
 - pts-core: Setup PTS_PATH define for phoronix-test-suite directory
 - pts-core: Don't reinstall a test only when the reported CPU frequency changes, but the CPU model remains the same
+- pts: Update compress-pbzip2 test profile to pbzip2 1.0.5
 
 Phoronix Test Suite 1.6.0 "Tydal"
 January 20, 2008

@@ -6,9 +6,9 @@
 			<FileSize>841402</FileSize>
 		</Package>
 		<Package>
-			<URL>http://compression.ca/pbzip2/pbzip2-1.0.2.tar.gz</URL>
-			<MD5>7c959f0554695bc484865b938e791aaf</MD5>
-			<FileSize>22777</FileSize>
+			<URL>http://compression.ca/pbzip2/pbzip2-1.0.5.tar.gz</URL>
+			<MD5>e2448d22ee29d1e6549ac58b98df11ab</MD5>
+			<FileSize>26997</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
