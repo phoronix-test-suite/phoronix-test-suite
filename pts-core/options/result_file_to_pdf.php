@@ -108,8 +108,8 @@ class result_file_to_pdf implements pts_option_interface
 			$placement++;
 		}
 
-		$pdf->Output($r[0] . ".pdf");
-		echo "\nSaved To: " . $r[0] . ".pdf\n\n";
+		$pdf->Output(($pdf_file = pts_user_home() . $r[0] . ".pdf"));
+		echo "\nSaved To: " . $pdf_file . "\n\n";
 	}
 }
 
