@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_init()
+function pts_client_init()
 {
 	pts_define_directories(); // Define directories
 	pts_basic_init(); // Initalize common / needed PTS start-up work
