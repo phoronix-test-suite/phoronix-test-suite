@@ -70,7 +70,7 @@ function pts_sw_string()
 }
 function pts_system_identifier_string()
 {
-	$components = array(hw_cpu_string(), hw_sys_motherboard_string(), sw_os_release(), sw_os_compiler());
+	$components = array(hw_cpu_string(false), hw_sys_motherboard_string(), sw_os_release(), sw_os_compiler());
 	return base64_encode(implode("__", $components));
 }
 

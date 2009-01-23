@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-functions_system_cpu.php: System functions related to the processor(s).
 
 	This program is free software; you can redistribute it and/or modify
@@ -67,7 +67,7 @@ function hw_cpu_job_count()
 	// Number of CPU jobs to tell the tests to use
 	return hw_cpu_core_count() * 2;
 }
-function hw_cpu_string()
+function hw_cpu_string($append_cpu_frequency = true)
 {
 	// Returns the processor name / frequency information
 	$info = "";
@@ -153,17 +153,21 @@ function hw_cpu_string()
 	if(!empty($info))
 	{
 		$info = pts_clean_information_string($info);
-		$cpu_core_read = 0; // for now default to the first core frequency to read
 
-		// Append the processor frequency to string
-		if(($freq = hw_cpu_default_frequency($cpu_core_read)) > 0)
+		if($append_cpu_frequency)
 		{
-			if(($strip_point = strpos($info, "@")) > 0)
-			{
-				$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
-			}
+			$cpu_core_read = 0; // for now default to the first core frequency to read
 
-			$info .= " @ " . $freq . "GHz";
+			// Append the processor frequency to string
+			if(($freq = hw_cpu_default_frequency($cpu_core_read)) > 0)
+			{
+				if(($strip_point = strpos($info, "@")) > 0)
+				{
+					$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
+				}
+
+				$info .= " @ " . $freq . "GHz";
+			}
 		}
 	}
 	else
