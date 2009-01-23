@@ -24,6 +24,7 @@ class analyze_batch implements pts_option_interface
 {
 	public static function run($r)
 	{
+		pts_load_function_set("analytical");
 		pts_load_function_set("merge");
 
 		$BASE_FILE = pts_find_result_file($r[0]);
