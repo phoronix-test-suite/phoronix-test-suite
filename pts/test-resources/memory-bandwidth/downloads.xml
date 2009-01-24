@@ -5,6 +5,11 @@
 			<MD5>3b155d43a34d5a37a2aa9cb312e57530</MD5>
 			<FileSize>16991</FileSize>
 		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/bandwidth-patch-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/bandwidth-patch-1.tar.gz</URL>
+			<MD5>00841bdd543769f8b703cad0348562c5</MD5>
+			<FileSize>1040</FileSize>
+		</Package>
 	</Downloads>
 </PhoronixTestSuite>
 
