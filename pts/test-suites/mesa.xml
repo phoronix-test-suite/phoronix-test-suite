@@ -1,0 +1,38 @@
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<Title>Mesa Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The Mesa test suite consists of tests that should be compatible with the Mesa 3D display drivers on Linux.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>urbanterror</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>openarena</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>padman</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>nexuiz</Test>
+		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>warsow</Test>
+		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Mode>BATCH</Mode>
+	</RunTest>
+</PhoronixTestSuite>
