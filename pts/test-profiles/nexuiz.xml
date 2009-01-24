@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
@@ -9,7 +9,6 @@
 		<EnvironmentSize>746</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.nexuiz.com/</ProjectURL>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
