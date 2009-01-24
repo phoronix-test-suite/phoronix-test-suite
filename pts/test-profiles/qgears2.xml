@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Other</SoftwareType>
 		<License>FREE</License>
@@ -8,7 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.42</EnvironmentSize>
 		<ProjectURL>http://zrusin.blogspot.com/</ProjectURL>
-		<ExternalDependencies>build-essential, qt4-development</ExternalDependencies>
+		<ExternalDependencies>build-utilities, qt4-development</ExternalDependencies>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
 		<Extends>2d-test</Extends>
 	</TestProfile>

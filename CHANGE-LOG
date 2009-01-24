@@ -14,7 +14,9 @@ Phoronix Test Suite (Git)
 - pts-core: Expand capabilities for pts_module_option
 - pts: Update compress-pbzip2 test profile to pbzip2 1.0.5
 - pts: Update memory-bandwidth test profile to version 0.15
+- pts: Nexuiz test profile doesn't need build-utilities
 - pts: Add mesa test suite for graphics tests that should be compatible with the Mesa 3D drivers
+- pts: Fix external dependencies typo in qgears2 test profile
 
 Phoronix Test Suite 1.6.0 "Tydal"
 January 20, 2008
