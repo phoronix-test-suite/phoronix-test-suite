@@ -17,6 +17,7 @@ Phoronix Test Suite (Git)
 - pts: Nexuiz test profile doesn't need build-utilities
 - pts: Add mesa test suite for graphics tests that should be compatible with the Mesa 3D drivers
 - pts: Fix external dependencies typo in qgears2 test profile
+- pts: Fix external dependencies typo in render-bench test profile
 
 Phoronix Test Suite 1.6.0 "Tydal"
 January 20, 2008

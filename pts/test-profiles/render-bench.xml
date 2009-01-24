@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Other</SoftwareType>
 		<License>FREE</License>
@@ -8,7 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.12</EnvironmentSize>
 		<ProjectURL>http://www.freedesktop.org/</ProjectURL>
-		<ExternalDependencies>build-essential, imlib2-development</ExternalDependencies>
+		<ExternalDependencies>build-utilities, imlib2-development</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 		<Extends>2d-test</Extends>
 	</TestProfile>
