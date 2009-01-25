@@ -21,6 +21,92 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_trim_double($double, $accuracy = 2)
+{
+	// Set precision for a variable's points after the decimal spot
+	$return = explode(".", $double);
+
+	if(count($return) == 1)
+	{
+		$return[1] = "00";
+	}
+	
+	if(count($return) == 2 && $accuracy > 0)
+	{
+		$strlen = strlen($return[1]);
+
+		if($strlen > $accuracy)
+		{
+			$return[1] = substr($return[1], 0, $accuracy);
+		}
+		else if($strlen < $accuracy)
+		{
+			for($i = $strlen; $i < $accuracy; $i++)
+			{
+				$return[1] .= '0';
+			}
+		}
+
+		$return = $return[0] . "." . $return[1];
+	}
+	else
+	{
+		$return = $return[0];
+	}
+
+	return $return;
+}
+function pts_string_bool($string)
+{
+	// Used for evaluating if the user inputted a string that evaluates to true
+	$string = strtolower($string);
+	return $string == "true" || $string == "1" || $string == "on";
+}
+function pts_trim_spaces($string)
+{
+	while(strpos($string, "  ") !== false)
+	{
+		$string = str_replace("  ", " ", $string);
+	}
+
+	return trim($string);
+}
+function pts_is_valid_download_url($string, $basename = null)
+{
+	// Checks for valid download URL
+	$is_valid = true;
+
+	if(strpos($string, "://") == false)
+	{
+		$is_valid = false;
+	}
+
+	if(!empty($basename) && $basename != basename($string))
+	{
+		$is_valid = false;
+	}
+
+	return $is_valid;
+}
+function pts_version_comparable($old, $new)
+{
+	// Checks if there's a major version difference between two strings, if so returns false.
+	// If the same or only a minor difference, returns true.
+
+	$old = explode(".", pts_remove_chars($old, true, true, false));
+	$new = explode(".", pts_remove_chars($new, true, true, false));
+	$compare = true;
+
+	if(count($old) >= 2 && count($new) >= 2)
+	{
+		if($old[0] != $new[0] || $old[1] != $new[1])
+		{
+			$compare = false;
+		}
+	}
+
+	return $compare;	
+}
 function __autoload($to_load)
 {
 	pts_load_object($to_load);
