@@ -59,7 +59,8 @@ function pts_prompt_results_identifier($current_identifiers = null)
 		$times_tried = 0;
 		do
 		{
-			if($times_tried == 0 && ($env_identifier = getenv("TEST_RESULTS_IDENTIFIER")) != false)
+			if($times_tried == 0 && (($env_identifier = getenv("TEST_RESULTS_IDENTIFIER")) != false || 
+			($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")) != false))
 			{
 				$results_identifier = $env_identifier;
 				echo "Test Identifier: " . $results_identifier . "\n";
@@ -182,7 +183,6 @@ function pts_prompt_test_options($identifier)
 				// Have the user select the desired option
 				echo "\n" . $o->get_name() . ":\n";
 				$all_option_names = $o->get_all_option_names();
-				$first_try = true;
 
 				do
 				{
@@ -192,17 +192,7 @@ function pts_prompt_test_options($identifier)
 						echo ($i + 1) . ": " . $o->get_option_name($i) . "\n";
 					}
 					echo "\nEnter Your Choice: ";
-
-					if($first_try && ($auto_opt = getenv(strtoupper($identifier) . "_" . $this_option_pos)) != false)
-					{
-						$bench_choice = $auto_opt;
-						echo $bench_choice . "\n";
-					}
-					else
-					{
-						$bench_choice = trim(fgets(STDIN));
-					}
-					$first_try = false;
+					$bench_choice = trim(fgets(STDIN));
 				}
 				while(($bench_choice < 1 || $bench_choice > $option_count) && !in_array($bench_choice, $all_option_names));
 
@@ -913,7 +903,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		if(is_file($benchmark_log_file))
 		{
-			if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") != false || getenv("SAVE_BENCHMARK_LOGS") != false))
+			if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
 			{
 				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/benchmark-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
 				$backup_filename = basename($benchmark_log_file);

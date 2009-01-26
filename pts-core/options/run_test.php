@@ -378,7 +378,6 @@ class run_test implements pts_option_interface
 				pts_set_assignment("SAVE_FILE_NAME", $proposed_file_name);
 
 				// Prompt Description
-
 				if(pts_read_assignment("IS_BATCH_MODE") == false || pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE") == "TRUE")
 				{
 					if($unique_test_names > 1)
