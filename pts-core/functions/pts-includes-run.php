@@ -27,7 +27,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 	$results_identifier = null;
 	$show_identifiers = array();
 
-	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE")
+	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_identifier())
 	{
 		if(is_array($current_identifiers) && count($current_identifiers) > 0)
 		{
@@ -358,7 +358,7 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 		}
 	}
 
-	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE")
+	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_save_name())
 	{
 		$is_reserved_word = pts_is_test($proposed_name) || pts_is_suite($proposed_name);
 
