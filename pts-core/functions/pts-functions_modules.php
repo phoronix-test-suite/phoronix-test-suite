@@ -212,13 +212,13 @@ function pts_module_valid_user_command($module, $command = null)
 
 	return $valid;
 }
-function pts_module_run_user_command($module, $command)
+function pts_module_run_user_command($module, $command, $arguments = null)
 {
 	$all_options = pts_php_module_call($module, "user_commands");
 	
 	if(isset($all_options[$command]) && method_exists($module, $all_options[$command]))
 	{
-		pts_php_module_call($module, $all_options[$command]);
+		pts_php_module_call($module, $all_options[$command], $arguments);
 	}
 }
 function pts_module_call($module, $process, $object_pass = null)
