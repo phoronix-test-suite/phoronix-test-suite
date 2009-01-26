@@ -68,60 +68,67 @@ function pts_save_result($save_to = null, $save_results = null)
 			$test_results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER");
 
 			// Save verbose system information here
-			if(!is_dir($save_to_dir . "/system-details/"))
+			if(!is_dir($save_to_dir . "/system-logs/"))
 			{
-				mkdir($save_to_dir . "/system-details/");
-			}
-			if(!is_dir($save_to_dir . "/system-details/" . $test_results_identifier))
-			{
-				mkdir($save_to_dir . "/system-details/" . $test_results_identifier);
+				mkdir($save_to_dir . "/system-logs/");
 			}
 
+			$system_log_dir = $save_to_dir . "/system-logs/" . $test_results_identifier;
+
+			if(!is_dir($system_log_dir))
+			{
+				mkdir($system_log_dir);
+			}
+
+			// Xorg.0.log
 			if(is_file("/var/log/Xorg.0.log"))
 			{
-				pts_copy("/var/log/Xorg.0.log", $save_to_dir . "/system-details/" . $test_results_identifier . "/Xorg.0.log");
-			}
-
-			// lspci
-			$file = shell_exec("lspci 2>&1");
-
-			if(strpos($file, "not found") == false)
-			{
-				@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/lspci", $file);
-			}
-
-			// sensors
-			$file = shell_exec("sensors 2>&1");
-
-			if(strpos($file, "not found") == false)
-			{
-				@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/sensors", $file);
-			}
-
-			// dmesg
-			$file = shell_exec("dmesg 2>&1");
-
-			if(strpos($file, "not found") == false)
-			{
-				@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/dmesg", $file);
-			}
-
-			if(IS_MACOSX)
-			{
-				// system_profiler (Mac OS X)
-				$file = shell_exec("system_profiler 2>&1");
-
-				if(strpos($file, "not found") == false)
-				{
-					@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/system_profiler", $file);
-				}
+				pts_copy("/var/log/Xorg.0.log", $system_log_dir . "/Xorg.0.log");
 			}
 
 			// cpuinfo
 			if(is_file("/proc/cpuinfo"))
 			{
 				$file = file_get_contents("/proc/cpuinfo");
-				@file_put_contents($save_to_dir . "/system-details/" . $test_results_identifier . "/cpuinfo", $file);
+				@file_put_contents($system_log_dir . "/cpuinfo", $file);
+			}
+
+			// lspci
+			$file = shell_exec("lspci 2>&1");
+			if(strpos($file, "not found") == false)
+			{
+				@file_put_contents($system_log_dir . "/lspci", $file);
+			}
+
+			// sensors
+			$file = shell_exec("sensors 2>&1");
+			if(strpos($file, "not found") == false)
+			{
+				@file_put_contents($system_log_dir . "/sensors", $file);
+			}
+
+			// dmesg
+			$file = shell_exec("dmesg 2>&1");
+			if(strpos($file, "not found") == false)
+			{
+				@file_put_contents($system_log_dir . "/dmesg", $file);
+			}
+
+			// glxinfo
+			$file = shell_exec("glxinfo 2>&1");
+			if(strpos($file, "not found") == false)
+			{
+				@file_put_contents($system_log_dir . "/glxinfo", $file);
+			}
+
+			if(IS_MACOSX)
+			{
+				// system_profiler (Mac OS X)
+				$file = shell_exec("system_profiler 2>&1");
+				if(strpos($file, "not found") == false)
+				{
+					@file_put_contents($system_log_dir . "/system_profiler", $file);
+				}
 			}
 		}
 		file_put_contents($save_to_dir . "/index.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=composite.xml\"></HEAD><BODY></BODY></HTML>");

@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rename function files that aren't loaded by default to use pts-includes- prefix
 - pts-core: Expand capabilities for pts_module_option
 - pts-core: Save system logs when running in batch mode
+- pts-core: save system logs to system-logs/ instead of system-details/
 - pts: Update compress-pbzip2 test profile to pbzip2 1.0.5
 - pts: Update memory-bandwidth test profile to version 0.15
 - pts: Nexuiz test profile doesn't need build-utilities
