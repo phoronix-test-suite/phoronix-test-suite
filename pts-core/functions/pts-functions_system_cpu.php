@@ -131,7 +131,12 @@ function hw_cpu_string($append_cpu_frequency = true)
 			else
 			{
 				$info = trim(shell_exec("dmesg 2>&1 | grep cpu0"));
-				$info = substr($info, strrpos($info, "cpu0:") + 6);
+				$info = trim(substr($info, strrpos($info, "cpu0:") + 6));
+
+				if(empty($info))
+				{
+					$info = array_pop(read_sun_ddu_dmi_info("ProcessorManufacturer"));
+				}
 			}
 		}
 		else if(IS_BSD)
