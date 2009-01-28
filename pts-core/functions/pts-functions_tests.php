@@ -588,6 +588,42 @@ function pts_test_version_supported($identifier)
 
 	return $supported;
 }
+function pts_test_version_compatible($version_compare = "")
+{
+	$compatible = true;
+
+	if(!empty($version_compare))
+	{
+		$current = pts_remove_chars(PTS_VERSION, true, false, false);
+
+		$version_compare = explode("-", $version_compare);	
+		$support_begins = pts_remove_chars(trim($version_compare[0]), true, false, false);
+
+		if(count($version_compare) == 2)
+		{
+			$support_ends = trim($version_compare[1]);
+		}
+		else
+		{
+			$support_ends = PTS_VERSION;
+		}
+		$support_ends = pts_remove_chars(trim($support_ends), true, false, false);
+
+		$compatible = $current >= $support_begins && $current <= $support_ends;
+	}
+
+	return $compatible;	
+}
+function pts_version_newer($version_a, $version_b)
+{
+	$r_a = explode(".", $version_a);
+	$r_b = explode(".", $version_b);
+
+	$r_a = ($r_a[0] * 1000) + ($r_a[1] * 100) + $r_a[2];
+	$r_b = ($r_b[0] * 1000) + ($r_b[1] * 100) + $r_b[2];
+
+	return $r_a > $r_b ? $version_a : $version_b;
+}
 function pts_suite_supported($identifier)
 {
 	$tests = pts_contained_tests($identifier, true);
@@ -673,32 +709,6 @@ function pts_available_suites_array()
 	}
 
 	return $suites;
-}
-function pts_test_version_compatible($version_compare = "")
-{
-	$compatible = true;
-
-	if(!empty($version_compare))
-	{
-		$current = pts_remove_chars(PTS_VERSION, true, false, false);
-
-		$version_compare = explode("-", $version_compare);	
-		$support_begins = pts_remove_chars(trim($version_compare[0]), true, false, false);
-
-		if(count($version_compare) == 2)
-		{
-			$support_ends = trim($version_compare[1]);
-		}
-		else
-		{
-			$support_ends = PTS_VERSION;
-		}
-		$support_ends = pts_remove_chars(trim($support_ends), true, false, false);
-
-		$compatible = $current >= $support_begins && $current <= $support_ends;
-	}
-
-	return $compatible;	
 }
 function pts_call_test_script($test_identifier, $script_name, $print_string = "", $pass_argument = "", $extra_vars = null, $use_ctp = true)
 {
