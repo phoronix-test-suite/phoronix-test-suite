@@ -1,6 +1,6 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<TestType>System</TestType>
 		<Title>OpenSolaris Nevada Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -36,6 +36,26 @@
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB</Arguments>
+		<Description>HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-lat 10x10-5%</Arguments>
+		<Description>Local Adaptive Thresholding</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-resize 50%</Arguments>
+		<Description>Resizing</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-sharpen 0x1.0</Arguments>
+		<Description>Sharpen</Description>
 	</RunTest>
 	<RunTest>
 		<Test>byte</Test>
