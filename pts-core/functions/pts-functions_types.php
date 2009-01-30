@@ -22,11 +22,9 @@
 */
 
 define("TYPE_TEST", "TEST"); // Type is test
-define("TYPE_OS_TEST", "OS_TEST"); // Type is OS-specific test
 define("TYPE_TEST_SUITE", "TEST_SUITE"); // Type is a test suite
 define("TYPE_LOCAL_TEST", "LOCAL_TEST"); // Type is local test
 define("TYPE_LOCAL_BASE_TEST", "LOCAL_TEST"); // Type is local base test
-define("TYPE_OS_LOCAL_TEST", "OS_LOCAL_TEST"); // Type is test
 define("TYPE_LOCAL_TEST_SUITE", "LOCAL_TEST_SUITE"); // Type is a test suite
 define("TYPE_SCTP_TEST", "LOCAL_SCTP_TEST"); // Type is a SCTP test
 define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a SCTP test
@@ -52,7 +50,39 @@ function pts_is_test($object)
 {
 	$type = pts_test_type($object);
 
-	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_LOCAL_BASE_TEST || $type == TYPE_OS_TEST || $type == TYPE_OS_LOCAL_TEST || $type == TYPE_SCTP_TEST || $type == TYPE_BASE_TEST;
+	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_LOCAL_BASE_TEST || $type == TYPE_SCTP_TEST || $type == TYPE_BASE_TEST;
+}
+function pts_validate_local_test_profile($identifier)
+{
+	if(is_file(($lp = XML_PROFILE_LOCAL_DIR . $identifier . ".xml")))
+	{
+		$valid = true;
+
+		if(is_file(($sp = XML_PROFILE_DIR . $identifier . ".xml")))
+		{
+			$lp_parser = new pts_test_tandem_XmlReader($lp);
+			$sp_parser = new pts_test_tandem_XmlReader($sp);
+
+			$lp_version = $lp_parser->getXMLValue(P_TEST_PTSVERSION);
+			$sp_version = $sp_parser->getXMLValue(P_TEST_PTSVERSION);
+
+			if(pts_version_newer($lp_version, $sp_version) == $sp_version)
+			{
+				// Standard test profile version newer than the local test profile version
+				$valid = false;
+
+				// Rename test profile since it's out of date
+				pts_rename($lp, XML_PROFILE_LOCAL_DIR . $identifier . ".xml.old");
+			}
+			
+		}
+	}
+	else
+	{
+		$valid = false;
+	}
+
+	return $valid;
 }
 function pts_test_type($identifier)
 {
@@ -69,7 +99,7 @@ function pts_test_type($identifier)
 		}
 		else if(!empty($identifier))
 		{
-			if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml"))
+			if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_profile($identifier))
 			{
 				$test_type = TYPE_LOCAL_TEST;
 			}
@@ -217,11 +247,11 @@ function pts_location_test_resources($identifier)
 		{
 			$type = pts_test_type($identifier);
 
-			if(($type == TYPE_TEST || $type == TYPE_OS_TEST) && is_dir(TEST_RESOURCE_DIR . $identifier))
+			if($type == TYPE_TEST && is_dir(TEST_RESOURCE_DIR . $identifier))
 			{
 				$location = TEST_RESOURCE_DIR . $identifier . "/";
 			}
-			else if(($type == TYPE_LOCAL_TEST || $type == TYPE_OS_LOCAL_TEST) && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
+			else if($type == TYPE_LOCAL_TEST && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
 			{
 				$location = TEST_RESOURCE_LOCAL_DIR . $identifier . "/";
 			}
@@ -274,7 +304,7 @@ function pts_test_extends_below($object)
 
 	return array_reverse($extensions);
 }
-function pts_contained_tests($objects, $include_extensions = false, $check_extended = true, $eliminate_duplicates = true)
+function pts_contained_tests($objects, $include_extensions = false, $check_extended = true, $remove_duplicates = true)
 {
 	// Provide an array containing the location(s) of all test(s) for the supplied object name
 	$tests = array();
@@ -357,7 +387,7 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 		}
 	}
 
-	if($eliminate_duplicates)
+	if($remove_duplicates)
 	{
 		$tests = array_unique($tests);
 	}

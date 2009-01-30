@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts-core: Don't prepend "-" to memory string before memory speed when memory type isn't detected
 - pts-core: Drop OS_PREFIX support from beginning of test profile names, since it's not being used and there's better ways to handle it
 - pts-core: Improve estimated run-time reporting when running multiple instances of the same test
+- pts-core: When there is a local test profile installed, compare it to the in-PTS version and use whatever one is newer
 - pts: Update compress-pbzip2 test profile to pbzip2 1.0.5
 - pts: Update memory-bandwidth test profile to version 0.15
 - pts: Nexuiz test profile doesn't need build-utilities

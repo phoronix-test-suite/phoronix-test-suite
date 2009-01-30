@@ -119,6 +119,10 @@ function pts_copy($from, $to)
 		copy($from, $to);
 	}
 }
+function pts_rename($from, $to)
+{
+	return rename($from, $to);
+}
 function pts_symlink($from, $to)
 {
 	return @symlink($from, $to);
