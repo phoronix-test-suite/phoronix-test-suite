@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: save system logs to system-logs/ instead of system-details/
 - pts-core: Add fallback support in OpenSolaris detection for CPU manufacturer when rest of processor detection fails
 - pts-core: Don't prepend "-" to memory string before memory speed when memory type isn't detected
+- pts-core: Drop OS_PREFIX support from beginning of test profile names, since it's not being used and there's better ways to handle it
 - pts: Update compress-pbzip2 test profile to pbzip2 1.0.5
 - pts: Update memory-bandwidth test profile to version 0.15
 - pts: Nexuiz test profile doesn't need build-utilities
