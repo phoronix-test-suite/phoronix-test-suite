@@ -274,7 +274,7 @@ function pts_test_extends_below($object)
 
 	return array_reverse($extensions);
 }
-function pts_contained_tests($objects, $include_extensions = false, $check_extended = true)
+function pts_contained_tests($objects, $include_extensions = false, $check_extended = true, $eliminate_duplicates = true)
 {
 	// Provide an array containing the location(s) of all test(s) for the supplied object name
 	$tests = array();
@@ -357,7 +357,12 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 		}
 	}
 
-	return array_unique($tests);
+	if($eliminate_duplicates)
+	{
+		$tests = array_unique($tests);
+	}
+
+	return $tests;
 }
 function pts_virtual_suite_tests($object)
 {

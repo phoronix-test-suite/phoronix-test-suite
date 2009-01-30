@@ -481,7 +481,7 @@ function pts_test_estimated_run_time($identifier)
 	// Estimate the time it takes (in seconds) to complete the given test
 	$estimated_length = 0;
 
-	foreach(pts_contained_tests($identifier) as $test)
+	foreach(pts_contained_tests($identifier, false, true, false) as $test)
 	{
 		if(pts_test_installed($test))
 		{
