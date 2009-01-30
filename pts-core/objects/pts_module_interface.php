@@ -102,7 +102,7 @@ class pts_module_interface
 
 	public static function __pre_run_process($obj = null)
 	{
-		// Passed is an array of test identifiers for all tests scheduled to run
+		// Passed is an array of pts_test_run_request objects for all tests scheduled to run
 		return;
 	}
 	public static function __pre_test_run($obj = null)
@@ -122,7 +122,7 @@ class pts_module_interface
 	}
 	public static function __post_run_process($obj = null)
 	{
-		// Passed is an array of test identifiers for all tests that were scheduled to run
+		// Passed is an array of pts_test_run_request objects for all tests scheduled to run
 		return;
 	}
 

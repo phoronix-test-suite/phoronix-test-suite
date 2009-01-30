@@ -91,9 +91,7 @@ class run_test implements pts_option_interface
 		}
 
 		$unique_test_names = count(array_unique($to_run_identifiers));
-		$test_names_r = array();
-		$test_arguments_r = array();
-		$test_arguments_description_r = array();
+		$tests_to_run = array();
 
 		foreach($to_run_identifiers as $to_run)
 		{
@@ -290,20 +288,11 @@ class run_test implements pts_option_interface
 
 			for($i = 0; $i < count($test_args) && $i < count($test_run); $i++)
 			{
-				array_push($test_names_r, $test_run[$i]);
-
-				$argument = $test_args[$i];
-				array_push($test_arguments_r, $argument);
-
-				if(isset($test_args_description[$i]))
-				{
-					$argument = $test_args_description[$i];
-				}
-				array_push($test_arguments_description_r, $argument);
+				array_push($tests_to_run, new pts_test_run_request($test_run[$i], $test_args[$i], isset($test_args_description[$i]) ? $test_args_description[$i] : ""));
 			}
 		}
 
-		if(count($to_run_identifiers) == 0 || count($test_names_r) == 0)
+		if(count($to_run_identifiers) == 0 || count($tests_to_run) == 0)
 		{
 			return false;
 		}
@@ -420,9 +409,16 @@ class run_test implements pts_option_interface
 
 		// Run the test process
 
-		if(count($test_names_r) > 1)
+		if(count($tests_to_run) > 1)
 		{
-			$estimated_length = pts_test_estimated_run_time($test_names_r);
+			$test_names = array();
+
+			foreach($tests_to_run as $t)
+			{
+				array_push($test_names, $t->get_identifier());
+			}
+
+			$estimated_length = pts_test_estimated_run_time($test_names);
 
 			if($estimated_length > 1)
 			{
@@ -436,10 +432,10 @@ class run_test implements pts_option_interface
 		}
 
 		// Run the actual tests
-		pts_module_process("__pre_run_process", $test_names_r);
-		pts_recurse_call_tests($test_names_r, $test_arguments_r, $save_results, $xml_results_writer, $results_identifier, $test_arguments_description_r);
+		pts_module_process("__pre_run_process", $tests_to_run);
+		pts_recurse_call_tests($tests_to_run, $xml_results_writer, $results_identifier);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
-		pts_module_process("__post_run_process", $test_names_r);
+		pts_module_process("__post_run_process", $tests_to_run);
 
 		if(isset($post_run_message))
 		{

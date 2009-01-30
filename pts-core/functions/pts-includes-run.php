@@ -622,28 +622,36 @@ function pts_verify_test_installation($identifiers)
 
 	return $valid_op;
 }
-function pts_recurse_call_tests($tests_to_run, $arguments_array, $save_results = false, &$tandem_xml = "", $results_identifier = "", $arguments_description = "")
+function pts_recurse_call_tests($tests_to_run, &$tandem_xml = "", $results_identifier = "")
 {
 	for($i = 0; $i < count($tests_to_run); $i++)
 	{
-		if(pts_is_suite($tests_to_run[$i]))
+		$to_run = $tests_to_run[$i]->get_identifier();
+
+		if(pts_is_suite($to_run))
 		{
-			$xml_parser = new pts_suite_tandem_XmlReader($tests_to_run[$i]);
+			$xml_parser = new pts_suite_tandem_XmlReader($to_run);
 			$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 			$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
 			$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
 
-			pts_recurse_call_tests($tests_in_suite, $sub_arguments, $save_results, $tandem_xml, $results_identifier, $sub_arguments_description);
+			$suite_tests = array();
+			for($i = 0; $i < count($tests_in_suite); $i++)
+			{
+				array_push($suite_tests, new pts_test_run_request($tests_in_suite[$i], $sub_arguments[$i], $sub_arguments_description[$i]));
+			}
+
+			pts_recurse_call_tests($suite_tests, $tandem_xml, $results_identifier);
 		}
-		else if(pts_is_test($tests_to_run[$i]))
+		else if(pts_is_test($to_run))
 		{
-			$test_result = pts_run_test($tests_to_run[$i], $arguments_array[$i], $arguments_description[$i]);
+			$test_result = pts_run_test($to_run, $tests_to_run[$i]->get_arguments(), $tests_to_run[$i]->get_arguments_description());
 
 			if($test_result instanceof pts_test_result)
 			{
 				$end_result = $test_result->get_result();
 
-				if($save_results && count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
+				if(!empty($results_identifier) && count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
 				{
 					pts_record_test_result($tandem_xml, $test_result, $results_identifier, pts_request_new_id());
 				}
