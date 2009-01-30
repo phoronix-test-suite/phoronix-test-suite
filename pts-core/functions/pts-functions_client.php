@@ -154,11 +154,6 @@ function pts_shutdown()
 		}
 	}
 
-	if(IS_SCTP_MODE)
-	{
-		pts_remove_sctp_test_files();
-	}
-
 	// Remove process
 	pts_process_remove("phoronix-test-suite");
 }

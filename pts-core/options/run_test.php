@@ -88,10 +88,6 @@ class run_test implements pts_option_interface
 					$to_run_identifiers[$i] = $test_extracted;
 				}
 			}
-			else if(IS_SCTP_MODE)
-			{
-				$to_run_identifiers[$i] = basename($to_run_identifiers[$i]);
-			}
 		}
 
 		$unique_test_names = count(array_unique($to_run_identifiers));
@@ -131,22 +127,14 @@ class run_test implements pts_option_interface
 			}
 			else
 			{
-				if(IS_SCTP_MODE)
+				if(pts_is_test($to_run) && !pts_is_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE"))
 				{
-					pts_set_assignment_once("AUTO_SAVE_NAME", $to_run);
-					$to_run_type = "SCTP_COMPARISON";
-				}
-				else
-				{
-					if(pts_is_test($to_run) && !pts_is_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE"))
-					{
-						$xml_parser = new pts_test_tandem_XmlReader($to_run);
-						$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
+					$xml_parser = new pts_test_tandem_XmlReader($to_run);
+					$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 
-						if($result_format == "NO_RESULT")
-						{
-							pts_set_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE", true);
-						}
+					if($result_format == "NO_RESULT")
+					{
+						pts_set_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE", true);
 					}
 				}
 			}

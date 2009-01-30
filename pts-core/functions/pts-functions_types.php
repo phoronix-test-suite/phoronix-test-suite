@@ -25,8 +25,7 @@ define("TYPE_TEST", "TEST"); // Type is test
 define("TYPE_TEST_SUITE", "TEST_SUITE"); // Type is a test suite
 define("TYPE_LOCAL_TEST", "LOCAL_TEST"); // Type is local test
 define("TYPE_LOCAL_TEST_SUITE", "LOCAL_TEST_SUITE"); // Type is a test suite
-define("TYPE_SCTP_TEST", "LOCAL_SCTP_TEST"); // Type is a SCTP test
-define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a SCTP test
+define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a base test
 
 define("TYPE_VIRT_SUITE_SUBSYSTEM", "VIRT_SUITE_SUBSYSTEM"); // Type is a virtual suite for a subsystem
 define("TYPE_VIRT_SUITE_ALL", "VIRT_SUITE_ALL");
@@ -49,7 +48,7 @@ function pts_is_test($object)
 {
 	$type = pts_test_type($object);
 
-	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_SCTP_TEST || $type == TYPE_BASE_TEST;
+	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_BASE_TEST;
 }
 function pts_validate_local_test_profile($identifier)
 {
@@ -92,11 +91,7 @@ function pts_test_type($identifier)
 	{
 		$test_type = false;
 
-		if(IS_SCTP_MODE)
-		{
-			$test_type = TYPE_SCTP_TEST;
-		}
-		else if(!empty($identifier))
+		if(!empty($identifier))
 		{
 			if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_profile($identifier))
 			{
@@ -195,11 +190,7 @@ function pts_location_test($identifier)
 	{
 		$location = false;
 
-		if(IS_SCTP_MODE)
-		{
-			$location = SCTP_FILE;
-		}
-		else if(pts_is_test($identifier))
+		if(pts_is_test($identifier))
 		{
 			$type = pts_test_type($identifier);
 
@@ -230,11 +221,7 @@ function pts_location_test_resources($identifier)
 	{
 		$location = false;
 
-		if(IS_SCTP_MODE)
-		{
-			$location = PTS_TEMP_DIR . "sctp/" . basename(SCTP_FILE) . "/";
-		}
-		else if(pts_is_test($identifier))
+		if(pts_is_test($identifier))
 		{
 			$type = pts_test_type($identifier);
 

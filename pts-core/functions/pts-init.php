@@ -26,15 +26,9 @@ function pts_client_init()
 	pts_define_directories(); // Define directories
 	pts_basic_init(); // Initalize common / needed PTS start-up work
 
-	if(IS_SCTP_MODE)
-	{
-		include(PTS_PATH . "pts-core/functions/pts-includes-sctp.php");
-	}
-
 	pts_config_init();
 	define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 	define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
-	define("SCTP_DIR", pts_find_home(pts_read_user_config(P_OPTION_SCTP_DIRECTORY, "~/.phoronix-test-suite/sctp/")));
 	define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
 	pts_extended_init();
 }
@@ -96,17 +90,6 @@ function pts_basic_init()
 		define("IS_DEBUG_MODE", false);
 	}
 
-	// Self-Contained Test Profile
-	if(($sctp_file = getenv("SCTP_FILE")) != false && is_file($sctp_file))
-	{
-		define("SCTP_FILE", $sctp_file);
-		define("IS_SCTP_MODE", true);
-	}
-	else
-	{
-		define("IS_SCTP_MODE", false);
-	}
-
 	// Operating System Detection
 	$supported_operating_systems = array("Linux", array("Solaris", "Sun"), "BSD", array("MacOSX", "Darwin"));
 	$uname_s = strtolower(php_uname("s"));
@@ -161,7 +144,7 @@ function pts_extended_init()
 	}
 
 	$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, XML_SUITE_LOCAL_DIR, 
-	TEST_RESOURCE_LOCAL_DIR, XML_PROFILE_LOCAL_DIR, SCTP_DIR, MODULE_LOCAL_DIR);
+	TEST_RESOURCE_LOCAL_DIR, XML_PROFILE_LOCAL_DIR, MODULE_LOCAL_DIR);
 
 	foreach($directory_check as $dir)
 	{
@@ -203,12 +186,6 @@ function pts_extended_init()
 	}
 
 	define("IS_UNKNOWN_GRAPHICS", ($found_gpu_match == false));
-
-	// Self-Contained Test Profile Routines
-	if(IS_SCTP_MODE)
-	{
-		pts_generate_sctp_layer();
-	}
 
 	if(substr(pts_read_user_config(P_OPTION_TESTCORE_LASTTIME, date("Y-m-d")), 0, 10) != date("Y-m-d"))
 	{

@@ -42,14 +42,7 @@ function pts_install_package_on_distribution($identifiers)
 }
 function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
 {
-	if(IS_SCTP_MODE)
-	{
-		$tests = array($TO_INSTALL);
-	}
-	else
-	{
-		$tests = pts_contained_tests($TO_INSTALL, true);
-	}
+	$tests = pts_contained_tests($TO_INSTALL, true);
 	
 	foreach($tests as $test)
 	{

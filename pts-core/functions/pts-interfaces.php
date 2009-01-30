@@ -72,19 +72,6 @@ define("P_TEST_OPTIONS_MENU_GROUP_NAME", P_TEST_OPTIONS_MENU_GROUP . "/" . S_TES
 define("P_TEST_OPTIONS_MENU_GROUP_VALUE", P_TEST_OPTIONS_MENU_GROUP . "/" . S_TEST_OPTIONS_MENU_GROUP_VALUE); // From inside the XML options menu group, the option value
 
 //
-// SELF-CONTAINED TEST PROFILE SPECIFICATION
-//
-
-define("P_TEST_SCTP_INSTALLSCRIPT", "PhoronixTestSuite/SelfContained/Install"); // Installation routine
-define("P_TEST_SCTP_VALIDATE_INSTALL", "PhoronixTestSuite/SelfContained/ValidateInstall"); // Validate installation routine
-define("P_TEST_SCTP_DOWNLOADS", "PhoronixTestSuite/SelfContained/Downloads"); // Downloads XML file
-define("P_TEST_SCTP_RESULTSPARSER", "PhoronixTestSuite/SelfContained/ResultsParser"); // Results Parser
-define("P_TEST_SCTP_VALIDATE_RESULT", "PhoronixTestSuite/SelfContained/ValidateResult"); // Validate results routine
-define("P_TEST_SCTP_PRERUN", "PhoronixTestSuite/SelfContained/PreRun"); // Pre-run script
-define("P_TEST_SCTP_INTERIMRUN", "PhoronixTestSuite/SelfContained/InterimRun"); // Interim-run script
-define("P_TEST_SCTP_POSTRUN", "PhoronixTestSuite/SelfContained/PostRun"); // Pre-run script
-
-//
 // TEST SUITE SPECIFICATION
 //
 
@@ -189,7 +176,6 @@ define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/Installation/Cache
 define("P_OPTION_CACHE_SEARCHMEDIA", "PhoronixTestSuite/Options/Installation/SearchMediaForCache"); // Search /media/ devices for a remote download cache
 define("P_OPTION_CACHE_SYMLINK", "PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache"); // Don't copy files from cache, but symlink to them
 define("P_OPTION_PROMPT_DOWNLOADLOC", "PhoronixTestSuite/Options/Installation/PromptForDownloadMirror"); // Results save directory
-define("P_OPTION_SCTP_DIRECTORY", "PhoronixTestSuite/Options/Installation/SelfContainedTestProfileDirectory"); // Directory for reading/writing to download cache
 
 define("P_OPTION_BATCH_CONFIGURED", "PhoronixTestSuite/Options/BatchMode/Configured"); // Batch mode has been configured
 define("P_OPTION_BATCH_SAVERESULTS", "PhoronixTestSuite/Options/BatchMode/SaveResults"); // Batch mode save results

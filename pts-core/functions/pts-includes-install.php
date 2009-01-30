@@ -27,33 +27,26 @@ function pts_start_install($to_install)
 {
 	$to_install = pts_to_array($to_install);
 
-	if(IS_SCTP_MODE)
+	$tests = array();
+
+	foreach($to_install as $to_install_test)
 	{
-		$tests = array($to_install[0]);
+		foreach(pts_contained_tests($to_install_test, true) as $test)
+		{
+			array_push($tests, $test);
+		}
 	}
-	else
+	$tests = array_unique($tests);
+
+	if(count($tests) == 0)
 	{
-		$tests = array();
+		$exit_message = "";
 
-		foreach($to_install as $to_install_test)
+		if(!pts_is_assignment("SILENCE_MESSAGES"))
 		{
-			foreach(pts_contained_tests($to_install_test, true) as $test)
-			{
-				array_push($tests, $test);
-			}
+			echo pts_string_header("\nNot recognized: " . $to_install[0] . "\n");
 		}
-		$tests = array_unique($tests);
-
-		if(count($tests) == 0)
-		{
-			$exit_message = "";
-
-			if(!pts_is_assignment("SILENCE_MESSAGES"))
-			{
-				echo pts_string_header("\nNot recognized: " . $to_install[0] . "\n");
-			}
-			return false;
-		}
+		return false;
 	}
 
 	pts_module_process("__pre_install_process", $tests);

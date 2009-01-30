@@ -32,11 +32,6 @@ class install_test implements pts_option_interface
 		}
 		else
 		{
-			if(IS_SCTP_MODE)
-			{
-				$items_to_install[0] = basename($items_to_install[0]);
-			}
-
 			$items_to_install = array_unique(array_map("strtolower", $items_to_install));
 
 			foreach($items_to_install as $this_install)
