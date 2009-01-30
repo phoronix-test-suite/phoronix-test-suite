@@ -402,7 +402,12 @@ function hw_sys_memory_string()
 				$mem_speed = substr($mem_speed, 0, $cut);
 			}
 
-			$mem_prefix .= "-" . str_replace(" ", "", $mem_speed);
+			if(!empty($mem_prefix))
+			{
+				$mem_prefix .= "-";
+			}
+
+			$mem_prefix .= str_replace(" ", "", $mem_speed);
 		}
 
 		if($mem_count > 1 && count(array_unique($mem_size)) > 1)

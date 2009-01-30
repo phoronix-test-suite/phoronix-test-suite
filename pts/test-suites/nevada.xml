@@ -4,7 +4,7 @@
 		<TestType>System</TestType>
 		<Title>OpenSolaris Nevada Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
-		<Description>The Nevada test suite (named after the SXCE code-name) is designed to house the most prominent tests that are compatible with Sun Microsystem's OpenSolaris / Solaris Express Community Edition operating systems.</Description>
+		<Description>The Nevada test suite (named after the SXCE codename) is designed to house the most prominent tests that are compatible with Sun Microsystem's OpenSolaris / Solaris Express Community Edition operating systems.</Description>
 	</SuiteInformation>
 	<RunTest>
 		<Test>j2dbench</Test>
@@ -64,11 +64,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>sqlite</Test>
-	</RunTest>
-	<RunTest>
-		<Test>tandem-xml</Test>
-		<Arguments>WRITE</Arguments>
-		<Description>Write Performance</Description>
 	</RunTest>
 	<RunTest>
 		<Test>java</Test>

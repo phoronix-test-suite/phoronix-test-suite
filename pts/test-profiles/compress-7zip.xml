@@ -12,6 +12,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>7-Zip Compression</Title>
+		<SubTitle>2GB File Compression</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Average MIPS</ResultScale>
 		<Proportion>HIB</Proportion>

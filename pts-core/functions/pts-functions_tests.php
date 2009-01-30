@@ -624,6 +624,10 @@ function pts_version_newer($version_a, $version_b)
 
 	return $r_a > $r_b ? $version_a : $version_b;
 }
+function pts_version_newer_than($version_a, $version_b)
+{
+	return pts_version_newer($version_a, $version_b) == $version_b;
+}
 function pts_suite_supported($identifier)
 {
 	$tests = pts_contained_tests($identifier, true);
