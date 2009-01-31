@@ -495,7 +495,7 @@ function pts_test_estimated_run_time($identifier)
 			else
 			{
 				// TODO: Likely integrate with P_TEST_ESTIMATEDTIME from test profile
-				return -1; // TODO: no accurate calculation not available
+				return -1; // TODO: no accurate calculation available
 			}
 		}
 	}

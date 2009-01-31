@@ -82,6 +82,38 @@ function pts_validate_local_test_profile($identifier)
 
 	return $valid;
 }
+function pts_validate_local_test_suite($identifier)
+{
+	if(is_file(($ls = XML_SUITE_LOCAL_DIR . $identifier . ".xml")))
+	{
+		$valid = true;
+
+		if(is_file(($ss = XML_SUITE_DIR . $identifier . ".xml")))
+		{
+			$ls_parser = new pts_test_tandem_XmlReader($ls);
+			$ss_parser = new pts_test_tandem_XmlReader($ss);
+
+			$ls_version = $ls_parser->getXMLValue(P_SUITE_VERSION);
+			$ss_version = $ss_parser->getXMLValue(P_SUITE_VERSION);
+
+			if(pts_version_newer($ls_version, $ss_version) == $ss_version)
+			{
+				// Standard test suite version newer than the local test suite version
+				$valid = false;
+
+				// Rename test suite since it's out of date
+				pts_rename($ls, XML_SUITE_LOCAL_DIR . $identifier . ".xml.old");
+			}
+			
+		}
+	}
+	else
+	{
+		$valid = false;
+	}
+
+	return $valid;
+}
 function pts_test_type($identifier)
 {
 	// Determine type of test based on identifier
@@ -97,7 +129,7 @@ function pts_test_type($identifier)
 			{
 				$test_type = TYPE_LOCAL_TEST;
 			}
-			else if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml"))
+			else if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_suite($identifier))
 			{
 				$test_type = TYPE_LOCAL_TEST_SUITE;
 			}
