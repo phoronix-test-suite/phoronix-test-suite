@@ -3,6 +3,7 @@ install = install_test
 upload = upload_result
 upload_results = upload_result
 list_results = list_saved_results
+list_test_results = list_saved_results
 show_results = show_result
 clone = clone_global_result
 force_install_all = install_all

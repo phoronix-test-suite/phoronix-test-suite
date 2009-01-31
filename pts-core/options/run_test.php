@@ -91,7 +91,7 @@ class run_test implements pts_option_interface
 		}
 
 		$unique_test_names = count(array_unique($to_run_identifiers));
-		$tests_to_run = array();
+		$test_run_manager = new pts_test_run_manager();
 
 		foreach($to_run_identifiers as $to_run)
 		{
@@ -142,36 +142,17 @@ class run_test implements pts_option_interface
 				if(pts_read_assignment("IS_BATCH_MODE") != false)
 				{
 					$option_output = pts_generate_batch_run_options($to_run);
-
-					$test_run = array();
-					$test_args = $option_output[0];
-					$test_args_description = $option_output[1];
-
-					for($i = 0; $i < count($test_args); $i++)
-					{
-						array_push($test_run, $to_run);
-					}
+					$test_run_manager->add_single_test_run($to_run, $option_output[0], $option_output[1]);
 				}
 				else if(pts_read_assignment("IS_DEFAULTS_MODE") == true)
 				{
 					$option_output = pts_defaults_test_options($to_run);
-
-					$test_run = array();
-					$test_args = $option_output[0];
-					$test_args_description = $option_output[1];
-
-					for($i = 0; $i < count($test_args); $i++)
-					{
-						array_push($test_run, $to_run);
-					}
+					$test_run_manager->add_single_test_run($to_run, $option_output[0], $option_output[1]);
 				}
 				else
 				{
 					$option_output = pts_prompt_test_options($to_run);
-
-					$test_run = array($to_run);
-					$test_args = array($option_output[0]);
-					$test_args_description = array($option_output[1]);
+					$test_run_manager->add_single_test_run($to_run, $option_output[0], $option_output[1]);
 				}
 
 				if($unique_test_names == 1)
@@ -205,10 +186,6 @@ class run_test implements pts_option_interface
 					pts_set_assignment_once("IS_PCQS_MODE", true);
 				}
 
-				$test_run = array();
-				$test_args = array();
-				$test_args_description = array();
-
 				$suite_run = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
 				$suite_mode = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
 				$suite_args = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
@@ -222,32 +199,14 @@ class run_test implements pts_option_interface
 					{
 						case "BATCH":
 							$option_output = pts_generate_batch_run_options($this_test);
-							$temp_args = $option_output[0];
-							$temp_args_description = $option_output[1];
-
-							for($x = 0; $x < count($temp_args); $x++)
-							{
-								array_push($test_run, $this_test);
-								array_push($test_args, $temp_args[$x]);
-								array_push($test_args_description, $temp_args_description[$x]);
-							}
+							$test_run_manager->add_single_test_run($this_test, $option_output[0], $option_output[1]);
 							break;
 						case "DEFAULTS":
 							$option_output = pts_defaults_test_options($this_test);
-							$temp_args = $option_output[0];
-							$temp_args_description = $option_output[1];
-
-							for($x = 0; $x < count($temp_args); $x++)
-							{
-								array_push($test_run, $this_test);
-								array_push($test_args, $temp_args[$x]);
-								array_push($test_args_description, $temp_args_description[$x]);
-							}
+							$test_run_manager->add_single_test_run($this_test, $option_output[0], $option_output[1]);
 							break;
 						default:
-							array_push($test_run, $this_test);
-							array_push($test_args, $suite_args[$i]);
-							array_push($test_args_description, $suite_args_description[$i]);
+							$test_run_manager->add_single_test_run($this_test, $suite_args[$i], $suite_args_description[$i]);
 							break;
 					}
 				}
@@ -279,20 +238,17 @@ class run_test implements pts_option_interface
 				}
 
 				pts_module_process_extensions($test_extensions, $module_store);
+
+				$test_run_manager->add_multi_test_run($test_run, $test_args, $test_args_description);
 			}
 			else
 			{
 				echo pts_string_header("\nUnrecognized option: " . $to_run . "\n");
 				continue;
 			}
-
-			for($i = 0; $i < count($test_args) && $i < count($test_run); $i++)
-			{
-				array_push($tests_to_run, new pts_test_run_request($test_run[$i], $test_args[$i], isset($test_args_description[$i]) ? $test_args_description[$i] : ""));
-			}
 		}
 
-		if(count($to_run_identifiers) == 0 || count($tests_to_run) == 0)
+		if(count($to_run_identifiers) == 0 || $test_run_manager->get_test_count() == 0)
 		{
 			return false;
 		}
@@ -330,7 +286,7 @@ class run_test implements pts_option_interface
 				}
 
 				// Prompt Save File Name
-				$file_name_result = pts_prompt_save_file_name($auto_name, $test_run[0]);
+				$file_name_result = pts_prompt_save_file_name($auto_name, $test_run_manager->get_instance_name());
 				$proposed_file_name = $file_name_result[0];
 				$custom_title = $file_name_result[1];
 
@@ -408,12 +364,11 @@ class run_test implements pts_option_interface
 		}
 
 		// Run the test process
-
-		if(count($tests_to_run) > 1)
+		if($test_run_manager->get_test_count() > 1)
 		{
 			$test_names = array();
 
-			foreach($tests_to_run as $t)
+			foreach($test_run_manager->get_tests_to_run() as $t)
 			{
 				array_push($test_names, $t->get_identifier());
 			}
@@ -432,10 +387,10 @@ class run_test implements pts_option_interface
 		}
 
 		// Run the actual tests
-		pts_module_process("__pre_run_process", $tests_to_run);
-		pts_recurse_call_tests($tests_to_run, $xml_results_writer, $results_identifier);
+		pts_module_process("__pre_run_process", $test_run_manager->get_tests_to_run());
+		pts_recurse_call_tests($test_run_manager->get_tests_to_run(), $xml_results_writer, $results_identifier);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
-		pts_module_process("__post_run_process", $tests_to_run);
+		pts_module_process("__post_run_process", $test_run_manager->get_tests_to_run());
 
 		if(isset($post_run_message))
 		{
