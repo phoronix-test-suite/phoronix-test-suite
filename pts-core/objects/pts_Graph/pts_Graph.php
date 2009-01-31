@@ -131,12 +131,7 @@ abstract class pts_Graph
 	}
 	public function loadGraphProportion($data)
 	{
-		if($data == "LIB")
-		{
-			$this->graph_proportion = "Fewer Are Better";
-		}
-		//else if($data == "HIB")
-		//	$this->graph_proportion = "More Is Better";
+		$this->graph_proportion = $data;
 	}
 	public function loadGraphData($data_array)
 	{
@@ -404,18 +399,39 @@ abstract class pts_Graph
 		if(!empty($this->graph_y_title) && !$this->graph_y_title_hide)
 		{
 			$str = $this->graph_y_title;
+			$offset = 0;
 
 			if(!empty($this->graph_proportion))
 			{
-				if(!empty($str))
+				switch($this->graph_proportion)
 				{
-					$str .= ", ";
+					case "LIB":
+						$proportion = "Fewer Are Better";
+						$offset += 12;
+						$this->graph_image->draw_arrow($this->graph_left_start + 5, $this->graph_top_start - 4, $this->graph_left_start + 5, $this->graph_top_start - 13, $this->graph_color_main_headers);
+						break;
+					case "HIB":
+						//$proportion = "Higher Is Better";
+						$offset += 12;
+						$this->graph_image->draw_arrow($this->graph_left_start + 5, $this->graph_top_start - 13, $this->graph_left_start + 5, $this->graph_top_start - 4, $this->graph_color_main_headers);
+						break;
+					default:
+						$proportion = null;
+						break;
 				}
 
-				$str .= $this->graph_proportion;
+				if($proportion != null)
+				{
+					if(!empty($str))
+					{
+						$str .= ", ";
+					}
+
+					$str .= $proportion;
+				}
 			}
 
-			$this->graph_image->write_text_left($str, $this->graph_font, 7, $this->graph_color_main_headers, $this->graph_left_start, $this->graph_top_start - 9, $this->graph_left_start, $this->graph_top_start - 9);
+			$this->graph_image->write_text_left($str, $this->graph_font, 7, $this->graph_color_main_headers, $this->graph_left_start + $offset, $this->graph_top_start - 9, $this->graph_left_start + $offset, $this->graph_top_start - 9);
 		}
 	}
 	protected function render_graph_value_ticks()

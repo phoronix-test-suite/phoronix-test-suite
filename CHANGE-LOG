@@ -28,6 +28,7 @@ Phoronix Test Suite (Git)
 - pts: Fix external dependencies typo in qgears2 test profile
 - pts: Fix external dependencies typo in render-bench test profile
 - pts: Add graphics-magick to nevada test profile
+- pts_Graph: Render an arrow to indicate graph proportion for higher or lower results being better
 
 Phoronix Test Suite 1.6.0 "Tydal"
 January 20, 2009
