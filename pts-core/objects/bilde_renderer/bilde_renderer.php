@@ -195,6 +195,28 @@ abstract class bilde_renderer
 		// Width x Height
 		return array($box_width, $box_height);
 	}
+	public function draw_arrow($tip_x1, $tip_y1, $tail_x1, $tail_y1, $background_color)
+	{
+		$arrow_length = sqrt(pow(($tail_x1 - $tip_x1), 2) + pow(($tail_y1 - $tip_y1), 2));
+		$arrow_width_half = ($arrow_length * .75) / 2;
+		$tail_width_half = (($t_w = $arrow_length * .2) > 4 ? $t_w : 4) / 2;
+
+		$middle_x = ($tip_x1 > $tail_x1 ? $tail_x1 : $tip_x1) + (abs($tail_x1 - $tip_x1) / 2);
+		$middle_y = ($tip_y1 > $tail_y1 ? $tail_y1 : $tip_y1) + (abs($tail_y1 - $tip_y1) / 2);
+
+		$arrow_points = array(
+		$tip_x1, $tip_y1,
+		$middle_x + $arrow_width_half, $middle_y,
+		$middle_x + $tail_width_half, $middle_y,
+		$tail_x1 + $tail_width_half, $tail_y1,
+		$tail_x1 - $tail_width_half, $tail_y1,
+		$middle_x - $tail_width_half, $middle_y,
+		$middle_x - $arrow_width_half, $middle_y,
+		$tip_x1, $tip_y1
+		);
+
+		$this->draw_polygon($arrow_points, $background_color);
+	}
 	protected function text_string_width($text_string, $font_type, $font_size)
 	{
 		$dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
