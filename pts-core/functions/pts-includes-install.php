@@ -516,7 +516,7 @@ function pts_generate_download_cache()
 	$normal_downloads = glob(TEST_RESOURCE_DIR . "*/downloads.xml");
 	$base_downloads = glob(TEST_RESOURCE_DIR . "base/*/downloads.xml");
 	
-	foreach(array_merge($normal_downloads, $base_downloads) as $downloads_file)
+	foreach(pts_array_merge($normal_downloads, $base_downloads) as $downloads_file)
 	{
 		$test = array_pop(explode("/", dirname($downloads_file)));
 		$xml_parser = new tandem_XmlReader($downloads_file);

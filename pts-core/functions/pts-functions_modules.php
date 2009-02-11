@@ -433,5 +433,12 @@ function pts_module_activity($process, $value = null)
 
 	return $return;
 }
+function pts_available_modules()
+{
+	$modules = pts_array_merge(glob(MODULE_DIR . "*.sh"), glob(MODULE_DIR . "*.php"));
+	asort($modules);
+
+	return $modules;
+}
 
 ?>

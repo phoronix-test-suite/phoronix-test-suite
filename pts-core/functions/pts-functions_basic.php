@@ -62,6 +62,15 @@ function pts_string_bool($string)
 	$string = strtolower($string);
 	return $string == "true" || $string == "1" || $string == "on";
 }
+function pts_array_merge($array1, $array2)
+{
+	if(is_array($array1) && is_array($array2))
+	{
+		$array1 = array_merge($array1, $array2);
+	}
+
+	return $array1;
+}
 function pts_trim_spaces($string)
 {
 	while(strpos($string, "  ") !== false)

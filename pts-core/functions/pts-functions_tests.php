@@ -660,7 +660,7 @@ function pts_available_tests_array()
 {
 	$tests = glob(XML_PROFILE_DIR . "*.xml");
 	$local_tests = glob(XML_PROFILE_LOCAL_DIR . "*.xml");
-	$tests = array_unique(array_merge($tests, $local_tests));
+	$tests = array_unique(pts_array_merge($tests, $local_tests));
 	asort($tests);
 
 	for($i = 0; $i < count($tests); $i++)
@@ -700,7 +700,7 @@ function pts_available_suites_array()
 {
 	$suites = glob(XML_SUITE_DIR . "*.xml");
 	$local_suites = glob(XML_SUITE_LOCAL_DIR . "*.xml");
-	$suites = array_unique(array_merge($suites, $local_suites));
+	$suites = array_unique(pts_array_merge($suites, $local_suites));
 	asort($suites);
 
 	for($i = 0; $i < count($suites); $i++)
