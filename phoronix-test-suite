@@ -23,7 +23,7 @@
 
 # Full path to root directory of the actual Phoronix Test Suite code
 export PTS_DIR=`pwd`
-CALL_DIR=`pwd`
+export PTS_MODE="CLIENT"
 
 if [ $PTS_DIR != `pwd` ]
 then

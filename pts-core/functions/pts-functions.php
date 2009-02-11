@@ -22,12 +22,21 @@
 */
 
 require(PTS_PATH . "pts-core/functions/pts.php");
+require(PTS_PATH . "pts-core/functions/pts-interfaces.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_loading.php");
+
+if(PTS_MODE == "LIB")
+{
+	// If a program using PTS as a library wants any of the below functions, they will need to load it manually
+	return;
+}
+
+// Client Work
 require(PTS_PATH . "pts-core/functions/pts-init.php");
 require(PTS_PATH . "pts-core/functions/pts-functions_basic.php");
 require(PTS_PATH . "pts-core/functions/pts-functions_client.php");
 
 // Load Main Functions
-require(PTS_PATH . "pts-core/functions/pts-interfaces.php");
 require(PTS_PATH . "pts-core/functions/pts-functions_io.php");
 require(PTS_PATH . "pts-core/functions/pts-functions_shell.php");
 require(PTS_PATH . "pts-core/functions/pts-functions_config.php");

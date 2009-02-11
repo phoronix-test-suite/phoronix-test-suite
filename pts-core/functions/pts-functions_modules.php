@@ -30,7 +30,7 @@ function pts_module_startup_init()
 {
 	// Process initially called when PTS starts up
 
-	if(getenv("PTS_IGNORE_MODULES") == false)
+	if(getenv("PTS_IGNORE_MODULES") == false && PTS_MODE == "CLIENT")
 	{
 		// Enable the toggling of the system screensaver by default.
 		// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable

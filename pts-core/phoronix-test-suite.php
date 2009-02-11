@@ -22,9 +22,22 @@
 */
 
 define("PTS_PATH", substr(($p = realpath(dirname(__FILE__))), 0, strrpos($p, "/")) . "/");
-define("PTS_MODE", "CLIENT");
+
+
+// PTS_MODE types
+// CLIENT = Standard Phoronix Test Suite Client
+// LIB = Only load select PTS files
+// SILENT = Load all normal pts-core files, but don't run client code
+define("PTS_MODE", in_array(($m = getenv("PTS_MODE")), array("CLIENT", "LIB", "SILENT")) ? $m : "CLIENT");
 
 require(PTS_PATH . "pts-core/functions/pts-functions.php");
+
+if(PTS_MODE != "CLIENT")
+{
+	// pts-core is acting as a library, return now since no need to run client code
+	return;
+}
+
 pts_client_init(); // Initalize the Phoronix Test Suite (pts-core) client
 
 $sent_command = strtolower(str_replace("-", "_", $argv[1]));
