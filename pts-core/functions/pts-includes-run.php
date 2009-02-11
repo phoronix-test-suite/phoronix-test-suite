@@ -845,10 +845,17 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	for($i = 0; $i < $times_to_run; $i++)
 	{
 		$benchmark_log_file = TEST_ENV_DIR . $test_identifier . "/" . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
-		$start_timer = TEST_LIBRARIES_DIR . "timer-start.sh";
-		$stop_timer = TEST_LIBRARIES_DIR . "timer-stop.sh";
-		$timed_kill = TEST_LIBRARIES_DIR . "timed-kill.sh";
-		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array("LOG_FILE" => $benchmark_log_file, "TIMER_START" => $start_timer, "TIMER_STOP" => $stop_timer, "TIMED_KILL" => $timed_kill, "PHP_BIN" => PHP_BIN));
+
+		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
+		"LOG_FILE" => $benchmark_log_file,
+		"TEST_LIBRARIES_DIR" => TEST_LIBRARIES_DIR,
+		"TIMER_START" => TEST_LIBRARIES_DIR . "timer-start.sh",
+		"TIMER_STOP" => TEST_LIBRARIES_DIR . "timer-stop.sh",
+		"TIMED_KILL" => TEST_LIBRARIES_DIR . "timed-kill.sh",
+		"SYSTEM_MONITOR_START" => TEST_LIBRARIES_DIR . "system-monitoring-start.sh",
+		"SYSTEM_MONITOR_STOP" => TEST_LIBRARIES_DIR . "system-monitoring-stop.sh",
+		"PHP_BIN" => PHP_BIN
+		));
 
 		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$result_output = array();
