@@ -35,6 +35,10 @@ class bilde_swf_renderer extends bilde_renderer
 
 		$this->swf_font = new SWFFont("_sans"); // TODO: Implement better font support
 	}
+	public static function renderer_supported()
+	{
+		return extension_loaded("ming");
+	}
 	public function render_image($output_file = null, $quality = 100)
 	{
 		return $this->image->save($output_file);

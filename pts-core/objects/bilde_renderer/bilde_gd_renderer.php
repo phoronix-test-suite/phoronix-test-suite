@@ -29,6 +29,10 @@ abstract class bilde_gd_renderer extends bilde_renderer
 		$this->image_width = $width;
 		$this->image_height = $height;
 	}
+	public static function renderer_supported()
+	{
+		return extension_loaded("gd");
+	}
 
 	/*
 	public function render_image($output_file = null, $quality = 100)

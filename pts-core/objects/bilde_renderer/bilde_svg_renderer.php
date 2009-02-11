@@ -31,6 +31,10 @@ class bilde_svg_renderer extends bilde_renderer
 		$this->image_height = $height;
 		$this->embed_identifiers = $embed_identifiers;
 	}
+	public static function renderer_supported()
+	{
+		return true;
+	}
 	public function resize_image($width, $height)
 	{
 		$this->image_width = $width;

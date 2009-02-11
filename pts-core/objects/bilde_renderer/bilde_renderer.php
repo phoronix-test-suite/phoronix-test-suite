@@ -30,6 +30,8 @@ abstract class bilde_renderer
 	var $embed_identifiers = null;
 
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
+	abstract static function renderer_supported();
+
 	abstract function render_image($output_file = null, $quality = 100);
 	abstract function resize_image($width, $height);
 	abstract function destroy_image();
@@ -57,34 +59,41 @@ abstract class bilde_renderer
 	public function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = "")
 	{
 		bilde_renderer::setup_font_directory();
+		$available_renderers = array("PNG", "JPG", "SWF", "SVG");
+		$fallback_renderer = "SVG";
+		$selected_renderer = null;
 
-		// Check if needed modules / extensions are available
-		$ming_available = extension_loaded("ming");
-		$gd_available = extension_loaded("gd"); // TODO: add check to see if dl() is permitted to load module
+		foreach($available_renderers as $this_renderer)
+		{
+			if(getenv(strtoupper($this_renderer) . "_DEBUG") != false)
+			{
+				eval("\$is_supported = bilde_" . strtolower($this_renderer) . "_renderer::renderer_supported();");
 
-		// Select a renderer
-		if(getenv("SVG_DEBUG") != false || $requested_renderer == "SVG")
-		{
-			$selected_renderer = "SVG";
-		}
-		else if($ming_available && (getenv("SWF_DEBUG") != false || $requested_renderer == "SWF"))
-		{
-			$selected_renderer = "SWF";
-		}
-		else if($gd_available)
-		{
-			if(getenv("JPG_DEBUG") != false || $requested_renderer == "JPG")
-			{
-				$selected_renderer = "JPG";
-			}
-			else
-			{
-				$selected_renderer = "PNG";
+				if($is_supported)
+				{
+					$requested_renderer = $this_renderer;
+					break;
+				}
 			}
 		}
-		else
+
+		foreach($available_renderers as $this_renderer)
 		{
-			$selected_renderer = "SVG";
+			if($requested_renderer == $this_renderer)
+			{
+				eval("\$is_supported = bilde_" . strtolower($this_renderer) . "_renderer::renderer_supported();");
+
+				if($is_supported)
+				{
+					$selected_renderer = $this_renderer;
+					break;
+				}
+			}
+		}
+
+		if($selected_renderer == null)
+		{
+			$selected_renderer == $fallback_renderer;
 		}
 
 		// Declare the selected renderer
