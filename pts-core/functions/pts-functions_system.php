@@ -25,6 +25,7 @@ require_once(PTS_PATH . "pts-core/functions/pts-functions_system_software.php");
 require_once(PTS_PATH . "pts-core/functions/pts-functions_system_hardware.php");
 require_once(PTS_PATH . "pts-core/functions/pts-functions_system_parsing.php");
 require_once(PTS_PATH . "pts-core/functions/pts-functions_system_cpu.php");
+require_once(PTS_PATH . "pts-core/functions/pts-functions_system_memory.php");
 require_once(PTS_PATH . "pts-core/functions/pts-functions_system_graphics.php");
 
 function pts_hw_string()

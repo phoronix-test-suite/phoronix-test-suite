@@ -13,7 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rename function files that aren't loaded by default to use pts-includes- prefix
 - pts-core: Expand capabilities for pts_module_option
 - pts-core: Save system logs when running in batch mode
-- pts-core: save system logs to system-logs/ instead of system-details/
+- pts-core: Save system logs to system-logs/ instead of system-details/
 - pts-core: Add fallback support in OpenSolaris detection for CPU manufacturer when rest of processor detection fails
 - pts-core: Don't prepend "-" to memory string before memory speed when memory type isn't detected
 - pts-core: Drop OS_PREFIX support from beginning of test profile names, since it's not being used and there's better ways to handle it
