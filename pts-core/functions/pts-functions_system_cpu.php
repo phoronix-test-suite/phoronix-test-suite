@@ -350,22 +350,35 @@ function hw_cpu_load_array($read_core = -1)
 function hw_cpu_usage($core = -1)
 {
 	// Determine current percentage for processor usage
-	$start_load = hw_cpu_load_array($core);
-	sleep(1);
-	$end_load = hw_cpu_load_array($core);
+	if(IS_LINUX)
+	{
+		$start_load = hw_cpu_load_array($core);
+		sleep(1);
+		$end_load = hw_cpu_load_array($core);
 	
-	for($i = 0; $i < count($end_load); $i++)
-	{
-		$end_load[$i] -= $start_load[$i];
-	}
+		for($i = 0; $i < count($end_load); $i++)
+		{
+			$end_load[$i] -= $start_load[$i];
+		}
 
-	if(array_sum($end_load) == 0)
+		if(array_sum($end_load) == 0)
+		{
+			$percent = 0;
+		}
+		else
+		{
+			$percent = 100 - (($end_load[(count($end_load) - 1)] * 100) / array_sum($end_load));
+		}
+	}
+	else if(IS_SOLARIS)
 	{
-		$percent = 0;
+		// TODO: Add support for monitoring load on a per-core basis (through mpstat maybe?)
+		$info = explode(" ", pts_trim_spaces(array_pop(explode("\n", trim(shell_exec("sar -u 1 1 2>&1"))))));
+		$percent = $info[1];
 	}
 	else
 	{
-		$percent = 100 - (($end_load[(count($end_load) - 1)] * 100) / array_sum($end_load));
+		$percent = null;
 	}
 
 	if(!is_numeric($percent) || $percent < 0 || $percent > 100)
