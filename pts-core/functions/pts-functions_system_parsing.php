@@ -789,7 +789,7 @@ function read_sun_ddu_dmi_info($object)
 				$this_section = $line_object;
 			}
 
-			if($line_object == $object && ($this_section == $section || pts_proximity_match($section, $this_section)) && !empty($this_value))
+			if($line_object == $object && ($this_section == $section || pts_proximity_match($section, $this_section)) && !empty($this_value) && $this_value != "Unknown")
 			{
 				array_push($values, $this_value);
 			}

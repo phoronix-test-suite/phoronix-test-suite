@@ -34,7 +34,7 @@ class pts_test_run_manager
 	{
 		if(count($this->tests_to_run) == 0)
 		{
-			$this->instance_name = $this_identifier;
+			$this->instance_name = $test_identifier;
 		}
 
 		array_push($this->tests_to_run, new pts_test_run_request($test_identifier, $arguments, $descriptions));
