@@ -420,7 +420,7 @@ abstract class pts_Graph
 						break;
 				}
 
-				if($proportion != null)
+				if($this->graph_proportion != null)
 				{
 					if(!empty($str))
 					{
