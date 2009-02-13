@@ -44,51 +44,8 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
-		for($i = 0; $i < count($to_run_identifiers); $i++)
-		{
-			// Clean up tests
-			$lower_identifier = strtolower($to_run_identifiers[$i]);
-
-			if(pts_is_test($lower_identifier))
-			{
-				$xml_parser = new pts_test_tandem_XmlReader($lower_identifier);
-				$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
-
-				if(empty($test_title))
-				{
-					echo pts_string_header($lower_identifier . " is not a test.");
-					unset($to_run_identifiers[$i]);
-					continue;
-				}
-			}
-			else if(pts_is_virtual_suite($lower_identifier))
-			{
-				foreach(pts_virtual_suite_tests($lower_identifier) as $virt_test)
-				{
-					array_push($to_run_identifiers, $virt_test);
-				}
-				unset($to_run_identifiers[$i]);
-				continue;
-			}
-
-			if(pts_verify_test_installation($lower_identifier) == false)
-			{
-				// Eliminate this test, it's not properly installed
-				unset($to_run_identifiers[$i]);
-				continue;
-			}
-			
-			if(is_file($to_run_identifiers[$i]) && substr(basename($to_run_identifiers[$i]), -4) == ".svg")
-			{
-				// One of the arguments was an SVG results file, do prompts
-				$test_extracted = pts_prompt_svg_result_options($to_run_identifiers[$i]);
-
-				if(!empty($test_extracted))
-				{
-					$to_run_identifiers[$i] = $test_extracted;
-				}
-			}
-		}
+		// Cleanup tests to run
+		$to_run_identifiers = pts_cleanup_tests_to_run($to_run_identifiers);
 
 		$unique_test_names = count(array_unique($to_run_identifiers));
 		$test_run_manager = new pts_test_run_manager();
@@ -185,8 +142,8 @@ class run_test implements pts_option_interface
 				{
 					pts_set_assignment_once("IS_PCQS_MODE", true);
 				}
+
 				$test_run_manager->add_suite_run($to_run);
-				unset($xml_parser);
 			}
 			else if($to_run_type == "GLOBAL_COMPARISON" || $to_run_type == "LOCAL_COMPARISON")
 			{

@@ -236,6 +236,56 @@ function pts_prompt_test_options($identifier)
 
 	return array($user_args, $text_args);
 }
+function pts_cleanup_tests_to_run($to_run_identifiers)
+{
+	// Clean up tests
+	for($i = 0; $i < count($to_run_identifiers); $i++)
+	{
+		$lower_identifier = strtolower($to_run_identifiers[$i]);
+
+		if(pts_is_test($lower_identifier))
+		{
+			$xml_parser = new pts_test_tandem_XmlReader($lower_identifier);
+			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
+
+			if(empty($test_title))
+			{
+				echo pts_string_header($lower_identifier . " is not a test.");
+				unset($to_run_identifiers[$i]);
+				continue;
+			}
+		}
+		else if(pts_is_virtual_suite($lower_identifier))
+		{
+			foreach(pts_virtual_suite_tests($lower_identifier) as $virt_test)
+			{
+				array_push($to_run_identifiers, $virt_test);
+			}
+			unset($to_run_identifiers[$i]);
+			continue;
+		}
+
+		if(pts_verify_test_installation($lower_identifier) == false)
+		{
+			// Eliminate this test, it's not properly installed
+			unset($to_run_identifiers[$i]);
+			continue;
+		}
+			
+		if(is_file($to_run_identifiers[$i]) && substr(basename($to_run_identifiers[$i]), -4) == ".svg")
+		{
+			// One of the arguments was an SVG results file, do prompts
+			$test_extracted = pts_prompt_svg_result_options($to_run_identifiers[$i]);
+
+			if(!empty($test_extracted))
+			{
+				$to_run_identifiers[$i] = $test_extracted;
+			}
+		}
+	}
+
+	return $to_run_identifiers;
+}
 function pts_defaults_test_options($identifier)
 {
 	// Defaults mode for single test
