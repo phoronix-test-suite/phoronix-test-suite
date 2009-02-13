@@ -513,12 +513,16 @@ function pts_generate_download_cache()
 	$xml_writer = new tandem_XmlWriter();
 	$xml_writer->addXmlObject(P_CACHE_PTS_VERSION, -1, PTS_VERSION);
 	$file_counter = 0;
-	$normal_downloads = glob(TEST_RESOURCE_DIR . "*/downloads.xml");
-	$base_downloads = glob(TEST_RESOURCE_DIR . "base/*/downloads.xml");
 	
-	foreach(pts_array_merge($normal_downloads, $base_downloads) as $downloads_file)
+	foreach(pts_array_merge(pts_available_base_tests_array(), pts_supported_tests_array()) as $test)
 	{
-		$test = array_pop(explode("/", dirname($downloads_file)));
+		$downloads_file = pts_location_test_resources($test) . "downloads.xml";
+
+		if(!is_file($downloads_file))
+		{
+			continue;
+		}
+
 		$xml_parser = new tandem_XmlReader($downloads_file);
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
@@ -527,7 +531,6 @@ function pts_generate_download_cache()
 
 		echo "\nChecking Downloads For: " . $test . "\n";
 		$test_install_message = true;
-
 		for($i = 0; $i < count($package_url); $i++)
 		{
 			if(empty($package_filename[$i]))

@@ -670,6 +670,18 @@ function pts_available_tests_array()
 
 	return $tests;
 }
+function pts_available_base_tests_array()
+{
+	$base_tests = glob(XML_PROFILE_CTP_BASE_DIR . "*.xml");
+	asort($base_tests);
+
+	for($i = 0; $i < count($base_tests); $i++)
+	{
+		$base_tests[$i] = basename($base_tests[$i], ".xml");
+	}
+
+	return $base_tests;
+}
 function pts_supported_tests_array()
 {
 	$supported_tests = array();
