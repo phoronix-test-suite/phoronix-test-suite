@@ -30,7 +30,7 @@ class pts_test_run_manager
 		$this->tests_to_run = array();
 		$this->instance_name = $name;
 	}
-	public function add_individual_test_run($test_identifier, $arguments, $descriptions = "")
+	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "")
 	{
 		if(count($this->tests_to_run) == 0)
 		{

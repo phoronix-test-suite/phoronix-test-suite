@@ -185,31 +185,7 @@ class run_test implements pts_option_interface
 				{
 					pts_set_assignment_once("IS_PCQS_MODE", true);
 				}
-
-				$suite_run = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-				$suite_mode = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
-				$suite_args = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
-				$suite_args_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
-
-				for($i = 0; $i < count($suite_run); $i++)
-				{
-					$this_test = $suite_run[$i];
-
-					switch($suite_mode[$i])
-					{
-						case "BATCH":
-							$option_output = pts_generate_batch_run_options($this_test);
-							$test_run_manager->add_single_test_run($this_test, $option_output[0], $option_output[1]);
-							break;
-						case "DEFAULTS":
-							$option_output = pts_defaults_test_options($this_test);
-							$test_run_manager->add_single_test_run($this_test, $option_output[0], $option_output[1]);
-							break;
-						default:
-							$test_run_manager->add_single_test_run($this_test, $suite_args[$i], $suite_args_description[$i]);
-							break;
-					}
-				}
+				$test_run_manager->add_individual_test_run($to_run);
 				unset($xml_parser);
 			}
 			else if($to_run_type == "GLOBAL_COMPARISON" || $to_run_type == "LOCAL_COMPARISON")

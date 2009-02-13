@@ -632,13 +632,27 @@ function pts_recurse_call_tests($tests_to_run, &$tandem_xml = "", $results_ident
 		{
 			$xml_parser = new pts_suite_tandem_XmlReader($to_run);
 			$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+			$sub_modes = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
 			$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
 			$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
 
 			$suite_tests = array();
 			for($i = 0; $i < count($tests_in_suite); $i++)
 			{
-				array_push($suite_tests, new pts_test_run_request($tests_in_suite[$i], $sub_arguments[$i], $sub_arguments_description[$i]));
+				switch($sub_modes[$i])
+				{
+					case "BATCH":
+						$option_output = pts_generate_batch_run_options($tests_in_suite[$i]);
+						array_push($suite_tests, new pts_test_run_request($tests_in_suite[$i], $option_output[0], $option_output[1]));
+						break;
+					case "DEFAULTS":
+						$option_output = pts_defaults_test_options($tests_in_suite[$i]);
+						array_push($suite_tests, new pts_test_run_request($tests_in_suite[$i], $option_output[0], $option_output[1]));
+						break;
+					default:
+						array_push($suite_tests, new pts_test_run_request($tests_in_suite[$i], $sub_arguments[$i], $sub_arguments_description[$i]));
+						break;
+				}
 			}
 
 			pts_recurse_call_tests($suite_tests, $tandem_xml, $results_identifier);
