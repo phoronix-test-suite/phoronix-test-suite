@@ -60,6 +60,39 @@ class pts_test_run_manager
 			$this->add_individual_test_run($test_identifier[$i], $arguments[$i], $descriptions[$i]);
 		}
 	}
+	public function add_suite_run($test_suite)
+	{
+		$xml_parser = new pts_suite_tandem_XmlReader($test_suite);
+		$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+		$sub_modes = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
+		$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
+		$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
+
+		for($i = 0; $i < count($tests_in_suite); $i++)
+		{
+			if(pts_is_test($tests_in_suite[$i]))
+			{
+				switch($sub_modes[$i])
+				{
+					case "BATCH":
+						$option_output = pts_generate_batch_run_options($tests_in_suite[$i]);
+						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1]);
+						break;
+					case "DEFAULTS":
+						$option_output = pts_defaults_test_options($tests_in_suite[$i]);
+						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1]);
+						break;
+					default:
+						$this->add_individual_test_run($tests_in_suite[$i], $sub_arguments[$i], $sub_arguments_description[$i]);
+						break;
+				}
+			}
+			else if(pts_is_suite($tests_in_suite[$i]))
+			{
+				$this->add_suite_run($tests_in_suite[$i]);
+			}
+		}
+	}
 	public function get_tests_to_run()
 	{
 		return $this->tests_to_run;

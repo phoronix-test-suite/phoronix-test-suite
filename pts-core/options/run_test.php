@@ -185,7 +185,7 @@ class run_test implements pts_option_interface
 				{
 					pts_set_assignment_once("IS_PCQS_MODE", true);
 				}
-				$test_run_manager->add_individual_test_run($to_run);
+				$test_run_manager->add_suite_run($to_run);
 				unset($xml_parser);
 			}
 			else if($to_run_type == "GLOBAL_COMPARISON" || $to_run_type == "LOCAL_COMPARISON")
@@ -364,7 +364,7 @@ class run_test implements pts_option_interface
 
 		// Run the actual tests
 		pts_module_process("__pre_run_process", $test_run_manager->get_tests_to_run());
-		pts_recurse_call_tests($test_run_manager->get_tests_to_run(), $xml_results_writer, $results_identifier);
+		pts_call_test_runs($test_run_manager->get_tests_to_run(), $xml_results_writer, $results_identifier);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_process("__post_run_process", $test_run_manager->get_tests_to_run());
 
