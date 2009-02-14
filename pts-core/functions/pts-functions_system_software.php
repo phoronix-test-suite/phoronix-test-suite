@@ -184,15 +184,15 @@ function sw_os_compiler()
 
 	if($compiler_info == null)
 	{
-		// LLVM (llvmc)
+		// LLVM - Low Level Virtual Machine (llvmc)
 		$info = trim(shell_exec("llvmc -version"));
 
 		if(($s = strpos($info, "version")) != false)
 		{
-			$info = substr($info, strrpos($info, "\n", $s));
-			$info = substr($info, strpos($info, "\n"));
+			$info = substr($info, 0, strpos($info, "\n", $s));
+			$info = substr($info, strrpos($info, "\n"));
 
-			$compiler_info = $info;
+			$compiler_info = trim($info);
 		}
 	}
 
