@@ -155,15 +155,39 @@ function sw_os_hostname()
 function sw_os_compiler()
 {
 	// Returns version of the compiler (if present)
-	$info = shell_exec("gcc -dumpversion 2>&1");
-	$gcc_info = "N/A";
+	$info = trim(shell_exec("cc -dumpversion 2>&1"));
+	$compiler_info = null;
 
-	if(strpos($info, '.') !== false)
+	if(strlen(pts_remove_chars($info, false, false, true, true)) == 0)
 	{
-		$gcc_info = "GCC " . trim($info);
+		// GCC
+		$gcc_info = trim(shell_exec("gcc -dumpversion 2>&1"));
+
+		if($gcc_info == $info)
+		{
+			$compiler_info = "GCC " . $info;
+		}
+	}
+	else if(IS_SOLARIS)
+	{
+		// Sun Studio / SunCC
+		$info = trim(shell_exec("suncc -V 2>&1"));
+
+		if(($s = strpos($info, "Sun C")) != false)
+		{
+			$info = substr($info, $s);
+			$info = substr($info, 0, strpos($info, "\n"));
+
+			$compiler_info = $info;
+		}
 	}
 
-	return $gcc_info;
+	if($compiler_info == null)
+	{
+		$compiler_info = "N/A";
+	}
+
+	return $compiler_info;
 }
 function sw_os_architecture()
 {
