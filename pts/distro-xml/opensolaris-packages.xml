@@ -33,7 +33,7 @@
 		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>gcc-dev</PackageName>
-			<FileCheck>/usr/bin/gcc</FileCheck>
+			<FileCheck>/usr/bin/gcc OR /opt/csw/gcc4/bin/gcc</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>

@@ -2,7 +2,9 @@
 
 tar -xvf SPECViewperf9.0.3.tar.gz
 cd SPECViewperf9.0/src
-if [ "$OS_ARCH" = "x86_64" ]; then
+if [ "$OS_TYPE" = "Solaris" ]; then
+ echo 4|./Configure
+elif [ "$OS_ARCH" = "x86_64" ]; then
  echo 3|./Configure
 else
  echo 1|./Configure
