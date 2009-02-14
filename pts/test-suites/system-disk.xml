@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- Generated: 2008-12-28 16:53:21 -->
+<?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>Disk Performance</Title>
