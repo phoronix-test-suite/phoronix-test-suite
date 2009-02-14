@@ -42,6 +42,7 @@ Phoronix Test Suite (Git)
 - pts: Add XSL stylesheet for PTS External Dependency XML files
 - pts: Add XSL stylesheet for test suite XML specification
 - pts: Add XSL stylesheet covering most of the XML test profile specification
+- pts: Add XSL stylesheet for the user-config.xml file
 - pts: Add Name tag to PTS External Dependency XML specification
 - pts_Graph: Render an arrow to indicate graph proportion for higher or lower results being better
 - bilde_renderer: Require and implement renderer_supported() function for renderers

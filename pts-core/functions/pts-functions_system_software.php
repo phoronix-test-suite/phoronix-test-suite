@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2009, Phoronix Media
 	Copyright (C) 2008 - 2009, Michael Larabel
-	pts-functions_system_software.php: System-level level functions
+	pts-functions_system_software.php: System-level level software functions
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

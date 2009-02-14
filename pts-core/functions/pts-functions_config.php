@@ -101,6 +101,7 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 	}
 
 	$config = new tandem_XmlWriter();
+	$config->setXslBinding("pts-user-config-viewer.xsl");
 	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, $UserName);
 	$config->addXmlObject(P_OPTION_GLOBAL_UPLOADKEY, 0, $UploadKey);
 
@@ -131,6 +132,7 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 7, $UserAgreement_MD5);
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
+	pts_copy(STATIC_DIR . "pts-user-config-viewer.xsl", PTS_USER_DIR . "pts-user-config-viewer.xsl");
 }
 function pts_module_config_init($SetOptions = null)
 {
