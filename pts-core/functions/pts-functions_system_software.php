@@ -184,6 +184,20 @@ function sw_os_compiler()
 
 	if($compiler_info == null)
 	{
+		// LLVM (llvmc)
+		$info = trim(shell_exec("llvmc -version"));
+
+		if(($s = strpos($info, "version")) != false)
+		{
+			$info = substr($info, strrpos($info, "\n", $s));
+			$info = substr($info, strpos($info, "\n"));
+
+			$compiler_info = $info;
+		}
+	}
+
+	if($compiler_info == null)
+	{
 		$compiler_info = "N/A";
 	}
 
