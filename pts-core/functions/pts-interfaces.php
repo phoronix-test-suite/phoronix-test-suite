@@ -113,6 +113,8 @@ define("P_CACHE_PTS_VERSION", "PhoronixTestSuite/DownloadCache/PTS/Version"); //
 // TEST EXTERNAL DEPENDENCY SPECIFICATION
 //
 
+define("P_EXDEP_INFO_NAME", "PhoronixTestSuite/ExternalDependencies/Information/Name"); // Name of the OS
+
 define("P_EXDEP_PACKAGE_TITLE", "PhoronixTestSuite/ExternalDependencies/Package/Title"); // Title of external dependency package
 define("P_EXDEP_PACKAGE_GENERIC", "PhoronixTestSuite/ExternalDependencies/Package/GenericName"); // Generic name of external dependency package
 define("P_EXDEP_PACKAGE_SPECIFIC", "PhoronixTestSuite/ExternalDependencies/Package/PackageName"); // Specific package name of external dependency package

@@ -2,6 +2,9 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-exdep-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<ExternalDependencies>
+		<Information>
+			<Name>Mandriva</Name>
+		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>gtk+2-devel</PackageName>

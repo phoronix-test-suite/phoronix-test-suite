@@ -2,6 +2,9 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-exdep-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<ExternalDependencies>
+		<Information>
+			<Name>Ubuntu</Name>
+		</Information>
 		<Package>
 			<GenericName>linux-32bit-libraries</GenericName>
 			<PackageName>ia32-libs</PackageName>

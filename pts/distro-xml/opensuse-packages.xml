@@ -2,6 +2,9 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-exdep-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<ExternalDependencies>
+		<Information>
+			<Name>OpenSuSE</Name>
+		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>gtk-devel</PackageName>

@@ -3,10 +3,11 @@
 <xsl:template match="/">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>Phoronix Test Suite - External Dependencies</title>
+		<title>Phoronix Test Suite - <xsl:value-of select="PhoronixTestSuite/ExternalDependencies/Information/Name" /> Dependencies</title>
 	</head>
 	<body>
-		<div style="width: 90%; margin: 30px auto 10px; text-align: center; border: 2px solid #000; border-width: 1px 2px; min-width: 700px;">
+		<div style="font-size: 27px; font-weight: bold; text-align: center; margin: 30px 0 0;"><xsl:value-of select="PhoronixTestSuite/ExternalDependencies/Information/Name" /> Dependencies</div>
+		<div style="width: 90%; margin: 20px auto 10px; text-align: center; border: 2px solid #000; border-width: 1px 2px; min-width: 700px;">
 			<div style="overflow: hidden; background-color: #000; color: #FFF; font-weight: bold;">
 				<div style="width: 20%; float: left;">Generic Name</div>
 				<div style="width: 20%; float: left;">Package Name(s)</div>

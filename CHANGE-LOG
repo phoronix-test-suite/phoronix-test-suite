@@ -39,6 +39,7 @@ Phoronix Test Suite (Git)
 - pts: Add graphics-magick to nevada test profile
 - pts: Start on OpenSolaris support for specviewperf9 and specviewperf10 test profiles
 - pts: Add XSL stylesheet for PTS External Dependency XML files
+- pts: Add Name tag to PTS External Dependency XML specification
 - pts_Graph: Render an arrow to indicate graph proportion for higher or lower results being better
 - bilde_renderer: Require and implement renderer_supported() function for renderers
 
