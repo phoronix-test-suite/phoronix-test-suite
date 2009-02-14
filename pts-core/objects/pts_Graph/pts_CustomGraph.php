@@ -65,6 +65,8 @@ class pts_CustomGraph extends pts_Graph
 		$this->graph_attr_big_border = pts_read_graph_config(P_GRAPH_RENDERBORDER, null, $read_config); // Border around graph or not
 		$this->graph_attr_marks = pts_read_graph_config(P_GRAPH_MARKCOUNT, null, $read_config); // Number of marks to make on vertical axis
 
+		$this->graph_renderer = pts_read_graph_config(P_GRAPH_RENDERER, null, $read_config); // Renderer
+
 		parent::__construct($Title, $SubTitle, $YTitle);
 	}
 }

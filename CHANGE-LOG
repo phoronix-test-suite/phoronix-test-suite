@@ -46,6 +46,7 @@ Phoronix Test Suite (Git)
 - pts: Add XSL stylesheet for the user-config.xml file
 - pts: Add Name tag to PTS External Dependency XML specification
 - pts_Graph: Render an arrow to indicate graph proportion for higher or lower results being better
+- pts_Graph: Add option to graph-config.xml for specifying the renderer to use by default
 - bilde_renderer: Require and implement renderer_supported() function for renderers
 
 Phoronix Test Suite 1.6.0 "Tydal"

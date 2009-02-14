@@ -237,6 +237,7 @@ define("P_GRAPH_FONT_SIZE_TEXT", "PhoronixTestSuite/Graphs/FontSize/ObjectText")
 define("P_GRAPH_FONT_SIZE_IDENTIFIERS", "PhoronixTestSuite/Graphs/FontSize/Identifiers"); // Graph font size for identifiers
 define("P_GRAPH_FONT_SIZE_AXIS", "PhoronixTestSuite/Graphs/FontSize/Axis"); // Graph font size for axis
 
+define("P_GRAPH_RENDERER", "PhoronixTestSuite/Graphs/Other/Renderer"); // Graph renderer
 define("P_GRAPH_RENDERBORDER", "PhoronixTestSuite/Graphs/Other/RenderBorder"); // Graph render border
 define("P_GRAPH_MARKCOUNT", "PhoronixTestSuite/Graphs/Other/NumberOfMarks"); // Graph number of marks
 define("P_GRAPH_WATERMARK", "PhoronixTestSuite/Graphs/Other/Watermark"); // Graph watermark

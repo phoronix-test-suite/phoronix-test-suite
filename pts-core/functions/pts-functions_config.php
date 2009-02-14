@@ -256,6 +256,7 @@ function pts_graph_config_init()
 	$config->addXmlObject(P_GRAPH_FONT_TYPE, 4, pts_read_graph_config(P_GRAPH_FONT_TYPE, "Sans.ttf", $read_config));
 
 	// Other
+	$config->addXmlObject(P_GRAPH_RENDERER, 4, pts_read_graph_config(P_GRAPH_RENDERER, "PNG", $read_config));
 	$config->addXmlObject(P_GRAPH_RENDERBORDER, 4, pts_read_graph_config(P_GRAPH_RENDERBORDER, "FALSE", $read_config));
 	$config->addXmlObject(P_GRAPH_MARKCOUNT, 4, pts_read_graph_config(P_GRAPH_MARKCOUNT, "6", $read_config));
 	$config->addXmlObject(P_GRAPH_WATERMARK, 4, pts_read_graph_config(P_GRAPH_WATERMARK, "PHORONIX-TEST-SUITE.COM", $read_config));
