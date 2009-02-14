@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-exdep-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Package>
@@ -33,7 +35,7 @@
 		<Package>
 			<GenericName>xorg-development</GenericName>
 			<PackageName>x11-devel</PackageName>
-			<FileCheck>/usr/include/xorg, /usr/include/GL/glut.h, /usr/include/zlib.h, /usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
+			<FileCheck>/usr/include/xorg, /usr/include/GL/glut.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>

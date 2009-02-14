@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-generic-exdep-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Package>
@@ -20,7 +22,7 @@
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
-			<Title>OpenGL Utility Kit (GLUT)</Title>
+			<Title>OpenGL Utility Kit / GLUT</Title>
 			<PossibleNames>freeglut3-dev, freeglut-devel</PossibleNames>
 			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
 		</Package>
@@ -44,7 +46,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<Title>GNU Development Utilities / Libraries</Title>
+			<Title>Compiler / Development Libraries</Title>
 			<PossibleNames>gcc</PossibleNames>
 			<FileCheck>/usr/bin/gcc</FileCheck>
 		</Package>
@@ -128,7 +130,7 @@
 		</Package>
 		<Package>
 			<GenericName>libaio-development</GenericName>
-			<Title>Development Files For Linux Kernel AIO Access Library</Title>
+			<Title>Linux Kernel AIO Development Files</Title>
 			<PossibleNames>libaio-dev, libaio-devel</PossibleNames>
 			<FileCheck>/usr/include/libaio.h</FileCheck>
 		</Package>
