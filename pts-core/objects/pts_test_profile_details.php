@@ -125,7 +125,14 @@ class pts_test_profile_details
 			}
 			if($last_run != "Never")
 			{
-				$str .= "Times Run: " . $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) . "\n";
+				$times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
+
+				if($times_run == null)
+				{
+					$times_run = 0;
+				}
+
+				$str .= "Times Run: " . $times_run . "\n";
 			}
 		}
 		else
