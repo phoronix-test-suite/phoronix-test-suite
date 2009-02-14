@@ -72,7 +72,7 @@ function hw_cpu_string($append_cpu_frequency = true)
 	// Returns the processor name / frequency information
 	$info = "";
 
-	if(is_file("/proc/cpuinfo"))
+	if(IS_LINUX)
 	{
 		$physical_cpu_ids = read_cpuinfo("physical id");
 		$physical_cpu_count = count(array_unique($physical_cpu_ids));
@@ -117,42 +117,40 @@ function hw_cpu_string($append_cpu_frequency = true)
 			$info = implode(", ", $cpus);
 		}
 	}
-
-	if(empty($info))
+	else if(IS_SOLARIS)
 	{
-		if(IS_SOLARIS)
-		{
-			$dmi_cpu = read_sun_ddu_dmi_info("ProcessorName");
-			if(count($dmi_cpu) > 0)
-			{
-				//TODO: Add in support for reading multiple CPUs, similar to the code from above
-				$info = $dmi_cpu[0];
-			}
-			else
-			{
-				$info = trim(shell_exec("dmesg 2>&1 | grep cpu0"));
-				$info = trim(substr($info, strrpos($info, "cpu0:") + 6));
+		$dmi_cpu = read_sun_ddu_dmi_info("ProcessorName");
 
-				if(empty($info))
-				{
-					$info = array_pop(read_sun_ddu_dmi_info("ProcessorManufacturer"));
-				}
-			}
-		}
-		else if(IS_BSD)
+		if(count($dmi_cpu) > 0)
 		{
-			$info = read_sysctl("hw.model");
+			$info = $dmi_cpu[0];
+		}
+		else
+		{
+			$info = trim(shell_exec("dmesg 2>&1 | grep cpu0"));
+			$info = trim(substr($info, strrpos($info, "cpu0:") + 6));
 
 			if(empty($info))
 			{
-				$info = "Unknown";
+				$info = array_pop(read_sun_ddu_dmi_info("ProcessorManufacturer"));
 			}
 		}
-		else if(IS_MACOSX)
-		{
-			$info = read_osx_system_profiler("SPHardwareDataType", "ProcessorName");
 
+		//TODO: Add in proper support for reading multiple CPUs, similar to the code from above
+		$physical_cpu_count = count(read_sun_ddu_dmi_info("ProcessorSocketType"));
+		if($physical_cpu_count > 1 && !empty($info))
+		{
+			// TODO: For now assuming when multiple CPUs are installed, that they are of the same type
+			$info = $physical_cpu_count . " x " . $info;
 		}
+	}
+	else if(IS_BSD)
+	{
+		$info = read_sysctl("hw.model");
+	}
+	else if(IS_MACOSX)
+	{
+		$info = read_osx_system_profiler("SPHardwareDataType", "ProcessorName");
 	}
 
 	if(!empty($info))
