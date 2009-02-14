@@ -35,7 +35,10 @@ class list_suites implements pts_option_interface
 				$has_partially_supported_suite = true;
 			}
 
-			echo $suite_info;
+			if(!$suite_info->not_supported())
+			{
+				echo $suite_info;
+			}
 		}
 		echo "\n";
 		if($has_partially_supported_suite)

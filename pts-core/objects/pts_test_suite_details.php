@@ -32,6 +32,7 @@ class pts_test_suite_details
 	var $test_type;
 	var $unique_tests;
 	var $only_partially_supported = false;
+	var $not_supported = false;
 
 	public function __construct($identifier)
 	{
@@ -48,18 +49,24 @@ class pts_test_suite_details
 		$suite_support_code = pts_suite_supported($identifier);
 
 		$this->identifier_show_prefix = " ";
-		if($suite_support_code > 0)
+
+		if($suite_support_code == 0)
 		{
-			if($suite_support_code == 1)
-			{
-				$this->identifier_show_prefix = "*";
-				$this->only_partially_supported = true;
-			}
+			$this->not_supported = true;
+		}
+		else if($suite_support_code == 1)
+		{
+			$this->identifier_show_prefix = "*";
+			$this->only_partially_supported = true;
 		}
 	}
 	public function partially_supported()
 	{
 		return $this->only_partially_supported;
+	}
+	public function not_supported()
+	{
+		return $this->not_supported;
 	}
 	public function info_string()
 	{

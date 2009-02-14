@@ -27,6 +27,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for reading the CPU usage on OpenSolaris
 - pts-core: Fix for recursively handling of nested suites for batch and default modes
 - pts-core: Provide smarter caching during make-download-cache process
+- pts-core: Don't show suites in list-suites that contain no supported tests
 - pts: Update compress-pbzip2 test profile to pbzip2 1.0.5
 - pts: Update memory-bandwidth test profile to version 0.15
 - pts: Nexuiz test profile doesn't need build-utilities
