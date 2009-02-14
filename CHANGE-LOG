@@ -31,6 +31,7 @@ Phoronix Test Suite (Git)
 - pts-core: Improve multi-CPU detection support on OpenSolaris
 - pts-core: Add Sun Studio compiler detection support
 - pts-core: Add LLVM compiler detection support
+- pts-core: Fix for generating download cache when destination is not writable
 - pts: Update compress-pbzip2 test profile to pbzip2 1.0.5
 - pts: Update memory-bandwidth test profile to version 0.15
 - pts: Nexuiz test profile doesn't need build-utilities

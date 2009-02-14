@@ -498,6 +498,13 @@ function pts_install_test($identifier)
 function pts_generate_download_cache()
 {
 	// Generates a PTS Download Cache
+
+	if(!is_writable(PTS_DOWNLOAD_CACHE_DIR))
+	{
+		echo PTS_DOWNLOAD_CACHE_DIR . " is not writable. A download cache cannot be created.\n\n";
+		return false;
+	}
+
 	if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
 	{
 		mkdir(PTS_DOWNLOAD_CACHE_DIR);
