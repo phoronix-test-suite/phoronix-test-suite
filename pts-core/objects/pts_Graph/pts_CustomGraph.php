@@ -25,6 +25,15 @@ class pts_CustomGraph extends pts_Graph
 {
 	function __construct($Title, $SubTitle, $YTitle)
 	{
+		if(PTS_MODE == "CLIENT")
+		{
+			$this->setup_custom_values();
+		}
+
+		parent::__construct($Title, $SubTitle, $YTitle);
+	}
+	private function setup_custom_values()
+	{
 		if(is_file(PTS_USER_DIR . "graph-config.xml"))
 		{
 			$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
@@ -66,8 +75,6 @@ class pts_CustomGraph extends pts_Graph
 		$this->graph_attr_marks = pts_read_graph_config(P_GRAPH_MARKCOUNT, null, $read_config); // Number of marks to make on vertical axis
 
 		$this->graph_renderer = pts_read_graph_config(P_GRAPH_RENDERER, null, $read_config); // Renderer
-
-		parent::__construct($Title, $SubTitle, $YTitle);
 	}
 }
 
