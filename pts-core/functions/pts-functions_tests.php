@@ -136,9 +136,14 @@ function pts_save_result($save_to = null, $save_results = null)
 
 	return $bool;
 }
-function pts_generate_graphs($test_results, $save_to_dir = null)
+function pts_generate_graphs($test_results, $save_to_dir)
 {
-	if(!empty($save_to_dir) && !is_dir($save_to_dir . "/result-graphs"))
+	if(empty($save_to_dir))
+	{
+		return false;
+	}
+
+	if(!is_dir($save_to_dir . "/result-graphs"))
 	{
 		mkdir($save_to_dir . "/result-graphs");
 	}
@@ -219,19 +224,12 @@ function pts_generate_graphs($test_results, $save_to_dir = null)
 		$t->addInternalIdentifier("Identifier", $results_suite_name);
 		$t->addInternalIdentifier("User", pts_current_user());
 
-		if(!empty($save_to_dir))
-		{
-			$t->saveGraphToFile($save_to_dir . "/result-graphs/" . ($i + 1) . ".BILDE_EXTENSION");
-		}
-
+		$t->saveGraphToFile($save_to_dir . "/result-graphs/" . ($i + 1) . ".BILDE_EXTENSION");
 		$t->renderGraph();
-
-		// TODO: Shouldn't this be out of loop?
-		if(!empty($save_to_dir))
-		{
-			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t->getRenderer(), $t->graphWidth(), $t->graphHeight()));
-		}
 	}
+
+	// Save XSL
+	file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t->getRenderer(), $t->graphWidth(), $t->graphHeight()));
 
 	// Render overview chart
 	$chart = new pts_Chart();
