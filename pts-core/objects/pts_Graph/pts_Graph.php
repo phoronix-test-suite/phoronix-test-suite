@@ -29,7 +29,7 @@ abstract class pts_Graph
 	var $graph_attr_height = 300; // Graph height
 	var $graph_attr_big_border = false; // Border around graph or not
 
-	var $graph_left_start = 20; // Distance in px to start graph from left side
+	var $graph_left_start = 10; // Distance in px to start graph from left side
 	var $graph_left_end_opp = 10; // Distance in px to end graph from right side
 	var $graph_top_start = 62; // Distance in px to start graph from top side
 	var $graph_top_end_opp = 22; // Distance in px to end graph from bottom side

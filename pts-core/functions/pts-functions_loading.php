@@ -21,10 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function __autoload($to_load)
-{
-	pts_load_object($to_load);
-}
 function pts_load_function_set($title)
 {
 	$includes_file = PTS_PATH . "pts-core/functions/pts-includes-" . $title . ".php";

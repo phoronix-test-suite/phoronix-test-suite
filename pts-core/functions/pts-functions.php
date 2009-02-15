@@ -25,6 +25,13 @@ require(PTS_PATH . "pts-core/functions/pts.php");
 require(PTS_PATH . "pts-core/functions/pts-interfaces.php");
 require(PTS_PATH . "pts-core/functions/pts-functions_loading.php");
 
+if(PTS_MODE == "CLIENT" || defined("PTS_AUTO_LOAD_OBJECTS"))
+{
+	function __autoload($to_load)
+	{
+		pts_load_object($to_load);
+	}
+}
 if(PTS_MODE == "LIB")
 {
 	// If a program using PTS as a library wants any of the below functions, they will need to load it manually
