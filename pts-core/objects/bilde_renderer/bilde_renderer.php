@@ -109,13 +109,14 @@ abstract class bilde_renderer
 				$renderer = new bilde_swf_renderer($width, $height, $embed_identifiers);
 				break;
 			case "SVG":
+			default:
 				$renderer = new bilde_svg_renderer($width, $height, $embed_identifiers);
 				break;
 		}
 
 		return $renderer;
 	}
-	public function render_to_file($output_file = null, $quality = 0)
+	public function render_to_file($output_file = null, $quality = 100)
 	{
 		$output_file = str_replace("BILDE_EXTENSION", strtolower($this->get_renderer()), $output_file);
 		return $this->render_image($output_file, $quality);

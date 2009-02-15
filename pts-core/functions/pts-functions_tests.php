@@ -226,11 +226,19 @@ function pts_generate_graphs($test_results, $save_to_dir = null)
 
 		$t->renderGraph();
 
+		// TODO: Shouldn't this be out of loop?
 		if(!empty($save_to_dir))
 		{
 			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t->getRenderer(), $t->graphWidth(), $t->graphHeight()));
 		}
 	}
+
+	// Render overview chart
+	$chart = new pts_Chart();
+	$chart->loadLeftHeaders("", $results_name);
+	$chart->loadTopHeaders($results_identifiers[0]);
+	$chart->loadData($results_values);
+	$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
 }
 function pts_subsystem_test_types()
 {
@@ -254,7 +262,21 @@ function pts_get_results_viewer_xsl_formatted($format_type = "PNG", $width, $hei
 		$graph_string = "<img><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />." . strtolower($format_type) . "</xsl:attribute></img>";
 	}
 
-	return str_replace("<!-- GRAPH TAGS -->", $graph_string, $raw_xsl);
+	/*
+	if($format_type == "SVG")
+	{
+		$overview_string = "<object type=\"image/svg+xml\" data=\"result-graphs/overview.svg\"></object>";
+	}
+	else
+	{
+		// Default to img
+		$overview_string = "<img src=\"result-graphs/overview." . strtolower($format_type)  . "\" />";
+	} */
+
+	$raw_xsl = str_replace("<!-- GRAPH TAGS -->", $graph_string, $raw_xsl);
+	//$raw_xsl = str_replace("<!-- OVERVIEW TAG -->", $overview_string, $raw_xsl);
+
+	return $raw_xsl;
 }
 function pts_test_needs_updated_install($identifier)
 {
