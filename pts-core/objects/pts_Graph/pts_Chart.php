@@ -3,9 +3,9 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
-	pts_Graph.php: The core graph object that is used by the different graphing objects.
+	Copyright (C) 2009, Phoronix Media
+	Copyright (C) 2009, Michael Larabel
+	pts_Chart.php: A charting object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@
 
 class pts_Chart
 {
-	// TODO: better integrate pts_Chart with pts_Graph
 	var $renderer;
 
 	var $left_headers_title;
@@ -33,6 +32,7 @@ class pts_Chart
 
 	public function __construct()
 	{
+		// TODO: better integrate pts_Chart with pts_Graph
 	}
 	public function loadLeftHeaders($title, $data_r)
 	{

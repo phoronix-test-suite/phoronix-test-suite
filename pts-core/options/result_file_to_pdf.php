@@ -68,21 +68,11 @@ class result_file_to_pdf implements pts_option_interface
 			$pdf->WriteText($notes_r[$i]);
 		}
 
-		if(count($identifiers) == 2)
+		if(count($identifiers) > 1 && is_file(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/overview.jpg"))
 		{
 			$pdf->AddPage();
-			$results = array();
-
-			$results_raw = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
-			$results_values = array();
-
-			for($i = 0; $i < count($results_raw); $i++)
-			{
-				$xml_results = new tandem_XmlReader($results_raw[$i]);
-				array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
-			}
-
-			$pdf->ResultTable($identifiers, $results_values, $tests);
+			$pdf->Ln(100);
+			$pdf->Image(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/overview.jpg", 15, 40, 180);
 		}
 
 
