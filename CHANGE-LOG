@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: For alpha and beta builds using build-package-deb.php, separate version number with "~"
+
 Phoronix Test Suite 1.8.0 Alpha 1
 February 16, 2009
 
@@ -54,7 +58,6 @@ February 16, 2009
 - pts_Graph: Add pts_Chart object for rendering charts
 - bilde_renderer: Require and implement renderer_supported() function for renderers
 - bilde_renderer: Require and implement html_embed_code() function to provide HTML markup for embedding the renderer's file
-
 
 Phoronix Test Suite 1.6.0 "Tydal"
 January 20, 2009

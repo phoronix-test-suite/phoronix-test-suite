@@ -39,13 +39,15 @@ shell_exec("mkdir -p /tmp/pts-deb-builder/DEBIAN/");
 shell_exec("mkdir -p /tmp/pts-deb-builder/usr/");
 shell_exec("./install-sh /tmp/pts-deb-builder/usr");
 
+$pts_version = str_replace("a", "~a", str_replace("b", "~b", PTS_VERSION)); // Fix version
+
 $phoronix_test_suite_bin = file_get_contents("phoronix-test-suite");
 $phoronix_test_suite_bin = str_replace("export PTS_DIR=`pwd`", "export PTS_DIR='/usr/share/phoronix-test-suite/'", $phoronix_test_suite_bin);
 file_put_contents("/tmp/pts-deb-builder/usr/bin/phoronix-test-suite", $phoronix_test_suite_bin);
 shell_exec("chmod +x /tmp/pts-deb-builder/usr/bin/phoronix-test-suite");
 
 $control_file = "Package: phoronix-test-suite\n";
-$control_file .= "Version: " . PTS_VERSION . "\n";
+$control_file .= "Version: " . $pts_version . "\n";
 $control_file .= "Section: Utilities\n";
 $control_file .= "Priority: optional\n";
 $control_file .= "Architecture: all\n";
@@ -55,7 +57,7 @@ $control_file .= "Maintainer: Phoronix Media <trondheim-pts@phoronix-test-suite.
 $control_file .= "Description: " . @file_get_contents("documentation/short-description.txt") . "\n";
 file_put_contents("/tmp/pts-deb-builder/DEBIAN/control", $control_file);
 
-shell_exec("dpkg --build /tmp/pts-deb-builder ../phoronix-test-suite_" . PTS_VERSION . "_all.deb");
+shell_exec("dpkg --build /tmp/pts-deb-builder ../phoronix-test-suite_" . $pts_version . "_all.deb");
 shell_exec("rm -rf /tmp/pts-deb-builder");
 
 ?>
