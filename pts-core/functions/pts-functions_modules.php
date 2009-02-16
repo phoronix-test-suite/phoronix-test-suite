@@ -207,8 +207,8 @@ function pts_module_valid_user_command($module, $command = null)
 
 		$all_options = pts_php_module_call($module, "user_commands");
 
-		$valid = (isset($all_options[$command]) && method_exists($module, $all_options[$command])) || 
-			in_array($command, array("help", "list_options"));
+		$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || 
+			in_array($command, array("help")));
 	}
 
 	return $valid;
@@ -227,7 +227,7 @@ function pts_module_run_user_command($module, $command, $arguments = null)
 		// or help or list_options was called
 		$all_options = pts_php_module_call($module, "user_commands");
 
-		echo "\nAvailable commands for the " . $module . " module:\n\n";
+		echo "\nUser commands for the " . $module . " module:\n\n";
 
 		foreach($all_options as $option)
 		{

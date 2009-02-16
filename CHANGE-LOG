@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 1.8.0 Alpha 1
+February 16, 2009
 
 - pts-core: Allow modules to be installed and loaded locally from ~/.phoronix-test-suite/modules/
 - pts-core: Add support for "user run commands" stored within PTS modules
@@ -14,14 +15,14 @@ Phoronix Test Suite (Git)
 - pts-core: Expand capabilities for pts_module_option
 - pts-core: Save system logs when running in batch mode
 - pts-core: Save system logs to system-logs/ instead of system-details/
-- pts-core: Add fallback support in OpenSolaris detection for CPU manufacturer when rest of processor detection fails
-- pts-core: Don't prepend "-" to memory string before memory speed when memory type isn't detected
+- pts-core: Add fall-back support in OpenSolaris detection for CPU manufacturer when rest of processor detection fails
+- pts-core: Don't prefix "-" to memory string before memory speed when memory type isn't detected
 - pts-core: Drop OS_PREFIX support from beginning of test profile names, since it's not being used and there's better ways to handle it
 - pts-core: Improve estimated run-time reporting when running multiple instances of the same test
 - pts-core: When there is a local test profile installed, compare it to the in-PTS version and use whatever one is newer
 - pts-core: When there is a local test suite installed, compare it to the in-PTS version and use whatever one is newer
 - pts-core: Drop TYPE_LOCAL_BASE_TEST and TEST_RESOURCE_LOCAL_CTP_BASE_DIR
-- pts-core: Remove SCTP (Self-Contained Test Profile) support until it's re-architected
+- pts-core: Remove SCTP (Self-Contained Test Profile) support until it's redesigned
 - pts-core: Fix warnings related to array merging of non-arrays
 - pts-core: Add $SYSTEM_MONITOR_START and $SYSTEM_MONITOR_STOP for system monitoring capabilities for test profiles
 - pts-core: Add support for reading the CPU usage on OpenSolaris
@@ -34,7 +35,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for generating download cache when destination is not writable
 - pts-core: Use pts_Chart overview chart when using result-file-to-pdf
 - pts-core: Don't copy XSL result viewer file on each time a graph is rendered
-- pts-core: When running a PTS module command of .help or .list_options with no function being implemented, list all available options
+- pts-core: When running a PTS module command of .help with no function being implemented, list all available commands
 - pts: Update compress-pbzip2 test profile to pbzip2 1.0.5
 - pts: Update memory-bandwidth test profile to version 0.15
 - pts: Nexuiz test profile doesn't need build-utilities
@@ -53,6 +54,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Add pts_Chart object for rendering charts
 - bilde_renderer: Require and implement renderer_supported() function for renderers
 - bilde_renderer: Require and implement html_embed_code() function to provide HTML markup for embedding the renderer's file
+
 
 Phoronix Test Suite 1.6.0 "Tydal"
 January 20, 2009
