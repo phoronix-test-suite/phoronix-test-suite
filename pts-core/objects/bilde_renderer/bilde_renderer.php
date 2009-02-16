@@ -92,31 +92,12 @@ abstract class bilde_renderer
 			}
 		}
 
-		if($selected_renderer == null)
+		if(!in_array($selected_renderer, $available_renderers))
 		{
 			$selected_renderer == $fallback_renderer;
 		}
 
-		// Declare the selected renderer
-		switch($selected_renderer)
-		{
-			case "PNG":
-				$renderer = new bilde_png_renderer($width, $height, $embed_identifiers);
-				break;
-			case "JPG":
-				$renderer = new bilde_jpg_renderer($width, $height, $embed_identifiers);
-				break;
-			case "GIF":
-				$renderer = new bilde_gif_renderer($width, $height, $embed_identifiers);
-				break;
-			case "SWF":
-				$renderer = new bilde_swf_renderer($width, $height, $embed_identifiers);
-				break;
-			case "SVG":
-			default:
-				$renderer = new bilde_svg_renderer($width, $height, $embed_identifiers);
-				break;
-		}
+		eval("\$renderer = new bilde_" . strtolower($selected_renderer) . "_renderer(\$width, \$height, \$embed_identifiers);");
 
 		return $renderer;
 	}
