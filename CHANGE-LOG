@@ -51,6 +51,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Add option to graph-config.xml for specifying the renderer to use by default
 - pts_Graph: Add pts_Chart object for rendering charts
 - bilde_renderer: Require and implement renderer_supported() function for renderers
+- bilde_renderer: Require and implement html_embed_code() function to provide HTML markup for embedding the renderer's file
 
 Phoronix Test Suite 1.6.0 "Tydal"
 January 20, 2009

@@ -229,7 +229,7 @@ function pts_generate_graphs($test_results, $save_to_dir)
 	}
 
 	// Save XSL
-	file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t->getRenderer(), $t->graphWidth(), $t->graphHeight()));
+	file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t));
 
 	// Render overview chart
 	$chart = new pts_Chart();
@@ -242,23 +242,12 @@ function pts_subsystem_test_types()
 {
 	return array("System", "Processor", "Disk", "Graphics", "Memory", "Network");
 }
-function pts_get_results_viewer_xsl_formatted($format_type = "PNG", $width, $height)
+function pts_get_results_viewer_xsl_formatted($pts_Graph)
 {
 	$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
 
-	if($format_type == "SVG")
-	{
-		$graph_string = "<object type=\"image/svg+xml\"><xsl:attribute name=\"data\">result-graphs/<xsl:number value=\"position()\" />.svg</xsl:attribute></object>";
-	}
-	else if($format_type == "SWF")
-	{
-		$graph_string = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\" id=\"objects\" width=\"" . $width . "\" height=\"" . $height . "\"><param name=\"movie\"><xsl:attribute name=\"value\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></param><embed width=\"" . $width . "\" height=\"" . $height . "\" type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></embed></object>";
-	}
-	else
-	{
-		// Default to img
-		$graph_string = "<img><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />." . strtolower($format_type) . "</xsl:attribute></img>";
-	}
+	//TODO: Move HTML embed code into a bilde_renderer function
+	$graph_string = $pts_Graph->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $pts_Graph->graphWidth(), $pts_Graph->graphWidth());
 
 	/*
 	if($format_type == "SVG")
