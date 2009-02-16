@@ -35,6 +35,35 @@ class bilde_svg_renderer extends bilde_renderer
 	{
 		return true;
 	}
+	public function html_embed_code($file_name, $attributes = null, $is_xsl = false)
+	{
+		$file_name = str_replace("BILDE_EXTENSION", strtolower($this->get_renderer()), $file_name);
+		$attributes = pts_to_array($attributes);
+		$attributes["data"] = $file_name;
+
+		if($is_xsl)
+		{
+			$html = "<object type=\"image/svg+xml\">";
+
+			foreach($attributes as $option => $value)
+			{
+				$html .= "<xsl:attribute name=\"" . $option . "\">" . $value . "</xsl:attribute>";
+			}
+			$html .= "</object>";
+		}
+		else
+		{
+			$html = "<object type=\"image/svg+xml\"";
+
+			foreach($attributes as $option => $value)
+			{
+				$html .= $option . "=\"" . $value . "\" ";
+			}
+			$html .= "/>";
+		}
+
+		return $html;
+	}
 	public function resize_image($width, $height)
 	{
 		$this->image_width = $width;

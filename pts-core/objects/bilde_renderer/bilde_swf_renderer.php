@@ -39,6 +39,54 @@ class bilde_swf_renderer extends bilde_renderer
 	{
 		return extension_loaded("ming");
 	}
+	public function html_embed_code($file_name, $attributes = null, $is_xsl = false)
+	{
+		$file_name = str_replace("BILDE_EXTENSION", strtolower($this->get_renderer()), $file_name);
+		$attributes = pts_to_array($attributes);
+		$attributes["value"] = $file_name;
+		$attributes["src"] = $file_name;
+
+	//	"<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\" id=\"objects\" width=\"" . $width . "\" height=\"" . $height . "\"><param name=\"movie\"><xsl:attribute name=\"value\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></param><embed width=\"" . $width . "\" height=\"" . $height . "\" type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></embed></object>";
+
+		if($is_xsl)
+		{
+			$html = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\" id=\"objects\"><param name=\"movie\">";
+
+			foreach($attributes as $option => $value)
+			{
+				$html .= "<xsl:attribute name=\"" . $option . "\">" . $value . "</xsl:attribute>";
+			}
+
+			$html .= "</param><embed type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\">";
+
+			foreach($attributes as $option => $value)
+			{
+				$html .= "<xsl:attribute name=\"" . $option . "\">" . $value . "</xsl:attribute>";
+			}
+
+			$html .= "</embed></object>";
+		}
+		else
+		{
+			$html = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\" id=\"objects\"><param name=\"movie\" ";
+
+			foreach($attributes as $option => $value)
+			{
+				$html .= $option . "=\"" . $value . "\" ";
+			}
+
+			$html .= "></param><embed type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\" ";
+
+			foreach($attributes as $option => $value)
+			{
+				$html .= $option . "=\"" . $value . "\" ";
+			}
+
+			$html .= "></embed></object>";
+		}
+
+		return $html;
+	}
 	public function render_image($output_file = null, $quality = 100)
 	{
 		return $this->image->save($output_file);

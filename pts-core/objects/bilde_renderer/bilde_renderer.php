@@ -32,6 +32,7 @@ abstract class bilde_renderer
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
 	abstract static function renderer_supported();
 
+	abstract function html_embed_code($file_name, $attributes = null, $is_xsl = false);
 	abstract function render_image($output_file = null, $quality = 100);
 	abstract function resize_image($width, $height);
 	abstract function destroy_image();

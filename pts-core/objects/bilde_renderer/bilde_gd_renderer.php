@@ -33,6 +33,35 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	{
 		return extension_loaded("gd");
 	}
+	public function html_embed_code($file_name, $attributes = null, $is_xsl = false)
+	{
+		$file_name = str_replace("BILDE_EXTENSION", strtolower($this->get_renderer()), $file_name);
+		$attributes = pts_to_array($attributes);
+		$attributes["src"] = $file_name;
+
+		if($is_xsl)
+		{
+			$html = "<img>";
+
+			foreach($attributes as $option => $value)
+			{
+				$html .= "<xsl:attribute name=\"" . $option . "\">" . $value . "</xsl:attribute>";
+			}
+			$html .= "</img>";
+		}
+		else
+		{
+			$html = "<img ";
+
+			foreach($attributes as $option => $value)
+			{
+				$html .= $option . "=\"" . $value . "\" ";
+			}
+			$html .= "/>";
+		}
+
+		return $html;
+	}
 
 	/*
 	public function render_image($output_file = null, $quality = 100)

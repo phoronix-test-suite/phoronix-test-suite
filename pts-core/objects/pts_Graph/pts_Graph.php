@@ -175,6 +175,18 @@ abstract class pts_Graph
 	{
 		$this->graph_output = $file;
 	}
+	public function htmlEmbedCode($file, $width, $height)
+	{
+		$attributes = array();
+
+		if($this->graph_renderer == "SWF")
+		{
+			$attributes["width"] = $width;
+			$attributes["height"] = $height;
+		}
+
+		return $this->graph_image->html_embed_code($file, $attributes, true);
+	}
 	public function graphWidth()
 	{
 		return $this->graph_attr_width;
