@@ -207,7 +207,8 @@ function pts_module_valid_user_command($module, $command = null)
 
 		$all_options = pts_php_module_call($module, "user_commands");
 
-		$valid = isset($all_options[$command]) && method_exists($module, $all_options[$command]);
+		$valid = (isset($all_options[$command]) && method_exists($module, $all_options[$command])) || 
+			in_array($command, array("help", "list_options"));
 	}
 
 	return $valid;
@@ -219,6 +220,20 @@ function pts_module_run_user_command($module, $command, $arguments = null)
 	if(isset($all_options[$command]) && method_exists($module, $all_options[$command]))
 	{
 		pts_php_module_call($module, $all_options[$command], $arguments);
+	}
+	else
+	{
+		// Not a valid command, list available options for the module 
+		// or help or list_options was called
+		$all_options = pts_php_module_call($module, "user_commands");
+
+		echo "\nAvailable commands for the " . $module . " module:\n\n";
+
+		foreach($all_options as $option)
+		{
+			echo "- " . $module . "." . $option . "\n";
+		}
+		echo "\n";
 	}
 }
 function pts_module_call($module, $process, $object_pass = null)

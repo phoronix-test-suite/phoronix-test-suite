@@ -209,7 +209,7 @@ function pts_generate_graphs($test_results, $save_to_dir)
 
 		if(getenv("REVERSE_GRAPH_ORDER") != false)
 		{
-			// Plot results in reverse order on graphs if REVERSE_GRAPH_PLOTTING env variable is set
+			// Plot results in reverse order on graphs if REVERSE_GRAPH_ORDER env variable is set
 			$results_identifiers[$i] = array_reverse($results_identifiers[$i]);
 			$results_values[$i] = array_reverse($results_values[$i]);
 		}
@@ -246,7 +246,6 @@ function pts_get_results_viewer_xsl_formatted($pts_Graph)
 {
 	$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
 
-	//TODO: Move HTML embed code into a bilde_renderer function
 	$graph_string = $pts_Graph->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $pts_Graph->graphWidth(), $pts_Graph->graphWidth());
 
 	/*
