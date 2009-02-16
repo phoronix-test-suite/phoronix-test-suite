@@ -60,7 +60,7 @@ abstract class bilde_renderer
 	public function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = "")
 	{
 		bilde_renderer::setup_font_directory();
-		$available_renderers = array("PNG", "JPG", "SWF", "SVG");
+		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG");
 		$fallback_renderer = "SVG";
 		$selected_renderer = null;
 
@@ -105,6 +105,9 @@ abstract class bilde_renderer
 				break;
 			case "JPG":
 				$renderer = new bilde_jpg_renderer($width, $height, $embed_identifiers);
+				break;
+			case "GIF":
+				$renderer = new bilde_gif_renderer($width, $height, $embed_identifiers);
 				break;
 			case "SWF":
 				$renderer = new bilde_swf_renderer($width, $height, $embed_identifiers);
