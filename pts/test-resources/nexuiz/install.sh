@@ -2,6 +2,7 @@
 
 # Nexuiz 2.4.2
 
+[ -d Nexuiz_/data ] && chmod +w Nexuiz_/data
 rm -rf Nexuiz Nexuiz_
 unzip -o nexuiz-242.zip
 mv Nexuiz Nexuiz_
