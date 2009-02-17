@@ -1,8 +1,10 @@
 #!/bin/sh
 
+rm -rf UrbanTerror UrbanTerror_
+
 unzip -o UrbanTerror_41_FULL.zip
 
-mv UrbanTerror/ UrbanTerror_/
+mv UrbanTerror UrbanTerror_
 cd UrbanTerror_/
 chmod +x ioUrbanTerror.i386
 chmod +x ioUrbanTerror.x86_64

@@ -1,9 +1,10 @@
 #!/bin/sh
 
-tar -xvf pts-sqlite-tests-1.tar.gz
 
+rm -rf sqlite-3.6.6.2 sqlite_env
+tar -xvf pts-sqlite-tests-1.tar.gz
 tar -xvf sqlite-3.6.6.2.tar.gz
-mv sqlite-3.6.6.2/ sqlite_env/
+mv sqlite-3.6.6.2 sqlite_env
 
 cd sqlite_env/
 ./configure

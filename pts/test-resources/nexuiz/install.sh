@@ -2,8 +2,9 @@
 
 # Nexuiz 2.4.2
 
+rm -rf Nexuiz Nexuiz_
 unzip -o nexuiz-242.zip
-mv Nexuiz/ Nexuiz_/
+mv Nexuiz Nexuiz_
 
 echo "#!/bin/sh
 cd Nexuiz_/

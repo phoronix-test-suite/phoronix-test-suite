@@ -95,7 +95,7 @@ class pts_Chart
 
 		for($i = 0; $i < count($this->data); $i++)
 		{
-			for($j = 0; $j < count($this->data[$j]); $j++)
+			for($j = 0; $j < count($this->data[$i]); $j++)
 			{
 				$this->renderer->write_text_center($this->data[$i][$j], $font_type, 10, $color_black, $left_header[0] + ($j * $top_header[0]), (($i + 1) * 20) - 1, $left_header[0] + (($j + 1) * $top_header[0]), (($i + 1) * 20) - 1 + $left_header[1]);
 			}
