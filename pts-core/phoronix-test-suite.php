@@ -21,8 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_PATH", substr(($p = realpath(dirname(__FILE__))), 0, strrpos($p, "/")) . "/");
-
+define("PTS_PATH", dirname(realpath(dirname(__FILE__))) . "/");
 
 // PTS_MODE types
 // CLIENT = Standard Phoronix Test Suite Client
