@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: For alpha and beta builds using build-package-deb.php, separate version number with "~"
 - pts: Various install.sh test script changes from Kano
 - pts: Fix in nexuiz test installation script from Kano
+- pts: Add PTS External Dependencies support for Arch Linux
 - bilde_renderer: Add a GIF renderer back-end that uses the GD library (bilde_gif_renderer)
 
 Phoronix Test Suite 1.8.0 Alpha 1
