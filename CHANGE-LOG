@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts: Add PTS External Dependencies support for Arch Linux
 - pts: Add PTS External Dependencies support for MEPIS by aliasing the Ubuntu external dependencies
 - bilde_renderer: Add a GIF renderer back-end that uses the GD library (bilde_gif_renderer)
+- bilde_renderer: Fix failure with bilde_renderer fallback renderer
 
 Phoronix Test Suite 1.8.0 Alpha 1
 February 16, 2009

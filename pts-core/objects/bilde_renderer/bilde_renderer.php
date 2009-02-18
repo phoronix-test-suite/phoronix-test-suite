@@ -94,7 +94,7 @@ abstract class bilde_renderer
 
 		if(!in_array($selected_renderer, $available_renderers))
 		{
-			$selected_renderer == $fallback_renderer;
+			$selected_renderer = $fallback_renderer;
 		}
 
 		eval("\$renderer = new bilde_" . strtolower($selected_renderer) . "_renderer(\$width, \$height, \$embed_identifiers);");
