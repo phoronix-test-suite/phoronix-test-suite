@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts: Various install.sh test script changes from Kano
 - pts: Fix in nexuiz test installation script from Kano
 - pts: Add PTS External Dependencies support for Arch Linux
+- pts: Add PTS External Dependencies support for MEPIS by aliasing the Ubuntu external dependencies
 - bilde_renderer: Add a GIF renderer back-end that uses the GD library (bilde_gif_renderer)
 
 Phoronix Test Suite 1.8.0 Alpha 1
