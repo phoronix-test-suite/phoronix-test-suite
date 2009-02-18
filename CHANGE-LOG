@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: For alpha and beta builds using build-package-deb.php, separate version number with "~"
+- pts-core: Improve Linux distribution detection for distributions that supply an empty *-release file (Such as Arch Linux)
 - pts: Various install.sh test script changes from Kano
 - pts: Fix in nexuiz test installation script from Kano
 - pts: Add PTS External Dependencies support for Arch Linux

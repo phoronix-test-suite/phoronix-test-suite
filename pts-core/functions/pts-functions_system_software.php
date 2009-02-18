@@ -278,7 +278,12 @@ function sw_os_release()
 		if(count($files) > 0)
 		{
 			$file = file_get_contents($files[0]);
-			$os = substr($file, 0, strpos($file, "\n"));
+			//TODO: Check more than the first file if needed
+			
+			if(trim($file) != "")
+			{
+				$os = substr($file, 0, strpos($file, "\n"));
+			}
 		}
 
 		if($os == "Unknown")
@@ -287,7 +292,16 @@ function sw_os_release()
 			if(count($files) > 0)
 			{
 				$file = file_get_contents($files[0]);
-				$os = substr($file, 0, strpos($file, "\n"));
+				//TODO: Check more than the first file if needed
+
+				if(trim($file) != "")
+				{
+					$os = substr($file, 0, strpos($file, "\n"));
+				}
+				else
+				{
+					$os = ucwords(substr(($n = basename($files[0])), 0, strpos($n, "-")));
+				}
 			}
 			else
 			{
