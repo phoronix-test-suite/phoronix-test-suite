@@ -275,35 +275,34 @@ function sw_os_release()
 
 		// Try to detect distro for those not supplying lsb_release
 		$files = glob("/etc/*-version");
-		if(count($files) > 0)
+		for($i = 0; $i < count($files) && $os == "Unknown"; $i++)
 		{
-			$file = file_get_contents($files[0]);
-			//TODO: Check more than the first file if needed
-			
+			$file = file_get_contents($files[$i]);
+
 			if(trim($file) != "")
 			{
 				$os = substr($file, 0, strpos($file, "\n"));
 			}
 		}
-
+		
 		if($os == "Unknown")
 		{
 			$files = glob("/etc/*-release");
-			if(count($files) > 0)
+			for($i = 0; $i < count($files) && $os == "Unknown"; $i++)
 			{
-				$file = file_get_contents($files[0]);
-				//TODO: Check more than the first file if needed
+				$file = file_get_contents($files[$i]);
 
 				if(trim($file) != "")
 				{
 					$os = substr($file, 0, strpos($file, "\n"));
 				}
-				else
+				else if($i == (count($files) - 1))
 				{
-					$os = ucwords(substr(($n = basename($files[0])), 0, strpos($n, "-")));
-				}
+					$os = ucwords(substr(($n = basename($files[$i])), 0, strpos($n, "-")));
+				}			
 			}
-			else
+
+			if($os == "Unknown")
 			{
 				if(is_file("/etc/release"))
 				{
@@ -354,12 +353,20 @@ function sw_desktop_environment()
 		$desktop_environment = "GNOME";
 		$desktop_version = array_pop(explode(" ", trim(shell_exec("gnome-about --version 2>&1"))));
 	}
-	else if(pts_process_running_bool("kded4"))
+	else if(($kde4 = pts_process_running_bool("kded4")) || pts_process_running_bool("kded"))
 	{
 		// KDE 4.x
 		$desktop_environment = "KDE";
 
-		$kde_output = trim(shell_exec("kde4-config --version 2>&1"));
+		if($kde4)
+		{
+			$kde_output = trim(shell_exec("kde4-config --version 2>&1"));
+		}
+		else
+		{
+			$kde_output = trim(shell_exec("kde-config --version 2>&1"));
+		}
+
 		$kde_lines = explode("\n", $kde_output);
 
 		for($i = 0; $i < count($kde_lines) && empty($desktop_version); $i++)
