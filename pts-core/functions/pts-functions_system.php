@@ -69,28 +69,50 @@ function pts_sw_string($return_string = true)
 
 	return pts_process_string_array($return_string, $sw);
 }
-function pts_process_string_array($return_string, $array)
+function pts_sys_sensors_string($return_string = true)
 {
-	if($return_string)
+	$sensors = array();
+
+	// TODO: Come up with a way to not need to statically label the units, including in system_monitor module
+
+	$sensors["GPU Temperature"] = hw_gpu_temperature() . " C";
+	$sensors["CPU Temperature"] = hw_cpu_temperature() . " C";
+	$sensors["HDD Temperature"] = hw_sys_hdd_temperature() . " C";
+	$sensors["System Temperature"] = hw_sys_temperature() . " C";
+
+	$sensors["CPU Frequency"] = hw_cpu_current_frequency() . " MHz";
+	$sensors["GPU Frequency"] = implode(" / ", hw_gpu_current_frequency()) . " MHz";
+
+	$sensors["CPU Usage"] = hw_cpu_usage() . " %";
+	$sensors["GPU Usage"] = hw_gpu_core_usage() . " %";
+
+	$sensors["Memory Usage"] = sw_physical_memory_usage() . " MB";
+	$sensors["SWAP Usage"] = sw_swap_memory_usage() . " MB";
+
+	$sensors["CPU Voltage"] = hw_sys_line_voltage("CPU") . " V";
+	$sensors["+3.33V Voltage"] = hw_sys_line_voltage("V3") . " V";
+	$sensors["+5.00V Voltage"] = hw_sys_line_voltage("V5") . " V";
+	$sensors["+12.00V Voltage"] = hw_sys_line_voltage("V12") . " V";
+
+	//$sensors["Battery Power Consumption"] = hw_sys_power_consumption_rate();
+	$sensors = pts_remove_unsupported_entries($sensors);
+
+	return pts_process_string_array($return_string, $sensors);
+}
+
+function pts_remove_unsupported_entries($array, $check_at_start_of_string = false)
+{
+	$clean_elements = array();
+
+	foreach($array as $key => $value)
 	{
-		$return = "";
-
-		foreach($array as $type => $value)
+		if($value != -1 && !empty($value))
 		{
-			if($return != "")
-			{
-				$return .= ", ";
-			}
-
-			$return .= $type . ": " . $value;
+			$clean_elements[$key] = $value;
 		}
 	}
-	else
-	{
-		$return = $array;
-	}
 
-	return $return;
+	return $clean_elements;
 }
 function pts_system_identifier_string()
 {

@@ -768,7 +768,7 @@ class gui_gtk implements pts_option_interface
 
 
 		$notebook = new GtkNotebook();
-		$notebook->set_size_request(540, 300);
+		$notebook->set_size_request(540, 250);
 		$vbox->pack_start($notebook);
 
 		$hw = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)));
@@ -776,6 +776,9 @@ class gui_gtk implements pts_option_interface
 
 		$sw = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)));
 		pts_gtk_add_notebook_tab($notebook, $sw, "Software");
+
+		$sensors = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)));
+		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors");
 
 		$window->show_all();
 		Gtk::main();

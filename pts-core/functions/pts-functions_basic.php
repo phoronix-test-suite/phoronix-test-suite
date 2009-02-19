@@ -127,5 +127,28 @@ function pts_array_with_key_to_2d($array)
 
 	return $array_2d;
 }
+function pts_process_string_array($return_string, $array)
+{
+	if($return_string)
+	{
+		$return = "";
+
+		foreach($array as $type => $value)
+		{
+			if($return != "")
+			{
+				$return .= ", ";
+			}
+
+			$return .= $type . ": " . $value;
+		}
+	}
+	else
+	{
+		$return = $array;
+	}
+
+	return $return;
+}
 
 ?>
