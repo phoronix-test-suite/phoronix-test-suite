@@ -26,7 +26,7 @@ class gui_gtk implements pts_option_interface
 	{
 		pts_load_function_set("gtk");
 
-		if(!extension_loaded("gtk"))
+		if(!extension_loaded("gtk") && !extension_loaded("php-gtk"))
 		{
 			echo "\nThe PHP GTK module must be loaded for the GUI.\nThis module can be found @ http://gtk.php.net/\n\n";
 			return;
@@ -84,9 +84,13 @@ class gui_gtk implements pts_option_interface
 		$main_frame->add($main_frame_vbox);
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $main_frame_vbox);
 
+		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
+		$logo->set_size_request(158, 82);
+		$main_frame_vbox->pack_start($logo);
+
 		$label_welcome = new GtkLabel("The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for the Linux operating system. This software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.");
 		$label_welcome->set_line_wrap(true);
-		$label_welcome->set_size_request(260, 10);
+		$label_welcome->set_size_request(260, 200);
 		$main_frame_vbox->pack_start($label_welcome);
 
 		$window_fixed->put($main_frame, 10, 10);

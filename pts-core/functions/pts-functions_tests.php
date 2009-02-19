@@ -447,7 +447,6 @@ function pts_suite_name_to_identifier($name)
 	static $cache;
 	$this_identifier = false;
 
-	// TODO: caching support
 	if(!isset($cache[$name]))
 	{
 		foreach(pts_available_suites_array() as $identifier)
@@ -479,8 +478,10 @@ function pts_test_identifier_to_name($identifier)
 			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 		}
 
-		$cache[$identifier] = $this_identifier;
+		$cache[$identifier] = $name;
 	}
+
+
 
 	return $cache[$identifier];
 }
@@ -498,7 +499,7 @@ function pts_suite_identifier_to_name($identifier)
 			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 		}
 
-		$cache[$identifier] = $this_identifier;
+		$cache[$identifier] = $name;
 	}
 
 	return $cache[$identifier];
