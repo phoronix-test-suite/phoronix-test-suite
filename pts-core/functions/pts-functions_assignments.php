@@ -87,6 +87,19 @@ function pts_clear_assignment($assignment)
 {
 	pts_assignment("CLEAR", $assignment);
 }
+function pts_set_assignment_next($assignment, $value)
+{
+	$options = pts_run_option_static_array();
+
+	if(count($options) > 0)
+	{
+		$next_option = array_shift($options);
+		$next_option->add_preset_assignment($assignment, $value);
+		array_unshift($options, $next_option);
+
+		pts_run_option_static_array($options);
+	}
+}
 function pts_unique_runtime_identifier()
 {
 	if(pts_is_assignment("THIS_OPTION_IDENTIFIER"))

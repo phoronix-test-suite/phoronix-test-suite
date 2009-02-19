@@ -370,6 +370,7 @@ class run_test implements pts_option_interface
 			{
 				pts_save_test_file($proposed_file_name, $xml_results_writer);
 				echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
+				pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $proposed_file_name);
 				pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
 
 				$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL") != false ? true : 
@@ -383,6 +384,7 @@ class run_test implements pts_option_interface
 					if(!empty($upload_url))
 					{
 						echo "\nResults Uploaded To: " . $upload_url . "\n";
+						pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
 						pts_module_process("__event_global_upload", $upload_url);
 						pts_display_web_browser("\"" . $upload_url . "\"", "Do you want to launch Phoronix Global", true);
 					}

@@ -57,6 +57,10 @@ class pts_run_option
 	{
 		return $this->preset_assignments;
 	}
+	public function add_preset_assignment($name, $value)
+	{
+		$this->preset_assignments[$name] = $value;
+	}
 }
 
 ?>

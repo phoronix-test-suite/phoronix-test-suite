@@ -76,7 +76,7 @@ class gui_gtk implements pts_option_interface
 		$vbox->pack_start($window_fixed);
 
 		// Details Frame
-		$main_frame = new GtkFrame("Welcome");
+		$main_frame = new GtkFrame((($t = pts_read_assignment("PREV_SAVE_NAME_TITLE")) !== false ? $t : "Welcome"));
 		$main_frame->set_size_request(280, 330);
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME", $main_frame);
 
@@ -84,14 +84,40 @@ class gui_gtk implements pts_option_interface
 		$main_frame->add($main_frame_vbox);
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $main_frame_vbox);
 
-		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
-		$logo->set_size_request(158, 82);
-		$main_frame_vbox->pack_start($logo);
 
-		$label_welcome = new GtkLabel("The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for the Linux operating system. This software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.");
-		$label_welcome->set_line_wrap(true);
-		$label_welcome->set_size_request(260, 200);
-		$main_frame_vbox->pack_start($label_welcome);
+		$i = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER");
+		$u = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL");
+
+		if($i != false || $u != false)
+		{
+			$main_frame_vbox->pack_start(new GtkLabel(" "));
+			if(!empty($i))
+			{
+				$tr_button = new GtkButton("View Test Results");
+				$tr_button->connect_simple("clicked", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $i . "/composite.xml");
+				$main_frame_vbox->pack_start($tr_button);
+			}
+			$main_frame_vbox->pack_start(new GtkLabel(" "));
+			if(!empty($u))
+			{
+				$pg_button = new GtkButton("View On Phoronix Global");
+				$pg_button->connect_simple("clicked", array("gui_gtk", "launch_web_browser"), $u);
+				$main_frame_vbox->pack_start($pg_button);
+			}
+			$main_frame_vbox->pack_start(new GtkLabel(" "));
+
+		}
+		else
+		{
+			$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
+			$logo->set_size_request(158, 82);
+			$main_frame_vbox->pack_start($logo);
+
+			$label_welcome = new GtkLabel("The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for the Linux operating system. This software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.");
+			$label_welcome->set_line_wrap(true);
+			$label_welcome->set_size_request(260, 200);
+			$main_frame_vbox->pack_start($label_welcome);
+		}
 
 		$window_fixed->put($main_frame, 10, 10);
 
@@ -555,12 +581,16 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_CONFIRMATION_WINDOW", $window);
 		Gtk::main();
 	}
+	public static function launch_web_browser($url)
+	{
+		pts_display_web_browser($url, null, true, true);
+	}
 	public static function details_button_clicked()
 	{
 		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{
 			$result_identifier = pts_read_assignment("GTK_SELECTED_ITEM");
-			pts_display_web_browser(SAVE_RESULTS_DIR . $result_identifier . "/index.html", null, true, true);			
+			pts_display_web_browser(SAVE_RESULTS_DIR . $result_identifier . "/index.html", null, true, true);
 		}
 	}
 	public static function notebook_selected_to_identifier()

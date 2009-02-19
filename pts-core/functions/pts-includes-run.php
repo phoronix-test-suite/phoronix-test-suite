@@ -441,6 +441,7 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 	{
 		$custom_title = $proposed_name;
 	}
+	pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $custom_title);
 
 	return array($proposed_name, $custom_title);
 }

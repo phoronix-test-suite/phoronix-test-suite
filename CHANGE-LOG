@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add initial Phoronix Test Suite GTK GUI (launch: phoronix-test-suite gui-gtk)
 - pts-core: Provide variable caching for more test functions
 - pts-core: Provide more cache support throughout pts-core, with GUI it's evident what functions can use caching
+- pts-core: Add pts_set_assignment_next() operator for setting assignments in the next option in the execution queue
 - pts: Various install.sh test script changes from Kano
 - pts: Fix in nexuiz test installation script from Kano
 - pts: Add PTS External Dependencies support for Arch Linux
