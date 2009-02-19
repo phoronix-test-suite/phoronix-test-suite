@@ -421,10 +421,10 @@ function pts_test_refresh_install_xml($identifier, $this_test_duration = 0, $new
 function pts_test_name_to_identifier($name)
 {
 	// Convert test name to identifier
+	static $cache;
 	$this_identifier = false;
 
-	// TODO: caching support
-	if(!empty($name))
+	if(!isset($cache[$name]))
 	{
 		foreach(pts_available_tests_array() as $identifier)
 		{
@@ -435,17 +435,20 @@ function pts_test_name_to_identifier($name)
 				$this_identifier = $identifier;
 			}
 		}
+
+		$cache[$name] = $this_identifier;
 	}
 
-	return $this_identifier;
+	return $cache[$name];
 }
 function pts_suite_name_to_identifier($name)
 {
 	// Convert test name to identifier
+	static $cache;
 	$this_identifier = false;
 
 	// TODO: caching support
-	if(!empty($name))
+	if(!isset($cache[$name]))
 	{
 		foreach(pts_available_suites_array() as $identifier)
 		{
@@ -456,37 +459,49 @@ function pts_suite_name_to_identifier($name)
 				$this_identifier = $identifier;
 			}
 		}
+
+		$cache[$name] = $this_identifier;
 	}
 
-	return $this_identifier;
+	return $cache[$name];
 }
 function pts_test_identifier_to_name($identifier)
 {
 	// Convert identifier to test name
+	static $cache;
 	$name = false;
 
-	// TODO: caching support
-	if(!empty($identifier) && pts_is_test($identifier))
+	if(!isset($cache[$identifier]))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
+		if(!empty($identifier) && pts_is_test($identifier))
+		{
+		 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
+			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
+		}
+
+		$cache[$identifier] = $this_identifier;
 	}
 
-	return $name;
+	return $cache[$identifier];
 }
 function pts_suite_identifier_to_name($identifier)
 {
 	// Convert identifier to test name
+	static $cache;
 	$name = false;
 
-	// TODO: caching support
-	if(!empty($identifier) && pts_is_suite($identifier))
+	if(!isset($cache[$identifier]))
 	{
-	 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
-		$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
+		if(!empty($identifier) && pts_is_suite($identifier))
+		{
+		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
+			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
+		}
+
+		$cache[$identifier] = $this_identifier;
 	}
 
-	return $name;
+	return $cache[$identifier];
 }
 function pts_estimated_download_size($identifier)
 {
