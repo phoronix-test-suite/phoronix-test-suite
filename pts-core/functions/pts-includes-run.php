@@ -468,7 +468,7 @@ function pts_promt_user_tags($default_tags = "")
 {
 	$tags_input = "";
 
-	if(pts_read_assignment("IS_BATCH_MODE") == false)
+	if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
 	{
 		echo "\nTags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas): ";
 		$tags_input .= fgets(STDIN);
