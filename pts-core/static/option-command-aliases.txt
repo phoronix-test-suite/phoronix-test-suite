@@ -1,4 +1,5 @@
 run = run_test
+gui = gui_gtk
 install = install_test
 upload = upload_result
 upload_results = upload_result

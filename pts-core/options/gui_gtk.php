@@ -25,6 +25,13 @@ class gui_gtk implements pts_option_interface
 	public static function run($r)
 	{
 		pts_load_function_set("gtk");
+
+		if(!extension_loaded("gtk"))
+		{
+			echo "\nThe PHP GTK module must be loaded for the GUI.\nThis module can be found @ http://gtk.php.net/\n\n";
+			return;
+		}
+
 		gui_gtk::show_main_interface();
 	}
 	public static function kill_gtk_window($window)
