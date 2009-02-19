@@ -28,46 +28,69 @@ require_once(PTS_PATH . "pts-core/functions/pts-functions_system_cpu.php");
 require_once(PTS_PATH . "pts-core/functions/pts-functions_system_memory.php");
 require_once(PTS_PATH . "pts-core/functions/pts-functions_system_graphics.php");
 
-function pts_hw_string()
+function pts_hw_string($return_string = true, $short_form = false)
 {
 	// Returns string of hardware information
-	$hardware = array();
+	$hw = array();
 
-	array_push($hardware, "Processor: " . hw_cpu_string() . " (Total Cores: " . hw_cpu_core_count() . ")");
-	array_push($hardware, "Motherboard: " . hw_sys_motherboard_string());
-	array_push($hardware, "Chipset: " . hw_sys_chipset_string());
-	array_push($hardware, "System Memory: " . hw_sys_memory_string());
-	array_push($hardware, "Disk: " . hw_sys_hdd_string());
-	array_push($hardware, "Graphics: " . hw_gpu_string() . hw_gpu_frequency());
-	array_push($hardware, "Screen Resolution: " . hw_gpu_current_mode());
+	$hw["Processor"] = hw_cpu_string() . ($short_form == false ? " (Total Cores: " . hw_cpu_core_count() . ")" : "");
+	$hw["Motherboard"] = hw_sys_motherboard_string();
+	$hw["Chipset"] = hw_sys_chipset_string();
+	$hw["System Memory"] = hw_sys_memory_string();
+	$hw["Disk"] = hw_sys_hdd_string();
+	$hw["Graphics"] = hw_gpu_string() . hw_gpu_frequency();
+	$hw["Screen Resolution"] = hw_gpu_current_mode();
 
-	return implode(", ", $hardware);
+	return pts_process_string_array($return_string, $hw);
 }
-function pts_sw_string()
+function pts_sw_string($return_string = true)
 {
 	// Returns string of software information
-	$software = array();
+	$sw = array();
 
-	array_push($software, "OS: " . sw_os_release());
-	array_push($software, "Kernel: " . sw_os_kernel() . " (" . sw_os_architecture() . ")");
+	$sw["OS"] = sw_os_release();
+	$sw["Kernel"] = sw_os_kernel() . " (" . sw_os_architecture() . ")";
 
 	if(($desktop = sw_desktop_environment()) != "")
 	{
-		array_push($software, "Desktop: " . $desktop);
+		$sw["Desktop"] = $desktop;
 	}
 
-	array_push($software, "Display Server: " . sw_os_graphics_subsystem());
+	$sw["Display Server"] = sw_os_graphics_subsystem();
 
 	if(($ddx = sw_xorg_ddx_driver_info()) != "")
 	{
-		array_push($software, "Display Driver: " . $ddx);
+		$sw["Display Driver"] = $ddx;
 	}
 
-	array_push($software, "OpenGL: " . sw_os_opengl());
-	array_push($software, "Compiler: " . sw_os_compiler());
-	array_push($software, "File-System: " . sw_os_filesystem());
+	$sw["OpenGL"] = sw_os_opengl();
+	$sw["Compiler"] = sw_os_compiler();
+	$sw["File-System"] = sw_os_filesystem();
 
-	return implode(", ", $software);
+	return pts_process_string_array($return_string, $sw);
+}
+function pts_process_string_array($return_string, $array)
+{
+	if($return_string)
+	{
+		$return = "";
+
+		foreach($array as $type => $value)
+		{
+			if($return != "")
+			{
+				$return .= ", ";
+			}
+
+			$return .= $type . ": " . $value;
+		}
+	}
+	else
+	{
+		$return = $array;
+	}
+
+	return $return;
 }
 function pts_system_identifier_string()
 {

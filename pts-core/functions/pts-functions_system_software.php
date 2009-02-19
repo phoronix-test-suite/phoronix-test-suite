@@ -271,11 +271,11 @@ function sw_os_release()
 
 	if($vendor == "Unknown" && $version == "Unknown")
 	{
-		$os = "Unknown";
+		$os = null;
 
 		// Try to detect distro for those not supplying lsb_release
 		$files = glob("/etc/*-version");
-		for($i = 0; $i < count($files) && $os == "Unknown"; $i++)
+		for($i = 0; $i < count($files) && $os == null; $i++)
 		{
 			$file = file_get_contents($files[$i]);
 
@@ -285,10 +285,10 @@ function sw_os_release()
 			}
 		}
 		
-		if($os == "Unknown")
+		if($os == null)
 		{
 			$files = glob("/etc/*-release");
-			for($i = 0; $i < count($files) && $os == "Unknown"; $i++)
+			for($i = 0; $i < count($files) && $os == null; $i++)
 			{
 				$file = file_get_contents($files[$i]);
 
@@ -302,7 +302,7 @@ function sw_os_release()
 				}			
 			}
 
-			if($os == "Unknown")
+			if($os == null)
 			{
 				if(is_file("/etc/release"))
 				{
@@ -312,7 +312,7 @@ function sw_os_release()
 			}
 		}
 
-		if($os == "Unknown")
+		if($os == null)
 		{
 			$os = shell_exec("uname -s 2>&1");
 		}
