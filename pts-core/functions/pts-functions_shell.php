@@ -23,6 +23,11 @@
 
 function pts_display_web_browser($URL, $alt_text = null, $default_open = false, $auto_open = false)
 {
+	if(pts_read_assignment("AUTOMATED_MODE") != false)
+	{
+		return;
+	}
+
 	// Launch the web browser
 	if($alt_text == null)
 	{

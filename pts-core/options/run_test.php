@@ -202,6 +202,10 @@ class run_test implements pts_option_interface
 			{
 				$save_results = true;
 			}
+			else if(pts_is_assignment("DO_NOT_SAVE_RESULTS") == true)
+			{
+				$save_results = false;
+			}
 			else
 			{
 				$save_results = pts_bool_question("Would you like to save these test results (Y/n)?", true, "SAVE_RESULTS");
@@ -209,7 +213,7 @@ class run_test implements pts_option_interface
 
 			if($save_results)
 			{
-				if($unique_test_names == 1 && ($asn = pts_read_assignment("AUTO_SAVE_NAME")) != false)
+				if(($unique_test_names == 1 || pts_is_assignment("AUTOMATED_MODE")) && ($asn = pts_read_assignment("AUTO_SAVE_NAME")) != false)
 				{
 					$auto_name = $asn;
 				}
@@ -245,7 +249,7 @@ class run_test implements pts_option_interface
 				pts_set_assignment("SAVE_FILE_NAME", $proposed_file_name);
 
 				// Prompt Description
-				if(pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_description())
+				if(!pts_is_assignment("AUTOMATED_MODE") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_description()))
 				{
 					if($unique_test_names > 1)
 					{
@@ -368,7 +372,8 @@ class run_test implements pts_option_interface
 				echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
 				pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
 
-				$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
+				$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL") != false ? true : 
+				pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
 
 				if($upload_results)
 				{
