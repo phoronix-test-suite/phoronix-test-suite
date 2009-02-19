@@ -34,7 +34,7 @@ class gui_gtk implements pts_option_interface
 
 		gui_gtk::show_main_interface();
 	}
-	public static function kill_gtk_window($window)
+	public static function kill_gtk_window($window = "")
 	{
 		Gtk::main_quit();
 	}
@@ -123,7 +123,7 @@ class gui_gtk implements pts_option_interface
 
 		$run_img = GtkImage::new_from_stock(Gtk::STOCK_EXECUTE, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 		$run_button = new GtkButton("Run");
-		$run_button->connect_simple("clicked", array("gui_gtk", "run_button_clicked"));
+		$run_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"));
 		$run_button->set_image($run_img);
 		$run_button->set_size_request(100, 30);
 		$window_fixed->put($run_button, 510, 342);
@@ -254,6 +254,7 @@ class gui_gtk implements pts_option_interface
 				}
 
 				$installed_suites = array_map("pts_suite_identifier_to_name", $installed_suites);
+				sort($installed_suites);
 				$installed_suites = pts_gtk_add_table(array("Suite"), $installed_suites, array("gui_gtk", "update_details_frame_from_select"));
 				pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
 			}
@@ -294,8 +295,8 @@ class gui_gtk implements pts_option_interface
 					}
 				}
 
+				sort($installed_tests);
 				$installed_tests = pts_gtk_add_table(array("Test"), $installed_tests, array("gui_gtk", "update_details_frame_from_select"));
-
 				pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
 			}
 
@@ -356,9 +357,83 @@ class gui_gtk implements pts_option_interface
 			gui_gtk::redraw_main_window();
 		}
 	}
-	public static function run_button_clicked()
+	public static function confirmation_button_clicked($button_call, $identifier)
 	{
-		// TODO
+		$window = pts_read_assignment("GTK_OBJ_CONFIRMATION_WINDOW");
+		$window->destroy();
+
+		switch($button_call)
+		{
+			case "return":
+				gui_gtk::show_main_interface();
+				break;
+			case "install":
+				pts_run_option_next("install_test", $identifier, array("SILENCE_MESSAGES" => true));
+				pts_run_option_next("gui_gtk");
+				break;
+		}
+	}
+	public static function show_run_confirmation_interface()
+	{
+		$identifier = gui_gtk::notebook_selected_to_identifier();
+
+		if(empty($identifier))
+		{
+			echo "DEBUG: Null identifier in gtk_gui::show_run_confirmation_interface()\n";
+			return;
+		}
+
+		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
+		$main_window->destroy();
+
+		switch(pts_read_assignment("GTK_RUN_BUTTON_TASK"))
+		{
+			case "UPDATE":
+				$title_cmd = "install";
+				$message = "The Phoronix Test Suite will now proceed to update your " . $identifier . " installation.";
+				break;
+			case "INSTALL":
+				$title_cmd = "install";
+				$message = "The Phoronix Test Suite will now proceed to install " . $identifier . ".";
+				break;
+		//	default:
+		//		return;
+		//		break;
+		}
+
+		$window = new GtkWindow();
+		$window->set_title("phoronix-test-suite " . $title_cmd . " " . $identifier);
+		$window->set_size_request(500, 200);
+		$window->set_resizable(false);
+		$window->connect_simple("destroy", array("Gtk", "main_quit"));
+		$vbox = new GtkVBox();
+		$window->add($vbox);
+
+		$label_temp = new GtkLabel($message);
+		$label_temp->set_size_request(480, 150);
+		$label_temp->set_line_wrap(true);
+		$vbox->pack_start($label_temp);
+
+		$button_box = new GtkHBox();
+		$vbox->pack_start($button_box);
+
+		$return_img = GtkImage::new_from_stock(Gtk::STOCK_CANCEL, Gtk::ICON_SIZE_SMALL_TOOLBAR);
+		$return_button = new GtkButton("Return");
+		$return_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), "return", $identifier);
+		$return_button->set_image($return_img);
+		$return_button->set_size_request(100, 30);
+		$button_box->pack_start($return_button);
+
+		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
+		$continue_button = new GtkButton("Continue");
+		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), $title_cmd, $identifier);
+		$continue_button->set_image($continue_img);
+		$continue_button->set_size_request(100, 30);
+		$button_box->pack_start($continue_button);
+
+		$window->show_all();
+		pts_set_assignment("GTK_OBJ_CONFIRMATION_WINDOW", $window);
+		Gtk::main();
 	}
 	public static function details_button_clicked()
 	{
@@ -368,7 +443,7 @@ class gui_gtk implements pts_option_interface
 			pts_display_web_browser(SAVE_RESULTS_DIR . $result_identifier . "/index.html", null, true, true);			
 		}
 	}
-	public static function update_run_button()
+	public static function notebook_selected_to_identifier()
 	{
 		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
 
@@ -384,6 +459,12 @@ class gui_gtk implements pts_option_interface
 		{
 			$identifier = pts_test_name_to_identifier($identifier);
 		}
+
+		return $identifier;
+	}
+	public static function update_run_button()
+	{
+		$identifier = gui_gtk::notebook_selected_to_identifier();
 
 		if(pts_is_test($identifier))
 		{
