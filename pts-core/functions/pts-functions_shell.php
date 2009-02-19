@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_display_web_browser($URL, $alt_text = null, $default_open = false)
+function pts_display_web_browser($URL, $alt_text = null, $default_open = false, $auto_open = false)
 {
 	// Launch the web browser
 	if($alt_text == null)
@@ -33,13 +33,20 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false)
 		$text = $alt_text;
 	}
 
-	if(!$default_open)
+	if($auto_open == false)
 	{
-		$view_results = pts_bool_question($text . " (y/N)?", false, "OPEN_BROWSER");
+		if(!$default_open)
+		{
+			$view_results = pts_bool_question($text . " (y/N)?", false, "OPEN_BROWSER");
+		}
+		else
+		{
+			$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
+		}
 	}
 	else
 	{
-		$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
+		$view_results = true;
 	}
 
 	if($view_results)

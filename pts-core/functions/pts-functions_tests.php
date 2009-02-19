@@ -421,32 +421,69 @@ function pts_test_refresh_install_xml($identifier, $this_test_duration = 0, $new
 function pts_test_name_to_identifier($name)
 {
 	// Convert test name to identifier
-	$identifier = false;
+	$this_identifier = false;
 
+	// TODO: caching support
 	if(!empty($name))
 	{
-		foreach(glob(XML_PROFILE_DIR . "*.xml") as $test_profile_file)
+		foreach(pts_available_tests_array() as $identifier)
 		{
-		 	$xml_parser = new tandem_XmlReader($test_profile_file);
+		 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 
 			if($xml_parser->getXMLValue(P_TEST_TITLE) == $name)
 			{
-				$identifier = basename($test_profile_file, ".xml");
+				$this_identifier = $identifier;
 			}
 		}
 	}
 
-	return $identifier;
+	return $this_identifier;
+}
+function pts_suite_name_to_identifier($name)
+{
+	// Convert test name to identifier
+	$this_identifier = false;
+
+	// TODO: caching support
+	if(!empty($name))
+	{
+		foreach(pts_available_suites_array() as $identifier)
+		{
+		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
+
+			if($xml_parser->getXMLValue(P_SUITE_TITLE) == $name)
+			{
+				$this_identifier = $identifier;
+			}
+		}
+	}
+
+	return $this_identifier;
 }
 function pts_test_identifier_to_name($identifier)
 {
 	// Convert identifier to test name
 	$name = false;
 
+	// TODO: caching support
 	if(!empty($identifier) && pts_is_test($identifier))
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$name = $xml_parser->getXMLValue(P_TEST_TITLE);
+	}
+
+	return $name;
+}
+function pts_suite_identifier_to_name($identifier)
+{
+	// Convert identifier to test name
+	$name = false;
+
+	// TODO: caching support
+	if(!empty($identifier) && pts_is_suite($identifier))
+	{
+	 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
+		$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
 	}
 
 	return $name;
@@ -710,6 +747,7 @@ function pts_installed_tests_array()
 
 	for($i = 0; $i < count($tests); $i++)
 	{
+		//TODO: Would probably be more efficient to use sttrpos and substr instead of exploding it all
 		$install_file_arr = explode("/", $tests[$i]);
 		$tests[$i] = $install_file_arr[count($install_file_arr) - 2];
 	}
@@ -729,6 +767,22 @@ function pts_available_suites_array()
 	}
 
 	return $suites;
+}
+function pts_supported_suites_array()
+{
+	$supported_suites = array();
+
+	foreach(pts_available_suites_array() as $identifier)
+	{
+		$suite = new pts_test_suite_details($identifier);
+
+		if(!$suite->not_supported())
+		{
+			array_push($supported_suites, $identifier);
+		}
+	}
+
+	return $supported_suites;
 }
 function pts_call_test_script($test_identifier, $script_name, $print_string = "", $pass_argument = "", $extra_vars = null, $use_ctp = true)
 {
