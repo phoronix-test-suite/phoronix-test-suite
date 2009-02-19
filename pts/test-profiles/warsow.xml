@@ -4,7 +4,7 @@
 	<TestProfile>
 		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
-		<ApplicationType>Game</ApplicationType>
+		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
