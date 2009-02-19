@@ -19,13 +19,11 @@ Test Suite without installing it, open a terminal and run <em>./phoronix-test-su
 <h2>Dependencies</h2>
 <p>The only required dependencies for the Phoronix Test Suite on Linux systems 
 is PHP 5.x CLI (packages for it are commonly called <em>php5-cli</em> or <em>php-cli</em> 
-or just <em>php</em>). Additionally, the PHP GD module (commonly called <em>php-gd</em> or 
+or just <em>php</em>). It's important to note that only PHP 5 is needed and not a 
+web server (Apache) or other packages commonly associated with PHP. Additionally, the PHP GD module (commonly called <em>php-gd</em> or 
 <em>php5-gd</em>) is recommended to render graphs to PNG image files, but other renderers are available. Likewise, if you wish to use the Adobe SWF renderer, the PHP Ming module (commonly called php-ming) is required. If you wish to use the <em>result-file-to-pdf</em> option, the PHP FPDF (commonly called php-fpdf) module is needed.</p>
-<p>It's important to note that only PHP 5 is needed and not a 
-web server (Apache) or other packages commonly associated with PHP. The reasoning 
-behind the use of PHP 5 for is the portability across platforms for this language, 
-low impact on the overall system, a lower entrance barrier for new developers, 
-and low number (if any) dependencies that PHP5 CLI requires.</p>
+<p>There is a GTK2 interface written for the Phoronix Test Suite that can be used by running <em>phoronix-test-suite gui</em>. In order to 
+use the GTK user interface, the PHP GTK module must be installed and loaded. This PHP module can be found at <a href="http://gtk.php.net/">gtk.php.net</a>.</p>
 <p><strong>Note #1:</strong> Depending upon your distribution's package configuration, you may also need <em>php-posix</em> package for providing the POSIX functions.</p>
 <p><strong>Note #2:</strong> You may need to modify the <em>php.ini</em> file on your system in order to support uploading results to Phoronix Global or logging into your Phoronix Global account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration and curl must be supported by the PHP installation. <a href="http://www.phoronix.com/forums/showpost.php?p=32484&postcount=4">Additional information</a>.
 <p>While PHP is the only required dependency, many of the test profiles 
