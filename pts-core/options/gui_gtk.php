@@ -66,7 +66,8 @@ class gui_gtk implements pts_option_interface
 		new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT)),
 		"Edit" => array(new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), "STRING", Gtk::STOCK_PREFERENCES)),
 		"View" => $view_menu,
-		"Help" => array(new pts_gtk_menu_item("About", array("gui_gtk", "show_about_interface"), "STRING", Gtk::STOCK_ABOUT))
+		"Help" => array(new pts_gtk_menu_item("Support Site", array("gui_gtk", "launch_web_browser"), "STRING", Gtk::STOCK_HELP), 
+		new pts_gtk_menu_item("About / Version", array("gui_gtk", "show_about_interface"), "STRING", Gtk::STOCK_ABOUT))
 		);
 		pts_gtk_add_menu($vbox, $main_menu_items);
 
@@ -117,6 +118,7 @@ class gui_gtk implements pts_option_interface
 			$label_welcome->set_line_wrap(true);
 			$label_welcome->set_size_request(260, 200);
 			$main_frame_vbox->pack_start($label_welcome);
+
 		}
 
 		$window_fixed->put($main_frame, 10, 10);
@@ -581,8 +583,13 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_CONFIRMATION_WINDOW", $window);
 		Gtk::main();
 	}
-	public static function launch_web_browser($url)
+	public static function launch_web_browser($url = "")
 	{
+		if($url == "")
+		{
+			$url = "http://www.phoronix-test-suite.com/";
+		}
+
 		pts_display_web_browser($url, null, true, true);
 	}
 	public static function details_button_clicked()
