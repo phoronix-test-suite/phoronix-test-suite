@@ -761,49 +761,21 @@ class gui_gtk implements pts_option_interface
 	{
 		$window = new GtkWindow();
 		$window->set_title("System Information");
-		$window->set_size_request(400, 500);
 		$window->set_resizable(false);
 		$window->connect_simple("destroy", array("Gtk", "main_quit"));
 		$vbox = new GtkVBox();
 		$window->add($vbox);
 
-		$label_hw = new GtkLabel("Hardware");
-		$label_hw->modify_font(new PangoFontDescription("Sans 19"));
-		$vbox->pack_start($label_hw);
 
-		$hbox_hw = new GtkHBox();
-		$vbox->pack_start($hbox_hw);
-		$vbox_hw_headers = new GtkVBox();
-		$vbox_hw_values = new GtkVBox();
-		$hbox_hw->pack_start($vbox_hw_headers);
-		$hbox_hw->pack_start($vbox_hw_values);
+		$notebook = new GtkNotebook();
+		$notebook->set_size_request(540, 300);
+		$vbox->pack_start($notebook);
 
-		foreach(pts_hw_string(false, true) as $header => $value)
-		{
-			$label_header = new GtkLabel($header);
-			$vbox_hw_headers->pack_start($label_header);
-			$label_value = new GtkLabel($value);
-			$vbox_hw_values->pack_start($label_value);
-		}
+		$hw = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)));
+		pts_gtk_add_notebook_tab($notebook, $hw, "Hardware");
 
-		$label_sw = new GtkLabel("Software");
-		$label_sw->modify_font(new PangoFontDescription("Sans 19"));
-		$vbox->pack_start($label_sw);
-
-		$hbox_sw = new GtkHBox();
-		$vbox->pack_start($hbox_sw);
-		$vbox_sw_headers = new GtkVBox();
-		$vbox_sw_values = new GtkVBox();
-		$hbox_sw->pack_start($vbox_sw_headers);
-		$hbox_sw->pack_start($vbox_sw_values);
-
-		foreach(pts_sw_string(false, true) as $header => $value)
-		{
-			$label_header = new GtkLabel($header);
-			$vbox_sw_headers->pack_start($label_header);
-			$label_value = new GtkLabel($value);
-			$vbox_sw_values->pack_start($label_value);
-		}
+		$sw = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)));
+		pts_gtk_add_notebook_tab($notebook, $sw, "Software");
 
 		$window->show_all();
 		Gtk::main();

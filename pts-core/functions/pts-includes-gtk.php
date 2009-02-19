@@ -97,7 +97,14 @@ function pts_gtk_add_table($headers, $data, $connect_to = null)
 	$scrolled_window->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
 	//$vbox->pack_start($scrolled_window);
 
-	$model = new GtkListStore(GObject::TYPE_STRING);
+	if(count($headers) == 2)
+	{
+		$model = new GtkListStore(GObject::TYPE_STRING, GObject::TYPE_STRING);
+	}
+	else
+	{
+		$model = new GtkListStore(GObject::TYPE_STRING);
+	}
 
 	$view = new GtkTreeView($model);
 	$scrolled_window->add($view);

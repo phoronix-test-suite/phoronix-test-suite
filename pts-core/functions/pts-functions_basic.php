@@ -116,5 +116,16 @@ function pts_version_comparable($old, $new)
 
 	return $compare;	
 }
+function pts_array_with_key_to_2d($array)
+{
+	$array_2d = array();
+
+	foreach($array as $key => $value)
+	{
+		array_push($array_2d, array($key, $value));
+	}
+
+	return $array_2d;
+}
 
 ?>

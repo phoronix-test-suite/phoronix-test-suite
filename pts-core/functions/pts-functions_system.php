@@ -28,12 +28,12 @@ require_once(PTS_PATH . "pts-core/functions/pts-functions_system_cpu.php");
 require_once(PTS_PATH . "pts-core/functions/pts-functions_system_memory.php");
 require_once(PTS_PATH . "pts-core/functions/pts-functions_system_graphics.php");
 
-function pts_hw_string($return_string = true, $short_form = false)
+function pts_hw_string($return_string = true)
 {
 	// Returns string of hardware information
 	$hw = array();
 
-	$hw["Processor"] = hw_cpu_string() . ($short_form == false ? " (Total Cores: " . hw_cpu_core_count() . ")" : "");
+	$hw["Processor"] = hw_cpu_string() . " (Total Cores: " . hw_cpu_core_count() . ")";
 	$hw["Motherboard"] = hw_sys_motherboard_string();
 	$hw["Chipset"] = hw_sys_chipset_string();
 	$hw["System Memory"] = hw_sys_memory_string();
