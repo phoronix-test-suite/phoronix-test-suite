@@ -68,10 +68,12 @@ class pts_test_suite_details
 	{
 		return $this->not_supported;
 	}
-	public function info_string()
+	public function get_description()
 	{
-		$str = "\n";
-
+		return $this->description;
+	}
+	public function get_maintainer()
+	{
 		$suite_maintainer = explode("|", $this->maintainer);
 		if(count($suite_maintainer) == 2)
 		{
@@ -82,11 +84,21 @@ class pts_test_suite_details
 			$suite_maintainer = $suite_maintainer[0];
 		}
 
+		return $suite_maintainer;
+	}
+	public function get_suite_type()
+	{
+		return $this->test_type;
+	}
+	public function info_string()
+	{
+		$str = "\n";
+
 		$str .= "Suite Version: " . $this->version . "\n";
-		$str .= "Maintainer: " . $this->maintainer . "\n";
-		$str .= "Suite Type: " . $this->test_type . "\n";
+		$str .= "Maintainer: " . $this->get_maintainer() . "\n";
+		$str .= "Suite Type: " . $this->get_suite_type() . "\n";
 		$str .= "Unique Tests: " . $this->unique_tests . "\n";
-		$str .= "Suite Description: " . $this->description . "\n";
+		$str .= "Suite Description: " . $this->get_description() . "\n";
 		$str .= "\n";
 
 		pts_print_format_tests($this->identifier, $str);

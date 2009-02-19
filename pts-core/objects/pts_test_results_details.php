@@ -39,13 +39,17 @@ class pts_test_results_details
 		$results_xml = new tandem_XmlReader($raw_results[0]);
 		$this->identifiers_r = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
 	}
+	public function get_title()
+	{
+		return $this->title;
+	}
 	public function __toString()
 	{
 		$str = "";
 
 		if(!empty($this->title))
 		{
-			$str .= $this->title . "\n";
+			$str .= $this->get_title() . "\n";
 			$str .= sprintf("Saved Name: %-18ls Test: %-18ls \n", $this->saved_identifier, $this->suite);
 
 			foreach($this->identifiers_r as $id)

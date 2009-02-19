@@ -41,9 +41,17 @@ class pts_test_result_info_details
 		$results_xml = new tandem_XmlReader($raw_results[0]);
 		$this->identifiers_r = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
 	}
+	public function get_title()
+	{
+		return $this->title;
+	}
+	public function get_suite()
+	{
+		return $this->suite;
+	}
 	public function __toString()
 	{
-		$str = "\nTitle: " . $this->title . "\nIdentifier: " . $this->saved_identifier . "\nTest: " . $this->suite . "\n";
+		$str = "\nTitle: " . $this->get_title() . "\nIdentifier: " . $this->saved_identifier . "\nTest: " . $this->get_suite() . "\n";
 		$str .= "\nTest Result Identifiers:\n";
 		foreach($this->identifiers_r as $id)
 		{

@@ -61,6 +61,48 @@ class pts_test_profile_details
 		$this->test_download_size = pts_estimated_download_size($identifier);
 		$this->test_environment_size = pts_test_estimated_environment_size($identifier);
 	}
+	public function get_maintainer()
+	{
+		$test_maintainer = explode("|", $this->maintainer);
+		if(count($test_maintainer) == 2)
+		{
+			$test_maintainer = trim($test_maintainer[0]) . " <" . trim($test_maintainer[1]) . ">";
+		}
+		else
+		{
+			$test_maintainer = $test_maintainer[0];
+		}
+
+		return $test_maintainer;
+	}
+	public function get_test_hardware_type()
+	{
+		return $this->hardware_type;
+	}
+	public function get_test_software_type()
+	{
+		return $this->software_type;
+	}
+	public function get_license()
+	{
+		return $this->license;
+	}
+	public function get_project_url()
+	{
+		return $this->project_url;
+	}
+	public function get_download_size()
+	{
+		return $this->test_download_size;
+	}
+	public function get_environment_size()
+	{
+		return $this->test_environment_size;
+	}
+	public function get_description()
+	{
+		return $this->description;
+	}
 	public function info_string()
 	{
 		$str = "";
@@ -72,23 +114,13 @@ class pts_test_profile_details
 		}
 		$str .= pts_string_header($test_title);
 
-		$test_maintainer = explode("|", $this->maintainer);
-		if(count($test_maintainer) == 2)
-		{
-			$test_maintainer = trim($test_maintainer[0]) . " <" . trim($test_maintainer[1]) . ">";
-		}
-		else
-		{
-			$test_maintainer = $test_maintainer[0];
-		}
-
 		$str .= "Test Version: " . $this->version . "\n";
-		$str .= "Maintainer: " . $test_maintainer . "\n";
-		$str .= "Test Type: " . $this->hardware_type . "\n";
-		$str .= "Software Type: " . $this->software_type . "\n";
-		$str .= "License Type: " . $this->license . "\n";
+		$str .= "Maintainer: " . $this->get_maintainer() . "\n";
+		$str .= "Test Type: " . $this->get_test_hardware_type() . "\n";
+		$str .= "Software Type: " . $this->get_test_software_type() . "\n";
+		$str .= "License Type: " . $this->get_license() . "\n";
 		$str .= "Test Status: " . $this->status . "\n";
-		$str .= "Project Web-Site: " . $this->project_url . "\n";
+		$str .= "Project Web-Site: " . $this->get_project_url() . "\n";
 
 		if(!empty($this->test_download_size))
 		{
@@ -103,7 +135,7 @@ class pts_test_profile_details
 			echo "Estimated Length: " . pts_estimated_time_string($this->estimated_length) . "\n";
 		}
 
-		$str .= "\nDescription: " . $this->description . "\n";
+		$str .= "\nDescription: " . $this->get_description() . "\n";
 
 		if(pts_test_installed($this->identifier))
 		{
@@ -177,6 +209,10 @@ class pts_test_profile_details
 
 		return $str;
 	}
+	public function verified_state()
+	{
+		return !in_array($this->status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED"));
+	}
 	public function __toString()
 	{
 		$str = "";
@@ -185,7 +221,7 @@ class pts_test_profile_details
 		{
 			$str = sprintf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $this->identifier, $this->test_version, $this->version, $this->status, $this->license, $this->test_download_size, $this->test_environment_size, $this->test_maintainer);
 		}
-		else if(!empty($this->name) && (pts_is_assignment("LIST_ALL_TESTS") || !in_array($this->status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED"))))
+		else if(!empty($this->name) && (pts_is_assignment("LIST_ALL_TESTS") || $this->verified_state()))
 		{
 			$str = sprintf("%-18ls - %-36ls [%s, %10ls]\n", $this->identifier, $this->name, $this->status, $this->license);
 		}
