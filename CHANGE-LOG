@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for KDE 3.5.x desktop detection that remains compatible with the KDE 4.x detection
 - pts-core: Add pts_suite_name_to_identifier(), pts_suite_identifier_to_name(), pts_supported_suites_array()
 - pts-core: Add various new functions to different pts_test_* objects
+- pts-core: Add initial Phoronix Test Suite GTK GUI (launch: phoronix-test-suite gui-gtk)
 - pts: Various install.sh test script changes from Kano
 - pts: Fix in nexuiz test installation script from Kano
 - pts: Add PTS External Dependencies support for Arch Linux
