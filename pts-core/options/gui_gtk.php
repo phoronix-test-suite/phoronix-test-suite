@@ -42,7 +42,7 @@ class gui_gtk implements pts_option_interface
 	{
 		$window = new GtkWindow();
 		$window->set_title("Phoronix Test Suite v" . PTS_VERSION);
-		$window->set_size_request(600, 400);
+		$window->set_size_request(620, 400);
 		$window->set_resizable(false);
 		$window->connect_simple("destroy", array("Gtk", "main_quit"));
 		pts_set_assignment("GTK_OBJ_WINDOW", $window);
@@ -97,7 +97,7 @@ class gui_gtk implements pts_option_interface
 
 		// Notebook Area
 		$main_notebook = new GtkNotebook();
-		$main_notebook->set_size_request(290, 330);
+		$main_notebook->set_size_request(310, 330);
 		pts_set_assignment("GTK_OBJ_MAIN_NOTEBOOK", $main_notebook);
 
 		$window_fixed->put($main_notebook, 305, 10);
@@ -117,7 +117,7 @@ class gui_gtk implements pts_option_interface
 		$details_button->connect_simple("clicked", array("gui_gtk", "details_button_clicked"));
 		$details_button->set_image($details_img);
 		$details_button->set_size_request(150, 30);
-		$window_fixed->put($details_button, 330, 342);
+		$window_fixed->put($details_button, 350, 342);
 		$details_button->set_label("More Information");
 		pts_set_assignment("GTK_OBJ_DETAILS_BUTTON", $details_button);
 
@@ -126,7 +126,8 @@ class gui_gtk implements pts_option_interface
 		$run_button->connect_simple("clicked", array("gui_gtk", "run_button_clicked"));
 		$run_button->set_image($run_img);
 		$run_button->set_size_request(100, 30);
-		$window_fixed->put($run_button, 490, 342);
+		$window_fixed->put($run_button, 510, 342);
+		pts_set_assignment("GTK_OBJ_RUN_BUTTON", $run_button);
 
 		$window->show_all();
 		Gtk::main();
@@ -220,6 +221,7 @@ class gui_gtk implements pts_option_interface
 			$vbox_right->pack_start($label_show);
 		}
 
+		gui_gtk::update_run_button();
 		gui_gtk::redraw_main_window();
 	}
 	public static function update_main_notebook()
@@ -236,25 +238,27 @@ class gui_gtk implements pts_option_interface
 			$main_notebook->remove($child);
 		}
 
-		if(count(($installed = pts_installed_tests_array())) > 0)
-		{
-			$installed_tests = array();
-
-			foreach($installed as $test)
-			{
-				if(($n = pts_test_identifier_to_name($test)) != "")
-				{
-					array_push($installed_tests, $n);
-				}
-			}
-
-			$installed_tests = pts_gtk_add_table(array("Test"), $installed_tests, array("gui_gtk", "update_details_frame_from_select"));
-
-			pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
-		}
-
 		if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 		{
+			// Installed Suites
+			if(count(pts_installed_tests_array()) > 0)
+			{
+				$installed_suites = array();
+
+				foreach(pts_available_suites_array() as $suite)
+				{
+					if(!pts_suite_needs_updated_install($suite))
+					{
+						array_push($installed_suites, $suite);
+					}
+				}
+
+				$installed_suites = array_map("pts_suite_identifier_to_name", $installed_suites);
+				$installed_suites = pts_gtk_add_table(array("Suite"), $installed_suites, array("gui_gtk", "update_details_frame_from_select"));
+				pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
+			}
+
+			// Available Suites
 			$test_suites = pts_supported_suites_array();
 			$to_show_names = array();
 			$to_show_types = pts_read_assignment("GTK_TEST_TYPES_TO_SHOW");
@@ -277,6 +281,25 @@ class gui_gtk implements pts_option_interface
 		}
 		else
 		{
+			// Installed Tests
+			if(count(($installed = pts_installed_tests_array())) > 0)
+			{
+				$installed_tests = array();
+
+				foreach($installed as $test)
+				{
+					if(($n = pts_test_identifier_to_name($test)) != "")
+					{
+						array_push($installed_tests, $n);
+					}
+				}
+
+				$installed_tests = pts_gtk_add_table(array("Test"), $installed_tests, array("gui_gtk", "update_details_frame_from_select"));
+
+				pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
+			}
+
+			// Available Tests
 			$test_names = pts_supported_tests_array();
 			$to_show_names = array();
 			$to_show_types = pts_read_assignment("GTK_TEST_TYPES_TO_SHOW");
@@ -344,6 +367,55 @@ class gui_gtk implements pts_option_interface
 			$result_identifier = pts_read_assignment("GTK_SELECTED_ITEM");
 			pts_display_web_browser(SAVE_RESULTS_DIR . $result_identifier . "/index.html", null, true, true);			
 		}
+	}
+	public static function update_run_button()
+	{
+		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+
+		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
+		{
+			$identifier = $identifier;
+		}
+		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
+		{
+			$identifier = pts_suite_name_to_identifier($identifier);
+		}
+		else
+		{
+			$identifier = pts_test_name_to_identifier($identifier);
+		}
+
+		if(pts_is_test($identifier))
+		{
+			if(!pts_test_installed($identifier))
+			{
+				$button_string = "Install";
+
+			}
+			else if(pts_test_needs_updated_install($identifier))
+			{
+				$button_string = "Update";
+			}
+			else
+			{
+				$button_string = "Run";
+			}
+		}
+		else if(pts_is_suite($identifier) || pts_is_test_result($identifier))
+		{
+			if(pts_suite_needs_updated_install($identifier))
+			{
+				$button_string = "Update";
+			}
+			else
+			{
+				$button_string = "Run";
+			}
+		}
+
+		pts_set_assignment("GTK_RUN_BUTTON_TASK", strtoupper($button_string));
+		$run_button = pts_read_assignment("GTK_OBJ_RUN_BUTTON");
+		$run_button->set_label($button_string);
 	}
 	public static function notebook_main_page_select($object)
 	{

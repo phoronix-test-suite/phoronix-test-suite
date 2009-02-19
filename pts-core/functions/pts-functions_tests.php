@@ -264,6 +264,21 @@ function pts_get_results_viewer_xsl_formatted($pts_Graph)
 
 	return $raw_xsl;
 }
+function pts_suite_needs_updated_install($identifier)
+{
+	$needs_update = false;
+
+	foreach(pts_contained_tests($identifier, true, true, true) as $test)
+	{
+		if(pts_test_needs_updated_install($test))
+		{
+			$needs_update = true;
+			break;
+		}
+	}
+
+	return $needs_update;
+}
 function pts_test_needs_updated_install($identifier)
 {
 	// Checks if test needs updating

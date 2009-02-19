@@ -58,7 +58,7 @@ class run_test implements pts_option_interface
 
 			if(!$to_run_type)
 			{
-				if(is_file(SAVE_RESULTS_DIR . $to_run . "/composite.xml"))
+				if(pts_is_test_result($to_run))
 				{
 					$to_run_type = "LOCAL_COMPARISON";
 				}
@@ -224,7 +224,7 @@ class run_test implements pts_option_interface
 				$custom_title = $file_name_result[1];
 
 				// Prompt Identifiers
-				if(is_file(SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml"))
+				if(pts_is_test_result($proposed_file_name))
 				{
 					$xml_parser = new pts_results_tandem_XmlReader($proposed_file_name);
 					$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);

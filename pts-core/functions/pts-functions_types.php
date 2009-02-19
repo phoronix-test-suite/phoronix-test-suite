@@ -50,6 +50,10 @@ function pts_is_test($object)
 
 	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_BASE_TEST;
 }
+function pts_is_test_result($object)
+{
+	return is_file(SAVE_RESULTS_DIR . $object . "/composite.xml");
+}
 function pts_validate_local_test_profile($identifier)
 {
 	if(is_file(($lp = XML_PROFILE_LOCAL_DIR . $identifier . ".xml")))
@@ -359,7 +363,7 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 				}
 			}
 		}
-		else if(is_file(SAVE_RESULTS_DIR . $object . "/composite.xml")) // Object is a saved results file
+		else if(pts_is_test_result($object)) // Object is a saved results file
 		{
 			$xml_parser = new pts_results_tandem_XmlReader($object);
 			$tests_in_save = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
@@ -442,7 +446,7 @@ function pts_find_result_file($file, $check_global = true)
 	{
 		$USE_FILE = $file;
 	}
-	else if(is_file(SAVE_RESULTS_DIR . $file . "/composite.xml"))
+	else if(pts_is_test_result($file))
 	{
 		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
 	}
