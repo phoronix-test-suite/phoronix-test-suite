@@ -112,6 +112,9 @@ class gui_gtk implements pts_option_interface
 		$defaults_mode_batch = new GtkCheckButton("Defaults Mode");
 		$window_fixed->put($defaults_mode_batch, 155, 345);
 
+		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $defaults_mode_batch);
+		$defaults_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_batch);
+
 		$details_img = GtkImage::new_from_stock(Gtk::STOCK_FIND, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 		$details_button = new GtkButton();
 		$details_button->connect_simple("clicked", array("gui_gtk", "details_button_clicked"));
@@ -371,7 +374,35 @@ class gui_gtk implements pts_option_interface
 				pts_run_option_next("install_test", $identifier, array("SILENCE_MESSAGES" => true));
 				pts_run_option_next("gui_gtk");
 				break;
+			case "run":
+				pts_run_option_next("run", $identifier, array("IS_BATCH_MODE" => pts_read_assignment("GTK_BATCH_MODE"), "IS_DEFAULTS_MODE" => pts_read_assignment("GTK_DEFAULTS_MODE"));
+				pts_run_option_next("gui_gtk");
+				break;
 		}
+	}
+	public static function check_test_mode_select($checkbox, $other_checkbox)
+	{
+		$toggled_mode = $checkbox->get_label();
+		$other_mode = $other_checkbox->get_label();
+
+		if($other_checkbox->get_active())
+		{
+			$other_checkbox->set_active(false);
+		}
+
+		if($toggled_mode == "Batch Mode")
+		{
+			$batch_checkbox = $checkbox;
+			$defaults_checkbox = $other_checkbox;
+		}
+		else
+		{
+			$batch_checkbox = $other_checkbox;
+			$defaults_checkbox = $checkbox;
+		}
+
+		pts_set_assignment("GTK_BATCH_MODE", $batch_checkbox->get_active());
+		pts_set_assignment("GTK_DEFAULTS_MODE", $defaults_checkbox->get_active());
 	}
 	public static function show_run_confirmation_interface()
 	{
@@ -395,6 +426,10 @@ class gui_gtk implements pts_option_interface
 			case "INSTALL":
 				$title_cmd = "install";
 				$message = "The Phoronix Test Suite will now proceed to install " . $identifier . ".";
+				break;
+			case "RUN":
+				$title_cmd = "run";
+				$message = "The Phoronix Test Suite will now run " . $identifier . ".";
 				break;
 		//	default:
 		//		return;
