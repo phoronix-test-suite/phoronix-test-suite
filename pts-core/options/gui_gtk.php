@@ -375,7 +375,7 @@ class gui_gtk implements pts_option_interface
 				pts_run_option_next("gui_gtk");
 				break;
 			case "run":
-				pts_run_option_next("run", $identifier, array("IS_BATCH_MODE" => pts_read_assignment("GTK_BATCH_MODE"), "IS_DEFAULTS_MODE" => pts_read_assignment("GTK_DEFAULTS_MODE"));
+				pts_run_option_next("run", $identifier, array("IS_BATCH_MODE" => pts_read_assignment("GTK_BATCH_MODE"), "IS_DEFAULTS_MODE" => pts_read_assignment("GTK_DEFAULTS_MODE")));
 				pts_run_option_next("gui_gtk");
 				break;
 		}
