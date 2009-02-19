@@ -266,18 +266,23 @@ function pts_get_results_viewer_xsl_formatted($pts_Graph)
 }
 function pts_suite_needs_updated_install($identifier)
 {
-	$needs_update = false;
-
-	foreach(pts_contained_tests($identifier, true, true, true) as $test)
+	if(!pts_is_assignment("CACHE_SUITE_INSTALLED_" . strtoupper($identifier)))
 	{
-		if(pts_test_needs_updated_install($test))
+		$needs_update = false;
+
+		foreach(pts_contained_tests($identifier, true, true, true) as $test)
 		{
-			$needs_update = true;
-			break;
+			if(pts_test_needs_updated_install($test))
+			{
+				$needs_update = true;
+				break;
+			}
 		}
+
+		pts_set_assignment("CACHE_SUITE_INSTALLED_" . strtoupper($identifier), $needs_update);
 	}
 
-	return $needs_update;
+	return pts_read_assignment("CACHE_SUITE_INSTALLED_" . strtoupper($identifier));
 }
 function pts_test_needs_updated_install($identifier)
 {
@@ -760,60 +765,86 @@ function pts_available_base_tests_array()
 }
 function pts_supported_tests_array()
 {
-	$supported_tests = array();
+	static $cache = null;
 
-	foreach(pts_available_tests_array() as $identifier)
+	if($cache == null)
 	{
-		if(pts_test_supported($identifier))
+		$supported_tests = array();
+
+		foreach(pts_available_tests_array() as $identifier)
 		{
-			array_push($supported_tests, $identifier);
+			if(pts_test_supported($identifier))
+			{
+				array_push($supported_tests, $identifier);
+			}
 		}
+
+		$cache = $supported_tests;
 	}
 
-	return $supported_tests;
+	return $cache;
 }
 function pts_installed_tests_array()
 {
-	$tests = glob(TEST_ENV_DIR . "*/pts-install.xml");
-
-	for($i = 0; $i < count($tests); $i++)
+	if(!pts_is_assignment("CACHE_INSTALLED_TESTS"))
 	{
-		//TODO: Would probably be more efficient to use sttrpos and substr instead of exploding it all
-		$install_file_arr = explode("/", $tests[$i]);
-		$tests[$i] = $install_file_arr[count($install_file_arr) - 2];
+		$tests = glob(TEST_ENV_DIR . "*/pts-install.xml");
+
+		for($i = 0; $i < count($tests); $i++)
+		{
+			//TODO: Would probably be more efficient to use sttrpos and substr instead of exploding it all
+			$install_file_arr = explode("/", $tests[$i]);
+			$tests[$i] = $install_file_arr[count($install_file_arr) - 2];
+		}
+
+		pts_set_assignment("CACHE_INSTALLED_TESTS", $tests);
 	}
 
-	return $tests;
+	return pts_read_assignment("CACHE_INSTALLED_TESTS");
 }
 function pts_available_suites_array()
 {
-	$suites = glob(XML_SUITE_DIR . "*.xml");
-	$local_suites = glob(XML_SUITE_LOCAL_DIR . "*.xml");
-	$suites = array_unique(pts_array_merge($suites, $local_suites));
-	asort($suites);
+	static $cache = null;
 
-	for($i = 0; $i < count($suites); $i++)
+	if($cache == null)
 	{
-		$suites[$i] = basename($suites[$i], ".xml");
+		$suites = glob(XML_SUITE_DIR . "*.xml");
+		$local_suites = glob(XML_SUITE_LOCAL_DIR . "*.xml");
+		$suites = array_unique(pts_array_merge($suites, $local_suites));
+		asort($suites);
+
+		for($i = 0; $i < count($suites); $i++)
+		{
+			$suites[$i] = basename($suites[$i], ".xml");
+		}
+
+		$cache = $suites;
 	}
 
-	return $suites;
+	return $cache;
 }
 function pts_supported_suites_array()
 {
-	$supported_suites = array();
+	static $cache = null;
 
-	foreach(pts_available_suites_array() as $identifier)
+	if($cache == null)
 	{
-		$suite = new pts_test_suite_details($identifier);
+		$supported_suites = array();
 
-		if(!$suite->not_supported())
+		foreach(pts_available_suites_array() as $identifier)
 		{
-			array_push($supported_suites, $identifier);
+			$suite = new pts_test_suite_details($identifier);
+
+			if(!$suite->not_supported())
+			{
+				array_push($supported_suites, $identifier);
+			}
 		}
+
+		$cache = $supported_suites;
 	}
 
-	return $supported_suites;
+	return $cache;
 }
 function pts_call_test_script($test_identifier, $script_name, $print_string = "", $pass_argument = "", $extra_vars = null, $use_ctp = true)
 {
