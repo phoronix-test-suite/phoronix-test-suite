@@ -103,6 +103,10 @@ class pts_test_profile_details
 	{
 		return $this->description;
 	}
+	public function get_name()
+	{
+		return $this->name;
+	}
 	public function info_string()
 	{
 		$str = "";

@@ -150,5 +150,9 @@ function pts_process_string_array($return_string, $array)
 
 	return $return;
 }
+function pts_extract_identifier_from_directory($path)
+{
+	return substr(($d = dirname($path)), strrpos($d, "/") + 1);
+}
 
 ?>

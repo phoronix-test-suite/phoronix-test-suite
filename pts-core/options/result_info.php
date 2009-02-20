@@ -26,7 +26,7 @@ class result_info implements pts_option_interface
 	{
 		if(is_file(($saved_results_file = SAVE_RESULTS_DIR . $r[0] . "/composite.xml")))
 		{
-			echo new pts_test_result_info_details($saved_results_file);
+			echo new pts_test_result_details($saved_results_file);
 		}
 		else
 		{

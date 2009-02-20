@@ -792,9 +792,7 @@ function pts_installed_tests_array()
 
 		for($i = 0; $i < count($tests); $i++)
 		{
-			//TODO: Would probably be more efficient to use sttrpos and substr instead of exploding it all
-			$install_file_arr = explode("/", $tests[$i]);
-			$tests[$i] = $install_file_arr[count($install_file_arr) - 2];
+			$tests[$i] = pts_extract_identifier_from_directory($tests[$i]);
 		}
 
 		pts_set_assignment("CACHE_INSTALLED_TESTS", $tests);

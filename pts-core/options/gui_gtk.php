@@ -194,7 +194,7 @@ class gui_gtk implements pts_option_interface
 		// PTS Test
 		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{
-			$result_file = new pts_test_result_info_details(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
+			$result_file = new pts_test_result_details(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 
 			$info_r["Title"] = $result_file->get_title();
 			$info_r["Test"] = $result_file->get_suite();
@@ -313,6 +313,8 @@ class gui_gtk implements pts_option_interface
 		}
 		else
 		{
+			$to_show_types = pts_read_assignment("GTK_TEST_TYPES_TO_SHOW");
+
 			// Installed Tests
 			if(count(($installed = pts_installed_tests_array())) > 0)
 			{
@@ -320,12 +322,16 @@ class gui_gtk implements pts_option_interface
 
 				foreach($installed as $test)
 				{
-					if(($n = pts_test_identifier_to_name($test)) != "")
+					$tp = new pts_test_profile_details($test);
+					$hw_type = $tp->get_test_hardware_type();
+
+					if((empty($hw_type) || in_array($hw_type, $to_show_types)) && $tp->get_name() != "")
 					{
-						array_push($installed_tests, $n);
+						array_push($installed_tests, $test);
 					}
 				}
 
+				$installed_tests = array_map("pts_test_identifier_to_name", $installed_tests);
 				sort($installed_tests);
 				$installed_tests = pts_gtk_add_table(array("Test"), $installed_tests, array("gui_gtk", "update_details_frame_from_select"));
 				pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
@@ -334,7 +340,6 @@ class gui_gtk implements pts_option_interface
 			// Available Tests
 			$test_names = pts_supported_tests_array();
 			$to_show_names = array();
-			$to_show_types = pts_read_assignment("GTK_TEST_TYPES_TO_SHOW");
 
 			foreach($test_names as $name)
 			{
@@ -361,9 +366,7 @@ class gui_gtk implements pts_option_interface
 
 			foreach($saved_results as $result_file)
 			{
-				//$rf = new pts_test_results_details($result_file);
-				//array_push($results, $rf->get_title());
-				array_push($results, array_pop(explode("/", dirname($result_file))));
+				array_push($results, pts_extract_identifier_from_directory($result_file));
 			}
 
 			$test_results = pts_gtk_add_table(array("Test Result"), $results, array("gui_gtk", "update_details_frame_from_select"));
