@@ -62,11 +62,11 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$main_menu_items = array(
-		"File" => array(//new pts_gtk_menu_item("Install / Update All"), new pts_gtk_menu_item("Merge Results"), 
-		new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT)),
+		"File" => array(new pts_gtk_menu_item("Install PCQS"), new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT)),
 		"Edit" => array(new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), "STRING", Gtk::STOCK_PREFERENCES)),
 		"View" => $view_menu,
-		"Help" => array(new pts_gtk_menu_item("Support Site", array("gui_gtk", "launch_web_browser"), "STRING", Gtk::STOCK_HELP), 
+		"Help" => array(new pts_gtk_menu_item("Get Help Online", array("gui_gtk", "launch_web_browser"), "STRING", Gtk::STOCK_HELP), 
+		new pts_gtk_menu_item("Phoronix-Test-Suite.com", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		new pts_gtk_menu_item("About / Version", array("gui_gtk", "show_about_interface"), "STRING", Gtk::STOCK_ABOUT))
 		);
 		pts_gtk_add_menu($vbox, $main_menu_items);
@@ -588,6 +588,20 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function launch_web_browser($url = "")
 	{
+		echo $url->child->get_label();
+
+		if($url instanceOf GtkImageMenuItem || $url instanceOf GtkMenuItem)
+		{
+			switch($url->child->get_label())
+			{
+				case "Phoronix-Test-Suite.com":
+					$url = "http://www.phoronix-test-suite.com/";
+					break;
+				case "Get Help Online":
+					$url = "http://www.phoronix.com/forums/forumdisplay.php?f=49";
+					break;
+			}
+		}
 		if($url == "")
 		{
 			$url = "http://www.phoronix-test-suite.com/";

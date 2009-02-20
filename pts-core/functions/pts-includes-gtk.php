@@ -76,13 +76,8 @@ function pts_gtk_add_menu($vbox, $menu)
 				}
 				else
 				{
-					$menu_item = new GtkMenuItem();
-					$hbox = new GtkHBox();
-					$menu_item->add($hbox);
-					$img = GtkImage::new_from_stock($this_object->get_image(), Gtk::ICON_SIZE_SMALL_TOOLBAR);
-					$hbox->pack_start($img, 0);
-					$label = new GtkLabel($this_object->get_title());
-					$hbox->pack_start($label);
+					$menu_item = new GtkImageMenuItem($this_object->get_title());
+					$menu_item->set_image(GtkImage::new_from_stock($this_object->get_image(), Gtk::ICON_SIZE_SMALL_TOOLBAR));
 				}
 
 				$menu_item->connect("activate", $this_object->get_function_call());
