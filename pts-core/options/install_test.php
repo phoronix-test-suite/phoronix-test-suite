@@ -36,10 +36,10 @@ class install_test implements pts_option_interface
 
 			foreach($items_to_install as $this_install)
 			{
-				if(strpos($this_install, "pcqs-") !== false && !is_file(XML_SUITE_LOCAL_DIR . "pcqs-license.txt"))
+				if(strpos($this_install, "pcqs-") !== false && !pts_pcqs_is_installed())
 				{
 					// Install the Phoronix Certification & Qualification Suite
-					$agreement = wordwrap(file_get_contents("http://www.phoronix-test-suite.com/pcqs/pcqs-license.txt"), 65);
+					$agreement = wordwrap(pts_pcqs_user_license(), 65);
 
 					if(strpos($agreement, "PCQS") == false)
 					{
@@ -52,9 +52,7 @@ class install_test implements pts_option_interface
 
 					if($agree)
 					{
-						pts_download("http://www.phoronix-test-suite.com/pcqs/download-pcqs.php", XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
-						pts_extract_file(XML_SUITE_LOCAL_DIR . "pcqs-suite.tar", true);
-						echo pts_string_header("The Phoronix Certification & Qualification Suite is now installed.");
+						pts_pcqs_install_package();
 						break;
 					}
 					else

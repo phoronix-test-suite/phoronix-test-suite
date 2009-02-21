@@ -50,6 +50,17 @@ class gui_gtk implements pts_option_interface
 		$window->add($vbox);
 
 		// Menu Setup
+		$file_menu = array();
+
+		if(!pts_pcqs_is_installed())
+		{
+			array_push($file_menu, new pts_gtk_menu_item("Install PCQS", array("gui_gtk", "show_pcqs_install_interface")));
+		}
+
+		array_push($file_menu, null);
+		array_push($file_menu, new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT));
+
+
 		$view_menu = array();
 		array_push($view_menu, new pts_gtk_menu_item("System Information", array("gui_gtk", "show_system_info_interface")));
 		array_push($view_menu, null);
@@ -62,11 +73,11 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$main_menu_items = array(
-		"File" => array(new pts_gtk_menu_item("Install PCQS"), new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT)),
-		"Edit" => array(new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), "STRING", Gtk::STOCK_PREFERENCES)),
+		"File" => $file_menu,
 		"View" => $view_menu,
 		"Help" => array(new pts_gtk_menu_item("Get Help Online", array("gui_gtk", "launch_web_browser"), "STRING", Gtk::STOCK_HELP), 
-		new pts_gtk_menu_item("Phoronix-Test-Suite.com", array("gui_gtk", "launch_web_browser"), "STRING"), 
+		new pts_gtk_menu_item("Project Web-Site", array("gui_gtk", "launch_web_browser"), "STRING"), 
+		new pts_gtk_menu_item("Phoronix Media", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		new pts_gtk_menu_item("About / Version", array("gui_gtk", "show_about_interface"), "STRING", Gtk::STOCK_ABOUT))
 		);
 		pts_gtk_add_menu($vbox, $main_menu_items);
@@ -437,6 +448,16 @@ class gui_gtk implements pts_option_interface
 		$window = pts_read_assignment("GTK_OBJ_CONFIRMATION_WINDOW");
 		$window->destroy();
 	}
+	public static function pcqs_button_clicked($button_call)
+	{
+		if($button_call == "install")
+		{
+			pts_pcqs_install_package();
+		}
+
+		$window = pts_read_assignment("GTK_OBJ_PCQS_WINDOW");
+		$window->destroy();
+	}
 	public static function check_test_mode_select($checkbox, $other_checkbox)
 	{
 		$toggled_mode = $checkbox->get_label();
@@ -588,8 +609,6 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function launch_web_browser($url = "")
 	{
-		echo $url->child->get_label();
-
 		if($url instanceOf GtkImageMenuItem || $url instanceOf GtkMenuItem)
 		{
 			switch($url->child->get_label())
@@ -600,9 +619,12 @@ class gui_gtk implements pts_option_interface
 				case "Get Help Online":
 					$url = "http://www.phoronix.com/forums/forumdisplay.php?f=49";
 					break;
+				case "Phoronix Media":
+					$url = "http://www.phoronix-media.com/";
+					break;
 			}
 		}
-		if($url == "")
+		else if($url == "")
 		{
 			$url = "http://www.phoronix-test-suite.com/";
 		}
@@ -797,6 +819,53 @@ class gui_gtk implements pts_option_interface
 		$sensors = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)));
 		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors");
 
+		$window->show_all();
+		Gtk::main();
+	}
+	public static function show_pcqs_install_interface()
+	{
+		$license = pts_pcqs_user_license();
+
+		if($license == false)
+		{
+			return;
+		}
+
+		$window = new GtkWindow();
+		$window->set_title("Phoronix Certification & Qualification Suite");
+		$window->connect_simple("destroy", array("Gtk", "main_quit"));
+		$vbox = new GtkVBox();
+		$window->add($vbox);
+
+		$scrolled_window = new GtkScrolledWindow();
+		$scrolled_window->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+
+		$text_view = new GtkTextView();
+		$text_buffer = new GtkTextBuffer();
+		$text_buffer->set_text($license);
+		$text_view->set_buffer($text_buffer);
+		$text_view->set_wrap_mode(GTK_WRAP_WORD);
+		$text_view->set_size_request(540, 250);
+		$scrolled_window->add($text_view);
+		$vbox->pack_start($scrolled_window);
+
+		$button_box = new GtkHBox();
+		$vbox->pack_start($button_box);
+		$return_img = GtkImage::new_from_stock(Gtk::STOCK_CANCEL, Gtk::ICON_SIZE_SMALL_TOOLBAR);
+		$return_button = new GtkButton("Return");
+		$return_button->connect_simple("clicked", array("gui_gtk", "pcqs_button_clicked"), "return");
+		$return_button->set_image($return_img);
+		$return_button->set_size_request(100, 30);
+		$button_box->pack_start($return_button);
+
+		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
+		$continue_button = new GtkButton("Install");
+		$continue_button->connect_simple("clicked", array("gui_gtk", "pcqs_button_clicked"), "install");
+		$continue_button->set_image($continue_img);
+		$continue_button->set_size_request(100, 30);
+		$button_box->pack_start($continue_button);
+
+		pts_set_assignment("GTK_OBJ_PCQS_WINDOW", $window);
 		$window->show_all();
 		Gtk::main();
 	}

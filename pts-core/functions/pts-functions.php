@@ -42,6 +42,7 @@ if(PTS_MODE == "LIB")
 require(PTS_PATH . "pts-core/functions/pts-init.php");
 require(PTS_PATH . "pts-core/functions/pts-functions_basic.php");
 require(PTS_PATH . "pts-core/functions/pts-functions_client.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_pcqs.php");
 
 // Load Main Functions
 require(PTS_PATH . "pts-core/functions/pts-functions_io.php");
