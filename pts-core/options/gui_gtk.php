@@ -50,6 +50,21 @@ class gui_gtk implements pts_option_interface
 		$window->add($vbox);
 
 		// Menu Setup
+		$analyze_runs = new pts_gtk_menu_item("Analyze All Runs", array("gui_gtk", ""));
+		$analyze_runs->attach_to_pts_assignment("GTK_OBJ_ANALYZE_RUNS");
+
+		$analyze_batch = new pts_gtk_menu_item("Analyze Batch Run", array("gui_gtk", ""));
+		$analyze_batch->attach_to_pts_assignment("GTK_OBJ_ANALYZE_BATCH");
+
+		$generate_pdf = new pts_gtk_menu_item("Generate PDF", array("gui_gtk", ""));
+		$generate_pdf->attach_to_pts_assignment("GTK_OBJ_GENERATE_PDF");
+
+		$refresh_graphs = new pts_gtk_menu_item("Refresh Graphs", array("gui_gtk", ""));
+		$refresh_graphs->attach_to_pts_assignment("GTK_OBJ_REFRESH_GRAPHS");
+
+		$build_suite = new pts_gtk_menu_item("Build Suite", array("gui_gtk", ""));
+		$build_suite->attach_to_pts_assignment("GTK_OBJ_BUILD_SUITE");
+
 		$file_menu = array();
 
 		if(!pts_pcqs_is_installed())
@@ -57,9 +72,9 @@ class gui_gtk implements pts_option_interface
 			array_push($file_menu, new pts_gtk_menu_item("Install PCQS", array("gui_gtk", "show_pcqs_install_interface")));
 		}
 
+		array_push($file_menu, $generate_pdf);
 		array_push($file_menu, null);
 		array_push($file_menu, new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT));
-
 
 		$view_menu = array();
 		array_push($view_menu, new pts_gtk_menu_item("System Information", array("gui_gtk", "show_system_info_interface")));
@@ -74,13 +89,28 @@ class gui_gtk implements pts_option_interface
 
 		$main_menu_items = array(
 		"File" => $file_menu,
+		"Edit" => array($refresh_graphs, null, new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), "STRING", Gtk::STOCK_PREFERENCES)),
 		"View" => $view_menu,
-		"Help" => array(new pts_gtk_menu_item("Get Help Online", array("gui_gtk", "launch_web_browser"), "STRING", Gtk::STOCK_HELP), 
-		new pts_gtk_menu_item("Project Web-Site", array("gui_gtk", "launch_web_browser"), "STRING"), 
+		"Tools" => array($build_suite, null, $analyze_runs, $analyze_batch),
+		"Help" => array(
+		new pts_gtk_menu_item("View Documentation", array("gui_gtk", "launch_web_browser"), "STRING"), 
+		null,
+		new pts_gtk_menu_item("Get Help Online", array("gui_gtk", "launch_web_browser"), "STRING", Gtk::STOCK_HELP), 
+		new pts_gtk_menu_item("Phoronix-Test-Suite.com", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		new pts_gtk_menu_item("Phoronix Media", array("gui_gtk", "launch_web_browser"), "STRING"), 
+		null,
 		new pts_gtk_menu_item("About / Version", array("gui_gtk", "show_about_interface"), "STRING", Gtk::STOCK_ABOUT))
 		);
 		pts_gtk_add_menu($vbox, $main_menu_items);
+
+		$a = pts_read_assignment("GTK_OBJ_ANALYZE_RUNS");
+		$a->set_sensitive(false);
+		$a = pts_read_assignment("GTK_OBJ_ANALYZE_BATCH");
+		$a->set_sensitive(false);
+		$a = pts_read_assignment("GTK_OBJ_GENERATE_PDF");
+		$a->set_sensitive(false);
+		$a = pts_read_assignment("GTK_OBJ_BUILD_SUITE");
+		$a->set_sensitive(false);
 
 		// Main Area
 		$window_fixed = new GtkFixed();
@@ -621,6 +651,9 @@ class gui_gtk implements pts_option_interface
 					break;
 				case "Phoronix Media":
 					$url = "http://www.phoronix-media.com/";
+					break;
+				case "View Documentation":
+					$url = PTS_PATH . "documentation/index.html";
 					break;
 			}
 		}

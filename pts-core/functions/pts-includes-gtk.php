@@ -41,47 +41,56 @@ function pts_gtk_add_menu($vbox, $menu)
 				$menu_item = new GtkSeparatorMenuItem();
 				$menu->append($menu_item);
 			}
-			else if($this_object->get_type() == "CHECK_BUTTON")
-			{
-				$menu_item = new GtkCheckMenuItem($this_object->get_title());
-				$menu_item->connect("toggled", $this_object->get_function_call());
-
-				if($this_object->get_active_default())
-				{
-					$menu_item->set_active(true);
-				}
-
-				$menu->append($menu_item);
-			}
-			else if($this_object->get_type() == "RADIO_BUTTON")
-			{
-				$radio = array();
-				$radio[0] = null;
-				$i = 1;
-
-				foreach($this_object->get_title() as $radio_item)
-				{
-					$radio[$i] = new GtkRadioMenuItem($radio[1], $radio_item);
-					$radio[$i]->connect("toggled", $this_object->get_function_call());
-					$menu->append($radio[$i]);
-					$i++;
-				}
-				$radio[1]->set_active(true);
-			}
 			else
 			{
-				if($this_object->get_image() == null)
+				if($this_object->get_type() == "CHECK_BUTTON")
 				{
-					$menu_item = new GtkMenuItem($this_object->get_title());
+					$menu_item = new GtkCheckMenuItem($this_object->get_title());
+					$menu_item->connect("toggled", $this_object->get_function_call());
+
+					if($this_object->get_active_default())
+					{
+						$menu_item->set_active(true);
+					}
+
+					$menu->append($menu_item);
+				}
+				else if($this_object->get_type() == "RADIO_BUTTON")
+				{
+					$radio = array();
+					$radio[0] = null;
+					$i = 1;
+
+					foreach($this_object->get_title() as $radio_item)
+					{
+						$radio[$i] = new GtkRadioMenuItem($radio[1], $radio_item);
+						$radio[$i]->connect("toggled", $this_object->get_function_call());
+						$menu->append($radio[$i]);
+						$i++;
+					}
+					$radio[1]->set_active(true);
 				}
 				else
 				{
-					$menu_item = new GtkImageMenuItem($this_object->get_title());
-					$menu_item->set_image(GtkImage::new_from_stock($this_object->get_image(), Gtk::ICON_SIZE_SMALL_TOOLBAR));
+					if($this_object->get_image() == null)
+					{
+						$menu_item = new GtkMenuItem($this_object->get_title());
+					}
+					else
+					{
+						$menu_item = new GtkImageMenuItem($this_object->get_title());
+						$menu_item->set_image(GtkImage::new_from_stock($this_object->get_image(), Gtk::ICON_SIZE_SMALL_TOOLBAR));
+					}
+
+					$menu_item->connect("activate", $this_object->get_function_call());
+					$menu->append($menu_item);
 				}
 
-				$menu_item->connect("activate", $this_object->get_function_call());
-				$menu->append($menu_item);
+				if($this_object->get_attach_to_pts_assignment() != null)
+				{
+					pts_set_assignment($this_object->get_attach_to_pts_assignment(), $menu_item);
+					$menu_item->set_sensitive(false);
+				}
 			}
 		}
 	}

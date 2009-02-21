@@ -27,6 +27,7 @@ class pts_gtk_menu_item
 	var $type;
 	var $attach_image;
 	var $active_default;
+	var $attach_to_pts_assignment = null;
 
 	public function __construct($title, $to_call = null, $type = "STRING", $attach_image = null, $set_active_default = false)
 	{
@@ -60,6 +61,14 @@ class pts_gtk_menu_item
 	public function get_image()
 	{
 		return $this->attach_image;
+	}
+	public function get_attach_to_pts_assignment()
+	{
+		return $this->attach_to_pts_assignment;
+	}
+	public function attach_to_pts_assignment($assignment)
+	{
+		$this->attach_to_pts_assignment = $assignment;
 	}
 }
 
