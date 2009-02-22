@@ -43,10 +43,11 @@ class gui_gtk implements pts_option_interface
 		$window = new GtkWindow();
 		$window->set_title("Phoronix Test Suite v" . PTS_VERSION);
 		$window->set_size_request(620, -1);
-		$window->set_resizable(false);
+		//$window->set_resizable(false);
 		$window->connect_simple("destroy", array("Gtk", "main_quit"));
 		pts_set_assignment("GTK_OBJ_WINDOW", $window);
 		$vbox = new GtkVBox();
+		$vbox->set_spacing(4);
 		$window->add($vbox);
 
 		// Menu Setup
@@ -113,9 +114,6 @@ class gui_gtk implements pts_option_interface
 		$a->set_sensitive(false);
 
 		// Main Area
-		$window_fixed = new GtkFixed();
-			
-		$vbox->pack_start($window_fixed);
 
 		// Details Frame
 		$main_frame = new GtkFrame((($t = pts_read_assignment("PREV_SAVE_NAME_TITLE")) !== false ? $t : "Welcome"));
@@ -125,7 +123,6 @@ class gui_gtk implements pts_option_interface
 		$main_frame_vbox = new GtkVBox();
 		$main_frame->add($main_frame_vbox);
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $main_frame_vbox);
-
 
 		$i = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER");
 		$u = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL");
@@ -162,24 +159,29 @@ class gui_gtk implements pts_option_interface
 
 		}
 
-		$window_fixed->put($main_frame, 10, 10);
+		$top_hbox = new GtkHBox();
+		$top_hbox->pack_start($main_frame);
 
 		// Notebook Area
 		$main_notebook = new GtkNotebook();
 		$main_notebook->set_size_request(310, 330);
 		pts_set_assignment("GTK_OBJ_MAIN_NOTEBOOK", $main_notebook);
 
-		$window_fixed->put($main_notebook, 305, 10);
-
+		$top_hbox->pack_start($main_notebook);
+		$top_hbox->set_spacing(8);
+		$vbox->pack_start($top_hbox);
 		gui_gtk::update_main_notebook();
 
 		// Bottom Line
 
+		$bottom_hbox = new GtkHBox();
+		$vbox->pack_start($bottom_hbox);
+
 		$check_mode_batch = new GtkCheckButton("Batch Mode");
-		$window_fixed->put($check_mode_batch, 20, 350);
+		$bottom_hbox->pack_start($check_mode_batch);
 
 		$defaults_mode_batch = new GtkCheckButton("Defaults Mode");
-		$window_fixed->put($defaults_mode_batch, 155, 350);
+		$bottom_hbox->pack_start($defaults_mode_batch);
 
 		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $defaults_mode_batch);
 		$defaults_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_batch);
@@ -189,7 +191,7 @@ class gui_gtk implements pts_option_interface
 		$details_button->connect_simple("clicked", array("gui_gtk", "details_button_clicked"));
 		$details_button->set_image($details_img);
 		$details_button->set_size_request(150, -1);
-		$window_fixed->put($details_button, 350, 342);
+		$bottom_hbox->pack_start($details_button);
 		$details_button->set_label("More Information");
 		pts_set_assignment("GTK_OBJ_DETAILS_BUTTON", $details_button);
 
@@ -198,7 +200,7 @@ class gui_gtk implements pts_option_interface
 		$run_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"));
 		$run_button->set_image($run_img);
 		$run_button->set_size_request(100, -1);
-		$window_fixed->put($run_button, 510, 342);
+		$bottom_hbox->pack_start($run_button);
 		pts_set_assignment("GTK_OBJ_RUN_BUTTON", $run_button);
 
 		$window->show_all();

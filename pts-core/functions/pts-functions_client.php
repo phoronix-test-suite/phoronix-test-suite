@@ -169,22 +169,6 @@ function pts_shutdown()
 	// Remove process
 	pts_process_remove("phoronix-test-suite");
 }
-function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $keep_alpha = true, $keep_dash = false)
-{
-	$string_r = str_split($string);
-	$new_string = "";
-
-	foreach($string_r as $char)
-	{
-		$i = ord($char);
-		if(($keep_numeric && $i > 47 && $i < 58) || ($keep_alpha && $i > 64 && $i < 91) || 
-		($keep_alpha && $i > 96 && $i < 123) || ($keep_decimal && $i == 46) || ($keep_dash && $i == 45))
-		{
-			$new_string .= $char; 
-		}
-	}
-	return $new_string;
-}
 function pts_evaluate_script_type($script)
 {
 	$script = explode("\n", trim($script));
@@ -299,15 +283,6 @@ function pts_load_pdf_generator()
 	}
 
 	return $pdf_loader && include_once($pdf_loader);
-}
-function pts_to_array($var)
-{
-	if(!is_array($var))
-	{
-		$var = array($var);
-	}
-
-	return $var;
 }
 
 ?>
