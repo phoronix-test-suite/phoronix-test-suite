@@ -108,8 +108,6 @@ class gui_gtk implements pts_option_interface
 		$a->set_sensitive(false);
 		$a = pts_read_assignment("GTK_OBJ_ANALYZE_BATCH");
 		$a->set_sensitive(false);
-		$a = pts_read_assignment("GTK_OBJ_GENERATE_PDF");
-		$a->set_sensitive(false);
 		$a = pts_read_assignment("GTK_OBJ_BUILD_SUITE");
 		$a->set_sensitive(false);
 
@@ -234,9 +232,14 @@ class gui_gtk implements pts_option_interface
 
 		$info_r = array();
 
+		$generate_pdf = pts_read_assignment("GTK_OBJ_GENERATE_PDF");
+		$generate_pdf->set_sensitive(false);
+
 		// PTS Test
 		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{
+			$generate_pdf->set_sensitive(true);
+
 			$result_file = new pts_test_result_details(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 
 			$info_r["Title"] = $result_file->get_title();
@@ -260,10 +263,16 @@ class gui_gtk implements pts_option_interface
 			{
 				$info_r["Environment Size"] = $test_profile->get_environment_size() . " MB";
 			}
+
+			$label_description_scroll = new GtkScrolledWindow();
+			$label_description_scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+			$label_description_scroll->set_shadow_type(Gtk::SHADOW_NONE);
+
 			$label_description = new GtkLabel($test_profile->get_description());
 			$label_description->set_line_wrap(true);
-			$label_description->set_size_request(260, 10);
-			$root_vbox->add($label_description);
+			$label_description->set_size_request(260, -1);
+			$label_description_scroll->add_with_viewport($label_description);
+			$root_vbox->add($label_description_scroll);
 		}
 		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 		{
@@ -273,17 +282,25 @@ class gui_gtk implements pts_option_interface
 			$info_r["Maintainer"] = $test_suite->get_maintainer();
 			$info_r["Suite Type"] = $test_suite->get_suite_type();
 
+			$label_description_scroll = new GtkScrolledWindow();
+			$label_description_scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+			$label_description_scroll->set_shadow_type(Gtk::SHADOW_NONE);
 			$label_description = new GtkLabel($test_suite->get_description());
 			$label_description->set_line_wrap(true);
-			$label_description->set_size_request(260, 10);
-			$root_vbox->add($label_description);
+			$label_description->set_size_request(260, -1);
+			$label_description_scroll->add_with_viewport($label_description);
+			$root_vbox->add($label_description_scroll);
 
 			$tests = pts_contained_tests($identifier, false, false, true);
 
+			$label_all_scroll = new GtkScrolledWindow();
+			$label_all_scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+			$label_all_scroll->set_shadow_type(Gtk::SHADOW_NONE);
 			$label_all = new GtkLabel("Tests: " . implode(", ", $tests));
 			$label_all->set_line_wrap(true);
-			$label_all->set_size_request(260, 10);
-			$root_vbox->add($label_all);
+			$label_all->set_size_request(260, -1);
+			$label_all_scroll->add_with_viewport($label_all);
+			$root_vbox->add($label_all_scroll);
 		}
 
 		foreach($info_r as $head => $show)
