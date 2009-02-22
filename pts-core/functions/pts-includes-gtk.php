@@ -79,7 +79,7 @@ function pts_gtk_add_menu($vbox, $menu)
 					else
 					{
 						$menu_item = new GtkImageMenuItem($this_object->get_title());
-						$menu_item->set_image(GtkImage::new_from_stock($this_object->get_image(), Gtk::ICON_SIZE_SMALL_TOOLBAR));
+						$menu_item->set_image(GtkImage::new_from_stock($this_object->get_image(), Gtk::ICON_SIZE_MENU));
 					}
 
 					$menu_item->connect("activate", $this_object->get_function_call());

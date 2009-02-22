@@ -42,7 +42,7 @@ class gui_gtk implements pts_option_interface
 	{
 		$window = new GtkWindow();
 		$window->set_title("Phoronix Test Suite v" . PTS_VERSION);
-		$window->set_size_request(620, 400);
+		$window->set_size_request(620, -1);
 		$window->set_resizable(false);
 		$window->connect_simple("destroy", array("Gtk", "main_quit"));
 		pts_set_assignment("GTK_OBJ_WINDOW", $window);
@@ -176,10 +176,10 @@ class gui_gtk implements pts_option_interface
 		// Bottom Line
 
 		$check_mode_batch = new GtkCheckButton("Batch Mode");
-		$window_fixed->put($check_mode_batch, 20, 345);
+		$window_fixed->put($check_mode_batch, 20, 350);
 
 		$defaults_mode_batch = new GtkCheckButton("Defaults Mode");
-		$window_fixed->put($defaults_mode_batch, 155, 345);
+		$window_fixed->put($defaults_mode_batch, 155, 350);
 
 		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $defaults_mode_batch);
 		$defaults_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_batch);
@@ -188,7 +188,7 @@ class gui_gtk implements pts_option_interface
 		$details_button = new GtkButton();
 		$details_button->connect_simple("clicked", array("gui_gtk", "details_button_clicked"));
 		$details_button->set_image($details_img);
-		$details_button->set_size_request(150, 30);
+		$details_button->set_size_request(150, -1);
 		$window_fixed->put($details_button, 350, 342);
 		$details_button->set_label("More Information");
 		pts_set_assignment("GTK_OBJ_DETAILS_BUTTON", $details_button);
@@ -197,7 +197,7 @@ class gui_gtk implements pts_option_interface
 		$run_button = new GtkButton("Run");
 		$run_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"));
 		$run_button->set_image($run_img);
-		$run_button->set_size_request(100, 30);
+		$run_button->set_size_request(100, -1);
 		$window_fixed->put($run_button, 510, 342);
 		pts_set_assignment("GTK_OBJ_RUN_BUTTON", $run_button);
 
@@ -286,10 +286,12 @@ class gui_gtk implements pts_option_interface
 
 		foreach($info_r as $head => $show)
 		{
-			$label_head = new GtkLabel($head);
+			$label_head = new GtkLabel("  " . $head . ": ");
+			$label_head->set_alignment(0, 0);
 			$vbox_left->pack_start($label_head);
 
 			$label_show = new GtkLabel($show);
+			$label_show->set_alignment(0, 0);
 			$vbox_right->pack_start($label_show);
 		}
 
@@ -787,7 +789,7 @@ class gui_gtk implements pts_option_interface
 	{
 		$window = new GtkWindow();
 		$window->set_title("About");
-		$window->set_size_request(200, 240);
+		$window->set_size_request(210, 260);
 		$window->set_resizable(false);
 		$window->connect_simple("destroy", array("Gtk", "main_quit"));
 		$vbox = new GtkVBox();
@@ -803,6 +805,12 @@ class gui_gtk implements pts_option_interface
 
 		$label_version = new GtkLabel("Version " . PTS_VERSION);
 		$vbox->pack_start($label_version);
+
+		$event_box = new GtkEventBox();
+		$label_url = new GtkLabel("www.phoronix-test-suite.com");
+		$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
+		$event_box->add($label_url);
+		$vbox->pack_start($event_box);
 
 		$label_copyright = new GtkLabel("Copyright By Phoronix Media");
 		$vbox->pack_start($label_copyright);
