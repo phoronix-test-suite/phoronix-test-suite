@@ -57,7 +57,7 @@ class gui_gtk implements pts_option_interface
 		$analyze_batch = new pts_gtk_menu_item("Analyze Batch Run", array("gui_gtk", ""));
 		$analyze_batch->attach_to_pts_assignment("GTK_OBJ_ANALYZE_BATCH");
 
-		$generate_pdf = new pts_gtk_menu_item("Generate PDF", array("gui_gtk", ""));
+		$generate_pdf = new pts_gtk_menu_item("Save PDF", array("gui_gtk", "show_generate_pdf_interface"));
 		$generate_pdf->attach_to_pts_assignment("GTK_OBJ_GENERATE_PDF");
 
 		$refresh_graphs = new pts_gtk_menu_item("Refresh Graphs", array("gui_gtk", ""));
@@ -100,7 +100,7 @@ class gui_gtk implements pts_option_interface
 		new pts_gtk_menu_item("Phoronix-Test-Suite.com", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		new pts_gtk_menu_item("Phoronix Media", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		null,
-		new pts_gtk_menu_item("About / Version", array("gui_gtk", "show_about_interface"), "STRING", Gtk::STOCK_ABOUT))
+		new pts_gtk_menu_item("About", array("gui_gtk", "show_about_interface"), "STRING", Gtk::STOCK_ABOUT))
 		);
 		pts_gtk_add_menu($vbox, $main_menu_items);
 
@@ -124,8 +124,9 @@ class gui_gtk implements pts_option_interface
 
 		$i = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER");
 		$u = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL");
+		$p = pts_read_assignment("PREV_PDF_FILE");
 
-		if($i != false || $u != false)
+		if($i != false || $u != false || $p != false)
 		{
 			$main_frame_vbox->pack_start(new GtkLabel(" "));
 			if(!empty($i))
@@ -141,7 +142,15 @@ class gui_gtk implements pts_option_interface
 				$pg_button->connect_simple("clicked", array("gui_gtk", "launch_web_browser"), $u);
 				$main_frame_vbox->pack_start($pg_button);
 			}
-			$main_frame_vbox->pack_start(new GtkLabel(" "));
+			if(!empty($p))
+			{
+				$pdf_label = new GtkLabel("PDF Saved To: " . $p);
+				$pdf_label->set_line_wrap(true);
+				$pdf_label->set_size_request(260, -1);
+				$main_frame_vbox->pack_start($pdf_label);
+				$main_frame_vbox->pack_start(new GtkLabel(" "));
+			}
+
 
 		}
 		else
@@ -855,6 +864,24 @@ class gui_gtk implements pts_option_interface
 
 		$window->show_all();
 		Gtk::main();
+	}
+	public static function show_generate_pdf_interface()
+	{
+		$dialog = new GtkFileChooserDialog("Save Results To PDF", null, Gtk::FILE_CHOOSER_ACTION_SAVE, array(Gtk::STOCK_OK, Gtk::RESPONSE_OK), null);
+		$dialog->show_all();
+
+		if($dialog->run() == Gtk::RESPONSE_OK)
+		{
+			$save_file = $dialog->get_filename();
+
+			$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
+			$main_window->destroy();
+
+			$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+			pts_run_option_next("result_file_to_pdf", $identifier, array("SAVE_TO" => $save_file));
+			pts_run_option_next("gui_gtk");
+		}
+		$dialog->destroy();
 	}
 	public static function show_system_info_interface()
 	{
