@@ -60,9 +60,6 @@ class gui_gtk implements pts_option_interface
 		$analyze_batch = new pts_gtk_menu_item("Analyze Batch Run", array("gui_gtk", "analyze_batch"));
 		$analyze_batch->attach_to_pts_assignment("GTK_OBJ_ANALYZE_BATCH");
 
-		$generate_pdf = new pts_gtk_menu_item("Save PDF", array("gui_gtk", "show_generate_pdf_interface"));
-		$generate_pdf->attach_to_pts_assignment("GTK_OBJ_GENERATE_PDF");
-
 		$refresh_graphs = new pts_gtk_menu_item("Refresh Graphs", array("gui_gtk", "refresh_graphs"));
 		$refresh_graphs->attach_to_pts_assignment("GTK_OBJ_REFRESH_GRAPHS");
 
@@ -76,7 +73,15 @@ class gui_gtk implements pts_option_interface
 			array_push($file_menu, new pts_gtk_menu_item("Install PCQS", array("gui_gtk", "show_pcqs_install_interface")));
 		}
 
+
+		$generate_pdf = new pts_gtk_menu_item("Save PDF", array("gui_gtk", "show_generate_pdf_interface"));
+		$generate_pdf->attach_to_pts_assignment("GTK_OBJ_GENERATE_PDF");
+
+		$global_upload = new pts_gtk_menu_item("Upload To Phoronix Global", array("gui_gtk", "upload_results_to_global"));
+		$global_upload->attach_to_pts_assignment("GTK_OBJ_GLOBAL_UPLOAD");
+
 		array_push($file_menu, $generate_pdf);
+		array_push($file_menu, $global_upload);
 		array_push($file_menu, null);
 		array_push($file_menu, new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT));
 
@@ -99,7 +104,7 @@ class gui_gtk implements pts_option_interface
 		"Help" => array(
 		new pts_gtk_menu_item("View Documentation", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		null,
-		new pts_gtk_menu_item("Get Help Online", array("gui_gtk", "launch_web_browser"), "STRING", Gtk::STOCK_HELP), 
+		new pts_gtk_menu_item("Community Support Online", array("gui_gtk", "launch_web_browser"), "STRING", Gtk::STOCK_HELP), 
 		new pts_gtk_menu_item("Phoronix-Test-Suite.com", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		new pts_gtk_menu_item("Phoronix Media", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		null,
@@ -112,6 +117,8 @@ class gui_gtk implements pts_option_interface
 		$a = pts_read_assignment("GTK_OBJ_ANALYZE_BATCH");
 		$a->set_sensitive(false);
 		$a = pts_read_assignment("GTK_OBJ_BUILD_SUITE");
+		$a->set_sensitive(false);
+		$a = pts_read_assignment("GTK_OBJ_GLOBAL_UPLOAD");
 		$a->set_sensitive(false);
 
 		// Main Area
@@ -270,10 +277,12 @@ class gui_gtk implements pts_option_interface
 		$refresh_graphs = pts_read_assignment("GTK_OBJ_REFRESH_GRAPHS");
 		$analyze_runs = pts_read_assignment("GTK_OBJ_ANALYZE_RUNS");
 		$analyze_batch = pts_read_assignment("GTK_OBJ_ANALYZE_BATCH");
+		$global_upload = pts_read_assignment("GTK_OBJ_GLOBAL_UPLOAD");
 		$generate_pdf->set_sensitive(false);
 		$refresh_graphs->set_sensitive(false);
 		$analyze_runs->set_sensitive(false);
 		$analyze_batch->set_sensitive(false);
+		$global_upload->set_sensitive(false);
 
 		// PTS Test
 		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
@@ -282,6 +291,7 @@ class gui_gtk implements pts_option_interface
 			$refresh_graphs->set_sensitive(true);
 			$analyze_runs->set_sensitive(true);
 			$analyze_batch->set_sensitive(true);
+			$global_upload->set_sensitive(true);
 
 			$result_file = new pts_test_result_details(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 
@@ -967,6 +977,15 @@ class gui_gtk implements pts_option_interface
 		$window->show_all();
 		Gtk::main();
 	}
+	public static function upload_results_to_global()
+	{
+		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
+		$main_window->destroy();
+
+		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		pts_run_option_next("upload_result", $identifier, array("AUTOMATED_MODE" => true));
+		pts_run_option_next("gui_gtk");
+	}
 	public static function show_generate_pdf_interface()
 	{
 		$dialog = new GtkFileChooserDialog("Save Results To PDF", null, Gtk::FILE_CHOOSER_ACTION_SAVE, array(Gtk::STOCK_OK, Gtk::RESPONSE_OK), null);
@@ -1021,7 +1040,6 @@ class gui_gtk implements pts_option_interface
 		$vbox = new GtkVBox();
 		$window->add($vbox);
 
-
 		$notebook = new GtkNotebook();
 		$notebook->set_size_request(540, 250);
 		$vbox->pack_start($notebook);
@@ -1038,7 +1056,7 @@ class gui_gtk implements pts_option_interface
 		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors", array("gui_gtk", "system_info_change_notebook"));
 
 		$copy_button = new GtkButton("Copy To Clipboard");
-		$copy_button->connect_simple("clicked", array("gui_gtk", "copy_to_clipboard"));
+		$copy_button->connect_simple("clicked", array("gui_gtk", "system_info_copy_to_clipboard"));
 		$vbox->pack_start($copy_button);
 
 		$window->show_all();
@@ -1049,7 +1067,7 @@ class gui_gtk implements pts_option_interface
 		$identifier = $object->child->get_label();
 		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", $identifier);
 	}
-	public static function copy_to_clipboard()
+	public static function system_info_copy_to_clipboard()
 	{
 		$clipboard = pts_read_assignment("GTK_OBJ_CLIPBOARD");
 

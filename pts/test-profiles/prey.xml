@@ -10,6 +10,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.prey.com/</ProjectURL>
+		<ExternalDependencies>libstdcpp5</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
