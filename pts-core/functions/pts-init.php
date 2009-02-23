@@ -48,6 +48,7 @@ function pts_define_directories()
 	define("RESULTS_VIEWER_DIR", PTS_PATH . "pts-core/results-viewer/");
 	define("TEST_LIBRARIES_DIR", PTS_PATH . "pts-core/test-libraries/");
 	define("STATIC_DIR", PTS_PATH . "pts-core/static/");
+	define("MEDIA_DIR", PTS_PATH . "pts-core/media/");
 	define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 	// Test & Suite Locations

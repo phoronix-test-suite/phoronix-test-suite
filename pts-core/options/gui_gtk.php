@@ -50,6 +50,9 @@ class gui_gtk implements pts_option_interface
 		$vbox->set_spacing(4);
 		$window->add($vbox);
 
+		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
+		$window->set_icon($window_icon);
+
 		$clipboard = new GtkClipboard($window->get_display(), Gdk::atom_intern("CLIPBOARD"));
 		pts_set_assignment("GTK_OBJ_CLIPBOARD", $clipboard);
 
