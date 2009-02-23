@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Disk</TestType>
 		<Title>Filesystem Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -10,26 +10,10 @@
 		<RunMode>PCQS</RunMode>
 	</SuiteInformation>
 	<RunTest>
-		<Test>nexuiz</Test>
-		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
-		<Test>padman</Test>
-		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
-		<Test>unigine</Test>
-	</RunTest>
-	<RunTest>
 		<Test>build-imagemagick</Test>
 	</RunTest>
 	<RunTest>
 		<Test>build-apache</Test>
-	</RunTest>
-	<RunTest>
-		<Test>compress-7zip</Test>
 	</RunTest>
 	<RunTest>
 		<Test>compress-pbzip2</Test>
@@ -47,10 +31,12 @@
 		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
-		<Test>sunflow</Test>
+		<Test>bork</Test>
 	</RunTest>
 	<RunTest>
-		<Test>bork</Test>
+		<Test>iozone</Test>
+		<Arguments>-s 2048M -i0</Arguments>
+		<Description>2GB Write Performance</Description>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
@@ -61,6 +47,16 @@
 		<Test>iozone</Test>
 		<Arguments>-s 4096M -i0 -i1</Arguments>
 		<Description>4GB Read Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 8192M -i0</Arguments>
+		<Description>8GB Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 8192M -i0 -i1</Arguments>
+		<Description>8GB Read Performance</Description>
 	</RunTest>
 	<RunTest>
 		<Test>fio</Test>

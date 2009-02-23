@@ -168,9 +168,12 @@ class gui_gtk implements pts_option_interface
 		}
 		else
 		{
+			$event_box = new GtkEventBox();
+			$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
 			$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
 			$logo->set_size_request(158, 82);
-			$main_frame_vbox->pack_start($logo);
+			$event_box->add($logo);
+			$main_frame_vbox->pack_start($event_box);
 
 			$label_welcome = new GtkLabel("The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for the Linux operating system. This software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.");
 			$label_welcome->set_line_wrap(true);
