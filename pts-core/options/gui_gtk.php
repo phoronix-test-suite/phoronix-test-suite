@@ -330,17 +330,6 @@ class gui_gtk implements pts_option_interface
 			$label_description->set_size_request(260, -1);
 			$label_description_scroll->add_with_viewport($label_description);
 			$root_vbox->add($label_description_scroll);
-
-			$tests = pts_contained_tests($identifier, false, false, true);
-
-			$label_all_scroll = new GtkScrolledWindow();
-			$label_all_scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
-			$label_all_scroll->set_shadow_type(Gtk::SHADOW_NONE);
-			$label_all = new GtkLabel("Tests: " . implode(", ", $tests));
-			$label_all->set_line_wrap(true);
-			$label_all->set_size_request(260, -1);
-			$label_all_scroll->add_with_viewport($label_all);
-			$root_vbox->add($label_all_scroll);
 		}
 
 		foreach($info_r as $head => $show)
@@ -727,10 +716,89 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function details_button_clicked()
 	{
+		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+
 		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{
-			$result_identifier = pts_read_assignment("GTK_SELECTED_ITEM");
-			pts_display_web_browser(SAVE_RESULTS_DIR . $result_identifier . "/index.html", null, true, true);
+			pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html", null, true, true);
+		}
+		else
+		{
+			$window = new GtkWindow();
+			$window->set_title($identifier);
+			$window->set_resizable(false);
+			$window->connect_simple("destroy", array("Gtk", "main_quit"));
+			$vbox = new GtkVBox();
+			$vbox->set_spacing(12);
+			$window->add($vbox);
+
+			if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
+			{
+				$identifier = pts_suite_name_to_identifier($identifier);
+
+				$label_tests = new GtkLabel("Suite Contains: " . implode(", ", pts_contained_tests($identifier, false, false, true)));
+				$label_tests->set_size_request(420, -1);
+				$label_tests->set_line_wrap(true);
+				$vbox->pack_start($label_tests);
+			}
+			else
+			{
+				$identifier = pts_test_name_to_identifier($identifier);
+
+				$obj = new pts_test_profile_details($identifier);
+
+				$str = "Software Dependencies: ";
+				$i = 0;
+				foreach($obj->get_dependencies() as $dependency)
+				{
+					if(($title = pts_dependency_name(trim($dependency)) )!= "")
+					{
+						if($i > 0)
+						{
+							$str .= ", ";
+						}
+
+						$str .= $title;
+						$i++;
+					}
+				}
+				if($i == 0)
+				{
+					$str .= "N/A";
+				}
+
+				$label_dependencies = new GtkLabel($str);
+				$label_dependencies->set_size_request(420, -1);
+				$label_dependencies->set_line_wrap(true);
+				$vbox->pack_start($label_dependencies);
+
+				// Suites
+
+				$str = "Suites Using This Test: ";
+				$i = 0;
+				foreach($obj->suites_using_this_test() as $suite)
+				{
+					if($i > 0)
+					{
+						$str .= ", ";
+					}
+
+					$str .= pts_suite_identifier_to_name($suite);
+					$i++;
+				}
+				if($i == 0)
+				{
+					$str .= "N/A";
+				}
+
+				$label_suites = new GtkLabel($str);
+				$label_suites->set_size_request(420, -1);
+				$label_suites->set_line_wrap(true);
+				$vbox->pack_start($label_suites);
+			}
+
+			$window->show_all();
+			Gtk::main();
 		}
 	}
 	public static function notebook_selected_to_identifier()

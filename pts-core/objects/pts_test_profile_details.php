@@ -107,6 +107,27 @@ class pts_test_profile_details
 	{
 		return $this->name;
 	}
+	public function get_dependencies()
+	{
+		return explode(",", $this->dependencies);
+	}
+	public function suites_using_this_test()
+	{
+		$associated_suites = array();
+		foreach(pts_available_suites_array() as $identifier)
+		{
+		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
+			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
+			$tests = pts_contained_tests($identifier);
+
+			if(in_array($this->identifier, $tests))
+			{
+				array_push($associated_suites, $identifier);
+			}
+		}
+
+		return $associated_suites;
+	}
 	public function info_string()
 	{
 		$str = "";
@@ -179,7 +200,7 @@ class pts_test_profile_details
 		if(!empty($this->dependencies))
 		{
 			$str .= "\nSoftware Dependencies:\n";
-			foreach(explode(",", $this->dependencies) as $dependency)
+			foreach($this->get_dependencies() as $dependency)
 			{
 				if(($title = pts_dependency_name(trim($dependency)) )!= "")
 				{
@@ -188,19 +209,7 @@ class pts_test_profile_details
 			}
 		}
 
-		$associated_suites = array();
-		foreach(pts_available_suites_array() as $identifier)
-		{
-		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
-			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
-			$tests = pts_contained_tests($identifier);
-
-			if(in_array($this->identifier, $tests))
-			{
-				array_push($associated_suites, $identifier);
-			}
-		}
-
+		$associated_suites = $this->suites_using_this_test();
 		if(count($associated_suites) > 0)
 		{
 			asort($associated_suites);
