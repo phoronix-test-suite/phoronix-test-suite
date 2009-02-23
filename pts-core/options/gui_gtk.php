@@ -185,19 +185,25 @@ class gui_gtk implements pts_option_interface
 		$vbox->pack_start($bottom_hbox);
 
 		$check_mode_batch = new GtkCheckButton("Batch Mode");
+		$check_mode_batch->set_sensitive(false);
+		pts_set_assignment("GTK_OBJ_CHECK_BATCH", $check_mode_batch);
 		$bottom_hbox->pack_start($check_mode_batch);
 
-		$defaults_mode_batch = new GtkCheckButton("Defaults Mode");
-		$bottom_hbox->pack_start($defaults_mode_batch);
+		$check_mode_defaults = new GtkCheckButton("Defaults Mode");
+		$check_mode_defaults->set_sensitive(false);
+		pts_set_assignment("GTK_OBJ_CHECK_DEFAULTS", $check_mode_defaults);
+		$bottom_hbox->pack_start($check_mode_defaults);
 
-		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $defaults_mode_batch);
-		$defaults_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_batch);
+		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_defaults);
+		$check_mode_defaults->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_batch);
 
 		$details_img = GtkImage::new_from_stock(Gtk::STOCK_FIND, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 		$details_button = new GtkButton();
 		$details_button->connect_simple("clicked", array("gui_gtk", "details_button_clicked"));
 		$details_button->set_image($details_img);
 		$details_button->set_size_request(150, -1);
+		$details_button->set_sensitive(false);
+
 		$bottom_hbox->pack_start($details_button);
 		$details_button->set_label("More Information");
 		pts_set_assignment("GTK_OBJ_DETAILS_BUTTON", $details_button);
@@ -207,6 +213,8 @@ class gui_gtk implements pts_option_interface
 		$run_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"));
 		$run_button->set_image($run_img);
 		$run_button->set_size_request(100, -1);
+		$run_button->set_sensitive(false);
+
 		$bottom_hbox->pack_start($run_button);
 		pts_set_assignment("GTK_OBJ_RUN_BUTTON", $run_button);
 
@@ -240,6 +248,20 @@ class gui_gtk implements pts_option_interface
 		$hbox->pack_start($vbox_right);
 
 		$info_r = array();
+
+		if(!pts_is_assignment("GTK_ITEM_SELECTED_ONCE"))
+		{
+			$button = pts_read_assignment("GTK_OBJ_RUN_BUTTON");
+			$button->set_sensitive(true);
+			$button = pts_read_assignment("GTK_OBJ_DETAILS_BUTTON");
+			$button->set_sensitive(true);
+			$button = pts_read_assignment("GTK_OBJ_CHECK_DEFAULTS");
+			$button->set_sensitive(true);
+			$button = pts_read_assignment("GTK_OBJ_CHECK_BATCH");
+			$button->set_sensitive(true);
+
+			pts_set_assignment("GTK_ITEM_SELECTED_ONCE", true);
+		}
 
 		$generate_pdf = pts_read_assignment("GTK_OBJ_GENERATE_PDF");
 		$refresh_graphs = pts_read_assignment("GTK_OBJ_REFRESH_GRAPHS");
