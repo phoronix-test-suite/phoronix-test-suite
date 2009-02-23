@@ -646,6 +646,9 @@ class gui_gtk implements pts_option_interface
 		$vbox = new GtkVBox();
 		$window->add($vbox);
 
+		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
+		$window->set_icon($window_icon);
+
 		if($window_type == "confirmation")
 		{
 			$window->set_size_request(500, 200);
@@ -712,7 +715,7 @@ class gui_gtk implements pts_option_interface
 				case "Phoronix-Test-Suite.com":
 					$url = "http://www.phoronix-test-suite.com/";
 					break;
-				case "Get Help Online":
+				case "Community Support Online":
 					$url = "http://www.phoronix.com/forums/forumdisplay.php?f=49";
 					break;
 				case "Phoronix Media":
@@ -747,6 +750,9 @@ class gui_gtk implements pts_option_interface
 			$vbox = new GtkVBox();
 			$vbox->set_spacing(12);
 			$window->add($vbox);
+
+			$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
+			$window->set_icon($window_icon);
 
 			if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 			{
@@ -935,6 +941,10 @@ class gui_gtk implements pts_option_interface
 		$window->set_size_request(210, 260);
 		$window->set_resizable(false);
 		$window->connect_simple("destroy", array("Gtk", "main_quit"));
+
+		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
+		$window->set_icon($window_icon);
+
 		$vbox = new GtkVBox();
 		$window->add($vbox);
 
@@ -969,6 +979,10 @@ class gui_gtk implements pts_option_interface
 		$window->set_size_request(300, 140);
 		$window->set_resizable(false);
 		$window->connect_simple("destroy", array("Gtk", "main_quit"));
+
+		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
+		$window->set_icon($window_icon);
+
 		$vbox = new GtkVBox();
 		$window->add($vbox);
 
@@ -1040,6 +1054,10 @@ class gui_gtk implements pts_option_interface
 		$window->set_title("System Information");
 		$window->set_resizable(false);
 		$window->connect_simple("destroy", array("Gtk", "main_quit"));
+
+		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
+		$window->set_icon($window_icon);
+
 		$vbox = new GtkVBox();
 		$window->add($vbox);
 
@@ -1101,6 +1119,10 @@ class gui_gtk implements pts_option_interface
 		$window = new GtkWindow();
 		$window->set_title("Phoronix Certification & Qualification Suite");
 		$window->connect_simple("destroy", array("Gtk", "main_quit"));
+
+		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
+		$window->set_icon($window_icon);
+
 		$vbox = new GtkVBox();
 		$window->add($vbox);
 
