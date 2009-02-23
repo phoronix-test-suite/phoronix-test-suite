@@ -146,13 +146,18 @@ function pts_gtk_selected_item($object)
 
 	return $model->get_value($iter, 0);
 }
-function pts_gtk_add_notebook_tab($notebook, $widget, $label)
+function pts_gtk_add_notebook_tab($notebook, $widget, $label, $connect = null)
 {
+	if($connect == null)
+	{
+		$connect = array("gui_gtk", "notebook_main_page_select");
+	}
+
 	$event_box = new GtkEventBox();
 	$label = new GtkLabel($label);
 	$label->show();
 	$event_box->add($label);
-	$event_box->connect("button-press-event", array("gui_gtk", "notebook_main_page_select"), $label->get_text());
+	$event_box->connect("button-press-event", $connect, $label->get_text());
 	$notebook->append_page($widget, $event_box);
 }
 

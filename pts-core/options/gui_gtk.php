@@ -50,6 +50,9 @@ class gui_gtk implements pts_option_interface
 		$vbox->set_spacing(4);
 		$window->add($vbox);
 
+		$clipboard = new GtkClipboard($window->get_display(), Gdk::atom_intern("CLIPBOARD"));
+		pts_set_assignment("GTK_OBJ_CLIPBOARD", $clipboard);
+
 		// Menu Setup
 		$analyze_runs = new pts_gtk_menu_item("Analyze All Runs", array("gui_gtk", "analyze_all_runs"));
 		$analyze_runs->attach_to_pts_assignment("GTK_OBJ_ANALYZE_RUNS");
@@ -1022,18 +1025,48 @@ class gui_gtk implements pts_option_interface
 		$notebook = new GtkNotebook();
 		$notebook->set_size_request(540, 250);
 		$vbox->pack_start($notebook);
+		$vbox->set_spacing(3);
 
+		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", "Hardware");
 		$hw = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)));
-		pts_gtk_add_notebook_tab($notebook, $hw, "Hardware");
+		pts_gtk_add_notebook_tab($notebook, $hw, "Hardware", array("gui_gtk", "system_info_change_notebook"));
 
 		$sw = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)));
-		pts_gtk_add_notebook_tab($notebook, $sw, "Software");
+		pts_gtk_add_notebook_tab($notebook, $sw, "Software", array("gui_gtk", "system_info_change_notebook"));
 
 		$sensors = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)));
-		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors");
+		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors", array("gui_gtk", "system_info_change_notebook"));
+
+		$copy_button = new GtkButton("Copy To Clipboard");
+		$copy_button->connect_simple("clicked", array("gui_gtk", "copy_to_clipboard"));
+		$vbox->pack_start($copy_button);
 
 		$window->show_all();
 		Gtk::main();
+	}
+	public static function system_info_change_notebook($object)
+	{
+		$identifier = $object->child->get_label();
+		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", $identifier);
+	}
+	public static function copy_to_clipboard()
+	{
+		$clipboard = pts_read_assignment("GTK_OBJ_CLIPBOARD");
+
+		switch(pts_read_assignment("GTK_SYSTEM_INFO_NOTEBOOK"))
+		{
+			case "Hardware":
+				$to_copy = pts_hw_string();
+				break;
+			case "Software":
+				$to_copy = pts_sw_string();
+				break;
+			case "Sensors":
+				$to_copy = pts_sys_sensors_string();
+				break;
+		}
+
+		$clipboard->set_text($to_copy);	
 	}
 	public static function show_pcqs_install_interface()
 	{
