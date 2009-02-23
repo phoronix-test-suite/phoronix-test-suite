@@ -60,6 +60,7 @@ class analyze_batch implements pts_option_interface
 			// Analyze Results
 			$SAVED_RESULTS = pts_merge_batch_tests_to_line_comparison(@file_get_contents($BASE_FILE));
 			pts_save_result($SAVE_TO, $SAVED_RESULTS);
+			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $SAVE_TO);
 			echo "Results Saved To: " . SAVE_RESULTS_DIR . $SAVE_TO . "\n\n";
 			pts_display_web_browser(SAVE_RESULTS_DIR . $SAVE_TO);
 		}

@@ -51,16 +51,16 @@ class gui_gtk implements pts_option_interface
 		$window->add($vbox);
 
 		// Menu Setup
-		$analyze_runs = new pts_gtk_menu_item("Analyze All Runs", array("gui_gtk", ""));
+		$analyze_runs = new pts_gtk_menu_item("Analyze All Runs", array("gui_gtk", "analyze_all_runs"));
 		$analyze_runs->attach_to_pts_assignment("GTK_OBJ_ANALYZE_RUNS");
 
-		$analyze_batch = new pts_gtk_menu_item("Analyze Batch Run", array("gui_gtk", ""));
+		$analyze_batch = new pts_gtk_menu_item("Analyze Batch Run", array("gui_gtk", "analyze_batch"));
 		$analyze_batch->attach_to_pts_assignment("GTK_OBJ_ANALYZE_BATCH");
 
 		$generate_pdf = new pts_gtk_menu_item("Save PDF", array("gui_gtk", "show_generate_pdf_interface"));
 		$generate_pdf->attach_to_pts_assignment("GTK_OBJ_GENERATE_PDF");
 
-		$refresh_graphs = new pts_gtk_menu_item("Refresh Graphs", array("gui_gtk", ""));
+		$refresh_graphs = new pts_gtk_menu_item("Refresh Graphs", array("gui_gtk", "refresh_graphs"));
 		$refresh_graphs->attach_to_pts_assignment("GTK_OBJ_REFRESH_GRAPHS");
 
 		$build_suite = new pts_gtk_menu_item("Build Suite", array("gui_gtk", ""));
@@ -242,12 +242,21 @@ class gui_gtk implements pts_option_interface
 		$info_r = array();
 
 		$generate_pdf = pts_read_assignment("GTK_OBJ_GENERATE_PDF");
+		$refresh_graphs = pts_read_assignment("GTK_OBJ_REFRESH_GRAPHS");
+		$analyze_runs = pts_read_assignment("GTK_OBJ_ANALYZE_RUNS");
+		$analyze_batch = pts_read_assignment("GTK_OBJ_ANALYZE_BATCH");
 		$generate_pdf->set_sensitive(false);
+		$refresh_graphs->set_sensitive(false);
+		$analyze_runs->set_sensitive(false);
+		$analyze_batch->set_sensitive(false);
 
 		// PTS Test
 		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{
 			$generate_pdf->set_sensitive(true);
+			$refresh_graphs->set_sensitive(true);
+			$analyze_runs->set_sensitive(true);
+			$analyze_batch->set_sensitive(true);
 
 			$result_file = new pts_test_result_details(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 
@@ -882,6 +891,33 @@ class gui_gtk implements pts_option_interface
 			pts_run_option_next("gui_gtk");
 		}
 		$dialog->destroy();
+	}
+	public static function refresh_graphs()
+	{
+		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
+		$main_window->destroy();
+
+		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		pts_run_option_next("refresh_graphs", $identifier, array("AUTOMATED_MODE" => true));
+		pts_run_option_next("gui_gtk");
+	}
+	public static function analyze_all_runs()
+	{
+		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
+		$main_window->destroy();
+
+		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		pts_run_option_next("analyze_all_runs", $identifier, array("AUTOMATED_MODE" => true));
+		pts_run_option_next("gui_gtk");
+	}
+	public static function analyze_batch()
+	{
+		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
+		$main_window->destroy();
+
+		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		pts_run_option_next("analyze_all_runs", $identifier, array("AUTOMATED_MODE" => true));
+		pts_run_option_next("gui_gtk");
 	}
 	public static function show_system_info_interface()
 	{
