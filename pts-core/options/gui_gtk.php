@@ -24,6 +24,7 @@ class gui_gtk implements pts_option_interface
 {
 	public static function run($r)
 	{
+		pts_load_function_set("gui");
 		pts_load_function_set("gtk");
 
 		if(!extension_loaded("gtk") && !extension_loaded("php-gtk"))
@@ -377,41 +378,12 @@ class gui_gtk implements pts_option_interface
 			// Installed Suites
 			if(count(pts_installed_tests_array()) > 0)
 			{
-				$installed_suites = array();
-
-				foreach(pts_available_suites_array() as $suite)
-				{
-					if(!pts_suite_needs_updated_install($suite))
-					{
-						array_push($installed_suites, $suite);
-					}
-				}
-
-				$installed_suites = array_map("pts_suite_identifier_to_name", $installed_suites);
-				sort($installed_suites);
-				$installed_suites = pts_gtk_add_table(array("Suite"), $installed_suites, array("gui_gtk", "update_details_frame_from_select"));
+				$installed_suites = pts_gtk_add_table(array("Suite"), pts_gui_installed_suites(), array("gui_gtk", "update_details_frame_from_select"));
 				pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
 			}
 
-			// Available Suites
-			$test_suites = pts_supported_suites_array();
-			$to_show_names = array();
-			$to_show_types = pts_read_assignment("GTK_TEST_TYPES_TO_SHOW");
-
-			foreach($test_suites as $name)
-			{
-				$ts = new pts_test_suite_details($name);
-				$hw_type = $ts->get_suite_type();
-
-				if(empty($hw_type) || in_array($hw_type, $to_show_types))
-				{
-					array_push($to_show_names, $name);
-				}
-			}
-
-			$test_suites = array_map("pts_suite_identifier_to_name", $to_show_names);
-			sort($test_suites);
-			$available_suites = pts_gtk_add_table(array("Suite"), $test_suites, array("gui_gtk", "update_details_frame_from_select"));
+			$available_suites = pts_gtk_add_table(array("Suite"), pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW")), 
+			array("gui_gtk", "update_details_frame_from_select"));
 			pts_gtk_add_notebook_tab($main_notebook, $available_suites, "Available Suites");
 		}
 		else
@@ -421,58 +393,22 @@ class gui_gtk implements pts_option_interface
 			// Installed Tests
 			if(count(($installed = pts_installed_tests_array())) > 0)
 			{
-				$installed_tests = array();
-
-				foreach($installed as $test)
-				{
-					$tp = new pts_test_profile_details($test);
-					$hw_type = $tp->get_test_hardware_type();
-
-					if((empty($hw_type) || in_array($hw_type, $to_show_types)) && $tp->get_name() != "")
-					{
-						array_push($installed_tests, $test);
-					}
-				}
-
-				$installed_tests = array_map("pts_test_identifier_to_name", $installed_tests);
-				sort($installed_tests);
-				$installed_tests = pts_gtk_add_table(array("Test"), $installed_tests, array("gui_gtk", "update_details_frame_from_select"));
+				$installed_tests = pts_gtk_add_table(array("Test"), pts_gui_installed_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW")), 
+				array("gui_gtk", "update_details_frame_from_select"));
 				pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
 			}
 
 			// Available Tests
-			$test_names = pts_supported_tests_array();
-			$to_show_names = array();
-
-			foreach($test_names as $name)
-			{
-				$tp = new pts_test_profile_details($name);
-				$hw_type = $tp->get_test_hardware_type();
-
-				if((empty($hw_type) || in_array($hw_type, $to_show_types)) && $tp->verified_state())
-				{
-					array_push($to_show_names, $name);
-				}
-			}
-
-			$test_names = array_map("pts_test_identifier_to_name", $to_show_names);
-			sort($test_names);
-			$available_tests = pts_gtk_add_table(array("Test"), $test_names, array("gui_gtk", "update_details_frame_from_select"));
+			$available_tests = pts_gtk_add_table(array("Test"), pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW")), 
+			array("gui_gtk", "update_details_frame_from_select"));
 			pts_gtk_add_notebook_tab($main_notebook, $available_tests, "Available Tests");
 		}
 
-		$saved_results = glob(SAVE_RESULTS_DIR . "*/composite.xml");
-
+		$saved_results = pts_gui_saved_test_results_identifiers();
 		if(count($saved_results) > 0)
 		{
-			$results = array();
 
-			foreach($saved_results as $result_file)
-			{
-				array_push($results, pts_extract_identifier_from_directory($result_file));
-			}
-
-			$test_results = pts_gtk_add_table(array("Test Result"), $results, array("gui_gtk", "update_details_frame_from_select"));
+			$test_results = pts_gtk_add_table(array("Test Result"), $saved_results, array("gui_gtk", "update_details_frame_from_select"));
 			pts_gtk_add_notebook_tab($main_notebook, $test_results, "Test Results");
 		}
 
@@ -947,7 +883,6 @@ class gui_gtk implements pts_option_interface
 
 		$label_copyright = new GtkLabel("Copyright By Phoronix Media");
 		$vbox->pack_start($label_copyright);
-
 
 		$window->show_all();
 		Gtk::main();

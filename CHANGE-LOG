@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Introduce pts_gtk_window object
+- pts-core: Move more of pts-core logic out of gui_gtk and into the generic GUI function set
 
 Phoronix Test Suite 1.8.0 Alpha 2
 February 25, 2009
