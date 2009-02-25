@@ -75,6 +75,7 @@ function pts_run_option_next($command = false, $pass_args = null, $set_assignmen
 	else
 	{
 		array_push($options, new pts_run_option($command, $pass_args, $set_assignments));
+		$return = true;
 	}
 
 	pts_run_option_static_array($options);
