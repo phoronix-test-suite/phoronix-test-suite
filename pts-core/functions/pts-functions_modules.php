@@ -190,10 +190,10 @@ function pts_module_valid_user_command($module, $command = null)
 	{
 		$dot_r = explode(".", $module);
 
-		if(count($dot_r) == 2)
+		if(count($dot_r) > 1)
 		{
-			$module = $dot_r[0];
-			$command = $dot_r[1];
+			$module = array_shift($dot_r);
+			$command = array_pop($dot_r);
 		}
 	}
 

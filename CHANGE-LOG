@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts_set_assignment_next() operator for setting assignments in the next option in the execution queue
 - pts-core: Merge pts_test_result_info_details and pts_test_results_details into pts_test_result_details
 - pts-core: Add MEDIA_DIR
+- pts-core: Allow multiple periods to be used in command string when running a module command
 - pts: Various install.sh test script changes from Kano
 - pts: Fix in nexuiz test installation script from Kano
 - pts: Add PTS External Dependencies support for Arch Linux
