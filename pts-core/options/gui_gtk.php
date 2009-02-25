@@ -40,18 +40,11 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_main_interface()
 	{
-		$window = new GtkWindow();
-		$window->set_title("Phoronix Test Suite v" . PTS_VERSION);
-		$window->set_size_request(620, -1);
-		//$window->set_resizable(false);
-		$window->connect_simple("destroy", array("Gtk", "main_quit"));
+		$window = new pts_gtk_window("Phoronix Test Suite v" . PTS_VERSION, 620, -1);
 		pts_set_assignment("GTK_OBJ_WINDOW", $window);
 		$vbox = new GtkVBox();
 		$vbox->set_spacing(4);
 		$window->add($vbox);
-
-		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
-		$window->set_icon($window_icon);
 
 		$clipboard = new GtkClipboard($window->get_display(), Gdk::atom_intern("CLIPBOARD"));
 		pts_set_assignment("GTK_OBJ_CLIPBOARD", $clipboard);
@@ -642,15 +635,10 @@ class gui_gtk implements pts_option_interface
 		//		break;
 		}
 
-		$window = new GtkWindow();
-		$window->set_title("phoronix-test-suite " . $title_cmd . " " . $identifier);
+		$window = new pts_gtk_window("phoronix-test-suite " . $title_cmd . " " . $identifier);
 		$window->set_resizable(false);
-		$window->connect_simple("destroy", array("Gtk", "main_quit"));
 		$vbox = new GtkVBox();
 		$window->add($vbox);
-
-		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
-		$window->set_icon($window_icon);
 
 		if($window_type == "confirmation")
 		{
@@ -746,16 +734,11 @@ class gui_gtk implements pts_option_interface
 		}
 		else
 		{
-			$window = new GtkWindow();
-			$window->set_title($identifier);
+			$window = new pts_gtk_window($identifier);
 			$window->set_resizable(false);
-			$window->connect_simple("destroy", array("Gtk", "main_quit"));
 			$vbox = new GtkVBox();
 			$vbox->set_spacing(12);
 			$window->add($vbox);
-
-			$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
-			$window->set_icon($window_icon);
 
 			if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 			{
@@ -939,14 +922,8 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_about_interface()
 	{
-		$window = new GtkWindow();
-		$window->set_title("About");
-		$window->set_size_request(210, 260);
+		$window = new pts_gtk_window("About", 210, 260);
 		$window->set_resizable(false);
-		$window->connect_simple("destroy", array("Gtk", "main_quit"));
-
-		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
-		$window->set_icon($window_icon);
 
 		$vbox = new GtkVBox();
 		$window->add($vbox);
@@ -977,14 +954,8 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_preferences_interface()
 	{
-		$window = new GtkWindow();
-		$window->set_title("Preferences");
-		$window->set_size_request(300, 140);
+		$window = new pts_gtk_window("Preferences", 300, 140);
 		$window->set_resizable(false);
-		$window->connect_simple("destroy", array("Gtk", "main_quit"));
-
-		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
-		$window->set_icon($window_icon);
 
 		$vbox = new GtkVBox();
 		$window->add($vbox);
@@ -1053,13 +1024,8 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_system_info_interface()
 	{
-		$window = new GtkWindow();
-		$window->set_title("System Information");
+		$window = new pts_gtk_window("System Information");
 		$window->set_resizable(false);
-		$window->connect_simple("destroy", array("Gtk", "main_quit"));
-
-		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
-		$window->set_icon($window_icon);
 
 		$vbox = new GtkVBox();
 		$window->add($vbox);
@@ -1119,12 +1085,7 @@ class gui_gtk implements pts_option_interface
 			return;
 		}
 
-		$window = new GtkWindow();
-		$window->set_title("Phoronix Certification & Qualification Suite");
-		$window->connect_simple("destroy", array("Gtk", "main_quit"));
-
-		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
-		$window->set_icon($window_icon);
+		$window = new pts_gtk_window("Phoronix Certification & Qualification Suite");
 
 		$vbox = new GtkVBox();
 		$window->add($vbox);

@@ -2,6 +2,11 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Introduce pts_gtk_window object
+
+Phoronix Test Suite 1.8.0 Alpha 2
+February 25, 2009
+
 - pts-core: For alpha and beta builds using build-package-deb.php, separate version number with "~"
 - pts-core: Improve Linux distribution detection for distributions that supply an empty *-release file (Such as Arch Linux)
 - pts-core: Improve Linux distribution detection where there are multiple *-version or *-release files
