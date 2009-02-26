@@ -87,7 +87,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n\n";
 		$svg_image .= $this->get_svg_formatted_definitions();
-		$svg_image .= $this->image . "\n\n</svg>";
+		$svg_image .= $this->image . "\n</svg>";
 
 		return $output_file != null && @file_put_contents($output_file, $svg_image);
 	}
@@ -182,7 +182,10 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function draw_rectangle_border($x1, $y1, $width, $height, $border_color)
 	{
-		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . round($width - $x1) . "\" height=\"" . round($height - $y1) . "\" fill=\"transparent\" stroke=\"" . $border_color . "\" stroke-width=\"1px\" />\n";
+		$class = "r_" . substr($border_color, 1);
+		$this->add_svg_style_definition($class, "stroke: " . $border_color . "; " . "stroke-width: 1px; fill: transparent;");
+
+		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . round($width - $x1) . "\" height=\"" . round($height - $y1) . "\" class=\"" . $class . "\" />\n";
 	}
 	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0)
 	{
@@ -209,7 +212,10 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
 	{
-		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" stroke=\"" . $color . "\" stroke-width=\"" . $line_width . "px\" />\n";
+		$class = "l_" . substr($color, 1) . "_" . $line_width;
+		$this->add_svg_style_definition($class, "stroke: " . $color . "; " . "stroke-width: " . $line_width . "px;");
+
+		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" class=\"" . $class . "\" />\n";
 	}
 
 	public function png_image_to_type($file)
