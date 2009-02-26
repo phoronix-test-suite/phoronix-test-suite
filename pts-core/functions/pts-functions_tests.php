@@ -575,8 +575,17 @@ function pts_test_estimated_run_time($identifier)
 			}
 			else
 			{
-				// TODO: Likely integrate with P_TEST_ESTIMATEDTIME from test profile
-				return -1; // TODO: no accurate calculation available
+				$xml_parser = new pts_test_tandem_XmlReader($test);
+				$el = $xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
+
+				if(is_numeric($el) && $el > 0)
+				{
+					$estimated_length += ($el * 60);
+				}
+				else
+				{
+					return -1; // no accurate calculation available
+				}
 			}
 		}
 	}

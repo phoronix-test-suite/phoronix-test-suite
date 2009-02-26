@@ -34,7 +34,6 @@ class pts_test_profile_details
 	var $test_version;
 	var $hardware_type;
 	var $software_type;
-	var $estimated_length;
 	var $test_download_size;
 	var $test_environment_size;
 	var $test_maintainer;
@@ -54,7 +53,6 @@ class pts_test_profile_details
 		$this->test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
 		$this->hardware_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 		$this->software_type = $xml_parser->getXMLValue(P_TEST_SOFTWARE_TYPE);
-		$this->estimated_length = $xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
 		$this->dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
 		$this->project_url = $xml_parser->getXMLValue(P_TEST_PROJECTURL);
 
@@ -155,9 +153,9 @@ class pts_test_profile_details
 		{
 			$str .= "Environment Size: " . $this->test_environment_size . " MB\n";
 		}
-		if(!empty($this->estimated_length))
+		if(($el = pts_test_estimated_run_time($this->identifier)) > 0)
 		{
-			echo "Estimated Length: " . pts_estimated_time_string($this->estimated_length) . "\n";
+			echo "Estimated Length: " . pts_format_time_string($el, "SECONDS", true, 60) . "\n";
 		}
 
 		$str .= "\nDescription: " . $this->get_description() . "\n";
