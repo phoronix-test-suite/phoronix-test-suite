@@ -222,6 +222,11 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function convert_hex_to_type($hex)
 	{
+		if(($short = substr($hex, 1, 3)) == substr($hex, 4, 3))
+		{
+			$hex = "#" . $short;
+		}
+
 		return $hex;
 	}
 	public function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false)
