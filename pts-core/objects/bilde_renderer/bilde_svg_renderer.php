@@ -24,12 +24,15 @@
 class bilde_svg_renderer extends bilde_renderer
 {
 	var $renderer = "SVG";
+	var $svg_style_definitions = "";
 
 	public function __construct($width, $height, $embed_identifiers = null)
 	{
+		// TODO: In the future when tandem_XmlWriter is ready, use that for rendering all of the SVG XML
 		$this->image_width = $width;
 		$this->image_height = $height;
 		$this->embed_identifiers = $embed_identifiers;
+		$this->svg_style_definitions = array();
 	}
 	public static function renderer_supported()
 	{
@@ -83,6 +86,7 @@ class bilde_svg_renderer extends bilde_renderer
 		}
 
 		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n\n";
+		$svg_image .= $this->get_svg_formatted_definitions();
 		$svg_image .= $this->image . "\n\n</svg>";
 
 		return $output_file != null && @file_put_contents($output_file, $svg_image);
@@ -239,7 +243,6 @@ class bilde_svg_renderer extends bilde_renderer
 	private function write_svg_text($string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, $orientation = "LEFT")
 	{
 		$font_size += 1.5;
-		$baseline = "middle";
 
 		if($rotation != 0)
 		{
@@ -250,20 +253,44 @@ class bilde_svg_renderer extends bilde_renderer
 		switch($orientation)
 		{
 			case "CENTER":
-				$text_anchor = "middle";
-				$baseline = "text-before-edge";
+				$this->add_svg_style_definition("t_c", "text-anchor: middle; dominant-baseline: text-before-edge;");
+				$class = "t_c";
 				break;
 			case "RIGHT":
-				$text_anchor = "end";
+				$this->add_svg_style_definition("t_r", "text-anchor: end; dominant-baseline: middle;");
+				$class = "t_r";
 				break;
 			case "LEFT":
 			default:
-				$text_anchor = "start";
+				$this->add_svg_style_definition("t_l", "text-anchor: start; dominant-baseline: middle;");
+				$class = "t_l";
 				break;
 		}
 
 		// TODO: Implement $font_type through style="font-family: $font;"
-		$this->image .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $font_color . "\" " . ($rotation == 0 ? "" : "transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" ") . "font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\">" . $string . "</text>\n";
+		$this->image .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $font_color . "\" " . ($rotation == 0 ? "" : "transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" ") . "font-size=\"" . $font_size . "\" class=\"" . $class . "\">" . $string . "</text>\n";
+	}
+	private function add_svg_style_definition($style, $attributes)
+	{
+		$this->svg_style_definitions[$style] = $attributes;
+	}
+	private function get_svg_formatted_definitions()
+	{
+		if(count($this->svg_style_definitions) > 0)
+		{
+			$svg = "<defs>\n";
+			$svg .= "<style><![CDATA[\n";
+
+			foreach($this->svg_style_definitions as $style => $attributes)
+			{
+				$svg .= "." . $style . " { " . $attributes . " }\n";
+			}
+
+			$svg .= "]]></style>\n";
+			$svg .= "</defs>\n\n";
+
+			return $svg;
+		}
 	}
 }
 
