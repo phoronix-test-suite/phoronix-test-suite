@@ -2,20 +2,20 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.0.2</Version>
+		<Version>0.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
 		<Status>BROKEN</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<ExternalDependencies>sdl-development, build-utilities, glew, jam, scons, vorbis-development</ExternalDependencies>
+		<ExternalDependencies>sdl-development, build-utilities, glew, glut, jam, scons, vorbis-development, autoconf, libtool</ExternalDependencies>
 		<ProjectURL>http://www.vdrift.net/</ProjectURL>
 		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>vDrift</Title>
-		<Version>2008-08-05</Version>
+		<Version>2009-02-15</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
@@ -23,7 +23,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>-benchmark</Arguments>
+			<Arguments>-multithreaded -benchmark</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
