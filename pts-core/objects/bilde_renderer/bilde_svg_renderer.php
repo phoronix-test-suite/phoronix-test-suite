@@ -258,7 +258,7 @@ class bilde_svg_renderer extends bilde_renderer
 		}
 
 		// TODO: Implement $font_type through style="font-family: $font;"
-		$this->image .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $font_color . "\" transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\">" . $string . "</text>\n";
+		$this->image .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $font_color . "\" " . ($rotation == 0 ? "" : "transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" ") . "font-size=\"" . $font_size . "\" text-anchor=\"" . $text_anchor . "\" dominant-baseline=\"" . $baseline . "\">" . $string . "</text>\n";
 	}
 }
 
