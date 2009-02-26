@@ -188,5 +188,11 @@
 			<PossibleNames>autoconf</PossibleNames>
 			<FileCheck>/usr/bin/autoconf</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>libtool</GenericName>
+			<Title>Libtool</Title>
+			<PossibleNames>libtool</PossibleNames>
+			<FileCheck>/usr/bin/libtool</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

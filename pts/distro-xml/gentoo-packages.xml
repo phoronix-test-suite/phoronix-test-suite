@@ -140,5 +140,15 @@
 			<PackageName>>=x11-libs/qt-core-4.4.2</PackageName>
 			<FileCheck>/usr/bin/qmake</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>autoconf</GenericName>
+			<PackageName>sys-devel/autoconf</PackageName>
+			<FileCheck>/usr/bin/autoconf</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>libtool</GenericName>
+			<PackageName>sys-devel/libtool</PackageName>
+			<FileCheck>/usr/bin/libtool</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

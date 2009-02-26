@@ -160,5 +160,10 @@
 			<PackageName>autoconf</PackageName>
 			<FileCheck>/usr/bin/autoconf</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>libtool</GenericName>
+			<PackageName>libtool</PackageName>
+			<FileCheck>/usr/bin/libtool</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
