@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Introduce pts_gtk_window object
 - pts-core: Move more of pts-core logic out of gui_gtk and into the generic GUI function set
 - pts-core: When estimated the test's run-time but the test hasn't been installed or run yet, use the EstimatedLength tag from test profile
+- pts-core: Override the LANG and LC_* environmental variables when running tests to not apply any language / locale settings to results
 
 Phoronix Test Suite 1.8.0 Alpha 2
 February 25, 2009

@@ -853,6 +853,10 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
 	$extra_runtime_variables = pts_run_additional_vars($test_identifier);
+	$extra_runtime_variables["LC_ALL"] = "";
+	$extra_runtime_variables["LC_CTYPE"] = "";
+	$extra_runtime_variables["LC_MESSAGES"] = "";
+	$extra_runtime_variables["LANG"] = "";
 
 	// Start
 	$pts_test_result->set_attribute("TEST_TITLE", $test_title);
