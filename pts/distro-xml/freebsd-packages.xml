@@ -125,5 +125,10 @@
 			<PackageName>qt</PackageName>
 			<FileCheck>/usr/local/include/qt.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>autoconf</GenericName>
+			<PackageName>autoconf</PackageName>
+			<FileCheck>/usr/local/bin/autoconf</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

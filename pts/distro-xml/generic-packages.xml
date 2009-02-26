@@ -182,5 +182,11 @@
 			<PossibleNames>libqt4-dev, libqt4-devel, qt4-devel</PossibleNames>
 			<FileCheck>/usr/lib/qt4/bin/qmake</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>autoconf</GenericName>
+			<Title>Autoconf</Title>
+			<PossibleNames>autoconf</PossibleNames>
+			<FileCheck>/usr/bin/autoconf</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

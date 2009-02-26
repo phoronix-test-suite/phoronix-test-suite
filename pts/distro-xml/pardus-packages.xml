@@ -140,5 +140,10 @@
 			<PackageName>qt4</PackageName>
 			<FileCheck>/usr/qt/4/bin/qmake</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>autoconf</GenericName>
+			<PackageName>autoconf</PackageName>
+			<FileCheck>/usr/bin/autoconf</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

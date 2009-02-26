@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Move more of pts-core logic out of gui_gtk and into the generic GUI function set
 - pts-core: When estimated the test's run-time but the test hasn't been installed or run yet, use the EstimatedLength tag from test profile
 - pts-core: Override the LANG and LC_* environmental variables when running tests to not apply any language / locale settings to results
+- pts: Add autoconf to PTS External Dependencies support
 - bilde_renderer: Optimize whats outputted by the SVG renderer
 - bilde_renderer: Add style definitions support to the SVG renderer that complies with the W3 CSS SVG styling specification
 
