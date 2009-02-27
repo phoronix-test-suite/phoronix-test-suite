@@ -8,7 +8,7 @@
 		<License>NON-FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>0.7</EnvironmentSize>
+		<EnvironmentSize>53.9</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>glut, glew, freeimage</ExternalDependencies>
 		<ProjectURL>http://www.dee.cz/lightsmark/</ProjectURL>

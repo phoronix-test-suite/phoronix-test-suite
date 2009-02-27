@@ -7,6 +7,7 @@
 		<SoftwareType>Scientific</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
+		<EnvironmentSize>17.1</EnvironmentSize>
 		<Maintainer>Andrew Schofield</Maintainer>
 		<ProjectURL>http://align.bmr.kyushu-u.ac.jp/mafft/software/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>

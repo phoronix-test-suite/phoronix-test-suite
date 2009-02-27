@@ -4,10 +4,9 @@
 	<TestProfile>
 		<Version>1.3.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>1.7</EnvironmentSize>
 		<ProjectURL>http://lame.sourceforge.net/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>
-		<EnvironmentSize>1.2</EnvironmentSize>
+		<EnvironmentSize>1.3</EnvironmentSize>
 	</TestProfile>
 	<TestInformation>
 		<Title>LAME MP3 Encoding</Title>

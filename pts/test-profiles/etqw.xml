@@ -8,7 +8,7 @@
 		<License>NON-FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>566</EnvironmentSize>
+		<EnvironmentSize>4500</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.enemyterritory.com/</ProjectURL>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>

@@ -7,6 +7,7 @@
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
 		<Status>VERIFIED</Status>
+		<EnvironmentSize>1700</EnvironmentSize>
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.prey.com/</ProjectURL>

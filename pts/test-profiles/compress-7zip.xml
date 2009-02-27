@@ -8,7 +8,7 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>8.6</EnvironmentSize>
+		<EnvironmentSize>9.3</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.7-zip.org/</ProjectURL>
 	</TestProfile>

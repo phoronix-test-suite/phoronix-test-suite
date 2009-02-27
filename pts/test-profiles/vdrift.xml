@@ -8,6 +8,7 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>826</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>sdl-development, build-utilities, glew, glut, jam, scons, vorbis-development, autoconf, libtool</ExternalDependencies>
 		<ProjectURL>http://www.vdrift.net/</ProjectURL>

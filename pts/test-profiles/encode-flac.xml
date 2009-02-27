@@ -7,7 +7,7 @@
 		<EnvironmentSize>9</EnvironmentSize>
 		<ProjectURL>http://flac.sourceforge.net/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>
-		<EnvironmentSize>1.7</EnvironmentSize>
+		<EnvironmentSize>8.1</EnvironmentSize>
 		<UnsupportedPlatforms>MacOSX, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>

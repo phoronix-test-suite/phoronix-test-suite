@@ -8,7 +8,7 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>0.42</EnvironmentSize>
+		<EnvironmentSize>0.5</EnvironmentSize>
 		<ProjectURL>http://zrusin.blogspot.com/</ProjectURL>
 		<ExternalDependencies>build-utilities, qt4-development</ExternalDependencies>
 		<SupportedPlatforms>Linux</SupportedPlatforms>

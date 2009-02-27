@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts: Add autoconf to PTS External Dependencies support
 - pts: Add libtool to PTS External Dependencies support
 - pts: Update vdrift test profile to VDrift 2009-02-15 and make the test profile work to verified state
+- pts: Add EnvironmentSize tag to many more test profiles
 - bilde_renderer: Optimize what is outputted by the SVG renderer
 - bilde_renderer: Add style definitions support to the SVG renderer that complies with the W3 CSS SVG styling specification
 

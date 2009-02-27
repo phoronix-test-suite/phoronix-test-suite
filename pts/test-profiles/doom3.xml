@@ -8,6 +8,7 @@
 		<License>NON-FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>1500</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.doom3.com/</ProjectURL>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>

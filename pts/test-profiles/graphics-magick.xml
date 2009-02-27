@@ -8,6 +8,7 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>21.7</EnvironmentSize>
 		<Extends>photo-sample</Extends>
 		<ExternalDependencies>build-utilities, jpeg-development</ExternalDependencies>
 		<ProjectURL>http://www.graphicsmagick.org/</ProjectURL>

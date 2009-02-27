@@ -8,7 +8,7 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>5.0</EnvironmentSize>
+		<EnvironmentSize>2.5</EnvironmentSize>
 		<ProjectURL>http://git.kernel.dk/?p=fio.git;a=summary</ProjectURL>
 		<ExternalDependencies>build-utilities, libaio-development</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>

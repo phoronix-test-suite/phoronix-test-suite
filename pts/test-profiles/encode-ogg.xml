@@ -7,7 +7,7 @@
 		<EnvironmentSize>6</EnvironmentSize>
 		<ProjectURL>http://www.vorbis.com/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>
-		<EnvironmentSize>2.9</EnvironmentSize>
+		<EnvironmentSize>4.3</EnvironmentSize>
 		<UnsupportedPlatforms>BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>

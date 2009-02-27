@@ -6,6 +6,7 @@
 		<TestType>Graphics</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
+		<EnvironmentSize>0.1</EnvironmentSize>
 		<Status>VERIFIED</Status>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<Maintainer>Michael Larabel</Maintainer>
