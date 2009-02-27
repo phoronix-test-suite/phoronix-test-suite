@@ -25,6 +25,7 @@ class gui_gtk implements pts_option_interface
 	public static function run($r)
 	{
 		pts_load_function_set("gui");
+		pts_load_function_set("run");
 		pts_load_function_set("gtk");
 
 		if(!extension_loaded("gtk") && !extension_loaded("php-gtk"))
@@ -468,6 +469,28 @@ class gui_gtk implements pts_option_interface
 					$args_to_pass["DO_NOT_SAVE_RESULTS"] = true;
 				}
 
+				if(pts_is_assignment("GTK_TEST_RUN_OPTIONS_SET"))
+				{
+					$preset_test_options = array();
+					$set_options = pts_read_assignment("GTK_TEST_RUN_OPTIONS_SET");
+
+					foreach($set_options as $test_name => $test_settings)
+					{
+						foreach($test_settings as $name => $value)
+						{
+							if($value instanceOf GtkEntry)
+							{
+								$preset_test_options[$test_name][$name] = $value->get_text();
+							}
+							else if($value instanceOf GtkComboBox)
+							{
+								$preset_test_options[$test_name][$name] = $value->get_active();
+							}
+						}
+					}
+					$args_to_pass["AUTO_TEST_OPTION_SELECTIONS"] = $preset_test_options;
+				}
+
 				pts_run_option_next("run_test", $identifier, $args_to_pass);
 				pts_run_option_next("gui_gtk");
 				break;
@@ -556,8 +579,67 @@ class gui_gtk implements pts_option_interface
 				}
 				else
 				{
+					$test_options = pts_test_options($identifier);
+					$selected_options = array();
 
+					if(count($test_options) == 0)
+					{
+						array_push($menu_items, new GtkLabel("No user options available."));
+					}
 
+					for($i = 0; $i < count($test_options); $i++)
+					{
+						$o = $test_options[$i];
+						$option_count = $o->option_count();
+
+						if($option_count == 0)
+						{
+							// User inputs their option
+							// TODO: could add check to make sure the text field isn't empty when pressed
+							$entry = new GtkEntry();
+							$selected_options[$identifier][$o->get_identifier()] = $entry;
+							array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $entry));
+		
+							//$user_args .= $o->format_option_value_from_input($value);
+						}
+						else
+						{
+							if($option_count == 1)
+							{
+								// Only one option in menu, so auto-select it
+								$bench_choice = 0;
+							}
+							else
+							{
+
+								$combobox = new GtkComboBox();
+
+								if(defined("GObject::TYPE_STRING"))
+								{
+									$model = new GtkListStore(GObject::TYPE_STRING);
+								}
+								else
+								{
+									$model = new GtkListStore(Gtk::TYPE_STRING);
+								}
+
+								$combobox->set_model($model);
+								$cell_renderer = new GtkCellRendererText();
+								$combobox->pack_start($cell_renderer);
+								$combobox->set_attributes($cell_renderer, "text", 0);
+
+								foreach($o->get_all_option_names() as $option_name)
+								{
+									$model->append(array($option_name));
+								}
+								$combobox->set_active(0);
+
+								$selected_options[$identifier][$o->get_identifier()] = $combobox;
+								array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $combobox));
+							}
+						}
+					}
+					pts_set_assignment("GTK_TEST_RUN_OPTIONS_SET", $selected_options);
 				}
 				array_push($menu_items, null);
 

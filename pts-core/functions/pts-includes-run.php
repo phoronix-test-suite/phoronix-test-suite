@@ -154,20 +154,33 @@ function pts_prompt_test_options($identifier)
 		echo pts_string_header("Test Configuration: " . $test_title);
 	}
 
+	if(pts_is_assignment("AUTOMATED_MODE"))
+	{
+		$preset_selections = pts_read_assignment("AUTO_TEST_OPTION_SELECTIONS");
+	}
+
 	for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
 	{
 		$o = $test_options[$this_option_pos];
 		$option_count = $o->option_count();
+		$option_identifier = $o->get_identifier();
 
 		if($option_count == 0)
 		{
 			// User inputs their option
-			do
+			if(pts_is_assignment("AUTOMATED_MODE") && isset($preset_selections[$identifier][$option_identifier]))
 			{
-				echo "\n" . $o->get_name() . "\n" . "Enter Value: ";
-				$value = trim(fgets(STDIN));
+				$value = $preset_selections[$identifier][$option_identifier];
 			}
-			while(empty($value));
+			else
+			{
+				do
+				{
+					echo "\n" . $o->get_name() . "\n" . "Enter Value: ";
+					$value = trim(fgets(STDIN));
+				}
+				while(empty($value));
+			}
 
 			$user_args .= $o->format_option_value_from_input($value);
 		}
@@ -181,20 +194,27 @@ function pts_prompt_test_options($identifier)
 			else
 			{
 				// Have the user select the desired option
-				do
+				if(pts_is_assignment("AUTOMATED_MODE") && isset($preset_selections[$identifier][$option_identifier]))
 				{
-					echo "\n" . $o->get_name() . ":\n";
-
-					$i = 1;
-					foreach($o->get_all_option_names() as $option_name)
-					{
-						echo $i . ": " . $option_name . "\n";
-						$i++;
-					}
-					echo "\nEnter Your Choice: ";
-					$bench_choice = trim(fgets(STDIN));
+					$bench_choice = $preset_selections[$identifier][$option_identifier];
 				}
-				while(($bench_choice = $o->is_valid_select_choice($bench_choice)) === false);
+				else
+				{
+					do
+					{
+						echo "\n" . $o->get_name() . ":\n";
+
+						$i = 1;
+						foreach($o->get_all_option_names() as $option_name)
+						{
+							echo $i . ": " . $option_name . "\n";
+							$i++;
+						}
+						echo "\nEnter Your Choice: ";
+						$bench_choice = trim(fgets(STDIN));
+					}
+					while(($bench_choice = $o->is_valid_select_choice($bench_choice)) === false);
+				}
 			}
 
 			// Format the selected option

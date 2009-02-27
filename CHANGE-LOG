@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rework PTS user agreement handling
 - pts-core: Add support for prompting the PTS user agreement when running the GTK GUI
 - pts-core: Move more test option prompting calculations to pts_test_option object
+- pts-core: Implement test options within the GTK GUI
 - pts: Add autoconf to PTS External Dependencies support
 - pts: Add libtool to PTS External Dependencies support
 - pts: Update vdrift test profile to VDrift 2009-02-15 and make the test profile work to verified state
