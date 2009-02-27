@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>0.1.0</Version>
+		<Version>1.0.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
@@ -12,20 +12,20 @@
 		<ExternalDependencies>sdl-development, build-utilities, glew, glut, jam, scons, vorbis-development, autoconf, libtool</ExternalDependencies>
 		<ProjectURL>http://www.vdrift.net/</ProjectURL>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
+		<EstimatedLength>6</EstimatedLength>
 	</TestProfile>
 	<TestInformation>
-		<Title>vDrift</Title>
+		<Title>VDrift</Title>
 		<Version>2009-02-15</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This test calculates the average frame-rate within vDrift, which is an open-source drift racing game.</Description>
+		<Description>This test calculates the average frame-rate within VDrift, which is an cross-platform, open-source drift racing game.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>auto-resolution</Identifier>
-			<ArgumentPostfix>-multithreaded -nosound -benchmark</ArgumentPostfix>
 			<Menu>
 				<Entry>
 					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>

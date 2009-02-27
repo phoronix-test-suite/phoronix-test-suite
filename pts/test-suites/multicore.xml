@@ -40,4 +40,9 @@
 		<Arguments>-lat 10x10-5%</Arguments>
 		<Description>Local Adaptive Thresholding</Description>
 	</RunTest>
+	<RunTest>
+		<Test>vdrift</Test>
+		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
 </PhoronixTestSuite>

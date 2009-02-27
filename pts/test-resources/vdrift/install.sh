@@ -57,5 +57,5 @@ view_distance = 1000.000000
 zdepth = 24\" > ~/.vdrift/VDrift.config
 
 cd vdrift-2009-02-15/
-./build/vdrift \$@ > \$LOG_FILE 2>&1" > vdrift
+./build/vdrift -multithreaded -nosound -benchmark \$@ > \$LOG_FILE 2>&1" > vdrift
 chmod +x vdrift

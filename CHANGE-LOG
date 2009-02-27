@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Move more of pts-core logic out of gui_gtk and into the generic GUI function set
 - pts-core: When estimated the test's run-time but the test hasn't been installed or run yet, use the EstimatedLength tag from test profile
 - pts-core: Override the LANG and LC_* environmental variables when running tests to not apply any language / locale settings to results
+- pts-core: Rework PTS user agreement handling
 - pts: Add autoconf to PTS External Dependencies support
 - pts: Add libtool to PTS External Dependencies support
 - pts: Update vdrift test profile to VDrift 2009-02-15 and make the test profile work to verified state

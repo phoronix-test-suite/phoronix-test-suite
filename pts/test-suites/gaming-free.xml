@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<TestType>System</TestType>
 		<Title>Free Software Gaming</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -25,5 +25,10 @@
 	</RunTest>
 	<RunTest>
 		<Test>ioquake3-games</Test>
+	</RunTest>
+	<RunTest>
+		<Test>vdrift</Test>
+		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 </PhoronixTestSuite>
