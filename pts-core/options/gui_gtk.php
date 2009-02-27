@@ -35,7 +35,7 @@ class gui_gtk implements pts_option_interface
 
 		gui_gtk::show_main_interface();
 	}
-	public static function kill_gtk_window($window = "")
+	public static function kill_gtk_window()
 	{
 		Gtk::main_quit();
 	}
@@ -1056,6 +1056,57 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_PCQS_WINDOW", $window);
 		$window->show_all();
 		Gtk::main();
+	}
+	public static function process_user_agreement_prompt($event)
+	{
+		pts_set_assignment("AGREED_TO_TERMS", ($event == "yes"));
+		$window = pts_read_assignment("GTK_USER_AGREEMENT_WINDOW");
+		$window->destroy();
+	}
+	public static function pts_user_agreement_prompt($user_agreement)
+	{
+		pts_set_assignment("AGREED_TO_TERMS", false);
+		$window = new pts_gtk_window("Phoronix Test Suite - User Agreement");
+
+		$vbox = new GtkVBox();
+		$vbox->set_spacing(1);
+		$window->add($vbox);
+
+		$scrolled_window = new GtkScrolledWindow();
+		$scrolled_window->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+
+		$text_view = new GtkTextView();
+		$text_buffer = new GtkTextBuffer();
+		$text_buffer->set_text(trim($user_agreement));
+		$text_view->set_buffer($text_buffer);
+		$text_view->set_wrap_mode(GTK_WRAP_WORD);
+		$text_view->set_size_request(540, 250);
+		$scrolled_window->add($text_view);
+		$vbox->pack_start($scrolled_window);
+
+		$vbox->pack_start(new GtkLabel("Do you agree to the user terms listed above?"));
+
+		$button_box = new GtkHBox();
+		$vbox->pack_start($button_box);
+		$return_img = GtkImage::new_from_stock(Gtk::STOCK_CANCEL, Gtk::ICON_SIZE_SMALL_TOOLBAR);
+		$return_button = new GtkButton("Quit");
+		$return_button->connect_simple("clicked", array("gui_gtk", "process_user_agreement_prompt"), "quit");
+		$return_button->set_image($return_img);
+		$return_button->set_size_request(100, 30);
+		$button_box->pack_start($return_button);
+
+		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
+		$continue_button = new GtkButton("Accept To Terms");
+		$continue_button->connect_simple("clicked", array("gui_gtk", "process_user_agreement_prompt"), "yes");
+		$continue_button->set_image($continue_img);
+		$continue_button->set_size_request(100, 30);
+		$button_box->pack_start($continue_button);
+
+		pts_set_assignment("GTK_USER_AGREEMENT_WINDOW", $window);
+		$window->show_all();
+		Gtk::main();
+
+		return pts_read_assignment("AGREED_TO_TERMS");
 	}
 	public static function redraw_main_window()
 	{
