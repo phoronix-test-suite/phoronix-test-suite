@@ -6,12 +6,12 @@
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
-		<Status>BROKEN</Status>
+		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>sdl-development, build-utilities, glew, glut, jam, scons, vorbis-development, autoconf, libtool</ExternalDependencies>
 		<ProjectURL>http://www.vdrift.net/</ProjectURL>
-		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>vDrift</Title>
@@ -22,12 +22,10 @@
 		<Description>This test calculates the average frame-rate within vDrift, which is an open-source drift racing game.</Description>
 	</TestInformation>
 	<TestSettings>
-		<Default>
-			<Arguments>-multithreaded -benchmark</Arguments>
-		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>auto-resolution</Identifier>
+			<ArgumentPostfix>-multithreaded -nosound -benchmark</ArgumentPostfix>
 			<Menu>
 				<Entry>
 					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
