@@ -120,7 +120,7 @@ function pts_download_test_files($identifier)
 					{
 						$download_append = "\nEstimated Download Size: " . $size . " MB";
 
-						if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
+						if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($size + 50))
 						{
 							echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
 							return false;

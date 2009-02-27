@@ -132,6 +132,31 @@ function sw_os_filesystem()
 					break;
 			}
 		}
+
+		if(IS_LINUX && strpos($fs, "UNKNOWN") !== false)
+		{
+			$dmesg_output = shell_exec("dmesg 2>&1");
+			$fs_r = array();
+
+			if(strpos($dmesg_output, "squashfs") != false)
+			{
+				array_push($fs_r, "SquashFS");
+			}
+
+			if(strpos($dmesg_output, "aufs") != false)
+			{
+				array_push($fs_r, "AuFS");
+			}
+			else if(strpos($dmesg_output, "unionfs") != false)
+			{
+				array_push($fs_r, "UnionFS");
+			}
+
+			if(count($fs_r) > 0)
+			{
+				$fs = implode(" + ", $fs_r);
+			}
+		}
 	}
 
 	if(empty($fs) || IS_BSD)
