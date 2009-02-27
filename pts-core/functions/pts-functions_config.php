@@ -41,25 +41,6 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 
 	$read_config = new pts_config_tandem_XmlReader();
 
-	$UserAgreement = pts_read_user_config(P_OPTION_USER_AGREEMENT, "", $read_config);
-	$UserAgreement_MD5 = md5_file(PTS_PATH . "pts-core/user-agreement.txt");
-
-	if($UserAgreement != $UserAgreement_MD5)
-	{
-		echo pts_string_header("PHORONIX TEST SUITE - WELCOME");
-		echo wordwrap(file_get_contents(PTS_PATH . "pts-core/user-agreement.txt"), 65);
-		$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
-
-		if($agree)
-		{
-			echo "\n";
-		}
-		else
-		{
-			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
-		}
-	}
-
 	if($UserName == null)
 	{
 		$UserName = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User", $read_config);
@@ -129,7 +110,7 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 
 	$config->addXmlObject(P_OPTION_TESTCORE_LASTVERSION, 6, $last_version);
 	$config->addXmlObject(P_OPTION_TESTCORE_LASTTIME, 6, $last_time);
-	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 7, $UserAgreement_MD5);
+	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 7, (defined("PTS_USER_AGREEMENT_CHECK") ? PTS_USER_AGREEMENT_CHECK : pts_read_user_config(P_OPTION_USER_AGREEMENT, "", $read_config)));
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
 	pts_copy(STATIC_DIR . "pts-user-config-viewer.xsl", PTS_USER_DIR . "pts-user-config-viewer.xsl");
@@ -352,6 +333,52 @@ function pts_download_cache()
 	}
 
 	return $dir;
+}
+function pts_user_agreement_check($command)
+{
+	$config_md5 = pts_read_user_config(P_OPTION_USER_AGREEMENT, "");
+	$current_md5 = md5_file(PTS_PATH . "pts-core/user-agreement.txt");
+
+	if($config_md5 != $current_md5)
+	{
+		$prompt_in_method = false;
+
+		if(is_file(PTS_PATH . "pts-core/options/" . $command . ".php"))
+		{
+			if(!class_exists($command, false))
+			{
+				include(PTS_PATH . "pts-core/options/" . $command . ".php");
+			}
+			if(method_exists($command, "pts_user_agreement_prompt"))
+			{
+				$prompt_in_method = true;
+			}
+		}
+
+		$user_agreement = file_get_contents(PTS_PATH . "pts-core/user-agreement.txt");
+
+		if($prompt_in_method)
+		{
+			eval("\$agree = " . $command . "::pts_user_agreement_prompt(\$user_agreement);");
+		}
+		else
+		{
+			echo pts_string_header("PHORONIX TEST SUITE - WELCOME");
+			echo wordwrap($user_agreement, 65);
+			$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
+		}
+
+		if($agree)
+		{
+			echo "\n";
+		}
+		else
+		{
+			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
+		}
+	}
+
+	return $current_md5;
 }
 
 ?>

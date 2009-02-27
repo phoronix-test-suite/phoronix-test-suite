@@ -24,6 +24,13 @@
 // Phoronix Test Suite - Functions
 function pts_run_option_command($command, $pass_args = null, $preset_assignments = "")
 {
+	if(!defined("PTS_USER_AGREEMENT_CHECK"))
+	{
+		// Phoronix Test Suite User Agreement Check
+		$agree = pts_user_agreement_check($command);
+		define("PTS_USER_AGREEMENT_CHECK", $agree);
+	}
+
 	pts_clear_assignments();
 	pts_set_assignment(array("START_TIME", "THIS_OPTION_IDENTIFIER"), time()); // For now THIS_OPTION_IDENTIFIER is also time
 	pts_set_assignment("COMMAND", $command);
