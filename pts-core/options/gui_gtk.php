@@ -540,31 +540,50 @@ class gui_gtk implements pts_option_interface
 				$window_type = "menu";
 				$message = "The Phoronix Test Suite will now run " . $identifier . ".";
 
+				$menu_items = array();
+
+				$label_options = new GtkLabel("Test Options");
+				$label_options->modify_font(new PangoFontDescription("Sans 19"));
+				array_push($menu_items, $label_options);
+
+				if(pts_read_assignment("GTK_BATCH_MODE") != false)
+				{
+					array_push($menu_items, new GtkLabel("No user options, running in batch mode."));
+				}
+				else if(pts_read_assignment("GTK_DEFAULTS_MODE") != false)
+				{
+					array_push($menu_items, new GtkLabel("No user options, running in defaults mode."));
+				}
+				else
+				{
+
+
+				}
+				array_push($menu_items, null);
+
 				$label_save = new GtkLabel("Results");
 				$label_save->modify_font(new PangoFontDescription("Sans 19"));
+				array_push($menu_items, $label_save);
 
 				$save_results = new GtkCheckButton("Save Results");
 				$save_results->set_active(true);
 				pts_set_assignment("GTK_OBJ_SAVE_RESULTS", $save_results);
+				array_push($menu_items, $save_results);
 
 				$save_name = new GtkEntry();
 				pts_set_assignment("GTK_OBJ_SAVE_NAME", $save_name);
+				array_push($menu_items, array(new GtkLabel("Save Name"), $save_name));
 
 				$test_identifier = new GtkEntry();
 				pts_set_assignment("GTK_OBJ_TEST_IDENTIFIER", $test_identifier);
+				array_push($menu_items, array(new GtkLabel("Test Identifier"), $test_identifier));
 
 				$global_upload = new GtkCheckButton("Upload Results To Phoronix Global");
 				$global_upload->set_active(true);
 				pts_set_assignment("GTK_OBJ_GLOBAL_UPLOAD", $global_upload);
+				array_push($menu_items, $global_upload);
 
-				$menu_items = array(
-				$label_save,
-				$save_results,
-				array(new GtkLabel("Save Name"), $save_name),
-				array(new GtkLabel("Test Identifier"), $test_identifier),
-				$global_upload,
-				null
-				);
+				array_push($menu_items, null);
 				break;
 		//	default:
 		//		return;
@@ -1060,6 +1079,7 @@ class gui_gtk implements pts_option_interface
 	public static function process_user_agreement_prompt($event)
 	{
 		pts_set_assignment("AGREED_TO_TERMS", ($event == "yes"));
+
 		$window = pts_read_assignment("GTK_USER_AGREEMENT_WINDOW");
 		$window->destroy();
 	}

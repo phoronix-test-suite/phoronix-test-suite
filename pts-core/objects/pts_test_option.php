@@ -103,6 +103,51 @@ class pts_test_option
 	{
 		return count($this->options);
 	}
+	public function format_option_value_from_input($input)
+	{
+		return $this->get_option_prefix() . $input . $this->get_option_postfix();
+	}
+	public function format_option_value_from_select($select_pos)
+	{
+		$input = $this->get_option_value($select_pos);
+
+		return $this->format_option_value_from_input($input);
+	}
+	public function format_option_display_from_select($select_pos)
+	{
+		$display_name = $this->get_option_name($select_pos);
+
+		if(($cut_point = strpos($display_name, "(")) > 1 && strpos($display_name, ")") > $cut_point)
+		{
+			$display_name = substr($display_name, 0, $cut_point);
+		}
+
+		return $this->get_name() . ": " . $display_name;
+	}
+	public function is_valid_select_choice($select_pos)
+	{
+		$valid = false;
+
+		if($select_pos > 0 && $select_pos <= $this->option_count())
+		{
+			$valid = ($select_pos - 1);
+		}
+		else if(in_array($select_pos, $this->get_all_option_names()))
+		{
+			$match_made = false;
+
+			for($i = 0; $i < $this->option_count() && !$match_made; $i++)
+			{
+				if($this->get_option_name($i) == $select_pos)
+				{
+					$valid = $i;
+					$match_made = true;
+				}
+			}
+		}
+
+		return $valid;
+	}
 }
 
 ?>

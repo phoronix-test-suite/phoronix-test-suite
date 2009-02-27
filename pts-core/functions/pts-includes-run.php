@@ -165,72 +165,47 @@ function pts_prompt_test_options($identifier)
 			do
 			{
 				echo "\n" . $o->get_name() . "\n" . "Enter Value: ";
-				$value = strtolower(trim(fgets(STDIN)));
+				$value = trim(fgets(STDIN));
 			}
 			while(empty($value));
 
-			$user_args .= $o->get_option_prefix() . $value . $o->get_option_postfix();
+			$user_args .= $o->format_option_value_from_input($value);
 		}
 		else
 		{
 			if($option_count == 1)
 			{
 				// Only one option in menu, so auto-select it
-				$bench_choice = 1;
+				$bench_choice = 0;
 			}
 			else
 			{
 				// Have the user select the desired option
-				echo "\n" . $o->get_name() . ":\n";
-				$all_option_names = $o->get_all_option_names();
-
 				do
 				{
-					echo "\n";
-					for($i = 0; $i < $option_count; $i++)
+					echo "\n" . $o->get_name() . ":\n";
+
+					$i = 1;
+					foreach($o->get_all_option_names() as $option_name)
 					{
-						echo ($i + 1) . ": " . $o->get_option_name($i) . "\n";
+						echo $i . ": " . $option_name . "\n";
+						$i++;
 					}
 					echo "\nEnter Your Choice: ";
 					$bench_choice = trim(fgets(STDIN));
 				}
-				while(($bench_choice < 1 || $bench_choice > $option_count) && !in_array($bench_choice, $all_option_names));
-
-				if(!is_numeric($bench_choice) && in_array($bench_choice, $all_option_names))
-				{
-					$match_made = false;
-
-					for($i = 0; $i < $option_count && !$match_made; $i++)
-					{
-						if($o->get_option_name($i) == $bench_choice)
-						{
-							$bench_choice = ($i + 1);
-							$match_made = true;
-						}
-					}
-				}
+				while(($bench_choice = $o->is_valid_select_choice($bench_choice)) === false);
 			}
 
 			// Format the selected option
-			$option_display_name = $o->get_option_name(($bench_choice - 1));
-
-			if(($cut_point = strpos($option_display_name, "(")) > 1 && strpos($option_display_name, ")") > $cut_point)
-			{
-				$option_display_name = substr($option_display_name, 0, $cut_point);
-			}
-
-			if(count($test_options) > 1)
-			{
-				$text_args .= $o->get_name() . ": ";
-			}
-			$text_args .= $option_display_name;
+			$text_args .= $o->format_option_display_from_select($bench_choice);
 
 			if($this_option_pos < (count($test_options) - 1))
 			{
 				$text_args .= " - ";
 			}
 
-			$user_args .= $o->get_option_prefix() . $o->get_option_value(($bench_choice - 1)) . $o->get_option_postfix() . " ";
+			$user_args .= $o->format_option_value_from_select($bench_choice) . " ";
 		}
 	}
 
