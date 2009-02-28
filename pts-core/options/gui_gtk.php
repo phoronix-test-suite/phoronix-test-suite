@@ -239,19 +239,8 @@ class gui_gtk implements pts_option_interface
 			$gtk_obj_main_frame->remove($gtk_obj_main_frame_box);
 		}
 
-		$root_vbox = new GtkVBox();
-		$gtk_obj_main_frame->add($root_vbox);
-		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $root_vbox);
-
-		$hbox = new GtkHBox();
-		$root_vbox->add($hbox);
-
-		$vbox_left = new GtkVBox();
-		$vbox_right = new GtkVBox();
-		$hbox->pack_start($vbox_left);
-		$hbox->pack_start($vbox_right);
-
 		$info_r = array();
+		$append_elements = array();
 
 		if(!pts_is_assignment("GTK_ITEM_SELECTED_ONCE"))
 		{
@@ -311,15 +300,8 @@ class gui_gtk implements pts_option_interface
 				$info_r["Environment Size"] = $test_profile->get_environment_size() . " MB";
 			}
 
-			$label_description_scroll = new GtkScrolledWindow();
-			$label_description_scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
-			$label_description_scroll->set_shadow_type(Gtk::SHADOW_NONE);
-
-			$label_description = new GtkLabel($test_profile->get_description());
-			$label_description->set_line_wrap(true);
-			$label_description->set_size_request(260, -1);
-			$label_description_scroll->add_with_viewport($label_description);
-			$root_vbox->add($label_description_scroll);
+			$textview_description = new pts_gtk_text_area($test_profile->get_description(), 260, -1);
+			array_push($append_elements, $textview_description);
 		}
 		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 		{
@@ -329,26 +311,32 @@ class gui_gtk implements pts_option_interface
 			$info_r["Maintainer"] = $test_suite->get_maintainer();
 			$info_r["Suite Type"] = $test_suite->get_suite_type();
 
-			$label_description_scroll = new GtkScrolledWindow();
-			$label_description_scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
-			$label_description_scroll->set_shadow_type(Gtk::SHADOW_NONE);
-			$label_description = new GtkLabel($test_suite->get_description());
-			$label_description->set_line_wrap(true);
-			$label_description->set_size_request(260, -1);
-			$label_description_scroll->add_with_viewport($label_description);
-			$root_vbox->add($label_description_scroll);
+			$textview_description = new pts_gtk_text_area($test_suite->get_description(), 260, -1);
+			array_push($append_elements, $textview_description);
 		}
 
+		$titles = array();
+		$values = array();
 		foreach($info_r as $head => $show)
 		{
 			$label_head = new GtkLabel("  " . $head . ": ");
 			$label_head->set_alignment(0, 0);
-			$vbox_left->pack_start($label_head);
+			array_push($titles, $label_head);
 
 			$label_show = new GtkLabel($show);
 			$label_show->set_alignment(0, 0);
-			$vbox_right->pack_start($label_show);
+			array_push($values, $label_show);
 		}
+
+		$elements = array(array($titles, $values));
+
+		foreach($append_elements as $e)
+		{
+			array_push($elements, $e);
+		}
+
+		$box = pts_gtk_array_to_boxes($gtk_obj_main_frame, $elements);
+		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $box);
 
 		gui_gtk::update_run_button();
 		gui_gtk::redraw_main_window();
