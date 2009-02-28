@@ -35,6 +35,7 @@ function pts_client_init()
 function pts_define_directories()
 {
 	// User's home directory for storing results, module files, test installations, etc.
+	define("PTS_CORE_PATH", PTS_PATH . "pts-core/");
 	define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
 
 	// Distribution External Dependency Locations
@@ -43,12 +44,12 @@ function pts_define_directories()
 
 	// Misc Locations
 	define("ETC_DIR", PTS_PATH . "pts/etc/");
-	define("MODULE_DIR", PTS_PATH . "pts-core/modules/");
+	define("MODULE_DIR", PTS_CORE_PATH . "modules/");
 	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
-	define("RESULTS_VIEWER_DIR", PTS_PATH . "pts-core/results-viewer/");
-	define("TEST_LIBRARIES_DIR", PTS_PATH . "pts-core/test-libraries/");
-	define("STATIC_DIR", PTS_PATH . "pts-core/static/");
-	define("MEDIA_DIR", PTS_PATH . "pts-core/media/");
+	define("RESULTS_VIEWER_DIR", PTS_CORE_PATH . "results-viewer/");
+	define("TEST_LIBRARIES_DIR", PTS_CORE_PATH . "test-libraries/");
+	define("STATIC_DIR", PTS_CORE_PATH . "static/");
+	define("MEDIA_DIR", PTS_CORE_PATH . "media/");
 	define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 	// Test & Suite Locations

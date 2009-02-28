@@ -28,7 +28,7 @@ class show_result implements pts_option_interface
 
 		if($URL != false)
 		{
-			pts_run_shell_script(PTS_PATH . "pts-core/scripts/launch-browser.sh", $URL);
+			pts_run_shell_script(PTS_CORE_PATH . "scripts/launch-browser.sh", $URL);
 		}
 		else
 		{
