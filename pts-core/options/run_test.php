@@ -373,8 +373,14 @@ class run_test implements pts_option_interface
 				pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $proposed_file_name);
 				pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
 
-				$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL") != false ? true : 
-				pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
+				if(pts_is_assignment("AUTOMATED_MODE"))
+				{
+					$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL");
+				}
+				else
+				{
+					$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
+				}
 
 				if($upload_results)
 				{

@@ -140,6 +140,53 @@ function pts_gtk_add_table($headers, $data, $connect_to = null)
 
 	return $scrolled_window;
 }
+function pts_gtk_array_to_boxes($widget, $items, $set_spacing = -1, $append_to = false)
+{
+	if($append_to)
+	{
+		$add_to = $widget;
+	}
+	else if($widget instanceOf GtkHBox)
+	{
+		$add_to = new GtkVBox();
+		$widget->pack_start($add_to);
+		$add_to->set_homogeneous(true);
+	}
+	else if($widget instanceOf GtkVBox)
+	{
+		$add_to = new GtkHBox();
+		$widget->pack_start($add_to);
+		$add_to->set_homogeneous(true);
+	}
+	else
+	{
+		$add_to = new GtkVBox();
+		$widget->add($add_to);	
+	}
+
+	if($set_spacing != -1)
+	{
+		$add_to->set_spacing($set_spacing);
+	}
+
+	foreach($items as $item)
+	{
+		if(is_array($item))
+		{
+			pts_gtk_array_to_boxes($add_to, $item);
+		}
+		else if($item == null)
+		{
+			$add_to->pack_start(new GtkLabel(" "));
+		}
+		else
+		{
+			$add_to->pack_start($item);
+		}
+	}
+
+	return $add_to;
+}
 function pts_gtk_selected_item($object)
 {
 	list($model, $iter) = $object->get_selected();

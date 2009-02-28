@@ -684,31 +684,7 @@ class gui_gtk implements pts_option_interface
 		}
 		else if($window_type == "menu")
 		{
-			$temp_boxes = array();
-
-			for($i = 0; $i < count($menu_items); $i++)
-			{
-				if(is_array($menu_items[$i]))
-				{
-					$temp_boxes[$i] = new GtkHBox();
-					$temp_boxes[$i]->set_homogeneous(true);
-
-					for($j = 0; $j < count($menu_items[$i]); $j++)
-					{
-						$temp_boxes[$i]->pack_start($menu_items[$i][$j]);
-					}
-
-					$vbox->pack_start($temp_boxes[$i]);
-				}
-				else if($menu_items[$i] == null)
-				{
-					$vbox->pack_start(new GtkLabel(" "));
-				}
-				else
-				{
-					$vbox->pack_start($menu_items[$i]);
-				}
-			}
+			pts_gtk_array_to_boxes($vbox, $menu_items, -1, true);
 		}
 
 		$button_box = new GtkHBox();
@@ -956,28 +932,22 @@ class gui_gtk implements pts_option_interface
 		$window = new pts_gtk_window("About", 210, 260);
 		$window->set_resizable(false);
 
-		$vbox = new GtkVBox();
-		$window->add($vbox);
-
 		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
 		$logo->set_size_request(158, 82);
-		$vbox->pack_start($logo);
 
 		$label_codename = new GtkLabel(ucwords(strtolower(PTS_CODENAME)));
 		$label_codename->modify_font(new PangoFontDescription("Sans 19"));
-		$vbox->pack_start($label_codename);
 
 		$label_version = new GtkLabel("Version " . PTS_VERSION);
-		$vbox->pack_start($label_version);
 
 		$event_box = new GtkEventBox();
 		$label_url = new GtkLabel("www.phoronix-test-suite.com");
 		$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
 		$event_box->add($label_url);
-		$vbox->pack_start($event_box);
 
 		$label_copyright = new GtkLabel("Copyright By Phoronix Media");
-		$vbox->pack_start($label_copyright);
+
+		pts_gtk_array_to_boxes($window, array($logo, $label_codename, $label_version, $event_box, $label_copyright));
 
 		$window->show_all();
 		Gtk::main();
@@ -1192,13 +1162,8 @@ class gui_gtk implements pts_option_interface
 		$window = new pts_gtk_window("System Information");
 		$window->set_resizable(false);
 
-		$vbox = new GtkVBox();
-		$window->add($vbox);
-
 		$notebook = new GtkNotebook();
 		$notebook->set_size_request(540, 250);
-		$vbox->pack_start($notebook);
-		$vbox->set_spacing(3);
 
 		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", "Hardware");
 		$hw = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)));
@@ -1211,7 +1176,8 @@ class gui_gtk implements pts_option_interface
 		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors", array("gui_gtk", "system_info_change_notebook"));
 
 		$copy_button = new pts_gtk_button("Copy To Clipboard", array("gui_gtk", "system_info_copy_to_clipboard"), null);
-		$vbox->pack_start($copy_button);
+
+		pts_gtk_array_to_boxes($window, array($notebook, $copy_button), 3);
 
 		$window->show_all();
 		Gtk::main();
@@ -1251,21 +1217,15 @@ class gui_gtk implements pts_option_interface
 
 		$window = new pts_gtk_window("Phoronix Certification & Qualification Suite");
 
-		$vbox = new GtkVBox();
-		$vbox->set_spacing(4);
-		$window->add($vbox);
 
 		$textview_pcqs = new pts_gtk_text_area($license, 540, 250);
-		$vbox->pack_start($textview_pcqs);
 
-		$button_box = new GtkHBox();
-		$vbox->pack_start($button_box);
 
 		$return_button = new pts_gtk_button("Return", array("gui_gtk", "pcqs_button_clicked"), "return", 100, 30, Gtk::STOCK_CANCEL);
-		$button_box->pack_start($return_button);
 
 		$continue_button = new pts_gtk_button("Install", array("gui_gtk", "pcqs_button_clicked"), "install", 100, 30, Gtk::STOCK_APPLY);
-		$button_box->pack_start($continue_button);
+
+		pts_gtk_array_to_boxes($window, array($textview_pcqs, array($return_button, $continue_button)), 4);
 
 		pts_set_assignment("GTK_OBJ_PCQS_WINDOW", $window);
 		$window->show_all();
@@ -1283,23 +1243,12 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("AGREED_TO_TERMS", false);
 		$window = new pts_gtk_window("Phoronix Test Suite - User Agreement");
 
-		$vbox = new GtkVBox();
-		$vbox->set_spacing(1);
-		$window->add($vbox);
-
 		$textview_agreement = new pts_gtk_text_area(trim($user_agreement), 540, 250);
-		$vbox->pack_start($textview_agreement);
-
-		$vbox->pack_start(new GtkLabel("Do you agree to the user terms listed above?"));
-
-		$button_box = new GtkHBox();
-		$vbox->pack_start($button_box);
 
 		$return_button = new pts_gtk_button("Quit", array("gui_gtk", "process_user_agreement_prompt"), "quit", 100, 30, Gtk::STOCK_CANCEL);
-		$button_box->pack_start($return_button);
-
 		$continue_button = new pts_gtk_button("Accept To Terms", array("gui_gtk", "process_user_agreement_prompt"), "yes", 100, 30, Gtk::STOCK_APPLY);
-		$button_box->pack_start($continue_button);
+
+		pts_gtk_array_to_boxes($window, array($textview_agreement, new GtkLabel("Do you agree to the user terms listed above?"), array($return_button, $continue_button)), 1);
 
 		pts_set_assignment("GTK_USER_AGREEMENT_WINDOW", $window);
 		$window->show_all();
