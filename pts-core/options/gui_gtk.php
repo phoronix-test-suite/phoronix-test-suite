@@ -141,8 +141,7 @@ class gui_gtk implements pts_option_interface
 			$main_frame_vbox->pack_start(new GtkLabel(" "));
 			if(!empty($i))
 			{
-				$tr_button = new GtkButton("View Test Results");
-				$tr_button->connect_simple("clicked", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $i . "/composite.xml");
+				$tr_button = new pts_gtk_button("View Test Results", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $i . "/composite.xml");
 				$main_frame_vbox->pack_start($tr_button);
 			}
 			if(!empty($ti))
@@ -154,8 +153,7 @@ class gui_gtk implements pts_option_interface
 			$main_frame_vbox->pack_start(new GtkLabel(" "));
 			if(!empty($u))
 			{
-				$pg_button = new GtkButton("View On Phoronix Global");
-				$pg_button->connect_simple("clicked", array("gui_gtk", "launch_web_browser"), $u);
+				$pg_button = new pts_gtk_button("View On Phoronix Global", array("gui_gtk", "launch_web_browser"), $u);
 				$main_frame_vbox->pack_start($pg_button);
 			}
 			if(!empty($p))
@@ -214,26 +212,15 @@ class gui_gtk implements pts_option_interface
 		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_defaults);
 		$check_mode_defaults->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_batch);
 
-		$details_img = GtkImage::new_from_stock(Gtk::STOCK_FIND, Gtk::ICON_SIZE_SMALL_TOOLBAR);
-		$details_button = new GtkButton();
-		$details_button->connect_simple("clicked", array("gui_gtk", "details_button_clicked"));
-		$details_button->set_image($details_img);
-		$details_button->set_size_request(150, -1);
+		$details_button = new pts_gtk_button("More Information", array("gui_gtk", "details_button_clicked"), null, 150, -1, Gtk::STOCK_FIND);
 		$details_button->set_sensitive(false);
-
-		$bottom_hbox->pack_start($details_button);
-		$details_button->set_label("More Information");
 		pts_set_assignment("GTK_OBJ_DETAILS_BUTTON", $details_button);
+		$bottom_hbox->pack_start($details_button);
 
-		$run_img = GtkImage::new_from_stock(Gtk::STOCK_EXECUTE, Gtk::ICON_SIZE_SMALL_TOOLBAR);
-		$run_button = new GtkButton("Run");
-		$run_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"));
-		$run_button->set_image($run_img);
-		$run_button->set_size_request(100, -1);
+		$run_button = new pts_gtk_button("Run", array("gui_gtk", "show_run_confirmation_interface"), null, 100, -1, Gtk::STOCK_EXECUTE);
 		$run_button->set_sensitive(false);
-
-		$bottom_hbox->pack_start($run_button);
 		pts_set_assignment("GTK_OBJ_RUN_BUTTON", $run_button);
+		$bottom_hbox->pack_start($run_button);
 
 		$window->show_all();
 		Gtk::main();
@@ -726,11 +713,8 @@ class gui_gtk implements pts_option_interface
 
 		$button_box = new GtkHBox();
 		$vbox->pack_start($button_box);
-		$return_img = GtkImage::new_from_stock(Gtk::STOCK_CANCEL, Gtk::ICON_SIZE_SMALL_TOOLBAR);
-		$return_button = new GtkButton("Return");
-		$return_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), "return", $identifier);
-		$return_button->set_image($return_img);
-		$return_button->set_size_request(100, 30);
+
+		$return_button = new pts_gtk_button("Return", array("gui_gtk", "confirmation_button_clicked"), "return", 100, 30, Gtk::STOCK_CANCEL);
 		$button_box->pack_start($return_button);
 
 		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
@@ -1107,18 +1091,11 @@ class gui_gtk implements pts_option_interface
 
 		$button_box = new GtkHBox();
 		$vbox->pack_start($button_box);
-		$return_img = GtkImage::new_from_stock(Gtk::STOCK_HELP, Gtk::ICON_SIZE_SMALL_TOOLBAR);
-		$return_button = new GtkButton("Help");
-		$return_button->connect_simple("clicked", array("gui_gtk", "launch_web_browser"), PTS_USER_DIR . "user-config.xml", $identifier);
-		$return_button->set_image($return_img);
-		$return_button->set_size_request(100, 30);
+
+		$return_button = new pts_gtk_button("Help", array("gui_gtk", "launch_web_browser"), PTS_USER_DIR . "user-config.xml", 100, 30, Gtk::STOCK_HELP);
 		$button_box->pack_start($return_button);
 
-		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
-		$continue_button = new GtkButton("Save");
-		$continue_button->connect_simple("clicked", array("gui_gtk", "preferences_button_clicked"), "save", $identifier);
-		$continue_button->set_image($continue_img);
-		$continue_button->set_size_request(100, 30);
+		$continue_button = new pts_gtk_button("Save", array("gui_gtk", "preferences_button_clicked"), "save", 100, 30, Gtk::STOCK_APPLY);
 		$button_box->pack_start($continue_button);
 
 		pts_set_assignment("GTK_OBJ_PREFERENCES_WINDOW", $window);
@@ -1233,8 +1210,7 @@ class gui_gtk implements pts_option_interface
 		$sensors = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)));
 		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors", array("gui_gtk", "system_info_change_notebook"));
 
-		$copy_button = new GtkButton("Copy To Clipboard");
-		$copy_button->connect_simple("clicked", array("gui_gtk", "system_info_copy_to_clipboard"));
+		$copy_button = new pts_gtk_button("Copy To Clipboard", array("gui_gtk", "system_info_copy_to_clipboard"), null);
 		$vbox->pack_start($copy_button);
 
 		$window->show_all();
@@ -1284,18 +1260,11 @@ class gui_gtk implements pts_option_interface
 
 		$button_box = new GtkHBox();
 		$vbox->pack_start($button_box);
-		$return_img = GtkImage::new_from_stock(Gtk::STOCK_CANCEL, Gtk::ICON_SIZE_SMALL_TOOLBAR);
-		$return_button = new GtkButton("Return");
-		$return_button->connect_simple("clicked", array("gui_gtk", "pcqs_button_clicked"), "return");
-		$return_button->set_image($return_img);
-		$return_button->set_size_request(100, 30);
+
+		$return_button = new pts_gtk_button("Return", array("gui_gtk", "pcqs_button_clicked"), "return", 100, 30, Gtk::STOCK_CANCEL);
 		$button_box->pack_start($return_button);
 
-		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
-		$continue_button = new GtkButton("Install");
-		$continue_button->connect_simple("clicked", array("gui_gtk", "pcqs_button_clicked"), "install");
-		$continue_button->set_image($continue_img);
-		$continue_button->set_size_request(100, 30);
+		$continue_button = new pts_gtk_button("Install", array("gui_gtk", "pcqs_button_clicked"), "install", 100, 30, Gtk::STOCK_APPLY);
 		$button_box->pack_start($continue_button);
 
 		pts_set_assignment("GTK_OBJ_PCQS_WINDOW", $window);
@@ -1325,18 +1294,11 @@ class gui_gtk implements pts_option_interface
 
 		$button_box = new GtkHBox();
 		$vbox->pack_start($button_box);
-		$return_img = GtkImage::new_from_stock(Gtk::STOCK_CANCEL, Gtk::ICON_SIZE_SMALL_TOOLBAR);
-		$return_button = new GtkButton("Quit");
-		$return_button->connect_simple("clicked", array("gui_gtk", "process_user_agreement_prompt"), "quit");
-		$return_button->set_image($return_img);
-		$return_button->set_size_request(100, 30);
+
+		$return_button = new pts_gtk_button("Quit", array("gui_gtk", "process_user_agreement_prompt"), "quit", 100, 30, Gtk::STOCK_CANCEL);
 		$button_box->pack_start($return_button);
 
-		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
-		$continue_button = new GtkButton("Accept To Terms");
-		$continue_button->connect_simple("clicked", array("gui_gtk", "process_user_agreement_prompt"), "yes");
-		$continue_button->set_image($continue_img);
-		$continue_button->set_size_request(100, 30);
+		$continue_button = new pts_gtk_button("Accept To Terms", array("gui_gtk", "process_user_agreement_prompt"), "yes", 100, 30, Gtk::STOCK_APPLY);
 		$button_box->pack_start($continue_button);
 
 		pts_set_assignment("GTK_USER_AGREEMENT_WINDOW", $window);
