@@ -96,8 +96,7 @@ class gui_gtk implements pts_option_interface
 
 		$main_menu_items = array(
 		"File" => $file_menu,
-		"Edit" => array($refresh_graphs, null, new pts_gtk_menu_item("Batch Mode Setup", array("gui_gtk", "show_batch_preferences_interface")),
-		new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), "STRING", Gtk::STOCK_PREFERENCES)),
+		"Edit" => array($refresh_graphs, null, new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), null, Gtk::STOCK_PREFERENCES)),
 		"View" => $view_menu,
 		"Tools" => array($build_suite, null, $analyze_runs, $analyze_batch),
 		"Help" => array(
@@ -944,39 +943,25 @@ class gui_gtk implements pts_option_interface
 	{
 		gui_gtk::show_preferences_interface("BATCH");
 	}
-	public static function show_preferences_interface($type = "NORMAL")
+	public static function show_preferences_interface()
 	{
-		if($type == "BATCH")
-		{
-			$editable_preferences = array(
-			P_OPTION_BATCH_SAVERESULTS,
-			P_OPTION_BATCH_LAUNCHBROWSER,
-			P_OPTION_BATCH_UPLOADRESULTS,
-			P_OPTION_BATCH_PROMPTIDENTIFIER,
-			P_OPTION_BATCH_PROMPTDESCRIPTION,
-			P_OPTION_BATCH_PROMPTSAVENAME
-			);
-		}
-		else
-		{
-			$editable_preferences = array(
-			P_OPTION_TEST_REMOVEDOWNLOADS,
-			P_OPTION_CACHE_SEARCHMEDIA,
-			P_OPTION_CACHE_SYMLINK,
-			P_OPTION_PROMPT_DOWNLOADLOC,
-			P_OPTION_TEST_ENVIRONMENT,
-			P_OPTION_CACHE_DIRECTORY,
-			P_OPTION_TEST_SLEEPTIME,
-			P_OPTION_LOG_VSYSDETAILS,
-			P_OPTION_LOG_BENCHMARKFILES
-			);
-		}
-
-		for($i = 0; $i < count($editable_preferences); $i++)
-		{
-			$combobox[$i] = new GtkComboBox();
-			// TODO: For some reason creating ComboBoxes lower down there creates a seg fault
-		}
+		$editable_preferences = array(
+		P_OPTION_TEST_REMOVEDOWNLOADS,
+		P_OPTION_CACHE_SEARCHMEDIA,
+		P_OPTION_CACHE_SYMLINK,
+		P_OPTION_PROMPT_DOWNLOADLOC,
+		P_OPTION_TEST_ENVIRONMENT,
+		P_OPTION_CACHE_DIRECTORY,
+		P_OPTION_TEST_SLEEPTIME,
+		P_OPTION_LOG_VSYSDETAILS,
+		P_OPTION_LOG_BENCHMARKFILES,
+		P_OPTION_BATCH_SAVERESULTS,
+		P_OPTION_BATCH_LAUNCHBROWSER,
+		P_OPTION_BATCH_UPLOADRESULTS,
+		P_OPTION_BATCH_PROMPTIDENTIFIER,
+		P_OPTION_BATCH_PROMPTDESCRIPTION,
+		P_OPTION_BATCH_PROMPTSAVENAME
+		);
 
 		$window = new pts_gtk_window("Preferences");
 		$window->set_resizable(false);
@@ -986,23 +971,31 @@ class gui_gtk implements pts_option_interface
 
 		$previous_heading = null;
 		$read_config = new pts_config_tandem_XmlReader();
+
 		$i = 0;
+		$pages = 0;
+		$page_items = array();
 		$preference_objects = array();
+
+		$notebook = new GtkNotebook();
+
 		foreach($editable_preferences as $preference)
 		{
 			if(($h = pts_extract_identifier_from_path($preference)) != $previous_heading)
 			{
-				$label_{$h} = new GtkLabel($h . ":");
-				$label_{$h}->modify_font(new PangoFontDescription("Sans 19"));
-				$vbox->pack_start($label_{$h});
+				if($pages > 0)
+				{
+					$vbox_page_{$pages} = new GtkVBox();
+					pts_gtk_array_to_boxes($vbox_page_{$pages}, $page_items, 1, true);
+					$notebook->append_page($vbox_page_{$pages}, new GtkLabel($previous_heading));
+				}
+
 				$previous_heading = $h;
+				$pages++;
+				$page_items = array();
 			}
 
 			$pref = basename($preference);
-
-			$hbox_{$pref} = new GtkHBox();
-			$hbox_{$pref}->set_homogeneous(true);
-			$hbox_{$pref}->pack_start(new GtkLabel(basename($pref)));
 
 			$current_value = pts_read_user_config($preference, null, $read_config);
 
@@ -1029,7 +1022,7 @@ class gui_gtk implements pts_option_interface
 				$combobox[$i]->set_active(($current_value == "TRUE" ? 0 : 1));
 
 				$preference_objects[$preference] = $combobox[$i];
-				$hbox_{$pref}->pack_start($combobox[$i]);
+				array_push($page_items, array(new GtkLabel(basename($pref)), $combobox[$i]));
 			}
 			else
 			{
@@ -1037,12 +1030,15 @@ class gui_gtk implements pts_option_interface
 				$entry[$i]->set_text($current_value);
 
 				$preference_objects[$preference] = $entry[$i];
-				$hbox_{$pref}->pack_start($entry[$i]);
+				array_push($page_items, array(new GtkLabel(basename($pref)), $entry[$i]));
 			}
-
-			$vbox->pack_start($hbox_{$pref});
 			$i++;
 		}
+		$vbox_page_{$pages} = new GtkVBox();
+		pts_gtk_array_to_boxes($vbox_page_{$pages}, $page_items, 1, true);
+		$notebook->append_page($vbox_page_{$pages}, new GtkLabel($previous_heading));
+
+		$vbox->pack_start($notebook);
 
 		$vbox->pack_start(new GtkLabel(" "));
 		pts_set_assignment("GTK_OBJ_PREFERENCES", $preference_objects);
@@ -1057,7 +1053,6 @@ class gui_gtk implements pts_option_interface
 		$button_box->pack_start($continue_button);
 
 		pts_set_assignment("GTK_OBJ_PREFERENCES_WINDOW", $window);
-		pts_set_assignment("GTK_PREFERENCES_TYPE", $type);
 
 		$window->show_all();
 		Gtk::main();
@@ -1069,10 +1064,7 @@ class gui_gtk implements pts_option_interface
 			$preferences = pts_read_assignment("GTK_OBJ_PREFERENCES");
 			$preferences_set = array();
 
-			if(pts_read_assignment("GTK_PREFERENCES_TYPE") == "BATCH")
-			{
-				$preferences_set[P_OPTION_BATCH_CONFIGURED] = "TRUE";
-			}
+			$preferences_set[P_OPTION_BATCH_CONFIGURED] = "TRUE";
 
 			foreach($preferences as $preference => $object)
 			{
