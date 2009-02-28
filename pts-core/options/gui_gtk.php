@@ -704,6 +704,7 @@ class gui_gtk implements pts_option_interface
 				if(is_array($menu_items[$i]))
 				{
 					$temp_boxes[$i] = new GtkHBox();
+					$temp_boxes[$i]->set_homogeneous(true);
 
 					for($j = 0; $j < count($menu_items[$i]); $j++)
 					{
@@ -1063,8 +1064,7 @@ class gui_gtk implements pts_option_interface
 
 			$current_value = pts_read_user_config($preference, null, $read_config);
 
-			//if($current_value == "TRUE" || $current_value == "FALSE")
-			if(false)
+			if($current_value == "TRUE" || $current_value == "FALSE")
 			{
 				$combobox[$i] = new GtkComboBox();
 
@@ -1276,19 +1276,11 @@ class gui_gtk implements pts_option_interface
 		$window = new pts_gtk_window("Phoronix Certification & Qualification Suite");
 
 		$vbox = new GtkVBox();
+		$vbox->set_spacing(4);
 		$window->add($vbox);
 
-		$scrolled_window = new GtkScrolledWindow();
-		$scrolled_window->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-
-		$text_view = new GtkTextView();
-		$text_buffer = new GtkTextBuffer();
-		$text_buffer->set_text($license);
-		$text_view->set_buffer($text_buffer);
-		$text_view->set_wrap_mode(GTK_WRAP_WORD);
-		$text_view->set_size_request(540, 250);
-		$scrolled_window->add($text_view);
-		$vbox->pack_start($scrolled_window);
+		$textview_pcqs = new pts_gtk_text_area($license, 540, 250);
+		$vbox->pack_start($textview_pcqs);
 
 		$button_box = new GtkHBox();
 		$vbox->pack_start($button_box);
@@ -1326,17 +1318,8 @@ class gui_gtk implements pts_option_interface
 		$vbox->set_spacing(1);
 		$window->add($vbox);
 
-		$scrolled_window = new GtkScrolledWindow();
-		$scrolled_window->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-
-		$text_view = new GtkTextView();
-		$text_buffer = new GtkTextBuffer();
-		$text_buffer->set_text(trim($user_agreement));
-		$text_view->set_buffer($text_buffer);
-		$text_view->set_wrap_mode(GTK_WRAP_WORD);
-		$text_view->set_size_request(540, 250);
-		$scrolled_window->add($text_view);
-		$vbox->pack_start($scrolled_window);
+		$textview_agreement = new pts_gtk_text_area(trim($user_agreement), 540, 250);
+		$vbox->pack_start($textview_agreement);
 
 		$vbox->pack_start(new GtkLabel("Do you agree to the user terms listed above?"));
 
