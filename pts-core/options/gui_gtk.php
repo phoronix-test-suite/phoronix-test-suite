@@ -96,7 +96,8 @@ class gui_gtk implements pts_option_interface
 
 		$main_menu_items = array(
 		"File" => $file_menu,
-		"Edit" => array($refresh_graphs, null, new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), "STRING", Gtk::STOCK_PREFERENCES)),
+		"Edit" => array($refresh_graphs, null, new pts_gtk_menu_item("Batch Mode Setup", array("gui_gtk", "show_batch_preferences_interface")),
+		new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), "STRING", Gtk::STOCK_PREFERENCES)),
 		"View" => $view_menu,
 		"Tools" => array($build_suite, null, $analyze_runs, $analyze_batch),
 		"Help" => array(
@@ -988,19 +989,37 @@ class gui_gtk implements pts_option_interface
 		$window->show_all();
 		Gtk::main();
 	}
-	public static function show_preferences_interface()
+	public static function show_batch_preferences_interface()
 	{
-		$editable_preferences = array(
-		P_OPTION_TEST_REMOVEDOWNLOADS,
-		P_OPTION_CACHE_SEARCHMEDIA,
-		P_OPTION_CACHE_SYMLINK,
-		P_OPTION_PROMPT_DOWNLOADLOC,
-		P_OPTION_TEST_ENVIRONMENT,
-		P_OPTION_CACHE_DIRECTORY,
-		P_OPTION_TEST_SLEEPTIME,
-		P_OPTION_LOG_VSYSDETAILS,
-		P_OPTION_LOG_BENCHMARKFILES
-		);
+		gui_gtk::show_preferences_interface("BATCH");
+	}
+	public static function show_preferences_interface($type = "NORMAL")
+	{
+		if($type == "BATCH")
+		{
+			$editable_preferences = array(
+			P_OPTION_BATCH_SAVERESULTS,
+			P_OPTION_BATCH_LAUNCHBROWSER,
+			P_OPTION_BATCH_UPLOADRESULTS,
+			P_OPTION_BATCH_PROMPTIDENTIFIER,
+			P_OPTION_BATCH_PROMPTDESCRIPTION,
+			P_OPTION_BATCH_PROMPTSAVENAME
+			);
+		}
+		else
+		{
+			$editable_preferences = array(
+			P_OPTION_TEST_REMOVEDOWNLOADS,
+			P_OPTION_CACHE_SEARCHMEDIA,
+			P_OPTION_CACHE_SYMLINK,
+			P_OPTION_PROMPT_DOWNLOADLOC,
+			P_OPTION_TEST_ENVIRONMENT,
+			P_OPTION_CACHE_DIRECTORY,
+			P_OPTION_TEST_SLEEPTIME,
+			P_OPTION_LOG_VSYSDETAILS,
+			P_OPTION_LOG_BENCHMARKFILES
+			);
+		}
 
 		for($i = 0; $i < count($editable_preferences); $i++)
 		{
@@ -1092,8 +1111,10 @@ class gui_gtk implements pts_option_interface
 		$continue_button->set_size_request(100, 30);
 		$button_box->pack_start($continue_button);
 
-		$window->show_all();
 		pts_set_assignment("GTK_OBJ_PREFERENCES_WINDOW", $window);
+		pts_set_assignment("GTK_PREFERENCES_TYPE", $type);
+
+		$window->show_all();
 		Gtk::main();
 	}
 	public static function preferences_button_clicked($button_press)
@@ -1102,6 +1123,11 @@ class gui_gtk implements pts_option_interface
 		{
 			$preferences = pts_read_assignment("GTK_OBJ_PREFERENCES");
 			$preferences_set = array();
+
+			if(pts_read_assignment("GTK_PREFERENCES_TYPE") == "BATCH")
+			{
+				$preferences_set[P_OPTION_BATCH_CONFIGURED] = "TRUE";
+			}
 
 			foreach($preferences as $preference => $object)
 			{
