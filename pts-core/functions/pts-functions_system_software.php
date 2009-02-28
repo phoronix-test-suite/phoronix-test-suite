@@ -135,19 +135,19 @@ function sw_os_filesystem()
 
 		if(IS_LINUX && strpos($fs, "UNKNOWN") !== false)
 		{
-			$dmesg_output = shell_exec("dmesg 2>&1");
+			$mounts = file_get_contents("/proc/mounts");
 			$fs_r = array();
 
-			if(strpos($dmesg_output, "squashfs") != false)
+			if(strpos($mounts, "squashfs") != false)
 			{
 				array_push($fs_r, "SquashFS");
 			}
 
-			if(strpos($dmesg_output, "aufs") != false)
+			if(strpos($mounts, "aufs") != false)
 			{
 				array_push($fs_r, "AuFS");
 			}
-			else if(strpos($dmesg_output, "unionfs") != false)
+			else if(strpos($mounts, "unionfs") != false)
 			{
 				array_push($fs_r, "UnionFS");
 			}

@@ -107,7 +107,7 @@ function pts_gui_saved_test_results_identifiers()
 
 	foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
 	{
-		array_push($results, pts_extract_identifier_from_directory($result_file));
+		array_push($results, pts_extract_identifier_from_path($result_file));
 	}
 
 	return $results;

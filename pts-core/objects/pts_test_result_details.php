@@ -33,7 +33,7 @@ class pts_test_result_details
 	{
 		$xml_parser = new pts_results_tandem_XmlReader($saved_results_file);
 		$this->saved_results_file = $saved_results_file;
-		$this->saved_identifier = pts_extract_identifier_from_directory($saved_results_file);
+		$this->saved_identifier = pts_extract_identifier_from_path($saved_results_file);
 		$this->title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 		$this->suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
 		$this->unique_tests_r = array_unique($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE));

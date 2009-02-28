@@ -801,7 +801,7 @@ function pts_installed_tests_array()
 
 		for($i = 0; $i < count($tests); $i++)
 		{
-			$tests[$i] = pts_extract_identifier_from_directory($tests[$i]);
+			$tests[$i] = pts_extract_identifier_from_path($tests[$i]);
 		}
 
 		pts_set_assignment("CACHE_INSTALLED_TESTS", $tests);

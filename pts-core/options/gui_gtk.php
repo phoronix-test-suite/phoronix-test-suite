@@ -990,19 +990,135 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_preferences_interface()
 	{
-		$window = new pts_gtk_window("Preferences", 300, 140);
+		$editable_preferences = array(
+		P_OPTION_TEST_REMOVEDOWNLOADS,
+		P_OPTION_CACHE_SEARCHMEDIA,
+		P_OPTION_CACHE_SYMLINK,
+		P_OPTION_PROMPT_DOWNLOADLOC,
+		P_OPTION_TEST_ENVIRONMENT,
+		P_OPTION_CACHE_DIRECTORY,
+		P_OPTION_TEST_SLEEPTIME,
+		P_OPTION_LOG_VSYSDETAILS,
+		P_OPTION_LOG_BENCHMARKFILES
+		);
+
+		for($i = 0; $i < count($editable_preferences); $i++)
+		{
+			$combobox[$i] = new GtkComboBox();
+			// TODO: For some reason creating ComboBoxes lower down there creates a seg fault
+		}
+
+		$window = new pts_gtk_window("Preferences");
 		$window->set_resizable(false);
 
 		$vbox = new GtkVBox();
 		$window->add($vbox);
 
-		$label_temp = new GtkLabel("This dialog is not yet implemented. For now the configuration can be modified manually at ~/.phoronix-test-suite/user-config.xml");
-		$label_temp->set_size_request(300, 200);
-		$label_temp->set_line_wrap(true);
-		$vbox->pack_start($label_temp);
+		$previous_heading = null;
+		$read_config = new pts_config_tandem_XmlReader();
+		$i = 0;
+		$preference_objects = array();
+		foreach($editable_preferences as $preference)
+		{
+			if(($h = pts_extract_identifier_from_path($preference)) != $previous_heading)
+			{
+				$label_{$h} = new GtkLabel($h);
+				$label_{$h}->modify_font(new PangoFontDescription("Sans 19"));
+				$vbox->pack_start($label_{$h});
+				$previous_heading = $h;
+			}
+
+			$pref = basename($preference);
+
+			$hbox_{$pref} = new GtkHBox();
+			$hbox_{$pref}->pack_start(new GtkLabel(basename($pref)));
+
+			$current_value = pts_read_user_config($preference, null, $read_config);
+
+			if($current_value == "TRUE" || $current_value == "FALSE")
+			{
+				// $combobox[$i] = new GtkComboBox();
+
+				if(defined("GObject::TYPE_STRING"))
+				{
+					$model[$i] = new GtkListStore(GObject::TYPE_STRING);
+				}
+				else
+				{
+					$model[$i] = new GtkListStore(Gtk::TYPE_STRING);
+				}
+
+				$combobox[$i]->set_model($model[$i]);
+				$cell_renderer[$i] = new GtkCellRendererText();
+				$combobox[$i]->pack_start($cell_renderer[$i]);
+				$combobox[$i]->set_attributes($cell_renderer[$i], "text", 0);
+
+				$model[$i]->append(array("TRUE"));
+				$model[$i]->append(array("FALSE"));
+				$combobox[$i]->set_active(($current_value == "TRUE" ? 0 : 1));
+
+				$preference_objects[$preference] = $combobox[$i];
+				$hbox_{$pref}->pack_start($combobox[$i]);
+			}
+			else
+			{
+				$entry[$i] = new GtkEntry();
+				$entry[$i]->set_text($current_value);
+
+				$preference_objects[$preference] = $entry[$i];
+				$hbox_{$pref}->pack_start($entry[$i]);
+			}
+
+			$vbox->pack_start($hbox_{$pref});
+			$i++;
+		}
+
+		$vbox->pack_start(new GtkLabel(" "));
+		pts_set_assignment("GTK_OBJ_PREFERENCES", $preference_objects);
+
+		$button_box = new GtkHBox();
+		$vbox->pack_start($button_box);
+		$return_img = GtkImage::new_from_stock(Gtk::STOCK_HELP, Gtk::ICON_SIZE_SMALL_TOOLBAR);
+		$return_button = new GtkButton("Help");
+		$return_button->connect_simple("clicked", array("gui_gtk", "launch_web_browser"), PTS_USER_DIR . "user-config.xml", $identifier);
+		$return_button->set_image($return_img);
+		$return_button->set_size_request(100, 30);
+		$button_box->pack_start($return_button);
+
+		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
+		$continue_button = new GtkButton("Save");
+		$continue_button->connect_simple("clicked", array("gui_gtk", "preferences_button_clicked"), "save", $identifier);
+		$continue_button->set_image($continue_img);
+		$continue_button->set_size_request(100, 30);
+		$button_box->pack_start($continue_button);
 
 		$window->show_all();
+		pts_set_assignment("GTK_OBJ_PREFERENCES_WINDOW", $window);
 		Gtk::main();
+	}
+	public static function preferences_button_clicked($button_press)
+	{
+		if($button_press == "save")
+		{
+			$preferences = pts_read_assignment("GTK_OBJ_PREFERENCES");
+			$preferences_set = array();
+
+			foreach($preferences as $preference => $object)
+			{
+				if($object instanceOf GtkEntry)
+				{
+					$preferences_set[$preference] = $object->get_text();
+				}
+				else if($object instanceOf GtkComboBox)
+				{
+					$preferences_set[$preference] = pts_config_bool_to_string($object->get_active() == 0);
+				}
+			}
+			pts_user_config_init($preferences_set);
+		}
+
+		$window = pts_read_assignment("GTK_OBJ_PREFERENCES_WINDOW");
+		$window->destroy();
 	}
 	public static function upload_results_to_global()
 	{
