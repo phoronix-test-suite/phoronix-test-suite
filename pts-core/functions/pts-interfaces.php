@@ -230,13 +230,13 @@ define("P_GRAPH_COLOR_BODYTEXT", "PhoronixTestSuite/Graphs/Colors/BodyText"); //
 define("P_GRAPH_COLOR_HEADERS", "PhoronixTestSuite/Graphs/Colors/Headers"); // Graph color text headers
 define("P_GRAPH_COLOR_MAINHEADERS", "PhoronixTestSuite/Graphs/Colors/MainHeaders"); // Graph color text main headers
 
-define("P_GRAPH_FONT_TYPE", "PhoronixTestSuite/Graphs/Font/FontType"); // Graph font type
 define("P_GRAPH_FONT_SIZE_HEADERS", "PhoronixTestSuite/Graphs/FontSize/Headers"); // Graph font size for headers
 define("P_GRAPH_FONT_SIZE_SUBHEADERS", "PhoronixTestSuite/Graphs/FontSize/SubHeaders"); // Graph font size for sub-headers
 define("P_GRAPH_FONT_SIZE_TEXT", "PhoronixTestSuite/Graphs/FontSize/ObjectText"); // Graph font size for object text
 define("P_GRAPH_FONT_SIZE_IDENTIFIERS", "PhoronixTestSuite/Graphs/FontSize/Identifiers"); // Graph font size for identifiers
 define("P_GRAPH_FONT_SIZE_AXIS", "PhoronixTestSuite/Graphs/FontSize/Axis"); // Graph font size for axis
 
+define("P_GRAPH_FONT_TYPE", "PhoronixTestSuite/Graphs/Other/FontType"); // Graph font type
 define("P_GRAPH_RENDERER", "PhoronixTestSuite/Graphs/Other/Renderer"); // Graph renderer
 define("P_GRAPH_RENDERBORDER", "PhoronixTestSuite/Graphs/Other/RenderBorder"); // Graph render border
 define("P_GRAPH_MARKCOUNT", "PhoronixTestSuite/Graphs/Other/NumberOfMarks"); // Graph number of marks

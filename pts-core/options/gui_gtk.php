@@ -946,6 +946,7 @@ class gui_gtk implements pts_option_interface
 	public static function show_preferences_interface()
 	{
 		$editable_preferences = array(
+		// User Settings
 		P_OPTION_TEST_REMOVEDOWNLOADS,
 		P_OPTION_CACHE_SEARCHMEDIA,
 		P_OPTION_CACHE_SYMLINK,
@@ -960,13 +961,38 @@ class gui_gtk implements pts_option_interface
 		P_OPTION_BATCH_UPLOADRESULTS,
 		P_OPTION_BATCH_PROMPTIDENTIFIER,
 		P_OPTION_BATCH_PROMPTDESCRIPTION,
-		P_OPTION_BATCH_PROMPTSAVENAME
+		P_OPTION_BATCH_PROMPTSAVENAME,
+		// Graph Settings
+		P_GRAPH_SIZE_WIDTH,
+		P_GRAPH_SIZE_HEIGHT,
+		P_GRAPH_COLOR_BACKGROUND,
+		P_GRAPH_COLOR_BODY,
+		P_GRAPH_COLOR_NOTCHES,
+		P_GRAPH_COLOR_BORDER,
+		P_GRAPH_COLOR_ALTERNATE,
+		P_GRAPH_COLOR_PAINT,
+		P_GRAPH_COLOR_HEADERS,
+		P_GRAPH_COLOR_MAINHEADERS,
+		P_GRAPH_COLOR_TEXT,
+		P_GRAPH_COLOR_BODYTEXT,
+		P_GRAPH_FONT_SIZE_HEADERS,
+		P_GRAPH_FONT_SIZE_SUBHEADERS,
+		P_GRAPH_FONT_SIZE_TEXT,
+		P_GRAPH_FONT_SIZE_IDENTIFIERS,
+		P_GRAPH_FONT_SIZE_AXIS,
+		P_GRAPH_FONT_TYPE,
+		P_GRAPH_RENDERER,
+		P_GRAPH_RENDERBORDER,
+		P_GRAPH_MARKCOUNT,
+		P_GRAPH_WATERMARK,
+		P_GRAPH_BORDER
 		);
 
 		$window = new pts_gtk_window("Preferences");
 
 		$previous_heading = null;
 		$read_config = new pts_config_tandem_XmlReader();
+		$graph_config = new pts_graph_config_tandem_XmlReader();
 
 		$i = 0;
 		$pages = 0;
@@ -974,6 +1000,8 @@ class gui_gtk implements pts_option_interface
 		$preference_objects = array();
 
 		$notebook = new GtkNotebook();
+		$page_prefix = "";
+		$config_type = "user";
 
 		foreach($editable_preferences as $preference)
 		{
@@ -983,7 +1011,13 @@ class gui_gtk implements pts_option_interface
 				{
 					$vbox_page_{$pages} = new GtkVBox();
 					pts_gtk_array_to_boxes($vbox_page_{$pages}, $page_items, 1, true);
-					$notebook->append_page($vbox_page_{$pages}, new GtkLabel($previous_heading));
+					$notebook->append_page($vbox_page_{$pages}, new GtkLabel($page_prefix . $previous_heading));
+				}
+
+				if($previous_heading == "BatchMode")
+				{
+					$config_type = "graph";
+					$page_prefix = "Graph ";
 				}
 
 				$previous_heading = $h;
@@ -993,8 +1027,16 @@ class gui_gtk implements pts_option_interface
 
 			$pref = basename($preference);
 
-			$current_value = pts_read_user_config($preference, null, $read_config);
+			if($config_type == "graph")
+			{
+				$current_value = pts_read_graph_config($preference, null, $graph_config);
+			}
+			else
+			{
+				$current_value = pts_read_user_config($preference, null, $read_config);
+			}
 
+			//if(false)
 			if($current_value == "TRUE" || $current_value == "FALSE")
 			{
 				$combobox[$i] = new GtkComboBox();
@@ -1026,7 +1068,11 @@ class gui_gtk implements pts_option_interface
 				$entry[$i]->set_text($current_value);
 
 				$preference_objects[$preference] = $entry[$i];
-				array_push($page_items, array(new GtkLabel(basename($pref)), $entry[$i]));
+
+				$header[$i] = new GtkLabel(" " . basename($pref) . ":");
+				$header[$i]->set_alignment(0, 0.5);
+
+				array_push($page_items, array($header[$i], $entry[$i]));
 			}
 			$i++;
 		}
@@ -1067,6 +1113,7 @@ class gui_gtk implements pts_option_interface
 				}
 			}
 			pts_user_config_init($preferences_set);
+			pts_graph_config_init($preferences_set);
 		}
 
 		$window = pts_read_assignment("GTK_OBJ_PREFERENCES_WINDOW");

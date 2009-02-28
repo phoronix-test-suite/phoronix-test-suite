@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add in new option override support for the user-config.xml settings
 - pts-core: Implement basic preferences window with batch mode options and more in GTK GUI
 - pts-core: Allow pts_option_interface objects to provide a required_function_sets() function to load needed function sets
+- pts-core: Add graph configuration options to preferences area
 - pts: Add autoconf to PTS External Dependencies support
 - pts: Add libtool to PTS External Dependencies support
 - pts: Update vdrift test profile to VDrift 2009-02-15 and make the test profile work to verified state

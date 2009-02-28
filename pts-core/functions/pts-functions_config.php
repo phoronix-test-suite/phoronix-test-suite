@@ -158,24 +158,11 @@ function pts_config_bool_to_string($bool)
 
 	return $bool_return;
 }
-function pts_graph_config_init()
+function pts_graph_config_init($new_config_values = "")
 {
 	// Initialize the graph configuration file
 
-	if(is_file(PTS_USER_DIR . "graph-config.xml"))
-	{
-		$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
-	}
-	else if(is_file(RESULTS_VIEWER_DIR . "graph-config-template.xml"))
-	{
-		$file = file_get_contents(RESULTS_VIEWER_DIR . "graph-config-template.xml");
-	}
-	else
-	{
-		$file = "";
-	}
-
-	$read_config = new tandem_XmlReader($file);
+	$read_config = new pts_graph_config_tandem_XmlReader($new_config_values);
 	$config = new tandem_XmlWriter();
 
 	// Size of Graph
@@ -203,10 +190,8 @@ function pts_graph_config_init()
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_IDENTIFIERS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_IDENTIFIERS, "11", $read_config));
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_AXIS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_AXIS, "11", $read_config));
 
-	// Text Font
-	$config->addXmlObject(P_GRAPH_FONT_TYPE, 4, pts_read_graph_config(P_GRAPH_FONT_TYPE, "Sans.ttf", $read_config));
-
 	// Other
+	$config->addXmlObject(P_GRAPH_FONT_TYPE, 4, pts_read_graph_config(P_GRAPH_FONT_TYPE, "Sans.ttf", $read_config));
 	$config->addXmlObject(P_GRAPH_RENDERER, 4, pts_read_graph_config(P_GRAPH_RENDERER, "PNG", $read_config));
 	$config->addXmlObject(P_GRAPH_RENDERBORDER, 4, pts_read_graph_config(P_GRAPH_RENDERBORDER, "FALSE", $read_config));
 	$config->addXmlObject(P_GRAPH_MARKCOUNT, 4, pts_read_graph_config(P_GRAPH_MARKCOUNT, "6", $read_config));
