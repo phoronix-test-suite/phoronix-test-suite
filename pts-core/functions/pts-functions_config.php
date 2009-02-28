@@ -35,42 +35,11 @@ function pts_config_init()
 	pts_user_config_init();
 	pts_graph_config_init();
 }
-function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions = null)
+function pts_user_config_init($new_config_values = null)
 {
 	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
-	$read_config = new pts_config_tandem_XmlReader();
-
-	if($UserName == null)
-	{
-		$UserName = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User", $read_config);
-	}
-	if($UploadKey == null)
-	{
-		$UploadKey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "", $read_config);
-	}
-
-	if($BatchOptions == null || !is_array($BatchOptions))
-	{
-		$BatchOptions = array();
-		$BatchOptions[0] = pts_read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE", $read_config);
-		$BatchOptions[1] = pts_read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE", $read_config);
-		$BatchOptions[2] = pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE", $read_config);
-		$BatchOptions[3] = pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE", $read_config);
-		$BatchOptions[4] = pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "TRUE", $read_config);
-		$BatchOptions[5] = pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "TRUE", $read_config);
-		$BatchOptions[6] = pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE", $read_config);
-	}
-	else
-	{
-		$BatchOptions[0] = pts_config_bool_to_string($BatchOptions[0]);
-		$BatchOptions[1] = pts_config_bool_to_string($BatchOptions[1]);
-		$BatchOptions[2] = pts_config_bool_to_string($BatchOptions[2]);
-		$BatchOptions[3] = pts_config_bool_to_string($BatchOptions[3]);
-		$BatchOptions[4] = pts_config_bool_to_string($BatchOptions[4]);
-		$BatchOptions[5] = pts_config_bool_to_string($BatchOptions[5]);
-		$BatchOptions[6] = "TRUE";
-	}
+	$read_config = new pts_config_tandem_XmlReader($new_config_values);
 
 	// Determine last version run of the Phoronix Test Suite
 	$last_version = pts_read_user_config(P_OPTION_TESTCORE_LASTVERSION, PTS_VERSION, $read_config);
@@ -83,8 +52,8 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 
 	$config = new tandem_XmlWriter();
 	$config->setXslBinding("pts-user-config-viewer.xsl");
-	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, $UserName);
-	$config->addXmlObject(P_OPTION_GLOBAL_UPLOADKEY, 0, $UploadKey);
+	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User", $read_config));
+	$config->addXmlObject(P_OPTION_GLOBAL_UPLOADKEY, 0, pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "", $read_config));
 
 	$config->addXmlObject(P_OPTION_LOAD_MODULES, 2, pts_read_user_config(P_OPTION_LOAD_MODULES, "", $read_config));
 
@@ -100,13 +69,13 @@ function pts_user_config_init($UserName = null, $UploadKey = null, $BatchOptions
 	$config->addXmlObject(P_OPTION_LOG_BENCHMARKFILES, 4, pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_RESULTS_DIRECTORY, 4, pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/", $read_config));
 
-	$config->addXmlObject(P_OPTION_BATCH_SAVERESULTS, 5, $BatchOptions[0]);
-	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 5, $BatchOptions[1]);
-	$config->addXmlObject(P_OPTION_BATCH_UPLOADRESULTS, 5, $BatchOptions[2]);
-	$config->addXmlObject(P_OPTION_BATCH_PROMPTIDENTIFIER, 5, $BatchOptions[3]);
-	$config->addXmlObject(P_OPTION_BATCH_PROMPTDESCRIPTION, 5, $BatchOptions[4]);
-	$config->addXmlObject(P_OPTION_BATCH_PROMPTSAVENAME, 5, $BatchOptions[5]);
-	$config->addXmlObject(P_OPTION_BATCH_CONFIGURED, 5, $BatchOptions[6]);
+	$config->addXmlObject(P_OPTION_BATCH_SAVERESULTS, 5, pts_read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE", $read_config));
+	$config->addXmlObject(P_OPTION_BATCH_LAUNCHBROWSER, 5, pts_read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE", $read_config));
+	$config->addXmlObject(P_OPTION_BATCH_UPLOADRESULTS, 5, pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE", $read_config));
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTIDENTIFIER, 5, pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE", $read_config));
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTDESCRIPTION, 5, pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "TRUE", $read_config));
+	$config->addXmlObject(P_OPTION_BATCH_PROMPTSAVENAME, 5, pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "TRUE", $read_config));
+	$config->addXmlObject(P_OPTION_BATCH_CONFIGURED, 5, pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE", $read_config));
 
 	$config->addXmlObject(P_OPTION_TESTCORE_LASTVERSION, 6, $last_version);
 	$config->addXmlObject(P_OPTION_TESTCORE_LASTTIME, 6, $last_time);

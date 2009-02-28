@@ -26,26 +26,28 @@ class batch_setup implements pts_option_interface
 	{
 		echo "\nThese are the default configuration options for when running the Phoronix Test Suite in a batch mode (i.e. running phoronix-test-suite batch-benchmark universe). Running in a batch mode is designed to be as autonomous as possible, except for where you'd like any end-user interaction.\n\n";
 		$batch_options = array();
-		$batch_options[0] = pts_bool_question("Save test results when in batch mode (Y/n)?", true);
+		$batch_options[P_OPTION_BATCH_SAVERESULTS] = pts_config_bool_to_string(pts_bool_question("Save test results when in batch mode (Y/n)?", true));
 
-		if($batch_options[0] == true)
+		if($batch_options[P_OPTION_BATCH_SAVERESULTS] == "TRUE")
 		{
-			$batch_options[1] = pts_bool_question("Open the web browser automatically when in batch mode (y/N)?", false);
-			$batch_options[2] = pts_bool_question("Auto upload the results to Phoronix Global (Y/n)?", true);
-			$batch_options[3] = pts_bool_question("Prompt for test identifier (Y/n)?", true);
-			$batch_options[4] = pts_bool_question("Prompt for test description (Y/n)?", true);
-			$batch_options[5] = pts_bool_question("Prompt for saved results file-name (Y/n)?", true);
+			$batch_options[P_OPTION_BATCH_LAUNCHBROWSER] = pts_config_bool_to_string(pts_bool_question("Open the web browser automatically when in batch mode (y/N)?", false));
+			$batch_options[P_OPTION_BATCH_UPLOADRESULTS] = pts_config_bool_to_string(pts_bool_question("Auto upload the results to Phoronix Global (Y/n)?", true));
+			$batch_options[P_OPTION_BATCH_PROMPTIDENTIFIER] = pts_config_bool_to_string(pts_bool_question("Prompt for test identifier (Y/n)?", true));
+			$batch_options[P_OPTION_BATCH_PROMPTDESCRIPTION] = pts_config_bool_to_string(pts_bool_question("Prompt for test description (Y/n)?", true));
+			$batch_options[P_OPTION_BATCH_PROMPTSAVENAME] = pts_config_bool_to_string(pts_bool_question("Prompt for saved results file-name (Y/n)?", true));
 		}
 		else
 		{
-			$batch_options[1] = false;
-			$batch_options[2] = false;
-			$batch_options[3] = false;
-			$batch_options[4] = false;
-			$batch_options[5] = false;
+			$batch_options[P_OPTION_BATCH_LAUNCHBROWSER] = "FALSE";
+			$batch_options[P_OPTION_BATCH_UPLOADRESULTS] = "FALSE";
+			$batch_options[P_OPTION_BATCH_PROMPTIDENTIFIER] = "FALSE";
+			$batch_options[P_OPTION_BATCH_PROMPTDESCRIPTION] = "FALSE";
+			$batch_options[P_OPTION_BATCH_PROMPTSAVENAME] = "FALSE";
 		}
 
-		pts_user_config_init(null, null, $batch_options);
+		$batch_options[P_OPTION_BATCH_CONFIGURED] = "TRUE";
+
+		pts_user_config_init($batch_options);
 		echo "\nBatch settings saved.\n\n";
 	}
 }

@@ -26,7 +26,9 @@
 
 class pts_config_tandem_XmlReader extends tandem_XmlReader
 {
-	public function __construct()
+	var $override_values;
+
+	public function __construct($new_values = null)
 	{
 		if(is_file(PTS_USER_DIR . "user-config.xml"))
 		{
@@ -41,7 +43,20 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 			$file = "";
 		}
 
+		$this->override_values = (is_array($new_values) ? $new_values : false);
+
 		parent::__construct($file, true);
+	}
+	function getValue($xml_path, $xml_tag = null, $xml_match = null, $cache_tag = true, $is_fallback_call = false)
+	{
+		if($this->override_values != false && isset($this->override_values[$xml_path]))
+		{
+			return $this->override_values[$xml_path];
+		}
+		else
+		{
+			return parent::getValue($xml_path, $xml_tag, $xml_match, $cache_tag, $is_fallback_call);
+		}
 	}
 }
 ?>

@@ -33,7 +33,7 @@ class global_login implements pts_option_interface
 
 		if(!empty($uploadkey))
 		{
-			pts_user_config_init($username, $uploadkey);
+			pts_user_config_init(array(P_OPTION_GLOBAL_USERNAME => $username, P_OPTION_GLOBAL_UPLOADKEY => $uploadkey));
 			echo "\nAccount: " . $uploadkey . "\nAccount information written to user-config.xml.\n\n";
 		}
 		else

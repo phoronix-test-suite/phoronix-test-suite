@@ -24,6 +24,7 @@
 function pts_merge_batch_tests_to_line_comparison($RESULT)
 {
 	// Perform analyze line comparison
+	// TODO: Improve this function, run this with phoronix-12676-9200-11657 as a dirty example, base off new pts-includes-merge code perhaps
 
 	// RE-READ LATEST RESULTS
 	$xml_reader = new tandem_XmlReader($RESULT);
