@@ -58,7 +58,7 @@ class gui_gtk implements pts_option_interface
 		$analyze_batch = new pts_gtk_menu_item("Analyze Batch Run", array("gui_gtk", "analyze_batch"));
 		$analyze_batch->attach_to_pts_assignment("GTK_OBJ_ANALYZE_BATCH");
 
-		$refresh_graphs = new pts_gtk_menu_item("Refresh Graphs", array("gui_gtk", "refresh_graphs"));
+		$refresh_graphs = new pts_gtk_menu_item("Regenerate Graphs", array("gui_gtk", "refresh_graphs"));
 		$refresh_graphs->attach_to_pts_assignment("GTK_OBJ_REFRESH_GRAPHS");
 
 		$build_suite = new pts_gtk_menu_item("Build Suite", array("gui_gtk", ""));
@@ -134,8 +134,9 @@ class gui_gtk implements pts_option_interface
 		$i = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER");
 		$u = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL");
 		$p = pts_read_assignment("PREV_PDF_FILE");
+		$ti = pts_read_assignment("PREV_TEST_INSTALLED");
 
-		if($i != false || $u != false || $p != false)
+		if($i != false || $u != false || $p != false || $ti != false)
 		{
 			$main_frame_vbox->pack_start(new GtkLabel(" "));
 			if(!empty($i))
@@ -143,6 +144,12 @@ class gui_gtk implements pts_option_interface
 				$tr_button = new GtkButton("View Test Results");
 				$tr_button->connect_simple("clicked", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $i . "/composite.xml");
 				$main_frame_vbox->pack_start($tr_button);
+			}
+			if(!empty($ti))
+			{
+				$ti_button = new GtkButton("Run " . pts_test_identifier_to_name($ti));
+				$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), "RUN", $ti);
+				$main_frame_vbox->pack_start($ti_button);
 			}
 			$main_frame_vbox->pack_start(new GtkLabel(" "));
 			if(!empty($u))
@@ -159,8 +166,6 @@ class gui_gtk implements pts_option_interface
 				$main_frame_vbox->pack_start($pdf_label);
 				$main_frame_vbox->pack_start(new GtkLabel(" "));
 			}
-
-
 		}
 		else
 		{
@@ -534,9 +539,12 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_BATCH_MODE", $batch_checkbox->get_active());
 		pts_set_assignment("GTK_DEFAULTS_MODE", $defaults_checkbox->get_active());
 	}
-	public static function show_run_confirmation_interface()
+	public static function show_run_confirmation_interface($task = null, $identifier = null)
 	{
-		$identifier = gui_gtk::notebook_selected_to_identifier();
+		if($identifier == null)
+		{
+			$identifier = gui_gtk::notebook_selected_to_identifier();
+		}
 
 		if(empty($identifier))
 		{
@@ -547,7 +555,7 @@ class gui_gtk implements pts_option_interface
 		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
 		$main_window->destroy();
 
-		switch(pts_read_assignment("GTK_RUN_BUTTON_TASK"))
+		switch(($task == null ? pts_read_assignment("GTK_RUN_BUTTON_TASK") : $task))
 		{
 			case "UPDATE":
 				$title_cmd = "install";
