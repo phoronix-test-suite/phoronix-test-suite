@@ -1049,7 +1049,7 @@ class gui_gtk implements pts_option_interface
 		{
 			if(($h = pts_extract_identifier_from_path($preference)) != $previous_heading)
 			{
-				$label_{$h} = new GtkLabel($h);
+				$label_{$h} = new GtkLabel($h . ":");
 				$label_{$h}->modify_font(new PangoFontDescription("Sans 19"));
 				$vbox->pack_start($label_{$h});
 				$previous_heading = $h;
@@ -1058,13 +1058,15 @@ class gui_gtk implements pts_option_interface
 			$pref = basename($preference);
 
 			$hbox_{$pref} = new GtkHBox();
+			$hbox_{$pref}->set_homogeneous(true);
 			$hbox_{$pref}->pack_start(new GtkLabel(basename($pref)));
 
 			$current_value = pts_read_user_config($preference, null, $read_config);
 
-			if($current_value == "TRUE" || $current_value == "FALSE")
+			//if($current_value == "TRUE" || $current_value == "FALSE")
+			if(false)
 			{
-				// $combobox[$i] = new GtkComboBox();
+				$combobox[$i] = new GtkComboBox();
 
 				if(defined("GObject::TYPE_STRING"))
 				{
