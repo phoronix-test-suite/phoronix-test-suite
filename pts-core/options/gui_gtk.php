@@ -947,44 +947,19 @@ class gui_gtk implements pts_option_interface
 	{
 		$editable_preferences = array(
 		// User Settings
-		P_OPTION_TEST_REMOVEDOWNLOADS,
-		P_OPTION_CACHE_SEARCHMEDIA,
-		P_OPTION_CACHE_SYMLINK,
-		P_OPTION_PROMPT_DOWNLOADLOC,
-		P_OPTION_TEST_ENVIRONMENT,
-		P_OPTION_CACHE_DIRECTORY,
-		P_OPTION_TEST_SLEEPTIME,
-		P_OPTION_LOG_VSYSDETAILS,
-		P_OPTION_LOG_BENCHMARKFILES,
-		P_OPTION_BATCH_SAVERESULTS,
-		P_OPTION_BATCH_LAUNCHBROWSER,
-		P_OPTION_BATCH_UPLOADRESULTS,
-		P_OPTION_BATCH_PROMPTIDENTIFIER,
-		P_OPTION_BATCH_PROMPTDESCRIPTION,
-		P_OPTION_BATCH_PROMPTSAVENAME,
+		P_OPTION_TEST_REMOVEDOWNLOADS, P_OPTION_CACHE_SEARCHMEDIA, P_OPTION_CACHE_SYMLINK,
+		P_OPTION_PROMPT_DOWNLOADLOC, P_OPTION_TEST_ENVIRONMENT, P_OPTION_CACHE_DIRECTORY,
+		P_OPTION_TEST_SLEEPTIME, P_OPTION_LOG_VSYSDETAILS, P_OPTION_LOG_BENCHMARKFILES,
+		P_OPTION_BATCH_SAVERESULTS, P_OPTION_BATCH_LAUNCHBROWSER, P_OPTION_BATCH_UPLOADRESULTS,
+		P_OPTION_BATCH_PROMPTIDENTIFIER, P_OPTION_BATCH_PROMPTDESCRIPTION, P_OPTION_BATCH_PROMPTSAVENAME,
 		// Graph Settings
-		P_GRAPH_SIZE_WIDTH,
-		P_GRAPH_SIZE_HEIGHT,
-		P_GRAPH_COLOR_BACKGROUND,
-		P_GRAPH_COLOR_BODY,
-		P_GRAPH_COLOR_NOTCHES,
-		P_GRAPH_COLOR_BORDER,
-		P_GRAPH_COLOR_ALTERNATE,
-		P_GRAPH_COLOR_PAINT,
-		P_GRAPH_COLOR_HEADERS,
-		P_GRAPH_COLOR_MAINHEADERS,
-		P_GRAPH_COLOR_TEXT,
-		P_GRAPH_COLOR_BODYTEXT,
-		P_GRAPH_FONT_SIZE_HEADERS,
-		P_GRAPH_FONT_SIZE_SUBHEADERS,
-		P_GRAPH_FONT_SIZE_TEXT,
-		P_GRAPH_FONT_SIZE_IDENTIFIERS,
-		P_GRAPH_FONT_SIZE_AXIS,
-		P_GRAPH_FONT_TYPE,
-		P_GRAPH_RENDERER,
-		P_GRAPH_RENDERBORDER,
-		P_GRAPH_MARKCOUNT,
-		P_GRAPH_WATERMARK,
+		P_GRAPH_SIZE_WIDTH, P_GRAPH_SIZE_HEIGHT, P_GRAPH_COLOR_BACKGROUND, P_GRAPH_COLOR_BODY,
+		P_GRAPH_COLOR_NOTCHES, P_GRAPH_COLOR_BORDER, P_GRAPH_COLOR_ALTERNATE,
+		P_GRAPH_COLOR_PAINT, P_GRAPH_COLOR_HEADERS, P_GRAPH_COLOR_MAINHEADERS,
+		P_GRAPH_COLOR_TEXT, P_GRAPH_COLOR_BODYTEXT, P_GRAPH_FONT_SIZE_HEADERS,
+		P_GRAPH_FONT_SIZE_SUBHEADERS, P_GRAPH_FONT_SIZE_TEXT, P_GRAPH_FONT_SIZE_IDENTIFIERS,
+		P_GRAPH_FONT_SIZE_AXIS,	P_GRAPH_FONT_TYPE, P_GRAPH_RENDERER,
+		P_GRAPH_RENDERBORDER, P_GRAPH_MARKCOUNT, P_GRAPH_WATERMARK,
 		P_GRAPH_BORDER
 		);
 
@@ -1036,8 +1011,8 @@ class gui_gtk implements pts_option_interface
 				$current_value = pts_read_user_config($preference, null, $read_config);
 			}
 
-			//if(false)
-			if($current_value == "TRUE" || $current_value == "FALSE")
+			if(false)
+			//if($current_value == "TRUE" || $current_value == "FALSE")
 			{
 				$combobox[$i] = new GtkComboBox();
 
@@ -1060,7 +1035,13 @@ class gui_gtk implements pts_option_interface
 				$combobox[$i]->set_active(($current_value == "TRUE" ? 0 : 1));
 
 				$preference_objects[$preference] = $combobox[$i];
-				array_push($page_items, array(new GtkLabel(basename($pref)), $combobox[$i]));
+			}
+			else if(substr($current_value, 0, 1) == "#" && strlen($current_value) == 7)
+			{
+				$cb[$i] = new GtkColorButton();
+				$cb[$i]->set_color(GdkColor::parse("$current_value"));
+
+				$preference_objects[$preference] = $cb[$i];
 			}
 			else
 			{
@@ -1068,12 +1049,12 @@ class gui_gtk implements pts_option_interface
 				$entry[$i]->set_text($current_value);
 
 				$preference_objects[$preference] = $entry[$i];
-
-				$header[$i] = new GtkLabel(" " . basename($pref) . ":");
-				$header[$i]->set_alignment(0, 0.5);
-
-				array_push($page_items, array($header[$i], $entry[$i]));
 			}
+
+			$header[$i] = new GtkLabel(" " . basename($pref) . ":");
+			$header[$i]->set_alignment(0, 0.5);
+			array_push($page_items, array($header[$i], $preference_objects[$preference]));
+
 			$i++;
 		}
 		$vbox_page_{$pages} = new GtkVBox();
@@ -1106,6 +1087,13 @@ class gui_gtk implements pts_option_interface
 				if($object instanceOf GtkEntry)
 				{
 					$preferences_set[$preference] = $object->get_text();
+				}
+				else if($object instanceOf GtkColorButton)
+				{
+					$color = $object->get_color();
+
+					// $preferences_set[$preference] = 
+					//exit;
 				}
 				else if($object instanceOf GtkComboBox)
 				{
