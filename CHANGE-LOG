@@ -12,8 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Implement test options within the GTK GUI
 - pts-core: Add file-system detection support for SquashFS, AuFS, and UnionFS when running from a Live CD/DVD mode
 - pts-core: Add in new option override support for the user-config.xml settings
-- pts-core: Implement basic preferences window in GTK GUI
-- pts-core: Implement basic batch mode setup window in GTK GUI
+- pts-core: Implement basic preferences window with batch mode options and more in GTK GUI
 - pts-core: Allow pts_option_interface objects to provide a required_function_sets() function to load needed function sets
 - pts: Add autoconf to PTS External Dependencies support
 - pts: Add libtool to PTS External Dependencies support

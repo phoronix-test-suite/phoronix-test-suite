@@ -964,10 +964,6 @@ class gui_gtk implements pts_option_interface
 		);
 
 		$window = new pts_gtk_window("Preferences");
-		$window->set_resizable(false);
-
-		$vbox = new GtkVBox();
-		$window->add($vbox);
 
 		$previous_heading = null;
 		$read_config = new pts_config_tandem_XmlReader();
@@ -1038,19 +1034,12 @@ class gui_gtk implements pts_option_interface
 		pts_gtk_array_to_boxes($vbox_page_{$pages}, $page_items, 1, true);
 		$notebook->append_page($vbox_page_{$pages}, new GtkLabel($previous_heading));
 
-		$vbox->pack_start($notebook);
-
-		$vbox->pack_start(new GtkLabel(" "));
 		pts_set_assignment("GTK_OBJ_PREFERENCES", $preference_objects);
 
-		$button_box = new GtkHBox();
-		$vbox->pack_start($button_box);
-
 		$return_button = new pts_gtk_button("Help", array("gui_gtk", "launch_web_browser"), PTS_USER_DIR . "user-config.xml", 100, 30, Gtk::STOCK_HELP);
-		$button_box->pack_start($return_button);
-
 		$continue_button = new pts_gtk_button("Save", array("gui_gtk", "preferences_button_clicked"), "save", 100, 30, Gtk::STOCK_APPLY);
-		$button_box->pack_start($continue_button);
+
+		pts_gtk_array_to_boxes($window, array($notebook, null, array($return_button, $continue_button)));
 
 		pts_set_assignment("GTK_OBJ_PREFERENCES_WINDOW", $window);
 
