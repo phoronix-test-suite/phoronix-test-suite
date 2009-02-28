@@ -22,9 +22,12 @@
 
 class install_dependencies implements pts_option_interface
 {
+	public static function required_function_sets()
+	{
+		return array("install");
+	}
 	public static function run($r)
 	{
-		pts_load_function_set("install");
 		$r = array_map("strtolower", $r);
 
 		if(empty($r[0]))

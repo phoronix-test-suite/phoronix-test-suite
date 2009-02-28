@@ -28,6 +28,26 @@ function pts_load_function_set($title)
 
 	return (is_file($includes_file) && include_once($includes_file)) || (is_file($functions_file) && include_once($functions_file));
 }
+function pts_load_run_option($option)
+{
+	if(is_file(PTS_PATH . "pts-core/options/" . $option . ".php"))
+	{
+		if(!class_exists($option, false))
+		{
+			include(PTS_PATH . "pts-core/options/" . $option . ".php");
+		}
+
+		if(method_exists($option, "required_function_sets"))
+		{
+			eval("\$required_function_sets = " . $option . "::" . "required_function_sets();");
+
+			foreach($required_function_sets as $to_load)
+			{
+				pts_load_function_set($to_load);
+			}
+		}
+	}
+}
 function pts_load_object($to_load)
 {
 	if(class_exists($to_load))

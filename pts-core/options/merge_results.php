@@ -22,10 +22,12 @@
 
 class merge_results implements pts_option_interface
 {
+	public static function required_function_sets()
+	{
+		return array("merge");
+	}
 	public static function run($r)
 	{
-		pts_load_function_set("merge");
-
 		$r = array_map("pts_find_result_file", $r);
 		$result_files_to_merge = array();
 

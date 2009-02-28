@@ -24,6 +24,11 @@
 // Phoronix Test Suite - Functions
 function pts_run_option_command($command, $pass_args = null, $preset_assignments = "")
 {
+	if(is_file(PTS_PATH . "pts-core/options/" . $command . ".php") && !class_exists($command, false))
+	{
+		pts_load_run_option($command);
+	}
+
 	if(!defined("PTS_USER_AGREEMENT_CHECK"))
 	{
 		// Phoronix Test Suite User Agreement Check
@@ -47,11 +52,6 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 
 	if(is_file(PTS_PATH . "pts-core/options/" . $command . ".php"))
 	{
-		if(!class_exists($command, false))
-		{
-			include(PTS_PATH . "pts-core/options/" . $command . ".php");
-		}
-
 		eval($command . "::run(\$pass_args);");
 	}
 	else if(pts_module_valid_user_command($command))

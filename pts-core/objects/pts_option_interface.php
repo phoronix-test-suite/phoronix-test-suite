@@ -22,6 +22,9 @@
 
 interface pts_option_interface
 {
+	// If a class implementing this interface has a public static function required_function_sets()
+	// that returns an array, it will automatically load those array elements using pts_load_function_set()
+
 	public static function run($passed_arguments_array);
 }
 

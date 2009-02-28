@@ -22,10 +22,12 @@
 
 class install_test implements pts_option_interface
 {
+	public static function required_function_sets()
+	{
+		return array("install");
+	}
 	public static function run($items_to_install)
 	{
-		pts_load_function_set("install");
-
 		if(count($items_to_install) == 0)
 		{
 			echo "\nThe test, suite name, or saved identifier must be supplied.\n";

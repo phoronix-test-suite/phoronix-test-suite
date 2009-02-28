@@ -22,12 +22,12 @@
 
 class run_test implements pts_option_interface
 {
+	public static function required_function_sets()
+	{
+		return array("run", "merge", "batch");
+	}
 	public static function run($to_run_identifiers)
 	{
-		pts_load_function_set("run");
-		pts_load_function_set("merge");
-		pts_load_function_set("batch");
-
 		if(pts_read_assignment("IS_BATCH_MODE") != false && !pts_batch_mode_configured())
 		{
 			echo pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup");
