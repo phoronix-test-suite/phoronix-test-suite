@@ -411,7 +411,7 @@ class gui_gtk implements pts_option_interface
 			gui_gtk::redraw_main_window();
 		}
 	}
-	public static function confirmation_button_clicked($button_call, $identifier)
+	public static function confirmation_button_clicked($button_call, $identifier = "")
 	{
 		switch($button_call)
 		{
@@ -1036,10 +1036,10 @@ class gui_gtk implements pts_option_interface
 
 				$preference_objects[$preference] = $combobox[$i];
 			}
-			else if(substr($current_value, 0, 1) == "#" && strlen($current_value) == 7)
+			else if(substr($current_value, 0, 1) == "#" && strpos($current_value, " ") == false)
 			{
 				$cb[$i] = new GtkColorButton();
-				$cb[$i]->set_color(GdkColor::parse("$current_value"));
+				$cb[$i]->set_color(GdkColor::parse($current_value));
 
 				$preference_objects[$preference] = $cb[$i];
 			}
@@ -1092,8 +1092,22 @@ class gui_gtk implements pts_option_interface
 				{
 					$color = $object->get_color();
 
-					// $preferences_set[$preference] = 
-					//exit;
+					$red = dechex(floor(($color->red / 65535) * 255));
+					$green = dechex(floor(($color->green / 65535) * 255));
+					$blue = dechex(floor(($color->blue / 65535) * 255));
+
+					$color = $red . $green . $blue;
+
+					if(($sl = strlen($color)) == 3)
+					{
+						$color .= $color;
+					}
+					else if($sl < 6)
+					{
+						$color .= str_repeat(substr($color, -1), (6 - $sl));
+					}					
+
+					$preferences_set[$preference] = "#" . $color;
 				}
 				else if($object instanceOf GtkComboBox)
 				{
