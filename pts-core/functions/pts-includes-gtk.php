@@ -173,7 +173,7 @@ function pts_gtk_array_to_boxes($widget, $items, $set_spacing = -1, $append_to =
 	{
 		if(is_array($item))
 		{
-			pts_gtk_array_to_boxes($add_to, $item);
+			pts_gtk_array_to_boxes($add_to, $item, $set_spacing, false, $homogeneous);
 		}
 		else if($item == null)
 		{

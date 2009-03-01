@@ -42,7 +42,7 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_main_interface()
 	{
-		$window = new pts_gtk_window("Phoronix Test Suite v" . PTS_VERSION, 620, -1);
+		$window = new pts_gtk_window("Phoronix Test Suite v" . PTS_VERSION);
 		pts_set_assignment("GTK_OBJ_WINDOW", $window);
 		$vbox = new GtkVBox();
 		$vbox->set_spacing(4);
@@ -119,11 +119,12 @@ class gui_gtk implements pts_option_interface
 		$a = pts_read_assignment("GTK_OBJ_GLOBAL_UPLOAD");
 		$a->set_sensitive(false);
 
+		//
 		// Main Area
+		//
 
 		// Details Frame
 		$main_frame = new GtkFrame((($t = pts_read_assignment("PREV_SAVE_NAME_TITLE")) !== false ? $t : "Welcome"));
-		$main_frame->set_size_request(280, 330);
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME", $main_frame);
 
 		$main_frame_vbox = new GtkVBox();
@@ -180,46 +181,31 @@ class gui_gtk implements pts_option_interface
 
 		}
 
-		$top_hbox = new GtkHBox();
-		$top_hbox->pack_start($main_frame);
-
 		// Notebook Area
 		$main_notebook = new GtkNotebook();
-		$main_notebook->set_size_request(310, 330);
 		pts_set_assignment("GTK_OBJ_MAIN_NOTEBOOK", $main_notebook);
-
-		$top_hbox->pack_start($main_notebook);
-		$top_hbox->set_spacing(8);
-		$vbox->pack_start($top_hbox);
 		gui_gtk::update_main_notebook();
 
 		// Bottom Line
-
-		$bottom_hbox = new GtkHBox();
-		$vbox->pack_start($bottom_hbox);
-
 		$check_mode_batch = new GtkCheckButton("Batch Mode");
 		$check_mode_batch->set_sensitive(false);
+		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_defaults);
 		pts_set_assignment("GTK_OBJ_CHECK_BATCH", $check_mode_batch);
-		$bottom_hbox->pack_start($check_mode_batch);
 
 		$check_mode_defaults = new GtkCheckButton("Defaults Mode");
 		$check_mode_defaults->set_sensitive(false);
-		pts_set_assignment("GTK_OBJ_CHECK_DEFAULTS", $check_mode_defaults);
-		$bottom_hbox->pack_start($check_mode_defaults);
-
-		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_defaults);
 		$check_mode_defaults->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_batch);
+		pts_set_assignment("GTK_OBJ_CHECK_DEFAULTS", $check_mode_defaults);
 
 		$details_button = new pts_gtk_button("More Information", array("gui_gtk", "details_button_clicked"), null, 150, -1, Gtk::STOCK_FIND);
 		$details_button->set_sensitive(false);
 		pts_set_assignment("GTK_OBJ_DETAILS_BUTTON", $details_button);
-		$bottom_hbox->pack_start($details_button);
 
 		$run_button = new pts_gtk_button("Run", array("gui_gtk", "show_run_confirmation_interface"), null, 100, -1, Gtk::STOCK_EXECUTE);
 		$run_button->set_sensitive(false);
 		pts_set_assignment("GTK_OBJ_RUN_BUTTON", $run_button);
-		$bottom_hbox->pack_start($run_button);
+
+		pts_gtk_array_to_boxes($vbox, array(array($main_frame, $main_notebook), array($check_mode_batch, $check_mode_defaults, $details_button, $run_button)), 6, true);
 
 		$window->show_all();
 		Gtk::main();
@@ -677,14 +663,13 @@ class gui_gtk implements pts_option_interface
 		$button_box = new GtkHBox();
 		$vbox->pack_start($button_box);
 
-		$return_button = new pts_gtk_button("Return", array("gui_gtk", "confirmation_button_clicked"), "return", 100, 30, Gtk::STOCK_CANCEL);
+		$return_button = new pts_gtk_button("Return", array("gui_gtk", "confirmation_button_clicked"), "return", -1, -1, Gtk::STOCK_CANCEL);
 		$button_box->pack_start($return_button);
 
 		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 		$continue_button = new GtkButton("Continue");
 		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), $title_cmd, $identifier);
 		$continue_button->set_image($continue_img);
-		$continue_button->set_size_request(100, 30);
 		$button_box->pack_start($continue_button);
 
 		$window->show_all();
@@ -1011,8 +996,8 @@ class gui_gtk implements pts_option_interface
 				$current_value = pts_read_user_config($preference, null, $read_config);
 			}
 
-			if(false)
-			//if($current_value == "TRUE" || $current_value == "FALSE")
+			//if(false)
+			if($current_value == "TRUE" || $current_value == "FALSE")
 			{
 				$combobox[$i] = new GtkComboBox();
 
@@ -1063,8 +1048,8 @@ class gui_gtk implements pts_option_interface
 
 		pts_set_assignment("GTK_OBJ_PREFERENCES", $preference_objects);
 
-		$return_button = new pts_gtk_button("Help", array("gui_gtk", "launch_web_browser"), PTS_USER_DIR . "user-config.xml", 100, 30, Gtk::STOCK_HELP);
-		$continue_button = new pts_gtk_button("Save", array("gui_gtk", "preferences_button_clicked"), "save", 100, 30, Gtk::STOCK_APPLY);
+		$return_button = new pts_gtk_button("Help", array("gui_gtk", "launch_web_browser"), PTS_USER_DIR . "user-config.xml", -1, -1, Gtk::STOCK_HELP);
+		$continue_button = new pts_gtk_button("Save", array("gui_gtk", "preferences_button_clicked"), "save", -1, -1, Gtk::STOCK_APPLY);
 
 		pts_gtk_array_to_boxes($window, array($notebook, null, array($return_button, $continue_button)));
 
@@ -1239,9 +1224,9 @@ class gui_gtk implements pts_option_interface
 		$textview_pcqs = new pts_gtk_text_area($license, 540, 250);
 
 
-		$return_button = new pts_gtk_button("Return", array("gui_gtk", "pcqs_button_clicked"), "return", 100, 30, Gtk::STOCK_CANCEL);
+		$return_button = new pts_gtk_button("Return", array("gui_gtk", "pcqs_button_clicked"), "return", -1, -1, Gtk::STOCK_CANCEL);
 
-		$continue_button = new pts_gtk_button("Install", array("gui_gtk", "pcqs_button_clicked"), "install", 100, 30, Gtk::STOCK_APPLY);
+		$continue_button = new pts_gtk_button("Install", array("gui_gtk", "pcqs_button_clicked"), "install", -1, -1, Gtk::STOCK_APPLY);
 
 		pts_gtk_array_to_boxes($window, array($textview_pcqs, array($return_button, $continue_button)), 4);
 
@@ -1263,8 +1248,8 @@ class gui_gtk implements pts_option_interface
 
 		$textview_agreement = new pts_gtk_text_area(trim($user_agreement), 540, 250);
 
-		$return_button = new pts_gtk_button("Quit", array("gui_gtk", "process_user_agreement_prompt"), "quit", 100, 30, Gtk::STOCK_CANCEL);
-		$continue_button = new pts_gtk_button("Accept To Terms", array("gui_gtk", "process_user_agreement_prompt"), "yes", 100, 30, Gtk::STOCK_APPLY);
+		$return_button = new pts_gtk_button("Quit", array("gui_gtk", "process_user_agreement_prompt"), "quit", -1, -1, Gtk::STOCK_CANCEL);
+		$continue_button = new pts_gtk_button("Accept To Terms", array("gui_gtk", "process_user_agreement_prompt"), "yes", -1, -1, Gtk::STOCK_APPLY);
 
 		pts_gtk_array_to_boxes($window, array($textview_agreement, new GtkLabel("Do you agree to the user terms listed above?"), array($return_button, $continue_button)), 1);
 
