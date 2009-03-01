@@ -1025,6 +1025,13 @@ class gui_gtk implements pts_option_interface
 
 				$preference_objects[$preference] = $cb[$i];
 			}
+			else if(is_numeric($current_value))
+			{
+				$spin[$i] = GtkSpinButton::new_with_range(0, 1024, 1);
+				$spin[$i]->set_value($current_value);
+
+				$preference_objects[$preference] = $spin[$i];
+			}
 			else
 			{
 				$entry[$i] = new GtkEntry();
@@ -1090,6 +1097,10 @@ class gui_gtk implements pts_option_interface
 					}					
 
 					$preferences_set[$preference] = "#" . $color;
+				}
+				else if($object instanceOf GtkSpinButton)
+				{
+					$preferences_set[$preference] = $object->get_value();
 				}
 				else if($object instanceOf GtkComboBox)
 				{
