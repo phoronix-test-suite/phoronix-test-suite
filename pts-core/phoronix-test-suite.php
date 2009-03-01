@@ -21,6 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+setlocale(LC_NUMERIC, "C");
 define("PTS_PATH", dirname(realpath(dirname(__FILE__))) . "/");
 
 // PTS_MODE types
