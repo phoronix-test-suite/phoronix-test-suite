@@ -127,43 +127,39 @@ class gui_gtk implements pts_option_interface
 		$main_frame = new GtkFrame((($t = pts_read_assignment("PREV_SAVE_NAME_TITLE")) !== false ? $t : "Welcome"));
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME", $main_frame);
 
-		$main_frame_vbox = new GtkVBox();
-		$main_frame->add($main_frame_vbox);
-		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $main_frame_vbox);
-
 		$i = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER");
 		$u = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL");
 		$p = pts_read_assignment("PREV_PDF_FILE");
 		$ti = pts_read_assignment("PREV_TEST_INSTALLED");
 
+		$main_frame_objects = array();
 		if($i != false || $u != false || $p != false || $ti != false)
 		{
-			$main_frame_vbox->pack_start(new GtkLabel(" "));
+			array_push($main_frame_objects, null);
 			if(!empty($i))
 			{
 				$tr_button = new pts_gtk_button("View Test Results", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $i . "/composite.xml");
-				$main_frame_vbox->pack_start($tr_button);
+				array_push($main_frame_objects, $tr_button);
 			}
 			if(!empty($ti))
 			{
 				$ti_button = new GtkButton("Run " . pts_test_identifier_to_name($ti));
 				$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), "RUN", $ti);
-				$main_frame_vbox->pack_start($ti_button);
+				array_push($main_frame_objects, $ti_button);
 			}
-			$main_frame_vbox->pack_start(new GtkLabel(" "));
 			if(!empty($u))
 			{
 				$pg_button = new pts_gtk_button("View On Phoronix Global", array("gui_gtk", "launch_web_browser"), $u);
-				$main_frame_vbox->pack_start($pg_button);
+				array_push($main_frame_objects, $pg_button);
 			}
 			if(!empty($p))
 			{
 				$pdf_label = new GtkLabel("PDF Saved To: " . $p);
 				$pdf_label->set_line_wrap(true);
 				$pdf_label->set_size_request(260, -1);
-				$main_frame_vbox->pack_start($pdf_label);
-				$main_frame_vbox->pack_start(new GtkLabel(" "));
+				array_push($main_frame_objects, $pdf_label);
 			}
+			array_push($main_frame_objects, null);
 		}
 		else
 		{
@@ -172,17 +168,21 @@ class gui_gtk implements pts_option_interface
 			$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
 			$logo->set_size_request(158, 82);
 			$event_box->add($logo);
-			$main_frame_vbox->pack_start($event_box);
+			array_push($main_frame_objects, $event_box);
 
 			$label_welcome = new GtkLabel("The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for the Linux operating system. This software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.");
 			$label_welcome->set_line_wrap(true);
 			$label_welcome->set_size_request(260, 200);
-			$main_frame_vbox->pack_start($label_welcome);
-
+			array_push($main_frame_objects, $label_welcome);
 		}
+
+		$main_frame_box = pts_gtk_array_to_boxes($main_frame, $main_frame_objects, 6);
+		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $main_frame_box);
+
 
 		// Notebook Area
 		$main_notebook = new GtkNotebook();
+		$main_notebook->set_size_request(-1, 300);
 		pts_set_assignment("GTK_OBJ_MAIN_NOTEBOOK", $main_notebook);
 		gui_gtk::update_main_notebook();
 
@@ -660,17 +660,14 @@ class gui_gtk implements pts_option_interface
 			pts_gtk_array_to_boxes($vbox, $menu_items, -1, true);
 		}
 
-		$button_box = new GtkHBox();
-		$vbox->pack_start($button_box);
-
 		$return_button = new pts_gtk_button("Return", array("gui_gtk", "confirmation_button_clicked"), "return", -1, -1, Gtk::STOCK_CANCEL);
-		$button_box->pack_start($return_button);
 
 		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 		$continue_button = new GtkButton("Continue");
 		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), $title_cmd, $identifier);
 		$continue_button->set_image($continue_img);
-		$button_box->pack_start($continue_button);
+
+		pts_gtk_array_to_boxes($vbox, array($return_button, $continue_button));
 
 		$window->show_all();
 		pts_set_assignment("GTK_OBJ_CONFIRMATION_WINDOW", $window);
