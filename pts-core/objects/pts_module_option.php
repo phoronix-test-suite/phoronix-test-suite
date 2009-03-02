@@ -93,6 +93,12 @@ class pts_module_option
 						$supported = true;
 					}
 					break;
+				case "ALPHA_NUMERIC":
+					if(!empty($input) && strlen(pts_remove_chars($input, true, false, true)) == strlen($input))
+					{
+						$supported = true;
+					}
+					break;
 				case "HTTP_URL":
 					if(substr($input, 0, 7) == "http://")
 					{

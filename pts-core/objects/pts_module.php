@@ -34,17 +34,38 @@ class pts_module
 
 		return $prefix_dir . str_replace("_", "-", self::module_name()) . "/";
 	}
-	public static function read_option($identifier)
+	public static function is_module_setup()
 	{
 		$module_name = self::module_name();
-		$value = "";
+		$is_setup = true;
+
+		$module_setup_options = pts_php_module_call($module_name, "module_setup");
+
+		foreach($module_setup_options as $option)
+		{
+			if($option instanceOf pts_module_option)
+			{
+				if(pts_module::read_option($option->get_identifier()) == false)
+				{
+					$is_setup = false;
+					break;
+				}
+			}
+		}
+
+		return $is_setup;
+	}
+	public static function read_option($identifier, $default_fallback = false)
+	{
+		$module_name = self::module_name();
+		$value = false;
 
 		$module_config_parser = new tandem_XmlReader(PTS_USER_DIR . "modules-config.xml");
 		$option_module = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_NAME);
 		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
 		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 
-		for($i = 0; $i < count($option_module) && $value == ""; $i++)
+		for($i = 0; $i < count($option_module) && $value == false; $i++)
 		{
 			if($option_module[$i] == $module_name && $option_identifier[$i] == $identifier)
 			{
@@ -52,12 +73,12 @@ class pts_module
 			}
 		}
 
-		if(empty($value))
+		if($default_fallback && empty($value))
 		{
 			// Find the default value
 			eval("\$module_options = " . $module_name . "::module_setup();");
 
-			for($i = 0; $i < count($module_options) && $value == ""; $i++)
+			for($i = 0; $i < count($module_options) && $value == false; $i++)
 			{
 				if($module_options[$i]->get_identifier() == $identifier)
 				{
