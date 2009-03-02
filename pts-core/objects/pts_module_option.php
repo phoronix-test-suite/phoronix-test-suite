@@ -53,9 +53,9 @@ class pts_module_option
 	{
 		$question_string = $this->get_question();
 
-		if($this->default_value != null)
+		if($this->get_default_value() != null)
 		{
-			$question_string .= " [" . $this->default_value . "]";
+			$question_string .= " [" . $this->get_default_value() . "]";
 		}
 
 		$question_string .= ": ";

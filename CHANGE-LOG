@@ -17,6 +17,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add graph configuration options to preferences area
 - pts-core: Set LC_NUMERIC locale within pts-core to "C"
 - pts-core: Add is_module_setup() function to pts_module object
+- pts-core: Quit testing prematurely if ~/.phoronix-test-suite/halt-testing is touched during the testing process
 - pts: Add autoconf to PTS External Dependencies support
 - pts: Add libtool to PTS External Dependencies support
 - pts: Update vdrift test profile to VDrift 2009-02-15 and make the test profile work to verified state

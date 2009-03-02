@@ -670,6 +670,11 @@ function pts_verify_test_installation($identifiers)
 }
 function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $results_identifier = "")
 {
+	if(is_file(PTS_USER_DIR . "halt-testing"))
+	{
+		unlink(PTS_USER_DIR . "halt-testing");
+	}
+
 	for($i = 0; $i < count($tests_to_run); $i++)
 	{
 		$to_run = $tests_to_run[$i]->get_identifier();
@@ -677,6 +682,12 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $results_identifie
 		if(pts_is_test($to_run))
 		{
 			$test_result = pts_run_test($to_run, $tests_to_run[$i]->get_arguments(), $tests_to_run[$i]->get_arguments_description());
+
+			if(is_file(PTS_USER_DIR . "halt-testing"))
+			{
+				unlink(PTS_USER_DIR . "halt-testing");
+				return;
+			}
 
 			if($test_result instanceof pts_test_result)
 			{
