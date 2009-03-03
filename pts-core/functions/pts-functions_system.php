@@ -39,7 +39,9 @@ function pts_hw_string($return_string = true)
 	$hw["System Memory"] = hw_sys_memory_string();
 	$hw["Disk"] = hw_sys_hdd_string();
 	$hw["Graphics"] = hw_gpu_string() . hw_gpu_frequency();
-	$hw["Screen Resolution"] = hw_gpu_current_mode();
+	$hw["Monitor"] = hw_gpu_enabled_monitors();
+
+	$hw = pts_remove_unsupported_entries($hw);
 
 	return pts_process_string_array($return_string, $hw);
 }
@@ -66,6 +68,7 @@ function pts_sw_string($return_string = true)
 	$sw["OpenGL"] = sw_os_opengl();
 	$sw["Compiler"] = sw_os_compiler();
 	$sw["File-System"] = sw_os_filesystem();
+	$sw["Screen Resolution"] = hw_gpu_current_mode();
 
 	return pts_process_string_array($return_string, $sw);
 }
@@ -100,7 +103,7 @@ function pts_sys_sensors_string($return_string = true)
 	return pts_process_string_array($return_string, $sensors);
 }
 
-function pts_remove_unsupported_entries($array, $check_at_start_of_string = false)
+function pts_remove_unsupported_entries($array)
 {
 	$clean_elements = array();
 

@@ -51,26 +51,24 @@ class module_setup implements pts_option_interface
 				$set_options = array();
 				foreach($module_setup as $module_option)
 				{
-					if(!($module_option instanceOf pts_module_option))
+					if($module_option instanceOf pts_module_option))
 					{
-						continue;
+						do
+						{
+							echo "\n" . $module_option->get_formatted_question();
+							$input = trim(fgets(STDIN));
+						}
+						while(!$module_option->is_supported_value($input));
+
+						if(empty($input))
+						{
+							$input = $module_option->get_default_value();
+						}
+
+						$this_input_identifier = $module_option->get_identifier();
+
+						$set_options[$module . "__" . $this_input_identifier] = $input;
 					}
-
-					do
-					{
-						echo "\n" . $module_option->get_formatted_question();
-						$input = trim(fgets(STDIN));
-					}
-					while(!$module_option->is_supported_value($input));
-
-					if(empty($input))
-					{
-						$input = $module_option->get_default_value();
-					}
-
-					$this_input_identifier = $module_option->get_identifier();
-
-					$set_options[$module . "__" . $this_input_identifier] = $input;
 				}
 				pts_module_config_init($set_options);
 			}

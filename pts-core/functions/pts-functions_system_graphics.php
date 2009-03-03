@@ -559,6 +559,14 @@ function hw_gpu_current_mode()
 
 	return $resolution;
 }
+function hw_gpu_enabled_monitors()
+{
+	$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep \"Monitor name\"");
+	$log_parse = substr($log_parse, strpos($log_parse, "Monitor name:") + 14);
+	$log_parse = trim(substr($log_parse, 0, strpos($log_parse, "\n")));
+
+	return (empty($log_parse) ? false : $log_parse);
+}
 function hw_gpu_screen_width()
 {
 	// Current screen width
