@@ -151,7 +151,6 @@ abstract class bilde_gd_renderer extends bilde_renderer
 			$text_x = $bound_x1 + $text_height;
 			$text_y = (($bound_y2 - $bound_y1) / 2) + $bound_y1 + round($text_width / 2);
 		}
-
 		imagettftext($this->image, $font_size, $rotation, $text_x, $text_y, $font_color, $font_type, $text_string);
 	}
 

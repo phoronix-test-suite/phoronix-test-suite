@@ -50,7 +50,7 @@ class pts_CustomGraph extends pts_Graph
 
 		if($font_xml != $font_type && !defined("CUSTOM_FONT_DIR"))
 		{
-			echo "\n" . $font_path = substr($font_xml, 0, 0 - (strlen($font_type)));
+			$font_path = substr($font_xml, 0, 0 - (strlen($font_type)));
 			define("CUSTOM_FONT_DIR", $font_path);
 		}
 

@@ -1035,8 +1035,7 @@ class gui_gtk implements pts_option_interface
 			else if(in_array($preference, array(P_GRAPH_FONT_TYPE)))
 			{
 				// TODO: implement GtkEntry with GtkFileChooser here
-				$entry[$i] = new GtkEntry();
-				$entry[$i]->set_text($current_value);
+				$entry[$i] = new pts_gtk_button($current_value, array("gui_gtk", "show_find_font_interface"), "this");
 
 				$preference_objects[$preference] = $entry[$i];
 			}
@@ -1114,6 +1113,10 @@ class gui_gtk implements pts_option_interface
 				{
 					$preferences_set[$preference] = pts_config_bool_to_string($object->get_active() == 0);
 				}
+				else if($object instanceOf GtkButton)
+				{
+					$preferences_set[$preference] = $object->get_label();
+				}
 			}
 			pts_user_config_init($preferences_set);
 			pts_graph_config_init($preferences_set);
@@ -1121,6 +1124,18 @@ class gui_gtk implements pts_option_interface
 
 		$window = pts_read_assignment("GTK_OBJ_PREFERENCES_WINDOW");
 		$window->destroy();
+	}
+	public static function show_find_font_interface($button)
+	{
+		$dialog = new GtkFileChooserDialog("Open TTF Font", null,  Gtk::FILE_CHOOSER_ACTION_OPEN, array(Gtk::STOCK_OK, Gtk::RESPONSE_OK), null);
+		$dialog->show_all();
+
+		if($dialog->run() == Gtk::RESPONSE_OK)
+		{
+			$open_file = $dialog->get_filename();
+			$button->set_label($open_file);
+		}
+		$dialog->destroy();
 	}
 	public static function upload_results_to_global()
 	{
