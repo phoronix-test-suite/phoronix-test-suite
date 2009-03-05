@@ -1,4 +1,4 @@
-The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux and is designed to carry out tests in a clean, reproducible, and easy-to-use manner. This software ships with over 70 test profiles and 30 test suites, but new tests and suites can be easily added through its XML-based test profile system.
+The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux and is designed to carry out tests in a clean, reproducible, and easy-to-use manner. This software ships with over 90 test profiles and 30 test suites, but new tests and suites can be easily added through its XML-based test profile system.
 
 - The Phoronix Test Suite is open-source and licensed under the GNU GPLv3. However, some tests supported by the PTS are not open-source. To see the license of tests, run: phoronix-test-suite list-tests.
 

@@ -52,23 +52,15 @@ function pts_sw_string($return_string = true)
 
 	$sw["OS"] = sw_os_release();
 	$sw["Kernel"] = sw_os_kernel() . " (" . sw_os_architecture() . ")";
-
-	if(($desktop = sw_desktop_environment()) != "")
-	{
-		$sw["Desktop"] = $desktop;
-	}
-
+	$sw["Desktop"] = sw_desktop_environment();
 	$sw["Display Server"] = sw_os_graphics_subsystem();
-
-	if(($ddx = sw_xorg_ddx_driver_info()) != "")
-	{
-		$sw["Display Driver"] = $ddx;
-	}
-
+	$sw["Display Driver"] = sw_xorg_ddx_driver_info();
 	$sw["OpenGL"] = sw_os_opengl();
 	$sw["Compiler"] = sw_os_compiler();
 	$sw["File-System"] = sw_os_filesystem();
 	$sw["Screen Resolution"] = hw_gpu_current_mode();
+
+	$sw = pts_remove_unsupported_entries($sw);
 
 	return pts_process_string_array($return_string, $sw);
 }

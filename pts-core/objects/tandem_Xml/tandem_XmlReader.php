@@ -4,7 +4,7 @@
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2004-2008, Michael Larabel
+	Copyright (C) 2004 - 2008, Michael Larabel
 	tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite.
 
 	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
