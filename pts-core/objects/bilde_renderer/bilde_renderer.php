@@ -116,7 +116,11 @@ abstract class bilde_renderer
 		// Setup directory for TTF Fonts
 		if(getenv("GDFONTPATH") == false)
 		{
-			if(defined("FONT_DIR"))
+			if(defined("CUSTOM_FONT_DIR"))
+			{
+				putenv("GDFONTPATH=" . CUSTOM_FONT_DIR);
+			}
+			else if(defined("FONT_DIR"))
 			{
 				putenv("GDFONTPATH=" . FONT_DIR);
 			}

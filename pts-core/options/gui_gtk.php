@@ -172,7 +172,7 @@ class gui_gtk implements pts_option_interface
 
 			$label_welcome = new GtkLabel("The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for the Linux operating system. This software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.");
 			$label_welcome->set_line_wrap(true);
-			$label_welcome->set_size_request(260, 200);
+			$label_welcome->set_size_request(260, -1);
 			array_push($main_frame_objects, $label_welcome);
 		}
 
@@ -935,14 +935,14 @@ class gui_gtk implements pts_option_interface
 		P_OPTION_BATCH_SAVERESULTS, P_OPTION_BATCH_LAUNCHBROWSER, P_OPTION_BATCH_UPLOADRESULTS,
 		P_OPTION_BATCH_PROMPTIDENTIFIER, P_OPTION_BATCH_PROMPTDESCRIPTION, P_OPTION_BATCH_PROMPTSAVENAME,
 		// Graph Settings
-		P_GRAPH_SIZE_WIDTH, P_GRAPH_SIZE_HEIGHT, P_GRAPH_COLOR_BACKGROUND, P_GRAPH_COLOR_BODY,
+		P_GRAPH_SIZE_WIDTH, P_GRAPH_SIZE_HEIGHT, P_GRAPH_RENDERER,
+		P_GRAPH_RENDERBORDER, P_GRAPH_MARKCOUNT, P_GRAPH_WATERMARK,
+		P_GRAPH_BORDER, P_GRAPH_COLOR_BACKGROUND, P_GRAPH_COLOR_BODY,
 		P_GRAPH_COLOR_NOTCHES, P_GRAPH_COLOR_BORDER, P_GRAPH_COLOR_ALTERNATE,
 		P_GRAPH_COLOR_PAINT, P_GRAPH_COLOR_HEADERS, P_GRAPH_COLOR_MAINHEADERS,
-		P_GRAPH_COLOR_TEXT, P_GRAPH_COLOR_BODYTEXT, P_GRAPH_FONT_SIZE_HEADERS,
+		P_GRAPH_COLOR_TEXT, P_GRAPH_COLOR_BODYTEXT, P_GRAPH_FONT_TYPE, P_GRAPH_FONT_SIZE_HEADERS,
 		P_GRAPH_FONT_SIZE_SUBHEADERS, P_GRAPH_FONT_SIZE_TEXT, P_GRAPH_FONT_SIZE_IDENTIFIERS,
-		P_GRAPH_FONT_SIZE_AXIS,	P_GRAPH_FONT_TYPE, P_GRAPH_RENDERER,
-		P_GRAPH_RENDERBORDER, P_GRAPH_MARKCOUNT, P_GRAPH_WATERMARK,
-		P_GRAPH_BORDER
+		P_GRAPH_FONT_SIZE_AXIS
 		);
 
 		$window = new pts_gtk_window("Preferences");
@@ -1032,6 +1032,14 @@ class gui_gtk implements pts_option_interface
 
 				$preference_objects[$preference] = $spin[$i];
 			}
+			else if(in_array($preference, array(P_GRAPH_FONT_TYPE)))
+			{
+				// TODO: implement GtkEntry with GtkFileChooser here
+				$entry[$i] = new GtkEntry();
+				$entry[$i]->set_text($current_value);
+
+				$preference_objects[$preference] = $entry[$i];
+			}
 			else
 			{
 				$entry[$i] = new GtkEntry();
@@ -1048,7 +1056,7 @@ class gui_gtk implements pts_option_interface
 		}
 		$vbox_page_{$pages} = new GtkVBox();
 		pts_gtk_array_to_boxes($vbox_page_{$pages}, $page_items, 1, true);
-		$notebook->append_page($vbox_page_{$pages}, new GtkLabel($previous_heading));
+		$notebook->append_page($vbox_page_{$pages}, new GtkLabel($page_prefix . $previous_heading));
 
 		pts_set_assignment("GTK_OBJ_PREFERENCES", $preference_objects);
 

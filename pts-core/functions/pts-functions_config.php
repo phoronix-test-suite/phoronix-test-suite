@@ -165,9 +165,14 @@ function pts_graph_config_init($new_config_values = "")
 	$read_config = new pts_graph_config_tandem_XmlReader($new_config_values);
 	$config = new tandem_XmlWriter();
 
-	// Size of Graph
+	// General
 	$config->addXmlObject(P_GRAPH_SIZE_WIDTH, 1, pts_read_graph_config(P_GRAPH_SIZE_WIDTH, "580", $read_config));
 	$config->addXmlObject(P_GRAPH_SIZE_HEIGHT, 1, pts_read_graph_config(P_GRAPH_SIZE_HEIGHT, "300", $read_config));
+	$config->addXmlObject(P_GRAPH_RENDERER, 1, pts_read_graph_config(P_GRAPH_RENDERER, "PNG", $read_config));
+	$config->addXmlObject(P_GRAPH_RENDERBORDER, 1, pts_read_graph_config(P_GRAPH_RENDERBORDER, "FALSE", $read_config));
+	$config->addXmlObject(P_GRAPH_MARKCOUNT, 1, pts_read_graph_config(P_GRAPH_MARKCOUNT, "6", $read_config));
+	$config->addXmlObject(P_GRAPH_WATERMARK, 1, pts_read_graph_config(P_GRAPH_WATERMARK, "PHORONIX-TEST-SUITE.COM", $read_config));
+	$config->addXmlObject(P_GRAPH_BORDER, 1, pts_read_graph_config(P_GRAPH_BORDER, "FALSE", $read_config));
 
 	// Colors
 	$config->addXmlObject(P_GRAPH_COLOR_BACKGROUND, 2, pts_read_graph_config(P_GRAPH_COLOR_BACKGROUND, "#FFFFFF", $read_config));
@@ -184,19 +189,12 @@ function pts_graph_config_init($new_config_values = "")
 	$config->addXmlObject(P_GRAPH_COLOR_BODYTEXT, 2, pts_read_graph_config(P_GRAPH_COLOR_BODYTEXT, "#FFFFFF", $read_config));
 
 	// Text Size
+	$config->addXmlObject(P_GRAPH_FONT_TYPE, 3, pts_read_graph_config(P_GRAPH_FONT_TYPE, "Sans.ttf", $read_config));
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_HEADERS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_HEADERS, "18", $read_config));
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_SUBHEADERS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_SUBHEADERS, "12", $read_config));
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_TEXT, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_TEXT, "12", $read_config));
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_IDENTIFIERS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_IDENTIFIERS, "11", $read_config));
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_AXIS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_AXIS, "11", $read_config));
-
-	// Other
-	$config->addXmlObject(P_GRAPH_FONT_TYPE, 4, pts_read_graph_config(P_GRAPH_FONT_TYPE, "Sans.ttf", $read_config));
-	$config->addXmlObject(P_GRAPH_RENDERER, 4, pts_read_graph_config(P_GRAPH_RENDERER, "PNG", $read_config));
-	$config->addXmlObject(P_GRAPH_RENDERBORDER, 4, pts_read_graph_config(P_GRAPH_RENDERBORDER, "FALSE", $read_config));
-	$config->addXmlObject(P_GRAPH_MARKCOUNT, 4, pts_read_graph_config(P_GRAPH_MARKCOUNT, "6", $read_config));
-	$config->addXmlObject(P_GRAPH_WATERMARK, 4, pts_read_graph_config(P_GRAPH_WATERMARK, "PHORONIX-TEST-SUITE.COM", $read_config));
-	$config->addXmlObject(P_GRAPH_BORDER, 4, pts_read_graph_config(P_GRAPH_BORDER, "FALSE", $read_config));
 
 	file_put_contents(PTS_USER_DIR . "graph-config.xml", $config->getXML());
 }
