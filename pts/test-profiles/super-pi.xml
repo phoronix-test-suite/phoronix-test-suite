@@ -5,7 +5,7 @@
 		<Version>1.0.1</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>UNKNOWN</License>
+		<License>NON-FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Pekka Panula</Maintainer>
 		<EnvironmentSize>1.4</EnvironmentSize>

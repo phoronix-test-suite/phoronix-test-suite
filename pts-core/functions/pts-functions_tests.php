@@ -242,6 +242,10 @@ function pts_subsystem_test_types()
 {
 	return array("System", "Processor", "Disk", "Graphics", "Memory", "Network");
 }
+function pts_license_test_types()
+{
+	return array("Free", "Non-Free", "Restricted");
+}
 function pts_get_results_viewer_xsl_formatted($pts_Graph)
 {
 	$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");

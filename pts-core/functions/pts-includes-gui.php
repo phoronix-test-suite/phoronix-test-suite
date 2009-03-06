@@ -38,8 +38,9 @@ function pts_gui_installed_suites()
 
 	return $installed_suites;
 }
-function pts_gui_available_suites($to_show_types)
+function pts_gui_available_suites($to_show_types, $license_types = "")
 {
+	// TODO: Right now a suite could include both free/non-free tests, so $license_types needs to be decided
 	$test_suites = pts_supported_suites_array();
 	$to_show_names = array();
 
@@ -59,17 +60,19 @@ function pts_gui_available_suites($to_show_types)
 
 	return $test_suites;
 }
-function pts_gui_installed_tests($to_show_types)
+function pts_gui_installed_tests($to_show_types, $license_types)
 {
 	$installed_tests = array();
 	$installed = pts_installed_tests_array();
+	$license_types = array_map("strtoupper", $license_types);
 
 	foreach($installed as $test)
 	{
 		$tp = new pts_test_profile_details($test);
 		$hw_type = $tp->get_test_hardware_type();
+		$license = $tp->get_license();
 
-		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && $tp->get_name() != "")
+		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->get_name() != "")
 		{
 			array_push($installed_tests, $test);
 		}
@@ -80,17 +83,19 @@ function pts_gui_installed_tests($to_show_types)
 
 	return $installed_tests;
 }
-function pts_gui_available_tests($to_show_types)
+function pts_gui_available_tests($to_show_types, $license_types)
 {
 	$test_names = pts_supported_tests_array();
 	$to_show_names = array();
+	$license_types = array_map("strtoupper", $license_types);
 
 	foreach($test_names as $name)
 	{
 		$tp = new pts_test_profile_details($name);
 		$hw_type = $tp->get_test_hardware_type();
+		$license = $tp->get_license();
 
-		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && $tp->verified_state())
+		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->verified_state())
 		{
 			array_push($to_show_names, $name);
 		}

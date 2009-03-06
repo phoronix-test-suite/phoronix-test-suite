@@ -89,6 +89,13 @@ class gui_gtk implements pts_option_interface
 		array_push($view_menu, new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON"));
 		array_push($view_menu, null);
 
+		foreach(pts_license_test_types() as $license)
+		{
+			array_push($view_menu, new pts_gtk_menu_item($license, array("gui_gtk", "check_test_license_select"), "CHECK_BUTTON", null, true));
+		}
+
+		array_push($view_menu, null);
+
 		foreach(pts_subsystem_test_types() as $subsystem)
 		{
 			array_push($view_menu, new pts_gtk_menu_item($subsystem, array("gui_gtk", "check_test_type_select"), "CHECK_BUTTON", null, true));
@@ -349,24 +356,25 @@ class gui_gtk implements pts_option_interface
 				pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
 			}
 
-			$available_suites = pts_gtk_add_table(array("Suite"), pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW")), 
+			$available_suites = pts_gtk_add_table(array("Suite"), pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), 
+			pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
 			array("gui_gtk", "update_details_frame_from_select"));
 			pts_gtk_add_notebook_tab($main_notebook, $available_suites, "Available Suites");
 		}
 		else
 		{
-			$to_show_types = pts_read_assignment("GTK_TEST_TYPES_TO_SHOW");
-
 			// Installed Tests
 			if(count(($installed = pts_installed_tests_array())) > 0)
 			{
-				$installed_tests = pts_gtk_add_table(array("Test"), pts_gui_installed_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW")), 
+				$installed_tests = pts_gtk_add_table(array("Test"), pts_gui_installed_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"),
+				pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
 				array("gui_gtk", "update_details_frame_from_select"));
 				pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
 			}
 
 			// Available Tests
-			$available_tests = pts_gtk_add_table(array("Test"), pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW")), 
+			$available_tests = pts_gtk_add_table(array("Test"), pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), 
+			pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
 			array("gui_gtk", "update_details_frame_from_select"));
 			pts_gtk_add_notebook_tab($main_notebook, $available_tests, "Available Tests");
 		}
@@ -864,9 +872,18 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function check_test_type_select($object)
 	{
+		gui_gtk::check_test_select($object, "SUBSYSTEMS");
+	}
+	public static function check_test_license_select($object)
+	{
+		gui_gtk::check_test_select($object, "LICENSES");
+	}
+	public static function check_test_select($object, $type)
+	{
 		$item = $object->child->get_label();
 		//$to_add = $object->get_active();
-		$items_to_show = pts_read_assignment("GTK_TEST_TYPES_TO_SHOW");
+
+		$items_to_show = pts_read_assignment(($type == "SUBSYSTEMS" ? "GTK_TEST_TYPES_TO_SHOW" : "GTK_TEST_LICENSES_TO_SHOW"));
 
 		if($items_to_show == null)
 		{
@@ -891,7 +908,7 @@ class gui_gtk implements pts_option_interface
 			}
 		}
 
-		pts_set_assignment("GTK_TEST_TYPES_TO_SHOW", $items_to_show);
+		pts_set_assignment(($type == "SUBSYSTEMS" ? "GTK_TEST_TYPES_TO_SHOW" : "GTK_TEST_LICENSES_TO_SHOW"), $items_to_show);
 
 		gui_gtk::update_main_notebook();
 		gui_gtk::redraw_main_window();
