@@ -942,7 +942,7 @@ class gui_gtk implements pts_option_interface
 		$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
 		$event_box->add($label_url);
 
-		$label_copyright = new GtkLabel("Copyright (C) 2008-2009 By Phoronix Media\nCopyright (C) 2008-2009 By Michael Larabel");
+		$label_copyright = new GtkLabel("Copyright (C) 2008 - 2009 By Phoronix Media\nCopyright (C) 2008 - 2009 By Michael Larabel");
 		$label_copyright->modify_font(new PangoFontDescription("Sans 9"));
 
 		pts_gtk_array_to_boxes($window, array($logo, $label_codename, $label_version, $event_box, $label_copyright), 6);
@@ -965,7 +965,7 @@ class gui_gtk implements pts_option_interface
 		P_OPTION_BATCH_PROMPTIDENTIFIER, P_OPTION_BATCH_PROMPTDESCRIPTION, P_OPTION_BATCH_PROMPTSAVENAME,
 		// Graph Settings
 		P_GRAPH_SIZE_WIDTH, P_GRAPH_SIZE_HEIGHT, P_GRAPH_RENDERER,
-		P_GRAPH_RENDERBORDER, P_GRAPH_MARKCOUNT, P_GRAPH_WATERMARK,
+		P_GRAPH_MARKCOUNT, P_GRAPH_WATERMARK,
 		P_GRAPH_BORDER, P_GRAPH_COLOR_BACKGROUND, P_GRAPH_COLOR_BODY,
 		P_GRAPH_COLOR_NOTCHES, P_GRAPH_COLOR_BORDER, P_GRAPH_COLOR_ALTERNATE,
 		P_GRAPH_COLOR_PAINT, P_GRAPH_COLOR_HEADERS, P_GRAPH_COLOR_MAINHEADERS,
@@ -1022,7 +1022,6 @@ class gui_gtk implements pts_option_interface
 				$current_value = pts_read_user_config($preference, null, $read_config);
 			}
 
-			//if(false)
 			if($current_value == "TRUE" || $current_value == "FALSE")
 			{
 				/*$combobox[$i] = new GtkComboBox();

@@ -219,10 +219,9 @@ define("P_INSTALL_TEST_AVG_RUNTIME", "PhoronixTestSuite/TestInstallation/History
 define("P_GRAPH_SIZE_WIDTH", "PhoronixTestSuite/Graphs/General/GraphWidth"); // Graph width
 define("P_GRAPH_SIZE_HEIGHT", "PhoronixTestSuite/Graphs/General/GraphHeight"); // Graph height
 define("P_GRAPH_RENDERER", "PhoronixTestSuite/Graphs/General/Renderer"); // Graph renderer
-define("P_GRAPH_RENDERBORDER", "PhoronixTestSuite/Graphs/General/RenderBorder"); // Graph render border
 define("P_GRAPH_MARKCOUNT", "PhoronixTestSuite/Graphs/General/NumberOfMarks"); // Graph number of marks
 define("P_GRAPH_WATERMARK", "PhoronixTestSuite/Graphs/General/Watermark"); // Graph watermark
-define("P_GRAPH_BORDER", "PhoronixTestSuite/Graphs/General/Border"); // Graph border bool
+define("P_GRAPH_BORDER", "PhoronixTestSuite/Graphs/General/Border"); // Render border around graph?
 
 define("P_GRAPH_COLOR_BACKGROUND", "PhoronixTestSuite/Graphs/Colors/Background"); // Graph color background
 define("P_GRAPH_COLOR_BODY", "PhoronixTestSuite/Graphs/Colors/GraphBody"); // Graph color body

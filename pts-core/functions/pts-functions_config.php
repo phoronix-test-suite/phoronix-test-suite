@@ -169,7 +169,6 @@ function pts_graph_config_init($new_config_values = "")
 	$config->addXmlObject(P_GRAPH_SIZE_WIDTH, 1, pts_read_graph_config(P_GRAPH_SIZE_WIDTH, "580", $read_config));
 	$config->addXmlObject(P_GRAPH_SIZE_HEIGHT, 1, pts_read_graph_config(P_GRAPH_SIZE_HEIGHT, "300", $read_config));
 	$config->addXmlObject(P_GRAPH_RENDERER, 1, pts_read_graph_config(P_GRAPH_RENDERER, "PNG", $read_config));
-	$config->addXmlObject(P_GRAPH_RENDERBORDER, 1, pts_read_graph_config(P_GRAPH_RENDERBORDER, "FALSE", $read_config));
 	$config->addXmlObject(P_GRAPH_MARKCOUNT, 1, pts_read_graph_config(P_GRAPH_MARKCOUNT, "6", $read_config));
 	$config->addXmlObject(P_GRAPH_WATERMARK, 1, pts_read_graph_config(P_GRAPH_WATERMARK, "PHORONIX-TEST-SUITE.COM", $read_config));
 	$config->addXmlObject(P_GRAPH_BORDER, 1, pts_read_graph_config(P_GRAPH_BORDER, "FALSE", $read_config));
