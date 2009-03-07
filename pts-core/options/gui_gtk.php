@@ -117,14 +117,10 @@ class gui_gtk implements pts_option_interface
 		);
 		pts_gtk_add_menu($vbox, $main_menu_items);
 
-		$a = pts_read_assignment("GTK_OBJ_ANALYZE_RUNS");
-		$a->set_sensitive(false);
-		$a = pts_read_assignment("GTK_OBJ_ANALYZE_BATCH");
-		$a->set_sensitive(false);
-		$a = pts_read_assignment("GTK_OBJ_BUILD_SUITE");
-		$a->set_sensitive(false);
-		$a = pts_read_assignment("GTK_OBJ_GLOBAL_UPLOAD");
-		$a->set_sensitive(false);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", false);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", false);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_BUILD_SUITE", false);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", false);
 
 		//
 		// Main Area
@@ -194,13 +190,14 @@ class gui_gtk implements pts_option_interface
 		// Bottom Line
 		$check_mode_batch = new GtkCheckButton("Batch Mode");
 		$check_mode_batch->set_sensitive(false);
-		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_defaults);
 		pts_set_assignment("GTK_OBJ_CHECK_BATCH", $check_mode_batch);
 
 		$check_mode_defaults = new GtkCheckButton("Defaults Mode");
 		$check_mode_defaults->set_sensitive(false);
-		$check_mode_defaults->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_batch);
 		pts_set_assignment("GTK_OBJ_CHECK_DEFAULTS", $check_mode_defaults);
+
+		$check_mode_defaults->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_batch);
+		$check_mode_batch->connect("toggled", array("gui_gtk", "check_test_mode_select"), $check_mode_defaults);
 
 		$details_button = new pts_gtk_button("More Information", array("gui_gtk", "details_button_clicked"), null, 150, -1, Gtk::STOCK_FIND);
 		$details_button->set_sensitive(false);
@@ -214,6 +211,11 @@ class gui_gtk implements pts_option_interface
 
 		$window->show_all();
 		Gtk::main();
+	}
+	protected static function pts_gtk_object_set_sensitive($object, $sensitive)
+	{
+		$o = pts_read_assignment($object);
+		$o->set_sensitive($sensitive);
 	}
 	public static function update_details_frame_from_select($object)
 	{
@@ -234,37 +236,20 @@ class gui_gtk implements pts_option_interface
 
 		if(!pts_is_assignment("GTK_ITEM_SELECTED_ONCE"))
 		{
-			$button = pts_read_assignment("GTK_OBJ_RUN_BUTTON");
-			$button->set_sensitive(true);
-			$button = pts_read_assignment("GTK_OBJ_DETAILS_BUTTON");
-			$button->set_sensitive(true);
-			$button = pts_read_assignment("GTK_OBJ_CHECK_DEFAULTS");
-			$button->set_sensitive(true);
-			$button = pts_read_assignment("GTK_OBJ_CHECK_BATCH");
-			$button->set_sensitive(true);
+			gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", true);
+			gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_DETAILS_BUTTON", true);
+			gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", true);
+			gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", true);
 
 			pts_set_assignment("GTK_ITEM_SELECTED_ONCE", true);
 		}
 
-		$generate_pdf = pts_read_assignment("GTK_OBJ_GENERATE_PDF");
-		$refresh_graphs = pts_read_assignment("GTK_OBJ_REFRESH_GRAPHS");
-		$analyze_runs = pts_read_assignment("GTK_OBJ_ANALYZE_RUNS");
-		$analyze_batch = pts_read_assignment("GTK_OBJ_ANALYZE_BATCH");
-		$global_upload = pts_read_assignment("GTK_OBJ_GLOBAL_UPLOAD");
-		$generate_pdf->set_sensitive(false);
-		$refresh_graphs->set_sensitive(false);
-		$analyze_runs->set_sensitive(false);
-		$analyze_batch->set_sensitive(false);
-		$global_upload->set_sensitive(false);
-
 		// PTS Test
+		$test_menu_items_sensitive = false;
+
 		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{
-			$generate_pdf->set_sensitive(true);
-			$refresh_graphs->set_sensitive(true);
-			$analyze_runs->set_sensitive(true);
-			$analyze_batch->set_sensitive(true);
-			$global_upload->set_sensitive(true);
+			$test_menu_items_sensitive = true;
 
 			$result_file = new pts_test_result_details(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 
@@ -316,6 +301,12 @@ class gui_gtk implements pts_option_interface
 			$textview_description = new pts_gtk_text_area($test_suite->get_description(), -1, -1, true);
 			array_push($append_elements, $textview_description);
 		}
+
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GENERATE_PDF", $test_menu_items_sensitive);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_REFRESH_GRAPHS", $test_menu_items_sensitive);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", $test_menu_items_sensitive);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", $test_menu_items_sensitive);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", $test_menu_items_sensitive);
 
 		$titles = array();
 		$values = array();
