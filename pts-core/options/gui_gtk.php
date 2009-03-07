@@ -1025,7 +1025,7 @@ class gui_gtk implements pts_option_interface
 			//if(false)
 			if($current_value == "TRUE" || $current_value == "FALSE")
 			{
-				$combobox[$i] = new GtkComboBox();
+				/*$combobox[$i] = new GtkComboBox();
 
 				if(defined("GObject::TYPE_STRING"))
 				{
@@ -1043,9 +1043,22 @@ class gui_gtk implements pts_option_interface
 
 				$model[$i]->append(array("TRUE"));
 				$model[$i]->append(array("FALSE"));
-				$combobox[$i]->set_active(($current_value == "TRUE" ? 0 : 1));
+				$combobox[$i]->set_active(($current_value == "TRUE" ? 0 : 1)); */
 
-				$preference_objects[$preference] = $combobox[$i];
+				$hb[$i] = new GtkHBox();
+				$hb[$i]->pack_start(($radio_true[$i] = new GtkRadioButton(null, "TRUE", true)));
+				$hb[$i]->pack_start(($radio_false[$i] = new GtkRadioButton($radio_true[$i], "FALSE", false)));
+
+				if($current_value == "TRUE")
+				{
+					$radio_true[$i]->set_active(true);
+				}
+				else
+				{
+					$radio_false[$i]->set_active(true);
+				}
+
+				$preference_objects[$preference] = array($hb[$i], $radio_true[$i]);
 			}
 			else if(substr($current_value, 0, 1) == "#" && strpos($current_value, " ") == false)
 			{
@@ -1078,7 +1091,8 @@ class gui_gtk implements pts_option_interface
 
 			$header[$i] = new GtkLabel(" " . basename($pref) . ":");
 			$header[$i]->set_alignment(0, 0.5);
-			array_push($page_items, array($header[$i], $preference_objects[$preference]));
+			array_push($page_items, array($header[$i], (is_array($preference_objects[$preference]) ? 
+			array_shift($preference_objects[$preference]) : $preference_objects[$preference])));
 
 			$i++;
 		}
@@ -1109,9 +1123,19 @@ class gui_gtk implements pts_option_interface
 
 			foreach($preferences as $preference => $object)
 			{
+				if(is_array($object))
+				{
+					$object = array_pop($object);
+				}
+
 				if($object instanceOf GtkEntry)
 				{
 					$preferences_set[$preference] = $object->get_text();
+				}
+				else if($object instanceOf GtkRadioButton)
+				{
+				echo 1;
+					$preferences_set[$preference] = ($object->get_active() ? "TRUE" : "FALSE");
 				}
 				else if($object instanceOf GtkColorButton)
 				{
