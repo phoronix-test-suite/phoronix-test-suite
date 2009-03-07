@@ -173,7 +173,7 @@ function pts_gtk_array_to_boxes($widget, $items, $set_spacing = -1, $append_to =
 		$widget->add($add_to);	
 	}
 
-	if($set_spacing != -1)
+	if($set_spacing != -1 && method_exists($add_to, "set_spacing"))
 	{
 		$add_to->set_spacing($set_spacing);
 	}

@@ -21,6 +21,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add basic support for detecting the attached/enabled monitor name(s) in system information string
 - pts-core: Move make download cache how-to into a static file
 - pts-core: Remove RenderBorder tag from graph-config.xml scheme when there is already Border tag doing same thing
+- pts-core: Start on Phoronix Global support for the GTK2 GUI
 - pts: Add autoconf to PTS External Dependencies support
 - pts: Add libtool to PTS External Dependencies support
 - pts: Update vdrift test profile to VDrift 2009-02-15 and make the test profile work to verified state

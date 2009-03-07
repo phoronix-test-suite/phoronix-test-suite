@@ -78,6 +78,7 @@ class gui_gtk implements pts_option_interface
 		$global_upload = new pts_gtk_menu_item("Upload To Phoronix Global", array("gui_gtk", "upload_results_to_global"));
 		$global_upload->attach_to_pts_assignment("GTK_OBJ_GLOBAL_UPLOAD");
 
+		array_push($file_menu, new pts_gtk_menu_item("Phoronix Global", array("gui_gtk", "show_phoronix_global_interface")));
 		array_push($file_menu, $generate_pdf);
 		array_push($file_menu, $global_upload);
 		array_push($file_menu, null);
@@ -682,6 +683,80 @@ class gui_gtk implements pts_option_interface
 		$window->show_all();
 		pts_set_assignment("GTK_OBJ_CONFIRMATION_WINDOW", $window);
 		Gtk::main();
+	}
+	public static function show_phoronix_global_interface()
+	{
+		$window = new pts_gtk_window("Phoronix Global");
+
+		$label_global = new GtkLabel("Phoronix Global is the web repository for the Phoronix Test Suite where test results are publicly hosted. Enter a Phoronix Global ID below. To access Phoronix Global, visit:\n\nhttp://global.phoronix-test-suite.com/\n");
+		$label_global->set_size_request(420, -1);
+		$label_global->set_line_wrap(true);
+
+		$global_id = new GtkEntry();
+		$global_id->connect_simple("backspace", array("gui_gtk", "phoronix_global_id_entry_changed"), null);
+		$global_id->connect_simple("key-press-event", array("gui_gtk", "phoronix_global_id_entry_changed"), null);
+		$global_id->connect_simple("paste-clipboard", array("gui_gtk", "phoronix_global_id_entry_changed"), null);
+		pts_set_assignment("GTK_OBJ_GLOBAL_ID", $global_id);
+
+		$results_button = new pts_gtk_button("View Results", array("gui_gtk", "launch_phoronix_global_action"), "view_results");
+		$results_button->set_sensitive(false);
+		$clone_button = new pts_gtk_button("Clone", array("gui_gtk", "launch_phoronix_global_action"), "clone_results");
+		$clone_button->set_sensitive(false);
+		$run_button = new pts_gtk_button("Run Comparison", array("gui_gtk", "launch_phoronix_global_action"), "run_comparison");
+		$run_button->set_sensitive(false);
+
+		pts_set_assignment("GTK_OBJ_GLOBAL_RESULTS", $results_button);
+		pts_set_assignment("GTK_OBJ_GLOBAL_CLONE", $clone_button);
+		pts_set_assignment("GTK_OBJ_GLOBAL_RUN", $run_button);
+
+		pts_gtk_array_to_boxes($window, array($label_global, $global_id, array($results_button, $clone_button, $run_button)), 4);
+		$window->show_all();
+		pts_set_assignment("GTK_OBJ_GLOBAL_WINDOW", $window);
+		Gtk::main();
+	}
+	public static function phoronix_global_id_entry_changed($force = false)
+	{
+		$id_entry = pts_read_assignment("GTK_OBJ_GLOBAL_ID");
+		$global_id = $id_entry->get_text();
+		$is_valid = $force || pts_global_valid_id_string($global_id);
+
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RESULTS", $is_valid);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_CLONE", $is_valid);
+		// gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RUN", $is_valid);
+		// TODO: Finish implementing GTK_OBJ_GLOBAL_RUN
+	}
+	public static function launch_phoronix_global_action($action)
+	{
+		$id_entry = pts_read_assignment("GTK_OBJ_GLOBAL_ID");
+		$global_id = trim($id_entry->get_text());
+
+		/*
+		if(!pts_is_global_id($global_id))
+		{
+			gui_gtk::phoronix_global_id_entry_changed(true);
+			return;
+		}
+		*/
+
+		$global_window = pts_read_assignment("GTK_OBJ_GLOBAL_WINDOW");
+		$global_window->destroy();
+
+		switch($action)
+		{
+			case "view_results":
+				gui_gtk::launch_web_browser(pts_global_public_url($global_id));
+				break;
+			case "clone_results":
+				//$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
+				//$main_window->destroy();
+				pts_run_option_next("clone_global_result", $global_id, array("AUTOMATED_MODE" => true));
+				pts_run_option_next("gui_gtk");
+				break;
+			case "run_comparison":
+				gui_gtk::launch_web_browser(pts_global_public_url($global_id));
+				break;
+		}
+		gui_gtk::kill_gtk_window();
 	}
 	public static function launch_web_browser($url = "")
 	{
