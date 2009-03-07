@@ -22,7 +22,7 @@
 
 class pts_gtk_text_area extends GtkScrolledWindow
 {
-	public function __construct($text, $width = -1, $height = -1)
+	public function __construct($text, $width = -1, $height = -1, $copy_bg_color = false)
 	{
 		parent::__construct();
 		$this->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
@@ -33,6 +33,15 @@ class pts_gtk_text_area extends GtkScrolledWindow
 		$text_view->set_buffer($text_buffer);
 		$text_view->set_wrap_mode(GTK_WRAP_WORD);
 		$text_view->set_size_request($width, $height);
+
+		$text_view->set_left_margin(12);
+		$text_view->set_right_margin(6);
+
+		if($copy_bg_color && ($window = pts_read_assignment("GTK_OBJ_WINDOW")) != false)
+		{
+			$bg_color = $window->get_style()->bg[Gtk::STATE_NORMAL];
+			$text_view->modify_base(Gtk::STATE_NORMAL, $bg_color);			
+		}
 
 		$this->add($text_view);
 	}

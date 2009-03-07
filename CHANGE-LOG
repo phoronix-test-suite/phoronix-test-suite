@@ -43,6 +43,7 @@ February 25, 2009
 - pts-core: Add MEDIA_DIR
 - pts-core: Allow multiple periods to be used in command string when running a module command
 - pts-core: Change format of several tags within graph-config.xml
+- pts-core: From view menu allow to toggle showing tests of a particular license (free / non-free)
 - pts: Various install.sh test script changes from Kano
 - pts: Fix in nexuiz test installation script from Kano
 - pts: Add PTS External Dependencies support for Arch Linux

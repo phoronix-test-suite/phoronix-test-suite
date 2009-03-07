@@ -292,7 +292,7 @@ class gui_gtk implements pts_option_interface
 				$info_r["Environment Size"] = $test_profile->get_environment_size() . " MB";
 			}
 
-			$textview_description = new pts_gtk_text_area($test_profile->get_description(), 260, -1);
+			$textview_description = new pts_gtk_text_area($test_profile->get_description(), -1, -1, true);
 			array_push($append_elements, $textview_description);
 		}
 		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
@@ -303,7 +303,7 @@ class gui_gtk implements pts_option_interface
 			$info_r["Maintainer"] = $test_suite->get_maintainer();
 			$info_r["Suite Type"] = $test_suite->get_suite_type();
 
-			$textview_description = new pts_gtk_text_area($test_suite->get_description(), 260, -1);
+			$textview_description = new pts_gtk_text_area($test_suite->get_description(), -1, -1, true);
 			array_push($append_elements, $textview_description);
 		}
 
@@ -311,8 +311,9 @@ class gui_gtk implements pts_option_interface
 		$values = array();
 		foreach($info_r as $head => $show)
 		{
-			$label_head = new GtkLabel("  " . $head . ": ");
+			$label_head = new GtkLabel($head . ": ");
 			$label_head->set_alignment(0, 0);
+			//$label_head->set_padding(0, 0);
 			array_push($titles, $label_head);
 
 			$label_show = new GtkLabel($show);
@@ -327,7 +328,7 @@ class gui_gtk implements pts_option_interface
 			array_push($elements, $e);
 		}
 
-		$box = pts_gtk_array_to_boxes($gtk_obj_main_frame, $elements);
+		$box = pts_gtk_array_to_boxes($gtk_obj_main_frame, $elements, 4);
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $box);
 
 		gui_gtk::update_run_button();
