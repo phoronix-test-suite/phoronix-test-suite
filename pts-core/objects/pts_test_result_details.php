@@ -49,6 +49,50 @@ class pts_test_result_details
 	{
 		return $this->suite;
 	}
+	public function get_identifiers()
+	{
+		return $this->identifiers_r;
+	}
+	public function get_unique_tests()
+	{
+		return $this->unique_tests_r;
+	}
+	public function unique_tests_string()
+	{
+		$str = "Contained Tests: ";
+
+		$i = 0;
+		foreach($this->get_unique_tests() as $id)
+		{
+			if($i > 0)
+			{
+				$str .= ",";
+			}
+
+			$str .= " " . $id;
+			$i++;
+		}
+
+		return $str;
+	}
+	public function identifiers_string()
+	{
+		$str = "Identifiers: ";
+
+		$i = 0;
+		foreach($this->get_identifiers() as $id)
+		{
+			if($i > 0)
+			{
+				$str .= ",";
+			}
+
+			$str .= " " . $id;
+			$i++;
+		}
+
+		return $str;
+	}
 	public function show_basic_details()
 	{
 		$str = "";
@@ -58,7 +102,7 @@ class pts_test_result_details
 			$str .= $this->get_title() . "\n";
 			$str .= sprintf("Saved Name: %-18ls Test: %-18ls \n", $this->saved_identifier, $this->suite);
 
-			foreach($this->identifiers_r as $id)
+			foreach($this->get_identifiers() as $id)
 			{
 				$str .= "\t- " . $id . "\n";
 			}
@@ -70,15 +114,15 @@ class pts_test_result_details
 	{
 		$str = "\nTitle: " . $this->get_title() . "\nIdentifier: " . $this->saved_identifier . "\nTest: " . $this->get_suite() . "\n";
 		$str .= "\nTest Result Identifiers:\n";
-		foreach($this->identifiers_r as $id)
+		foreach($this->get_identifiers() as $id)
 		{
 			$str .= "- " . $id . "\n";
 		}
 
-		if(count($this->unique_tests_r) > 1)
+		if(count($this->get_unique_tests()) > 1)
 		{
 			$str .= "\nContained Tests:\n";
-			foreach($this->unique_tests_r as $test)
+			foreach($this->get_unique_tests() as $test)
 			{
 				$str .= "- " . $test . "\n";
 			}

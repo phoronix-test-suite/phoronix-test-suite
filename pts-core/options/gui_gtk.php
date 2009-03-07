@@ -269,7 +269,19 @@ class gui_gtk implements pts_option_interface
 			$result_file = new pts_test_result_details(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 
 			$info_r["Title"] = $result_file->get_title();
+			$info_r["null1"] = null;
 			$info_r["Test"] = $result_file->get_suite();
+			$info_r["null2"] = null;
+
+			if(count($result_file->get_identifiers()) > 1)
+			{
+				array_push($append_elements, new pts_gtk_text_area($result_file->identifiers_string(), -1, -1, true));
+			}
+			if(count($result_file->get_unique_tests()) > 1)
+			{
+				//array_push($append_elements, null);
+				array_push($append_elements, new pts_gtk_text_area($result_file->unique_tests_string(), -1, -1, true));
+			}
 		}
 		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "TEST")
 		{
@@ -309,7 +321,7 @@ class gui_gtk implements pts_option_interface
 		$values = array();
 		foreach($info_r as $head => $show)
 		{
-			$label_head = new GtkLabel($head . ": ");
+			$label_head = new GtkLabel(($show == null ? null : $head . ": "));
 			$label_head->set_alignment(0, 0);
 			//$label_head->set_padding(0, 0);
 			array_push($titles, $label_head);
@@ -914,7 +926,7 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_about_interface()
 	{
-		$window = new pts_gtk_window("About", 210, 260);
+		$window = new pts_gtk_window("About");
 		$window->set_resizable(false);
 
 		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
@@ -930,9 +942,10 @@ class gui_gtk implements pts_option_interface
 		$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
 		$event_box->add($label_url);
 
-		$label_copyright = new GtkLabel("Copyright By Phoronix Media");
+		$label_copyright = new GtkLabel("Copyright (C) 2008-2009 By Phoronix Media\nCopyright (C) 2008-2009 By Michael Larabel");
+		$label_copyright->modify_font(new PangoFontDescription("Sans 9"));
 
-		pts_gtk_array_to_boxes($window, array($logo, $label_codename, $label_version, $event_box, $label_copyright));
+		pts_gtk_array_to_boxes($window, array($logo, $label_codename, $label_version, $event_box, $label_copyright), 6);
 
 		$window->show_all();
 		Gtk::main();

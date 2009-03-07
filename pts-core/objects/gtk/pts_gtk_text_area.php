@@ -33,6 +33,7 @@ class pts_gtk_text_area extends GtkScrolledWindow
 		$text_view->set_buffer($text_buffer);
 		$text_view->set_wrap_mode(GTK_WRAP_WORD);
 		$text_view->set_size_request($width, $height);
+		$text_view->set_cursor_visible(false);
 
 		$text_view->set_left_margin(12);
 		$text_view->set_right_margin(6);
