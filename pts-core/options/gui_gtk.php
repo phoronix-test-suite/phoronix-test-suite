@@ -64,6 +64,9 @@ class gui_gtk implements pts_option_interface
 		$build_suite = new pts_gtk_menu_item("Build Suite", array("gui_gtk", ""));
 		$build_suite->attach_to_pts_assignment("GTK_OBJ_BUILD_SUITE");
 
+		$merge_results = new pts_gtk_menu_item("Merge Results", array("gui_gtk", ""));
+		$merge_results->attach_to_pts_assignment("GTK_OBJ_MERGE_RESULTS");
+
 		$file_menu = array();
 
 		if(!pts_pcqs_is_installed())
@@ -106,7 +109,7 @@ class gui_gtk implements pts_option_interface
 		"File" => $file_menu,
 		"Edit" => array($refresh_graphs, null, new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), null, Gtk::STOCK_PREFERENCES)),
 		"View" => $view_menu,
-		"Tools" => array($build_suite, null, $analyze_runs, $analyze_batch),
+		"Tools" => array($build_suite, $merge_results, null, $analyze_runs, $analyze_batch),
 		"Help" => array(
 		new pts_gtk_menu_item("View Documentation", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		null,
@@ -121,6 +124,7 @@ class gui_gtk implements pts_option_interface
 		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", false);
 		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", false);
 		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_BUILD_SUITE", false);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_MERGE_RESULTS", false);
 		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", false);
 
 		//
@@ -686,6 +690,10 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_phoronix_global_interface()
 	{
+		// We need to close the main window now since it seems to cause problems if closed from within launch_phoronix_global_action()
+		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
+		$main_window->destroy();
+
 		$window = new pts_gtk_window("Phoronix Global");
 
 		$label_global = new GtkLabel("Phoronix Global is the web repository for the Phoronix Test Suite where test results are publicly hosted. Enter a Phoronix Global ID below. To access Phoronix Global, visit:\n\nhttp://global.phoronix-test-suite.com/\n");
@@ -722,8 +730,7 @@ class gui_gtk implements pts_option_interface
 
 		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RESULTS", $is_valid);
 		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_CLONE", $is_valid);
-		// gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RUN", $is_valid);
-		// TODO: Finish implementing GTK_OBJ_GLOBAL_RUN
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RUN", $is_valid);
 	}
 	public static function launch_phoronix_global_action($action)
 	{
@@ -745,18 +752,17 @@ class gui_gtk implements pts_option_interface
 		{
 			case "view_results":
 				gui_gtk::launch_web_browser(pts_global_public_url($global_id));
-				break;
-			case "clone_results":
-				//$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
-				//$main_window->destroy();
-				pts_run_option_next("clone_global_result", $global_id, array("AUTOMATED_MODE" => true));
 				pts_run_option_next("gui_gtk");
 				break;
+			case "clone_results":
+				pts_run_option_next("clone_global_result", $global_id, array("AUTOMATED_MODE" => true));
+				pts_run_option_next("gui_gtk");
+				//Gtk::main_quit();
+				break;
 			case "run_comparison":
-				gui_gtk::launch_web_browser(pts_global_public_url($global_id));
+				gui_gtk::show_run_confirmation_interface("RUN", $global_id);
 				break;
 		}
-		gui_gtk::kill_gtk_window();
 	}
 	public static function launch_web_browser($url = "")
 	{
