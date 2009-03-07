@@ -155,7 +155,16 @@ function pts_gtk_array_to_boxes($widget, $items, $set_spacing = -1, $append_to =
 	else if($widget instanceOf GtkVBox)
 	{
 		$add_to = new GtkHBox();
-		$widget->pack_start($add_to, false, false);
+
+		if(count($items) > 0 && $items[0] instanceOf GtkFrame)
+		{
+			$widget->pack_start($add_to);
+		}
+		else
+		{
+			$widget->pack_start($add_to, false, false);
+		}
+
 		$add_to->set_homogeneous(true);
 	}
 	else
