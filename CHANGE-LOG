@@ -1,8 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test SUite (Git)
+Phoronix Test Suite (Git)
 
 - pts-core: Add sample phoronix-test-suite.desktop file to pts-core/static/
+- pts-core: Move short-description.txt to pts-core/static/
 - install-sh: Install Phoronix Test Suite icon
 
 Phoronix Test Suite 1.8.0 Alpha 3

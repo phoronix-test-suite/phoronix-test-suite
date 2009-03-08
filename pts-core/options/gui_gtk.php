@@ -178,7 +178,7 @@ class gui_gtk implements pts_option_interface
 			$event_box->add($logo);
 			array_push($main_frame_objects, $event_box);
 
-			$welcome = file_get_contents(PTS_PATH . "documentation/short-description.txt");
+			$welcome = file_get_contents(STATIC_DIR . "short-description.txt");
 			array_push($main_frame_objects, $t = new pts_gtk_text_area($welcome, -1, -1, true));
 		}
 
