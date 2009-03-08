@@ -700,6 +700,7 @@ class gui_gtk implements pts_option_interface
 		$label_global->set_size_request(420, -1);
 		$label_global->set_line_wrap(true);
 
+		$global_label = new GtkLabel("Phoronix Global ID:");
 		$global_id = new GtkEntry();
 		$global_id->connect_simple("backspace", array("gui_gtk", "phoronix_global_id_entry_changed"), null);
 		$global_id->connect_simple("key-press-event", array("gui_gtk", "phoronix_global_id_entry_changed"), null);
@@ -717,7 +718,7 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_GLOBAL_CLONE", $clone_button);
 		pts_set_assignment("GTK_OBJ_GLOBAL_RUN", $run_button);
 
-		pts_gtk_array_to_boxes($window, array($label_global, $global_id, array($results_button, $clone_button, $run_button)), 4);
+		pts_gtk_array_to_boxes($window, array($label_global, array($global_label, $global_id), array($results_button, $clone_button, $run_button)), 4);
 		$window->show_all();
 		pts_set_assignment("GTK_OBJ_GLOBAL_WINDOW", $window);
 		Gtk::main();
@@ -1147,9 +1148,7 @@ class gui_gtk implements pts_option_interface
 			}
 			else if(in_array($preference, array(P_GRAPH_FONT_TYPE)))
 			{
-				// TODO: implement GtkEntry with GtkFileChooser here
 				$entry[$i] = new pts_gtk_button($current_value, array("gui_gtk", "show_find_font_interface"), "this");
-
 				$preference_objects[$preference] = $entry[$i];
 			}
 			else
@@ -1252,6 +1251,7 @@ class gui_gtk implements pts_option_interface
 	public static function show_find_font_interface($button)
 	{
 		$dialog = new GtkFileChooserDialog("Open TTF Font", null,  Gtk::FILE_CHOOSER_ACTION_OPEN, array(Gtk::STOCK_OK, Gtk::RESPONSE_OK), null);
+		$dialog->set_filename("/usr/share/fonts/");
 		$dialog->show_all();
 
 		if($dialog->run() == Gtk::RESPONSE_OK)
