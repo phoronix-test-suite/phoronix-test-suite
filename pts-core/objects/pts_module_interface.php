@@ -38,6 +38,10 @@ class pts_module_interface
 	{
 		return array();
 	}
+	public static function module_setup_validate($module_options_array)
+	{
+		return $module_options_array;
+	}
 	public static function user_commands()
 	{
 		return array();

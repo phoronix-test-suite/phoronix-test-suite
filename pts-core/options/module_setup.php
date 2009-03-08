@@ -66,11 +66,18 @@ class module_setup implements pts_option_interface
 						}
 
 						$this_input_identifier = $module_option->get_identifier();
-
-						$set_options[$module . "__" . $this_input_identifier] = $input;
+						$set_options[$this_input_identifier] = $input;
 					}
 				}
-				pts_module_config_init($set_options);
+
+				$set_options = pts_php_module_call($module, "module_setup_validate", $set_options);
+
+				$formatted_options = array();
+				foreach($set_options as $option => $value)
+				{
+					$formatted_options[$module . "__" . $option] = $value;
+				}
+				pts_module_config_init($formatted_options);
 			}
 
 			echo "\n";
