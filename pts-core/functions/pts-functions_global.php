@@ -75,20 +75,19 @@ function pts_global_upload_result($result_file, $tags = "")
 	$return_stream = "";
 
 	$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags);
-	$upload_data = http_build_query($upload_data);
 
+	return pts_http_upload_via_post("http://www.phoronix-test-suite.com/global/user-upload.php", $upload_data);
+}
+function pts_http_upload_via_post($url, $to_post_data)
+{
+	$upload_data = http_build_query($to_post_data);
 	$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
 
 	$stream_context = stream_context_create($http_parameters);
-	$opened_url = @fopen("http://www.phoronix-test-suite.com/global/user-upload.php", "rb", false, $stream_context);
+	$opened_url = @fopen($url, "rb", false, $stream_context);
 	$response = @stream_get_contents($opened_url);
 
-	if($response !== false)
-	{
-		$return_stream = $response;
-	}
-
-	return $return_stream;
+	return $response;
 }
 
 ?>

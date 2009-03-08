@@ -59,16 +59,16 @@ function pts_gtk_add_menu($vbox, $menu)
 				{
 					$radio = array();
 					$radio[0] = null;
-					$i = 1;
+					$i = 0;
 
 					foreach($this_object->get_title() as $radio_item)
 					{
-						$radio[$i] = new GtkRadioMenuItem($radio[1], $radio_item);
+						$radio[$i] = new GtkRadioMenuItem($radio[0], $radio_item);
 						$radio[$i]->connect("toggled", $this_object->get_function_call());
 						$menu->append($radio[$i]);
 						$i++;
 					}
-					$radio[1]->set_active(true);
+					$radio[0]->set_active(true);
 				}
 				else
 				{
@@ -182,7 +182,7 @@ function pts_gtk_array_to_boxes($widget, $items, $set_spacing = -1, $append_to =
 	{
 		if(is_array($item))
 		{
-			pts_gtk_array_to_boxes($add_to, $item, $set_spacing, false, $homogeneous);
+			pts_gtk_array_to_boxes($add_to, $item, $set_spacing, false);
 		}
 		else if($item == null)
 		{
