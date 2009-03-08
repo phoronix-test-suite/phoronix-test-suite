@@ -48,6 +48,7 @@ rm -rf $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 rm -rf $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
 
 mkdir -p $DESTDIR$INSTALL_PREFIX/bin/
+mkdir -p $DESTDIR$INSTALL_PREFIX/share/icons/
 mkdir -p $DESTDIR$INSTALL_PREFIX/share/man/man1/
 mkdir -p $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 mkdir -p $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
@@ -62,6 +63,7 @@ cd ..
 rm -rf $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/man-pages/
 
 cp documentation/man-pages/*.1 $DESTDIR$INSTALL_PREFIX/share/man/man1/
+cp pts-core/media/phoronix-test-suite.png $DESTDIR$INSTALL_PREFIX/share/icons/phoronix-test-suite.png
 
 cp -r pts/ $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts/etc/scripts/package-build-*
@@ -74,4 +76,9 @@ echo -e "\nPhoronix Test Suite Installation Completed\n
 Executable File: $INSTALL_PREFIX/bin/phoronix-test-suite
 Documentation: $INSTALL_PREFIX/share/doc/phoronix-test-suite/
 Phoronix Test Suite Files: $INSTALL_PREFIX/share/phoronix-test-suite/\n"
-if [ "X$DESTDIR" != "X" ]; then echo "Installed to chroot: $DESTDIR"; fi
+
+if [ "X$DESTDIR" != "X" ]
+then
+	echo "Installed to chroot: $DESTDIR";
+fi
+

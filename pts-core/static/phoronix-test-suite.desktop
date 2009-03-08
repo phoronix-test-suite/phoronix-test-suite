@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Phoronix Test Suite
+Comment=Phoronix Test Suite Benchmarking Utility
+Exec=phoronix-test-suite
+Icon=phoronix-test-suite.png
+Terminal=0
+Type=Application
+Encoding=UTF-8
+Categories=System Tools;Application;
