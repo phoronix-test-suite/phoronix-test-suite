@@ -32,36 +32,6 @@ function pts_client_init()
 	define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
 	pts_extended_init();
 }
-function pts_define_directories()
-{
-	// User's home directory for storing results, module files, test installations, etc.
-	define("PTS_CORE_PATH", PTS_PATH . "pts-core/");
-	define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
-
-	// Distribution External Dependency Locations
-	define("XML_DISTRO_DIR", PTS_PATH . "pts/distro-xml/");
-	define("SCRIPT_DISTRO_DIR", PTS_PATH . "pts/distro-scripts/");
-
-	// Misc Locations
-	define("ETC_DIR", PTS_PATH . "pts/etc/");
-	define("MODULE_DIR", PTS_CORE_PATH . "modules/");
-	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
-	define("RESULTS_VIEWER_DIR", PTS_CORE_PATH . "results-viewer/");
-	define("TEST_LIBRARIES_DIR", PTS_CORE_PATH . "test-libraries/");
-	define("STATIC_DIR", PTS_CORE_PATH . "static/");
-	define("MEDIA_DIR", PTS_CORE_PATH . "media/");
-	define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
-
-	// Test & Suite Locations
-	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");
-	define("XML_PROFILE_CTP_BASE_DIR", PTS_PATH . "pts/base-test-profiles/");
-	define("XML_SUITE_DIR", PTS_PATH . "pts/test-suites/");
-	define("TEST_RESOURCE_DIR", PTS_PATH . "pts/test-resources/");
-	define("TEST_RESOURCE_CTP_BASE_DIR", PTS_PATH . "pts/base-test-resources/");
-	define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
-	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
-	define("TEST_RESOURCE_LOCAL_DIR", PTS_USER_DIR . "test-resources/");
-}
 function pts_basic_init()
 {
 	// Initialize The Phoronix Test Suite

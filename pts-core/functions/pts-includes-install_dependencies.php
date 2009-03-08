@@ -24,6 +24,11 @@
 function pts_install_package_on_distribution($identifiers)
 {
 	// PTS External Dependencies install on distribution
+	if(pts_is_assignment("AUTOMATED_MODE") && pts_current_user() != "root")
+	{
+		return false;
+	}
+
 	if(!pts_is_assignment("SILENCE_MESSAGES"))
 	{
 		echo "Checking For Needed External Dependencies.\n";
@@ -39,6 +44,8 @@ function pts_install_package_on_distribution($identifiers)
 	$install_objects = array_unique($install_objects);
 
 	pts_install_packages_on_distribution_process($install_objects);
+
+	return true;
 }
 function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
 {

@@ -195,5 +195,4 @@ class tandem_XmlWriter
 		return $this->xml_objects;
 	}
 }
-
 ?>

@@ -24,6 +24,7 @@
 require(PTS_PATH . "pts-core/functions/pts.php");
 require(PTS_PATH . "pts-core/functions/pts-interfaces.php");
 require(PTS_PATH . "pts-core/functions/pts-functions_loading.php");
+require(PTS_PATH . "pts-core/functions/pts-functions_directories.php");
 
 if(PTS_MODE == "CLIENT" || defined("PTS_AUTO_LOAD_OBJECTS"))
 {

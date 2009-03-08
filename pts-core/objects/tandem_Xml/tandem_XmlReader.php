@@ -305,5 +305,4 @@ class tandem_XmlReader
 		$this->setTagCaching($do_cache);
 	}
 }
-
 ?>

@@ -68,7 +68,13 @@ class install_test implements pts_option_interface
 			echo "\n";
 
 			// Any external dependencies?
-			pts_install_package_on_distribution($items_to_install);
+			$success = pts_install_package_on_distribution($items_to_install);
+
+			if(!$success)
+			{
+				echo "\nInstallation of needed test dependencies failed.\n\n";
+				return false;
+			}
 
 			// Install tests
 			pts_start_install($items_to_install);
