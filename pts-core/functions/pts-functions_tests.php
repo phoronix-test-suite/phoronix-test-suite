@@ -244,7 +244,7 @@ function pts_subsystem_test_types()
 }
 function pts_license_test_types()
 {
-	return array("Free", "Non-Free", "Restricted");
+	return array("Free", "Non-Free", "Retail", "Restricted");
 }
 function pts_get_results_viewer_xsl_formatted($pts_Graph)
 {

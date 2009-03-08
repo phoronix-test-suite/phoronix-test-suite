@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add sample phoronix-test-suite.desktop file to pts-core/static/
 - pts-core: Move short-description.txt to pts-core/static/
 - pts-core: Add module_setup_validate() to pts_module_interface
+- pts: Add RETAIL to License type for test profiles
 - install-sh: Install Phoronix Test Suite icon
 
 Phoronix Test Suite 1.8.0 Alpha 3
