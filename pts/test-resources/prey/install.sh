@@ -1,6 +1,6 @@
 #!/bin/sh
 
-unzip -o prey-installer-12072008.bin
+unzip -o prey-installer-02192009.bin
 rm -rf guis/
 rm -rf meta/
 rm -rf scripts/
