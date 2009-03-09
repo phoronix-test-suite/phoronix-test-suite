@@ -43,6 +43,8 @@ class gui_gtk implements pts_option_interface
 	public static function show_main_interface()
 	{
 		$window = new pts_gtk_window("Phoronix Test Suite v" . PTS_VERSION);
+		$window->drag_dest_set(Gtk::DEST_DEFAULT_ALL, array(array("text/uri-list", 0, 0)), Gdk::ACTION_COPY);
+		$window->connect("drag-data-received", array("gui_gtk", "drag_drop_item"), $window);
 		pts_set_assignment("GTK_OBJ_WINDOW", $window);
 		$vbox = new GtkVBox();
 		$vbox->set_spacing(4);
@@ -216,6 +218,22 @@ class gui_gtk implements pts_option_interface
 
 		$window->show_all();
 		Gtk::main();
+	}
+	public static function drag_drop_item($widget, $context, $x, $y, $data, $info, $time, $img)
+	{
+		$file = str_replace("file://", "", trim($data->data));
+
+		if(substr($file, -4) == ".svg")
+		{
+			$svg_options = pts_parse_svg_options($file);
+
+			if(count($svg_options) > 0)
+			{
+
+				// TODO: finish
+
+			}
+		}
 	}
 	protected static function pts_gtk_object_set_sensitive($object, $sensitive)
 	{

@@ -91,28 +91,11 @@ function pts_prompt_results_identifier($current_identifiers = null)
 function pts_prompt_svg_result_options($svg_file)
 {
 	// Image graph result driven test selection
-	$svg_parser = new tandem_XmlReader($svg_file);
-	$svg_test = array_pop($svg_parser->getStatement("Test"));
-	$svg_identifier = array_pop($svg_parser->getStatement("Identifier"));
+	$run_options = pts_parse_svg_options($svg_file);
 	$test_to_run = null;
 
-	if(!empty($svg_test) && !empty($svg_identifier))
+	if(($run_option_count = count($run_options)) > 0)
 	{
-		$run_options = array();
-		if(pts_is_test($svg_test))
-		{
-			array_push($run_options, array($svg_test, "Run this test (" . $svg_test . ")"));
-		}
-		if(pts_is_suite($svg_identifier))
-		{
-			array_push($run_options, array($svg_identifier, "Run this suite (" . $svg_identifier . ")"));
-		}
-		else if(pts_is_global_id($svg_identifier))
-		{
-			array_push($run_options, array($svg_identifier, "Run this Phoronix Global comparison (" . $svg_identifier . ")"));
-		}
-
-		$run_option_count = count($run_options);
 		if($run_option_count > 0)
 		{
 			if($run_option_count == 1)
