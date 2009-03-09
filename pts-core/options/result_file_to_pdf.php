@@ -45,9 +45,16 @@ class result_file_to_pdf implements pts_option_interface
 		$pdf = new pts_pdf_template($xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE), $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME));
 
 		$pdf->AddPage();
-		$pdf->Ln(10);
+		$pdf->Image(MEDIA_DIR . "pts-308x160.png", 69, 85, 73, 38);
+		$pdf->Ln(120);
+		$pdf->WriteStatementCenter("www.phoronix-test-suite.com");
+		$pdf->Ln(15);
+		$pdf->WriteBigHeaderCenter($xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE));
 		$pdf->WriteText($xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION));
-		$pdf->Ln(5);
+
+
+		$pdf->AddPage();
+		$pdf->Ln(15);
 
 		$identifiers = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
 		$hardware_r = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);

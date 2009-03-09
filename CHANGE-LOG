@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Move short-description.txt to pts-core/static/
 - pts-core: Add module_setup_validate() to pts_module_interface
 - pts-core: Add menu mnemonics to GTK2 GUI
+- pts-core: Few improvements to result-file-to-pdf writer
 - pts: Add RETAIL to License type for test profiles
 - pts: OpenAL fix for smokin-guns test profile when using newer Debian / Ubuntu
 - install-sh: Install Phoronix Test Suite icon

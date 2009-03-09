@@ -35,10 +35,16 @@ class pts_pdf_template extends FPDF
 		$this->SetTitle($Title);
 		$this->SetAuthor("Phoronix Test Suite");
 		$this->SetCreator(pts_codename(true));
+		$this->SetCompression(false);
 	}
 
 	function Header()
 	{
+		if($this->PageNo() == 1)
+		{
+			return;
+		}
+
 		if(RESULTS_VIEWER_DIR . "pts-logo.jpg")
 		{
 			$this->Image(RESULTS_VIEWER_DIR . "pts-logo.jpg", 10, 8, 30);
@@ -54,17 +60,48 @@ class pts_pdf_template extends FPDF
 	}
 	function Footer()
 	{
+		if($this->PageNo() == 1)
+		{
+			return;
+		}
+
 		$this->SetY(-10);
 		$this->SetFont("Arial", "B", 7);
 		$this->Cell(0, 0, "Phoronix Test Suite v" . PTS_VERSION, 0, 0, "L");
-		$this->Cell(0, 0, "http://www.phoronix-test-suite.com/", 0, 0, "R");
+		$this->Cell(0, 0, "www.phoronix-test-suite.com", 0, 0, "R");
 	}
-	function WriteHeader($Header)
+	function WriteBigHeaderCenter($Header)
+	{
+		$this->WriteBigHeader($Header, "C");
+	}
+	function WriteBigHeader($Header, $Align = "L")
+	{
+		$this->SetFont("Arial", "B", 21);
+		$this->SetFillColor(255, 255, 255);
+		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
+		$this->Ln(15);
+	}
+	function WriteHeaderCenter($Header)
+	{
+		$this->WriteHeader($Header, "C");
+	}
+	function WriteHeader($Header, $Align = "L")
 	{
 		$this->SetFont("Arial", "B", 16);
 		$this->SetFillColor(255, 255, 255);
-		$this->Cell(0, 6, $Header, 0, 0, "L", true);
+		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
 		$this->Ln(15);
+	}
+	function WriteStatementCenter($Header)
+	{
+		$this->WriteStatement($Header, "C");
+	}
+	function WriteStatement($Header, $Align = "L")
+	{
+		$this->SetFont("Arial", "B", 14);
+		$this->SetFillColor(255, 255, 255);
+		$this->Cell(0, 2, $Header, 0, 0, $Align, true);
+		$this->Ln(10);
 	}
 	function WriteMiniHeader($Header)
 	{
