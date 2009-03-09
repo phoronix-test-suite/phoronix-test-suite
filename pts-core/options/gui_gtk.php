@@ -78,7 +78,7 @@ class gui_gtk implements pts_option_interface
 		$generate_pdf = new pts_gtk_menu_item("Save PDF", array("gui_gtk", "show_generate_pdf_interface"));
 		$generate_pdf->attach_to_pts_assignment("GTK_OBJ_GENERATE_PDF");
 
-		$global_upload = new pts_gtk_menu_item("Upload To Phoronix Global", array("gui_gtk", "upload_results_to_global"));
+		$global_upload = new pts_gtk_menu_item("_Upload To Phoronix Global", array("gui_gtk", "upload_results_to_global"));
 		$global_upload->attach_to_pts_assignment("GTK_OBJ_GLOBAL_UPLOAD");
 
 		array_push($file_menu, new pts_gtk_menu_item("Phoronix Global", array("gui_gtk", "show_phoronix_global_interface")));
@@ -88,7 +88,7 @@ class gui_gtk implements pts_option_interface
 		array_push($file_menu, new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT));
 
 		$view_menu = array();
-		array_push($view_menu, new pts_gtk_menu_item("System Information", array("gui_gtk", "show_system_info_interface")));
+		array_push($view_menu, new pts_gtk_menu_item("System _Information", array("gui_gtk", "show_system_info_interface")));
 		array_push($view_menu, null);
 		array_push($view_menu, new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON"));
 		array_push($view_menu, null);
@@ -106,18 +106,18 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$main_menu_items = array(
-		"File" => $file_menu,
-		"Edit" => array($refresh_graphs, null, new pts_gtk_menu_item("Preferences", array("gui_gtk", "show_preferences_interface"), null, Gtk::STOCK_PREFERENCES)),
-		"View" => $view_menu,
-		"Tools" => array($build_suite, $merge_results, null, $analyze_runs, $analyze_batch),
-		"Help" => array(
+		"_File" => $file_menu,
+		"_Edit" => array($refresh_graphs, null, new pts_gtk_menu_item("_Preferences", array("gui_gtk", "show_preferences_interface"), null, Gtk::STOCK_PREFERENCES)),
+		"_View" => $view_menu,
+		"_Tools" => array($build_suite, $merge_results, null, $analyze_runs, $analyze_batch),
+		"_Help" => array(
 		new pts_gtk_menu_item("View Documentation", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		null,
 		new pts_gtk_menu_item("Community Support Online", array("gui_gtk", "launch_web_browser"), "STRING", Gtk::STOCK_HELP), 
 		new pts_gtk_menu_item("Phoronix-Test-Suite.com", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		new pts_gtk_menu_item("Phoronix Media", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		null,
-		new pts_gtk_menu_item("About", array("gui_gtk", "show_about_interface"), "STRING", Gtk::STOCK_ABOUT))
+		new pts_gtk_menu_item("_About", array("gui_gtk", "show_about_interface"), "STRING", Gtk::STOCK_ABOUT))
 		);
 		pts_gtk_add_menu($vbox, $main_menu_items);
 
