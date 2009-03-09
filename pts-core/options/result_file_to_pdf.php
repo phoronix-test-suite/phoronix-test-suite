@@ -75,12 +75,14 @@ class result_file_to_pdf implements pts_option_interface
 			$pdf->WriteText($notes_r[$i]);
 		}
 
+		/*
 		if(count($identifiers) > 1 && is_file(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/overview.jpg"))
 		{
 			$pdf->AddPage();
 			$pdf->Ln(100);
 			$pdf->Image(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/overview.jpg", 15, 40, 180);
 		}
+		*/
 
 
 		$pdf->AddPage();
