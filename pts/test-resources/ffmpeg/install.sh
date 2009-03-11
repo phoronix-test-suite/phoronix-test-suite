@@ -1,8 +1,8 @@
 #!/bin/sh
 
-tar -xjf ffmpeg-may27-2008.tar.bz2
+tar -xjf ffmpeg-0.5.tar.bz2
 
-cd ffmpeg-may27-2008/
+cd ffmpeg-0.5/
 ./configure > /dev/null
 make -j $NUM_CPU_JOBS
 cd ..
@@ -10,6 +10,6 @@ cd ..
 echo "#!/bin/sh
 
 \$TIMER_START
-./ffmpeg-may27-2008/ffmpeg -i \$TEST_EXTENDS/pts-trondheim.avi -y -target ntsc-vcd /dev/null 2>&1
+./ffmpeg-0.5/ffmpeg -i \$TEST_EXTENDS/pts-trondheim.avi -y -target ntsc-vcd /dev/null 2>&1
 \$TIMER_STOP" > ffmpeg
 chmod +x ffmpeg

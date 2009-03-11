@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/ffmpeg-may27-2008.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/ffmpeg-may27-2008.tar.bz2</URL>
-			<MD5>7d3f30e1f03770948d7688612dc4f063</MD5>
-			<FileSize>2566151</FileSize>
+			<URL>http://www.ffmpeg.org/releases/ffmpeg-0.5.tar.bz2</URL>
+			<MD5>be8503f15c3b81ba00eb8379ca8dcf33</MD5>
+			<FileSize>2744768</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
