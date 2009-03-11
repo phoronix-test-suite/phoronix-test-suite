@@ -495,6 +495,21 @@ function pts_test_note($process, $value = null)
 		case "ADD":
 			if(!empty($value) && !in_array($value, $note_r))
 			{
+				$value = trim($value);
+
+				switch($value)
+				{
+					case "JAVA_VERSION":
+						$value = sw_os_java_version();
+
+						if(empty($value))
+						{
+							return;
+						}
+
+						break;
+				}
+
 				array_push($note_r, $value);
 			}
 			break;

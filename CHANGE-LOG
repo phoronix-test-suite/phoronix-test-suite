@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add menu mnemonics to GTK2 GUI
 - pts-core: Few improvements to result-file-to-pdf writer
 - pts-core: Add "drag and drop" benchmarking support of test result graphs on GTK2 GUI
+- pts-core: Move Java version detection into pts-core
 - pts: Add RETAIL to License type for test profiles
 - pts: OpenAL fix for smokin-guns test profile when using newer Debian / Ubuntu
 - pts: Update ffmpeg test profile to FFmpeg version 0.5
