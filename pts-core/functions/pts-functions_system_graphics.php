@@ -880,6 +880,30 @@ function hw_gpu_memory_size()
 
 	return $video_ram;
 }
+function hw_gpu_2d_accel_method()
+{
+	$accel_method = "";
+
+	if(is_file("/var/log/Xorg.0.log"))
+	{
+		$x_log = file_get_contents("/var/log/Xorg.0.log");
+
+		if(strpos($x_log, "Using EXA") > 0)
+		{
+			$accel_method = "EXA";
+		}
+		else if(strpos($x_log, "Using UXA") > 0)
+		{
+			$accel_method = "UXA";
+		}
+		else if(strpos($x_log, "Using XFree86") > 0)
+		{
+			$accel_method = "XAA";
+		}
+	}
+
+	return $accel_method;
+}
 function hw_gpu_core_usage()
 {
 	// Determine GPU usage

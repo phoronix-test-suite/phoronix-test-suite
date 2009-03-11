@@ -506,7 +506,18 @@ function pts_test_note($process, $value = null)
 						{
 							return;
 						}
+						break;
+					case "2D_ACCEL_METHOD":
+						$value = hw_gpu_2d_accel_method();
 
+						if(!empty($value))
+						{
+							$value = "2D Acceleration: " . $value;
+						}
+						else
+						{
+							return;
+						}
 						break;
 				}
 
