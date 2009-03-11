@@ -229,10 +229,42 @@ class gui_gtk implements pts_option_interface
 
 			if(count($svg_options) > 0)
 			{
+				$window = pts_read_assignment("GTK_OBJ_WINDOW");
 
-				// TODO: finish
+				foreach($window->get_children() as $child)
+				{
+					$window->remove($child);
+				}
 
+				$vertical = array(null);
+
+				for($i = 0; $i < count($svg_options); $i++)
+				{
+					array_push($vertical, new pts_gtk_button($svg_options[$i][1], array("gui_gtk", "drag_drop_item_clicked"), $svg_options[$i][0]));
+				}
+				array_push($vertical, new pts_gtk_button("Return", array("gui_gtk", "drag_drop_item_clicked"), "return", -1, -1, Gtk::STOCK_QUIT));
+				array_push($vertical, null);
+
+				pts_gtk_array_to_boxes($window, $vertical, 16);
+				gui_gtk::redraw_main_window();
 			}
+		}
+	}
+	public static function drag_drop_item_clicked($clicked)
+	{
+		$window = pts_read_assignment("GTK_OBJ_WINDOW");
+		$window->destroy();
+
+		switch($clicked)
+		{
+			case "return":
+				// TODO: refresh main window instead of having to redo it all
+				pts_run_option_next("gui_gtk");
+				break;
+			default:
+				pts_run_option_next("install_test", $clicked, array("SILENCE_MESSAGES" => true));
+				gui_gtk::confirmation_button_clicked("RUN", $clicked);
+				break;
 		}
 	}
 	protected static function pts_gtk_object_set_sensitive($object, $sensitive)
@@ -496,7 +528,11 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$window = pts_read_assignment("GTK_OBJ_CONFIRMATION_WINDOW");
-		$window->destroy();
+
+		if($window instanceOf GtkWindow)
+		{
+			$window->destroy();
+		}
 	}
 	public static function pcqs_button_clicked($button_call)
 	{
