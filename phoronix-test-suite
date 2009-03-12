@@ -31,10 +31,10 @@ then
 fi
 
 # Determine PHP binary location
-if [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ]
+if [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ] || [ -x /usr/pkg/bin/php5 ]
 then
 	export PHP_BIN="php5"
-elif [ -x /usr/bin/php ] || [ -x /usr/local/bin/php ]
+elif [ -x /usr/bin/php ] || [ -x /usr/local/bin/php ] || [ -x /usr/pkg/bin/php ]
 then
 	export PHP_BIN="php"
 elif [ -x /usr/php5/bin/php ]
