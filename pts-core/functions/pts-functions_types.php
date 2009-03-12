@@ -350,19 +350,6 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 			}
 			array_push($tests, $object);
 		}
-		else if(is_file(($file_path = pts_input_correct_results_path($object)))) // Object is a local file
-		{
-			$xml_parser = new tandem_XmlReader($file_path);
-			$tests_in_file = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-			foreach($tests_in_file as $test)
-			{
-				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
-				{
-					array_push($tests, $sub_test);
-				}
-			}
-		}
 		else if(pts_is_test_result($object)) // Object is a saved results file
 		{
 			$xml_parser = new pts_results_tandem_XmlReader($object);
@@ -394,6 +381,19 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 			foreach(pts_virtual_suite_tests($object) as $virt_test)
 			{
 				array_push($tests, $virt_test);
+			}
+		}
+		else if(is_file(($file_path = pts_input_correct_results_path($object)))) // Object is a local file
+		{
+			$xml_parser = new tandem_XmlReader($file_path);
+			$tests_in_file = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+
+			foreach($tests_in_file as $test)
+			{
+				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+				{
+					array_push($tests, $sub_test);
+				}
 			}
 		}
 	}

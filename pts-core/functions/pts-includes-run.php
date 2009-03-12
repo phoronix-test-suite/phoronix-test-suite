@@ -677,7 +677,7 @@ function pts_verify_test_installation($identifiers)
 
 	return $valid_op;
 }
-function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $results_identifier = "")
+function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $identifier = "")
 {
 	if(is_file(PTS_USER_DIR . "halt-testing"))
 	{
@@ -690,7 +690,7 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $results_identifie
 
 		if(pts_is_test($to_run))
 		{
-			$test_result = pts_run_test($to_run, $tests_to_run[$i]->get_arguments(), $tests_to_run[$i]->get_arguments_description());
+			$result = pts_run_test($to_run, $tests_to_run[$i]->get_arguments(), $tests_to_run[$i]->get_arguments_description());
 
 			if(is_file(PTS_USER_DIR . "halt-testing"))
 			{
@@ -698,13 +698,26 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $results_identifie
 				return;
 			}
 
-			if($test_result instanceof pts_test_result)
+			if($result instanceof pts_test_result)
 			{
-				$end_result = $test_result->get_result();
+				$end_result = $result->get_result();
 
-				if(!empty($results_identifier) && count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
+				if(!empty($identifier) && count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
 				{
-					pts_record_test_result($tandem_xml, $test_result, $results_identifier, pts_request_new_id());
+					$tandem_id = pts_request_new_id();
+					pts_set_assignment("TEST_RAN", true);
+
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_attribute("TEST_TITLE"));
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_attribute("TEST_VERSION"));
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_attribute("TEST_DESCRIPTION"));
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_result_proportion());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_attribute("TEST_IDENTIFIER"));
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
+					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
+					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
+					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
 				}
 			}
 
@@ -714,24 +727,6 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $results_identifie
 			}
 		}
 	}
-}
-function pts_record_test_result(&$tandem_xml, $result, $identifier, $tandem_id = 128)
-{
-	// Do the actual recording of the test result and other relevant information for the given test
-
-	$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_attribute("TEST_TITLE"));
-	$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_attribute("TEST_VERSION"));
-	$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_attribute("TEST_DESCRIPTION"));
-	$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
-	$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_result_proportion());
-	$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
-	$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_attribute("TEST_IDENTIFIER"));
-	$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
-	$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
-	$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
-	$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
-
-	pts_set_assignment("TEST_RAN", true);
 }
 function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
 {
@@ -977,11 +972,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 			{
 				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/benchmark-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
 				$backup_filename = basename($benchmark_log_file);
-				@mkdir($backup_log_dir, 0777, true);
-				@copy($benchmark_log_file, $backup_log_dir . $backup_filename);
+				mkdir($backup_log_dir, 0777, true);
+				copy($benchmark_log_file, $backup_log_dir . $backup_filename);
 			}
 
-			@unlink($benchmark_log_file);
+			unlink($benchmark_log_file);
 		}
 	}
 
@@ -992,22 +987,22 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	if(is_file($test_directory . "/pts-test-note"))
 	{
-		pts_add_test_note(trim(@file_get_contents($test_directory . "/pts-test-note")));
+		pts_add_test_note(trim(file_get_contents($test_directory . "/pts-test-note")));
 		unlink($test_directory . "pts-test-note");
 	}
 	if(empty($result_scale) && is_file($test_directory . "pts-results-scale"))
 	{
-		$result_scale = trim(@file_get_contents($test_directory . "pts-results-scale"));
+		$result_scale = trim(file_get_contents($test_directory . "pts-results-scale"));
 		unlink($test_directory . "pts-results-scale");
 	}
 	if(empty($result_quantifier) && is_file($test_directory . "pts-results-quantifier"))
 	{
-		$result_quantifier = trim(@file_get_contents($test_directory . "pts-results-quantifier"));
+		$result_quantifier = trim(file_get_contents($test_directory . "pts-results-quantifier"));
 		unlink($test_directory . "pts-results-quantifier");
 	}
 	if(empty($test_version) && is_file($test_directory . "pts-test-version"))
 	{
-		$test_version = @file_get_contents($test_directory . "pts-test-version");
+		$test_version = file_get_contents($test_directory . "pts-test-version");
 		unlink($test_directory . "pts-test-version");
 	}
 	if(empty($arguments_description))
@@ -1020,7 +1015,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 		else if(is_file($test_directory . "pts-test-description"))
 		{
-			$arguments_description = @file_get_contents($test_directory . "pts-test-description");
+			$arguments_description = file_get_contents($test_directory . "pts-test-description");
 			unlink($test_directory . "pts-test-description");
 		}
 		else
