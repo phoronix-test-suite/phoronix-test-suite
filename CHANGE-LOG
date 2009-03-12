@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Clean up some of the pts-includes-run code
 - pts-core: Check for PHP binary in /usr/pkg/bin/
 - pts-core: Add enhanced BSD support to pts_download()
+- pts-core: Allow null input for test identifier (defaults to date/time stamp)
 - pts: Add RETAIL to License type for test profiles
 - pts: OpenAL fix for smokin-guns test profile when using newer Debian / Ubuntu
 - pts: Update ffmpeg test profile to FFmpeg version 0.5

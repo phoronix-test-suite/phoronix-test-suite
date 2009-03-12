@@ -72,7 +72,7 @@ function pts_prompt_results_identifier($current_identifiers = null)
 			}
 			$times_tried++;
 		}
-		while(empty($results_identifier) || in_array($results_identifier, $show_identifiers));
+		while(in_array($results_identifier, $show_identifiers));
 	}
 
 	if(empty($results_identifier))
