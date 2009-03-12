@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts: Add RETAIL to License type for test profiles
 - pts: OpenAL fix for smokin-guns test profile when using newer Debian / Ubuntu
 - pts: Update ffmpeg test profile to FFmpeg version 0.5
+- pts: Add External Dependencies support for PCLinuxOS
 - install-sh: Install Phoronix Test Suite icon
 
 Phoronix Test Suite 1.8.0 Alpha 3
