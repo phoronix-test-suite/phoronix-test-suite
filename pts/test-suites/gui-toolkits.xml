@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.1</Version>
+		<Version>1.0.3</Version>
 		<TestType>Graphics</TestType>
 		<Title>GUI Toolkits</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -22,5 +22,9 @@
 		<Test>gtkperf</Test>
 		<Arguments>RADIO_BUTTON</Arguments>
 		<Description>GtkRadioButton</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Mode>BATCH</Mode>
 	</RunTest>
 </PhoronixTestSuite>
