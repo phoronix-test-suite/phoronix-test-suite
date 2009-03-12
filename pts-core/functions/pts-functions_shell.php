@@ -269,7 +269,7 @@ function pts_process_register($process)
 function pts_process_remove($process)
 {
 	// Remove a process from being active, if present
-	return is_file(PTS_USER_DIR . ".processes/" . $process . ".p") && @unlink(PTS_USER_DIR . ".processes/" . $process . ".p");
+	return is_file(PTS_USER_DIR . ".processes/" . $process . ".p") && unlink(PTS_USER_DIR . ".processes/" . $process . ".p");
 }
 function pts_process_active($process)
 {
@@ -277,7 +277,7 @@ function pts_process_active($process)
 	$active = false;
 	if(is_file(PTS_USER_DIR . ".processes/" . $process . ".p") && !IS_SOLARIS)
 	{
-		$pid = trim(@file_get_contents(PTS_USER_DIR . ".processes/" . $process . ".p"));
+		$pid = trim(file_get_contents(PTS_USER_DIR . ".processes/" . $process . ".p"));
 		$ps = trim(shell_exec("ps -p $pid 2>&1"));
 
 		if(strpos($ps, "php") > 0)

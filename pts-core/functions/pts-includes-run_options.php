@@ -152,10 +152,10 @@ function pts_all_combos(&$return_arr, $current_string, $options, $counter, $deli
 		}
 	}
 }
-function pts_auto_process_test_option($identifier, &$option_names, &$option_values)
+function pts_auto_process_test_option($test_identifier, $option_identifier, &$option_names, &$option_values)
 {
 	// Some test items have options that are dynamically built
-	switch($identifier)
+	switch($option_identifier)
 	{
 		case "auto-resolution":
 			// Base options off available screen resolutions
@@ -181,6 +181,7 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 			}
 			break;
 		case "auto-disk-partitions":
+		case "auto-disk-mount-points":
 			// Base options off available disk partitions
 			$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
 			$all_devices_count = count($all_devices);
@@ -200,7 +201,41 @@ function pts_auto_process_test_option($identifier, &$option_names, &$option_valu
 			{
 				array_push($option_values, $partition);
 			}
-			$option_names = $option_values;
+
+			if($option_identifier == "auto-disk-mount-points")
+			{
+				$partitions_d = $option_values;
+				$option_values = array();
+				$option_names = array();
+
+				if(is_file("/proc/mounts"))
+				{
+					$mounts = file_get_contents("/proc/mounts");
+				}
+				else
+				{
+					$mounts = null;
+				}
+
+				array_push($option_values, "");
+				array_push($option_names, "Default Test Directory");
+
+				foreach($partitions_d as $partition_d)
+				{
+					$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, " "));
+
+					if(is_dir($mount_point) && $mount_point != "/boot")
+					{
+						array_push($option_values, $mount_point);
+						array_push($option_names, $mount_point . " [" . $partition_d . "]");
+					}
+				}
+			}
+			else
+			{
+				$option_names = $option_values;
+			}
+
 			break;
 		case "auto-disks":
 			// Base options off attached disks
@@ -285,7 +320,7 @@ function pts_test_options($identifier)
 		$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
 		$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
 		$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
-		pts_auto_process_test_option($settings_identifier[$option_count], $option_names, $option_values);
+		pts_auto_process_test_option($identifier, $settings_identifier[$option_count], $option_names, $option_values);
 
 		$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
 		$prefix = $settings_argument_prefix[$option_count];
