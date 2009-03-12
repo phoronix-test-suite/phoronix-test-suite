@@ -75,15 +75,20 @@ function pts_download($download, $to)
 	{
 		$to_file = basename($download);
 	}
-	else if(is_executable("/usr/bin/curl") || is_executable("/usr/local/bin/curl"))
+	else if(is_executable("/usr/bin/curl") || is_executable("/usr/local/bin/curl") || is_executable("/usr/pkg/bin/curl"))
 	{
 		// curl download
 		$download_output = shell_exec("cd " . $to_dir . " && curl -L --fail --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
 	}
-	else if(is_executable("/usr/bin/wget") || is_executable("/usr/local/bin/wget"))
+	else if(is_executable("/usr/bin/wget") || is_executable("/usr/local/bin/wget") || is_executable("/usr/pkg/bin/wget"))
 	{
 		// wget download
 		$download_output = shell_exec("cd " . $to_dir . " && wget --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
+	}
+	else if(IS_BSD && is_executable("/usr/bin/ftp"))
+	{
+		// NetBSD ftp(1) download; also speaks http, but not https
+		$download_output = shell_exec("cd " . $to_dir . " && ftp -V " . $download . " -o " . $to_file);
 	}
 	else
 	{
