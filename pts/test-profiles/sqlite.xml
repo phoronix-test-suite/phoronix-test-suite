@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.3.0</Version>
+		<Version>1.4.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
@@ -22,4 +22,10 @@
 		<Proportion>LIB</Proportion>
 		<Description>This is a simple benchmark of SQLite. At present this test profile just measures the time to perform a pre-defined number of insertions on an indexed database.</Description>
 	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Test Target</DisplayName>
+			<Identifier>auto-disk-mount-points</Identifier>
+		</Option>
+	</TestSettings>
 </PhoronixTestSuite>

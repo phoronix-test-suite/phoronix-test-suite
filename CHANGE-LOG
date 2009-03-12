@@ -15,9 +15,11 @@ Phoronix Test Suite (Git)
 - pts-core: Add enhanced BSD support to pts_download()
 - pts-core: Allow null input for test identifier (defaults to date/time stamp)
 - pts-core: Split out some pts-includes-run code into pts-includes-run_setup and pts-includes-run_options
+- pts-core: Add auto-disk-mount-points as an automatic identifier for providing mounted disk point locations to test profiles
 - pts: Add RETAIL to License type for test profiles
 - pts: OpenAL fix for smokin-guns test profile when using newer Debian / Ubuntu
 - pts: Update ffmpeg test profile to FFmpeg version 0.5
+- pts: Allow alternate disks to be tested with sqlite test profile through auto-disk-mount-points option
 - pts: Add External Dependencies support for PCLinuxOS
 - pts: Add External Dependencies support for NetBSD
 - install-sh: Install Phoronix Test Suite icon
