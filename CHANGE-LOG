@@ -20,8 +20,9 @@ Phoronix Test Suite (Git)
 - pts: OpenAL fix for smokin-guns test profile when using newer Debian / Ubuntu
 - pts: Update ffmpeg test profile to FFmpeg version 0.5
 - pts: Allow alternate disks to be tested with sqlite test profile through auto-disk-mount-points option
-- pts: Add External Dependencies support for PCLinuxOS
 - pts: Few trivial test profile tweaks
+- pts: Drop tandem-xml and pts-graph test profiles
+- pts: Add External Dependencies support for PCLinuxOS
 - pts: Add External Dependencies support for NetBSD
 - install-sh: Install Phoronix Test Suite icon
 

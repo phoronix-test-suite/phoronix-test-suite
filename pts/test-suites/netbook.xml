@@ -39,16 +39,6 @@
 		<Description>1GB Write Performance</Description>
 	</RunTest>
 	<RunTest>
-		<Test>tandem-xml</Test>
-		<Arguments>WRITE</Arguments>
-		<Description>Write Performance</Description>
-	</RunTest>
-	<RunTest>
-		<Test>tandem-xml</Test>
-		<Arguments>READ</Arguments>
-		<Description>Read Performance</Description>
-	</RunTest>
-	<RunTest>
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
