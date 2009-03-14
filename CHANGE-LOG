@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - pts: Allow alternate disks to be tested with sqlite test profile through auto-disk-mount-points option
 - pts: Few trivial test profile tweaks
 - pts: Drop tandem-xml and pts-graph test profiles
+- pts: Drop no longer used php-gd and git from External Dependencies
 - pts: Add External Dependencies support for PCLinuxOS
 - pts: Add External Dependencies support for NetBSD
 - install-sh: Install Phoronix Test Suite icon

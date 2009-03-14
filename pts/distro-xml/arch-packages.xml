@@ -31,11 +31,6 @@
 			<FileCheck>/usr/bin/g++</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>git</GenericName>
-			<PackageName>git</PackageName>
-			<FileCheck>/usr/bin/git</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>xorg-development</GenericName>
 			<PackageName>xorg</PackageName>
 			<FileCheck>/usr/bin/X</FileCheck>

@@ -31,19 +31,9 @@
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>php-gd</GenericName>
-			<PackageName>php-gd</PackageName>
-			<FileCheck>/usr/lib/php/modules/gd.so</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>gcc gcc-c++</PackageName>
 			<FileCheck>/usr/bin/gcc, /usr/bin/c++</FileCheck>
-		</Package>
-		<Package>
-			<GenericName>git</GenericName>
-			<PackageName>git</PackageName>
-			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>

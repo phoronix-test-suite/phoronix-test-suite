@@ -36,11 +36,6 @@
 			<FileCheck>/usr/bin/gcc</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>git</GenericName>
-			<PackageName>dev-util/git</PackageName>
-			<FileCheck>/usr/bin/git</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>xorg-development</GenericName>
 			<PackageName>x11-base/xorg-server</PackageName>
 			<FileCheck>/usr/include/xorg</FileCheck>

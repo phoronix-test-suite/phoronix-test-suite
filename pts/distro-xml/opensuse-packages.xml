@@ -31,19 +31,9 @@
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>php-gd</GenericName>
-			<PackageName>php5-gd</PackageName>
-			<FileCheck>/usr/lib/php5/extensions/gd.so</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>gcc gcc-c++ make autoconf</PackageName>
 			<FileCheck>/usr/bin/gcc, /usr/bin/g++, /usr/bin/make, /usr/bin/autoconf</FileCheck>
-		</Package>
-		<Package>
-			<GenericName>git</GenericName>
-			<PackageName>git-core</PackageName>
-			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>

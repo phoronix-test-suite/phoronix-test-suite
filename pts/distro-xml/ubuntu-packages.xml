@@ -36,19 +36,9 @@
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>php-gd</GenericName>
-			<PackageName>php5-gd</PackageName>
-			<FileCheck>/usr/share/doc/php5-gd</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>build-essential</PackageName>
 			<FileCheck>/usr/share/build-essential</FileCheck>
-		</Package>
-		<Package>
-			<GenericName>git</GenericName>
-			<PackageName>git-core curl</PackageName>
-			<FileCheck>/usr/bin/git, /usr/bin/curl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>

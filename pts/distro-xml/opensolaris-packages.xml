@@ -31,11 +31,6 @@
 			<FileCheck>/usr/include/png.h</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>php-gd</GenericName>
-			<PackageName>SUNWphp524</PackageName>
-			<FileCheck>/usr/php5/modules/gd.so</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>gcc-dev</PackageName>
 			<FileCheck>/usr/bin/gcc OR /opt/csw/gcc4/bin/gcc</FileCheck>

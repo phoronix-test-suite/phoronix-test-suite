@@ -39,22 +39,10 @@
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>php-gd</GenericName>
-			<Title>PHP GD Module</Title>
-			<PossibleNames>php5-gd, php-gd</PossibleNames>
-			<FileCheck>/usr/share/doc/php5-gd</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>build-utilities</GenericName>
 			<Title>Compiler / Development Libraries</Title>
 			<PossibleNames>gcc</PossibleNames>
 			<FileCheck>/usr/bin/gcc</FileCheck>
-		</Package>
-		<Package>
-			<GenericName>git</GenericName>
-			<Title>Git</Title>
-			<PossibleNames>git, git-core</PossibleNames>
-			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
