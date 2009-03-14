@@ -91,7 +91,7 @@ function pts_test_note($process, $value = null)
 	switch($process)
 	{
 		case "ADD":
-			if(!empty($value) && !in_array($value, $note_r))
+			if(!empty($value))
 			{
 				$value = trim($value);
 
@@ -119,7 +119,10 @@ function pts_test_note($process, $value = null)
 						break;
 				}
 
-				array_push($note_r, $value);
+				if(!in_array($value, $note_r))
+				{
+					array_push($note_r, $value);
+				}
 			}
 			break;
 		case "TO_STRING":
@@ -563,7 +566,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 			{
 				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/benchmark-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
 				$backup_filename = basename($benchmark_log_file);
-				mkdir($backup_log_dir, 0777, true);
+
+				if(!is_dir($backup_log_dir))
+				{
+					mkdir($backup_log_dir, 0777, true);
+				}
+
 				copy($benchmark_log_file, $backup_log_dir . $backup_filename);
 			}
 
