@@ -95,8 +95,18 @@ function pts_gtk_add_menu($vbox, $menu)
 		}
 	}
 }
-function pts_gtk_add_table($headers, $data, $connect_to = null)
+function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null)
 {
+	if(count($data) == 0 && $on_empty != null)
+	{
+		$vbox = new GtkVBox();
+		$empty_label = new GtkLabel($on_empty);
+		$empty_label->set_line_wrap(true);
+		$vbox->pack_start($empty_label);
+
+		return $vbox;
+	}
+
 	$scrolled_window = new GtkScrolledWindow();
 	$scrolled_window->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
 	//$vbox->pack_start($scrolled_window);

@@ -407,42 +407,31 @@ class gui_gtk implements pts_option_interface
 		if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 		{
 			// Installed Suites
-			if(count(pts_installed_tests_array()) > 0)
-			{
-				$installed_suites = pts_gtk_add_table(array("Suite"), pts_gui_installed_suites(), array("gui_gtk", "update_details_frame_from_select"));
-				pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
-			}
+			$installed_suites = pts_gtk_table(array("Suite"), pts_gui_installed_suites(), array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");
+			pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
 
-			$available_suites = pts_gtk_add_table(array("Suite"), pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), 
+			$available_suites = pts_gtk_table(array("Suite"), pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), 
 			pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
-			array("gui_gtk", "update_details_frame_from_select"));
+			array("gui_gtk", "update_details_frame_from_select"), "No suites are available.");
 			pts_gtk_add_notebook_tab($main_notebook, $available_suites, "Available Suites");
 		}
 		else
 		{
 			// Installed Tests
-			if(count(($installed = pts_installed_tests_array())) > 0)
-			{
-				$installed_tests = pts_gtk_add_table(array("Test"), pts_gui_installed_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"),
-				pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
-				array("gui_gtk", "update_details_frame_from_select"));
-				pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
-			}
+			$installed_tests = pts_gtk_table(array("Test"), pts_gui_installed_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"),
+			pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
+			array("gui_gtk", "update_details_frame_from_select"), "No tests are currently installed.");
+			pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
 
 			// Available Tests
-			$available_tests = pts_gtk_add_table(array("Test"), pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), 
+			$available_tests = pts_gtk_table(array("Test"), pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), 
 			pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
-			array("gui_gtk", "update_details_frame_from_select"));
+			array("gui_gtk", "update_details_frame_from_select"), "No tests are available.");
 			pts_gtk_add_notebook_tab($main_notebook, $available_tests, "Available Tests");
 		}
 
-		$saved_results = pts_gui_saved_test_results_identifiers();
-		if(count($saved_results) > 0)
-		{
-
-			$test_results = pts_gtk_add_table(array("Test Result"), $saved_results, array("gui_gtk", "update_details_frame_from_select"));
-			pts_gtk_add_notebook_tab($main_notebook, $test_results, "Test Results");
-		}
+		$test_results = pts_gtk_table(array("Test Result"), pts_gui_saved_test_results_identifiers(), array("gui_gtk", "update_details_frame_from_select"), "No test results have been saved.");
+		pts_gtk_add_notebook_tab($main_notebook, $test_results, "Test Results");
 
 		/*
 		if(($no = pts_read_assignment("GTK_MAIN_NOTEBOOK_NUM")) >= 0)
@@ -1378,13 +1367,13 @@ class gui_gtk implements pts_option_interface
 		$notebook->set_size_request(540, 250);
 
 		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", "Hardware");
-		$hw = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)));
+		$hw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)), "No system information available.");
 		pts_gtk_add_notebook_tab($notebook, $hw, "Hardware", array("gui_gtk", "system_info_change_notebook"));
 
-		$sw = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)));
+		$sw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)), "No system information available.");
 		pts_gtk_add_notebook_tab($notebook, $sw, "Software", array("gui_gtk", "system_info_change_notebook"));
 
-		$sensors = pts_gtk_add_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)));
+		$sensors = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)), "No system information available.");
 		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors", array("gui_gtk", "system_info_change_notebook"));
 
 		$copy_button = new pts_gtk_button("Copy To Clipboard", array("gui_gtk", "system_info_copy_to_clipboard"), null);
