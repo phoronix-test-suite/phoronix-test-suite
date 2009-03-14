@@ -18,6 +18,7 @@
 		<Title>QGears2</Title>
 		<Executable>qgears2-run</Executable>
 		<TimesToRun>3</TimesToRun>
+		<Proportion>HIB</Proportion>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Description>This test runs qgears2, which is a test written by Zack Rusin and is based upon cairogears. This test can see how well different rendering backends perform and uses Qt4.</Description>
 	</TestInformation>

@@ -9,6 +9,5 @@
 	<TestInformation>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
 	</TestInformation>
 </PhoronixTestSuite>

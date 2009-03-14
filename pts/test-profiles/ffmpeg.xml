@@ -21,6 +21,6 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>This test uses FFmpeg and the libavcodec family for testing the system's audio/video encoding performance.</Description>
+		<Description>This test uses FFmpeg for testing the system's audio/video encoding performance.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

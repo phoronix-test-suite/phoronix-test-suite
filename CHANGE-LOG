@@ -21,6 +21,7 @@ Phoronix Test Suite (Git)
 - pts: Update ffmpeg test profile to FFmpeg version 0.5
 - pts: Allow alternate disks to be tested with sqlite test profile through auto-disk-mount-points option
 - pts: Add External Dependencies support for PCLinuxOS
+- pts: Few trivial test profile tweaks
 - pts: Add External Dependencies support for NetBSD
 - install-sh: Install Phoronix Test Suite icon
 

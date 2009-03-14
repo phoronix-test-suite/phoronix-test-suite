@@ -19,6 +19,6 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
-		<Description>Bork is a very small, cross-platform file encryption utility. It is written in Java and designed to be included along with the files it encrypts for long-term storage. This test measures the amount of time it takes to encrypt a sample file.</Description>
+		<Description>Bork is a small, cross-platform file encryption utility. It is written in Java and designed to be included along with the files it encrypts for long-term storage. This test measures the amount of time it takes to encrypt a sample file.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

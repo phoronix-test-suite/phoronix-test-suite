@@ -12,6 +12,6 @@
 		<Title>Timed Linux Kernel Compilation</Title>
 		<Version>2.6.25</Version>
 		<Executable>time-compile-kernel</Executable>
-		<Description>This test times how long it takes to build the Linux 2.6.25 kernel.</Description>
+		<Description>This test times how long it takes to build the Linux kernel.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

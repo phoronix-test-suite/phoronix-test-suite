@@ -17,7 +17,7 @@
 		<SubTitle>Feature Compliance</SubTitle>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Brightness Control, CPU Power Management, Thermal Zones, Suspend</ResultScale>
-		<Description>This is a test checking if what ACPI (Advanced Configuration and Power Interface) features are supported by the system.</Description>
+		<Description>This test checks if ACPI (Advanced Configuration and Power Interface) features are supported by the system.</Description>
 		<ResultFormat>MULTI_PASS_FAIL</ResultFormat>
 	</TestInformation>
 </PhoronixTestSuite>

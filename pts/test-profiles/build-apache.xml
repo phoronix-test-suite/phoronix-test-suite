@@ -11,6 +11,6 @@
 		<Title>Timed Apache Compilation</Title>
 		<Version>2.2.8</Version>
 		<Executable>time-compile-apache</Executable>
-		<Description>This test times how long it takes to build Apache HTTPD 2.2.8.</Description>
+		<Description>This test times how long it takes to build the Apache HTTP Server.</Description>
 	</TestInformation>
 </PhoronixTestSuite>
