@@ -39,10 +39,11 @@ function pts_module_startup_init()
 
 		pts_load_modules();
 		pts_module_process("__startup");
+		define("PTS_STARTUP_TASK_PERFORMED", true);
 		register_shutdown_function("pts_module_process", "__shutdown");
 	}
 }
-function pts_auto_detect_modules($load_here = false)
+function pts_auto_detect_modules()
 {
 	// Auto detect modules to load
 	$module_variables_file = @file_get_contents(STATIC_DIR . "module-variables.txt");
@@ -65,11 +66,6 @@ function pts_auto_detect_modules($load_here = false)
 				}
 
 				pts_attach_module($module);
-
-				if($load_here)
-				{
-					pts_load_module($module);
-				}
 			}
 		}
 	}
@@ -123,8 +119,6 @@ function pts_load_modules()
 	$module_store_list = array();
 	foreach(pts_attached_modules() as $module)
 	{
-		pts_load_module($module);
-
 		$module_type = pts_module_type($module);
 		if($module_type == "PHP")
 		{
@@ -160,8 +154,16 @@ function pts_load_modules()
 }
 function pts_attach_module($module)
 {
-	// Attach a module to be called routinely
-	pts_module("ATTACH", trim($module));
+	// Attach a module
+	$module = trim($module);
+
+	pts_load_module($module);
+	pts_module("ATTACH", $module);
+
+	if(defined("PTS_STARTUP_TASK_PERFORMED"))
+	{
+		pts_module_process_task($module, "__startup");
+	}
 }
 function pts_load_module($module)
 {
@@ -202,7 +204,6 @@ function pts_module_valid_user_command($module, $command = null)
 		if(!pts_module_attached($module))
 		{
 			pts_attach_module($module);
-			pts_load_module($module);
 		}
 
 		$all_options = pts_php_module_call($module, "user_commands");
@@ -286,26 +287,30 @@ function pts_module_process($process, $object_pass = null)
 	pts_debug_message($process);
 	foreach(pts_attached_modules() as $module_index => $module)
 	{
-		pts_module_activity("SET_CURRENT", $module);
-
-		$MODULE_RESPONSE = pts_module_call($module, $process, $object_pass);
-
-		if(!empty($MODULE_RESPONSE))
-		{
-			switch($MODULE_RESPONSE)
-			{
-				case PTS_MODULE_UNLOAD:
-					// Unload the PTS module
-					pts_module("DETACH", $module_index);
-					break;
-				case PTS_QUIT:
-					// Stop the Phoronix Test Suite immediately
-					pts_exit();
-					break;
-			}
-		}
+		pts_module_process_task($module, $process, $object_pass);
 	}
 	pts_module_activity("CLEAR_CURRENT");
+}
+function pts_module_process_task($module, $process, $object_pass = null)
+{
+	pts_module_activity("SET_CURRENT", $module);
+
+	$MODULE_RESPONSE = pts_module_call($module, $process, $object_pass);
+
+	if(!empty($MODULE_RESPONSE))
+	{
+		switch($MODULE_RESPONSE)
+		{
+			case PTS_MODULE_UNLOAD:
+				// Unload the PTS module
+				pts_module("DETACH", $module_index);
+				break;
+			case PTS_QUIT:
+				// Stop the Phoronix Test Suite immediately
+				pts_exit();
+				break;
+		}
+	}
 }
 function pts_module_process_extensions($extensions, &$write_to)
 {
@@ -321,7 +326,7 @@ function pts_module_process_extensions($extensions, &$write_to)
 			pts_set_environment_variable($ev_r[1], $ev_r[2]);
 		}
 
-		pts_auto_detect_modules(true);
+		pts_auto_detect_modules();
 	}
 }
 function pts_module_type($name)

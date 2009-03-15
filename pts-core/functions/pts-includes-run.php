@@ -465,6 +465,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	// Start
 	$pts_test_result->set_attribute("TEST_TITLE", $test_title);
 	$pts_test_result->set_attribute("TEST_IDENTIFIER", $test_identifier);
+	$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);
 	pts_module_process("__pre_test_run", $pts_test_result);
 
 	$time_test_start = time();
@@ -557,7 +558,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		{
 			echo pts_call_test_script($test_identifier, "interim", null, $test_directory, $extra_runtime_variables);
 			pts_module_process("__interim_test_run", $pts_test_result);
-			sleep(1); // Rest for a moment between tests
+			sleep(2); // Rest for a moment between tests
 		}
 
 		if(is_file($benchmark_log_file))
@@ -574,8 +575,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 				copy($benchmark_log_file, $backup_log_dir . $backup_filename);
 			}
-
 			unlink($benchmark_log_file);
+		}
+
+		if(is_file(PTS_USER_DIR . "halt-testing"))
+		{
+			return;
 		}
 	}
 

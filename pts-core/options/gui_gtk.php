@@ -40,6 +40,63 @@ class gui_gtk implements pts_option_interface
 	{
 		Gtk::main_quit();
 	}
+	public static function system_tray_monitor($update_text = null, $icon_blink = null)
+	{
+		static $system_tray = null;
+
+		if($system_tray == null)
+		{
+			$system_tray = new GtkStatusIcon();
+			$system_tray->set_from_file(MEDIA_DIR . "pts-icon.png");
+			$system_tray->set_tooltip("Phoronix Test Suite v" . PTS_VERSION);
+			$system_tray->connect("activate", array("gui_gtk", "system_tray_activate"));
+			$system_tray->connect("popup-menu", array("gui_gtk", "system_tray_menu"));
+		}
+
+		if($update_text != null)
+		{
+			$system_tray->set_tooltip($update_text);
+		}
+		if($icon_blink !== null)
+		{
+			$system_tray->set_blinking($icon_blink);
+		}
+	}
+	public static function system_tray_activate()
+	{
+		static $is_showing = true;
+
+		if(($window = pts_read_assignment("GTK_OBJ_WINDOW")) instanceOf pts_gtk_window)
+		{
+			if($is_showing)
+			{
+				$window->hide_all();
+			}
+			else
+			{
+				$window->show_all();
+			}
+			$is_showing = !$is_showing;
+		}
+	}
+	public static function system_tray_menu()
+	{
+		$menu = array();
+
+		array_push($menu, new pts_gtk_menu_item("About The Phoronix Test Suite", array("gui_gtk", "show_about_interface")));
+
+		$gtk_menu = new GtkMenu();
+
+		foreach($menu as $pts_gtk_menu_item)
+		{	
+			$menu_item = new GtkMenuItem($pts_gtk_menu_item->get_title());
+			$menu_item->connect("activate", $pts_gtk_menu_item->get_function_call());
+			$gtk_menu->append($menu_item);
+		}
+
+		$gtk_menu->show_all();
+		$gtk_menu->popup();		
+	}
 	public static function show_main_interface()
 	{
 		$window = new pts_gtk_window("Phoronix Test Suite v" . PTS_VERSION);
@@ -215,6 +272,10 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_RUN_BUTTON", $run_button);
 
 		pts_gtk_array_to_boxes($vbox, array(array($main_frame, $main_notebook), array($check_mode_batch, $check_mode_defaults, $details_button, $run_button)), 6, true);
+
+		// Setup System Tray
+		gui_gtk::system_tray_monitor();
+		pts_attach_module("gui_gtk_events");
 
 		$window->show_all();
 		Gtk::main();

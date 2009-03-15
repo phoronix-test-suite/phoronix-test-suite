@@ -105,6 +105,10 @@ class pts_test_result
 			array_push($this->trial_results, $result);
 		}
 	}
+	public function trial_run_count()
+	{
+		return count($this->trial_results);
+	}
 	public function calculate_end_result(&$return_string)
 	{
 		$END_RESULT = 0;

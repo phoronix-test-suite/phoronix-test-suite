@@ -30,8 +30,7 @@ class pts_gtk_window extends GtkWindow
 		$this->set_title($window_title);
 		$this->set_size_request($window_width, $window_height);
 
-		$window_icon = GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png");
-		$this->set_icon($window_icon);
+		$this->set_icon(GdkPixbuf::new_from_file(MEDIA_DIR . "pts-icon.png"));
 	}
 }
 
