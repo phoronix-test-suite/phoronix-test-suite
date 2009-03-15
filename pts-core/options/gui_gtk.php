@@ -1140,26 +1140,6 @@ class gui_gtk implements pts_option_interface
 
 			if($current_value == "TRUE" || $current_value == "FALSE")
 			{
-				/*$combobox[$i] = new GtkComboBox();
-
-				if(defined("GObject::TYPE_STRING"))
-				{
-					$model[$i] = new GtkListStore(GObject::TYPE_STRING);
-				}
-				else
-				{
-					$model[$i] = new GtkListStore(Gtk::TYPE_STRING);
-				}
-
-				$combobox[$i]->set_model($model[$i]);
-				$cell_renderer[$i] = new GtkCellRendererText();
-				$combobox[$i]->pack_start($cell_renderer[$i]);
-				$combobox[$i]->set_attributes($cell_renderer[$i], "text", 0);
-
-				$model[$i]->append(array("TRUE"));
-				$model[$i]->append(array("FALSE"));
-				$combobox[$i]->set_active(($current_value == "TRUE" ? 0 : 1)); */
-
 				$hb[$i] = new GtkHBox();
 				$hb[$i]->pack_start(($radio_true[$i] = new GtkRadioButton(null, "TRUE", true)));
 				$hb[$i]->pack_start(($radio_false[$i] = new GtkRadioButton($radio_true[$i], "FALSE", false)));

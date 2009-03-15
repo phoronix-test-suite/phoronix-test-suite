@@ -25,6 +25,7 @@ Phoronix Test Suite (Git)
 - pts: Drop no longer used php-gd and git from External Dependencies
 - pts: Add External Dependencies support for PCLinuxOS
 - pts: Add External Dependencies support for NetBSD
+- pts: Fix for smokin-guns test with OpenAL and other work so that it runs cleanly on Ubuntu
 - install-sh: Install Phoronix Test Suite icon
 
 Phoronix Test Suite 1.8.0 Alpha 3

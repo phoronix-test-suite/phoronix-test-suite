@@ -242,7 +242,7 @@ function pts_gtk_add_dynamic_notebook_tab(&$notebook, $tab_label, $tab_on_click,
 	$t_event_box->connect("button-press-event", $tab_on_click, $tab_label);
 
 	$vbox = new GtkVBox();
-	if(false && $notebook->get_n_pages() == 0)
+	if($notebook->get_n_pages() == 0)
 	{
 		call_user_func("pts_gtk_fill_notebook_tab", $vbox, $list_label, $list_function, $list_on_click, $on_empty_list);
 	}
