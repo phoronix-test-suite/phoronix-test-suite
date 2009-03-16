@@ -736,8 +736,9 @@ class gui_gtk implements pts_option_interface
 				array_push($menu_items, $label_save);
 
 				$save_results = new GtkCheckButton("Save Results");
-				$save_results->set_active(true);
 				pts_set_assignment("GTK_OBJ_SAVE_RESULTS", $save_results);
+				$save_results->set_active(true);
+				$save_results->connect("toggled", array("gui_gtk", "toggle_save_results"));
 				array_push($menu_items, $save_results);
 
 				$save_name = new GtkEntry();
@@ -791,6 +792,16 @@ class gui_gtk implements pts_option_interface
 		$window->show_all();
 		pts_set_assignment("GTK_OBJ_CONFIRMATION_WINDOW", $window);
 		Gtk::main();
+	}
+	public static function toggle_save_results()
+	{
+		$save_results = pts_read_assignment("GTK_OBJ_SAVE_RESULTS");
+		$is_save = $save_results->get_active();
+
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_SAVE_NAME", $is_save);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_TEST_IDENTIFIER", $is_save);
+		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", $is_save);
+
 	}
 	public static function show_phoronix_global_interface()
 	{

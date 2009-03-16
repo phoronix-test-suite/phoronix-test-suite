@@ -26,13 +26,12 @@ function pts_env_variables()
 	// The PTS environmental variables passed during the testing process, etc
 	static $env_variables = null;
 
-	if(empty($env_variables))
+	if($env_variables == null)
 	{
 		$env_variables = array(
 		"PTS_VERSION" => PTS_VERSION,
 		"PTS_CODENAME" => PTS_CODENAME,
 		"PTS_DIR" => PTS_PATH,
-		"FONT_DIR" => FONT_DIR,
 		"PHP_BIN" => PHP_BIN,
 		"NUM_CPU_CORES" => hw_cpu_core_count(),
 		"NUM_CPU_JOBS" => hw_cpu_job_count(),
@@ -57,7 +56,7 @@ function pts_user_runtime_variables($search_for = null)
 {
 	static $runtime_variables = null;
 
-	if(empty($runtime_variables))
+	if($runtime_variables == null)
 	{
 		$runtime_variables = array(
 		"VIDEO_RESOLUTION" => hw_gpu_current_mode(),
