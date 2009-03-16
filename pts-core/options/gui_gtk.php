@@ -180,11 +180,11 @@ class gui_gtk implements pts_option_interface
 		);
 		pts_gtk_add_menu($vbox, $main_menu_items);
 
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", false);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", false);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_BUILD_SUITE", false);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_MERGE_RESULTS", false);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", false);
+		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", false);
+		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", false);
+		pts_gtk_object_set_sensitive("GTK_OBJ_BUILD_SUITE", false);
+		pts_gtk_object_set_sensitive("GTK_OBJ_MERGE_RESULTS", false);
+		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", false);
 
 		//
 		// Main Area
@@ -329,11 +329,6 @@ class gui_gtk implements pts_option_interface
 				break;
 		}
 	}
-	protected static function pts_gtk_object_set_sensitive($object, $sensitive)
-	{
-		$o = pts_read_assignment($object);
-		$o->set_sensitive($sensitive);
-	}
 	public static function update_details_frame_from_select($object)
 	{
 		$identifier = pts_gtk_selected_item($object);
@@ -353,10 +348,10 @@ class gui_gtk implements pts_option_interface
 
 		if(!pts_is_assignment("GTK_ITEM_SELECTED_ONCE"))
 		{
-			gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", true);
-			gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_DETAILS_BUTTON", true);
-			gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", true);
-			gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", true);
+			pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", true);
+			pts_gtk_object_set_sensitive("GTK_OBJ_DETAILS_BUTTON", true);
+			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", true);
+			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", true);
 
 			pts_set_assignment("GTK_ITEM_SELECTED_ONCE", true);
 		}
@@ -419,11 +414,11 @@ class gui_gtk implements pts_option_interface
 			array_push($append_elements, $textview_description);
 		}
 
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GENERATE_PDF", $test_menu_items_sensitive);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_REFRESH_GRAPHS", $test_menu_items_sensitive);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", $test_menu_items_sensitive);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", $test_menu_items_sensitive);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", $test_menu_items_sensitive);
+		pts_gtk_object_set_sensitive("GTK_OBJ_GENERATE_PDF", $test_menu_items_sensitive);
+		pts_gtk_object_set_sensitive("GTK_OBJ_REFRESH_GRAPHS", $test_menu_items_sensitive);
+		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", $test_menu_items_sensitive);
+		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", $test_menu_items_sensitive);
+		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", $test_menu_items_sensitive);
 
 		$titles = array();
 		$values = array();
@@ -799,10 +794,9 @@ class gui_gtk implements pts_option_interface
 		$save_results = pts_read_assignment("GTK_OBJ_SAVE_RESULTS");
 		$is_save = $save_results->get_active();
 
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_SAVE_NAME", $is_save);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_TEST_IDENTIFIER", $is_save);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", $is_save);
-
+		pts_gtk_object_set_sensitive("GTK_OBJ_SAVE_NAME", $is_save);
+		pts_gtk_object_set_sensitive("GTK_OBJ_TEST_IDENTIFIER", $is_save);
+		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", $is_save);
 	}
 	public static function show_phoronix_global_interface()
 	{
@@ -845,9 +839,9 @@ class gui_gtk implements pts_option_interface
 		$global_id = $id_entry->get_text();
 		$is_valid = $force || pts_global_valid_id_string($global_id);
 
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RESULTS", $is_valid);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_CLONE", $is_valid);
-		gui_gtk::pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RUN", $is_valid);
+		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RESULTS", $is_valid);
+		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_CLONE", $is_valid);
+		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RUN", $is_valid);
 	}
 	public static function launch_phoronix_global_action($action)
 	{
@@ -1297,7 +1291,6 @@ class gui_gtk implements pts_option_interface
 				}
 				else if($object instanceOf GtkRadioButton)
 				{
-				echo 1;
 					$preferences_set[$preference] = ($object->get_active() ? "TRUE" : "FALSE");
 				}
 				else if($object instanceOf GtkColorButton)
@@ -1467,18 +1460,13 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$window = new pts_gtk_window("Phoronix Certification & Qualification Suite");
-
-
 		$textview_pcqs = new pts_gtk_text_area($license, 540, 250);
-
-
 		$return_button = new pts_gtk_button("Return", array("gui_gtk", "pcqs_button_clicked"), "return", -1, -1, Gtk::STOCK_CANCEL);
-
 		$continue_button = new pts_gtk_button("Install", array("gui_gtk", "pcqs_button_clicked"), "install", -1, -1, Gtk::STOCK_APPLY);
 
 		pts_gtk_array_to_boxes($window, array($textview_pcqs, array($return_button, $continue_button)), 4);
-
 		pts_set_assignment("GTK_OBJ_PCQS_WINDOW", $window);
+
 		$window->show_all();
 		Gtk::main();
 	}
@@ -1495,7 +1483,6 @@ class gui_gtk implements pts_option_interface
 		$window = new pts_gtk_window("Phoronix Test Suite - User Agreement");
 
 		$textview_agreement = new pts_gtk_text_area(trim($user_agreement), 540, 250);
-
 		$return_button = new pts_gtk_button("Quit", array("gui_gtk", "process_user_agreement_prompt"), "quit", -1, -1, Gtk::STOCK_CANCEL);
 		$continue_button = new pts_gtk_button("Accept To Terms", array("gui_gtk", "process_user_agreement_prompt"), "yes", -1, -1, Gtk::STOCK_APPLY);
 

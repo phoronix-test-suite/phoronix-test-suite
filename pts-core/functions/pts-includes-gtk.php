@@ -226,6 +226,11 @@ function pts_gtk_add_notebook_tab($notebook, $widget, $label, $connect = null)
 	$event_box->connect("button-press-event", $connect, $label->get_text());
 	$notebook->append_page($widget, $event_box);
 }
+function pts_gtk_object_set_sensitive($object, $sensitive)
+{
+	$o = pts_read_assignment($object);
+	$o->set_sensitive($sensitive);
+}
 
 /*
 
