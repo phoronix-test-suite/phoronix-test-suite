@@ -984,26 +984,5 @@ function pts_objects_test_downloads($test_identifier)
 
 	return $obj_r;
 }
-function pts_dependency_name($dependency)
-{
-	// Find the name of a dependency
-	$return_title = "";
-	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
-	{
-		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
-		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
-
-		for($i = 0; $i < count($title) && empty($return_title); $i++)
-		{
-			if($dependency == $package_name[$i])
-			{
-				$return_title = $title[$i];
-			}
-		}
-	}
-
-	return $return_title;
-}
 
 ?>

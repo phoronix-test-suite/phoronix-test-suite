@@ -107,7 +107,7 @@ class pts_test_profile_details
 	}
 	public function get_dependencies()
 	{
-		return explode(",", $this->dependencies);
+		return array_map("trim", explode(",", $this->dependencies));
 	}
 	public function suites_using_this_test()
 	{
@@ -198,12 +198,9 @@ class pts_test_profile_details
 		if(!empty($this->dependencies))
 		{
 			$str .= "\nSoftware Dependencies:\n";
-			foreach($this->get_dependencies() as $dependency)
+			foreach($this->dependency_names() as $dependency)
 			{
-				if(($title = pts_dependency_name(trim($dependency)) )!= "")
-				{
-					$str .= "- " . $title . "\n";
-				}
+					$str .= "- " . $dependency . "\n";
 			}
 		}
 
@@ -238,6 +235,28 @@ class pts_test_profile_details
 		}
 
 		return $str;
+	}
+	public function dependency_names()
+	{
+		$dependency_names = array();
+
+		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
+		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+
+		foreach($this->get_dependencies() as $dependency)
+		{
+			for($i = 0; $i < count($title); $i++)
+			{
+				if($dependency == $package_name[$i])
+				{
+					array_push($dependency_names, $title[$i]);
+					break;
+				}
+			}
+		}
+
+		return $dependency_names;
 	}
 }
 

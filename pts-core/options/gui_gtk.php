@@ -941,18 +941,15 @@ class gui_gtk implements pts_option_interface
 
 				$str = "Software Dependencies: ";
 				$i = 0;
-				foreach($obj->get_dependencies() as $dependency)
+				foreach($obj->dependency_names() as $dependency)
 				{
-					if(($title = pts_dependency_name(trim($dependency)) )!= "")
+					if($i > 0)
 					{
-						if($i > 0)
-						{
-							$str .= ", ";
-						}
-
-						$str .= $title;
-						$i++;
+						$str .= ", ";
 					}
+
+					$str .= $dependency;
+					$i++;
 				}
 				if($i == 0)
 				{
