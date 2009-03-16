@@ -61,6 +61,7 @@ function pts_save_result($save_to = null, $save_results = null)
 		{
 			pts_generate_graphs($save_results, $save_to_dir);
 		}
+
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
 		if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || pts_read_assignment("IS_PCQS_MODE") != false || getenv("SAVE_SYSTEM_DETAILS") != false || pts_is_assignment("IS_BATCH_MODE")))
@@ -251,17 +252,6 @@ function pts_get_results_viewer_xsl_formatted($pts_Graph)
 	$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
 
 	$graph_string = $pts_Graph->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $pts_Graph->graphWidth(), $pts_Graph->graphWidth());
-
-	/*
-	if($format_type == "SVG")
-	{
-		$overview_string = "<object type=\"image/svg+xml\" data=\"result-graphs/overview.svg\"></object>";
-	}
-	else
-	{
-		// Default to img
-		$overview_string = "<img src=\"result-graphs/overview." . strtolower($format_type)  . "\" />";
-	} */
 
 	$raw_xsl = str_replace("<!-- GRAPH TAGS -->", $graph_string, $raw_xsl);
 	//$raw_xsl = str_replace("<!-- OVERVIEW TAG -->", $overview_string, $raw_xsl);
@@ -993,37 +983,6 @@ function pts_objects_test_downloads($test_identifier)
 	}
 
 	return $obj_r;
-}
-function pts_remove_saved_result($identifier)
-{
-	// Remove a saved result file
-	$return_value = false;
-
-	if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
-	{
-		@unlink(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
-
-		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/result-graphs/*.png") as $remove_file)
-		{
-			@unlink($remove_file);
-		}
-		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/result-graphs/*.svg") as $remove_file)
-		{
-			@unlink($remove_file);
-		}
-
-		foreach(glob(SAVE_RESULTS_DIR . $identifier . "/test-*.xml") as $remove_file)
-		{
-			@unlink($remove_file);
-		}
-
-		@unlink(SAVE_RESULTS_DIR . $identifier . "/pts-results-viewer.xsl");
-		@rmdir(SAVE_RESULTS_DIR . $identifier . "/result-graphs/");
-		@rmdir(SAVE_RESULTS_DIR . $identifier);
-		echo "Removed: $identifier\n";
-		$return_value = true;
-	}
-	return $return_value;
 }
 function pts_print_format_tests($object, &$write_buffer, $steps = -1)
 {

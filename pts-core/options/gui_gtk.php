@@ -274,8 +274,9 @@ class gui_gtk implements pts_option_interface
 		pts_gtk_array_to_boxes($vbox, array(array($main_frame, $main_notebook), array($check_mode_batch, $check_mode_defaults, $details_button, $run_button)), 6, true);
 
 		// Setup System Tray
-		gui_gtk::system_tray_monitor();
-		pts_attach_module("gui_gtk_events");
+		// TOOD: re-enable
+		// gui_gtk::system_tray_monitor();
+		// pts_attach_module("gui_gtk_events");
 
 		$window->show_all();
 		Gtk::main();

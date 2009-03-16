@@ -27,7 +27,7 @@ class remove_result implements pts_option_interface
 		if(is_file(SAVE_RESULTS_DIR . $r[0] . "/composite.xml"))
 		{
 			echo "\n";
-			pts_remove_saved_result($r[0]);
+			pts_remove(SAVE_RESULTS_DIR . $r[0]);
 			echo "\n";
 		}
 		else
