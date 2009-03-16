@@ -101,7 +101,7 @@ class pts_test_suite_details
 		$str .= "Suite Description: " . $this->get_description() . "\n";
 		$str .= "\n";
 
-		pts_print_format_tests($this->identifier, $str);
+		$this->pts_print_format_tests($this->identifier, $str);
 
 		return $str;
 	}
@@ -119,6 +119,39 @@ class pts_test_suite_details
 		}
 
 		return $str;
+	}
+	public function pts_print_format_tests($object, &$write_buffer, $steps = -1)
+	{
+		// Print out a text tree that shows the suites and tests within an object
+		$steps++;
+		if(pts_is_suite($object))
+		{
+			$xml_parser = new pts_suite_tandem_XmlReader($object);
+			$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+
+			if($steps > 0)
+			{
+				asort($tests_in_suite);
+			}
+
+			if($steps == 0)
+			{
+				$write_buffer .= $object . "\n";
+			}
+			else
+			{
+				$write_buffer .= str_repeat("  ", $steps) . "+ " . $object . "\n";
+			}
+
+			foreach($tests_in_suite as $test)
+			{
+				$write_buffer .= $this->pts_print_format_tests($test, $write_buffer, $steps);
+			}
+		}
+		else
+		{
+			$write_buffer .= str_repeat("  ", $steps) . "* " . $object . "\n";
+		}
 	}
 }
 

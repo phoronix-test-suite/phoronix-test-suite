@@ -984,39 +984,6 @@ function pts_objects_test_downloads($test_identifier)
 
 	return $obj_r;
 }
-function pts_print_format_tests($object, &$write_buffer, $steps = -1)
-{
-	// Print out a text tree that shows the suites and tests within an object
-	$steps++;
-	if(pts_is_suite($object))
-	{
-		$xml_parser = new pts_suite_tandem_XmlReader($object);
-		$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
-
-		if($steps > 0)
-		{
-			asort($tests_in_suite);
-		}
-
-		if($steps == 0)
-		{
-			$write_buffer .= $object . "\n";
-		}
-		else
-		{
-			$write_buffer .= str_repeat("  ", $steps) . "+ " . $object . "\n";
-		}
-
-		foreach($tests_in_suite as $test)
-		{
-			$write_buffer .= pts_print_format_tests($test, $write_buffer, $steps);
-		}
-	}
-	else
-	{
-		$write_buffer .= str_repeat("  ", $steps) . "* " . $object . "\n";
-	}
-}
 function pts_dependency_name($dependency)
 {
 	// Find the name of a dependency
