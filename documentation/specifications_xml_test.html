@@ -197,12 +197,20 @@ benchmarking environment directory, this is the string of the file-name.</p>
 <strong>Required:</strong> No - Defaults to 1<br>
 <strong>Description:</strong> The number of times to run the test.<br>
 <strong>Supported Values:</strong> ( Integer Values )</p>
+<p><strong>Tag:</strong> IgnoreRuns<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_IGNORERUNS<br>
+<strong>Required:</strong> No - Defaults to not ignoring any runs<br>
+<strong>Description:</strong> If this tag is present, any integer values passed for the run numbers will be ignored. 
+For example, if the value is <em>1</em>, the results from the first run will be ignored and not recorded. Multiple values 
+can be defined with their values being separated by a comma.<br>
+<strong>Supported Values:</strong> Integers between one and the value of <em>TimesToRun</em>.</p>
 <p><strong>Tag:</strong> IgnoreFirstRun<br>
 <strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
 <strong>Internal Reference:</strong> P_TEST_IGNOREFIRSTRUN<br>
 <strong>Required:</strong> No - Defaults to 0<br>
-<strong>Description:</strong> If the test is being run multiple times, should the first value be 
-ignored. If the value is set to 1, the first result will be void.<br>
+<strong>Description:</strong> As of Phoronix Test Suite 1.8, this option has been removed and is replaced with the 
+<em>IgnoreRuns</em> tag.<br>
 <strong>Supported Values:</strong> 0, 1</p>
 <p><strong>Tag:</strong> PreInstallMessage<br>
 <strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>

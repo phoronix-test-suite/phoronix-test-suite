@@ -378,7 +378,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));
-	$ignore_first_run = $xml_parser->getXMLValue(P_TEST_IGNOREFIRSTRUN);
+	$ignore_runs = array_map("trim", explode(",", $xml_parser->getXMLValue(P_TEST_IGNORERUNS)));
 	$pre_run_message = $xml_parser->getXMLValue(P_TEST_PRERUNMSG);
 	$post_run_message = $xml_parser->getXMLValue(P_TEST_POSTRUNMSG);
 	$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
@@ -517,7 +517,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 			echo file_get_contents($benchmark_log_file);
 		}
 
-		if(!($i == 0 && pts_string_bool($ignore_first_run) && $times_to_run > 1))
+		if(!in_array($i, $ignore_runs))
 		{
 			$test_extra_runtime_variables_post = $test_extra_runtime_variables;
 			if(is_file(TEST_ENV_DIR . $test_identifier . "/pts-timer"))

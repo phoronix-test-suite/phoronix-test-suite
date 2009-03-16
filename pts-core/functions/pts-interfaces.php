@@ -35,7 +35,7 @@ define("P_TEST_RESULTFORMAT", "PhoronixTestSuite/TestInformation/ResultFormat");
 define("P_TEST_PROPORTION", "PhoronixTestSuite/TestInformation/Proportion"); // Proportion
 define("P_TEST_EXECUTABLE", "PhoronixTestSuite/TestInformation/Executable"); // Executable
 define("P_TEST_RUNCOUNT", "PhoronixTestSuite/TestInformation/TimesToRun"); // Run count
-define("P_TEST_IGNOREFIRSTRUN", "PhoronixTestSuite/TestInformation/IgnoreFirstRun"); // Ignore first run?
+define("P_TEST_IGNORERUNS", "PhoronixTestSuite/TestInformation/IgnoreRuns"); // Ignore certain run intervals?
 define("P_TEST_PREINSTALLMSG", "PhoronixTestSuite/TestInformation/PreInstallMessage"); // Pre-install message
 define("P_TEST_POSTINSTALLMSG", "PhoronixTestSuite/TestInformation/PostInstallMessage"); // Post-install message
 define("P_TEST_PRERUNMSG", "PhoronixTestSuite/TestInformation/PreRunMessage"); // Pre-run message

@@ -17,6 +17,7 @@ Phoronix Test Suite (Git)
 - pts-core: Split out some pts-includes-run code into pts-includes-run_setup and pts-includes-run_options
 - pts-core: Add auto-disk-mount-points as an automatic identifier for providing mounted disk point locations to test profiles
 - pts-core: Begin work on system tray support for GTK2 GUI
+- pts-core: Introduce IgnoreRuns tag to test profile specification, to replace IgnoreFirstRun option
 - pts: Add RETAIL to License type for test profiles
 - pts: OpenAL fix for smokin-guns test profile when using newer Debian / Ubuntu
 - pts: Update ffmpeg test profile to FFmpeg version 0.5
