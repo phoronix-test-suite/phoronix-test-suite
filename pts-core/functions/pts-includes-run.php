@@ -680,5 +680,64 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	return $pts_test_result;
 }
+function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
+{
+	// Refresh an install XML for pts-install.xml
+	// Similar to pts_test_generate_install_xml()
+ 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
+	$xml_writer = new tandem_XmlWriter();
+
+	$test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
+	if(!is_numeric($test_duration))
+	{
+		$test_duration = $this_test_duration;
+	}
+	if(is_numeric($this_test_duration) && $this_test_duration > 0)
+	{
+		$test_duration = ceil((($test_duration * $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN)) + $this_test_duration) / ($xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1));
+	}
+
+	$test_version = $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
+	if(empty($test_version))
+	{
+		$test_version = pts_test_profile_version($identifier);
+	}
+
+	$test_checksum = $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
+	if(empty($test_checksum))
+	{
+		$test_checksum = pts_test_checksum_installer($identifier);
+	}
+
+	$sys_identifier = $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
+	if(empty($sys_identifier))
+	{
+		$sys_identifier = pts_system_identifier_string();
+	}
+
+	$install_time = $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);
+	if(empty($install_time))
+	{
+		$install_time = date("Y-m-d H:i:s");
+	}
+
+	$times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
+	if(empty($times_run))
+	{
+		$times_run = 0;
+	}
+	$times_run++;
+
+	$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $identifier);
+	$xml_writer->addXmlObject(P_INSTALL_TEST_VERSION, 1, $test_version);
+	$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, $test_checksum);
+	$xml_writer->addXmlObject(P_INSTALL_TEST_SYSIDENTIFY, 1, $sys_identifier);
+	$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, $install_time);
+	$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, date("Y-m-d H:i:s"));
+	$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, $times_run);
+	$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $test_duration, 2);
+
+	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
+}
 
 ?>

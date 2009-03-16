@@ -390,70 +390,6 @@ function pts_test_installed_profile_version($identifier)
 
 	return $version;
 }
-function pts_test_generate_install_xml($identifier)
-{
-	// Generate an install XML for pts-install.xml
-	return pts_test_refresh_install_xml($identifier, 0, true);
-}
-function pts_test_refresh_install_xml($identifier, $this_test_duration = 0, $new_install = false)
-{
-	// Generate/refresh an install XML for pts-install.xml
- 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
-	$xml_writer = new tandem_XmlWriter();
-
-	$test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
-	if(!is_numeric($test_duration))
-	{
-		$test_duration = $this_test_duration;
-	}
-	if(is_numeric($this_test_duration) && $this_test_duration > 0)
-	{
-		$test_duration = ceil((($test_duration * $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN)) + $this_test_duration) / ($xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1));
-	}
-
-	$test_version = $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
-	if(empty($test_version) || $new_install)
-	{
-		$test_version = pts_test_profile_version($identifier);
-	}
-
-	$test_checksum = $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
-	if(empty($test_checksum) || $new_install)
-	{
-		$test_checksum = pts_test_checksum_installer($identifier);
-	}
-
-	$sys_identifier = $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
-	if(empty($sys_identifier) || $new_install)
-	{
-		$sys_identifier = pts_system_identifier_string();
-	}
-
-	$install_time = $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);
-	if(empty($install_time))
-	{
-		$install_time = date("Y-m-d H:i:s");
-	}
-
-	$times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
-	if($new_install && empty($times_run))
-	{
-		$times_run = 0;
-	}
-	if(!$new_install)
-		$times_run++;
-
-	$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $identifier);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_VERSION, 1, $test_version);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, $test_checksum);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_SYSIDENTIFY, 1, $sys_identifier);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, $install_time);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, date("Y-m-d H:i:s"));
-	$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, $times_run);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $test_duration, 2);
-
-	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
-}
 function pts_test_name_to_identifier($name)
 {
 	// Convert test name to identifier
@@ -471,7 +407,6 @@ function pts_test_name_to_identifier($name)
 				$this_identifier = $identifier;
 			}
 		}
-
 		$cache[$name] = $this_identifier;
 	}
 
@@ -494,7 +429,6 @@ function pts_suite_name_to_identifier($name)
 				$this_identifier = $identifier;
 			}
 		}
-
 		$cache[$name] = $this_identifier;
 	}
 
@@ -513,11 +447,8 @@ function pts_test_identifier_to_name($identifier)
 		 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 		}
-
 		$cache[$identifier] = $name;
 	}
-
-
 
 	return $cache[$identifier];
 }
@@ -620,13 +551,7 @@ function pts_test_architecture_supported($identifier)
 
 		if(!empty($archs))
 		{
-			$archs = explode(",", $archs);
-
-			foreach($archs as $key => $value)
-			{
-				$archs[$key] = trim($value);
-			}
-
+			$archs = array_map("trim", explode(",", $archs));
 			$supported = pts_cpu_arch_compatible($archs);
 		}
 	}
@@ -648,12 +573,7 @@ function pts_test_platform_supported($identifier)
 		{
 			if(!empty($un_platforms))
 			{
-				$un_platforms = explode(",", $un_platforms);
-
-				foreach($un_platforms as $key => $value)
-				{
-					$un_platforms[$key] = trim($value);
-				}
+				$un_platforms = array_map("trim", explode(",", $un_platforms));
 
 				if(in_array(OPERATING_SYSTEM, $un_platforms))
 				{
@@ -662,12 +582,7 @@ function pts_test_platform_supported($identifier)
 			}
 			if(!empty($platforms))
 			{
-				$platforms = explode(",", $platforms);
-
-				foreach($platforms as $key => $value)
-				{
-					$platforms[$key] = trim($value);
-				}
+				$platforms = array_map("trim", explode(",", $platforms));
 
 				if(!in_array(OPERATING_SYSTEM, $platforms))
 				{
@@ -953,25 +868,13 @@ function pts_objects_test_downloads($test_identifier)
 
 			if(!empty($package_platform[$i]))
 			{
-				$platforms = explode(",", $package_platform[$i]);
-
-				foreach($platforms as $key => $value)
-				{
-					$platforms[$key] = trim($value);
-				}
-
+				$platforms = array_map("trim", explode(",", $package_platform[$i]));
 				$file_exempt = !in_array(OPERATING_SYSTEM, $platforms);
 			}
 
 			if(!empty($package_architecture[$i]))
 			{
-				$architectures = explode(",", $package_architecture[$i]);
-
-				foreach($architectures as $key => $value)
-				{
-					$architectures[$key] = trim($value);
-				}
-
+				$architectures = array_map("trim", explode(",", $package_architecture[$i]));
 				$file_exempt = !pts_cpu_arch_compatible($architectures);
 			}
 
