@@ -517,7 +517,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 			echo file_get_contents($benchmark_log_file);
 		}
 
-		if(!in_array($i, $ignore_runs))
+		if(!in_array(($i + 1), $ignore_runs))
 		{
 			$test_extra_runtime_variables_post = $test_extra_runtime_variables;
 			if(is_file(TEST_ENV_DIR . $test_identifier . "/pts-timer"))

@@ -325,7 +325,7 @@ class gui_gtk implements pts_option_interface
 				break;
 			default:
 				pts_run_option_next("install_test", $clicked, array("SILENCE_MESSAGES" => true));
-				gui_gtk::confirmation_button_clicked("RUN", $clicked);
+				gui_gtk::show_run_confirmation_interface("RUN", $clicked);
 				break;
 		}
 	}
