@@ -1,3 +1,4 @@
 suselinux = opensuse
 linuxmint = ubuntu
 mepis = ubuntu
+debian = ubuntu

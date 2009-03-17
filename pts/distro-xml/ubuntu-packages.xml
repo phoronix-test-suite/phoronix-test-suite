@@ -8,7 +8,7 @@
 		<Package>
 			<GenericName>linux-32bit-libraries</GenericName>
 			<PackageName>ia32-libs</PackageName>
-			<FileCheck>/usr/share/doc/ia32-libs/Manifest.ia32-libs.gz</FileCheck>
+			<FileCheck>/usr/share/doc/ia32-libs</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gtk-development</GenericName>
