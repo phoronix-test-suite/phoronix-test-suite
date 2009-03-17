@@ -242,15 +242,7 @@ function pts_process_running_string($process_arr)
 			}
 		}
 
-		if($p_count == 1)
-		{
-			$p_string .= "was";
-		}
-		else
-		{
-			$p_string .= "were";
-		}
-
+		$p_string .= ($p_count == 1 ? "was" : "were");
 		$p_string .= " running on this system";
 	}
 

@@ -146,7 +146,7 @@ function pts_generate_graphs($test_results, $save_to_dir)
 
 	if(!is_dir($save_to_dir . "/result-graphs"))
 	{
-		mkdir($save_to_dir . "/result-graphs");
+		mkdir($save_to_dir . "/result-graphs", 0777, true);
 	}
 
 	$xml_reader = new tandem_XmlReader($test_results);

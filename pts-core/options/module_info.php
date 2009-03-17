@@ -30,7 +30,6 @@ class module_info implements pts_option_interface
 		{
 			$module = new pts_user_module_details($path);
 			echo $module->info_string();
-
 			echo "\n";
 		}
 		else

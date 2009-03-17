@@ -31,7 +31,7 @@ class install_all_dependencies implements pts_option_interface
 		$packages_to_install = array();
 		pts_package_generic_to_distro_name($packages_to_install, "all");
 
-		if(empty($packages_to_install) || count($packages_to_install) == 0)
+		if(empty($packages_to_install))
 		{
 			echo pts_string_header("No packages found. Your operating system may not support this feature.\nSeek support from http://www.phoronix-test-suite.com/.");
 		}

@@ -26,11 +26,19 @@ class refresh_graphs implements pts_option_interface
 	{
 		$identifier = $r[0];
 
-		if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
+		if(($file = pts_find_result_file($identifier)) != false)
 		{
-			$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
+			$composite_xml = file_get_contents($file);
 
-			pts_generate_graphs($composite_xml, SAVE_RESULTS_DIR . $identifier . "/");
+			if(!is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
+			{
+				pts_save_result($identifier . "/composite.xml", $composite_xml);
+			}
+			else
+			{
+				pts_generate_graphs($composite_xml, SAVE_RESULTS_DIR . $identifier . "/");
+			}
+
 			echo "\nThe Phoronix Test Suite Graphs Have Been Re-Rendered.\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
 			pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");

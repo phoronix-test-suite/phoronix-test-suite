@@ -28,9 +28,7 @@ class upload_result implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$USE_FILE = pts_find_result_file($r[0], false);
-
-		if($USE_FILE == false)
+		if(($use_file = pts_find_result_file($r[0], false)) == false)
 		{
 			echo "\nThis result doesn't exist.\n";
 		}
@@ -42,7 +40,7 @@ class upload_result implements pts_option_interface
 				echo "\n";
 			}
 
-			$upload_url = pts_global_upload_result($USE_FILE, $tags_input);
+			$upload_url = pts_global_upload_result($use_file, $tags_input);
 
 			if(!empty($upload_url))
 			{

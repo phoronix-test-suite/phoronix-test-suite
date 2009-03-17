@@ -158,15 +158,7 @@ function pts_extended_init()
 	}
 
 	define("IS_UNKNOWN_GRAPHICS", ($found_gpu_match == false));
-
-	if(substr(pts_read_user_config(P_OPTION_TESTCORE_LASTTIME, date("Y-m-d")), 0, 10) != date("Y-m-d"))
-	{
-		define("IS_FIRST_RUN_TODAY", true);
-	}
-	else
-	{
-		define("IS_FIRST_RUN_TODAY", false);
-	}
+	define("IS_FIRST_RUN_TODAY", (substr(pts_read_user_config(P_OPTION_TESTCORE_LASTTIME, date("Y-m-d")), 0, 10) != date("Y-m-d")));
 }
 
 ?>

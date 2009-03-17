@@ -146,17 +146,7 @@ function pts_module_config_init($SetOptions = null)
 }
 function pts_config_bool_to_string($bool)
 {
-	// Evaluate a string to boolean type
-	if($bool == true)
-	{
-		$bool_return = "TRUE";
-	}
-	else
-	{
-		$bool_return = "FALSE";
-	}
-
-	return $bool_return;
+	return ($bool ? "TRUE" : "FALSE");
 }
 function pts_graph_config_init($new_config_values = "")
 {

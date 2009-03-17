@@ -30,14 +30,12 @@ class info implements pts_option_interface
 		{
 			$suite = new pts_test_suite_details($to_info);
 			echo $suite->info_string();
-		
 			echo "\n";
 		}
 		else if(pts_is_test($to_info))
 		{
 			$suite = new pts_test_profile_details($to_info);
 			echo $suite->info_string();
-		
 			echo "\n";
 		}
 		else

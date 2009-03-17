@@ -24,9 +24,7 @@ class show_result implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$URL =  pts_find_result_file($r[0]);
-
-		if($URL != false)
+		if(($URL = pts_find_result_file($r[0])) != false)
 		{
 			pts_run_shell_script(PTS_CORE_PATH . "scripts/launch-browser.sh", $URL);
 		}

@@ -36,6 +36,6 @@ elif [ "`which open`" ]
 then
 	open "$1"
 else
-	"URL: $1"
+	echo "URL: $1"
 fi
 

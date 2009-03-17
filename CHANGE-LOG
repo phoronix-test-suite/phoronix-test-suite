@@ -21,6 +21,7 @@ Phoronix Test Suite (Git)
 - pts-core: Introduce IgnoreRuns tag to test profile specification, to replace IgnoreFirstRun option
 - pts-core: Drop support for read_ati_extension() since ATI OverDrive has been on Linux long enough now -- using read_ati_overdrive()
 - pts-core: When launching browser, if konqueror is installed, use x-www-browser
+- pts-core: Support inputting Global IDs for more test options
 - pts: Add RETAIL to License type for test profiles
 - pts: OpenAL fix for smokin-guns test profile when using newer Debian / Ubuntu
 - pts: Update ffmpeg test profile to FFmpeg version 0.5

@@ -26,9 +26,9 @@ class analyze_all_runs implements pts_option_interface
 	{
 		$identifier = $r[0];
 
-		if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
+		if(($file = pts_find_result_file($identifier)) != false)
 		{
-			$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
+			$composite_xml = file_get_contents($file);
 
 			pts_set_assignment("GRAPH_RENDER_TYPE", "CANDLESTICK");
 			if(pts_save_result($identifier . "/composite.xml", $composite_xml))

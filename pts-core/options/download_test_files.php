@@ -40,7 +40,7 @@ class download_test_files implements pts_option_interface
 
 			if(count($tests) == 0)
 			{
-				echo "\n" . $test . " isn't recognized.\n";
+				echo "\n" . $test . " is not recognized.\n";
 			}
 			else
 			{

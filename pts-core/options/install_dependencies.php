@@ -36,21 +36,7 @@ class install_dependencies implements pts_option_interface
 		}
 		else
 		{
-			if($r[0] == "phoronix-test-suite" || $r[0] == "pts" || $r[0] == "trondheim-pts")
-			{
-				$pts_dependencies = array("php-gd", "php-extras", "build-utilities");
-				$packages_to_install = array();
-				$continue_install = pts_package_generic_to_distro_name($packages_to_install, $pts_dependencies);
-
-				if($continue_install)
-				{
-					pts_install_packages_on_distribution_process($packages_to_install);
-				}
-			}
-			else
-			{
-				pts_install_package_on_distribution($r[0]);
-			}
+			pts_install_package_on_distribution($r[0]);
 		}
 	}
 }

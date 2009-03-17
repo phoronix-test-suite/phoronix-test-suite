@@ -28,42 +28,41 @@ class analyze_batch implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$BASE_FILE = pts_find_result_file($r[0]);
-		$SAVE_TO = $r[1];
-
-		if($BASE_FILE == false)
+		if(($base_file = pts_find_result_file($r[0])) == false)
 		{
 			echo "\n" . $r[0] . " couldn't be found.\n";
 		}
 		else
 		{
-			if(!empty($SAVE_TO) && !is_dir(SAVE_RESULTS_DIR . $SAVE_TO))
+			$save_to = $r[1];
+
+			if(!empty($save_to) && !is_dir(SAVE_RESULTS_DIR . $save_to))
 			{
-				$SAVE_TO .= "/composite.xml";
+				$save_to .= "/composite.xml";
 			}
 			else
 			{
-				$SAVE_TO = null;
+				$save_to = null;
 			}
 
-			if(empty($SAVE_TO))
+			if(empty($save_to))
 			{
 				do
 				{
 					$rand_file = rand(1000, 9999);
-					$SAVE_TO = "analyze-" . $rand_file . '/';
+					$save_to = "analyze-" . $rand_file . '/';
 				}
-				while(is_dir(SAVE_RESULTS_DIR . $SAVE_TO));
+				while(is_dir(SAVE_RESULTS_DIR . $save_to));
 
-				$SAVE_TO .= "composite.xml";
+				$save_to .= "composite.xml";
 			}
 
 			// Analyze Results
-			$SAVED_RESULTS = pts_merge_batch_tests_to_line_comparison(@file_get_contents($BASE_FILE));
-			pts_save_result($SAVE_TO, $SAVED_RESULTS);
-			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $SAVE_TO);
-			echo "Results Saved To: " . SAVE_RESULTS_DIR . $SAVE_TO . "\n\n";
-			pts_display_web_browser(SAVE_RESULTS_DIR . $SAVE_TO);
+			$SAVED_RESULTS = pts_merge_batch_tests_to_line_comparison(file_get_contents($base_file));
+			pts_save_result($save_to, $SAVED_RESULTS);
+			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $save_to);
+			echo "Results Saved To: " . SAVE_RESULTS_DIR . $save_to . "\n\n";
+			pts_display_web_browser(SAVE_RESULTS_DIR . $save_to);
 		}
 	}
 }
