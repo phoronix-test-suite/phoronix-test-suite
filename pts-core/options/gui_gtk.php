@@ -1177,7 +1177,7 @@ class gui_gtk implements pts_option_interface
 				{
 					$vbox_page_{$pages} = new GtkVBox();
 					pts_gtk_array_to_boxes($vbox_page_{$pages}, $page_items, 1, true);
-					$notebook->append_page($vbox_page_{$pages}, new GtkLabel($page_prefix . $previous_heading));
+					$notebook->append_page($vbox_page_{$pages}, new GtkLabel($page_prefix . gui_gtk::caps_to_spaces($previous_heading)));
 				}
 
 				if($previous_heading == "BatchMode")
@@ -1246,7 +1246,7 @@ class gui_gtk implements pts_option_interface
 				$preference_objects[$preference] = $entry[$i];
 			}
 
-			$header[$i] = new GtkLabel(" " . basename($pref) . ":");
+			$header[$i] = new GtkLabel(" " . gui_gtk::caps_to_spaces(basename($pref)) . ":");
 			$header[$i]->set_alignment(0, 0.5);
 			array_push($page_items, array($header[$i], (is_array($preference_objects[$preference]) ? 
 			array_shift($preference_objects[$preference]) : $preference_objects[$preference])));
@@ -1268,6 +1268,17 @@ class gui_gtk implements pts_option_interface
 
 		$window->show_all();
 		Gtk::main();
+	}
+	public static function caps_to_spaces($str)
+	{
+		$new_str = "";
+
+		for($i = 0; $i < strlen($str); $i++)
+		{
+			$new_str .= ($i > 0 && ($ascii = ord($str[$i])) > 64 && $ascii < 91 ? " " : "") . $str[$i];
+		}
+
+		return $new_str;
 	}
 	public static function preferences_button_clicked($button_press)
 	{
@@ -1410,13 +1421,13 @@ class gui_gtk implements pts_option_interface
 		$notebook->set_size_request(540, 250);
 
 		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", "Hardware");
-		$hw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)), "No system information available.");
+		$hw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)), null, "No system information available.");
 		pts_gtk_add_notebook_tab($notebook, $hw, "Hardware", array("gui_gtk", "system_info_change_notebook"));
 
-		$sw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)), "No system information available.");
+		$sw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)), null, "No system information available.");
 		pts_gtk_add_notebook_tab($notebook, $sw, "Software", array("gui_gtk", "system_info_change_notebook"));
 
-		$sensors = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)), "No system information available.");
+		$sensors = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)), null, "No system information available.");
 		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors", array("gui_gtk", "system_info_change_notebook"));
 
 		$copy_button = new pts_gtk_button("Copy To Clipboard", array("gui_gtk", "system_info_copy_to_clipboard"), null);
