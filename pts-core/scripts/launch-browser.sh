@@ -17,22 +17,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-if [ pts`which x-www-browser` != pts ] && [ pts`which konqueror` != pts ]
+if [ "`which x-www-browser`" ] && [ "`which konqueror`" ]
 then
 	x-www-browser "$1"
-elif [ pts`which xdg-open` != pts ]
+elif [ "`which xdg-open`" ]
 then
 	xdg-open "$1"
-elif [ pts`which epiphany` != pts ]
+elif [ "`which epiphany`" ]
 then
 	epiphany "$1"
-elif [ pts`which firefox` != pts ]
+elif [ "`which firefox`" ]
 then
 	firefox "$1"
-elif [ pts`which mozilla` != pts ]
+elif [ "`which mozilla`" ]
 then
 	mozilla "$1"
-elif [ pts`which open` != pts ]
+elif [ "`which open`" ]
 then
 	open "$1"
 else
