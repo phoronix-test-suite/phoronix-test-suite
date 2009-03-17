@@ -52,15 +52,7 @@ function pts_assignment($process, $assignment = null, $value = null)
 }
 function pts_set_assignment_once($assignment, $value)
 {
-	$set_assignment = false;
-
-	if(!pts_is_assignment($assignment))
-	{
-		pts_set_assignment($assignment, $value);
-		$set_assignment = true;
-	}
-
-	return $set_assignment;
+	return !pts_is_assignment($assignment) && pts_set_assignment($assignment, $value);
 }
 function pts_set_assignment($assignment, $value)
 {
@@ -70,6 +62,8 @@ function pts_set_assignment($assignment, $value)
 	{
 		pts_assignment("SET", $this_assignment, $value);
 	}
+
+	return true;
 }
 function pts_read_assignment($assignment)
 {
@@ -102,29 +96,11 @@ function pts_set_assignment_next($assignment, $value)
 }
 function pts_unique_runtime_identifier()
 {
-	if(pts_is_assignment("THIS_OPTION_IDENTIFIER"))
-	{
-		$identifier = pts_read_assignment("THIS_OPTION_IDENTIFIER");
-	}
-	else
-	{
-		$identifier = PTS_INIT_TIME;
-	}
-
-	return $identifier;
+	return (($id = pts_read_assignment("THIS_OPTION_IDENTIFIER")) != false ? $id : PTS_INIT_TIME);
 }
 function pts_time_elapsed()
 {
-	if(pts_is_assignment("START_TIME"))
-	{
-		$start_time = pts_read_assignment("START_TIME");
-	}
-	else
-	{
-		$start_time = PTS_INIT_TIME;
-	}
-
-	return (time() - $start_time);
+	return (time() - (($time = pts_read_assignment("START_TIME")) != false ? $time : PTS_INIT_TIME));
 }
 
 ?>

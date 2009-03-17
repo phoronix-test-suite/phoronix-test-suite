@@ -451,14 +451,7 @@ function read_ati_overdrive($attribute, $adapter = 0)
 						$od_value = str_replace(array("%"), "", $od_value);
 						$od_value_r = explode(" ", $od_value);
 
-						if(count($od_value_r) == 1)
-						{
-							$value = $od_value_r[0];
-						}
-						else
-						{
-							$value = $od_value_r;
-						}											
+						$value = (count($od_value_r) == 1 ? $od_value_r[0] : $od_value_r);			
 					}
 				}
 			}
