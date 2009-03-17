@@ -25,7 +25,7 @@ class graphics_event_checker extends pts_module_interface
 {
 	const module_name = "Graphics Event Checker";
 	const module_version = "0.1.0";
-	const module_description = "This module checks a number of events prior to and and after running a test to make sure the graphics sub-system wasn't put in a sour or unintended state. For instance, it makes sure syncing to vBlank isn't forced through the driver and that a graphics test hadn't ended prematurely where it left the resolution in an incorrect mode.";
+	const module_description = "This module checks a number of events prior to and and after running a test to make sure the graphics sub-system was not put in a sour or unintended state. For instance, it makes sure syncing to vBlank is not forced through the driver and that a graphics test had not ended prematurely where it left the resolution in an incorrect mode.";
 	const module_author = "Michael Larabel";
 
 	static $start_video_resolution = array(-1, -1);
@@ -40,7 +40,7 @@ class graphics_event_checker extends pts_module_interface
 	{
 		if(count(read_xdpy_monitor_info()) > 1)
 		{
-			echo "\nThe graphics_event_checker currently doesn't support multiple monitors.\n";
+			echo "\nThe graphics_event_checker currently does not support multiple monitors.\n";
 			return PTS_MODULE_UNLOAD;
 		}
 

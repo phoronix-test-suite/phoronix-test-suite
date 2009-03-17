@@ -44,7 +44,6 @@ function pts_generate_download_cache()
 	}
 
 	$xml_writer = new tandem_XmlWriter();
-	$xml_writer->addXmlObject(P_CACHE_PTS_VERSION, -1, PTS_VERSION);
 	$file_counter = 0;
 	
 	foreach(pts_array_merge(pts_available_base_tests_array(), pts_supported_tests_array()) as $test)

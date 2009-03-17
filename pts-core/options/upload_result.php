@@ -30,7 +30,7 @@ class upload_result implements pts_option_interface
 	{
 		if(($use_file = pts_find_result_file($r[0], false)) == false)
 		{
-			echo "\nThis result doesn't exist.\n";
+			echo "\nThis result does not exist.\n";
 		}
 		else
 		{

@@ -30,7 +30,7 @@ class result_info implements pts_option_interface
 		}
 		else
 		{
-			echo "\n" . $r[0] . " isn't a valid results file.\n";
+			echo "\n" . $r[0] . " is not a valid results file.\n";
 		}
 		echo "\n";
 	}

@@ -107,7 +107,6 @@ define("P_DOWNLOADS_PACKAGE_ARCHSPECIFIC", "PhoronixTestSuite/Downloads/Package/
 
 define("P_CACHE_PACKAGE_FILENAME", "PhoronixTestSuite/DownloadCache/Package/FileName"); // Package file-name in download cache
 define("P_CACHE_PACKAGE_MD5", "PhoronixTestSuite/DownloadCache/Package/MD5"); // Package MD5 in download cache
-define("P_CACHE_PTS_VERSION", "PhoronixTestSuite/DownloadCache/PTS/Version"); // PTS version in download cache
 
 //
 // TEST EXTERNAL DEPENDENCY SPECIFICATION

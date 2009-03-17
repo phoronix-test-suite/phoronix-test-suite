@@ -96,7 +96,7 @@ class graphics_override extends pts_module_interface
 						$ati_aa = "0x00000008";
 						break;
 					case 16:
-						echo "\nThe ATI fglrx driver currently doesn't support 16x AA! Defaulting to 8x AA!\n";
+						echo "\nThe ATI fglrx driver currently does not support 16x AA! Defaulting to 8x AA!\n";
 						$ati_aa = "0x00000008";
 						break;
 				}

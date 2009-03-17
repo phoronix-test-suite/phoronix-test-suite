@@ -30,7 +30,7 @@ class analyze_batch implements pts_option_interface
 	{
 		if(($base_file = pts_find_result_file($r[0])) == false)
 		{
-			echo "\n" . $r[0] . " couldn't be found.\n";
+			echo "\n" . $r[0] . " could not be found.\n";
 		}
 		else
 		{

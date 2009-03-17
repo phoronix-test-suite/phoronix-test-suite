@@ -6,7 +6,7 @@
 		<TestType>System</TestType>
 		<Title>Universe CLI Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
-		<Description>The Universe CLI suite contains Phoronix Test Suite tests that are all command-line based / don't require an X server to be running.</Description>
+		<Description>The Universe CLI suite contains Phoronix Test Suite tests that are all command-line based / do not require an X server to be running.</Description>
 	</SuiteInformation>
 	<RunTest>
 		<Test>audio-encoding</Test>

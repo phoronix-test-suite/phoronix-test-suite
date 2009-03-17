@@ -32,7 +32,7 @@ class remove_result implements pts_option_interface
 		}
 		else
 		{
-			echo "\nThis result doesn't exist.\n";
+			echo "\nThis result does not exist.\n";
 		}
 	}
 }
