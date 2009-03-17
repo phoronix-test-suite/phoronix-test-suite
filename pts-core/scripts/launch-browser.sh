@@ -2,7 +2,7 @@
 
 # Phoronix Test Suite
 # URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-# Copyright (C) 2008, Phoronix Media
+# Copyright (C) 2008 - 2009, Phoronix Media
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-if [ pts`which xdg-open` != pts ]
+if [ pts`which x-www-browser` != pts ] && [ pts`which konqueror` != pts ]
+then
+	x-www-browser "$1"
+elif [ pts`which xdg-open` != pts ]
 then
 	xdg-open "$1"
 elif [ pts`which epiphany` != pts ]
