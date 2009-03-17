@@ -231,7 +231,7 @@ class gui_gtk implements pts_option_interface
 		else
 		{
 			$event_box = new GtkEventBox();
-			$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
+			//$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
 			$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
 			$logo->set_size_request(158, 82);
 			$event_box->add($logo);
@@ -1262,7 +1262,7 @@ class gui_gtk implements pts_option_interface
 		$return_button = new pts_gtk_button("Help", array("gui_gtk", "launch_web_browser"), PTS_USER_DIR . "user-config.xml", -1, -1, Gtk::STOCK_HELP);
 		$continue_button = new pts_gtk_button("Save", array("gui_gtk", "preferences_button_clicked"), "save", -1, -1, Gtk::STOCK_APPLY);
 
-		pts_gtk_array_to_boxes($window, array($notebook, null, array($return_button, $continue_button)));
+		pts_gtk_array_to_boxes($window, array($notebook, array($return_button, $continue_button)), 2);
 
 		pts_set_assignment("GTK_OBJ_PREFERENCES_WINDOW", $window);
 
