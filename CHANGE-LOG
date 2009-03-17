@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 1.8.0 Beta 1
+March 17, 2009
 
 - pts-core: Add sample phoronix-test-suite.desktop file to pts-core/static/
 - pts-core: Move short-description.txt to pts-core/static/
