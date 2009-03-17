@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - pts-core: Begin work on system tray support for GTK2 GUI
 - pts-core: Un-globalize some functions that were included by default always but are only used in select cases
 - pts-core: Introduce IgnoreRuns tag to test profile specification, to replace IgnoreFirstRun option
+- pts-core: Drop support for read_ati_extension() since ATI OverDrive has been on Linux long enough now -- using read_ati_overdrive()
 - pts: Add RETAIL to License type for test profiles
 - pts: OpenAL fix for smokin-guns test profile when using newer Debian / Ubuntu
 - pts: Update ffmpeg test profile to FFmpeg version 0.5

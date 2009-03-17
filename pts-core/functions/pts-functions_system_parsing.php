@@ -415,62 +415,6 @@ function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 
 	return $attribute_values;
 }
-function read_ati_extension($attribute)
-{
-	// Read ATI fake extension
-	$ati_info = "";
-
-	//mangler to get correct info out of aticonfig
-	if("CoreTemperature" == $attribute)
-	{
-			$info = shell_exec("aticonfig --pplib-cmd \"get temperature 0\" 2>&1");
-			if(($pos = strpos($info, "thermal")) > 0)
-			{
-				$ati_info = substr($info, strpos($info, "is") + 3);
-				$ati_info = substr($ati_info, 0, strpos($ati_info, "\n"));
-				$ati_info = trim(substr($ati_info, 0, strrpos($ati_info, ".")));
-			}
-	}
-	else if("Stock3DFrequencies" == $attribute)
-	{
-			$info = shell_exec("aticonfig --pplib-cmd \"get clock\" 2>&1");
-			if(($pos = strpos($info, "ngine")) > 0)
-			{
-				$core_info = substr($info, strpos($info, "-") + 1);
-				$core_info = substr($core_info, 0, strpos($core_info, " "));
-				$mem_info = substr($info, strpos($info, "Memory Clock"));
-				$mem_info = substr($mem_info, strpos($mem_info, "-") + 1);
-				$mem_info = trim(substr($mem_info, 0, strpos($mem_info, " ")));
-				$ati_info = $core_info . "," . $mem_info;
-			}
-	}
-	else if("Current3DFrequencies" == $attribute)
-	{
-			$info = shell_exec("aticonfig --pplib-cmd \"get activity\" 2>&1");
-			if(($pos = strpos($info, "Activity")) > 0)
-			{
-				$core_info = substr($info, strpos($info, "Core Clock:") + 12);
-				$core_info = substr($core_info, 0, strpos($core_info, "\n"));
-				$core_info = trim(substr($core_info, 0, strrpos($core_info, "MHZ")));
-				$mem_info = substr($info, strpos($info, "Memory Clock:") + 14);
-				$mem_info = substr($mem_info, 0, strpos($mem_info, "\n"));
-				$mem_info = trim(substr($mem_info, 0, strrpos($mem_info, "MHZ")));
-				$ati_info = $core_info . "," . $mem_info;
-			}
-	}
-	else if("GPUActivity" == $attribute)
-	{
-		$info = shell_exec("aticonfig --pplib-cmd \"get activity\" 2>&1");
-		if(($pos = strpos($info, "Activity")) > 0)
-		{
-			$activity_info = substr($info, strpos($info, "Activity:") + 9);
-			$activity_info = trim(substr($activity_info, 0, strpos($activity_info, "percent\n")));
-			$ati_info = $activity_info;
-		}
-	}
-
-	return $ati_info;
-}
 function read_ati_overdrive($attribute, $adapter = 0)
 {
 	// Read ATI OverDrive information using aticonfig
@@ -736,6 +680,7 @@ function read_sun_ddu_dmi_info($object)
 
 		$objects = explode(",", $object);
 		$this_section = "";
+
 		if(count($objects) == 2)
 		{
 			$section = $objects[0];
