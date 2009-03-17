@@ -570,11 +570,13 @@ function hw_gpu_enabled_monitors()
 function hw_gpu_screen_width()
 {
 	// Current screen width
-	$resolution = hw_gpu_xrandr_mode();
-	
 	if(IS_MACOSX)
 	{
 		$resolution = hw_gpu_osx_mode();
+	}
+	else
+	{
+		$resolution = hw_gpu_xrandr_mode();
 	}
 	
 	return $resolution[0];
@@ -582,11 +584,13 @@ function hw_gpu_screen_width()
 function hw_gpu_screen_height()
 {
 	// Current screen height
-	$resolution = hw_gpu_xrandr_mode();
-	
 	if(IS_MACOSX)
 	{
 		$resolution = hw_gpu_osx_mode();
+	}
+	else
+	{
+		$resolution = hw_gpu_xrandr_mode();
 	}
 	
 	return $resolution[1];

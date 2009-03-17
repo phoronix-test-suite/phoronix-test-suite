@@ -37,15 +37,7 @@ function read_acpi($point, $match)
 			{
 				$line = explode(": ", $acpi_lines[$i]);
 				$this_attribute = trim($line[0]);
-
-				if(count($line) > 1)
-				{
-					$this_value = trim($line[1]);
-				}
-				else
-				{
-					$this_value = "";
-				}
+				$this_value = (count($line) > 1 ? trim($line[1]) : "");
 
 				if($this_attribute == $match)
 				{
@@ -100,7 +92,7 @@ function read_system_hal($name)
 	// Read system HAL
 	$hal = read_hal($name, "/org/freedesktop/Hal/devices/computer");
 
-	if(empty($hal))
+	if($hal == false)
 	{
 		$hal = read_hal($name);
 	}
@@ -253,15 +245,7 @@ function read_cpuinfo($attribute)
 		{
 			$line = explode(": ", $line);
 			$this_attribute = trim($line[0]);
-
-			if(count($line) > 1)
-			{
-				$this_value = trim($line[1]);
-			}
-			else
-			{
-				$this_value = "";
-			}
+			$this_value = (count($line) > 1 ? trim($line[1]) : "");
 
 			if($this_attribute == $attribute)
 			{
@@ -658,14 +642,7 @@ function read_osx_system_profiler($data_type, $object, $multiple_objects = false
 	$info = trim(shell_exec("system_profiler " . $data_type . " 2>&1"));
 	$lines = explode("\n", $info);
 
-	if($multiple_objects)
-	{
-		$value = array();
-	}
-	else
-	{
-		$value = false;
-	}
+	$value = ($multiple_objects ? array() : false);
 
 	for($i = 0; $i < count($lines) && ($value == false || $multiple_objects); $i++)
 	{

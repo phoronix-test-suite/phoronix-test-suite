@@ -54,14 +54,7 @@ function hw_sys_motherboard_string()
 		$product = read_system_hal(array("system.hardware.product", "system.board.product"));
 		$version = read_system_hal(array("system.hardware.version", "smbios.system.version"));
 
-		if(!empty($vendor))
-		{
-			$info = $vendor;
-		}
-		else
-		{
-			$info = "";
-		}
+		$info = ($vendor != false ? $vendor : "");
 
 		if(empty($product) || empty($product) || (strpos($version, ".") === false && !empty($version)))
 		{
@@ -310,27 +303,13 @@ function hw_sys_hdd_string()
 					}
 				}
 
-				if($times_found > 1)
-				{
-					$disk = $times_found . " x " . $disks_formatted[$i];
-				}
-				else
-				{
-					$disk = $disks_formatted[$i];
-				}
+				$disk = ($times_found > 1 ? $times_found . " x "  : "") . $disks_formatted[$i];
 				array_push($disks, $disk);
 			}
 		}
 	}
 
-	if(count($disks) == 0)
-	{
-		$disks = hw_sys_hdd_total() . "GB";
-	}
-	else
-	{
-		$disks = implode(" + ", $disks);
-	}
+	$disks = (count($disks) == 0 ? hw_sys_hdd_total() . "GB" : implode(" + ", $disks));
 
 	return $disks;
 }
