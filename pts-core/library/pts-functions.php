@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_LIBRARY_PATH", PTS_PATH . "pts-core/functions/");
+define("PTS_LIBRARY_PATH", PTS_PATH . "pts-core/library/");
 
 require(PTS_LIBRARY_PATH . "pts.php");
 require(PTS_LIBRARY_PATH . "pts-interfaces.php");

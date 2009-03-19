@@ -30,7 +30,7 @@ define("PTS_PATH", dirname(realpath(dirname(__FILE__))) . "/");
 // SILENT = Load all normal pts-core files, but don't run client code
 define("PTS_MODE", in_array(($m = getenv("PTS_MODE")), array("CLIENT", "LIB", "SILENT")) ? $m : "CLIENT");
 
-require(PTS_PATH . "pts-core/functions/pts-functions.php");
+require(PTS_PATH . "pts-core/library/pts-functions.php");
 
 if(PTS_MODE != "CLIENT")
 {

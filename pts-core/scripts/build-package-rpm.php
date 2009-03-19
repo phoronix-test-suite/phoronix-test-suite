@@ -26,8 +26,8 @@ if(!is_file("phoronix-test-suite") || !is_dir("pts/") || !is_dir("pts-core/"))
        echo "Example: php5 pts-core/scripts/package-build-rpm.php\n";
        exit(0);
 }
-@require("pts-core/functions/pts.php");
-@require("pts-core/functions/pts-functions_system.php");
+@require("pts-core/library/pts.php");
+@require("pts-core/library/pts-functions_system.php");
 
 if(!defined("PTS_VERSION"))
 {

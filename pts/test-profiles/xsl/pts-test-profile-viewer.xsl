@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 <!--
 
-This XSL file doesn't fully implement the PTS test profile specification as found in pts-core/functions/pts-interfaces.php. 
+This XSL file doesn't fully implement the PTS test profile specification as found in pts-core/library/pts-interfaces.php. 
 Some tags can easily be added, and patches are welcome. Though not all of the specification can be implemented due to the Extends 
 tag with Cascading Test Profiles (CTP) and other tags that require processing by pts-core.
 

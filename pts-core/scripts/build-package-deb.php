@@ -26,7 +26,7 @@ if(!is_file("phoronix-test-suite") || !is_dir("pts/") || !is_dir("pts-core/"))
 	echo "Example: php5 pts/etc/scripts/package-build-deb.php\n";
 	exit(0);
 }
-@require("pts-core/functions/pts.php");
+@require("pts-core/library/pts.php");
 
 if(!defined("PTS_VERSION"))
 {
