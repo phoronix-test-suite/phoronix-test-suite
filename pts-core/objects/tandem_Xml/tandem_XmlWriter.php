@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2004 - 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2004 - 2009, Michael Larabel
 	tandem_XmlReader.php: The XML writing object for the Phoronix Test Suite.
 
 	Additional Notes: A very simple XML writer with a few extras... Does not support attributes on tags, etc.
@@ -128,14 +128,7 @@ class tandem_XmlWriter
 	}
 	function getXSL()
 	{
-		$str = "";
-
-		if($this->xsl_binding != null)
-		{
-			$str = "<?xml-stylesheet type=\"text/xsl\" href=\"" . $this->xsl_binding . "\" ?>\n";
-		}
-
-		return $str;
+		return ($this->xsl_binding != null ? "<?xml-stylesheet type=\"text/xsl\" href=\"" . $this->xsl_binding . "\" ?>\n" : "");
 	}
 	function getJustXML()
 	{
@@ -170,29 +163,16 @@ class tandem_XmlWriter
 	}
 	function getXMLTabs($times_deep)
 	{
-		$format = "";
-
-		if($this->format_xml)
-		{
-			$format = str_repeat("\t", $times_deep);
-		}
-
-		return $format;
+		return ($this->format_xml ? $format = str_repeat("\t", $times_deep) : "");
 	}
 	function getXMLBreaks()
 	{
-		$format = "";
-
-		if($this->format_xml)
-		{
-			$format = "\n";
-		}
-
-		return $format;
+		return ($this->format_xml ? "\n" : "");
 	}
 	function debugDumpArray()
 	{
 		return $this->xml_objects;
 	}
 }
+
 ?>

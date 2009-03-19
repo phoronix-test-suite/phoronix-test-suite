@@ -125,15 +125,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$bound_x1 -= 2;
 		$bound_x2 -= 2;
-
-		if($rotate_text == false)
-		{
-			$rotation = 0;
-		}
-		else
-		{
-			$rotation = 90;
-		}
+		$rotation = ($rotate_text == false ? 0 : 90);
 
 		$text_x = $bound_x2 - $text_width;
 		$text_y = $bound_y1 + round($text_height / 2);

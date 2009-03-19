@@ -46,8 +46,6 @@ class bilde_swf_renderer extends bilde_renderer
 		$attributes["value"] = $file_name;
 		$attributes["src"] = $file_name;
 
-	//	"<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\" id=\"objects\" width=\"" . $width . "\" height=\"" . $height . "\"><param name=\"movie\"><xsl:attribute name=\"value\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></param><embed width=\"" . $width . "\" height=\"" . $height . "\" type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"><xsl:attribute name=\"src\">result-graphs/<xsl:number value=\"position()\" />.swf</xsl:attribute></embed></object>";
-
 		if($is_xsl)
 		{
 			$html = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\" id=\"objects\"><param name=\"movie\">";

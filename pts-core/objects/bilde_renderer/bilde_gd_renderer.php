@@ -108,16 +108,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
 		$text_height = $text_dimensions[1];
-
-		if($rotate_text == false)
-		{
-			$rotation = 0;
-		}
-		else
-		{
-			$rotation = 90;
-		}
-
+		$rotation = ($rotate_text == false ? 0 : 90);
 		$text_x = $bound_x2 - $text_width;
 		$text_y = $bound_y1 + round($text_height / 2);
 
