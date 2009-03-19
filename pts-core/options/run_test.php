@@ -46,7 +46,6 @@ class run_test implements pts_option_interface
 
 		// Cleanup tests to run
 		$to_run_identifiers = pts_cleanup_tests_to_run($to_run_identifiers);
-
 		$unique_test_names = count(array_unique($to_run_identifiers));
 		$test_run_manager = new pts_test_run_manager();
 
@@ -236,7 +235,7 @@ class run_test implements pts_option_interface
 
 					for($i = 0; $i < count($raw_results); $i++)
 					{
-						$results_xml = new tandem_XmlReader($raw_results[$i]);
+						$results_xml = new tandem_XmlReader($raw_results[$i], false);
 						array_push($result_identifiers, $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
 					}
 				}
@@ -258,15 +257,7 @@ class run_test implements pts_option_interface
 						array_push($unique_tests_r, "and " . $last);
 
 						$test_description = "Running ";
-
-						if($unique_test_names == 2)
-						{
-							$test_description .= implode(" ", $unique_tests_r);
-						}
-						else
-						{
-							$test_description .= implode(", ", $unique_tests_r);
-						}
+						$test_description .= implode(($unique_test_names == 2 ? " " : ", "), $unique_tests_r);
 						$test_description .= ".";
 					}
 					if(empty($test_description))

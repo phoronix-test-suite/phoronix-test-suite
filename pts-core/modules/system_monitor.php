@@ -24,9 +24,11 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.4.0";
+	const module_version = "1.5.0";
 	const module_description = "This module contains sensor monitoring support.";
 	const module_author = "Michael Larabel";
+
+	static $to_monitor = array();
 
 	public static function module_info()
 	{
@@ -45,112 +47,39 @@ class system_monitor extends pts_module_interface
 	//
 	// General Functions
 	//
-
 	public static function __pre_option_process($obj = NULL)
 	{
-		$to_show = getenv("MONITOR");
-		
-		$to_show = explode(',', $to_show);
+		$to_show = explode(",", getenv("MONITOR"));
 		$monitor_all = in_array("all", $to_show);
-		$monitor_temp = in_array("all.temp", $to_show) || $monitor_all;
-		$monitor_power = in_array("all.power", $to_show) || $monitor_all;
-		$monitor_voltage = in_array("all.voltage", $to_show) || $monitor_all;
-		$monitor_freq = in_array("all.freq", $to_show) || $monitor_all;
-		$monitor_usage = in_array("all.usage", $to_show) || $monitor_all;
-		$monitor_memory = in_array("all.memory", $to_show) || $monitor_all;
 
-		if(in_array("gpu.temp", $to_show)  || $monitor_temp)
+		foreach(pts_all_sensors() as $pts_sensor)
 		{
-			pts_set_assignment("MONITOR_GPU_TEMP", 1);
-			pts_module::save_file(".s/GPU_TEMPERATURE");
-		}
-		if(in_array("cpu.temp", $to_show)  || $monitor_temp)
-		{	
-			pts_set_assignment("MONITOR_CPU_TEMP", 1);
-			pts_module::save_file(".s/CPU_TEMPERATURE");
-		}
-		if(in_array("hdd.temp", $to_show)  || $monitor_temp)
-		{	
-			pts_set_assignment("MONITOR_HDD_TEMP", 1);
-			pts_module::save_file(".s/HDD_TEMPERATURE");
-		}
-		if(in_array("sys.temp", $to_show)  || $monitor_temp)
-		{	
-			pts_set_assignment("MONITOR_SYS_TEMP", 1);
-			pts_module::save_file(".s/SYS_TEMPERATURE");
-		}
-		if(in_array("battery.power", $to_show) || $monitor_power)
-		{	
-			pts_set_assignment("MONITOR_BATTERY_POWER", 1);
-			pts_module::save_file(".s/BATTERY_POWER");
-		}
-		if(in_array("cpu.voltage", $to_show) || $monitor_voltage)
-		{	
-			pts_set_assignment("MONITOR_CPU_VOLTAGE", 1);
-			pts_module::save_file(".s/CPU_VOLTAGE");
-		}
-		if(in_array("v3.voltage", $to_show) || $monitor_voltage)
-		{
-			pts_set_assignment("MONITOR_V3_VOLTAGE", 1);
-			pts_module::save_file(".s/V3_VOLTAGE");
-		}
-		if(in_array("v5.voltage", $to_show) || $monitor_voltage)
-		{
-			pts_set_assignment("MONITOR_V5_VOLTAGE", 1);
-			pts_module::save_file(".s/V5_VOLTAGE");
-		}
-		if(in_array("v12.voltage", $to_show) || $monitor_voltage)
-		{
-			pts_set_assignment("MONITOR_V12_VOLTAGE", 1);
-			pts_module::save_file(".s/V12_VOLTAGE");
-		}
-		if(in_array("cpu.freq", $to_show) || $monitor_freq)
-		{
-			pts_set_assignment("MONITOR_CPU_FREQ", 1);
-			pts_module::save_file(".s/CPU_FREQ");
-		}
-		if(in_array("gpu.freq", $to_show) || $monitor_freq)
-		{
-			pts_set_assignment("MONITOR_GPU_FREQ", 1);
-			pts_module::save_file(".s/GPU_FREQ");
-		}
-		if(in_array("gpu.usage", $to_show) || $monitor_usage)
-		{
-			pts_set_assignment("MONITOR_GPU_USAGE", 1);
-			pts_module::save_file(".s/GPU_USAGE");
-		}
-		if(in_array("cpu.usage", $to_show) || $monitor_usage)
-		{
-			pts_set_assignment("MONITOR_CPU_USAGE", 1);
-			pts_module::save_file(".s/CPU_USAGE");
-
-			if(($cpu_count = hw_cpu_core_count()) > 1)
+			if($monitor_all || in_array($pts_sensor->get_identifier(), $to_show) || in_array("all." . $pts_sensor->get_sensor_type(), $to_show))
 			{
-				for($i = 0; $i < $cpu_count; $i++)
+				if($pts_sensor->read_sensor() != -1)
 				{
-					pts_module::save_file(".s/CPU_USAGE_" . $i);
+					// Sensor supported
+					array_push(self::$to_monitor, $pts_sensor);
+					pts_module::save_file("logs/" . $pts_sensor->get_identifier());
 				}
 			}
-		}
-		if(in_array("system.memory", $to_show) || $monitor_memory)
-		{
-			pts_set_assignment("MONITOR_SYS_MEMORY", 1);
-			pts_module::save_file(".s/SYS_MEMORY");
-		}
-		if(in_array("swap.memory", $to_show) || $monitor_memory)
-		{
-			pts_set_assignment("MONITOR_SWAP_MEMORY", 1);
-			pts_module::save_file(".s/SWAP_MEMORY");
-		}
-		if(in_array("total.memory", $to_show) || $monitor_memory)
-		{
-			pts_set_assignment("MONITOR_TOTAL_MEMORY", 1);
-			pts_module::save_file(".s/TOTAL_MEMORY");
 		}
 	}
 	public static function __pre_run_process()
 	{
 		pts_module::pts_timed_function(9, "pts_monitor_update");
+	}
+	public static function pts_monitor_update()
+	{
+		foreach(self::$to_monitor as $pts_sensor)
+		{
+			$sensor_value = $pts_sensor->read_sensor();
+
+			if($sensor_value != -1)
+			{
+				pts_module::save_file("logs/" . $pts_sensor->get_identifier(), $sensor_value, true);
+			}
+		}
 	}
 	public static function __post_option_process($obj = NULL)
 	{
@@ -164,238 +93,27 @@ class system_monitor extends pts_module_interface
 		$unit = array();
 		$m_array = array();
 		$type_index = array();
-		$type_index["THERMAL"] = array();
-		$type_index["POWER"] = array();
-		$type_index["VOLTAGE"] = array();
-		$type_index["FREQUENCY"] = array();
-		$type_index["USAGE"] = array();
-		$type_index["MEMORY"] = array();
 
-		if(pts_is_assignment("MONITOR_GPU_TEMP"))
+		foreach(self::$to_monitor as $pts_sensor)
 		{
-			$this_array = self::parse_monitor_log(".s/GPU_TEMPERATURE");
+			$sensor_results = self::parse_monitor_log("logs/" . $pts_sensor->get_identifier());
 
-			if(is_array($this_array) && !empty($this_array[0]))
+			if(count($sensor_results) > 0)
 			{
-				array_push($device, "GPU");
-				array_push($type, "Thermal");
-				array_push($unit, "°C");
-				array_push($m_array, $this_array);
-				array_push($type_index["THERMAL"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_CPU_TEMP"))
-		{
-			$this_array = self::parse_monitor_log(".s/CPU_TEMPERATURE");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "CPU");
-				array_push($type, "Thermal");
-				array_push($unit, "°C");
-				array_push($m_array, $this_array);
-				array_push($type_index["THERMAL"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_HDD_TEMP"))
-		{
-			$this_array = self::parse_monitor_log(".s/HDD_TEMPERATURE");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "HDD");
-				array_push($type, "Thermal");
-				array_push($unit, "°C");
-				array_push($m_array, $this_array);
-				array_push($type_index["THERMAL"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_SYS_TEMP"))
-		{
-			$this_array = self::parse_monitor_log(".s/SYS_TEMPERATURE");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "System");
-				array_push($type, "Thermal");
-				array_push($unit, "°C");
-				array_push($m_array, $this_array);
-				array_push($type_index["THERMAL"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_BATTERY_POWER"))
-		{
-			$this_array = self::parse_monitor_log(".s/BATTERY_POWER");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "Battery");
-				array_push($type, "Power");
-				array_push($unit, "Milliwatts");
-				array_push($m_array, $this_array);
-				array_push($type_index["POWER"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_CPU_VOLTAGE"))
-		{
-			$this_array = self::parse_monitor_log(".s/CPU_VOLTAGE");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "CPU");
-				array_push($type, "Voltage");
-				array_push($unit, "Volts");
-				array_push($m_array, $this_array);
-				array_push($type_index["VOLTAGE"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_V3_VOLTAGE"))
-		{
-			$this_array = self::parse_monitor_log(".s/V3_VOLTAGE");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "+3.33V");
-				array_push($type, "Voltage");
-				array_push($unit, "Volts");
-				array_push($m_array, $this_array);
-				array_push($type_index["VOLTAGE"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_V5_VOLTAGE"))
-		{
-			$this_array = self::parse_monitor_log(".s/V5_VOLTAGE");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "+5.00V");
-				array_push($type, "Voltage");
-				array_push($unit, "Volts");
-				array_push($m_array, $this_array);
-				array_push($type_index["VOLTAGE"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_V12_VOLTAGE"))
-		{
-			$this_array = self::parse_monitor_log(".s/V12_VOLTAGE");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "+12.00V");
-				array_push($type, "Voltage");
-				array_push($unit, "Volts");
-				array_push($m_array, $this_array);
-				array_push($type_index["VOLTAGE"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_CPU_FREQ"))
-		{
-			$this_array = self::parse_monitor_log(".s/CPU_FREQ");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "CPU");
-				array_push($type, "Frequency");
-				array_push($unit, "Megahertz");
-				array_push($m_array, $this_array);
-				array_push($type_index["FREQUENCY"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_GPU_FREQ"))
-		{
-			$this_array = self::parse_monitor_log(".s/GPU_FREQ");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "GPU");
-				array_push($type, "Frequency");
-				array_push($unit, "Megahertz");
-				array_push($m_array, $this_array);
-				array_push($type_index["FREQUENCY"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_GPU_USAGE"))
-		{
-			$this_array = self::parse_monitor_log(".s/GPU_USAGE");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "GPU");
-				array_push($type, "Usage");
-				array_push($unit, "Percent");
-				array_push($m_array, $this_array);
-				array_push($type_index["USAGE"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_CPU_USAGE"))
-		{
-			$this_array = self::parse_monitor_log(".s/CPU_USAGE");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "CPU");
-				array_push($type, "Usage");
-				array_push($unit, "Percent");
-				array_push($m_array, $this_array);
-				array_push($type_index["USAGE"], count($m_array) - 1);
-			}
-
-			for($i = 0; $i < hw_cpu_core_count() && pts_module::is_file(".s/CPU_USAGE_" . $i); $i++)
-			{
-				$this_array = self::parse_monitor_log(".s/CPU_USAGE_" . $i);
-
-				if(is_array($this_array) && !empty($this_array[0]))
+				if(!isset($type_index[$pts_sensor->get_sensor_string()]))
 				{
-					array_push($device, "CPU " . ($i + 1));
-					array_push($type, "Usage");
-					array_push($unit, "Percent");
-					array_push($m_array, $this_array);
-					array_push($type_index["USAGE"], count($m_array) - 1);
+					$type_index[$pts_sensor->get_sensor_string()] = array();
 				}
-			}
-		}
-		if(pts_is_assignment("MONITOR_SYS_MEMORY"))
-		{
-			$this_array = self::parse_monitor_log(".s/SYS_MEMORY");
 
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "Physical");
-				array_push($type, "Memory Usage");
-				array_push($unit, "Megabytes");
-				array_push($m_array, $this_array);
-				array_push($type_index["MEMORY"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_SWAP_MEMORY"))
-		{
-			$this_array = self::parse_monitor_log(".s/SWAP_MEMORY");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "SWAP");
-				array_push($type, "Memory Usage");
-				array_push($unit, "Megabytes");
-				array_push($m_array, $this_array);
-				array_push($type_index["MEMORY"], count($m_array) - 1);
-			}
-		}
-		if(pts_is_assignment("MONITOR_TOTAL_MEMORY"))
-		{
-			$this_array = self::parse_monitor_log(".s/TOTAL_MEMORY");
-
-			if(is_array($this_array) && !empty($this_array[0]))
-			{
-				array_push($device, "Total");
-				array_push($type, "Memory Usage");
-				array_push($unit, "Megabytes");
-				array_push($m_array, $this_array);
-				array_push($type_index["MEMORY"], count($m_array) - 1);
+				array_push($device, $pts_sensor->get_formatted_hardware_type());
+				array_push($type, $pts_sensor->get_sensor_string());
+				array_push($unit, $pts_sensor->get_sensor_unit());
+				array_push($m_array, $sensor_results);
+				array_push($type_index[$pts_sensor->get_sensor_string()], count($m_array) - 1);
 			}
 		}
 
 		$info_report = "";
-
 		if(isset($m_array[0]) && count($m_array[0]) == 1)
 		{
 			$info_report .= "Current Sensor Readings:\n\n";
@@ -504,134 +222,6 @@ class system_monitor extends pts_module_interface
 				pts_display_web_browser($file);
 		}
 	}
-
-	//
-	// Extra Functions
-	//
-
-	public static function pts_monitor_update()
-	{
-		if(pts_is_assignment("MONITOR_GPU_TEMP"))
-		{
-			$temp = hw_gpu_temperature();
-
-			if($temp != -1)
-				pts_module::save_file(".s/GPU_TEMPERATURE", $temp, true);
-		}
-		if(pts_is_assignment("MONITOR_CPU_TEMP"))
-		{
-			$temp = hw_cpu_temperature();
-
-			if($temp != -1)
-				pts_module::save_file(".s/CPU_TEMPERATURE", $temp, true);
-		}
-		if(pts_is_assignment("MONITOR_HDD_TEMP"))
-		{
-			$temp = hw_sys_hdd_temperature();
-
-			if($temp != -1)
-				pts_module::save_file(".s/HDD_TEMPERATURE", $temp, true);
-		}
-		if(pts_is_assignment("MONITOR_SYS_TEMP"))
-		{
-			$temp = hw_sys_temperature();
-
-			if($temp != -1)
-				pts_module::save_file(".s/SYS_TEMPERATURE", $temp, true);
-		}
-		if(pts_is_assignment("MONITOR_BATTERY_POWER"))
-		{
-			$rate = hw_sys_power_consumption_rate();
-
-			if($rate != -1)
-				pts_module::save_file(".s/BATTERY_POWER", $rate, true);
-		}
-		if(pts_is_assignment("MONITOR_CPU_VOLTAGE"))
-		{
-			$voltage = hw_sys_line_voltage("CPU");
-
-			if($voltage != -1)
-				pts_module::save_file(".s/GPU_VOLTAGE", $voltage, true);
-		}
-		if(pts_is_assignment("MONITOR_V3_VOLTAGE"))
-		{
-			$voltage = hw_sys_line_voltage("V3");
-
-			if($voltage != -1)
-				pts_module::save_file(".s/V3_VOLTAGE", $voltage, true);
-		}
-		if(pts_is_assignment("MONITOR_V5_VOLTAGE"))
-		{
-			$voltage = hw_sys_line_voltage("V5");
-
-			if($voltage != -1)
-				pts_module::save_file(".s/V5_VOLTAGE", $voltage, true);
-		}
-		if(pts_is_assignment("MONITOR_V12_VOLTAGE"))
-		{
-			$voltage = hw_sys_line_voltage("V12");
-
-			if($voltage != -1)
-				pts_module::save_file(".s/V12_VOLTAGE", $voltage, true);
-		}
-		if(pts_is_assignment("MONITOR_CPU_FREQ"))
-		{
-			$speed = hw_cpu_current_frequency();
-
-			if($speed > 0)
-				pts_module::save_file(".s/CPU_FREQ", $speed, true);
-		}
-		if(pts_is_assignment("MONITOR_GPU_FREQ"))
-		{
-			$speed = hw_gpu_current_frequency();
-
-			if(!empty($speed[0]))
-				pts_module::save_file(".s/GPU_FREQ", $speed[0], true);
-		}
-		if(pts_is_assignment("MONITOR_GPU_USAGE"))
-		{
-			$usage = hw_gpu_core_usage();
-
-			if($usage != -1)
-				pts_module::save_file(".s/GPU_USAGE", $usage, true);
-		}
-		if(pts_is_assignment("MONITOR_CPU_USAGE"))
-		{
-			$usage = hw_cpu_usage();
-
-			if($usage != -1)
-				pts_module::save_file(".s/CPU_USAGE", $usage, true);
-
-			for($i = 0; $i < hw_cpu_core_count() && pts_module::is_file(".s/CPU_USAGE_" . $i); $i++)
-			{
-				$usage = hw_cpu_usage($i);
-
-				if($usage != -1)
-					pts_module::save_file(".s/CPU_USAGE_" . $i, $usage, true);
-			}
-		}
-		if(pts_is_assignment("MONITOR_SYS_MEMORY"))
-		{
-			$usage = sw_physical_memory_usage();
-
-			if($usage != -1)
-				pts_module::save_file(".s/SYS_MEMORY", $usage, true);
-		}
-		if(pts_is_assignment("MONITOR_SWAP_MEMORY"))
-		{
-			$usage = sw_swap_memory_usage();
-
-			if($usage != -1)
-				pts_module::save_file(".s/SWAP_MEMORY", $usage, true);
-		}
-		if(pts_is_assignment("MONITOR_TOTAL_MEMORY"))
-		{
-			$usage = sw_total_memory_usage();
-
-			if($usage != -1)
-				pts_module::save_file(".s/TOTAL_MEMORY", $usage, true);
-		}
-	}
 	private function parse_monitor_log($log_file)
 	{
 		$log_f = pts_module::read_file($log_file);
@@ -650,7 +240,19 @@ class system_monitor extends pts_module_interface
 	}
 	private function monitor_arguments()
 	{
-		return array("all", "all.temp", "all.power", "all.voltage", "all.freq", "all.usage", "all.memory", "gpu.temp", "cpu.temp", "hdd.temp", "sys.temp", "battery.power", "cpu.voltage", "v3.voltage", "v5.voltage", "v12.voltage", "cpu.freq", "gpu.freq", "gpu.usage", "cpu.usage", "system.memory", "swap.memory", "total.memory");
+		$args = array("all");
+
+		foreach(pts_all_sensors() as $pts_sensor)
+		{
+			if(!in_array("all." . $pts_sensor->get_sensor_type(), $args))
+			{
+				array_push($args, "all." . $pts_sensor->get_sensor_type());
+			}
+
+			array_push($args, $pts_sensor->get_hardware_type() . "." . $pts_sensor->get_sensor_type());
+		}
+
+		return $args;
 	}
 }
 
