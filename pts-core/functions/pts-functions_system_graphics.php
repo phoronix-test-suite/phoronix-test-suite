@@ -626,7 +626,7 @@ function hw_gpu_stock_frequency()
 
 	return array($core_freq, $mem_freq);
 }
-function hw_gpu_current_frequency()
+function hw_gpu_current_frequency($show_memory = true)
 {
 	// Graphics processor real/current frequency
 	$core_freq = 0;
@@ -660,7 +660,7 @@ function hw_gpu_current_frequency()
 		$mem_freq = 0;
 	}
 
-	return array($core_freq, $mem_freq);
+	return ($show_memory ? array($core_freq, $mem_freq) : $core_freq);
 }
 function hw_gpu_string()
 {

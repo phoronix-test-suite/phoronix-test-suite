@@ -94,6 +94,27 @@ function pts_sys_sensors_string($return_string = true)
 
 	return pts_process_string_array($return_string, $sensors);
 }
+function pts_all_sensors()
+{
+	return array(
+	new pts_sensor("temp", "gpu", "hw_gpu_temperature", "°C"),
+	new pts_sensor("temp", "cpu", "hw_cpu_temperature", "°C"),
+	new pts_sensor("temp", "hdd", "hw_sys_hdd_temperature", "°C"),
+	new pts_sensor("temp", "sys", "hw_sys_temperature", "°C", "System"),
+	new pts_sensor("battery", "power", "hw_sys_power_consumption_rate", "Milliwatts"),
+	new pts_sensor("voltage", "cpu", array("hw_sys_line_voltage", "CPU"), "Volts"),
+	new pts_sensor("voltage", "v3", array("hw_sys_line_voltage", "V3"), "Volts", "+3.33V"),
+	new pts_sensor("voltage", "v5", array("hw_sys_line_voltage", "V5"), "Volts", "+5.00V"),
+	new pts_sensor("voltage", "v12", array("hw_sys_line_voltage", "V12"), "Volts", "+12.00V"),
+	new pts_sensor("freq", "cpu", "hw_cpu_current_frequency", "Megahertz"),
+	new pts_sensor("freq", "gpu", array("hw_gpu_current_frequency", true), "Megahertz"),
+	new pts_sensor("usage", "cpu", "hw_cpu_usage", "Percent"),
+	new pts_sensor("usage", "gpu", "hw_gpu_core_usage", "Percent"),
+	new pts_sensor("memory", "system", "sw_physical_memory_usage", "Megabytes"),
+	new pts_sensor("memory", "swap", "sw_swap_memory_usage", "Megabytes"),
+	new pts_sensor("memory", "total", "sw_total_memory_usage", "Megabytes")
+	);
+}
 
 function pts_remove_unsupported_entries($array)
 {
