@@ -21,10 +21,12 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require(PTS_PATH . "pts-core/functions/pts.php");
-require(PTS_PATH . "pts-core/functions/pts-interfaces.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_loading.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_directories.php");
+define("PTS_LIBRARY_PATH", PTS_PATH . "pts-core/functions/");
+
+require(PTS_LIBRARY_PATH . "pts.php");
+require(PTS_LIBRARY_PATH . "pts-interfaces.php");
+require(PTS_LIBRARY_PATH . "pts-functions_loading.php");
+require(PTS_LIBRARY_PATH . "pts-functions_directories.php");
 
 if(PTS_MODE == "CLIENT" || defined("PTS_AUTO_LOAD_OBJECTS"))
 {
@@ -40,21 +42,21 @@ if(PTS_MODE == "LIB")
 }
 
 // Client Work
-require(PTS_PATH . "pts-core/functions/pts-init.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_basic.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_client.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_pcqs.php");
+require(PTS_LIBRARY_PATH . "pts-init.php");
+require(PTS_LIBRARY_PATH . "pts-functions_basic.php");
+require(PTS_LIBRARY_PATH . "pts-functions_client.php");
+require(PTS_LIBRARY_PATH . "pts-functions_pcqs.php");
 
 // Load Main Functions
-require(PTS_PATH . "pts-core/functions/pts-functions_io.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_shell.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_config.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_system.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_global.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_tests.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_types.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_vars.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_modules.php");
-require(PTS_PATH . "pts-core/functions/pts-functions_assignments.php");
+require(PTS_LIBRARY_PATH . "pts-functions_io.php");
+require(PTS_LIBRARY_PATH . "pts-functions_shell.php");
+require(PTS_LIBRARY_PATH . "pts-functions_config.php");
+require(PTS_LIBRARY_PATH . "pts-functions_system.php");
+require(PTS_LIBRARY_PATH . "pts-functions_global.php");
+require(PTS_LIBRARY_PATH . "pts-functions_tests.php");
+require(PTS_LIBRARY_PATH . "pts-functions_types.php");
+require(PTS_LIBRARY_PATH . "pts-functions_vars.php");
+require(PTS_LIBRARY_PATH . "pts-functions_modules.php");
+require(PTS_LIBRARY_PATH . "pts-functions_assignments.php");
 
 ?>

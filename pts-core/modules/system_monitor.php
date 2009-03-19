@@ -47,8 +47,10 @@ class system_monitor extends pts_module_interface
 	//
 	// General Functions
 	//
+
 	public static function __pre_option_process($obj = NULL)
 	{
+		self::$to_monitor = array();
 		$to_show = explode(",", getenv("MONITOR"));
 		$monitor_all = in_array("all", $to_show);
 

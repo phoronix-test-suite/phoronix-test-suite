@@ -21,8 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(PTS_PATH . "pts-core/functions/pts-includes-run_setup.php");
-require_once(PTS_PATH . "pts-core/functions/pts-includes-run_options.php");
+require_once(PTS_LIBRARY_PATH . "pts-includes-run_setup.php");
+require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 
 function pts_cleanup_tests_to_run($to_run_identifiers)
 {
@@ -451,7 +451,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	{
 		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the " . $test_title . " test should be re-installed.");
 		// Auto reinstall
-		//require_once(PTS_PATH . "pts-core/functions/pts-functions-install.php");
+		//require_once(PTS_LIBRARY_PATH . "pts-functions-install.php");
 		//pts_install_test($test_identifier);
 	}
 

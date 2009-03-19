@@ -23,8 +23,8 @@
 
 function pts_load_function_set($title)
 {
-	$includes_file = PTS_PATH . "pts-core/functions/pts-includes-" . $title . ".php";
-	$functions_file = PTS_PATH . "pts-core/functions/pts-functions_" . $title . ".php";
+	$includes_file = PTS_LIBRARY_PATH . "pts-includes-" . $title . ".php";
+	$functions_file = PTS_LIBRARY_PATH . "pts-functions_" . $title . ".php";
 
 	return (is_file($includes_file) && include_once($includes_file)) || (is_file($functions_file) && include_once($functions_file));
 }

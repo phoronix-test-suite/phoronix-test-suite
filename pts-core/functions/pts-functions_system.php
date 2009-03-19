@@ -21,12 +21,12 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(PTS_PATH . "pts-core/functions/pts-functions_system_software.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_system_hardware.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_system_parsing.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_system_cpu.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_system_memory.php");
-require_once(PTS_PATH . "pts-core/functions/pts-functions_system_graphics.php");
+require_once(PTS_LIBRARY_PATH . "pts-functions_system_software.php");
+require_once(PTS_LIBRARY_PATH . "pts-functions_system_hardware.php");
+require_once(PTS_LIBRARY_PATH . "pts-functions_system_parsing.php");
+require_once(PTS_LIBRARY_PATH . "pts-functions_system_cpu.php");
+require_once(PTS_LIBRARY_PATH . "pts-functions_system_memory.php");
+require_once(PTS_LIBRARY_PATH . "pts-functions_system_graphics.php");
 
 function pts_hw_string($return_string = true)
 {
@@ -68,7 +68,7 @@ function pts_sys_sensors_string($return_string = true)
 {
 	$sensors = array();
 
-	// TODO: Come up with a way to not need to statically label the units, including in system_monitor module
+	// TODO: Switch to using pts_sensor infrastructure with pts_all_sensors() function
 
 	$sensors["GPU Temperature"] = hw_gpu_temperature() . " C";
 	$sensors["CPU Temperature"] = hw_cpu_temperature() . " C";
