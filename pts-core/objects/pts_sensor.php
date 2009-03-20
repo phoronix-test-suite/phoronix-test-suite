@@ -40,7 +40,7 @@ class pts_sensor
 		switch($sensor_type)
 		{
 			case "temp":
-				$this->sensor_string = "Thermal";
+				$this->sensor_string = "Temperature";
 				break;
 			case "freq":
 				$this->sensor_string = "Frequency";
@@ -96,7 +96,7 @@ class pts_sensor
 	}
 	public function read_sensor()
 	{
-		if(is_array($this->read_function))
+		if(is_array($this->read_function) && count($this->read_function) == 2)
 		{
 			$value = call_user_func($this->read_function[0], $this->read_function[1]);
 		}

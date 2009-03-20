@@ -140,25 +140,11 @@ function hw_gpu_monitor_layout()
 			}
 			else if($monitor_position_x > 0 && $monitor_position_y == 0)
 			{
-				if($hit_0_0 == false)
-				{
-					array_push($monitor_layout, "LEFT");
-				}
-				else
-				{
-					array_push($monitor_layout, "RIGHT");
-				}
+				array_push($monitor_layout, ($hit_0_0 ? "RIGHT" : "LEFT"));
 			}
 			else if($monitor_position_x == 0 && $monitor_position_y > 0)
 			{
-				if($hit_0_0 == false)
-				{
-					array_push($monitor_layout, "UPPER");
-				}
-				else
-				{
-					array_push($monitor_layout, "LOWER");
-				}
+				array_push($monitor_layout, ($hit_0_0 ? "LOWER" : "UPPER"));
 			}
 		}
 
@@ -696,14 +682,7 @@ function hw_gpu_string()
 
 		if(count($adapters) > 0)
 		{
-			if($video_ram > DEFAULT_VIDEO_RAM_CAPACITY)
-			{
-				$video_ram = " " . $video_ram . "MB";
-			}
-			else
-			{
-				$video_ram = "";
-			}
+			$video_ram = ($video_ram > DEFAULT_VIDEO_RAM_CAPACITY ? " " . $video_ram . "MB" : "");
 
 			if($crossfire_card_count > 1 && $crossfire_card_count <= count($adapters))
 			{
@@ -787,7 +766,6 @@ function hw_gpu_string()
 		{
 			$info = read_sysctl("dev.agp.0.%desc");
 		}
-
 		if(empty($info))
 		{
 			$info = "Unknown";
@@ -801,7 +779,6 @@ function hw_gpu_string()
 	
 	$clean_phrases = array("OpenGL Engine");
 	$info = str_replace($clean_phrases, "", $info);
-	
 	$info = pts_clean_information_string($info);
 	
 	if(IS_MACOSX)

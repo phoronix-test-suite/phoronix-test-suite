@@ -343,28 +343,27 @@ function hw_sys_temperature()
 function hw_sys_line_voltage($type)
 {
 	// Reads the system's line voltages
-	if($type == "CPU")
+
+	switch($type)
 	{
-		$voltage = read_sensors("VCore");
-	}
-	else if($type == "V3")
-	{
-		$voltage = read_sensors(array("V3.3", "+3.3V"));
-	}
-	else if($type == "V5")
-	{
-		$voltage = read_sensors(array("V5", "+5V"));
-	}
-	else if($type == "V12")
-	{
-		$voltage = read_sensors(array("V12", "+12V"));
-	}
-	else
-	{
-		$voltage = "";
+		case "CPU":
+			$voltage = read_sensors("VCore");
+			break;
+		case "V3":
+			$voltage = read_sensors(array("V3.3", "+3.3V"));
+			break;
+		case "V5":
+			$voltage = read_sensors(array("V5", "+5V"));
+			break;
+		case "V12":
+			$voltage = read_sensors(array("V12", "+12V"));
+			break;
+		default:
+			$voltage = null;
+			break;
 	}
 
-	if(empty($voltage))
+	if($voltage == null)
 	{
 		$voltage = -1;
 	}

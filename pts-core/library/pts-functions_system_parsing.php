@@ -102,7 +102,7 @@ function read_system_hal($name)
 function read_sensors($attributes)
 {
 	// Read LM_Sensors
-	$value = "";
+	$value = null;
 	$sensors = shell_exec("sensors 2>&1");
 	$sensors_lines = explode("\n", $sensors);
 	$attributes = pts_to_array($attributes);
@@ -110,7 +110,7 @@ function read_sensors($attributes)
 	for($j = 0; $j < count($attributes) && empty($value); $j++)
 	{
 		$attribute = $attributes[$j];
-		for($i = 0; $i < count($sensors_lines) && empty($value); $i++)
+		for($i = 0; $i < count($sensors_lines) && $value == null; $i++)
 		{
 			$line = explode(": ", $sensors_lines[$i]);
 			$this_attribute = trim($line[0]);

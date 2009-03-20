@@ -72,7 +72,7 @@ function pts_package_vendor_identifier()
 function sw_os_virtualized_mode()
 {
 	// Reports if system is running virtualized
-	$virtualized = "";
+	$virtualized = null;
 	$gpu = hw_gpu_string();
 
 	if(strpos(hw_cpu_string(), "QEMU") !== false)
@@ -88,7 +88,7 @@ function sw_os_virtualized_mode()
 		$virtualized = "VirtualBox";
 	}
 
-	if(!empty($virtualized))
+	if($virtualized != null)
 	{
 		$virtualized = "This system was using " . $virtualized . " virtualization";
 	}
@@ -232,7 +232,6 @@ function sw_os_architecture()
 {
 	// Find out the kernel archiecture
 	$kernel_arch = trim(shell_exec("uname -m 2>&1"));
-
 
 	switch($kernel_arch)
 	{
@@ -382,16 +381,7 @@ function sw_desktop_environment()
 	{
 		// KDE 4.x
 		$desktop_environment = "KDE";
-
-		if($kde4)
-		{
-			$kde_output = trim(shell_exec("kde4-config --version 2>&1"));
-		}
-		else
-		{
-			$kde_output = trim(shell_exec("kde-config --version 2>&1"));
-		}
-
+		$kde_output = trim(shell_exec(($kde4 ? "kde4-config" : "kde-config") . " --version 2>&1"));
 		$kde_lines = explode("\n", $kde_output);
 
 		for($i = 0; $i < count($kde_lines) && empty($desktop_version); $i++)
@@ -416,7 +406,6 @@ function sw_desktop_environment()
 	{
 		// Xfce 4.x
 		$desktop_environment = "Xfce";
-
 		$xfce_output = trim(shell_exec("xfce4-session --version 2>&1"));
 
 		if(($open = strpos($xfce_output, "(")) > 0)
@@ -504,22 +493,8 @@ function sw_xorg_ddx_driver_info()
 function sw_os_graphics_subsystem()
 {
 	// Find graphics subsystem version
-	if(IS_SOLARIS)
-	{
-		$info = shell_exec("X :0 -version 2>&1");
-	}
-	else
-	{
-		$info = shell_exec("X -version 2>&1");
-	}
-
-	$pos = strrpos($info, "Release Date");
-	
-	if($pos == false)
-	{
-		$pos = strrpos($info, "Build Date");
-	}
-	
+	$info = shell_exec("X " . (IS_SOLARIS ? ":0" : "") . " -version 2>&1");
+	$pos = (($p = strrpos($info, "Release Date")) !== false ? $p : strrpos($info, "Build Date"));	
 	$info = trim(substr($info, 0, $pos));
 
 	if($pos === false)
@@ -567,14 +542,14 @@ function sw_os_java_version()
 
 		if(($cut = count($java_version) - 2) > 0)
 		{
-			$v = trim($java_version[$cut]);
+			$v = $java_version[$cut];
 		}
 		else
 		{
-			$v = trim(array_pop($java_version));
+			$v = array_pop($java_version);
 		}
 
-		$java_version = $v;
+		$java_version = trim($v);
 	}
 	else
 	{

@@ -32,14 +32,11 @@ function hw_cpu_core_count()
 
 		if(IS_LINUX)
 		{
-			$processors = read_cpuinfo("processor");
-			$info = count($processors);
+			$processors = count(read_cpuinfo("processor"));
 		}
 		else if(IS_SOLARIS)
 		{
-			$info = trim(shell_exec("psrinfo"));
-			$info = explode("\n", $info);
-			$info = count($info);
+			$info = count(explode("\n", trim(shell_exec("psrinfo"))));
 		}
 		else if(IS_BSD)
 		{
@@ -192,17 +189,8 @@ function hw_cpu_default_frequency($cpu_core = 0)
 	else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
 	{
 		$cpu_speeds = read_cpuinfo("cpu MHz");
-
-		if(count($cpu_speeds) > $cpu_core)
-		{
-			$info = $cpu_speeds[$cpu_core];
-		}
-		else
-		{
-			$info = $cpu_speeds[0];
-		}
-
-		$info = pts_trim_double($info / 1000, 2);
+		$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
+		$info = pts_trim_double($cpu_speeds[$cpu_core] / 1000, 2);
 	}
 	else
 	{
@@ -264,6 +252,7 @@ function hw_cpu_power_savings_enabled()
 			}
 		}
 	}
+
 	return $return_string;
 }
 function hw_cpu_current_frequency($cpu_core = 0)
@@ -278,17 +267,8 @@ function hw_cpu_current_frequency($cpu_core = 0)
 	else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
 	{
 		$cpu_speeds = read_cpuinfo("cpu MHz");
-
-		if(count($cpu_speeds) > $cpu_core)
-		{
-			$info = $cpu_speeds[$cpu_core];
-		}
-		else
-		{
-			$info = $cpu_speeds[0];
-		}
-
-		$info = pts_trim_double(intval($info), 2);
+		$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
+		$info = pts_trim_double(intval($cpu_speeds[$cpu_core]), 2);
 	}
 	else if(IS_SOLARIS)
 	{
@@ -359,14 +339,7 @@ function hw_cpu_usage($core = -1)
 			$end_load[$i] -= $start_load[$i];
 		}
 
-		if(array_sum($end_load) == 0)
-		{
-			$percent = 0;
-		}
-		else
-		{
-			$percent = 100 - (($end_load[(count($end_load) - 1)] * 100) / array_sum($end_load));
-		}
+		$percent = (($sum = array_sum($end_load)) == 0 ? 0 : 100 - (($end_load[(count($end_load) - 1)] * 100) / $sum));
 	}
 	else if(IS_SOLARIS)
 	{
