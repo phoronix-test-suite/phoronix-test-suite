@@ -255,7 +255,7 @@ function sw_os_vendor()
 	// Returns OS vendor
 	$vendor = read_lsb("Distributor ID");
 
-	if(empty($vendor))
+	if($vendor == false)
 	{
 		$vendor = "Unknown";
 	}
@@ -265,8 +265,6 @@ function sw_os_vendor()
 function sw_os_version()
 {
 	// Returns OS version
-	$os_version = read_lsb("Release");
-	
 	if(IS_MACOSX)
 	{
 		$os = read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
@@ -277,6 +275,10 @@ function sw_os_version()
 		$end_pos = strpos($os, " ", $end_pos);
 		
 		$os_version = substr($os, $start_pos + 1, $end_pos - $start_pos);
+	}
+	else
+	{
+		$os_version = read_lsb("Release");
 	}
 
 	if(empty($os_version))

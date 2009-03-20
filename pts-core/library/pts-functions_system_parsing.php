@@ -201,7 +201,7 @@ function read_lsb($desc)
 	static $output = null;
 	$info = false;
 
-	if(empty($output))
+	if($output == null)
 	{
 		$output = shell_exec("lsb_release -a 2>&1");
 	}

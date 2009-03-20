@@ -510,7 +510,7 @@ function hw_gpu_xrandr_mode()
 		}
 		else
 		{
-			$info = array("Unknown", "Unknown");
+			$info = array(-1, -1);
 		}
 	}
 
@@ -529,7 +529,7 @@ function hw_gpu_osx_mode()
 function hw_gpu_current_mode()
 {
 	// Return the current screen resolution
-	if(($width = hw_gpu_screen_width()) != "Unknown" && ($height = hw_gpu_screen_height()) != "Unknown")
+	if(($width = hw_gpu_screen_width()) != -1 && ($height = hw_gpu_screen_height()) != -1)
 	{
 		$resolution = $width . "x" . $height;
 	}
