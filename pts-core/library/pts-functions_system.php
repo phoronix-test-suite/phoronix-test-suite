@@ -68,33 +68,14 @@ function pts_sys_sensors_string($return_string = true)
 {
 	$sensors = array();
 
-	// TODO: Switch to using pts_sensor infrastructure with pts_all_sensors() function
-
-	$sensors["GPU Temperature"] = hw_gpu_temperature() . " C";
-	$sensors["CPU Temperature"] = hw_cpu_temperature() . " C";
-	$sensors["HDD Temperature"] = hw_sys_hdd_temperature() . " C";
-	$sensors["System Temperature"] = hw_sys_temperature() . " C";
-
-	$sensors["CPU Frequency"] = hw_cpu_current_frequency() . " MHz";
-	$sensors["GPU Frequency"] = implode(" / ", hw_gpu_current_frequency()) . " MHz";
-
-	$sensors["CPU Usage"] = hw_cpu_usage() . " %";
-	$sensors["GPU Usage"] = hw_gpu_core_usage() . " %";
-
-	$sensors["Memory Usage"] = sw_physical_memory_usage() . " MB";
-	$sensors["SWAP Usage"] = sw_swap_memory_usage() . " MB";
-
-	$sensors["CPU Voltage"] = hw_sys_line_voltage("CPU") . " V";
-	$sensors["+3.33V Voltage"] = hw_sys_line_voltage("V3") . " V";
-	$sensors["+5.00V Voltage"] = hw_sys_line_voltage("V5") . " V";
-	$sensors["+12.00V Voltage"] = hw_sys_line_voltage("V12") . " V";
-
-	//$sensors["Battery Power Consumption"] = hw_sys_power_consumption_rate();
-	$sensors = pts_remove_unsupported_entries($sensors);
+	foreach(pts_supported_sensors() as $s)
+	{
+		$sensors[$s->get_formatted_hardware_type() . " " . $s->get_sensor_string()] = $s->read_sensor() . " " . $s->get_sensor_unit();
+	}
 
 	return pts_process_string_array($return_string, $sensors);
 }
-function pts_all_sensors()
+function pts_available_sensors()
 {
 	return array(
 	new pts_sensor("temp", "gpu", "hw_gpu_temperature", "°C"),
@@ -107,7 +88,7 @@ function pts_all_sensors()
 	new pts_sensor("voltage", "v5", array("hw_sys_line_voltage", "V5"), "Volts", "+5.00V"),
 	new pts_sensor("voltage", "v12", array("hw_sys_line_voltage", "V12"), "Volts", "+12.00V"),
 	new pts_sensor("freq", "cpu", "hw_cpu_current_frequency", "Megahertz"),
-	new pts_sensor("freq", "gpu", array("hw_gpu_current_frequency", true), "Megahertz"),
+	new pts_sensor("freq", "gpu", array("hw_gpu_current_frequency", false), "Megahertz"),
 	new pts_sensor("usage", "cpu", "hw_cpu_usage", "Percent"),
 	new pts_sensor("usage", "gpu", "hw_gpu_core_usage", "Percent"),
 	new pts_sensor("memory", "system", "sw_physical_memory_usage", "Megabytes"),
@@ -115,7 +96,20 @@ function pts_all_sensors()
 	new pts_sensor("memory", "total", "sw_total_memory_usage", "Megabytes")
 	);
 }
+function pts_supported_sensors()
+{
+	$supported_sensors = array();
 
+	foreach(pts_available_sensors() as $pts_sensor)
+	{
+		if($pts_sensor->read_sensor() != -1)
+		{
+			array_push($supported_sensors, $pts_sensor);
+		}
+	}
+
+	return $supported_sensors;
+}
 function pts_remove_unsupported_entries($array)
 {
 	$clean_elements = array();

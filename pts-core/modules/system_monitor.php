@@ -54,7 +54,7 @@ class system_monitor extends pts_module_interface
 		$to_show = explode(",", getenv("MONITOR"));
 		$monitor_all = in_array("all", $to_show);
 
-		foreach(pts_all_sensors() as $pts_sensor)
+		foreach(pts_available_sensors() as $pts_sensor)
 		{
 			if($monitor_all || in_array($pts_sensor->get_identifier(), $to_show) || in_array("all." . $pts_sensor->get_sensor_type(), $to_show))
 			{
@@ -244,7 +244,7 @@ class system_monitor extends pts_module_interface
 	{
 		$args = array("all");
 
-		foreach(pts_all_sensors() as $pts_sensor)
+		foreach(pts_available_sensors() as $pts_sensor)
 		{
 			if(!in_array("all." . $pts_sensor->get_sensor_type(), $args))
 			{

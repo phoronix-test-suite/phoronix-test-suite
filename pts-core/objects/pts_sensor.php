@@ -98,9 +98,7 @@ class pts_sensor
 	{
 		if(is_array($this->read_function))
 		{
-			$function = array_shift($this->read_function);
-			$arg = array_shift($this->read_function);
-			$value = ($arg == null ? -1 : call_user_func($function, $arg));
+			$value = call_user_func($this->read_function[0], $this->read_function[1]);
 		}
 		else
 		{
