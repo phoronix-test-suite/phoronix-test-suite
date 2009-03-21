@@ -23,36 +23,9 @@
 
 define("DEFAULT_VIDEO_RAM_CAPACITY", 128);
 
-function hw_gpu_frequency()
-{
-	// Report graphics frequency string
-	if(IS_ATI_GRAPHICS)
-	{
-		$freq = hw_gpu_stock_frequency();
-	}
-	else
-	{
-		$freq = hw_gpu_current_frequency();
-	}
-
-	$freq_string = $freq[0] . "/" . $freq[1];
-
-	if($freq_string == "0/0")
-	{
-		$freq_string = "";
-	}
-	else
-	{
-		$freq_string = " (" . $freq_string . "MHz)";
-	}
-
-	return $freq_string;
-}
 function hw_gpu_temperature()
 {
 	// Report graphics processor temperature
-	$temp_c = -1;
-
 	if(IS_NVIDIA_GRAPHICS)
 	{
 		$temp_c = read_nvidia_extension("GPUCoreTemp");
@@ -61,13 +34,12 @@ function hw_gpu_temperature()
 	{
 		$temp_c = read_ati_overdrive("Temperature");
 	}
-
-	if(empty($temp_c) || $temp_c < 0)
+	else
 	{
-		$temp_c = -1;
+		$temp_c = false;
 	}
 
-	return $temp_c;
+	return (is_numeric($temp_c) ? $temp_c : -1);
 }
 function hw_gpu_monitor_count()
 {
@@ -361,7 +333,7 @@ function hw_gpu_set_resolution($width, $height)
 {
 	shell_exec("xrandr -s " . $width . "x" . $height . " 2>&1");
 
-	return hw_gpu_xrandr_mode() == array($width, $height); // Check if video resolution set worked
+	return hw_gpu_screen_resolution() == array($width, $height); // Check if video resolution set worked
 }
 function hw_gpu_set_nvidia_extension($attribute, $value)
 {
@@ -374,7 +346,7 @@ function hw_gpu_set_nvidia_extension($attribute, $value)
 function hw_gpu_set_amd_pcsdb($attribute, $value)
 {
 	// Sets a value for AMD's PCSDB, Persistent Configuration Store Database
-	if(!empty($value) && IS_ATI_GRAPHICS)
+	if(IS_ATI_GRAPHICS && !empty($value))
 	{
 		$DISPLAY = substr(getenv("DISPLAY"), 1, 1);
 		$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
@@ -491,18 +463,14 @@ function hw_gpu_xrandr_mode()
 		$res[0] = substr($res[0], strrpos($res[0], " "));
 		$res[1] = substr($res[1], 0, strpos($res[1], " "));
 
-		if(is_numeric($res[0]) && is_numeric($res[1]))
-		{
-			$info = array();
-			array_push($info, trim($res[0]), trim($res[1]));
-		}
-		else
-		{
-			$info = "";
-		}
+		$info = (is_numeric($res[0]) && is_numeric($res[1]) ? array($res[0], $res[1]) : null);
+	}
+	else
+	{
+		$info = null;
 	}
 
-	if(empty($info))
+	if($info == null)
 	{
 		if(IS_NVIDIA_GRAPHICS && ($nvidia = read_nvidia_extension("FrontendResolution")) != "")
 		{
@@ -548,33 +516,28 @@ function hw_gpu_enabled_monitors()
 
 	return (empty($log_parse) ? false : $log_parse);
 }
+function hw_gpu_screen_resolution()
+{
+	if(IS_MACOSX)
+	{
+		$resolution = hw_gpu_osx_mode();
+	}
+	else
+	{
+		$resolution = hw_gpu_xrandr_mode();
+	}
+
+	return $resolution;
+}
 function hw_gpu_screen_width()
 {
 	// Current screen width
-	if(IS_MACOSX)
-	{
-		$resolution = hw_gpu_osx_mode();
-	}
-	else
-	{
-		$resolution = hw_gpu_xrandr_mode();
-	}
-	
-	return $resolution[0];
+	return array_shift(hw_gpu_screen_resolution());
 }
 function hw_gpu_screen_height()
 {
-	// Current screen height
-	if(IS_MACOSX)
-	{
-		$resolution = hw_gpu_osx_mode();
-	}
-	else
-	{
-		$resolution = hw_gpu_xrandr_mode();
-	}
-	
-	return $resolution[1];
+	// Current screen height	
+	return array_pop(hw_gpu_screen_resolution());
 }
 function hw_gpu_stock_frequency()
 {
@@ -586,7 +549,7 @@ function hw_gpu_stock_frequency()
 	{
 		$nv_freq = read_nvidia_extension("GPUDefault3DClockFreqs");
 
-		$nv_freq = explode(',', $nv_freq);
+		$nv_freq = explode(",", $nv_freq);
 		$core_freq = $nv_freq[0];
 		$mem_freq = $nv_freq[1];
 	}
@@ -622,7 +585,7 @@ function hw_gpu_current_frequency($show_memory = true)
 	{
 		$nv_freq = read_nvidia_extension("GPUCurrentClockFreqs");
 
-		$nv_freq = explode(',', $nv_freq);
+		$nv_freq = explode(",", $nv_freq);
 		$core_freq = $nv_freq[0];
 		$mem_freq = $nv_freq[1];
 	}
@@ -648,7 +611,7 @@ function hw_gpu_current_frequency($show_memory = true)
 
 	return ($show_memory ? array($core_freq, $mem_freq) : $core_freq);
 }
-function hw_gpu_string()
+function hw_gpu_string($append_frequency = false)
 {
 	// Report graphics processor string
 	$info = shell_exec("glxinfo 2>&1 | grep renderer");
@@ -784,6 +747,14 @@ function hw_gpu_string()
 	if(IS_MACOSX)
 	{
 		$info .= " " . $video_ram . "MB";	
+	}
+
+	if($append_frequency)
+	{
+		$freq = (IS_ATI_GRAPHICS ? hw_gpu_stock_frequency() : hw_gpu_current_frequency());
+		$freq_string = $freq[0] . "/" . $freq[1];
+
+		$info .= ($freq_string == "0/0" ? "" : " (" . $freq_string . "MHz)");
 	}
 
 	return $info;

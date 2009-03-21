@@ -38,7 +38,7 @@ function pts_hw_string($return_string = true)
 	$hw["Chipset"] = hw_sys_chipset_string();
 	$hw["System Memory"] = hw_sys_memory_string();
 	$hw["Disk"] = hw_sys_hdd_string();
-	$hw["Graphics"] = hw_gpu_string() . hw_gpu_frequency();
+	$hw["Graphics"] = hw_gpu_string(true);
 	$hw["Monitor"] = hw_gpu_enabled_monitors();
 
 	$hw = pts_remove_unsupported_entries($hw);

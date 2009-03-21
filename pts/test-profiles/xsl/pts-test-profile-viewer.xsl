@@ -6,7 +6,7 @@ This XSL file doesn't fully implement the PTS test profile specification as foun
 Some tags can easily be added, and patches are welcome. Though not all of the specification can be implemented due to the Extends 
 tag with Cascading Test Profiles (CTP) and other tags that require processing by pts-core.
 
- -->
+-->
 <xsl:template match="/">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>

@@ -9,6 +9,7 @@ system product name
 to be filled by o.e.m.
 not applicable
 not specified
+not available
 oem
 00
 none

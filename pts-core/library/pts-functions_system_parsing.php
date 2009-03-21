@@ -260,7 +260,7 @@ function read_nvidia_extension($attribute)
 {
 	// Read NVIDIA's NV Extension
 	$info = shell_exec("nvidia-settings --query " . $attribute . " 2>&1");
-	$nv_info = null;
+	$nv_info = false;
 
 	if(($pos = strpos($info, $attribute)) > 0)
 	{
@@ -419,7 +419,7 @@ function read_ati_overdrive($attribute, $adapter = 0)
 {
 	// Read ATI OverDrive information using aticonfig
 	// OverDrive supported in fglrx 8.52+ drivers
-	$value = -1;
+	$value = false;
 
 	if($attribute == "Temperature")
 	{
