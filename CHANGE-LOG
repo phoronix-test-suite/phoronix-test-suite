@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support SearchMediaForCache on Mac OS X with /Volumes/ mount
 - pts-core: Use the $PATH variable when looking for the downloading application to use in pts_download()
 - pts-core: Add support on Mac OS X for reading enabled monitors with hw_gpu_enabled_monitors()
+- pts: Support build-mysql test profile on platforms besides Linux
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure
 
 Phoronix Test Suite 1.8.0 Beta 1

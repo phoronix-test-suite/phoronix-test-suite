@@ -7,7 +7,6 @@
 		<EnvironmentSize>180.4</EnvironmentSize>
 		<ProjectURL>http://www.mysql.com/</ProjectURL>
 		<Extends>timed-build</Extends>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed MySQL Compilation</Title>

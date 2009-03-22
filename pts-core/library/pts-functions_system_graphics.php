@@ -503,7 +503,7 @@ function hw_gpu_enabled_monitors()
 	if(IS_MACOSX)
 	{
 		$system_profiler = shell_exec("system_profiler SPDisplaysDataType 2>&1");
-		$system_profiler = substr($system_profiler, strpos($system_profiler, "Displays:"));
+		$system_profiler = substr($system_profiler, strrpos($system_profiler, "Displays:"));
 		$system_profiler = substr($system_profiler, strpos($system_profiler, "\n"));
 		$monitor = trim(substr($system_profiler, 0, strpos($system_profiler, ":")));
 	}
