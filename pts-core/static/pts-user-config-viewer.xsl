@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div style="width: 90%; margin: 20px auto 10px; text-align: left;">
-			<p align="center"><img src="test-results/pts-results-viewer/pts-logo.png" /></p>
+			<p align="center"><img src="xsl/pts-logo.png" /></p>
 			<p>The <em>user-config.xml</em> file contains the user configuration options for the Phoronix Test Suite. To edit any option, open <em>user-config.xml</em> within your preferred text editor. For additional information, view the documentation included with the Phoronix Test Suite or visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a>.</p>
 
 			<h1>Installation Options</h1>

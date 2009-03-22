@@ -52,7 +52,7 @@ function pts_user_config_init($new_config_values = null)
 	}
 
 	$config = new tandem_XmlWriter();
-	$config->setXslBinding("pts-user-config-viewer.xsl");
+	$config->setXslBinding("xsl/pts-user-config-viewer.xsl");
 	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User", $read_config));
 	$config->addXmlObject(P_OPTION_GLOBAL_UPLOADKEY, 0, pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "", $read_config));
 
@@ -83,7 +83,17 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObject(P_OPTION_USER_AGREEMENT, 7, (defined("PTS_USER_AGREEMENT_CHECK") ? PTS_USER_AGREEMENT_CHECK : pts_read_user_config(P_OPTION_USER_AGREEMENT, "", $read_config)));
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
-	pts_copy(STATIC_DIR . "pts-user-config-viewer.xsl", PTS_USER_DIR . "pts-user-config-viewer.xsl");
+
+	if(!defined("PTS_END_TIME"))
+	{
+		if(!is_dir(PTS_USER_DIR . "xsl/"))
+		{
+			mkdir(PTS_USER_DIR . "xsl/");
+		}
+
+		pts_copy(STATIC_DIR . "pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
+		pts_copy(MEDIA_DIR . "pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
+	}
 }
 function pts_module_config_init($SetOptions = null)
 {

@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix list-suites so that it will not show suites containing no supported tests
 - pts-core: Use file-locking based system for determining whether another phoronix-test-suite instance is active
 - pts-core: Use file-locking based system for test instances and drop pts_process_register(), pts_process_remove(), pts_process_active()
+- pts-core: Move XSL for user-config.xml into ~/.phoronix-test-suite/xsl/
 - pts-core: Support SearchMediaForCache on Mac OS X with /Volumes/ mount
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure
 
