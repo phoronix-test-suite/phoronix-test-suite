@@ -101,7 +101,12 @@ function pts_download_test_files($identifier)
 
 		if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
 		{
-			foreach(glob("/media/*/download-cache/") as $dir)
+			$download_cache_dirs = array_merge(
+			glob("/media/*/download-cache/"),
+			glob("/Volumes/*/download-cache/")
+			);
+
+			foreach($download_cache_dirs as $dir)
 			{
 				array_push($cache_directories, $dir);
 			}
