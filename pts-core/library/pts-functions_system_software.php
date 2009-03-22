@@ -106,7 +106,7 @@ function sw_os_filesystem()
 	{
 		$fs = trim(shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null"));
 
-		if(is_file("/etc/fstab") && is_readable("/etc/fstab"))
+		if(is_readable("/etc/fstab"))
 		{
 			$fstab = file_get_contents("/etc/fstab");
 

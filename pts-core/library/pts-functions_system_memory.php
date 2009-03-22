@@ -140,15 +140,7 @@ function hw_sys_memory_capacity()
 	{
 		$info = read_osx_system_profiler("SPHardwareDataType", "Memory");
 		$info = explode(" ", $info);
-		
-		if(isset($info[1]) && $info[1] == "GB")
-		{
-			$info = $info[0] * 1024;
-		}
-		else
-		{
-			$info = $info[0];
-		}
+		$info = (isset($info[1]) && $info[1] == "GB" ? $info[0] * 1024 : $info[0]);
 	}
 	else
 	{

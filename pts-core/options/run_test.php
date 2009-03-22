@@ -383,7 +383,7 @@ class run_test implements pts_option_interface
 						echo "\nResults Uploaded To: " . $upload_url . "\n";
 						pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
 						pts_module_process("__event_global_upload", $upload_url);
-						pts_display_web_browser("\"" . $upload_url . "\"", "Do you want to launch Phoronix Global", true);
+						pts_display_web_browser($upload_url, "Do you want to launch Phoronix Global", true);
 					}
 					else
 					{

@@ -4,6 +4,8 @@ Phoronix Test Suite (Git)
 
 - pts-core: Introduce pts_sensor infrastructure
 - pts-core: Define PTS_LIBRARY_PATH, rename pts-core/functions/ to pts-core/library/
+- pts-core: Small code clean-ups and optimizations
+- pts-core: Fix launching of Phoronix Global from run_test option
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure
 
 Phoronix Test Suite 1.8.0 Beta 1

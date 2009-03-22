@@ -24,7 +24,7 @@
 function read_acpi($point, $match)
 {
 	// Read ACPI - Advanced Configuration and Power Interface
-	$value = "";
+	$value = false;
 	$point = pts_to_array($point);
 
 	for($i = 0; $i < count($point) && empty($value); $i++)
@@ -33,11 +33,11 @@ function read_acpi($point, $match)
 		{
 			$acpi_lines = explode("\n", file_get_contents("/proc/acpi" . $point[$i]));
 
-			for($i = 0; $i < count($acpi_lines) && $value == ""; $i++)
+			for($i = 0; $i < count($acpi_lines) && $value == false; $i++)
 			{
 				$line = explode(": ", $acpi_lines[$i]);
 				$this_attribute = trim($line[0]);
-				$this_value = (count($line) > 1 ? trim($line[1]) : "");
+				$this_value = (count($line) > 1 ? trim($line[1]) : null);
 
 				if($this_attribute == $match)
 				{
@@ -102,7 +102,7 @@ function read_system_hal($name)
 function read_sensors($attributes)
 {
 	// Read LM_Sensors
-	$value = null;
+	$value = false;
 	$sensors = shell_exec("sensors 2>&1");
 	$sensors_lines = explode("\n", $sensors);
 	$attributes = pts_to_array($attributes);

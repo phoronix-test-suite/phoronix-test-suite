@@ -323,7 +323,7 @@ function hw_sys_temperature()
 	// Reads the system's temperature
 	$temp_c = read_sensors(array("Sys Temp", "Board Temp"));
 
-	if(empty($temp_c))
+	if($temp_c == false)
 	{
 		$temp_c = read_acpi("/thermal_zone/THM1/temperature", "temperature"); // if it is THM1 that is for the system, in most cases it should be
 
@@ -333,12 +333,7 @@ function hw_sys_temperature()
 		}
 	}
 
-	if(empty($temp_c))
-	{
-		$temp_c = -1;
-	}
-
-	return $temp_c;
+	return ($temp_c == false ? -1 : $temp_c);
 }
 function hw_sys_line_voltage($type)
 {
@@ -363,12 +358,7 @@ function hw_sys_line_voltage($type)
 			break;
 	}
 
-	if($voltage == null)
-	{
-		$voltage = -1;
-	}
-
-	return $voltage;
+	return ($voltage == null ? -1 : $voltage);
 }
 function hw_sys_hdd_temperature($disk = null)
 {
