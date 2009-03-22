@@ -161,7 +161,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 			// Base options off available screen resolutions
 			if(count($option_names) == 1 && count($option_values) == 1)
 			{
-				$available_video_modes = hw_gpu_xrandr_available_modes();
+				$available_video_modes = hw_gpu_available_modes();
 				$format_name = $option_names[0];
 				$format_value = $option_values[0];
 				$option_names = array();

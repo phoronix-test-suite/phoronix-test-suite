@@ -352,15 +352,15 @@ function hw_gpu_set_amd_pcsdb($attribute, $value)
 		$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
 	}
 }
-function hw_gpu_xrandr_available_modes()
+function hw_gpu_available_modes()
 {
 	// XRandR available modes
-	$info = shell_exec("xrandr 2>&1");
-	$xrandr_lines = array_reverse(explode("\n", $info));
 	$available_modes = array();
-
 	$supported_ratios = array(1.60, 1.25, 1.33);
 	$ignore_modes = array(array(832, 624), array(1152, 864), array(1792, 1344), array(1800, 1440), array(1856, 1392), array(2048, 1536));
+
+	$info = shell_exec("xrandr 2>&1");
+	$xrandr_lines = array_reverse(explode("\n", $info));
 
 	foreach($xrandr_lines as $xrandr_mode)
 	{
@@ -398,12 +398,11 @@ function hw_gpu_xrandr_available_modes()
 		array(1400, 1050), array(1680, 1050), array(1600, 1200), array(1920, 1080), array(2560, 1600));
 		$available_modes = array();
 
-		$video_width = hw_gpu_screen_width();
-		$video_height = hw_gpu_screen_height();
+		$current_resolution = hw_gpu_screen_resolution();
 
 		for($i = 0; $i < count($stock_modes); $i++)
 		{
-			if($stock_modes[$i][0] <= $video_width && $stock_modes[$i][1] <= $video_height)
+			if($stock_modes[$i][0] <= $current_resolution[0] && $stock_modes[$i][1] <= $current_resolution[1])
 			{
 				array_push($available_modes, $stock_modes[$i]);
 			}
