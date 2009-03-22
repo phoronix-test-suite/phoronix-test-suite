@@ -32,7 +32,7 @@ function hw_cpu_core_count()
 
 		if(IS_LINUX)
 		{
-			$processors = count(read_cpuinfo("processor"));
+			$info = count(read_cpuinfo("processor"));
 		}
 		else if(IS_SOLARIS)
 		{
