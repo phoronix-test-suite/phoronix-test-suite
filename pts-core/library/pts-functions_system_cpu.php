@@ -47,14 +47,7 @@ function hw_cpu_core_count()
 			$info = read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
 		}
 
-		if(is_int($info) && $info > 0)
-		{
-			$core_count = $info;
-		}
-		else
-		{
-			$core_count = 1;
-		}
+		$core_count = (is_int($info) && $info > 0 ? $info : 1);
 	}
 
 	return $core_count;

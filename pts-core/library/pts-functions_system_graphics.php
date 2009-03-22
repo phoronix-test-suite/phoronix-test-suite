@@ -484,16 +484,6 @@ function hw_gpu_xrandr_mode()
 
 	return $info;
 }
-function hw_gpu_osx_mode()
-{
-	$resolution = array();
-	$info = read_osx_system_profiler("SPDisplaysDataType", "Resolution");
-	$info = explode(" ", $info);
-	$resolution[0] = trim($info[0]);
-	$resolution[1] = trim($info[2]);
-
-	return $resolution;
-}
 function hw_gpu_current_mode()
 {
 	// Return the current screen resolution
@@ -510,17 +500,31 @@ function hw_gpu_current_mode()
 }
 function hw_gpu_enabled_monitors()
 {
-	$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep \"Monitor name\"");
-	$log_parse = substr($log_parse, strpos($log_parse, "Monitor name:") + 14);
-	$log_parse = trim(substr($log_parse, 0, strpos($log_parse, "\n")));
+	if(IS_MACOSX)
+	{
+		$system_profiler = shell_exec("system_profiler SPDisplaysDataType 2>&1");
+		$system_profiler = substr($system_profiler, strpos("Displays:", $system_profiler));
+		$system_profiler = substr($system_profiler, strpos("\n", $system_profiler));
+		$monitor = trim(substr($system_profiler, 0, strpos(":", $system_profiler)));
+	}
+	else
+	{
+		$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep \"Monitor name\"");
+		$log_parse = substr($log_parse, strpos($log_parse, "Monitor name:") + 14);
+		$monitor = trim(substr($log_parse, 0, strpos($log_parse, "\n")));
+	}
 
-	return (empty($log_parse) ? false : $log_parse);
+	return (empty($monitor) ? false : $monitor);
 }
 function hw_gpu_screen_resolution()
 {
 	if(IS_MACOSX)
 	{
-		$resolution = hw_gpu_osx_mode();
+		$resolution = array();
+		$info = read_osx_system_profiler("SPDisplaysDataType", "Resolution");
+		$info = explode(" ", $info);
+		$resolution[0] = trim($info[0]);
+		$resolution[1] = trim($info[2]);
 	}
 	else
 	{
