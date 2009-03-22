@@ -647,7 +647,7 @@ function pts_version_newer($version_a, $version_b)
 }
 function pts_suite_supported($identifier)
 {
-	$tests = pts_contained_tests($identifier, true);
+	$tests = pts_contained_tests($identifier, false, false, true);
 	$supported_size = $original_size = count($tests);
 
 	for($i = 0; $i < $original_size; $i++)
