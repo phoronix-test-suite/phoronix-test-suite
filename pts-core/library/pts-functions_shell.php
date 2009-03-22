@@ -75,20 +75,20 @@ function pts_download($download, $to)
 	{
 		$to_file = basename($download);
 	}
-	else if(is_executable("/usr/bin/curl") || is_executable("/usr/local/bin/curl") || is_executable("/usr/pkg/bin/curl"))
+	else if(($curl = pts_executable_in_path("curl")) != false)
 	{
 		// curl download
-		$download_output = shell_exec("cd " . $to_dir . " && curl -L --fail --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && " . $curl . " -L --fail --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
 	}
-	else if(is_executable("/usr/bin/wget") || is_executable("/usr/local/bin/wget") || is_executable("/usr/pkg/bin/wget"))
+	else if(($wget = pts_executable_in_path("wget")) != false)
 	{
 		// wget download
-		$download_output = shell_exec("cd " . $to_dir . " && wget --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && " . $wget . " --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
 	}
-	else if(IS_BSD && is_executable("/usr/bin/ftp"))
+	else if(IS_BSD && ($ftp = pts_executable_in_path("ftp")) != false)
 	{
 		// NetBSD ftp(1) download; also speaks http, but not https
-		$download_output = shell_exec("cd " . $to_dir . " && ftp -V " . $download . " -o " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && " . $ftp . " -V " . $download . " -o " . $to_file);
 	}
 	else
 	{
@@ -96,6 +96,32 @@ function pts_download($download, $to)
 	}
 
 	return $download_output;
+}
+function pts_executable_in_path($executable)
+{
+	$paths = explode(":", getenv("PATH"));
+	$executable_path = false;
+
+	if(empty($paths) || empty($paths[0]))
+	{
+		// Load a few defaults
+		$paths = array("/usr/bin", "/usr/local/bin");
+	}
+
+	for($i = 0; $i < count($paths) && $executable_path == false; $i++)
+	{
+		if(substr($paths[$i], -1) != "/")
+		{
+			$paths[$i] .= "/";
+		}
+
+		if(is_executable($paths[$i] . $executable))
+		{
+			$executable_path = $paths[$i] . $executable;
+		}
+	}
+
+	return $executable_path;
 }
 function pts_remove($object, $ignore_files = null)
 {

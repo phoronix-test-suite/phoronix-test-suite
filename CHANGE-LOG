@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Use file-locking based system for test instances and drop pts_process_register(), pts_process_remove(), pts_process_active()
 - pts-core: Move XSL for user-config.xml into ~/.phoronix-test-suite/xsl/
 - pts-core: Support SearchMediaForCache on Mac OS X with /Volumes/ mount
+- pts-core: Use the $PATH variable when looking for the downloading application to use in pts_download()
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure
 
 Phoronix Test Suite 1.8.0 Beta 1
