@@ -364,14 +364,14 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 {
 	// Do the actual test running process
 	$pts_test_result = new pts_test_result();
+	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 
-	if(pts_process_active($test_identifier))
+	$test_fp = fopen(($lock_file = $test_directory . "run_lock"), "w");
+	if(!flock($test_fp, LOCK_EX | LOCK_NB))
 	{
-		echo "\nThis test (" . $test_identifier . ") is already running.\n";
+		echo "\nThe " . $test_identifier . " test is already running.\n\n";
 		return $pts_test_result;
 	}
-	pts_process_register($test_identifier);
-	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 
 	$xml_parser = new pts_test_tandem_XmlReader($test_identifier);
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
@@ -489,7 +489,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	for($i = 0; $i < $times_to_run; $i++)
 	{
-		$benchmark_log_file = TEST_ENV_DIR . $test_identifier . "/" . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
+		$benchmark_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
 
 		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
 		"LOG_FILE" => $benchmark_log_file,
@@ -668,10 +668,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	}
 
 	pts_user_message($post_run_message);
-
-	pts_process_remove($test_identifier);
 	pts_module_process("__post_test_run", $pts_test_result);
 	pts_test_refresh_install_xml($test_identifier, ($time_test_end - $time_test_start));
+
+	// Remove lock
+	fclose($test_fp);
+	unlink($lock_file);
 
 	if($result_format == "NO_RESULT")
 	{

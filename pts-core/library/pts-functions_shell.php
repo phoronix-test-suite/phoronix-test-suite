@@ -248,41 +248,6 @@ function pts_process_running_string($process_arr)
 
 	return $p_string;
 }
-function pts_process_register($process)
-{
-	// Register a process as active
-	if(!is_dir(PTS_USER_DIR . ".processes"))
-	{
-		mkdir(PTS_USER_DIR . ".processes");
-	}
-
-	return file_put_contents(PTS_USER_DIR . ".processes/" . $process . ".p", getmypid());
-}
-function pts_process_remove($process)
-{
-	// Remove a process from being active, if present
-	return is_file(PTS_USER_DIR . ".processes/" . $process . ".p") && unlink(PTS_USER_DIR . ".processes/" . $process . ".p");
-}
-function pts_process_active($process)
-{
-	// Register a process as active
-	$active = false;
-	if(is_file(PTS_USER_DIR . ".processes/" . $process . ".p") && !IS_SOLARIS)
-	{
-		$pid = trim(file_get_contents(PTS_USER_DIR . ".processes/" . $process . ".p"));
-		$ps = trim(shell_exec("ps -p $pid 2>&1"));
-
-		if(strpos($ps, "php") > 0)
-		{
-			$active = true;
-		}
-		else
-		{
-			pts_process_remove($process);
-		}
-	}
-	return $active;
-}
 function pts_set_environment_variable($name, $value)
 {
 	// Sets an environmental variable
