@@ -236,6 +236,10 @@ function pts_text_save_buffer($to_add)
 
 	return $return;
 }
+function pts_extract_string($string, $start_string, $end_string)
+{
+
+}
 function pts_debug_message($message = null)
 {
 	static $debug_messages = "";

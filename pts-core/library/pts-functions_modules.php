@@ -285,7 +285,7 @@ function pts_module_process($process, $object_pass = null)
 {
 	// Run a module process on all registered modules
 	pts_debug_message($process);
-	foreach(pts_attached_modules() as $module_index => $module)
+	foreach(pts_attached_modules() as $module)
 	{
 		pts_module_process_task($module, $process, $object_pass);
 	}
@@ -295,15 +295,15 @@ function pts_module_process_task($module, $process, $object_pass = null)
 {
 	pts_module_activity("SET_CURRENT", $module);
 
-	$MODULE_RESPONSE = pts_module_call($module, $process, $object_pass);
+	$module_response = pts_module_call($module, $process, $object_pass);
 
-	if(!empty($MODULE_RESPONSE))
+	if(!empty($module_response))
 	{
-		switch($MODULE_RESPONSE)
+		switch($module_response)
 		{
 			case PTS_MODULE_UNLOAD:
 				// Unload the PTS module
-				pts_module("DETACH", $module_index);
+				pts_module("DETACH", $module);
 				break;
 			case PTS_QUIT:
 				// Stop the Phoronix Test Suite immediately

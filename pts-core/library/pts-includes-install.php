@@ -513,11 +513,7 @@ function pts_test_generate_install_xml($identifier)
 	$test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
 	if(!is_numeric($test_duration))
 	{
-		$test_duration = $this_test_duration;
-	}
-	if(is_numeric($this_test_duration) && $this_test_duration > 0)
-	{
-		$test_duration = ceil((($test_duration * $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN)) + $this_test_duration) / ($xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1));
+		$test_duration = 0;
 	}
 
 	$test_version = pts_test_profile_version($identifier);

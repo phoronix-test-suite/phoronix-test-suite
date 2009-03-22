@@ -217,17 +217,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	}
 	public function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false)
 	{
-		$box_array = imagettfbbox($font_size, 0, $font_type, $string);
-		$box_width = $box_array[4] - $box_array[6];
-
-		if($predefined_string)
-		{
-			$box_array = imagettfbbox($size, 0, $font, "AZ@![]()@|_");
-		}
-
-		$box_height = $box_array[1] - $box_array[7];
-
-		return array($box_width, $box_height);
+		return $this->soft_text_string_dimensions($string, $font_type, $font_size, $predefined_string);
 	}
 
 	// Privates / Protected
