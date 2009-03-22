@@ -173,9 +173,6 @@ function pts_shutdown()
 			echo "\nDebug Message Saved To: " . PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE . "\n";
 		}
 	}
-
-	// Remove process
-	pts_process_remove("phoronix-test-suite");
 }
 function pts_evaluate_script_type($script)
 {

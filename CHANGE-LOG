@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Small code clean-ups and optimizations
 - pts-core: Fix launching of Phoronix Global from run_test option
 - pts-core: Fix list-suites so that it will not show suites containing no supported tests
+- pts-core: Use file-locking based system for determining whether another phoronix-test-suite instance is active
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure
 
 Phoronix Test Suite 1.8.0 Beta 1

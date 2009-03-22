@@ -75,14 +75,13 @@ if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 	}
 }
 
-// Register PTS Process
-if(pts_process_active("phoronix-test-suite"))
+$pts_fp = fopen(($lock_file = PTS_USER_DIR . "run_lock"), "w");
+if(!($remove_lock = flock($pts_fp, LOCK_EX | LOCK_NB)))
 {
 	echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running...\nFor proper results, only run one instance at a time.");
 }
-pts_process_register("phoronix-test-suite");
-register_shutdown_function("pts_shutdown");
 
+register_shutdown_function("pts_shutdown");
 pts_module_startup_init(); // Initialize the PTS module system
 
 // Read passed arguments
@@ -100,6 +99,12 @@ pts_run_option_next($sent_command, $pass_args);
 while(($current_option = pts_run_option_next(false)) != false)
 {
 	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
+}
+
+if($remove_lock)
+{
+	fclose($pts_fp);
+	unlink($lock_file);
 }
 
 ?>
