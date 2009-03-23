@@ -26,6 +26,7 @@ Result Viewing Options:
     remove-result <saved name>: Remove this saved result file
     remove-all-results: Removes all saved results
     merge-results <saved name> <saved name>: Merge multiple sets of results
+    reference-comparison <saved name>: Compare test results to available reference systems
 
 Phoronix Global Options:
     upload-results <saved name>: Upload saved results to Phoronix Global

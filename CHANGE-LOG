@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add ReferenceSystems tag to XML profile specifications for tests and suites
 - pts-core: Generate graphs if they are missing when running show-result on a saved file
 - pts-core: Add support for being able to merge together test result files, but to only merge selected result sets / identifiers
+- pts-core: Add reference-comparison option for comparing test results to available reference test systems on supported tests / suites
 - pts: Support build-mysql test profile on platforms besides Linux
 - bilde_renderer: With GD renderer don't crash when TTF support isn't available, fallback through the soft font renderer
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure

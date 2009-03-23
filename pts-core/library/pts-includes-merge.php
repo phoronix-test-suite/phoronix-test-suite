@@ -34,8 +34,21 @@ function pts_merge_test_results()
 
 	for($merge_pos = 0; $merge_pos < count($files_to_combine); $merge_pos++)
 	{
-		$result_file = $files_to_combine[$merge_pos];
-		$selected_identifiers = null;
+		if(is_object($files_to_combine[$merge_pos]) && $files_to_combine[$merge_pos] instanceOf pts_result_merge_select)
+		{
+			$result_file = $files_to_combine[$merge_pos]->get_result_file();
+			$selected_identifiers = $files_to_combine[$merge_pos]->get_selected_identifiers();
+
+			if($selected_identifiers != null)
+			{
+				$selected_identifiers = pts_to_array($selected_identifiers);
+			}
+		}
+		else
+		{
+			$result_file = $files_to_combine[$merge_pos];
+			$selected_identifiers = null;
+		}
 
 		$this_result_file = new pts_result_file($result_file);
 
