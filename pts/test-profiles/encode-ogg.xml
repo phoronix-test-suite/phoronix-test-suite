@@ -9,6 +9,7 @@
 		<Extends>timed-audio-encode</Extends>
 		<EnvironmentSize>4.3</EnvironmentSize>
 		<UnsupportedPlatforms>BSD</UnsupportedPlatforms>
+		<ReferenceSystems>michael-23806-27331-19382, michael-26214-23683-26718, michael-6528-11252-30949</ReferenceSystems>
 	</TestProfile>
 	<TestInformation>
 		<Title>Ogg Encoding</Title>
