@@ -57,6 +57,7 @@ define("P_TEST_ENVIRONMENTSIZE", "PhoronixTestSuite/TestProfile/EnvironmentSize"
 define("P_TEST_ESTIMATEDTIME", "PhoronixTestSuite/TestProfile/EstimatedLength"); // Estimated length of time it takes the test to complete (in minutes)
 define("P_TEST_PROJECTURL", "PhoronixTestSuite/TestProfile/ProjectURL"); // Estimated length of time it takes the test to complete (in minutes)
 define("P_TEST_SUPPORTS_COREVERSION", "PhoronixTestSuite/TestProfile/RequiresCoreVersion"); // If the test profile is bound to specific versions of the Phoronix Test Suite (pts-core)
+define("P_TEST_REFERENCE_SYSTEMS", "PhoronixTestSuite/TestProfile/ReferenceSystems"); // Phoronix Global IDs of reference systems for the test
 
 define("P_TEST_DEFAULTARGUMENTS", "PhoronixTestSuite/TestSettings/Default/Arguments"); // Default arguments
 define("P_TEST_POSSIBLEPATHS", "PhoronixTestSuite/TestSettings/Default/PossiblePaths"); // Possible paths
@@ -83,6 +84,7 @@ define("P_SUITE_TYPE", "PhoronixTestSuite/SuiteInformation/TestType"); // Suite 
 define("P_SUITE_PRERUNMSG", "PhoronixTestSuite/SuiteInformation/PreRunMessage"); // Pre-run message
 define("P_SUITE_POSTRUNMSG", "PhoronixTestSuite/SuiteInformation/PostRunMessage"); // Post-run message
 define("P_SUITE_RUNMODE", "PhoronixTestSuite/SuiteInformation/RunMode"); // Run-mode (currently, set to PCQS if it's a PCQS suite)
+define("P_SUITE_REFERENCE_SYSTEMS", "PhoronixTestSuite/SuiteInformation/ReferenceSystems"); // Phoronix Global IDs of reference systems for the suite
 
 define("P_SUITE_TEST_NAME", "PhoronixTestSuite/RunTest/Test"); // Names of tests in suite
 define("P_SUITE_TEST_MODE", "PhoronixTestSuite/RunTest/Mode"); // Modes (if available) for the test runs in suite
