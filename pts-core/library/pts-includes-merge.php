@@ -34,7 +34,10 @@ function pts_merge_test_results()
 
 	for($merge_pos = 0; $merge_pos < count($files_to_combine); $merge_pos++)
 	{
-		$this_result_file = new pts_result_file($files_to_combine[$merge_pos]);
+		$result_file = $files_to_combine[$merge_pos];
+		$selected_identifiers = null;
+
+		$this_result_file = new pts_result_file($result_file);
 
 		if($merge_pos == 0)
 		{
@@ -56,20 +59,22 @@ function pts_merge_test_results()
 		$associated_identifiers = $this_result_file->get_system_identifiers();
 
 		// Write the system hardware/software information
-
 		for($i = 0; $i < count($system_hardware); $i++)
 		{
-			$USE_ID = pts_request_new_id();
-			$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $system_hardware[$i]);
-			$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $system_software[$i]);
-			$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $system_author[$i]);
-			$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $system_date[$i]);
-			$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $system_notes[$i]);
-			$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $pts_version[$i]);
-			$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $associated_identifiers[$i]);
+			if($selected_identifiers == null || in_array($associated_identifiers[$i], $selected_identifiers))
+			{
+				$USE_ID = pts_request_new_id();
+				$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $system_hardware[$i]);
+				$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $system_software[$i]);
+				$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $system_author[$i]);
+				$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $system_date[$i]);
+				$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $system_notes[$i]);
+				$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $pts_version[$i]);
+				$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $associated_identifiers[$i]);
+			}
 		}
 
-		$test_result_manager->add_test_result_set($this_result_file->get_result_objects());
+		$test_result_manager->add_test_result_set($this_result_file->get_result_objects(), $selected_identifiers);
 	}
 
 	// Write the actual test results

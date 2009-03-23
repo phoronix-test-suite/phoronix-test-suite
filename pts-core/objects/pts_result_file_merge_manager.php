@@ -28,14 +28,14 @@ class pts_result_file_merge_manager
 	{
 		$this->test_results = array();
 	}
-	public function add_test_result_set($merge_test_objects_array)
+	public function add_test_result_set($merge_test_objects_array, $select_identifiers = null)
 	{
 		foreach($merge_test_objects_array as $merge_test_object)
 		{
-			$this->add_test_result($merge_test_object);
+			$this->add_test_result($merge_test_object, $select_identifiers);
 		}
 	}
-	public function add_test_result($merge_test_object)
+	public function add_test_result($merge_test_object, $select_identifiers = null)
 	{
 		/*
 		if(empty($merge_test_object->get_identifiers()) || is_array($merge_test_object->get_identifiers()) && count($merge_test_object->get_identifiers()) == 0)
@@ -44,22 +44,28 @@ class pts_result_file_merge_manager
 		}
 		*/
 
+		if($select_identifiers != null)
+		{
+			$select_identifiers = pts_to_array($select_identifiers);
+		}
+
 		$merged = false;
 		for($i = 0; $i < count($this->test_results) && !$merged; $i++)
 		{
 			if($this->test_results[$i]->get_test_name() == $merge_test_object->get_test_name() && $this->test_results[$i]->get_arguments() == $merge_test_object->get_arguments() && $this->test_results[$i]->get_attributes() == $merge_test_object->get_attributes() && $this->test_results[$i]->get_version() == $merge_test_object->get_version())
 			{
-				foreach($merge_test_object->get_identifiers() as $identifier)
+				$identifiers = $merge_test_object->get_identifiers();
+				$values = $merge_test_object->get_values();
+				$raw_values = $merge_test_object->get_raw_values();
+
+				for($j = 0; $j < count($identifiers); $j++)
 				{
-					$this->test_results[$i]->add_identifier($identifier);
-				}
-				foreach($merge_test_object->get_values() as $value)
-				{
-					$this->test_results[$i]->add_value($value);
-				}
-				foreach($merge_test_object->get_raw_values() as $raw_value)
-				{
-					$this->test_results[$i]->add_raw_value($raw_value);
+					if($select_identifiers == null || in_array($identifiers[$j], $select_identifiers))
+					{
+						$this->test_results[$i]->add_identifier($identifiers[$j]);
+						$this->test_results[$i]->add_value($values[$j]);
+						$this->test_results[$i]->add_raw_value($raw_values[$j]);
+					}
 				}
 
 				$merged = true;
