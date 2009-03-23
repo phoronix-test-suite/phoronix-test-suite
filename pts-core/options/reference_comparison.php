@@ -36,42 +36,32 @@ class reference_comparison implements pts_option_interface
 			return false;
 		}
 
-		$xml_parser = new pts_results_tandem_XmlReader($result);
-		$result_test = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+		$reference_test_globals = pts_result_file_reference_tests($result);
 
-		if(pts_is_suite($result_test))
+		if(count($reference_test_globals) == 0)
 		{
-			echo "\nReference comparisons for suites are currently disabled.\n";
+			echo "\nNo reference tests are available.\n\n";
 			return false;
-
-			$xml_parser = new pts_suite_tandem_XmlReader($result_test);
-			$reference_systems_xml = $xml_parser->getXMLValue(P_SUITE_REFERENCE_SYSTEMS);
 		}
-		else if(pts_is_test($result_test))
+
+		$merge_args = array($r[0]);
+		if(pts_is_assignment("AUTOMATED_MODE"))
 		{
-			$xml_parser = new pts_test_tandem_XmlReader($result_test);
-			$reference_systems_xml = $xml_parser->getXMLValue(P_TEST_REFERENCE_SYSTEMS);
+			$reference_comparisons = pts_read_assignment("REFERENCE_COMPARISONS");
+
+			foreach($reference_comparisons as $comparison)
+			{
+				array_push($merge_args, $comparison);
+			}
 		}
 		else
 		{
-			echo "\n" . $result_test . " in " . $result . " could not be determined.\n";
-			return false;
-		}
+			echo pts_string_header("Reference Comparison");
+			$reference_systems = array();
+			$reference_count = 1;
 
-		$reference_systems = array();
-		$reference_count = 1;
-
-		echo pts_string_header("Reference Comparison");
-
-		foreach(array_map("trim", explode(",", $reference_systems_xml)) as $global_id)
-		{
-			if(pts_is_global_id($global_id))
+			foreach($reference_test_globals as $global_id)
 			{
-				if(!pts_is_test_result($global_id))
-				{
-					pts_clone_from_global($global_id, false);
-				}
-
 				$xml_parser = new pts_results_tandem_XmlReader($global_id);
 				$ref_identifiers = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
 				$ref_hardware = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);
@@ -86,23 +76,19 @@ class reference_comparison implements pts_option_interface
 					$reference_count++;
 				}
 			}
+
+			do
+			{
+				echo "\nSelect a reference system to compare to: ";
+				$request_identifier = trim(fgets(STDIN));
+			}
+			while(!isset($reference_systems[$request_identifier]));
+			array_push($merge_args, $reference_systems[$request_identifier]);
 		}
 
-		if(count($reference_systems) == 0)
-		{
-			echo "\nNo reference systems found.\n\n";
-			return false;
-		}
-
-		do
-		{
-			echo "\nSelect a reference system to compare to: ";
-			$request_identifier = trim(fgets(STDIN));
-		}
-		while(!isset($reference_systems[$request_identifier]));
-
-		$merged_results = pts_merge_test_results($r[0], $reference_systems[$request_identifier]);
+		$merged_results = call_user_func_array("pts_merge_test_results", $merge_args);
 		pts_save_result($r[0] . "/composite.xml", $merged_results);
+		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $r[0]);
 		pts_display_web_browser(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
 	}
 }

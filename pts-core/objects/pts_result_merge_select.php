@@ -38,6 +38,10 @@ class pts_result_merge_select
 	{
 		return $this->selected_identifiers;
 	}
+	public function __toString()
+	{
+		return $this->get_result_file() . ":" . $this->get_selected_identifiers();
+	}
 }
 
 ?>

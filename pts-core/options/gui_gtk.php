@@ -226,7 +226,27 @@ class gui_gtk implements pts_option_interface
 				$pdf_label->set_size_request(260, -1);
 				array_push($main_frame_objects, $pdf_label);
 			}
-			array_push($main_frame_objects, null);
+			if(!empty($i) && pts_read_assignment("PREV_COMMAND") != "reference_comparison")
+			{
+				$reference_tests = pts_result_file_reference_tests($i);
+				if(count($reference_tests) > 0)
+				{
+					$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($reference_tests, $i);
+
+					foreach($objs as $obj)
+					{
+						array_push($main_frame_objects, $obj);
+					}
+				}
+				else
+				{
+					array_push($main_frame_objects, null);
+				}
+			}
+			else
+			{
+				array_push($main_frame_objects, null);
+			}
 		}
 		else
 		{
@@ -370,14 +390,27 @@ class gui_gtk implements pts_option_interface
 			$info_r["Test"] = $result_file->get_suite();
 			$info_r["null2"] = null;
 
-			if(count($result_file->get_identifiers()) > 1)
+			$reference_tests = pts_result_file_reference_tests($identifier);
+			if(count($reference_tests) > 0)
 			{
-				array_push($append_elements, new pts_gtk_text_area($result_file->identifiers_string(), -1, -1, true));
+				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($reference_tests, $identifier);
+
+				foreach($objs as $obj)
+				{
+					array_push($append_elements, $obj);
+				}
 			}
-			if(count($result_file->get_unique_tests()) > 1)
+			else
 			{
-				//array_push($append_elements, null);
-				array_push($append_elements, new pts_gtk_text_area($result_file->unique_tests_string(), -1, -1, true));
+				if(count($result_file->get_identifiers()) > 1)
+				{
+					array_push($append_elements, new pts_gtk_text_area($result_file->identifiers_string(), -1, -1, true));
+				}
+				if(count($result_file->get_unique_tests()) > 1)
+				{
+					//array_push($append_elements, null);
+					array_push($append_elements, new pts_gtk_text_area($result_file->unique_tests_string(), -1, -1, true));
+				}
 			}
 		}
 		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "TEST")
@@ -426,7 +459,7 @@ class gui_gtk implements pts_option_interface
 		{
 			$label_head = new GtkLabel(($show == null ? null : $head . ": "));
 			$label_head->set_alignment(0, 0);
-			//$label_head->set_padding(0, 0);
+			$label_head->set_padding(0, 0);
 			array_push($titles, $label_head);
 
 			$label_show = new GtkLabel($show);
@@ -446,6 +479,84 @@ class gui_gtk implements pts_option_interface
 
 		gui_gtk::update_run_button();
 		gui_gtk::redraw_main_window();
+	}
+	public static function pts_gtk_reference_system_comparison_objects($reference_tests, $comparison_identifier)
+	{
+		// TODO: cleanup this function
+		$append_elements = array();
+		pts_set_assignment("REFERENCE_COMPARISONS_IDENTIFIER", $comparison_identifier);
+		array_push($append_elements, new GtkLabel("Reference Systems"));
+		$compare_results = new pts_gtk_button("Compare Results", array("gui_gtk", "compare_reference_systems"), null);
+		$compare_results->set_sensitive(false);
+
+		foreach($reference_tests as $global_id)
+		{
+			$xml_parser = new pts_results_tandem_XmlReader($global_id);
+			$ref_identifiers = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
+
+			for($i = 0; $i < count($ref_identifiers); $i++)
+			{
+				$ref_check_button = new GtkCheckButton($ref_identifiers[$i]);
+				$ref_check_merge = new pts_result_merge_select($global_id, $ref_identifiers[$i]);
+
+				$ref_check_button->set_active(false);
+				$ref_check_button->connect("toggled", array("gui_gtk", "toggle_reference_systems"), $ref_check_merge, $compare_results);
+
+				array_push($append_elements, $ref_check_button);
+			}
+		}
+		array_push($append_elements, $compare_results);
+
+		return $append_elements;
+	}
+	public static function compare_reference_systems()
+	{
+		$reference_comparisons = pts_read_assignment("REFERENCE_COMPARISONS");
+		$identifier = pts_read_assignment("REFERENCE_COMPARISONS_IDENTIFIER");
+
+		if(empty($reference_comparisons))
+		{
+			return false;
+		}
+
+		$pass_args = array("AUTOMATED_MODE" => true, "REFERENCE_COMPARISONS" => $reference_comparisons);
+		pts_run_option_next("reference_comparison", $identifier, $pass_args);
+		pts_run_option_next("gui_gtk");
+
+		$window = pts_read_assignment("GTK_OBJ_WINDOW");
+
+		if($window instanceOf GtkWindow)
+		{
+			$window->destroy();
+		}
+	}
+	public static function toggle_reference_systems($checkbutton, $merge_object, $compare_button)
+	{
+		$reference_comparisons = pts_read_assignment("REFERENCE_COMPARISONS");
+
+		if(empty($reference_comparisons))
+		{
+			$reference_comparisons = array();
+		}
+
+		if($checkbutton->get_active())
+		{
+			if(!in_array($merge_object, $reference_comparisons))
+			{
+				array_push($reference_comparisons, $merge_object);
+			}
+		}
+		else if(count($reference_comparisons) > 0)
+		{
+			if(($key = array_search($merge_object, $reference_comparisons)) !== false)
+			{
+				unset($reference_comparisons[$key]);
+			}
+
+		}
+
+		$compare_button->set_sensitive((count($reference_comparisons) > 0));
+		pts_set_assignment("REFERENCE_COMPARISONS", $reference_comparisons);
 	}
 	public static function update_main_notebook()
 	{

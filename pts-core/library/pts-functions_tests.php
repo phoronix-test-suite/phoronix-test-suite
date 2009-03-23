@@ -887,5 +887,40 @@ function pts_objects_test_downloads($test_identifier)
 
 	return $obj_r;
 }
+function pts_result_file_reference_tests($result)
+{
+	$xml_parser = new pts_results_tandem_XmlReader($result);
+	$result_test = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+	$reference_tests = array();
+
+	if(pts_is_suite($result_test))
+	{
+		$xml_parser = new pts_suite_tandem_XmlReader($result_test);
+		$reference_systems_xml = $xml_parser->getXMLValue(P_SUITE_REFERENCE_SYSTEMS);
+	}
+	else if(pts_is_test($result_test))
+	{
+		$xml_parser = new pts_test_tandem_XmlReader($result_test);
+		$reference_systems_xml = $xml_parser->getXMLValue(P_TEST_REFERENCE_SYSTEMS);
+	}
+	else
+	{
+		$reference_systems_xml = null;
+	}
+
+	foreach(array_map("trim", explode(",", $reference_systems_xml)) as $global_id)
+	{
+		if(pts_is_global_id($global_id))
+		{
+			if(!pts_is_test_result($global_id))
+			{
+				pts_clone_from_global($global_id, false);
+			}
+			array_push($reference_tests, $global_id);
+		}
+	}
+
+	return $reference_tests;
+}
 
 ?>
