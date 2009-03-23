@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_save_result($save_to = null, $save_results = null)
+function pts_save_result($save_to = null, $save_results = null, $render_graphs = true)
 {
 	// Saves PTS result file
 	if(strpos($save_to, ".xml") === false)
@@ -57,7 +57,7 @@ function pts_save_result($save_to = null, $save_results = null)
 	{
 		$save_name = basename($save_to, ".xml");
 
-		if($save_name == "composite")
+		if($save_name == "composite" && $render_graphs)
 		{
 			pts_generate_graphs($save_results, $save_to_dir);
 		}

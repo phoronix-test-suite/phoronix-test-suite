@@ -31,9 +31,9 @@ function pts_global_download_xml($global_id)
 	// Download a saved test result from Phoronix Global
 	return @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $global_id);
 }
-function pts_clone_from_global($global_id)
+function pts_clone_from_global($global_id, $render_graphs = true)
 {
-	return pts_save_result($global_id . "/composite.xml", pts_global_download_xml($global_id));
+	return pts_save_result($global_id . "/composite.xml", pts_global_download_xml($global_id), $render_graphs);
 }
 function pts_global_public_url($global_id)
 {

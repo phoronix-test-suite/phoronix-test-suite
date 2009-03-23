@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,6 +26,11 @@ class show_result implements pts_option_interface
 	{
 		if(($URL = pts_find_result_file($r[0])) != false)
 		{
+			if(!is_dir(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/"))
+			{
+				pts_generate_graphs(file_get_contents($URL), SAVE_RESULTS_DIR . $r[0] . "/");
+			}
+
 			pts_run_shell_script(PTS_CORE_PATH . "scripts/launch-browser.sh", $URL);
 		}
 		else
