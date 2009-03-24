@@ -120,7 +120,7 @@ class gui_gtk implements pts_option_interface
 		$refresh_graphs = new pts_gtk_menu_item("Regenerate Graphs", array("gui_gtk", "refresh_graphs"));
 		$refresh_graphs->attach_to_pts_assignment("GTK_OBJ_REFRESH_GRAPHS");
 
-		$build_suite = new pts_gtk_menu_item("Build Suite", array("gui_gtk", ""));
+		$build_suite = new pts_gtk_menu_item("Build Suite", array("gui_gtk", ""), "STRING", Gtk::STOCK_NEW);
 		$build_suite->attach_to_pts_assignment("GTK_OBJ_BUILD_SUITE");
 
 		$merge_results = new pts_gtk_menu_item("Merge Results", array("gui_gtk", ""));
@@ -552,7 +552,6 @@ class gui_gtk implements pts_option_interface
 			{
 				unset($reference_comparisons[$key]);
 			}
-
 		}
 
 		$compare_button->set_sensitive((count($reference_comparisons) > 0));
@@ -808,16 +807,7 @@ class gui_gtk implements pts_option_interface
 							{
 
 								$combobox = new GtkComboBox();
-
-								if(defined("GObject::TYPE_STRING"))
-								{
-									$model = new GtkListStore(GObject::TYPE_STRING);
-								}
-								else
-								{
-									$model = new GtkListStore(Gtk::TYPE_STRING);
-								}
-
+								$model = new GtkListStore((defined("GObject::TYPE_STRING") ? GObject::TYPE_STRING : Gtk::TYPE_STRING));
 								$combobox->set_model($model);
 								$cell_renderer = new GtkCellRendererText();
 								$combobox->pack_start($cell_renderer);
@@ -1353,7 +1343,6 @@ class gui_gtk implements pts_option_interface
 			{
 				$entry[$i] = new GtkEntry();
 				$entry[$i]->set_text($current_value);
-
 				$preference_objects[$preference] = $entry[$i];
 			}
 
@@ -1374,7 +1363,6 @@ class gui_gtk implements pts_option_interface
 		$continue_button = new pts_gtk_button("Save", array("gui_gtk", "preferences_button_clicked"), "save", -1, -1, Gtk::STOCK_APPLY);
 
 		pts_gtk_array_to_boxes($window, array($notebook, array($return_button, $continue_button)), 2);
-
 		pts_set_assignment("GTK_OBJ_PREFERENCES_WINDOW", $window);
 
 		$window->show_all();

@@ -19,7 +19,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add reference-comparison option for comparing test results to available reference test systems on supported tests / suites
 - pts-core: Add support to the GTK2 GUI for performing reference comparisons on test results and recently run tests
 - pts: Support build-mysql test profile on platforms besides Linux
-- bilde_renderer: With GD renderer don't crash when TTF support isn't available, fallback through the soft font renderer
+- bilde_renderer: With GD renderer don't crash when TTF support isn't available, fall back to the soft font renderer
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure
 
 Phoronix Test Suite 1.8.0 Beta 1
