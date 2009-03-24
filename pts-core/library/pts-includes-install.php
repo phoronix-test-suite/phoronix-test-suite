@@ -158,7 +158,7 @@ function pts_download_test_files($identifier)
 							}
 							else
 							{
-								pts_move_file($package_filename . ".temp", $package_filename, $download_location);
+								pts_move($package_filename . ".temp", $package_filename, $download_location);
 								$urls = array();
 							}
 							$cache_search = false;
@@ -279,7 +279,7 @@ function pts_download_test_files($identifier)
 						{
 							if(is_file($download_destination . ".temp"))
 							{
-								pts_move_file($package_filename . ".temp", $package_filename, $download_location);
+								pts_move($package_filename . ".temp", $package_filename, $download_location);
 							}
 							$file_downloaded = true;
 							$fail_count = 0;
