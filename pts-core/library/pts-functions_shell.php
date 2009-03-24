@@ -174,7 +174,7 @@ function pts_move_file($from, $to, $change_directory = "")
 {
 	return shell_exec("cd " . $change_directory . " && mv " . $from . " " . $to . " 2>&1");
 }
-function pts_extract_file($file, $remove_afterwards = false)
+function pts_extract($file)
 {
 	$file_name = basename($file);
 	$file_path = dirname($file);
@@ -190,9 +190,6 @@ function pts_extract_file($file, $remove_afterwards = false)
 		case "tar.bz2":
 			$extract_cmd = "tar -jxf";
 			break;
-		case "tar.bz2":
-			$extract_cmd = "tar -jxf";
-			break;
 		case "zip":
 			$extract_cmd = "zip -O";
 			break;
@@ -202,11 +199,33 @@ function pts_extract_file($file, $remove_afterwards = false)
 	}
 
 	shell_exec("cd " . $file_path . " && " . $extract_cmd . " " . $file_name . " 2>&1");
+}
+function pts_compress($to_compress, $compress_to)
+{
+	$compress_to_file = basename($compress_to);
+	$compress_base_dir = dirname($to_compress);
+	$compress_base_name = basename($to_compress);
 
-	if($remove_afterwards == true)
+	switch(substr($compress_to_file, strpos($compress_to_file, ".") + 1))
 	{
-		pts_remove($file);
+		case "tar":
+			$extract_cmd = "tar -cf " . $compress_to . " " . $compress_base_name;
+			break;
+		case "tar.gz":
+			$extract_cmd = "tar -czf " . $compress_to . " " . $compress_base_name;
+			break;
+		case "tar.bz2":
+			$extract_cmd = "tar -cjf " . $compress_to . " " . $compress_base_name;
+			break;
+		case "zip":
+			$extract_cmd = "zip -r " . $compress_to . " " . $compress_base_name;
+			break;
+		default:
+			$extract_cmd = "";
+			break;
 	}
+
+	shell_exec("cd " . $compress_base_dir . " && " . $extract_cmd . " 2>&1");
 }
 function pts_run_shell_script($file, $arguments = "")
 {

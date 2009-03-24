@@ -922,5 +922,17 @@ function pts_result_file_reference_tests($result)
 
 	return $reference_tests;
 }
+function pts_archive_result_directory($identifier, $save_to = null)
+{
+	if($save_to == null)
+	{
+		$save_to = SAVE_RESULTS_DIR . $identifier . ".zip";
+	}
+
+	if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
+	{
+		pts_compress(SAVE_RESULTS_DIR . $identifier . "/", $save_to);
+	}
+}
 
 ?>

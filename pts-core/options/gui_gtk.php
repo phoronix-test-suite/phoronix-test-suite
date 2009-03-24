@@ -133,15 +133,18 @@ class gui_gtk implements pts_option_interface
 			array_push($file_menu, new pts_gtk_menu_item("Install PCQS", array("gui_gtk", "show_pcqs_install_interface")));
 		}
 
-
 		$generate_pdf = new pts_gtk_menu_item("Save PDF", array("gui_gtk", "show_generate_pdf_interface"));
 		$generate_pdf->attach_to_pts_assignment("GTK_OBJ_GENERATE_PDF");
+
+		$generate_archive = new pts_gtk_menu_item("Archive Results", array("gui_gtk", "show_generate_archive_interface"));
+		$generate_archive->attach_to_pts_assignment("GTK_OBJ_GENERATE_ARCHIVE");
 
 		$global_upload = new pts_gtk_menu_item("_Upload To Phoronix Global", array("gui_gtk", "upload_results_to_global"));
 		$global_upload->attach_to_pts_assignment("GTK_OBJ_GLOBAL_UPLOAD");
 
 		array_push($file_menu, new pts_gtk_menu_item("Phoronix Global", array("gui_gtk", "show_phoronix_global_interface")));
 		array_push($file_menu, $generate_pdf);
+		array_push($file_menu, $generate_archive);
 		array_push($file_menu, $global_upload);
 		array_push($file_menu, null);
 		array_push($file_menu, new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT));
@@ -447,6 +450,7 @@ class gui_gtk implements pts_option_interface
 			array_push($append_elements, $textview_description);
 		}
 
+		pts_gtk_object_set_sensitive("GTK_OBJ_GENERATE_ARCHIVE", $test_menu_items_sensitive);
 		pts_gtk_object_set_sensitive("GTK_OBJ_GENERATE_PDF", $test_menu_items_sensitive);
 		pts_gtk_object_set_sensitive("GTK_OBJ_REFRESH_GRAPHS", $test_menu_items_sensitive);
 		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", $test_menu_items_sensitive);
@@ -1481,6 +1485,19 @@ class gui_gtk implements pts_option_interface
 			$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
 			pts_run_option_next("result_file_to_pdf", $identifier, array("SAVE_TO" => $save_file));
 			pts_run_option_next("gui_gtk");
+		}
+		$dialog->destroy();
+	}
+	public static function show_generate_archive_interface()
+	{
+		$dialog = new GtkFileChooserDialog("Archive Results", null, Gtk::FILE_CHOOSER_ACTION_SAVE, array(Gtk::STOCK_OK, Gtk::RESPONSE_OK), null);
+		$dialog->show_all();
+
+		if($dialog->run() == Gtk::RESPONSE_OK)
+		{
+			$save_file = $dialog->get_filename();
+			$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+			pts_archive_result_directory($identifier, $save_file);
 		}
 		$dialog->destroy();
 	}
