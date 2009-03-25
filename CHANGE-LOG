@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - pts: Support build-mysql test profile on platforms besides Linux
 - pts: Upgrade build-apache test profile to Apache 2.2.11
 - pts: Upgrade build-imagemagick test profile to ImageMagick 6.5.0
+- pts: Upgrade compress-7zip test profile to p7zip 4.65
 - bilde_renderer: With GD renderer don't crash when TTF support isn't available, fall back to the soft font renderer
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure
 

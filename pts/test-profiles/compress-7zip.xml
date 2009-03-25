@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.2.1</Version>
+		<Version>1.3.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -14,6 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>7-Zip Compression</Title>
+		<Version>4.65</Version>
 		<SubTitle>Compress Speed Test</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MIPS</ResultScale>
