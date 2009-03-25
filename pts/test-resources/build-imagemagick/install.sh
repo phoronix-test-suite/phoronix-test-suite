@@ -1,16 +1,9 @@
 #!/bin/sh
 
 echo "#!/bin/sh
-
-if [ ! -f image-magick.tar.bz2 ]
-  then
-	echo \"Image Magick Not Downloaded... Build Fails.\"
-	exit
-fi
-
-rm -rf ImageMagick-6.4.0/
-tar -xjf image-magick.tar.bz2
-cd ImageMagick-6.4.0/
+rm -rf ImageMagick-6.5.0-6/
+tar -xjf ImageMagick-6.5.0-6.tar.bz2
+cd ImageMagick-6.5.0-6/
 ./configure > /dev/null
 sleep 3
 \$TIMER_START

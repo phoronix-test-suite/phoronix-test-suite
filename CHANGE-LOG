@@ -20,7 +20,8 @@ Phoronix Test Suite (Git)
 - pts-core: Add support to the GTK2 GUI for performing reference comparisons on test results and recently run tests
 - pts-core: Add Archive Results item to menu on GTK2 GUI for backing up test results to a compressed file
 - pts: Support build-mysql test profile on platforms besides Linux
-- pts: Upgrade build-apache test profile to version 2.2.11
+- pts: Upgrade build-apache test profile to Apache 2.2.11
+- pts: Upgrade build-imagemagick test profile to ImageMagick 6.5.0
 - bilde_renderer: With GD renderer don't crash when TTF support isn't available, fall back to the soft font renderer
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure
 
