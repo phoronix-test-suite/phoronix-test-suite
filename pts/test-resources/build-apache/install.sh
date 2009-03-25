@@ -1,9 +1,9 @@
 #!/bin/sh
 
 echo "#!/bin/sh
-rm -rf httpd-2.2.8/
-tar -xvf httpd-2.2.8.tar.gz
-cd httpd-2.2.8/
+rm -rf httpd-2.2.11/
+tar -xvf httpd-2.2.11.tar.gz
+cd httpd-2.2.11/
 ./configure > /dev/null
 sleep 3
 
