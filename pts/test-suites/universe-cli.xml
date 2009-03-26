@@ -42,6 +42,6 @@
 		<Test>espeak</Test>
 	</RunTest>
 	<RunTest>
-		<Test>yafray</Test>
+		<Test>povray</Test>
 	</RunTest>
 </PhoronixTestSuite>

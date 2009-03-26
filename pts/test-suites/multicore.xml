@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<TestType>Processor</TestType>
 		<Title>Multi-Core</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -29,6 +29,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>povray</Test>
 	</RunTest>
 	<RunTest>
 		<Test>graphics-magick</Test>
