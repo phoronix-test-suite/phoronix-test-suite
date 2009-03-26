@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 1.8.0 Beta 2
+March 26, 2009
 
 - pts-core: Introduce pts_sensor infrastructure
 - pts-core: Define PTS_LIBRARY_PATH, rename pts-core/functions/ to pts-core/library/

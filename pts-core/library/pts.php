@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "1.8.0b1");
+define("PTS_VERSION", "1.8.0b2");
 define("PTS_CODENAME", "SELBU");
 
 function pts_codename($full_string = false)
