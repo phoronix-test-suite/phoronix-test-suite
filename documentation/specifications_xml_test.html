@@ -231,6 +231,14 @@ test is installed but after the files are downloaded.</p>
 <strong>Required:</strong> No<br>
 <strong>Description:</strong> If the user needs to be alerted about something dealing with this 
 test, this tag can contain a string that will be shown to the user after the test installation script has been executed.</p>
+<p><strong>Tag:</strong> InstallationAgreement<br>
+<strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
+<strong>Internal Reference:</strong> P_TEST_INSTALLAGREEMENT<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If there is a user license agreement or installation agreement, it should be specified within this tag. The agreement 
+is then displayed prior to the test being installed. Once the text has been shown, the user is asked whether they agree to the terms with a yes / no option. If the user 
+agrees, the test is installed otherwise the test installation is aborted. Instead of supplying the full-text to the agreement in this tag, an HTTP URL to where the agreement can be found 
+in a plain text format can be given, which will then be fetched by the Phoronix Test Suite.</p>
 <p><strong>Tag:</strong> PreRunMessage<br>
 <strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>
 <strong>Internal Reference:</strong> P_TEST_PRERUNMSG<br>

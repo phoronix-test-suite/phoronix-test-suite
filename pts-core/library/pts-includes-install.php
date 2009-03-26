@@ -457,6 +457,30 @@ function pts_install_test($identifier)
 					$xml_parser = new pts_test_tandem_XmlReader($identifier);
 					$pre_install_message = $xml_parser->getXMLValue(P_TEST_PREINSTALLMSG);
 					$post_install_message = $xml_parser->getXMLValue(P_TEST_POSTINSTALLMSG);
+					$install_agreement = $xml_parser->getXMLValue(P_TEST_INSTALLAGREEMENT);
+
+					if(!empty($install_agreement))
+					{
+						if(substr($install_agreement, 0, 7) == "http://")
+						{
+							$install_agreement = file_get_contents($install_agreement);
+
+							if(empty($install_agreement))
+							{
+								echo "\nThe user agreement could not be found. Test installation aborted.\n";
+								return false;
+							}
+						}
+
+						echo $install_agreement . "\n";
+						$user_agrees = pts_bool_question("Do you agree to these terms (y/N)?", false, "INSTALL_AGREEMENT");
+
+						if(!$user_agrees)
+						{
+							echo "\n" . $identifier . " will not be installed.\n";
+							return false;
+						}
+					}
 
 					pts_user_message($pre_install_message);
 

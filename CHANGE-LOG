@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add reference-comparison option for comparing test results to available reference test systems on supported tests / suites
 - pts-core: Add support to the GTK2 GUI for performing reference comparisons on test results and recently run tests
 - pts-core: Add Archive Results item to menu on GTK2 GUI for backing up test results to a compressed file
+- pts-core: Bring InstallationAgreement tag for EULA / license agreement handling at install time to Selbu branch
 - pts: Support build-mysql test profile on platforms besides Linux
 - pts: Upgrade build-apache test profile to Apache 2.2.11
 - pts: Upgrade build-imagemagick test profile to ImageMagick 6.5.0
