@@ -31,6 +31,9 @@
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
 		<Test>povray</Test>
 	</RunTest>
 	<RunTest>
