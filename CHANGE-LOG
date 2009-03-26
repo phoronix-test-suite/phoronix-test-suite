@@ -23,6 +23,7 @@ Phoronix Test Suite (Git)
 - pts: Upgrade build-apache test profile to Apache 2.2.11
 - pts: Upgrade build-imagemagick test profile to ImageMagick 6.5.0
 - pts: Upgrade compress-7zip test profile to p7zip 4.65
+- pts: Upgrade openssl test profile to OpenSSL 0.9.8k
 - pts: Add External Dependencies support to Intel Moblin by mirroring the Fedora dependencies
 - bilde_renderer: With GD renderer don't crash when TTF support isn't available, fall back to the soft font renderer
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure
