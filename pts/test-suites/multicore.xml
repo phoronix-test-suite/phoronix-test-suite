@@ -18,10 +18,6 @@
 		<Test>build-imagemagick</Test>
 	</RunTest>
 	<RunTest>
-		<Test>sunflow</Test>
-		<Description>Image Synthesis w/ Raytracing</Description>
-	</RunTest>
-	<RunTest>
 		<Test>compress-7zip</Test>
 	</RunTest>
 	<RunTest>
@@ -31,10 +27,7 @@
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
-		<Test>c-ray</Test>
-	</RunTest>
-	<RunTest>
-		<Test>povray</Test>
+		<Test>ray-tracing</Test>
 	</RunTest>
 	<RunTest>
 		<Test>graphics-magick</Test>

@@ -28,6 +28,7 @@ Phoronix Test Suite (Git)
 - pts: Upgrade sqlite test profile to SQLite 3.6.11
 - pts: Add povray test profile for POV-Ray benchmark
 - pts: Add c-ray test profile for C-Ray ray-tracing benchmark
+- pts: Add bwfirt test profile for another ray-tracing test
 - pts: Add External Dependencies support to Intel Moblin by mirroring the Fedora dependencies
 - bilde_renderer: With GD renderer don't crash when TTF support isn't available, fall back to the soft font renderer
 - system_monitor: Rewrite system_monitor module to use pts_sensor infrastructure

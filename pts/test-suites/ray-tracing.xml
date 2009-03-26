@@ -15,6 +15,9 @@
 		<Test>yafray</Test>
 	</RunTest>
 	<RunTest>
+		<Test>bwfirt</Test>
+	</RunTest>
+	<RunTest>
 		<Test>c-ray</Test>
 	</RunTest>
 	<RunTest>
