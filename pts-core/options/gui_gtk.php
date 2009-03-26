@@ -270,6 +270,7 @@ class gui_gtk implements pts_option_interface
 
 		// Notebook Area
 		$main_notebook = new GtkNotebook();
+		$main_notebook->connect("switch-page", array("gui_gtk", "notebook_main_page_select"));
 		$main_notebook->set_size_request(-1, 300);
 		pts_set_assignment("GTK_OBJ_MAIN_NOTEBOOK", $main_notebook);
 		gui_gtk::update_main_notebook();
@@ -373,8 +374,8 @@ class gui_gtk implements pts_option_interface
 		{
 			pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", true);
 			pts_gtk_object_set_sensitive("GTK_OBJ_DETAILS_BUTTON", true);
-			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", true);
-			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", true);
+			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") != "Test Results");
+			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") != "Test Results");
 
 			pts_set_assignment("GTK_ITEM_SELECTED_ONCE", true);
 		}
@@ -432,7 +433,7 @@ class gui_gtk implements pts_option_interface
 			}
 			if($test_profile->get_environment_size() > 0)
 			{
-				$info_r["Environment Size"] = $test_profile->get_environment_size() . " MB";
+				$info_r["Installed Size"] = $test_profile->get_environment_size() . " MB";
 			}
 
 			$textview_description = new pts_gtk_text_area($test_profile->get_description(), -1, -1, true);
@@ -1144,20 +1145,29 @@ class gui_gtk implements pts_option_interface
 		$run_button = pts_read_assignment("GTK_OBJ_RUN_BUTTON");
 		$run_button->set_label($button_string);
 	}
-	public static function notebook_main_page_select($object)
+	public static function notebook_main_page_select($notebook, $ptr, $current_page)
 	{
-		$selected = $object->child->get_label();
-		pts_set_assignment("GTK_MAIN_NOTEBOOK_SELECTED", $selected);
+		$selected_page = $notebook->get_tab_label_text($notebook->get_nth_page($current_page));
+		pts_set_assignment("GTK_MAIN_NOTEBOOK_SELECTED", $selected_page);
 
 		$details_button = pts_read_assignment("GTK_OBJ_DETAILS_BUTTON");
 
-		switch($selected)
+		if(!($details_button instanceOf pts_gtk_button))
+		{
+			return;
+		}
+
+		switch($selected_page)
 		{
 			case "Test Results":
 				$details_button->set_label("View Results");
+				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", false);
+				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", false);
 				break;
 			default:
 				$details_button->set_label("More Information");
+				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", true);
+				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", true);
 				break;
 		}
 
@@ -1534,17 +1544,18 @@ class gui_gtk implements pts_option_interface
 		$window->set_resizable(false);
 
 		$notebook = new GtkNotebook();
+		$notebook->connect("switch-page", array("gui_gtk", "system_info_change_notebook"));
 		$notebook->set_size_request(540, 250);
 
 		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", "Hardware");
 		$hw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)), null, "No system information available.");
-		pts_gtk_add_notebook_tab($notebook, $hw, "Hardware", array("gui_gtk", "system_info_change_notebook"));
+		pts_gtk_add_notebook_tab($notebook, $hw, "Hardware");
 
 		$sw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)), null, "No system information available.");
-		pts_gtk_add_notebook_tab($notebook, $sw, "Software", array("gui_gtk", "system_info_change_notebook"));
+		pts_gtk_add_notebook_tab($notebook, $sw, "Software");
 
 		$sensors = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)), null, "No system information available.");
-		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors", array("gui_gtk", "system_info_change_notebook"));
+		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors");
 
 		$copy_button = new pts_gtk_button("Copy To Clipboard", array("gui_gtk", "system_info_copy_to_clipboard"), null);
 
@@ -1553,9 +1564,9 @@ class gui_gtk implements pts_option_interface
 		$window->show_all();
 		Gtk::main();
 	}
-	public static function system_info_change_notebook($object)
+	public static function system_info_change_notebook($notebook, $ptr, $current_page)
 	{
-		$identifier = $object->child->get_label();
+		$identifier = $notebook->get_tab_label_text($notebook->get_nth_page($current_page));
 		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", $identifier);
 	}
 	public static function system_info_copy_to_clipboard()
