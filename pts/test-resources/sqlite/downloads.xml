@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.sqlite.org/sqlite-3.6.6.2.tar.gz</URL>
-			<MD5>23cd36188f21d427d45191d317bcbcd5</MD5>
-			<FileSize>2303256</FileSize>
+			<URL>http://www.sqlite.org/sqlite-3.6.11.tar.gz</URL>
+			<MD5>7ebb099696ab76cc6ff65dd496d17858</MD5>
+			<FileSize>3852259</FileSize>
 		</Package>
 		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sqlite-tests-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sqlite-tests-1.tar.gz</URL>

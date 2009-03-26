@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.4.0</Version>
+		<Version>1.5.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>SQLite</Title>
-		<Version>3.6.6.2</Version>
+		<Version>3.6.11</Version>
 		<TimesToRun>3</TimesToRun>
 		<Executable>sqlite-benchmark</Executable>
 		<SubTitle>12,500 INSERTs</SubTitle>
