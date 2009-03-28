@@ -28,12 +28,7 @@ function pts_codename($full_string = false)
 {
 	$codename = ucwords(strtolower(PTS_CODENAME));
 
-	if($full_string)
-	{
-		$codename = "PhoronixTestSuite/" . $codename;
-	}
-
-	return $codename;
+	return ($full_string ? "PhoronixTestSuite/" : "") . $codename;
 }
 
 ?>

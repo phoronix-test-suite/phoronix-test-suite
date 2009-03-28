@@ -51,12 +51,12 @@ function pts_auto_detect_modules()
 
 	foreach($module_variables as $module_var)
 	{
-		$module_var = explode("=", $module_var);
+		$module_var = array_map("trim", explode("=", $module_var));
 
 		if(count($module_var) == 2)
 		{
-			$env_var = trim($module_var[0]);
-			$module = trim($module_var[1]);
+			$env_var = $module_var[0];
+			$module = $module_var[1];
 
 			if(!pts_module_attached($module) && ($e = getenv($env_var)) != false && !empty($e))
 			{

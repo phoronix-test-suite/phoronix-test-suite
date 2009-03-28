@@ -689,15 +689,7 @@ function read_sun_ddu_dmi_info($object)
 		{
 			$line = explode(":", $line);
 			$line_object = str_replace(" ", "", $line[0]);
-
-			if(count($line) > 1)
-			{
-				$this_value = trim($line[1]);
-			}
-			else
-			{
-				$this_value = "";
-			}
+			$this_value = (count($line) > 1 ? trim($line[1]) : "");
 
 			if(empty($this_value) && !empty($section))
 			{

@@ -206,16 +206,7 @@ function pts_format_time_string($time, $format = "SECONDS", $standard_version = 
 		}
 	}
 
-	if($standard_version)
-	{
-		$time_string = implode(", ", $formatted_time);
-	}
-	else
-	{
-		$time_string = implode("", $formatted_time);
-	}
-
-	return $time_string;
+	return implode(($standard_version ? ", " : ""), $formatted_time);
 }
 
 ?>

@@ -789,14 +789,7 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 	$result = null;
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 
-	if($use_ctp)
-	{
-		$tests_r = pts_contained_tests($test_identifier, true);
-	}
-	else
-	{
-		$tests_r = array($test_identifier);
-	}
+	$tests_r = ($use_ctp ? pts_contained_tests($test_identifier, true) : array($test_identifier));
 
 	foreach($tests_r as $this_test)
 	{

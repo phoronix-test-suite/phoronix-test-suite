@@ -70,14 +70,7 @@ function pts_run_option_next($command = false, $pass_args = null, $set_assignmen
 
 	if($command == false)
 	{
-		if(count($options) == 0)
-		{
-			$return = false;
-		}
-		else
-		{
-			$return = array_shift($options);
-		}
+		$return = (count($options) == 0 ? false : array_shift($options));
 	}
 	else
 	{

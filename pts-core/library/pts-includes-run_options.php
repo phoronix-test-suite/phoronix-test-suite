@@ -208,14 +208,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 				$option_values = array();
 				$option_names = array();
 
-				if(is_file("/proc/mounts"))
-				{
-					$mounts = file_get_contents("/proc/mounts");
-				}
-				else
-				{
-					$mounts = null;
-				}
+				$mounts = (is_file("/proc/mounts") ? file_get_contents("/proc/mounts") : null);
 
 				array_push($option_values, "");
 				array_push($option_names, "Default Test Directory");

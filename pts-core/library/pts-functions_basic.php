@@ -73,12 +73,7 @@ function pts_array_merge($array1, $array2)
 }
 function pts_trim_spaces($string)
 {
-	while(strpos($string, "  ") !== false)
-	{
-		$string = str_replace("  ", " ", $string);
-	}
-
-	return trim($string);
+	return trim(str_replace("  ", " ", $string));
 }
 function pts_is_valid_download_url($string, $basename = null)
 {
@@ -172,12 +167,7 @@ function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $
 }
 function pts_to_array($var)
 {
-	if(!is_array($var))
-	{
-		$var = array($var);
-	}
-
-	return $var;
+	return (!is_array($var) ? array($var) : $var);
 }
 
 ?>

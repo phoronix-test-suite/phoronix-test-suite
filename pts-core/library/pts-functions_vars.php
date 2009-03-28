@@ -90,14 +90,7 @@ function pts_variables_export_string($vars = null)
 	// Convert pts_env_variables() into shell export variable syntax
 	$return_string = "";
 
-	if($vars == null)
-	{
-		$vars = pts_env_variables();
-	}
-	else
-	{
-		$vars = array_merge(pts_env_variables(), $vars);
-	}
+	$vars = ($vars == null ? pts_env_variables() : array_merge(pts_env_variables(), $vars));
 
 	foreach($vars as $name => $var)
 	{

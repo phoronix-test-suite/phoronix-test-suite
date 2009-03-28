@@ -29,14 +29,7 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 	}
 
 	// Launch the web browser
-	if($alt_text == null)
-	{
-		$text = "Do you want to view the results in your web browser";
-	}
-	else
-	{
-		$text = $alt_text;
-	}
+	$text = ($alt_text == null ? "Do you want to view the results in your web browser" : $alt_text);
 
 	if($auto_open == false)
 	{

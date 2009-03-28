@@ -217,14 +217,7 @@ function pts_download_test_files($identifier)
 							}
 							while(($mirror_choice < 1 || $mirror_choice > count($urls)) && !pts_is_valid_download_url($mirror_choice, $package_filename));
 
-							if(is_numeric($mirror_choice))
-							{
-								$url = $urls[($mirror_choice - 1)];
-							}
-							else
-							{
-								$url = $mirror_choice;
-							}
+							$url = (is_numeric($mirror_choice) ? $urls[($mirror_choice - 1)] : $mirror_choice);
 						}
 						else
 						{

@@ -369,13 +369,10 @@ function hw_gpu_available_modes()
 			$xrandr_mode = substr($xrandr_mode, 0, $cut_point);
 		}
 
-		$res = explode("x", $xrandr_mode);
+		$res = array_map("trim", explode("x", $xrandr_mode));
 
 		if(count($res) == 2)
 		{
-			$res[0] = trim($res[0]);
-			$res[1] = trim($res[1]);
-
 			$res[0] = substr($res[0], strrpos($res[0], " "));
 			$res[1] = substr($res[1], 0, strpos($res[1], " "));
 
@@ -455,10 +452,7 @@ function hw_gpu_xrandr_mode()
 
 	if(strpos($info, "*") !== false)
 	{
-		$res = explode("x", $info);
-		$res[0] = trim($res[0]);
-		$res[1] = trim($res[1]);
-
+		$res = array_map("trim", explode("x", $info));
 		$res[0] = substr($res[0], strrpos($res[0], " "));
 		$res[1] = substr($res[1], 0, strpos($res[1], " "));
 
@@ -521,9 +515,9 @@ function hw_gpu_screen_resolution()
 	{
 		$resolution = array();
 		$info = read_osx_system_profiler("SPDisplaysDataType", "Resolution");
-		$info = explode(" ", $info);
-		$resolution[0] = trim($info[0]);
-		$resolution[1] = trim($info[2]);
+		$info = array_map("trim", explode(" ", $info));
+		$resolution[0] = $info[0];
+		$resolution[1] = $info[2];
 	}
 	else
 	{
@@ -749,7 +743,7 @@ function hw_gpu_string($append_frequency = false)
 	
 	if(IS_MACOSX)
 	{
-		$info .= " " . $video_ram . "MB";	
+		$info .= " " . $video_ram . "MB";
 	}
 
 	if($append_frequency)
