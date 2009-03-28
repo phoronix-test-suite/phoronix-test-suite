@@ -56,7 +56,7 @@ function hw_sys_motherboard_string()
 
 		$info = ($vendor != false ? $vendor : "");
 
-		if(empty($product) || empty($product) || (strpos($version, ".") === false && !empty($version)))
+		if(empty($product) && (strpos($version, ".") === false && !empty($version)))
 		{
 			$product = $version;
 		}

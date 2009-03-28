@@ -78,10 +78,10 @@ abstract class pts_Graph
 	var $graph_data = array();
 	var $graph_data_raw = array();
 	var $graph_data_title = array();
+	var $graph_sub_titles = array();
 	var $graph_color_paint_index = -1;
 	var $graph_identifiers;
 	var $graph_title;
-	var $graph_sub_title;
 	var $graph_y_title;
 	var $graph_y_title_hide = false;
 	var $graph_top_end;
@@ -90,14 +90,17 @@ abstract class pts_Graph
 	var $graph_internal_identifiers = array();
 
 	// Internal Switches
-
-	var $graph_format_heading = "NORMAL";
+	// var $graph_format_heading = "NORMAL";
 
 	public function __construct($title, $sub_title, $y_axis_title)
 	{
 		$this->graph_title = $title;
-		$this->graph_sub_title = $sub_title;
 		$this->graph_y_title = $y_axis_title;
+
+		if(!empty($sub_title))
+		{
+			$this->addSubTitle($sub_title);
+		}
 
 		$this->update_graph_dimensions(-1, -1, true);
 	}
@@ -166,6 +169,10 @@ abstract class pts_Graph
 		{
 			$this->graph_body_image = $img;
 		}
+	}
+	public function addSubTitle($sub_title)
+	{
+		array_push($this->graph_sub_titles, $sub_title);
 	}
 	public function addInternalIdentifier($identifier, $value)
 	{
@@ -371,23 +378,12 @@ abstract class pts_Graph
 	}
 	protected function render_graph_heading()
 	{
-		// $this->graph_format_heading
+		// Default to NORMAL
+		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3);
 
-		if($this->graph_format_heading == "ALT1")
+		for($i = 0; $i < count($this->graph_sub_titles); $i++)
 		{
-			// Default to Alternate 1 style
-			$heading_text_color = $this->graph_image->convert_hex_to_type("#FFFFFF"); // TODO: Do more than white
-			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, 40, $this->graph_color_main_headers);
-			$this->graph_image->write_text_left($this->graph_title, $this->graph_font, ($this->graph_font_size_heading - 1), $heading_text_color, 4, 10, $this->graph_left_end, 10);
-			$this->graph_image->write_text_left($this->graph_sub_title, $this->graph_font, ($this->graph_font_size_sub_heading - 1), $heading_text_color, 4, 29, $this->graph_left_end, 29, false, true);
-
-			//$this->graph_image->image_copy_merge($this->graph_image->image_file_to_type(RESULTS_VIEWER_DIR . "pts-logo.png"), $this->graph_attr_width - 160, 3, 0, 0, 158, 40);
-		}
-		else
-		{
-			// Default to NORMAL
-			$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3);
-			$this->graph_image->write_text_center($this->graph_sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, 29, $this->graph_left_end, 29, false, true);
+			$this->graph_image->write_text_center($this->graph_sub_titles[$i], $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (29 + ($i * 18)), $this->graph_left_end, (29 + ($i * 18)), false, true);
 		}
 
 		$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9);
@@ -397,7 +393,12 @@ abstract class pts_Graph
 		if(count($this->graph_data_title) > 1 || $this->graph_show_key == true)
 		{
 			$num_key_lines = ceil(count($this->graph_data_title) / 4);
-			$this->graph_top_start = $this->graph_top_start + 8 + ($num_key_lines * 11);
+			$this->graph_top_start += 8 + ($num_key_lines * 11);
+		}
+
+		if(($sub_title_count = count($this->graph_sub_titles)) > 1)
+		{
+			$this->graph_top_start += (($sub_title_count - 1) * 14);
 		}
 
 		$this->graph_image->draw_rectangle($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body);

@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts_Graph: Add support for multiple sub-titles on graphs
+
 Phoronix Test Suite 1.8.0 Beta 2
 March 26, 2009
 
