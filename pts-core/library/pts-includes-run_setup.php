@@ -108,16 +108,12 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 	{
 		$is_reserved_word = pts_is_test($proposed_name) || pts_is_suite($proposed_name);
 
-		while(empty($proposed_name) || $is_reserved_word || !pts_validate_save_file_name($proposed_name, $to_run))
+		while(empty($proposed_name) || $is_reserved_word)
 		{
 			if($is_reserved_word)
 			{
 				echo "\n\nThe name of the saved file cannot be the same as a test/suite: " . $proposed_name . "\n";
 				$is_reserved_word = false;
-			}
-			else if(!pts_validate_save_file_name($proposed_name, $to_run))
-			{
-				echo "\n\n" . $proposed_name . " is associated with a different test/suite.\n";
 			}
 
 			echo "Enter a name to save these results: ";
@@ -126,6 +122,11 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 			$proposed_name = pts_input_string_to_identifier($proposed_name);
 
 			$is_reserved_word = pts_is_run_object($proposed_name);
+		}
+
+		if(!pts_validate_save_file_name($proposed_name, $to_run))
+		{
+			echo "\n\nNOTE: " . $proposed_name . " is associated with a different test/suite.\n";
 		}
 	}
 

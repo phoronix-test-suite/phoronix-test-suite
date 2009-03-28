@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Only emit a warning when the inputted test result file is associated with a different test/suite type
 - pts_Graph: Add support for multiple sub-titles on graphs
 
 Phoronix Test Suite 1.8.0 Beta 2
