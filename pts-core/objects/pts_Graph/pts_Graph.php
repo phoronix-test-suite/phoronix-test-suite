@@ -172,7 +172,12 @@ abstract class pts_Graph
 	}
 	public function addSubTitle($sub_title)
 	{
-		array_push($this->graph_sub_titles, $sub_title);
+		$sub_titles = array_map("trim", explode("|", $sub_title));
+
+		foreach($sub_titles as $sub_title)
+		{
+			array_push($this->graph_sub_titles, $sub_title);
+		}
 	}
 	public function addInternalIdentifier($identifier, $value)
 	{

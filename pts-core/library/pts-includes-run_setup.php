@@ -106,9 +106,7 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 
 	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_save_name())
 	{
-		$is_reserved_word = pts_is_test($proposed_name) || pts_is_suite($proposed_name);
-
-		while(empty($proposed_name) || $is_reserved_word)
+		while(empty($proposed_name) || ($is_reserved_word = pts_is_run_object($proposed_name)))
 		{
 			if($is_reserved_word)
 			{
@@ -120,8 +118,6 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 			$proposed_name = trim(fgets(STDIN));
 			$custom_title = $proposed_name;
 			$proposed_name = pts_input_string_to_identifier($proposed_name);
-
-			$is_reserved_word = pts_is_run_object($proposed_name);
 		}
 
 		if(!pts_validate_save_file_name($proposed_name, $to_run))

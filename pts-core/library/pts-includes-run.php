@@ -647,6 +647,32 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		$return_string .= "\n";
 	}
 
+	if($test_type == "Graphics")
+	{
+		$extra_gfx_settings = array();
+		$aa_level = hw_gpu_aa_level();
+		$af_level = hw_gpu_af_level();
+
+		if(!empty($aa_level))
+		{
+			array_push($extra_gfx_settings, "AA: " . $aa_level);
+		}
+		if(!empty($af_level))
+		{
+			array_push($extra_gfx_settings, "AF: " . $af_level);
+		}
+
+		if(count($extra_gfx_settings) > 0)
+		{
+			if($arguments_description != null)
+			{
+				$arguments_description .= " | ";
+			}
+
+			$arguments_description .= implode(" - ", $extra_gfx_settings);
+		}
+	}
+
 	// Result Calculation
 	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
 	$pts_test_result->set_attribute("TEST_VERSION", $test_version);
