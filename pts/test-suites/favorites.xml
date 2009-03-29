@@ -12,6 +12,9 @@
 		<Test>build-php</Test>
 	</RunTest>
 	<RunTest>
+		<Test>compress-7zip</Test>
+	</RunTest>
+	<RunTest>
 		<Test>encode-mp3</Test>
 	</RunTest>
 	<RunTest>
@@ -28,12 +31,12 @@
 	</RunTest>
 	<RunTest>
 		<Test>graphics-magick</Test>
-		<Arguments>-colorspace HWB </Arguments>
+		<Arguments>-colorspace HWB</Arguments>
 		<Description>HWB Color Space</Description>
 	</RunTest>
 	<RunTest>
 		<Test>graphics-magick</Test>
-		<Arguments>-lat 10x10-5% </Arguments>
+		<Arguments>-lat 10x10-5%</Arguments>
 		<Description>Local Adaptive Thresholding</Description>
 	</RunTest>
 	<RunTest>

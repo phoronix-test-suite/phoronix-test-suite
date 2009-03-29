@@ -250,7 +250,7 @@ class run_test implements pts_option_interface
 				// Prompt Description
 				if(!pts_is_assignment("AUTOMATED_MODE") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_description()))
 				{
-					if($unique_test_names > 1)
+					if($unique_test_names > 1 || !isset($test_description))
 					{
 						$unique_tests_r = array_unique($to_run_identifiers);
 						$last = array_pop($unique_tests_r);

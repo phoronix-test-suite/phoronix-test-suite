@@ -106,7 +106,7 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 
 	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_save_name())
 	{
-		while(empty($proposed_name) || ($is_reserved_word = pts_is_run_object($proposed_name)))
+		while(($is_reserved_word = pts_is_run_object($proposed_name)) || empty($proposed_name))
 		{
 			if($is_reserved_word)
 			{
