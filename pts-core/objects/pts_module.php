@@ -133,16 +133,7 @@ class pts_module
 	{
 		$file = self::save_dir() . $file;
 
-		if(is_file($file))
-		{
-			$file = file_get_contents($file);
-		}
-		else
-		{
-			$file = false;
-		}
-
-		return $file;		
+		return (is_file($file) ? file_get_contents($file) : false);		
 	}
 	public static function is_file($file)
 	{
