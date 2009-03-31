@@ -554,10 +554,10 @@ function hw_gpu_stock_frequency()
 	{
 		$od_clocks = read_ati_overdrive("CurrentPeak");
 
-		if(is_array($od_clocks) && count($od_clocks) == 2) // ATI OverDrive
+		if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
 		{
-			$core_freq = $od_clocks[0];
-			$mem_freq = $od_clocks[1];
+			$core_freq = array_shift($od_clocks);
+			$mem_freq = array_pop($od_clocks);
 		}
 	}
 
@@ -590,10 +590,10 @@ function hw_gpu_current_frequency($show_memory = true)
 	{
 		$od_clocks = read_ati_overdrive("CurrentClocks");
 
-		if(is_array($od_clocks) && count($od_clocks) == 2) // ATI OverDrive
+		if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
 		{
-			$core_freq = $od_clocks[0];
-			$mem_freq = $od_clocks[1];
+			$core_freq = array_shift($od_clocks);
+			$mem_freq = array_pop($od_clocks);
 		}
 	}
 

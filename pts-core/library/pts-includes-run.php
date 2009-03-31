@@ -669,7 +669,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 				$arguments_description .= " | ";
 			}
 
-			$arguments_description .= implode(" - ", $extra_gfx_settings);
+			$extra_gfx_settings = implode(" - ", $extra_gfx_settings);
+
+			if(strpos($arguments_description, $extra_gfx_settings) === false)
+			{
+				$arguments_description .= $extra_gfx_settings;
+			}
 		}
 	}
 
