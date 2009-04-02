@@ -3,8 +3,9 @@
 $log_file = file_get_contents(getenv("LOG_FILE"));
 
 $BENCHMARK_RESULTS = substr($log_file, strrpos($log_file, "Rendering took: ") + 16);
-$BENCHMARK_RESULTS = substr($BENCHMARK_RESULTS, 0, strpos($BENCHMARK_RESULTS, " seconds"));
+$BENCHMARK_RESULTS = substr($BENCHMARK_RESULTS, 0, strpos($BENCHMARK_RESULTS, " milliseconds"));
+$BENCHMARK_RESULTS = substr($BENCHMARK_RESULTS, strpos($BENCHMARK_RESULTS, "(") + 1);
 
-echo $BENCHMARK_RESULTS;
+echo ($BENCHMARK_RESULTS / 1000);
 
 ?>
