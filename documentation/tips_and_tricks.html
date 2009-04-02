@@ -16,18 +16,12 @@ as some random information that some users may find useful.</p>
 <p>- The desktop's screensaver will automatically be 
 shutdown when a test is running and will be restored to its previous state upon 
 the test's completion. This should work for GNOME, KDE, and other XDG-supportive desktop environments.</p>
-<p>- Phoronix Test Suite supports OpenSolaris and *BSD operating systems. Support for Mac OS X may 
-be added in the future.</p>
 <p>- How do I find tests that are in a suite? Run <em>phoronix-test-suite info NAME-OF-SUITE</em> and (along with other information) a tree will be displayed that recursively shows the tests (along with any sub-suites) inside. To find suites that utilize a particular test, run <em>phoronix-test-suite info NAME-OF-TEST</em> and it will show that information too.</p>
 <h2>Running</h2>
 <p>- When running a test in batch mode (through the use of the <em>batch-run</em> 
 or <em>batch-benchmark</em> options) that normally has end-user options (such 
 as the sub-test to run or resolution), the Phoronix Test Suite will run the test 
 with each unique combination of options possible.</p>
-<p>- If the environmental variable <em>PTS_MERGE=custom</em> is set, no compatibility 
-checks will be performed when merging results and it will allow you to form custom 
-suites very easily, etc. Though the preferred method to create a suite is by writing 
-a formal suite.</p>
 <p>- When being prompted for the test identifier or the file name for saving the results, several user variables are supported. These include 
 <em>$VIDEO_RESOLUTION</em>, <em>$VIDEO_CARD</em>, <em>$OPERATING_SYSTEM</em>, <em>$PROCESSOR</em>, <em>$MOTHERBOARD</em>, <em>$CHIPSET</em>, and <em>$KERNEL_VERSION</em>. 
 If any of these variables are entered, the Phoronix Test Suite will replace them with their respective values before saving the results.</p>
@@ -64,7 +58,6 @@ same generic <em>graph-config.xml</em> configuration is used.</p>
 <h2>Test / Suite Writing</h2>
 <p>- The Phoronix Test Suite recursively determines tests/suites and allows a suite 
 to call another suite.</p>
-<p>- In <em>pts/etc</em> are XML templates that you can use when starting to write test profiles and other XML files.</p>
 <p>- One of the quickest and easiest ways to understand how to write a profile 
 is by just looking at the some of the existing profiles within the <em>pts/</em> folder.</p>
 <p>- The XML syntax for all file specifications are defined within <em>pts-core/library/pts-interfaces.php</em> 

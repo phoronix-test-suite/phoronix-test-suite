@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix a few PHP warnings
 - pts: Add favorites test suite
 - pts_Graph: Add support for multiple sub-titles on graphs
+- documentation: Update for Phoronix Test Suite 1.8
 
 Phoronix Test Suite 1.8.0 Beta 2
 March 26, 2009
