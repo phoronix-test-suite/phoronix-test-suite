@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add AA/AF reporting to sub-titles on graphics for Graphics tests where levels are forced by drivers
 - pts-core: More robust detection of clock frequencies with ATI OverDrive
 - pts-core: Fix a few PHP warnings
+- pts-core: Fix regression in excess removal of spaces from strings in pts_trim_spaces()
 - pts: Add favorites test suite
 - pts_Graph: Add support for multiple sub-titles on graphs
 - documentation: Update for Phoronix Test Suite 1.8

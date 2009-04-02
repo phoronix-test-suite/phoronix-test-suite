@@ -73,7 +73,16 @@ function pts_array_merge($array1, $array2)
 }
 function pts_trim_spaces($string)
 {
-	return trim(str_replace("  ", " ", $string));
+	$s_l = strlen($string);
+
+	do
+	{
+		$string_l = $s_l;
+		$string = str_replace("  ", " ", $string);
+	}
+	while($string_l != ($s_l = strlen($string)));
+
+	return trim($string);
 }
 function pts_is_valid_download_url($string, $basename = null)
 {

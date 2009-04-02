@@ -340,7 +340,7 @@ function pts_remove_local_download_test_files($identifier)
 
 		if(is_file($file_location))
 		{
-			@unlink($file_location);
+			unlink($file_location);
 		}
 	}
 }
