@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Revise the installation interface for GTK2 GUI
 - pts: Add favorites test suite
 - pts: Allow c-ray test profile to have millisecond precision for test results
+- pts: Update nexuiz test profile to Nexuiz 2.5.0
 - pts_Graph: Add support for multiple sub-titles on graphs
 - bilde_renderer: Support for using system default TTF fonts
 - documentation: Update for Phoronix Test Suite 1.8

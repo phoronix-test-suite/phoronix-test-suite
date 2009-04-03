@@ -92,6 +92,7 @@ function hw_sys_memory_string()
 			$mem_prefix .= str_replace(" ", "", $mem_speed);
 		}
 
+		// TODO: Allow a combination of both functions below, so like 2 x 2GB + 3 x 1GB DDR2-800
 		if($mem_count > 1 && count(array_unique($mem_size)) > 1)
 		{
 			$mem_string = implode(" + ", $mem_size) . " " . $mem_prefix;

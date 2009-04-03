@@ -2,20 +2,20 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>746</EnvironmentSize>
-		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<EnvironmentSize>715</EnvironmentSize>
 		<ProjectURL>http://www.nexuiz.com/</ProjectURL>
-		<UnsupportedPlatforms>Solaris, BSD</UnsupportedPlatforms>
+		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Nexuiz</Title>
-		<Version>2.4.2</Version>
+		<Version>2.5.0</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
@@ -23,7 +23,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>-nohome -benchmark demos/demo1</Arguments>
+			<Arguments>-nohome -benchmark demos/bench1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>

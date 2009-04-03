@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://jaist.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-242.zip, http://keihanna.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-242.zip, http://kent.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-242.zip</URL>
-			<MD5>2ea51368774ca603fd56faebfeac74d7</MD5>
-			<FileSize>393779967</FileSize>
+			<URL>http://voxel.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-25.zip, http://softlayer.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-25.zip, http://fastbull.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-25.zip, http://internode.dl.sourceforge.net/sourceforge/nexuiz/nexuiz-25.zip</URL>
+			<MD5>e9489cf81f6a2ed5776ad98bbf76e57c</MD5>
+			<FileSize>666902063</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

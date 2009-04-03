@@ -1,19 +1,17 @@
 #!/bin/sh
 
-# Nexuiz 2.4.2
-
 [ -d Nexuiz_/data ] && chmod +w Nexuiz_/data
 rm -rf Nexuiz Nexuiz_
-unzip -o nexuiz-242.zip
+unzip -o nexuiz-25.zip
 mv Nexuiz Nexuiz_
 
 echo "#!/bin/sh
 cd Nexuiz_/
 if [ \$OS_TYPE = \"MacOSX\" ]
 then
-	./Nexuiz.app/Contents/MacOS/nexuiz-osx-agl +exec normal.cfg \$@ > \$LOG_FILE 2>&1
+	./Nexuiz.app/Contents/MacOS/nexuiz-osx-agl +exec high.cfg \$@ > \$LOG_FILE 2>&1
 else
-	./nexuiz-linux-glx.sh +exec normal.cfg \$@ > \$LOG_FILE 2>&1
+	./nexuiz-linux-glx.sh +exec high.cfg \$@ > \$LOG_FILE 2>&1
 fi
 cat \$LOG_FILE | grep fps" > nexuiz
 chmod +x nexuiz
