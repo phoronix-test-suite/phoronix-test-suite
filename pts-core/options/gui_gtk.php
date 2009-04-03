@@ -214,7 +214,7 @@ class gui_gtk implements pts_option_interface
 			if(!empty($ti))
 			{
 				$ti_button = new GtkButton("Run " . pts_test_identifier_to_name($ti));
-				$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), "RUN", $ti);
+				$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), $ti);
 				array_push($main_frame_objects, $ti_button);
 			}
 			if(!empty($u))
@@ -267,7 +267,6 @@ class gui_gtk implements pts_option_interface
 		$main_frame_box = pts_gtk_array_to_boxes($main_frame, $main_frame_objects, 6);
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $main_frame_box);
 
-
 		// Notebook Area
 		$main_notebook = new GtkNotebook();
 		$main_notebook->connect("switch-page", array("gui_gtk", "notebook_main_page_select"));
@@ -291,7 +290,7 @@ class gui_gtk implements pts_option_interface
 		$details_button->set_sensitive(false);
 		pts_set_assignment("GTK_OBJ_DETAILS_BUTTON", $details_button);
 
-		$run_button = new pts_gtk_button("Run", array("gui_gtk", "show_run_confirmation_interface"), null, 100, -1, Gtk::STOCK_EXECUTE);
+		$run_button = new pts_gtk_button("Run", array("gui_gtk", "show_confirmation_interface"), null, 100, -1, Gtk::STOCK_EXECUTE);
 		$run_button->set_sensitive(false);
 		pts_set_assignment("GTK_OBJ_RUN_BUTTON", $run_button);
 
@@ -349,7 +348,7 @@ class gui_gtk implements pts_option_interface
 				break;
 			default:
 				pts_run_option_next("install_test", $clicked, array("SILENCE_MESSAGES" => true));
-				gui_gtk::show_run_confirmation_interface("RUN", $clicked);
+				gui_gtk::show_run_confirmation_interface($clicked);
 				break;
 		}
 	}
@@ -370,9 +369,11 @@ class gui_gtk implements pts_option_interface
 		$info_r = array();
 		$append_elements = array();
 
+		pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", true);
+
 		if(!pts_is_assignment("GTK_ITEM_SELECTED_ONCE"))
 		{
-			pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", true);
+		//	pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", true);
 			pts_gtk_object_set_sensitive("GTK_OBJ_DETAILS_BUTTON", true);
 			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") != "Test Results");
 			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") != "Test Results");
@@ -483,6 +484,51 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $box);
 
 		gui_gtk::update_run_button();
+		gui_gtk::redraw_main_window();
+	}
+	public static function update_details_frame_for_install($to_install)
+	{
+		$gtk_obj_main_frame = pts_read_assignment("GTK_OBJ_MAIN_FRAME");
+		$gtk_obj_main_frame->set_label($identifier);
+
+		if(pts_is_assignment("GTK_OBJ_MAIN_FRAME_BOX"))
+		{
+			$gtk_obj_main_frame_box = pts_read_assignment("GTK_OBJ_MAIN_FRAME_BOX");
+			$gtk_obj_main_frame->remove($gtk_obj_main_frame_box);
+		}
+
+		$info_r = array();
+		$append_elements = array();
+
+		// PTS Test
+		$info_r["Estimated Download Size"] = pts_estimated_download_size($to_install) . " MB";
+		$info_r["null1"] = null;
+		$info_r["Estimated Install Size"] = pts_test_estimated_environment_size($to_install) . " MB";
+		$info_r["null2"] = null;
+
+		$titles = array();
+		$values = array();
+		foreach($info_r as $head => $show)
+		{
+			$label_head = new GtkLabel(($show == null ? null : $head . ": "));
+			$label_head->set_alignment(0, 0);
+			$label_head->set_padding(0, 0);
+			array_push($titles, $label_head);
+
+			$label_show = new GtkLabel($show);
+			$label_show->set_alignment(0, 0);
+			array_push($values, $label_show);
+		}
+
+		$install_button = new pts_gtk_button("Install Now", null, null, 200, 100);
+		$install_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), "install", $to_install);
+
+		$elements = array(array($titles, $values), null, $install_button, null);
+		$box = pts_gtk_array_to_boxes($gtk_obj_main_frame, $elements, 4);
+		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $box);
+
+		pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", false);
+
 		gui_gtk::redraw_main_window();
 	}
 	public static function pts_gtk_reference_system_comparison_objects($reference_tests, $comparison_identifier)
@@ -688,8 +734,13 @@ class gui_gtk implements pts_option_interface
 				break;
 		}
 
-		$window = pts_read_assignment("GTK_OBJ_CONFIRMATION_WINDOW");
+		$window = pts_read_assignment("GTK_OBJ_WINDOW");
+		if($window instanceOf GtkWindow)
+		{
+			$window->destroy();
+		}
 
+		$window = pts_read_assignment("GTK_OBJ_CONFIRMATION_WINDOW");
 		if($window instanceOf GtkWindow)
 		{
 			$window->destroy();
@@ -729,13 +780,32 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_BATCH_MODE", $batch_checkbox->get_active());
 		pts_set_assignment("GTK_DEFAULTS_MODE", $defaults_checkbox->get_active());
 	}
-	public static function show_run_confirmation_interface($task = null, $identifier = null)
+	public static function show_confirmation_interface($task = null, $identifier = null)
 	{
 		if($identifier == null)
 		{
 			$identifier = gui_gtk::notebook_selected_to_identifier();
 		}
 
+		switch(($task == null ? pts_read_assignment("GTK_RUN_BUTTON_TASK") : $task))
+		{
+			case "UPDATE":
+				//echo "\nERROR: Should be using gui_gtk::update_details_frame_for_install()\n";
+				gui_gtk::update_details_frame_for_install($identifier);
+				return;
+				break;
+			case "INSTALL":
+				//echo "\nERROR: Should be using gui_gtk::update_details_frame_for_install()\n";
+				gui_gtk::update_details_frame_for_install($identifier);
+				return;
+				break;
+			case "RUN":
+				gui_gtk::show_run_confirmation_interface($identifier);
+				break;
+		}
+	}
+	public static function show_run_confirmation_interface($identifier)
+	{
 		if(empty($identifier))
 		{
 			echo "DEBUG: Null identifier in gtk_gui::show_run_confirmation_interface()\n";
@@ -745,148 +815,112 @@ class gui_gtk implements pts_option_interface
 		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
 		$main_window->destroy();
 
-		switch(($task == null ? pts_read_assignment("GTK_RUN_BUTTON_TASK") : $task))
+		$menu_items = array();
+
+		$label_options = new GtkLabel("Test Options");
+		$label_options->modify_font(new PangoFontDescription("Sans 19"));
+		array_push($menu_items, $label_options);
+
+		if(pts_read_assignment("GTK_BATCH_MODE") != false)
 		{
-			case "UPDATE":
-				$title_cmd = "install";
-				$window_type = "confirmation";
-				$message = "The Phoronix Test Suite will now proceed to update your " . $identifier . " installation.";
-				break;
-			case "INSTALL":
-				$title_cmd = "install";
-				$window_type = "confirmation";
-				$message = "The Phoronix Test Suite will now proceed to install " . $identifier . ".";
-				break;
-			case "RUN":
-				$title_cmd = "benchmark";
-				$window_type = "menu";
-				$message = "The Phoronix Test Suite will now run " . $identifier . ".";
+			array_push($menu_items, new GtkLabel("No user options, running in batch mode."));
+		}
+		else if(pts_read_assignment("GTK_DEFAULTS_MODE") != false)
+		{
+			array_push($menu_items, new GtkLabel("No user options, running in defaults mode."));
+		}
+		else
+		{
+			$test_options = pts_test_options($identifier);
+			$selected_options = array();
 
-				$menu_items = array();
+			if(count($test_options) == 0)
+			{
+				array_push($menu_items, new GtkLabel("No user options available."));
+			}
 
-				$label_options = new GtkLabel("Test Options");
-				$label_options->modify_font(new PangoFontDescription("Sans 19"));
-				array_push($menu_items, $label_options);
+			for($i = 0; $i < count($test_options); $i++)
+			{
+				$o = $test_options[$i];
+				$option_count = $o->option_count();
 
-				if(pts_read_assignment("GTK_BATCH_MODE") != false)
+				if($option_count == 0)
 				{
-					array_push($menu_items, new GtkLabel("No user options, running in batch mode."));
-				}
-				else if(pts_read_assignment("GTK_DEFAULTS_MODE") != false)
-				{
-					array_push($menu_items, new GtkLabel("No user options, running in defaults mode."));
+					// User inputs their option
+					// TODO: could add check to make sure the text field isn't empty when pressed
+					$entry = new GtkEntry();
+					$selected_options[$identifier][$o->get_identifier()] = $entry;
+					array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $entry));
+					//$user_args .= $o->format_option_value_from_input($value);
 				}
 				else
 				{
-					$test_options = pts_test_options($identifier);
-					$selected_options = array();
-
-					if(count($test_options) == 0)
+					if($option_count == 1)
 					{
-						array_push($menu_items, new GtkLabel("No user options available."));
+						// Only one option in menu, so auto-select it
+						$bench_choice = 0;
 					}
-
-					for($i = 0; $i < count($test_options); $i++)
+					else
 					{
-						$o = $test_options[$i];
-						$option_count = $o->option_count();
+						$combobox = new GtkComboBox();
+						$model = new GtkListStore((defined("GObject::TYPE_STRING") ? GObject::TYPE_STRING : Gtk::TYPE_STRING));
+						$combobox->set_model($model);
+						$cell_renderer = new GtkCellRendererText();
+						$combobox->pack_start($cell_renderer);
+						$combobox->set_attributes($cell_renderer, "text", 0);
 
-						if($option_count == 0)
+						foreach($o->get_all_option_names() as $option_name)
 						{
-							// User inputs their option
-							// TODO: could add check to make sure the text field isn't empty when pressed
-							$entry = new GtkEntry();
-							$selected_options[$identifier][$o->get_identifier()] = $entry;
-							array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $entry));
-		
-							//$user_args .= $o->format_option_value_from_input($value);
+							$model->append(array($option_name));
 						}
-						else
-						{
-							if($option_count == 1)
-							{
-								// Only one option in menu, so auto-select it
-								$bench_choice = 0;
-							}
-							else
-							{
+						$combobox->set_active(0);
 
-								$combobox = new GtkComboBox();
-								$model = new GtkListStore((defined("GObject::TYPE_STRING") ? GObject::TYPE_STRING : Gtk::TYPE_STRING));
-								$combobox->set_model($model);
-								$cell_renderer = new GtkCellRendererText();
-								$combobox->pack_start($cell_renderer);
-								$combobox->set_attributes($cell_renderer, "text", 0);
-
-								foreach($o->get_all_option_names() as $option_name)
-								{
-									$model->append(array($option_name));
-								}
-								$combobox->set_active(0);
-
-								$selected_options[$identifier][$o->get_identifier()] = $combobox;
-								array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $combobox));
-							}
-						}
+						$selected_options[$identifier][$o->get_identifier()] = $combobox;
+						array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $combobox));
 					}
-					pts_set_assignment("GTK_TEST_RUN_OPTIONS_SET", $selected_options);
 				}
-				array_push($menu_items, null);
-
-				$label_save = new GtkLabel("Results");
-				$label_save->modify_font(new PangoFontDescription("Sans 19"));
-				array_push($menu_items, $label_save);
-
-				$save_results = new GtkCheckButton("Save Results");
-				pts_set_assignment("GTK_OBJ_SAVE_RESULTS", $save_results);
-				$save_results->set_active(true);
-				$save_results->connect("toggled", array("gui_gtk", "toggle_save_results"));
-				array_push($menu_items, $save_results);
-
-				$save_name = new GtkEntry();
-				pts_set_assignment("GTK_OBJ_SAVE_NAME", $save_name);
-				array_push($menu_items, array(new GtkLabel("Save Name"), $save_name));
-
-				$test_identifier = new GtkEntry();
-				pts_set_assignment("GTK_OBJ_TEST_IDENTIFIER", $test_identifier);
-				array_push($menu_items, array(new GtkLabel("Test Identifier"), $test_identifier));
-
-				$global_upload = new GtkCheckButton("Upload Results To Phoronix Global");
-				$global_upload->set_active(true);
-				pts_set_assignment("GTK_OBJ_GLOBAL_UPLOAD", $global_upload);
-				array_push($menu_items, $global_upload);
-
-				array_push($menu_items, null);
-				break;
-		//	default:
-		//		return;
-		//		break;
+			}
+			pts_set_assignment("GTK_TEST_RUN_OPTIONS_SET", $selected_options);
 		}
+		array_push($menu_items, null);
 
-		$window = new pts_gtk_window("phoronix-test-suite " . $title_cmd . " " . $identifier);
+		$label_save = new GtkLabel("Results");
+		$label_save->modify_font(new PangoFontDescription("Sans 19"));
+		array_push($menu_items, $label_save);
+
+		$save_results = new GtkCheckButton("Save Results");
+		pts_set_assignment("GTK_OBJ_SAVE_RESULTS", $save_results);
+		$save_results->set_active(true);
+		$save_results->connect("toggled", array("gui_gtk", "toggle_save_results"));
+		array_push($menu_items, $save_results);
+
+		$save_name = new GtkEntry();
+		pts_set_assignment("GTK_OBJ_SAVE_NAME", $save_name);
+		array_push($menu_items, array(new GtkLabel("Save Name"), $save_name));
+
+		$test_identifier = new GtkEntry();
+		pts_set_assignment("GTK_OBJ_TEST_IDENTIFIER", $test_identifier);
+		array_push($menu_items, array(new GtkLabel("Test Identifier"), $test_identifier));
+
+		$global_upload = new GtkCheckButton("Upload Results To Phoronix Global");
+		$global_upload->set_active(true);
+		pts_set_assignment("GTK_OBJ_GLOBAL_UPLOAD", $global_upload);
+		array_push($menu_items, $global_upload);
+
+		array_push($menu_items, null);
+
+		$window = new pts_gtk_window("phoronix-test-suite benchmark " . $identifier);
 		$window->set_resizable(false);
 		$vbox = new GtkVBox();
 		$window->add($vbox);
 
-		if($window_type == "confirmation")
-		{
-			$window->set_size_request(500, 200);
-
-			$label_temp = new GtkLabel($message);
-			$label_temp->set_size_request(480, 150);
-			$label_temp->set_line_wrap(true);
-			$vbox->pack_start($label_temp);
-		}
-		else if($window_type == "menu")
-		{
-			pts_gtk_array_to_boxes($vbox, $menu_items, -1, true);
-		}
+		pts_gtk_array_to_boxes($vbox, $menu_items, -1, true);
 
 		$return_button = new pts_gtk_button("Return", array("gui_gtk", "confirmation_button_clicked"), "return", -1, -1, Gtk::STOCK_CANCEL);
 
 		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 		$continue_button = new GtkButton("Continue");
-		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), $title_cmd, $identifier);
+		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), "benchmark", $identifier);
 		$continue_button->set_image($continue_img);
 
 		pts_gtk_array_to_boxes($vbox, array($return_button, $continue_button));
@@ -977,7 +1011,7 @@ class gui_gtk implements pts_option_interface
 				//Gtk::main_quit();
 				break;
 			case "run_comparison":
-				gui_gtk::show_run_confirmation_interface("RUN", $global_id);
+				gui_gtk::show_run_confirmation_interface($global_id);
 				break;
 		}
 	}

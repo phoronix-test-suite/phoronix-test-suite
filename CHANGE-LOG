@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: More robust detection of clock frequencies with ATI OverDrive
 - pts-core: Fix a few PHP warnings
 - pts-core: Fix regression in excess removal of spaces from strings in pts_trim_spaces()
+- pts-core: Revise the installation interface for GTK2 GUI
 - pts: Add favorites test suite
 - pts: Allow c-ray test profile to have millisecond precision for test results
 - pts_Graph: Add support for multiple sub-titles on graphs

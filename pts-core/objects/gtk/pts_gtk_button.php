@@ -22,7 +22,7 @@
 
 class pts_gtk_button extends GtkButton
 {
-	public function __construct($button_text, $on_click, $pass_on_click, $width = -1, $height = -1, $image = null)
+	public function __construct($button_text, $on_click = null, $pass_on_click = null, $width = -1, $height = -1, $image = null)
 	{
 		parent::__construct($button_text);
 
@@ -31,7 +31,11 @@ class pts_gtk_button extends GtkButton
 			$pass_on_click = $this;
 		}
 
-		$this->connect_simple("clicked", $on_click, $pass_on_click);
+		if($on_click != null)
+		{
+			$this->connect_simple("clicked", $on_click, $pass_on_click);
+		}
+
 		$this->set_size_request($width, $height);
 
 		if($image != null)
