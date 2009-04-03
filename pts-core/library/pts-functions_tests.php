@@ -486,7 +486,7 @@ function pts_estimated_download_size($identifier)
 
 	return $estimated_size;
 }
-function pts_test_estimated_environment_size($identifier)
+function pts_estimated_environment_size($identifier)
 {
 	// Estimate the environment size of a test or suite
 	$estimated_size = 0;
@@ -504,7 +504,7 @@ function pts_test_estimated_environment_size($identifier)
 
 	return $estimated_size;
 }
-function pts_test_estimated_run_time($identifier)
+function pts_estimated_run_time($identifier)
 {
 	// Estimate the time it takes (in seconds) to complete the given test
 	$estimated_length = 0;

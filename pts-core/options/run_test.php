@@ -301,7 +301,7 @@ class run_test implements pts_option_interface
 				array_push($test_names, $t->get_identifier());
 			}
 
-			$estimated_length = pts_test_estimated_run_time($test_names);
+			$estimated_length = pts_estimated_run_time($test_names);
 
 			if($estimated_length > 1)
 			{

@@ -66,7 +66,7 @@ function pts_start_install($to_install)
 		{
 			echo pts_string_header($install_count . " Tests To Be Installed" . 
 			"\nEstimated Download Size: " . pts_estimated_download_size($will_be_installed) . " MB" .
-			"\nEstimated Install Size: " . pts_test_estimated_environment_size($will_be_installed) . " MB");
+			"\nEstimated Install Size: " . pts_estimated_environment_size($will_be_installed) . " MB");
 		}
 	}
 	foreach($tests as $test)
@@ -434,7 +434,7 @@ function pts_install_test($identifier)
 					pts_module_process("__pre_test_install", $identifier);
 					$install_header = "Installing Test: " . $identifier;
 
-					if(($size = pts_test_estimated_environment_size($identifier)) > 0)
+					if(($size = pts_estimated_environment_size($identifier)) > 0)
 					{
 						$install_header .= "\nEstimated Install Size: " . $size . " MB";
 					}

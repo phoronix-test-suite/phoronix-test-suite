@@ -57,7 +57,7 @@ class pts_test_profile_details
 		$this->project_url = $xml_parser->getXMLValue(P_TEST_PROJECTURL);
 
 		$this->test_download_size = pts_estimated_download_size($identifier);
-		$this->test_environment_size = pts_test_estimated_environment_size($identifier);
+		$this->test_environment_size = pts_estimated_environment_size($identifier);
 	}
 	public function get_maintainer()
 	{
@@ -153,7 +153,7 @@ class pts_test_profile_details
 		{
 			$str .= "Environment Size: " . $this->test_environment_size . " MB\n";
 		}
-		if(($el = pts_test_estimated_run_time($this->identifier)) > 0)
+		if(($el = pts_estimated_run_time($this->identifier)) > 0)
 		{
 			echo "Estimated Length: " . pts_format_time_string($el, "SECONDS", true, 60) . "\n";
 		}
