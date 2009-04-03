@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts: Add favorites test suite
 - pts: Allow c-ray test profile to have millisecond precision for test results
 - pts_Graph: Add support for multiple sub-titles on graphs
+- bilde_renderer: Support for using system default TTF fonts
 - documentation: Update for Phoronix Test Suite 1.8
 
 Phoronix Test Suite 1.8.0 Beta 2

@@ -483,7 +483,7 @@ function pts_install_test($identifier)
 					{
 						@file_put_contents(TEST_ENV_DIR . $identifier . "/install.log", $install_log);
 
-						if(strlen($install_log) < 10240)
+						if(!isset($install_log[10240]))
 						{
 							// Not worth printing files over 10kb to screen
 							echo $install_log;

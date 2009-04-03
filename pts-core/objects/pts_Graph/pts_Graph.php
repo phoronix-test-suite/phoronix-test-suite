@@ -61,8 +61,6 @@ abstract class pts_Graph
 	var $graph_version = "";
 	var $graph_proportion = "";
 
-	// CHANGE DIRECTORY FOR TTF FONT LOCATION INSIDE __construct FUNCTION
-
 	// Not user-friendly changes below this line
 	var $graph_body_image = false;
 	var $graph_hide_identifiers = false;
@@ -103,6 +101,30 @@ abstract class pts_Graph
 		}
 
 		$this->update_graph_dimensions(-1, -1, true);
+
+		if(empty($this->graph_font))
+		{
+			$default_font = bilde_renderer::find_default_ttf_font();
+
+			if($default_font == false)
+			{
+				$this->requestRenderer("SVG");
+				$font_type = null;
+			}
+			else
+			{
+				$font_type = basename($default_font);
+
+				if($default_font != $font_type && !defined("CUSTOM_FONT_DIR"))
+				{
+					$font_path = substr($default_font, 0, 0 - (strlen($font_type)));
+					define("CUSTOM_FONT_DIR", $font_path);
+					bilde_renderer::setup_font_directory();
+				}
+			}
+
+			$this->graph_font = $font_type;
+		}
 	}
 	public function requestRenderer($renderer)
 	{

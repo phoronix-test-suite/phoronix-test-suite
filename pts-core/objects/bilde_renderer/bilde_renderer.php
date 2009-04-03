@@ -134,6 +134,31 @@ abstract class bilde_renderer
 			}
 		}
 	}
+	public function find_default_ttf_font()
+	{
+		if(!defined("BILDE_DEFAULT_FONT"))
+		{
+			$default_font = false;
+			$possible_fonts = array(
+			"/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
+			"/usr/share/fonts/truetype/freefont/FreeSans.ttf",
+			"/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf"
+			);
+
+			foreach($possible_fonts as $font_file)
+			{
+				if(is_file($font_file))
+				{
+					$default_font = $font_file;
+					break;
+				}
+			}
+
+			define("BILDE_DEFAULT_FONT", $default_font);
+		}
+
+		return BILDE_DEFAULT_FONT;
+	}
 	public function get_renderer()
 	{
 		return $this->renderer;

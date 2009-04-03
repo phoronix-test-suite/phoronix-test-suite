@@ -507,7 +507,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments, $test_extra_runtime_variables);
 
-		if(strlen($test_results) < 10240)
+		if(!isset($test_results[10240]))
 		{
 			echo $test_results;
 		}
