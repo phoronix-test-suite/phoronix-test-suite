@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts: Update Mandriva Linux external dependencies support
+- pts: Update build-php test profile with updated download links
 
 Phoronix Test Suite 1.8.0 "Selbu"
 April 6, 2009
