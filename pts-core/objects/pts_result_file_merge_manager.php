@@ -62,9 +62,12 @@ class pts_result_file_merge_manager
 				{
 					if($select_identifiers == null || in_array($identifiers[$j], $select_identifiers))
 					{
-						$this->test_results[$i]->add_identifier($identifiers[$j]);
-						$this->test_results[$i]->add_value($values[$j]);
-						$this->test_results[$i]->add_raw_value($raw_values[$j]);
+						if(!$this->result_already_contained($i, $identifiers[$j], $values[$j]))
+						{
+							$this->test_results[$i]->add_identifier($identifiers[$j]);
+							$this->test_results[$i]->add_value($values[$j]);
+							$this->test_results[$i]->add_raw_value($raw_values[$j]);
+						}
 					}
 				}
 
@@ -77,6 +80,23 @@ class pts_result_file_merge_manager
 			// Add Result
 			array_push($this->test_results, $merge_test_object);
 		}
+	}
+	protected function result_already_contained($test_results_location, $identifier, $value)
+	{
+		$contained = false;
+		$keys = array_keys($this->test_results[$test_results_location]->get_identifiers(), $identifier);
+		$result_values = $this->test_results[$test_results_location]->get_values();
+
+		foreach($keys as $key)
+		{
+			if($result_values[$key] == $value)
+			{
+				$contained = true;
+				break;
+			}
+		}
+
+		return $contained;
 	}
 	public function get_results()
 	{

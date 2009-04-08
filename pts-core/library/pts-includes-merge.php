@@ -31,6 +31,7 @@ function pts_merge_test_results()
 	$test_result_manager = new pts_result_file_merge_manager();
 
 	$results->setXslBinding("pts-results-viewer.xsl");
+	$added_systems_hash = array();
 
 	for($merge_pos = 0; $merge_pos < count($files_to_combine); $merge_pos++)
 	{
@@ -72,18 +73,26 @@ function pts_merge_test_results()
 		$associated_identifiers = $this_result_file->get_system_identifiers();
 
 		// Write the system hardware/software information
+
 		for($i = 0; $i < count($system_hardware); $i++)
 		{
 			if($selected_identifiers == null || in_array($associated_identifiers[$i], $selected_identifiers))
 			{
-				$USE_ID = pts_request_new_id();
-				$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $system_hardware[$i]);
-				$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $system_software[$i]);
-				$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $system_author[$i]);
-				$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $system_date[$i]);
-				$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $system_notes[$i]);
-				$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $pts_version[$i]);
-				$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $associated_identifiers[$i]);
+				$this_hash = md5($associated_identifiers[$i] . ";" . $system_hardware[$i] . ";" . $system_software[$i] . ";" . $system_date[$i]);
+
+				if(!in_array($this_hash, $added_systems_hash))
+				{
+					$USE_ID = pts_request_new_id();
+					$results->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $USE_ID, $system_hardware[$i]);
+					$results->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $USE_ID, $system_software[$i]);
+					$results->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $USE_ID, $system_author[$i]);
+					$results->addXmlObject(P_RESULTS_SYSTEM_DATE, $USE_ID, $system_date[$i]);
+					$results->addXmlObject(P_RESULTS_SYSTEM_NOTES, $USE_ID, $system_notes[$i]);
+					$results->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $USE_ID, $pts_version[$i]);
+					$results->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $USE_ID, $associated_identifiers[$i]);
+
+					array_push($added_systems_hash, $this_hash);
+				}
 			}
 		}
 
