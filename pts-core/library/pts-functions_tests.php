@@ -230,7 +230,10 @@ function pts_generate_graphs($test_results, $save_to_dir)
 	}
 
 	// Save XSL
-	file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t));
+	if(isset($t))
+	{
+		file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t));
+	}
 
 	// Render overview chart
 	$chart = new pts_Chart();

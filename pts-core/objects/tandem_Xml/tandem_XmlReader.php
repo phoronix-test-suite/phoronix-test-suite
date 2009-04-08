@@ -40,9 +40,11 @@ class tandem_XmlReader
 
 	function __construct($read_xml, $cache_support = true)
 	{
-		if(is_readable($read_xml))
+		$remote_file = isset($read_xml[8]) && substr($read_xml, 0, 7) == "http://";
+
+		if(is_readable($read_xml) || $remote_file)
 		{
-			if($cache_support)
+			if($cache_support && !$remote_file)
 			{
 				$this->xml_cache_file = false;
 				$this->xml_cache_tags = false;
@@ -51,7 +53,7 @@ class tandem_XmlReader
 			// If you are going to be banging XML files hard through the course of the script, you will want to flush the PHP file cache
 			// clearstatcache();
 
-			$this->xml_file_time = filemtime($read_xml);
+			$this->xml_file_time = ($remote_file ? null : filemtime($read_xml));
 			$this->xml_file_name = $read_xml;
 
 			if($this->xml_cache_file && isset(self::$file_cache[$this->xml_file_name][$this->xml_file_time]))
