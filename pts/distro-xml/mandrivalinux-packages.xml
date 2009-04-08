@@ -97,9 +97,14 @@
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl</PackageName>
+			<PackageName>perl perl-SDL</PackageName>
 			<FileCheck>/usr/bin/perl</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>perl-opengl</GenericName>
+			<PackageName>libopengl-perl</PackageName>
+			<FileCheck>/usr/lib/perl5/auto/OpenGL/OpenGL.so</FileCheck>
+                </Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
 			<PackageName>libxv1-devel libxvmc1-devel</PackageName>
