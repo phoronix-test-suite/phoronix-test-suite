@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=Phoronix Test Suite
 Comment=Phoronix Test Suite Benchmarking Utility
-Exec=phoronix-test-suite
-Icon=phoronix-test-suite.png
+Comment[fr]=Outil pour étalonner les performances de votre ordinateur
+Exec=phoronix-test-suite gui
+StartupNotify=true
+Icon=phoronix-test-suite
 Terminal=0
 Type=Application
 Encoding=UTF-8
-Categories=System Tools;Application;
+Categories=System;Application;
