@@ -81,6 +81,12 @@
 			<FileCheck>/usr/include/portaudio.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>ncurses-development</GenericName>
+			<Title>NCurses Development Files</Title>
+			<PossibleNames>libncurses5-dev</PossibleNames>
+			<FileCheck>/usr/include/ncurses.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>fortran-compiler</GenericName>
 			<Title>Fortran Compiler</Title>
 			<PossibleNames>gfortran, gcc-fortran</PossibleNames>

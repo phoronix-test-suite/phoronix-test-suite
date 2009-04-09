@@ -145,5 +145,10 @@
 			<PackageName>libtool</PackageName>
 			<FileCheck>/usr/bin/libtool</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>ncurses-development</GenericName>
+			<PackageName>ncurses</PackageName>
+			<FileCheck>/usr/include/ncurses.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
