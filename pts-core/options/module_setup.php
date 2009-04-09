@@ -51,7 +51,7 @@ class module_setup implements pts_option_interface
 				$set_options = array();
 				foreach($module_setup as $module_option)
 				{
-					if($module_option instanceOf pts_module_option))
+					if($module_option instanceOf pts_module_option)
 					{
 						do
 						{

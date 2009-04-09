@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: When merging results, don't merge results that are already in the merge and are identical (prevent duplicates)
+- pts-core: Use /sys/block/sdX for Linux disk drive detection instead of dmesg output
 - pts: Update Mandriva Linux external dependencies support
 - pts: Update build-php test profile with updated download links
 - tandem_Xml: Support for reading XML from a remote HTTP location

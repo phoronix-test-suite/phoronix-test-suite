@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.2</Version>
+		<Version>1.2.0</Version>
 		<TestType>System</TestType>
 		<Title>Netbook Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -15,13 +15,16 @@
 		<Test>encode-ogg</Test>
 	</RunTest>
 	<RunTest>
-		<Test>mencoder</Test>
+		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
 		<Test>build-imagemagick</Test>
 	</RunTest>
 	<RunTest>
-		<Test>compress-gzip</Test>
+		<Test>compress-7zip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-lzma</Test>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
@@ -46,6 +49,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
 	</RunTest>
 	<RunTest>
 		<Test>ramspeed</Test>
