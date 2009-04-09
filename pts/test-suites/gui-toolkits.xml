@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.3</Version>
+		<Version>1.0.4</Version>
 		<TestType>Graphics</TestType>
 		<Title>GUI Toolkits</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -25,6 +25,27 @@
 	</RunTest>
 	<RunTest>
 		<Test>qgears2</Test>
-		<Mode>BATCH</Mode>
+		<Arguments>-render GEARSFANCY</Arguments>
+		<Description>XRender + Gears</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-render TEXT</Arguments>
+		<Description>XRender + Text</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-render COMPO</Arguments>
+		<Description>XRender + Image Scaling</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-gl GEARSFANCY</Arguments>
+		<Description>OpenGL + Gears</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-gl COMPO</Arguments>
+		<Description>OpenGL + Image Scaling</Description>
 	</RunTest>
 </PhoronixTestSuite>

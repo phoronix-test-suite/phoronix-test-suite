@@ -27,6 +27,24 @@
 		<Test>compress-lzma</Test>
 	</RunTest>
 	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_COMPOSITE</Arguments>
+		<Description>Composite</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_FFT</Arguments>
+		<Description>Fast Fourier Transform</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_MONTE</Arguments>
+		<Description>Monte Carlo</Description>
+	</RunTest>
+	<RunTest>
+		<Test>fhourstones</Test>
+	</RunTest>
+	<RunTest>
 		<Test>iozone</Test>
 		<Arguments>-s 512M -i0</Arguments>
 		<Description>512MB Write Performance</Description>
@@ -57,34 +75,6 @@
 		<Test>ramspeed</Test>
 		<Arguments>ADD -b 3 -l 10</Arguments>
 		<Description>Integer Add</Description>
-	</RunTest>
-	<RunTest>
-		<Test>java</Test>
-	</RunTest>
-	<RunTest>
-		<Test>qgears2</Test>
-		<Arguments>-render GEARSFANCY</Arguments>
-		<Description>XRender + Gears</Description>
-	</RunTest>
-	<RunTest>
-		<Test>qgears2</Test>
-		<Arguments>-render TEXT</Arguments>
-		<Description>XRender + Text</Description>
-	</RunTest>
-	<RunTest>
-		<Test>qgears2</Test>
-		<Arguments>-render COMPO</Arguments>
-		<Description>XRender + Image Scaling</Description>
-	</RunTest>
-	<RunTest>
-		<Test>qgears2</Test>
-		<Arguments>-gl GEARSFANCY</Arguments>
-		<Description>OpenGL + Gears</Description>
-	</RunTest>
-	<RunTest>
-		<Test>qgears2</Test>
-		<Arguments>-gl COMPO</Arguments>
-		<Description>OpenGL + Image Scaling</Description>
 	</RunTest>
 	<RunTest>
 		<Test>gui-toolkits</Test>
