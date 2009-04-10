@@ -253,14 +253,19 @@ function sw_os_kernel()
 function sw_os_vendor()
 {
 	// Returns OS vendor
-	if(IS_LINUX)
-	{
-		$vendor = read_lsb("Distributor ID");
-	}
+	static $vendor = false;
 
 	if($vendor == false)
 	{
-		$vendor = "Unknown";
+		if(IS_LINUX)
+		{
+			$vendor = read_lsb("Distributor ID");
+		}
+
+		if($vendor == false)
+		{
+			$vendor = "Unknown";
+		}
 	}
 
 	return $vendor;
@@ -268,27 +273,31 @@ function sw_os_vendor()
 function sw_os_version()
 {
 	// Returns OS version
-	if(IS_MACOSX)
-	{
-		$os = read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
-		
-		$start_pos = strpos($os, ".");
-		$end_pos = strrpos($os, ".");
-		$start_pos = strrpos(substr($os, 0, $start_pos), " ");
-		$end_pos = strpos($os, " ", $end_pos);
-		
-		$os_version = substr($os, $start_pos + 1, $end_pos - $start_pos);
-	}
-	else if(IS_LINUX)
-	{
-		$os_version = read_lsb("Release");
-	}
+	static $version = false;
 
-	if(empty($os_version))
+	if($version == false)
 	{
-		$os_version = "Unknown";
-	}
-	
+		if(IS_MACOSX)
+		{
+			$os = read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
+		
+			$start_pos = strpos($os, ".");
+			$end_pos = strrpos($os, ".");
+			$start_pos = strrpos(substr($os, 0, $start_pos), " ");
+			$end_pos = strpos($os, " ", $end_pos);
+		
+			$os_version = substr($os, $start_pos + 1, $end_pos - $start_pos);
+		}
+		else if(IS_LINUX)
+		{
+			$os_version = read_lsb("Release");
+		}
+
+		if(empty($os_version))
+		{
+			$os_version = "Unknown";
+		}
+	}	
 	
 	return $os_version;
 }

@@ -143,9 +143,13 @@ function read_pci($desc, $clean_string = true)
 		{
 			$lspci_cmd = "/sbin/lspci";
 		}
+		else if(($lspci = pts_executable_in_path("lspci")) != false)
+		{
+			$lspci_cmd = $lspci;
+		}
 		else
 		{
-			$lspci_cmd = "lspci";
+			return false;
 		}
 
 		$pci_info = shell_exec($lspci_cmd . " 2>&1");

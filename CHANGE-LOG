@@ -6,6 +6,8 @@ Phoronix Test Suite (Git)
 - pts-core: Use /sys/block/sdX for Linux disk drive detection instead of dmesg
 - pts-core: Fix an error from a typo in module-setup option
 - pts-core: Don't attempt to read LSB information on non-Linux platforms
+- pts-core: Don't call lspci when it's not available
+- pts-core: Fix various warning output fixes on PC-BSD
 - pts: Update Mandriva Linux external dependencies support
 - pts: Update build-php test profile with updated download links
 - pts: Update netbook test suite
