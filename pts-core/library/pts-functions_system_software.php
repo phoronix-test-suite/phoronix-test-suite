@@ -253,7 +253,10 @@ function sw_os_kernel()
 function sw_os_vendor()
 {
 	// Returns OS vendor
-	$vendor = read_lsb("Distributor ID");
+	if(IS_LINUX)
+	{
+		$vendor = read_lsb("Distributor ID");
+	}
 
 	if($vendor == false)
 	{
@@ -276,7 +279,7 @@ function sw_os_version()
 		
 		$os_version = substr($os, $start_pos + 1, $end_pos - $start_pos);
 	}
-	else
+	else if(IS_LINUX)
 	{
 		$os_version = read_lsb("Release");
 	}
