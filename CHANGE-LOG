@@ -4,11 +4,13 @@ Phoronix Test Suite (Git)
 
 - pts-core: When merging results, don't merge results that are already in the merge and are identical (prevent duplicates)
 - pts-core: Use /sys/block/sdX for Linux disk drive detection instead of dmesg
+- pts-core: Fix an error from a typo in module-setup option
 - pts: Update Mandriva Linux external dependencies support
 - pts: Update build-php test profile with updated download links
 - pts: Update netbook test suite
 - pts: Add ncurses development files to PTS External Dependencies as ncurses-development
 - tandem_Xml: Support for reading XML from a remote HTTP location
+- documentation: Update install instructions regarding the phoronix-test-suite being in Fedora / EPEL repositories
 
 Phoronix Test Suite 1.8.0 "Selbu"
 April 6, 2009

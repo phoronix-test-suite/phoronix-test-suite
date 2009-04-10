@@ -42,9 +42,6 @@
 		<Description>Monte Carlo</Description>
 	</RunTest>
 	<RunTest>
-		<Test>fhourstones</Test>
-	</RunTest>
-	<RunTest>
 		<Test>iozone</Test>
 		<Arguments>-s 512M -i0</Arguments>
 		<Description>512MB Write Performance</Description>
