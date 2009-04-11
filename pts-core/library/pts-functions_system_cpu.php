@@ -40,7 +40,7 @@ function hw_cpu_core_count()
 		}
 		else if(IS_BSD)
 		{
-			$info = read_sysctl("hw.ncpu");
+			$info = intval(read_sysctl("hw.ncpu"));
 		}
 		else if(IS_MACOSX)
 		{
@@ -195,23 +195,41 @@ function hw_cpu_default_frequency($cpu_core = 0)
 function hw_cpu_temperature()
 {
 	// Read the processor temperature
-	$temp_c = read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
+	$temp_c = -1;
 
-	if(empty($temp_c))
+	if(IS_LINUX)
 	{
-		$temp_c = read_acpi(array(
-			"/thermal_zone/THM0/temperature", 
-			"/thermal_zone/TZ00/temperature"), "temperature");
+		$sensors = read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
 
-		if(($end = strpos($temp_c, ' ')) > 0)
+		if(!$sensors != false && is_numeric($sensors))
 		{
-			$temp_c = substr($temp_c, 0, $end);
+			$temp_c = $sensors;
+		}
+		else
+		{
+			$acpi = read_acpi(array(
+				"/thermal_zone/THM0/temperature", 
+				"/thermal_zone/TZ00/temperature"), "temperature");
+
+			if(($end = strpos($acpi, ' ')) > 0)
+			{
+				$temp_c = substr($acpi, 0, $end);
+			}
 		}
 	}
-
-	if(empty($temp_c))
+	else if(IS_BSD)
 	{
-		$temp_c = -1;
+		$acpi = read_sysctl("hw.acpi.thermal.tz0.temperature");
+
+		if(($end = strpos($acpi, 'C')) > 0)
+		{
+			$acpi = substr($acpi, 0, $end);
+
+			if(is_numeric($acpi))
+			{
+				$temp_c = $acpi;
+			}
+		}
 	}
 
 	return $temp_c;

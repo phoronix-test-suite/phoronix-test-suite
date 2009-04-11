@@ -110,7 +110,7 @@ function read_sensors($attributes)
 	for($j = 0; $j < count($attributes) && empty($value); $j++)
 	{
 		$attribute = $attributes[$j];
-		for($i = 0; $i < count($sensors_lines) && $value == null; $i++)
+		for($i = 0; $i < count($sensors_lines) && $value == false; $i++)
 		{
 			$line = explode(": ", $sensors_lines[$i]);
 			$this_attribute = trim($line[0]);

@@ -246,19 +246,44 @@ function hw_sys_hdd_total()
 function hw_sys_temperature()
 {
 	// Reads the system's temperature
-	$temp_c = read_sensors(array("Sys Temp", "Board Temp"));
+	$temp_c = -1;
 
-	if($temp_c == false)
+	if(IS_LINUX)
 	{
-		$temp_c = read_acpi("/thermal_zone/THM1/temperature", "temperature"); // if it is THM1 that is for the system, in most cases it should be
+		$sensors = read_sensors(array("Sys Temp", "Board Temp"));
 
-		if(($end = strpos($temp_c, ' ')) > 0)
+		if(!$sensors != false && is_numeric($sensors))
 		{
-			$temp_c = substr($temp_c, 0, $end);
+			$temp_c = $sensors;
+		}
+		else
+		{
+			$acpi = read_acpi(array(
+				"/thermal_zone/THM1/temperature", 
+				"/thermal_zone/TZ01/temperature"), "temperature");
+
+			if(($end = strpos($acpi, ' ')) > 0)
+			{
+				$temp_c = substr($acpi, 0, $end);
+			}
+		}
+	}
+	else if(IS_BSD)
+	{
+		$acpi = read_sysctl("hw.acpi.thermal.tz1.temperature");
+
+		if(($end = strpos($acpi, 'C')) > 0)
+		{
+			$acpi = substr($acpi, 0, $end);
+
+			if(is_numeric($acpi))
+			{
+				$temp_c = $acpi;
+			}
 		}
 	}
 
-	return ($temp_c == false ? -1 : $temp_c);
+	return $temp_c;
 }
 function hw_sys_line_voltage($type)
 {

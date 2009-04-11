@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Don't attempt to read LSB information on non-Linux platforms
 - pts-core: Don't call lspci when it's not available
 - pts-core: Fix various warning output fixes on PC-BSD
+- pts-core: Add ACPI temperature detection support on BSD operating systems
 - pts: Update Mandriva Linux external dependencies support
 - pts: Update build-php test profile with updated download links
 - pts: Update netbook test suite
