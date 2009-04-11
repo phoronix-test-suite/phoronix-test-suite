@@ -24,7 +24,7 @@
 class toggle_screensaver extends pts_module_interface
 {
 	const module_name = "Toggle Screensaver";
-	const module_version = "1.0.1";
+	const module_version = "1.0.2";
 	const module_description = "This module toggles the system's screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.";
 	const module_author = "Phoronix Media";
 
@@ -36,7 +36,9 @@ class toggle_screensaver extends pts_module_interface
 	{
 		$halt_screensaver = trim(getenv("HALT_SCREENSAVER"));
 		if(!empty($halt_screensaver) && !pts_string_bool($halt_screensaver))
-			return;
+		{
+			return PTS_MODULE_UNLOAD;
+		}
 
 		// GNOME Screensaver?
 		$is_gnome_screensaver_enabled = trim(shell_exec("gconftool -g /apps/gnome-screensaver/idle_activation_enabled 2>&1"));
@@ -61,7 +63,14 @@ class toggle_screensaver extends pts_module_interface
 		}
 
 		if(self::$gnome_screensaver_halted || self::$kde_screensaver_halted)
+		{
 			self::$screensaver_halted = TRUE;
+		}
+		else if(pts_executable_in_path("xdg-screensaver") == false)
+		{
+			// xdg-screensaver is not available
+			return PTS_MODULE_UNLOAD;
+		}
 	}
 	public static function __shutdown()
 	{
