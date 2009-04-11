@@ -11,7 +11,7 @@
 		<EnvironmentSize>12.7</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.povray.org/</ProjectURL>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
+		<SupportedPlatforms>Linux, BSD</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>POV-Ray</Title>
