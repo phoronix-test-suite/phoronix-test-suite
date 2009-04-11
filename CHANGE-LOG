@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts: Update build-php test profile with updated download links
 - pts: Update netbook test suite
 - pts: Add ncurses development files to PTS External Dependencies as ncurses-development
+- pts: c-ray test profile works on BSD
 - tandem_Xml: Support for reading XML from a remote HTTP location
 - documentation: Update install instructions regarding the phoronix-test-suite being in Fedora / EPEL repositories
 
