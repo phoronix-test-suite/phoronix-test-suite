@@ -181,6 +181,7 @@ function hw_sys_chipset_string()
 function hw_sys_hdd_string()
 {
 	$disks = array();
+
 	if(IS_MACOSX)
 	{
 		// TODO: Support reading non-SATA drives and more than one drive
@@ -191,6 +192,22 @@ function hw_sys_hdd_string()
 		{
 			$disks = array($capacity . " " . $model);
 		}
+	}
+	else if(IS_BSD)
+	{
+		$i = 0;
+
+		do
+		{
+			$disk = read_sysctl("hw.ad." . $i . ".%desc");
+
+			if($disk != false)
+			{
+				array_push($disks, $disk);
+			}
+			$i++;
+		}
+		while($disk != false);
 	}
 	else
 	{
