@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts: povray test profile works on BSD
 - pts: Add bsd test suite of tests that are known to work against BSD (at least PC-BSD)
 - pts: Add xorg-development as an external dependency to render-bench test profile
+- pts: Add libqt4-opengl-dev to qt4-development external dependency on Ubuntu
 - toggle_screensaver: Unload the module when the GNOME/KDE screensaver isn't toggled and xdg-screensaver isn't available
 - tandem_Xml: Support for reading XML from a remote HTTP location
 - documentation: Update install instructions regarding the phoronix-test-suite being in Fedora / EPEL repositories

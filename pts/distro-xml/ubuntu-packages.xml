@@ -142,8 +142,8 @@
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>
-			<PackageName>libqt4-dev</PackageName>
-			<FileCheck>/usr/bin/qmake-qt4</FileCheck>
+			<PackageName>libqt4-dev libqt4-opengl-dev</PackageName>
+			<FileCheck>/usr/bin/qmake-qt4, /usr/include/qt4/Qt/qgl.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>autoconf</GenericName>
