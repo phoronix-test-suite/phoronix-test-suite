@@ -10,7 +10,7 @@ cd scimark2_files/
 
 rm -f *.result
 
-./scimark2 -large > \$LOG_FILE.result
+./scimark2 -large > \$LOG_FILE.result 2>&1
 
 case \"\$1\" in
 \"TEST_COMPOSITE\")
