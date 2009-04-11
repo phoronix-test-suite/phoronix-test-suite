@@ -142,7 +142,9 @@ abstract class bilde_renderer
 			$possible_fonts = array(
 			"/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
 			"/usr/share/fonts/truetype/freefont/FreeSans.ttf",
-			"/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf"
+			"/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf",
+			"/usr/share/fonts/dejavu/DejaVuSans.ttf",
+			"/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
 			);
 
 			foreach($possible_fonts as $font_file)
