@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!-- Generated: 2009-04-11 00:10:36 -->
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Title>BSD</Title>
+		<Version>1.0.0</Version>
+		<Maintainer>Michael Larabel</Maintainer>
+		<TestType>System</TestType>
+		<Description>A collection of tests that are compatible with BSD operating systems like FreeBSD, OpenBSD, NetBSD, and PC-BSD.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>build-imagemagick</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-mp3</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-7zip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-gzip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-lzma</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>povray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB</Arguments>
+		<Description>HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-lat 10x10-5%</Arguments>
+		<Description>Local Adaptive Thresholding</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-resize 50%</Arguments>
+		<Description>Resizing</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-sharpen 0x1.0</Arguments>
+		<Description>Sharpen</Description>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_DHRY2</Arguments>
+		<Description>Dhrystone 2</Description>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_INT</Arguments>
+		<Description>Integer Arithmetic</Description>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_FLOAT</Arguments>
+		<Description>Floating-Point Arithmetic</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>FFT</Arguments>
+		<Description>Fast Fourier Transform</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>SPARSE</Arguments>
+		<Description>Sparse Matrix Multiply</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>DENSE</Arguments>
+		<Description>Dense LU Matrix Factorization</Description>
+	</RunTest>
+	<RunTest>
+		<Test>fhourstones</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+</PhoronixTestSuite>
