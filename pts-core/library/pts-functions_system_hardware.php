@@ -199,7 +199,7 @@ function hw_sys_hdd_string()
 
 		do
 		{
-			$disk = read_sysctl("hw.ad." . $i . ".%desc");
+			$disk = read_sysctl("dev.ad." . $i . ".%desc");
 
 			if($disk != false)
 			{
@@ -265,7 +265,21 @@ function hw_sys_temperature()
 	// Reads the system's temperature
 	$temp_c = -1;
 
-	if(IS_LINUX)
+	if(IS_BSD)
+	{
+		$acpi = read_sysctl("hw.acpi.thermal.tz1.temperature");
+
+		if(($end = strpos($acpi, 'C')) > 0)
+		{
+			$acpi = substr($acpi, 0, $end);
+
+			if(is_numeric($acpi))
+			{
+				$temp_c = $acpi;
+			}
+		}
+	}
+	else if(IS_LINUX)
 	{
 		$sensors = read_sensors(array("Sys Temp", "Board Temp"));
 
@@ -282,20 +296,6 @@ function hw_sys_temperature()
 			if(($end = strpos($acpi, ' ')) > 0)
 			{
 				$temp_c = substr($acpi, 0, $end);
-			}
-		}
-	}
-	else if(IS_BSD)
-	{
-		$acpi = read_sysctl("hw.acpi.thermal.tz1.temperature");
-
-		if(($end = strpos($acpi, 'C')) > 0)
-		{
-			$acpi = substr($acpi, 0, $end);
-
-			if(is_numeric($acpi))
-			{
-				$temp_c = $acpi;
 			}
 		}
 	}

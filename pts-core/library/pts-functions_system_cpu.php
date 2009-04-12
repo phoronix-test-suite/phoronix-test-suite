@@ -197,7 +197,21 @@ function hw_cpu_temperature()
 	// Read the processor temperature
 	$temp_c = -1;
 
-	if(IS_LINUX)
+	if(IS_BSD)
+	{
+		$acpi = read_sysctl("hw.acpi.thermal.tz0.temperature");
+
+		if(($end = strpos($acpi, 'C')) > 0)
+		{
+			$acpi = substr($acpi, 0, $end);
+
+			if(is_numeric($acpi))
+			{
+				$temp_c = $acpi;
+			}
+		}
+	}
+	else if(IS_LINUX)
 	{
 		$sensors = read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
 
@@ -214,20 +228,6 @@ function hw_cpu_temperature()
 			if(($end = strpos($acpi, ' ')) > 0)
 			{
 				$temp_c = substr($acpi, 0, $end);
-			}
-		}
-	}
-	else if(IS_BSD)
-	{
-		$acpi = read_sysctl("hw.acpi.thermal.tz0.temperature");
-
-		if(($end = strpos($acpi, 'C')) > 0)
-		{
-			$acpi = substr($acpi, 0, $end);
-
-			if(is_numeric($acpi))
-			{
-				$temp_c = $acpi;
 			}
 		}
 	}
