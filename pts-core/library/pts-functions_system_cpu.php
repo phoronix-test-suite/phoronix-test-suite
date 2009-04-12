@@ -199,11 +199,29 @@ function hw_cpu_temperature()
 
 	if(IS_BSD)
 	{
-		$acpi = read_sysctl("hw.acpi.thermal.tz0.temperature");
 
-		if(($end = strpos($acpi, 'C')) > 0)
+		$cpu_temp = read_sysctl("dev.cpu.0.temperature");
+
+		if($cpu_temp != false)
 		{
-			$acpi = substr($acpi, 0, $end);
+			if(($end = strpos($cpu_temp, 'C')) > 0)
+			{
+				$cpu_temp = substr($cpu_temp, 0, $end);
+			}
+
+			if(is_numeric($cpu_temp))
+			{
+				$temp_c = $cpu_temp;
+			}
+		}
+		else
+		{
+			$acpi = read_sysctl("hw.acpi.thermal.tz0.temperature");
+
+			if(($end = strpos($acpi, 'C')) > 0)
+			{
+				$acpi = substr($acpi, 0, $end);
+			}
 
 			if(is_numeric($acpi))
 			{
