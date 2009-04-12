@@ -209,7 +209,7 @@ function hw_sys_hdd_string()
 		}
 		while($disk != false);
 	}
-	else
+	else if(IS_LINUX)
 	{
 		$disks_formatted = array();
 		$disks = array();

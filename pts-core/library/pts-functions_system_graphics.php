@@ -691,6 +691,24 @@ function hw_gpu_string($append_frequency = false)
 
 		$info = $info;
 	}
+	else if(IS_BSD)
+	{
+		$drm_info = read_sysctl("dev.drm.0.%desc");
+
+		if($drm_info == false)
+		{
+			$agp_info = read_sysctl("dev.agp.0.%desc");
+
+			if($agp_info != false)
+			{
+				$info = $agp_info;
+			}
+		}
+		else
+		{
+			$info = $drm_info;
+		}
+	}
 	
 	if(empty($info) || strpos($info, "Mesa ") !== false || $info == "Software Rasterizer")
 	{
@@ -715,20 +733,6 @@ function hw_gpu_string($append_frequency = false)
 			{
 				$info = substr($info, $start_pos + 5);
 			}
-		}
-	}
-
-	if(IS_BSD && $info == "Unknown")
-	{
-		$info = read_sysctl("dev.drm.0.%desc");
-
-		if(empty($info))
-		{
-			$info = read_sysctl("dev.agp.0.%desc");
-		}
-		if(empty($info))
-		{
-			$info = "Unknown";
 		}
 	}
 
