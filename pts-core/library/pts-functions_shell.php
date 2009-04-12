@@ -92,29 +92,35 @@ function pts_download($download, $to)
 }
 function pts_executable_in_path($executable)
 {
-	$paths = explode(":", getenv("PATH"));
+	$paths = explode(":", (($path = getenv("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
 	$executable_path = false;
 
-	if(empty($paths) || empty($paths[0]))
+	foreach($paths as $path)
 	{
-		// Load a few defaults
-		$paths = array("/usr/bin", "/usr/local/bin");
-	}
-
-	for($i = 0; $i < count($paths) && $executable_path == false; $i++)
-	{
-		if(substr($paths[$i], -1) != "/")
+		if(substr($path, -1) != "/")
 		{
-			$paths[$i] .= "/";
+			$path .= "/";
 		}
 
-		if(is_executable($paths[$i] . $executable))
+		if(is_executable($path . $executable))
 		{
-			$executable_path = $paths[$i] . $executable;
+			$executable_path = $path . $executable;
+			break;
 		}
 	}
 
 	return $executable_path;
+}
+function pts_executable_available($executable)
+{
+	static $cache = null;
+
+	if(!isset($cache[$executable]))
+	{
+		$cache[$executable] = pts_executable_in_path($executable) != false;
+	}
+
+	return $cache[$executable];
 }
 function pts_remove($object, $ignore_files = null)
 {
