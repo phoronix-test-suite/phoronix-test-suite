@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
+
 Phoronix Test Suite 1.8.1
 April 16, 2009
 

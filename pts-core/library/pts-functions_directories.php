@@ -43,7 +43,6 @@ function pts_define_directories()
 	define("TEST_LIBRARIES_DIR", PTS_CORE_PATH . "test-libraries/");
 	define("STATIC_DIR", PTS_CORE_PATH . "static/");
 	define("MEDIA_DIR", PTS_CORE_PATH . "media/");
-	define("FONT_DIR", RESULTS_VIEWER_DIR . "fonts/");
 
 	// Test & Suite Locations
 	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");

@@ -134,25 +134,32 @@ abstract class bilde_renderer
 			}
 		}
 	}
-	public function find_default_ttf_font()
+	public function find_default_ttf_font($find_font = null)
 	{
 		if(!defined("BILDE_DEFAULT_FONT"))
 		{
-			$default_font = false;
-			$possible_fonts = array(
-			"/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
-			"/usr/share/fonts/truetype/freefont/FreeSans.ttf",
-			"/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf",
-			"/usr/share/fonts/dejavu/DejaVuSans.ttf",
-			"/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
-			);
-
-			foreach($possible_fonts as $font_file)
+			if(is_file($find_font))
 			{
-				if(is_file($font_file))
+				$default_font = $find_font;
+			}
+			else
+			{
+				$default_font = false;
+				$possible_fonts = array(
+				"/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
+				"/usr/share/fonts/truetype/freefont/FreeSans.ttf",
+				"/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf",
+				"/usr/share/fonts/dejavu/DejaVuSans.ttf",
+				"/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
+				);
+
+				foreach($possible_fonts as $font_file)
 				{
-					$default_font = $font_file;
-					break;
+					if(is_file($font_file))
+					{
+						$default_font = $font_file;
+						break;
+					}
 				}
 			}
 

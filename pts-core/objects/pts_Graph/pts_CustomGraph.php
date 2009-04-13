@@ -45,15 +45,6 @@ class pts_CustomGraph extends pts_Graph
 
 		$read_config = new tandem_XmlReader($file);
 
-		$font_xml = pts_read_graph_config(P_GRAPH_FONT_TYPE, null, $read_config);
-		$font_type = basename($font_xml);
-
-		if($font_xml != $font_type && !defined("CUSTOM_FONT_DIR"))
-		{
-			$font_path = substr($font_xml, 0, 0 - (strlen($font_type)));
-			define("CUSTOM_FONT_DIR", $font_path);
-		}
-
 		$this->graph_attr_width = pts_read_graph_config(P_GRAPH_SIZE_WIDTH, null, $read_config); // Graph width
 		$this->graph_attr_height = pts_read_graph_config(P_GRAPH_SIZE_HEIGHT, null, $read_config); // Graph height
 		$this->graph_attr_big_border = pts_read_graph_config(P_GRAPH_BORDER, null, $read_config) == "TRUE"; // Graph border
@@ -73,7 +64,7 @@ class pts_CustomGraph extends pts_Graph
 
 		// Text
 		$this->graph_watermark_text = pts_read_graph_config(P_GRAPH_WATERMARK, null, $read_config); // watermark
-		$this->graph_font = $font_type; // TTF file name
+		$this->graph_font = pts_read_graph_config(P_GRAPH_FONT_TYPE, null, $read_config);  // TTF file name
 		$this->graph_font_size_heading = pts_read_graph_config(P_GRAPH_FONT_SIZE_HEADERS, null, $read_config); // Font size of headings
 		$this->graph_font_size_bars = pts_read_graph_config(P_GRAPH_FONT_SIZE_TEXT, null, $read_config); // Font size for text on the bars/objects
 		$this->graph_font_size_identifiers = pts_read_graph_config(P_GRAPH_FONT_SIZE_IDENTIFIERS, null, $read_config); // Font size of identifiers

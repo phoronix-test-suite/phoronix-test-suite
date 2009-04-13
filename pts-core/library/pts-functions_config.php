@@ -188,7 +188,7 @@ function pts_graph_config_init($new_config_values = "")
 	$config->addXmlObject(P_GRAPH_COLOR_BODYTEXT, 2, pts_read_graph_config(P_GRAPH_COLOR_BODYTEXT, "#FFFFFF", $read_config));
 
 	// Text Size
-	$config->addXmlObject(P_GRAPH_FONT_TYPE, 3, pts_read_graph_config(P_GRAPH_FONT_TYPE, "Sans.ttf", $read_config));
+	$config->addXmlObject(P_GRAPH_FONT_TYPE, 3, pts_read_graph_config(P_GRAPH_FONT_TYPE, "", $read_config));
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_HEADERS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_HEADERS, "18", $read_config));
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_SUBHEADERS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_SUBHEADERS, "12", $read_config));
 	$config->addXmlObject(P_GRAPH_FONT_SIZE_TEXT, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_TEXT, "12", $read_config));

@@ -49,6 +49,7 @@ class pts_Chart
 	}
 	public function renderChart($file)
 	{
+		return;
 		if(is_file(PTS_USER_DIR . "graph-config.xml"))
 		{
 			$f = file_get_contents(PTS_USER_DIR . "graph-config.xml");
