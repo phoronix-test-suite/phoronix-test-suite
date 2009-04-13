@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 1.8.1
+April 16, 2009
 
 - pts-core: When merging results, don't merge results that are already in the merge and are identical (prevent duplicates)
 - pts-core: Use /sys/block/sdX for Linux disk drive detection instead of dmesg
