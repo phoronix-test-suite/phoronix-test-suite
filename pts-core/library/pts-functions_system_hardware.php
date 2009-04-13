@@ -221,11 +221,16 @@ function hw_sys_hdd_string()
 				$disk_size = file_get_contents($sdx . "/size");
 				$disk_model = trim(file_get_contents($sdx . "/device/model"));
 
-				$disk_size = round($disk_size * 512 / 1000000000);
+				$disk_size = round($disk_size * 512 / 1000000000) . "GB";
+
+				if(strpos($disk_model, $disk_size . " ") === false && strpos($disk_model, " " . $disk_size) === false)
+				{
+					$disk_model = $disk_size . " " . $disk_model;
+				}
 
 				if($disk_size > 0)
 				{
-					array_push($disks_formatted, $disk_size . "GB " . $disk_model);
+					array_push($disks_formatted, $disk_model);
 				}
 			}
 		}
