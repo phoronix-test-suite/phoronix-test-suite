@@ -95,7 +95,7 @@ function pts_gtk_add_menu($vbox, $menu)
 		}
 	}
 }
-function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null)
+function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null, $allow_multiple_select = true)
 {
 	if(count($data) == 0 && $on_empty != null)
 	{
@@ -142,9 +142,15 @@ function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null)
 		$model->append($values);
 	}
 
+	$selection = $view->get_selection();
+
+	if($allow_multiple_select)
+	{
+		$selection->set_mode(Gtk::SELECTION_MULTIPLE);
+	}
+
 	if($connect_to != null)
 	{
-		$selection = $view->get_selection();
 		$selection->connect("changed", $connect_to);
 	}
 
@@ -211,6 +217,19 @@ function pts_gtk_selected_item($object)
 	list($model, $iter) = $object->get_selected();
 
 	return $model->get_value($iter, 0);
+}
+function pts_gtk_selected_items($object)
+{
+	list($model, $rows) = $object->get_selected_rows();
+	$return_items = array();
+
+	foreach($rows as $row)
+	{
+		$iter = $model->get_iter($row);
+		array_push($return_items, $model->get_value($iter, 0));
+	}
+
+	return $return_items;
 }
 function pts_gtk_add_notebook_tab($notebook, $widget, $label)
 {

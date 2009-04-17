@@ -354,9 +354,12 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function update_details_frame_from_select($object)
 	{
-		$identifier = pts_gtk_selected_item($object);
+		$previous_select = (is_array($p = pts_read_assignment("GTK_SELECTED_ITEM_PREV")) ? $p : array());
+		$identifiers = pts_gtk_selected_items($object);
+		pts_set_assignment("GTK_MULTIPLE_SELECT_ITEMS", ($multiple_selected = count($identifiers) > 1));
+		pts_set_assignment("GTK_LAST_SELECTED_ITEM", ($identifier = array_pop(array_diff($identifiers, $previous_select))));
+		pts_set_assignment("GTK_SELECTED_ITEMS", $identifiers);
 
-		pts_set_assignment("GTK_SELECTED_ITEM", $identifier);
 		$gtk_obj_main_frame = pts_read_assignment("GTK_OBJ_MAIN_FRAME");
 		$gtk_obj_main_frame->set_label($identifier);
 
@@ -370,21 +373,19 @@ class gui_gtk implements pts_option_interface
 		$append_elements = array();
 
 		pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", true);
-
-		if(!pts_is_assignment("GTK_ITEM_SELECTED_ONCE"))
-		{
-		//	pts_gtk_object_set_sensitive("GTK_OBJ_RUN_BUTTON", true);
-			pts_gtk_object_set_sensitive("GTK_OBJ_DETAILS_BUTTON", true);
-			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") != "Test Results");
-			pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") != "Test Results");
-
-			pts_set_assignment("GTK_ITEM_SELECTED_ONCE", true);
-		}
+		pts_gtk_object_set_sensitive("GTK_OBJ_DETAILS_BUTTON", !$multiple_selected);
+		pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") != "Test Results");
+		pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") != "Test Results");
 
 		// PTS Test
 		$test_menu_items_sensitive = false;
 
-		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
+		if($multiple_selected)
+		{
+			$test_menu_items_sensitive = false;
+			$info_r["Tests Selected"] = count($identifiers) . " Selected";
+		}
+		else if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{
 			$test_menu_items_sensitive = true;
 
@@ -806,6 +807,12 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_run_confirmation_interface($identifier)
 	{
+		if(count($identifier) > 1)
+		{
+			echo "\nOnly one item can be selected currently...\n"; // TODO: Fix This
+		}
+		$identifier = array_pop($identifier);
+
 		if(empty($identifier))
 		{
 			echo "DEBUG: Null identifier in gtk_gui::show_run_confirmation_interface()\n";
@@ -1044,7 +1051,7 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function details_button_clicked()
 	{
-		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
 
 		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{
@@ -1126,52 +1133,66 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function notebook_selected_to_identifier()
 	{
-		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		$identifiers = pts_read_assignment("GTK_SELECTED_ITEMS");
+		$selected = array();
 
-		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
+		foreach($identifiers as $identifier)
 		{
-			$identifier = $identifier;
-		}
-		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
-		{
-			$identifier = pts_suite_name_to_identifier($identifier);
-		}
-		else
-		{
-			$identifier = pts_test_name_to_identifier($identifier);
+			if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
+			{
+				$identifier = $identifier;
+			}
+			else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
+			{
+				$identifier = pts_suite_name_to_identifier($identifier);
+			}
+			else
+			{
+				$identifier = pts_test_name_to_identifier($identifier);
+			}
+			array_push($selected, $identifier);
 		}
 
-		return $identifier;
+		return $selected;
 	}
 	public static function update_run_button()
 	{
 		$identifier = gui_gtk::notebook_selected_to_identifier();
 
-		if(pts_is_test($identifier))
+		if(count($identifiers) > 1)
 		{
-			if(!pts_test_installed($identifier))
-			{
-				$button_string = "Install";
-
-			}
-			else if(pts_test_needs_updated_install($identifier))
-			{
-				$button_string = "Update";
-			}
-			else
-			{
-				$button_string = "Run";
-			}
+			$button_string = "Run"; // TODO: cleanup
 		}
-		else if(pts_is_suite($identifier) || pts_is_test_result($identifier))
+		else
 		{
-			if(pts_suite_needs_updated_install($identifier))
+			$identifier = array_pop($identifier);
+
+			if(pts_is_test($identifier))
 			{
-				$button_string = "Update";
+				if(!pts_test_installed($identifier))
+				{
+					$button_string = "Install";
+
+				}
+				else if(pts_test_needs_updated_install($identifier))
+				{
+					$button_string = "Update";
+				}
+				else
+				{
+					$button_string = "Run";
+				}
 			}
-			else
+			else if(pts_is_suite($identifier) || pts_is_test_result($identifier))
 			{
-				$button_string = "Run";
+				if(pts_suite_needs_updated_install($identifier))
+				{
+					$button_string = "Update";
+				}
+				else
+				{
+					$button_string = "Run";
+				}
 			}
 		}
 
@@ -1510,7 +1531,7 @@ class gui_gtk implements pts_option_interface
 		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
 		$main_window->destroy();
 
-		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
 		pts_run_option_next("upload_result", $identifier, array("AUTOMATED_MODE" => true));
 		pts_run_option_next("gui_gtk");
 	}
@@ -1526,7 +1547,7 @@ class gui_gtk implements pts_option_interface
 			$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
 			$main_window->destroy();
 
-			$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+			$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
 			pts_run_option_next("result_file_to_pdf", $identifier, array("SAVE_TO" => $save_file));
 			pts_run_option_next("gui_gtk");
 		}
@@ -1540,7 +1561,7 @@ class gui_gtk implements pts_option_interface
 		if($dialog->run() == Gtk::RESPONSE_OK)
 		{
 			$save_file = $dialog->get_filename();
-			$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+			$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
 			pts_archive_result_directory($identifier, $save_file);
 		}
 		$dialog->destroy();
@@ -1550,7 +1571,7 @@ class gui_gtk implements pts_option_interface
 		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
 		$main_window->destroy();
 
-		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
 		pts_run_option_next("refresh_graphs", $identifier, array("AUTOMATED_MODE" => true));
 		pts_run_option_next("gui_gtk");
 	}
@@ -1559,7 +1580,7 @@ class gui_gtk implements pts_option_interface
 		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
 		$main_window->destroy();
 
-		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
 		pts_run_option_next("analyze_all_runs", $identifier, array("AUTOMATED_MODE" => true));
 		pts_run_option_next("gui_gtk");
 	}
@@ -1568,7 +1589,7 @@ class gui_gtk implements pts_option_interface
 		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
 		$main_window->destroy();
 
-		$identifier = pts_read_assignment("GTK_SELECTED_ITEM");
+		$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
 		pts_run_option_next("analyze_all_runs", $identifier, array("AUTOMATED_MODE" => true));
 		pts_run_option_next("gui_gtk");
 	}
@@ -1582,13 +1603,13 @@ class gui_gtk implements pts_option_interface
 		$notebook->set_size_request(540, 250);
 
 		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", "Hardware");
-		$hw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)), null, "No system information available.");
+		$hw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)), null, "No system information available.", false);
 		pts_gtk_add_notebook_tab($notebook, $hw, "Hardware");
 
-		$sw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)), null, "No system information available.");
+		$sw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)), null, "No system information available.", false);
 		pts_gtk_add_notebook_tab($notebook, $sw, "Software");
 
-		$sensors = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)), null, "No system information available.");
+		$sensors = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)), null, "No system information available.", false);
 		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors");
 
 		$copy_button = new pts_gtk_button("Copy To Clipboard", array("gui_gtk", "system_info_copy_to_clipboard"), null);
