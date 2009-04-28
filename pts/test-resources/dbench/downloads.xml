@@ -1,0 +1,9 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://samba.org/ftp/tridge/dbench/dbench-4.0.tar.gz</URL>
+			<MD5>1fe56ff71b9a416f8889d7150ac54da4</MD5>
+			<FileSize>2055359</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
