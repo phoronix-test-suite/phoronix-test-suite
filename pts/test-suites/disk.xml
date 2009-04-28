@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.2</Version>
+		<Version>1.1.3</Version>
 		<TestType>Disk</TestType>
 		<Title>Hard Disk Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -17,6 +17,16 @@
 		<Test>iozone</Test>
 		<Arguments>-s 4096M -i0 -i1</Arguments>
 		<Description>4GB Read Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>1</Arguments>
+		<Description>1 Client</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>12</Arguments>
+		<Description>12 Clients</Description>
 	</RunTest>
 	<RunTest>
 		<Test>fio</Test>

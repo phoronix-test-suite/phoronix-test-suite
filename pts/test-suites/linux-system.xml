@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>Linux System</Title>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<TestType>System</TestType>
 		<Description>A collection of tests designed to test the overall performance of a desktop computer.</Description>
@@ -43,6 +43,11 @@
 	</RunTest>
 	<RunTest>
 		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>1</Arguments>
+		<Description>1 Client</Description>
 	</RunTest>
 	<RunTest>
 		<Test>graphics-magick</Test>

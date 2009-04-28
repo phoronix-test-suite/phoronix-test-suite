@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<TestType>Disk</TestType>
 		<Title>Filesystem Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -62,5 +62,15 @@
 		<Test>fio</Test>
 		<Arguments>examples/iometer-file-access-server</Arguments>
 		<Description>Intel IOMeter File Server Access Pattern</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>1</Arguments>
+		<Description>1 Client</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>12</Arguments>
+		<Description>12 Clients</Description>
 	</RunTest>
 </PhoronixTestSuite>

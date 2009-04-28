@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>Favorites</Title>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<TestType>System</TestType>
 		<Description>This is a random collection of tests that are some of the personal favorite tests by Michael Larabel, the founder of Phoronix Media and the Phoronix Test Suite.</Description>
@@ -50,6 +50,11 @@
 	</RunTest>
 	<RunTest>
 		<Test>povray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>1</Arguments>
+		<Description>1 Client</Description>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
