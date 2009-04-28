@@ -1,0 +1,50 @@
+<?php
+
+/*
+	Phoronix Test Suite
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2009, Phoronix Media
+	Copyright (C) 2009, Michael Larabel
+	pts_device_property.php: Device property object
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+class pts_device_property
+{
+	var $device_object;
+	var $object_function;
+	var $cacheable;
+
+	public function __construct($object, $function, $is_cacheable = false)
+	{
+		$this->device_object = $object;
+		$this->object_function = $function;
+		$this->cacheable = $is_cacheable == true;
+	}
+	public function get_device_object()
+	{
+		return $this->device_object;
+	}
+	public function get_device_function()
+	{
+		return $this->object_function;
+	}
+	public function can_cache()
+	{
+		return $this->cacheable;
+	}
+}
+
+?>
