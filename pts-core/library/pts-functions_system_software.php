@@ -73,7 +73,7 @@ function sw_os_virtualized_mode()
 {
 	// Reports if system is running virtualized
 	$virtualized = null;
-	$gpu = hw_gpu_string();
+	$gpu = phodevi::read_name("gpu");
 
 	if(strpos(hw_cpu_string(), "QEMU") !== false)
 	{
@@ -83,7 +83,7 @@ function sw_os_virtualized_mode()
 	{
 		$virtualized = "VMware";
 	}
-	else if(strpos($gpu, "VirtualBox") !== false || strpos(hw_sys_motherboard_string(), "VirtualBox") !== false)
+	else if(strpos($gpu, "VirtualBox") !== false || strpos(phodevi::read_name("motherboard"), "VirtualBox") !== false)
 	{
 		$virtualized = "VirtualBox";
 	}
@@ -491,7 +491,7 @@ function sw_xorg_ddx_driver_info()
 			$ddx_info = $dri_driver . " " . $driver_version;
 		}
 	}
-	else if(IS_MESA_GRAPHICS && stripos(hw_gpu_string(), "NVIDIA") !== false)
+	else if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
 	{
 		// xf86-video-nv is an open-source driver but currently doesn't support DRI
 		$nv_driver_version = read_xorg_module_version("nv_drv.so");

@@ -367,12 +367,11 @@ function pts_global_auto_tags($extra_attr = null)
 		array_push($tags_array, "VIA");
 	}
 
-	$gpu_type = hw_gpu_string();
-	if(strpos($cpu_type, "ATI") !== false)
+	if(IS_ATI_GRAPHICS)
 	{
 		array_push($tags_array, "ATI");
 	}
-	else if(strpos($cpu_type, "NVIDIA") !== false)
+	else if(IS_NVIDIA_GRAPHICS)
 	{
 		array_push($tags_array, "NVIDIA");
 	}

@@ -60,11 +60,11 @@ function pts_user_runtime_variables($search_for = null)
 	{
 		$runtime_variables = array(
 		"VIDEO_RESOLUTION" => hw_gpu_current_mode(),
-		"VIDEO_CARD" => hw_gpu_string(),
+		"VIDEO_CARD" => phodevi::read_name("gpu"),
 		"VIDEO_DRIVER" => sw_os_opengl(),
 		"OPERATING_SYSTEM" => sw_os_release(),
 		"PROCESSOR" => hw_cpu_string(),
-		"MOTHERBOARD" => hw_sys_motherboard_string(),
+		"MOTHERBOARD" => phodevi::read_name("motherboard"),
 		"CHIPSET" => hw_sys_chipset_string(),
 		"KERNEL_VERSION" => sw_os_kernel(),
 		"COMPILER" => sw_os_compiler(),

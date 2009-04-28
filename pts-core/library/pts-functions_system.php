@@ -34,12 +34,12 @@ function pts_hw_string($return_string = true)
 	$hw = array();
 
 	$hw["Processor"] = hw_cpu_string() . " (Total Cores: " . hw_cpu_core_count() . ")";
-	$hw["Motherboard"] = hw_sys_motherboard_string();
+	$hw["Motherboard"] = phodevi::read_name("motherboard");
 	$hw["Chipset"] = hw_sys_chipset_string();
 	$hw["System Memory"] = phodevi::read_name("memory");
 	$hw["Disk"] = phodevi::read_name("disk");
-	$hw["Graphics"] = hw_gpu_string(true);
-	$hw["Monitor"] = hw_gpu_enabled_monitors();
+	$hw["Graphics"] = phodevi::read_name("gpu");
+	$hw["Monitor"] = phodevi::read_name("monitor");
 
 	$hw = pts_remove_unsupported_entries($hw);
 
@@ -126,7 +126,7 @@ function pts_remove_unsupported_entries($array)
 }
 function pts_system_identifier_string()
 {
-	$components = array(hw_cpu_string(false), hw_sys_motherboard_string(), sw_os_release(), sw_os_compiler());
+	$components = array(hw_cpu_string(false), phodevi::read_name("motherboard"), sw_os_release(), sw_os_compiler());
 	return base64_encode(implode("__", $components));
 }
 
