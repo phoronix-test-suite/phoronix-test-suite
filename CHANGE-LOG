@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Begin work on Phorodevi: Phoronix Device Interface
 - pts: Update build-php test profile to use PHP 5.2.9
 - pts: Set bork and compress-* test profiles to use the EnvironmentTestingSize tag
+- pts: Add Popt to PTS External Dependencies using popt generic name
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
 
 Phoronix Test Suite 1.8.1

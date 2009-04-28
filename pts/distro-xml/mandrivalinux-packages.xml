@@ -150,5 +150,10 @@
 			<PackageName>libncurses5-devel</PackageName>
 			<FileCheck>/usr/include/ncurses.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>popt</GenericName>
+			<PackageName>popt</PackageName>
+			<FileCheck>/usr/include/popt.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

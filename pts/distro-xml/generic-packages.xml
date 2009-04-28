@@ -188,5 +188,11 @@
 			<PossibleNames>libtool</PossibleNames>
 			<FileCheck>/usr/bin/libtool</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>popt</GenericName>
+			<Title>Popt</Title>
+			<PossibleNames>popt, popt-devel, libpopt-dev</PossibleNames>
+			<FileCheck>/usr/include/popt.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
