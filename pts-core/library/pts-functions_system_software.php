@@ -75,7 +75,7 @@ function sw_os_virtualized_mode()
 	$virtualized = null;
 	$gpu = phodevi::read_name("gpu");
 
-	if(strpos(hw_cpu_string(), "QEMU") !== false)
+	if(strpos(phodevi::read_property("cpu", "model"), "QEMU") !== false)
 	{
 		$virtualized = "QEMU";
 	}

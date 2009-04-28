@@ -33,9 +33,9 @@ function pts_hw_string($return_string = true)
 	// Returns string of hardware information
 	$hw = array();
 
-	$hw["Processor"] = hw_cpu_string() . " (Total Cores: " . hw_cpu_core_count() . ")";
+	$hw["Processor"] = phodevi::read_name("cpu");
 	$hw["Motherboard"] = phodevi::read_name("motherboard");
-	$hw["Chipset"] = hw_sys_chipset_string();
+	$hw["Chipset"] = phodevi::read_name("chipset");
 	$hw["System Memory"] = phodevi::read_name("memory");
 	$hw["Disk"] = phodevi::read_name("disk");
 	$hw["Graphics"] = phodevi::read_name("gpu");
@@ -126,7 +126,7 @@ function pts_remove_unsupported_entries($array)
 }
 function pts_system_identifier_string()
 {
-	$components = array(hw_cpu_string(false), phodevi::read_name("motherboard"), sw_os_release(), sw_os_compiler());
+	$components = array(phodevi::read_property("cpu", "model"), phodevi::read_name("motherboard"), sw_os_release(), sw_os_compiler());
 	return base64_encode(implode("__", $components));
 }
 

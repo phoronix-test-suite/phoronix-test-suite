@@ -30,6 +30,12 @@ class phodevi_gpu extends pts_device_interface
 			case "identifier":
 				$property = new pts_device_property("phodevi_gpu", "gpu_string", true);
 				break;
+			case "model":
+				$property = new pts_device_property("phodevi_gpu", "gpu_model", true);
+				break;
+			case "frequency":
+				$property = new pts_device_property("phodevi_gpu", "gpu_frequency_string", true);
+				break;
 			default:
 				$property = new pts_device_property(null, null, false);
 				break;
@@ -38,6 +44,17 @@ class phodevi_gpu extends pts_device_interface
 		return $property;
 	}
 	public static function gpu_string()
+	{
+		return phodevi::read_property("gpu", "model") . phodevi::read_property("gpu", "frequency");
+	}
+	public static function gpu_frequency_string()
+	{
+		$freq = (IS_ATI_GRAPHICS ? hw_gpu_stock_frequency() : hw_gpu_current_frequency());
+		$freq_string = $freq[0] . "/" . $freq[1];
+
+		return ($freq_string == "0/0" ? "" : " (" . $freq_string . "MHz)");
+	}
+	public static function gpu_model()
 	{
 		// Report graphics processor string
 		$info = shell_exec("glxinfo 2>&1 | grep renderer");
@@ -178,11 +195,6 @@ class phodevi_gpu extends pts_device_interface
 		{
 			$info .= " " . $video_ram . "MB";
 		}
-
-		// could add check here to determine whether or not to include frequency
-		$freq = (IS_ATI_GRAPHICS ? hw_gpu_stock_frequency() : hw_gpu_current_frequency());
-		$freq_string = $freq[0] . "/" . $freq[1];
-		$info .= ($freq_string == "0/0" ? "" : " (" . $freq_string . "MHz)");
 
 		return $info;
 	}

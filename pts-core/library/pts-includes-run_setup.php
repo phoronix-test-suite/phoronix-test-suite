@@ -337,7 +337,7 @@ function pts_global_auto_tags($extra_attr = null)
 		}
 	}
 
-	switch(hw_cpu_core_count())
+	switch(phodevi::read_property("cpu", "core-count"))
 	{
 		case 1:
 			array_push($tags_array, "Single Core");
@@ -353,7 +353,7 @@ function pts_global_auto_tags($extra_attr = null)
 			break;
 	}
 
-	$cpu_type = hw_cpu_string();
+	$cpu_type = phodevi::read_property("cpu", "model");
 	if(strpos($cpu_type, "Intel") !== false)
 	{
 		array_push($tags_array, "Intel");
