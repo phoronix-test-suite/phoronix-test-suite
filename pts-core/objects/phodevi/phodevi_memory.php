@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2009, Phoronix Media
 	Copyright (C) 2008 - 2009, Michael Larabel
-	pdi_memory.php: The PTS Device Interface object for system memory
+	phodevi_memory.php: The PTS Device Interface object for system memory
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,19 +28,19 @@ class phodevi_memory extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("pdi_memory", "memory_string", true);
+				$property = new pts_device_property("phodevi_memory", "memory_string", true);
 				break;
 			case "capacity":
-				$property = new pts_device_property("pdi_memory", "memory_capacity", true);
+				$property = new pts_device_property("phodevi_memory", "memory_capacity", true);
 				break;
 			case "physical-usage":
-				$property = new pts_device_property("pdi_memory", array("memory_usage", "MEMORY"), false);
+				$property = new pts_device_property("phodevi_memory", array("memory_usage", "MEMORY"), false);
 				break;
 			case "swap-usage":
-				$property = new pts_device_property("pdi_memory", array("memory_usage", "SWAP"), false);
+				$property = new pts_device_property("phodevi_memory", array("memory_usage", "SWAP"), false);
 				break;
 			case "total-usage":
-				$property = new pts_device_property("pdi_memory", array("memory_usage", "TOTAL"), false);
+				$property = new pts_device_property("phodevi_memory", array("memory_usage", "TOTAL"), false);
 				break;
 			default:
 				$property = new pts_device_property(null, null, false);
@@ -133,7 +133,7 @@ class phodevi_memory extends pts_device_interface
 
 		if(empty($mem_string))
 		{
-			$mem_string = pts_host::read_property("memory", "capacity") . "MB";
+			$mem_string = phodevi::read_property("memory", "capacity") . "MB";
 		}
 
 		return trim($mem_string);

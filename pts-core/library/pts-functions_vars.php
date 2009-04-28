@@ -35,7 +35,7 @@ function pts_env_variables()
 		"PHP_BIN" => PHP_BIN,
 		"NUM_CPU_CORES" => hw_cpu_core_count(),
 		"NUM_CPU_JOBS" => hw_cpu_job_count(),
-		"SYS_MEMORY" => hw_sys_memory_capacity(),
+		"SYS_MEMORY" => phodevi::read_property("memory", "capacity"),
 		"VIDEO_MEMORY" => hw_gpu_memory_size(),
 		"VIDEO_WIDTH" => hw_gpu_screen_width(),
 		"VIDEO_HEIGHT" => hw_gpu_screen_height(),

@@ -26,7 +26,11 @@ class phodevi
 	// An example:
 	// echo phodevi::read_property("memory", "physical-usage") . " " . phodevi::read_property("memory", "swap-usage") . " " . phodevi::read_property("memory", "total-usage");
 
-	public static function read_property($device, $read_property = "identifier")
+	public static function read_name($device)
+	{
+		return phodevi::read_property($device, "identifier");
+	}
+	public static function read_property($device, $read_property)
 	{
 		static $device_cache = null;
 		$value = false;

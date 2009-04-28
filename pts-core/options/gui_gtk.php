@@ -384,6 +384,8 @@ class gui_gtk implements pts_option_interface
 		{
 			$test_menu_items_sensitive = false;
 			$info_r["Tests Selected"] = count($identifiers) . " Selected";
+			$info_r["null1"] = null;
+			array_push($append_elements, new pts_gtk_text_area("Note: This mode of selecting multiple tests simultaneously is currently experimental.", -1, -1, true));
 		}
 		else if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{

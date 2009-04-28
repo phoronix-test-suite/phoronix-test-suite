@@ -36,8 +36,8 @@ function pts_hw_string($return_string = true)
 	$hw["Processor"] = hw_cpu_string() . " (Total Cores: " . hw_cpu_core_count() . ")";
 	$hw["Motherboard"] = hw_sys_motherboard_string();
 	$hw["Chipset"] = hw_sys_chipset_string();
-	$hw["System Memory"] = hw_sys_memory_string();
-	$hw["Disk"] = hw_sys_hdd_string();
+	$hw["System Memory"] = phodevi::read_name("memory");
+	$hw["Disk"] = phodevi::read_name("disk");
 	$hw["Graphics"] = hw_gpu_string(true);
 	$hw["Monitor"] = hw_gpu_enabled_monitors();
 

@@ -1,0 +1,124 @@
+<?php
+
+/*
+	Phoronix Test Suite
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
+	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+class phodevi_disk extends pts_device_interface
+{
+	public static function read_property($identifier)
+	{
+		switch($identifier)
+		{
+			case "identifier":
+				$property = new pts_device_property("phodevi_disk", "hdd_string", true);
+				break;
+			default:
+				$property = new pts_device_property(null, null, false);
+				break;
+		}
+
+		return $property;
+	}
+	public static function hdd_string()
+	{
+		$disks = array();
+
+		if(IS_MACOSX)
+		{
+			// TODO: Support reading non-SATA drives and more than one drive
+			$capacity = read_osx_system_profiler("SPSerialATADataType", "Capacity");
+			$model = read_osx_system_profiler("SPSerialATADataType", "Model");
+
+			if(!empty($capacity) && !empty($model))
+			{
+				$disks = array($capacity . " " . $model);
+			}
+		}
+		else if(IS_BSD)
+		{
+			$i = 0;
+
+			do
+			{
+				$disk = read_sysctl("dev.ad." . $i . ".%desc");
+
+				if($disk != false)
+				{
+					array_push($disks, $disk);
+				}
+				$i++;
+			}
+			while($disk != false);
+		}
+		else if(IS_LINUX)
+		{
+			$disks_formatted = array();
+			$disks = array();
+
+			foreach(glob("/sys/block/sd*") as $sdx)
+			{
+				if(is_file($sdx . "/device/model") && is_file($sdx . "/size"))
+				{
+					$disk_size = file_get_contents($sdx . "/size");
+					$disk_model = trim(file_get_contents($sdx . "/device/model"));
+
+					$disk_size = round($disk_size * 512 / 1000000000) . "GB";
+
+					if(strpos($disk_model, $disk_size . " ") === false && strpos($disk_model, " " . $disk_size) === false)
+					{
+						$disk_model = $disk_size . " " . $disk_model;
+					}
+
+					if($disk_size > 0)
+					{
+						array_push($disks_formatted, $disk_model);
+					}
+				}
+			}
+
+			for($i = 0; $i < count($disks_formatted); $i++)
+			{
+				if(!empty($disks_formatted[$i]))
+				{
+					$times_found = 1;
+
+					for($j = ($i + 1); $j < count($disks_formatted); $j++)
+					{
+						if($disks_formatted[$i] == $disks_formatted[$j])
+						{
+							$times_found++;
+							$disks_formatted[$j] = "";
+						}
+					}
+
+					$disk = ($times_found > 1 ? $times_found . " x "  : "") . $disks_formatted[$i];
+					array_push($disks, $disk);
+				}
+			}
+		}
+
+		$disks = (count($disks) == 0 ? ceil(disk_total_space("/") / 1073741824) . "GB" : implode(" + ", $disks));
+
+		return $disks;
+	}
+}
+
+?>
