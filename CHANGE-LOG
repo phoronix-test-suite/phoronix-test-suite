@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support 1.70 mode ratio in hw_gpu_available_modes() which will allow auto-resolution to select 1024x600 on netbooks
 - pts-core: Initial support for being able to select multiple test/suite/result entries from the notebook menu area
 - pts-core: Fix bug where remove-all-results option would not actually remove the results
+- pts: Update build-php test profile to use PHP 5.2.9
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
 
 Phoronix Test Suite 1.8.1

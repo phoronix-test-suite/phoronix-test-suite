@@ -14,15 +14,9 @@ rm -rf libxml2-2.6.31/
 
 echo "#!/bin/sh
 
-if [ ! -f php-5.2.5.tar.bz2 ]
-  then
-	echo \"PHP5 Not Downloaded... Build Fails.\"
-	exit
-fi
-
-rm -rf php-5.2.5/
-tar -xjf php-5.2.5.tar.bz2
-cd php-5.2.5/
+rm -rf php-5.2.9/
+tar -xjf php-5.2.9.tar.bz2
+cd php-5.2.9/
 ./configure --with-libxml-dir=$THIS_DIR/libxml2 > /dev/null
 sleep 3
 \$TIMER_START
