@@ -14,17 +14,18 @@
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
-		<Title>DBench</Title>
+		<Title>Dbench</Title>
 		<Version>4.0</Version>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>DBench is a benchmark designed by the Samba project as a free alternative to netbench, but dbench contains only file-system calls for testing the disk performance.</Description>
+		<Description>Dbench is a benchmark designed by the Samba project as a free alternative to netbench, but dbench contains only file-system calls for testing the disk performance.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Option>
 			<DisplayName>Client Count</DisplayName>
-			<Identifier>client-count</Identifier>			<Menu>
+			<Identifier>client-count</Identifier>
+			<Menu>
 				<Entry>
 					<Name>1</Name>
 					<Value>1</Value>
