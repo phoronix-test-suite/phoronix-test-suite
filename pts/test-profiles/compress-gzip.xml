@@ -8,6 +8,7 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentTestingSize>2048</EnvironmentTestingSize>
 		<ProjectURL>http://www.gzip.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>

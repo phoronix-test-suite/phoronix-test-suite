@@ -55,6 +55,7 @@ define("P_TEST_EXDEP", "PhoronixTestSuite/TestProfile/ExternalDependencies"); //
 define("P_TEST_CTPEXTENDS", "PhoronixTestSuite/TestProfile/Extends"); // Does this test profile extend another test? (Cascading Test Profiles)
 define("P_TEST_ROOTNEEDED", "PhoronixTestSuite/TestProfile/RequiresRoot"); // Is root access needed? If set to "TRUE"
 define("P_TEST_ENVIRONMENTSIZE", "PhoronixTestSuite/TestProfile/EnvironmentSize"); // Estimated size of capacity needed for testing environment (in MB)
+define("P_TEST_ENVIRONMENT_TESTING_SIZE", "PhoronixTestSuite/TestProfile/EnvironmentTestingSize"); // Estimated size of capacity needed for testing environment during testing (in MB)
 define("P_TEST_ESTIMATEDTIME", "PhoronixTestSuite/TestProfile/EstimatedLength"); // Estimated length of time it takes the test to complete (in minutes)
 define("P_TEST_PROJECTURL", "PhoronixTestSuite/TestProfile/ProjectURL"); // Estimated length of time it takes the test to complete (in minutes)
 define("P_TEST_SUPPORTS_COREVERSION", "PhoronixTestSuite/TestProfile/RequiresCoreVersion"); // If the test profile is bound to specific versions of the Phoronix Test Suite (pts-core)

@@ -390,9 +390,17 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$default_arguments = $xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
 	$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 	$root_required = $xml_parser->getXMLValue(P_TEST_ROOTNEEDED) == "TRUE";
+	$env_testing_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE);
 
 	if(($test_type == "Graphics" && getenv("DISPLAY") == false) || getenv("NO_" . strtoupper($test_type) . "_TESTS") != false)
 	{
+		return $pts_test_result;
+	}
+
+	if(!empty($env_testing_size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $env_testing_size)
+	{
+		// Ensure enough space is available on disk during testing process
+		echo "\nThere is not enough space (at " . TEST_ENV_DIR . ") for this test to run. " . $env_testing_size . " MB of space is needed.\n";
 		return $pts_test_result;
 	}
 

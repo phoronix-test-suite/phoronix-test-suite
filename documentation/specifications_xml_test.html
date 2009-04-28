@@ -111,6 +111,12 @@ writers should instead use the <em>FileSize</em> within the <em>downloads.xml</e
 <strong>Description:</strong> The estimated size (in megabytes) that this test takes up in its 
 environment directory when downloaded files have been extracted, etc.<br>
 <strong>Supported Values:</strong> ( Values must be in MB )</p>
+<p><strong>Tag:</strong> EnvironmentTestingSize<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_ENVIRONMENT_TESTING_SIZE<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If the test involves creating a significantly large file(s) during the testing process, this tag should be used to ensure that there is sufficient space available. For example, if during the testing process a 2GB file is temporarily created, this tag should be set to 2048. If there is not sufficient room available on the hard drive prior to the test running, the test will not run. This tag does not impact the <em>EnvironmentSize</em> tag nor is it used at the test's install time.<br>
+<strong>Supported Values:</strong> ( Values must be in MB )</p>
 <p><strong>Tag:</strong> EstimatedLength<br>
 <strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
 <strong>Internal Reference:</strong> P_TEST_ESTIMATEDTIME<br>

@@ -9,6 +9,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.93</EnvironmentSize>
+		<EnvironmentTestingSize>2048</EnvironmentTestingSize>
 		<ProjectURL>http://www.sourceforge.net/projects/bork</ProjectURL>
 		<Extends>java-environment</Extends>
 	</TestProfile>
