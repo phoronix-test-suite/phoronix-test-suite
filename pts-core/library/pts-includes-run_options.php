@@ -217,7 +217,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 				{
 					$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, " "));
 
-					if(is_dir($mount_point) && $mount_point != "/boot")
+					if(is_dir($mount_point) && is_writable($mount_point) && $mount_point != "/boot")
 					{
 						array_push($option_values, $mount_point);
 						array_push($option_names, $mount_point . " [" . $partition_d . "]");
@@ -257,7 +257,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 
 			for($i = 0; $i < count($removable_media); $i++)
 			{
-				if(is_dir($removable_media[$i])) // add more checks later on
+				if(is_dir($removable_media[$i]) && is_writable($removable_media[$i])) // add more checks later on
 				{
 					array_push($option_names, $removable_media[$i]);
 					array_push($option_values, $removable_media[$i]);
@@ -287,7 +287,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 
 			for($i = 0; $i < count($names) && $i < count($values); $i++)
 			{
-				if(is_dir($values[$i]))
+				if(is_dir($values[$i]) && is_writable($removable_media[$i]))
 				{
 					array_push($option_names, $names[$i]);
 					array_push($option_values, $values[$i]);
