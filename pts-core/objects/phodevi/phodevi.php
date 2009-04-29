@@ -30,6 +30,38 @@ class phodevi
 	{
 		return phodevi::read_property($device, "identifier");
 	}
+	public static function read_sensor($device, $read_sensor)
+	{
+		$value = false;
+
+		if(method_exists("phodevi_" . $device, "read_sensor"))
+		{
+			eval("\$sensor_function = phodevi_" . $device . "::read_sensor(\$read_sensor);");
+
+			if(is_array($sensor_function))
+			{
+				if(count($sensor_function) > 1)
+				{
+					// TODO: support passing more than one argument
+					$sensor_function_pass = $sensor_function[1];
+				}
+				$sensor_function = $sensor_function[0];
+			}
+			else
+			{
+				$sensor_function_pass = null;
+			}
+
+			if(method_exists("phodevi_" . $device, $sensor_function))
+			{
+				eval("\$read_value = phodevi_" . $device . "::" . $sensor_function . "(\$sensor_function_pass);");
+
+				$value = $read_value; // possibly add some sort of check here
+			}
+		}
+
+		return $value;
+	}
 	public static function read_property($device, $read_property)
 	{
 		static $device_cache = null;

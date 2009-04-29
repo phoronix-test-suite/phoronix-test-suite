@@ -25,6 +25,11 @@ abstract class pts_device_interface
 {
 	abstract static function read_property($identifier);
 
+	public static function read_sensor($identifier)
+	{
+		return false;
+	}
+
 	public static function available_sensors()
 	{
 		return array();
