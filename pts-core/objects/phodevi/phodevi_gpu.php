@@ -141,7 +141,7 @@ class phodevi_gpu extends pts_device_interface
 
 		return ($freq_string == "0/0" ? "" : " (" . $freq_string . "MHz)");
 	}
-	public static function function gpu_stock_frequency()
+	public static function gpu_stock_frequency()
 	{
 		// Graphics processor stock frequency
 		$core_freq = 0;
