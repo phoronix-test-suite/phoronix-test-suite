@@ -36,7 +36,7 @@ function pts_env_variables()
 		"NUM_CPU_CORES" => phodevi::read_property("cpu", "core-count"),
 		"NUM_CPU_JOBS" => (phodevi::read_property("cpu", "core-count") * 2),
 		"SYS_MEMORY" => phodevi::read_property("memory", "capacity"),
-		"VIDEO_MEMORY" => hw_gpu_memory_size(),
+		"VIDEO_MEMORY" => phodevi::read_property("gpu", "memory-capacity"),
 		"VIDEO_WIDTH" => hw_gpu_screen_width(),
 		"VIDEO_HEIGHT" => hw_gpu_screen_height(),
 		"VIDEO_MONITOR_COUNT" => hw_gpu_monitor_count(),
@@ -65,7 +65,7 @@ function pts_user_runtime_variables($search_for = null)
 		"OPERATING_SYSTEM" => sw_os_release(),
 		"PROCESSOR" => phodevi::read_name("cpu"),
 		"MOTHERBOARD" => phodevi::read_name("motherboard"),
-		"CHIPSET" => hw_sys_chipset_string(),
+		"CHIPSET" => phodevi::read_name("chipset"),
 		"KERNEL_VERSION" => sw_os_kernel(),
 		"COMPILER" => sw_os_compiler(),
 		"HOSTNAME" => sw_os_hostname()

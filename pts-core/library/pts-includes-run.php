@@ -106,7 +106,7 @@ function pts_test_note($process, $value = null)
 						}
 						break;
 					case "2D_ACCEL_METHOD":
-						$value = hw_gpu_2d_accel_method();
+						$value = phodevi::read_property("gpu", "2d-accel-method");
 
 						if(!empty($value))
 						{
@@ -181,7 +181,7 @@ function pts_generate_test_notes($test_type)
 	}
 
 	// Power Saving Technologies?
-	pts_add_test_note(hw_cpu_power_savings_enabled());
+	pts_add_test_note(phodevi::read_property("cpu", "power-savings-mode"));
 	pts_add_test_note(hw_sys_power_mode());
 	pts_add_test_note(sw_os_virtualized_mode());
 

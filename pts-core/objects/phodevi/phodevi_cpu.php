@@ -33,8 +33,14 @@ class phodevi_cpu extends pts_device_interface
 			case "model":
 				$property = new pts_device_property("phodevi_cpu", "cpu_model", true);
 				break;
+			case "default-frequency":
+				$property = new pts_device_property("phodevi_cpu", array("cpu_default_frequency", 0), true);
+				break;
 			case "core-count":
 				$property = new pts_device_property("phodevi_cpu", "cpu_core_count", true);
+				break;
+			case "power-savings-mode":
+				$property = new pts_device_property("phodevi_cpu", "cpu_power_savings_mode", true);
 				break;
 			default:
 				$property = new pts_device_property(null, null, false);
@@ -67,6 +73,60 @@ class phodevi_cpu extends pts_device_interface
 		}
 
 		return (is_int($info) && $info > 0 ? $info : 1);
+	}
+	public static function cpu_default_frequency($cpu_core = 0)
+	{
+		// Find out the processor frequency
+		// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+		if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"))
+		{
+			$info = trim(file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"));
+			$info = pts_trim_double(intval($info) / 1000000, 2);
+		}
+		else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
+		{
+			$cpu_speeds = read_cpuinfo("cpu MHz");
+			$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
+			$info = pts_trim_double($cpu_speeds[$cpu_core] / 1000, 2);
+		}
+		else
+		{
+			$info = hw_cpu_current_frequency($cpu_core);
+		}
+
+		return $info;
+	}
+	public static function cpu_power_savings_mode()
+	{
+		// Report string if CPU power savings feature is enabled
+		$return_string = "";
+
+		if(is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq") && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"))
+		{
+			// if EIST / CnQ is disabled, the cpufreq folder shoudln't be present, but double check by comparing the min and max frequencies
+			$min = trim(file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq"));
+			$max = trim(file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"));
+
+			if($min < $max)
+			{
+				$cpu = phodevi::read_property("cpu", "model");
+
+				if(strpos($cpu, "AMD") !== false)
+				{
+					$return_string = "AMD Cool n Quiet was enabled";
+				}
+				else if(strpos($cpu, "Intel") !== false)
+				{
+					$return_string = "Intel SpeedStep Technology was enabled";
+				}
+				else
+				{
+					$return_string = "The CPU was in a power-savings mode";
+				}
+			}
+		}
+
+		return $return_string;
 	}
 	public static function cpu_model()
 	{
@@ -160,10 +220,8 @@ class phodevi_cpu extends pts_device_interface
 
 			if($append_cpu_frequency)
 			{
-				$cpu_core_read = 0; // for now default to the first core frequency to read
-
 				// Append the processor frequency to string
-				if(($freq = hw_cpu_default_frequency($cpu_core_read)) > 0)
+				if(($freq = phodevi::read_property("cpu", "default-frequency")) > 0)
 				{
 					if(($strip_point = strpos($info, "@")) > 0)
 					{

@@ -36,6 +36,15 @@ class phodevi_gpu extends pts_device_interface
 			case "frequency":
 				$property = new pts_device_property("phodevi_gpu", "gpu_frequency_string", true);
 				break;
+			case "stock-frequency":
+				$property = new pts_device_property("phodevi_gpu", "gpu_stock_frequency", true);
+				break;
+			case "2d-accel-method":
+				$property = new pts_device_property("phodevi_gpu", "gpu_2d_accel_method", true);
+				break;
+			case "memory-capacity":
+				$property = new pts_device_property("phodevi_gpu", "gpu_memory_size", true);
+				break;
 			default:
 				$property = new pts_device_property(null, null, false);
 				break;
@@ -43,22 +52,136 @@ class phodevi_gpu extends pts_device_interface
 
 		return $property;
 	}
+	public static function gpu_2d_accel_method()
+	{
+		$accel_method = "";
+
+		if(is_file("/var/log/Xorg.0.log"))
+		{
+			$x_log = file_get_contents("/var/log/Xorg.0.log");
+
+			if(strpos($x_log, "Using EXA") > 0)
+			{
+				$accel_method = "EXA";
+			}
+			else if(strpos($x_log, "Using UXA") > 0)
+			{
+				$accel_method = "UXA";
+			}
+			else if(strpos($x_log, "Using XFree86") > 0)
+			{
+				$accel_method = "XAA";
+			}
+		}
+
+		return $accel_method;
+	}
+	public static function gpu_memory_size()
+	{
+		// Graphics memory capacity
+		$video_ram = DEFAULT_VIDEO_RAM_CAPACITY;
+
+		if(($vram = getenv("VIDEO_MEMORY")) != false && is_numeric($vram) && $vram > DEFAULT_VIDEO_RAM_CAPACITY)
+		{
+			$video_ram = $vram;
+		}
+		else
+		{
+			if(IS_NVIDIA_GRAPHICS && ($NVIDIA = read_nvidia_extension("VideoRam")) > 0) // NVIDIA blob
+			{
+				$video_ram = $NVIDIA / 1024;
+			}
+			else if(is_file("/var/log/Xorg.0.log"))
+			{
+				// Attempt Video RAM detection using X log
+				// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
+				// xf86-video-ati, xf86-video-intel, and xf86-video-radeonhd also report their memory information in a similar format
+
+				$info = shell_exec("cat /var/log/Xorg.0.log | grep -i VideoRAM");
+
+				if(empty($info))
+				{
+					$info = shell_exec("cat /var/log/Xorg.0.log | grep \"Video RAM\"");
+				}
+
+				if(($pos = strpos($info, "RAM:")) > 0 || ($pos = strpos($info, "Ram:")) > 0)
+				{
+					$info = substr($info, $pos + 5);
+					$info = substr($info, 0, strpos($info, " "));
+
+					if($info > 65535)
+					{
+						$video_ram = intval($info) / 1024;
+					}
+				}
+			}
+			else if(IS_MACOSX)
+			{
+				$info = read_osx_system_profiler("SPDisplaysDataType", "VRAM");
+				$info = explode(" ", $info);
+				$video_ram = $info[0];
+			
+				if($info[1] == "GB")
+				{
+					$video_ram *= 1024;
+				}
+			}
+		}
+
+		return $video_ram;
+	}
 	public static function gpu_string()
 	{
 		return phodevi::read_property("gpu", "model") . phodevi::read_property("gpu", "frequency");
 	}
 	public static function gpu_frequency_string()
 	{
-		$freq = (IS_ATI_GRAPHICS ? hw_gpu_stock_frequency() : hw_gpu_current_frequency());
+		$freq = (IS_ATI_GRAPHICS ? phodevi::read_property("gpu", "stock-frequency") : hw_gpu_current_frequency());
 		$freq_string = $freq[0] . "/" . $freq[1];
 
 		return ($freq_string == "0/0" ? "" : " (" . $freq_string . "MHz)");
+	}
+	public static function function gpu_stock_frequency()
+	{
+		// Graphics processor stock frequency
+		$core_freq = 0;
+		$mem_freq = 0;
+
+		if(IS_NVIDIA_GRAPHICS) // NVIDIA GPU
+		{
+			$nv_freq = read_nvidia_extension("GPUDefault3DClockFreqs");
+
+			$nv_freq = explode(",", $nv_freq);
+			$core_freq = $nv_freq[0];
+			$mem_freq = $nv_freq[1];
+		}
+		else if(IS_ATI_GRAPHICS) // ATI GPU
+		{
+			$od_clocks = read_ati_overdrive("CurrentPeak");
+
+			if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
+			{
+				$core_freq = array_shift($od_clocks);
+				$mem_freq = array_pop($od_clocks);
+			}
+		}
+
+		if(!is_numeric($core_freq))
+		{
+			$core_freq = 0;
+		}
+		if(!is_numeric($mem_freq))
+		{
+			$mem_freq = 0;
+		}
+
+		return array($core_freq, $mem_freq);
 	}
 	public static function gpu_model()
 	{
 		// Report graphics processor string
 		$info = shell_exec("glxinfo 2>&1 | grep renderer");
-		$video_ram = hw_gpu_memory_size();
+		$video_ram = phodevi::read_property("gpu", "memory-capacity");
 
 		if(($pos = strpos($info, "renderer string:")) > 0)
 		{
