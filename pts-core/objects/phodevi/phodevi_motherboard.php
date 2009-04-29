@@ -28,10 +28,10 @@ class phodevi_motherboard extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("phodevi_motherboard", "motherboard_string", true);
+				$property = new pts_device_property("motherboard_string", true);
 				break;
 			default:
-				$property = new pts_device_property(null, null, false);
+				$property = new pts_device_property(null, false);
 				break;
 		}
 

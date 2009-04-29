@@ -28,25 +28,25 @@ class phodevi_gpu extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("phodevi_gpu", "gpu_string", true);
+				$property = new pts_device_property("gpu_string", true);
 				break;
 			case "model":
-				$property = new pts_device_property("phodevi_gpu", "gpu_model", true);
+				$property = new pts_device_property("gpu_model", true);
 				break;
 			case "frequency":
-				$property = new pts_device_property("phodevi_gpu", "gpu_frequency_string", true);
+				$property = new pts_device_property("gpu_frequency_string", true);
 				break;
 			case "stock-frequency":
-				$property = new pts_device_property("phodevi_gpu", "gpu_stock_frequency", true);
+				$property = new pts_device_property("gpu_stock_frequency", true);
 				break;
 			case "2d-accel-method":
-				$property = new pts_device_property("phodevi_gpu", "gpu_2d_accel_method", true);
+				$property = new pts_device_property("gpu_2d_accel_method", true);
 				break;
 			case "memory-capacity":
-				$property = new pts_device_property("phodevi_gpu", "gpu_memory_size", true);
+				$property = new pts_device_property("gpu_memory_size", true);
 				break;
 			default:
-				$property = new pts_device_property(null, null, false);
+				$property = new pts_device_property(null, false);
 				break;
 		}
 

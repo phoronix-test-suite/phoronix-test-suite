@@ -47,7 +47,6 @@ class phodevi
 			}
 			else
 			{
-				$dev_class = $property->get_device_object();
 				$dev_function = $property->get_device_function();
 
 				if(is_array($dev_function))
@@ -65,10 +64,10 @@ class phodevi
 					$dev_function_pass = null;
 				}
 
-				if(method_exists($dev_class, $dev_function))
+				if(method_exists("phodevi_" . $device, $dev_function))
 				{
 
-					eval("\$read_value = " . $dev_class . "::" . $dev_function . "(\$dev_function_pass);");
+					eval("\$read_value = phodevi_" . $device . "::" . $dev_function . "(\$dev_function_pass);");
 
 					$value = $read_value; // possibly add some sort of check here
 

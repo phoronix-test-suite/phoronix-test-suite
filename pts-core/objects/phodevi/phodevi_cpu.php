@@ -28,22 +28,22 @@ class phodevi_cpu extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("phodevi_cpu", "cpu_string", true);
+				$property = new pts_device_property("cpu_string", true);
 				break;
 			case "model":
-				$property = new pts_device_property("phodevi_cpu", "cpu_model", true);
+				$property = new pts_device_property("cpu_model", true);
 				break;
 			case "default-frequency":
-				$property = new pts_device_property("phodevi_cpu", array("cpu_default_frequency", 0), true);
+				$property = new pts_device_property(array("cpu_default_frequency", 0), true);
 				break;
 			case "core-count":
-				$property = new pts_device_property("phodevi_cpu", "cpu_core_count", true);
+				$property = new pts_device_property("cpu_core_count", true);
 				break;
 			case "power-savings-mode":
-				$property = new pts_device_property("phodevi_cpu", "cpu_power_savings_mode", true);
+				$property = new pts_device_property("cpu_power_savings_mode", true);
 				break;
 			default:
-				$property = new pts_device_property(null, null, false);
+				$property = new pts_device_property(null, false);
 				break;
 		}
 

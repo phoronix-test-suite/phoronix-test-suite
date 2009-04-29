@@ -28,10 +28,10 @@ class phodevi_chipset extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("phodevi_chipset", "chipset_string", true);
+				$property = new pts_device_property("chipset_string", true);
 				break;
 			default:
-				$property = new pts_device_property(null, null, false);
+				$property = new pts_device_property(null, false);
 				break;
 		}
 

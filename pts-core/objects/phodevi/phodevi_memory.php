@@ -28,22 +28,22 @@ class phodevi_memory extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("phodevi_memory", "memory_string", true);
+				$property = new pts_device_property("memory_string", true);
 				break;
 			case "capacity":
-				$property = new pts_device_property("phodevi_memory", "memory_capacity", true);
+				$property = new pts_device_property("memory_capacity", true);
 				break;
 			case "physical-usage":
-				$property = new pts_device_property("phodevi_memory", array("memory_usage", "MEMORY"), false);
+				$property = new pts_device_property(array("memory_usage", "MEMORY"), false);
 				break;
 			case "swap-usage":
-				$property = new pts_device_property("phodevi_memory", array("memory_usage", "SWAP"), false);
+				$property = new pts_device_property(array("memory_usage", "SWAP"), false);
 				break;
 			case "total-usage":
-				$property = new pts_device_property("phodevi_memory", array("memory_usage", "TOTAL"), false);
+				$property = new pts_device_property(array("memory_usage", "TOTAL"), false);
 				break;
 			default:
-				$property = new pts_device_property(null, null, false);
+				$property = new pts_device_property(null, false);
 				break;
 		}
 
