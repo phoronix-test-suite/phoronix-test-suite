@@ -51,7 +51,20 @@ class phodevi_cpu extends pts_device_interface
 	}
 	public static function cpu_string()
 	{
-		return phodevi::read_property("cpu", "model") . " (Total Cores: " . phodevi::read_property("cpu", "core-count") . ")";
+		$model = phodevi::read_property("cpu", "model");
+
+		// Append the processor frequency to string
+		if(($freq = phodevi::read_property("cpu", "default-frequency")) > 0)
+		{
+			if(($strip_point = strpos($model, "@")) > 0)
+			{
+				$model = trim(substr($model, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
+			}
+
+			$model .= " @ " . $freq . "GHz";
+		}
+
+		return $model . " (Total Cores: " . phodevi::read_property("cpu", "core-count") . ")";
 	}
 	public static function cpu_core_count()
 	{
@@ -217,20 +230,6 @@ class phodevi_cpu extends pts_device_interface
 		if(!empty($info))
 		{
 			$info = pts_clean_information_string($info);
-
-			if($append_cpu_frequency)
-			{
-				// Append the processor frequency to string
-				if(($freq = phodevi::read_property("cpu", "default-frequency")) > 0)
-				{
-					if(($strip_point = strpos($info, "@")) > 0)
-					{
-						$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
-					}
-
-					$info .= " @ " . $freq . "GHz";
-				}
-			}
 		}
 		else
 		{
