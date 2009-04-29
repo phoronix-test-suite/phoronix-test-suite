@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.1</Version>
+		<Version>1.1.2</Version>
 		<TestType>Disk</TestType>
 		<Title>Filesystem Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -32,6 +32,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>bork</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
@@ -72,5 +75,10 @@
 		<Test>dbench</Test>
 		<Arguments>12</Arguments>
 		<Description>12 Clients</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>128</Arguments>
+		<Description>128 Clients</Description>
 	</RunTest>
 </PhoronixTestSuite>
