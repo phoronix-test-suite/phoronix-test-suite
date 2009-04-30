@@ -1,0 +1,27 @@
+#!/bin/sh
+
+THIS_DIR=$(pwd)
+mkdir $THIS_DIR/gmp_
+
+tar -xvf gmp-4.3.0.tar.gz
+cd gmp-4.3.0/
+./configure --prefix=$THIS_DIR/gmp_
+make
+make install
+cd ..
+rm -rf gmp-4.3.0/
+
+tar -xvf gmpbench-0.1.tar.gz
+cp gexpr.c gmpbench-0.1/
+
+cp gmp_/include/gmp.h gmpbench-0.1/
+
+cd gmpbench-0.1/
+gcc -lm gexpr.c -o gexpr
+
+cd ..
+
+echo "#!/bin/sh
+cd gmpbench-0.1/
+LIBS=$HOME/gmp_/lib/libgmp.so.3.5.0 PATH=.:$PATH ./runbench > \$LOG_FILE 2>&1" > gmpbench
+chmod +x gmpbench

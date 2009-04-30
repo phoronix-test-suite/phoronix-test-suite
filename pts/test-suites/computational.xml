@@ -26,4 +26,7 @@
 	<RunTest>
 		<Test>fhourstones</Test>
 	</RunTest>
+	<RunTest>
+		<Test>gmpbench</Test>
+	</RunTest>
 </PhoronixTestSuite>

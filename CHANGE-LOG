@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts: Add dbench test profile for the DBench disk benchmark
 - pts: Add dbench test profile to relevant suites
 - pts: Update sqlite test profile to SQLite 3.6.13
+- pts: Add gmpbench test profile for GMP / GMPbench testing
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
 
 Phoronix Test Suite 1.8.1

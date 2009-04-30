@@ -45,6 +45,9 @@
 		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
+		<Test>gmpbench</Test>
+	</RunTest>
+	<RunTest>
 		<Test>dbench</Test>
 		<Arguments>1</Arguments>
 		<Description>1 Client</Description>

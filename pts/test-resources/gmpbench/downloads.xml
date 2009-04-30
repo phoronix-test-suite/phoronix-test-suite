@@ -1,0 +1,20 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>ftp://ftp.gmplib.org/pub/gmp-4.3.0.tar.gz, ftp://ftp.gnu.org/gnu/gmp/gmp-4.3.0.tar.gz</URL>
+			<MD5>2cc4a7bf899907e84849d1be77f5a579</MD5>
+			<FileSize>2488749</FileSize>
+		</Package>
+		<Package>
+			<URL>http://gmplib.org/gmpbench-0.1.tar.gz</URL>
+			<MD5>131a5e8e2009a3cb1a92506b0e720068</MD5>
+			<FileSize>4464</FileSize>
+		</Package>
+		<Package>
+			<URL>http://gmplib.org/gexpr.c</URL>
+			<MD5>f28a3c5e6f812b26c122e3e71f5d24be</MD5>
+			<FileSize>6278</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
+
