@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>0.0.1</Version>
+		<TestType>System</TestType>
+		<SoftwareType>Benchmark</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Kim Bisgaard</Maintainer>
+		<ProjectURL>http://www.postgresql.org/</ProjectURL>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestProfile>
+	<TestInformation>
+		<Title>PostgreSQL pgbench</Title>
+		<SubTitle>TPC-B Transactions per second</SubTitle>
+		<TimesToRun>3</TimesToRun>
+		<Executable>pgbench</Executable>
+		<Version>8.3.7</Version>
+		<ResultScale>TPS</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This is a simple TPC-B like benchmark of PostgreSQL.</Description>
+	</TestInformation>
+</PhoronixTestSuite>

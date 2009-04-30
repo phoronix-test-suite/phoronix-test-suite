@@ -1,0 +1,9 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>ftp://ftp.dk.postgresql.org/postgresql/source/v8.3.7/postgresql-8.3.7.tar.bz2</URL>
+			<MD5>7b7e91a2221e55fe1b167e663217a96d</MD5>
+			<FileSize>14124712</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
