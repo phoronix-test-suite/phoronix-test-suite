@@ -24,7 +24,7 @@
 class graphics_event_checker extends pts_module_interface
 {
 	const module_name = "Graphics Event Checker";
-	const module_version = "0.1.0";
+	const module_version = "0.1.1";
 	const module_description = "This module checks a number of events prior to and and after running a test to make sure the graphics sub-system was not put in a sour or unintended state. For instance, it makes sure syncing to vBlank is not forced through the driver and that a graphics test had not ended prematurely where it left the resolution in an incorrect mode.";
 	const module_author = "Michael Larabel";
 
@@ -45,7 +45,7 @@ class graphics_event_checker extends pts_module_interface
 		}
 
 		// Store the video resolution
-		self::$start_video_resolution = hw_gpu_xrandr_mode();
+		self::$start_video_resolution = phodevi::read_property("gpu", "screen-resolution");
 
 		if(IS_ATI_GRAPHICS)
 		{
@@ -114,7 +114,7 @@ class graphics_event_checker extends pts_module_interface
 	}
 	private static function check_video_resolution()
 	{
-		$current_res = hw_gpu_xrandr_mode();
+		$current_res = phodevi::read_property("gpu", "screen-resolution");
 
 		if($current_res != self::$start_video_resolution && self::$start_video_resolution != array(-1, -1))
 		{

@@ -58,7 +58,7 @@ function pts_sw_string($return_string = true)
 	$sw["OpenGL"] = sw_os_opengl();
 	$sw["Compiler"] = sw_os_compiler();
 	$sw["File-System"] = sw_os_filesystem();
-	$sw["Screen Resolution"] = hw_gpu_current_mode();
+	$sw["Screen Resolution"] = phodevi::read_property("gpu", "screen-resolution-string");
 
 	$sw = pts_remove_unsupported_entries($sw);
 

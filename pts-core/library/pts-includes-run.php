@@ -187,8 +187,8 @@ function pts_generate_test_notes($test_type)
 
 	if($test_type == "Graphics" || $test_type == "System")
 	{
-		$aa_level = hw_gpu_aa_level();
-		$af_level = hw_gpu_af_level();
+		$aa_level = phodevi::read_property("gpu", "aa-level");
+		$af_level = phodevi::read_property("gpu", "af-level");
 
 		if(!empty($aa_level))
 		{
@@ -655,8 +655,8 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if($test_type == "Graphics")
 	{
 		$extra_gfx_settings = array();
-		$aa_level = hw_gpu_aa_level();
-		$af_level = hw_gpu_af_level();
+		$aa_level = phodevi::read_property("gpu", "aa-level");
+		$af_level = phodevi::read_property("gpu", "af-level");
 
 		if(!empty($aa_level))
 		{

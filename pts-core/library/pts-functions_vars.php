@@ -37,11 +37,11 @@ function pts_env_variables()
 		"NUM_CPU_JOBS" => (phodevi::read_property("cpu", "core-count") * 2),
 		"SYS_MEMORY" => phodevi::read_property("memory", "capacity"),
 		"VIDEO_MEMORY" => phodevi::read_property("gpu", "memory-capacity"),
-		"VIDEO_WIDTH" => hw_gpu_screen_width(),
-		"VIDEO_HEIGHT" => hw_gpu_screen_height(),
-		"VIDEO_MONITOR_COUNT" => hw_gpu_monitor_count(),
-		"VIDEO_MONITOR_LAYOUT" => hw_gpu_monitor_layout(),
-		"VIDEO_MONITOR_SIZES" => hw_gpu_monitor_modes(),
+		"VIDEO_WIDTH" => array_shift(phodevi::read_property("gpu", "screen-resolution")),
+		"VIDEO_HEIGHT" => array_pop(phodevi::read_property("gpu", "screen-resolution")),
+		"VIDEO_MONITOR_COUNT" => phodevi::read_property("gpu", "monitor-count"),
+		"VIDEO_MONITOR_LAYOUT" => phodevi::read_property("gpu", "monitor-layout"),
+		"VIDEO_MONITOR_SIZES" => phodevi::read_property("gpu", "monitor-modes"),
 		"OPERATING_SYSTEM" => pts_vendor_identifier(),
 		"OS_VERSION" => sw_os_version(),
 		"OS_ARCH" => sw_os_architecture(),
@@ -59,7 +59,7 @@ function pts_user_runtime_variables($search_for = null)
 	if($runtime_variables == null)
 	{
 		$runtime_variables = array(
-		"VIDEO_RESOLUTION" => hw_gpu_current_mode(),
+		"VIDEO_RESOLUTION" => phodevi::read_property("gpu", "screen-resolution-string"),
 		"VIDEO_CARD" => phodevi::read_name("gpu"),
 		"VIDEO_DRIVER" => sw_os_opengl(),
 		"OPERATING_SYSTEM" => sw_os_release(),
