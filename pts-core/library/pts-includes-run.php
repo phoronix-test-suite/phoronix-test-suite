@@ -182,7 +182,7 @@ function pts_generate_test_notes($test_type)
 
 	// Power Saving Technologies?
 	pts_add_test_note(phodevi::read_property("cpu", "power-savings-mode"));
-	pts_add_test_note(hw_sys_power_mode());
+	pts_add_test_note(phodevi::read_property("motherboard", "power-mode"));
 	pts_add_test_note(sw_os_virtualized_mode());
 
 	if($test_type == "Graphics" || $test_type == "System")

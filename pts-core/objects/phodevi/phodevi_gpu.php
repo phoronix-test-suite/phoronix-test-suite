@@ -540,9 +540,9 @@ class phodevi_gpu extends pts_device_interface
 	public static function gpu_memory_size()
 	{
 		// Graphics memory capacity
-		$video_ram = DEFAULT_VIDEO_RAM_CAPACITY;
+		$video_ram = 64; // Assume 64MB of video RAM at least
 
-		if(($vram = getenv("VIDEO_MEMORY")) != false && is_numeric($vram) && $vram > DEFAULT_VIDEO_RAM_CAPACITY)
+		if(($vram = getenv("VIDEO_MEMORY")) != false && is_numeric($vram) && $vram > $video_ram)
 		{
 			$video_ram = $vram;
 		}
@@ -672,7 +672,7 @@ class phodevi_gpu extends pts_device_interface
 
 			if(count($adapters) > 0)
 			{
-				$video_ram = ($video_ram > DEFAULT_VIDEO_RAM_CAPACITY ? " " . $video_ram . "MB" : "");
+				$video_ram = ($video_ram > 64 ? " " . $video_ram . "MB" : ""); // assume more than 64MB of vRAM
 
 				if($crossfire_card_count > 1 && $crossfire_card_count <= count($adapters))
 				{
@@ -766,7 +766,7 @@ class phodevi_gpu extends pts_device_interface
 			}
 		}
 
-		if(IS_NVIDIA_GRAPHICS && $video_ram > DEFAULT_VIDEO_RAM_CAPACITY && strpos($info, $video_ram) == false)
+		if(IS_NVIDIA_GRAPHICS && $video_ram > 64 && strpos($info, $video_ram) == false) // assume more than 64MB of vRAM
 		{
 			$info .= " " . $video_ram . "MB";
 		}

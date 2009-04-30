@@ -30,12 +30,28 @@ class phodevi_motherboard extends pts_device_interface
 			case "identifier":
 				$property = new pts_device_property("motherboard_string", true);
 				break;
+			case "power-mode":
+				$property = new pts_device_property("power_mode", true);
+				break;
 			default:
 				$property = new pts_device_property(null, false);
 				break;
 		}
 
 		return $property;
+	}
+	public static function power_mode()
+	{
+		// Returns the power mode
+		$power_state = read_acpi("/ac_adapter/AC/state", "state");
+		$return_status = "";
+
+		if($power_state == "off-line")
+		{
+			$return_status = "This computer was running on battery power";
+		}
+
+		return $return_status;
 	}
 	public static function motherboard_string()
 	{
