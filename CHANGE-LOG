@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts: Add gmpbench test profile for GMP / GMPbench testing
 - pts: Add pgbench test profile for PostgreSQL testing
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
+- install-sh: Copy phoronix-test-suite.desktop to /usr/share/applications/ for the GUI
 
 Phoronix Test Suite 1.8.1
 April 16, 2009
