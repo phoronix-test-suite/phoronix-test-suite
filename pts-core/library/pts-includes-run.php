@@ -98,7 +98,7 @@ function pts_test_note($process, $value = null)
 				switch($value)
 				{
 					case "JAVA_VERSION":
-						$value = sw_os_java_version();
+						$value = phodevi::read_property("system", "java-version");
 
 						if(empty($value))
 						{
@@ -183,7 +183,7 @@ function pts_generate_test_notes($test_type)
 	// Power Saving Technologies?
 	pts_add_test_note(phodevi::read_property("cpu", "power-savings-mode"));
 	pts_add_test_note(phodevi::read_property("motherboard", "power-mode"));
-	pts_add_test_note(sw_os_virtualized_mode());
+	pts_add_test_note(phodevi::read_property("system", "virtualized-mode"));
 
 	if($test_type == "Graphics" || $test_type == "System")
 	{

@@ -830,7 +830,7 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 function pts_cpu_arch_compatible($check_against)
 {
 	$compatible = true;
-	$this_arch = sw_os_architecture();
+	$this_arch = phodevi::read_property("system", "kernel-architecture");
 	$check_against = pts_to_array($check_against);
 
 	if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")

@@ -21,7 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(PTS_LIBRARY_PATH . "pts-functions_system_software.php");
 require_once(PTS_LIBRARY_PATH . "pts-functions_system_hardware.php");
 require_once(PTS_LIBRARY_PATH . "pts-functions_system_parsing.php");
 
@@ -47,14 +46,14 @@ function pts_sw_string($return_string = true)
 	// Returns string of software information
 	$sw = array();
 
-	$sw["OS"] = sw_os_release();
-	$sw["Kernel"] = sw_os_kernel() . " (" . sw_os_architecture() . ")";
-	$sw["Desktop"] = sw_desktop_environment();
-	$sw["Display Server"] = sw_os_graphics_subsystem();
-	$sw["Display Driver"] = sw_xorg_ddx_driver_info();
-	$sw["OpenGL"] = sw_os_opengl();
-	$sw["Compiler"] = sw_os_compiler();
-	$sw["File-System"] = sw_os_filesystem();
+	$sw["OS"] = phodevi::read_property("system", "operating-system");
+	$sw["Kernel"] = phodevi::read_property("system", "kernel") . " (" . phodevi::read_property("system", "kernel-architecture") . ")";
+	$sw["Desktop"] = phodevi::read_property("system", "desktop-environment");
+	$sw["Display Server"] = phodevi::read_property("system", "display-server");
+	$sw["Display Driver"] = phodevi::read_property("system", "display-driver");
+	$sw["OpenGL"] = phodevi::read_property("system", "opengl-driver");
+	$sw["Compiler"] = phodevi::read_property("system", "compiler");
+	$sw["File-System"] = phodevi::read_property("system", "filesystem");
 	$sw["Screen Resolution"] = phodevi::read_property("gpu", "screen-resolution-string");
 
 	$sw = pts_remove_unsupported_entries($sw);
@@ -123,7 +122,7 @@ function pts_remove_unsupported_entries($array)
 }
 function pts_system_identifier_string()
 {
-	$components = array(phodevi::read_property("cpu", "model"), phodevi::read_name("motherboard"), sw_os_release(), sw_os_compiler());
+	$components = array(phodevi::read_property("cpu", "model"), phodevi::read_name("motherboard"), phodevi::read_property("system", "operating-system"), phodevi::read_property("system", "compiler"));
 	return base64_encode(implode("__", $components));
 }
 

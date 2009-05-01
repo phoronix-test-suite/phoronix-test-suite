@@ -42,9 +42,9 @@ function pts_env_variables()
 		"VIDEO_MONITOR_COUNT" => phodevi::read_property("gpu", "monitor-count"),
 		"VIDEO_MONITOR_LAYOUT" => phodevi::read_property("gpu", "monitor-layout"),
 		"VIDEO_MONITOR_SIZES" => phodevi::read_property("gpu", "monitor-modes"),
-		"OPERATING_SYSTEM" => pts_vendor_identifier(),
-		"OS_VERSION" => sw_os_version(),
-		"OS_ARCH" => sw_os_architecture(),
+		"OPERATING_SYSTEM" => phodevi::read_property("system", "vendor-identifier"),
+		"OS_VERSION" => phodevi::read_property("system", "os-version"),
+		"OS_ARCH" => phodevi::read_property("system", "kernel-architecture"),
 		"OS_TYPE" => OPERATING_SYSTEM,
 		"THIS_RUN_TIME" => PTS_INIT_TIME
 		);
@@ -61,14 +61,14 @@ function pts_user_runtime_variables($search_for = null)
 		$runtime_variables = array(
 		"VIDEO_RESOLUTION" => phodevi::read_property("gpu", "screen-resolution-string"),
 		"VIDEO_CARD" => phodevi::read_name("gpu"),
-		"VIDEO_DRIVER" => sw_os_opengl(),
-		"OPERATING_SYSTEM" => sw_os_release(),
+		"VIDEO_DRIVER" => phodevi::read_property("system", "display-driver"),
+		"OPERATING_SYSTEM" => phodevi::read_property("system", "operating-system"),
 		"PROCESSOR" => phodevi::read_name("cpu"),
 		"MOTHERBOARD" => phodevi::read_name("motherboard"),
 		"CHIPSET" => phodevi::read_name("chipset"),
-		"KERNEL_VERSION" => sw_os_kernel(),
-		"COMPILER" => sw_os_compiler(),
-		"HOSTNAME" => sw_os_hostname()
+		"KERNEL_VERSION" => phodevi::read_property("system", "kernel"),
+		"COMPILER" => phodevi::read_property("system", "compiler"),
+		"HOSTNAME" => phodevi::read_property("system", "hostname")
 		);
 	}
 

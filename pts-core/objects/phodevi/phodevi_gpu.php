@@ -437,7 +437,7 @@ class phodevi_gpu extends pts_device_interface
 
 		if(phodevi::read_property("gpu", "monitor-count") == 1)
 		{
-			array_push($resolutions, hw_gpu_current_mode());
+			array_push($resolutions, phodevi::read_property("gpu", "screen-resolution-string"));
 		}
 		else
 		{

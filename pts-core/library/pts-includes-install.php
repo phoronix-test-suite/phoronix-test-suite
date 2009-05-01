@@ -382,7 +382,7 @@ function pts_install_test($identifier)
 	$installed = false;
 	if(!pts_test_architecture_supported($identifier))
 	{
-		echo pts_string_header($identifier . " is not supported on this architecture: " . sw_os_architecture());
+		echo pts_string_header($identifier . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
 	}
 	else if(!pts_test_platform_supported($identifier))
 	{

@@ -123,7 +123,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 		{
 			array_push($dependencies, "php-extras");
 
-			if(sw_os_architecture() == "x86_64")
+			if(phodevi::read_property("system", "kernel-architecture") == "x86_64")
 			{
 				array_push($dependencies, "linux-32bit-libraries");
 			}
@@ -241,6 +241,37 @@ function pts_file_missing_check($file_arr)
 	}
 
 	return $file_missing;
+}
+function pts_package_vendor_identifier()
+{
+	$os_vendor = phodevi::read_property("system", "vendor-identifier");
+
+	if(!is_file(XML_DISTRO_DIR . $os_vendor . "-packages.xml") && !is_file(SCRIPT_DISTRO_DIR . "install-" . $os_vendor . "-packages.sh"))
+	{
+		if(is_file(STATIC_DIR . "software-vendor-aliases.txt"))
+		{
+			$vendors_alias_file = trim(file_get_contents(STATIC_DIR . "software-vendor-aliases.txt"));
+			$vendors_r = explode("\n", $vendors_alias_file);
+
+			foreach($vendors_r as $vendor)
+			{
+				$vendor_r = explode("=", $vendor);
+
+				if(count($vendor_r) == 2)
+				{
+					$to_replace = trim($vendor_r[0]);
+
+					if($os_vendor == $to_replace)
+					{
+						$os_vendor = trim($vendor_r[1]);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	return $os_vendor;
 }
 
 ?>

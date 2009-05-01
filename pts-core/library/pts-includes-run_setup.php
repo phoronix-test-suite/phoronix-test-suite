@@ -376,12 +376,12 @@ function pts_global_auto_tags($extra_attr = null)
 		array_push($tags_array, "NVIDIA");
 	}
 
-	if(sw_os_architecture() == "x86_64" && IS_LINUX)
+	if(phodevi::read_property("system", "kernel-architecture") == "x86_64" && IS_LINUX)
 	{
 		array_push($tags_array, "64-bit Linux");
 	}
 
-	$os = sw_os_release();
+	$os = phodevi::read_property("system", "operating-system");
 	if($os != "Unknown")
 	{
 		array_push($tags_array, $os);

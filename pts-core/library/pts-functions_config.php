@@ -264,7 +264,7 @@ function pts_current_user()
 
 	if($pts_user == "Default User")
 	{
-		$pts_user = sw_os_username();
+		$pts_user = phodevi::read_property("system", "username");
 	}
 
 	return $pts_user;
