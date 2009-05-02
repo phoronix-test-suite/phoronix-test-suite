@@ -92,7 +92,7 @@ function pts_user_config_init($new_config_values = null)
 		}
 
 		pts_copy(STATIC_DIR . "pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
-		pts_copy(MEDIA_DIR . "pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
+		pts_copy(STATIC_DIR . "pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
 	}
 }
 function pts_module_config_init($SetOptions = null)

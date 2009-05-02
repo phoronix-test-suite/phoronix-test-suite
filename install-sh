@@ -64,7 +64,7 @@ cd ..
 rm -rf $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/man-pages/
 
 cp documentation/man-pages/*.1 $DESTDIR$INSTALL_PREFIX/share/man/man1/
-cp pts-core/media/phoronix-test-suite.png $DESTDIR$INSTALL_PREFIX/share/icons/phoronix-test-suite.png
+cp pts-core/static/phoronix-test-suite.png $DESTDIR$INSTALL_PREFIX/share/icons/phoronix-test-suite.png
 cp pts-core/static/phoronix-test-suite.desktop $DESTDIR$INSTALL_PREFIX/share/applications/
 
 cp -r pts/ $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/

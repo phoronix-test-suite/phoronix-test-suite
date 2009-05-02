@@ -53,7 +53,7 @@ class gui_gtk implements pts_option_interface
 		if($system_tray == null)
 		{
 			$system_tray = new GtkStatusIcon();
-			$system_tray->set_from_file(MEDIA_DIR . "pts-icon.png");
+			$system_tray->set_from_file(STATIC_DIR . "pts-icon.png");
 			$system_tray->set_tooltip("Phoronix Test Suite v" . PTS_VERSION);
 			$system_tray->connect("activate", array("gui_gtk", "system_tray_activate"));
 			$system_tray->connect("popup-menu", array("gui_gtk", "system_tray_menu"));
