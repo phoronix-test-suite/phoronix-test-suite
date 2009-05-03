@@ -161,7 +161,17 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 			// Base options off available screen resolutions
 			if(count($option_names) == 1 && count($option_values) == 1)
 			{
-				$available_video_modes = phodevi::read_property("gpu", "available-modes");
+				if(PTS_MODE == "CLIENT")
+				{
+					$available_video_modes = phodevi::read_property("gpu", "available-modes");
+				}
+				else
+				{
+					// Use hard-coded defaults
+					$available_video_modes = array(array(800, 600), array(1024, 768), array(1280, 1024), array(1280, 960), 
+						array(1400, 1050), array(1680, 1050), array(1600, 1200), array(1920, 1080), array(2560, 1600));
+				}
+
 				$format_name = $option_names[0];
 				$format_value = $option_values[0];
 				$option_names = array();
@@ -183,6 +193,12 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 		case "auto-disk-partitions":
 		case "auto-disk-mount-points":
 			// Base options off available disk partitions
+			if(PTS_MODE != "CLIENT")
+			{
+				echo "ERROR: This option is not supported in this configuration.";
+				return;
+			}
+
 			$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
 			$all_devices_count = count($all_devices);
 
@@ -232,6 +248,12 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 			break;
 		case "auto-disks":
 			// Base options off attached disks
+			if(PTS_MODE != "CLIENT")
+			{
+				echo "ERROR: This option is not supported in this configuration.";
+				return;
+			}
+
 			$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
 			$all_devices_count = count($all_devices);
 
@@ -253,6 +275,12 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 			$option_names = $option_values;
 			break;
 		case "auto-removable-media":
+			if(PTS_MODE != "CLIENT")
+			{
+				echo "ERROR: This option is not supported in this configuration.";
+				return;
+			}
+
 			$removable_media = glob("/media/*/");
 
 			for($i = 0; $i < count($removable_media); $i++)
@@ -265,6 +293,12 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 			}
 			break;
 		case "auto-file-select":
+			if(PTS_MODE != "CLIENT")
+			{
+				echo "ERROR: This option is not supported in this configuration.";
+				return;
+			}
+
 			$names = $option_names;
 			$values = $option_values;
 			$option_names = array();
@@ -280,6 +314,12 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 			}
 			break;
 		case "auto-directory-select":
+			if(PTS_MODE != "CLIENT")
+			{
+				echo "ERROR: This option is not supported in this configuration.";
+				return;
+			}
+
 			$names = $option_names;
 			$values = $option_values;
 			$option_names = array();
