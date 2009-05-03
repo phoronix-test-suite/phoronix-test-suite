@@ -45,8 +45,7 @@ $PG/bin/createdb pgbench
 $PG/bin/pgbench -i -s \$NUM_CPU_JOBS pgbench
 
 # run the test 
-let clients=NUM_CPU_JOBS/2
-$PG/bin/pgbench -t 30000 -c \$clients pgbench >\$LOG_FILE
+$PG/bin/pgbench -t 30000 -c \`expr \$NUM_CPU_JOBS / 2\` pgbench >\$LOG_FILE 
 # drop test db
 $PG/bin/dropdb pgbench
 # stop server
