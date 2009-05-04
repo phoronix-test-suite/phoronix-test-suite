@@ -21,15 +21,12 @@
 */
 
 define("M_PHOROMATIC_GEN_RESPONSE", "PhoronixTestSuite/Phoromatic/General/Response");
-
-define("M_PHOROMATIC_TEST_TITLE", "PhoronixTestSuite/Phoromatic/TestData/Title");
-define("M_PHOROMATIC_TEST_IDENTIFIER", "PhoronixTestSuite/Phoromatic/TestData/Identifier");
-define("M_PHOROMATIC_TEST_DESCRIPTION", "PhoronixTestSuite/Phoromatic/TestData/Description");
+define("M_PHOROMATIC_SYS_NAME", "PhoronixTestSuite/Phoromatic/General/SystemName");
 
 class phoromatic extends pts_module_interface
 {
 	const module_name = "Phoromatic Client";
-	const module_version = "0.0.1";
+	const module_version = "0.0.2";
 	const module_description = "The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/";
 	const module_author = "Phoronix Media";
 
@@ -82,7 +79,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_commands()
 	{
-		return array("start" => "user_start");
+		return array("start" => "user_start", "user_system_return" => "user_system_return");
 	}
 
 	//
@@ -110,7 +107,6 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		exit;
 		pts_attach_module("phoromatic");
 		phoromatic::user_system_process();
 	}
@@ -119,11 +115,18 @@ class phoromatic extends pts_module_interface
 	// Core Functions
 	//
 
-	public static function user_system_return()
+	public static function user_system_return($tests)
 	{
 		// Upload result here
+		foreach($tests as $test)
+		{
+			if(is_file(XML_SUITE_LOCAL_DIR . $test . ".xml"))
+			{
+				unlink(XML_SUITE_LOCAL_DIR . $test . ".xml");
+			}
+		}
 
-
+		exit; // DEBUG
 		phoromatic::user_system_process();
 	}
 	public static function user_system_process()
@@ -131,8 +134,8 @@ class phoromatic extends pts_module_interface
 		do
 		{
 			$server_response = phoromatic::upload_to_remote_server(array("r" => "status_check"));
-			$xml_parser = new tandem_XmlReader($server_response);
 
+			$xml_parser = new tandem_XmlReader($server_response);
 			$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
 
 			switch($response)
@@ -140,31 +143,26 @@ class phoromatic extends pts_module_interface
 				case "benchmark":
 					$args_to_pass = array("AUTOMATED_MODE" => true);
 
-					$test_title = $xml_parser->getXMLValue(M_PHOROMATIC_TEST_TITLE);
-					$test_identifier = $xml_parser->getXMLValue(M_PHOROMATIC_TEST_IDENTIFIER);
-					$test_description = $xml_parser->getXMLValue(M_PHOROMATIC_TEST_DESCRIPTION);
-
-					//$args_to_pass["AUTO_SAVE_NAME"] = $save_name;
-					$args_to_pass["PHOROMATIC_TITLE"] = $test_title;
-					$args_to_pass["AUTO_TEST_RESULTS_IDENTIFIER"] = $test_identifier;
-
 					do
 					{
 						$suite_identifier = "phoromatic-" . rand(1000, 9999);
 					}
 					while(is_file(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml"));
 
+					$args_to_pass["AUTO_SAVE_NAME"] = date("Y-m-d H:i:s");
+					$args_to_pass["PHOROMATIC_TITLE"] = $xml_parser->getXMLValue(P_SUITE_TITLE);
+					$args_to_pass["AUTO_TEST_RESULTS_IDENTIFIER"] = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
+
 					file_put_contents(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml", $server_response);
 
-					pts_run_option_next("install_test", $identifier, array("AUTOMATED_MODE" => true));
-					pts_run_option_next("run_test", $identifier, $args_to_pass);
-					pts_run_option_next("phoromatic.user_system_return", $identifier, $args_to_pass);
-
-					unlink(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml");
+					pts_run_option_next("install_test", $suite_identifier, array("AUTOMATED_MODE" => true));
+					pts_run_option_next("run_test", $suite_identifier, $args_to_pass);
+					pts_run_option_next("phoromatic.user_system_return", $suite_identifier, $args_to_pass);
 					break;
 				case "exit":
 					break;
 				default:
+					exit;  // DEBUG
 					sleep((5 - (date("i") % 5)) * 60); // Check with server every 5 minutes
 					break;
 			}
@@ -183,13 +181,13 @@ class phoromatic extends pts_module_interface
 
 		if($last_update_time == null || time() > ($last_update_time + 600))
 		{
-			update_system_status("Installing Tests");
+			phoromatic::update_system_status("Installing Tests");
 			$last_update_time = time();
 		}
 	}
 	public static function __pre_test_run( $pts_test_result)
 	{
-		update_system_status("Running " . $pts_test_result->get_attribute("TEST_IDENTIFIER") . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
+		phoromatic::update_system_status("Running " . $pts_test_result->get_attribute("TEST_IDENTIFIER") . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
 	}
 
 	//
