@@ -298,6 +298,16 @@ class phodevi_gpu extends pts_device_interface
 		$info = shell_exec("xrandr 2>&1");
 		$xrandr_lines = array_reverse(explode("\n", $info));
 
+		if($override_check = (($override_modes = getenv("OVERRIDE_VIDEO_MODES")) != false))
+		{
+			$override_modes = explode(",", $override_modes);
+
+			for($i = 0; $i < count($override_modes); $i++)
+			{
+				$override_modes[$i] = explode("x", $override_modes[$i]);
+			}
+		}
+
 		foreach($xrandr_lines as $xrandr_mode)
 		{
 			if(($cut_point = strpos($xrandr_mode, "(")) > 0)
@@ -317,7 +327,7 @@ class phodevi_gpu extends pts_device_interface
 					$ratio = pts_trim_double($res[0] / $res[1], 2);
 					$this_mode = array($res[0], $res[1]);
 
-					if(in_array($ratio, $supported_ratios) && !in_array($this_mode, $ignore_modes))
+					if(in_array($ratio, $supported_ratios) && !in_array($this_mode, $ignore_modes) && (!$override_check || in_array($stock_modes[$i], $override_modes)))
 					{
 						array_push($available_modes, $this_mode);
 					}
@@ -337,7 +347,10 @@ class phodevi_gpu extends pts_device_interface
 			{
 				if($stock_modes[$i][0] <= $current_resolution[0] && $stock_modes[$i][1] <= $current_resolution[1])
 				{
-					array_push($available_modes, $stock_modes[$i]);
+					if(!$override_check || in_array($stock_modes[$i], $override_modes))
+					{
+						array_push($available_modes, $stock_modes[$i]);
+					}
 				}
 			}
 		}
@@ -377,6 +390,17 @@ class phodevi_gpu extends pts_device_interface
 			}
 
 			$available_modes = $sorted_modes;
+		}
+
+		if(count($available_modes) == 0 && $override_check)
+		{
+			foreach($override_modes as $mode)
+			{
+				if(is_array($mode) && count($mode) == 2)
+				{
+					array_push($available_modes, $mode);
+				}
+			}
 		}
 
 		return $available_modes;
