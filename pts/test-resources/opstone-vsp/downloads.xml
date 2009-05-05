@@ -1,0 +1,17 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.bluesailsoftware.com/software/opstone/build/?download=opstone-sp-athlon64</URL>
+			<MD5>e8b6751aacd99e430e42c29a4955a573</MD5>
+			<FileName>opstone-sp-athlon64</FileName>
+			<FileSize>85704</FileSize>
+		</Package>
+		<Package>
+			<URL>http://www.bluesailsoftware.com/software/opstone/build/?download=opstone-sp-pentium4</URL>
+			<MD5>aa4d5e01a7517f3feadaf26d161f0675</MD5>
+			<FileName>opstone-sp-pentium4</FileName>
+			<FileSize>66664</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
+
