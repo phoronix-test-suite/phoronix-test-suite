@@ -23,8 +23,15 @@
 
 function pts_gtk_add_menu($vbox, $menu)
 {
-	$menu_bar = new GtkMenuBar();
-	$vbox->pack_start($menu_bar, false, false);
+	if($vbox instanceOf GtkBox)
+	{
+		$menu_bar = new GtkMenuBar();
+		$vbox->pack_start($menu_bar, false, false);
+	}
+	else if($vbox instanceOf GtkMenu)
+	{
+		$menu_bar = $vbox;
+	}
 
 	foreach($menu as $this_menu => $sub_menu)
 	{
@@ -34,12 +41,16 @@ function pts_gtk_add_menu($vbox, $menu)
 		$new_menu->set_submenu($menu);
 
 		$sub_menu = pts_to_array($sub_menu);
-		foreach($sub_menu as $this_object)
+		foreach($sub_menu as $this_identifier => $this_object)
 		{
 			if($this_object == null)
 			{
 				$menu_item = new GtkSeparatorMenuItem();
 				$menu->append($menu_item);
+			}
+			else if(is_array($this_object))
+			{
+				pts_gtk_add_menu($menu, array($this_identifier => $this_object));
 			}
 			else
 			{
