@@ -30,6 +30,9 @@
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
+		<Test>crafty</Test>
+	</RunTest>
+	<RunTest>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>HWB Color Space</Description>

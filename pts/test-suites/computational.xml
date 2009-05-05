@@ -29,4 +29,7 @@
 	<RunTest>
 		<Test>gmpbench</Test>
 	</RunTest>
+	<RunTest>
+		<Test>crafty</Test>
+	</RunTest>
 </PhoronixTestSuite>

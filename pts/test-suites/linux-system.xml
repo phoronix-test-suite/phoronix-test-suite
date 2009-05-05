@@ -66,6 +66,9 @@
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
+		<Test>crafty</Test>
+	</RunTest>
+	<RunTest>
 		<Test>scimark2</Test>
 		<Arguments>TEST_FFT </Arguments>
 		<Description>Fast Fourier Transform</Description>
