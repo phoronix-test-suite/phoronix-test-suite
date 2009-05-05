@@ -14,7 +14,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 	</TestProfile>
 	<TestInformation>
-		<Title>Opstone Sparse-Vector Scalar Product</Title>
+		<Title>Opstone Singular Value Decomposition</Title>
 		<SubTitle>Double-Precision Mean</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Mflops</ResultScale>
