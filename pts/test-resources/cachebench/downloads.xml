@@ -1,0 +1,10 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://icl.cs.utk.edu/projects/llcbench/llcbench.tar.gz</URL>
+			<MD5>eac47d5ce9ad9d09b08a7e7936b1ae3a</MD5>
+			<FileSize>176236</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
+
