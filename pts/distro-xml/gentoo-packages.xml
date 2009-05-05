@@ -155,5 +155,10 @@
 			<PackageName>dev-libs/popt</PackageName>
 			<FileCheck>/usr/include/popt.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>numa-development</GenericName>
+			<PackageName>sys-process/numactl</PackageName>
+			<FileCheck>/usr/include/numa.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

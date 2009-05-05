@@ -130,5 +130,10 @@
 			<PackageName>libtool</PackageName>
 			<FileCheck>/usr/bin/libtool</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>numa-development</GenericName>
+			<PackageName>numactl</PackageName>
+			<FileCheck>/usr/include/numa.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

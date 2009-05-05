@@ -165,5 +165,10 @@
 			<PackageName>libpopt-dev</PackageName>
 			<FileCheck>/usr/include/popt.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>numa-development</GenericName>
+			<PackageName>libnuma-dev</PackageName>
+			<FileCheck>/usr/include/numa.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

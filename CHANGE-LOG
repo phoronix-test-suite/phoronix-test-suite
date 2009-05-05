@@ -12,7 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Do not ask to display web browser when DISPLAY is not set
 - pts-core: When launching the GUI from a menu and it fails, show an error message in the web browser
 - pts-core: Move contents of pts-core/media/ into pts-core/static/
-- pts-core: Commit a Phoromatic stub module
+- pts-core: Add initial Phoromatic module
 - pts-core: Provide hard-coded paths when using PTS auto-* run options within a non-client environment
 - pts-core: Add OVERRIDE_VIDEO_MODES environmental variable for overriding video modes
 - pts: Update build-php test profile to use PHP 5.2.9
@@ -24,6 +24,7 @@ Phoronix Test Suite (Git)
 - pts: Add gmpbench test profile for GMP / GMPbench testing
 - pts: Add pgbench test profile for PostgreSQL testing
 - pts: Add tiobench test profile for Threaded I/O benchmark
+- pts: Add NUMA External Dependencies support using numa-development generic name
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
 - install-sh: Copy phoronix-test-suite.desktop to /usr/share/applications/ for the GUI
 

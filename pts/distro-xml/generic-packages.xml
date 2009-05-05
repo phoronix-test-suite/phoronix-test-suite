@@ -194,5 +194,11 @@
 			<PossibleNames>popt, popt-devel, libpopt-dev</PossibleNames>
 			<FileCheck>/usr/include/popt.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>numa-development</GenericName>
+			<Title>NUMA Development Files</Title>
+			<PossibleNames>libnuma-dev, numactl-devel</PossibleNames>
+			<FileCheck>/usr/include/numa.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
