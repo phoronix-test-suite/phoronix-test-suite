@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<Title>Server Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite consists of server-oriented tests.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>apache</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
+	</RunTest>
+</PhoronixTestSuite>

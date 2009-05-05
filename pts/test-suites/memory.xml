@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<TestType>Memory</TestType>
 		<Title>Memory Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -32,5 +32,15 @@
 		<Test>memory-bandwidth</Test>
 		<Arguments>TEST_READ</Arguments>
 		<Description>RAM Sequential Read</Description>
+	</RunTest>
+	<RunTest>
+		<Test>cachebench</Test>
+		<Arguments>-r</Arguments>
+		<Description>Read Cache</Description>
+	</RunTest>
+	<RunTest>
+		<Test>cachebench</Test>
+		<Arguments>-w</Arguments>
+		<Description>Write Cache</Description>
 	</RunTest>
 </PhoronixTestSuite>

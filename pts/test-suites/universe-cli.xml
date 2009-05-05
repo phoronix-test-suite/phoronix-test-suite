@@ -36,6 +36,9 @@
 		<Test>database</Test>
 	</RunTest>
 	<RunTest>
+		<Test>server</Test>
+	</RunTest>
+	<RunTest>
 		<Test>java</Test>
 	</RunTest>
 	<RunTest>
