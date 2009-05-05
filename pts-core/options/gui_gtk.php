@@ -132,7 +132,8 @@ class gui_gtk implements pts_option_interface
 		$merge_results = new pts_gtk_menu_item("Merge Results", array("gui_gtk", ""));
 		$merge_results->attach_to_pts_assignment("GTK_OBJ_MERGE_RESULTS");
 
-		$file_menu = array("Phoronix Global" => array(new pts_gtk_menu_item("Clone From Global", array("gui_gtk", "show_phoronix_global_interface"))), null);
+		$file_menu = array("Phoronix Global" => array(new pts_gtk_menu_item("Clone / View Results", array("gui_gtk", "show_phx_global_clone_interface")), 
+		new pts_gtk_menu_item("User Log-In", array("gui_gtk", "show_phx_global_login_interface"))), null);
 
 		if(!pts_pcqs_is_installed())
 		{
@@ -955,7 +956,7 @@ class gui_gtk implements pts_option_interface
 		pts_gtk_object_set_sensitive("GTK_OBJ_TEST_IDENTIFIER", $is_save);
 		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", $is_save);
 	}
-	public static function show_phoronix_global_interface()
+	public static function show_phx_global_clone_interface()
 	{
 		// We need to close the main window now since it seems to cause problems if closed from within launch_phoronix_global_action()
 		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
@@ -963,7 +964,7 @@ class gui_gtk implements pts_option_interface
 
 		$window = new pts_gtk_window("Phoronix Global");
 
-		$label_global = new GtkLabel("Phoronix Global is the web repository for the Phoronix Test Suite where test results are publicly hosted. Enter a Phoronix Global ID below. To access Phoronix Global, visit:\n\nhttp://global.phoronix-test-suite.com/\n");
+		$label_global = new GtkLabel("Phoronix Global is the web repository for the Phoronix Test Suite where test results are publicly hosted. Enter a Phoronix Global ID below. To access Phoronix Global, visit:\n\nhttp://global.phoronix.com/\n");
 		$label_global->set_size_request(420, -1);
 		$label_global->set_line_wrap(true);
 
@@ -990,6 +991,38 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_GLOBAL_WINDOW", $window);
 		Gtk::main();
 	}
+	public static function show_phx_global_login_interface()
+	{
+		// We need to close the main window now since it seems to cause problems if closed from within launch_phoronix_global_action()
+		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
+		$main_window->destroy();
+
+		$window = new pts_gtk_window("Phoronix Global Log-In");
+
+		$label_global = new GtkLabel("Phoronix Global is the web repository for the Phoronix Test Suite where test results are publicly hosted. Anonymous uploads are supported or you can log-in to your account here. To create an account, visit: http://global.phoronix.com/\n");
+		$label_global->set_size_request(420, -1);
+		$label_global->set_line_wrap(true);
+
+		$user_label = new GtkLabel("User-Name:");
+		$user_login = new GtkEntry();
+		pts_set_assignment("GTK_OBJ_GLOBAL_USER", $user_login);
+
+		$password_label = new GtkLabel("Password:");
+		$password_login = new GtkEntry();
+		// $password_login->set_visibility(false); // TODO: currently this causes the password not to show with ->get_text()
+		pts_set_assignment("GTK_OBJ_GLOBAL_PASSWORD", $password_login);
+
+		$login_button = new pts_gtk_button("Log-In", array("gui_gtk", "launch_phoronix_global_action"), "login");
+
+		pts_set_assignment("GTK_OBJ_GLOBAL_RESULTS", $results_button);
+		pts_set_assignment("GTK_OBJ_GLOBAL_CLONE", $clone_button);
+		pts_set_assignment("GTK_OBJ_GLOBAL_RUN", $run_button);
+
+		pts_gtk_array_to_boxes($window, array($label_global, array($user_label, $user_login), array($password_label, $password_login), array($login_button)), 4);
+		$window->show_all();
+		pts_set_assignment("GTK_OBJ_GLOBAL_WINDOW", $window);
+		Gtk::main();
+	}
 	public static function phoronix_global_id_entry_changed($force = false)
 	{
 		$id_entry = pts_read_assignment("GTK_OBJ_GLOBAL_ID");
@@ -1003,7 +1036,7 @@ class gui_gtk implements pts_option_interface
 	public static function launch_phoronix_global_action($action)
 	{
 		$id_entry = pts_read_assignment("GTK_OBJ_GLOBAL_ID");
-		$global_id = trim($id_entry->get_text());
+		$global_id = ($id_entry != false ? trim($id_entry->get_text()) : false);
 
 		/*
 		if(!pts_is_global_id($global_id))
@@ -1029,6 +1062,16 @@ class gui_gtk implements pts_option_interface
 				break;
 			case "run_comparison":
 				gui_gtk::show_run_confirmation_interface($global_id);
+				break;
+			case "login":
+				$username = pts_read_assignment("GTK_OBJ_GLOBAL_USER");
+				$password = pts_read_assignment("GTK_OBJ_GLOBAL_PASSWORD");
+
+				$username = $username->get_text();
+				$password = md5($password->get_text());
+
+				pts_global_setup_account($username, $password); // TODO: add interface showing whether or not it worked
+				pts_run_option_next("gui_gtk");
 				break;
 		}
 	}

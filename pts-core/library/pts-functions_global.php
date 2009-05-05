@@ -56,6 +56,17 @@ function pts_global_valid_id_string($global_id)
 
 	return $is_valid;
 }
+function pts_global_setup_account($username, $password)
+{
+	$uploadkey = @file_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=" . $username . "&user_md5_pass=" . $password);
+
+	if(!empty($uploadkey))
+	{
+		pts_user_config_init(array(P_OPTION_GLOBAL_USERNAME => $username, P_OPTION_GLOBAL_UPLOADKEY => $uploadkey));
+	}
+
+	return !empty($uploadkey);
+}
 function pts_global_upload_result($result_file, $tags = "")
 {
 	// Upload a test result to the Phoronix Global database

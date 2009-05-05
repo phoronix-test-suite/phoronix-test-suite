@@ -29,12 +29,11 @@ class global_login implements pts_option_interface
 		$username = trim(fgets(STDIN));
 		echo "Password: ";
 		$password = md5(trim(fgets(STDIN)));
-		$uploadkey = @file_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=" . $username . "&user_md5_pass=" . $password);
+		$global_success = pts_global_setup_account($username, $password);
 
-		if(!empty($uploadkey))
+		if($global_success)
 		{
-			pts_user_config_init(array(P_OPTION_GLOBAL_USERNAME => $username, P_OPTION_GLOBAL_UPLOADKEY => $uploadkey));
-			echo "\nAccount: " . $uploadkey . "\nAccount information written to user-config.xml.\n\n";
+			echo "\nPhoronix Global Account Setup.\nAccount information written to ~/.phoronix-test-suite/user-config.xml.\n\n";
 		}
 		else
 		{
