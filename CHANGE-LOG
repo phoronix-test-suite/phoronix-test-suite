@@ -27,6 +27,7 @@ Phoronix Test Suite (Git)
 - pts: Add NUMA External Dependencies support using numa-development generic name
 - pts: Add crafty test profile for popular chess engine benchmark
 - pts: Add opstone-vsp test profile for Opstone Vector Scalar Product benchmark
+- pts: Add opstone-svsp test profile for Opstone Sparse-Vector Scalar Product benchmark
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
 - install-sh: Copy phoronix-test-suite.desktop to /usr/share/applications/ for the GUI
 
