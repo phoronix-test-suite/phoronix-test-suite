@@ -394,6 +394,7 @@ class phodevi_gpu extends pts_device_interface
 
 		if(count($available_modes) == 0 && $override_check)
 		{
+			// Write in the non-standard modes that were overrode
 			foreach($override_modes as $mode)
 			{
 				if(is_array($mode) && count($mode) == 2)

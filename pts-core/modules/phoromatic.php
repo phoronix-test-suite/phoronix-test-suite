@@ -35,10 +35,6 @@ class phoromatic extends pts_module_interface
 	static $phoromatic_verifier = null;
 	static $phoromatic_system = null;
 
-	public static function module_info()
-	{
-
-	}
 	public static function module_setup()
 	{
 		return array(
@@ -122,7 +118,27 @@ class phoromatic extends pts_module_interface
 		{
 			if(is_file(XML_SUITE_LOCAL_DIR . $test . ".xml"))
 			{
+				// Remove old suite files
 				unlink(XML_SUITE_LOCAL_DIR . $test . ".xml");
+			}
+		}
+
+		if(($save_identifier = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) != false)
+		{
+			// Upload test results
+
+			if(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml")
+			{
+				$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
+
+				$server_response = phoromatic::upload_to_remote_server(array("r" => "upload_test_results", "c" => $composite_xml));
+				$xml_parser = new tandem_XmlReader($server_response);
+				$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
+
+				if($response != "ERROR")
+				{
+					
+				}
 			}
 		}
 
@@ -163,7 +179,7 @@ class phoromatic extends pts_module_interface
 					break;
 				default:
 					exit;  // DEBUG
-					sleep((5 - (date("i") % 5)) * 60); // Check with server every 5 minutes
+					sleep((10 - (date("i") % 10)) * 60); // Check with server every 10 minutes
 					break;
 			}
 		}
@@ -185,7 +201,7 @@ class phoromatic extends pts_module_interface
 			$last_update_time = time();
 		}
 	}
-	public static function __pre_test_run( $pts_test_result)
+	public static function __pre_test_run($pts_test_result)
 	{
 		phoromatic::update_system_status("Running " . $pts_test_result->get_attribute("TEST_IDENTIFIER") . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
 	}
