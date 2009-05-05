@@ -29,6 +29,7 @@ Phoronix Test Suite (Git)
 - pts: Add opstone-vsp test profile for Opstone Vector Scalar Product benchmark
 - pts: Add opstone-svsp test profile for Opstone Sparse-Vector Scalar Product benchmark
 - pts: Add opstone-svd test profile for Opstone Singular Value Decomposition benchmark
+- pts: Add opstone test suite of all opstone-* test profiles
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
 - install-sh: Copy phoronix-test-suite.desktop to /usr/share/applications/ for the GUI
 

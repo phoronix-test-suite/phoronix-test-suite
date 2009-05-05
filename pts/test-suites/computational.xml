@@ -32,4 +32,7 @@
 	<RunTest>
 		<Test>crafty</Test>
 	</RunTest>
+	<RunTest>
+		<Test>opstone</Test>
+	</RunTest>
 </PhoronixTestSuite>
