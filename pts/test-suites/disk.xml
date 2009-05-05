@@ -38,4 +38,24 @@
 		<Arguments>examples/netio</Arguments>
 		<Description>Example Network Job</Description>
 	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -f 64 -t 32</Arguments>
+		<Description>64MB Random Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Read - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k2 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Random Read - 32 Threads</Description>
+	</RunTest>
 </PhoronixTestSuite>
