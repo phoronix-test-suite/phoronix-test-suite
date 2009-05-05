@@ -98,11 +98,11 @@ class pts_sensor
 	{
 		if(is_array($this->read_function) && count($this->read_function) == 2)
 		{
-			$value = call_user_func($this->read_function[0], $this->read_function[1]);
+			$value = phodevi::read_sensor($this->read_function[0], $this->read_function[1]);
 		}
 		else
 		{
-			$value = call_user_func($this->read_function);
+			$value = -1;
 		}
 
 		return $value;

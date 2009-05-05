@@ -23,6 +23,20 @@
 
 class phodevi_disk extends pts_device_interface
 {
+	public static function read_sensor($identifier)
+	{
+		switch($identifier)
+		{
+			case "temperature":
+				$sensor = "hdd_temperature";
+				break;
+			default:
+				$sensor = false;
+				break;
+		}
+
+		return $sensor;
+	}
 	public static function read_property($identifier)
 	{
 		switch($identifier)
@@ -118,6 +132,11 @@ class phodevi_disk extends pts_device_interface
 		$disks = (count($disks) == 0 ? ceil(disk_total_space("/") / 1073741824) . "GB" : implode(" + ", $disks));
 
 		return $disks;
+	}
+	public static function hdd_temperature($disk = null)
+	{
+		// Attempt to read temperature using hddtemp
+		return read_hddtemp($disk);
 	}
 }
 

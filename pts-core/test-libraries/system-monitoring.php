@@ -7,10 +7,10 @@ require(getenv("PTS_DIR") . "pts-core/phoronix-test-suite.php");
 switch($argv[1])
 {
 	case "cpu.usage":
-		$call_function = "hw_cpu_usage";
+		$call_function = phodevi::read_sensor("cpu", "usage");
 		break;
 	case "mem.usage":
-		$call_function = "sw_physical_memory_usage";
+		$call_function = phodevi::read_sensor("memory", "physical-usage");
 		break;
 	default:
 		exit();

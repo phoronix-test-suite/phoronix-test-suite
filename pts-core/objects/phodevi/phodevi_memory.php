@@ -23,6 +23,26 @@
 
 class phodevi_memory extends pts_device_interface
 {
+	public static function read_sensor($identifier)
+	{
+		switch($identifier)
+		{
+			case "physical-usage":
+				$sensor = array("memory_usage", "MEMORY");
+				break;
+			case "swap-usage":
+				$sensor = array("memory_usage", "SWAP");
+				break;
+			case "total-usage":
+				$sensor = array("memory_usage", "TOTAL");
+				break;
+			default:
+				$sensor = false;
+				break;
+		}
+
+		return $sensor;
+	}
 	public static function read_property($identifier)
 	{
 		switch($identifier)
@@ -32,15 +52,6 @@ class phodevi_memory extends pts_device_interface
 				break;
 			case "capacity":
 				$property = new pts_device_property("memory_capacity", true);
-				break;
-			case "physical-usage":
-				$property = new pts_device_property(array("memory_usage", "MEMORY"), false);
-				break;
-			case "swap-usage":
-				$property = new pts_device_property(array("memory_usage", "SWAP"), false);
-				break;
-			case "total-usage":
-				$property = new pts_device_property(array("memory_usage", "TOTAL"), false);
 				break;
 			default:
 				$property = new pts_device_property(null, false);

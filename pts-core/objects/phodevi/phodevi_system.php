@@ -23,6 +23,35 @@
 
 class phodevi_system extends pts_device_interface
 {
+	public static function read_sensor($identifier)
+	{
+		switch($identifier)
+		{
+			case "temperature":
+				$sensor = "sys_temperature";
+				break;
+			case "cpu-voltage":
+				$sensor = "sys_cpu_voltage";
+				break;
+			case "v3-voltage":
+				$sensor = "sys_v3_voltage";
+				break;
+			case "v5-voltage":
+				$sensor = "sys_v5_voltage";
+				break;
+			case "v12-voltage":
+				$sensor = "sys_v12_voltage";
+				break;
+			case "power-consumption":
+				$sensor = "sys_power_consumption_rate";
+				break;
+			default:
+				$sensor = false;
+				break;
+		}
+
+		return $sensor;
+	}
 	public static function read_property($identifier)
 	{
 		switch($identifier)
@@ -84,6 +113,104 @@ class phodevi_system extends pts_device_interface
 		}
 
 		return $property;
+	}
+	public static function sys_cpu_voltage()
+	{
+		$voltage = read_sensors("VCore");
+
+		return ($voltage == null ? -1 : $voltage);
+	}
+	public static function sys_v3_voltage()
+	{
+		$voltage = read_sensors(array("V3.3", "+3.3V"));
+
+		return ($voltage == null ? -1 : $voltage);
+	}
+	public static function sys_v5_voltage()
+	{
+		$voltage = read_sensors(array("V5", "+5V"));
+
+		return ($voltage == null ? -1 : $voltage);
+	}
+	public static function sys_v12_voltage()
+	{
+		$voltage = read_sensors(array("V12", "+12V"));
+
+		return ($voltage == null ? -1 : $voltage);
+	}
+	public static function sys_temperature()
+	{
+		// Reads the system's temperature
+		$temp_c = -1;
+
+		if(IS_LINUX)
+		{
+			$sensors = read_sensors(array("Sys Temp", "Board Temp"));
+
+			if(!$sensors != false && is_numeric($sensors))
+			{
+				$temp_c = $sensors;
+			}
+			else
+			{
+				$acpi = read_acpi(array(
+					"/thermal_zone/THM1/temperature", 
+					"/thermal_zone/TZ01/temperature"), "temperature");
+
+				if(($end = strpos($acpi, ' ')) > 0)
+				{
+					$temp_c = substr($acpi, 0, $end);
+				}
+			}
+		}
+		else if(IS_BSD)
+		{
+			$acpi = read_sysctl("hw.acpi.thermal.tz1.temperature");
+
+			if(($end = strpos($acpi, 'C')) > 0)
+			{
+				$acpi = substr($acpi, 0, $end);
+
+				if(is_numeric($acpi))
+				{
+					$temp_c = $acpi;
+				}
+			}
+		}
+
+		return $temp_c;
+	}
+	function sys_power_consumption_rate()
+	{
+		// Returns power consumption rate in mW
+		$battery = array("/battery/BAT0/state", "/battery/BAT1/state");
+		$state = read_acpi($battery, "charging state");
+		$power = read_acpi($battery, "present rate");
+		$voltage = read_acpi($battery, "present voltage");
+		$rate = -1;
+
+		if($state == "discharging")
+		{
+			$power_unit = substr($power, strrpos($power, " ") + 1);
+			$power = substr($power, 0, strpos($power, " "));
+
+			if($power_unit == "mA")
+			{
+				$voltage_unit = substr($voltage, strrpos($voltage, " ") + 1);
+				$voltage = substr($voltage, 0, strpos($voltage, " "));
+
+				if($voltage_unit == "mV")
+				{
+					$rate = round(($power * $voltage) / 1000);
+				}				
+			}
+			else if($power_unit == "mW")
+			{
+				$rate = $power;
+			}
+		}
+
+		return $rate;
 	}
 	public static function sw_username()
 	{

@@ -23,6 +23,26 @@
 
 class phodevi_gpu extends pts_device_interface
 {
+	public static function read_sensor($identifier)
+	{
+		switch($identifier)
+		{
+			case "temperature":
+				$sensor = "gpu_temperature";
+				break;
+			case "current-frequency":
+				$sensor = array("gpu_current_frequency", false);
+				break;
+			case "core-usage":
+				$sensor = "gpu_core_usage";
+				break;
+			default:
+				$sensor = false;
+				break;
+		}
+
+		return $sensor;
+	}
 	public static function read_property($identifier)
 	{
 		switch($identifier)
@@ -622,7 +642,7 @@ class phodevi_gpu extends pts_device_interface
 	}
 	public static function gpu_frequency_string()
 	{
-		$freq = (IS_ATI_GRAPHICS ? phodevi::read_property("gpu", "stock-frequency") : hw_gpu_current_frequency());
+		$freq = (IS_ATI_GRAPHICS ? phodevi::read_property("gpu", "stock-frequency") : phodevi_gpu::gpu_current_frequency());
 		$freq_string = $freq[0] . "/" . $freq[1];
 
 		return ($freq_string == "0/0" ? "" : " (" . $freq_string . "MHz)");
@@ -806,6 +826,72 @@ class phodevi_gpu extends pts_device_interface
 		}
 
 		return $info;
+	}
+	public static function gpu_temperature()
+	{
+		// Report graphics processor temperature
+		if(IS_NVIDIA_GRAPHICS)
+		{
+			$temp_c = read_nvidia_extension("GPUCoreTemp");
+		}
+		else if(IS_ATI_GRAPHICS)
+		{
+			$temp_c = read_ati_overdrive("Temperature");
+		}
+		else
+		{
+			$temp_c = false;
+		}
+
+		return (is_numeric($temp_c) ? $temp_c : -1);
+	}
+	public static function gpu_current_frequency($show_memory = true)
+	{
+		// Graphics processor real/current frequency
+		$core_freq = 0;
+		$mem_freq = 0;
+
+		if(IS_NVIDIA_GRAPHICS) // NVIDIA GPU
+		{
+			$nv_freq = read_nvidia_extension("GPUCurrentClockFreqs");
+
+			$nv_freq = explode(",", $nv_freq);
+			$core_freq = $nv_freq[0];
+			$mem_freq = $nv_freq[1];
+		}
+		else if(IS_ATI_GRAPHICS) // ATI GPU
+		{
+			$od_clocks = read_ati_overdrive("CurrentClocks");
+
+			if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
+			{
+				$core_freq = array_shift($od_clocks);
+				$mem_freq = array_pop($od_clocks);
+			}
+		}
+
+		if(!is_numeric($core_freq))
+		{
+			$core_freq = 0;
+		}
+		if(!is_numeric($mem_freq))
+		{
+			$mem_freq = 0;
+		}
+
+		return ($show_memory ? array($core_freq, $mem_freq) : $core_freq);
+	}
+	public static function gpu_core_usage()
+	{
+		// Determine GPU usage
+		$gpu_usage = -1;
+
+		if(IS_ATI_GRAPHICS)
+		{
+			$gpu_usage = read_ati_overdrive("GPUload");
+		}
+
+		return $gpu_usage;
 	}
 }
 
