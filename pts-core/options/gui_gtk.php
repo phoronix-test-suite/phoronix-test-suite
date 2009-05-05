@@ -132,7 +132,7 @@ class gui_gtk implements pts_option_interface
 		$merge_results = new pts_gtk_menu_item("Merge Results", array("gui_gtk", ""));
 		$merge_results->attach_to_pts_assignment("GTK_OBJ_MERGE_RESULTS");
 
-		$file_menu = array();
+		$file_menu = array("Phoronix Global" => array(new pts_gtk_menu_item("Clone From Global", array("gui_gtk", "show_phoronix_global_interface"))), null);
 
 		if(!pts_pcqs_is_installed())
 		{
@@ -148,30 +148,32 @@ class gui_gtk implements pts_option_interface
 		$global_upload = new pts_gtk_menu_item("_Upload To Phoronix Global", array("gui_gtk", "upload_results_to_global"));
 		$global_upload->attach_to_pts_assignment("GTK_OBJ_GLOBAL_UPLOAD");
 
-		array_push($file_menu, new pts_gtk_menu_item("Phoronix Global", array("gui_gtk", "show_phoronix_global_interface")));
 		array_push($file_menu, $generate_pdf);
 		array_push($file_menu, $generate_archive);
 		array_push($file_menu, $global_upload);
 		array_push($file_menu, null);
 		array_push($file_menu, new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT));
 
-		$view_menu = array();
-		array_push($view_menu, new pts_gtk_menu_item("System _Information", array("gui_gtk", "show_system_info_interface")));
-		array_push($view_menu, null);
-		array_push($view_menu, new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON"));
-		array_push($view_menu, null);
-
+		$license_type = array();
 		foreach(pts_license_test_types() as $license)
 		{
-			array_push($view_menu, new pts_gtk_menu_item($license, array("gui_gtk", "check_test_license_select"), "CHECK_BUTTON", null, true));
+			array_push($license_type, new pts_gtk_menu_item($license, array("gui_gtk", "check_test_license_select"), "CHECK_BUTTON", null, true));
 		}
 
-		array_push($view_menu, null);
-
+		$subsystem_type = array();
 		foreach(pts_subsystem_test_types() as $subsystem)
 		{
-			array_push($view_menu, new pts_gtk_menu_item($subsystem, array("gui_gtk", "check_test_type_select"), "CHECK_BUTTON", null, true));
+			array_push($subsystem_type, new pts_gtk_menu_item($subsystem, array("gui_gtk", "check_test_type_select"), "CHECK_BUTTON", null, true));
 		}
+
+		$view_menu = array(
+			new pts_gtk_menu_item("System _Information", array("gui_gtk", "show_system_info_interface")),
+			null,
+			new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON"),
+			null,
+			"Show License" => $license_type,
+			"Show Subsystem" => $subsystem_type,
+			);
 
 		$main_menu_items = array(
 		"_File" => $file_menu,
