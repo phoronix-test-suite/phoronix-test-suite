@@ -62,47 +62,7 @@ function pts_basic_init()
 		define("IS_DEBUG_MODE", false);
 	}
 
-	// Operating System Detection
-	$supported_operating_systems = array("Linux", array("Solaris", "Sun"), "BSD", array("MacOSX", "Darwin"));
-	$uname_s = strtolower(php_uname("s"));
-
-	foreach($supported_operating_systems as $os_check)
-	{
-		if(!is_array($os_check))
-		{
-			$os_check = array($os_check);
-		}
-
-		$is_os = false;
-		$os_title = $os_check[0];
-
-		for($i = 0; $i < count($os_check) && !$is_os; $i++)
-		{
-			if(strpos($uname_s, strtolower($os_check[$i])) !== false) // Check for OS
-			{
-				define("OPERATING_SYSTEM", $os_title);
-				define("IS_" . strtoupper($os_title), true);
-				$is_os = true;
-			}
-		}
-
-		if(!$is_os)
-		{
-			define("IS_" . strtoupper($os_title), false);
-		}
-	}
-
-	if(!defined("OPERATING_SYSTEM"))
-	{
-		define("OPERATING_SYSTEM", "Unknown");
-		define("IS_UNKNOWN", true);
-	}
-	else
-	{
-		define("IS_UNKNOWN", false);
-	}
-
-	define("OS_PREFIX", strtolower(OPERATING_SYSTEM) . "_");
+	phodevi::initial_setup();
 }
 function pts_extended_init()
 {
@@ -126,38 +86,6 @@ function pts_extended_init()
 		}
 	}
 
-	// OpenGL / graphics detection
-	$graphics_detection = array("NVIDIA", array("ATI", "fglrx"), "Mesa");
-	$opengl_driver = phodevi::read_property("system", "opengl-driver") . " " . phodevi::read_property("system", "dri-display-driver");
-	$found_gpu_match = false;
-
-	foreach($graphics_detection as $gpu_check)
-	{
-		if(!is_array($gpu_check))
-		{
-			$gpu_check = array($gpu_check);
-		}
-
-		$is_this = false;
-		$gpu_title = $gpu_check[0];
-
-		for($i = 0; $i < count($gpu_check) && !$is_this; $i++)
-		{
-			if(stripos($opengl_driver, $gpu_check[$i]) !== false) // Check for GPU
-			{
-				define("IS_" . strtoupper($gpu_title) . "_GRAPHICS", true);
-				$is_this = true;
-				$found_gpu_match = true;
-			}
-		}
-
-		if(!$is_this)
-		{
-			define("IS_" . strtoupper($gpu_title) . "_GRAPHICS", false);
-		}
-	}
-
-	define("IS_UNKNOWN_GRAPHICS", ($found_gpu_match == false));
 	define("IS_FIRST_RUN_TODAY", (substr(pts_read_user_config(P_OPTION_TESTCORE_LASTTIME, date("Y-m-d")), 0, 10) != date("Y-m-d")));
 }
 
