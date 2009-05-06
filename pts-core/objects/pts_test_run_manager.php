@@ -37,7 +37,12 @@ class pts_test_run_manager
 			$this->instance_name = $test_identifier;
 		}
 
-		array_push($this->tests_to_run, new pts_test_run_request($test_identifier, $arguments, $descriptions));
+		$this_run_request = new pts_test_run_request($test_identifier, $arguments, $descriptions);
+
+		if(!in_array($this_run_request, $this->tests_to_run))
+		{
+			array_push($this->tests_to_run, $this_run_request);
+		}
 	}
 	public function add_single_test_run($test_identifier, $arguments, $descriptions)
 	{

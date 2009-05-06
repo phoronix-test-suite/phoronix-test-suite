@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - pts-core: Reorganize menus in GTK2 GUI
 - pts-core: Add support for logging into Phoronix Global from GTK2 GUI
 - pts-core: Move sensor functions over to Phodevi framework using phodevi::read_sensor()
+- pts-core: Don't let pts_test_run_manager add another test request if the test with identical settings has already been added
 - pts: Update build-php test profile to use PHP 5.2.9
 - pts: Set bork and compress-* test profiles to use the EnvironmentTestingSize tag
 - pts: Add Popt to PTS External Dependencies using popt generic name

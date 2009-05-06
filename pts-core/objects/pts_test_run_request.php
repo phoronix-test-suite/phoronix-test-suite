@@ -46,7 +46,7 @@ class pts_test_run_request
 	}
 	public function __toString()
 	{
-		return $this->get_identifier();
+		return $this->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description();
 	}
 }
 
