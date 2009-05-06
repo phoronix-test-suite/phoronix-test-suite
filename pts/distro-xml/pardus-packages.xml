@@ -155,5 +155,10 @@
 			<PackageName>popt</PackageName>
 			<FileCheck>/usr/include/popt.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>curl</GenericName>
+			<PackageName>libcurl curl</PackageName>
+			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

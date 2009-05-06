@@ -200,5 +200,11 @@
 			<PossibleNames>libnuma-dev, numactl-devel</PossibleNames>
 			<FileCheck>/usr/include/numa.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>curl</GenericName>
+			<Title>Curl</Title>
+			<PossibleNames>curl, libcurl3, libcurl</PossibleNames>
+			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

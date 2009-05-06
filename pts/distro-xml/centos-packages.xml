@@ -125,5 +125,10 @@
 			<PackageName>numactl-devel</PackageName>
 			<FileCheck>/usr/include/numa.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>curl</GenericName>
+			<PackageName>curl</PackageName>
+			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

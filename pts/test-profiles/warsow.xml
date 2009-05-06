@@ -10,7 +10,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>195</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<ExternalDependencies>xorg-development</ExternalDependencies>
+		<ExternalDependencies>xorg-development, curl</ExternalDependencies>
 		<ProjectURL>http://www.warsow.net/</ProjectURL>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>

@@ -38,6 +38,7 @@ Phoronix Test Suite (Git)
 - pts: Add apache test profile for Apache Benchmark
 - pts: Add server test suite of server tests
 - pts: Update build-mysql test profile download links
+- pts: Add curl to PTS External Dependencies for curl and curl library
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
 - install-sh: Copy phoronix-test-suite.desktop to /usr/share/applications/ for the GUI
 
