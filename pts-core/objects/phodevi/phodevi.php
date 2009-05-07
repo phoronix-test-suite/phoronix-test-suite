@@ -204,7 +204,11 @@ class phodevi
 		if(is_file($restore_dir . "phodevi.cache"))
 		{
 			$restore_cache = unserialize(file_get_contents($restore_dir . "phodevi.cache"));
-			self::$device_cache = $restore_cache->restore_cache($restore_dir, $client_version);
+
+			if($restore_cache instanceOf phodevi_cache)
+			{
+				self::$device_cache = $restore_cache->restore_cache($restore_dir, $client_version);
+			}
 		}
 	}
 	public static function create_smart_cache($store_dir, $client_version = 0)
