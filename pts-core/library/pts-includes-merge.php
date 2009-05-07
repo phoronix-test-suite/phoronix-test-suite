@@ -115,7 +115,7 @@ function pts_merge_test_results()
 
 		$identifiers = $result_object->get_identifiers();
 		$values = $result_object->get_values();
-		$raw_values = $result_object->get_values();
+		$raw_values = $result_object->get_raw_values();
 
 		for($i = 0; $i < count($identifiers); $i++)
 		{
