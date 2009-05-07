@@ -28,10 +28,10 @@ class phodevi_motherboard extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("motherboard_string", true);
+				$property = new pts_device_property("motherboard_string", PHODEVI_SMART_CACHE);
 				break;
 			case "power-mode":
-				$property = new pts_device_property("power_mode", true);
+				$property = new pts_device_property("power_mode", PHODEVI_SMART_CACHE);
 				break;
 			default:
 				$property = new pts_device_property(null, false);

@@ -21,6 +21,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+define("PHODEVI_AVOID_CACHE", 0); // No caching
+define("PHODEVI_STAND_CACHE", 1); // Standard caching
+define("PHODEVI_SMART_CACHE", 2); // Smart caching
+
 class phodevi
 {
 	static $device_cache = null;
@@ -69,9 +73,9 @@ class phodevi
 		{
 			eval("\$property = phodevi_" . $device . "::read_property(\$read_property);");
 
-			$do_cache = $property->can_cache();
+			$cache_code = $property->cache_code();
 
-			if($do_cache && isset(self::$device_cache[$device][$read_property]))
+			if($cache_code != PHODEVI_AVOID_CACHE && isset(self::$device_cache[$device][$read_property]))
 			{
 				$value = self::$device_cache[$device][$read_property];
 			}
@@ -101,7 +105,7 @@ class phodevi
 
 					$value = $read_value; // possibly add some sort of check here
 
-					if($do_cache)
+					if($cache_code != PHODEVI_AVOID_CACHE)
 					{
 						self::$device_cache[$device][$read_property] = $value;
 					}

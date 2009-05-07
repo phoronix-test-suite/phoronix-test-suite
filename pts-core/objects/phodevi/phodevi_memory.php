@@ -48,13 +48,10 @@ class phodevi_memory extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("memory_string", true);
+				$property = new pts_device_property("memory_string", PHODEVI_SMART_CACHE);
 				break;
 			case "capacity":
-				$property = new pts_device_property("memory_capacity", true);
-				break;
-			default:
-				$property = new pts_device_property(null, false);
+				$property = new pts_device_property("memory_capacity", PHODEVI_SMART_CACHE);
 				break;
 		}
 

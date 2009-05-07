@@ -28,10 +28,7 @@ class phodevi_monitor extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("monitor_string", true);
-				break;
-			default:
-				$property = new pts_device_property(null, false);
+				$property = new pts_device_property("monitor_string", PHODEVI_SMART_CACHE);
 				break;
 		}
 

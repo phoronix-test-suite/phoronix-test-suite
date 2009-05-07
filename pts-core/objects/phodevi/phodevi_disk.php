@@ -42,10 +42,7 @@ class phodevi_disk extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("hdd_string", true);
-				break;
-			default:
-				$property = new pts_device_property(null, false);
+				$property = new pts_device_property("hdd_string", PHODEVI_SMART_CACHE);
 				break;
 		}
 

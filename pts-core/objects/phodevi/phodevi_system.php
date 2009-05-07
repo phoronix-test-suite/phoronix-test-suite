@@ -57,58 +57,55 @@ class phodevi_system extends pts_device_interface
 		switch($identifier)
 		{
 			case "username":
-				$property = new pts_device_property("sw_username", true);
+				$property = new pts_device_property("sw_username", PHODEVI_STAND_CACHE);
 				break;
 			case "hostname":
-				$property = new pts_device_property("sw_hostname", true);
+				$property = new pts_device_property("sw_hostname", PHODEVI_STAND_CACHE);
 				break;
 			case "vendor-identifier":
-				$property = new pts_device_property("sw_vendor_identifier", true);
+				$property = new pts_device_property("sw_vendor_identifier", PHODEVI_SMART_CACHE);
 				break;
 			case "filesystem":
-				$property = new pts_device_property("sw_filesystem", true);
+				$property = new pts_device_property("sw_filesystem", PHODEVI_SMART_CACHE);
 				break;
 			case "virtualized-mode":
-				$property = new pts_device_property("sw_virtualized_mode", true);
+				$property = new pts_device_property("sw_virtualized_mode", PHODEVI_SMART_CACHE);
 				break;
 			case "java-version":
-				$property = new pts_device_property("sw_java_version", true);
+				$property = new pts_device_property("sw_java_version", PHODEVI_STAND_CACHE);
 				break;
 			case "display-server":
-				$property = new pts_device_property("sw_display_server", true);
+				$property = new pts_device_property("sw_display_server", PHODEVI_STAND_CACHE);
 				break;
 			case "display-driver":
-				$property = new pts_device_property("sw_display_driver", true);
+				$property = new pts_device_property("sw_display_driver", PHODEVI_STAND_CACHE);
 				break;
 			case "dri-display-driver":
-				$property = new pts_device_property("sw_dri_display_driver", true);
+				$property = new pts_device_property("sw_dri_display_driver", PHODEVI_STAND_CACHE);
 				break;
 			case "opengl-driver":
-				$property = new pts_device_property("sw_opengl_driver", true);
+				$property = new pts_device_property("sw_opengl_driver", PHODEVI_STAND_CACHE);
 				break;
 			case "desktop-environment":
-				$property = new pts_device_property("sw_desktop_environment", true);
+				$property = new pts_device_property("sw_desktop_environment", PHODEVI_STAND_CACHE);
 				break;
 			case "operating-system":
-				$property = new pts_device_property("sw_operating_system", true);
+				$property = new pts_device_property("sw_operating_system", PHODEVI_SMART_CACHE);
 				break;
 			case "os-version":
-				$property = new pts_device_property("sw_os_version", true);
+				$property = new pts_device_property("sw_os_version", PHODEVI_SMART_CACHE);
 				break;
 			case "os-vendor":
-				$property = new pts_device_property("sw_os_vendor", true);
+				$property = new pts_device_property("sw_os_vendor", PHODEVI_SMART_CACHE);
 				break;
 			case "kernel":
-				$property = new pts_device_property("sw_kernel", true);
+				$property = new pts_device_property("sw_kernel", PHODEVI_SMART_CACHE);
 				break;
 			case "kernel-architecture":
-				$property = new pts_device_property("sw_kernel_architecture", true);
+				$property = new pts_device_property("sw_kernel_architecture", PHODEVI_SMART_CACHE);
 				break;
 			case "compiler":
-				$property = new pts_device_property("sw_compiler", true);
-				break;
-			default:
-				$property = new pts_device_property(null, false);
+				$property = new pts_device_property("sw_compiler", PHODEVI_STAND_CACHE);
 				break;
 		}
 

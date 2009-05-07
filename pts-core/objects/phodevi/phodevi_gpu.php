@@ -48,49 +48,46 @@ class phodevi_gpu extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("gpu_string", true);
+				$property = new pts_device_property("gpu_string", PHODEVI_SMART_CACHE);
 				break;
 			case "model":
-				$property = new pts_device_property("gpu_model", true);
+				$property = new pts_device_property("gpu_model", PHODEVI_SMART_CACHE);
 				break;
 			case "frequency":
-				$property = new pts_device_property("gpu_frequency_string", true);
+				$property = new pts_device_property("gpu_frequency_string", PHODEVI_SMART_CACHE);
 				break;
 			case "stock-frequency":
-				$property = new pts_device_property("gpu_stock_frequency", true);
+				$property = new pts_device_property("gpu_stock_frequency", PHODEVI_SMART_CACHE);
 				break;
 			case "2d-accel-method":
-				$property = new pts_device_property("gpu_2d_accel_method", true);
+				$property = new pts_device_property("gpu_2d_accel_method", PHODEVI_STAND_CACHE);
 				break;
 			case "monitor-count":
-				$property = new pts_device_property("gpu_monitor_count", true);
+				$property = new pts_device_property("gpu_monitor_count", PHODEVI_STAND_CACHE);
 				break;
 			case "monitor-layout":
-				$property = new pts_device_property("gpu_monitor_layout", true);
+				$property = new pts_device_property("gpu_monitor_layout", PHODEVI_STAND_CACHE);
 				break;
 			case "monitor-modes":
-				$property = new pts_device_property("gpu_monitor_modes", true);
+				$property = new pts_device_property("gpu_monitor_modes", PHODEVI_STAND_CACHE);
 				break;
 			case "memory-capacity":
-				$property = new pts_device_property("gpu_memory_size", true);
+				$property = new pts_device_property("gpu_memory_size", PHODEVI_SMART_CACHE);
 				break;
 			case "aa-level":
-				$property = new pts_device_property("gpu_aa_level", false);
+				$property = new pts_device_property("gpu_aa_level", PHODEVI_AVOID_CACHE);
 				break;
 			case "af-level":
-				$property = new pts_device_property("gpu_af_level", false);
+				$property = new pts_device_property("gpu_af_level", PHODEVI_AVOID_CACHE);
 				break;
 			case "available-modes":
-				$property = new pts_device_property("gpu_available_modes", true);
+				$property = new pts_device_property("gpu_available_modes", PHODEVI_SMART_CACHE);
 				break;
 			case "screen-resolution":
-				$property = new pts_device_property("gpu_screen_resolution", true);
+				$property = new pts_device_property("gpu_screen_resolution", PHODEVI_SMART_CACHE);
 				break;
 			case "screen-resolution-string":
-				$property = new pts_device_property("gpu_screen_resolution_string", true);
-				break;
-			default:
-				$property = new pts_device_property(null, false);
+				$property = new pts_device_property("gpu_screen_resolution_string", PHODEVI_SMART_CACHE);
 				break;
 		}
 

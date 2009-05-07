@@ -24,20 +24,20 @@
 class pts_device_property
 {
 	var $object_function;
-	var $cacheable;
+	var $cache_code;
 
-	public function __construct($function, $is_cacheable = false)
+	public function __construct($function, $cache_code = false)
 	{
 		$this->object_function = $function;
-		$this->cacheable = $is_cacheable == true;
+		$this->cache_code = $cache_code;
 	}
 	public function get_device_function()
 	{
 		return $this->object_function;
 	}
-	public function can_cache()
+	public function cache_code()
 	{
-		return $this->cacheable;
+		return $this->cache_code;
 	}
 }
 
