@@ -28,6 +28,7 @@ define("PHODEVI_SMART_CACHE", 2); // Smart caching
 class phodevi
 {
 	static $device_cache = null;
+	static $smart_cache = null;
 
 	public static function read_name($device)
 	{
@@ -108,6 +109,12 @@ class phodevi
 					if($cache_code != PHODEVI_AVOID_CACHE)
 					{
 						self::$device_cache[$device][$read_property] = $value;
+
+						if($cache_code == PHODEVI_SMART_CACHE)
+						{
+							// TODO: For now just copy the smart cache to other var, but come up with better yet efficient way
+							self::$smart_cache[$device][$read_property] = $value;
+						}
 					}
 				}
 			}
@@ -191,6 +198,22 @@ class phodevi
 		}
 
 		define("IS_UNKNOWN_GRAPHICS", ($found_gpu_match == false));
+	}
+	public static function restore_smart_cache($restore_dir, $client_version = 0)
+	{
+		if(is_file($restore_dir . "phodevi.cache"))
+		{
+			$restore_cache = unserialize(file_get_contents($restore_dir . "phodevi.cache"));
+			self::$device_cache = $restore_cache->restore_cache($restore_dir, $client_version);
+		}
+	}
+	public static function create_smart_cache($store_dir, $client_version = 0)
+	{
+		if(!empty(self::$smart_cache) && is_writable($store_dir))
+		{
+			file_put_contents($store_dir . "phodevi.cache", 
+				serialize(new phodevi_cache(self::$smart_cache, $store_dir, $client_version)));
+		}
 	}
 }
 

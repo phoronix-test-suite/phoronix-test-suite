@@ -62,6 +62,7 @@ function pts_basic_init()
 		define("IS_DEBUG_MODE", false);
 	}
 
+	phodevi::restore_smart_cache(PTS_USER_DIR, PTS_VERSION);
 	phodevi::initial_setup();
 }
 function pts_extended_init()

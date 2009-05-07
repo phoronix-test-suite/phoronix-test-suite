@@ -25,11 +25,8 @@ class system_info implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite v" . PTS_VERSION . " (" . PTS_CODENAME . ")\nSystem Information");
-
-		$start = microtime(true);
 		echo "Hardware:\n" . pts_hw_string() . "\n\n";
 		echo "Software:\n" . pts_sw_string() . "\n\n";
-		echo microtime(true) - $start;
 	}
 }
 

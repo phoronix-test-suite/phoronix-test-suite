@@ -154,6 +154,9 @@ function pts_shutdown()
 	// Re-run the config file generation to save the last run version
 	pts_user_config_init();
 
+	// Generate Phodevi Smart Cache
+	phodevi::create_smart_cache(PTS_USER_DIR, PTS_VERSION);
+
 	if(IS_DEBUG_MODE && defined("PTS_DEBUG_FILE"))
 	{
 		if(!is_dir(PTS_USER_DIR . "debug-messages/"))
