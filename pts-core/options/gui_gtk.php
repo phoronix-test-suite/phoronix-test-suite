@@ -638,30 +638,29 @@ class gui_gtk implements pts_option_interface
 		if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 		{
 			// Installed Suites
-			$installed_suites = pts_gtk_table(array("Suite"), pts_gui_installed_suites(), array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");
+			$i_s = pts_gui_installed_suites();
+			$installed_suites = pts_gtk_table(array(count($i_s) . " Suites"), $i_s, array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");
 			pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
 
-			$available_suites = pts_gtk_table(array("Suite"), pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), 
-			pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
-			array("gui_gtk", "update_details_frame_from_select"), "No suites are available.");
+			$a_s = pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"));
+			$available_suites = pts_gtk_table(array(count($a_s) . " Suites"), $a_s, array("gui_gtk", "update_details_frame_from_select"), "No suites are available.");
 			pts_gtk_add_notebook_tab($main_notebook, $available_suites, "Available Suites");
 		}
 		else
 		{
 			// Installed Tests
-			$installed_tests = pts_gtk_table(array("Test"), pts_gui_installed_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"),
-			pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
-			array("gui_gtk", "update_details_frame_from_select"), "No tests are currently installed.");
+			$i_t = pts_gui_installed_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"));
+			$installed_tests = pts_gtk_table(array(count($i_t) . " Tests"), $i_t, array("gui_gtk", "update_details_frame_from_select"), "No tests are currently installed.");
 			pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
 
 			// Available Tests
-			$available_tests = pts_gtk_table(array("Test"), pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), 
-			pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW")), 
-			array("gui_gtk", "update_details_frame_from_select"), "No tests are available.");
+			$a_t = pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"));
+			$available_tests = pts_gtk_table(array(count($a_t) . " Tests"), $a_t, array("gui_gtk", "update_details_frame_from_select"), "No tests are available.");
 			pts_gtk_add_notebook_tab($main_notebook, $available_tests, "Available Tests");
 		}
 
-		$test_results = pts_gtk_table(array("Test Result"), pts_gui_saved_test_results_identifiers(), array("gui_gtk", "update_details_frame_from_select"), "No test results have been saved.");
+		$r_i = pts_gui_saved_test_results_identifiers();
+		$test_results = pts_gtk_table(array(count($r_i) . " Test Results"), $r_i, array("gui_gtk", "update_details_frame_from_select"), "No test results have been saved.");
 		pts_gtk_add_notebook_tab($main_notebook, $test_results, "Test Results");
 
 		/*
