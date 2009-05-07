@@ -310,6 +310,8 @@ class gui_gtk implements pts_option_interface
 		// gui_gtk::system_tray_monitor();
 		// pts_attach_module("gui_gtk_events");
 
+		pts_set_assignment("GUI_INITIALIZED", true);
+
 		$window->show_all();
 		Gtk::main();
 	}
@@ -368,6 +370,7 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_MULTIPLE_SELECT_ITEMS", ($multiple_selected = count($identifiers) > 1));
 		pts_set_assignment("GTK_LAST_SELECTED_ITEM", ($identifier = array_pop(array_diff($identifiers, $previous_select))));
 		pts_set_assignment("GTK_SELECTED_ITEMS", $identifiers);
+		pts_set_assignment_once("GTK_HAS_TOUCHED_SELECT_MENU", true);
 
 		$gtk_obj_main_frame = pts_read_assignment("GTK_OBJ_MAIN_FRAME");
 		$gtk_obj_main_frame->set_label($identifier);
@@ -1273,9 +1276,11 @@ class gui_gtk implements pts_option_interface
 				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", false);
 				break;
 			default:
+				$has_selected = pts_read_assignment("GTK_HAS_TOUCHED_SELECT_MENU");
+
 				$details_button->set_label("More Information");
-				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", true);
-				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", true);
+				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_DEFAULTS", $has_selected);
+				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", $has_selected);
 				break;
 		}
 
