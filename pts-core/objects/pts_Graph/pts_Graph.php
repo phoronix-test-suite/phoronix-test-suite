@@ -285,7 +285,7 @@ abstract class pts_Graph
 	{
 		while($font_size > $minimum_font_size && ($this->text_string_width($string, $font, $font_size) > $bound_width || ($bound_height > 0 && $this->text_string_height($string, $font, $font_size) > $bound_height)))
 		{
-			$font_size -= 0.5;
+			$font_size -= 0.2;
 		}
 
 		return $font_size;

@@ -44,6 +44,7 @@ Phoronix Test Suite (Git)
 - pts: Update build-mysql test profile download links
 - pts: Add curl to PTS External Dependencies for curl and curl library
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
+- pts_Graph: Tweak bar graph text settings
 - install-sh: Copy phoronix-test-suite.desktop to /usr/share/applications/ for the GUI
 
 Phoronix Test Suite 1.8.1
