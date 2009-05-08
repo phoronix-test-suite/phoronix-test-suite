@@ -45,6 +45,7 @@ Phoronix Test Suite (Git)
 - pts: Add server test suite of server tests
 - pts: Update build-mysql test profile download links
 - pts: Add curl to PTS External Dependencies for curl and curl library
+- pts: Specify SPECViewPerf version within Title for specviewperf9 and specviewperf10 to workaround bug
 - bilde_renderer: Drop integrated TTF font, switch to detecting installed system TTF fonts
 - pts_Graph: Tweak bar graph text settings
 - install-sh: Copy phoronix-test-suite.desktop to /usr/share/applications/ for the GUI

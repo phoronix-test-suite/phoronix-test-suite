@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.2</Version>
+		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -14,8 +14,7 @@
 		<UnsupportedPlatforms>MacOSX, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
-		<Title>SPECViewPerf</Title>
-		<Version>9.0.3</Version>
+		<Title>SPECViewPerf 9</Title>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Weighted Geometric Mean</ResultScale>
 		<Proportion>HIB</Proportion>
