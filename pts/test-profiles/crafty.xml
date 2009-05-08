@@ -11,7 +11,6 @@
 		<EnvironmentSize>5.9</EnvironmentSize>
 		<ExternalDependencies>build-utilities, numa-development</ExternalDependencies>
 		<ProjectURL>http://www.cis.uab.edu/info/faculty/hyatt/hyatt.html</ProjectURL>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Crafty</Title>

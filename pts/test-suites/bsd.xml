@@ -83,6 +83,9 @@
 		<Description>Dense LU Matrix Factorization</Description>
 	</RunTest>
 	<RunTest>
+		<Test>crafty</Test>
+	</RunTest>
+	<RunTest>
 		<Test>fhourstones</Test>
 	</RunTest>
 	<RunTest>

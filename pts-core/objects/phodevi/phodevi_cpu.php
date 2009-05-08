@@ -102,7 +102,7 @@ class phodevi_cpu extends pts_device_interface
 			$info = read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
 		}
 
-		return (is_int($info) && $info > 0 ? $info : 1);
+		return (is_numeric($info) && $info > 0 ? $info : 1);
 	}
 	public static function cpu_default_frequency($cpu_core = 0)
 	{

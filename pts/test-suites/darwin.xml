@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.1</Version>
+		<Version>1.1.2</Version>
 		<TestType>System</TestType>
 		<Title>Darwin Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -69,7 +69,53 @@
 		<Description>Dhrystone 2</Description>
 	</RunTest>
 	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_INT</Arguments>
+		<Description>Integer Arithmetic</Description>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_FLOAT</Arguments>
+		<Description>Floating-Point Arithmetic</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_SPARSE</Arguments>
+		<Description>Sparse Matrix Multiply</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>DENSE</Arguments>
+		<Description>Dense LU Matrix Factorization</Description>
+	</RunTest>
+	<RunTest>
 		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>crafty</Test>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 4</Arguments>
+		<Description>64MB Write - 4 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -f 64 -t 32</Arguments>
+		<Description>64MB Random Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Read - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>
 		<Test>java</Test>

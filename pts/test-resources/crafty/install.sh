@@ -28,14 +28,25 @@ EOT
 
 cd crafty-23.0/
 
-case $OS_ARCH in
-	"x86_64" )
-	make linux-amd64
-	;;
-	* )
-	make linux
-	;;
-esac
+if [ $OS_TYPE = "MacOSX" ]
+then
+	make darwin
+elif [ $OS_TYPE = "BSD" ]
+then
+	make freebsd
+elif [ $OS_TYPE = "Solaris" ]
+then
+	make solaris-gcc
+else
+	case $OS_ARCH in
+		"x86_64" )
+		make linux-amd64
+		;;
+		* )
+		make linux
+		;;
+	esac
+fi
 
 cd ..
 

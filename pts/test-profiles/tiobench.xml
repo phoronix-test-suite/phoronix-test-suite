@@ -11,7 +11,7 @@
 		<EnvironmentSize>0.2</EnvironmentSize>
 		<ProjectURL>http://sourceforge.net/projects/tiobench/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Threaded I/O Tester</Title>
