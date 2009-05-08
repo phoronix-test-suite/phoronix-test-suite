@@ -991,7 +991,7 @@ class gui_gtk implements pts_option_interface
 
 		$password_label = new GtkLabel("Password:");
 		$password_login = new GtkEntry();
-		// $password_login->set_visibility(false); // TODO: currently this causes the password not to show with ->get_text()
+		$password_login->set_visibility(false); // TODO: currently this causes the password not to show with ->get_text()
 		pts_set_assignment("GTK_OBJ_GLOBAL_PASSWORD", $password_login);
 
 		$login_button = new pts_gtk_button("Log-In", array("gui_gtk", "launch_phoronix_global_action"), "login");
