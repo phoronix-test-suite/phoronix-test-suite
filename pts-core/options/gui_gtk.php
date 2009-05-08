@@ -663,13 +663,6 @@ class gui_gtk implements pts_option_interface
 		$r_i = pts_gui_saved_test_results_identifiers();
 		$test_results = pts_gtk_table(array(count($r_i) . " Test Results"), $r_i, array("gui_gtk", "update_details_frame_from_select"), "No test results have been saved.");
 		pts_gtk_add_notebook_tab($main_notebook, $test_results, "Test Results");
-
-		/*
-		if(($no = pts_read_assignment("GTK_MAIN_NOTEBOOK_NUM")) >= 0)
-		{
-			$main_notebook->set_current_page($no);
-		}
-		*/
 	}
 	public static function radio_test_suite_select($object)
 	{
@@ -682,7 +675,7 @@ class gui_gtk implements pts_option_interface
 			gui_gtk::redraw_main_window();
 		}
 	}
-	public static function confirmation_button_clicked($button_call, $identifier = "")
+	public static function confirmation_button_clicked($button_call, $identifiers = "")
 	{
 		switch($button_call)
 		{
@@ -690,7 +683,7 @@ class gui_gtk implements pts_option_interface
 				gui_gtk::show_main_interface();
 				break;
 			case "install":
-				pts_run_option_next("install_test", $identifier, array("SILENCE_MESSAGES" => true));
+				pts_run_option_next("install_test", $identifiers, array("SILENCE_MESSAGES" => true));
 				pts_run_option_next("gui_gtk");
 				break;
 			case "benchmark":
@@ -742,7 +735,7 @@ class gui_gtk implements pts_option_interface
 					$args_to_pass["AUTO_TEST_OPTION_SELECTIONS"] = $preset_test_options;
 				}
 
-				pts_run_option_next("run_test", $identifier, $args_to_pass);
+				pts_run_option_next("run_test", $identifiers, $args_to_pass);
 				pts_run_option_next("gui_gtk");
 				break;
 		}
@@ -817,15 +810,9 @@ class gui_gtk implements pts_option_interface
 				break;
 		}
 	}
-	public static function show_run_confirmation_interface($identifier)
+	public static function show_run_confirmation_interface($identifiers)
 	{
-		if(count($identifier) > 1)
-		{
-			echo "\nOnly one item can be selected currently...\n"; // TODO: Fix This
-		}
-		$identifier = array_pop($identifier);
-
-		if(empty($identifier))
+		if(empty($identifiers))
 		{
 			echo "DEBUG: Null identifier in gtk_gui::show_run_confirmation_interface()\n";
 			return;
@@ -836,76 +823,70 @@ class gui_gtk implements pts_option_interface
 
 		$menu_items = array();
 
-		$label_options = new GtkLabel("Test Options");
-		$label_options->modify_font(new PangoFontDescription("Sans 19"));
-		array_push($menu_items, $label_options);
-
 		if(pts_read_assignment("GTK_BATCH_MODE") != false)
 		{
+			array_push($menu_items, new pts_gtk_label("Test Options", "Sans 19"));
 			array_push($menu_items, new GtkLabel("No user options, running in batch mode."));
 		}
 		else if(pts_read_assignment("GTK_DEFAULTS_MODE") != false)
 		{
+			array_push($menu_items, new pts_gtk_label("Test Options", "Sans 19"));
 			array_push($menu_items, new GtkLabel("No user options, running in defaults mode."));
 		}
 		else
 		{
-			$test_options = pts_test_options($identifier);
 			$selected_options = array();
 
-			if(count($test_options) == 0)
+			foreach($identifiers as $identifier)
 			{
-				array_push($menu_items, new GtkLabel("No user options available."));
-			}
+				$test_options = pts_test_options($identifier);
+				array_push($menu_items, new pts_gtk_label($identifier . " Test Options", "Sans 19"));
 
-			for($i = 0; $i < count($test_options); $i++)
-			{
-				$o = $test_options[$i];
-				$option_count = $o->option_count();
-
-				if($option_count == 0)
+				if(count($test_options) == 0)
 				{
-					// User inputs their option
-					// TODO: could add check to make sure the text field isn't empty when pressed
-					$entry = new GtkEntry();
-					$selected_options[$identifier][$o->get_identifier()] = $entry;
-					array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $entry));
-					//$user_args .= $o->format_option_value_from_input($value);
+					array_push($menu_items, new GtkLabel("No user options available."));
 				}
-				else
+
+				for($i = 0; $i < count($test_options); $i++)
 				{
-					if($option_count == 1)
+					$o = $test_options[$i];
+					$option_count = $o->option_count();
+
+					if($option_count == 0)
 					{
-						// Only one option in menu, so auto-select it
-						$bench_choice = 0;
+						// User inputs their option
+						// TODO: could add check to make sure the text field isn't empty when pressed
+						$selected_options[$identifier][$o->get_identifier()] = new GtkEntry();
+						array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $selected_options[$identifier][$o->get_identifier()]));
 					}
 					else
 					{
-						$combobox = new GtkComboBox();
-						$model = new GtkListStore((defined("GObject::TYPE_STRING") ? GObject::TYPE_STRING : Gtk::TYPE_STRING));
-						$combobox->set_model($model);
-						$cell_renderer = new GtkCellRendererText();
-						$combobox->pack_start($cell_renderer);
-						$combobox->set_attributes($cell_renderer, "text", 0);
-
-						foreach($o->get_all_option_names() as $option_name)
+						if($option_count == 1)
 						{
-							$model->append(array($option_name));
+							// Only one option in menu, so auto-select it
+							$bench_choice = 0;
 						}
-						$combobox->set_active(0);
+						else
+						{
+							$combobox = GtkComboBox::new_text();
+							foreach($o->get_all_option_names() as $option_name)
+							{
+								$combobox->append_text($option_name);
+							}
+							$combobox->set_active(0);
 
-						$selected_options[$identifier][$o->get_identifier()] = $combobox;
-						array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $combobox));
+							$selected_options[$identifier][$o->get_identifier()] = $combobox;
+							array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $combobox));
+						}
 					}
 				}
 			}
+
 			pts_set_assignment("GTK_TEST_RUN_OPTIONS_SET", $selected_options);
 		}
-		array_push($menu_items, null);
 
-		$label_save = new GtkLabel("Results");
-		$label_save->modify_font(new PangoFontDescription("Sans 19"));
-		array_push($menu_items, $label_save);
+		array_push($menu_items, null);
+		array_push($menu_items, new pts_gtk_label("Results", "Sans 19"));
 
 		$save_results = new GtkCheckButton("Save Results");
 		pts_set_assignment("GTK_OBJ_SAVE_RESULTS", $save_results);
@@ -928,7 +909,7 @@ class gui_gtk implements pts_option_interface
 
 		array_push($menu_items, null);
 
-		$window = new pts_gtk_window("phoronix-test-suite benchmark " . $identifier);
+		$window = new pts_gtk_window("phoronix-test-suite benchmark " . implode(" ", $identifiers));
 		$window->set_resizable(false);
 		$vbox = new GtkVBox();
 		$window->add($vbox);
@@ -939,7 +920,7 @@ class gui_gtk implements pts_option_interface
 
 		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 		$continue_button = new GtkButton("Continue");
-		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), "benchmark", $identifier);
+		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), "benchmark", $identifiers);
 		$continue_button->set_image($continue_img);
 
 		pts_gtk_array_to_boxes($vbox, array($return_button, $continue_button));
@@ -1281,11 +1262,6 @@ class gui_gtk implements pts_option_interface
 				pts_gtk_object_set_sensitive("GTK_OBJ_CHECK_BATCH", $has_selected);
 				break;
 		}
-
-		/*
-		$main_notebook = pts_read_assignment("GTK_OBJ_MAIN_NOTEBOOK");
-		pts_set_assignment("GTK_MAIN_NOTEBOOK_NUM", $main_notebook->get_current_page());
-		*/
 	}
 	public static function check_test_type_select($object)
 	{
@@ -1338,9 +1314,6 @@ class gui_gtk implements pts_option_interface
 		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
 		$logo->set_size_request(158, 82);
 
-		$label_codename = new GtkLabel(ucwords(strtolower(PTS_CODENAME)));
-		$label_codename->modify_font(new PangoFontDescription("Sans 19"));
-
 		$label_version = new GtkLabel("Version " . PTS_VERSION);
 
 		$event_box = new GtkEventBox();
@@ -1348,10 +1321,9 @@ class gui_gtk implements pts_option_interface
 		$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
 		$event_box->add($label_url);
 
-		$label_copyright = new GtkLabel("Copyright (C) 2008 - 2009 By Phoronix Media\nCopyright (C) 2008 - 2009 By Michael Larabel");
-		$label_copyright->modify_font(new PangoFontDescription("Sans 9"));
-
-		pts_gtk_array_to_boxes($window, array($logo, $label_codename, $label_version, $event_box, $label_copyright), 6);
+		pts_gtk_array_to_boxes($window, array($logo,
+			new pts_gtk_label(ucwords(strtolower(PTS_CODENAME)), "Sans 19"), $label_version, $event_box,
+			new pts_gtk_label("Copyright (C) 2008 - 2009 By Phoronix Media\nCopyright (C) 2008 - 2009 By Michael Larabel", "Sans 9")), 6);
 
 		$window->show_all();
 		Gtk::main();
