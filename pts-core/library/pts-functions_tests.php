@@ -769,6 +769,20 @@ function pts_available_suites_array()
 
 	return $cache;
 }
+function pts_installed_suites_array()
+{
+	$installed_suites = array();
+
+	foreach(pts_available_suites_array() as $suite)
+	{
+		if(!pts_suite_needs_updated_install($suite))
+		{
+			array_push($installed_suites, $suite);
+		}
+	}
+
+	return $installed_suites;
+}
 function pts_supported_suites_array()
 {
 	static $cache = null;

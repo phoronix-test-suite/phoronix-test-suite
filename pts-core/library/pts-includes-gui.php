@@ -23,16 +23,7 @@
 
 function pts_gui_installed_suites()
 {
-	$installed_suites = array();
-
-	foreach(pts_available_suites_array() as $suite)
-	{
-		if(!pts_suite_needs_updated_install($suite))
-		{
-			array_push($installed_suites, $suite);
-		}
-	}
-
+	$installed_suites = pts_installed_suites_array();
 	$installed_suites = array_map("pts_suite_identifier_to_name", $installed_suites);
 	sort($installed_suites);
 
