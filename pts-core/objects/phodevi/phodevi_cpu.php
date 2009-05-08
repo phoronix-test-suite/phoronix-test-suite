@@ -121,7 +121,7 @@ class phodevi_cpu extends pts_device_interface
 		}
 		else
 		{
-			$info = hw_cpu_current_frequency($cpu_core);
+			$info = phodevi::read_property("cpu", "current-frequency");
 		}
 
 		return $info;

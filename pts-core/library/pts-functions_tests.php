@@ -731,14 +731,19 @@ function pts_installed_tests_array()
 {
 	if(!pts_is_assignment("CACHE_INSTALLED_TESTS"))
 	{
-		$tests = glob(TEST_ENV_DIR . "*/pts-install.xml");
+		$cleaned_tests = array();
 
-		for($i = 0; $i < count($tests); $i++)
+		foreach(glob(TEST_ENV_DIR . "*/pts-install.xml") as $test)
 		{
-			$tests[$i] = pts_extract_identifier_from_path($tests[$i]);
+			$test = pts_extract_identifier_from_path($test);
+
+			if(pts_is_test($test))
+			{
+				array_push($cleaned_tests, $test);
+			}
 		}
 
-		pts_set_assignment("CACHE_INSTALLED_TESTS", $tests);
+		pts_set_assignment("CACHE_INSTALLED_TESTS", $cleaned_tests);
 	}
 
 	return pts_read_assignment("CACHE_INSTALLED_TESTS");
