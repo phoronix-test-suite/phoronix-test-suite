@@ -3,3 +3,4 @@ linuxmint = ubuntu
 mepis = ubuntu
 debian = ubuntu
 moblin = fedora
+nexentacore = ubuntu

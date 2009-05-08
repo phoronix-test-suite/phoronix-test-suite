@@ -499,7 +499,7 @@ class phodevi_system extends pts_device_interface
 					{
 						$proposed_os = substr($file, 0, strpos($file, "\n"));
 
-						if(strpos("=", $proposed_os) == false)
+						if(strpos($proposed_os, "=") == false)
 						{
 							$os = $proposed_os;
 						}
