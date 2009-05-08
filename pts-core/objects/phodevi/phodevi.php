@@ -74,6 +74,11 @@ class phodevi
 		{
 			eval("\$property = phodevi_" . $device . "::read_property(\$read_property);");
 
+			if(!($property instanceOf pts_device_property))
+			{
+				return false;
+			}
+
 			$cache_code = $property->cache_code();
 
 			if($cache_code != PHODEVI_AVOID_CACHE && isset(self::$device_cache[$device][$read_property]))
