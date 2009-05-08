@@ -71,12 +71,12 @@ function pts_download($download, $to)
 	else if(($curl = pts_executable_in_path("curl")) != false)
 	{
 		// curl download
-		$download_output = shell_exec("cd " . $to_dir . " && " . $curl . " -L --fail --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && " . $curl . " -L --fail --connect-timeout 20 --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
 	}
 	else if(($wget = pts_executable_in_path("wget")) != false)
 	{
 		// wget download
-		$download_output = shell_exec("cd " . $to_dir . " && " . $wget . " --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && " . $wget . " --timeout=20 --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
 	}
 	else if(IS_BSD && ($ftp = pts_executable_in_path("ftp")) != false)
 	{
