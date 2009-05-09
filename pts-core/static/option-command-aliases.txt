@@ -16,3 +16,4 @@ test_info = info
 sensors = removed_option
 analyze = removed_option
 analyze_results = removed_option
+list_supported_tests = list_tests

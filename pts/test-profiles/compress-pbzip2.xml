@@ -12,7 +12,7 @@
 		<EnvironmentTestingSize>2048</EnvironmentTestingSize>
 		<ProjectURL>http://compression.ca/pbzip2/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<UnsupportedPlatforms>MacOSX, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Parallel BZIP2 Compression</Title>

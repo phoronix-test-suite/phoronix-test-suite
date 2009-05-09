@@ -26,6 +26,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix bug that would drop raw results value when merging test results
 - pts-core: Provide smart caching for Phodevi to store software/hardware information that will not change between reboots
 - pts-core: Add list-installed-suites option
+- pts-core: Add list-unsupported-tests option
 - pts-core: Allow selecting multiple tests/suites to run at once from GTK2 GUI
 - pts-core: Fix GtkComboBox segmentation fault from GTK2 GUI
 - pts-core: Fix for NexentaCore operating system detection
