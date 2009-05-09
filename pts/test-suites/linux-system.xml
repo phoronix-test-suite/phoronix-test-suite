@@ -48,6 +48,21 @@
 		<Test>gmpbench</Test>
 	</RunTest>
 	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 4</Arguments>
+		<Description>64MB Write - 4 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Read - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
 		<Test>dbench</Test>
 		<Arguments>1</Arguments>
 		<Description>1 Client</Description>
@@ -73,16 +88,19 @@
 	</RunTest>
 	<RunTest>
 		<Test>scimark2</Test>
-		<Arguments>TEST_FFT </Arguments>
+		<Arguments>TEST_FFT</Arguments>
 		<Description>Fast Fourier Transform</Description>
 	</RunTest>
 	<RunTest>
 		<Test>scimark2</Test>
-		<Arguments>TEST_SPARSE </Arguments>
+		<Arguments>TEST_SPARSE</Arguments>
 		<Description>Sparse Matrix Multiply</Description>
 	</RunTest>
 	<RunTest>
 		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>
 		<Test>sunflow</Test>
