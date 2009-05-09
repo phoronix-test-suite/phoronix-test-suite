@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.1</Version>
+		<Version>1.1.2</Version>
 		<TestType>System</TestType>
 		<Title>OpenSolaris Nevada Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -31,7 +31,7 @@
 		<Test>compress-7zip</Test>
 	</RunTest>
 	<RunTest>
-		<Test>compress-gzip</Test>
+		<Test>compress-lzma</Test>
 	</RunTest>
 	<RunTest>
 		<Test>gnupg</Test>
@@ -40,7 +40,25 @@
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
+		<Test>mafft</Test>
+	</RunTest>
+	<RunTest>
 		<Test>crafty</Test>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 4</Arguments>
+		<Description>64MB Write - 4 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Read - 32 Threads</Description>
 	</RunTest>
 	<RunTest>
 		<Test>graphics-magick</Test>
@@ -69,6 +87,25 @@
 	</RunTest>
 	<RunTest>
 		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
+	</RunTest>
+	<RunTest>
+		<Test>cachebench</Test>
+		<Arguments>-r </Arguments>
+		<Description>Read</Description>
+	</RunTest>
+	<RunTest>
+		<Test>cachebench</Test>
+		<Arguments>-w </Arguments>
+		<Description>Write</Description>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>povray</Test>
 	</RunTest>
 	<RunTest>
 		<Test>java</Test>
