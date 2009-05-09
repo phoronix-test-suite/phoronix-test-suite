@@ -171,6 +171,25 @@ class run_test implements pts_option_interface
 
 				pts_module_process_extensions($test_extensions, $module_store);
 
+				if(pts_is_assignment("FINISH_INCOMPLETE_RUN"))
+				{
+					$all_test_runs = $test_run;
+					$all_test_args = $test_args;
+					$all_test_args_description = $test_args_description;
+					$test_run = array();
+					$test_args = array();
+					$test_args_description = array();
+
+					$tests_to_complete = pts_read_assignment("TESTS_TO_COMPLETE");
+
+					foreach($tests_to_complete as $test_pos)
+					{
+						array_push($test_run, $all_test_runs[$test_pos]);
+						array_push($test_args, $all_test_args[$test_pos]);
+						array_push($test_args_description, $all_test_args_description[$test_pos]);
+					}
+				}
+
 				$test_run_manager->add_multi_test_run($test_run, $test_args, $test_args_description);
 			}
 			else
@@ -225,6 +244,7 @@ class run_test implements pts_option_interface
 				$file_name_result = pts_prompt_save_file_name($auto_name, $test_run_manager->get_instance_name());
 				$proposed_file_name = $file_name_result[0];
 				$custom_title = $file_name_result[1];
+				pts_set_assignment("SAVE_FILE_NAME", $proposed_file_name);
 
 				// Prompt Identifiers
 				if(pts_is_test_result($proposed_file_name))
@@ -245,7 +265,6 @@ class run_test implements pts_option_interface
 				}
 
 				$results_identifier = pts_prompt_results_identifier($result_identifiers);
-				pts_set_assignment("SAVE_FILE_NAME", $proposed_file_name);
 
 				// Prompt Description
 				if(!pts_is_assignment("AUTOMATED_MODE") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_description()))
@@ -336,26 +355,29 @@ class run_test implements pts_option_interface
 				array_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
-			$test_notes = pts_generate_test_notes($test_type);
+			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN"))
+			{
+				$test_notes = pts_generate_test_notes($test_type);
 
-			$id = pts_request_new_id();
-			$xml_results_writer->setXslBinding("pts-results-viewer.xsl");
-			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $id, pts_hw_string());
-			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $id, pts_sw_string());
-			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $id, pts_current_user());
-			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, $id, date("F j, Y h:i A"));
-			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, $id, trim($test_notes));
-			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $id, PTS_VERSION);
-			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $results_identifier);
+				$id = pts_request_new_id();
+				$xml_results_writer->setXslBinding("pts-results-viewer.xsl");
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $id, pts_hw_string());
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $id, pts_sw_string());
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $id, pts_current_user());
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, $id, date("F j, Y h:i A"));
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, $id, trim($test_notes));
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $id, PTS_VERSION);
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $results_identifier);
 
-			$id = pts_request_new_id();
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $custom_title);
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, $id, pts_read_assignment("TO_RUN"));
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, $id, $test_version);
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $module_store);
-			$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $test_properties));
+				$id = pts_request_new_id();
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $custom_title);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, $id, pts_read_assignment("TO_RUN"));
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, $id, $test_version);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $module_store);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $test_properties));
+			}
 
 			if(pts_read_assignment("TEST_RAN") == true)
 			{

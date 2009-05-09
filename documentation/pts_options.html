@@ -70,6 +70,8 @@ be supplied or the Phoronix Global ID or saved local file name. Multiple argumen
 <p>This option will run the selected test(s). The name of the test or suite must 
 be supplied or the Phoronix Global ID or saved local file name. Multiple arguments can be supplied to run additional tests at the same time and save the results in a suite-like fashion. 
 Unlike the normal <em>run</em> option, the <em>default-run</em> will not prompt the user to select from the available test options but will instead use the default options as automatically set by pts-core or the test profile. Use <em>batch-run</em> to automatically test all of the available options.</p>
+<p><strong>finish-run &lt;Saved Results File&gt;</strong></p>
+<p>This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.</p>
 <h2>Batch Run Options</h2>
 <p><strong>batch-setup</strong></p>
 <p>This option is used to configure the batch mode options for the Phoronix Test 
