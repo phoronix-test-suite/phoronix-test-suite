@@ -11,7 +11,6 @@
 		<EnvironmentSize>6.0</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.futuretech.blinkenlights.nl/c-ray.html</ProjectURL>
-		<SupportedPlatforms>Linux, BSD</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>C-Ray</Title>

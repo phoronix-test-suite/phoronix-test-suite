@@ -11,7 +11,6 @@
 		<EnvironmentSize>127</EnvironmentSize>
 		<ProjectURL>http://ffmpeg.mplayerhq.hu/</ProjectURL>
 		<Extends>video-sample</Extends>
-		<UnsupportedPlatforms>Solaris, BSD</UnsupportedPlatforms>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestProfile>
 	<TestInformation>
