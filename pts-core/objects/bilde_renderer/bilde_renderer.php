@@ -150,7 +150,11 @@ abstract class bilde_renderer
 				"/usr/share/fonts/truetype/freefont/FreeSans.ttf",
 				"/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf",
 				"/usr/share/fonts/dejavu/DejaVuSans.ttf",
-				"/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
+				"/usr/share/fonts/liberation/LiberationSans-Regular.ttf",
+				"/usr/share/fonts/truetype/DejaVuSans.ttf",
+				"/usr/share/fonts/truetype/LiberationSans-Regular.ttf",
+				"/usr/share/fonts/TTF/dejavu/DejaVuSans.ttf",
+				"/usr/share/fonts/TTF/liberation/LiberationSans-Regular.ttf"
 				);
 
 				foreach($possible_fonts as $font_file)
