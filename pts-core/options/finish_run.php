@@ -60,7 +60,7 @@ class finish_run implements pts_option_interface
 
 		if(count($incomplete_identifiers) == 0)
 		{
-			echo "\nIt appears that there are no incomplete test results within this saved file.\n";
+			echo "\nIt appears that there are no incomplete test results within this saved file.\n\n";
 			return false;
 		}
 

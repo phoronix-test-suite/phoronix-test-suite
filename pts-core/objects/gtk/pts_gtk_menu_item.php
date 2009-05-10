@@ -27,10 +27,20 @@ class pts_gtk_menu_item
 	var $type;
 	var $attach_image;
 	var $active_default;
-	var $attach_to_pts_assignment = null;
+	var $attach_to_pts_assignment;
 
 	public function __construct($title, $to_call = null, $type = "STRING", $attach_image = null, $set_active_default = false)
 	{
+		if(is_array($title) && count($title) == 2)
+		{
+			$assignment = $title[0];
+			$title = $title[1];
+		}
+		else
+		{
+			$assignment = null;
+		}
+
 		if($type == "RADIO_BUTTON")
 		{
 			$title = pts_to_array($title);
@@ -41,6 +51,7 @@ class pts_gtk_menu_item
 		$this->type = $type;
 		$this->attach_image = $attach_image;
 		$this->active_default = $set_active_default == true;
+		$this->attach_to_pts_assignment = $assignment;
 	}
 	public function get_title()
 	{
