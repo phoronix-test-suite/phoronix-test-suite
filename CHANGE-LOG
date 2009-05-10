@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.0.0 Alpha 1
+May 10, 2009
 
 - pts-core: Support 1.70 mode ratio in hw_gpu_available_modes() which will allow auto-resolution to select 1024x600 on netbooks
 - pts-core: Initial support for being able to select multiple test/suite/result entries from the notebook menu area
