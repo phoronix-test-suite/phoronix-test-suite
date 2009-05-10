@@ -21,12 +21,13 @@
 */
 
 define("M_PHOROMATIC_GEN_RESPONSE", "PhoronixTestSuite/Phoromatic/General/Response");
+define("M_PHOROMATIC_ID", "PhoronixTestSuite/Phoromatic/General/ID");
 define("M_PHOROMATIC_SYS_NAME", "PhoronixTestSuite/Phoromatic/General/SystemName");
 
 class phoromatic extends pts_module_interface
 {
 	const module_name = "Phoromatic Client";
-	const module_version = "0.0.2";
+	const module_version = "0.1.0";
 	const module_description = "The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/";
 	const module_author = "Phoronix Media";
 
@@ -131,18 +132,24 @@ class phoromatic extends pts_module_interface
 			{
 				$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
 
-				$server_response = phoromatic::upload_to_remote_server(array("r" => "upload_test_results", "c" => $composite_xml));
+				$server_response = phoromatic::upload_to_remote_server(array(
+					"r" => "upload_test_results",
+					"c" => $composite_xml,
+					"i" => pts_read_assignment("PHOROMATIC_SCHEDULE_ID"),
+					"ti" => pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")
+					));
+
 				$xml_parser = new tandem_XmlReader($server_response);
 				$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
 
-				if($response != "ERROR")
+				if($response == "ERROR")
 				{
-					
+					echo "\nERROR OCCURRED IN UPLOADING RESULTS\n";
+					return;
 				}
 			}
 		}
 
-		exit; // DEBUG
 		phoromatic::user_system_process();
 	}
 	public static function user_system_process()
@@ -167,6 +174,7 @@ class phoromatic extends pts_module_interface
 
 					$args_to_pass["AUTO_SAVE_NAME"] = date("Y-m-d H:i:s");
 					$args_to_pass["PHOROMATIC_TITLE"] = $xml_parser->getXMLValue(P_SUITE_TITLE);
+					$args_to_pass["PHOROMATIC_SCHEDULE_ID"] = $xml_parser->getXMLValue(M_PHOROMATIC_ID);
 					$args_to_pass["AUTO_TEST_RESULTS_IDENTIFIER"] = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
 
 					file_put_contents(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml", $server_response);
@@ -178,7 +186,6 @@ class phoromatic extends pts_module_interface
 				case "exit":
 					break;
 				default:
-					exit;  // DEBUG
 					sleep((10 - (date("i") % 10)) * 60); // Check with server every 10 minutes
 					break;
 			}

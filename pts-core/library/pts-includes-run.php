@@ -366,8 +366,13 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$pts_test_result = new pts_test_result();
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 
+	if(!is_dir($test_directory))
+	{
+		return $pts_test_result;
+	}
+
 	$test_fp = fopen(($lock_file = $test_directory . "run_lock"), "w");
-	if(!flock($test_fp, LOCK_EX | LOCK_NB))
+	if($test_fp == false || !flock($test_fp, LOCK_EX | LOCK_NB))
 	{
 		echo "\nThe " . $test_identifier . " test is already running.\n\n";
 		return $pts_test_result;
