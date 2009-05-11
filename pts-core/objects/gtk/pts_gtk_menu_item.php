@@ -31,7 +31,7 @@ class pts_gtk_menu_item
 
 	public function __construct($title, $to_call = null, $type = "STRING", $attach_image = null, $set_active_default = false)
 	{
-		if(is_array($title) && count($title) == 2)
+		if(is_array($title) && count($title) == 2 && $type != "RADIO_BUTTON")
 		{
 			$assignment = $title[0];
 			$title = $title[1];
