@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix for showing tests in the GTK2 GUI from Alpha 1
+- pts: Add dcraw test profile for RAW image decoding benchmark
 
 Phoronix Test Suite 2.0.0 Alpha 1
 May 10, 2009

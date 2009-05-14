@@ -74,4 +74,7 @@
 		<Arguments>examples/iometer-file-access-server</Arguments>
 		<Description>Intel IOMeter File Server Access Pattern</Description>
 	</RunTest>
+	<RunTest>
+		<Test>dcraw</Test>
+	</RunTest>
 </PhoronixTestSuite>

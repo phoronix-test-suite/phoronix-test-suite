@@ -108,4 +108,7 @@
 	<RunTest>
 		<Test>yafray</Test>
 	</RunTest>
+	<RunTest>
+		<Test>dcraw</Test>
+	</RunTest>
 </PhoronixTestSuite>

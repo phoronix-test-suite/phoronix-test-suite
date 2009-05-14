@@ -35,4 +35,7 @@
 	<RunTest>
 		<Test>opstone</Test>
 	</RunTest>
+	<RunTest>
+		<Test>dcraw</Test>
+	</RunTest>
 </PhoronixTestSuite>

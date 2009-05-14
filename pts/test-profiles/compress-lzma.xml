@@ -8,7 +8,6 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<EnvironmentSize>0.7</EnvironmentSize>
-		<EnvironmentTestingSize>2048</EnvironmentTestingSize>
 		<EnvironmentTestingSize>256</EnvironmentTestingSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<Maintainer>apaige</Maintainer>

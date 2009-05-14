@@ -391,7 +391,7 @@ class gui_gtk implements pts_option_interface
 		{
 			$test_menu_items_sensitive = true;
 
-			$result_file = new pts_test_result_details(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
+			$result_file = new pts_test_result_details($identifier);
 
 			$info_r["Title"] = $result_file->get_title();
 			$info_r["null1"] = null;
