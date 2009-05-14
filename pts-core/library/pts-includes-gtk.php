@@ -57,7 +57,7 @@ function pts_gtk_add_menu($vbox, $menu)
 				if($this_object->get_type() == "CHECK_BUTTON")
 				{
 					$menu_item = new GtkCheckMenuItem($this_object->get_title());
-					$menu_item->connect("toggled", $this_object->get_function_call());
+					$menu_item->connect("toggled", $this_object->get_function_call(), $this_object->get_function_argument());
 
 					if($this_object->get_active_default())
 					{
@@ -75,7 +75,7 @@ function pts_gtk_add_menu($vbox, $menu)
 					foreach($this_object->get_title() as $radio_item)
 					{
 						$radio[$i] = new GtkRadioMenuItem($radio[0], $radio_item);
-						$radio[$i]->connect("toggled", $this_object->get_function_call());
+						$radio[$i]->connect("toggled", $this_object->get_function_call(), $this_object->get_function_argument());
 						$menu->append($radio[$i]);
 						$i++;
 					}
@@ -93,7 +93,7 @@ function pts_gtk_add_menu($vbox, $menu)
 						$menu_item->set_image(GtkImage::new_from_stock($this_object->get_image(), Gtk::ICON_SIZE_MENU));
 					}
 
-					$menu_item->connect("activate", $this_object->get_function_call());
+					$menu_item->connect("activate", $this_object->get_function_call(), $this_object->get_function_argument());
 					$menu->append($menu_item);
 				}
 

@@ -118,11 +118,7 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_CLIPBOARD", $clipboard);
 
 		// Menu Setup
-		$analyze_runs = new pts_gtk_menu_item(array("GTK_OBJ_ANALYZE_RUNS", "Analyze All Runs"), array("gui_gtk", "analyze_all_runs"));
-		$analyze_batch = new pts_gtk_menu_item(array("GTK_OBJ_ANALYZE_BATCH", "Analyze Batch Run"), array("gui_gtk", "analyze_batch"));
 		$refresh_graphs = new pts_gtk_menu_item(array("GTK_OBJ_REFRESH_GRAPHS", "Regenerate Graphs"), array("gui_gtk", "refresh_graphs"));
-		$build_suite = new pts_gtk_menu_item(array("GTK_OBJ_BUILD_SUITE", "Build Suite"), array("gui_gtk", ""), "STRING", Gtk::STOCK_NEW);
-		$merge_results = new pts_gtk_menu_item(array("GTK_OBJ_MERGE_RESULTS", "Merge Results"), array("gui_gtk", ""));
 
 		$file_menu = array("Phoronix Global" => array(new pts_gtk_menu_item("Clone / View Results", array("gui_gtk", "show_phx_global_clone_interface")), 
 		new pts_gtk_menu_item("User Log-In", array("gui_gtk", "show_phx_global_login_interface"))), null);
@@ -132,13 +128,9 @@ class gui_gtk implements pts_option_interface
 			array_push($file_menu, new pts_gtk_menu_item("Install PCQS", array("gui_gtk", "show_pcqs_install_interface")));
 		}
 
-		$generate_pdf = new pts_gtk_menu_item(array("GTK_OBJ_GENERATE_PDF", "Save PDF"), array("gui_gtk", "show_generate_pdf_interface"));
-		$generate_archive = new pts_gtk_menu_item(array("GTK_OBJ_GENERATE_ARCHIVE", "Archive Results"), array("gui_gtk", "show_generate_archive_interface"));
-		$global_upload = new pts_gtk_menu_item(array("GTK_OBJ_GLOBAL_UPLOAD", "_Upload To Phoronix Global"), array("gui_gtk", "upload_results_to_global"));
-
-		array_push($file_menu, $generate_pdf);
-		array_push($file_menu, $generate_archive);
-		array_push($file_menu, $global_upload);
+		array_push($file_menu, new pts_gtk_menu_item(array("GTK_OBJ_GENERATE_PDF", "Save PDF"), array("gui_gtk", "show_generate_pdf_interface")));
+		array_push($file_menu, new pts_gtk_menu_item(array("GTK_OBJ_GENERATE_ARCHIVE", "Archive Results"), array("gui_gtk", "show_generate_archive_interface")));
+		array_push($file_menu, new pts_gtk_menu_item(array("GTK_OBJ_GLOBAL_UPLOAD", "_Upload To Phoronix Global"), array("gui_gtk", "upload_results_to_global")));
 		array_push($file_menu, null);
 		array_push($file_menu, new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT));
 
@@ -165,9 +157,17 @@ class gui_gtk implements pts_option_interface
 
 		$main_menu_items = array(
 		"_File" => $file_menu,
-		"_Edit" => array($refresh_graphs, null, new pts_gtk_menu_item("_Preferences", array("gui_gtk", "show_preferences_interface"), null, Gtk::STOCK_PREFERENCES)),
+		"_Edit" => array(
+			new pts_gtk_menu_item(array("GTK_OBJ_REFRESH_GRAPHS", "Regenerate Graphs"), array("gui_gtk", "quick_operation", "refresh_graphs")),
+			null,
+			new pts_gtk_menu_item("_Preferences", array("gui_gtk", "show_preferences_interface"), null, Gtk::STOCK_PREFERENCES)),
 		"_View" => $view_menu,
-		"_Tools" => array($build_suite, $merge_results, null, $analyze_runs, $analyze_batch),
+		"_Tools" => array(
+			new pts_gtk_menu_item(array("GTK_OBJ_BUILD_SUITE", "Build Suite"), array("gui_gtk", ""), "STRING", Gtk::STOCK_NEW),
+			new pts_gtk_menu_item(array("GTK_OBJ_MERGE_RESULTS", "Merge Results"), array("gui_gtk", "")),
+			null,
+			new pts_gtk_menu_item(array("GTK_OBJ_ANALYZE_RUNS", "Analyze All Runs"), array("gui_gtk", "quick_operation", "analyze_all_runs")),
+			new pts_gtk_menu_item(array("GTK_OBJ_ANALYZE_BATCH", "Analyze Batch Run"), array("gui_gtk", "quick_operation", "analyze_batch"))),
 		"_Help" => array(
 		new pts_gtk_menu_item("View Documentation", array("gui_gtk", "launch_web_browser"), "STRING"), 
 		null,
@@ -784,15 +784,9 @@ class gui_gtk implements pts_option_interface
 
 		switch(($task == null ? pts_read_assignment("GTK_RUN_BUTTON_TASK") : $task))
 		{
-			case "UPDATE":
-				//echo "\nERROR: Should be using gui_gtk::update_details_frame_for_install()\n";
-				gui_gtk::update_details_frame_for_install($identifier);
-				return;
-				break;
 			case "INSTALL":
-				//echo "\nERROR: Should be using gui_gtk::update_details_frame_for_install()\n";
+			case "UPDATE":
 				gui_gtk::update_details_frame_for_install($identifier);
-				return;
 				break;
 			case "RUN":
 				gui_gtk::show_run_confirmation_interface($identifier);
@@ -1209,14 +1203,7 @@ class gui_gtk implements pts_option_interface
 			}
 			else if(pts_is_suite($identifier) || pts_is_test_result($identifier))
 			{
-				if(pts_suite_needs_updated_install($identifier))
-				{
-					$button_string = "Update";
-				}
-				else
-				{
-					$button_string = "Run";
-				}
+				$button_string = (pts_suite_needs_updated_install($identifier) ? "Update" : "Run");
 			}
 		}
 
@@ -1226,15 +1213,14 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function notebook_main_page_select($notebook, $ptr, $current_page)
 	{
-		$selected_page = $notebook->get_tab_label_text($notebook->get_nth_page($current_page));
-		pts_set_assignment("GTK_MAIN_NOTEBOOK_SELECTED", $selected_page);
-
 		$details_button = pts_read_assignment("GTK_OBJ_DETAILS_BUTTON");
-
 		if(!($details_button instanceOf pts_gtk_button))
 		{
 			return;
 		}
+
+		$selected_page = $notebook->get_tab_label_text($notebook->get_nth_page($current_page));
+		pts_set_assignment("GTK_MAIN_NOTEBOOK_SELECTED", $selected_page);
 
 		switch($selected_page)
 		{
@@ -1583,31 +1569,20 @@ class gui_gtk implements pts_option_interface
 		}
 		$dialog->destroy();
 	}
-	public static function refresh_graphs()
+	public static function quick_operation($ignore_var, $operation)
 	{
 		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
 		$main_window->destroy();
 
 		$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
-		pts_run_option_next("refresh_graphs", $identifier, array("AUTOMATED_MODE" => true));
-		pts_run_option_next("gui_gtk");
-	}
-	public static function analyze_all_runs()
-	{
-		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
-		$main_window->destroy();
 
-		$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
-		pts_run_option_next("analyze_all_runs", $identifier, array("AUTOMATED_MODE" => true));
-		pts_run_option_next("gui_gtk");
-	}
-	public static function analyze_batch()
-	{
-		$main_window = pts_read_assignment("GTK_OBJ_WINDOW");
-		$main_window->destroy();
+		switch($operation)
+		{
+			default:
+				pts_run_option_next($operation, $identifier, array("AUTOMATED_MODE" => true));
+				break;
+		}
 
-		$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
-		pts_run_option_next("analyze_all_runs", $identifier, array("AUTOMATED_MODE" => true));
 		pts_run_option_next("gui_gtk");
 	}
 	public static function show_system_info_interface()

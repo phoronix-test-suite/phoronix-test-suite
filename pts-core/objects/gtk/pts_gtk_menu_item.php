@@ -24,6 +24,7 @@ class pts_gtk_menu_item
 {
 	var $title;
 	var $to_call;
+	var $to_call_arg;
 	var $type;
 	var $attach_image;
 	var $active_default;
@@ -46,6 +47,7 @@ class pts_gtk_menu_item
 			$title = pts_to_array($title);
 		}
 
+		$this->to_call_arg = (count($to_call) > 2 ? array_pop($to_call) : null);
 		$this->title = $title;
 		$this->to_call = $to_call;
 		$this->type = $type;
@@ -64,6 +66,10 @@ class pts_gtk_menu_item
 	public function get_function_call()
 	{
 		return $this->to_call;
+	}
+	public function get_function_argument()
+	{
+		return $this->to_call_arg;
 	}
 	public function get_type()
 	{
