@@ -31,6 +31,7 @@ class toggle_screensaver extends pts_module_interface
 	static $screensaver_halted = FALSE;
 	static $gnome_screensaver_halted = FALSE;
 	static $kde_screensaver_halted = FALSE;
+	static $gnome_gconftool = FALSE;
 
 	public static function __startup()
 	{
@@ -41,13 +42,21 @@ class toggle_screensaver extends pts_module_interface
 		}
 
 		// GNOME Screensaver?
-		$is_gnome_screensaver_enabled = trim(shell_exec("gconftool -g /apps/gnome-screensaver/idle_activation_enabled 2>&1"));
-
-		if($is_gnome_screensaver_enabled == "true")
+		if(($gt = pts_executable_in_path("gconftool")) != false || ($gt = pts_executable_in_path("gconftool-2")) != false)
 		{
-			// Stop the GNOME Screensaver
-			shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1");
-			self::$gnome_screensaver_halted = TRUE;
+			self::$gnome_gconftool = $gt;
+		}
+
+		if(self::$gnome_gconftool != false)
+		{
+			$is_gnome_screensaver_enabled = trim(shell_exec(self::$gnome_gconftool . " -g /apps/gnome-screensaver/idle_activation_enabled 2>&1"));
+
+			if($is_gnome_screensaver_enabled == "true")
+			{
+				// Stop the GNOME Screensaver
+				shell_exec(self::$gnome_gconftool . " --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1");
+				self::$gnome_screensaver_halted = TRUE;
+			}
 		}
 		else
 		{
@@ -77,7 +86,7 @@ class toggle_screensaver extends pts_module_interface
 		if(self::$gnome_screensaver_halted == TRUE)
 		{
 			// Restore the GNOME Screensaver
-			shell_exec("gconftool --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");
+			shell_exec(self::$gnome_gconftool . " --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");
 		}
 		else if(self::$kde_screensaver_halted == TRUE)
 		{
