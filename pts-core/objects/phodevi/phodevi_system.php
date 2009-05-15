@@ -151,7 +151,8 @@ class phodevi_system extends pts_device_interface
 			else
 			{
 				$acpi = read_acpi(array(
-					"/thermal_zone/THM1/temperature", 
+					"/thermal_zone/THM1/temperature",
+					"/thermal_zone/TZ00/temperature",
 					"/thermal_zone/TZ01/temperature"), "temperature");
 
 				if(($end = strpos($acpi, ' ')) > 0)
