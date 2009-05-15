@@ -899,14 +899,14 @@ class gui_gtk implements pts_option_interface
 
 		pts_gtk_array_to_boxes($vbox, $menu_items, -1, true);
 
-		$return_button = new pts_gtk_button("Return", array("gui_gtk", "confirmation_button_clicked"), "return", -1, -1, Gtk::STOCK_CANCEL);
+		//$return_button = new pts_gtk_button("Return", array("gui_gtk", "confirmation_button_clicked"), "return", -1, -1, Gtk::STOCK_CANCEL);
 
 		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 		$continue_button = new GtkButton("Continue");
 		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), "benchmark", $identifiers);
 		$continue_button->set_image($continue_img);
 
-		pts_gtk_array_to_boxes($vbox, array($return_button, $continue_button));
+		pts_gtk_array_to_boxes($vbox, array($continue_button));
 
 		$window->show_all();
 		pts_set_assignment("GTK_OBJ_CONFIRMATION_WINDOW", $window);
@@ -1077,11 +1077,15 @@ class gui_gtk implements pts_option_interface
 		}
 		else
 		{
-			$window = new pts_gtk_window($identifier);
-			$window->set_resizable(false);
-			$vbox = new GtkVBox();
-			$vbox->set_spacing(12);
-			$window->add($vbox);
+			$gtk_obj_main_frame = pts_read_assignment("GTK_OBJ_MAIN_FRAME");
+
+			if(pts_is_assignment("GTK_OBJ_MAIN_FRAME_BOX"))
+			{
+				$gtk_obj_main_frame_box = pts_read_assignment("GTK_OBJ_MAIN_FRAME_BOX");
+				$gtk_obj_main_frame->remove($gtk_obj_main_frame_box);
+			}
+
+			$elements = array();
 
 			if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 			{
@@ -1090,12 +1094,11 @@ class gui_gtk implements pts_option_interface
 				$label_tests = new GtkLabel("Suite Contains: " . implode(", ", pts_contained_tests($identifier, false, false, true)));
 				$label_tests->set_size_request(420, -1);
 				$label_tests->set_line_wrap(true);
-				$vbox->pack_start($label_tests);
+				array_push($elements, $label_tests);
 			}
 			else
 			{
 				$identifier = pts_test_name_to_identifier($identifier);
-
 				$obj = new pts_test_profile_details($identifier);
 
 				$str = "Software Dependencies: ";
@@ -1118,7 +1121,7 @@ class gui_gtk implements pts_option_interface
 				$label_dependencies = new GtkLabel($str);
 				$label_dependencies->set_size_request(420, -1);
 				$label_dependencies->set_line_wrap(true);
-				$vbox->pack_start($label_dependencies);
+				array_push($elements, $label_dependencies);
 
 				// Suites
 
@@ -1142,11 +1145,12 @@ class gui_gtk implements pts_option_interface
 				$label_suites = new GtkLabel($str);
 				$label_suites->set_size_request(420, -1);
 				$label_suites->set_line_wrap(true);
-				$vbox->pack_start($label_suites);
+				array_push($elements, $label_suites);
 			}
 
-			$window->show_all();
-			Gtk::main();
+			$box = pts_gtk_array_to_boxes($gtk_obj_main_frame, $elements, 4);
+			pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $box);
+			gui_gtk::redraw_main_window();
 		}
 	}
 	public static function notebook_selected_to_identifier()
@@ -1365,15 +1369,7 @@ class gui_gtk implements pts_option_interface
 			}
 
 			$pref = basename($preference);
-
-			if($config_type == "graph")
-			{
-				$current_value = pts_read_graph_config($preference, null, $graph_config);
-			}
-			else
-			{
-				$current_value = pts_read_user_config($preference, null, $read_config);
-			}
+			$current_value = pts_read_graph_config($preference, null, ($config_type == "graph" ? $graph_config : $read_config));
 
 			if($current_value == "TRUE" || $current_value == "FALSE")
 			{
@@ -1381,15 +1377,7 @@ class gui_gtk implements pts_option_interface
 				$hb[$i]->pack_start(($radio_true[$i] = new GtkRadioButton(null, "TRUE", true)));
 				$hb[$i]->pack_start(($radio_false[$i] = new GtkRadioButton($radio_true[$i], "FALSE", false)));
 
-				if($current_value == "TRUE")
-				{
-					$radio_true[$i]->set_active(true);
-				}
-				else
-				{
-					$radio_false[$i]->set_active(true);
-				}
-
+				$radio_true[$i]->set_active($current_value == "TRUE");
 				$preference_objects[$preference] = array($hb[$i], $radio_true[$i]);
 			}
 			else if(substr($current_value, 0, 1) == "#" && strpos($current_value, " ") == false)
