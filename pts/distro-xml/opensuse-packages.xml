@@ -170,5 +170,10 @@
 			<PackageName>fftw3-devel</PackageName>
 			<FileCheck>/usr/include/fftw3.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>blas-development</GenericName>
+			<PackageName>blas</PackageName>
+			<FileCheck>/usr/include/cblas.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -206,5 +206,17 @@
 			<PossibleNames>curl, libcurl3, libcurl</PossibleNames>
 			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>fftw3-development</GenericName>
+			<Title>Fast Fourier Transform 3 Library</Title>
+			<PossibleNames>fftw3, libfftw3-dev, libfftw3-devel, fftw3-devel</PossibleNames>
+			<FileCheck>/usr/include/fftw3.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>blas-development</GenericName>
+			<Title>Basic Linear Algebra Sub-Routine Library</Title>
+			<PossibleNames>libblas-dev, libblas-devel, blas-devel, blas</PossibleNames>
+			<FileCheck>/usr/include/cblas.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
