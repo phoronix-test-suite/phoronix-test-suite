@@ -175,5 +175,10 @@
 			<PackageName>libcurl3 curl</PackageName>
 			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>fftw3-development</GenericName>
+			<PackageName>libfftw3-dev</PackageName>
+			<FileCheck>/usr/include/fftw3.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
