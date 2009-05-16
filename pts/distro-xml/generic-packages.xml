@@ -218,5 +218,11 @@
 			<PossibleNames>libblas-dev, libblas-devel, blas-devel, blas</PossibleNames>
 			<FileCheck>/usr/include/cblas.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>lapack-development</GenericName>
+			<Title>Linear Algebra Pack</Title>
+			<PossibleNames>liblapack-dev, lapack, lapack-devel, liblapack-devel</PossibleNames>
+			<FileCheck>/usr/lib/liblapack.so</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

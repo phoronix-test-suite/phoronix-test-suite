@@ -175,5 +175,10 @@
 			<PackageName>blas</PackageName>
 			<FileCheck>/usr/include/cblas.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>lapack-development</GenericName>
+			<PackageName>lapack</PackageName>
+			<FileCheck>/usr/lib/liblapack.so</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
