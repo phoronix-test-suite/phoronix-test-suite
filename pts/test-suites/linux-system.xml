@@ -109,6 +109,9 @@
 		<Test>yafray</Test>
 	</RunTest>
 	<RunTest>
+		<Test>sudokut</Test>
+	</RunTest>
+	<RunTest>
 		<Test>dcraw</Test>
 	</RunTest>
 </PhoronixTestSuite>

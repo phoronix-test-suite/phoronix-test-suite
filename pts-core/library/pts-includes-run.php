@@ -170,9 +170,9 @@ function pts_generate_test_notes($test_type)
 			pts_add_test_note("SELinux was enabled.");
 		}
 	}
-	else if(is_readable("/boot/grub/menu.lst"))
+	else if(is_readable("/proc/cmdline"))
 	{
-		if(stripos(file_get_contents("/boot/grub/menu.lst"), "selinux=1") !== false)
+		if(stripos(file_get_contents("/proc/cmdline"), "selinux=1") != false)
 		{
 			pts_add_test_note("SELinux was enabled.");
 		}

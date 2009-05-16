@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Various code clean-ups
 - phodevi: Support monitoring the system temperature from the ACPI TZ00 thermal zone
 - pts: Add dcraw test profile for RAW image decoding benchmark
+- pts: Add sudokut test profile for a Sudoku solver benchmark
 - toggle_screensaver: Support using gconftool-2 for toggling GNOME screensaver
 
 Phoronix Test Suite 2.0.0 Alpha 1

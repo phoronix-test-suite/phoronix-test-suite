@@ -38,4 +38,7 @@
 	<RunTest>
 		<Test>dcraw</Test>
 	</RunTest>
+	<RunTest>
+		<Test>sudokut</Test>
+	</RunTest>
 </PhoronixTestSuite>

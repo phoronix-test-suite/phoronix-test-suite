@@ -86,6 +86,9 @@
 		<Test>crafty</Test>
 	</RunTest>
 	<RunTest>
+		<Test>sudokut</Test>
+	</RunTest>
+	<RunTest>
 		<Test>fhourstones</Test>
 	</RunTest>
 	<RunTest>

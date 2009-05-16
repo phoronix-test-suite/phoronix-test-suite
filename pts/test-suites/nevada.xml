@@ -108,6 +108,9 @@
 		<Test>povray</Test>
 	</RunTest>
 	<RunTest>
+		<Test>sudokut</Test>
+	</RunTest>
+	<RunTest>
 		<Test>java</Test>
 	</RunTest>
 </PhoronixTestSuite>
