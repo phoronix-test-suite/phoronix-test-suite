@@ -41,4 +41,7 @@
 	<RunTest>
 		<Test>sudokut</Test>
 	</RunTest>
+	<RunTest>
+		<Test>nero2d</Test>
+	</RunTest>
 </PhoronixTestSuite>

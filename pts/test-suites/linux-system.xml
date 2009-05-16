@@ -112,6 +112,9 @@
 		<Test>sudokut</Test>
 	</RunTest>
 	<RunTest>
+		<Test>nero2d</Test>
+	</RunTest>
+	<RunTest>
 		<Test>dcraw</Test>
 	</RunTest>
 </PhoronixTestSuite>
