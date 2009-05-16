@@ -59,7 +59,7 @@ class install_test implements pts_option_interface
 					}
 					else
 					{
-						pts_string_header("In order to run PCQS you must agree to the listed terms.");
+						echo pts_string_header("In order to run PCQS you must agree to the listed terms.");
 						return false;
 					}
 				}

@@ -163,18 +163,16 @@ function pts_generate_test_notes($test_type)
 	}
 
 	// Check if Security Enhanced Linux was enforcing, permissive, or disabled
-	if(is_file("/etc/sysconfig/selinux") && is_readable("/boot/grub/menu.lst"))
+	if(is_readable("/etc/sysconfig/selinux"))
 	{
-		$selinux_file = file_get_contents("/etc/sysconfig/selinux");
-		if(stripos($selinux_file, "selinux=disabled") === false)
+		if(stripos(file_get_contents("/etc/sysconfig/selinux"), "selinux=disabled") === false)
 		{
 			pts_add_test_note("SELinux was enabled.");
 		}
 	}
-	else if(is_file("/boot/grub/menu.lst") && is_readable("/boot/grub/menu.lst"))
+	else if(is_readable("/boot/grub/menu.lst"))
 	{
-		$grub_file = file_get_contents("/boot/grub/menu.lst");
-		if(stripos($grub_file, "selinux=1") !== false)
+		if(stripos(file_get_contents("/boot/grub/menu.lst"), "selinux=1") !== false)
 		{
 			pts_add_test_note("SELinux was enabled.");
 		}
@@ -358,6 +356,7 @@ function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
 		$MERGED_RESULTS = pts_merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $proposed_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
 		pts_save_result($proposed_name . "/composite.xml", $MERGED_RESULTS);
 	}
+
 	return $real_name;
 }
 function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "")
@@ -445,7 +444,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	{
 		$path_check = trim(array_pop($execute_path_check));
 
-		if(is_file($path_check . $execute_binary) || is_link($path_check . $execute_binary))
+		if(is_executable($path_check . $execute_binary))
 		{
 			$to_execute = $path_check;
 		}	
@@ -460,9 +459,6 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if(pts_test_needs_updated_install($test_identifier))
 	{
 		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the " . $test_title . " test should be re-installed.");
-		// Auto reinstall
-		//require_once(PTS_LIBRARY_PATH . "pts-functions-install.php");
-		//pts_install_test($test_identifier);
 	}
 
 	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
@@ -637,24 +633,15 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 			$arguments_description = "Phoronix Test Suite v" . PTS_VERSION;
 		}
 	}
+
 	foreach(pts_env_variables() as $key => $value)
 	{
 		$arguments_description = str_replace("$" . $key, $value, $arguments_description);
-	}
-	foreach(pts_env_variables() as $key => $value)
-	{
+
 		if($key != "VIDEO_MEMORY" && $key != "NUM_CPU_CORES" && $key != "NUM_CPU_JOBS")
 		{
 			$extra_arguments = str_replace("$" . $key, $value, $extra_arguments);
 		}
-	}
-
-	$return_string = $test_title . ":\n";
-	$return_string .= $arguments_description . "\n";
-
-	if(!empty($arguments_description))
-	{
-		$return_string .= "\n";
 	}
 
 	if($test_type == "Graphics")
@@ -688,6 +675,8 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 	}
 
+	$return_string = $test_title . ":\n" . $arguments_description . "\n" . (!empty($arguments_description) ? "\n" : "");
+
 	// Result Calculation
 	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
 	$pts_test_result->set_attribute("TEST_VERSION", $test_version);
@@ -716,12 +705,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	fclose($test_fp);
 	unlink($lock_file);
 
-	if($result_format == "NO_RESULT")
-	{
-		$pts_test_result = false;
-	}
-
-	return $pts_test_result;
+	return ($result_format == "NO_RESULT" ? false : $pts_test_result);
 }
 function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 {

@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for showing tests in the GTK2 GUI from Alpha 1
 - pts-core: Various GTK2 GUI improvements
 - pts-core: Add 1.77 ratio to available modes in phodevi_gpu for supporting 1920 x 1080 resolution
+- pts-core: Various code clean-ups
 - phodevi: Support monitoring the system temperature from the ACPI TZ00 thermal zone
 - pts: Add dcraw test profile for RAW image decoding benchmark
 - toggle_screensaver: Support using gconftool-2 for toggling GNOME screensaver

@@ -46,7 +46,7 @@ class run_test implements pts_option_interface
 
 		// Cleanup tests to run
 		$to_run_identifiers = pts_cleanup_tests_to_run($to_run_identifiers);
-		$unique_test_names = count(array_unique($to_run_identifiers));
+		$unique_test_count = count(array_unique($to_run_identifiers));
 		$test_run_manager = new pts_test_run_manager();
 
 		foreach($to_run_identifiers as $to_run)
@@ -111,7 +111,7 @@ class run_test implements pts_option_interface
 					$test_run_manager->add_single_test_run($to_run, $option_output[0], $option_output[1]);
 				}
 
-				if($unique_test_names == 1)
+				if($unique_test_count == 1)
 				{
 					$xml_parser = new pts_test_tandem_XmlReader($to_run);
 					$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
@@ -126,7 +126,7 @@ class run_test implements pts_option_interface
 
 				$xml_parser = new pts_suite_tandem_XmlReader($to_run);
 
-				if($unique_test_names == 1)
+				if($unique_test_count == 1)
 				{
 					$test_description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
 					$test_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
@@ -203,9 +203,9 @@ class run_test implements pts_option_interface
 		{
 			return false;
 		}
-		$unique_test_names = count(array_unique($to_run_identifiers));
+		$unique_test_count = count(array_unique($to_run_identifiers));
 
-		if($unique_test_names > 1)
+		if($unique_test_count > 1)
 		{
 			pts_set_assignment("MULTI_TYPE_RUN", true);
 		}
@@ -214,7 +214,7 @@ class run_test implements pts_option_interface
 
 		echo "\n";
 		$save_results = false;
-		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_names > 1)
+		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1)
 		{
 			if(pts_is_assignment("AUTO_SAVE_NAME") || getenv("TEST_RESULTS_NAME") != false)
 			{
@@ -231,7 +231,7 @@ class run_test implements pts_option_interface
 
 			if($save_results)
 			{
-				if(($unique_test_names == 1 || pts_is_assignment("AUTOMATED_MODE")) && ($asn = pts_read_assignment("AUTO_SAVE_NAME")) != false)
+				if(($unique_test_count == 1 || pts_is_assignment("AUTOMATED_MODE")) && ($asn = pts_read_assignment("AUTO_SAVE_NAME")) != false)
 				{
 					$auto_name = $asn;
 				}
@@ -269,14 +269,14 @@ class run_test implements pts_option_interface
 				// Prompt Description
 				if(!pts_is_assignment("AUTOMATED_MODE") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_description()))
 				{
-					if($unique_test_names > 1 || !isset($test_description))
+					if($unique_test_count > 1 || !isset($test_description))
 					{
 						$unique_tests_r = array_unique($to_run_identifiers);
 						$last = array_pop($unique_tests_r);
 						array_push($unique_tests_r, "and " . $last);
 
 						$test_description = "Running ";
-						$test_description .= implode(($unique_test_names == 2 ? " " : ", "), $unique_tests_r);
+						$test_description .= implode(($unique_test_count == 2 ? " " : ", "), $unique_tests_r);
 						$test_description .= ".";
 					}
 					if(empty($test_description))
@@ -295,7 +295,7 @@ class run_test implements pts_option_interface
 					}
 				}
 
-				if($unique_test_names > 1)
+				if($unique_test_count > 1)
 				{
 					$test_version = "1.0.0";
 					$test_type = "System";
@@ -379,7 +379,7 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $test_properties));
 			}
 
-			if(pts_read_assignment("TEST_RAN") == true)
+			if(pts_read_assignment("TEST_RAN"))
 			{
 				pts_save_test_file($proposed_file_name, $xml_results_writer);
 				echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
