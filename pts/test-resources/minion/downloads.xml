@@ -1,0 +1,9 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://fastbull.dl.sourceforge.net/sourceforge/minion/minion-0.8.1-src.tar.gz, http://internap.dl.sourceforge.net/sourceforge/minion/minion-0.8.1-src.tar.gz, http://softlayer.dl.sourceforge.net/sourceforge/minion/minion-0.8.1-src.tar.gz, http://freefr.dl.sourceforge.net/sourceforge/minion/minion-0.8.1-src.tar.gz, http://internode.dl.sourceforge.net/sourceforge/minion/minion-0.8.1-src.tar.gz</URL>
+			<MD5>d5de37b552f13628b8eeca59d9d21b74</MD5>
+			<FileSize>4269950</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
