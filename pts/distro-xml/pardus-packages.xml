@@ -180,5 +180,10 @@
 			<PackageName>cmake</PackageName>
 			<FileCheck>/usr/bin/cmake</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>boost-development</GenericName>
+			<PackageName>boost</PackageName>
+			<FileCheck>/usr/include/boost/</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

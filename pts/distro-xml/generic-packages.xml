@@ -230,5 +230,11 @@
 			<PossibleNames>cmake</PossibleNames>
 			<FileCheck>/usr/bin/cmake</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>boost-development</GenericName>
+			<Title>Boost Development Libraries</Title>
+			<PossibleNames>boost-devel, libboost-dev, libboost-devel</PossibleNames>
+			<FileCheck>/usr/include/boost/</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
