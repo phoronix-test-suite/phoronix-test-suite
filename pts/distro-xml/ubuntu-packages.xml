@@ -190,5 +190,10 @@
 			<PackageName>liblapack-dev</PackageName>
 			<FileCheck>/usr/lib/liblapack.so</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>cmake</GenericName>
+			<PackageName>cmake</PackageName>
+			<FileCheck>/usr/bin/cmake</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

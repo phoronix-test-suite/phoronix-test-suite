@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts: Add fftw3-development external dependency for Fast Fourier Transform 3 library
 - pts: Add blas-development external dependency for Basic Linear Algebra Subroutine library
 - pts: Add lapack-development external dependency for LAPACK
+- pts: Add cmake external dependency for cmake
 - pts: Add nero2d test profile for Open FMM Nero2D TM/TE electromagnetic software solver
 - toggle_screensaver: Support using gconftool-2 for toggling GNOME screensaver
 

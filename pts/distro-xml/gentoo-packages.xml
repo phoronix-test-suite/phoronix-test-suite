@@ -180,5 +180,10 @@
 			<PackageName>virtual/lapack</PackageName>
 			<FileCheck>/usr/lib/liblapack.so</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>cmake</GenericName>
+			<PackageName>dev-util/cmake</PackageName>
+			<FileCheck>/usr/bin/cmake</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

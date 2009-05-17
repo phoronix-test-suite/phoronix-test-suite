@@ -224,5 +224,11 @@
 			<PossibleNames>liblapack-dev, lapack, lapack-devel, liblapack-devel</PossibleNames>
 			<FileCheck>/usr/lib/liblapack.so</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>cmake</GenericName>
+			<Title>CMake</Title>
+			<PossibleNames>cmake</PossibleNames>
+			<FileCheck>/usr/bin/cmake</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
