@@ -77,6 +77,25 @@ class pts_result_file_merge_manager
 
 		if(!$merged)
 		{
+			if(is_array($select_identifiers))
+			{
+				$identifiers = $merge_test_object->get_identifiers();
+				$values = $merge_test_object->get_values();
+				$raw_values = $merge_test_object->get_raw_values();
+
+				$merge_test_object->flush_result_data();
+
+				for($j = 0; $j < count($identifiers); $j++)
+				{
+					if(in_array($identifiers[$j], $select_identifiers))
+					{
+						$merge_test_object->add_identifier($identifiers[$j]);
+						$merge_test_object->add_value($values[$j]);
+						$merge_test_object->add_raw_value($raw_values[$j]);
+					}
+				}
+			}
+
 			// Add Result
 			array_push($this->test_results, $merge_test_object);
 		}

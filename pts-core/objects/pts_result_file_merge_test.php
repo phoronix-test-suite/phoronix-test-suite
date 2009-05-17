@@ -62,6 +62,12 @@ class pts_result_file_merge_test
 	{
 		array_push($this->raw_values, $raw_value);
 	}
+	public function flush_result_data()
+	{
+		$this->identifiers = array();
+		$this->values = array();
+		$this->raw_values = array();
+	}
 
 	public function get_name()
 	{
