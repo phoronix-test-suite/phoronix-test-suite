@@ -15,6 +15,9 @@ Testing Options:
     list-tests: List all tests and relevant information
     list-suites: List all suites and relevant information
 
+GUI Options:
+    gui: Launch the Phoronix Test Suite GTK2 GUI
+
 Batch Testing Options:
     batch-setup: Setup the batch mode options
     batch-run <suite / test>: Run the specified test(s) in batch mode

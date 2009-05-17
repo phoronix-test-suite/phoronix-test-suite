@@ -190,5 +190,10 @@
 			<PackageName>dev-libs/boost</PackageName>
 			<FileCheck>/usr/include/boost/</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>bzip2-development</GenericName>
+			<PackageName>dev-haskell/bzlib</PackageName>
+			<FileCheck>/usr/include/bzlib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

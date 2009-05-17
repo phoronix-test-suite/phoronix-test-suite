@@ -155,5 +155,10 @@
 			<PackageName>boost-devel</PackageName>
 			<FileCheck>/usr/include/boost/</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>bzip2-development</GenericName>
+			<PackageName>bzip2-devel</PackageName>
+			<FileCheck>/usr/include/bzlib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

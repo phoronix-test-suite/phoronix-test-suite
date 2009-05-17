@@ -236,5 +236,11 @@
 			<PossibleNames>boost-devel, libboost-dev, libboost-devel</PossibleNames>
 			<FileCheck>/usr/include/boost/</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>bzip2-development</GenericName>
+			<Title>BZIP2 Development Libraries</Title>
+			<PossibleNames>bzip2-devel, libbz2-dev, libbzip2-devel</PossibleNames>
+			<FileCheck>/usr/include/bzlib.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

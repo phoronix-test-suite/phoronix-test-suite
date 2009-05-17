@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts: Add lapack-development external dependency for LAPACK
 - pts: Add cmake external dependency for cmake
 - pts: Add boost-development external dependency for Boost development libraries
+- pts: Add bzip2-development external dependency for BZIP2 development libraries
 - pts: Add nero2d test profile for Open FMM Nero2D TM/TE electromagnetic software solver
 - toggle_screensaver: Support using gconftool-2 for toggling GNOME screensaver
 
