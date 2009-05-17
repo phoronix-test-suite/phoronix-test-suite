@@ -31,7 +31,7 @@ class show_result implements pts_option_interface
 				pts_generate_graphs(file_get_contents($URL), SAVE_RESULTS_DIR . $r[0] . "/");
 			}
 
-			pts_run_shell_script(PTS_CORE_PATH . "scripts/launch-browser.sh", $URL);
+			pts_display_web_browser($URL, null, false, true);
 		}
 		else
 		{

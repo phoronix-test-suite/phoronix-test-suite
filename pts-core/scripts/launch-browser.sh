@@ -17,7 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-if [ "`which x-www-browser`" ] && [ "`which konqueror`" ]
+if [ "`which $2`" ]
+then
+	$2 "$1"
+elif [ "`which x-www-browser`" ] && [ "`which konqueror`" ]
 then
 	x-www-browser "$1"
 elif [ "`which xdg-open`" ]
