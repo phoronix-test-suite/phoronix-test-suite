@@ -1,13 +1,13 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.bluesailsoftware.com/software/opstone/build/?download=opstone-svd-athlon64</URL>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/opstone-svd-athlon64, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/opstone-svd-athlon64</URL>
 			<MD5>574c319aa211e48c6bc5c01baa825397</MD5>
 			<FileName>opstone-svd-athlon64</FileName>
 			<FileSize>133568</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.bluesailsoftware.com/software/opstone/build/?download=opstone-svd-pentium4</URL>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/opstone-svd-pentium4, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/opstone-svd-pentium4</URL>
 			<MD5>231bce4fc679ec77dd00a1b7fd82337d</MD5>
 			<FileName>opstone-svd-pentium4</FileName>
 			<FileSize>107488</FileSize>

@@ -72,7 +72,7 @@
 			<GenericName>java</GenericName>
 			<Title>Java Runtime Environment</Title>
 			<PossibleNames>java-openjdk, icedtea, java, sun-java</PossibleNames>
-			<FileCheck>/usr/bin/java</FileCheck>
+			<FileCheck>/usr/bin/java OR /usr/lib/jvm OR /usr/lib64/jvm</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
