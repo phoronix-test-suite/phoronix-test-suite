@@ -31,7 +31,7 @@ class pts_gtk_text_area extends GtkScrolledWindow
 		$text_buffer = new GtkTextBuffer();
 		$text_buffer->set_text($text);
 		$text_view->set_buffer($text_buffer);
-		$text_view->set_wrap_mode(GTK_WRAP_WORD);
+		$text_view->set_wrap_mode(GTK::WRAP_WORD);
 		$text_view->set_size_request($width, $height);
 		$text_view->set_cursor_visible(false);
 		$text_view->set_editable(false);

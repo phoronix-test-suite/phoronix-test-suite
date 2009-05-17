@@ -492,7 +492,7 @@ class gui_gtk implements pts_option_interface
 	public static function update_details_frame_for_install($to_install)
 	{
 		$gtk_obj_main_frame = pts_read_assignment("GTK_OBJ_MAIN_FRAME");
-		$gtk_obj_main_frame->set_label($identifier);
+		$gtk_obj_main_frame->set_label($to_install);
 
 		if(pts_is_assignment("GTK_OBJ_MAIN_FRAME_BOX"))
 		{
@@ -1181,7 +1181,7 @@ class gui_gtk implements pts_option_interface
 	{
 		$identifier = gui_gtk::notebook_selected_to_identifier();
 
-		if(count($identifiers) > 1)
+		if(count($identifier) > 1)
 		{
 			$button_string = "Run"; // TODO: cleanup
 		}
