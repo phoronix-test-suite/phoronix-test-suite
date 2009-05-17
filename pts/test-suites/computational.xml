@@ -44,4 +44,9 @@
 	<RunTest>
 		<Test>nero2d</Test>
 	</RunTest>
+	<RunTest>
+		<Test>minion</Test>
+		<Arguments>benchmarks/solitaire/solitaire_benchmark_8.minion</Arguments>
+		<Description>Solitaire</Description>
+	</RunTest>
 </PhoronixTestSuite>

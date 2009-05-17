@@ -30,6 +30,9 @@
 		<Test>ray-tracing</Test>
 	</RunTest>
 	<RunTest>
+		<Test>ffmpeg</Test>
+	</RunTest>
+	<RunTest>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>HWB Color Space</Description>

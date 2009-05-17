@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts: Add bzip2-development external dependency for BZIP2 development libraries
 - pts: Add nero2d test profile for Open FMM Nero2D TM/TE electromagnetic software solver
 - pts: Add minion test profile for Minion solver
+- pts: Support using multiple threads for FFmpeg test profile
 - toggle_screensaver: Support using gconftool-2 for toggling GNOME screensaver
 
 Phoronix Test Suite 2.0.0 Alpha 1
