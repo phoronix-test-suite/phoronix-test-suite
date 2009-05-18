@@ -612,7 +612,7 @@ class phodevi_gpu extends pts_device_interface
 					$info = substr($info, $pos);
 					$info = substr($info, 0, strpos($info, " "));
 
-					if(!is_numeric($info) && ($cut = strpos($info, ","))
+					if(!is_numeric($info) && ($cut = strpos($info, ",")))
 					{
 						$info = substr($info, 0, $cut);
 					}
