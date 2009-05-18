@@ -607,10 +607,15 @@ class phodevi_gpu extends pts_device_interface
 					$info = shell_exec("cat /var/log/Xorg.0.log | grep \"Video RAM\"");
 				}
 
-				if(($pos = strpos($info, "RAM:")) > 0 || ($pos = strpos($info, "Ram:")) > 0)
+				if(($pos = strpos($info, "RAM:") + 5) > 5 || ($pos = strpos($info, "Ram:") + 5) > 5 || ($pos = strpos($info, "RAM=") + 4) > 4)
 				{
-					$info = substr($info, $pos + 5);
+					$info = substr($info, $pos);
 					$info = substr($info, 0, strpos($info, " "));
+
+					if(!is_numeric($info) && ($cut = strpos($info, ","))
+					{
+						$info = substr($info, 0, $cut);
+					}
 
 					if($info > 65535)
 					{
