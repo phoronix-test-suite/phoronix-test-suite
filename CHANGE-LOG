@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support monitoring the system temperature from the ACPI TZ00 thermal zone
 - phodevi: Fix in Xfce 4 desktop version detection
 - phodevi: Report video memory detection for some GPUs, at least when using the xf86-video-ati driver
+- phodevi: Report video memory size for GPUs where the driver in use is Mesa
 - pts: Add dcraw test profile for RAW image decoding benchmark
 - pts: Add sudokut test profile for a Sudoku solver benchmark
 - pts: Add fftw3-development external dependency for Fast Fourier Transform 3 library

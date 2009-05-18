@@ -813,7 +813,7 @@ class phodevi_gpu extends pts_device_interface
 			}
 		}
 
-		if(IS_NVIDIA_GRAPHICS && $video_ram > 64 && strpos($info, $video_ram) == false) // assume more than 64MB of vRAM
+		if((IS_NVIDIA_GRAPHICS || IS_MESA_GRAPHICS) && $video_ram > 64 && strpos($info, $video_ram) == false) // assume more than 64MB of vRAM
 		{
 			$info .= " " . $video_ram . "MB";
 		}
