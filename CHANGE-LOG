@@ -24,6 +24,7 @@ Phoronix Test Suite (Git)
 - pts: Add nero2d test profile for Open FMM Nero2D TM/TE electromagnetic software solver
 - pts: Add minion test profile for Minion solver
 - pts: Support using multiple threads for FFmpeg test profile
+- pts: Update filesystem test suite
 - pts: Add External Dependencies support for Zenwalk Linux distribution
 - toggle_screensaver: Support using gconftool-2 for toggling GNOME screensaver
 

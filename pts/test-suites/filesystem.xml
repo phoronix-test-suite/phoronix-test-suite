@@ -2,19 +2,13 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.2</Version>
+		<Version>1.1.3</Version>
 		<TestType>Disk</TestType>
 		<Title>Filesystem Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This file-system test suite is designed to contain real-world disk and file-system tests.</Description>
 		<RunMode>PCQS</RunMode>
 	</SuiteInformation>
-	<RunTest>
-		<Test>build-imagemagick</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-apache</Test>
-	</RunTest>
 	<RunTest>
 		<Test>compress-pbzip2</Test>
 	</RunTest>
@@ -35,6 +29,12 @@
 	</RunTest>
 	<RunTest>
 		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
+	</RunTest>
+	<RunTest>
+		<Test>apache</Test>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
@@ -62,11 +62,6 @@
 		<Description>8GB Read Performance</Description>
 	</RunTest>
 	<RunTest>
-		<Test>fio</Test>
-		<Arguments>examples/iometer-file-access-server</Arguments>
-		<Description>Intel IOMeter File Server Access Pattern</Description>
-	</RunTest>
-	<RunTest>
 		<Test>dbench</Test>
 		<Arguments>1</Arguments>
 		<Description>1 Client</Description>
@@ -80,6 +75,11 @@
 		<Test>dbench</Test>
 		<Arguments>128</Arguments>
 		<Description>128 Clients</Description>
+	</RunTest>
+	<RunTest>
+		<Test>fio</Test>
+		<Arguments>examples/iometer-file-access-server</Arguments>
+		<Description>Intel IOMeter File Server Access Pattern</Description>
 	</RunTest>
 	<RunTest>
 		<Test>fio</Test>
@@ -98,11 +98,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>tiobench</Test>
-		<Arguments>-k3 -k2 -f 64 -t 32</Arguments>
-		<Description>64MB Random Write - 32 Threads</Description>
-	</RunTest>
-	<RunTest>
-		<Test>tiobench</Test>
 		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
 		<Description>64MB Read - 32 Threads</Description>
 	</RunTest>
@@ -110,5 +105,20 @@
 		<Test>tiobench</Test>
 		<Arguments>-k2 -k1 -f 64 -t 32</Arguments>
 		<Description>64MB Random Read - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -f 64 -t 32</Arguments>
+		<Description>64MB Random Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 256 -t 32</Arguments>
+		<Description>256MB Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k1 -f 256 -t 32</Arguments>
+		<Description>256MB Read - 32 Threads</Description>
 	</RunTest>
 </PhoronixTestSuite>
