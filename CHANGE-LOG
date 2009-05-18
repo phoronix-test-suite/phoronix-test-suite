@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add extract-from-result-file option for extracting a single test run from a merged results file
 - pts-core: Various bug fixes from Deanjo
 - phodevi: Support monitoring the system temperature from the ACPI TZ00 thermal zone
+- phodevi: Fix in Xfce 4 desktop version detection
 - pts: Add dcraw test profile for RAW image decoding benchmark
 - pts: Add sudokut test profile for a Sudoku solver benchmark
 - pts: Add fftw3-development external dependency for Fast Fourier Transform 3 library

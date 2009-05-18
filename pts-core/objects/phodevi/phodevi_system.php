@@ -591,7 +591,7 @@ class phodevi_system extends pts_device_interface
 		{
 			// Xfce 4.x
 			$desktop_environment = "Xfce";
-			$xfce_output = trim(shell_exec("xfce4-session --version 2>&1"));
+			$xfce_output = trim(shell_exec("xfce4-session-settings --version 2>&1"));
 
 			if(($open = strpos($xfce_output, "(")) > 0)
 			{
