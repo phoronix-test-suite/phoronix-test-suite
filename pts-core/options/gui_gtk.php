@@ -492,7 +492,7 @@ class gui_gtk implements pts_option_interface
 	public static function update_details_frame_for_install($to_install)
 	{
 		$gtk_obj_main_frame = pts_read_assignment("GTK_OBJ_MAIN_FRAME");
-		$gtk_obj_main_frame->set_label($to_install);
+		$gtk_obj_main_frame->set_label(array_pop(pts_to_array($to_install)));
 
 		if(pts_is_assignment("GTK_OBJ_MAIN_FRAME_BOX"))
 		{
