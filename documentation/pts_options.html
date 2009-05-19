@@ -20,20 +20,6 @@ Optionally, a Phoronix Global ID or the name of a saved results file can be supp
 as well and the test(s) to install will automatically be extracted from that information. 
 If the test is already installed and was run by the latest version of the installation 
 process, no action will be taken. Multiple arguments can be supplied to install additional tests at the same time.</p>
-<p><strong>install-dependencies &lt;To Install&gt;</strong></p>
-<p>This option will install the external dependencies needed by the selected test(s) 
-using the distribution's package management system. For example, some tests depend 
-upon GCC for compiling code. If GCC is not detected on the system, the Phoronix 
-Test Suite will attempt to install GCC using the distribution's package management 
-system. If you're running this command as a local user, you may be prompted for 
-the root password while the process is running. For unsupported distributions, 
-the dependency names will be displayed along with common names for the package. 
-The install-dependencies option needs to be supplied with the test name or suite 
-as an argument. Optionally, a Phoronix Global ID or the name of a saved results file 
-can be supplied as well and the external dependencies will automatically be extracted 
-from that information. The install-dependencies option will only install the dependencies 
-on tests that utilize this feature. When using the install option, the external 
-dependencies are automatically checked.</p>
 <p><strong>install-all</strong></p>
 <p>This option will install all available test(s) inside the testing environment 
 directory (defaults to ~/.phoronix-test-suite/installed-tests). The install process 
@@ -50,8 +36,6 @@ The process is similar to the install-all option but even if a test is installed
 the entire installation process will automatically be executed. This option should 
 only be used when debugging a test installation problem. As of Phoronix Test Suite 1.6 this option 
 has been deprecated. Users should instead use <em>force-install all</em>.</p>
-<p><strong>list-possible-dependencies</strong></p>
-<p>List all possible external dependencies used by tests within the Phoronix Test Suite.</p>
 <h2>Run Options</h2>
 <p><strong>benchmark &lt;To Run&gt;</strong></p>
 <p>This option will install the selected test(s) (if needed) and will proceed 
@@ -84,6 +68,25 @@ will be run in the Phoronix Test Suite batch mode.</p>
 <p><strong>batch-benchmark &lt;To Run&gt;</strong></p>
 <p>This option and its arguments are equivalent to the benchmark option, but the 
 process will be run in the Phoronix Test Suite batch mode.</p>
+<h2>Test Dependency Options</h1>
+<p><strong>install-dependencies &lt;To Install&gt;</strong></p>
+<p>This option will install the external dependencies needed by the selected test(s) 
+using the distribution's package management system. For example, some tests depend 
+upon GCC for compiling code. If GCC is not detected on the system, the Phoronix 
+Test Suite will attempt to install GCC using the distribution's package management 
+system. If you're running this command as a local user, you may be prompted for 
+the root password while the process is running. For unsupported distributions, 
+the dependency names will be displayed along with common names for the package. 
+The install-dependencies option needs to be supplied with the test name or suite 
+as an argument. Optionally, a Phoronix Global ID or the name of a saved results file 
+can be supplied as well and the external dependencies will automatically be extracted 
+from that information. The install-dependencies option will only install the dependencies 
+on tests that utilize this feature. When using the install option, the external 
+dependencies are automatically checked.</p>
+<p><strong>list-possible-dependencies</strong></p>
+<p>This option will list all possible external dependencies used by tests within the Phoronix Test Suite.</p>
+<p><strong>list-installed-dependencies</strong></p>
+<p>This option will list all external dependencies used by tests within the Phoronix Test Suite that are installed on the system.</p>
 <h2>Test Options</h2>
 <p><strong>list-tests</strong></p>
 <p>This option will list all available tests. The name, title, status, and license 

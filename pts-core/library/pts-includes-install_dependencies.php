@@ -201,28 +201,18 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 
 	return $generated;
 }
-function pts_external_dependencies_installed($show_generic_title = false)
+function pts_external_dependencies_installed()
 {
 	$all_dependencies = pts_external_dependency_generic_packages();
-	$missing_dependencies = pts_external_dependencies_missing(false);
+	$missing_dependencies = pts_external_dependencies_missing();
 	$installed_dependencies = array_diff($all_dependencies, $missing_dependencies);
-
-	if($show_generic_title)
-	{
-		$installed_dependencies = array_map("pts_external_dependency_generic_title", $installed_dependencies);
-	}
 
 	return $installed_dependencies;	
 }
-function pts_external_dependencies_missing($show_generic_title = false)
+function pts_external_dependencies_missing()
 {
 	$missing_dependencies = array();
 	pts_package_generic_to_distro_name($missing_dependencies, "all", true);
-
-	if($show_generic_title)
-	{
-		$missing_dependencies = array_map("pts_external_dependency_generic_title", $missing_dependencies);
-	}
 
 	return $missing_dependencies;	
 }
