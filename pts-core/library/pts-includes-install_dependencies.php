@@ -30,11 +30,15 @@ function pts_install_package_on_distribution($identifiers)
 	}
 
 	$install_objects = array();
-	$identifiers = pts_to_array($identifiers);
-
-	foreach($identifiers as $identifier)
+	foreach(pts_to_array($identifiers) as $identifier)
 	{
-		pts_start_install_dependencies($identifier, $install_objects);
+		foreach(pts_contained_tests($identifier, true) as $test)
+		{
+			if(pts_test_supported($test))
+			{
+				pts_install_external_dependencies_list($test, $install_objects);
+			}
+		}
 	}
 	$install_objects = array_unique($install_objects);
 
@@ -47,19 +51,29 @@ function pts_install_package_on_distribution($identifiers)
 
 	return true;
 }
-function pts_start_install_dependencies($TO_INSTALL, &$PLACE_LIST)
+function pts_external_dependency_generic_title($generic_name)
 {
-	$tests = pts_contained_tests($TO_INSTALL, true);
-	
-	foreach($tests as $test)
+	// Get the generic information for a PTS External Dependency generic
+	$generic_title = null;
+
+	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
 	{
-		if(pts_test_supported($test))
+		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
+		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+
+		for($i = 0; $i < count($package_name) && $generic_title == null; $i++)
 		{
-			pts_install_external_dependencies_list($test, $PLACE_LIST);
+			if($generic_name == $package_name[$i])
+			{
+				$generic_title = $title[$i];
+			}
 		}
 	}
+
+	return $generic_title;
 }
-function pts_external_dependency_generic($Name)
+function pts_external_dependency_generic_info($Name)
 {
 	// Get the generic information for a PTS External Dependency generic
 	$generic_information = "";
@@ -101,6 +115,18 @@ function pts_external_dependency_generic($Name)
 
 	return $generic_information;
 }
+function pts_external_dependency_generic_packages()
+{
+	$packages = array();
+
+	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
+	{
+		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
+		$packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+	}
+
+	return $packages;
+}
 function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 {
 	// Install from a list of external dependencies
@@ -115,14 +141,10 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 
 	if(!empty($dependencies))
 	{
-		$dependencies = explode(",", $dependencies);
-
-		$dependencies = array_map("trim", $dependencies);
+		$dependencies = array_map("trim", explode(",", $dependencies));
 
 		if(!pts_is_assignment("PTS_EXDEP_FIRST_RUN"))
 		{
-			array_push($dependencies, "php-extras");
-
 			if(phodevi::read_property("system", "kernel-architecture") == "x86_64")
 			{
 				array_push($dependencies, "linux-32bit-libraries");
@@ -136,7 +158,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 			$package_string = "";
 			foreach($dependencies as $dependency)
 			{
-				$package_string .= pts_external_dependency_generic($dependency);
+				$package_string .= pts_external_dependency_generic_info($dependency);
 			}
 
 			if(!empty($package_string))
@@ -146,7 +168,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 		}
 	}
 }
-function pts_package_generic_to_distro_name(&$package_install_array, $generic_names)
+function pts_package_generic_to_distro_name(&$package_install_array, $generic_names, $write_generic_name = false)
 {
 	// Generic name to distribution package name
 	$vendor = pts_package_vendor_identifier();
@@ -165,19 +187,11 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 			{
 				if(!in_array($distro_package[$i], $package_install_array))
 				{
-					if(!empty($file_check[$i]))
-					{
-						$files = explode(",", $file_check[$i]);
-						$add_dependency = pts_file_missing_check($files);
-					}
-					else
-					{
-						$add_dependency = true;
-					}
+					$add_dependency = (!empty($file_check[$i]) ? pts_file_missing_check(explode(",", $file_check[$i])) : true);
 
 					if($add_dependency)
 					{
-						array_push($package_install_array, $distro_package[$i]);
+						array_push($package_install_array, ($write_generic_name ? $generic_package[$i] : $distro_package[$i]));
 					}
 				}
 			}
@@ -186,6 +200,31 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 	}
 
 	return $generated;
+}
+function pts_external_dependencies_installed($show_generic_title = false)
+{
+	$all_dependencies = pts_external_dependency_generic_packages();
+	$missing_dependencies = pts_external_dependencies_missing(false);
+	$installed_dependencies = array_diff($all_dependencies, $missing_dependencies);
+
+	if($show_generic_title)
+	{
+		$installed_dependencies = array_map("pts_external_dependency_generic_title", $installed_dependencies);
+	}
+
+	return $installed_dependencies;	
+}
+function pts_external_dependencies_missing($show_generic_title = false)
+{
+	$missing_dependencies = array();
+	pts_package_generic_to_distro_name($missing_dependencies, "all", true);
+
+	if($show_generic_title)
+	{
+		$missing_dependencies = array_map("pts_external_dependency_generic_title", $missing_dependencies);
+	}
+
+	return $missing_dependencies;	
 }
 function pts_install_packages_on_distribution_process($install_objects)
 {
