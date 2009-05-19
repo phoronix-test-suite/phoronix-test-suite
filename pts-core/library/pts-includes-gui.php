@@ -74,7 +74,7 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 
 	return $installed_tests;
 }
-function pts_gui_available_tests($to_show_types, $license_types)
+function pts_gui_available_tests($to_show_types, $license_types, $dependency_limit = null)
 {
 	$test_names = pts_supported_tests_array();
 	$to_show_names = array();
@@ -88,7 +88,40 @@ function pts_gui_available_tests($to_show_types, $license_types)
 
 		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->verified_state())
 		{
-			array_push($to_show_names, $name);
+			$show = true;
+
+			if($dependency_limit == "DEPENDENCIES_INSTALLED")
+			{
+				$missing_dependencies = pts_external_dependencies_missing();
+
+				foreach($tp->get_dependencies() as $dependency)
+				{
+					if(in_array($dependency, $missing_dependencies))
+					{
+						$show = false;
+						break;
+					}
+				}
+			}
+			else if($dependency_limit == "DEPENDENCIES_MISSING")
+			{
+				$missing_dependencies = pts_external_dependencies_missing();
+
+				$show = false;
+				foreach($tp->get_dependencies() as $dependency)
+				{
+					if(in_array($dependency, $missing_dependencies))
+					{
+						$show = true;
+						break;
+					}
+				}
+			}
+
+			if($show)
+			{
+				array_push($to_show_names, $name);
+			}
 		}
 	}
 

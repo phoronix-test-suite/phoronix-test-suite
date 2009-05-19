@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Cleanup and revise PTS installation External Dependency functions
 - pts-core: Add list-installed-dependencies option
 - pts-core: Add list-missing-dependencies option
+- pts-core: Add view option to GTK2 GUI for displaying available tests based upon external dependency criteria
 - phodevi: Support monitoring the system temperature from the ACPI TZ00 thermal zone
 - phodevi: Fix in Xfce 4 desktop version detection
 - phodevi: Report video memory detection for some GPUs, at least when using the xf86-video-ati driver

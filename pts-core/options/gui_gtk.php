@@ -24,7 +24,7 @@ class gui_gtk implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("gui", "run", "gtk");
+		return array("gui", "run", "gtk", "install_dependencies");
 	}
 	public static function run($r)
 	{
@@ -153,6 +153,7 @@ class gui_gtk implements pts_option_interface
 			null,
 			"Show License" => $license_type,
 			"Show Subsystem" => $subsystem_type,
+			"Show Dependencies" => array(new pts_gtk_menu_item(array("Show All", "All Dependencies Installed", "Dependencies Missing"), array("gui_gtk", "radio_test_dependencies_select"), "RADIO_BUTTON"))
 			);
 
 		$main_menu_items = array(
@@ -644,7 +645,7 @@ class gui_gtk implements pts_option_interface
 			pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
 
 			// Available Tests
-			$a_t = pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"));
+			$a_t = pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"), pts_read_assignment("GTK_DEPENDENCY_LIMIT"));
 			$available_tests = pts_gtk_table(array(count($a_t) . " Tests"), $a_t, array("gui_gtk", "update_details_frame_from_select"), "No tests are available.");
 			pts_gtk_add_notebook_tab($main_notebook, $available_tests, "Available Tests");
 		}
@@ -659,6 +660,31 @@ class gui_gtk implements pts_option_interface
 		{
 			$item = $object->child->get_label();
 			pts_set_assignment("GTK_TEST_OR_SUITE", ($item == "Tests" ? "TEST" : "SUITE"));
+
+			gui_gtk::update_main_notebook();
+			gui_gtk::redraw_main_window();
+		}
+	}
+	public static function radio_test_dependencies_select($object)
+	{
+		if($object->get_active())
+		{
+			$item = $object->child->get_label();
+
+			switch($item)
+			{
+				case "All Dependencies Installed":
+					$dependency_limit = "DEPENDENCIES_INSTALLED";
+					break;
+				case "Dependencies Missing":
+					$dependency_limit = "DEPENDENCIES_MISSING";
+					break;
+				default:
+					$dependency_limit = null;
+					break;
+			}
+
+			pts_set_assignment("GTK_DEPENDENCY_LIMIT", $dependency_limit);
 
 			gui_gtk::update_main_notebook();
 			gui_gtk::redraw_main_window();
