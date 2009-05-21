@@ -30,6 +30,7 @@ Phoronix Test Suite (Git)
 - pts: Support using multiple threads for FFmpeg test profile
 - pts: Update filesystem test suite
 - pts: Add External Dependencies support for Zenwalk Linux distribution
+- pts: Update disk test suite
 - toggle_screensaver: Support using gconftool-2 for toggling GNOME screensaver
 
 Phoronix Test Suite 2.0.0 Alpha 1
