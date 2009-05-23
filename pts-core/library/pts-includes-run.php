@@ -26,12 +26,19 @@ require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 
 function pts_cleanup_tests_to_run($to_run_identifiers)
 {
-	// Clean up tests
+	$skip_tests = (($e = getenv("SKIP_TESTS")) != false ? explode(",", $e) : false);
+
 	for($i = 0; $i < count($to_run_identifiers); $i++)
 	{
 		$lower_identifier = strtolower($to_run_identifiers[$i]);
 
-		if(pts_is_test($lower_identifier))
+		if($skip_tests != false && in_array($lower_identifier, $skip_tests))
+		{
+			echo pts_string_header("Skipping test: " . $lower_identifier);
+			unset($to_run_identifiers[$i]);
+			continue;
+		}
+		else if(pts_is_test($lower_identifier))
 		{
 			$xml_parser = new pts_test_tandem_XmlReader($lower_identifier);
 			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
