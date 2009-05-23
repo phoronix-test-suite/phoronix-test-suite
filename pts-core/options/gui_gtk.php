@@ -164,7 +164,8 @@ class gui_gtk implements pts_option_interface
 			new pts_gtk_menu_item("_Preferences", array("gui_gtk", "show_preferences_interface"), null, Gtk::STOCK_PREFERENCES)),
 		"_View" => $view_menu,
 		"_Tools" => array(
-			new pts_gtk_menu_item(array("GTK_OBJ_BUILD_SUITE", "Build Suite"), array("gui_gtk", ""), "STRING", Gtk::STOCK_NEW),
+		// TODO: Implement build suite option
+		//	new pts_gtk_menu_item(array("GTK_OBJ_BUILD_SUITE", "Build Suite"), array("gui_gtk", ""), "STRING", Gtk::STOCK_NEW),
 			new pts_gtk_menu_item(array("GTK_OBJ_MERGE_RESULTS", "Merge Results"), array("gui_gtk", "")),
 			null,
 			new pts_gtk_menu_item(array("GTK_OBJ_ANALYZE_RUNS", "Analyze All Runs"), array("gui_gtk", "quick_operation", "analyze_all_runs")),
@@ -182,7 +183,6 @@ class gui_gtk implements pts_option_interface
 
 		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", false);
 		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", false);
-		pts_gtk_object_set_sensitive("GTK_OBJ_BUILD_SUITE", false);
 		pts_gtk_object_set_sensitive("GTK_OBJ_MERGE_RESULTS", false);
 		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", false);
 
