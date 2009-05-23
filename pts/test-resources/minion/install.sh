@@ -5,7 +5,7 @@ cd minion-0.8.1/
 mkdir build
 cd build/
 cmake ..
-make -j $NUM_CPU_JOBS minion
+make minion
 cd ../..
 
 echo "#!/bin/sh

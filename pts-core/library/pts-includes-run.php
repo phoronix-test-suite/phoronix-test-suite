@@ -396,7 +396,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$root_required = $xml_parser->getXMLValue(P_TEST_ROOTNEEDED) == "TRUE";
 	$env_testing_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE);
 
-	if(($test_type == "Graphics" && getenv("DISPLAY") == false) || getenv("NO_" . strtoupper($test_type) . "_TESTS") != false)
+	if($test_type == "Graphics" && getenv("DISPLAY") == false)
+	{
+		return $pts_test_result;
+	}
+
+	if(getenv("NO_" . strtoupper($test_type) . "_TESTS") != false || (($e = getenv("SKIP_TESTS")) != false && in_array($test_identifier, explode(",", $e))))
 	{
 		return $pts_test_result;
 	}
