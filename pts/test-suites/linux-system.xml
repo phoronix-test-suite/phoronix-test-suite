@@ -9,11 +9,6 @@
 		<Description>A collection of tests designed to test the overall performance of a desktop computer.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>padman</Test>
-		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
 		<Test>bork</Test>
 	</RunTest>
 	<RunTest>
@@ -70,9 +65,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
-	</RunTest>
-	<RunTest>
-		<Test>opstone</Test>
 	</RunTest>
 	<RunTest>
 		<Test>crafty</Test>
