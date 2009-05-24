@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>Linux System</Title>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<TestType>System</TestType>
 		<Description>A collection of tests designed to test the overall performance of a desktop computer.</Description>
@@ -20,16 +20,6 @@
 		<Test>build-php</Test>
 	</RunTest>
 	<RunTest>
-		<Test>byte</Test>
-		<Arguments>TEST_DHRY2 </Arguments>
-		<Description>Dhrystone 2</Description>
-	</RunTest>
-	<RunTest>
-		<Test>byte</Test>
-		<Arguments>TEST_INT </Arguments>
-		<Description>Integer Arithmetic</Description>
-	</RunTest>
-	<RunTest>
 		<Test>encode-mp3</Test>
 	</RunTest>
 	<RunTest>
@@ -39,18 +29,19 @@
 		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
-		<Test>fhourstones</Test>
-	</RunTest>
-	<RunTest>
 		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
 		<Test>gmpbench</Test>
 	</RunTest>
 	<RunTest>
-		<Test>tiobench</Test>
-		<Arguments>-k3 -k2 -k1 -f 64 -t 4</Arguments>
-		<Description>64MB Write - 4 Threads</Description>
+		<Test>bwfirt</Test>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>mafft</Test>
 	</RunTest>
 	<RunTest>
 		<Test>tiobench</Test>
@@ -64,8 +55,8 @@
 	</RunTest>
 	<RunTest>
 		<Test>dbench</Test>
-		<Arguments>1</Arguments>
-		<Description>1 Client</Description>
+		<Arguments>12</Arguments>
+		<Description>12 Clients</Description>
 	</RunTest>
 	<RunTest>
 		<Test>graphics-magick</Test>
@@ -85,16 +76,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>crafty</Test>
-	</RunTest>
-	<RunTest>
-		<Test>scimark2</Test>
-		<Arguments>TEST_FFT</Arguments>
-		<Description>Fast Fourier Transform</Description>
-	</RunTest>
-	<RunTest>
-		<Test>scimark2</Test>
-		<Arguments>TEST_SPARSE</Arguments>
-		<Description>Sparse Matrix Multiply</Description>
 	</RunTest>
 	<RunTest>
 		<Test>sqlite</Test>
