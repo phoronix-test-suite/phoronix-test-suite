@@ -216,6 +216,10 @@ class phodevi
 			}
 		}
 	}
+	public static function remove_smart_cache($store_dir)
+	{
+		return is_file($store_dir . "phodevi.cache") && unlink($store_dir . "phodevi.cache");
+	}
 	public static function create_smart_cache($store_dir, $client_version = 0)
 	{
 		if(!empty(self::$smart_cache) && is_writable($store_dir))

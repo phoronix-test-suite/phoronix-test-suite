@@ -169,6 +169,7 @@ define("P_OPTION_GLOBAL_UPLOADKEY", "PhoronixTestSuite/GlobalDatabase/UploadKey"
 
 define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/General/LoadModules"); // Modules to load by default
 define("P_OPTION_DEFAULT_BROWSER", "PhoronixTestSuite/Options/General/DefaultBrowser"); // Web browser to use to override the auto-detected browser
+define("P_OPTION_PHODEVI_CACHE", "PhoronixTestSuite/Options/General/UsePhodeviCache"); // Whether to use/create Phodevi smart cache in PTS
 
 define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Testing/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
 define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/Testing/SaveSystemDetails"); // Log verbose system details?

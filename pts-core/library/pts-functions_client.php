@@ -155,7 +155,14 @@ function pts_shutdown()
 	pts_user_config_init();
 
 	// Generate Phodevi Smart Cache
-	phodevi::create_smart_cache(PTS_USER_DIR, PTS_VERSION);
+	if(pts_string_bool(pts_read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
+	{
+		phodevi::create_smart_cache(PTS_USER_DIR, PTS_VERSION);
+	}
+	else
+	{
+		phodevi::remove_smart_cache(PTS_USER_DIR);
+	}
 
 	if(IS_DEBUG_MODE && defined("PTS_DEBUG_FILE"))
 	{

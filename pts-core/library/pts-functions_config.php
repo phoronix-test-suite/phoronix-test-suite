@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-functions_config.php: Functions needed to read/write to the PTS user-configuration files.
 
 	This program is free software; you can redistribute it and/or modify
@@ -58,6 +58,7 @@ function pts_user_config_init($new_config_values = null)
 
 	$config->addXmlObject(P_OPTION_LOAD_MODULES, 2, pts_read_user_config(P_OPTION_LOAD_MODULES, "", $read_config));
 	$config->addXmlObject(P_OPTION_DEFAULT_BROWSER, 2, pts_read_user_config(P_OPTION_DEFAULT_BROWSER, "", $read_config));
+	$config->addXmlObject(P_OPTION_PHODEVI_CACHE, 2, pts_read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE", $read_config));
 
 	$config->addXmlObject(P_OPTION_TEST_REMOVEDOWNLOADS, 3, pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_CACHE_SEARCHMEDIA, 3, pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE", $read_config));
