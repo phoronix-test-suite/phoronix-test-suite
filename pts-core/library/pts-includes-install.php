@@ -476,8 +476,8 @@ function pts_install_test($identifier)
 					}
 
 					pts_user_message($pre_install_message);
-
 					$install_log = pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
+					pts_user_message($post_install_message);
 
 					if(!empty($install_log))
 					{
@@ -490,10 +490,22 @@ function pts_install_test($identifier)
 						}
 					}
 
-					pts_user_message($post_install_message);
+					if(is_file(TEST_ENV_DIR . $identifier . "/install-exit-status"))
+					{
+						// If the installer writes its exit status to ~/install-exit-status, if it's non-zero the install failed
+						$install_exit_status = trim(file_get_contents(TEST_ENV_DIR . $identifier . "/install-exit-status"));
+						unlink(TEST_ENV_DIR . $identifier . "/install-exit-status");
+
+						if($install_exit_status != "0")
+						{
+							echo "\nThe " . $identifier . " installer exited with a non-zero exit status. Installation failed.\n";
+							return false;
+						}
+					}
 
 					pts_test_generate_install_xml($identifier);
 					pts_module_process("__post_test_install", $identifier);
+					$installed = true;
 
 					if(pts_string_bool(pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
 					{
