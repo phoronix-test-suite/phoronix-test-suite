@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.0.0 Alpha 2
+May 24, 2009
 
 - pts-core: Fix for showing tests in the GTK2 GUI from Alpha 1
 - pts-core: Various GTK2 GUI improvements
@@ -16,6 +17,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add SKIP_TESTS environmental variable for specifying test identifier(s) (delimited by comma) to override and skip from testing
 - pts-core: Rewrite pts_generate_graphs() so that it can be supported for Phoronix Global / Phoromatic usage
 - pts-core: Add UsePhodeviCache option to user-config.xml for toggling whether to enable Phodevi smart cache for PTS
+- pts-core: Add support for test install scripts to write an install-exit-status where if it's set to a value not 0 it means install failed
 - phodevi: Support monitoring the system temperature from the ACPI TZ00 thermal zone
 - phodevi: Fix in Xfce 4 desktop version detection
 - phodevi: Report video memory detection for some GPUs, at least when using the xf86-video-ati driver
