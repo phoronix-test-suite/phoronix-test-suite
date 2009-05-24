@@ -78,12 +78,6 @@
 		<Test>crafty</Test>
 	</RunTest>
 	<RunTest>
-		<Test>sqlite</Test>
-	</RunTest>
-	<RunTest>
-		<Test>pgbench</Test>
-	</RunTest>
-	<RunTest>
 		<Test>sunflow</Test>
 	</RunTest>
 	<RunTest>
@@ -97,5 +91,16 @@
 	</RunTest>
 	<RunTest>
 		<Test>dcraw</Test>
+	</RunTest>
+	<RunTest>
+		<Test>minion</Test>
+		<Arguments>benchmarks/solitaire/solitaire_benchmark_8.minion</Arguments>
+		<Description>Solitaire</Description>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
 	</RunTest>
 </PhoronixTestSuite>
