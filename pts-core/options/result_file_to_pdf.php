@@ -37,9 +37,8 @@ class result_file_to_pdf implements pts_option_interface
 			return;
 		}
 
-		$composite_xml = file_get_contents($saved_results_file);
 		putenv("JPG_DEBUG=true"); // Force to JPEG mode
-		pts_generate_graphs($composite_xml, SAVE_RESULTS_DIR . $r[0] . "/");
+		pts_generate_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
 		$xml_parser = new pts_results_tandem_XmlReader($saved_results_file);
 		$pdf = new pts_pdf_template($xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE), $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME));

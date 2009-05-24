@@ -158,7 +158,7 @@ function pts_extract_identifier_from_path($path)
 {
 	return substr(($d = dirname($path)), strrpos($d, "/") + 1);
 }
-function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $keep_alpha = true, $keep_dash = false, $keep_underscore = false)
+function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $keep_alpha = true, $keep_dash = false, $keep_underscore = false, $keep_colon = false)
 {
 	$string_r = str_split($string);
 	$new_string = "";
@@ -167,7 +167,8 @@ function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $
 	{
 		$i = ord($char);
 		if(($keep_numeric && $i > 47 && $i < 58) || ($keep_alpha && $i > 64 && $i < 91) || 
-		($keep_alpha && $i > 96 && $i < 123) || ($keep_decimal && $i == 46) || ($keep_dash && $i == 45) || ($keep_underscore && $i == 95))
+		($keep_alpha && $i > 96 && $i < 123) || ($keep_decimal && $i == 46) || ($keep_dash && $i == 45) || 
+		($keep_underscore && $i == 95) || ($keep_colon && $i == 58))
 		{
 			$new_string .= $char; 
 		}

@@ -137,110 +137,99 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 
 	return $bool;
 }
-function pts_generate_graphs($test_results, $save_to_dir)
+function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 {
-	if(empty($save_to_dir))
-	{
-		return false;
-	}
-
-	if(!is_dir($save_to_dir . "/result-graphs"))
+	if($save_to_dir != false && !is_dir($save_to_dir . "/result-graphs"))
 	{
 		mkdir($save_to_dir . "/result-graphs", 0777, true);
 	}
 
-	$xml_reader = new tandem_XmlReader($test_results);
+	$result_file = new pts_result_file($test_results_identifier);
 
-	$results_pts_version = $xml_reader->getXMLValue(P_RESULTS_SYSTEM_PTSVERSION);
-	$results_suite_name = $xml_reader->getXMLValue(P_RESULTS_SUITE_NAME);
-
-	if(empty($results_pts_version))
+	$pts_version = array_pop($result_file->get_system_pts_version());
+	if(empty($pts_version))
 	{
-		$results_pts_version = PTS_VERSION;
+		$pts_version = PTS_VERSION;
 	}
 
-	$results_name = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
-	$results_testname = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-	$results_version = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
-	$results_attributes = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
-	$results_scale = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_SCALE);
-	$results_proportion = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
-	$results_result_format = $xml_reader->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
-	$results_raw = $xml_reader->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
-
-	$results_identifiers = array();
-	$results_values = array();
-	$results_rawvalues = array();
-
-	foreach($results_raw as $result_raw)
+	$i = 0;
+	$generated_graphs = array();
+	foreach($result_file->get_result_objects() as $r_o)
 	{
-		$xml_results = new tandem_XmlReader($result_raw);
-		array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
-		array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
-		array_push($results_rawvalues, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
-	}
+		$i++;
+		$name = $r_o->get_name() . (strlen($r_o->get_version()) > 2 ? " v" . $r_o->get_version() : "");
+		$result_format = $r_o->get_format();
 
-	for($i = 0; $i < count($results_name); $i++)
-	{
-		if(strlen($results_version[$i]) > 2)
+		if($result_format == "LINE_GRAPH")
 		{
-			$results_name[$i] .= " v" . $results_version[$i];
+			$t = new pts_LineGraph($name, $r_o->get_attributes(), $r_o->get_scale());
 		}
-
-		if($results_result_format[$i] == "LINE_GRAPH")
+		else if($result_format == "PASS_FAIL")
 		{
-			$t = new pts_LineGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+			$t = new pts_PassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale());
 		}
-		else if($results_result_format[$i] == "PASS_FAIL")
+		else if($result_format == "MULTI_PASS_FAIL")
 		{
-			$t = new pts_PassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
-		}
-		else if($results_result_format[$i] == "MULTI_PASS_FAIL")
-		{
-			$t = new pts_MultiPassFailGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+			$t = new pts_MultiPassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale());
 		}
 		else if(pts_read_assignment("GRAPH_RENDER_TYPE") == "CANDLESTICK")
 		{
-			$t = new pts_CandleStickGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+			$t = new pts_CandleStickGraph($name, $r_o->get_attributes(), $r_o->get_scale());
 		}
 		else
 		{
-			$t = new pts_BarGraph($results_name[$i], $results_attributes[$i], $results_scale[$i]);
+			$t = new pts_BarGraph($name, $r_o->get_attributes(), $r_o->get_scale());
 		}
+
+		$identifiers = $r_o->get_identifiers();
+		$values = $r_o->get_values();
+		$raw_values = $r_o->get_raw_values();
 
 		if(getenv("REVERSE_GRAPH_ORDER") != false)
 		{
 			// Plot results in reverse order on graphs if REVERSE_GRAPH_ORDER env variable is set
-			$results_identifiers[$i] = array_reverse($results_identifiers[$i]);
-			$results_values[$i] = array_reverse($results_values[$i]);
+			$identifiers = array_reverse($identifiers);
+			$values = array_reverse($values);
+			$raw_values = array_reverse($raw_values);
 		}
 
-		$t->loadGraphIdentifiers($results_identifiers[$i]);
-		$t->loadGraphValues($results_values[$i]);
-		$t->loadGraphRawValues($results_rawvalues[$i]);
-		$t->loadGraphProportion($results_proportion[$i]);
-		$t->loadGraphVersion($results_pts_version);
+		$t->loadGraphIdentifiers($identifiers);
+		$t->loadGraphValues($values);
+		$t->loadGraphRawValues($raw_values);
+		$t->loadGraphProportion($r_o->get_proportion());
+		$t->loadGraphVersion($pts_version);
 
-		$t->addInternalIdentifier("Test", $results_testname[$i]);
-		$t->addInternalIdentifier("Identifier", $results_suite_name);
+		$t->addInternalIdentifier("Test", $r_o->get_test_name());
+		$t->addInternalIdentifier("Identifier", $result_file->get_suite_name());
 		$t->addInternalIdentifier("User", pts_current_user());
 
-		$t->saveGraphToFile($save_to_dir . "/result-graphs/" . ($i + 1) . ".BILDE_EXTENSION");
-		$t->renderGraph();
+		if($save_to_dir != false && is_dir($save_to_dir))
+		{
+			$t->saveGraphToFile($save_to_dir . "/result-graphs/" . $i . ".BILDE_EXTENSION");
+		}
+
+		$graph = $t->renderGraph();
+		array_push($generated_graphs, $graph);
 	}
 
 	// Save XSL
-	if(isset($t))
+	if(isset($t) && $save_to_dir != false)
 	{
 		file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($t));
 	}
 
 	// Render overview chart
-	$chart = new pts_Chart();
-	$chart->loadLeftHeaders("", $results_name);
-	$chart->loadTopHeaders($results_identifiers[0]);
-	$chart->loadData($results_values);
-	$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
+
+	if($save_to_dir != false)
+	{
+		$chart = new pts_Chart();
+		$chart->loadLeftHeaders("", $results_name);
+		$chart->loadTopHeaders($results_identifiers[0]);
+		$chart->loadData($results_values);
+		$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
+	}
+
+	return $generated_graphs;
 }
 function pts_subsystem_test_types()
 {

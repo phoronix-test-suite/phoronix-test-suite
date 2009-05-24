@@ -89,7 +89,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$svg_image .= $this->get_svg_formatted_definitions();
 		$svg_image .= $this->image . "\n</svg>";
 
-		return $output_file != null && @file_put_contents($output_file, $svg_image);
+		return ($output_file != null ? @file_put_contents($output_file, $svg_image) : $svg_image);
 	}
 	public function destroy_image()
 	{

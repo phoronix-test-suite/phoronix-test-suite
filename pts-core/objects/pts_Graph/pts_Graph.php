@@ -364,7 +364,7 @@ abstract class pts_Graph
 		$this->render_graph_key();
 		$this->render_graph_result();
 		$this->render_graph_watermark();
-		$this->return_graph_image();
+		return $this->return_graph_image();
 	}
 	protected function render_graph_pre_init()
 	{
@@ -559,8 +559,10 @@ abstract class pts_Graph
 	}
 	protected function return_graph_image()
 	{
-		$this->graph_image->render_to_file($this->graph_output, 85);
+		$return_object = $this->graph_image->render_to_file($this->graph_output, 85);
 		$this->graph_image->destroy_image();
+
+		return $return_object;
 	}
 	protected function trim_double($double, $accuracy = 2)
 	{
