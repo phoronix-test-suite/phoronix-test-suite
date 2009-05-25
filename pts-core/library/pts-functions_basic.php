@@ -84,23 +84,6 @@ function pts_trim_spaces($string)
 
 	return trim($string);
 }
-function pts_is_valid_download_url($string, $basename = null)
-{
-	// Checks for valid download URL
-	$is_valid = true;
-
-	if(strpos($string, "://") == false)
-	{
-		$is_valid = false;
-	}
-
-	if(!empty($basename) && $basename != basename($string))
-	{
-		$is_valid = false;
-	}
-
-	return $is_valid;
-}
 function pts_version_comparable($old, $new)
 {
 	// Checks if there's a major version difference between two strings, if so returns false.
@@ -130,29 +113,6 @@ function pts_array_with_key_to_2d($array)
 	}
 
 	return $array_2d;
-}
-function pts_process_string_array($return_string, $array)
-{
-	if($return_string)
-	{
-		$return = "";
-
-		foreach($array as $type => $value)
-		{
-			if($return != "")
-			{
-				$return .= ", ";
-			}
-
-			$return .= $type . ": " . $value;
-		}
-	}
-	else
-	{
-		$return = $array;
-	}
-
-	return $return;
 }
 function pts_extract_identifier_from_path($path)
 {

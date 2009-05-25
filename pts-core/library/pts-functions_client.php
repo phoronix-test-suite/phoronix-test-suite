@@ -239,10 +239,6 @@ function pts_text_save_buffer($to_add)
 
 	return $return;
 }
-function pts_extract_string($string, $start_string, $end_string, $start_search_from_left = true, $end_search_from_left = true)
-{
-	// TODO
-}
 function pts_debug_message($message = null)
 {
 	static $debug_messages = "";

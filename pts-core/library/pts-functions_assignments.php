@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-functions_assignments.php: Functions for the assignment operations
 
 	This program is free software; you can redistribute it and/or modify
@@ -96,11 +96,11 @@ function pts_set_assignment_next($assignment, $value)
 }
 function pts_unique_runtime_identifier()
 {
-	return (($id = pts_read_assignment("THIS_OPTION_IDENTIFIER")) != false ? $id : PTS_INIT_TIME);
+	return ($id = pts_read_assignment("THIS_OPTION_IDENTIFIER")) != false ? $id : PTS_INIT_TIME;
 }
 function pts_time_elapsed()
 {
-	return (time() - (($time = pts_read_assignment("START_TIME")) != false ? $time : PTS_INIT_TIME));
+	return time() - (($time = pts_read_assignment("START_TIME")) != false ? $time : PTS_INIT_TIME);
 }
 
 ?>

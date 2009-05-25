@@ -57,12 +57,11 @@ function pts_load_object($to_load)
 
 	static $sub_objects = null;
 
-	if($sub_objects == null && !is_array($sub_objects))
+	if($sub_objects == null)
 	{
 		$sub_objects = array();
-		$sub_object_files = glob(PTS_PATH . "pts-core/objects/*/*.php");
 
-		foreach($sub_object_files as $file)
+		foreach(glob(PTS_PATH . "pts-core/objects/*/*.php") as $file)
 		{
 			$object_name = basename($file, ".php");
 			$sub_objects[$object_name] = $file;

@@ -72,16 +72,12 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 			case "UPLOAD_RESULTS":
 				$auto_answer = pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE");
 				break;
+			default:
+				$auto_answer = "true";
+				break;
 		}
 
-		if(isset($auto_answer))
-		{
-			$answer = $auto_answer == "TRUE" || $auto_answer == "1";
-		}
-		else
-		{
-			$answer = $default;
-		}
+		$answer = pts_string_bool($auto_answer);
 	}
 	else
 	{
@@ -123,7 +119,7 @@ function pts_string_header($heading, $char = '=')
 
 	$terminal_width = trim(shell_exec("tput cols 2>&1"));
 
-	if($header_size > $terminal_width && $terminal_width > 1)
+	if(is_numeric($terminal_width) && $header_size > $terminal_width && $terminal_width > 1)
 	{
 		$header_size = $terminal_width;
 	}
@@ -146,63 +142,32 @@ function pts_format_time_string($time, $format = "SECONDS", $standard_version = 
 
 	if($time > 0)
 	{
-		$time_hours = floor($time / 3600);
-		$time_minutes = floor(($time - ($time_hours * 3600)) / 60);
-		$time_seconds = $time % 60;
+		$time_r[0] = array(floor($time / 3600), "Hour");
+		$time_r[1] = array(floor(($time - ($time_hours * 3600)) / 60), "Minute");
+		$time_r[2] = array($time % 60, "Second");
 
-		if($time_hours > 0)
+		foreach($time_r as $time_segment)
 		{
-			if($standard_version)
+			if($time_segment[0] > 0)
 			{
-				$formatted_part = $time_hours . " Hour";
+				$formatted_part = $time_segment[0];
 
-				if($time_hours > 1)
+				if($standard_version)
 				{
-					$formatted_part .= "s";
+					$formatted_part .= " " . $time_segment[1];
+
+					if($time_segment[0] > 1)
+					{
+						$formatted_part .= "s";
+					}
 				}
-			}
-			else
-			{
-				$formatted_part = $time_hours . "h";
-			}
-
-			array_push($formatted_time, $formatted_part);
-		}
-		if($time_minutes > 0)
-		{
-			if($standard_version)
-			{
-				$formatted_part = $time_minutes . " Minute";
-
-				if($time_minutes > 1)
+				else
 				{
-					$formatted_part .= "s";
+					$formatted_part .= strtolower(substr($time_segment[1], 0, 1));
 				}
-			}
-			else
-			{
-				$formatted_part = $time_minutes . "m";
-			}
 
-			array_push($formatted_time, $formatted_part);
-		}
-		if($time_seconds > 0)
-		{
-			if($standard_version)
-			{
-				$formatted_part = $time_seconds . " Second";
-
-				if($time_seconds > 1)
-				{
-					$formatted_part .= "s";
-				}
+				array_push($formatted_time, $formatted_part);
 			}
-			else
-			{
-				$formatted_part = $time_seconds . "s";
-			}
-
-			array_push($formatted_time, $formatted_part);
 		}
 	}
 

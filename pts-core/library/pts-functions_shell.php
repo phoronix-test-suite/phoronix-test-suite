@@ -92,32 +92,28 @@ function pts_download($download, $to)
 }
 function pts_executable_in_path($executable)
 {
-	$paths = explode(":", (($path = getenv("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
-	$executable_path = false;
-
-	foreach($paths as $path)
-	{
-		if(substr($path, -1) != "/")
-		{
-			$path .= "/";
-		}
-
-		if(is_executable($path . $executable))
-		{
-			$executable_path = $path . $executable;
-			break;
-		}
-	}
-
-	return $executable_path;
-}
-function pts_executable_available($executable)
-{
 	static $cache = null;
 
 	if(!isset($cache[$executable]))
 	{
-		$cache[$executable] = pts_executable_in_path($executable) != false;
+		$paths = explode(":", (($path = getenv("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
+		$executable_path = false;
+
+		foreach($paths as $path)
+		{
+			if(substr($path, -1) != "/")
+			{
+				$path .= "/";
+			}
+
+			if(is_executable($path . $executable))
+			{
+				$executable_path = $path . $executable;
+				break;
+			}
+		}
+
+		$cache[$executable] = $executable_path;
 	}
 
 	return $cache[$executable];
@@ -241,56 +237,7 @@ function pts_process_running_bool($process)
 	$running = shell_exec("ps -C " . strtolower($process) . " 2>&1");
 	$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
 
-	$running = !empty($running) && !IS_MACOSX && !IS_SOLARIS;
-
-	return $running;
-}
-function pts_process_running_string($process_arr)
-{
-	// Format a nice string that shows processes running
-	$p = array();
-	$p_string = "";
-
-	$process_arr = pts_to_array($process_arr);
-
-	foreach($process_arr as $p_name => $p_process)
-	{
-		$p_process = pts_to_array($p_process);
-
-		foreach($p_process as $process)
-		{
-			if(pts_process_running_bool($process))
-			{
-				array_push($p, $p_name);
-			}
-		}
-	}
-
-	$p = array_keys(array_flip($p));
-
-	if(($p_count = count($p)) > 0)
-	{
-		for($i = 0; $i < $p_count; $i++)
-		{
-			$p_string .= $p[$i];
-
-			if($i != ($p_count - 1) && $p_count > 2)
-			{
-				$p_string .= ",";
-			}
-			$p_string .= " ";
-
-			if($i == ($p_count - 2))
-			{
-				$p_string .= "and ";
-			}
-		}
-
-		$p_string .= ($p_count == 1 ? "was" : "were");
-		$p_string .= " running on this system";
-	}
-
-	return $p_string;
+	return !empty($running) && !IS_MACOSX && !IS_SOLARIS;
 }
 function pts_set_environment_variable($name, $value)
 {

@@ -191,7 +191,7 @@ class phodevi_memory extends pts_device_interface
 		// Reads system memory usage
 		$mem_usage = -1;
 
-		if(pts_executable_available("free"))
+		if(pts_executable_in_path("free") != false)
 		{
 			$mem = explode("\n", shell_exec("free -t -m 2>&1"));
 			$grab_line = null;

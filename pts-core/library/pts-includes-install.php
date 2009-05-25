@@ -567,5 +567,10 @@ function pts_test_generate_install_xml($identifier)
 
 	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
 }
+function pts_is_valid_download_url($string, $basename = null)
+{
+	// Checks for valid download URL
+	return !(strpos($string, "://") == false || !empty($basename) && $basename != basename($string));
+}
 
 ?>

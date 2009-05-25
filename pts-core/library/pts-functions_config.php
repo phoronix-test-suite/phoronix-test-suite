@@ -23,13 +23,14 @@
 
 function pts_config_init()
 {
-	if(!is_dir(PTS_USER_DIR))
+	$dir_init = array(PTS_USER_DIR, PTS_TEMP_DIR);
+
+	foreach($dir_init as $dir)
 	{
-		mkdir(PTS_USER_DIR);
-	}
-	if(!is_dir(PTS_TEMP_DIR))
-	{
-		mkdir(PTS_TEMP_DIR);
+		if(!is_dir($dir))
+		{
+			mkdir($dir);
+		}
 	}
 
 	pts_user_config_init();
@@ -158,7 +159,7 @@ function pts_module_config_init($SetOptions = null)
 }
 function pts_config_bool_to_string($bool)
 {
-	return ($bool ? "TRUE" : "FALSE");
+	return $bool ? "TRUE" : "FALSE";
 }
 function pts_graph_config_init($new_config_values = "")
 {
@@ -212,24 +213,23 @@ function pts_read_graph_config($xml_pointer, $value = null, $tandem_xml = null)
 function pts_read_config($config_file, $xml_pointer, $value, $tandem_xml)
 {
 	// Generic call for reading a config file
-	if(!empty($tandem_xml))
+	if(!($tandem_xml instanceOf tandem_XmlReader))
 	{
-		$temp_value = $tandem_xml->getXmlValue($xml_pointer);
-
-		if(!empty($temp_value))
+		if($config_file == "graph-config.xml")
 		{
-			$value = $temp_value;
+			$tandem_xml = new pts_graph_config_tandem_XmlReader();
+		}
+		else
+		{
+			$tandem_xml = new pts_config_tandem_XmlReader();
 		}
 	}
-	else
-	{
-		$xml_parser = new pts_config_tandem_XmlReader();
-		$temp_value = $xml_parser->getXmlValue($xml_pointer);
+	
+	$temp_value = $tandem_xml->getXmlValue($xml_pointer);
 
-		if(!empty($temp_value))
-		{
-			$value = $temp_value;
-		}
+	if(!empty($temp_value))
+	{
+		$value = $temp_value;
 	}
 
 	return $value;
@@ -281,16 +281,16 @@ function pts_download_cache()
 		$dir = pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/");
 	}
 
-	if(substr($dir, -1) != '/')
+	if(substr($dir, -1) != "/")
 	{
-			$dir .= '/';
+			$dir .= "/";
 	}
 
 	return $dir;
 }
 function pts_user_agreement_check($command)
 {
-	$config_md5 = pts_read_user_config(P_OPTION_USER_AGREEMENT, "");
+	$config_md5 = pts_read_user_config(P_OPTION_USER_AGREEMENT, null);
 	$current_md5 = md5_file(PTS_PATH . "pts-core/user-agreement.txt");
 
 	if($config_md5 != $current_md5)

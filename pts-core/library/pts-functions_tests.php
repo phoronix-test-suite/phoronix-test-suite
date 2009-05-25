@@ -81,57 +81,34 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 				mkdir($system_log_dir);
 			}
 
-			// Xorg.0.log
-			if(is_file("/var/log/Xorg.0.log"))
+			// Backup system files
+			$system_log_files = array("/var/log/Xorg.0.log", "/proc/cpuinfo");
+
+			foreach($system_log_files as $file)
 			{
-				pts_copy("/var/log/Xorg.0.log", $system_log_dir . "/Xorg.0.log");
+				if(is_file($file))
+				{
+					file_put_contents($system_log_dir . "/" . basename($file), file_get_contents($file));
+				}
 			}
 
-			// cpuinfo
-			if(is_file("/proc/cpuinfo"))
-			{
-				$file = file_get_contents("/proc/cpuinfo");
-				@file_put_contents($system_log_dir . "/cpuinfo", $file);
-			}
-
-			// lspci
-			$file = shell_exec("lspci 2>&1");
-			if(strpos($file, "not found") == false)
-			{
-				@file_put_contents($system_log_dir . "/lspci", $file);
-			}
-
-			// sensors
-			$file = shell_exec("sensors 2>&1");
-			if(strpos($file, "not found") == false)
-			{
-				@file_put_contents($system_log_dir . "/sensors", $file);
-			}
-
-			// dmesg
-			$file = shell_exec("dmesg 2>&1");
-			if(strpos($file, "not found") == false)
-			{
-				@file_put_contents($system_log_dir . "/dmesg", $file);
-			}
-
-			// glxinfo
-			$file = shell_exec("glxinfo 2>&1");
-			if(strpos($file, "not found") == false)
-			{
-				@file_put_contents($system_log_dir . "/glxinfo", $file);
-			}
+			// Generate logs from system commands to backup
+			$system_log_commands = array("lspci", "lshal", "sensors", "dmesg", "glxinfo");
 
 			if(IS_MACOSX)
 			{
-				// system_profiler (Mac OS X)
-				$file = shell_exec("system_profiler 2>&1");
-				if(strpos($file, "not found") == false)
+				array_push($system_log_commands, "system_profiler");
+			}
+
+			foreach($system_log_commands as $command_string)
+			{
+				if(pts_executable_in_path($command = array_pop(explode(" ", $command_string))))
 				{
-					@file_put_contents($system_log_dir . "/system_profiler", $file);
+					@file_put_contents($system_log_dir . "/" . $command, shell_exec($command_string . " 2>&1"));
 				}
 			}
 		}
+
 		file_put_contents($save_to_dir . "/index.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=composite.xml\"></HEAD><BODY></BODY></HTML>");
 	}
 
@@ -389,10 +366,6 @@ function pts_test_profile_version($identifier)
 
 	return $version;
 }
-function pts_test_installed($identifier)
-{
-	return is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml");
-}
 function pts_test_installed_profile_version($identifier)
 {
 	// Checks installed version
@@ -406,14 +379,19 @@ function pts_test_installed_profile_version($identifier)
 
 	return $version;
 }
+function pts_test_installed($identifier)
+{
+	return is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml");
+}
 function pts_test_name_to_identifier($name)
 {
 	// Convert test name to identifier
 	static $cache;
-	$this_identifier = false;
 
 	if(!isset($cache[$name]))
 	{
+		$this_identifier = false;
+
 		foreach(pts_available_tests_array() as $identifier)
 		{
 		 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
@@ -423,6 +401,7 @@ function pts_test_name_to_identifier($name)
 				$this_identifier = $identifier;
 			}
 		}
+
 		$cache[$name] = $this_identifier;
 	}
 
@@ -432,10 +411,11 @@ function pts_suite_name_to_identifier($name)
 {
 	// Convert test name to identifier
 	static $cache;
-	$this_identifier = false;
 
 	if(!isset($cache[$name]))
 	{
+		$this_identifier = false;
+
 		foreach(pts_available_suites_array() as $identifier)
 		{
 		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
@@ -445,6 +425,7 @@ function pts_suite_name_to_identifier($name)
 				$this_identifier = $identifier;
 			}
 		}
+
 		$cache[$name] = $this_identifier;
 	}
 
@@ -454,15 +435,17 @@ function pts_test_identifier_to_name($identifier)
 {
 	// Convert identifier to test name
 	static $cache;
-	$name = false;
 
 	if(!isset($cache[$identifier]))
 	{
+		$name = false;
+
 		if(!empty($identifier) && pts_is_test($identifier))
 		{
 		 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
 		}
+
 		$cache[$identifier] = $name;
 	}
 
@@ -472,10 +455,11 @@ function pts_suite_identifier_to_name($identifier)
 {
 	// Convert identifier to test name
 	static $cache;
-	$name = false;
 
 	if(!isset($cache[$identifier]))
 	{
+		$name = false;
+
 		if(!empty($identifier) && pts_is_suite($identifier))
 		{
 		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
@@ -636,14 +620,7 @@ function pts_test_version_compatible($version_compare = "")
 		$version_compare = explode("-", $version_compare);	
 		$support_begins = pts_remove_chars(trim($version_compare[0]), true, false, false);
 
-		if(count($version_compare) == 2)
-		{
-			$support_ends = trim($version_compare[1]);
-		}
-		else
-		{
-			$support_ends = PTS_VERSION;
-		}
+		$support_ends = count($version_compare) == 2 ? trim($version_compare[1]) : PTS_VERSION;
 		$support_ends = pts_remove_chars(trim($support_ends), true, false, false);
 
 		$compatible = $current >= $support_begins && $current <= $support_ends;

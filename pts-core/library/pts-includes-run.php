@@ -778,5 +778,52 @@ function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 
 	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
 }
+function pts_process_running_string($process_arr)
+{
+	// Format a nice string that shows processes running
+	$p = array();
+	$p_string = "";
+
+	$process_arr = pts_to_array($process_arr);
+
+	foreach($process_arr as $p_name => $p_process)
+	{
+		$p_process = pts_to_array($p_process);
+
+		foreach($p_process as $process)
+		{
+			if(pts_process_running_bool($process))
+			{
+				array_push($p, $p_name);
+			}
+		}
+	}
+
+	$p = array_keys(array_flip($p));
+
+	if(($p_count = count($p)) > 0)
+	{
+		for($i = 0; $i < $p_count; $i++)
+		{
+			$p_string .= $p[$i];
+
+			if($i != ($p_count - 1) && $p_count > 2)
+			{
+				$p_string .= ",";
+			}
+			$p_string .= " ";
+
+			if($i == ($p_count - 2))
+			{
+				$p_string .= "and ";
+			}
+		}
+
+		$p_string .= ($p_count == 1 ? "was" : "were");
+		$p_string .= " running on this system";
+	}
+
+	return $p_string;
+}
 
 ?>

@@ -126,6 +126,29 @@ function pts_system_identifier_string()
 	$components = array(phodevi::read_property("cpu", "model"), phodevi::read_name("motherboard"), phodevi::read_property("system", "operating-system"), phodevi::read_property("system", "compiler"));
 	return base64_encode(implode("__", $components));
 }
+function pts_process_string_array($return_string, $array)
+{
+	if($return_string)
+	{
+		$return = "";
+
+		foreach($array as $type => $value)
+		{
+			if($return != "")
+			{
+				$return .= ", ";
+			}
+
+			$return .= $type . ": " . $value;
+		}
+	}
+	else
+	{
+		$return = $array;
+	}
+
+	return $return;
+}
 
 
 // TODO: Implement the below functions with Phodevi using phodevi::set_property()
