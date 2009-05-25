@@ -65,7 +65,21 @@ class result_file_to_csv implements pts_option_interface
 			$result_output .= "\n";
 		}
 
-		echo $result_output;
+		if(pts_is_assignment("SAVE_TO"))
+		{
+			$file = pts_read_assignment("SAVE_TO");
+
+			if(substr($file, -4) != ".csv")
+			{
+				$file .= ".csv";
+			}
+
+			file_put_contents($file, $result_output);
+		}
+		else
+		{
+			echo $result_output;
+		}
 	}
 }
 

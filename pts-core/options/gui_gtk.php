@@ -128,7 +128,11 @@ class gui_gtk implements pts_option_interface
 			array_push($file_menu, new pts_gtk_menu_item("Install PCQS", array("gui_gtk", "show_pcqs_install_interface")));
 		}
 
-		array_push($file_menu, new pts_gtk_menu_item(array("GTK_OBJ_GENERATE_PDF", "Save PDF"), array("gui_gtk", "show_generate_pdf_interface")));
+		$file_menu["Export Results"] = array(new pts_gtk_menu_item("Save To PDF", array("gui_gtk", "show_generate_pdf_interface")),
+		new pts_gtk_menu_item("Save To Text", array("gui_gtk", "show_generate_text_interface")),
+		new pts_gtk_menu_item("Save To CSV", array("gui_gtk", "show_generate_csv_interface"))
+		);
+
 		array_push($file_menu, new pts_gtk_menu_item(array("GTK_OBJ_GENERATE_ARCHIVE", "Archive Results"), array("gui_gtk", "show_generate_archive_interface")));
 		array_push($file_menu, new pts_gtk_menu_item(array("GTK_OBJ_GLOBAL_UPLOAD", "_Upload To Phoronix Global"), array("gui_gtk", "upload_results_to_global")));
 		array_push($file_menu, null);
@@ -185,6 +189,7 @@ class gui_gtk implements pts_option_interface
 		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", false);
 		pts_gtk_object_set_sensitive("GTK_OBJ_MERGE_RESULTS", false);
 		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_UPLOAD", false);
+		pts_gtk_object_set_sensitive("GTK_OBJ_MENU_EXPORT_RESULTS", false);
 
 		//
 		// Main Area
@@ -457,7 +462,7 @@ class gui_gtk implements pts_option_interface
 		}
 
 		pts_gtk_object_set_sensitive("GTK_OBJ_GENERATE_ARCHIVE", $test_menu_items_sensitive);
-		pts_gtk_object_set_sensitive("GTK_OBJ_GENERATE_PDF", $test_menu_items_sensitive);
+		pts_gtk_object_set_sensitive("GTK_OBJ_MENU_EXPORT_RESULTS", $test_menu_items_sensitive);
 		pts_gtk_object_set_sensitive("GTK_OBJ_REFRESH_GRAPHS", $test_menu_items_sensitive);
 		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_RUNS", $test_menu_items_sensitive);
 		pts_gtk_object_set_sensitive("GTK_OBJ_ANALYZE_BATCH", $test_menu_items_sensitive);
@@ -1554,7 +1559,19 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_generate_pdf_interface()
 	{
-		$dialog = new GtkFileChooserDialog("Save Results To PDF", null, Gtk::FILE_CHOOSER_ACTION_SAVE, array(Gtk::STOCK_OK, Gtk::RESPONSE_OK), null);
+		gui_gtk::show_generate_export_interface("pdf");
+	}
+	public static function show_generate_csv_interface()
+	{
+		gui_gtk::show_generate_export_interface("csv");
+	}
+	public static function show_generate_text_interface()
+	{
+		gui_gtk::show_generate_export_interface("text");
+	}
+	public static function show_generate_export_interface($type)
+	{
+		$dialog = new GtkFileChooserDialog("Save Results To " . strtoupper($type), null, Gtk::FILE_CHOOSER_ACTION_SAVE, array(Gtk::STOCK_OK, Gtk::RESPONSE_OK), null);
 		$dialog->show_all();
 
 		if($dialog->run() == Gtk::RESPONSE_OK)
@@ -1565,7 +1582,7 @@ class gui_gtk implements pts_option_interface
 			$main_window->destroy();
 
 			$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
-			pts_run_option_next("result_file_to_pdf", $identifier, array("SAVE_TO" => $save_file));
+			pts_run_option_next("result_file_to_" . strtolower($type), $identifier, array("SAVE_TO" => $save_file));
 			pts_run_option_next("gui_gtk");
 		}
 		$dialog->destroy();

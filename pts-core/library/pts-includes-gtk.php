@@ -40,6 +40,8 @@ function pts_gtk_add_menu($vbox, $menu)
 		$menu = new GtkMenu();
 		$new_menu->set_submenu($menu);
 
+		pts_set_assignment("GTK_OBJ_MENU_" . strtoupper(str_replace(" ", "_", $this_menu)), $menu);
+
 		$sub_menu = pts_to_array($sub_menu);
 		foreach($sub_menu as $this_identifier => $this_object)
 		{
