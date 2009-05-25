@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Title>Kernel</Title>
+		<Version>1.0.0</Version>
+		<Maintainer>Michael Larabel</Maintainer>
+		<TestType>System</TestType>
+		<Description>This suite consists of tests that look at different aspects of the system's kernel performance.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>compress-lzma</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-7zip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-mp3</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-flac</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gmpbench</Test>
+	</RunTest>
+	<RunTest>
+		<Test>bwfirt</Test>
+	</RunTest>
+	<RunTest>
+		<Test>mafft</Test>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_DHRY2</Arguments>
+		<Description>Dhrystone 2</Description>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_INT</Arguments>
+		<Description>Integer Arithmetic</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 4096M -i0</Arguments>
+		<Description>4GB Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 4096M -i0 -i1</Arguments>
+		<Description>4GB Read Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Read - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>12</Arguments>
+		<Description>12 Clients</Description>
+	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB </Arguments>
+		<Description>HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-lat 10x10-5% </Arguments>
+		<Description>Local Adaptive Thresholding</Description>
+	</RunTest>
+	<RunTest>
+		<Test>nero2d</Test>
+	</RunTest>
+	<RunTest>
+		<Test>dcraw</Test>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_FFT </Arguments>
+		<Description>Fast Fourier Transform</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_SPARSE </Arguments>
+		<Description>Sparse Matrix Multiply</Description>
+	</RunTest>
+	<RunTest>
+		<Test>minion</Test>
+		<Arguments>benchmarks/solitaire/solitaire_benchmark_8.minion</Arguments>
+		<Description>Solitaire</Description>
+	</RunTest>
+</PhoronixTestSuite>

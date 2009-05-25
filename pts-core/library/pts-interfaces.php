@@ -215,6 +215,7 @@ define("P_INSTALL_TEST_INSTALLTIME", "PhoronixTestSuite/TestInstallation/History
 define("P_INSTALL_TEST_LASTRUNTIME", "PhoronixTestSuite/TestInstallation/History/LastRunTime"); // Time the test last run
 define("P_INSTALL_TEST_TIMESRUN", "PhoronixTestSuite/TestInstallation/History/TimesRun"); // Time the test last run
 define("P_INSTALL_TEST_AVG_RUNTIME", "PhoronixTestSuite/TestInstallation/History/AverageRunTime"); // The average time (in Seconds) it takes to run the test
+define("P_INSTALL_TEST_LATEST_RUNTIME", "PhoronixTestSuite/TestInstallation/History/LatestRunTime"); // The time (in Seconds) it took to run the test during its last time
 
 //
 // GRAPH CONFIGURATION SPECIFICATION

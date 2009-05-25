@@ -539,10 +539,16 @@ function pts_test_generate_install_xml($identifier)
  	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
 	$xml_writer = new tandem_XmlWriter();
 
-	$test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
-	if(!is_numeric($test_duration))
+	$average_test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
+	if(!is_numeric($average_test_duration))
 	{
-		$test_duration = 0;
+		$average_test_duration = 0;
+	}
+
+	$latest_test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_LATEST_RUNTIME);
+	if(!is_numeric($latest_test_duration))
+	{
+		$latest_test_duration = 0;
 	}
 
 	$test_version = pts_test_profile_version($identifier);
@@ -563,7 +569,8 @@ function pts_test_generate_install_xml($identifier)
 	$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, $install_time);
 	$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, date("Y-m-d H:i:s"));
 	$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, $times_run);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $test_duration, 2);
+	$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $average_test_duration);
+	$xml_writer->addXmlObject(P_INSTALL_TEST_LATEST_RUNTIME, 2, $latest_test_duration);
 
 	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
 }

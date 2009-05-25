@@ -216,11 +216,14 @@ function pts_compress($to_compress, $compress_to)
 			$extract_cmd = "zip -r " . $compress_to . " " . $compress_base_name;
 			break;
 		default:
-			$extract_cmd = "";
+			$extract_cmd = null;
 			break;
 	}
 
-	shell_exec("cd " . $compress_base_dir . " && " . $extract_cmd . " 2>&1");
+	if($extract_cmd != null)
+	{
+		shell_exec("cd " . $compress_base_dir . " && " . $extract_cmd . " 2>&1");
+	}
 }
 function pts_run_shell_script($file, $arguments = "")
 {
