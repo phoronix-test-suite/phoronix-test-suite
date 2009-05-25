@@ -81,132 +81,6 @@ function pts_cleanup_tests_to_run($to_run_identifiers)
 
 	return $to_run_identifiers;
 }
-function pts_add_test_note($note)
-{
-	pts_test_note("ADD", $note);
-}
-function pts_test_note($process, $value = null)
-{
-	static $note_r;
-	$return = null;
-
-	if(empty($note_r))
-	{
-		$note_r = array();
-	}
-
-	switch($process)
-	{
-		case "ADD":
-			if(!empty($value))
-			{
-				$value = trim($value);
-
-				switch($value)
-				{
-					case "JAVA_VERSION":
-						$value = phodevi::read_property("system", "java-version");
-
-						if(empty($value))
-						{
-							return;
-						}
-						break;
-					case "2D_ACCEL_METHOD":
-						$value = phodevi::read_property("gpu", "2d-accel-method");
-
-						if(!empty($value))
-						{
-							$value = "2D Acceleration: " . $value;
-						}
-						else
-						{
-							return;
-						}
-						break;
-				}
-
-				if(!in_array($value, $note_r))
-				{
-					array_push($note_r, $value);
-				}
-			}
-			break;
-		case "TO_STRING":
-			$return = implode(". \n", $note_r);
-			break;
-	}
-
-	return $return;
-}
-function pts_generate_test_notes($test_type)
-{
-	static $check_processes = null;
-
-	if(empty($check_processes) && is_file(STATIC_DIR . "process-reporting-checks.txt"))
-	{
-		$word_file = trim(file_get_contents(STATIC_DIR . "process-reporting-checks.txt"));
-		$processes_r = array_map("trim", explode("\n", $word_file));
-		$check_processes = array();
-
-		foreach($processes_r as $p)
-		{
-			$p = explode("=", $p);
-			$p_title = trim($p[0]);
-			$p_names = array_map("trim", explode(",", $p[1]));
-
-			$check_processes[$p_title] = array();
-
-			foreach($p_names as $p_name)
-			{
-				array_push($check_processes[$p_title], $p_name);
-			}
-		}
-	}
-
-	if(!IS_BSD)
-	{
-		pts_add_test_note(pts_process_running_string($check_processes));
-	}
-
-	// Check if Security Enhanced Linux was enforcing, permissive, or disabled
-	if(is_readable("/etc/sysconfig/selinux"))
-	{
-		if(stripos(file_get_contents("/etc/sysconfig/selinux"), "selinux=disabled") === false)
-		{
-			pts_add_test_note("SELinux was enabled.");
-		}
-	}
-	else if(is_readable("/proc/cmdline"))
-	{
-		if(stripos(file_get_contents("/proc/cmdline"), "selinux=1") != false)
-		{
-			pts_add_test_note("SELinux was enabled.");
-		}
-	}
-
-	// Power Saving Technologies?
-	pts_add_test_note(phodevi::read_property("cpu", "power-savings-mode"));
-	pts_add_test_note(phodevi::read_property("motherboard", "power-mode"));
-	pts_add_test_note(phodevi::read_property("system", "virtualized-mode"));
-
-	if($test_type == "Graphics" || $test_type == "System")
-	{
-		$aa_level = phodevi::read_property("gpu", "aa-level");
-		$af_level = phodevi::read_property("gpu", "af-level");
-
-		if(!empty($aa_level))
-		{
-			pts_add_test_note("Antialiasing: " . $aa_level);
-		}
-		if(!empty($af_level))
-		{
-			pts_add_test_note("Anisotropic Filtering: " . $af_level);
-		}
-	}
-
-	return pts_test_note("TO_STRING");
-}
 function pts_verify_test_installation($identifiers)
 {
 	// Verify a test is installed
@@ -609,7 +483,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	if(is_file($test_directory . "/pts-test-note"))
 	{
-		pts_add_test_note(trim(file_get_contents($test_directory . "/pts-test-note")));
+		pts_test_notes_manager::add_note(trim(file_get_contents($test_directory . "/pts-test-note")));
 		unlink($test_directory . "pts-test-note");
 	}
 	if(empty($result_scale) && is_file($test_directory . "pts-results-scale"))

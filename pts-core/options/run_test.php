@@ -357,7 +357,7 @@ class run_test implements pts_option_interface
 
 			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN"))
 			{
-				$test_notes = pts_generate_test_notes($test_type);
+				$test_notes = pts_test_notes_manager::generate_test_notes($test_type);
 
 				$id = pts_request_new_id();
 				$xml_results_writer->setXslBinding("pts-results-viewer.xsl");

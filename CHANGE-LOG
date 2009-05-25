@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add external dependencies window to GTK2 GUI for showing installed/missing test dependencies
 - pts-core: Various code cleaning and function enhancements
 - pts-core: Only initialize the system tray icon for GTK2 GUI when GtkStatusIcon is available
+- pts-core: Add pts_test_notes_manager
 - pts: Add kernel test suite
 
 Phoronix Test Suite 2.0.0 Alpha 2
