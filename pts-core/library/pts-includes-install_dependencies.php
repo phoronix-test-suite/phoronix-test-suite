@@ -203,9 +203,16 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 }
 function pts_external_dependencies_installed()
 {
-	$all_dependencies = pts_external_dependency_generic_packages();
 	$missing_dependencies = pts_external_dependencies_missing();
-	$installed_dependencies = array_diff($all_dependencies, $missing_dependencies);
+	$installed_dependencies = array();
+
+	foreach(pts_external_dependency_generic_packages() as $package)
+	{
+		if(!in_array($package, $missing_dependencies))
+		{
+			array_push($installed_dependencies, $package);
+		}
+	}
 
 	return $installed_dependencies;	
 }

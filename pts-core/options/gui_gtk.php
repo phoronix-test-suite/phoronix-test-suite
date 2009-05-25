@@ -152,6 +152,7 @@ class gui_gtk implements pts_option_interface
 
 		$view_menu = array(
 			new pts_gtk_menu_item("System _Information", array("gui_gtk", "show_system_info_interface")),
+			new pts_gtk_menu_item("Software _Dependencies", array("gui_gtk", "show_dependency_info_interface")),
 			null,
 			new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON"),
 			null,
@@ -1615,6 +1616,29 @@ class gui_gtk implements pts_option_interface
 		}
 
 		pts_run_option_next("gui_gtk");
+	}
+	public static function show_dependency_info_interface()
+	{
+		$window = new pts_gtk_window("External Dependencies");
+		$window->set_resizable(false);
+
+		$notebook = new GtkNotebook();
+		$notebook->set_size_request(540, 250);
+
+		$installed_dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependencies_installed());
+		sort($installed_dependencies);
+		$installed = pts_gtk_table(array(""), $installed_dependencies, null, "No software dependencies are installed.", false);
+		pts_gtk_add_notebook_tab($notebook, $installed, "Installed Dependencies");
+
+		$missing_dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependencies_missing());
+		sort($missing_dependencies);
+		$missing = pts_gtk_table(array(""), $missing_dependencies, null, "No software dependencies are missing.", false);
+		pts_gtk_add_notebook_tab($notebook, $missing, "Missing Dependencies");
+
+		pts_gtk_array_to_boxes($window, array($notebook), 3);
+
+		$window->show_all();
+		Gtk::main();
 	}
 	public static function show_system_info_interface()
 	{

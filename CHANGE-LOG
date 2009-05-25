@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add result-file-to-text option for outputting result file/results to the terminal
 - pts-core: Add result-file-to-csv option for outputting result file/results to CSV
+- pts-core: Add external dependencies window to GTK2 GUI for showing installed/missing test dependencies
 - pts-core: Various code cleaning and function enhancements
 - pts: Add kernel test suite
 
