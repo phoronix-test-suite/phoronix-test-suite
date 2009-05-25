@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add result-file-to-text option for outputting result file/results to the terminal
 - pts-core: Various code cleaning and function enhancements
 - pts: Add kernel test suite
 
