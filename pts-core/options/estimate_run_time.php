@@ -55,7 +55,7 @@ class estimate_run_time implements pts_option_interface
 
 		if(count($run_times) > 1)
 		{
-			echo "Total Run-Time: " . (!$accurate ? "+" : "") . pts_format_time_string($total_time, "SECONDS", true, 60) . "\n\n";
+			echo "Total Run-Time: " . (!$accurate ? "+" : "") . pts_format_time_string(pts_estimated_run_time($r, true, false), "SECONDS", true, 60) . "\n\n";
 		}
 	}
 }

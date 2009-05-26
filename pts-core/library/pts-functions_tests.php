@@ -504,10 +504,11 @@ function pts_estimated_environment_size($identifier)
 
 	return $estimated_size;
 }
-function pts_estimated_run_time($identifier, $return_total_time = true)
+function pts_estimated_run_time($identifier, $return_total_time = true, $return_on_missing = true)
 {
 	// Estimate the time it takes (in seconds) to complete the given test
 	$estimated_lengths = array();
+	$estimated_total = 0;
 
 	foreach(pts_contained_tests($identifier, false, true, false) as $test)
 	{
@@ -530,7 +531,7 @@ function pts_estimated_run_time($identifier, $return_total_time = true)
 				{
 					$estimated_length = ($el * 60);
 				}
-				else if($return_total_time)
+				else if($return_total_time && $return_on_missing)
 				{
 					// No accurate calculation available
 					return -1;
@@ -538,10 +539,11 @@ function pts_estimated_run_time($identifier, $return_total_time = true)
 			}
 
 			$estimated_lengths[$test] = $estimated_length;
+			$estimated_total += $estimated_length;
 		}
 	}
 
-	return $return_total_time ? (array_sum($estimated_lengths) / count($estimated_lengths)) : $estimated_lengths;
+	return $return_total_time ? $estimated_total : $estimated_lengths;
 }
 function pts_test_architecture_supported($identifier)
 {
