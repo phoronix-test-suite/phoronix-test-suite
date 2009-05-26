@@ -143,7 +143,7 @@ function pts_format_time_string($time, $format = "SECONDS", $standard_version = 
 	if($time > 0)
 	{
 		$time_r[0] = array(floor($time / 3600), "Hour");
-		$time_r[1] = array(floor(($time - ($time_hours * 3600)) / 60), "Minute");
+		$time_r[1] = array(floor(($time - ($time_r[0][0] * 3600)) / 60), "Minute");
 		$time_r[2] = array($time % 60, "Second");
 
 		foreach($time_r as $time_segment)
