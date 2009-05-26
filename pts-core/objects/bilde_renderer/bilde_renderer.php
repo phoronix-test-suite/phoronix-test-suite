@@ -138,9 +138,13 @@ abstract class bilde_renderer
 	{
 		if(!defined("BILDE_DEFAULT_FONT"))
 		{
-			if(is_file($find_font))
+			if(is_readable($find_font))
 			{
 				$default_font = $find_font;
+			}
+			else if(ini_get("open_basedir"))
+			{
+				$default_font = false;
 			}
 			else
 			{
@@ -159,7 +163,7 @@ abstract class bilde_renderer
 
 				foreach($possible_fonts as $font_file)
 				{
-					if(is_file($font_file))
+					if(is_readable($font_file))
 					{
 						$default_font = $font_file;
 						break;
@@ -210,7 +214,7 @@ abstract class bilde_renderer
 	{
 		bilde_renderer::setup_font_directory();
 
-		if(function_exists("imagettfbbox"))
+		if(function_exists("imagettfbbox") && $font_type != false)
 		{
 			$box_array = imagettfbbox($font_size, 0, $font_type, $text_string);
 			$box_width = $box_array[4] - $box_array[6];

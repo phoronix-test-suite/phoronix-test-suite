@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Various code cleaning and function enhancements
 - pts-core: Only initialize the system tray icon for GTK2 GUI when GtkStatusIcon is available
 - pts-core: Add pts_test_notes_manager
+- bilde_renderer: Support interfacing by the Phoromatic server code
 - pts: Add kernel test suite
 
 Phoronix Test Suite 2.0.0 Alpha 2

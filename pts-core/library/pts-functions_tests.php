@@ -179,7 +179,7 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 	{
 		$t = new pts_MultiPassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale());
 	}
-	else if(pts_read_assignment("GRAPH_RENDER_TYPE") == "CANDLESTICK")
+	else if(function_exists("pts_read_assignment") && pts_read_assignment("GRAPH_RENDER_TYPE") == "CANDLESTICK")
 	{
 		$t = new pts_CandleStickGraph($name, $r_o->get_attributes(), $r_o->get_scale());
 	}
