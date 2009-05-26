@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
@@ -10,12 +10,12 @@
 		<Status>VERIFIED</Status>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<Maintainer>Michael Larabel</Maintainer>
-		<UnsupportedPlatforms>MacOSX, BSD, Solaris</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 		<Extends>2d-test</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>JXRenderMark</Title>
-		<Version>0.6</Version>
+		<Version>1.0.1</Version>
 		<TimesToRun>4</TimesToRun>
 		<Executable>jxrender-run</Executable>
 		<ResultScale>Operations Per Second</ResultScale>
@@ -32,32 +32,12 @@
 					<Value>0</Value>
 				</Entry>
 				<Entry>
-					<Name>Rects Blended</Name>
-					<Value>1</Value>
-				</Entry>
-				<Entry>
 					<Name>Rects Composition</Name>
 					<Value>2</Value>
 				</Entry>
 				<Entry>
 					<Name>Put Composition</Name>
 					<Value>3</Value>
-				</Entry>
-				<Entry>
-					<Name>Lines Composition</Name>
-					<Value>4</Value>
-				</Entry>
-				<Entry>
-					<Name>Mixed Composition</Name>
-					<Value>5</Value>
-				</Entry>
-				<Entry>
-					<Name>Traps Composition</Name>
-					<Value>6</Value>
-				</Entry>
-				<Entry>
-					<Name>Traps w/ Temp Surface Comp</Name>
-					<Value>7</Value>
 				</Entry>
 				<Entry>
 					<Name>Simple Blit</Name>
@@ -91,6 +71,10 @@
 					<Name>12pt Text Grayscale</Name>
 					<Value>15</Value>
 				</Entry>
+				<Entry>
+					<Name>12pt Text LCD</Name>
+					<Value>16</Value>
+				</Entry>
 			</Menu>
 		</Option>
 		<Option>
@@ -102,16 +86,8 @@
 					<Value>32</Value>
 				</Entry>
 				<Entry>
-					<Name>64x64</Name>
-					<Value>64</Value>
-				</Entry>
-				<Entry>
 					<Name>128x128</Name>
 					<Value>128</Value>
-				</Entry>
-				<Entry>
-					<Name>256x256</Name>
-					<Value>256</Value>
 				</Entry>
 			</Menu>
 		</Option>

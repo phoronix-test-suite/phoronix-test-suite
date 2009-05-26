@@ -30,7 +30,6 @@ class estimate_run_time implements pts_option_interface
 		}
 
 		echo "\n";
-		$total_time = 0;
 		$accurate = true;
 		$run_times = pts_estimated_run_time($r, false);
 
@@ -46,7 +45,6 @@ class estimate_run_time implements pts_option_interface
 			else
 			{
 				echo pts_format_time_string($time, "SECONDS", true, 60);
-				$total_time += $time;
 			}
 			echo "\n";
 		}

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-tar -xvf jxrender-0.6.tar.gz
+unzip -o JXRenderMark-1.0.1.zip
+chmod +x JXRenderMark-1.0.1
 
 echo "#!/bin/sh
-cd rendermark/
-./JXRenderMark-0.6 \$@ > \$LOG_FILE 2>&1" > jxrender-run
+./JXRenderMark-1.0.1 \$@ > \$LOG_FILE 2>&1" > jxrender-run
 chmod +x jxrender-run

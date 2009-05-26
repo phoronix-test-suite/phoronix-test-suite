@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add estimate-run-time option for providing a detailed estimate of how much time is needed to run a test/suite/result file
 - bilde_renderer: Support interfacing by the Phoromatic server usage
 - pts: Add kernel test suite
+- pts: Update jxrendermark test profile against JXRenderMark 1.0.1
 
 Phoronix Test Suite 2.0.0 Alpha 2
 May 24, 2009
