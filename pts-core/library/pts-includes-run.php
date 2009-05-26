@@ -409,7 +409,21 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 			echo file_get_contents($benchmark_log_file);
 		}
 
-		if(!in_array(($i + 1), $ignore_runs))
+		$exit_status_pass = true;
+		if(is_file(TEST_ENV_DIR . $identifier . "/test-exit-status"))
+		{
+			// If the test script writes its exit status to ~/test-exit-status, if it's non-zero the test run failed
+			$exit_status = trim(file_get_contents(TEST_ENV_DIR . $identifier . "/test-exit-status"));
+			unlink(TEST_ENV_DIR . $identifier . "/test-exit-status");
+
+			if($exit_status != "0")
+			{
+				echo "\nThe test exited with a non-zero exit status. Test run failed.\n";
+				$exit_status_pass = false;
+			}
+		}
+
+		if(!in_array(($i + 1), $ignore_runs) && $exit_status_pass)
 		{
 			$test_extra_runtime_variables_post = $test_extra_runtime_variables;
 			if(is_file(TEST_ENV_DIR . $test_identifier . "/pts-timer"))
@@ -472,7 +486,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		if(is_file(PTS_USER_DIR . "halt-testing"))
 		{
-			return;
+			return $pts_test_result;
 		}
 	}
 
