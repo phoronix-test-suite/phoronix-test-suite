@@ -11,9 +11,10 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for test run scripts to write a test-exit-status where if it's set to a value not 0 it means test run failed
 - pts-core: Fix regression in pts_format_time_string() in Alpha 2 that caused the minutes to be calculated wrong
 - pts-core: Add estimate-run-time option for providing a detailed estimate of how much time is needed to run a test/suite/result file
-- bilde_renderer: Support interfacing by the Phoromatic server usage
+- pts-core: Add install-time support for skipping test installations using SKIP_TESTS
 - pts: Add kernel test suite
 - pts: Update jxrendermark test profile against JXRenderMark 1.0.1
+- bilde_renderer: Support interfacing for Phoromatic server usage
 
 Phoronix Test Suite 2.0.0 Alpha 2
 May 24, 2009

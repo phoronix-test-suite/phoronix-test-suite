@@ -375,7 +375,7 @@ function pts_install_test($identifier)
 {
 	if(!pts_is_test($identifier))
 	{
-		return;
+		return false;
 	}
 
 	// Install a test
@@ -391,6 +391,10 @@ function pts_install_test($identifier)
 	else if(!pts_test_version_supported($identifier))
 	{
 		echo pts_string_header($identifier . " is not supported by this version of the Phoronix Test Suite (" . PTS_VERSION . ").");
+	}
+	else if(($e = getenv("SKIP_TESTS")) != false && in_array($identifier, explode(",", $e)))
+	{
+		echo pts_string_header($identifier . " is being skipped from the installation process.");
 	}
 	else
 	{
@@ -530,6 +534,7 @@ function pts_install_test($identifier)
 			}
 		}
 	}
+
 	return $installed;
 }
 function pts_test_generate_install_xml($identifier)
