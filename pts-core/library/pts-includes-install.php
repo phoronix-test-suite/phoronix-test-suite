@@ -502,6 +502,7 @@ function pts_install_test($identifier)
 
 						if($install_exit_status != "0")
 						{
+							// TODO: should check for and remove pts-install.xml.
 							echo "\nThe " . $identifier . " installer exited with a non-zero exit status. Installation failed.\n";
 							return false;
 						}

@@ -92,16 +92,13 @@
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
-		<Test>pgbench</Test>
-	</RunTest>
-	<RunTest>
 		<Test>cachebench</Test>
-		<Arguments>-r </Arguments>
+		<Arguments>-r</Arguments>
 		<Description>Read</Description>
 	</RunTest>
 	<RunTest>
 		<Test>cachebench</Test>
-		<Arguments>-w </Arguments>
+		<Arguments>-w</Arguments>
 		<Description>Write</Description>
 	</RunTest>
 	<RunTest>

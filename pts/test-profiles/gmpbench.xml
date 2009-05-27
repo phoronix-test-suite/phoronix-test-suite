@@ -10,6 +10,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>2.1</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 		<ProjectURL>http://www.gmplib.org/gmpbench.html</ProjectURL>
 	</TestProfile>
 	<TestInformation>
