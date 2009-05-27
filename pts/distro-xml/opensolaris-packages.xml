@@ -80,5 +80,35 @@
 			<PackageName>SUNWgccruntime</PackageName>
 			<FileCheck>/usr/sfw/lib/libstdc++.so</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>vorbis-development</GenericName>
+			<PackageName>SUNWogg-vorbis</PackageName>
+			<FileCheck>/usr/include/vorbis/vorbisfile.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>autoconf</GenericName>
+			<PackageName>SUNWaconf</PackageName>
+			<FileCheck>/usr/bin/autoconf</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>libtool</GenericName>
+			<PackageName>SUNWlibtool</PackageName>
+			<FileCheck>/usr/bin/libtool</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>ncurses-development</GenericName>
+			<PackageName>SUNWncurses</PackageName>
+			<FileCheck>/usr/gnu/include/ncurses/curses.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>popt</GenericName>
+			<PackageName>SUNWlibpopt</PackageName>
+			<FileCheck>/usr/include/popt.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>curl</GenericName>
+			<PackageName>SUNWcurl</PackageName>
+			<FileCheck>/usr/lib/libcurl.so.3</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
