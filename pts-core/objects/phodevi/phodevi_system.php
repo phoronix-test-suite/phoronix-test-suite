@@ -455,10 +455,7 @@ class phodevi_system extends pts_device_interface
 	public static function sw_os_vendor()
 	{
 		// Returns OS vendor
-		if(IS_LINUX)
-		{
-			$vendor = read_lsb("Distributor ID");
-		}
+		$vendor = IS_LINUX ? read_lsb("Distributor ID") : false;
 
 		if($vendor == false)
 		{
