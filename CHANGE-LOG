@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add install-time support for skipping test installations using SKIP_TESTS
 - pts-core: Few PHP warning fixes
 - pts-core: Updates for OpenSolaris support
+- pts-core: When a test install fails based upon install-exit-status, remove pts-install.xml
 - pts: Add kernel test suite
 - pts: Update jxrendermark test profile against JXRenderMark 1.0.1
 - pts: Update OpenSolaris External Dependencies
