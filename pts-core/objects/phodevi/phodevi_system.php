@@ -264,7 +264,11 @@ class phodevi_system extends pts_device_interface
 		{
 			$fs = trim(shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null"));
 
-			if(is_readable("/etc/fstab"))
+			if($fs == "UNKNOWN (0x9123683e)")
+			{
+				$fs = "Btrfs";
+			}
+			else if(is_readable("/etc/fstab"))
 			{
 				$fstab = file_get_contents("/etc/fstab");
 
