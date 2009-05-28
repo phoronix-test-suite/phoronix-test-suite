@@ -24,7 +24,7 @@
 // Phoronix Test Suite - Functions
 function pts_run_option_command($command, $pass_args = null, $preset_assignments = "")
 {
-	if(is_file(PTS_PATH . "pts-core/options/" . $command . ".php") && !class_exists($command, false))
+	if(is_file(OPTIONS_DIR . $command . ".php") && !class_exists($command, false))
 	{
 		pts_load_run_option($command);
 	}
@@ -50,7 +50,7 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 
 	pts_module_process("__pre_option_process", $command);
 
-	if(is_file(PTS_PATH . "pts-core/options/" . $command . ".php"))
+	if(is_file(OPTIONS_DIR . $command . ".php"))
 	{
 		eval($command . "::run(\$pass_args);");
 	}

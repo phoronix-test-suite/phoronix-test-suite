@@ -1,0 +1,11 @@
+have phoronix-test-suite &&
+_phoronix-test-suite-show()
+{
+        local cur
+
+        COMPREPLY=()
+        cur=${COMP_WORDS[COMP_CWORD]}
+        COMPREPLY=($( compgen -W 'analyze-all-runs analyze-batch batch-benchmark batch-run batch-setup benchmark build-suite clone-global-result core-version default-benchmark default-run diagnostics download-test-files estimate-run-time extract-from-result-file finish-run force-install global-login gui-gtk info initial-config install-all-dependencies install-all install-dependencies install-test list-all-tests list-installed-dependencies list-installed-suites list-installed-tests list-missing-dependencies list-modules list-possible-dependencies list-saved-results list-suites list-tests list-test-usage list-unsupported-tests make-download-cache merge-results module-info module-setup reference-comparison refresh-graphs remove-all-results removed-option remove-installed-test remove-result result-file-to-csv result-file-to-pdf result-file-to-suite result-file-to-text result-info run-test show-result system-info test-module upload-result' -- $cur ))
+}
+complete -F _phoronix-test-suite-show phoronix-test-suite
+

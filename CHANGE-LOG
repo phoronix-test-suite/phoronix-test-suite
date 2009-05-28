@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - pts-core: Few PHP warning fixes
 - pts-core: Updates for OpenSolaris support
 - pts-core: When a test install fails based upon install-exit-status, remove pts-install.xml
+- pts-core: Add bash auto-completion support for basic PTS commands
 - pts: Add kernel test suite
 - pts: Update jxrendermark test profile against JXRenderMark 1.0.1
 - pts: Update OpenSolaris External Dependencies

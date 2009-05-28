@@ -30,11 +30,11 @@ function pts_load_function_set($title)
 }
 function pts_load_run_option($option)
 {
-	if(is_file(PTS_PATH . "pts-core/options/" . $option . ".php"))
+	if(is_file(OPTIONS_DIR . $option . ".php"))
 	{
 		if(!class_exists($option, false))
 		{
-			include(PTS_PATH . "pts-core/options/" . $option . ".php");
+			include(OPTIONS_DIR . $option . ".php");
 		}
 
 		if(method_exists($option, "required_function_sets"))

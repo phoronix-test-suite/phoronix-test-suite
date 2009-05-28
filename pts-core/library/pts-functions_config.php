@@ -297,7 +297,7 @@ function pts_user_agreement_check($command)
 	{
 		$prompt_in_method = false;
 
-		if(is_file(PTS_PATH . "pts-core/options/" . $command . ".php"))
+		if(is_file(OPTIONS_DIR . $command . ".php"))
 		{
 			if(method_exists($command, "pts_user_agreement_prompt"))
 			{

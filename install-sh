@@ -53,6 +53,7 @@ mkdir -p $DESTDIR$INSTALL_PREFIX/share/icons/
 mkdir -p $DESTDIR$INSTALL_PREFIX/share/man/man1/
 mkdir -p $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 mkdir -p $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
+mkdir -p $DESTDIR/etc/bash_completion.d/
 
 cp CHANGE-LOG $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
 cp COPYING $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
@@ -64,6 +65,7 @@ cd ..
 rm -rf $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/man-pages/
 
 cp documentation/man-pages/*.1 $DESTDIR$INSTALL_PREFIX/share/man/man1/
+cp pts-core/static/bash_completion $DESTDIR/etc/bash_completion.d/phoronix-test-suite
 cp pts-core/static/phoronix-test-suite.png $DESTDIR$INSTALL_PREFIX/share/icons/phoronix-test-suite.png
 cp pts-core/static/phoronix-test-suite.desktop $DESTDIR$INSTALL_PREFIX/share/applications/
 
