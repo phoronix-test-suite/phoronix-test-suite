@@ -16,7 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Updates for OpenSolaris support
 - pts-core: When a test install fails based upon install-exit-status, remove pts-install.xml
 - pts-core: Add bash auto-completion support for basic PTS commands
-- phodevi: Btrfs file-system detection instead of 0x9123683e
+- phodevi: Improve file-system detection, add detection for Btrfs instead of reporting 0x9123683e
 - pts: Add kernel test suite
 - pts: Update jxrendermark test profile against JXRenderMark 1.0.1
 - pts: Update OpenSolaris External Dependencies

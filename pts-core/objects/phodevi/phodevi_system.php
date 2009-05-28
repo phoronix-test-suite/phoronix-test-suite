@@ -264,20 +264,20 @@ class phodevi_system extends pts_device_interface
 		{
 			$fs = trim(shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null"));
 
-			if($fs == "UNKNOWN (0x9123683e)")
+			switch($fs)
 			{
-				$fs = "Btrfs";
-			}
-			else if(is_readable("/etc/fstab"))
-			{
-				$fstab = file_get_contents("/etc/fstab");
+				case "UNKNOWN (0x9123683e)":
+					$fs = "Btrfs";
+					break;
+				case "ext2/ext3":
+					if(is_readable("/proc/mounts"))
+					{
+						$fstab = file_get_contents("/proc/mounts");
+						$fstab = str_replace("/boot ", "IGNORE", $fstab);
 
-				switch($fs)
-				{
-					case "ext2/ext3":
-						$using_ext2 = strpos($fstab, "ext2") !== false;
-						$using_ext3 = strpos($fstab, "ext3") !== false;
-						$using_ext4 = strpos($fstab, "ext4") !== false;
+						$using_ext2 = strpos($fstab, " ext2") !== false;
+						$using_ext3 = strpos($fstab, " ext3") !== false;
+						$using_ext4 = strpos($fstab, " ext4") !== false;
 
 						if(!$using_ext2 && !$using_ext3 && $using_ext4)
 						{
@@ -291,11 +291,11 @@ class phodevi_system extends pts_device_interface
 						{
 							$fs = "ext2";
 						}
-						break;
-				}
+					}
+					break;
 			}
 
-			if(IS_LINUX && strpos($fs, "UNKNOWN") !== false)
+			if(strpos($fs, "UNKNOWN") !== false && is_readable("/proc/mounts"))
 			{
 				$mounts = file_get_contents("/proc/mounts");
 				$fs_r = array();
