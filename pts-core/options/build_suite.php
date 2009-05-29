@@ -66,7 +66,7 @@ class build_suite implements pts_option_interface
 
 					if(!empty($option_output[0]) && !empty($option_output[0]))
 					{
-						$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $write_position, $option_output[0]);
+						$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $write_position, trim($option_output[0]));
 						$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $write_position, $option_output[1]);
 					}
 					$write_position++;

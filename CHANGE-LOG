@@ -24,6 +24,7 @@ Phoronix Test Suite (Git)
 - pts: Add postmark test profile for NetApp's PostMark disk benchmark
 - pts: Add blogbench test profile for testing filesystem / disk performance similar to load produced by a web-blog server
 - pts: Add n-queens test profile for N-Queens OpenMP benchmark
+- pts: Add openmp test suite for containing tests that use OpenMP
 - bilde_renderer: Support interfacing for Phoromatic server usage
 
 Phoronix Test Suite 2.0.0 Alpha 2
