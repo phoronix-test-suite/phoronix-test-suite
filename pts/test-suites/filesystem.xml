@@ -16,12 +16,6 @@
 		<Test>compress-lzma</Test>
 	</RunTest>
 	<RunTest>
-		<Test>encode-mp3</Test>
-	</RunTest>
-	<RunTest>
-		<Test>ffmpeg</Test>
-	</RunTest>
-	<RunTest>
 		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
