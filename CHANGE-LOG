@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - pts: Update jxrendermark test profile against JXRenderMark 1.0.1
 - pts: Update OpenSolaris External Dependencies
 - pts: Add postmark test profile for NetApp's PostMark disk benchmark
+- pts: Add blogbench test profile for testing filesystem / disk performance similar to load produced by a web-blog server
 - bilde_renderer: Support interfacing for Phoromatic server usage
 
 Phoronix Test Suite 2.0.0 Alpha 2

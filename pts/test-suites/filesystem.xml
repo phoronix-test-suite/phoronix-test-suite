@@ -118,4 +118,14 @@
 	<RunTest>
 		<Test>postmark</Test>
 	</RunTest>
+	<RunTest>
+		<Test>blogbench</Test>
+		<Arguments>WRITE</Arguments>
+		<Description>Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>blogbench</Test>
+		<Arguments>READ</Arguments>
+		<Description>Read Performance</Description>
+	</RunTest>
 </PhoronixTestSuite>
