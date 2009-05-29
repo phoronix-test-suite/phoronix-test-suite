@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>1.4</EnvironmentSize>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ProjectURL>http://www.arch.cs.titech.ac.jp/~kise/nq/index.htm</ProjectURL>
+	</TestProfile>
+	<TestInformation>
+		<Title>N-Queens</Title>
+		<Version>1.0</Version>
+		<SubTitle>Elapsed Time</SubTitle>
+		<TimesToRun>2</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>This is a test of the OpenMP version of a test that solves the N-queens problem. The board problem size is 18.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<Arguments>18</Arguments>
+		</Default>
+	</TestSettings>
+</PhoronixTestSuite>
