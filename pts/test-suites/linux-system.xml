@@ -49,6 +49,9 @@
 		<Description>64MB Read - 32 Threads</Description>
 	</RunTest>
 	<RunTest>
+		<Test>postmark</Test>
+	</RunTest>
+	<RunTest>
 		<Test>dbench</Test>
 		<Arguments>12</Arguments>
 		<Description>12 Clients</Description>

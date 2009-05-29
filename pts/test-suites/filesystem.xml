@@ -121,4 +121,7 @@
 		<Arguments>-k3 -k1 -f 256 -t 32</Arguments>
 		<Description>256MB Read - 32 Threads</Description>
 	</RunTest>
+	<RunTest>
+		<Test>postmark</Test>
+	</RunTest>
 </PhoronixTestSuite>

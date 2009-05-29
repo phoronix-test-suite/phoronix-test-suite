@@ -75,6 +75,9 @@
 		<Description>Intel IOMeter File Server Access Pattern</Description>
 	</RunTest>
 	<RunTest>
+		<Test>postmark</Test>
+	</RunTest>
+	<RunTest>
 		<Test>dcraw</Test>
 	</RunTest>
 </PhoronixTestSuite>

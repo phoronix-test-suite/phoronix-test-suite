@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Disk</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>0.1</EnvironmentSize>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestProfile>
+	<TestInformation>
+		<Title>PostMark</Title>
+		<Version>1.51</Version>
+		<SubTitle>Disk Transaction Performance</SubTitle>
+		<TimesToRun>4</TimesToRun>
+		<ResultScale>TPS</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This is a test of NetApp's PostMark benchmark designed to simulate small-file testing similar to the tasks endured by web and mail servers. This test profile will set PostMark to perform 25,000 transactions with 500 files simultaneously with the file sizes ranging between 5 and 512 kilobytes.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<Arguments>25000 5120 524288 500</Arguments>
+		</Default>
+	</TestSettings>
+</PhoronixTestSuite>

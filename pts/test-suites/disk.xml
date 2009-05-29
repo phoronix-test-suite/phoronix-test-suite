@@ -12,6 +12,9 @@
 		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>
+		<Test>postmark</Test>
+	</RunTest>
+	<RunTest>
 		<Test>iozone</Test>
 		<Arguments>-s 2048M -i0</Arguments>
 		<Description>2GB Write Performance</Description>

@@ -52,7 +52,7 @@ class pts_test_notes_manager
 			break;
 		}
 
-		if(!in_array($note, self::$notes))
+		if(!empty($note) && !in_array($note, self::$notes))
 		{
 			array_push(self::$notes, $note);
 		}
