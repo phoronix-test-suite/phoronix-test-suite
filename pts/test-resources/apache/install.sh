@@ -9,6 +9,7 @@ tar -xvf httpd-2.2.11.tar.gz
 cd httpd-2.2.11/
 ./configure --prefix=$THIS_DIR/httpd_
 make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf httpd-2.2.11/
@@ -18,10 +19,7 @@ mv -f test.html httpd_/htdocs/
 mv -f pts.png httpd_/htdocs/
 
 echo "#!/bin/sh
-THIS_DIR=\$(pwd)
-./httpd_/bin/apachectl -k start -f \$THIS_DIR/httpd_/conf/httpd.conf
-sleep 5
 ./httpd_/bin/ab \$@ > \$LOG_FILE 2>&1
-./httpd_/bin/apachectl -k stop" > apache
+echo \$? > ~/test-exit-status" > apache
 
 chmod +x apache

@@ -193,6 +193,16 @@ class gui_gtk implements pts_option_interface
 		pts_gtk_object_set_sensitive("GTK_OBJ_MENU_EXPORT_RESULTS", false);
 
 		//
+		// Top Header
+		//
+
+/*		$header_hbox = new GtkHBox();
+		$header_hbox->modify_bg(Gtk::STATE_NORMAL, $window->get_style()->bg[Gtk::STATE_SELECTED]);
+		//$header_hbox->set_size_request(-1, 50);
+
+		$vbox->pack_start($header_hbox);
+*/
+		//
 		// Main Area
 		//
 

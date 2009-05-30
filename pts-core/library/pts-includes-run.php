@@ -353,7 +353,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$extra_runtime_variables["LC_CTYPE"] = "";
 	$extra_runtime_variables["LC_MESSAGES"] = "";
 	$extra_runtime_variables["LANG"] = "";
-	$extra_runtime_variables["PTS_TEST_ARGUMENTS"] = $pts_test_arguments;
+	$extra_runtime_variables["PTS_TEST_ARGUMENTS"] = "'" . $pts_test_arguments . "'";
 
 	// Start
 	$pts_test_result->set_attribute("TEST_TITLE", $test_title);
