@@ -242,6 +242,7 @@ function pts_download_test_files($identifier)
 							$file_downloaded = false;
 							$fail_count++;
 							echo "\nThe MD5 check-sum of the downloaded file is incorrect.\n";
+							echo "Failed URL: " . $url . "\n";
 
 							if($fail_count > 3)
 							{
