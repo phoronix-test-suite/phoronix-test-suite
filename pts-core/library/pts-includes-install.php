@@ -351,6 +351,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 		{
 			array_push($ignore_files, $download_object->get_filename());
 		}
+
 		pts_remove(TEST_ENV_DIR . $identifier, $ignore_files);
 	}
 
@@ -495,6 +496,8 @@ function pts_install_test($identifier)
 							{
 								unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
 							}
+
+							pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
 
 							echo "\nThe " . $identifier . " installer exited with a non-zero exit status. Installation failed.\n";
 							return false;
