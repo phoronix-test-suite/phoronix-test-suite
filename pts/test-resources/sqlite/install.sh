@@ -10,6 +10,8 @@ cd sqlite_env/
 make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 cd ..
+rm -rf sqlite_env/test/
+rm -rf sqlite_env/tsrc/
 
 echo "#!/bin/sh
 

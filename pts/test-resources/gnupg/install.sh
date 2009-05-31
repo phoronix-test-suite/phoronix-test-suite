@@ -10,6 +10,7 @@ echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf gnupg-1.4.9/
+rm -rf gnupg_/share/
 
 echo pts-1234567890 > passphrase
 
