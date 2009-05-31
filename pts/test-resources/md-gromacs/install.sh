@@ -83,6 +83,8 @@ case \"\$1\" in
 	;;
 esac
 
+\$HOME/gromacs40_/bin/grompp_\$PRECISION\_MPI -nov 1>/dev/null 2>&1
+
 case \"\$2\" in
 \"mpi\")
 	\$HOME/mpich2_/bin/mpiexec -np \$NUM_CPU_CORES \$HOME/gromacs40_/bin/mdrun_\$PRECISION\_MPI 1>\$HOME/flopcount 2>&1
