@@ -8,6 +8,7 @@
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Kim Bisgaard</Maintainer>
+		<EnvironmentSize>170</EnvironmentSize>
 		<ProjectURL>http://www.postgresql.org/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestProfile>

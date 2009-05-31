@@ -10,6 +10,7 @@
 		<EnvironmentSize>0.7</EnvironmentSize>
 		<EnvironmentTestingSize>256</EnvironmentTestingSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ProjectURL>http://www.7-zip.org/sdk.html</ProjectURL>
 		<Maintainer>apaige</Maintainer>
 	</TestProfile>
 	<TestInformation>

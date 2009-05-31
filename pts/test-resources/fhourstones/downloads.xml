@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://homepages.cwi.nl/~tromp/c4/Fhourstones.tar.gz</URL>
+			<URL>http://homepages.cwi.nl/~tromp/c4/Fhourstones.tar.gz, ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/Fhourstones.tar.gz, ftp://ftp.es.freebsd.org/pub/FreeBSD/ports/distfiles/Fhourstones.tar.gz</URL>
 			<MD5>020cc5476aba44e4abf343e63fd47fca</MD5>
 			<FileSize>11396</FileSize>
 		</Package>

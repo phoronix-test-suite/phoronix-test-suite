@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://archive.apache.org/dist/httpd/httpd-2.2.11.tar.gz</URL>
+			<URL>http://archive.apache.org/dist/httpd/httpd-2.2.11.tar.gz, ftp://ftp.bit.nl/mirror/apache/httpd-2.2.11.tar.gz, ftp://ftp.sunfreeware.com/pub/freeware/SOURCES/httpd-2.2.11.tar.gz</URL>
 			<MD5>03e0a99a5de0f3f568a0087fb9993af9</MD5>
 			<FileSize>6806786</FileSize>
 		</Package>
