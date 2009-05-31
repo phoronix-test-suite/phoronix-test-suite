@@ -6,6 +6,7 @@ echo "#!/bin/sh
 
 rm -f *.result
 java jnt.scimark2.commandline > \$LOG_FILE.result
+echo \$? > ~/test-exit-status
 
 case \"\$1\" in
 \"TEST_COMPOSITE\")

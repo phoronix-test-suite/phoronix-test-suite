@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.povray.org/ftp/pub/povray/Official/Unix/povray-3.6.1.tar.bz2, ftp://sunsite.cnlab-switch.ch/mirror/povray/povray/Official/Unix/povray-3.6.1.tar.bz2, http://ftp.man.poznan.pl/pub/povray/Official/Unix/povray-3.6.1.tar.bz2</URL>
+			<URL>http://www.povray.org/ftp/pub/povray/Official/Unix/povray-3.6.1.tar.bz2, ftp://sunsite.cnlab-switch.ch/mirror/povray/povray/Official/Unix/povray-3.6.1.tar.bz2, http://ftp.man.poznan.pl/pub/povray/Official/Unix/povray-3.6.1.tar.bz2, ftp://ftp.uni-frankfurt.de/pub/Mirrors2/gentoo.org/distfiles/povray-3.6.1.tar.bz2, ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/povray36/povray-3.6.1.tar.bz2</URL>
 			<MD5>b5789bb7eeaed0809c5c82d0efda571d</MD5>
 			<FileSize>8200160</FileSize>
 		</Package>

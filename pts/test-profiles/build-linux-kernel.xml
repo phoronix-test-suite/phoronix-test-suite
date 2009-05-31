@@ -6,7 +6,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<ProjectURL>http://www.kernel.org/</ProjectURL>
 		<Extends>timed-build</Extends>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed Linux Kernel Compilation</Title>

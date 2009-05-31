@@ -8,6 +8,7 @@ cd ImageMagick-6.5.0-6/
 sleep 3
 \$TIMER_START
 make -s -j \$NUM_CPU_JOBS 2>&1
+echo \$? > ~/test-exit-status
 \$TIMER_STOP" > time-compile-imagemagick
 
 chmod +x time-compile-imagemagick

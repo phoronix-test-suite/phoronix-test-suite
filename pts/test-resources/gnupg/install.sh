@@ -1,12 +1,12 @@
 #!/bin/sh
 
-THIS_DIR=$(pwd)
-mkdir $THIS_DIR/gnupg_
+mkdir $HOME/gnupg_
 
 tar -xvf gnupg-1.4.9.tar.gz
 cd gnupg-1.4.9/
-./configure --prefix=$THIS_DIR/gnupg_
+./configure --prefix=$HOME/gnupg_
 make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf gnupg-1.4.9/

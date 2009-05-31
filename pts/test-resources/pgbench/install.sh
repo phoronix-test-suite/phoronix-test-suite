@@ -20,6 +20,7 @@ cd postgresql-${version}
 ./configure --prefix=$PG --datadir=$PG/data --without-readline --without-zlib
 make 
 make -C contrib/pgbench all
+echo $? > ~/install-exit-status
 make install
 make -C contrib/pgbench install
 cd ..

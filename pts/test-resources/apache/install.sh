@@ -1,13 +1,12 @@
 #!/bin/sh
 
-THIS_DIR=$(pwd)
-mkdir $THIS_DIR/httpd_
+mkdir $HOME/httpd_
 
 tar -xvf apache-ab-test-files-1.tar.gz
 tar -xvf httpd-2.2.11.tar.gz
 
 cd httpd-2.2.11/
-./configure --prefix=$THIS_DIR/httpd_
+./configure --prefix=$HOME/httpd_
 make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 make install

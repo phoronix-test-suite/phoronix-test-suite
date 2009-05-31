@@ -1,12 +1,11 @@
 #!/bin/sh
 
-THIS_DIR=$(pwd)
-mkdir $THIS_DIR/mpich2_
+mkdir $HOME/mpich2_
 
 tar -xvf mpich2-1.0.7.tar.gz
 cd mpich2-1.0.7/
-./configure --prefix=$THIS_DIR/mpich2_ --enable-fast=all --with-pm=gforker
-make
+./configure --prefix=$HOME/mpich2_ --enable-fast=all --with-pm=gforker
+make -j $NUM_CPU_JOBS
 make install
 cd ..
 rm -rf mpich2-1.0.7/
@@ -22,7 +21,7 @@ if [ ! "$SSE" = "" ]
 fi
 #kludge to remove readline dependency. I don't think it affects the speed, so it can probably stay.
 sed -i -e "s/USEREADLINE ?= yes/USEREADLINE ?= no/g" Makefile
-make -j $NUM_CPU_JOBS PATH=$THIS_DIR/mpich2_/bin/:$PATH
+make -j $NUM_CPU_JOBS PATH=$HOME/mpich2_/bin/:$PATH
 
 cat>job.nex<<EOT
 begin mrbayes;

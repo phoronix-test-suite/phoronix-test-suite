@@ -3,6 +3,7 @@
 tar -xvf postmark_1.51.orig.tar.gz
 cd postmark-1.51/
 cc postmark-1.51.c -o postmark
+echo $? > ~/install-exit-status
 cd ..
 
 echo "#!/bin/sh

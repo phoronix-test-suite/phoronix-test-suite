@@ -2,12 +2,12 @@
 
 tar -xjf povray-3.6.1.tar.bz2
 
-THIS_DIR=$(pwd)
-mkdir $THIS_DIR/pov_
+mkdir $HOME/pov_
 
 cd povray-3.6.1/
-./configure --prefix=$THIS_DIR/pov_ COMPILED_BY="PhoronixTestSuite"
+./configure --prefix=$HOME/pov_ COMPILED_BY="PhoronixTestSuite"
 make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf povray-3.6.1/

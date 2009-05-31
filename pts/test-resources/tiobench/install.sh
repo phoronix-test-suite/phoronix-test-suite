@@ -2,7 +2,8 @@
 
 tar -xvf tiobench-0.3.3.tar.gz
 cd tiobench-0.3.3/
-make
+make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 cd ..
 
 echo "#!/bin/sh

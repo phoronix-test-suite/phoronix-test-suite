@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 rm -rf sqlite-3.6.13 sqlite_env
 tar -xvf pts-sqlite-tests-1.tar.gz
 tar -xvf sqlite-3.6.13.tar.gz
@@ -9,6 +8,7 @@ mv sqlite-3.6.13 sqlite_env
 cd sqlite_env/
 ./configure
 make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 cd ..
 
 echo "#!/bin/sh

@@ -26,6 +26,9 @@ Phoronix Test Suite (Git)
 - pts: Add blogbench test profile for testing filesystem / disk performance similar to load produced by a web-blog server
 - pts: Add n-queens test profile for N-Queens OpenMP benchmark
 - pts: Add openmp test suite for containing tests that use OpenMP
+- pts: Update espeak test profile to eSpeak version 1.40.02
+- pts: Update nearly all test profiles to take advantage of exit status feature in PTS 2.0
+- pts: Trivial clean-ups in the scripts for a majority of the test profiles
 - bilde_renderer: Support interfacing for Phoromatic server usage
 
 Phoronix Test Suite 2.0.0 Alpha 2

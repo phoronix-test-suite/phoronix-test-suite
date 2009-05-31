@@ -47,10 +47,12 @@ else
 		;;
 	esac
 fi
+echo $? > ~/install-exit-status
 
 cd ..
 
 echo "#!/bin/sh
 cd crafty-23.0/
-./crafty \$@ > \$LOG_FILE 2>&1" > crafty
+./crafty \$@ > \$LOG_FILE 2>&1
+echo \$? > ~/test-exit-status" > crafty
 chmod +x crafty

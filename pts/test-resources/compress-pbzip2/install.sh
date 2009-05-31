@@ -9,6 +9,7 @@ cp -f bzlib.h ../pbzip2-1.0.5
 cd ..
 cd pbzip2-1.0.5/
 make pbzip2-static
+echo $? > ~/install-exit-status
 
 cd ..
 

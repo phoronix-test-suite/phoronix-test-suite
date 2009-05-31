@@ -8,6 +8,6 @@ cd ../../
 
 echo "#!/bin/sh
 cd version1.0/omp/
-./qn24b_openmp \$@ > \$LOG_FILE 2>&1
+OMP_NUM_THREADS=\$NUM_CPU_CORES ./qn24b_openmp \$@ > \$LOG_FILE 2>&1
 echo $? > ~/test-exit-status" > n-queens
 chmod +x n-queens

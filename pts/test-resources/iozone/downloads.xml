@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.iozone.org/src/current/iozone3_315.tar</URL>
-			<MD5>e5997fa99c538e067bf5eefde90dd423</MD5>
-			<FileSize>1566720</FileSize>
+			<URL>http://iozone.org/src/current/iozone3_323.tar</URL>
+			<MD5>277a7854e34e7ab552f6a504cef1ae74</MD5>
+			<FileSize>1576960</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

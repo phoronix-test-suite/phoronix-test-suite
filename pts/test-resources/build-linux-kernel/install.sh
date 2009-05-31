@@ -4,12 +4,6 @@ tar -xvf linux-2625-config.tar.gz
 
 echo "#!/bin/sh
 
-if [ ! -f linux-2.6.25.tar.bz2 ]
-  then
-	echo \"Linux Kernel Not Downloaded... Build Fails.\"
-	exit
-fi
-
 rm -rf linux-2.6.25/
 tar -xjf linux-2.6.25.tar.bz2
 
@@ -26,6 +20,7 @@ cd linux-2.6.25/
 sleep 3
 \$TIMER_START
 make -s -j \$NUM_CPU_JOBS 2>&1
+echo \$? > ~/test-exit-status
 \$TIMER_STOP" > time-compile-kernel
 
 chmod +x time-compile-kernel

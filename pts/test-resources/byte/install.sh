@@ -4,6 +4,7 @@ tar -xvf byte-benchmark-1.tar.gz
 cd bm/
 make clean
 make
+echo $? > ~/install-exit-status
 cd ..
 
 echo "#!/bin/sh

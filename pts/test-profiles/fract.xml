@@ -12,7 +12,7 @@
 		<SupportedArchitectures>x86</SupportedArchitectures>
 		<ProjectURL>http://fract.sourceforge.net/</ProjectURL>
 		<ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>FRACT</Title>

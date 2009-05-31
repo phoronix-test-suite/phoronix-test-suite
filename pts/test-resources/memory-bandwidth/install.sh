@@ -7,7 +7,8 @@ tar -xvf bandwidth-patch-1.tar.gz
 
 patch -p0 < bandwidth-015-add-options.patch
 cd bandwidth-0.15/
-make
+make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 ln bandwidth ../
 cd ..
 

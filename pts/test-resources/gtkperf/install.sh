@@ -1,7 +1,6 @@
 #!/bin/sh
 
-THIS_DIR=$(pwd)
-mkdir $THIS_DIR/gtkperf_env
+mkdir $HOME/gtkperf_env
 
 tar -xvf gtkperf_0.40.tar.gz
 cd gtkperf/
@@ -70,8 +69,9 @@ patch -p1 <<'EOT'
 
 EOT
 
-./configure --prefix=$THIS_DIR/gtkperf_env
+./configure --prefix=$HOME/gtkperf_env
 make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf gtkperf/

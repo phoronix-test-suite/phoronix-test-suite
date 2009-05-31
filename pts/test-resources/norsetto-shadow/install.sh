@@ -3,7 +3,8 @@
 rm -rf shadow/
 tar -xjf norsetto-shadow-01.tar.bz2
 cd shadow/
-make
+make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 cd ..
 
 echo "#!/bin/sh

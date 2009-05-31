@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed MrBayes Analysis</Title>
-		<Version>3.1</Version>
+		<Version>3.1.2</Version>
 		<SubTitle>Primate Phylogeny Analysis</SubTitle>
 		<ResultScale>Seconds</ResultScale>
 		<TimesToRun>3</TimesToRun>

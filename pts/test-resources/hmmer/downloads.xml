@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://selab.janelia.org/pub/software/hmmer/CURRENT/hmmer-2.3.2.tar.gz</URL>
+			<URL>ftp://ftp.eenet.ee/pub/FreeBSD/distfiles/hmmer-2.3.2.tar.gz, ftp://ftp.uni-frankfurt.de/pub/Mirrors2/gentoo.org/distfiles/hmmer-2.3.2.tar.gz, ftp://ftp.mgts.by/pub/FreeBSD/ports/distfiles/hmmer-2.3.2.tar.gz, ftp://ftp.dei.uc.pt/pub/linux/gentoo/distfiles/hmmer-2.3.2.tar.gz</URL>
 			<MD5>5f073340c0cf761288f961a73821228a</MD5>
 			<FileSize>1024933</FileSize>
 		</Package>

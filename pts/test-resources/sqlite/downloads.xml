@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.sqlite.org/sqlite-3.6.13.tar.gz</URL>
+			<URL>http://www.sqlite.org/sqlite-3.6.13.tar.gz, ftp://ftp.linux.hr/gentoo/distfiles/distfiles/sqlite-3.6.13.tar.gz, ftp://ftp.sk.freebsd.org/FreeBSD/ports/distfiles/sqlite-3.6.13.tar.gz</URL>
 			<MD5>652a01797e7538811e4997a5847bc026</MD5>
 			<FileSize>2780584</FileSize>
 		</Package>

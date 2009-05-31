@@ -31,6 +31,7 @@ patch -p0 <<'EOT'
 EOT
 
 make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 cd ..
 
 echo "#!/bin/sh
@@ -39,6 +40,7 @@ cd GLMark-0.5.2/
 
 rm -f *.result
 ./glmark \$@ > \$THIS_RUN_TIME.result
+echo \$? > ~/test-exit-status
 
 case \"\$5\" in
 \"VERTEX_ARRAY\")

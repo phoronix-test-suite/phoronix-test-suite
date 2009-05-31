@@ -5,6 +5,7 @@ cd llcbench/
 
 make linux-mpich
 make cache-bench
+echo $? > ~/install-exit-status
 
 cd ..
 

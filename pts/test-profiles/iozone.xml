@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.3.1</Version>
+		<Version>1.4.0</Version>
 		<TestType>Disk</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>IOzone</Title>
-		<Version>3.315</Version>
+		<Version>3.323</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>

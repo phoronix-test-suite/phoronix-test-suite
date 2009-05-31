@@ -1,12 +1,12 @@
 #!/bin/sh
 
-THIS_DIR=$(pwd)
-mkdir -p $THIS_DIR/hmmer_
+mkdir -p $HOME/hmmer_
 
 tar -xvf hmmer-2.3.2.tar.gz
 cd hmmer-2.3.2/
-./configure --enable-threads --prefix=$THIS_DIR/hmmer_
+./configure --enable-threads --prefix=$HOME/hmmer_
 make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 make install
 cd ..
 cp -r hmmer-2.3.2/tutorial hmmer_
@@ -25,6 +25,7 @@ cat>hmmer<<EOT
 #!/bin/sh
 \$TIMER_START
 ./hmmpfam 2>&1
+echo \$? > ~/test-exit-status
 \$TIMER_STOP
 EOT
 chmod +x hmmer

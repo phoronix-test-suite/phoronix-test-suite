@@ -24,6 +24,7 @@ rm -rf libvorbis-1.2.0/
 cd vorbis-tools-1.2.0/
 ./configure --prefix=$THIS_DIR/vorbis
 make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf vorbis-tools-1.2.0/
@@ -31,6 +32,6 @@ rm -rf vorbis-tools-1.2.0/
 echo "#!/bin/sh
 \$TIMER_START
 ./vorbis/bin/oggenc \$TEST_EXTENDS/pts-trondheim.wav -q 10 -o /dev/null > \$LOG_FILE 2>&1
-\$TIMER_STOP
-cat \$LOG_FILE" > oggenc
+echo \$? > ~/test-exit-status
+\$TIMER_STOP" > oggenc
 chmod +x oggenc

@@ -11,7 +11,7 @@
 		<EnvironmentSize>3.8</EnvironmentSize>
 		<ProjectURL>http://www.opengl.org/</ProjectURL>
 		<ExternalDependencies>glut, build-utilities, xorg-development</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>GLEW</Title>

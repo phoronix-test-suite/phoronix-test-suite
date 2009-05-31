@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://align.bmr.kyushu-u.ac.jp/mafft/software/mafft-6.240-src.tgz</URL>
+			<URL>http://align.bmr.kyushu-u.ac.jp/mafft/software/mafft-6.240-src.tgz, http://gd.tuwien.ac.at/opsys/linux/gentoo/distfiles/mafft-6.240-src.tgz, ftp://ftp.swin.edu.au/gentoo/distfiles/mafft-6.240-src.tgz, ftp://ftp.uni-kassel.de/Mirrors/ftp.fhh.opensource-mirror.de/gentoo/distfiles/mafft-6.240-src.tgz</URL>
 			<MD5>e603c1dbef35913d46286d5b98b601a3</MD5>
 			<FileSize>657197</FileSize>
 		</Package>

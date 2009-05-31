@@ -31,7 +31,8 @@ echo "--- commonrenderer.cpp.orig	2008-11-02 16:19:16.000000000 -0500
 
 
 qmake
-make
+make -j $NUM_CPU_JOBS
+echo $? > ~/install-exit-status
 cd ..
 
 echo "#!/bin/sh

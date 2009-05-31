@@ -11,7 +11,7 @@
 		<EnvironmentSize>46.4</EnvironmentSize>
 		<ProjectURL>http://samba.org/ftp/tridge/dbench/</ProjectURL>
 		<ExternalDependencies>build-utilities, autoconf, popt</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Dbench</Title>

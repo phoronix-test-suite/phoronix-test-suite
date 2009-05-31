@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://download.tuxfamily.org/openarena/rel/081/oa081.zip</URL>
+			<URL>http://download.tuxfamily.org/openarena/rel/081/oa081.zip, ftp://ftp.tiscali.nl/pub/mirror/gentoo/distfiles/oa081.zip, ftp://ftp.cs.univ-paris8.fr/mirrors/rsync.gentoo.org/gentoo/distfiles/oa081.zip, ftp://ftp2.pt.freebsd.org/pub/gentoo/distfiles/oa081.zip</URL>
 			<MD5>49006bcb02b4e8ea3d06749e8f4e4887</MD5>
 			<FileSize>318927645</FileSize>
 		</Package>
