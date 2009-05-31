@@ -192,6 +192,15 @@ Modules are used for extending the functionality of the Phoronix Test Suite with
 <p>This option will allow you to configure all available end-user options for a PTS module. These options are then stored within the user's 
 configuration file. Not all modules may have options that can be configured by the end-user. These options are then stored in 
 <em>~/.phoronix-test-suite/modules-config.xml</em> and modules can access them using the <em>pts_module::read_option()</em> function.</p>
+<h2>Test/Suite Creation</h2>
+<p><strong>build-suite</strong></p>
+<p>This option will guide the user through the process of generating their own test suite, which they can then run.</p>
+<p><strong>result-file-to-suite &lt;Saved Name&gt;</strong></p>
+<p>This option will guide the user through the process of generating their own test suite, which they can then run, that's based upon an 
+existing test results file.</p>
+<p><strong>validate-test-profile &lt;Test&gt;</strong></p>
+<p>This option will run automated tests on a Phoronix Test Suite test profile in an effort to catch common errors or warnings with the test profile, 
+such as missing XML tags or other issues.</p>
 <h2>Miscellaneous Options</h2>
 <p><strong>make-download-cache</strong></p>
 <p>This option will backup all files that were automatically downloaded by the 
@@ -212,11 +221,6 @@ detected by the Phoronix Test Suite.</p>
 problems with the Phoronix Test Suite.</p>
 <p><strong>version</strong></p>
 <p>This option will print the Phoronix Test Suite version.</p>
-<p><strong>build-suite</strong></p>
-<p>This option will guide the user through the process of generating their own test suite, which they can then run.</p>
-<p><strong>result-file-to-suite &lt;Saved Name&gt;</strong></p>
-<p>This option will guide the user through the process of generating their own test suite, which they can then run, that's based upon an 
-existing test results file.</p>
 <p><strong>refresh-graphs &lt;Saved Name&gt;</strong></p>
 <p>This option will re-render and save all result graphs within a saved file. 
 This option can be used when making modifications to the graphing code or its 
