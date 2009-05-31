@@ -30,6 +30,7 @@ Phoronix Test Suite (Git)
 - pts: Update nearly all test profiles to take advantage of exit status feature in PTS 2.0
 - pts: Trivial clean-ups in the scripts for a majority of the test profiles
 - pts: Finish replacing $THIS_DIR with $HOME in test profile installation scripts
+- pts: Conserve space in some test profiles by removing files that are not needed
 - bilde_renderer: Support interfacing for Phoromatic server usage
 
 Phoronix Test Suite 2.0.0 Alpha 2

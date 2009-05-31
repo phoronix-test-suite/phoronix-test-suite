@@ -8,6 +8,7 @@ cmake ..
 make minion -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 cd ../..
+rm -rf minion-0.8.1/build/CMakeFiles/
 
 echo "#!/bin/sh
 cd minion-0.8.1/

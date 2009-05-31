@@ -8,17 +8,14 @@ if [ ! -e postgresql-${version}.tar.bz2 ]; then
     exit 1;
 fi
 
-tar xjf postgresql-${version}.tar.bz2 
+tar -xjf postgresql-${version}.tar.bz2 
 
-PG=$(pwd)/pg_
-if [ -d $PG ]; then
-    rm -rf $PG
-fi
-mkdir $PG
+rm -rf $HOME/pg_
+mkdir $HOME/pg_
 
 cd postgresql-${version}
-./configure --prefix=$PG --datadir=$PG/data --without-readline --without-zlib
-make 
+./configure --prefix=$HOME/pg_ --datadir=$HOME/pg_/data --without-readline --without-zlib
+make -j $NUM_CPU_JOBS
 make -C contrib/pgbench all
 echo $? > ~/install-exit-status
 make install
@@ -26,30 +23,29 @@ make -C contrib/pgbench install
 cd ..
 rm -rf postgresql-${version}/
 
-PGDATA=$PG/data/db
 # initialize database with encoding and locale
-$PG/bin/initdb -D $PGDATA --encoding=SQL_ASCII --locale=C
+$HOME/pg_/bin/initdb -D $HOME/pg_/data/db --encoding=SQL_ASCII --locale=C
 
 
 echo "#!/bin/sh
-PGDATA=$PGDATA
+PGDATA=\$HOME/pg_/data/db/
 PGPORT=7777
 export PGDATA
 export PGPORT
 # start server
-$PG/bin/pg_ctl start -o '-c checkpoint_segments=8 -c autovacuum=false'
+pg_/bin/pg_ctl start -o '-c checkpoint_segments=8 -c autovacuum=false'
 # wait for server to start
 sleep 30
 # create test db
-$PG/bin/createdb pgbench
+pg_/bin/createdb pgbench
 # set up tables
-$PG/bin/pgbench -i -s \$NUM_CPU_JOBS pgbench
+pg_/bin/pgbench -i -s \$NUM_CPU_JOBS pgbench
 
 # run the test 
-$PG/bin/pgbench -t 30000 -c \`expr \$NUM_CPU_JOBS / 2\` pgbench >\$LOG_FILE 
+pg_/bin/pgbench -t 30000 -c \`expr \$NUM_CPU_JOBS / 2\` pgbench >\$LOG_FILE 
 # drop test db
-$PG/bin/dropdb pgbench
+pg_/bin/dropdb pgbench
 # stop server
-$PG/bin/pg_ctl stop" > pgbench
+pg_/bin/pg_ctl stop" > pgbench
 chmod +x pgbench
 

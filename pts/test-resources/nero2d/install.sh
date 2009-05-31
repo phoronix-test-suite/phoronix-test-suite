@@ -16,5 +16,6 @@ echo "#!/bin/sh
 \$TIMER_START
 ./nero2d_/bin/nero2d \$@ > \$LOG_FILE 2>&1
 echo \$? > ~/test-exit-status
-\$TIMER_STOP" > nero2d
+\$TIMER_STOP
+rm -f *.bdf" > nero2d
 chmod +x nero2d

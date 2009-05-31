@@ -1,15 +1,19 @@
 #!/bin/sh
 
 tar -xvf openssl-0.9.8k.tar.gz
+
+mkdir openssl_/
+
 cd openssl-0.9.8k/
-./config no-zlib
+./config --prefix=$HOME/openssl_/ no-zlib
 make
 echo \$? > ~/test-exit-status
+make install
 cd ..
+rm -rf openssl-0.9.8k/
 
 echo "#!/bin/sh
-cd openssl-0.9.8k/
-./apps/openssl speed rsa4096 -multi \$NUM_CPU_CORES > \$LOG_FILE 2>&1
+./openssl_/bin/openssl speed rsa4096 -multi \$NUM_CPU_CORES > \$LOG_FILE 2>&1
 echo \$? > ~/test-exit-status" > openssl
 chmod +x openssl
 

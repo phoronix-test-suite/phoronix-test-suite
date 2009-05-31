@@ -1,6 +1,5 @@
 #!/bin/sh
 
-mkdir $HOME/scratch/
 mkdir $HOME/blogbench_/
 
 tar -xvf blogbench-1.0.tar.gz
@@ -13,6 +12,9 @@ cd ..
 rm -rf blogbench-1.0/
 
 echo "#!/bin/sh
+rm -rf \$HOME/scratch/
+mkdir \$HOME/scratch/
 ./blogbench_/bin/blogbench -d \$HOME/scratch > \$LOG_FILE 2>&1
-echo \$? > ~/test-exit-status" > blogbench
+echo \$? > ~/test-exit-status
+rm -rf \$HOME/scratch/" > blogbench
 chmod +x blogbench
