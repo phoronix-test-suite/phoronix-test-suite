@@ -9,7 +9,10 @@ cd MPlayer-1.0rc2/
 make -j $NUM_CPU_JOBS
 make install
 cd ..
+
 rm -rf MPlayer-1.0rc2/
+rm -rf mplayer_/share/
+rm -f mplayer_/bin/mplayer
 
 echo "#!/bin/sh
 

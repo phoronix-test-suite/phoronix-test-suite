@@ -11,6 +11,7 @@ echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf povray-3.6.1/
+rm -rf pov_/share/doc/
 
 echo "#!/bin/sh
 echo 1 | ./pov_/bin/povray -benchmark > \$LOG_FILE 2>&1" > povray

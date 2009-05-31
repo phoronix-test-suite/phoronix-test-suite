@@ -22,6 +22,7 @@ make install
 make -C contrib/pgbench install
 cd ..
 rm -rf postgresql-${version}/
+rm -rf pg_/doc/
 
 # initialize database with encoding and locale
 $HOME/pg_/bin/initdb -D $HOME/pg_/data/db --encoding=SQL_ASCII --locale=C

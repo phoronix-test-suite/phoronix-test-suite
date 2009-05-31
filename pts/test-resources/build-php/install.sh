@@ -10,6 +10,7 @@ make -s -j $NUM_CPU_JOBS
 make install
 cd ..
 rm -rf libxml2-2.6.31/
+rm -rf libxml2/share/
 
 echo "#!/bin/sh
 

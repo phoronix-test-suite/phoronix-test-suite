@@ -23,6 +23,7 @@ echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf flac-1.2.1/
+rm -rf flac_/share/
 
 echo "#!/bin/sh
 \$TIMER_START

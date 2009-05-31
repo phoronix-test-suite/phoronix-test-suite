@@ -11,6 +11,7 @@ echo \$? > ~/test-exit-status
 make install
 cd ..
 rm -rf openssl-0.9.8k/
+rm -rf openssl_/lib/
 
 echo "#!/bin/sh
 ./openssl_/bin/openssl speed rsa4096 -multi \$NUM_CPU_CORES > \$LOG_FILE 2>&1

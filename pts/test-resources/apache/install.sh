@@ -12,6 +12,7 @@ echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf httpd-2.2.11/
+rm -rf httpd_/manual/
 
 patch -p0 < CHANGE-APACHE-PORT.patch
 mv -f test.html httpd_/htdocs/

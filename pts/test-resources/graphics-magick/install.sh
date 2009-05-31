@@ -11,7 +11,9 @@ echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf GraphicsMagick-1.3.3/
-rm -rf gm_/share/
+rm -rf gm_/share/doc/GraphicsMagick/
+rm -rf gm_/share/man/
+rm -rf gm_/lib/
 
 echo "#!/bin/sh
 OMP_NUM_THREADS=\$NUM_CPU_CORES ./gm_/bin/gm benchmark -duration 60 convert \$TEST_EXTENDS/DSC_4185.JPG \$@ null: > \$LOG_FILE 2>&1
