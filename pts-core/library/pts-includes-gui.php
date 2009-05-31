@@ -29,11 +29,13 @@ function pts_gui_installed_suites()
 
 	return $installed_suites;
 }
-function pts_gui_available_suites($to_show_types, $license_types = "")
+function pts_gui_available_suites($to_show_types, $license_types = "", $dependency_limit = null, $downloads_limit = null)
 {
 	// TODO: Right now a suite could include both free/non-free tests, so $license_types needs to be decided
 	$test_suites = pts_supported_suites_array();
 	$to_show_names = array();
+
+	// TODO: implement $dependency_limit and $downloads_limit
 
 	foreach($test_suites as $name)
 	{
@@ -74,7 +76,7 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 
 	return $installed_tests;
 }
-function pts_gui_available_tests($to_show_types, $license_types, $dependency_limit = null)
+function pts_gui_available_tests($to_show_types, $license_types, $dependency_limit = null, $downloads_limit = null)
 {
 	$test_names = pts_supported_tests_array();
 	$to_show_names = array();
@@ -115,6 +117,29 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 						$show = true;
 						break;
 					}
+				}
+			}
+
+			if($show && $downloads_limit != null)
+			{
+				$all_files_are_local = true;
+
+				foreach(pts_objects_test_downloads($name) as $download_package)
+				{
+					if(!pts_test_download_file_local($name, $download_package->get_filename()))
+					{
+						$all_files_are_local = false;
+						break;
+					}
+				}
+
+				if($downloads_limit == "DOWNLOADS_LOCAL")
+				{
+					$show = $all_files_are_local;
+				}
+				else if($downloads_limit == "DOWNLOADS_MISSING")
+				{
+					$show = !$all_files_are_local;
 				}
 			}
 

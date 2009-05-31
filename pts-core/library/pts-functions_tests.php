@@ -948,5 +948,46 @@ function pts_archive_result_directory($identifier, $save_to = null)
 		pts_compress(SAVE_RESULTS_DIR . $identifier . "/", $save_to);
 	}
 }
+function pts_test_download_caches()
+{
+	$cache_directories = array(PTS_DOWNLOAD_CACHE_DIR);
+
+	if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
+	{
+		$download_cache_dirs = array_merge(
+		glob("/media/*/download-cache/"),
+		glob("/Volumes/*/download-cache/")
+		);
+
+		foreach($download_cache_dirs as $dir)
+		{
+			array_push($cache_directories, $dir);
+		}
+	}
+
+	return $cache_directories;
+}
+function pts_test_download_file_local($test_identifier, $download_name)
+{
+	$is_local = false;
+
+	if(is_file(TEST_ENV_DIR . $test_identifier . "/" . $download_name))
+	{
+		$is_local = true;
+	}
+	else
+	{
+		foreach(pts_test_download_caches() as $download_cache)
+		{
+			if(is_file($download_cache . $download_name))
+			{
+				$is_local = true;
+				break;
+			}
+		}
+	}
+
+	return $is_local;
+}
 
 ?>

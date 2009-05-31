@@ -156,9 +156,10 @@ class gui_gtk implements pts_option_interface
 			null,
 			new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON"),
 			null,
-			"Show License" => $license_type,
-			"Show Subsystem" => $subsystem_type,
-			"Show Dependencies" => array(new pts_gtk_menu_item(array("Show All", "All Dependencies Installed", "Dependencies Missing"), array("gui_gtk", "radio_test_dependencies_select"), "RADIO_BUTTON"))
+			"License" => $license_type,
+			"Subsystem" => $subsystem_type,
+			"Dependencies" => array(new pts_gtk_menu_item(array("Show All", "All Dependencies Installed", "Dependencies Missing"), array("gui_gtk", "radio_test_dependencies_select"), "RADIO_BUTTON")),
+			"File Downloads" => array(new pts_gtk_menu_item(array("Show All", "All Files Available Locally", "Files Need To Be Downloaded"), array("gui_gtk", "radio_test_downloads_select"), "RADIO_BUTTON"))
 			);
 
 		$main_menu_items = array(
@@ -652,7 +653,7 @@ class gui_gtk implements pts_option_interface
 			$installed_suites = pts_gtk_table(array(count($i_s) . " Suites"), $i_s, array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");
 			pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
 
-			$a_s = pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"));
+			$a_s = pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"), pts_read_assignment("GTK_DEPENDENCY_LIMIT"), pts_read_assignment("GTK_DOWNLOADS_LIMIT"));
 			$available_suites = pts_gtk_table(array(count($a_s) . " Suites"), $a_s, array("gui_gtk", "update_details_frame_from_select"), "No suites are available.");
 			pts_gtk_add_notebook_tab($main_notebook, $available_suites, "Available Suites");
 		}
@@ -664,7 +665,7 @@ class gui_gtk implements pts_option_interface
 			pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
 
 			// Available Tests
-			$a_t = pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"), pts_read_assignment("GTK_DEPENDENCY_LIMIT"));
+			$a_t = pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"), pts_read_assignment("GTK_DEPENDENCY_LIMIT"), pts_read_assignment("GTK_DOWNLOADS_LIMIT"));
 			$available_tests = pts_gtk_table(array(count($a_t) . " Tests"), $a_t, array("gui_gtk", "update_details_frame_from_select"), "No tests are available.");
 			pts_gtk_add_notebook_tab($main_notebook, $available_tests, "Available Tests");
 		}
@@ -704,6 +705,31 @@ class gui_gtk implements pts_option_interface
 			}
 
 			pts_set_assignment("GTK_DEPENDENCY_LIMIT", $dependency_limit);
+
+			gui_gtk::update_main_notebook();
+			gui_gtk::redraw_main_window();
+		}
+	}
+	public static function radio_test_downloads_select($object)
+	{
+		if($object->get_active())
+		{
+			$item = $object->child->get_label();
+
+			switch($item)
+			{
+				case "All Files Available Locally":
+					$downloads_limit = "DOWNLOADS_LOCAL";
+					break;
+				case "Files Need To Be Downloaded":
+					$downloads_limit = "DOWNLOADS_MISSING";
+					break;
+				default:
+					$downloads_limit = null;
+					break;
+			}
+
+			pts_set_assignment("GTK_DOWNLOADS_LIMIT", $downloads_limit);
 
 			gui_gtk::update_main_notebook();
 			gui_gtk::redraw_main_window();

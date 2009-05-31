@@ -85,7 +85,7 @@ function pts_download_test_files($identifier)
 	if(count($download_packages) > 0)
 	{
 		$header_displayed = false;
-		$cache_directories = array(PTS_DOWNLOAD_CACHE_DIR);
+		$cache_directories = pts_test_download_caches();
 
 		if(strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != false)
 		{
@@ -97,19 +97,6 @@ function pts_download_test_files($identifier)
 		{
 			$dc_file = array();
 			$dc_md5 = array();
-		}
-
-		if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
-		{
-			$download_cache_dirs = array_merge(
-			glob("/media/*/download-cache/"),
-			glob("/Volumes/*/download-cache/")
-			);
-
-			foreach($download_cache_dirs as $dir)
-			{
-				array_push($cache_directories, $dir);
-			}
 		}
 
 		for($i = 0; $i < count($download_packages); $i++)
