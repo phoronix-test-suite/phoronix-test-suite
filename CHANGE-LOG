@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add validate-test-suite option to catch common errors/warnings when writing a test suite
 - pts-core: Add menu item to GTK2 GUI for showing tests where all needed test files are available locally or in download cache
 - pts-core: When a test installation fails based upon a non-zero exit status, wipe out the files it created during the install process
+- pts-core: Support showing suites with and without where all external dependencies are satisfied and where test files available locally
 - phodevi: Improve file-system detection, add detection for Btrfs instead of reporting 0x9123683e
 - pts: Add kernel test suite
 - pts: Update jxrendermark test profile against JXRenderMark 1.0.1

@@ -967,6 +967,40 @@ function pts_test_download_caches()
 
 	return $cache_directories;
 }
+function pts_test_download_files_locally_available($identifier)
+{
+	foreach(pts_contained_tests($identifier, true, true, false) as $name)
+	{
+		foreach(pts_objects_test_downloads($name) as $download_package)
+		{
+			if(!pts_test_download_file_local($name, $download_package->get_filename()))
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+function pts_test_external_dependencies_satisfied($identifier)
+{
+	$missing_dependencies = pts_external_dependencies_missing();
+
+	foreach(pts_contained_tests($identifier, true, true, false) as $name)
+	{
+		$tp = new pts_test_profile_details($name);
+
+		foreach($tp->get_dependencies() as $dependency)
+		{
+			if(in_array($dependency, $missing_dependencies))
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
 function pts_test_download_file_local($test_identifier, $download_name)
 {
 	$is_local = false;

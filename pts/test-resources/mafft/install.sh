@@ -14,6 +14,7 @@ echo $? > ~/install-exit-status
 make install
 cd ~/
 cp -f mafft-6.706-without-extensions/scripts/mafft mafft_/
+rm -rf mafft-6.706-without-extensions/
 
 bunzip2 pyruvate_decarboxylase.fasta.bz2 -c > mafft_/pyruvate_decarboxylase.fasta
 

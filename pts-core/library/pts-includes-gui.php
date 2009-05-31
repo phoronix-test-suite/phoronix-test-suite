@@ -44,7 +44,40 @@ function pts_gui_available_suites($to_show_types, $license_types = "", $dependen
 
 		if(empty($hw_type) || in_array($hw_type, $to_show_types))
 		{
-			array_push($to_show_names, $name);
+			$show = true;
+
+			if($dependency_limit != null)
+			{
+				$dependencies_satisfied = pts_test_external_dependencies_satisfied($name);
+
+				if($dependency_limit == "DEPENDENCIES_INSTALLED")
+				{
+					$show = $dependencies_satisfied;
+				}
+				else if($dependency_limit == "DEPENDENCIES_MISSING")
+				{
+					$show = !$dependencies_satisfied;
+				}
+			}
+
+			if($show && $downloads_limit != null)
+			{
+				$all_files_are_local = pts_test_download_files_locally_available($name);
+
+				if($downloads_limit == "DOWNLOADS_LOCAL")
+				{
+					$show = $all_files_are_local;
+				}
+				else if($downloads_limit == "DOWNLOADS_MISSING")
+				{
+					$show = !$all_files_are_local;
+				}
+			}
+
+			if($show)
+			{
+				array_push($to_show_names, $name);
+			}
 		}
 	}
 
@@ -92,46 +125,23 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 		{
 			$show = true;
 
-			if($dependency_limit == "DEPENDENCIES_INSTALLED")
+			if($dependency_limit != null)
 			{
-				$missing_dependencies = pts_external_dependencies_missing();
+				$dependencies_satisfied = pts_test_external_dependencies_satisfied($name);
 
-				foreach($tp->get_dependencies() as $dependency)
+				if($dependency_limit == "DEPENDENCIES_INSTALLED")
 				{
-					if(in_array($dependency, $missing_dependencies))
-					{
-						$show = false;
-						break;
-					}
+					$show = $dependencies_satisfied;
 				}
-			}
-			else if($dependency_limit == "DEPENDENCIES_MISSING")
-			{
-				$missing_dependencies = pts_external_dependencies_missing();
-
-				$show = false;
-				foreach($tp->get_dependencies() as $dependency)
+				else if($dependency_limit == "DEPENDENCIES_MISSING")
 				{
-					if(in_array($dependency, $missing_dependencies))
-					{
-						$show = true;
-						break;
-					}
+					$show = !$dependencies_satisfied;
 				}
 			}
 
 			if($show && $downloads_limit != null)
 			{
-				$all_files_are_local = true;
-
-				foreach(pts_objects_test_downloads($name) as $download_package)
-				{
-					if(!pts_test_download_file_local($name, $download_package->get_filename()))
-					{
-						$all_files_are_local = false;
-						break;
-					}
-				}
+				$all_files_are_local = pts_test_download_files_locally_available($name);
 
 				if($downloads_limit == "DOWNLOADS_LOCAL")
 				{
