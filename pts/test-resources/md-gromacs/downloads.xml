@@ -1,19 +1,19 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.gromacs.org/pub/gromacs/gromacs-3.3.3.tar.gz</URL>
-			<MD5>33f5f434d69b45bc51c5af36f5719618</MD5>
-			<FileSize>8013789</FileSize>
+			<URL>ftp://ftp.gromacs.org/pub/gromacs/gromacs-4.0.5.tar.gz</URL>
+			<MD5>2db2261852a4d3a97547979f379dee94</MD5>
+			<FileSize>8465397</FileSize>
 		</Package>
 		<Package>
-			<URL>ftp://ftp.fftw.org/pub/fftw/old/fftw-3.1.2.tar.gz</URL>
-			<MD5>08f2e21c9fd02f4be2bd53a62592afa4</MD5>
-			<FileSize>2736360</FileSize>
+			<URL>http://www.fftw.org/fftw-3.2.1.tar.gz, ftp://ftp.fftw.org/pub/fftw/fftw-3.2.1.tar.gz</URL>
+			<MD5>712d3f33625a0a76f5758648d4b925f7</MD5>
+			<FileSize>3476044</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.mcs.anl.gov/research/projects/mpich2/downloads/tarballs/1.0.7/mpich2-1.0.7.tar.gz</URL>
-			<MD5>c3beb9430d45347078a80cf1c6780509</MD5>
-			<FileSize>16565875</FileSize>
+			<URL>http://www.mcs.anl.gov/research/projects/mpich2/downloads/tarballs/1.0.8p1/mpich2-1.0.8p1.tar.gz</URL>
+			<MD5>8ff91187e264e75b5f9307018983ba2b</MD5>
+			<FileSize>16883298</FileSize>
 		</Package>
 		<Package>
 			<URL>ftp://ftp.gromacs.org/pub/benchmarks/gmxbench-3.0.tar.gz</URL>

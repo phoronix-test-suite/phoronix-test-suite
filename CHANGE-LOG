@@ -36,6 +36,7 @@ Phoronix Test Suite (Git)
 - pts: Finish replacing $THIS_DIR with $HOME in test profile installation scripts
 - pts: Conserve space in some test profiles by removing files that are not needed
 - pts: Add more download mirrors for files in many of the test profiles
+- pts: Update md-gromacs test profile to version 4.0.5
 - bilde_renderer: Support interfacing for Phoromatic server usage
 
 Phoronix Test Suite 2.0.0 Alpha 2
