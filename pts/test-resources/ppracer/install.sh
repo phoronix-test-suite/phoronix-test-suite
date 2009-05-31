@@ -1,7 +1,6 @@
 #!/bin/sh
 
-THIS_DIR=$(pwd)
-mkdir $THIS_DIR/ppracer_
+mkdir $HOME/ppracer_
 
 tar -jxvf ppracer-data-0.2.3.tar.bz2
 tar -jxvf ppracer-0.5alpha.tar.bz2
@@ -10,7 +9,7 @@ cd ppracer-0.5alpha/
 sed 's/RacingMode::RacingMode()/RacingMode()/' src/racingmode.h > racingmode.h
 mv -f racingmode.h src/racingmode.h
 
-./configure --prefix=$THIS_DIR/ppracer_
+./configure --prefix=$HOME/ppracer_
 make
 make install
 cd ..
@@ -22,7 +21,6 @@ cd ..
 rm -rf ppracer-data-0.2.3/
 
 echo "#!/bin/sh
-THIS_DIR=\$(pwd)
 
 echo \"ppconfig <- {
 audio_format_mode = 1,
@@ -58,7 +56,7 @@ stencil_buffer = true,
 do_intro_animation = true,
 audio_stereo = true,
 enable_fsaa = true,
-data_dir = \\\"\$THIS_DIR/ppracer_/share/ppracer\\\",
+data_dir = \\\"\$HOME/ppracer_/share/ppracer\\\",
 terrain_blending = true,
 disable_videomode_autodetection = false,
 fullscreen = true,
@@ -77,5 +75,5 @@ tux_sphere_divisions = 15,
 };\" > pts-config.nut
 
 cd ppracer_/bin/
-./ppracer -c $THIS_DIR/pts-config.nut -a -f events/herring_run/snow_valley > \$LOG_FILE 2>&1" > ppracer
+./ppracer -c $HOME/pts-config.nut -a -f events/herring_run/snow_valley > \$LOG_FILE 2>&1" > ppracer
 chmod +x ppracer

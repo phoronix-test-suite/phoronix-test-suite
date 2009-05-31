@@ -14,7 +14,7 @@ rm -rf espeak-1.40.02-source/
 echo "#!/bin/sh
 cd espeak_/bin/
 \$TIMER_START
-LD_LIBRARY_PATH=$THIS_DIR/espeak_/lib/:\$LD_LIBRARY_PATH ./espeak -f ~/gutenberg-science.txt -w /dev/null 2>&1
+LD_LIBRARY_PATH=\$HOME/espeak_/lib/:\$LD_LIBRARY_PATH ./espeak -f ~/gutenberg-science.txt -w /dev/null 2>&1
 echo \$? > ~/test-exit-status
 \$TIMER_STOP" > espeak
 chmod +x espeak

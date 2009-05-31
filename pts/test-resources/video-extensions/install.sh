@@ -2,11 +2,10 @@
 
 tar -xjf MPlayer-1.0rc2.tar.bz2
 
-THIS_DIR=$(pwd)
-mkdir $THIS_DIR/mplayer_
+mkdir $HOME/mplayer_
 
 cd MPlayer-1.0rc2/
-./configure --enable-xv --enable-xvmc --disable-ivtv --prefix=$THIS_DIR/mplayer_ > /dev/null
+./configure --enable-xv --enable-xvmc --disable-ivtv --prefix=$HOME/mplayer_ > /dev/null
 make -j $NUM_CPU_JOBS
 make install
 cd ..

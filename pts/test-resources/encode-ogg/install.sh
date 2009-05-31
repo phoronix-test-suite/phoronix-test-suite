@@ -1,28 +1,27 @@
 #!/bin/sh
 
-THIS_DIR=$(pwd)
-mkdir $THIS_DIR/vorbis
+mkdir $HOME/vorbis
 
 tar -xvf libogg-1.1.3.tar.gz
 tar -xvf libvorbis-1.2.0.tar.gz
 tar -xvf vorbis-tools-1.2.0.tar.gz
 
 cd libogg-1.1.3/
-./configure --prefix=$THIS_DIR/vorbis
+./configure --prefix=$HOME/vorbis
 make -j $NUM_CPU_JOBS
 make install
 cd ..
 rm -rf libogg-1.1.3/
 
 cd libvorbis-1.2.0/
-./configure --prefix=$THIS_DIR/vorbis
+./configure --prefix=$HOME/vorbis
 make -j $NUM_CPU_JOBS
 make install
 cd ..
 rm -rf libvorbis-1.2.0/
 
 cd vorbis-tools-1.2.0/
-./configure --prefix=$THIS_DIR/vorbis
+./configure --prefix=$HOME/vorbis
 make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 make install

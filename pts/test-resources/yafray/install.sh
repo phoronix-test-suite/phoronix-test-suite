@@ -3,8 +3,7 @@
 tar -xvf yafray-0.0.9.tar.gz
 tar -jxvf yafray-render-1.tar.bz2
 
-THIS_DIR=$(pwd)
-mkdir $THIS_DIR/yafray_
+mkdir $HOME/yafray_
 
 echo "--- linux-settings.py.orig	2008-06-02 14:00:50.000000000 -0400
 +++ linux-settings.py	2008-06-02 14:01:11.000000000 -0400
@@ -13,7 +12,7 @@ echo "--- linux-settings.py.orig	2008-06-02 14:00:50.000000000 -0400
  def init(args): 
  	global prefix
 -	prefix = args.get('prefix','/usr/local')
-+	prefix = \"$THIS_DIR/yafray_\"
++	prefix = \"$HOME/yafray_\"
  
  def get_libpath(args): return prefix+\"/lib\"
  def get_pluginpath(args): return prefix+\"/lib/yafray\"
@@ -25,7 +24,7 @@ echo "--- linux-settings.py.orig	2008-06-02 14:00:50.000000000 -0400
  import globalinfo
  
 -prefix=ARGUMENTS.get('prefix','/usr/local')
-+prefix=\"$THIS_DIR/yafray_/\"
++prefix=\"$HOME/yafray_/\"
  
  ficheros = {
  'darwin' : 'darwin-settings',
@@ -41,7 +40,7 @@ rm -rf yafray/
 cp yafray_/etc/gram.yafray .
 
 echo "#!/bin/sh
-export LD_LIBRARY_PATH=\"$THIS_DIR/yafray_/lib/:\$LD_LIBRARY_PATH\"
+export LD_LIBRARY_PATH=\"$HOME/yafray_/lib/:\$LD_LIBRARY_PATH\"
 \$TIMER_START
 ./yafray_/bin/yafray -c \$NUM_CPU_CORES YBtest.xml 2>&1
 \$TIMER_STOP" > yafray-run
