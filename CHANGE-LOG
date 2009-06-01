@@ -25,6 +25,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support showing suites with and without where all external dependencies are satisfied and where test files available locally
 - phodevi: Improve file-system detection, add detection for Btrfs instead of reporting 0x9123683e
 - phodevi: Add monitor name detection support when using NVIDIA graphics
+- phodevi: Move a few minor properties from phodevi_gpu to phodevi_monitor
 - phodevi: Add support for OpenSolaris 2009.06
 - pts: Add kernel test suite
 - pts: Update jxrendermark test profile against JXRenderMark 1.0.1
