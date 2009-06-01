@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.0.0 Alpha 3
+June 1, 2009
 
 - pts-core: Add result-file-to-text option for outputting result file/results to the terminal
 - pts-core: Add result-file-to-csv option for outputting result file/results to CSV
