@@ -952,6 +952,11 @@ function pts_test_download_caches()
 {
 	$cache_directories = array(PTS_DOWNLOAD_CACHE_DIR);
 
+	if(is_dir())
+	{
+		
+	}
+
 	if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
 	{
 		$download_cache_dirs = array_merge(

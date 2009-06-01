@@ -24,6 +24,8 @@ Phoronix Test Suite (Git)
 - pts-core: When a test installation fails based upon a non-zero exit status, wipe out the files it created during the install process
 - pts-core: Support showing suites with and without where all external dependencies are satisfied and where test files available locally
 - phodevi: Improve file-system detection, add detection for Btrfs instead of reporting 0x9123683e
+- phodevi: Add monitor name detection support when using NVIDIA graphics
+- phodevi: Add support for OpenSolaris 2009.06
 - pts: Add kernel test suite
 - pts: Update jxrendermark test profile against JXRenderMark 1.0.1
 - pts: Update OpenSolaris External Dependencies

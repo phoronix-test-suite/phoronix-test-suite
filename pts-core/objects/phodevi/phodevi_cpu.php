@@ -210,7 +210,12 @@ class phodevi_cpu extends pts_device_interface
 		}
 		else if(IS_SOLARIS)
 		{
-			$dmi_cpu = read_sun_ddu_dmi_info("ProcessorName");
+			$dmi_cpu = read_sun_ddu_dmi_info("CPUType", "-C");
+
+			if(count($dmi_cpu) == 0)
+			{
+				$dmi_cpu = read_sun_ddu_dmi_info("ProcessorName");
+			}
 
 			if(count($dmi_cpu) > 0)
 			{

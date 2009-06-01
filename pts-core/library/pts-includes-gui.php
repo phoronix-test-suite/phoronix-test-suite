@@ -35,8 +35,6 @@ function pts_gui_available_suites($to_show_types, $license_types = "", $dependen
 	$test_suites = pts_supported_suites_array();
 	$to_show_names = array();
 
-	// TODO: implement $dependency_limit and $downloads_limit
-
 	foreach($test_suites as $name)
 	{
 		$ts = new pts_test_suite_details($name);

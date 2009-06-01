@@ -508,8 +508,12 @@ function read_hddtemp($disk = null)
 	{
 		if(empty($disk))
 		{
-			// TODO: Have it determine what disks are present and whether it's sdX or hdX, etc...
-			$disk = "/dev/sda";
+			$disks = glob("/dev/sd*");
+
+			if(count($disks) > 0)
+			{
+				$disk = array_shift($disks);
+			}
 		}
 
 		// For most situations this won't work since hddtemp usually requires root access
@@ -646,14 +650,14 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore =
 
 	return $value;
 }
-function read_sun_ddu_dmi_info($object)
+function read_sun_ddu_dmi_info($object, $args = "")
 {
 	// Read Sun's Device Driver Utility for OpenSolaris
 	$values = array();
 
-	if(is_executable("/usr/ddu/bin/dmi_info"))
+	if(is_executable(($dmi_info = "/usr/ddu/bin/dmi_info")) || is_executable(($dmi_info = "/usr/ddu/bin/i386/dmi_info")))
 	{
-		$info = shell_exec("/usr/ddu/bin/dmi_info 2>&1");
+		$info = shell_exec($dmi_info . " " . $args . " 2>&1");
 		$lines = explode("\n", $info);
 
 		$objects = explode(",", $object);
