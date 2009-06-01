@@ -43,6 +43,12 @@ class phodevi_monitor extends pts_device_interface
 			$system_profiler = substr($system_profiler, strpos($system_profiler, "\n"));
 			$monitor = trim(substr($system_profiler, 0, strpos($system_profiler, ":")));
 		}
+		else if(IS_NVIDIA_GRAPHICS)
+		{
+			$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep \"DFP-0\"");
+			$log_parse = substr($log_parse, strpos($log_parse, "NVIDIA(0):") + 10);
+			$monitor = trim(substr($log_parse, 0, strpos($log_parse, "(DFP-0)")));
+		}
 		else
 		{
 			$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep \"Monitor name\"");
