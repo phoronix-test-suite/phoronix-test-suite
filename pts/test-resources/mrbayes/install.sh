@@ -2,13 +2,13 @@
 
 mkdir $HOME/mpich2_
 
-tar -xvf mpich2-1.0.7.tar.gz
-cd mpich2-1.0.7/
-./configure --prefix=$HOME/mpich2_ --enable-fast=all --with-pm=gforker
-make -j $NUM_CPU_JOBS
+tar -xvf mpich2-1.0.8p1.tar.gz
+cd mpich2-1.0.8p1/
+./configure --prefix=$HOME/mpich2_ --enable-fast=all --with-pm=gforker --disable-option-checking
+make
 make install
 cd ..
-rm -rf mpich2-1.0.7/
+rm -rf mpich2-1.0.8p1/
 
 tar -xvf mrbayes-3.1.2.tar.gz
 cd mrbayes-3.1.2/

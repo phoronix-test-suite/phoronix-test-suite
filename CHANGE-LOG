@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts: Update mpich2 in mrbayes test profile
+
 Phoronix Test Suite 2.0.0 Alpha 3
 June 1, 2009
 

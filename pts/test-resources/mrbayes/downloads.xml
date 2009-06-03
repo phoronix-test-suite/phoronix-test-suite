@@ -6,9 +6,9 @@
 			<FileSize>545968</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.mcs.anl.gov/research/projects/mpich2/downloads/tarballs/1.0.7/mpich2-1.0.7.tar.gz</URL>
-			<MD5>c3beb9430d45347078a80cf1c6780509</MD5>
-			<FileSize>16565875</FileSize>
+			<URL>http://www.mcs.anl.gov/research/projects/mpich2/downloads/tarballs/1.0.8p1/mpich2-1.0.8p1.tar.gz</URL>
+			<MD5>8ff91187e264e75b5f9307018983ba2b</MD5>
+			<FileSize>16883298</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
