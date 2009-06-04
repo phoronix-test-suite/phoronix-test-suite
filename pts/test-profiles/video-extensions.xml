@@ -2,23 +2,23 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.1</Version>
+		<Version>1.2.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>30.0</EnvironmentSize>
+		<EnvironmentSize>1.0</EnvironmentSize>
 		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
 		<ExternalDependencies>build-utilities, xorg-development, xorg-video</ExternalDependencies>
-		<Extends>video-sample</Extends>
+		<Extends>mplayer-base</Extends>
 		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>MPlayer Video Playback Tests</Title>
-		<Version>1.0-rc2</Version>
+		<Version>2009-06-04</Version>
 		<SubTitle>Supported Video Extensions</SubTitle>
-		<ResultScale>GL, GL2, X-Video, XvMC</ResultScale>
+		<ResultScale>GL, GL2, X-Video, XvMC, VDPAU</ResultScale>
 		<Description>This is a test of playing back a short video file with different video extensions supported by X.Org and MPlayer.</Description>
 		<ResultFormat>MULTI_PASS_FAIL</ResultFormat>
 	</TestInformation>
