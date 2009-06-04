@@ -111,6 +111,7 @@ function pts_run_additional_vars($identifier)
 		if(is_dir(TEST_ENV_DIR . $extended_test . "/"))
 		{
 			$ctp_extension_string .= TEST_ENV_DIR . $extended_test . ":";
+			$extra_vars["TEST_" . strtoupper(str_replace("-", "_", $extended_test))] = TEST_ENV_DIR . $extended_test;
 		}
 	}
 
