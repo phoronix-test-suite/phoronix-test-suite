@@ -7,10 +7,10 @@ require(getenv("PTS_DIR") . "pts-core/phoronix-test-suite.php");
 switch($argv[1])
 {
 	case "cpu.usage":
-		$call_function = phodevi::read_sensor("cpu", "usage");
+		$call_function = "phodevi::read_sensor(\"cpu\", \"usage\")";
 		break;
 	case "mem.usage":
-		$call_function = phodevi::read_sensor("memory", "physical-usage");
+		$call_function = "phodevi::read_sensor(\"memory\", \"physical-usage\")";
 		break;
 	default:
 		exit();
@@ -23,11 +23,11 @@ $scratch_file = getenv("HOME") . "/pts-system-monitoring-to-kill";
 touch($scratch_file);
 
 $run_type = $argv[2];
-$timer = is_numeric($argv[3]) && $argv[3] > 0 ? $argv[3] : 0;
+$timer = is_numeric($argv[3]) && $argv[3] > 0 ? $argv[3] : 5;
 
 do
 {
-	$value = call_user_func($call_function);
+	eval("\$value = " . $call_function . ";");
 
 	if($value != -1 && !empty($value))
 	{
@@ -74,7 +74,8 @@ switch($run_type)
 		$end_result = pts_trim_double(abs($results[0] - $results[(count($results) - 1)]), 2);
 		break;
 	case "all":
-		$end_result = implode(" ", $results);
+	case "all-comma":
+		$end_result = implode(($run_type == "all-comma" ? "," : " "), $results);
 		break;
 }
 
