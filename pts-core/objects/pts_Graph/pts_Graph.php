@@ -295,6 +295,11 @@ abstract class pts_Graph
 		$longest_string = "";
 		$longest_string_length = 0;
 
+		if(!is_array($string_r))
+		{
+			$string_r = array($string_r);
+		}
+
 		foreach($string_r as $one_string)
 		{
 			if(($new_length = strlen($one_string)) > $longest_string_length)
@@ -529,7 +534,7 @@ abstract class pts_Graph
 
 		for($i = 0; $i < count($this->graph_data_title); $i++)
 		{
-			if(!empty($this->graph_data_title))
+			if(!empty($this->graph_data_title[$i]))
 			{
 				$this_color = $this->next_paint_color();
 				$key_counter += 1;

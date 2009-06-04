@@ -117,6 +117,11 @@ class pts_test_result
 			// Nothing to do
 			$return_string = null;
 		}
+		else if($this->result_format == "LINE_GRAPH")
+		{
+			$return_string = null;
+			$END_RESULT = $this->trial_results[0];
+		}
 		else if($this->result_format == "PASS_FAIL" || $this->result_format == "MULTI_PASS_FAIL")
 		{
 			// Calculate pass/fail type

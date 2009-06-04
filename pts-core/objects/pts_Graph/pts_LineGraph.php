@@ -36,7 +36,7 @@ class pts_LineGraph extends pts_CustomGraph
 	protected function render_graph_pre_init()
 	{
 		// Do some common work to this object
-		$identifier_count = count($this->graph_identifiers) + 1;
+		$identifier_count = (($c = count($this->graph_identifiers)) > 1 ? $c : count($this->graph_data[0])) + 1;
 		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
 
 		$longest_string = $this->find_longest_string($this->graph_identifiers);

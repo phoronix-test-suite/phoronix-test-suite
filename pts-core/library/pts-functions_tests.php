@@ -170,27 +170,6 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 	$name = $r_o->get_name() . (strlen($r_o->get_version()) > 2 ? " v" . $r_o->get_version() : "");
 	$result_format = $r_o->get_format();
 
-	if($result_format == "LINE_GRAPH")
-	{
-		$t = new pts_LineGraph($name, $r_o->get_attributes(), $r_o->get_scale());
-	}
-	else if($result_format == "PASS_FAIL")
-	{
-		$t = new pts_PassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale());
-	}
-	else if($result_format == "MULTI_PASS_FAIL")
-	{
-		$t = new pts_MultiPassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale());
-	}
-	else if(function_exists("pts_read_assignment") && pts_read_assignment("GRAPH_RENDER_TYPE") == "CANDLESTICK")
-	{
-		$t = new pts_CandleStickGraph($name, $r_o->get_attributes(), $r_o->get_scale());
-	}
-	else
-	{
-		$t = new pts_BarGraph($name, $r_o->get_attributes(), $r_o->get_scale());
-	}
-
 	$identifiers = $r_o->get_identifiers();
 	$values = $r_o->get_values();
 	$raw_values = $r_o->get_raw_values();
@@ -203,9 +182,41 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 		$raw_values = array_reverse($raw_values);
 	}
 
-	$t->loadGraphIdentifiers($identifiers);
-	$t->loadGraphValues($values);
-	$t->loadGraphRawValues($raw_values);
+	if($result_format == "LINE_GRAPH")
+	{
+		$t = new pts_LineGraph($name, $r_o->get_attributes(), $r_o->get_scale());
+		//$t->hideGraphIdentifiers();
+
+		for($i = 0; $i < count($values); $i++)
+		{
+			$values[$i] = explode(",", $values[$i]);
+			$t->loadGraphValues($values[$i], $identifiers[$i]);
+		}
+	}
+	else
+	{
+		if($result_format == "PASS_FAIL")
+		{
+			$t = new pts_PassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale());
+		}
+		else if($result_format == "MULTI_PASS_FAIL")
+		{
+			$t = new pts_MultiPassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale());
+		}
+		else if(function_exists("pts_read_assignment") && pts_read_assignment("GRAPH_RENDER_TYPE") == "CANDLESTICK")
+		{
+			$t = new pts_CandleStickGraph($name, $r_o->get_attributes(), $r_o->get_scale());
+		}
+		else
+		{
+			$t = new pts_BarGraph($name, $r_o->get_attributes(), $r_o->get_scale());
+		}
+
+		$t->loadGraphIdentifiers($identifiers);
+		$t->loadGraphValues($values);
+		$t->loadGraphRawValues($raw_values);
+	}
+
 	$t->loadGraphProportion($r_o->get_proportion());
 	$t->loadGraphVersion($pts_version);
 

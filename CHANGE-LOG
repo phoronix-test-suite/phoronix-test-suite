@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Fix system monitoring reporting of values in test results
+- pts-core: Proper handling of line graphics in test results
 - pts: Update mpich2 in mrbayes test profile
 
 Phoronix Test Suite 2.0.0 Alpha 3
