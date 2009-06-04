@@ -7,7 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Make all test extensions available through environmental variables, helpful when a test extends a test
 - pts: Update mpich2 in mrbayes test profile
 - pts: Add mplayer-base base test profile for providing installation of new mplayer/mencoder build with XvMC/VDPAU/etc
-- pts: Switch video-extensions test profile to using mplayer-base
+- pts: Switch video-extensions test profile to using mplayer-base and support testing VDPAU
 
 Phoronix Test Suite 2.0.0 Alpha 3
 June 1, 2009
