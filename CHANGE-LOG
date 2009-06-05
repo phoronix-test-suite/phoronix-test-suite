@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts: Add mplayer-base base test profile for providing installation of new mplayer/mencoder build with XvMC/VDPAU/etc
 - pts: Switch video-extensions test profile to using mplayer-base and support testing VDPAU
 - pts: Add video-cpu-usage test profile to monitor CPU usage during video playback with different video outputs
+- pts: Switch mencoder test profile to using mplayer-base for its mplayer/mencoder build
 
 Phoronix Test Suite 2.0.0 Alpha 3
 June 1, 2009

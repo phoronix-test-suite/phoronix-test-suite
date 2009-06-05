@@ -2,21 +2,18 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>16</EnvironmentSize>
-		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
-		<Extends>video-sample</Extends>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>Solaris, BSD</UnsupportedPlatforms>
+		<EnvironmentSize>1.0</EnvironmentSize>
+		<Extends>mplayer-base</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>Mencoder</Title>
-		<Version>1.0-rc2</Version>
+		<Version>2009-06-04</Version>
 		<SubTitle>AVI To LAVC</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

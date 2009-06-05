@@ -17,7 +17,9 @@ fi
 make -j $NUM_CPU_JOBS
 make install
 cd ..
+
 rm -rf mplayer-checkout-2009-06-04/
+rm -rf mplayer_/share/
 
 ln -s mplayer_/bin/mplayer mplayer
 ln -s mplayer_/bin/mencoder mencoder
