@@ -301,7 +301,9 @@ class phodevi_gpu extends pts_device_interface
 		// XRandR available modes
 		$available_modes = array();
 		$supported_ratios = array(1.60, 1.25, 1.33, 1.70, 1.77);
-		$ignore_modes = array(array(832, 624), array(1152, 864), array(1792, 1344), array(1800, 1440), array(1856, 1392), array(2048, 1536));
+		$ignore_modes = array(array(832, 624), array(960, 600), array(896, 672), array(928, 696), 
+			array(960, 720), array(1152, 864), array(1280, 720), array(1360, 768), array(1792, 1344), 
+			array(1800, 1440), array(1856, 1392), array(2048, 1536));
 
 		$info = shell_exec("xrandr 2>&1");
 		$xrandr_lines = array_reverse(explode("\n", $info));
