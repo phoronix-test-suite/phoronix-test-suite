@@ -85,6 +85,16 @@ class pts_result_file_merge_test
 	{
 		return $this->scale;
 	}
+	public function get_scale_formatted()
+	{
+		return trim(array_shift(explode("|", $this->get_scale())));
+	}
+	public function get_scale_special()
+	{
+		$scale_parts = explode("|", $this->scale);
+
+		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
+	}
 	public function get_test_name()
 	{
 		return $this->test_name;
@@ -100,6 +110,18 @@ class pts_result_file_merge_test
 	public function get_format()
 	{
 		return $this->format;
+	}
+	public function set_format($format)
+	{
+		$this->format = $format;
+	}
+	public function set_scale($scale)
+	{
+		$this->scale = $scale;
+	}
+	public function set_attributes($attributes)
+	{
+		$this->attributes = $attributes;
 	}
 	public function get_identifiers()
 	{

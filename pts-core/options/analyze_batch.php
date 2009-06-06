@@ -24,7 +24,7 @@ class analyze_batch implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("analytical", "merge");
+		return array("merge");
 	}
 	public static function run($r)
 	{
@@ -58,7 +58,7 @@ class analyze_batch implements pts_option_interface
 			}
 
 			// Analyze Results
-			$SAVED_RESULTS = pts_merge_batch_tests_to_line_comparison(file_get_contents($base_file));
+			$SAVED_RESULTS = pts_generate_analytical_batch_xml($base_file);
 			pts_save_result($save_to, $SAVED_RESULTS);
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $save_to);
 			echo "Results Saved To: " . SAVE_RESULTS_DIR . $save_to . "\n\n";

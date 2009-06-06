@@ -63,31 +63,24 @@ function pts_merge_test_results()
 	}
 
 	// Write the actual test results
-	$results_added = 0;
-	foreach($test_result_manager->get_results() as $result_object)
-	{
-		$use_id = pts_request_new_id();
-		$results->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->get_name());
-		$results->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->get_version());
-		$results->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $use_id, $result_object->get_attributes());
-		$results->addXmlObject(P_RESULTS_TEST_SCALE, $use_id, $result_object->get_scale());
-		$results->addXmlObject(P_RESULTS_TEST_PROPORTION, $use_id, $result_object->get_proportion());
-		$results->addXmlObject(P_RESULTS_TEST_TESTNAME, $use_id, $result_object->get_test_name());
-		$results->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $use_id, $result_object->get_arguments());
-		$results->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $use_id, $result_object->get_format());
+	pts_result_file_results_to_xml($test_result_manager, $results);
 
-		$identifiers = $result_object->get_identifiers();
-		$values = $result_object->get_values();
-		$raw_values = $result_object->get_raw_values();
+	return $results->getXML();
+}
+function pts_generate_analytical_batch_xml($analyze_file)
+{
+	$results = new tandem_XmlWriter();
+	$results->setXslBinding("pts-results-viewer.xsl");
 
-		for($i = 0; $i < count($identifiers); $i++)
-		{
-			$results->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $use_id, $identifiers[$i], 5, "o-$i-$results_added-r");
-			$results->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $use_id, $values[$i], 5, "o-$i-$results_added-r");
-			$results->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $use_id, $raw_values[$i], 5, "o-$i-$results_added-r");
-		}
-		$results_added++;
-	}
+	$test_result_manager = new pts_result_file_analyze_manager();
+	$result_file = new pts_result_file($analyze_file);
+	$added_systems_hash = array();
+
+	pts_result_file_suite_info_to_xml($result_file, $results);
+	pts_result_file_system_info_to_xml($result_file, $results, $added_systems_hash, null);
+
+	$test_result_manager->add_test_result_set($result_file->get_result_objects());
+	pts_result_file_results_to_xml($test_result_manager, $results);
 
 	return $results->getXML();
 }
@@ -133,6 +126,34 @@ function pts_result_file_system_info_to_xml(&$pts_result_file, &$xml_writer, &$s
 				array_push($systems_hash, $this_hash);
 			}
 		}
+	}
+}
+function pts_result_file_results_to_xml(&$result_manager, &$xml_writer)
+{
+	$results_added = 0;
+	foreach($result_manager->get_results() as $result_object)
+	{
+		$use_id = pts_request_new_id();
+		$xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->get_name());
+		$xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->get_version());
+		$xml_writer->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $use_id, $result_object->get_attributes());
+		$xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $use_id, $result_object->get_scale());
+		$xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $use_id, $result_object->get_proportion());
+		$xml_writer->addXmlObject(P_RESULTS_TEST_TESTNAME, $use_id, $result_object->get_test_name());
+		$xml_writer->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $use_id, $result_object->get_arguments());
+		$xml_writer->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $use_id, $result_object->get_format());
+
+		$identifiers = $result_object->get_identifiers();
+		$values = $result_object->get_values();
+		$raw_values = $result_object->get_raw_values();
+
+		for($i = 0; $i < count($identifiers); $i++)
+		{
+			$xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $use_id, $identifiers[$i], 5, "o-$i-$results_added-r");
+			$xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $use_id, $values[$i], 5, "o-$i-$results_added-r");
+			$xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $use_id, $raw_values[$i], 5, "o-$i-$results_added-r");
+		}
+		$results_added++;
 	}
 }
 
