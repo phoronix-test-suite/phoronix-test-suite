@@ -653,6 +653,9 @@ class gui_gtk implements pts_option_interface
 			$installed_suites = pts_gtk_table(array(count($i_s) . " Suites"), $i_s, array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");
 			pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
 
+			// TODO: implement dynamic notebook tab support
+			//pts_gtk_add_dynamic_notebook_tab($main_notebook, "Installed Suites", array("gui_gtk", "notebook_main_page_select"), "Suite", "pts_gui_installed_suites", array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");
+
 			$a_s = pts_gui_available_suites(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"), pts_read_assignment("GTK_DEPENDENCY_LIMIT"), pts_read_assignment("GTK_DOWNLOADS_LIMIT"));
 			$available_suites = pts_gtk_table(array(count($a_s) . " Suites"), $a_s, array("gui_gtk", "update_details_frame_from_select"), "No suites are available.");
 			pts_gtk_add_notebook_tab($main_notebook, $available_suites, "Available Suites");

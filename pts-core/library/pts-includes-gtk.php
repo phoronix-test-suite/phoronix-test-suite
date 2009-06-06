@@ -253,13 +253,6 @@ function pts_gtk_object_set_sensitive($object, $sensitive)
 	$o = pts_read_assignment($object);
 	$o->set_sensitive($sensitive);
 }
-
-/*
-
-TODO: Complete Dynamic Tabs Support
-
-example call: pts_gtk_add_dynamic_notebook_tab($main_notebook, "Installed Suites", array("gui_gtk", "notebook_main_page_select"), "Suite", "pts_gui_installed_suites", array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");
-
 function pts_gtk_add_dynamic_notebook_tab(&$notebook, $tab_label, $tab_on_click, $list_label, $list_function, $list_on_click, $on_empty_list)
 {
 	$t_label = new GtkLabel($tab_label);
@@ -284,20 +277,21 @@ function pts_gtk_add_dynamic_notebook_tab(&$notebook, $tab_label, $tab_on_click,
 }
 function pts_gtk_fill_notebook_tab($vbox, $list_label, $list_function, $list_on_click, $on_empty_list)
 {
-//	if(!pts_is_assignment("GTK_DYNAMIC_TAB_" . strtoupper($list_function)))
-//	{
+	if(!pts_is_assignment("GTK_DYNAMIC_TAB_" . strtoupper($list_function)))
+	{
+		$list_label = pts_to_array($list_label);
+		$tab_gtk_label = pts_gtk_table($list_label, call_user_func($list_function), $list_on_click, $on_empty_list);
+
 		foreach($vbox->get_children() as $child)
 		{
 			$vbox->remove($child);
 		}
 
-		$list_label = pts_to_array($list_label);
-		$vbox->pack_start(pts_gtk_table($list_label, call_user_func($list_function), $list_on_click, $on_empty_list));
+		$vbox->pack_start($tab_gtk_label);
 
-//		pts_set_assignment("GTK_DYNAMIC_TAB_" . strtoupper($list_function), true);
-//	}
+		gui_gtk::redraw_main_window();
+		pts_set_assignment("GTK_DYNAMIC_TAB_" . strtoupper($list_function), true);
+	}
 }
-
-*/
 
 ?>
