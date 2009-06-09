@@ -60,6 +60,9 @@
 		<Test>crafty</Test>
 	</RunTest>
 	<RunTest>
+		<Test>dcraw</Test>
+	</RunTest>
+	<RunTest>
 		<Test>gui-toolkits</Test>
 	</RunTest>
 </PhoronixTestSuite>
