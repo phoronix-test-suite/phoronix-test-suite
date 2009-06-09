@@ -3,16 +3,16 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>Linux System</Title>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<TestType>System</TestType>
 		<Description>A collection of tests designed to test the overall performance of a desktop computer.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>bork</Test>
+		<Test>build-php</Test>
 	</RunTest>
 	<RunTest>
-		<Test>build-php</Test>
+		<Test>apache</Test>
 	</RunTest>
 	<RunTest>
 		<Test>encode-mp3</Test>
@@ -74,9 +74,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>sunflow</Test>
-	</RunTest>
-	<RunTest>
-		<Test>yafray</Test>
 	</RunTest>
 	<RunTest>
 		<Test>sudokut</Test>
