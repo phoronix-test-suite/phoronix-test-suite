@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - pts: Switch mencoder test profile to using mplayer-base for its mplayer/mencoder build
 - pts: Add desktop-graphics suite
 - pts: Add cpu suite
+- pts: Add workstation-graphics suite
 
 Phoronix Test Suite 2.0.0 Alpha 3
 June 1, 2009
