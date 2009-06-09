@@ -18,7 +18,7 @@ Phoronix Test Suite (Git)
 - pts: Add cpu suite
 - pts: Add workstation-graphics suite
 - pts: Add server-motherboard suite
-- pts: Update linux-system test suite
+- pts: Update linux-system, netbook test suites
 
 Phoronix Test Suite 2.0.0 Alpha 3
 June 1, 2009
