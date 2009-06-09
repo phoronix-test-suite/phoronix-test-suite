@@ -27,7 +27,6 @@ function pts_defaults_test_options($identifier)
 	// Defaults mode for single test
 	$all_args_real = array();
 	$all_args_description = array();
-	$description_separate = " - ";
 	$test_options = pts_test_options($identifier);
 
 	for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
@@ -77,6 +76,7 @@ function pts_defaults_test_options($identifier)
 	pts_all_combos($test_args, "", $all_args_real, 0);
 
 	$test_args_description = array();
+	$description_separate = " - ";
 	pts_all_combos($test_args_description, "", $all_args_description, 0, $description_separate);
 
 	return array($test_args, $test_args_description);

@@ -95,6 +95,7 @@ class pts_result_file_analyze_manager
 								if($diff_index == null)
 								{
 									$this_index = array_pop(array_keys($diff));
+									//$this_index_value = $diff[$this_index];
 									$index_id = implode(",", array($test_name, $test_version, $this_index));
 
 									if(in_array($index_id, $compared_to_index))

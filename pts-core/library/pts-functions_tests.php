@@ -21,6 +21,17 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_setup_results_viewer()
+{
+	if(!is_dir(SAVE_RESULTS_DIR . "pts-results-viewer"))
+	{
+		mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
+	}
+
+	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
+	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
+	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
+}
 function pts_save_result($save_to = null, $save_results = null, $render_graphs = true)
 {
 	// Saves PTS result file
@@ -40,14 +51,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 		mkdir($save_to_dir);
 	}
 
-	if(!is_dir(SAVE_RESULTS_DIR . "pts-results-viewer"))
-	{
-		mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
-	}
-
-	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
-	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
-	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
+	pts_setup_results_viewer();
 	
 	if($save_to == null || $save_results == null)
 	{

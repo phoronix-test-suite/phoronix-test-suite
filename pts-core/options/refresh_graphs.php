@@ -39,6 +39,8 @@ class refresh_graphs implements pts_option_interface
 				pts_generate_graphs($composite_xml, SAVE_RESULTS_DIR . $identifier . "/");
 			}
 
+			pts_setup_results_viewer();
+
 			echo "\nThe Phoronix Test Suite Graphs Have Been Re-Rendered.\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
 			pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
