@@ -36,6 +36,7 @@ class install_test implements pts_option_interface
 		{
 			$items_to_install = array_unique(array_map("strtolower", $items_to_install));
 
+			/*
 			foreach($items_to_install as $this_install)
 			{
 				if(strpos($this_install, "pcqs-") !== false && !pts_pcqs_is_installed())
@@ -64,6 +65,7 @@ class install_test implements pts_option_interface
 					}
 				}
 			}
+			*/
 
 			echo "\n";
 

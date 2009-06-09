@@ -123,11 +123,6 @@ class gui_gtk implements pts_option_interface
 		$file_menu = array("Phoronix Global" => array(new pts_gtk_menu_item("Clone / View Results", array("gui_gtk", "show_phx_global_clone_interface")), 
 		new pts_gtk_menu_item("User Log-In", array("gui_gtk", "show_phx_global_login_interface"))), null);
 
-		if(!pts_pcqs_is_installed())
-		{
-			array_push($file_menu, new pts_gtk_menu_item("Install PCQS", array("gui_gtk", "show_pcqs_install_interface")));
-		}
-
 		$file_menu["Export Results"] = array(new pts_gtk_menu_item("Save To PDF", array("gui_gtk", "show_generate_pdf_interface")),
 		new pts_gtk_menu_item("Save To Text", array("gui_gtk", "show_generate_text_interface")),
 		new pts_gtk_menu_item("Save To CSV", array("gui_gtk", "show_generate_csv_interface"))
@@ -814,16 +809,6 @@ class gui_gtk implements pts_option_interface
 		{
 			$window->destroy();
 		}
-	}
-	public static function pcqs_button_clicked($button_call)
-	{
-		if($button_call == "install")
-		{
-			pts_pcqs_install_package();
-		}
-
-		$window = pts_read_assignment("GTK_OBJ_PCQS_WINDOW");
-		$window->destroy();
 	}
 	public static function check_test_mode_select($checkbox, $other_checkbox)
 	{
@@ -1731,26 +1716,6 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$clipboard->set_text($to_copy);	
-	}
-	public static function show_pcqs_install_interface()
-	{
-		$license = pts_pcqs_user_license();
-
-		if($license == false)
-		{
-			return;
-		}
-
-		$window = new pts_gtk_window("Phoronix Certification & Qualification Suite");
-		$textview_pcqs = new pts_gtk_text_area($license, 540, 250);
-		$return_button = new pts_gtk_button("Return", array("gui_gtk", "pcqs_button_clicked"), "return", -1, -1, Gtk::STOCK_CANCEL);
-		$continue_button = new pts_gtk_button("Install", array("gui_gtk", "pcqs_button_clicked"), "install", -1, -1, Gtk::STOCK_APPLY);
-
-		pts_gtk_array_to_boxes($window, array($textview_pcqs, array($return_button, $continue_button)), 4);
-		pts_set_assignment("GTK_OBJ_PCQS_WINDOW", $window);
-
-		$window->show_all();
-		Gtk::main();
 	}
 	public static function process_user_agreement_prompt($event)
 	{
