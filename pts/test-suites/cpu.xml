@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>Processor</TestType>
+		<Title>CPU / Processor Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite contains tests designed to test the system's CPU / processor.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>nexuiz</Test>
+		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +r_hdr 1</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - HDR</Description>
+	</RunTest>
+	<RunTest>
+		<Test>padman</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>vdrift</Test>
+		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>etqw-demo</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>unigine-tropics</Test>
+		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>unigine-sanctuary</Test>
+		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>3dsmax</Arguments>
+		<Description>3DS Max</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>maya</Arguments>
+		<Description>Maya</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>light</Arguments>
+		<Description>Light</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB</Arguments>
+		<Description>HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-lat 10x10-5%</Arguments>
+		<Description>Local Adaptive Thresholding</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-resize 50%</Arguments>
+		<Description>Resizing</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-sharpen 0x1.0</Arguments>
+		<Description>Sharpen</Description>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-mysql</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-imagemagick</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-pbzip2</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-mp3</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-flac</Test>
+	</RunTest>
+	<RunTest>
+		<Test>ffmpeg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sunflow</Test>
+	</RunTest>
+	<RunTest>
+		<Test>bwfirt</Test>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>povray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>byte</Test>
+		<Arguments>TEST_DHRY2</Arguments>
+		<Description>Dhrystone 2</Description>
+	</RunTest>
+	<RunTest>
+		<Test>scimark2</Test>
+		<Arguments>TEST_COMPOSITE</Arguments>
+		<Description>Composite</Description>
+	</RunTest>
+	<RunTest>
+		<Test>fhourstones</Test>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
+		<Arguments>ADD -b 3 -l 10</Arguments>
+		<Description>Integer Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
+		<Arguments>COPY -b 3 -l 10</Arguments>
+		<Description>Integer Copy</Description>
+	</RunTest>
+	<RunTest>
+		<Test>ramspeed</Test>
+		<Arguments>SCALE -b 3 -l 10</Arguments>
+		<Description>Integer Scale</Description>
+	</RunTest>
+</PhoronixTestSuite>
