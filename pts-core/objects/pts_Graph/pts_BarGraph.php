@@ -41,7 +41,7 @@ class pts_BarGraph extends pts_CustomGraph
 		$width = $this->identifier_width - 4;
 		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $width);
 
-		if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
+		if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 		{
 			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->text_string_width($longest_string, $this->graph_font, 9));
 		}
@@ -68,7 +68,7 @@ class pts_BarGraph extends pts_CustomGraph
 
 			$this->graph_image->draw_line($px_bound_right, $px_from_top_start, $px_bound_right, $px_from_top_end, $this->graph_color_notches);
 
-			if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
+			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 			{
 				$this->graph_image->write_text_left($this->graph_identifiers[$i], $this->graph_font, 9, $this->graph_color_headers, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, $px_bound_left + ceil($this->identifier_width / 2), $px_from_top_end, true);
 			}

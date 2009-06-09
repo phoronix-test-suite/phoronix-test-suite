@@ -40,10 +40,10 @@ class pts_LineGraph extends pts_CustomGraph
 		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
 
 		$longest_string = $this->find_longest_string($this->graph_identifiers);
-		$width = $this->identifier_width - 2;
+		$width = $this->identifier_width - 4;
 		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $width);
 
-		if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
+		if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 		{
 			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->text_string_width($longest_string, $this->graph_font, 9));
 		}
@@ -55,11 +55,17 @@ class pts_LineGraph extends pts_CustomGraph
 
 		for($i = 0; $i < count($this->graph_identifiers); $i++)
 		{
+			if(is_array($this->graph_identifiers[$i]) || $this->graph_identifiers[$i] == "Array")
+			{
+				// TODO: Why is "Array" text getting sent with some line graphs?
+				break;
+			}
+
 			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
 			$this->graph_image->draw_line($px_from_left, $px_from_top_start, $px_from_left, $px_from_top_end, $this->graph_color_notches);
 
-			if($this->graph_font_size_identifiers == $this->minimum_identifier_font)
+			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 			{
 				$this->graph_image->write_text_left($this->graph_identifiers[$i], $this->graph_font, 9, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2, true);
 			}
