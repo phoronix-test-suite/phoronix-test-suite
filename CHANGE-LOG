@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rewrite analyze-batch option entirely and use new pts_result_file_analyze manager engine and other new features
 - pts-core: Support setting up the XSL results viewer when running the refresh-graphs command
 - pts-core: Disable PCQS suite downloader
+- pts-core: With GTK2 GUI, only show "Installed Tests" tab when there are tests installed
 - phodevi: Add a few more video modes to phodevi_gpu to ignore
 - pts: Update mpich2 in mrbayes test profile
 - pts: Add mplayer-base base test profile for providing installation of new mplayer/mencoder build with XvMC/VDPAU/etc

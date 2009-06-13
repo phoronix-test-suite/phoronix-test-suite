@@ -659,8 +659,12 @@ class gui_gtk implements pts_option_interface
 		{
 			// Installed Tests
 			$i_t = pts_gui_installed_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"));
-			$installed_tests = pts_gtk_table(array(count($i_t) . " Tests"), $i_t, array("gui_gtk", "update_details_frame_from_select"), "No tests are currently installed.");
-			pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
+
+			if(count($i_t) > 0)
+			{
+				$installed_tests = pts_gtk_table(array(count($i_t) . " Tests"), $i_t, array("gui_gtk", "update_details_frame_from_select"), "No tests are currently installed.");
+				pts_gtk_add_notebook_tab($main_notebook, $installed_tests, "Installed Tests");
+			}
 
 			// Available Tests
 			$a_t = pts_gui_available_tests(pts_read_assignment("GTK_TEST_TYPES_TO_SHOW"), pts_read_assignment("GTK_TEST_LICENSES_TO_SHOW"), pts_read_assignment("GTK_DEPENDENCY_LIMIT"), pts_read_assignment("GTK_DOWNLOADS_LIMIT"));
