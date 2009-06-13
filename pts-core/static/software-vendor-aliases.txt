@@ -4,3 +4,5 @@ mepis = ubuntu
 debian = ubuntu
 moblin = fedora
 nexentacore = ubuntu
+ptslinuxlive = ubuntu
+ptsdesktoplive = ubuntu
