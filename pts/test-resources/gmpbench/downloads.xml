@@ -11,9 +11,9 @@
 			<FileSize>4464</FileSize>
 		</Package>
 		<Package>
-			<URL>http://gmplib.org/gexpr.c</URL>
-			<MD5>f28a3c5e6f812b26c122e3e71f5d24be</MD5>
-			<FileSize>6278</FileSize>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/gexpr.c.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/gexpr.c.tar.gz</URL>
+			<MD5>ee936a79be9f00de7e8ea2b55171167d</MD5>
+			<FileSize>2367</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

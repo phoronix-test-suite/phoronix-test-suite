@@ -2,6 +2,7 @@
 
 mkdir $HOME/gmp_
 
+tar -xvf gexpr.c.tar.gz
 tar -xvf gmp-4.3.0.tar.gz
 cd gmp-4.3.0/
 ./configure --prefix=$HOME/gmp_

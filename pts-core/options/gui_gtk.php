@@ -1736,7 +1736,7 @@ class gui_gtk implements pts_option_interface
 
 		$textview_agreement = new pts_gtk_text_area(trim($user_agreement), 540, 250);
 		$return_button = new pts_gtk_button("Quit", array("gui_gtk", "process_user_agreement_prompt"), "quit", -1, -1, Gtk::STOCK_CANCEL);
-		$continue_button = new pts_gtk_button("Accept To Terms", array("gui_gtk", "process_user_agreement_prompt"), "yes", -1, -1, Gtk::STOCK_APPLY);
+		$continue_button = new pts_gtk_button("Accept Terms", array("gui_gtk", "process_user_agreement_prompt"), "yes", -1, -1, Gtk::STOCK_APPLY);
 
 		pts_gtk_array_to_boxes($window, array($textview_agreement, new GtkLabel("Do you agree to the user terms listed above?"), array($return_button, $continue_button)), 1);
 
