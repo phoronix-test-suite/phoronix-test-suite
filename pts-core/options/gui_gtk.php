@@ -858,6 +858,7 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_run_confirmation_interface($identifiers)
 	{
+		$identifiers = pts_to_array($identifiers);
 		if(empty($identifiers))
 		{
 			echo "DEBUG: Null identifier in gtk_gui::show_run_confirmation_interface()\n";
