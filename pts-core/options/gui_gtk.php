@@ -153,8 +153,8 @@ class gui_gtk implements pts_option_interface
 			null,
 			"License" => $license_type,
 			"Subsystem" => $subsystem_type,
-			"Dependencies" => array(new pts_gtk_menu_item(array("Show All", "All Dependencies Installed", "Dependencies Missing"), array("gui_gtk", "radio_test_dependencies_select"), "RADIO_BUTTON")),
-			"File Downloads" => array(new pts_gtk_menu_item(array("Show All", "All Files Available Locally", "Files Need To Be Downloaded"), array("gui_gtk", "radio_test_downloads_select"), "RADIO_BUTTON"))
+			"Dependencies" => array(new pts_gtk_menu_item(array("Show All", "All Dependencies Installed", "Dependencies Missing"), array("gui_gtk", "radio_test_dependencies_select"), "RADIO_BUTTON", null, IS_PTS_LIVE ? 1 : 0)),
+			"File Downloads" => array(new pts_gtk_menu_item(array("Show All", "All Files Available Locally", "Files Need To Be Downloaded"), array("gui_gtk", "radio_test_downloads_select"), "RADIO_BUTTON", null, IS_PTS_LIVE ? 1 : 0))
 			);
 
 		$main_menu_items = array(

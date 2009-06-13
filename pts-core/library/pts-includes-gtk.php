@@ -81,7 +81,15 @@ function pts_gtk_add_menu($vbox, $menu)
 						$menu->append($radio[$i]);
 						$i++;
 					}
-					$radio[0]->set_active(true);
+
+					$default = $this_object->get_active_default();
+
+					if(!isset($radio[$default]))
+					{
+						$default = 0;
+					}
+
+					$radio[$default]->set_active(true);
 				}
 				else
 				{

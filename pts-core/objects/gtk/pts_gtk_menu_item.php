@@ -52,7 +52,7 @@ class pts_gtk_menu_item
 		$this->to_call = $to_call;
 		$this->type = $type;
 		$this->attach_image = $attach_image;
-		$this->active_default = $set_active_default == true;
+		$this->active_default = $set_active_default;
 		$this->attach_to_pts_assignment = $assignment;
 	}
 	public function get_title()
