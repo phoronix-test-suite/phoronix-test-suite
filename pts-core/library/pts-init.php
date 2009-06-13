@@ -64,6 +64,8 @@ function pts_basic_init()
 
 	phodevi::restore_smart_cache(PTS_USER_DIR, PTS_VERSION);
 	phodevi::initial_setup();
+
+	define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
 }
 function pts_extended_init()
 {

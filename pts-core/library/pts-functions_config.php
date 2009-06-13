@@ -52,6 +52,17 @@ function pts_user_config_init($new_config_values = null)
 		$last_time = date("Y-m-d H:i:s");
 	}
 
+	if(IS_PTS_LIVE)
+	{
+		$symlink_default = "TRUE";
+		$remove_downloaded_files = "TRUE";
+	}
+	else
+	{
+		$symlink_default = "FALSE";
+		$remove_downloaded_files = "FALSE";
+	}
+
 	$config = new tandem_XmlWriter();
 	$config->setXslBinding("xsl/pts-user-config-viewer.xsl");
 	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User", $read_config));
@@ -61,9 +72,9 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObject(P_OPTION_DEFAULT_BROWSER, 2, pts_read_user_config(P_OPTION_DEFAULT_BROWSER, "", $read_config));
 	$config->addXmlObject(P_OPTION_PHODEVI_CACHE, 2, pts_read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE", $read_config));
 
-	$config->addXmlObject(P_OPTION_TEST_REMOVEDOWNLOADS, 3, pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE", $read_config));
+	$config->addXmlObject(P_OPTION_TEST_REMOVEDOWNLOADS, 3, pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, $remove_downloaded_files, $read_config));
 	$config->addXmlObject(P_OPTION_CACHE_SEARCHMEDIA, 3, pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE", $read_config));
-	$config->addXmlObject(P_OPTION_CACHE_SYMLINK, 3, pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE", $read_config));
+	$config->addXmlObject(P_OPTION_CACHE_SYMLINK, 3, pts_read_user_config(P_OPTION_CACHE_SYMLINK, $symlink_default, $read_config));
 	$config->addXmlObject(P_OPTION_PROMPT_DOWNLOADLOC, 3, pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE", $read_config));
 	$config->addXmlObject(P_OPTION_TEST_ENVIRONMENT, 3, pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/", $read_config));
 	$config->addXmlObject(P_OPTION_CACHE_DIRECTORY, 3, pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/", $read_config));

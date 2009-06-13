@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: With GTK2 GUI, only show "Installed Tests" tab when there are tests installed
 - pts-core: Support checking /var/cache/phoronix-test-suite/ as a possible PTS download-cache directory
 - pts-core: Fix test options not showing up when selecting a single test to run from the GTK2 GUI
+- pts-core: Support different default user-config.xml options when running the PTS live OS
 - phodevi: Add a few more video modes to phodevi_gpu to ignore
 - pts: Update mpich2 in mrbayes test profile
 - pts: Add mplayer-base base test profile for providing installation of new mplayer/mencoder build with XvMC/VDPAU/etc
