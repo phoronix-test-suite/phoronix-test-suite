@@ -193,43 +193,15 @@ class gui_gtk implements pts_option_interface
 		//
 
 		$header_box = new GtkEventBox();
+		pts_set_assignment("GTK_HEADER_BOX", $header_box);
 		$header_box->set_size_request(-1, 35);
-		$header_box->modify_bg(Gtk::STATE_NORMAL, $window->get_style()->bg[Gtk::STATE_SELECTED]); // or do STATE_ACTIVE
+		$header_box->modify_bg(Gtk::STATE_NORMAL, $window->get_style()->base[Gtk::STATE_SELECTED]); // or do STATE_ACTIVE
 		$header_bbox = new GtkHButtonBox();
 		$header_bbox->set_layout(Gtk::BUTTONBOX_END);
 		$header_bbox->set_spacing(5);
 		$header_box->add($header_bbox);
 
-		$i = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER");
-		if(!empty($i))
-		{
-			$tr_button = new pts_gtk_button("View Test Results", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $i . "/composite.xml");
-			$header_bbox->add($tr_button);
-		}
-
-		$ti = pts_read_assignment("PREV_TEST_INSTALLED");
-		if(!empty($ti))
-		{
-			$ti_button = new GtkButton("Run " . pts_test_identifier_to_name($ti));
-			$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), $ti);
-			$header_bbox->add($ti_button);
-		}
-
-		$u = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL");
-		if(!empty($u))
-		{
-			$pg_button = new pts_gtk_button("View On Phoronix Global", array("gui_gtk", "launch_web_browser"), $u);
-			$header_bbox->add($pg_button);
-		}
-
-		$p = pts_read_assignment("PREV_PDF_FILE");
-		if(!empty($p))
-		{
-			$pdf_label = new GtkLabel("PDF Saved To: " . $p);
-			$pdf_label->set_line_wrap(true);
-			$pdf_label->set_size_request(260, -1);
-			$header_bbox->add($pdf_label);
-		}
+		gui_gtk::check_events_for_header($header_bbox);
 
 		if(count($header_bbox->get_children()) > 0)
 		{
@@ -258,7 +230,7 @@ class gui_gtk implements pts_option_interface
 		*/
 
 		// Details Frame
-		$main_frame = new GtkFrame((($t = pts_read_assignment("PREV_SAVE_NAME_TITLE")) !== false ? $t : "Welcome"));
+		$main_frame = new GtkFrame("Welcome");
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME", $main_frame);
 
 		$event_box = new GtkEventBox();
@@ -314,6 +286,41 @@ class gui_gtk implements pts_option_interface
 		$window->show_all();
 		Gtk::main();
 	}
+	public static function check_events_for_header(&$button_box)
+	{
+		if(($p = pts_read_assignment("PREV_SAVE_NAME_TITLE")) != false)
+		{
+			$button_box->add(new pts_gtk_label("<b>" . $p . "</b> "));
+		}
+		if(($p = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) != false)
+		{
+			$tr_button = new pts_gtk_button("View Test Results", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $p . "/composite.xml");
+			$button_box->add($tr_button);
+		}
+		if(($p = pts_read_assignment("PREV_TEST_INSTALLED")) != false)
+		{
+			$ti_button = new GtkButton("Run " . pts_test_identifier_to_name($p));
+			$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), $p);
+			$button_box->add($ti_button);
+		}
+		if(($p = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL")) != false)
+		{
+			$pg_button = new pts_gtk_button("View On Phoronix Global", array("gui_gtk", "launch_web_browser"), $p);
+			$button_box->add($pg_button);
+		}
+		if(($p = pts_read_assignment("PREV_PDF_FILE")) != false)
+		{
+			$button_box->add(new pts_gtk_label("<b>PDF File Saved To:</b> " . $p));
+		}
+		if(($p = pts_read_assignment("PREV_CSV_FILE")) != false)
+		{
+			$button_box->add(new pts_gtk_label("<b>CSV File Saved To:</b> " . $p));
+		}
+		if(($p = pts_read_assignment("PREV_TXT_FILE")) != false)
+		{
+			$button_box->add(new pts_gtk_label("<b>Text File Saved To:</b> " . $p));
+		}
+	}
 	public static function drag_drop_item($widget, $context, $x, $y, $data, $info, $time, $img)
 	{
 		$file = str_replace("file://", "", trim($data->data));
@@ -364,6 +371,10 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function update_details_frame_from_select($object)
 	{
+		// TODO: the below code does not seem to be working
+		// $header_box = pts_read_assignment("GTK_HEADER_BOX");
+		// $header_box->hide();
+
 		$previous_select = (is_array($p = pts_read_assignment("GTK_SELECTED_ITEM_PREV")) ? $p : array());
 		$identifiers = pts_gtk_selected_items($object);
 		pts_set_assignment("GTK_MULTIPLE_SELECT_ITEMS", ($multiple_selected = count($identifiers) > 1));

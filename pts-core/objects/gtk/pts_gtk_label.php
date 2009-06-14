@@ -24,7 +24,8 @@ class pts_gtk_label extends GtkLabel
 {
 	public function __construct($label_text, $font_description = null)
 	{
-		parent::__construct($label_text);
+		parent::__construct();
+		$this->set_markup_with_mnemonic($label_text);
 
 		if($font_description != null)
 		{

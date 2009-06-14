@@ -74,6 +74,7 @@ class result_file_to_csv implements pts_option_interface
 				$file .= ".csv";
 			}
 
+			pts_set_assignment_next("PREV_CSV_FILE", $file);
 			file_put_contents($file, $result_output);
 		}
 		else

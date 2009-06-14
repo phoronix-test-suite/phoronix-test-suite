@@ -69,6 +69,7 @@ class result_file_to_text implements pts_option_interface
 				$file .= ".txt";
 			}
 
+			pts_set_assignment_next("PREV_TXT_FILE", $file);
 			file_put_contents($file, $result_output);
 		}
 		else
