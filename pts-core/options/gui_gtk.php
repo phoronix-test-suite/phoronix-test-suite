@@ -748,7 +748,13 @@ class gui_gtk implements pts_option_interface
 				pts_run_option_next("install_test", $identifiers, array("SILENCE_MESSAGES" => true));
 				pts_run_option_next("gui_gtk");
 				break;
-			case "benchmark":
+			case "BENCHMARK":
+			case "RUN":
+				if($button_call == "BENCHMARK")
+				{
+					pts_run_option_next("install_test", $identifiers, array("SILENCE_MESSAGES" => true));
+				}
+
 				$args_to_pass = array("IS_BATCH_MODE" => pts_read_assignment("GTK_BATCH_MODE"), 
 				"IS_DEFAULTS_MODE" => pts_read_assignment("GTK_DEFAULTS_MODE"), "AUTOMATED_MODE" => true);
 
@@ -845,18 +851,19 @@ class gui_gtk implements pts_option_interface
 			$identifier = gui_gtk::notebook_selected_to_identifier();
 		}
 
-		switch(($task == null ? pts_read_assignment("GTK_RUN_BUTTON_TASK") : $task))
+		switch(($task == null ? ($task = pts_read_assignment("GTK_RUN_BUTTON_TASK")) : $task))
 		{
 			case "INSTALL":
 			case "UPDATE":
 				gui_gtk::update_details_frame_for_install($identifier);
 				break;
 			case "RUN":
-				gui_gtk::show_run_confirmation_interface($identifier);
+			case "BENCHMARK":
+				gui_gtk::show_run_confirmation_interface($identifier, $task);
 				break;
 		}
 	}
-	public static function show_run_confirmation_interface($identifiers)
+	public static function show_run_confirmation_interface($identifiers, $task = "RUN")
 	{
 		$identifiers = pts_to_array($identifiers);
 		if(empty($identifiers))
@@ -967,7 +974,7 @@ class gui_gtk implements pts_option_interface
 
 		$continue_img = GtkImage::new_from_stock(Gtk::STOCK_APPLY, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 		$continue_button = new GtkButton("Continue");
-		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), "benchmark", $identifiers);
+		$continue_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), $task, $identifiers);
 		$continue_button->set_image($continue_img);
 
 		pts_gtk_array_to_boxes($vbox, array($continue_button));
@@ -1243,36 +1250,26 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function update_run_button()
 	{
-		$identifier = gui_gtk::notebook_selected_to_identifier();
+		$identifiers = gui_gtk::notebook_selected_to_identifier();
+		$button_string = "Run";
 
-		if(count($identifier) > 1)
+		foreach(pts_contained_tests($identifiers, true, true, true) as $one_identifier)
 		{
-			$button_string = "Run"; // TODO: cleanup
+			if(!pts_test_installed($one_identifier))
+			{
+				$button_string = "Install";
+				break;
+			}
+			else if(pts_test_needs_updated_install($one_identifier))
+			{
+				$button_string = "Update";
+				break;
+			}
 		}
-		else
+
+		if(count($identifiers) > 1 && $button_string != "Run")
 		{
-			$identifier = array_pop($identifier);
-
-			if(pts_is_test($identifier))
-			{
-				if(!pts_test_installed($identifier))
-				{
-					$button_string = "Install";
-
-				}
-				else if(pts_test_needs_updated_install($identifier))
-				{
-					$button_string = "Update";
-				}
-				else
-				{
-					$button_string = "Run";
-				}
-			}
-			else if(pts_is_suite($identifier) || pts_is_test_result($identifier))
-			{
-				$button_string = (pts_suite_needs_updated_install($identifier) ? "Update" : "Run");
-			}
+			$button_string = "Benchmark";
 		}
 
 		pts_set_assignment("GTK_RUN_BUTTON_TASK", strtoupper($button_string));
