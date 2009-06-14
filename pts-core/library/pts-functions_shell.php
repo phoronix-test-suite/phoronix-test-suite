@@ -76,7 +76,7 @@ function pts_download($download, $to)
 	else if(($wget = pts_executable_in_path("wget")) != false)
 	{
 		// wget download
-		$download_output = shell_exec("cd " . $to_dir . " && " . $wget . " --timeout=20 --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && " . $wget . " --timeout=20 --tries=3 --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
 	}
 	else if(IS_BSD && ($ftp = pts_executable_in_path("ftp")) != false)
 	{

@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support different default user-config.xml options when running the PTS live OS
 - pts-core: Support different defaults in GTK2 GUI when running the PTS live OS
 - pts-core: When selecting multiple tests/suites from GTK2 GUI, support both installing and running tests from the benchmark button click
+- pts-core: Set tries to 3 when using wget downloader
 - phodevi: Add a few more video modes to phodevi_gpu to ignore
 - pts: Update mpich2 in mrbayes test profile
 - pts: Add mplayer-base base test profile for providing installation of new mplayer/mencoder build with XvMC/VDPAU/etc
