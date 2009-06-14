@@ -52,7 +52,7 @@ class pts_result_file_merge_manager
 		$merged = false;
 		for($i = 0; $i < count($this->test_results) && !$merged; $i++)
 		{
-			if($this->test_results[$i]->get_test_name() == $merge_test_object->get_test_name() && $this->test_results[$i]->get_arguments() == $merge_test_object->get_arguments() && $this->test_results[$i]->get_attributes() == $merge_test_object->get_attributes() && $this->test_results[$i]->get_version() == $merge_test_object->get_version())
+			if($this->test_results[$i]->get_test_name() == $merge_test_object->get_test_name() && trim($this->test_results[$i]->get_arguments()) == trim($merge_test_object->get_arguments()) && $this->test_results[$i]->get_attributes() == $merge_test_object->get_attributes() && $this->test_results[$i]->get_version() == $merge_test_object->get_version())
 			{
 				$identifiers = $merge_test_object->get_identifiers();
 				$values = $merge_test_object->get_values();
@@ -77,8 +77,15 @@ class pts_result_file_merge_manager
 
 		if(!$merged)
 		{
+			$skip_adding = false;
+
 			if(is_array($select_identifiers))
 			{
+				if(pts_read_assignment("REFERENCE_COMPARISON"))
+				{
+					$skip_adding = true;
+				}
+
 				$identifiers = $merge_test_object->get_identifiers();
 				$values = $merge_test_object->get_values();
 				$raw_values = $merge_test_object->get_raw_values();
@@ -97,7 +104,10 @@ class pts_result_file_merge_manager
 			}
 
 			// Add Result
-			array_push($this->test_results, $merge_test_object);
+			if(!$skip_adding)
+			{
+				array_push($this->test_results, $merge_test_object);
+			}
 		}
 	}
 	protected function result_already_contained($test_results_location, $identifier, $value)

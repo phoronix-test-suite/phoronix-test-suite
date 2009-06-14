@@ -950,6 +950,7 @@ function pts_result_file_reference_tests($result)
 			{
 				pts_clone_from_global($global_id, false);
 			}
+
 			array_push($reference_tests, $global_id);
 		}
 	}
