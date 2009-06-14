@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: When selecting multiple tests/suites from GTK2 GUI, support both installing and running tests from the benchmark button click
 - pts-core: Set tries to 3 when using wget downloader
 - pts-core: Don't overflow the test options window when there are many tests/options to be displayed
+- pts-core: Add a colored header along the top of the GTK2 GUI for indicating important buttons/events rather than using the main frame
 - phodevi: Add a few more video modes to phodevi_gpu to ignore
 - pts: Update mpich2 in mrbayes test profile
 - pts: Add mplayer-base base test profile for providing installation of new mplayer/mencoder build with XvMC/VDPAU/etc

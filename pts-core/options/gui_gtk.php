@@ -192,70 +192,62 @@ class gui_gtk implements pts_option_interface
 		// Top Header
 		//
 
-/*		$header_hbox = new GtkHBox();
-		$header_hbox->modify_bg(Gtk::STATE_NORMAL, $window->get_style()->bg[Gtk::STATE_SELECTED]);
-		//$header_hbox->set_size_request(-1, 50);
-
-		$vbox->pack_start($header_hbox);
-*/
-		//
-		// Main Area
-		//
-
-		// Details Frame
-		$main_frame = new GtkFrame((($t = pts_read_assignment("PREV_SAVE_NAME_TITLE")) !== false ? $t : "Welcome"));
-		pts_set_assignment("GTK_OBJ_MAIN_FRAME", $main_frame);
+		$header_box = new GtkEventBox();
+		$header_box->set_size_request(-1, 35);
+		$header_box->modify_bg(Gtk::STATE_NORMAL, $window->get_style()->bg[Gtk::STATE_SELECTED]); // or do STATE_ACTIVE
+		$header_bbox = new GtkHButtonBox();
+		$header_bbox->set_layout(Gtk::BUTTONBOX_END);
+		$header_bbox->set_spacing(5);
+		$header_box->add($header_bbox);
 
 		$i = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER");
-		$u = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL");
-		$p = pts_read_assignment("PREV_PDF_FILE");
-		$ti = pts_read_assignment("PREV_TEST_INSTALLED");
-
-		$main_frame_objects = array();
-		if($i != false || $u != false || $p != false || $ti != false)
+		if(!empty($i))
 		{
+			$tr_button = new pts_gtk_button("View Test Results", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $i . "/composite.xml");
+			$header_bbox->add($tr_button);
+		}
 
-			// TODO: this area here could be cleaned up...
+		$ti = pts_read_assignment("PREV_TEST_INSTALLED");
+		if(!empty($ti))
+		{
+			$ti_button = new GtkButton("Run " . pts_test_identifier_to_name($ti));
+			$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), $ti);
+			$header_bbox->add($ti_button);
+		}
 
-			array_push($main_frame_objects, null);
-			if(!empty($i))
+		$u = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL");
+		if(!empty($u))
+		{
+			$pg_button = new pts_gtk_button("View On Phoronix Global", array("gui_gtk", "launch_web_browser"), $u);
+			$header_bbox->add($pg_button);
+		}
+
+		$p = pts_read_assignment("PREV_PDF_FILE");
+		if(!empty($p))
+		{
+			$pdf_label = new GtkLabel("PDF Saved To: " . $p);
+			$pdf_label->set_line_wrap(true);
+			$pdf_label->set_size_request(260, -1);
+			$header_bbox->add($pdf_label);
+		}
+
+		if(count($header_bbox->get_children()) > 0)
+		{
+			$vbox->pack_start($header_box);
+		}
+
+		// TODO: Important! Reimplement the reference comparisons
+		/*
+		if(!empty($i) && pts_read_assignment("PREV_COMMAND") != "reference_comparison")
+		{
+			$reference_tests = pts_result_file_reference_tests($i);
+			if(count($reference_tests) > 0)
 			{
-				$tr_button = new pts_gtk_button("View Test Results", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $i . "/composite.xml");
-				array_push($main_frame_objects, $tr_button);
-			}
-			if(!empty($ti))
-			{
-				$ti_button = new GtkButton("Run " . pts_test_identifier_to_name($ti));
-				$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), $ti);
-				array_push($main_frame_objects, $ti_button);
-			}
-			if(!empty($u))
-			{
-				$pg_button = new pts_gtk_button("View On Phoronix Global", array("gui_gtk", "launch_web_browser"), $u);
-				array_push($main_frame_objects, $pg_button);
-			}
-			if(!empty($p))
-			{
-				$pdf_label = new GtkLabel("PDF Saved To: " . $p);
-				$pdf_label->set_line_wrap(true);
-				$pdf_label->set_size_request(260, -1);
-				array_push($main_frame_objects, $pdf_label);
-			}
-			if(!empty($i) && pts_read_assignment("PREV_COMMAND") != "reference_comparison")
-			{
-				$reference_tests = pts_result_file_reference_tests($i);
-				if(count($reference_tests) > 0)
+				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($reference_tests, $i);
+
+				foreach($objs as $obj)
 				{
-					$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($reference_tests, $i);
-
-					foreach($objs as $obj)
-					{
-						array_push($main_frame_objects, $obj);
-					}
-				}
-				else
-				{
-					array_push($main_frame_objects, null);
+					array_push($main_frame_objects, $obj);
 				}
 			}
 			else
@@ -263,18 +255,21 @@ class gui_gtk implements pts_option_interface
 				array_push($main_frame_objects, null);
 			}
 		}
-		else
-		{
-			$event_box = new GtkEventBox();
-			//$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
-			$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
-			$logo->set_size_request(158, 82);
-			$event_box->add($logo);
-			array_push($main_frame_objects, $event_box);
+		*/
 
-			$welcome = file_get_contents(STATIC_DIR . "short-description.txt");
-			array_push($main_frame_objects, $t = new pts_gtk_text_area($welcome, -1, -1, true));
-		}
+		// Details Frame
+		$main_frame = new GtkFrame((($t = pts_read_assignment("PREV_SAVE_NAME_TITLE")) !== false ? $t : "Welcome"));
+		pts_set_assignment("GTK_OBJ_MAIN_FRAME", $main_frame);
+
+		$event_box = new GtkEventBox();
+		//$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
+		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
+		$logo->set_size_request(158, 82);
+		$event_box->add($logo);
+		$main_frame_objects = array($event_box);
+
+		$welcome = file_get_contents(STATIC_DIR . "short-description.txt");
+		array_push($main_frame_objects, $t = new pts_gtk_text_area($welcome, -1, -1, true));
 
 		$main_frame_box = pts_gtk_array_to_boxes($main_frame, $main_frame_objects, 6);
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $main_frame_box);
