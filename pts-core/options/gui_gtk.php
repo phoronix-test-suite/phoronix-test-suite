@@ -208,40 +208,41 @@ class gui_gtk implements pts_option_interface
 			$vbox->pack_start($header_box);
 		}
 
-		// TODO: Important! Reimplement the reference comparisons
-		/*
-		if(!empty($i) && pts_read_assignment("PREV_COMMAND") != "reference_comparison")
+		$reference_comparison_objects = array();
+		if(($prev_identifier = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) != false && pts_read_assignment("PREV_COMMAND") != "reference_comparison")
 		{
-			$reference_tests = pts_result_file_reference_tests($i);
+			$reference_tests = pts_result_file_reference_tests($prev_identifier);
 			if(count($reference_tests) > 0)
 			{
-				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($reference_tests, $i);
+				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($reference_tests, $prev_identifier);
 
 				foreach($objs as $obj)
 				{
-					array_push($main_frame_objects, $obj);
+					array_push($reference_comparison_objects, $obj);
 				}
 			}
-			else
-			{
-				array_push($main_frame_objects, null);
-			}
 		}
-		*/
 
 		// Details Frame
 		$main_frame = new GtkFrame("Welcome");
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME", $main_frame);
 
-		$event_box = new GtkEventBox();
-		//$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
-		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
-		$logo->set_size_request(158, 82);
-		$event_box->add($logo);
-		$main_frame_objects = array($event_box);
+		if(count($reference_comparison_objects) > 0)
+		{
+			$main_frame_objects = $reference_comparison_objects;
+		}
+		else
+		{
+			$event_box = new GtkEventBox();
+			//$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
+			$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
+			$logo->set_size_request(158, 82);
+			$event_box->add($logo);
+			$main_frame_objects = array($event_box);
 
-		$welcome = file_get_contents(STATIC_DIR . "short-description.txt");
-		array_push($main_frame_objects, $t = new pts_gtk_text_area($welcome, -1, -1, true));
+			$welcome = file_get_contents(STATIC_DIR . "short-description.txt");
+			array_push($main_frame_objects, $t = new pts_gtk_text_area($welcome, -1, -1, true));
+		}
 
 		$main_frame_box = pts_gtk_array_to_boxes($main_frame, $main_frame_objects, 6);
 		pts_set_assignment("GTK_OBJ_MAIN_FRAME_BOX", $main_frame_box);
@@ -589,13 +590,14 @@ class gui_gtk implements pts_option_interface
 	{
 		$reference_comparisons = pts_read_assignment("REFERENCE_COMPARISONS");
 		$identifier = pts_read_assignment("REFERENCE_COMPARISONS_IDENTIFIER");
+		$comparison_title = pts_read_assignment("PREV_SAVE_NAME_TITLE");
 
 		if(empty($reference_comparisons))
 		{
 			return false;
 		}
 
-		$pass_args = array("AUTOMATED_MODE" => true, "REFERENCE_COMPARISONS" => $reference_comparisons);
+		$pass_args = array("AUTOMATED_MODE" => true, "REFERENCE_COMPARISONS" => $reference_comparisons, "PREV_SAVE_NAME_TITLE" => $comparison_title);
 		pts_run_option_next("reference_comparison", $identifier, $pass_args);
 		pts_run_option_next("gui_gtk");
 

@@ -89,6 +89,12 @@ class reference_comparison implements pts_option_interface
 		$merged_results = call_user_func_array("pts_merge_test_results", $merge_args);
 		pts_save_result($r[0] . "/composite.xml", $merged_results);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $r[0]);
+
+		if(($title = pts_read_assignment("PREV_SAVE_NAME_TITLE")) != false)
+		{
+			pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $title . " + Comparison");
+		}
+
 		pts_display_web_browser(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
 	}
 }
