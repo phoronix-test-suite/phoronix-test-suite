@@ -30,6 +30,7 @@ Phoronix Test Suite (Git)
 - pts: Update linux-system, netbook test suites
 - pts: Support PTS External Dependencies on the PTS Linux OS
 - pts: Compiler fix for nero2d test profile
+- pts: Update PTS External Dependencies support for Fedora x86_64
 
 Phoronix Test Suite 2.0.0 Alpha 3
 June 1, 2009

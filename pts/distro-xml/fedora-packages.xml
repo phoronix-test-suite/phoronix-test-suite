@@ -18,7 +18,7 @@
 		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>freeglut-devel</PackageName>
-			<FileCheck>/usr/lib/libglut.so, /usr/include/GL/glut.h</FileCheck>
+			<FileCheck>/usr/lib/libglut.so OR /usr/lib64/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
@@ -53,7 +53,7 @@
 		<Package>
 			<GenericName>imlib2-development</GenericName>
 			<PackageName>imlib2-devel</PackageName>
-			<FileCheck>/usr/lib/imlib2</FileCheck>
+			<FileCheck>/usr/lib/imlib2 OR /usr/lib64/imlib2</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
@@ -78,7 +78,7 @@
 		<Package>
 			<GenericName>freeimage</GenericName>
 			<PackageName>freeimage freeimage-devel</PackageName>
-			<FileCheck>/usr/lib/libfreeimage.so.3, /usr/include/FreeImage.h</FileCheck>
+			<FileCheck>/usr/lib/libfreeimage.so.3 OR /usr/lib64/libfreeimage.so.3, /usr/include/FreeImage.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>scons</GenericName>
@@ -113,12 +113,12 @@
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
 			<PackageName>compat-libstdc++-33</PackageName>
-			<FileCheck>/usr/lib/libstdc++.so.5</FileCheck>
+			<FileCheck>/usr/lib/libstdc++.so.5 OR /usr/lib64/libstdc++.so.5</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
 			<PackageName>openal openal-devel</PackageName>
-			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
+			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0 OR /usr/lib64/libopenal.so.0</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
@@ -162,8 +162,8 @@
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
-			<PackageName>curl</PackageName>
-			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
+			<PackageName>libcurl curl</PackageName>
+			<FileCheck>/usr/lib/libcurl.so.4 OR /usr/lib64/libcurl.so.4, /usr/bin/curl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
@@ -172,13 +172,13 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<PackageName>blas-devel</PackageName>
-			<FileCheck>/usr/include/cblas.h</FileCheck>
+			<PackageName>blas blas-devel</PackageName>
+			<FileCheck>/usr/include/cblas.h OR /usr/lib/libblas.so.3</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
 			<PackageName>lapack-devel</PackageName>
-			<FileCheck>/usr/lib/liblapack.so</FileCheck>
+			<FileCheck>/usr/lib/liblapack.so OR /usr/lib64/liblapack.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
