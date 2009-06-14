@@ -894,12 +894,13 @@ class gui_gtk implements pts_option_interface
 			foreach($identifiers as $identifier)
 			{
 				$test_options = pts_test_options($identifier);
-				array_push($menu_items, new pts_gtk_label($identifier . " Test Options", "Sans 19"));
 
 				if(count($test_options) == 0)
 				{
-					array_push($menu_items, new GtkLabel("No user options available."));
+					continue;
 				}
+
+				array_push($menu_items, new pts_gtk_label($identifier . " Test Options", "Sans 19"));
 
 				for($i = 0; $i < count($test_options); $i++)
 				{
@@ -939,7 +940,19 @@ class gui_gtk implements pts_option_interface
 			pts_set_assignment("GTK_TEST_RUN_OPTIONS_SET", $selected_options);
 		}
 
-		array_push($menu_items, null);
+		if(count($menu_items) > 0)
+		{
+			$test_area = new GtkScrolledWindow();
+			$test_area->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+			$test_area->set_size_request(-1, 200);
+			pts_gtk_array_to_boxes($test_area, $menu_items);
+			$menu_items = array($test_area);
+		}
+		else
+		{
+			$menu_items = array();
+		}
+
 		array_push($menu_items, new pts_gtk_label("Results", "Sans 19"));
 
 		$save_results = new GtkCheckButton("Save Results");

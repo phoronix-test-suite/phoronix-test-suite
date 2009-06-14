@@ -207,7 +207,15 @@ function pts_gtk_array_to_boxes($widget, $items, $set_spacing = -1, $append_to =
 	else
 	{
 		$add_to = new GtkVBox();
-		$widget->add($add_to);	
+
+		if($widget instanceOf GtkScrolledWindow)
+		{
+			$widget->add_with_viewport($add_to);
+		}
+		else
+		{
+			$widget->add($add_to);
+		}
 	}
 
 	if($set_spacing != -1 && method_exists($add_to, "set_spacing"))
