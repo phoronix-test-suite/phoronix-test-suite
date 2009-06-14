@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://voxel.dl.sourceforge.net/sourceforge/openfmm/nero2d-2.0.2.tar.gz, http://internap.dl.sourceforge.net/sourceforge/openfmm/nero2d-2.0.2.tar.gz, http://softlayer.dl.sourceforge.net/sourceforge/openfmm/nero2d-2.0.2.tar.gz, http://internode.dl.sourceforge.net/sourceforge/openfmm/nero2d-2.0.2.tar.gz, http://fastbull.dl.sourceforge.net/sourceforge/openfmm/nero2d-2.0.2.tar.gz</URL>
+			<URL>http://voxel.dl.sourceforge.net/sourceforge/openfmm/nero2d-2.0.2.tar.gz, http://internap.dl.sourceforge.net/sourceforge/openfmm/nero2d-2.0.2.tar.gz, http://softlayer.dl.sourceforge.net/sourceforge/openfmm/nero2d-2.0.2.tar.gz, http://internode.dl.sourceforge.net/sourceforge/openfmm/nero2d-2.0.2.tar.gz</URL>
 			<MD5>c706e3c0bd88936c73b703698a5fed01</MD5>
 			<FileSize>1546724</FileSize>
 		</Package>

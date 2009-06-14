@@ -27,6 +27,7 @@ Phoronix Test Suite (Git)
 - pts: Add server-motherboard suite
 - pts: Update linux-system, netbook test suites
 - pts: Support PTS External Dependencies on the PTS Linux OS
+- pts: Compiler fix for nero2d test profile
 
 Phoronix Test Suite 2.0.0 Alpha 3
 June 1, 2009
