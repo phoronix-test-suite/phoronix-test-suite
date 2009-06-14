@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.0.0 Beta 1
+June 14, 2009
 
 - pts-core: Fix system monitoring reporting of values in test results
 - pts-core: Proper handling of line graphs in test results
