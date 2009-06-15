@@ -279,18 +279,5 @@ function pts_user_message($message)
 		}
 	}
 }
-function pts_load_pdf_generator()
-{
-	if(is_file("/usr/share/php/fpdf/fpdf.php"))
-	{
-		$pdf_loader = "/usr/share/php/fpdf/fpdf.php";
-	}
-	else
-	{
-		$pdf_loader = false;
-	}
-
-	return $pdf_loader && include_once($pdf_loader);
-}
 
 ?>

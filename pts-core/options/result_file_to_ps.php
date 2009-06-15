@@ -20,25 +20,15 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class result_file_to_pdf implements pts_option_interface
+class result_file_to_ps implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Result File To PDF Converter");
+		echo pts_string_header("Result File To PostScript Converter");
 
-		if(is_file("/usr/share/php/fpdf/fpdf.php"))
+		if(!extension_loaded("ps") || !function_exists("ps_new"))
 		{
-			include_once("/usr/share/php/fpdf/fpdf.php");
-		}
-		else
-		{
-			echo "\nThe FPDF library must be installed.\n\n";
-			return;
-		}
-
-		if(!is_file(($saved_results_file = SAVE_RESULTS_DIR . $r[0] . "/composite.xml")))
-		{
-			echo "\n" . $r[0] . " is not a saved results file.\n\n";
+			echo "\nThe PS extension for PHP does not appear to be installed.\n\n";
 			return;
 		}
 
@@ -46,9 +36,17 @@ class result_file_to_pdf implements pts_option_interface
 		pts_generate_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
 		$xml_parser = new pts_results_tandem_XmlReader($saved_results_file);
-		$pdf = new pts_pdf_template($xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE), $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME));
+		$ps = ps_new();
+		$page_width = 596;
+		$page_height = 842;
 
-		$pdf->AddPage();
+		ps_set_info("Title", $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE));
+		ps_set_info("Creator", pts_codename(true));
+		ps_set_info("Author", "Phoronix Test Suite");
+		//ps_set_info("Keywords", "Phoronix Test Suite");
+		//ps_set_info("Subject", "Phoronix Test Suite");
+
+		ps_begin_page($ps, $page_width, $page_height);
 		$pdf->Image(STATIC_DIR . "pts-308x160.png", 69, 85, 73, 38);
 		$pdf->Ln(120);
 		$pdf->WriteStatementCenter("www.phoronix-test-suite.com");
