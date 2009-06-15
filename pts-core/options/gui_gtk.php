@@ -653,8 +653,12 @@ class gui_gtk implements pts_option_interface
 		{
 			// Installed Suites
 			$i_s = pts_gui_installed_suites();
-			$installed_suites = pts_gtk_table(array(count($i_s) . " Suites"), $i_s, array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");
-			pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
+
+			if(count($i_s) > 0)
+			{
+				$installed_suites = pts_gtk_table(array(count($i_s) . " Suites"), $i_s, array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");
+				pts_gtk_add_notebook_tab($main_notebook, $installed_suites, "Installed Suites");
+			}
 
 			// TODO: implement dynamic notebook tab support
 			//pts_gtk_add_dynamic_notebook_tab($main_notebook, "Installed Suites", array("gui_gtk", "notebook_main_page_select"), "Suite", "pts_gui_installed_suites", array("gui_gtk", "update_details_frame_from_select"), "No suites are currently installed.");

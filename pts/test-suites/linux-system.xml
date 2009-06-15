@@ -9,7 +9,10 @@
 		<Description>A collection of tests designed to test the overall performance of a desktop computer.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>build-php</Test>
+		<Test>compress-lzma</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-pbzip2</Test>
 	</RunTest>
 	<RunTest>
 		<Test>apache</Test>
@@ -36,7 +39,13 @@
 		<Test>c-ray</Test>
 	</RunTest>
 	<RunTest>
+		<Test>povray</Test>
+	</RunTest>
+	<RunTest>
 		<Test>mafft</Test>
+	</RunTest>
+	<RunTest>
+		<Test>hmmer</Test>
 	</RunTest>
 	<RunTest>
 		<Test>tiobench</Test>
