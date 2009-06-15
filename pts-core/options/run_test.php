@@ -266,19 +266,20 @@ class run_test implements pts_option_interface
 
 				$results_identifier = pts_prompt_results_identifier($result_identifiers);
 
+				if($unique_test_count > 1 || !isset($test_description))
+				{
+					$unique_tests_r = array_unique($to_run_identifiers);
+					$last = array_pop($unique_tests_r);
+					array_push($unique_tests_r, "and " . $last);
+
+					$test_description = "Running ";
+					$test_description .= implode(($unique_test_count == 2 ? " and " : ", "), $unique_tests_r);
+					$test_description .= ".";
+				}
+
 				// Prompt Description
 				if(!pts_is_assignment("AUTOMATED_MODE") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_description()))
 				{
-					if($unique_test_count > 1 || !isset($test_description))
-					{
-						$unique_tests_r = array_unique($to_run_identifiers);
-						$last = array_pop($unique_tests_r);
-						array_push($unique_tests_r, "and " . $last);
-
-						$test_description = "Running ";
-						$test_description .= implode(($unique_test_count == 2 ? " " : ", "), $unique_tests_r);
-						$test_description .= ".";
-					}
 					if(empty($test_description))
 					{
 						$test_description = "N/A";

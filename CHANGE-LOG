@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Only show Installed Suites tab in GTK2 GUI when there is at least one suite installed
+- pts-core: Fix for undefined variable with test description when calling 2+ suites to run in batch mode
 
 Phoronix Test Suite 2.0.0 Beta 1
 June 14, 2009
