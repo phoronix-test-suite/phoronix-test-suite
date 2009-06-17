@@ -205,5 +205,10 @@
 			<PackageName>libbz2-dev</PackageName>
 			<FileCheck>/usr/include/bzlib.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>tcl</GenericName>
+			<PackageName>tcl</PackageName>
+			<FileCheck>/usr/bin/tclsh</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

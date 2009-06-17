@@ -242,5 +242,11 @@
 			<PossibleNames>bzip2-devel, libbz2-dev, libbzip2-devel</PossibleNames>
 			<FileCheck>/usr/include/bzlib.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>tcl</GenericName>
+			<Title>Tool Command Language</Title>
+			<PossibleNames>tcl</PossibleNames>
+			<FileCheck>/usr/bin/tclsh</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

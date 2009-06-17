@@ -185,5 +185,10 @@
 			<PackageName>boost</PackageName>
 			<FileCheck>/usr/include/boost/</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>tcl</GenericName>
+			<PackageName>tcl</PackageName>
+			<FileCheck>/usr/bin/tclsh</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
