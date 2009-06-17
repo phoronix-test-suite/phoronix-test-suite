@@ -110,5 +110,15 @@
 			<PackageName>SUNWcurl</PackageName>
 			<FileCheck>/usr/lib/libcurl.so.3</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>tcl</GenericName>
+			<PackageName>SUNWTcl</PackageName>
+			<FileCheck>/usr/bin/tclsh</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>cmake</GenericName>
+			<PackageName>SUNWcmake</PackageName>
+			<FileCheck>/usr/bin/cmake</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
