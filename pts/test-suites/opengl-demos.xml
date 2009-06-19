@@ -15,7 +15,7 @@
 	</RunTest>
 	<RunTest>
 		<Test>lightsmark</Test>
-		<Arguments>$VIDEO_WIDTHx$VIDEO_HEIGHT</Arguments>
+		<Arguments>$VIDEO_WIDTH'x'$VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>

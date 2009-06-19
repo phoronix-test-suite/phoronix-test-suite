@@ -6,6 +6,8 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for undefined variable with test description when calling 2+ suites to run in batch mode
 - pts: Add tcl to PTS External Dependencies
 - pts: Small OpenSolaris updates
+- pts: Add perl as an external dependency to build-imagemagick
+- pts: Fix lightsmark test profile when running in the test suites
 
 Phoronix Test Suite 2.0.0 Beta 1
 June 14, 2009

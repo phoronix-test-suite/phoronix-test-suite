@@ -6,6 +6,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<ProjectURL>http://www.imagemagick.org/</ProjectURL>
 		<Extends>timed-build</Extends>
+		<ExternalDependencies>build-utilities, perl</ExternalDependencies>
 		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
