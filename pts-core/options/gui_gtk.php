@@ -281,8 +281,10 @@ class gui_gtk implements pts_option_interface
 		{
 			// TOOD: re-enable and get working properly
 			gui_gtk::system_tray_monitor();
-			// pts_attach_module("gui_gtk_events");
+			pts_attach_module("gui_gtk_events");
 		}
+
+		pts_attach_module("notify_send_events");
 
 		$window->show_all();
 		Gtk::main();
