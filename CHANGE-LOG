@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Only show Installed Suites tab in GTK2 GUI when there is at least one suite installed
 - pts-core: Fix for undefined variable with test description when calling 2+ suites to run in batch mode
 - pts-core: Add notify_send_events module for reporting test installation/run statuses to notification daemon
+- phodevi: Add NILFS2 file-system detection support
 - pts: Add tcl to PTS External Dependencies
 - pts: Small OpenSolaris updates
 - pts: Add perl as an external dependency to build-imagemagick

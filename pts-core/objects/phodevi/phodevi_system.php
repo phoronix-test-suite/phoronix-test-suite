@@ -269,6 +269,9 @@ class phodevi_system extends pts_device_interface
 				case "UNKNOWN (0x9123683e)":
 					$fs = "Btrfs";
 					break;
+				case "UNKNOWN (0x3434)":
+					$fs = "NILFS2";
+					break;
 				case "ext2/ext3":
 					if(is_readable("/proc/mounts"))
 					{
