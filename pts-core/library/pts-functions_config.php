@@ -63,10 +63,18 @@ function pts_user_config_init($new_config_values = null)
 		$remove_downloaded_files = "FALSE";
 	}
 
+	$gsid = pts_read_user_config(P_OPTION_GLOBAL_GSID, null, $read_config);
+	if(empty($gsid))
+	{
+		// Global System ID for anonymous uploads, etc
+		$gsid = pts_global_request_gsid();
+	}
+
 	$config = new tandem_XmlWriter();
 	$config->setXslBinding("xsl/pts-user-config-viewer.xsl");
 	$config->addXmlObject(P_OPTION_GLOBAL_USERNAME, 0, pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User", $read_config));
 	$config->addXmlObject(P_OPTION_GLOBAL_UPLOADKEY, 0, pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "", $read_config));
+	$config->addXmlObject(P_OPTION_GLOBAL_GSID, 0, $gsid);
 
 	$config->addXmlObject(P_OPTION_LOAD_MODULES, 2, pts_read_user_config(P_OPTION_LOAD_MODULES, "", $read_config));
 	$config->addXmlObject(P_OPTION_DEFAULT_BROWSER, 2, pts_read_user_config(P_OPTION_DEFAULT_BROWSER, "", $read_config));

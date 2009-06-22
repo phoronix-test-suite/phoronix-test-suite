@@ -67,6 +67,27 @@ function pts_global_setup_account($username, $password)
 
 	return !empty($uploadkey);
 }
+function pts_global_request_gsid()
+{
+	$gsid = trim(@file_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION));
+
+	return pts_global_gsid_valid($gsid) ? $gsid : false;
+}
+function pts_global_gsid_valid($gsid)
+{
+	$gsid_valid = false;
+
+	if(strlen($gsid) == 9)
+	{
+		if(strlen(pts_remove_chars(substr($gsid, 0, 6), false, false, true, false, false, false)) == 6 &&
+		strlen(pts_remove_chars(substr($gsid, 6, 3), true, false, false, false, false, false)) == 3)
+		{
+			$gsid_valid = true;
+		}
+	}
+
+	return $gsid_valid;
+}
 function pts_global_upload_result($result_file, $tags = "")
 {
 	// Upload a test result to the Phoronix Global database

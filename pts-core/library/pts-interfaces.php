@@ -166,6 +166,7 @@ define("P_RESULTS_RESULTS_GROUP_RAW", P_RESULTS_RESULTS_GROUP . "/" . S_RESULTS_
 
 define("P_OPTION_GLOBAL_USERNAME", "PhoronixTestSuite/GlobalDatabase/UserName"); // Phoronix Global user-name
 define("P_OPTION_GLOBAL_UPLOADKEY", "PhoronixTestSuite/GlobalDatabase/UploadKey"); // Phoronix Global upload key
+define("P_OPTION_GLOBAL_GSID", "PhoronixTestSuite/GlobalDatabase/GSID"); // Phoronix Global System ID
 
 define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/General/LoadModules"); // Modules to load by default
 define("P_OPTION_DEFAULT_BROWSER", "PhoronixTestSuite/Options/General/DefaultBrowser"); // Web browser to use to override the auto-detected browser

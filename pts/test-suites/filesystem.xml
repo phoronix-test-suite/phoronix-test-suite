@@ -76,11 +76,6 @@
 		<Description>Intel IOMeter File Server Access Pattern</Description>
 	</RunTest>
 	<RunTest>
-		<Test>fio</Test>
-		<Arguments>examples/netio</Arguments>
-		<Description>Example Network Job</Description>
-	</RunTest>
-	<RunTest>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k2 -k1 -f 64 -t 4</Arguments>
 		<Description>64MB Write - 4 Threads</Description>
