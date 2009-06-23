@@ -26,6 +26,8 @@
 
 class pts_test_tandem_XmlReader extends tandem_XmlReader
 {
+	var $override_values = null;
+
 	public function __construct($read_xml, $cache_support = true)
 	{
 		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
@@ -34,6 +36,30 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 		}
 
 		parent::__construct($read_xml, $cache_support);
+	}
+	public function overrideXMLValues($test_options)
+	{
+		$this->override_values = $test_options;
+	}
+	function getXMLValue($xml_tag)
+	{
+		if(!empty($this->override_values))
+		{
+			if(isset($this->override_values[$xml_tag]) && !empty($this->override_values[$xml_tag]))
+			{
+				return $this->override_values[$xml_tag];
+			}
+			else
+			{
+				$tag_name = basename($xml_tag);
+				if(isset($this->override_values[$tag_name]) && !empty($this->override_values[$tag_name]))
+				{
+					return $this->override_values[$tag_name];
+				}
+			}
+		}
+
+		return $this->getValue($xml_tag);
 	}
 	function handleXmlZeroTagFallback($xml_tag)
 	{

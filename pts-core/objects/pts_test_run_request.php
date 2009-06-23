@@ -25,12 +25,14 @@ class pts_test_run_request
 	var $test_identifier;
 	var $test_arguments;
 	var $test_arguments_description;
+	var $override_options;
 
-	public function __construct($test_identifier, $test_arguments = "", $test_arguments_description)
+	public function __construct($test_identifier, $test_arguments = "", $test_arguments_description, $override_test_options = null)
 	{
 		$this->test_identifier = $test_identifier;
 		$this->test_arguments = $test_arguments;
 		$this->test_arguments_description = $test_arguments_description;
+		$this->override_options = pts_to_array($override_test_options);
 	}
 	public function get_identifier()
 	{
@@ -40,13 +42,17 @@ class pts_test_run_request
 	{
 		return $this->test_arguments;
 	}
+	public function get_override_options()
+	{
+		return $this->override_options;
+	}
 	public function get_arguments_description()
 	{
 		return !empty($this->test_arguments_description) ? $this->test_arguments_description : $this->get_arguments();
 	}
 	public function __toString()
 	{
-		return $this->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description();
+		return $this->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description(). " " . $this->get_override_options();
 	}
 }
 

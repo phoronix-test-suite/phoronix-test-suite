@@ -163,7 +163,7 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $identifier = "")
 
 		if(pts_is_test($to_run))
 		{
-			$result = pts_run_test($to_run, $tests_to_run[$i]->get_arguments(), $tests_to_run[$i]->get_arguments_description());
+			$result = pts_run_test($to_run, $tests_to_run[$i]->get_arguments(), $tests_to_run[$i]->get_arguments_description(), $tests_to_run[$i]->get_override_options());
 
 			if(is_file(PTS_USER_DIR . "halt-testing"))
 			{
@@ -240,7 +240,7 @@ function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
 
 	return $real_name;
 }
-function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "")
+function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "", $override_test_options = null)
 {
 	// Do the actual test running process
 	$pts_test_result = new pts_test_result();
@@ -259,6 +259,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	}
 
 	$xml_parser = new pts_test_tandem_XmlReader($test_identifier);
+	$xml_parser->overrideXMLValues($override_test_options);
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);

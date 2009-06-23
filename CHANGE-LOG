@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for undefined variable with test description when calling 2+ suites to run in batch mode
 - pts-core: Add notify_send_events module for reporting test installation/run statuses to notification daemon
 - pts-core: Add GSID for Phoronix Global usage
+- pts-core: Allow suites to override test options / XML values for a test profile from within a suite by using the OverrideTestOptions tag
 - phodevi: Add NILFS2 file-system detection support
 - pts: Add tcl to PTS External Dependencies
 - pts: Small OpenSolaris updates

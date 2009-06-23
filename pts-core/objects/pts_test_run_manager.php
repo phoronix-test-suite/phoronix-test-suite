@@ -30,28 +30,28 @@ class pts_test_run_manager
 		$this->tests_to_run = array();
 		$this->instance_name = $name;
 	}
-	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "")
+	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "", $override_test_options = null)
 	{
 		if(count($this->tests_to_run) == 0)
 		{
 			$this->instance_name = $test_identifier;
 		}
 
-		$this_run_request = new pts_test_run_request($test_identifier, $arguments, $descriptions);
+		$this_run_request = new pts_test_run_request($test_identifier, $arguments, $descriptions, $override_test_options);
 
 		if(!in_array($this_run_request, $this->tests_to_run))
 		{
 			array_push($this->tests_to_run, $this_run_request);
 		}
 	}
-	public function add_single_test_run($test_identifier, $arguments, $descriptions)
+	public function add_single_test_run($test_identifier, $arguments, $descriptions, $override_test_options = null)
 	{
 		$arguments = pts_to_array($arguments);
 		$descriptions = pts_to_array($descriptions);
 
 		for($i = 0; $i < count($arguments); $i++)
 		{
-			$this->add_individual_test_run($test_identifier, $arguments[$i], $descriptions[$i]);
+			$this->add_individual_test_run($test_identifier, $arguments[$i], $descriptions[$i], $override_test_options);
 		}
 	}
 	public function add_multi_test_run($test_identifier, $arguments, $descriptions)
@@ -72,23 +72,38 @@ class pts_test_run_manager
 		$sub_modes = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
 		$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
 		$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
+		$override_test_options = $xml_parser->getXMLArrayValues(P_SUITE_TEST_OVERRIDE_OPTIONS);
 
 		for($i = 0; $i < count($tests_in_suite); $i++)
 		{
 			if(pts_is_test($tests_in_suite[$i]))
 			{
+				$override_options = array();
+				if(!empty($override_test_options[$i]))
+				{
+					foreach(explode(";", $override_test_options[$i]) as $override_string)
+					{
+						$override_segments = array_map("trim", explode("=", $override_string));
+
+						if(count($override_segments) == 2 && !empty($override_segments[0]) && !empty($override_segments[1]))
+						{
+							$override_options[$override_segments[0]] = $override_segments[1];
+						}
+					}
+				}
+
 				switch($sub_modes[$i])
 				{
 					case "BATCH":
 						$option_output = pts_generate_batch_run_options($tests_in_suite[$i]);
-						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1]);
+						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1], $override_options);
 						break;
 					case "DEFAULTS":
 						$option_output = pts_defaults_test_options($tests_in_suite[$i]);
-						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1]);
+						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1], $override_options);
 						break;
 					default:
-						$this->add_individual_test_run($tests_in_suite[$i], $sub_arguments[$i], $sub_arguments_description[$i]);
+						$this->add_individual_test_run($tests_in_suite[$i], $sub_arguments[$i], $sub_arguments_description[$i], $override_options);
 						break;
 				}
 			}

@@ -92,6 +92,7 @@ define("P_SUITE_TEST_NAME", "PhoronixTestSuite/RunTest/Test"); // Names of tests
 define("P_SUITE_TEST_MODE", "PhoronixTestSuite/RunTest/Mode"); // Modes (if available) for the test runs in suite
 define("P_SUITE_TEST_ARGUMENTS", "PhoronixTestSuite/RunTest/Arguments"); // Arguments of tests in suite
 define("P_SUITE_TEST_DESCRIPTION", "PhoronixTestSuite/RunTest/Description"); // Description of tests in suite
+define("P_SUITE_TEST_OVERRIDE_OPTIONS", "PhoronixTestSuite/RunTest/OverrideTestOptions"); // Settings to force/override in a test profile
 
 //
 // TEST DOWNLOAD SPECIFICATION
