@@ -32,9 +32,8 @@ not back up the downloaded files to the Phoronix Test Suite download cache. Enab
 with very limited disk space.</p>
 <p>- If the amount of video memory for your graphics card is incorrectly reported by the Phoronix Test Suite (you can check by running <em>phoronix-test-suite diagnostics</em>), you can use the <em>VIDEO_MEMORY=</em> environmental variable for overriding the video memory capacity (in Megabytes) used by the Phoronix Test Suite.</p>
 <p>- If the <em>DISPLAY</em> environmental variable is not set or <em>NO_GRAPHICS_TESTS</em> environmental variable is set, tests of type <em>Graphics</em> will not be run. Likewise, if <em>NO_SYSTEM_TESTS</em> environmental variable is set, tests of type <em>System</em> will not run. This applies to all test types where <em>NO_&lt;TEST TYPE&gt;_TESTS</em> is set.</p>
-<p>- If the <em>TEST_RESULTS_NAME</em> environmental variable is set, instead of prompting the user for the name to save the results as, it will use the variable's value.</p>
-<p>- If the <em>TEST_RESULTS_IDENTIFIER</em> environmental variable is set, instead of prompting the user for the test identifier when saving the result, it will use the variable's value.</p>
 <p>- If while running multiple tests you want to quit the testing prematurely, in a new terminal window type <em>touch ~/.phoronix-test-suite/halt-testing</em>. All results for tests that had already run will be saved (permitting you opted to save the results), except for the test currently being run.</p>
+<p>- If you want the specified test(s) to run in a loop for a set period of time, use the <em>TOTAL_LOOP_TIME</em> environmental variable. For instance, running <em>TOTAL_LOOP_TIME=120 phoronix-test-suite benchmark ffmpeg</em> would keep running the ffmpeg test profile for 120 minutes.</p>
 <h2>Support</h2>
 <p>- The Phoronix Test Suite really appreciates and welcomes independent code 
 contributions, patches, new tests/suites, etc... :)</p>

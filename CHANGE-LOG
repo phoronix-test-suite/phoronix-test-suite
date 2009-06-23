@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add notify_send_events module for reporting test installation/run statuses to notification daemon
 - pts-core: Add GSID for Phoronix Global usage
 - pts-core: Allow suites to override test options / XML values for a test profile from within a suite by using the OverrideTestOptions tag
+- pts-core: Add TOTAL_LOOP_TIME environmental variable for having pts-core run a loop of the specified test(s) until certain time is reached
 - phodevi: Add NILFS2 file-system detection support
 - pts: Add tcl to PTS External Dependencies
 - pts: Small OpenSolaris updates

@@ -157,49 +157,73 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $identifier = "")
 		unlink(PTS_USER_DIR . "halt-testing");
 	}
 
-	for($i = 0; $i < count($tests_to_run); $i++)
+	$test_flag = true;
+
+	if(($total_loop_time = getenv("TOTAL_LOOP_TIME")) != false && is_numeric($total_loop_time))
 	{
-		$to_run = $tests_to_run[$i]->get_identifier();
+		$loop_end_time = time() + ($total_loop_time * 60);
 
-		if(pts_is_test($to_run))
+		do
 		{
-			$result = pts_run_test($to_run, $tests_to_run[$i]->get_arguments(), $tests_to_run[$i]->get_arguments_description(), $tests_to_run[$i]->get_override_options());
-
-			if(is_file(PTS_USER_DIR . "halt-testing"))
+			for($i = 0; $i < count($tests_to_run) && $test_flag && time() < $loop_end_time; $i++)
 			{
-				unlink(PTS_USER_DIR . "halt-testing");
-				return;
-			}
-
-			if($result instanceof pts_test_result)
-			{
-				$end_result = $result->get_result();
-
-				if(!empty($identifier) && count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
-				{
-					$tandem_id = pts_request_new_id();
-					pts_set_assignment("TEST_RAN", true);
-
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_attribute("TEST_TITLE"));
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_attribute("TEST_VERSION"));
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_attribute("TEST_DESCRIPTION"));
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_result_proportion());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_attribute("TEST_IDENTIFIER"));
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
-					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
-					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
-					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
-				}
-			}
-
-			if($i != (count($tests_to_run) - 1))
-			{
-				sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
+				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], false);
 			}
 		}
+		while(time() < $loop_end_time && $test_flag);
 	}
+	else
+	{
+		for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
+		{
+			$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $i == (count($tests_to_run) - 1));
+		}
+	}
+}
+function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_request, $is_last_test = true)
+{
+	$to_run = $pts_test_run_request->get_identifier();
+
+	if(pts_is_test($to_run))
+	{
+		$result = pts_run_test($to_run, $pts_test_run_request->get_arguments(), $pts_test_run_request->get_arguments_description(), $pts_test_run_request->get_override_options());
+
+		if(is_file(PTS_USER_DIR . "halt-testing"))
+		{
+			unlink(PTS_USER_DIR . "halt-testing");
+			return false;
+		}
+
+		if($result instanceof pts_test_result)
+		{
+			$end_result = $result->get_result();
+
+			if(!empty($identifier) && count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
+			{
+				$tandem_id = pts_request_new_id();
+				pts_set_assignment("TEST_RAN", true);
+
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_attribute("TEST_TITLE"));
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_attribute("TEST_VERSION"));
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_attribute("TEST_DESCRIPTION"));
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_result_proportion());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_attribute("TEST_IDENTIFIER"));
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
+			}
+		}
+
+		if(!$is_last_test)
+		{
+			sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
+		}
+	}
+
+	return true;
 }
 function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
 {
