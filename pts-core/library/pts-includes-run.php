@@ -172,6 +172,17 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $identifier = "")
 		}
 		while(time() < $loop_end_time && $test_flag);
 	}
+	else if(($total_loop_count = getenv("TOTAL_LOOP_COUNT")) != false && is_numeric($total_loop_count))
+	{
+
+		for($loop = 0; $loop < $total_loop_count && $test_flag; $loop++)
+		{
+			for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
+			{
+				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $loop < ($total_loop_count - 1));
+			}
+		}
+	}
 	else
 	{
 		for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
