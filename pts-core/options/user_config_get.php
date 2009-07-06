@@ -20,45 +20,39 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class user_config_set implements pts_option_interface
+class user_config_get implements pts_option_interface
 {
 	public static function run($r)
 	{
 		if(count($r) == 0)
 		{
-			echo "\nYou must specify the tag to override along with the value.\n";
-			echo "Example: phoronix-test-suite user-config-set CacheDirectory=~/cache/\n\n";
+			echo "\nYou must specify the tag to read. Enter all to read all values.\n";
+			echo "Example: phoronix-test-suite user-config-get CacheDirectory\n\n";
 			return false;
 		}
 
-		$new_options = array();
-		foreach($r as $user_option)
+		$defined_constants = get_defined_constants(true);
+		$value_found = false;
+		echo "\n";
+
+		foreach($defined_constants["user"] as $c_name => $c_value)
 		{
-			$user_option_r = explode("=", $user_option);
-
-			if(count($user_option_r) > 1)
+			if(isset($c_name[10]) && substr($c_name, 0, 9) == "P_OPTION_")
 			{
-				$user_value = substr($user_option, strlen($user_option_r[0]) + 1);
-
-				if(substr($user_value, 0, 1) == "\"")
+				if($r[0] == "all" || $r[0] == $c_value || $r[0] == basename($c_value))
 				{
-					$user_value = substr($user_value, 1);
-				}
-
-				if(substr($user_value, -1) == "\"")
-				{
-					$user_value = substr($user_value, 0, -1);
-				}
-
-				if(!in_array(basename($user_option_r[0]), array("AgreementCheckSum", "GSID")))
-				{
-					$new_options[$user_option_r[0]] = $user_value;
+					echo $c_value . ": " . pts_read_user_config($c_value) . "\n";
+					$value_found = true;
 				}
 			}
 		}
 
-		pts_user_config_init($new_options);
-		echo "\nNew user configuration file written.\n\n";
+		if(!$value_found)
+		{
+			echo "No such options found in the user configuration file.\n";
+		}
+
+		echo "\n";
 	}
 }
 
