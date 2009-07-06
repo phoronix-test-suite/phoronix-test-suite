@@ -46,7 +46,7 @@ Module Options:
 
 Miscellaneous Options:
     make-download-cache: Backup all downloaded test files
-    info <suite / test>: Show detailed information about a test or suite
+    info <suite / test / results>: Show detailed information about a test object
     system-info: Show detected software and hardware information
     diagnostics: Useful information when reporting a bug or problem
     build-suite: Build your own test suite

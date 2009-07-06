@@ -18,3 +18,4 @@ analyze = removed_option
 analyze_results = removed_option
 list_supported_tests = list_tests
 initial_config = user_config_reset
+result_info = info

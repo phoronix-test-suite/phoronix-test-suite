@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,6 +37,10 @@ class info implements pts_option_interface
 			$suite = new pts_test_profile_details($to_info);
 			echo $suite->info_string();
 			echo "\n";
+		}
+		else if(($file = pts_find_result_file($to_info)) != false)
+		{
+			echo new pts_test_result_details($file, $to_info);
 		}
 		else
 		{
