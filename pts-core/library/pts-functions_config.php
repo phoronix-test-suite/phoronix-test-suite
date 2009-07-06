@@ -302,7 +302,7 @@ function pts_download_cache()
 
 	if(substr($dir, -1) != "/")
 	{
-			$dir .= "/";
+		$dir .= "/";
 	}
 
 	return $dir;

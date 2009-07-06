@@ -197,7 +197,7 @@ class system_monitor extends pts_module_interface
 							}
 						}
 						$save_filename_base = pts_unique_runtime_identifier() . '-' . $image_count;
-						$t->loadGraphVersion(PTS_VERSION);
+						$t->loadGraphVersion("Phoronix Test Suite " . PTS_VERSION);
 						$t->saveGraphToFile(pts_module::save_dir() . $save_filename_base . ".BILDE_EXTENSION");
 						$t->renderGraph();
 						$save_filename = $save_filename_base . "." . strtolower($t->getRenderer());

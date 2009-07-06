@@ -146,10 +146,7 @@ abstract class pts_Graph
 	}
 	public function loadGraphVersion($data)
 	{
-		if(!empty($data))
-		{
-			$this->graph_version = "Phoronix Test Suite " . $data;
-		}
+		$this->graph_version = $data;
 	}
 	public function loadGraphProportion($data)
 	{

@@ -35,7 +35,7 @@ function pts_setup_results_viewer()
 function pts_save_result($save_to = null, $save_results = null, $render_graphs = true)
 {
 	// Saves PTS result file
-	if(strpos($save_to, ".xml") === false)
+	if(substr($save_to, -4) != ".xml")
 	{
 		$save_to .= ".xml";
 	}
@@ -227,7 +227,7 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 	}
 
 	$t->loadGraphProportion($r_o->get_proportion());
-	$t->loadGraphVersion($pts_version);
+	$t->loadGraphVersion("Phoronix Test Suite " . $pts_version);
 
 	$t->addInternalIdentifier("Test", $r_o->get_test_name());
 	$t->addInternalIdentifier("Identifier", $suite_name);
