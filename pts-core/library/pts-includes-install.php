@@ -46,10 +46,12 @@ function pts_start_install($to_install)
 		{
 			echo pts_string_header("Not recognized: " . $to_install[0]);
 		}
+
 		return false;
 	}
 
 	pts_module_process("__pre_install_process", $tests);
+
 	if(count($tests) > 1)
 	{
 		$will_be_installed = array();
@@ -69,6 +71,7 @@ function pts_start_install($to_install)
 			"\nEstimated Install Size: " . pts_estimated_environment_size($will_be_installed) . " MB");
 		}
 	}
+
 	foreach($tests as $test)
 	{
 		pts_install_test($test);
@@ -103,7 +106,9 @@ function pts_download_test_files($identifier)
 		{
 			$download_location = TEST_ENV_DIR . $identifier . "/";
 			$package_filename = $download_packages[$i]->get_filename();
+			$package_filename_temp = $package_filename . ".pts";
 			$download_destination = $download_location . $package_filename;
+			$download_destination_temp = $download_location . $package_filename_temp;
 
 			if(!is_file($download_destination))
 			{
@@ -136,16 +141,16 @@ function pts_download_test_files($identifier)
 						if($dc_file[$f] == $package_filename && $dc_md5[$f] == $package_md5)
 						{
 							echo "Downloading From Remote Cache: " . $package_filename . "\n\n";
-							echo pts_download(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $download_destination . ".temp");
+							echo pts_download(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $download_destination_temp);
 							echo "\n";
 
-							if(!pts_validate_md5_download_file($download_destination . ".temp", $package_md5))
+							if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
 							{
-								@unlink($download_destination . ".temp");
+								@unlink($download_destination_temp);
 							}
 							else
 							{
-								pts_move($package_filename . ".temp", $package_filename, $download_location);
+								pts_move($package_filename_temp, $package_filename, $download_location);
 								$urls = array();
 							}
 							$cache_search = false;
@@ -217,13 +222,13 @@ function pts_download_test_files($identifier)
 						}
 
 						echo "\n\nDownloading File: " . $package_filename . "\n\n";
-						echo pts_download($url, $download_destination . ".temp");
+						echo pts_download($url, $download_destination_temp);
 
-						if(!pts_validate_md5_download_file($download_destination . ".temp", $package_md5))
+						if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
 						{
-							if(is_file($download_destination . ".temp"))
+							if(is_file($download_destination_temp))
 							{
-								unlink($download_destination . ".temp");
+								unlink($download_destination_temp);
 							}
 
 							$file_downloaded = false;
@@ -258,9 +263,9 @@ function pts_download_test_files($identifier)
 						}
 						else
 						{
-							if(is_file($download_destination . ".temp"))
+							if(is_file($download_destination_temp))
 							{
-								pts_move($package_filename . ".temp", $package_filename, $download_location);
+								pts_move($package_filename_temp, $package_filename, $download_location);
 							}
 							$file_downloaded = true;
 							$fail_count = 0;
@@ -387,7 +392,6 @@ function pts_install_test($identifier)
 	}
 	else
 	{
-		// TODO: clean up validate-install and put in pts_validate_test_install
 		$custom_validated_output = trim(pts_call_test_script($identifier, "validate-install", "\nValidating Installation...\n", TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false));
 
 		if(!empty($custom_validated_output) && !pts_string_bool($custom_validated_output))
