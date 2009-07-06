@@ -1,6 +1,6 @@
 #!/bin/sh
 
-version=8.3.7
+version=8.4.0
 
 if [ ! -e postgresql-${version}.tar.bz2 ]; then
     echo Please download postgresql-${version}.tar.bz2 into $(pwd)

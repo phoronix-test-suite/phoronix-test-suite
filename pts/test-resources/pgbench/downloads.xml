@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.dk.postgresql.org/postgresql/source/v8.3.7/postgresql-8.3.7.tar.bz2, ftp://ftp.li.kernel.org/pub/.3/ftp.postgresql.org/source/v8.3.7/postgresql-8.3.7.tar.bz2, ftp://ftp.linux.hr/gentoo/distfiles/distfiles/postgresql-8.3.7.tar.bz2</URL>
-			<MD5>7b7e91a2221e55fe1b167e663217a96d</MD5>
-			<FileSize>14124712</FileSize>
+			<URL>ftp://ftp.dk.postgresql.org/postgresql/source/v8.4.0/postgresql-8.4.0.tar.bz2, ftp://ftp.li.kernel.org/pub/.3/ftp.postgresql.org/source/v8.4.0/postgresql-8.4.0.tar.bz2, ftp://ftp.linux.hr/gentoo/distfiles/distfiles/postgresql-8.4.0.tar.bz2</URL>
+			<MD5>1f172d5f60326e972837f58fa5acd130</MD5>
+			<FileSize>13839282</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

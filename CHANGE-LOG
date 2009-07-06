@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts: Small OpenSolaris updates
 - pts: Add perl as an external dependency to build-imagemagick
 - pts: Fix lightsmark test profile when running in the test suites
+- pts: Update PostgreSQL to version 8.4.0 in pgbench test profile
 
 Phoronix Test Suite 2.0.0 Beta 1
 June 14, 2009

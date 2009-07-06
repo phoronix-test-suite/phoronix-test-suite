@@ -2,13 +2,13 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Kim Bisgaard</Maintainer>
-		<EnvironmentSize>170</EnvironmentSize>
+		<EnvironmentSize>230</EnvironmentSize>
 		<ProjectURL>http://www.postgresql.org/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 	</TestProfile>
@@ -17,7 +17,7 @@
 		<SubTitle>TPC-B Transactions per second</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<Executable>pgbench</Executable>
-		<Version>8.3.7</Version>
+		<Version>8.4.0</Version>
 		<ResultScale>TPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a simple TPC-B like benchmark of PostgreSQL.</Description>
