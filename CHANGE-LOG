@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - pts: Add perl as an external dependency to build-imagemagick
 - pts: Fix lightsmark test profile when running in the test suites
 - pts: Update PostgreSQL to version 8.4.0 in pgbench test profile
+- pts: Update wine-unstable base test profile to WINE 1.1.25
 
 Phoronix Test Suite 2.0.0 Beta 1
 June 14, 2009

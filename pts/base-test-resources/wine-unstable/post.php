@@ -1,6 +1,6 @@
 <?php
 
-file_put_contents("pts-test-note", "WINE Server: WINE v1.1.12");
+file_put_contents("pts-test-note", "WINE v1.1.25");
 
 ?>
 

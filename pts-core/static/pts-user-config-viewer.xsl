@@ -8,7 +8,7 @@
 	<body>
 		<div style="width: 90%; margin: 20px auto 10px; text-align: left;">
 			<p align="center"><img src="xsl/pts-logo.png" /></p>
-			<p>The <em>user-config.xml</em> file contains the user configuration options for the Phoronix Test Suite. To edit any option, open <em>user-config.xml</em> within your preferred text editor. For additional information, view the documentation included with the Phoronix Test Suite or visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a>.</p>
+			<p>The <em>user-config.xml</em> file contains the user configuration options for the Phoronix Test Suite. To edit any option, open <em>user-config.xml</em> within your preferred text editor. Alternatively, you can use the <em>user-config-set</em> option with the Phoronix Test Suite to update settings. For example, to set the download cache with the Phoronix Test Suite, execute <em>phoronix-test-suite user-config-set CacheDirectory=~/cache-directory/</em>. For additional information, view the documentation included with the Phoronix Test Suite or visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a>.</p>
 
 			<h1>General Options</h1>
 			<h3>DefaultBrowser: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/General/DefaultBrowser" /></span></h3>
