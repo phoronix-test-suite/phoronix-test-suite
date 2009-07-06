@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts_test_option: An object used for storing a test option and its possible values
 
 	This program is free software; you can redistribute it and/or modify
@@ -130,7 +130,7 @@ class pts_test_option
 
 		if($select_pos > 0 && $select_pos <= $this->option_count())
 		{
-			$valid = ($select_pos - 1);
+			$valid = $select_pos - 1;
 		}
 		else if(in_array($select_pos, $this->get_all_option_names()))
 		{

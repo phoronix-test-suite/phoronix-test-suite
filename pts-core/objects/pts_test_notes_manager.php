@@ -32,11 +32,6 @@ class pts_test_notes_manager
 		{
 			case "JAVA_VERSION":
 				$note = phodevi::read_property("system", "java-version");
-
-				if(empty($note))
-				{
-					return;
-				}
 				break;
 			case "2D_ACCEL_METHOD":
 				$note = phodevi::read_property("gpu", "2d-accel-method");
@@ -44,10 +39,6 @@ class pts_test_notes_manager
 				if(!empty($note))
 				{
 					$note = "2D Acceleration: " . $note;
-				}
-				else
-				{
-					return;
 				}
 			break;
 		}

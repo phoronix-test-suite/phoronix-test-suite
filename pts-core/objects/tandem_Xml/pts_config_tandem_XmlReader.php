@@ -49,14 +49,19 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 	}
 	function getValue($xml_path, $xml_tag = null, $xml_match = null, $cache_tag = true, $is_fallback_call = false)
 	{
-		if($this->override_values != false && isset($this->override_values[$xml_path]))
+		if($this->override_values != false)
 		{
-			return $this->override_values[$xml_path];
+			if(isset($this->override_values[$xml_path]))
+			{
+				return $this->override_values[$xml_path];
+			}
+			else if(isset($this->override_values[($bn = basename($xml_path))]))
+			{
+				return $this->override_values[$bn];
+			}
 		}
-		else
-		{
-			return parent::getValue($xml_path, $xml_tag, $xml_match, $cache_tag, $is_fallback_call);
-		}
+
+		return parent::getValue($xml_path, $xml_tag, $xml_match, $cache_tag, $is_fallback_call);
 	}
 }
 ?>
