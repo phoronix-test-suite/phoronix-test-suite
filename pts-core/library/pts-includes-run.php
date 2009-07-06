@@ -99,14 +99,12 @@ function pts_verify_test_installation($identifiers)
 	$tests = array_unique($tests);
 	$needs_installing = array();
 	$pass_count = 0;
-	$fail_count = 0;
 	$valid_op = true;
 
 	foreach($tests as $test)
 	{
 		if(!pts_test_installed($test))
 		{
-			$fail_count++;
 			if(pts_test_supported($test))
 			{
 				array_push($needs_installing, $test);
@@ -117,29 +115,26 @@ function pts_verify_test_installation($identifiers)
 			$pass_count++;
 		}
 	}
-
-	if($fail_count > 0)
+	
+	if(count($needs_installing) > 0)
 	{
 		$needs_installing = array_unique($needs_installing);
-	
-		if(count($needs_installing) > 0)
+
+		if(count($needs_installing) == 1)
 		{
-			if(count($needs_installing) == 1)
+			echo pts_string_header($needs_installing[0] . " isn't installed.\nTo install, run: phoronix-test-suite install " . $needs_installing[0]);
+		}
+		else
+		{
+			$message = "Multiple tests need to be installed before proceeding:\n\n";
+			foreach($needs_installing as $single_package)
 			{
-				echo pts_string_header($needs_installing[0] . " isn't installed.\nTo install, run: phoronix-test-suite install " . $needs_installing[0]);
+				$message .= "- " . $single_package . "\n";
 			}
-			else
-			{
-				$message = "Multiple tests need to be installed before proceeding:\n\n";
-				foreach($needs_installing as $single_package)
-				{
-					$message .= "- " . $single_package . "\n";
-				}
 
-				$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(" ", $identifiers);
+			$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(" ", $identifiers);
 
-				echo pts_string_header($message);
-			}
+			echo pts_string_header($message);
 		}
 
 		if(pts_is_test($identifiers_o))
@@ -174,7 +169,6 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $identifier = "")
 	}
 	else if(($total_loop_count = getenv("TOTAL_LOOP_COUNT")) != false && is_numeric($total_loop_count))
 	{
-
 		for($loop = 0; $loop < $total_loop_count && $test_flag; $loop++)
 		{
 			for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
@@ -338,20 +332,19 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	{
 		$times_to_run = 1;
 	}
-	
-	if(empty($times_to_run) || !is_int($times_to_run))
-	{
-		$times_to_run = 3;
-	}
-	if(($force_runs = getenv("FORCE_TIMES_TO_RUN")) != false)
+
+	if(($force_runs = getenv("FORCE_TIMES_TO_RUN")) != false && is_int($force_runs))
 	{
 		$times_to_run = $force_runs;
+	}
+	else if(empty($times_to_run) || !is_int($times_to_run))
+	{
+		$times_to_run = 3;
 	}
 
 	if(!empty($test_type))
 	{
-		$test_name = "TEST_" . strtoupper($test_type);
-		pts_set_assignment_once($test_name, 1);
+		pts_set_assignment_once("TEST_" . strtoupper($test_type), 1);
 	}
 
 	if(empty($execute_binary))
@@ -361,6 +354,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	$execute_path_check = explode(",", $execute_path);
 	array_push($execute_path_check, $test_directory);
+	$to_execute = null;
 
 	while(count($execute_path_check) > 0)
 	{
@@ -372,7 +366,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}	
 	}
 
-	if(!isset($to_execute) || empty($to_execute))
+	if(empty($to_execute))
 	{
 		echo "The test executable for " . $test_identifier . " could not be found. Skipping test.\n\n";
 		return $pts_test_result;
@@ -390,6 +384,13 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$extra_runtime_variables["LC_MESSAGES"] = "";
 	$extra_runtime_variables["LANG"] = "";
 	$extra_runtime_variables["PTS_TEST_ARGUMENTS"] = "'" . $pts_test_arguments . "'";
+	$extra_runtime_variables["TEST_LIBRARIES_DIR"] = TEST_LIBRARIES_DIR;
+	$extra_runtime_variables["TIMER_START"] = TEST_LIBRARIES_DIR . "timer-start.sh";
+	$extra_runtime_variables["TIMER_STOP"] = TEST_LIBRARIES_DIR . "timer-stop.sh";
+	$extra_runtime_variables["TIMED_KILL"] = TEST_LIBRARIES_DIR . "timed-kill.sh";
+	$extra_runtime_variables["SYSTEM_MONITOR_START"] = TEST_LIBRARIES_DIR . "system-monitoring-start.sh";
+	$extra_runtime_variables["SYSTEM_MONITOR_STOP"] = TEST_LIBRARIES_DIR . "system-monitoring-stop.sh";
+	$extra_runtime_variables["PHP_BIN"] = PHP_BIN;
 
 	// Start
 	$pts_test_result->set_attribute("TEST_TITLE", $test_title);
@@ -418,21 +419,12 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	for($i = 0; $i < $times_to_run; $i++)
 	{
+		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
 		$benchmark_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
 
 		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
-		"LOG_FILE" => $benchmark_log_file,
-		"TEST_LIBRARIES_DIR" => TEST_LIBRARIES_DIR,
-		"TIMER_START" => TEST_LIBRARIES_DIR . "timer-start.sh",
-		"TIMER_STOP" => TEST_LIBRARIES_DIR . "timer-stop.sh",
-		"TIMED_KILL" => TEST_LIBRARIES_DIR . "timed-kill.sh",
-		"SYSTEM_MONITOR_START" => TEST_LIBRARIES_DIR . "system-monitoring-start.sh",
-		"SYSTEM_MONITOR_STOP" => TEST_LIBRARIES_DIR . "system-monitoring-stop.sh",
-		"PHP_BIN" => PHP_BIN
+		"LOG_FILE" => $benchmark_log_file
 		));
-
-		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
-		$result_output = array();
 
 		$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments, $test_extra_runtime_variables);
 
