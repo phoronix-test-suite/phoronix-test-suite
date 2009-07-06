@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add TOTAL_LOOP_COUNT environmental variable for having pts-core run a loop of the specified test(s) a specified number of times
 - pts-core: Add user-config-set option for allowing user configuration values to be set through PTS instead of modifying XML
 - pts-core: Add user-config-get option for reading user configuration option values
+- pts-core: Rename initial-config user option to user-config-reset
 - phodevi: Add NILFS2 file-system detection support
 - pts: Add tcl to PTS External Dependencies
 - pts: Small OpenSolaris updates
