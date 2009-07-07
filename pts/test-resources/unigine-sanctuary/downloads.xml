@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.unigine.com/download/files/Unigine_Sanctuary-2.1.tar.bz2, http://www.phoronix-test-suite.com/benchmark-files/Unigine_Sanctuary-2.1.tar.bz2</URL>
-			<MD5>1177b4a99cdc08e4e60295dae9997b54</MD5>
-			<FileSize>29054933</FileSize>
+			<URL>http://www.unigine.com/download/files/Unigine_Sanctuary-2.2.run</URL>
+			<MD5>50e09d1ca86f76f9b73a793bfe4c0b4d</MD5>
+			<FileSize>28623234</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
