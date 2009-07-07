@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.unigine.com/download/files/Unigine_Tropics-1.1.tar.bz2, http://www.phoronix-test-suite.com/benchmark-files/Unigine_Tropics-1.1.tar.bz2</URL>
-			<MD5>0948a3af073d21e156b30fc3bc49b3f4</MD5>
-			<FileSize>57979033</FileSize>
+			<URL>http://www.unigine.com/download/files/Unigine_Tropics-1.2.run</URL>
+			<MD5>55139b63b298aa06bbf6286dfb9a9f81</MD5>
+			<FileSize>58771057</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

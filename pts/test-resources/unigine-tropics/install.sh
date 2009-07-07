@@ -1,11 +1,12 @@
 #!/bin/sh
 
-tar -jxvf Unigine_Tropics-1.1.tar.bz2
+chmod +x Unigine_Tropics-1.2.run
+./Unigine_Tropics-1.2.run
 
 echo "#!/bin/sh
-cd Unigine_Tropics-1.1/
+cd tropics/
 export LD_LIBRARY_PATH=bin/:\$LD_LIBRARY_PATH
-./bin/main_x86 \$@ > \$LOG_FILE 2>&1
+./bin/Tropics \$@ > \$LOG_FILE 2>&1
 cat \$LOG_FILE | grep FPS" > unigine-tropics
 chmod +x unigine-tropics
 
