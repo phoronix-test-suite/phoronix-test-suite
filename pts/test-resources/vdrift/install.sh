@@ -1,19 +1,9 @@
 #!/bin/sh
 
-tar -xjf vdrift-benchmark-1.tar.bz2
-tar -xjf vdrift-2009-02-15-src.tar.bz2
-cd vdrift-2009-02-15/
-tar -xvf bullet-2.73-sp1.tgz
-cd bullet-2.73/
-./autogen.sh
-./configure
-make
-cd ..
-patch -p0 < ../VDRIFT-ADD-BENCHMARK-MODE.patch
-scons
-
-# TODO: Drop in benchmark.vdr to ~/.vdrift/replays/
-# Config file at ~/.vdrift/VDrift.config
+tar -xjf vdrift-2009-06-15-src.tar.bz2
+tar -xjf vdrift-benchmark-2.tar.bz2
+cd vdrift-2009-06-15/
+scons release=1
 
 cd ..
 
@@ -27,7 +17,7 @@ autoclutch = true
 autotrans = true
 button_ramp = 0.000000
 mousegrab = true
-speed_sens_steering = 0.000000
+speed_sens_steering = 1.000000
 
 [ display ]
 width = \$1
@@ -43,19 +33,19 @@ input_graph = false
 lighting = 0
 mph = true
 racingline = false
-reflections = 0
+reflections = 1
 shaders = true
-shadow_distance = 1
-shadow_quality = 1
+shadow_distance = 2
+shadow_quality = 2
 shadows = true
 show_fps = true
 show_hud = true
 skin = simple
 texture_size = large
 trackmap = true
-view_distance = 1000.000000
+view_distance = 2500.000000
 zdepth = 24\" > ~/.vdrift/VDrift.config
 
-cd vdrift-2009-02-15/
+cd vdrift-2009-06-15/
 ./build/vdrift -multithreaded -nosound -benchmark \$@ > \$LOG_FILE 2>&1" > vdrift
 chmod +x vdrift

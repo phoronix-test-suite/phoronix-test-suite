@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.snt.utwente.nl/pub/games/urbanterror/UrbanTerror_41_FULL.zip, http://mirror.kickassctf.com/UrbanTerror_41_FULL.zip, http://mrsentry.net/release/UrbanTerror_41_FULL.zip</URL>
+			<URL>ftp://ftp.snt.utwente.nl/pub/games/urbanterror/UrbanTerror_41_FULL.zip, http://mirror.kickassctf.com/UrbanTerror_41_FULL.zip, http://dls.urt.voxel.net/q3ut4/UrbanTerror_41_FULL.zip</URL>
 			<MD5>1370306ea236f65f595e7ca70765e469</MD5>
 			<FileSize>754307397</FileSize>
 		</Package>

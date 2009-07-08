@@ -197,8 +197,8 @@
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
-			<PackageName>libboost-dev</PackageName>
-			<FileCheck>/usr/include/boost/</FileCheck>
+			<PackageName>libboost-dev libasio-dev</PackageName>
+			<FileCheck>/usr/include/boost/, /usr/include/asio/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>
