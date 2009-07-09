@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts-includes-batch.php: Functions Needed When Running In Batch Mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,19 +23,19 @@
 
 function pts_batch_mode_configured()
 {
-	return pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == "TRUE";
+	return pts_string_bool(pts_read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE"));
 }
 function pts_batch_prompt_test_identifier()
 {
-	return pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") == "TRUE";
+	return pts_string_bool(pts_read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE"));
 }
 function pts_batch_prompt_test_description()
 {
-	return pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE") == "TRUE";
+	return pts_string_bool(pts_read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE"));
 }
 function pts_batch_prompt_save_name()
 {
-	return pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE") == "TRUE";
+	return pts_string_bool(pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"));
 }
 
 ?>

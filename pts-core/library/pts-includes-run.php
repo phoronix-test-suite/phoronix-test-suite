@@ -263,8 +263,8 @@ function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
 	else
 	{
 		// Merge Results
-		$MERGED_RESULTS = pts_merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $proposed_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
-		pts_save_result($proposed_name . "/composite.xml", $MERGED_RESULTS);
+		$merged_results = pts_merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $proposed_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
+		pts_save_result($proposed_name . "/composite.xml", $merged_results);
 	}
 
 	return $real_name;
