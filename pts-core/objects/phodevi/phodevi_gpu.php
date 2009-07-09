@@ -671,6 +671,18 @@ class phodevi_gpu extends pts_device_interface
 				{
 					$info = substr($info, $start_pos + 5);
 				}
+
+				if(substr($info, -1) == ")" && ($open_p = strrpos($info, "(")) != false)
+				{
+					$end_check = strpos($info, " ", $open_p);
+					$to_check = substr($info, ($open_p + 1), ($end_check - $open_p - 1));
+
+					// Don't report card revision from PCI info
+					if($to_check == "rev")
+					{
+						$info = substr($info, 0, $open_p - 1);
+					}
+				}
 			}
 		}
 
