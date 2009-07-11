@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -166,7 +166,6 @@ class pts_test_result
 		else
 		{
 			// Result is of a normal numerical type
-
 			if($this->result_quantifier == "MAX")
 			{
 				$max_value = $this->trial_results[0];
@@ -213,15 +212,7 @@ class pts_test_result
 					}
 				}
 
-				if($TOTAL_COUNT > 0)
-				{
-					$END_RESULT = pts_trim_double($TOTAL_RESULT / $TOTAL_COUNT, 2);
-				}
-				else
-				{
-					$END_RESULT = pts_trim_double($TOTAL_RESULT, 2);
-				}
-
+				$END_RESULT = pts_trim_double($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
 				$return_string .= "\nAverage: " . $END_RESULT . " " . $this->result_scale;
 			}
 		}

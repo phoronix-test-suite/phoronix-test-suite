@@ -24,7 +24,7 @@ class removed_option implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo "\nThis option was dropped or changed in the Phoronix Test Suite.\nFor more information on the replacement option, view the documentation.\n\n";
+		echo "\nThis option has been dropped or changed. For information on the available options, view the included documentation or visit http://www.phoronix-test-suite.com/.\n\n";
 	}
 }
 

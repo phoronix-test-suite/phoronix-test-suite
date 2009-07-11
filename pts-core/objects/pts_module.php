@@ -133,7 +133,7 @@ class pts_module
 	{
 		$file = self::save_dir() . $file;
 
-		return (is_file($file) ? file_get_contents($file) : false);		
+		return is_file($file) ? file_get_contents($file) : false;	
 	}
 	public static function is_file($file)
 	{
@@ -150,7 +150,6 @@ class pts_module
 	public static function copy_file($from_file, $to_file)
 	{
 		// Copy a file for a module
-
 		$save_base_dir = self::save_dir();
 
 		if(!is_dir($save_base_dir))
@@ -179,7 +178,7 @@ class pts_module
 	}
 	public static function pts_timed_function($time, $function)
 	{
-		if($time <= 5 || $time > 300)
+		if($time < 3 || $time > 300)
 		{
 			return;
 		}
@@ -200,7 +199,7 @@ class pts_module
 					$start_id = pts_unique_runtime_identifier();
 					while(!pts_is_assignment("PTS_TESTING_DONE") && ($start_id == pts_unique_runtime_identifier() || $start_id == PTS_INIT_TIME) && is_file(PTS_USER_LOCK) && $loop_continue)
 					{
-						eval(self::module_name() . "::" . $function . "();"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+						eval(self::module_name() . "::" . $function . "();");
 
 						if($time > 0)
 						{

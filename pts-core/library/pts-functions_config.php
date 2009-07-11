@@ -64,7 +64,7 @@ function pts_user_config_init($new_config_values = null)
 	}
 
 	$gsid = pts_read_user_config(P_OPTION_GLOBAL_GSID, null, $read_config);
-	if(empty($gsid))
+	if(empty($gsid) || !pts_global_gsid_valid($gsid))
 	{
 		// Global System ID for anonymous uploads, etc
 		$gsid = pts_global_request_gsid();

@@ -69,14 +69,7 @@ class pts_test_option
 	}
 	public function get_option_default()
 	{
-		$default = $this->default_entry;
-
-		if($default == -1)
-		{
-			$default = $this->option_count() - 1;
-		}
-
-		return $default;
+		return $this->default_entry == -1 ? $this->option_count() - 1 : $this->default_entry;
 	}
 	public function add_option($name, $value)
 	{

@@ -27,7 +27,7 @@ class result_file_to_text implements pts_option_interface
 		if(!is_file(($saved_results_file = SAVE_RESULTS_DIR . $r[0] . "/composite.xml")))
 		{
 			echo "\n" . $r[0] . " is not a saved results file.\n\n";
-			return;
+			return false;
 		}
 
 		$result_file = new pts_result_file($r[0]);

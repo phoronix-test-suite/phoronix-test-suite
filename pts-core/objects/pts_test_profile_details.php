@@ -61,10 +61,11 @@ class pts_test_profile_details
 	}
 	public function get_maintainer()
 	{
-		$test_maintainer = explode("|", $this->maintainer);
+		$test_maintainer = array_map("trim", explode("|", $this->maintainer));
+
 		if(count($test_maintainer) == 2)
 		{
-			$test_maintainer = trim($test_maintainer[0]) . " <" . trim($test_maintainer[1]) . ">";
+			$test_maintainer = $test_maintainer[0] . " <" . $test_maintainer[1] . ">";
 		}
 		else
 		{
@@ -112,6 +113,7 @@ class pts_test_profile_details
 	public function suites_using_this_test()
 	{
 		$associated_suites = array();
+
 		foreach(pts_available_suites_array() as $identifier)
 		{
 		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);

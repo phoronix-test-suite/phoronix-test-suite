@@ -38,6 +38,7 @@ class pts_test_result_details
 		$this->suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
 		$this->unique_tests_r = array_unique($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE));
 		$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+
 		$results_xml = new tandem_XmlReader($raw_results[0]);
 		$this->identifiers_r = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
 	}

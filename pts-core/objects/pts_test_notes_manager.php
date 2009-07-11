@@ -35,12 +35,8 @@ class pts_test_notes_manager
 				break;
 			case "2D_ACCEL_METHOD":
 				$note = phodevi::read_property("gpu", "2d-accel-method");
-
-				if(!empty($note))
-				{
-					$note = "2D Acceleration: " . $note;
-				}
-			break;
+				$note = !empty($note) ? "2D Acceleration: " . $note : null;
+				break;
 		}
 
 		if(!empty($note) && !in_array($note, self::$notes))
@@ -160,7 +156,7 @@ class pts_test_notes_manager
 				}
 			}
 
-			$p_string .= ($p_count == 1 ? "was" : "were");
+			$p_string .= $p_count == 1 ? "was" : "were";
 			$p_string .= " running on this system";
 		}
 

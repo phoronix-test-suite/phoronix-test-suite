@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Small bug fixes and code clean-ups throughout
 - phodevi: Don't report PCI revision for graphics card model string
 - pts: Update unigine-sanctuary test profile to Unigine Sanctuary 2.2
 - pts: Update unigine-tropics test profile to Unigine Tropics 1.2

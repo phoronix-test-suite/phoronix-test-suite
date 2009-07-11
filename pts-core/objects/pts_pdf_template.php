@@ -45,7 +45,7 @@ class pts_pdf_template extends FPDF
 			return;
 		}
 
-		if(RESULTS_VIEWER_DIR . "pts-logo.jpg")
+		if(is_file(RESULTS_VIEWER_DIR . "pts-logo.jpg"))
 		{
 			$this->Image(RESULTS_VIEWER_DIR . "pts-logo.jpg", 10, 8, 30);
 		}

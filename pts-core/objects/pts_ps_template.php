@@ -141,7 +141,7 @@ class pts_ps_template
 			return;
 		}
 
-		if(RESULTS_VIEWER_DIR . "pts-logo.jpg")
+		if(is_file(RESULTS_VIEWER_DIR . "pts-logo.jpg"))
 		{
 			$this->Image(RESULTS_VIEWER_DIR . "pts-logo.jpg");
 		}

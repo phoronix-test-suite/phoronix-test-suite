@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -74,10 +74,11 @@ class pts_test_suite_details
 	}
 	public function get_maintainer()
 	{
-		$suite_maintainer = explode("|", $this->maintainer);
+		$suite_maintainer = array_map("trim", explode("|", $this->maintainer));
+
 		if(count($suite_maintainer) == 2)
 		{
-			$suite_maintainer = trim($suite_maintainer[0]) . " <" . trim($suite_maintainer[1]) . ">";
+			$suite_maintainer = $suite_maintainer[0] . " <" . $suite_maintainer[1] . ">";
 		}
 		else
 		{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,14 +33,7 @@ class pts_installed_test_details
 	}
 	public function __toString()
 	{
-		$str = "";
-
-		if(!empty($this->name))
-		{
-			$str = sprintf("%-18ls - %-30ls\n", $this->identifier, $this->name);
-		}
-
-		return $str;
+		return !empty($this->name) ? sprintf("%-18ls - %-30ls\n", $this->identifier, $this->name) : null;
 	}
 }
 
