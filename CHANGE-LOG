@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - phodevi: Don't report PCI revision for graphics card model string
 - phodevi: Fixes for DragonFly BSD support
 - phodevi: Add support for reading motherboard information from new ACPI oid with sysctl on *BSD
+- phodevi: Add basic file-system detection support on *BSD
 - pts: Update unigine-sanctuary test profile to Unigine Sanctuary 2.2
 - pts: Update unigine-tropics test profile to Unigine Tropics 1.2
 - pts: Update download locations in etqw-demo test profile

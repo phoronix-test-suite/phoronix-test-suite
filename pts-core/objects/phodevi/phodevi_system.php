@@ -256,9 +256,39 @@ class phodevi_system extends pts_device_interface
 	public static function sw_filesystem()
 	{
 		// Determine file-system type
+		$fs = null;
+
 		if(IS_MACOSX)
 		{
 			$fs = read_osx_system_profiler("SPSerialATADataType", "FileSystem");
+		}
+		else if(IS_BSD)
+		{
+			if(pts_executable_in_path("mount"))
+			{
+				$mount = shell_exec("mount 2>&1");
+				
+				if(($start = strpos($mount, "on / (")) != false)
+				{
+					/*
+					-bash-4.0$ mount
+					ROOT on / (hammer, local)
+					/dev/da0s1a on /boot (ufs, local)
+					/pfs/@@-1:00001 on /var (null, local)
+					/pfs/@@-1:00002 on /tmp (null, local)
+					/pfs/@@-1:00003 on /usr (null, local)
+					/pfs/@@-1:00004 on /home (null, local)
+					/pfs/@@-1:00005 on /usr/obj (null, local)
+					/pfs/@@-1:00006 on /var/crash (null, local)
+					/pfs/@@-1:00007 on /var/tmp (null, local)
+					procfs on /proc (procfs, local)
+					*/
+
+					// TODO: improve this in case there are other partitions, etc
+					$fs = substr($mount, $start + 6);
+					$fs = substr($fs, 0, strpos($fs, ","));
+				}
+			}
 		}
 		else
 		{
@@ -324,7 +354,7 @@ class phodevi_system extends pts_device_interface
 			}
 		}
 
-		if(empty($fs) || IS_BSD)
+		if(empty($fs))
 		{
 			$fs = "Unknown";
 		}
