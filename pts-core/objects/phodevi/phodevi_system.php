@@ -564,7 +564,11 @@ class phodevi_system extends pts_device_interface
 		{
 			// GNOME
 			$desktop_environment = "GNOME";
-			$desktop_version = array_pop(explode(" ", trim(shell_exec("gnome-about --version 2>&1"))));
+
+			if(pts_executable_in_path("gnome-about") != false)
+			{
+				$desktop_version = array_pop(explode(" ", trim(shell_exec("gnome-about --version 2>&1"))));
+			}
 		}
 		else if(($kde4 = pts_process_running_bool("kded4")) || pts_process_running_bool("kded"))
 		{

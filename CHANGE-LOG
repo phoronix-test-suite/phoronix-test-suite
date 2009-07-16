@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add new functionality to reference system comparison function
 - phodevi: Don't try calling glxinfo when it's not available
 - phodevi: Don't report PCI revision for graphics card model string
+- phodevi: Fixes for DragonFly BSD support
 - pts: Update unigine-sanctuary test profile to Unigine Sanctuary 2.2
 - pts: Update unigine-tropics test profile to Unigine Tropics 1.2
 - pts: Update download locations in etqw-demo test profile

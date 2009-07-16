@@ -101,6 +101,10 @@ class phodevi_cpu extends pts_device_interface
 		{
 			$info = read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
 		}
+		else
+		{
+			$info = null;
+		}
 
 		return (is_numeric($info) && $info > 0 ? $info : 1);
 	}
