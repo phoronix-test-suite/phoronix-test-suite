@@ -549,7 +549,7 @@ class phodevi_gpu extends pts_device_interface
 	public static function gpu_model()
 	{
 		// Report graphics processor string
-		$info = shell_exec("glxinfo 2>&1 | grep renderer");
+		$info = pts_executable_in_path("glxinfo") != false ? shell_exec("glxinfo 2>&1 | grep renderer") : null;
 		$video_ram = phodevi::read_property("gpu", "memory-capacity");
 
 		if(($pos = strpos($info, "renderer string:")) > 0)

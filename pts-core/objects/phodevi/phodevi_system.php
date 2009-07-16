@@ -674,7 +674,7 @@ class phodevi_system extends pts_device_interface
 	public static function sw_opengl_driver()
 	{
 		// OpenGL version
-		$info = shell_exec("glxinfo 2>&1 | grep version");
+		$info = pts_executable_in_path("glxinfo") != false ? shell_exec("glxinfo 2>&1 | grep version") : null;
 
 		if(($pos = strpos($info, "OpenGL version string:")) === false)
 		{
