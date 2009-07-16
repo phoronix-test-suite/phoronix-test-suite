@@ -78,6 +78,10 @@ class phodevi_motherboard extends pts_device_interface
 			{
 				$info = trim($vendor . " " . $version);
 			}
+			else if(($acpi = read_sysctl("dev.acpi.0.%desc")) != false)
+			{
+				$info = trim($acpi);
+			}
 		}
 
 		if(empty($info))
