@@ -57,8 +57,8 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>java-1_7_0-icedtea</PackageName>
-			<FileCheck>/usr/lib/jvm/java-1.7.0-icedtea-1.5_b24</FileCheck>
+			<PackageName>java-1_6_0-openjdk</PackageName>
+			<FileCheck>/usr/lib/jvm/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
@@ -157,7 +157,7 @@
 		</Package>
 		<Package>
 			<GenericName>numa-development</GenericName>
-			<PackageName>numactl-devel</PackageName>
+			<PackageName>libnuma-devel</PackageName>
 			<FileCheck>/usr/include/numa.h</FileCheck>
 		</Package>
 		<Package>

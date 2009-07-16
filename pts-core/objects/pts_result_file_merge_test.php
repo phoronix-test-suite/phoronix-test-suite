@@ -69,6 +69,18 @@ class pts_result_file_merge_test
 		$this->raw_values = array();
 	}
 
+	public function get_comparison_hash()
+	{
+		$hash_table = array(
+		$this->get_test_name(),
+		$this->get_arguments(),
+		trim($this->get_arguments()),
+		$this->get_attributes(),
+		$this->get_version()
+		);
+
+		return base64_encode(implode(",", $hash_table));
+	}
 	public function get_name()
 	{
 		return $this->name;

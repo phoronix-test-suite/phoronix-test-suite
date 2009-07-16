@@ -42,6 +42,7 @@ class pts_result_file
 
 	public function __construct($result_file)
 	{
+		// TODO: don't do all this work in the __construct() but move it out to the get functions
 		$xml_reader = new pts_results_tandem_XmlReader($result_file);
 		$this->system_hardware = $xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);
 		$this->system_software = $xml_reader->getXMLArrayValues(P_RESULTS_SYSTEM_SOFTWARE);
