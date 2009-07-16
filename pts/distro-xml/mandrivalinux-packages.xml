@@ -87,7 +87,7 @@
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
-			<PackageName>jpeg-devel</PackageName>
+			<PackageName>libopenjpeg-devel</PackageName>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
 		<Package>
@@ -162,7 +162,7 @@
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
-			<PackageName>libfftw3-devel</PackageName>
+			<PackageName>libfftw-devel</PackageName>
 			<FileCheck>/usr/include/fftw3.h</FileCheck>
 		</Package>
 		<Package>

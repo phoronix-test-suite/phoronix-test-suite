@@ -479,7 +479,7 @@ class phodevi_system extends pts_device_interface
 		}
 		else
 		{
-			$os_version = null;
+			$os_version = php_uname("r");
 		}
 
 		if(empty($os_version))
