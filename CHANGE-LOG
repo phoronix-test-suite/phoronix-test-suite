@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts: Update download locations in etqw-demo test profile
 - pts: Update vdrift test profile against vDrift 2009-06-15
 - pts: Update OpenSuSE External Dependencies
+- pts: Add External Dependencies support for DragonflyBSD through the NetBSD pkgsrc support
 
 Phoronix Test Suite 2.0.0 Beta 2
 July 7, 2009

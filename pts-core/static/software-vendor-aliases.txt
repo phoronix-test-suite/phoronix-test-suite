@@ -6,3 +6,4 @@ moblin = fedora
 nexentacore = ubuntu
 ptslinuxlive = ubuntu
 ptsdesktoplive = ubuntu
+dragonfly = netbsd
