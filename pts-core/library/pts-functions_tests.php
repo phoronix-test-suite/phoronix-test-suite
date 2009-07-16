@@ -923,9 +923,15 @@ function pts_objects_test_downloads($test_identifier)
 }
 function pts_result_file_reference_tests($result)
 {
-	$xml_parser = new pts_results_tandem_XmlReader($result);
-	$result_test = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
+	$result_file = new pts_result_file($result);
+	$result_test = $result_file->get_suite_name();
+	$test_result_hashes = array();
 	$reference_tests = array();
+
+	foreach($result_file->get_result_objects() as $result_object)
+	{
+		array_push($test_result_hashes, $result_object->get_comparison_hash());
+	}
 
 	if(pts_is_suite($result_test))
 	{
@@ -942,7 +948,10 @@ function pts_result_file_reference_tests($result)
 		$reference_systems_xml = null;
 	}
 
-	foreach(array_map("trim", explode(",", $reference_systems_xml)) as $global_id)
+	$reference_ids = array_map("trim", explode(",", $reference_systems_xml));
+	$reference_file_ids = array_map("trim", explode("\n", file_get_contents(STATIC_DIR . "reference-system-comparisons.txt")));
+
+	foreach(array_merge($reference_ids, $reference_file_ids) as $global_id)
 	{
 		if(pts_is_global_id($global_id))
 		{
@@ -951,7 +960,27 @@ function pts_result_file_reference_tests($result)
 				pts_clone_from_global($global_id, false);
 			}
 
-			array_push($reference_tests, $global_id);
+			$global_result_file = new pts_result_file($global_id);
+			$global_result_hashes = array();
+			$hash_failed = false;
+
+			foreach($global_result_file->get_result_objects() as $result_object)
+			{
+				array_push($global_result_hashes, $result_object->get_comparison_hash());
+			}
+			foreach($test_result_hashes as $hash)
+			{
+				if(!in_array($hash, $global_result_hashes))
+				{
+					$hash_failed = true;
+					break;
+				}
+			}
+
+			if(!$hash_failed)
+			{
+				array_push($reference_tests, $global_id);
+			}
 		}
 	}
 
