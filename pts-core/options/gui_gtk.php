@@ -323,6 +323,10 @@ class gui_gtk implements pts_option_interface
 		{
 			$button_box->add(new pts_gtk_label("<b>Text File Saved To:</b> " . $p));
 		}
+		if(($p = pts_read_assignment("PREV_GLOBAL_ACCT_SETUP")) != false)
+		{
+			$button_box->add(new pts_gtk_label("<b>" . $p . "</b>"));
+		}
 	}
 	public static function drag_drop_item($widget, $context, $x, $y, $data, $info, $time, $img)
 	{
@@ -1072,7 +1076,7 @@ class gui_gtk implements pts_option_interface
 
 		$password_label = new GtkLabel("Password:");
 		$password_login = new GtkEntry();
-		$password_login->set_visibility(false); // TODO: currently this causes the password not to show with ->get_text()
+		//$password_login->set_visibility(false); // TODO: currently this causes the password not to show with ->get_text()
 		pts_set_assignment("GTK_OBJ_GLOBAL_PASSWORD", $password_login);
 
 		$login_button = new pts_gtk_button("Log-In", array("gui_gtk", "launch_phoronix_global_action"), "login");
@@ -1130,11 +1134,11 @@ class gui_gtk implements pts_option_interface
 				$username = pts_read_assignment("GTK_OBJ_GLOBAL_USER");
 				$password = pts_read_assignment("GTK_OBJ_GLOBAL_PASSWORD");
 
-				$username = $username->get_text();
-				$password = md5($password->get_text());
+				$username = trim($username->get_text());
+				$password = md5(trim($password->get_text()));
 
-				pts_global_setup_account($username, $password); // TODO: add interface showing whether or not it worked
-				pts_run_option_next("gui_gtk");
+				$setup_success = pts_global_setup_account($username, $password);
+				pts_run_option_next("gui_gtk", null, array("PREV_GLOBAL_ACCT_SETUP" => "Phoronix Global Setup " . ($setup_success ? "Was Successful" : "Failed") . "."));
 				break;
 		}
 	}

@@ -58,6 +58,7 @@ function pts_global_valid_id_string($global_id)
 }
 function pts_global_setup_account($username, $password)
 {
+	echo "\n" . $username . " " . $password . "\n";
 	$uploadkey = @file_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=" . $username . "&user_md5_pass=" . $password);
 
 	if(!empty($uploadkey))
