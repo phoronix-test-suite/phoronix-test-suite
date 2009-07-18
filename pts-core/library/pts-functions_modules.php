@@ -272,7 +272,7 @@ function pts_php_module_call($module, $process, $object_pass = null)
 {
 	if(method_exists($module, $process))
 	{
-		eval("\$module_val = " . $module . "::" . $process . "(\$object_pass);"); // TODO: This can be cleaned up once PHP 5.3.0+ is out there and adopted
+		eval("\$module_val = " . $module . "::" . $process . "(\$object_pass);");
 	}
 	else
 	{
