@@ -925,6 +925,7 @@ function pts_result_file_reference_tests($result)
 {
 	$result_file = new pts_result_file($result);
 	$result_test = $result_file->get_suite_name();
+	$result_identifiers = $result_file->get_system_identifiers();
 	$test_result_hashes = array();
 	$reference_tests = array();
 
@@ -962,24 +963,39 @@ function pts_result_file_reference_tests($result)
 
 			$global_result_file = new pts_result_file($global_id);
 			$global_result_hashes = array();
-			$hash_failed = false;
 
-			foreach($global_result_file->get_result_objects() as $result_object)
+			$global_result_identifiers = $global_result_file->get_system_identifiers();
+			$match_count = 0;
+
+			foreach($global_result_identifiers as $identifier_check)
 			{
-				array_push($global_result_hashes, $result_object->get_comparison_hash());
-			}
-			foreach($test_result_hashes as $hash)
-			{
-				if(!in_array($hash, $global_result_hashes))
+				if(in_array($identifier_check, $result_identifiers))
 				{
-					$hash_failed = true;
-					break;
+					$match_count++;
 				}
 			}
 
-			if(!$hash_failed)
+			if(count($global_result_identifiers) != $match_count)
 			{
-				array_push($reference_tests, $global_id);
+				$hash_failed = false;
+
+				foreach($global_result_file->get_result_objects() as $result_object)
+				{
+					array_push($global_result_hashes, $result_object->get_comparison_hash());
+				}
+				foreach($test_result_hashes as $hash)
+				{
+					if(!in_array($hash, $global_result_hashes))
+					{
+						$hash_failed = true;
+						break;
+					}
+				}
+
+				if(!$hash_failed)
+				{
+					array_push($reference_tests, $global_id);
+				}
 			}
 		}
 	}

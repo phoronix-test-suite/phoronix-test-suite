@@ -214,7 +214,7 @@ class gui_gtk implements pts_option_interface
 			$reference_tests = pts_result_file_reference_tests($prev_identifier);
 			if(count($reference_tests) > 0)
 			{
-				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($reference_tests, $prev_identifier);
+				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($prev_identifier, $reference_tests, $prev_identifier);
 
 				foreach($objs as $obj)
 				{
@@ -430,7 +430,7 @@ class gui_gtk implements pts_option_interface
 			$reference_tests = pts_result_file_reference_tests($identifier);
 			if(count($reference_tests) > 0)
 			{
-				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($reference_tests, $identifier);
+				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($identifier, $reference_tests, $identifier);
 
 				foreach($objs as $obj)
 				{
@@ -563,7 +563,7 @@ class gui_gtk implements pts_option_interface
 
 		gui_gtk::redraw_main_window();
 	}
-	public static function pts_gtk_reference_system_comparison_objects($reference_tests, $comparison_identifier)
+	public static function pts_gtk_reference_system_comparison_objects($result_identifier, $reference_tests, $comparison_identifier)
 	{
 		// TODO: cleanup this function
 		$append_elements = array();
@@ -572,13 +572,21 @@ class gui_gtk implements pts_option_interface
 		$compare_results = new pts_gtk_button("Compare Results", array("gui_gtk", "compare_reference_systems"), null);
 		$compare_results->set_sensitive(false);
 
+		$result_file = new pts_result_file($result_identifier);
+		$result_ref_identifiers = $result_file->get_system_identifiers();
+
 		foreach($reference_tests as $global_id)
 		{
-			$xml_parser = new pts_results_tandem_XmlReader($global_id);
-			$ref_identifiers = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
+			$result_file = new pts_result_file($global_id);
+			$ref_identifiers = $result_file->get_system_identifiers();
 
 			for($i = 0; $i < count($ref_identifiers); $i++)
 			{
+				if(in_array($ref_identifiers[$i], $result_ref_identifiers))
+				{
+					continue;
+				}
+
 				$ref_check_button = new GtkCheckButton($ref_identifiers[$i]);
 				$ref_check_merge = new pts_result_merge_select($global_id, $ref_identifiers[$i]);
 
