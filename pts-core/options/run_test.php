@@ -33,16 +33,15 @@ class run_test implements pts_option_interface
 			echo pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup");
 			return false;
 		}
-		
-		$module_store = pts_module_store_var("TO_STRING");
-		$test_properties = array();
-		$types_of_tests = array();
-
 		if(count($to_run_identifiers) == 0 || empty($to_run_identifiers[0]))
 		{
 			echo pts_string_header("The test, suite, or saved identifier must be supplied.");
 			return false;
 		}
+		
+		$module_store = pts_module_store_var("TO_STRING");
+		$test_properties = array();
+		$types_of_tests = array();
 
 		// Cleanup tests to run
 		$to_run_identifiers = pts_cleanup_tests_to_run($to_run_identifiers);
@@ -79,9 +78,10 @@ class run_test implements pts_option_interface
 
 				pts_set_assignment_once("AUTO_SAVE_NAME", $to_run);
 			}
-			else
+
+			if(pts_is_test($to_run))
 			{
-				if(pts_is_test($to_run) && !pts_is_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE"))
+				if(!pts_is_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE"))
 				{
 					$xml_parser = new pts_test_tandem_XmlReader($to_run);
 					$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
@@ -91,10 +91,7 @@ class run_test implements pts_option_interface
 						pts_set_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE", true);
 					}
 				}
-			}
 
-			if(pts_is_test($to_run))
-			{
 				if(pts_read_assignment("IS_BATCH_MODE") != false)
 				{
 					$option_output = pts_generate_batch_run_options($to_run);
@@ -117,7 +114,6 @@ class run_test implements pts_option_interface
 					$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 					$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
 					$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
-					unset($xml_parser);
 				}
 			}
 			else if(pts_is_suite($to_run))
@@ -203,7 +199,6 @@ class run_test implements pts_option_interface
 		{
 			return false;
 		}
-		$unique_test_count = count(array_unique($to_run_identifiers));
 
 		if($unique_test_count > 1)
 		{
