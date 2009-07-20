@@ -965,17 +965,16 @@ function pts_result_file_reference_tests($result)
 			$global_result_hashes = array();
 
 			$global_result_identifiers = $global_result_file->get_system_identifiers();
-			$match_count = 0;
 
-			foreach($global_result_identifiers as $identifier_check)
+			foreach($global_result_identifiers as $index => $identifier_check)
 			{
 				if(in_array($identifier_check, $result_identifiers))
 				{
-					$match_count++;
+					unset($global_result_identifiers[$index]);
 				}
 			}
 
-			if(count($global_result_identifiers) != $match_count)
+			if(count($global_result_identifiers) > 0)
 			{
 				$hash_failed = false;
 
@@ -994,7 +993,10 @@ function pts_result_file_reference_tests($result)
 
 				if(!$hash_failed)
 				{
-					array_push($reference_tests, $global_id);
+					foreach($global_result_identifiers as $system_identifier)
+					{
+						array_push($reference_tests, new pts_result_merge_select($global_id, $system_identifier));
+					}
 				}
 			}
 		}

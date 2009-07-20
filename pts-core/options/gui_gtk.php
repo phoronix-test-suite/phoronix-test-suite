@@ -214,12 +214,7 @@ class gui_gtk implements pts_option_interface
 			$reference_tests = pts_result_file_reference_tests($prev_identifier);
 			if(count($reference_tests) > 0)
 			{
-				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($prev_identifier, $reference_tests, $prev_identifier);
-
-				foreach($objs as $obj)
-				{
-					array_push($reference_comparison_objects, $obj);
-				}
+				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($prev_identifier, $reference_tests, $reference_comparison_objects);
 			}
 		}
 
@@ -430,12 +425,7 @@ class gui_gtk implements pts_option_interface
 			$reference_tests = pts_result_file_reference_tests($identifier);
 			if(count($reference_tests) > 0)
 			{
-				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($identifier, $reference_tests, $identifier);
-
-				foreach($objs as $obj)
-				{
-					array_push($append_elements, $obj);
-				}
+				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($identifier, $reference_tests, $append_elements);
 			}
 			else
 			{
@@ -563,42 +553,22 @@ class gui_gtk implements pts_option_interface
 
 		gui_gtk::redraw_main_window();
 	}
-	public static function pts_gtk_reference_system_comparison_objects($result_identifier, $reference_tests, $comparison_identifier)
+	public static function pts_gtk_reference_system_comparison_objects($result_identifier, $reference_tests, &$append_elements)
 	{
-		// TODO: cleanup this function
-		$append_elements = array();
-		pts_set_assignment("REFERENCE_COMPARISONS_IDENTIFIER", $comparison_identifier);
+		pts_set_assignment("REFERENCE_COMPARISONS_IDENTIFIER", $result_identifier);
 		array_push($append_elements, new GtkLabel("Reference Systems"));
 		$compare_results = new pts_gtk_button("Compare Results", array("gui_gtk", "compare_reference_systems"), null);
 		$compare_results->set_sensitive(false);
 
-		$result_file = new pts_result_file($result_identifier);
-		$result_ref_identifiers = $result_file->get_system_identifiers();
-
-		foreach($reference_tests as $global_id)
+		foreach($reference_tests as $merge_select_object)
 		{
-			$result_file = new pts_result_file($global_id);
-			$ref_identifiers = $result_file->get_system_identifiers();
+			$ref_check_button = new GtkCheckButton($merge_select_object->get_selected_identifiers());
+			$ref_check_button->set_active(false);
+			$ref_check_button->connect("toggled", array("gui_gtk", "toggle_reference_systems"), $merge_select_object, $compare_results);
 
-			for($i = 0; $i < count($ref_identifiers); $i++)
-			{
-				if(in_array($ref_identifiers[$i], $result_ref_identifiers))
-				{
-					continue;
-				}
-
-				$ref_check_button = new GtkCheckButton($ref_identifiers[$i]);
-				$ref_check_merge = new pts_result_merge_select($global_id, $ref_identifiers[$i]);
-
-				$ref_check_button->set_active(false);
-				$ref_check_button->connect("toggled", array("gui_gtk", "toggle_reference_systems"), $ref_check_merge, $compare_results);
-
-				array_push($append_elements, $ref_check_button);
-			}
+			array_push($append_elements, $ref_check_button);
 		}
 		array_push($append_elements, $compare_results);
-
-		return $append_elements;
 	}
 	public static function compare_reference_systems()
 	{

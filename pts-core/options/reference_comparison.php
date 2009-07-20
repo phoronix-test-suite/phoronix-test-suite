@@ -57,33 +57,22 @@ class reference_comparison implements pts_option_interface
 		else
 		{
 			echo pts_string_header("Reference Comparison");
-			$reference_systems = array();
 			$reference_count = 1;
 
-			foreach($reference_test_globals as $global_id)
+			foreach($reference_test_globals as $merge_select_object)
 			{
-				$xml_parser = new pts_results_tandem_XmlReader($global_id);
-				$ref_identifiers = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
-				$ref_hardware = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);
-				$ref_software = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_SOFTWARE);
-
-				for($i = 0; $i < count($ref_identifiers); $i++)
-				{
-					echo $reference_count . ": " . $ref_identifiers[$i] . "\n\n";
-					echo $ref_hardware[$i] . "\n\n" . $ref_software[$i] . "\n\n";
-
-					$reference_systems[$reference_count] = new pts_result_merge_select($global_id, $ref_identifiers[$i]);
-					$reference_count++;
-				}
+				echo $reference_count . ": " . $merge_select_object->get_selected_identifiers() . "\n";
+				$reference_count++;
 			}
 
 			do
 			{
 				echo "\nSelect a reference system to compare to: ";
-				$request_identifier = trim(fgets(STDIN));
+				$request_identifier = (trim(fgets(STDIN)) - 1);
 			}
-			while(!isset($reference_systems[$request_identifier]));
-			array_push($merge_args, $reference_systems[$request_identifier]);
+			while(!isset($reference_test_globals[$request_identifier]));
+
+			array_push($merge_args, $reference_test_globals[$request_identifier]);
 		}
 
 		pts_set_assignment("REFERENCE_COMPARISON", true);
