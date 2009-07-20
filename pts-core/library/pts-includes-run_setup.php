@@ -21,35 +21,45 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_prompt_results_identifier($current_identifiers = null)
+function pts_prompt_results_identifier($file_name = null, &$test_run_manager)
 {
 	// Prompt for a results identifier
 	$results_identifier = null;
 	$show_identifiers = array();
+	$no_repeated_tests = true;
+
+	if(pts_is_test_result($file_name))
+	{
+		$result_file = new pts_result_file($file_name);
+		$current_identifiers = $result_file->get_system_identifiers();
+
+		$result_objects = $result_file->get_result_objects();
+
+		foreach(array_keys($result_objects) as $result_key)
+		{
+			$result_objects[$result_key] = $result_objects[$result_key]->get_comparison_hash(false);
+		}
+
+		foreach($test_run_manager->get_tests_to_run() as $run_request)
+		{
+			if(in_array($run_request->get_comparison_hash(), $result_objects))
+			{
+				$no_repeated_tests = false;
+				break;
+			}
+		}
+	}
+	else
+	{
+		$current_identifiers = array();
+	}
 
 	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_identifier())
 	{
-		if(is_array($current_identifiers) && count($current_identifiers) > 0)
+		if(count($current_identifiers) > 0)
 		{
-			foreach($current_identifiers as $identifier)
-			{
-				if(is_array($identifier))
-				{
-					foreach($identifier as $identifier_2)
-					{
-						array_push($show_identifiers, $identifier_2);
-					}
-				}
-				else
-				{
-					array_push($show_identifiers, $identifier);
-				}
-			}
-
-			$show_identifiers = array_unique($show_identifiers);
-
 			echo "\nCurrent Test Identifiers:\n";
-			foreach($show_identifiers as $identifier)
+			foreach($current_identifiers as $identifier)
 			{
 				echo "- " . $identifier . "\n";
 			}
@@ -71,8 +81,10 @@ function pts_prompt_results_identifier($current_identifiers = null)
 				$results_identifier = trim(str_replace(array("/"), "", fgets(STDIN)));
 			}
 			$times_tried++;
+
+			// TODO: add check that if a unique name is repeated, that the system software/hardware matches from the result_file
 		}
-		while(in_array($results_identifier, $show_identifiers) && !pts_is_assignment("FINISH_INCOMPLETE_RUN"));
+		while(!$no_repeated_tests && in_array($results_identifier, $current_identifiers) && !pts_is_assignment("FINISH_INCOMPLETE_RUN"));
 	}
 
 	if(empty($results_identifier))

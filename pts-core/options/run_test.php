@@ -241,25 +241,8 @@ class run_test implements pts_option_interface
 				$custom_title = $file_name_result[1];
 				pts_set_assignment("SAVE_FILE_NAME", $proposed_file_name);
 
-				// Prompt Identifiers
-				if(pts_is_test_result($proposed_file_name))
-				{
-					$xml_parser = new pts_results_tandem_XmlReader($proposed_file_name);
-					$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
-					$result_identifiers = array();
-
-					for($i = 0; $i < count($raw_results); $i++)
-					{
-						$results_xml = new tandem_XmlReader($raw_results[$i], false);
-						array_push($result_identifiers, $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
-					}
-				}
-				else
-				{
-					$result_identifiers = array();
-				}
-
-				$results_identifier = pts_prompt_results_identifier($result_identifiers);
+				// Prompt Identifier
+				$results_identifier = pts_prompt_results_identifier($proposed_file_name, $test_run_manager);
 
 				if($unique_test_count > 1 || !isset($test_description))
 				{

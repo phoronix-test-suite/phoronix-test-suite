@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fixes for Phoronix Global log-in from GTK2 GUI
 - pts-core: More efficient pts_result_file object
 - pts-core: Don't let the same reference system result be merged into a test result when it was already merged
+- pts-core: Allow unique test run identifiers to be repeated if the new test run contains no repeated tests from result file
 - phodevi: Don't try calling glxinfo when it's not available
 - phodevi: Don't report PCI revision for graphics card model string
 - phodevi: Fixes for DragonFly BSD support

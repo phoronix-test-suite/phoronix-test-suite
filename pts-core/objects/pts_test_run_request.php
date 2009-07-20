@@ -52,7 +52,19 @@ class pts_test_run_request
 	}
 	public function __toString()
 	{
-		return $this->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description(). " " . $this->get_override_options();
+		return $this->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description() . " " . $this->get_override_options();
+	}
+	public function get_comparison_hash()
+	{
+		// this function is shared with pts_result_file_merge_test hashes
+		// TODO: should be standardized to new object for comparison hashes
+
+		$hash_table = array(
+		$this->get_identifier(),
+		trim($this->get_arguments())
+		);
+
+		return base64_encode(implode(",", $hash_table));
 	}
 }
 

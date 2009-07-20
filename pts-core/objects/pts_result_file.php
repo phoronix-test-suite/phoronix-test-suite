@@ -106,9 +106,9 @@ class pts_result_file
 			$results_values = array();
 			$results_raw_values = array();
 
-			foreach($results_raw as $result_raw)
+			foreach(array_keys($results_raw) as $results_raw_key)
 			{
-				$xml_results = new tandem_XmlReader($result_raw);
+				$xml_results = new tandem_XmlReader($results_raw[$results_raw_key]);
 				array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
 				array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
 				array_push($results_raw_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
