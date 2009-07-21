@@ -20,6 +20,7 @@ Phoronix Test Suite (Git)
 - pts: Update OpenSuSE External Dependencies
 - pts: Add External Dependencies support for DragonflyBSD through the NetBSD pkgsrc support
 - pts: Update Mandriva Linux External Dependencies
+- pts: Add supertuxkart test profile for SuperTuxKart racing game
 
 Phoronix Test Suite 2.0.0 Beta 2
 July 7, 2009

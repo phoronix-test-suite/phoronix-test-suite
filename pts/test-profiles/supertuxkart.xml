@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Graphics</TestType>
+		<SoftwareType>Game</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>182</EnvironmentSize>
+		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ProjectURL>http://supertuxkart.sourceforge.net/</ProjectURL>
+		<SupportedPlatforms>Linux</USupportedPlatforms>
+	</TestProfile>
+	<TestInformation>
+		<Title>SuperTuxKart</Title>
+		<Version>0.6</Version>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Frames Per Second</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This is a test of SuperTuxKart, which is an open-source racing game. This game uses PLIB, SDL, OpenAL, and other technologies.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<Arguments>--profile=60 --kart tux --track beach --numkarts 8 --fullscreen</Arguments>
+		</Default>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>auto-resolution</Identifier>
+			<Menu>
+				<Entry>
+					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+					<Value>--screensize $VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>
