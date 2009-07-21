@@ -378,9 +378,12 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 		}
 		else if($check_extended && pts_is_virtual_suite($object))
 		{
-			foreach(pts_virtual_suite_tests($object) as $virt_test)
+			foreach(pts_virtual_suite_tests($object) as $test)
 			{
-				array_push($tests, $virt_test);
+				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+				{
+					array_push($tests, $sub_test);
+				}
 			}
 		}
 		else if(is_file(($file_path = pts_input_correct_results_path($object)))) // Object is a local file
