@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.0.0 Beta 3
+July 21, 2009
 
 - pts-core: Small bug fixes and code clean-ups throughout
 - pts-core: Add new functionality to reference system comparison function
@@ -8,7 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: More efficient pts_result_file object
 - pts-core: Don't let the same reference system result be merged into a test result when it was already merged
 - pts-core: Allow unique test run identifiers to be repeated if the new test run contains no repeated tests from result file
-- pts-core: Fix bug where tests that use Cascading Test Profiles would not have their extensions installed
+- pts-core: Fix bug where tests that use Cascading Test Profiles would not have their extensions installed in a virtual suite
 - phodevi: Don't try calling glxinfo when it's not available
 - phodevi: Don't report PCI revision for graphics card model string
 - phodevi: Fixes for DragonFly BSD support
