@@ -144,7 +144,7 @@ class phodevi_system extends pts_device_interface
 		{
 			$sensors = read_sensors(array("Sys Temp", "Board Temp"));
 
-			if(!$sensors != false && is_numeric($sensors))
+			if($sensors != false && is_numeric($sensors))
 			{
 				$temp_c = $sensors;
 			}

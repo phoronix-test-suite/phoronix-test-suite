@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phodevi: Fix regression that caused system and CPU temperatures to not be reported through LM_Sensors interface
+
 Phoronix Test Suite 2.0.0 Beta 3
 July 21, 2009
 

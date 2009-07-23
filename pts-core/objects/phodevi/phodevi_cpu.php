@@ -305,7 +305,7 @@ class phodevi_cpu extends pts_device_interface
 		{
 			$sensors = read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
 
-			if(!$sensors != false && is_numeric($sensors))
+			if($sensors != false && is_numeric($sensors))
 			{
 				$temp_c = $sensors;
 			}
