@@ -430,7 +430,13 @@ function pts_virtual_suite_tests($object)
 		case TYPE_VIRT_SUITE_ALL:
 			foreach(pts_supported_tests_array() as $test)
 			{
-				array_push($contained_tests, $test);
+				$xml_parser = new pts_test_tandem_XmlReader($test);
+				$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
+
+				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")))
+				{
+					array_push($contained_tests, $test);
+				}
 			}
 			break;
 	}

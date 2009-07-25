@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: For the "all" virtual suite, don't include tests that have a ResultFormat of NO_RESULT, PASS_FAIL, or MULTI_PASS_FAIL
 - phodevi: Fix regression that caused system and CPU temperatures to not be reported through LM_Sensors interface
 - pts: Fix bug in key location detection for key test profile by using $DEBUG_REAL_HOME in test install script
 - pts: Update boost packages for ubuntu-packages.xml external dependencies
