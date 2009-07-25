@@ -16,7 +16,7 @@ echo \"[ control ]
 autoclutch = true
 autotrans = true
 button_ramp = 0.000000
-mousegrab = true
+mousegrab = false
 speed_sens_steering = 1.000000
 
 [ display ]

@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts: Fix bug in key location detection for key test profile by using $DEBUG_REAL_HOME in test install script
 - pts: Update boost packages for ubuntu-packages.xml external dependencies
 - documentation: Add Frequently Asked Questions
+- pts: For vdrift test profile, don't grab mouse
 
 Phoronix Test Suite 2.0.0 Beta 3
 July 21, 2009
