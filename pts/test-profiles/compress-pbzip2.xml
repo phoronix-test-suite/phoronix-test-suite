@@ -2,14 +2,14 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>4.5</EnvironmentSize>
-		<EnvironmentTestingSize>2048</EnvironmentTestingSize>
+		<EnvironmentTestingSize>256</EnvironmentTestingSize>
 		<ProjectURL>http://compression.ca/pbzip2/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<UnsupportedPlatforms>MacOSX, BSD</UnsupportedPlatforms>
@@ -17,7 +17,7 @@
 	<TestInformation>
 		<Title>Parallel BZIP2 Compression</Title>
 		<Version>1.0.5</Version>
-		<SubTitle>2GB File Compression</SubTitle>
+		<SubTitle>256MB File Compression</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts: Update boost packages for ubuntu-packages.xml external dependencies
 - pts: For vdrift test profile, don't grab the mouse
 - pts: Add glut as an external dependency to supertuxkart test profile
+- pts: Update compress-pbzip2 test profile to use 256MB compression file
 - documentation: Add Frequently Asked Questions
 - documentation: Few small updates
 
