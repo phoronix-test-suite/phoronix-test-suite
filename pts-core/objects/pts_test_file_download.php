@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,22 +29,9 @@ class pts_test_file_download
 
 	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null)
 	{
-		if(empty($filename))
-		{
-			$filename = basename($url);
-		}
-		if($filename == $url)
-		{
-			$url = "";
-		}	
-		if(!is_numeric($filesize))
-		{
-			$filesize = 0;
-		}
-
-		$this->url = $url;
-		$this->filename = $filename;
-		$this->filesize = $filesize;
+		$this->filename = (empty($filename) ? basename($url) : $filename);
+		$this->url = ($this->filename == $url ? null : $url);
+		$this->filesize = (!is_numeric($filesize) ? 0 : $filesize);
 		$this->md5 = $md5;
 	}
 	public function get_download_url_array()

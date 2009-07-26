@@ -40,7 +40,6 @@ class pts_run_option
 			$set_assignments = array();
 		}
 
-
 		$this->command = $command;
 		$this->arguments = $pass_args;
 		$this->preset_assignments = $set_assignments;
