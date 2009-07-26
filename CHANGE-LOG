@@ -6,7 +6,8 @@ Phoronix Test Suite (Git)
 - phodevi: Fix regression that caused system and CPU temperatures to not be reported through LM_Sensors interface
 - pts: Fix bug in key location detection for key test profile by using $DEBUG_REAL_HOME in test install script
 - pts: Update boost packages for ubuntu-packages.xml external dependencies
-- pts: For vdrift test profile, don't grab mouse
+- pts: For vdrift test profile, don't grab the mouse
+- pts: Add glut as an external dependency to supertuxkart test profile
 - documentation: Add Frequently Asked Questions
 - documentation: Few small updates
 

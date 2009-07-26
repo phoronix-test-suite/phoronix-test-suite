@@ -11,6 +11,7 @@
 		<EnvironmentSize>182</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://supertuxkart.sourceforge.net/</ProjectURL>
+		<ExternalDependencies>glut</ExternalDependencies>
 		<SupportedPlatforms>Linux</USupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
