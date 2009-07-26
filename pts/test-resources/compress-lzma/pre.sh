@@ -1,4 +1,4 @@
 #!/bin/sh
 
-dd if=/dev/urandom of=compressfile bs=1024 count=262144
+dd if=/dev/urandom of=encryptfile bs=1M count=256
 
