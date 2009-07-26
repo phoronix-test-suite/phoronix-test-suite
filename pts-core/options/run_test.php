@@ -54,6 +54,7 @@ class run_test implements pts_option_interface
 			$to_run_type = pts_test_type($to_run);
 			pts_set_assignment_once("TO_RUN", $to_run);
 
+			// TODO: Could be reworked to eliminate $to_run_type
 			if(!$to_run_type)
 			{
 				if(pts_is_test_result($to_run))
@@ -250,9 +251,7 @@ class run_test implements pts_option_interface
 					$last = array_pop($unique_tests_r);
 					array_push($unique_tests_r, "and " . $last);
 
-					$test_description = "Running ";
-					$test_description .= implode(($unique_test_count == 2 ? " and " : ", "), $unique_tests_r);
-					$test_description .= ".";
+					$test_description = "Running " . implode(($unique_test_count == 2 ? " and " : ", "), $unique_tests_r) . ".";
 				}
 
 				// Prompt Description

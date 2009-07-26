@@ -32,19 +32,18 @@ class pts_user_module_details
 
 	public function __construct($module_file_path)
 	{
-		$module = basename(substr($module_file_path, 0, strrpos($module_file_path, ".")));
-		$this->module = $module;
+		$this->module = basename(substr($module_file_path, 0, strrpos($module_file_path, ".")));
 
-		if(!class_exists($module) && substr($module_file_path, -3) == "php")
+		if(!class_exists($this->module) && substr($module_file_path, -3) == "php")
 		{
 			include_once($module_file_path);
 		}
 
-		$this->name = pts_module_call($module, "module_name");
-		$this->version = pts_module_call($module, "module_version");
-		$this->author = pts_module_call($module, "module_author");
-		$this->description = pts_module_call($module, "module_description");
-		$this->information = pts_module_call($module, "module_info");
+		$this->name = pts_module_call($this->module, "module_name");
+		$this->version = pts_module_call($this->module, "module_version");
+		$this->author = pts_module_call($this->module, "module_author");
+		$this->description = pts_module_call($this->module, "module_description");
+		$this->information = pts_module_call($this->module, "module_info");
 	}
 	public function info_string()
 	{
