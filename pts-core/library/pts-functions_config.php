@@ -261,7 +261,8 @@ function pts_find_home($path)
 		$home_path = pts_user_home();
 		$path = str_replace("~/", $home_path, $path);
 	}
-	return $path;
+
+	return pts_add_trailing_slash($path);
 }
 function pts_user_home()
 {

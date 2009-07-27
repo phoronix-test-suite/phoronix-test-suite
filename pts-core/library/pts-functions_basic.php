@@ -56,6 +56,10 @@ function pts_trim_double($double, $accuracy = 2)
 
 	return $return;
 }
+function pts_add_trailing_slash($path)
+{
+	return $path . (substr($path, -1) == "/" ? null : "/"); 
+}
 function pts_string_bool($string)
 {
 	// Used for evaluating if the user inputted a string that evaluates to true
