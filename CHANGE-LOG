@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Clean-up pts_test_file_download object
 - pts-core: For GTK2 GUI change around event reporting for test installation
 - pts-core: Don't require trailing slash for user-config.xml paths
+- pts-core: Properly handle test profiles with no files to be downloaded in pts_test_download_files_locally_available()
 - phodevi: Fix regression that caused system and CPU temperatures to not be reported through LM_Sensors interface
 - pts: Fix bug in key location detection for key test profile by using $DEBUG_REAL_HOME in test install script
 - pts: Update boost packages for ubuntu-packages.xml external dependencies

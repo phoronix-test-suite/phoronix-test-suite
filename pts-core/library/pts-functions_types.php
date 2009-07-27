@@ -50,6 +50,12 @@ function pts_is_test($object)
 
 	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_BASE_TEST;
 }
+function pts_is_base_test($object)
+{
+	$type = pts_test_type($object);
+
+	return $type == TYPE_BASE_TEST;
+}
 function pts_is_test_result($object)
 {
 	return is_file(SAVE_RESULTS_DIR . $object . "/composite.xml");

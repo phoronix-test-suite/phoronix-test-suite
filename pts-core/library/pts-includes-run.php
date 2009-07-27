@@ -352,13 +352,13 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		$execute_binary = $test_identifier;
 	}
 
-	$execute_path_check = explode(",", $execute_path);
+	$execute_path_check = array_map("trim", explode(",", $execute_path));
 	array_push($execute_path_check, $test_directory);
 	$to_execute = null;
 
 	while(count($execute_path_check) > 0)
 	{
-		$path_check = trim(array_pop($execute_path_check));
+		$path_check = array_pop($execute_path_check);
 
 		if(is_executable($path_check . $execute_binary))
 		{
