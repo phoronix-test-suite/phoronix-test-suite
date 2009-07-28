@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Don't require trailing slash for user-config.xml paths
 - pts-core: Properly handle test profiles with no files to be downloaded in pts_test_download_files_locally_available()
 - pts-core: When using run-test in a batch mode and automated mode, but batch-setup hasn't been run, don't output an error
+- pts-core: Few fixes for Phoronix Global comparisons from GTK2 GUI interface
 - phodevi: Fix regression that caused system and CPU temperatures to not be reported through LM_Sensors interface
 - phodevi: Don't report disk size on hard disk identifier string when size equals 1GB, since that would be due to incorrect size
 - pts: Fix prey test profile bug in key location detection for key test profile by using $DEBUG_REAL_HOME in test install script

@@ -156,7 +156,7 @@ class run_test implements pts_option_interface
 				$test_args = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
 				$test_args_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 
-				pts_set_assignment_once("AUTO_SAVE_NAME", $to_run);
+				pts_set_assignment("AUTO_SAVE_NAME", $to_run);
 
 				foreach(explode(";", $test_previous_properties) as $test_prop)
 				{

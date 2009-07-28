@@ -120,7 +120,7 @@ class gui_gtk implements pts_option_interface
 		// Menu Setup
 		$refresh_graphs = new pts_gtk_menu_item(array("GTK_OBJ_REFRESH_GRAPHS", "Regenerate Graphs"), array("gui_gtk", "refresh_graphs"));
 
-		$file_menu = array("Phoronix Global" => array(new pts_gtk_menu_item("Clone / View Results", array("gui_gtk", "show_phx_global_clone_interface")), 
+		$file_menu = array("Phoronix Global" => array(new pts_gtk_menu_item("Run Comparison / View Results", array("gui_gtk", "show_phx_global_clone_interface")), 
 		new pts_gtk_menu_item("User Log-In", array("gui_gtk", "show_phx_global_login_interface"))), null);
 
 		$file_menu["Export Results"] = array(new pts_gtk_menu_item("Save To PDF", array("gui_gtk", "show_generate_pdf_interface")),
@@ -963,6 +963,12 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_SAVE_NAME", $save_name);
 		array_push($menu_items, array(new GtkLabel("Save Name"), $save_name));
 
+		if(count($identifiers) == 1 && (pts_is_test_result($identifiers[0]) || pts_is_global_id($identifiers[0])))
+		{
+			$save_name->set_text($identifiers[0]);
+			$save_name->set_sensitive(false);
+		}
+
 		$test_identifier = new GtkEntry();
 		pts_set_assignment("GTK_OBJ_TEST_IDENTIFIER", $test_identifier);
 		array_push($menu_items, array(new GtkLabel("Test Identifier"), $test_identifier));
@@ -1020,6 +1026,7 @@ class gui_gtk implements pts_option_interface
 		$global_id->connect_simple("backspace", array("gui_gtk", "phoronix_global_id_entry_changed"), null);
 		$global_id->connect_simple("key-press-event", array("gui_gtk", "phoronix_global_id_entry_changed"), null);
 		$global_id->connect_simple("paste-clipboard", array("gui_gtk", "phoronix_global_id_entry_changed"), null);
+		//$global_id->connect_simple("insert-at-cursor", array("gui_gtk", "phoronix_global_id_entry_changed"), null);
 		pts_set_assignment("GTK_OBJ_GLOBAL_ID", $global_id);
 
 		$results_button = new pts_gtk_button("View Results", array("gui_gtk", "launch_phoronix_global_action"), "view_results");
@@ -1108,7 +1115,7 @@ class gui_gtk implements pts_option_interface
 				//Gtk::main_quit();
 				break;
 			case "run_comparison":
-				gui_gtk::show_run_confirmation_interface($global_id);
+				gui_gtk::show_run_confirmation_interface($global_id, "BENCHMARK");
 				break;
 			case "login":
 				$username = pts_read_assignment("GTK_OBJ_GLOBAL_USER");
