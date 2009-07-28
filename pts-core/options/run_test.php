@@ -28,9 +28,9 @@ class run_test implements pts_option_interface
 	}
 	public static function run($to_run_identifiers)
 	{
-		if(pts_read_assignment("IS_BATCH_MODE") != false && !pts_batch_mode_configured())
+		if(pts_read_assignment("IS_BATCH_MODE") != false && !pts_batch_mode_configured() && !pts_is_assignment("AUTOMATED_MODE"))
 		{
-			echo pts_string_header("The batch mode must first be configured\nRun: phoronix-test-suite batch-setup");
+			echo pts_string_header("The batch mode must first be configured.\nRun: phoronix-test-suite batch-setup");
 			return false;
 		}
 		if(count($to_run_identifiers) == 0 || empty($to_run_identifiers[0]))
