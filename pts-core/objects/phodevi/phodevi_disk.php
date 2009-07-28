@@ -93,7 +93,7 @@ class phodevi_disk extends pts_device_interface
 
 					$disk_size = round($disk_size * 512 / 1000000000) . "GB";
 
-					if(strpos($disk_model, $disk_size . " ") === false && strpos($disk_model, " " . $disk_size) === false)
+					if(strpos($disk_model, $disk_size . " ") === false && strpos($disk_model, " " . $disk_size) === false && $disk_size != "1GB")
 					{
 						$disk_model = $disk_size . " " . $disk_model;
 					}
