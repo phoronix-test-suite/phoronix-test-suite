@@ -42,6 +42,9 @@
 		<Description>1GB Write Performance</Description>
 	</RunTest>
 	<RunTest>
+		<Test>postmark</Test>
+	</RunTest>
+	<RunTest>
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
