@@ -197,8 +197,8 @@
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
-			<PackageName>libboost-dev libasio-dev libboost-date-time-dev libboost-regex-dev</PackageName>
-			<FileCheck>/usr/include/boost/, /usr/include/asio/, /usr/include/boost/date_time/, /usr/include/boost/regex.hpp</FileCheck>
+			<PackageName>libboost-dev libasio-dev libboost-date-time-dev libboost-regex-dev libboost-iostreams-dev</PackageName>
+			<FileCheck>/usr/include/boost/, /usr/include/asio/, /usr/include/boost/date_time/, /usr/include/boost/regex.hpp, /usr/include/boost/iostreams/write.hpp</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>

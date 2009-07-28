@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite 2.0.0 "Sandtorg"
 
 - pts-core: Don't prompt for download mirror selection if the option is enabled, but running from the GUI
+- pts: minion test profile updates
 
 Phoronix Test Suite 2.0.0 Beta 4
 July 28, 2009

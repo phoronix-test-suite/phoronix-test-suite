@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm -rf minion-0.8.1/
 tar -xvf minion-0.8.1-src.tar.gz
 cd minion-0.8.1/
 mkdir build
