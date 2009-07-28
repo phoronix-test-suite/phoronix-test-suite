@@ -4,7 +4,7 @@
 	<SuiteInformation>
 		<Version>1.0.3</Version>
 		<TestType>System</TestType>
-		<Title>Universe Test Suite</Title>
+		<Title>Universe X Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Universe X suite contains Phoronix Test Suite tests that require an active X server / tests that are graphics-based.</Description>
 	</SuiteInformation>
