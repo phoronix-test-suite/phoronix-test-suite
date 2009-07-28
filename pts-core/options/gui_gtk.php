@@ -670,7 +670,7 @@ class gui_gtk implements pts_option_interface
 			pts_gtk_add_notebook_tab($main_notebook, $available_tests, "Available Tests");
 		}
 
-		$r_i = pts_gui_saved_test_results_identifiers();
+		$r_i = pts_saved_test_results_identifiers();
 		$test_results = pts_gtk_table(array(count($r_i) . " Test Results"), $r_i, array("gui_gtk", "update_details_frame_from_select"), "No test results have been saved.");
 		pts_gtk_add_notebook_tab($main_notebook, $test_results, "Test Results");
 	}

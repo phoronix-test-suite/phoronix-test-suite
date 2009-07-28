@@ -163,16 +163,5 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 
 	return $test_names;
 }
-function pts_gui_saved_test_results_identifiers()
-{
-	$results = array();
-
-	foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
-	{
-		array_push($results, pts_extract_identifier_from_path($result_file));
-	}
-
-	return $results;
-}
 
 ?>

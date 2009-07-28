@@ -921,6 +921,34 @@ function pts_objects_test_downloads($test_identifier)
 
 	return $obj_r;
 }
+function pts_saved_test_results_identifiers()
+{
+	$results = array();
+	$ignore_ids = pts_generic_reference_system_comparison_ids();
+
+	foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
+	{
+		$identifier = pts_extract_identifier_from_path($result_file);
+
+		if(!in_array($identifier, $ignore_ids))
+		{
+			array_push($results, $identifier);
+		}
+	}
+
+	return $results;
+}
+function pts_generic_reference_system_comparison_ids()
+{
+	static $comparison_ids = null;
+
+	if($comparison_ids == null)
+	{
+		$comparison_ids = array_map("trim", explode("\n", file_get_contents(STATIC_DIR . "reference-system-comparisons.txt")));
+	}
+
+	return $comparison_ids;
+}
 function pts_result_file_reference_tests($result)
 {
 	$result_file = new pts_result_file($result);
@@ -950,7 +978,7 @@ function pts_result_file_reference_tests($result)
 	}
 
 	$reference_ids = array_map("trim", explode(",", $reference_systems_xml));
-	$reference_file_ids = array_map("trim", explode("\n", file_get_contents(STATIC_DIR . "reference-system-comparisons.txt")));
+	$reference_file_ids = pts_generic_reference_system_comparison_ids();
 
 	foreach(array_merge($reference_ids, $reference_file_ids) as $global_id)
 	{
