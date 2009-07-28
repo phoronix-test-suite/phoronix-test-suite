@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts: Add glut as an external dependency to supertuxkart test profile
 - pts: Update compress-pbzip2 test profile to use 256MB compression file
 - documentation: Add Frequently Asked Questions
+- documentation: Add PTS Desktop Live
 - documentation: Few small updates
 
 Phoronix Test Suite 2.0.0 Beta 3
