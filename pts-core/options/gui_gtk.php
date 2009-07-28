@@ -1748,6 +1748,7 @@ class gui_gtk implements pts_option_interface
 	{
 		pts_set_assignment("AGREED_TO_TERMS", false);
 		$window = new pts_gtk_window("Phoronix Test Suite - User Agreement");
+		$window->set_position(Gtk::WIN_POS_CENTER_ALWAYS);
 
 		$textview_agreement = new pts_gtk_text_area(trim($user_agreement), 540, 250);
 		$return_button = new pts_gtk_button("Quit", array("gui_gtk", "process_user_agreement_prompt"), "quit", -1, -1, Gtk::STOCK_CANCEL);
