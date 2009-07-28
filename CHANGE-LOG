@@ -10,7 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: When using run-test in a batch mode and automated mode, but batch-setup hasn't been run, don't output an error
 - phodevi: Fix regression that caused system and CPU temperatures to not be reported through LM_Sensors interface
 - phodevi: Don't report disk size on hard disk identifier string when size equals 1GB, since that would be due to incorrect size
-- pts: Fix bug in key location detection for key test profile by using $DEBUG_REAL_HOME in test install script
+- pts: Fix prey test profile bug in key location detection for key test profile by using $DEBUG_REAL_HOME in test install script
 - pts: Update boost packages for ubuntu-packages.xml external dependencies
 - pts: For vdrift test profile, don't grab the mouse
 - pts: Add glut as an external dependency to supertuxkart test profile
