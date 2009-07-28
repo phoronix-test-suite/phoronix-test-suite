@@ -297,7 +297,7 @@ class gui_gtk implements pts_option_interface
 		}
 		if(($p = pts_read_assignment("PREV_TEST_INSTALLED")) != false)
 		{
-			$button_box->add(new pts_gtk_label("<b>Installed: " . pts_test_identifier_to_name($p) . "</b> "));
+			$button_box->add(new pts_gtk_label("<b>Installed " . pts_test_identifier_to_name($p) . "</b> "));
 
 			$ti_button = new GtkButton("Run Test");
 			$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), $p);

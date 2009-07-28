@@ -78,7 +78,14 @@ function pts_start_install($to_install)
 	}
 
 	pts_module_process("__post_install_process", $tests);
-	pts_set_assignment_next("PREV_TEST_INSTALLED", array_pop($tests));
+
+	do
+	{
+		$report_install = array_pop($tests);
+	}
+	while(!pts_test_installed($report_install) && count($tests) > 0);
+
+	pts_set_assignment_next("PREV_TEST_INSTALLED", $report_install);
 }
 function pts_download_test_files($identifier)
 {
