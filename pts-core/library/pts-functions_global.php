@@ -69,7 +69,7 @@ function pts_global_setup_account($username, $password)
 }
 function pts_global_request_gsid()
 {
-	$gsid = trim(@file_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION));
+	$gsid = trim(@file_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION . "&os=" . phodevi::read_property("system", "vendor-identifier")));
 
 	return pts_global_gsid_valid($gsid) ? $gsid : false;
 }
