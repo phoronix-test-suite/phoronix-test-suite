@@ -86,8 +86,6 @@ class reference_comparison implements pts_option_interface
 			$title = $result_file->get_suite_title();
 		}
 
-		if(strpos($title, "Comparison") === false ? 
-
 		pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $title . (strpos($title, "Comparison") === false ? " Comparison" : null));
 
 		pts_display_web_browser(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
