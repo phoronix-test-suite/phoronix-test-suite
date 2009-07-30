@@ -6,6 +6,7 @@ Phoronix Test Suite 2.0.0 "Sandtorg"
 - pts-core: Don't report "Comparison" multiple times when using the reference-comparison option
 - pts: Add two more reference comparison systems
 - pts: minion test profile updates
+- pts: Update workstation-graphics test suite
 
 Phoronix Test Suite 2.0.0 Beta 4
 July 28, 2009
