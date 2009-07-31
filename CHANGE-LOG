@@ -4,6 +4,7 @@ Phoronix Test Suite 2.0.0 "Sandtorg"
 
 - pts-core: Don't prompt for download mirror selection if the option is enabled, but running from the GUI
 - pts-core: Don't report "Comparison" multiple times when using the reference-comparison option
+- phodevi: Add LXDE desktop environment detection
 - pts: Add two more reference comparison systems
 - pts: minion test profile updates
 - pts: Update workstation-graphics test suite

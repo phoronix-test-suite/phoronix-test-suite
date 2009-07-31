@@ -623,7 +623,18 @@ class phodevi_system extends pts_device_interface
 					$desktop_version = $v;
 				}
 			}
+		}
+		else if(pts_process_running_bool("lxde-settings"))
+		{
+			$lx_output = trim(shell_exec("lxpanel --version"));
+			$version = substr($lx_output, strpos(" ", $lx_output) + 1);
 
+			$desktop_environment = "LXDE";
+
+			if(strlen(pts_remove_chars($version, true, true, false, false, false, false)) == strlen($version))
+			{
+				$desktop_version = $version;
+			}
 		}
 		else if(pts_process_running_bool("xfce4-session") || pts_process_running_bool("xfce-mcs-manager"))
 		{
