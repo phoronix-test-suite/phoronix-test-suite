@@ -145,7 +145,7 @@ function pts_verify_test_installation($identifiers)
 
 	return $valid_op;
 }
-function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $identifier = "")
+function pts_call_test_runs($tests_to_run, &$tandem_xml = null, $identifier = null, $save_name = null)
 {
 	if(is_file(PTS_USER_DIR . "halt-testing"))
 	{
@@ -162,7 +162,7 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $identifier = "")
 		{
 			for($i = 0; $i < count($tests_to_run) && $test_flag && time() < $loop_end_time; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], false);
+				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $save_name, false);
 			}
 		}
 		while(time() < $loop_end_time && $test_flag);
@@ -173,7 +173,7 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $identifier = "")
 		{
 			for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $loop < ($total_loop_count - 1));
+				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $save_name, $loop < ($total_loop_count - 1));
 			}
 		}
 	}
@@ -181,13 +181,14 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = "", $identifier = "")
 	{
 		for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
 		{
-			$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $i == (count($tests_to_run) - 1));
+			$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $save_name, $i == (count($tests_to_run) - 1));
 		}
 	}
 }
-function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_request, $is_last_test = true)
+function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_request, $save_name = null, $is_last_test = true)
 {
 	$to_run = $pts_test_run_request->get_identifier();
+	$active_xml = SAVE_RESULTS_DIR . $save_name . "/active.xml";
 
 	if(pts_is_test($to_run))
 	{
@@ -219,10 +220,22 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_r
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
+
+				if(!$is_last_test && $save_name != null)
+				{
+					file_put_contents($active_xml, $tandem_xml->getXML());
+				}
 			}
 		}
 
-		if(!$is_last_test)
+		if($is_last_test)
+		{
+			if(is_file($active_xml))
+			{
+				unlink($active_xml);
+			}
+		}
+		else
 		{
 			sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 		}

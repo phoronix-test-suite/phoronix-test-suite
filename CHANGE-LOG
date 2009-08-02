@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Begin writing the results XML during the test run process earlier
+- pts-core: When a test is running, save the active pts_test_run_manager to a pts_storage_object on the disk
+- pts-core: Backup the XML results when a test is running to active.xml in the result's folder
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009

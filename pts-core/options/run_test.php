@@ -209,6 +209,7 @@ class run_test implements pts_option_interface
 		$xml_results_writer = new tandem_XmlWriter();
 
 		echo "\n";
+		$proposed_file_name = false;
 		$save_results = false;
 		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1)
 		{
@@ -358,7 +359,7 @@ class run_test implements pts_option_interface
 
 		// Run the actual tests
 		pts_module_process("__pre_run_process", $test_run_manager->get_tests_to_run());
-		pts_call_test_runs($test_run_manager->get_tests_to_run(), $xml_results_writer, $results_identifier);
+		pts_call_test_runs($test_run_manager->get_tests_to_run(), $xml_results_writer, $results_identifier, $proposed_file_name);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_process("__post_run_process", $test_run_manager->get_tests_to_run());
 
@@ -369,15 +370,15 @@ class run_test implements pts_option_interface
 
 		if($save_results) // possibly add back: && pts_is_assignment("TEST_RAN")
 		{
-			pts_save_test_file($proposed_file_name, $xml_results_writer);
-			echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
-			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $proposed_file_name);
-			pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
-
 			if(is_file($pt2so_location))
 			{
 				unlink($pt2so_location);
 			}
+
+			pts_save_test_file($proposed_file_name, $xml_results_writer);
+			echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
+			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $proposed_file_name);
+			pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
 
 			if(pts_is_assignment("AUTOMATED_MODE"))
 			{
