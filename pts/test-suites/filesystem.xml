@@ -13,12 +13,6 @@
 		<Test>compress-pbzip2</Test>
 	</RunTest>
 	<RunTest>
-		<Test>compress-lzma</Test>
-	</RunTest>
-	<RunTest>
-		<Test>gnupg</Test>
-	</RunTest>
-	<RunTest>
 		<Test>bork</Test>
 	</RunTest>
 	<RunTest>
@@ -54,18 +48,8 @@
 	</RunTest>
 	<RunTest>
 		<Test>dbench</Test>
-		<Arguments>1</Arguments>
-		<Description>1 Client</Description>
-	</RunTest>
-	<RunTest>
-		<Test>dbench</Test>
 		<Arguments>12</Arguments>
 		<Description>12 Clients</Description>
-	</RunTest>
-	<RunTest>
-		<Test>dbench</Test>
-		<Arguments>128</Arguments>
-		<Description>128 Clients</Description>
 	</RunTest>
 	<RunTest>
 		<Test>fio</Test>
@@ -109,15 +93,5 @@
 	</RunTest>
 	<RunTest>
 		<Test>postmark</Test>
-	</RunTest>
-	<RunTest>
-		<Test>blogbench</Test>
-		<Arguments>WRITE</Arguments>
-		<Description>Write Performance</Description>
-	</RunTest>
-	<RunTest>
-		<Test>blogbench</Test>
-		<Arguments>READ</Arguments>
-		<Description>Read Performance</Description>
 	</RunTest>
 </PhoronixTestSuite>

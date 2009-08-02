@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "2.0.0b4");
+define("PTS_VERSION", "2.0.0");
 define("PTS_CODENAME", "SANDTORG");
 
 function pts_codename($full_string = false)
