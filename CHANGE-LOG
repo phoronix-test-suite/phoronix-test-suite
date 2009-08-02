@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Begin writing the results XML during the test run process earlier
+
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009
 

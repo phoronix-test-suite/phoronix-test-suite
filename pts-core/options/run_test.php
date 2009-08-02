@@ -311,17 +311,6 @@ class run_test implements pts_option_interface
 			pts_user_message($pre_run_message);
 		}
 
-		// Run the actual tests
-		pts_module_process("__pre_run_process", $test_run_manager->get_tests_to_run());
-		pts_call_test_runs($test_run_manager->get_tests_to_run(), $xml_results_writer, $results_identifier);
-		pts_set_assignment("PTS_TESTING_DONE", 1);
-		pts_module_process("__post_run_process", $test_run_manager->get_tests_to_run());
-
-		if(isset($post_run_message))
-		{
-			pts_user_message($post_run_message);
-		}
-
 		if($save_results)
 		{
 			if(pts_read_assignment("IS_BATCH_MODE") != false)
@@ -356,42 +345,53 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $module_store);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $test_properties));
 			}
+		}
 
-			if(pts_read_assignment("TEST_RAN"))
+		// Run the actual tests
+		pts_module_process("__pre_run_process", $test_run_manager->get_tests_to_run());
+		pts_call_test_runs($test_run_manager->get_tests_to_run(), $xml_results_writer, $results_identifier);
+		pts_set_assignment("PTS_TESTING_DONE", 1);
+		pts_module_process("__post_run_process", $test_run_manager->get_tests_to_run());
+
+		if(isset($post_run_message))
+		{
+			pts_user_message($post_run_message);
+		}
+
+		if($save_results) // possibly add back: && pts_is_assignment("TEST_RAN")
+		{
+			pts_save_test_file($proposed_file_name, $xml_results_writer);
+			echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
+			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $proposed_file_name);
+			pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
+
+			if(pts_is_assignment("AUTOMATED_MODE"))
 			{
-				pts_save_test_file($proposed_file_name, $xml_results_writer);
-				echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
-				pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $proposed_file_name);
-				pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
+				$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL");
+			}
+			else
+			{
+				$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
+			}
 
-				if(pts_is_assignment("AUTOMATED_MODE"))
+			if($upload_results)
+			{
+				$tags_input = pts_promt_user_tags(array($results_identifier));
+				$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml", $tags_input);
+
+				if(!empty($upload_url))
 				{
-					$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL");
+					echo "\nResults Uploaded To: " . $upload_url . "\n";
+					pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
+					pts_module_process("__event_global_upload", $upload_url);
+					pts_display_web_browser($upload_url, "Do you want to launch Phoronix Global", true);
 				}
 				else
 				{
-					$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
+					echo "\nResults Failed To Upload.\n";
 				}
-
-				if($upload_results)
-				{
-					$tags_input = pts_promt_user_tags(array($results_identifier));
-					$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml", $tags_input);
-
-					if(!empty($upload_url))
-					{
-						echo "\nResults Uploaded To: " . $upload_url . "\n";
-						pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
-						pts_module_process("__event_global_upload", $upload_url);
-						pts_display_web_browser($upload_url, "Do you want to launch Phoronix Global", true);
-					}
-					else
-					{
-						echo "\nResults Failed To Upload.\n";
-					}
-				}
-				echo "\n";
 			}
+			echo "\n";
 		}
 	}
 }
