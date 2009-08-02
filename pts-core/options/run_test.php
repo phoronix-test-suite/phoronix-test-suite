@@ -313,6 +313,8 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
+			$results_directory = pts_setup_result_directory($proposed_file_name . "/file.file") . "/";
+
 			if(pts_read_assignment("IS_BATCH_MODE") != false)
 			{
 				array_push($test_properties, "PTS_BATCH_MODE");
@@ -345,6 +347,13 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $module_store);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $test_properties));
 			}
+
+			$pso = new pts_storage_object();
+			$pso->add_object("test_run_manager", $test_run_manager);
+
+			$pt2so_location = $results_directory . "objects.pt2so";
+			$pso->save_to_file($pt2so_location);
+			unset($pso);
 		}
 
 		// Run the actual tests
@@ -364,6 +373,11 @@ class run_test implements pts_option_interface
 			echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $proposed_file_name);
 			pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
+
+			if(is_file($pt2so_location))
+			{
+				unlink($pt2so_location);
+			}
 
 			if(pts_is_assignment("AUTOMATED_MODE"))
 			{

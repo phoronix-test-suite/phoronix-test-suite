@@ -32,14 +32,8 @@ function pts_setup_results_viewer()
 	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
 	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
 }
-function pts_save_result($save_to = null, $save_results = null, $render_graphs = true)
+function pts_setup_result_directory($save_to)
 {
-	// Saves PTS result file
-	if(substr($save_to, -4) != ".xml")
-	{
-		$save_to .= ".xml";
-	}
-
 	$save_to_dir = dirname(SAVE_RESULTS_DIR . $save_to);
 
 	if(!is_dir(SAVE_RESULTS_DIR))
@@ -51,6 +45,17 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 		mkdir($save_to_dir);
 	}
 
+	return $save_to_dir;
+}
+function pts_save_result($save_to = null, $save_results = null, $render_graphs = true)
+{
+	// Saves PTS result file
+	if(substr($save_to, -4) != ".xml")
+	{
+		$save_to .= ".xml";
+	}
+
+	$save_to_dir = pts_setup_result_directory($save_to);
 	pts_setup_results_viewer();
 	
 	if($save_to == null || $save_results == null)
