@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Backup the XML results when a test is running to active.xml in the result's folder
 - pts-core: Add recover-run option for recovering the test results / finish running the tests when a crash had occured
 - pts-core: Fix bug with the result identifier being empty when using list-saved-results / list-results
+- pts-core: Setup a pt2so object for storing some pts-core data using a pts_storage_object, move some of these items out of user-config.xml
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009

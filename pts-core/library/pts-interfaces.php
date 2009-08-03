@@ -193,10 +193,6 @@ define("P_OPTION_BATCH_PROMPTIDENTIFIER", "PhoronixTestSuite/Options/BatchMode/P
 define("P_OPTION_BATCH_PROMPTDESCRIPTION", "PhoronixTestSuite/Options/BatchMode/PromptForTestDescription"); // Batch mode prompt for test description
 define("P_OPTION_BATCH_PROMPTSAVENAME", "PhoronixTestSuite/Options/BatchMode/PromptSaveName"); // Batch mode prompt for save results name
 
-define("P_OPTION_TESTCORE_LASTVERSION", "PhoronixTestSuite/TestCore/LastRun/Version"); // Last version of the Phoronix Test Suite Run
-define("P_OPTION_TESTCORE_LASTTIME", "PhoronixTestSuite/TestCore/LastRun/Time"); // Last time the Phoronix Test Suite ran
-define("P_OPTION_USER_AGREEMENT", "PhoronixTestSuite/TestCore/UserInformation/AgreementCheckSum"); // PTS user agreement confirmation
-
 //
 // MODULE CONFIGURATION SPECIFICATION
 //

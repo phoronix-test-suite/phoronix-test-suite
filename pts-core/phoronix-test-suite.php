@@ -95,6 +95,7 @@ for($i = 2; $i < $argc; $i++)
 	}
 }
 
+pts_user_agreement_check($sent_command);
 pts_run_option_next($sent_command, $pass_args);
 
 while(($current_option = pts_run_option_next(false)) != false)

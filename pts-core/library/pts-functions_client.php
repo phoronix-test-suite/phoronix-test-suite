@@ -29,13 +29,6 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 		pts_load_run_option($command);
 	}
 
-	if(!defined("PTS_USER_AGREEMENT_CHECK"))
-	{
-		// Phoronix Test Suite User Agreement Check
-		$agree = pts_user_agreement_check($command);
-		define("PTS_USER_AGREEMENT_CHECK", $agree);
-	}
-
 	pts_clear_assignments();
 	pts_set_assignment(array("START_TIME", "THIS_OPTION_IDENTIFIER"), time()); // For now THIS_OPTION_IDENTIFIER is also time
 	pts_set_assignment("COMMAND", $command);
@@ -150,9 +143,6 @@ function pts_shutdown()
 {
 	// Shutdown process for PTS
 	define("PTS_END_TIME", time());
-
-	// Re-run the config file generation to save the last run version
-	pts_user_config_init();
 
 	// Generate Phodevi Smart Cache
 	if(pts_string_bool(pts_read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))

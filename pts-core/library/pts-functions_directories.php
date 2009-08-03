@@ -29,6 +29,7 @@ function pts_define_directories()
 	if(function_exists("pts_user_home"))
 	{
 		define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
+		define("PTS_CORE_STORAGE", PTS_USER_DIR . "core.pt2so");
 	}
 
 	// Distribution External Dependency Locations
