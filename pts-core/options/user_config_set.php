@@ -50,7 +50,7 @@ class user_config_set implements pts_option_interface
 					$user_value = substr($user_value, 0, -1);
 				}
 
-				if(!in_array(basename($user_option_r[0]), array("AgreementCheckSum", "GSID")))
+				if(!in_array(basename($user_option_r[0]), array("AgreementCheckSum", "GSID"))) // List any XML tags to ignore in this array
 				{
 					$new_options[$user_option_r[0]] = $user_value;
 				}

@@ -130,6 +130,23 @@ function pts_core_storage_init()
 
 	$pso->add_object("last_run_time", date("Y-m-d H:i:s")); // Time PTS was last run
 
+	// Phoronix Global - GSID
+	$global_gsid = $pso->read_object("global_system_id");
+	if($global_gsid == false)
+	{
+		// Compatibility for loading it from PTS 2.0 run and earlier
+		$global_gsid = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/GSID", null);
+	}
+
+	if(empty($global_gsid) || !pts_global_gsid_valid($global_gsid))
+	{
+		// Global System ID for anonymous uploads, etc
+		$global_gsid = pts_global_request_gsid();
+	}
+
+	define("PTS_GSID", $global_gsid);
+	$pso->add_object("global_system_id", $global_gsid); // GSID
+
 	// User Agreement Checking
 	$agreement_cs = $pso->read_object("user_agreement_cs");
 	if($agreement_cs == false)
