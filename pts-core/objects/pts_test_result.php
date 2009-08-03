@@ -91,10 +91,7 @@ class pts_test_result
 	}
 	public function get_attribute($name)
 	{
-		if(isset($this->attributes[$name]) && !empty($this->attributes[$name]))
-		{
-			return $this->attributes[$name];
-		}
+		return isset($this->attributes[$name]) ? $this->attributes[$name] : false;
 	}
 	public function add_trial_run_result($result)
 	{
@@ -109,25 +106,36 @@ class pts_test_result
 	{
 		return count($this->trial_results);
 	}
-	public function calculate_end_result(&$return_string)
+	public function get_result_format_string()
+	{
+		switch($this->get_result_format())
+		{
+			case "MAX":
+				$return_str = "Maximum";
+			case "MIN":
+				$return_str = "Minimum";
+			default:
+				$return_str = "Average";
+		}
+
+		return $return_str;
+	}
+	public function calculate_end_result()
 	{
 		$END_RESULT = 0;
+
 		if($this->result_format == "NO_RESULT")
 		{
 			// Nothing to do
-			$return_string = null;
 		}
 		else if($this->result_format == "LINE_GRAPH")
 		{
-			$return_string = null;
 			$END_RESULT = $this->trial_results[0];
 		}
 		else if($this->result_format == "PASS_FAIL" || $this->result_format == "MULTI_PASS_FAIL")
 		{
 			// Calculate pass/fail type
-			$return_string .= "(" . $this->result_scale . ")\n";
 			$END_RESULT = -1;
-			$i = 1;
 
 			if(count($this->trial_results) == 1)
 			{
@@ -139,8 +147,6 @@ class pts_test_result
 				{
 					if($result == "FALSE" || $result == "0" || $result == "FAIL")
 					{
-						$this_result = "FAIL";
-
 						if($END_RESULT == -1 || $END_RESULT == "PASS")
 						{
 							$END_RESULT = "FAIL";
@@ -148,20 +154,13 @@ class pts_test_result
 					}
 					else
 					{
-						$this_result = "PASS";
-
 						if($END_RESULT == -1)
 						{
 							$END_RESULT = "PASS";
 						}
 					}
-
-					$return_string .= "Trial $i: " . $this_result . "\n";
-					$i++;
 				}
 			}
-
-			$return_string .= "\nFinal: " . $END_RESULT . "\n";
 		}
 		else
 		{
@@ -176,9 +175,7 @@ class pts_test_result
 						$max_value = $result;
 					}
 
-					$return_string .= $result . " " . $this->result_scale . "\n";
 				}
-				$return_string .= "\nMaximum: " . $max_value . " " . $this->result_scale;
 				$END_RESULT = $max_value;
 			}
 			else if($this->result_quantifier == "MIN")
@@ -190,10 +187,7 @@ class pts_test_result
 					{
 						$min_value = $result;
 					}
-
-					$return_string .= $result . " " . $this->result_scale . "\n";
 				}
-				$return_string .= "\nMinimum: " . $min_value . " " . $this->result_scale;
 				$END_RESULT = $min_value;
 			}
 			else
@@ -208,14 +202,13 @@ class pts_test_result
 					{
 						$TOTAL_RESULT += trim($result);
 						$TOTAL_COUNT++;
-						$return_string .= $result . " " . $this->result_scale . "\n";
 					}
 				}
 
 				$END_RESULT = pts_trim_double($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
-				$return_string .= "\nAverage: " . $END_RESULT . " " . $this->result_scale;
 			}
 		}
+
 		$this->set_result($END_RESULT);
 	}
 }

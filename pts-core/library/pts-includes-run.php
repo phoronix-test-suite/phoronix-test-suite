@@ -145,7 +145,7 @@ function pts_verify_test_installation($identifiers)
 
 	return $valid_op;
 }
-function pts_call_test_runs($tests_to_run, &$tandem_xml = null, $identifier = null, $save_name = null)
+function pts_call_test_runs($tests_to_run, &$display_mode, &$tandem_xml = null, $identifier = null, $save_name = null)
 {
 	if(is_file(PTS_USER_DIR . "halt-testing"))
 	{
@@ -162,7 +162,7 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = null, $identifier = nu
 		{
 			for($i = 0; $i < count($tests_to_run) && $test_flag && time() < $loop_end_time; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $save_name, false);
+				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, false);
 			}
 		}
 		while(time() < $loop_end_time && $test_flag);
@@ -173,7 +173,7 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = null, $identifier = nu
 		{
 			for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $save_name, $loop < ($total_loop_count - 1));
+				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, $loop < ($total_loop_count - 1));
 			}
 		}
 	}
@@ -181,11 +181,11 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = null, $identifier = nu
 	{
 		for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
 		{
-			$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $save_name, $i == (count($tests_to_run) - 1));
+			$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, $i == (count($tests_to_run) - 1));
 		}
 	}
 }
-function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_request, $save_name = null, $is_last_test = true)
+function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_request, &$display_mode, $save_name = null, $is_last_test = true)
 {
 	$to_run = $pts_test_run_request->get_identifier();
 
@@ -197,7 +197,7 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_r
 			file_put_contents($active_xml, $tandem_xml->getXML());
 		}
 
-		$result = pts_run_test($to_run, $pts_test_run_request->get_arguments(), $pts_test_run_request->get_arguments_description(), $pts_test_run_request->get_override_options());
+		$result = pts_run_test($to_run, $display_mode, $pts_test_run_request->get_arguments(), $pts_test_run_request->get_arguments_description(), $pts_test_run_request->get_override_options());
 
 		if(is_file(PTS_USER_DIR . "halt-testing"))
 		{
@@ -282,7 +282,7 @@ function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
 
 	return $real_name;
 }
-function pts_run_test($test_identifier, $extra_arguments = "", $arguments_description = "", $override_test_options = null)
+function pts_run_test($test_identifier, &$display_mode, $extra_arguments = "", $arguments_description = "", $override_test_options = null)
 {
 	// Do the actual test running process
 	$pts_test_result = new pts_test_result();
@@ -296,7 +296,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$test_fp = fopen(($lock_file = $test_directory . "run_lock"), "w");
 	if($test_fp == false || !flock($test_fp, LOCK_EX | LOCK_NB))
 	{
-		echo "\nThe " . $test_identifier . " test is already running.\n\n";
+		$display_mode->test_run_error("The " . $test_identifier . " test is already running.");
 		return $pts_test_result;
 	}
 
@@ -333,7 +333,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	if(!empty($env_testing_size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $env_testing_size)
 	{
 		// Ensure enough space is available on disk during testing process
-		echo "\nThere is not enough space (at " . TEST_ENV_DIR . ") for this test to run. " . $env_testing_size . " MB of space is needed.\n";
+		$display_mode->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run. " . $env_testing_size . " MB of space is needed.");
 		return $pts_test_result;
 	}
 
@@ -381,7 +381,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	if(empty($to_execute))
 	{
-		echo "The test executable for " . $test_identifier . " could not be found. Skipping test.\n\n";
+		$display_mode->test_run_error("The test executable for " . $test_identifier . " could not be found. Skipping test.");
 		return $pts_test_result;
 	}
 
@@ -408,6 +408,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 	// Start
 	$pts_test_result->set_attribute("TEST_TITLE", $test_title);
+	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
 	$pts_test_result->set_attribute("TEST_IDENTIFIER", $test_identifier);
 	$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);
 	pts_module_process("__pre_test_run", $pts_test_result);
@@ -431,9 +432,11 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		$execute_binary_prepend .= " ";
 	}
 
+	$display_mode->test_run_start($pts_test_result);
+
 	for($i = 0; $i < $times_to_run; $i++)
 	{
-		echo pts_string_header($test_title . " (Run " . ($i + 1) . " of " . $times_to_run . ")");
+		$display_mode->test_run_instance_header($pts_test_result, ($i + 1), $times_to_run);
 		$benchmark_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
 
 		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
@@ -444,12 +447,14 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 		if(!isset($test_results[10240]))
 		{
-			echo $test_results;
+			$display_mode->test_run_output($test_results);
 		}
 
 		if(is_file($benchmark_log_file) && trim($test_results) == "" && filesize($benchmark_log_file) < 10240)
 		{
-			echo file_get_contents($benchmark_log_file);
+			$benchmark_log_file_contents = file_get_contents($benchmark_log_file);
+			$display_mode->test_run_output($benchmark_log_file_contents);
+			unset($benchmark_log_file_contents);
 		}
 
 		$exit_status_pass = true;
@@ -461,7 +466,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 
 			if($exit_status != "0")
 			{
-				echo "\nThe test exited with a non-zero exit status. Test run failed.\n";
+				$display_mode->test_run_error("The test exited with a non-zero exit status. Test run failed.");
 				$exit_status_pass = false;
 			}
 		}
@@ -618,8 +623,6 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 		}
 	}
 
-	$return_string = $test_title . ":\n" . $arguments_description . "\n" . (!empty($arguments_description) ? "\n" : "");
-
 	// Result Calculation
 	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
 	$pts_test_result->set_attribute("TEST_VERSION", $test_version);
@@ -628,17 +631,9 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	$pts_test_result->set_result_proportion($result_proportion);
 	$pts_test_result->set_result_scale($result_scale);
 	$pts_test_result->set_result_quantifier($result_quantifier);
-	$pts_test_result->calculate_end_result($return_string); // Process results
+	$pts_test_result->calculate_end_result(); // Process results
 
-	if(!empty($return_string))
-	{
-		echo $this_result = pts_string_header($return_string, "#");
-		pts_text_save_buffer($this_result);
-	}
-	else
-	{
-		echo "\n\n";
-	}
+	$display_mode->test_run_end($pts_test_result);
 
 	pts_user_message($post_run_message);
 	pts_module_process("__post_test_run", $pts_test_result);
@@ -648,7 +643,7 @@ function pts_run_test($test_identifier, $extra_arguments = "", $arguments_descri
 	fclose($test_fp);
 	unlink($lock_file);
 
-	return ($result_format == "NO_RESULT" ? false : $pts_test_result);
+	return $result_format == "NO_RESULT" ? false : $pts_test_result;
 }
 function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 {
