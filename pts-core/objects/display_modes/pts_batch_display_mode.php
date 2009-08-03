@@ -29,7 +29,7 @@ class pts_batch_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_result)
 	{
-		echo "\n\n" . $test_result->get_attribute("TEST_TITLE") . ":\n\t" . $test_result->get_attribute("TEST_IDENTIFIER");
+		echo "\n" . $test_result->get_attribute("TEST_TITLE") . ":\n\t" . $test_result->get_attribute("TEST_IDENTIFIER");
 
 		if(($test_description = $test_result->get_attribute("TEST_DESCRIPTION")) != false)
 		{

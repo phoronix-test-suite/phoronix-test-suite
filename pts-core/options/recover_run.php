@@ -86,10 +86,12 @@ class recover_run implements pts_option_interface
 
 		// Processing
 		$tests_to_run = array();
+		$test_to_run_is_empty = true;
 
 		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
 		{
 			$request_hash = $test_run_request->get_comparison_hash();
+			$add_test = false;
 
 			if(($search_key = array_search($test_run_request->get_comparison_hash(), $result_file_hashes)) !== false)
 			{
@@ -97,17 +99,32 @@ class recover_run implements pts_option_interface
 
 				if(!in_array($recovered_identifier, $result_file_objects[$search_key]->get_identifiers()))
 				{
-					array_push($tests_to_run, $test_run_request);
+					$add_test = true;
 				}
 			}
 			else
 			{
+				$add_test = true;
+			}
+
+			if($add_test)
+			{
+				if($test_to_run_is_empty)
+				{
+					$test_to_run_is_empty = false;
+					echo pts_string_header("Last Test Run: " . $test_run_request->get_identifier() . "\nLast Test Parameters: " . $test_run_request->get_arguments_description());
+					$skip_this = pts_bool_question("Would you like to skip running this test? Enter N to re-try (Y/n).", true);
+
+					if($skip_this)
+					{
+						continue;
+					}
+				}
+
 				array_push($tests_to_run, $test_run_request);
 			}
 
 		}
-
-		// TODO: add prompt to ask user whether to skip the last test that was running / where the crash likely happened
 
 		if(count($tests_to_run) > 0)
 		{
