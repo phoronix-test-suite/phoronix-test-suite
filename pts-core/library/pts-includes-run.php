@@ -188,10 +188,15 @@ function pts_call_test_runs($tests_to_run, &$tandem_xml = null, $identifier = nu
 function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_request, $save_name = null, $is_last_test = true)
 {
 	$to_run = $pts_test_run_request->get_identifier();
-	$active_xml = SAVE_RESULTS_DIR . $save_name . "/active.xml";
 
 	if(pts_is_test($to_run))
 	{
+		$active_xml = SAVE_RESULTS_DIR . $save_name . "/active.xml";
+		if($save_name != null)
+		{
+			file_put_contents($active_xml, $tandem_xml->getXML());
+		}
+
 		$result = pts_run_test($to_run, $pts_test_run_request->get_arguments(), $pts_test_run_request->get_arguments_description(), $pts_test_run_request->get_override_options());
 
 		if(is_file(PTS_USER_DIR . "halt-testing"))
@@ -220,11 +225,6 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_r
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
-
-				if(!$is_last_test && $save_name != null)
-				{
-					file_put_contents($active_xml, $tandem_xml->getXML());
-				}
 			}
 		}
 
