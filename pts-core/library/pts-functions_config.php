@@ -74,11 +74,7 @@ function pts_user_config_init($new_config_values = null)
 
 	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
 
-	if(!is_dir(PTS_USER_DIR . "xsl/"))
-	{
-		mkdir(PTS_USER_DIR . "xsl/");
-	}
-
+	pts_mkdir(PTS_USER_DIR . "xsl/");
 	pts_copy(STATIC_DIR . "pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
 	pts_copy(STATIC_DIR . "pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
 }
@@ -247,31 +243,12 @@ function pts_user_home()
 function pts_current_user()
 {
 	// Current system user
-	$pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User");
-
-	if($pts_user == "Default User")
-	{
-		$pts_user = phodevi::read_property("system", "username");
-	}
-
-	return $pts_user;
+	return ($pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User")) != "Default User" ? $pts_user : phodevi::read_property("system", "username");
 }
 function pts_download_cache()
 {
 	// Returns directory of the PTS Download Cache
-	$dir = getenv("PTS_DOWNLOAD_CACHE");
-
-	if(empty($dir))
-	{
-		$dir = pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/");
-	}
-
-	if(substr($dir, -1) != "/")
-	{
-		$dir .= "/";
-	}
-
-	return $dir;
+	return pts_add_trailing_slash((($dir = getenv("PTS_DOWNLOAD_CACHE")) != false ? $dir : pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/")));
 }
 
 ?>

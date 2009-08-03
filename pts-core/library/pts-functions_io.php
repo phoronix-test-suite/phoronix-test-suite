@@ -24,6 +24,7 @@
 
 function p_str($str_o)
 {
+	// TODO: implement here for internationalization support
 	//  $_ENV["LANG"]
 	return $str_o;
 }

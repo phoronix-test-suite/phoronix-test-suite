@@ -26,11 +26,7 @@ class pts_module
 	public static function save_dir()
 	{
 		$prefix_dir = PTS_USER_DIR . "module-files/";
-
-		if(!is_dir($prefix_dir))
-		{
-			mkdir($prefix_dir);
-		}
+		pts_mkdir($prefix_dir);
 
 		return $prefix_dir . str_replace("_", "-", self::module_name()) . "/";
 	}
@@ -99,10 +95,7 @@ class pts_module
 
 		$save_base_dir = self::save_dir();
 
-		if(!is_dir($save_base_dir))
-		{
-			mkdir($save_base_dir);
-		}
+		pts_mkdir($save_base_dir);
 
 		if(($extra_dir = dirname($file)) != "." && !is_dir($save_base_dir . $extra_dir))
 		{
@@ -152,10 +145,7 @@ class pts_module
 		// Copy a file for a module
 		$save_base_dir = self::save_dir();
 
-		if(!is_dir($save_base_dir))
-		{
-			mkdir($save_base_dir);
-		}
+		pts_mkdir($save_base_dir);
 
 		if(($extra_dir = dirname($to_file)) != "." && !is_dir($save_base_dir . $extra_dir))
 		{

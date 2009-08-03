@@ -34,6 +34,7 @@ function pts_module_startup_init()
 	{
 		// Enable the toggling of the system screensaver by default.
 		// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
+		// TODO: move the pts_attach_modules out to a default-modules.txt in the static/ folder
 		pts_attach_module("toggle_screensaver");
 		pts_attach_module("update_checker"); // Check for new PTS versions
 

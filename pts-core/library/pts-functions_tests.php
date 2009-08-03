@@ -23,11 +23,7 @@
 
 function pts_setup_results_viewer()
 {
-	if(!is_dir(SAVE_RESULTS_DIR . "pts-results-viewer"))
-	{
-		mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
-	}
-
+	pts_mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
 	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
 	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
 	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
@@ -36,13 +32,10 @@ function pts_setup_result_directory($save_to)
 {
 	$save_to_dir = dirname(SAVE_RESULTS_DIR . $save_to);
 
-	if(!is_dir(SAVE_RESULTS_DIR))
+	pts_mkdir(SAVE_RESULTS_DIR);
+	if($save_to_dir != ".")
 	{
-		mkdir(SAVE_RESULTS_DIR);
-	}
-	if($save_to_dir != '.' && !is_dir($save_to_dir))
-	{
-		mkdir($save_to_dir);
+		pts_mkdir($save_to_dir);
 	}
 
 	return $save_to_dir;
@@ -78,17 +71,8 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 			$test_results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER");
 
 			// Save verbose system information here
-			if(!is_dir($save_to_dir . "/system-logs/"))
-			{
-				mkdir($save_to_dir . "/system-logs/");
-			}
-
-			$system_log_dir = $save_to_dir . "/system-logs/" . $test_results_identifier;
-
-			if(!is_dir($system_log_dir))
-			{
-				mkdir($system_log_dir);
-			}
+			pts_mkdir($save_to_dir . "/system-logs/");
+			pts_mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $test_results_identifier));
 
 			// Backup system files
 			$system_log_files = array("/var/log/Xorg.0.log", "/proc/cpuinfo");

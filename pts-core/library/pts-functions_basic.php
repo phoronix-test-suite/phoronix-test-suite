@@ -68,12 +68,11 @@ function pts_string_bool($string)
 }
 function pts_array_merge($array1, $array2)
 {
-	if(is_array($array1) && is_array($array2))
-	{
-		$array1 = array_merge($array1, $array2);
-	}
-
-	return $array1;
+	return is_array($array1) && is_array($array2) ? array_merge($array1, $array2) : $array1;
+}
+function pts_mkdir($dir)
+{
+	return !is_dir($dir) && mkdir($dir);
 }
 function pts_trim_spaces($string)
 {
@@ -141,7 +140,7 @@ function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $
 }
 function pts_to_array($var)
 {
-	return (!is_array($var) ? array($var) : $var);
+	return !is_array($var) ? array($var) : $var;
 }
 
 ?>

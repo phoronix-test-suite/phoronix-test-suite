@@ -34,11 +34,7 @@ class make_download_cache implements pts_option_interface
 			return false;
 		}
 
-		if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
-		{
-			mkdir(PTS_DOWNLOAD_CACHE_DIR);
-		}
-		else
+		if(!pts_mkdir(PTS_DOWNLOAD_CACHE_DIR))
 		{
 			if(is_file(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto"))
 			{

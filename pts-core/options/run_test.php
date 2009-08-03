@@ -53,7 +53,7 @@ class run_test implements pts_option_interface
 			$to_run = strtolower($to_run);
 			pts_set_assignment_once("TO_RUN", $to_run);
 
-			if(pts_is_global_id($to_run))
+			if(!pts_is_test_result($to_run) && pts_is_global_id($to_run))
 			{
 				pts_set_assignment_once("GLOBAL_COMPARISON", true);
 				pts_clone_from_global($to_run);
@@ -258,8 +258,7 @@ class run_test implements pts_option_interface
 					}
 
 					echo pts_string_header("If you wish, enter a new description below.\nPress ENTER to proceed without changes.", "#");
-					echo "Current Description: " . $test_description;
-					echo "\n\nNew Description: ";
+					echo "Current Description: " . $test_description . "\n\nNew Description: ";
 					$new_test_description = trim(fgets(STDIN));
 
 					if(!empty($new_test_description))

@@ -70,7 +70,7 @@ class pts_storage_object
 	}
 	public function get_span_versions()
 	{
-		return $this->span_versions;
+		return $this->span_versions !== false;
 	}
 	public function get_creation_time()
 	{

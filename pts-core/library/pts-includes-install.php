@@ -346,16 +346,10 @@ function pts_remove_local_download_test_files($identifier)
 }
 function pts_setup_install_test_directory($identifier, $remove_old_files = false)
 {
-	if(!is_dir(TEST_ENV_DIR))
-	{
-		mkdir(TEST_ENV_DIR);
-	}
+	pts_mkdir(TEST_ENV_DIR);
+	pts_mkdir(TEST_ENV_DIR . $identifier);
 
-	if(!is_dir(TEST_ENV_DIR . $identifier))
-	{
-		mkdir(TEST_ENV_DIR . $identifier);
-	}
-	else if($remove_old_files)
+	if($remove_old_files)
 	{
 		// Remove any (old) files that were installed
 		$ignore_files = array("pts-install.xml");

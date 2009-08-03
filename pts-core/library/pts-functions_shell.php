@@ -258,10 +258,7 @@ function pts_process_running_bool($process)
 function pts_set_environment_variable($name, $value)
 {
 	// Sets an environmental variable
-	if(getenv($name) == false)
-	{
-		putenv($name . "=" . $value);
-	}
+	return getenv($name) == false && putenv($name . "=" . $value);
 }
 
 ?>

@@ -66,10 +66,7 @@ function pts_basic_init()
 	$dir_init = array(PTS_USER_DIR, PTS_TEMP_DIR);
 	foreach($dir_init as $dir)
 	{
-		if(!is_dir($dir))
-		{
-			mkdir($dir);
-		}
+		pts_mkdir($dir);
 	}
 
 	phodevi::restore_smart_cache(PTS_USER_DIR, PTS_VERSION);
@@ -82,9 +79,8 @@ function pts_extended_init()
 	// Extended Initalization Process
 
 	// Create Other Directories
-	if(!is_dir(PTS_DOWNLOAD_CACHE_DIR))
+	if(pts_mkdir(PTS_DOWNLOAD_CACHE_DIR))
 	{
-		@mkdir(PTS_DOWNLOAD_CACHE_DIR);
 		@file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto", file_get_contents(STATIC_DIR . "make-download-cache-howto.txt"));
 	}
 
@@ -93,10 +89,7 @@ function pts_extended_init()
 
 	foreach($directory_check as $dir)
 	{
-		if(!is_dir($dir))
-		{
-			@mkdir($dir);
-		}
+		pts_mkdir($dir);
 	}
 }
 function pts_core_storage_init()
