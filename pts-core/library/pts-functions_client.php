@@ -210,22 +210,6 @@ function pts_proximity_match($search, $match_to)
 
 	return $is_match;
 }
-function pts_text_save_buffer($to_add)
-{
-	static $buffer = null;
-	$return = null;
-
-	if($to_add == false)
-	{
-		$return = $to_add;
-	}
-	else if(!empty($to_add))
-	{
-		$buffer .= $to_add;
-	}
-
-	return $return;
-}
 function pts_debug_message($message = null)
 {
 	static $debug_messages = "";

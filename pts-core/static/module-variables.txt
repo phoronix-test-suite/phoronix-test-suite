@@ -2,5 +2,4 @@ MONITOR = system_monitor
 FORCE_AA = graphics_override
 FORCE_AF = graphics_override
 HALT_SCREENSAVER = toggle_screensaver
-EMAIL_RESULTS_TO = email_results
 SCREENSHOT_INTERVAL = timed_screenshot
