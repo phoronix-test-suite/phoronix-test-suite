@@ -51,33 +51,12 @@ class run_test implements pts_option_interface
 		foreach($to_run_identifiers as $to_run)
 		{
 			$to_run = strtolower($to_run);
-			$to_run_type = pts_test_type($to_run);
 			pts_set_assignment_once("TO_RUN", $to_run);
 
-			// TODO: Could be reworked to eliminate $to_run_type
-			if(!$to_run_type)
+			if(pts_is_global_id($to_run))
 			{
-				if(pts_is_test_result($to_run))
-				{
-					$to_run_type = "LOCAL_COMPARISON";
-				}
-				else if(is_file(pts_input_correct_results_path($to_run)))
-				{
-					$to_run_type = "LOCAL_COMPARISON";
-				}
-				else if(pts_is_global_id($to_run))
-				{
-					$to_run_type = "GLOBAL_COMPARISON";
-					pts_set_assignment_once("GLOBAL_COMPARISON", true);
-					pts_clone_from_global($to_run);
-				}
-				else
-				{
-					echo pts_string_header("Not Recognized: " . $to_run);
-					continue;
-				}
-
-				pts_set_assignment_once("AUTO_SAVE_NAME", $to_run);
+				pts_set_assignment_once("GLOBAL_COMPARISON", true);
+				pts_clone_from_global($to_run);
 			}
 
 			if(pts_is_test($to_run))
@@ -141,7 +120,7 @@ class run_test implements pts_option_interface
 
 				$test_run_manager->add_suite_run($to_run);
 			}
-			else if($to_run_type == "GLOBAL_COMPARISON" || $to_run_type == "LOCAL_COMPARISON")
+			else if(pts_is_test_result($to_run) || is_file(pts_input_correct_results_path($to_run)))
 			{
 				echo pts_string_header("Comparison: " . $to_run);
 
@@ -206,7 +185,7 @@ class run_test implements pts_option_interface
 			}
 			else
 			{
-				echo pts_string_header("\nUnrecognized option: " . $to_run . "\n");
+				echo pts_string_header("Not Recognized: " . $to_run);
 				continue;
 			}
 		}
