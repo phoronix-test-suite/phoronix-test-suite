@@ -27,7 +27,7 @@ class list_saved_results implements pts_option_interface
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		foreach(pts_saved_test_results_identifiers() as $saved_results_identifier)
 		{
-			$tr = new pts_test_result_details($saved_results_identifier);
+			$tr = new pts_test_result_details($saved_results_identifier, $saved_results_identifier);
 			echo $tr->show_basic_details() . "\n";
 		}
 		echo "\n";
