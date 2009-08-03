@@ -353,7 +353,7 @@ class run_test implements pts_option_interface
 			unset($pso);
 		}
 
-		$display_mode = new pts_standard_display_mode(); // TODO: setup support for selecting from the available display outputs
+		$display_mode = pts_get_display_mode_object();
 
 		// Run the actual tests
 		pts_module_process("__pre_run_process", $test_run_manager->get_tests_to_run());
