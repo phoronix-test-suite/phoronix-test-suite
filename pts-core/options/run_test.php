@@ -155,6 +155,7 @@ class run_test implements pts_option_interface
 				$test_run = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 				$test_args = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
 				$test_args_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+				$test_override_options = array();
 
 				pts_set_assignment("AUTO_SAVE_NAME", $to_run);
 
@@ -186,8 +187,22 @@ class run_test implements pts_option_interface
 						array_push($test_args_description, $all_test_args_description[$test_pos]);
 					}
 				}
+				else if(pts_is_assignment("RECOVER_RUN"))
+				{
+					$test_run = array();
+					$test_args = array();
+					$test_args_description = array();
 
-				$test_run_manager->add_multi_test_run($test_run, $test_args, $test_args_description);
+					foreach(pts_read_assignment("RECOVER_RUN_REQUESTS") as $test_run_request)
+					{
+						array_push($test_run, $test_run_request->get_identifier());
+						array_push($test_args, $test_run_request->get_arguments());
+						array_push($test_args_description, $test_run_request->get_arguments_description());
+						array_push($test_override_options, $test_run_request->get_override_options());
+					}
+				}
+
+				$test_run_manager->add_multi_test_run($test_run, $test_args, $test_args_description, $test_override_options);
 			}
 			else
 			{
@@ -325,7 +340,7 @@ class run_test implements pts_option_interface
 				array_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
-			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN"))
+			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN"))
 			{
 				$test_notes = pts_test_notes_manager::generate_test_notes($test_type);
 
@@ -351,6 +366,9 @@ class run_test implements pts_option_interface
 
 			$pso = new pts_storage_object();
 			$pso->add_object("test_run_manager", $test_run_manager);
+			$pso->add_object("system_hardware", pts_hw_string(false));
+			$pso->add_object("system_software", pts_sw_string(false));
+			$pso->add_object("results_identifier", $results_identifier);
 
 			$pt2so_location = $results_directory . "objects.pt2so";
 			$pso->save_to_file($pt2so_location);

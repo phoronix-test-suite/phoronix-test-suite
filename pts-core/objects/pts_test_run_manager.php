@@ -54,15 +54,16 @@ class pts_test_run_manager
 			$this->add_individual_test_run($test_identifier, $arguments[$i], $descriptions[$i], $override_test_options);
 		}
 	}
-	public function add_multi_test_run($test_identifier, $arguments, $descriptions)
+	public function add_multi_test_run($test_identifier, $arguments, $descriptions, $override_test_options = null)
 	{
 		$test_identifier = pts_to_array($test_identifier);
 		$arguments = pts_to_array($arguments);
 		$descriptions = pts_to_array($descriptions);
+		$override_test_options = pts_to_array($override_test_options);
 
 		for($i = 0; $i < count($test_identifier); $i++)
 		{
-			$this->add_individual_test_run($test_identifier[$i], $arguments[$i], $descriptions[$i]);
+			$this->add_individual_test_run($test_identifier[$i], $arguments[$i], $descriptions[$i], (isset($override_test_options[$i]) ? $override_test_options[$i] : null));
 		}
 	}
 	public function add_suite_run($test_suite)

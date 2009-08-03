@@ -84,7 +84,7 @@ function pts_prompt_results_identifier($file_name = null, &$test_run_manager)
 
 			// TODO: add check that if a unique name is repeated, that the system software/hardware matches from the result_file
 		}
-		while(!$no_repeated_tests && in_array($results_identifier, $current_identifiers) && !pts_is_assignment("FINISH_INCOMPLETE_RUN"));
+		while(!$no_repeated_tests && in_array($results_identifier, $current_identifiers) && !pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN"));
 	}
 
 	if(empty($results_identifier))
