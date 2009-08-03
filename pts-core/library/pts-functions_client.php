@@ -156,10 +156,7 @@ function pts_shutdown()
 
 	if(IS_DEBUG_MODE && defined("PTS_DEBUG_FILE"))
 	{
-		if(!is_dir(PTS_USER_DIR . "debug-messages/"))
-		{
-			mkdir(PTS_USER_DIR . "debug-messages/");
-		}
+		pts_mkdir(PTS_USER_DIR . "debug-messages/");
 
 		if(file_put_contents(PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE, pts_debug_message()))
 		{

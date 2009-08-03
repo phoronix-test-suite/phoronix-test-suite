@@ -1,0 +1,2 @@
+toggle_screensaver
+update_checker

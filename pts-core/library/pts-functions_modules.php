@@ -29,14 +29,14 @@ define("PTS_QUIT", "PTS_QUIT");
 function pts_module_startup_init()
 {
 	// Process initially called when PTS starts up
-
 	if(getenv("PTS_IGNORE_MODULES") == false && PTS_MODE == "CLIENT")
 	{
 		// Enable the toggling of the system screensaver by default.
 		// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
-		// TODO: move the pts_attach_modules out to a default-modules.txt in the static/ folder
-		pts_attach_module("toggle_screensaver");
-		pts_attach_module("update_checker"); // Check for new PTS versions
+		foreach(array_map("trim", explode("\n", file_get_contents(STATIC_DIR . "default-modules.txt"))) as $default_module)
+		{
+			pts_attach_module($default_module);
+		}
 
 		pts_load_modules();
 		pts_module_process("__startup");
@@ -47,7 +47,7 @@ function pts_module_startup_init()
 function pts_auto_detect_modules()
 {
 	// Auto detect modules to load
-	$module_variables_file = @file_get_contents(STATIC_DIR . "module-variables.txt");
+	$module_variables_file = file_get_contents(STATIC_DIR . "module-variables.txt");
 	$module_variables = explode("\n", $module_variables_file);
 
 	foreach($module_variables as $module_var)
@@ -157,6 +157,11 @@ function pts_attach_module($module)
 {
 	// Attach a module
 	$module = trim($module);
+
+	if(pts_module_type($module) == false)
+	{
+		return false;
+	}
 
 	pts_load_module($module);
 	pts_module("ATTACH", $module);
@@ -351,7 +356,7 @@ function pts_module_type($name)
 		}
 		else
 		{
-			$type = null;
+			$type = false;
 		}
 
 		$cache[$name] = $type;

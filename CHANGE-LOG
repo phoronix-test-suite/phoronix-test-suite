@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add recover-run option for recovering the test results / finish running the tests when a crash had occured
 - pts-core: Fix bug with the result identifier being empty when using list-saved-results / list-results
 - pts-core: Setup a pt2so object for storing some pts-core data using a pts_storage_object, move some of these items out of user-config.xml
+- pts-core: Move out the modules that are loaded by a default to a separate file
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009
