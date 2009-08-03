@@ -27,12 +27,14 @@ class pts_storage_object
 	var $object_cs;
 	var $creation_time;
 	var $span_reboots;
+	var $span_versions;
 	var $pts_version;
 
-	public function __construct($span_reboots = true)
+	public function __construct($span_reboots = true, $span_versions = true)
 	{
 		$this->creation_time = time();
-		$this->span_reboots = $span_reboots;
+		$this->span_reboots = $span_reboots == true;
+		$this->span_versions = $span_versions == true;
 		$this->pts_version = PTS_VERSION;
 		$this->object_cache = array();
 	}
@@ -66,6 +68,10 @@ class pts_storage_object
 	{
 		return $this->span_reboots;
 	}
+	public function get_span_versions()
+	{
+		return $this->span_versions;
+	}
 	public function get_creation_time()
 	{
 		return $this->creation_time;
@@ -80,7 +86,7 @@ class pts_storage_object
 
 			if($restore instanceOf pts_storage_object)
 			{
-				if($restore->get_pts_version() == PTS_VERSION && md5(serialize($restore->get_objects())) == $restore->get_object_checksum())
+				if(($restore->get_span_versions() || $restore->get_pts_version() == PTS_VERSION) && md5(serialize($restore->get_objects())) == $restore->get_object_checksum())
 				{
 					if(!$restore->get_span_reboots())
 					{

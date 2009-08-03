@@ -343,7 +343,7 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $test_properties));
 			}
 
-			$pso = new pts_storage_object();
+			$pso = new pts_storage_object(true, false);
 			$pso->add_object("test_run_manager", $test_run_manager);
 			$pso->add_object("system_hardware", pts_hw_string(false));
 			$pso->add_object("system_software", pts_sw_string(false));

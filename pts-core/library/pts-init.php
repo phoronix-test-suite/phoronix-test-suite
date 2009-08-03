@@ -105,7 +105,7 @@ function pts_core_storage_init()
 
 	if($pso == false)
 	{
-		$pso = new pts_storage_object();
+		$pso = new pts_storage_object(true, true);
 	}
 
 	// Last Run Processing
