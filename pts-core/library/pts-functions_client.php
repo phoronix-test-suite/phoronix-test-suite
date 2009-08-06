@@ -237,6 +237,25 @@ function pts_debug_message($message = null)
 		}
 	}
 }
+function pts_check_option_for_function($option, $check_function)
+{
+	$in_option = false;
+
+	if(is_file(OPTIONS_DIR . $option . ".php"))
+	{
+		if(!class_exists($option, false))
+		{
+			pts_load_run_option($option);
+		}
+
+		if(method_exists($option, $check_function))
+		{
+			$in_option = true;
+		}
+	}
+
+	return $in_option;
+}
 function pts_user_message($message)
 {
 	if(!empty($message))

@@ -159,34 +159,39 @@ function pts_user_agreement_check($command)
 	$config_md5 = $pso->read_object("user_agreement_cs");
 	$current_md5 = md5_file(PTS_PATH . "pts-core/user-agreement.txt");
 
-	if($config_md5 != $current_md5)
+	if($config_md5 != $current_md5 || pts_read_user_config(P_OPTION_USAGE_REPORTING, "UNKNOWN") == "UNKNOWN")
 	{
-		$prompt_in_method = false;
-
-		if(is_file(OPTIONS_DIR . $command . ".php"))
-		{
-			if(!class_exists($command, false))
-			{
-				pts_load_run_option($command);
-			}
-
-			if(method_exists($command, "pts_user_agreement_prompt"))
-			{
-				$prompt_in_method = true;
-			}
-		}
-
+		$prompt_in_method = pts_check_option_for_function($command, "pts_user_agreement_prompt");
 		$user_agreement = file_get_contents(PTS_PATH . "pts-core/user-agreement.txt");
 
 		if($prompt_in_method)
 		{
-			eval("\$agree = " . $command . "::pts_user_agreement_prompt(\$user_agreement);");
+			eval("\$user_agreement_return = " . $command . "::pts_user_agreement_prompt(\$user_agreement);");
+
+			if(is_array($user_agreement_return))
+			{
+				if(count($user_agreement_return) == 2)
+				{
+					list($agree, $usage_reporting) = $user_agreement_return;
+				}
+				else
+				{
+					$agree = array_shift($user_agreement_return);
+					$usage_reporting = -1;
+				}
+			}
+			else
+			{
+				$agree = $user_agreement_return;
+				$usage_reporting = -1;
+			}
 		}
 		else
 		{
-			echo pts_string_header("PHORONIX TEST SUITE - WELCOME");
+			echo pts_string_header("Phoronix Test Suite - Welcome");
 			echo wordwrap($user_agreement, 65);
 			$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
+			$usage_reporting = pts_bool_question("Do you wish to enable anonymous usage / statistics reporting (Y/n)?", true);
 		}
 
 		if($agree)
@@ -199,6 +204,23 @@ function pts_user_agreement_check($command)
 		{
 			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
 		}
+	}
+
+	if(!is_bool($usage_reporting) && pts_read_user_config(P_OPTION_USAGE_REPORTING, null) == null)
+	{
+		// Ask user whether to enable anonymous usage reporting, if it wasn't done during the user agreement check
+		// Currently it is done during the user agreement check for at least the CLI and GTK2 GUI
+		$prompt_in_method = pts_check_option_for_function($command, "pts_usage_reporting_prompt");
+
+		if($prompt_in_method)
+		{
+			eval("\$usage_reporting = " . $command . "::pts_usage_reporting_prompt();");
+		}
+	}
+
+	if(is_bool($usage_reporting))
+	{
+		pts_user_config_init(array(P_OPTION_USAGE_REPORTING => ($usage_reporting ? "TRUE" : "FALSE")));
 	}
 }
 

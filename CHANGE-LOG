@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for writing to different display modes / abstract out the output process from the testing process
 - pts-core: Drop the email_results module since using Phoromatic is a better solution
 - pts-core: Add a display mode for batch runs or when DefaultDisplayMode in the user-config.xml is set to "BATCH"
+- pts-core: Add support to allow anonymous usage reporting / statistics information
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009

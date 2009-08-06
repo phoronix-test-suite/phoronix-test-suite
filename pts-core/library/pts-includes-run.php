@@ -24,7 +24,7 @@
 require_once(PTS_LIBRARY_PATH . "pts-includes-run_setup.php");
 require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 
-function pts_cleanup_tests_to_run($to_run_identifiers)
+function pts_cleanup_tests_to_run(&$to_run_identifiers)
 {
 	$skip_tests = (($e = getenv("SKIP_TESTS")) != false ? explode(",", $e) : false);
 
@@ -78,8 +78,6 @@ function pts_cleanup_tests_to_run($to_run_identifiers)
 			}
 		}
 	}
-
-	return $to_run_identifiers;
 }
 function pts_verify_test_installation($identifiers)
 {
@@ -387,7 +385,7 @@ function pts_run_test($test_identifier, &$display_mode, $extra_arguments = "", $
 
 	if(pts_test_needs_updated_install($test_identifier))
 	{
-		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, the " . $test_title . " test should be re-installed.");
+		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, " . $test_title . " should be re-installed.");
 	}
 
 	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
