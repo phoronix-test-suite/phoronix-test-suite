@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Drop the email_results module since using Phoromatic is a better solution
 - pts-core: Add a display mode for batch runs or when DefaultDisplayMode in the user-config.xml is set to "BATCH"
 - pts-core: Add support to allow anonymous usage reporting / statistics information
+- pts-core: Add "free" virtual suite that contains all tests that are of a FREE type for its license
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009

@@ -29,6 +29,7 @@ define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a base test
 
 define("TYPE_VIRT_SUITE_SUBSYSTEM", "VIRT_SUITE_SUBSYSTEM"); // Type is a virtual suite for a subsystem
 define("TYPE_VIRT_SUITE_ALL", "VIRT_SUITE_ALL");
+define("TYPE_VIRT_SUITE_FREE", "VIRT_SUITE_FREE");
 
 function pts_is_run_object($object)
 {
@@ -204,6 +205,10 @@ function pts_location_virtual_suite($identifier)
 			{
 				// All tests
 				$virtual_suite = TYPE_VIRT_SUITE_ALL;
+			}
+			else if($identifier == "free")
+			{
+				$virtual_suite = TYPE_VIRT_SUITE_FREE;
 			}
 			else
 			{
@@ -440,6 +445,18 @@ function pts_virtual_suite_tests($object)
 				$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 
 				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")))
+				{
+					array_push($contained_tests, $test);
+				}
+			}
+			break;
+		case TYPE_VIRT_SUITE_FREE:
+			foreach(pts_supported_tests_array() as $test)
+			{
+				$xml_parser = new pts_test_tandem_XmlReader($test);
+				$test_license = $xml_parser->getXMLValue(P_TEST_LICENSE);
+
+				if($test_license == "FREE")
 				{
 					array_push($contained_tests, $test);
 				}
