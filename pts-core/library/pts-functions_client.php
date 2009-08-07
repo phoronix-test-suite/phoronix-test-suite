@@ -282,5 +282,9 @@ function pts_get_display_mode_object()
 
 	return $display_mode;
 }
+function pts_anonymous_usage_reporting()
+{
+	return pts_string_bool(pts_read_user_config(P_OPTION_USAGE_REPORTING, 0));
+}
 
 ?>

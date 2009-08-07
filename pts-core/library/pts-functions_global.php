@@ -88,6 +88,10 @@ function pts_global_gsid_valid($gsid)
 
 	return $gsid_valid;
 }
+function pts_upload_usage_data($task, $data)
+{
+	// TODO: implement
+}
 function pts_global_upload_result($result_file, $tags = "")
 {
 	// Upload a test result to the Phoronix Global database
