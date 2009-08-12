@@ -247,10 +247,28 @@ function pts_current_user()
 	// Current system user
 	return ($pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User")) != "Default User" ? $pts_user : phodevi::read_property("system", "username");
 }
-function pts_download_cache()
+function pts_download_cache_user_directories()
 {
 	// Returns directory of the PTS Download Cache
-	return pts_add_trailing_slash((($dir = getenv("PTS_DOWNLOAD_CACHE")) != false ? $dir : pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/")));
+	$dir_string = null;
+	$cache_user_directories = array();
+
+	if(($dir = getenv("PTS_DOWNLOAD_CACHE")) != false)
+	{
+		$dir_string .= $dir . ":";
+	}
+
+	$dir_string .= pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/");
+
+	foreach(explode(":", $dir_string) as $dir_check)
+	{
+		if($dir_check != null)
+		{
+			array_push($cache_user_directories, pts_add_trailing_slash(pts_find_home($dir_check)));
+		}
+	}
+
+	return $cache_user_directories;
 }
 
 ?>

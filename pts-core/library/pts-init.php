@@ -30,7 +30,7 @@ function pts_client_init()
 	pts_config_init();
 	define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 	define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
-	define("PTS_DOWNLOAD_CACHE_DIR", pts_find_home(pts_download_cache()));
+	define("PTS_DOWNLOAD_CACHE_DIR", array_shift(($cache_dirs = pts_download_cache_user_directories())));
 	pts_extended_init();
 }
 function pts_basic_init()
