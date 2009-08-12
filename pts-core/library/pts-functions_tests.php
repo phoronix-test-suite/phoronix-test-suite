@@ -1035,7 +1035,7 @@ function pts_archive_result_directory($identifier, $save_to = null)
 }
 function pts_test_download_caches()
 {
-	$cache_directories = array(PTS_DOWNLOAD_CACHE_DIR);
+	$cache_directories = pts_download_cache_user_directories();
 
 	$possible_cache_dirs = array("/var/cache/phoronix-test-suite/");
 	foreach($possible_cache_dirs as $dir)

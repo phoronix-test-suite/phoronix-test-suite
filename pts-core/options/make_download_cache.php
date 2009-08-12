@@ -27,18 +27,30 @@ class make_download_cache implements pts_option_interface
 		echo pts_string_header("Phoronix Test Suite - Generating Download Cache");
 
 		// Generates a PTS Download Cache
+		$dc_write_directory = null;
 
-		if(!is_writable(PTS_DOWNLOAD_CACHE_DIR))
+		foreach(pts_download_cache_user_directories() as $dc_directory)
 		{
-			echo PTS_DOWNLOAD_CACHE_DIR . " is not writable. A download cache cannot be created.\n\n";
+			if(is_writable($dc_directory))
+			{
+				$dc_write_directory = $dc_directory;
+				break;
+			}
+		}
+
+		if($dc_write_directory == null)
+		{
+			echo "No writable download cache directory was found. A download cache cannot be created.\n\n";
 			return false;
 		}
 
-		if(!pts_mkdir(PTS_DOWNLOAD_CACHE_DIR))
+		echo "\nDownload Cache Directory: " . $dc_write_directory . "\n";
+
+		if(!pts_mkdir($dc_write_directory))
 		{
-			if(is_file(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto"))
+			if(is_file($dc_write_directory . "make-cache-howto"))
 			{
-				unlink(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto");
+				unlink($dc_write_directory . "make-cache-howto");
 			}
 		}
 
@@ -69,7 +81,7 @@ class make_download_cache implements pts_option_interface
 					$package_filename[$i] = basename($package_url[$i]);
 				}
 
-				if(is_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) && (empty($package_md5[$i]) || md5_file(PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]) == $package_md5[$i]))
+				if(is_file($dc_write_directory . $package_filename[$i]) && (empty($package_md5[$i]) || md5_file($dc_write_directory . $package_filename[$i]) == $package_md5[$i]))
 				{
 					echo "\tPreviously Cached: " . $package_filename[$i] . "\n";
 					$cached = true;
@@ -84,7 +96,7 @@ class make_download_cache implements pts_option_interface
 							{
 								echo "\tCaching: " . $package_filename[$i] . "\n";
 
-								if(copy(TEST_ENV_DIR . $test . "/" . $package_filename[$i], PTS_DOWNLOAD_CACHE_DIR . $package_filename[$i]))
+								if(copy(TEST_ENV_DIR . $test . "/" . $package_filename[$i], $dc_write_directory . $package_filename[$i]))
 								{
 									$cached = true;
 								}
@@ -111,7 +123,7 @@ class make_download_cache implements pts_option_interface
 		}
 
 		$cache_xml = $xml_writer->getXML();
-		file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml", $cache_xml);
+		file_put_contents($dc_write_directory . "pts-download-cache.xml", $cache_xml);
 		echo "\n";
 	}
 }

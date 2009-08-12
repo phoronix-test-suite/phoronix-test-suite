@@ -30,7 +30,6 @@ function pts_client_init()
 	pts_config_init();
 	define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 	define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
-	define("PTS_DOWNLOAD_CACHE_DIR", array_shift(($cache_dirs = pts_download_cache_user_directories())));
 	pts_extended_init();
 }
 function pts_basic_init()
@@ -79,9 +78,12 @@ function pts_extended_init()
 	// Extended Initalization Process
 
 	// Create Other Directories
-	if(pts_mkdir(PTS_DOWNLOAD_CACHE_DIR))
+	foreach(pts_download_cache_user_directories() as $dc_directory)
 	{
-		@file_put_contents(PTS_DOWNLOAD_CACHE_DIR . "make-cache-howto", file_get_contents(STATIC_DIR . "make-download-cache-howto.txt"));
+		if(pts_mkdir($dc_directory))
+		{
+			@file_put_contents($dc_directory . "make-cache-howto", file_get_contents(STATIC_DIR . "make-download-cache-howto.txt"));
+		}
 	}
 
 	$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, XML_SUITE_LOCAL_DIR, 

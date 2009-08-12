@@ -260,7 +260,7 @@ function pts_download_cache_user_directories()
 
 	$dir_string .= pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/");
 
-	foreach(explode(":", $dir_string) as $dir_check)
+	foreach(array_map("trim", explode(":", $dir_string)) as $dir_check)
 	{
 		if($dir_check != null)
 		{

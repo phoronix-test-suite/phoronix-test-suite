@@ -95,18 +95,26 @@ function pts_download_test_files($identifier)
 	if(count($download_packages) > 0)
 	{
 		$header_displayed = false;
-		$cache_directories = pts_test_download_caches();
+		$remote_download_files = array();
+		$local_cache_directories = array();
 
-		if(strpos(PTS_DOWNLOAD_CACHE_DIR, "://") > 0 && ($xml_dc_file = @file_get_contents(PTS_DOWNLOAD_CACHE_DIR . "pts-download-cache.xml")) != false)
+		foreach(pts_test_download_caches() as $dc_directory)
 		{
-			$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
-			$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
-			$dc_md5 = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_MD5);
-		}
-		else
-		{
-			$dc_file = array();
-			$dc_md5 = array();
+			if(strpos($dc_directory, "://") > 0 && ($xml_dc_file = @file_get_contents($dc_directory . "pts-download-cache.xml")) != false)
+			{
+				$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
+				$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
+				$dc_md5 = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_MD5);
+
+				for($i = 0; $i < count($dc_file); $i++)
+				{
+					array_push($remote_download_files, new pts_download_cache_file_reference($dc_directory, $dc_file[$i], $dc_md5[$i]));
+				}
+			}
+			else
+			{
+				array_push($local_cache_directories, $dc_directory);
+			}
 		}
 
 		for($i = 0; $i < count($download_packages); $i++)
@@ -140,15 +148,15 @@ function pts_download_test_files($identifier)
 				$urls = $download_packages[$i]->get_download_url_array();
 				$package_md5 = $download_packages[$i]->get_md5();
 
-				if(count($dc_file) > 0 && count($dc_md5) > 0)
+				$found_in_remote_cache = false;
+				if(($remote_download_file_count = count($remote_download_files)) > 0)
 				{
-					$cache_search = true;
-					for($f = 0; $f < count($dc_file) && $cache_search; $f++)
+					for($f = 0; $f < $remote_download_file_count && !$found_in_remote_cache; $f++)
 					{
-						if($dc_file[$f] == $package_filename && $dc_md5[$f] == $package_md5)
+						if($remote_download_files[$f]->get_filename() == $package_filename && $remote_download_files[$f]->get_md5() == $package_md5)
 						{
 							echo "Downloading From Remote Cache: " . $package_filename . "\n\n";
-							echo pts_download(PTS_DOWNLOAD_CACHE_DIR . $package_filename, $download_destination_temp);
+							echo pts_download($remote_download_files[$f]->get_download_cache_directory() . $package_filename, $download_destination_temp);
 							echo "\n";
 
 							if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
@@ -160,28 +168,30 @@ function pts_download_test_files($identifier)
 								pts_move($package_filename_temp, $package_filename, $download_location);
 								$urls = array();
 							}
-							$cache_search = false;
+
+							$found_in_remote_cache = true;
 						}
 					}
 				}
-				else
+
+				if(!$found_in_remote_cache)
 				{
 					$used_cache = false;
-					for($j = 0; $j < count($cache_directories) && $used_cache == false; $j++)
+					for($j = 0; $j < count($local_cache_directories) && $used_cache == false; $j++)
 					{
-						if(pts_validate_md5_download_file($cache_directories[$j] . $package_filename, $package_md5))
+						if(pts_validate_md5_download_file($local_cache_directories[$j] . $package_filename, $package_md5))
 						{
 
 							if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
 							{
 								// P_OPTION_CACHE_SYMLINK is disabled by default for now
 								echo "Linking Cached File: " . $package_filename . "\n";
-								pts_symlink($cache_directories[$j] . $package_filename, $download_destination);
+								pts_symlink($local_cache_directories[$j] . $package_filename, $download_destination);
 							}
 							else
 							{
 								echo "Copying Cached File: " . $package_filename . "\n";
-								copy($cache_directories[$j] . $package_filename, $download_destination);
+								copy($local_cache_directories[$j] . $package_filename, $download_destination);
 							}
 
 							if(is_file($download_destination))
