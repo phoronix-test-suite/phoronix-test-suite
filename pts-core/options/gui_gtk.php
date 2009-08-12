@@ -1449,7 +1449,7 @@ class gui_gtk implements pts_option_interface
 			}
 
 			$pref = basename($preference);
-			$current_value = pts_read_graph_config($preference, null, ($config_type == "graph" ? $graph_config : $read_config));
+			$current_value = pts_read_user_config($preference, null, ($config_type == "graph" ? $graph_config : $read_config));
 
 			if($current_value == "TRUE" || $current_value == "FALSE")
 			{
