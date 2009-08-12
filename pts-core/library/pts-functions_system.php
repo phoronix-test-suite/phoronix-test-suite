@@ -150,31 +150,4 @@ function pts_process_string_array($return_string, $array)
 	return $return;
 }
 
-
-// TODO: Implement the below functions with Phodevi using phodevi::set_property()
-
-function hw_gpu_set_resolution($width, $height)
-{
-	shell_exec("xrandr -s " . $width . "x" . $height . " 2>&1");
-
-	return phodevi::read_property("gpu", "screen-resolution") == array($width, $height); // Check if video resolution set worked
-}
-function hw_gpu_set_nvidia_extension($attribute, $value)
-{
-	// Sets an object in NVIDIA's NV Extension
-	if(IS_NVIDIA_GRAPHICS)
-	{
-		shell_exec("nvidia-settings --assign " . $attribute . "=" . $value . " 2>&1");
-	}
-}
-function hw_gpu_set_amd_pcsdb($attribute, $value)
-{
-	// Sets a value for AMD's PCSDB, Persistent Configuration Store Database
-	if(IS_ATI_GRAPHICS && !empty($value))
-	{
-		$DISPLAY = substr(getenv("DISPLAY"), 1, 1);
-		$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
-	}
-}
-
 ?>

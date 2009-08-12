@@ -84,6 +84,31 @@ class phodevi_gpu extends pts_device_interface
 
 		return $property;
 	}
+	public static function set_property($identifier, $args)
+	{
+		switch($identifier)
+		{
+			case "screen-resolution":
+				$property = self::gpu_set_resolution($args);
+				break;
+		}
+
+		return $property;
+	}
+	function gpu_set_resolution($args)
+	{
+		if(count($args) != 2)
+		{
+			return false;
+		}
+
+		$width = $args[0];
+		$height = $args[1];
+
+		shell_exec("xrandr -s " . $width . "x" . $height . " 2>&1");
+
+		return phodevi::read_property("gpu", "screen-resolution") == array($width, $height); // Check if video resolution set worked
+	}
 	public static function gpu_aa_level()
 	{
 		// Determine AA level if over-rode

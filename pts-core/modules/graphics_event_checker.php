@@ -126,7 +126,7 @@ class graphics_event_checker extends pts_module_interface
 			$reset_height = $reset[1];
 
 			echo "\nThe video resolution had changed during testing and it was not properly reset! Now resetting to $reset_width x $reset_height from $video_width x $video_height.\n";
-			hw_gpu_set_resolution($reset_width, $reset_height);
+			phodevi::set_property("gpu", "screen-resolution", array($reset_width, $reset_height));
 		}
 	}
 	protected static function nvidia_gpu_error_count()
