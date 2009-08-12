@@ -127,6 +127,17 @@ class phodevi
 
 		return $value;
 	}
+	public static function set_property($device, $set_property, $pass_args = array())
+	{
+		$return_value = false;
+
+		if(method_exists("phodevi_" . $device, "set_property"))
+		{
+			eval("\$return_value = phodevi_" . $device . "::set_property(\$set_property, \$pass_args);");
+		}
+
+		return $return_value;
+	}
 	public static function initial_setup()
 	{
 		// Operating System Detection

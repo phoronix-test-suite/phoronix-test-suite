@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support to allow anonymous usage reporting / statistics information
 - pts-core: Add "free" virtual suite that contains all tests that are of a FREE type for its license
 - pts-core: Multiple download cache directories can be specified in the user-config.xml and PTS_DOWNLOAD_CACHE environmental variable when delimited by colon
+- phodevi: Add infrastructure so that properties / settings can be set using phodevi::set_property()
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009
