@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Memory</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>0.1</EnvironmentSize>
+		<ProjectURL>http://www.cs.virginia.edu/stream/</ProjectURL>
+                <ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestProfile>
+	<TestInformation>
+		<Title>Stream</Title>
+		<Version>2009-04-11</Version>
+		<TimesToRun>5</TimesToRun>
+		<ResultScale>MB/s</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This benchmark tests the system memory (RAM) performance.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Type</DisplayName>
+			<Identifier>run-type</Identifier>
+			<Menu>
+				<Entry>
+					<Name>Copy</Name>
+					<Value>Copy</Value>
+				</Entry>
+				<Entry>
+					<Name>Scale</Name>
+					<Value>Scale</Value>
+				</Entry>
+				<Entry>
+					<Name>Add</Name>
+					<Value>Add</Value>
+				</Entry>
+				<Entry>
+					<Name>Triad</Name>
+					<Value>Triad</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>

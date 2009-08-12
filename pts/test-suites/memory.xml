@@ -29,6 +29,21 @@
 		<Description>Floating-Point Add</Description>
 	</RunTest>
 	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Add</Arguments>
+		<Description>Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Copy</Arguments>
+		<Description>Copy</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Scale</Arguments>
+		<Description>Scale</Description>
+	</RunTest>
+	<RunTest>
 		<Test>memory-bandwidth</Test>
 		<Arguments>TEST_READ</Arguments>
 		<Description>RAM Sequential Read</Description>

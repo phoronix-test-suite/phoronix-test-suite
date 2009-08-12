@@ -1,0 +1,9 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/stream-2009-04-11.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/stream-2009-04-11.tar.gz</URL>
+			<MD5>db10871405a08a3873306fcb2688f729</MD5>
+			<FileSize>4057</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

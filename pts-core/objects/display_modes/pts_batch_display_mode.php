@@ -33,7 +33,7 @@ class pts_batch_display_mode implements pts_display_mode_interface
 
 		if(($test_description = $test_result->get_attribute("TEST_DESCRIPTION")) != false)
 		{
-			echo ": " . $test_description;
+			echo " [" . $test_description . "]";
 		}
 
 		echo "\n";
