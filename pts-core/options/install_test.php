@@ -69,15 +69,17 @@ class install_test implements pts_option_interface
 
 			echo "\n";
 
+			$display_mode = pts_get_display_mode_object();
+
 			// Any external dependencies?
-			if(!pts_install_package_on_distribution($items_to_install))
+			if(!pts_install_package_on_distribution($items_to_install, $display_mode))
 			{
 				echo "\nInstallation of needed test dependencies failed.\n\n";
 				return false;
 			}
 
 			// Install tests
-			pts_start_install($items_to_install);
+			pts_start_install($items_to_install, $display_mode);
 		}
 	}
 }

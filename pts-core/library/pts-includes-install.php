@@ -23,7 +23,7 @@
 
 require_once(PTS_LIBRARY_PATH . "pts-includes-install_dependencies.php");
 
-function pts_start_install($to_install)
+function pts_start_install($to_install, &$display_mode)
 {
 	$to_install = pts_to_array($to_install);
 
@@ -74,7 +74,7 @@ function pts_start_install($to_install)
 
 	foreach($tests as $test)
 	{
-		pts_install_test($test);
+		pts_install_test($test, $display_mode);
 	}
 
 	pts_module_process("__post_install_process", $tests);
@@ -376,7 +376,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 		pts_symlink($xauth_file, TEST_ENV_DIR . $identifier . "/.Xauthority");
 	}
 }
-function pts_install_test($identifier)
+function pts_install_test($identifier, &$display_mode)
 {
 	if(!pts_is_test($identifier))
 	{

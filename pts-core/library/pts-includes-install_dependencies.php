@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_install_package_on_distribution($identifiers)
+function pts_install_package_on_distribution($identifiers, &$display_mode)
 {
 	// PTS External Dependencies install on distribution
 	if(!pts_is_assignment("SILENCE_MESSAGES"))
@@ -47,7 +47,7 @@ function pts_install_package_on_distribution($identifiers)
 		return count($install_objects) == 0;
 	}
 
-	pts_install_packages_on_distribution_process($install_objects);
+	pts_install_packages_on_distribution_process($install_objects, $display_mode);
 
 	return true;
 }
@@ -223,7 +223,7 @@ function pts_external_dependencies_missing()
 
 	return $missing_dependencies;	
 }
-function pts_install_packages_on_distribution_process($install_objects)
+function pts_install_packages_on_distribution_process($install_objects, &$display_mode)
 {
 	// Do the actual installing process of packages using the distribution's package management system
 	if(!empty($install_objects))
@@ -237,6 +237,7 @@ function pts_install_packages_on_distribution_process($install_objects)
 
 		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
 		{
+			// TODO: hook into $display_mode here if it's desired
 			echo "\nThe following dependencies will be installed: \n";
 
 			foreach(explode(" ", $install_objects) as $obj)
