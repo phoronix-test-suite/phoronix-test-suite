@@ -38,6 +38,14 @@ class pts_batch_display_mode implements pts_display_mode_interface
 
 		echo "\n";
 
+		$test_run_position = pts_read_assignment("TEST_RUN_POSITION");
+		$test_run_count = pts_read_assignment("TEST_RUN_COUNT");
+
+		if($test_run_count > 1 && $test_run_position <= $test_run_count)
+		{
+			echo "\tTest Run " . $test_run_position . " of " . $test_run_count . "\n";
+		}
+
 		$estimated_length = pts_estimated_run_time($test_result->get_attribute("TEST_IDENTIFIER"));
 		if($estimated_length > 1)
 		{

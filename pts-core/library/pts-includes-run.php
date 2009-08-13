@@ -151,6 +151,7 @@ function pts_call_test_runs($tests_to_run, &$display_mode, &$tandem_xml = null, 
 	}
 
 	$test_flag = true;
+	$tests_to_run_count = count($tests_to_run);
 
 	if(($total_loop_time = getenv("TOTAL_LOOP_TIME")) != false && is_numeric($total_loop_time))
 	{
@@ -158,9 +159,9 @@ function pts_call_test_runs($tests_to_run, &$display_mode, &$tandem_xml = null, 
 
 		do
 		{
-			for($i = 0; $i < count($tests_to_run) && $test_flag && time() < $loop_end_time; $i++)
+			for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, false);
+				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, 1, 1);
 			}
 		}
 		while(time() < $loop_end_time && $test_flag);
@@ -169,21 +170,21 @@ function pts_call_test_runs($tests_to_run, &$display_mode, &$tandem_xml = null, 
 	{
 		for($loop = 0; $loop < $total_loop_count && $test_flag; $loop++)
 		{
-			for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
+			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, $loop < ($total_loop_count - 1));
+				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
 			}
 		}
 	}
 	else
 	{
-		for($i = 0; $i < count($tests_to_run) && $test_flag; $i++)
+		for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 		{
-			$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, $i == (count($tests_to_run) - 1));
+			$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, ($i + 1), $tests_to_run_count);
 		}
 	}
 }
-function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_request, &$display_mode, $save_name = null, $is_last_test = true)
+function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_request, &$display_mode, $save_name = null, $run_position = 1, $run_count = 1)
 {
 	$to_run = $pts_test_run_request->get_identifier();
 
@@ -194,6 +195,9 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_r
 		{
 			file_put_contents($active_xml, $tandem_xml->getXML());
 		}
+
+		pts_set_assignment("TEST_RUN_POSITION", $run_position);
+		pts_set_assignment("TEST_RUN_COUNT", $run_count);
 
 		$result = pts_run_test($to_run, $display_mode, $pts_test_run_request->get_arguments(), $pts_test_run_request->get_arguments_description(), $pts_test_run_request->get_override_options());
 
@@ -226,16 +230,16 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_r
 			}
 		}
 
-		if($is_last_test)
+		if(($run_position == 1 && $run_count == 1) || $run_position < $run_count)
+		{
+			sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
+		}
+		else
 		{
 			if(is_file($active_xml))
 			{
 				unlink($active_xml);
 			}
-		}
-		else
-		{
-			sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 		}
 	}
 
