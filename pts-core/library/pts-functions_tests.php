@@ -486,17 +486,28 @@ function pts_suite_identifier_to_name($identifier)
 function pts_estimated_download_size($identifier)
 {
 	// Estimate the size of files to be downloaded
-	$estimated_size = 0;
-	foreach(pts_contained_tests($identifier, true) as $test)
+	static $cache;
+
+	if(is_array($identifier) || !isset($cache[$identifier]))
 	{
-		// The work for calculating the download size in 1.4.0+
-		foreach(pts_objects_test_downloads($test) as $download_object)
+		$estimated_size = 0;
+
+		foreach(pts_contained_tests($identifier, true) as $test)
 		{
-			$estimated_size += pts_trim_double($download_object->get_filesize() / 1048576);
+			// The work for calculating the download size in 1.4.0+
+			foreach(pts_objects_test_downloads($test) as $download_object)
+			{
+				$estimated_size += pts_trim_double($download_object->get_filesize() / 1048576);
+			}
+		}
+
+		if(!is_array($identifier))
+		{
+			$cache[$identifier] = $estimated_size;
 		}
 	}
 
-	return $estimated_size;
+	return is_array($identifier) ? $estimated_size : $cache[$identifier];
 }
 function pts_estimated_environment_size($identifier)
 {
@@ -834,11 +845,11 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 
 			if($file_extension == "php")
 			{
-				$this_result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
+				$this_result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
 			}
 			else if($file_extension == "sh")
 			{
-				$this_result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\"", $extra_vars);
+				$this_result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
 			}
 			else
 			{
