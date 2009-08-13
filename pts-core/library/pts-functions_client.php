@@ -271,7 +271,7 @@ function pts_user_message($message)
 }
 function pts_get_display_mode_object()
 {
-	if(pts_is_assignment("IS_BATCH_MODE") || pts_read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT") == "BATCH")
+	if(pts_is_assignment("IS_BATCH_MODE") || pts_read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT") == "BATCH" || getenv("PTS_DISPLAY_MODE") == "BATCH")
 	{
 		$display_mode = new pts_batch_display_mode();
 	}
