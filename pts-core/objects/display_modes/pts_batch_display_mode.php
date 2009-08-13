@@ -27,6 +27,32 @@ class pts_batch_display_mode implements pts_display_mode_interface
 	{
 
 	}
+	public function test_install_start($identifier)
+	{
+		echo "\t" . $identifier . "\n";
+	}
+	public function test_install_downloads($identifier, &$download_packages)
+	{
+		echo "\t\t" . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " To Download";
+
+		if(($size = pts_estimated_download_size($identifier)) > 0)
+		{
+			echo " / " . $size . " MB";
+		}
+
+		echo "\n";
+	}
+	public function test_install_process($identifier)
+	{
+		if(($size = pts_estimated_environment_size($identifier)) > 0)
+		{
+			echo "\t\tInstall Size: " . $size . " MB\n";
+		}
+	}
+	public function test_install_output(&$to_output)
+	{
+		return;
+	}
 	public function test_run_start(&$test_result)
 	{
 		echo "\n" . $test_result->get_attribute("TEST_TITLE") . ":\n\t" . $test_result->get_attribute("TEST_IDENTIFIER");

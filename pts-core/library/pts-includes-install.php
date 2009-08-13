@@ -87,7 +87,7 @@ function pts_start_install($to_install, &$display_mode)
 
 	pts_set_assignment_next("PREV_TEST_INSTALLED", $report_install);
 }
-function pts_download_test_files($identifier)
+function pts_download_test_files($identifier, &$display_mode)
 {
 	// Download needed files for a test
 	$download_packages = pts_objects_test_downloads($identifier);
@@ -117,6 +117,12 @@ function pts_download_test_files($identifier)
 			}
 		}
 
+		if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_download_size($identifier) + 50))
+		{
+			echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
+			return false;
+		}
+
 		for($i = 0; $i < count($download_packages); $i++)
 		{
 			$download_location = TEST_ENV_DIR . $identifier . "/";
@@ -129,19 +135,7 @@ function pts_download_test_files($identifier)
 			{
 				if(!$header_displayed)
 				{
-					$download_append = "";
-					if(($size = pts_estimated_download_size($identifier)) > 0)
-					{
-						$download_append = "\nEstimated Download Size: " . $size . " MB";
-
-						if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($size + 50))
-						{
-							echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
-							return false;
-						}
-					}
-					echo pts_string_header("Downloading Files For: " . $identifier . $download_append);
-
+					$display_mode->test_install_downloads($identifier, $download_packages);
 					$header_displayed = true;
 				}
 
@@ -413,23 +407,9 @@ function pts_install_test($identifier, &$display_mode)
 		{
 			if(pts_test_needs_updated_install($identifier))
 			{
-				if(!pts_is_assignment("PTS_TOTAL_SIZE_MSG"))
-				{
-					if(isset($argv[1]))
-					{
-						$total_download_size = pts_estimated_download_size($argv[1]);
-
-						if($total_download_size > 0 && pts_is_suite($argv[1]))
-						{
-							echo pts_string_header("Total Estimated Download Size: " . $total_download_size . " MB");
-						}
-					}
-
-					pts_set_assignment("PTS_TOTAL_SIZE_MSG", 1);
-				}
-
 				pts_setup_install_test_directory($identifier, true);
-				$download_test_files = pts_download_test_files($identifier);
+				$display_mode->test_install_start($identifier);
+				$download_test_files = pts_download_test_files($identifier, $display_mode);
 
 				if($download_test_files == false)
 				{
@@ -440,14 +420,7 @@ function pts_install_test($identifier, &$display_mode)
 				if(is_file(pts_location_test_resources($identifier) . "install.sh") || is_file(pts_location_test_resources($identifier) . "install.php"))
 				{
 					pts_module_process("__pre_test_install", $identifier);
-					$install_header = "Installing Test: " . $identifier;
-
-					if(($size = pts_estimated_environment_size($identifier)) > 0)
-					{
-						$install_header .= "\nEstimated Install Size: " . $size . " MB";
-					}
-
-					echo pts_string_header($install_header);
+					$display_mode->test_install_process($identifier);
 
 					if(!empty($size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
 					{
@@ -490,12 +463,7 @@ function pts_install_test($identifier, &$display_mode)
 					if(!empty($install_log))
 					{
 						@file_put_contents(TEST_ENV_DIR . $identifier . "/install.log", $install_log);
-
-						if(!isset($install_log[10240]))
-						{
-							// Not worth printing files over 10kb to screen
-							echo $install_log;
-						}
+						$display_mode->test_install_output($install_log);
 					}
 
 					if(is_file(TEST_ENV_DIR . $identifier . "/install-exit-status"))

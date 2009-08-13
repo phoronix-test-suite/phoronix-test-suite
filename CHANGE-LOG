@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts-core: Move relevant functions that touch hardware settings / properties out of pts-core and now using the phodevi::set_property() framework
 - pts-core: Fix check buttons for boolean values in the GTK2 GUI preferences window
 - pts-core: Allow the display mode to be set using PTS_DISPLAY_MODE environmental variable
+- pts-core: Add display mode support when a test is being installed
 - phodevi: Add infrastructure so that properties / settings can be set using phodevi::set_property()
 - pts: Add stream test profile for Stream memory benchmark
 

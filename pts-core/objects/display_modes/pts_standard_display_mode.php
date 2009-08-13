@@ -27,6 +27,38 @@ class pts_standard_display_mode implements pts_display_mode_interface
 	{
 
 	}
+	public function test_install_start($identifier)
+	{
+		return;
+	}
+	public function test_install_downloads($identifier, &$download_packages)
+	{
+		$download_append = "";
+		if(($size = pts_estimated_download_size($identifier)) > 0)
+		{
+			$download_append = "\nEstimated Download Size: " . $size . " MB";
+		}
+		echo pts_string_header("Downloading Files For: " . $identifier . $download_append);
+	}
+	public function test_install_process($identifier)
+	{
+		$install_header = "Installing Test: " . $identifier;
+
+		if(($size = pts_estimated_environment_size($identifier)) > 0)
+		{
+			$install_header .= "\nEstimated Install Size: " . $size . " MB";
+		}
+
+		echo pts_string_header($install_header);
+	}
+	public function test_install_output(&$to_output)
+	{
+		if(!isset($to_output[10240]))
+		{
+			// Not worth printing files over 10kb to screen
+			echo $to_output;
+		}
+	}
 	public function test_run_start(&$test_result)
 	{
 		return;
