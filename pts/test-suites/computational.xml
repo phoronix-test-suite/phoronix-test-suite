@@ -30,7 +30,7 @@
 		<Test>gmpbench</Test>
 	</RunTest>
 	<RunTest>
-		<Test>crafty</Test>
+		<Test>chess</Test>
 	</RunTest>
 	<RunTest>
 		<Test>opstone</Test>
