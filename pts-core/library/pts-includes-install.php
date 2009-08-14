@@ -40,8 +40,6 @@ function pts_start_install($to_install, &$display_mode)
 
 	if(count($tests) == 0)
 	{
-		$exit_message = "";
-
 		if(!pts_is_assignment("SILENCE_MESSAGES"))
 		{
 			echo pts_string_header("Not recognized: " . $to_install[0]);
@@ -58,6 +56,8 @@ function pts_start_install($to_install, &$display_mode)
 		}
 	}
 
+	$tests = array_values($tests);
+
 	if(($install_count = count($tests)) > 1)
 	{
 		echo pts_string_header($install_count . " Tests To Be Installed" . 
@@ -67,12 +67,10 @@ function pts_start_install($to_install, &$display_mode)
 	pts_set_assignment("TEST_INSTALL_COUNT", $install_count);
 
 	pts_module_process("__pre_install_process", $tests);
-	$i = 1;
-	foreach($tests as $test)
+	foreach($tests as $i => $test)
 	{
-		pts_set_assignment("TEST_INSTALL_POSITION", $i);
+		pts_set_assignment("TEST_INSTALL_POSITION", ($i + 1));
 		pts_install_test($test, $display_mode);
-		$i++;
 	}
 	pts_module_process("__post_install_process", $tests);
 
