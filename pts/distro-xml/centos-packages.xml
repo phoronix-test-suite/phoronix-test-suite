@@ -165,5 +165,10 @@
 			<PackageName>tcl</PackageName>
 			<FileCheck>/usr/bin/tclsh</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>glibc-development</GenericName>
+			<PackageName>glibc-devel</PackageName>
+			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib/libc.a</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

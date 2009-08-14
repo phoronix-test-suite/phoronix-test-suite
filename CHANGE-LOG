@@ -21,6 +21,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add display mode support when a test is being installed
 - phodevi: Add infrastructure so that properties / settings can be set using phodevi::set_property()
 - pts: Add stream test profile for Stream memory benchmark
+- pts: Add glibc-development as an external dependency for providing GNU C library development files
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009

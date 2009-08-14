@@ -200,5 +200,10 @@
 			<PackageName>dev-lang/tcl</PackageName>
 			<FileCheck>/usr/bin/tclsh</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>glibc-development</GenericName>
+			<PackageName>dev-libs/libpthread-stubs</PackageName>
+			<FileCheck>/usr/include/gnu/stubs-32.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

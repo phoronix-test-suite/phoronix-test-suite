@@ -210,5 +210,10 @@
 			<PackageName>tcl</PackageName>
 			<FileCheck>/usr/bin/tclsh</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>glibc-development</GenericName>
+			<PackageName>libc6-dev libc6-dev-i386</PackageName>
+			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib32/librt.so, /usr/lib/libc.a</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
