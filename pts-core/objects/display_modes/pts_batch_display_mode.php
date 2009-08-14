@@ -29,7 +29,20 @@ class pts_batch_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_start($identifier)
 	{
-		echo "\t" . $identifier . "\n";
+		echo "\t" . $identifier . ":\n";
+
+		$test_install_position = pts_read_assignment("TEST_INSTALL_POSITION");
+		$test_install_count = pts_read_assignment("TEST_INSTALL_COUNT");
+		if($test_install_count > 1 && $test_install_position <= $test_install_count)
+		{
+			echo "\t\tTest Installation " . $test_install_position . " of " . $test_install_count . "\n";
+		}
+
+		if(($size = pts_estimated_environment_size($identifier)) > 0)
+		{
+			echo "\t\tInstall Size: " . $size . " MB\n";
+		}
+		echo "\n";
 	}
 	public function test_install_downloads($identifier, &$download_packages)
 	{
@@ -42,12 +55,31 @@ class pts_batch_display_mode implements pts_display_mode_interface
 
 		echo "\n";
 	}
+	public function test_install_download_file(&$pts_test_file_download, $process)
+	{
+		echo "\t\t" . $pts_test_file_download->get_filename() . ": ";
+
+		switch($process)
+		{
+			case "DOWNLOAD_FROM_CACHE":
+				echo "Downloading From Cache";
+				break;
+			case "LINK_FROM_CACHE":
+				echo "Linking From Cache";
+				break;
+			case "COPY_FROM_CACHE":
+				echo "Copying From Cache";
+				break;
+			case "DOWNLOAD":
+				echo "Downloading";
+				break;
+		}
+
+		echo " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 1) . "MB]\n";
+	}
 	public function test_install_process($identifier)
 	{
-		if(($size = pts_estimated_environment_size($identifier)) > 0)
-		{
-			echo "\t\tInstall Size: " . $size . " MB\n";
-		}
+		return;
 	}
 	public function test_install_output(&$to_output)
 	{
@@ -66,7 +98,6 @@ class pts_batch_display_mode implements pts_display_mode_interface
 
 		$test_run_position = pts_read_assignment("TEST_RUN_POSITION");
 		$test_run_count = pts_read_assignment("TEST_RUN_COUNT");
-
 		if($test_run_count > 1 && $test_run_position <= $test_run_count)
 		{
 			echo "\tTest Run " . $test_run_position . " of " . $test_run_count . "\n";

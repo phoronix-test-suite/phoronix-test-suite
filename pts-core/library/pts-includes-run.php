@@ -445,7 +445,7 @@ function pts_run_test($test_identifier, &$display_mode, $extra_arguments = "", $
 		"LOG_FILE" => $benchmark_log_file
 		));
 
-		$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments, $test_extra_runtime_variables);
+		$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1", $test_extra_runtime_variables);
 
 		if(!isset($test_results[10240]))
 		{

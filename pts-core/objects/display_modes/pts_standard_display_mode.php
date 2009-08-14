@@ -40,6 +40,24 @@ class pts_standard_display_mode implements pts_display_mode_interface
 		}
 		echo pts_string_header("Downloading Files For: " . $identifier . $download_append);
 	}
+	public function test_install_download_file(&$pts_test_file_download, $process)
+	{
+		switch($process)
+		{
+			case "DOWNLOAD_FROM_CACHE":
+				echo "Downloading Cached File: " . $pts_test_file_download->get_filename() . "\n\n";
+				break;
+			case "LINK_FROM_CACHE":
+				echo "Linking Cached File: " . $pts_test_file_download->get_filename() . "\n";
+				break;
+			case "COPY_FROM_CACHE":
+				echo "Copying Cached File: " . $pts_test_file_download->get_filename() . "\n";
+				break;
+			case "DOWNLOAD":
+				echo "\n\nDownloading File: " . $pts_test_file_download->get_filename() . "\n\n";
+				break;
+		}
+	}
 	public function test_install_process($identifier)
 	{
 		$install_header = "Installing Test: " . $identifier;

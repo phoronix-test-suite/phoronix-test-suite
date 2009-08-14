@@ -50,33 +50,30 @@ function pts_start_install($to_install, &$display_mode)
 		return false;
 	}
 
-	pts_module_process("__pre_install_process", $tests);
-
-	if(count($tests) > 1)
+	foreach($tests as $key => $test)
 	{
-		$will_be_installed = array();
-
-		foreach($tests as $test)
+		if(!pts_test_needs_updated_install($test))
 		{
-			if(pts_test_needs_updated_install($test))
-			{
-				array_push($will_be_installed, $test);
-			}
-		}
-
-		if(($install_count = count($will_be_installed)) > 1)
-		{
-			echo pts_string_header($install_count . " Tests To Be Installed" . 
-			"\nEstimated Download Size: " . pts_estimated_download_size($will_be_installed) . " MB" .
-			"\nEstimated Install Size: " . pts_estimated_environment_size($will_be_installed) . " MB");
+			unset($tests[$key]);
 		}
 	}
 
+	if(($install_count = count($tests)) > 1)
+	{
+		echo pts_string_header($install_count . " Tests To Be Installed" . 
+		"\nEstimated Download Size: " . pts_estimated_download_size($tests) . " MB" .
+		"\nEstimated Install Size: " . pts_estimated_environment_size($tests) . " MB");
+	}
+	pts_set_assignment("TEST_INSTALL_COUNT", $install_count);
+
+	pts_module_process("__pre_install_process", $tests);
+	$i = 1;
 	foreach($tests as $test)
 	{
+		pts_set_assignment("TEST_INSTALL_POSITION", $i);
 		pts_install_test($test, $display_mode);
+		$i++;
 	}
-
 	pts_module_process("__post_install_process", $tests);
 
 	do
@@ -149,7 +146,7 @@ function pts_download_test_files($identifier, &$display_mode)
 					{
 						if($remote_download_files[$f]->get_filename() == $package_filename && $remote_download_files[$f]->get_md5() == $package_md5)
 						{
-							echo "Downloading From Remote Cache: " . $package_filename . "\n\n";
+							$display_mode->test_install_download_file($download_packages[$i], "DOWNLOAD_FROM_CACHE");
 							echo pts_download($remote_download_files[$f]->get_download_cache_directory() . $package_filename, $download_destination_temp);
 							echo "\n";
 
@@ -179,12 +176,12 @@ function pts_download_test_files($identifier, &$display_mode)
 							if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
 							{
 								// P_OPTION_CACHE_SYMLINK is disabled by default for now
-								echo "Linking Cached File: " . $package_filename . "\n";
+								$display_mode->test_install_download_file($download_packages[$i], "LINK_FROM_CACHE");
 								pts_symlink($local_cache_directories[$j] . $package_filename, $download_destination);
 							}
 							else
 							{
-								echo "Copying Cached File: " . $package_filename . "\n";
+								$display_mode->test_install_download_file($download_packages[$i], "COPY_FROM_CACHE");
 								copy($local_cache_directories[$j] . $package_filename, $download_destination);
 							}
 
@@ -232,7 +229,7 @@ function pts_download_test_files($identifier, &$display_mode)
 							while(!pts_is_valid_download_url($url));
 						}
 
-						echo "\n\nDownloading File: " . $package_filename . "\n\n";
+						$display_mode->test_install_download_file($download_packages[$i], "DOWNLOAD");
 						echo pts_download($url, $download_destination_temp);
 
 						if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
