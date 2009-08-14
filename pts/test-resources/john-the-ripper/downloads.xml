@@ -1,0 +1,9 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.openwall.com/john/g/john-1.7.3.1.tar.gz</URL>
+			<MD5>6a2e174e71b2a220d5f8a34f1d2ce540</MD5>
+			<FileSize>814903</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

@@ -28,6 +28,7 @@ Phoronix Test Suite (Git)
 - pts: Add pybench test profile for Python's PyBench
 - pts: Add tscp test profile for the chess benchmark
 - pts: Add chess test suite for test profiles that use chess AI
+- pts: Add john-the-ripper test profile for John The Ripper password cracker benchmark
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009

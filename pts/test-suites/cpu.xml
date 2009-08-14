@@ -74,6 +74,10 @@
 		<Description>Sharpen</Description>
 	</RunTest>
 	<RunTest>
+		<Test>john-the-ripper</Test>
+		<Mode>BATCH</Mode>
+	</RunTest>
+	<RunTest>
 		<Test>build-php</Test>
 	</RunTest>
 	<RunTest>

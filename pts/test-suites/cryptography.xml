@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>Processor</TestType>
 		<Title>Cryptography</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -13,5 +13,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>john-the-ripper</Test>
+		<Mode>BATCH</Mode>
 	</RunTest>
 </PhoronixTestSuite>

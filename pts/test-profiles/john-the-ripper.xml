@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>2.3</EnvironmentSize>
+		<ProjectURL>http://www.openwall.com/john/</ProjectURL>
+                <ExternalDependencies>build-utilities</ExternalDependencies>
+	</TestProfile>
+	<TestInformation>
+		<Title>John The Ripper</Title>
+		<Version>1.7.3.1</Version>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Real C/S</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>This is a benchmark of John The Ripper, which is a password cracker.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Option>
+			<DisplayName>Test</DisplayName>
+			<Identifier>run-test</Identifier>
+			<Menu>
+				<Entry>
+					<Name>Traditional DES</Name>
+					<Value>TRADITIONAL_DES_MANY_SALTS</Value>
+				</Entry>
+				<Entry>
+					<Name>MD5</Name>
+					<Value>MD5</Value>
+				</Entry>
+				<Entry>
+					<Name>Blowfish</Name>
+					<Value>BLOWFISH</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>
