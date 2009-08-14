@@ -102,6 +102,9 @@
 		<Description>Solitaire</Description>
 	</RunTest>
 	<RunTest>
+		<Test>pybench</Test>
+	</RunTest>
+	<RunTest>
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
