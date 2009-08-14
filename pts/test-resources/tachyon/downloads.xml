@@ -1,0 +1,9 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://jedi.ks.uiuc.edu/~johns/raytracer/files/0.98.7/tachyon-0.98.7.tar.gz</URL>
+			<MD5>17b41c7042a2d3a75531a4979f643d15</MD5>
+			<FileSize>3269840</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>

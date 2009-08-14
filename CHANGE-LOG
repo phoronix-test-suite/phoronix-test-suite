@@ -24,6 +24,7 @@ Phoronix Test Suite (Git)
 - pts: Add python external dependency for Python language
 - pts: Add stream test profile for Stream memory benchmark
 - pts: Add tachyon test profile for Tachyon Parallel Ray-Tracing benchmark
+- pts: Add python-environment base test profile for placing external dependency on python and reporting Python version to test notes
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009

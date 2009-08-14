@@ -74,6 +74,9 @@ class phodevi_system extends pts_device_interface
 			case "java-version":
 				$property = new pts_device_property("sw_java_version", PHODEVI_STAND_CACHE);
 				break;
+			case "python-version":
+				$property = new pts_device_property("sw_python_version", PHODEVI_STAND_CACHE);
+				break;
 			case "display-server":
 				$property = new pts_device_property("sw_display_server", PHODEVI_STAND_CACHE);
 				break;
@@ -776,6 +779,17 @@ class phodevi_system extends pts_device_interface
 		}
 
 		return $java_version;
+	}
+	public static function sw_python_version()
+	{
+		$python_version = null;
+
+		if(pts_executable_in_path("python") != false)
+		{
+			$python_version = trim(shell_exec("python -V 2>&1"));
+		}
+
+		return $python_version;
 	}
 }
 
