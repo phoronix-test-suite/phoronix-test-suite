@@ -64,6 +64,9 @@
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
+		<Test>tachyon</Test>
+	</RunTest>
+	<RunTest>
 		<Test>byte</Test>
 		<Arguments>TEST_DHRY2</Arguments>
 		<Description>Dhrystone 2</Description>

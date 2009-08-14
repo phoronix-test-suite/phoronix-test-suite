@@ -215,5 +215,10 @@
 			<PackageName>libc6-dev libc6-dev-i386</PackageName>
 			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib32/librt.so, /usr/lib/libc.a</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>python</GenericName>
+			<PackageName>python</PackageName>
+			<FileCheck>/usr/bin/python</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

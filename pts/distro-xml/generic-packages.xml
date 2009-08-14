@@ -254,5 +254,11 @@
 			<PossibleNames>libc6-dev, libc6-dev-i386, glibc-devel</PossibleNames>
 			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib/libc.a</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>python</GenericName>
+			<Title>Python</Title>
+			<PossibleNames>python</PossibleNames>
+			<FileCheck>/usr/bin/python</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

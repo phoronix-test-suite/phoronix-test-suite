@@ -125,5 +125,10 @@
 			<PackageName>libtool-base</PackageName>
 			<FileCheck>/usr/pkg/bin/libtool</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>python</GenericName>
+			<PackageName>python</PackageName>
+			<FileCheck>/usr/pkg/bin/python</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

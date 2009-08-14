@@ -23,4 +23,7 @@
 	<RunTest>
 		<Test>povray</Test>
 	</RunTest>
+	<RunTest>
+		<Test>tachyon</Test>
+	</RunTest>
 </PhoronixTestSuite>

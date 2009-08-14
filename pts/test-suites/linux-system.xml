@@ -39,6 +39,9 @@
 		<Test>c-ray</Test>
 	</RunTest>
 	<RunTest>
+		<Test>tachyon</Test>
+	</RunTest>
+	<RunTest>
 		<Test>povray</Test>
 	</RunTest>
 	<RunTest>

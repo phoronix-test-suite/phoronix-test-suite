@@ -170,5 +170,10 @@
 			<PackageName>tcl</PackageName>
 			<FileCheck>/usr/bin/tclsh</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>python</GenericName>
+			<PackageName>python</PackageName>
+			<FileCheck>/usr/bin/python</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -170,5 +170,10 @@
 			<PackageName>glibc-devel</PackageName>
 			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib/libc.a</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>python</GenericName>
+			<PackageName>python</PackageName>
+			<FileCheck>/usr/bin/python</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

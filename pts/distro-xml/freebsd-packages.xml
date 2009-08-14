@@ -120,5 +120,10 @@
 			<PackageName>autoconf</PackageName>
 			<FileCheck>/usr/local/bin/autoconf</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>python</GenericName>
+			<PackageName>python</PackageName>
+			<FileCheck>/usr/local/bin/python</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
