@@ -61,17 +61,6 @@ function pts_sw_string($return_string = true)
 
 	return pts_process_string_array($return_string, $sw);
 }
-function pts_sys_sensors_string($return_string = true)
-{
-	$sensors = array();
-
-	foreach(pts_supported_sensors() as $s)
-	{
-		$sensors[$s->get_formatted_hardware_type() . " " . $s->get_sensor_string()] = $s->read_sensor() . " " . $s->get_sensor_unit();
-	}
-
-	return pts_process_string_array($return_string, $sensors);
-}
 function pts_available_sensors()
 {
 	return array(
@@ -92,6 +81,18 @@ function pts_available_sensors()
 	new pts_sensor("memory", "swap", array("memory", "swap-usage"), "Megabytes"),
 	new pts_sensor("memory", "total", array("memory", "total-usage"), "Megabytes")
 	);
+}
+
+function pts_sys_sensors_string($return_string = true)
+{
+	$sensors = array();
+
+	foreach(pts_supported_sensors() as $s)
+	{
+		$sensors[$s->get_formatted_hardware_type() . " " . $s->get_sensor_string()] = $s->read_sensor() . " " . $s->get_sensor_unit();
+	}
+
+	return pts_process_string_array($return_string, $sensors);
 }
 function pts_supported_sensors()
 {
