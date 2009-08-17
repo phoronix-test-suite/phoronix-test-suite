@@ -212,8 +212,14 @@
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>
-			<PackageName>libc6-dev libc6-dev-i386</PackageName>
-			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib32/librt.so, /usr/lib/libc.a</FileCheck>
+			<PackageName>libc6-dev</PackageName>
+			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib/libc.a</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>glibc-development</GenericName>
+			<PackageName>libc6-dev-i386</PackageName>
+			<FileCheck>/usr/lib32/libc.so</FileCheck>
+			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>

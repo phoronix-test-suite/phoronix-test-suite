@@ -180,6 +180,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 		$generic_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$distro_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_SPECIFIC);
 		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
+		$arch_specific = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_ARCHSPECIFIC);
 
 		for($i = 0; $i < count($generic_package); $i++)
 		{
@@ -188,8 +189,10 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 				if(!in_array($distro_package[$i], $package_install_array))
 				{
 					$add_dependency = (!empty($file_check[$i]) ? pts_file_missing_check(explode(",", $file_check[$i])) : true);
+					$arch_compliant = empty($arch_specific[$i]) || 
+					in_array(phodevi::read_property("system", "kernel-architecture"), array_map("trim", explode(",", $arch_specific[$i])));
 
-					if($add_dependency)
+					if($add_dependency && $arch_compliant)
 					{
 						array_push($package_install_array, ($write_generic_name ? $generic_package[$i] : $distro_package[$i]));
 					}

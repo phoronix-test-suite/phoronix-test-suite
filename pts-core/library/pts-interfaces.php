@@ -122,6 +122,7 @@ define("P_EXDEP_PACKAGE_TITLE", "PhoronixTestSuite/ExternalDependencies/Package/
 define("P_EXDEP_PACKAGE_GENERIC", "PhoronixTestSuite/ExternalDependencies/Package/GenericName"); // Generic name of external dependency package
 define("P_EXDEP_PACKAGE_SPECIFIC", "PhoronixTestSuite/ExternalDependencies/Package/PackageName"); // Specific package name of external dependency package
 define("P_EXDEP_PACKAGE_FILECHECK", "PhoronixTestSuite/ExternalDependencies/Package/FileCheck"); // File check of external dependency package
+define("P_EXDEP_PACKAGE_ARCHSPECIFIC", "PhoronixTestSuite/ExternalDependencies/Package/ArchitectureSpecific"); // If the package is specific to a select architecture
 define("P_EXDEP_PACKAGE_POSSIBLENAMES", "PhoronixTestSuite/ExternalDependencies/Package/PossibleNames"); // Possible names of external dependency package
 
 //

@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix check buttons for boolean values in the GTK2 GUI preferences window
 - pts-core: Allow the display mode to be set using PTS_DISPLAY_MODE environmental variable
 - pts-core: Add display mode support when a test is being installed
+- pts-core: Add ArchitectureSpecific tag support to distro-xml files for specifying packages to install on only select architectures for the OS
 - phodevi: Add infrastructure so that properties / settings can be set using phodevi::set_property()
 - pts: Add glibc-development as an external dependency for providing GNU C library development files
 - pts: Add python external dependency for Python language
