@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add ArchitectureSpecific tag support to distro-xml files for specifying packages to install on only select architectures for the OS
 - pts-core: Rework test timers to avoid false results on crashes
 - phodevi: Add infrastructure so that properties / settings can be set using phodevi::set_property()
+- tandem_XmlWriter: Don't add the "Generated" timestamp each time that getXML() is called, since it's now being hit multiple times with each test run
 - pts: Add glibc-development as an external dependency for providing GNU C library development files
 - pts: Add python external dependency for Python language
 - pts: Add stream test profile for Stream memory benchmark

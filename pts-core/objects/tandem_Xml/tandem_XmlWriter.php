@@ -99,7 +99,7 @@ class tandem_XmlWriter
 	}
 	function addStatement($name, $value)
 	{
-		array_push($this->xml_statements, trim($name . ": " . $value));
+		$this->xml_statements[$name] = trim($name . ": " . $value));
 	}
 	function getXMLStatements()
 	{
