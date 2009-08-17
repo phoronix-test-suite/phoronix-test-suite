@@ -544,6 +544,7 @@ function pts_run_test($test_identifier, &$display_mode, $extra_arguments = "", $
 
 	// End
 	$time_test_end = time();
+	$time_test_elapsed = $time_test_end - $time_test_start;
 
 	if(is_file($test_directory . "/pts-test-note"))
 	{
@@ -629,6 +630,7 @@ function pts_run_test($test_identifier, &$display_mode, $extra_arguments = "", $
 	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
 	$pts_test_result->set_attribute("TEST_VERSION", $test_version);
 	$pts_test_result->set_attribute("EXTRA_ARGUMENTS", $extra_arguments);
+	$pts_test_result->set_attribute("ELAPSED_TIME", $time_test_elapsed);
 	$pts_test_result->set_result_format($result_format);
 	$pts_test_result->set_result_proportion($result_proportion);
 	$pts_test_result->set_result_scale($result_scale);
@@ -637,15 +639,13 @@ function pts_run_test($test_identifier, &$display_mode, $extra_arguments = "", $
 
 	$display_mode->test_run_end($pts_test_result);
 
-	$time_test_elapsed = $time_test_end - $time_test_start;
-
 	pts_user_message($post_run_message);
 	pts_module_process("__post_test_run", $pts_test_result);
 	pts_test_refresh_install_xml($test_identifier, $time_test_elapsed);
 
 	if(pts_anonymous_usage_reporting() && $time_test_elapsed >= 60)
 	{
-		pts_upload_usage_data("test_complete", array("ELAPSED_TIME" => $time_test_elapsed));
+		pts_global_upload_usage_data("test_complete", $pts_test_result);
 	}
 
 	// Remove lock

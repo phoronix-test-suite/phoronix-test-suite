@@ -88,9 +88,15 @@ function pts_global_gsid_valid($gsid)
 
 	return $gsid_valid;
 }
-function pts_upload_usage_data($task, $data)
+function pts_global_upload_usage_data($task, $data)
 {
-	// TODO: implement
+	switch($task)
+	{
+		case "test_complete":
+			$upload_data = array("test_identifier" => $data->get_attribute("TEST_IDENTIFIER"), "test_version" => $data->get_attribute("TEST_VERSION"), "elapsed_time" => $data->get_attribute("ELAPSED_TIME"));
+			pts_http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/test-completion.php", $upload_data);
+			break;
+	}
 }
 function pts_global_upload_result($result_file, $tags = "")
 {
