@@ -196,6 +196,23 @@ function pts_user_agreement_check($command)
 			$usage_reporting = pts_bool_question("Do you wish to enable anonymous usage / statistics reporting (Y/n)?", true);
 		}
 
+		if(!is_bool($usage_reporting) && pts_read_user_config(P_OPTION_USAGE_REPORTING, null) == null)
+		{
+			// Ask user whether to enable anonymous usage reporting, if it wasn't done during the user agreement check
+			// Currently it is done during the user agreement check for at least the CLI and GTK2 GUI
+			$prompt_in_method = pts_check_option_for_function($command, "pts_usage_reporting_prompt");
+
+			if($prompt_in_method)
+			{
+				eval("\$usage_reporting = " . $command . "::pts_usage_reporting_prompt();");
+			}
+		}
+
+		if(is_bool($usage_reporting))
+		{
+			pts_user_config_init(array(P_OPTION_USAGE_REPORTING => ($usage_reporting ? "TRUE" : "FALSE")));
+		}
+
 		if($agree)
 		{
 			echo "\n";
@@ -206,23 +223,6 @@ function pts_user_agreement_check($command)
 		{
 			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
 		}
-	}
-
-	if(!is_bool($usage_reporting) && pts_read_user_config(P_OPTION_USAGE_REPORTING, null) == null)
-	{
-		// Ask user whether to enable anonymous usage reporting, if it wasn't done during the user agreement check
-		// Currently it is done during the user agreement check for at least the CLI and GTK2 GUI
-		$prompt_in_method = pts_check_option_for_function($command, "pts_usage_reporting_prompt");
-
-		if($prompt_in_method)
-		{
-			eval("\$usage_reporting = " . $command . "::pts_usage_reporting_prompt();");
-		}
-	}
-
-	if(is_bool($usage_reporting))
-	{
-		pts_user_config_init(array(P_OPTION_USAGE_REPORTING => ($usage_reporting ? "TRUE" : "FALSE")));
 	}
 }
 
