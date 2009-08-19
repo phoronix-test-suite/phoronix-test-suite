@@ -527,21 +527,39 @@ function pts_estimated_environment_size($identifier)
 
 	return $estimated_size;
 }
+function pts_tests_within_run_manager($test_run_manager)
+{
+	$identifiers = array();
+
+	if($test_run_manager instanceOf pts_test_run_manager && is_array(($trq_r = $test_run_manager->get_tests_to_run())))
+	{
+		foreach($trq_r as $test_run_request)
+		{
+			if($test_run_request instanceOf pts_test_run_request)
+			{
+				array_push($identifiers, $test_run_request->get_identifier());
+			}
+			else
+			{
+				foreach(pts_tests_within_run_manager($run_request) as $to_add)
+				{
+					array_push($identifiers, $to_add);
+				}
+			}
+		}
+	}
+
+	return $identifiers;
+}
 function pts_estimated_run_time($identifier, $return_total_time = true, $return_on_missing = true)
 {
 	// Estimate the time it takes (in seconds) to complete the given test
 	$estimated_lengths = array();
 	$estimated_total = 0;
 
-	if($identifier instanceOf pts_test_run_manager && is_array(($trq_r = $identifier->get_tests_to_run())))
+	if($identifier instanceOf pts_test_run_manager)
 	{
-		// Run the test process
-		$identifier = array();
-
-		foreach($trq_r as $test_run_request)
-		{
-			array_push($identifier, $test_run_request->get_identifier());
-		}
+		$identifier = pts_tests_within_run_manager($identifier);
 	}
 
 	foreach(pts_contained_tests($identifier, false, true, false) as $test)

@@ -43,7 +43,8 @@ function pts_prompt_results_identifier(&$test_run_manager)
 
 		foreach($test_run_manager->get_tests_to_run() as $run_request)
 		{
-			if(in_array($run_request->get_comparison_hash(), $result_objects))
+			// TODO: determine how to handle arrays a pts_weighted_test_run_manager here
+			if($run_request instanceOf pts_test_run_request && in_array($run_request->get_comparison_hash(), $result_objects))
 			{
 				$no_repeated_tests = false;
 				break;

@@ -9,7 +9,7 @@
 <div class="pts_doc_notice"><div style="float: left"><a href="index.html">&lt;&lt; Documentation Home</a></div><div style="float: right;">PTS Suite Specification</div></div>
 <div class="pts_doc_main">
 <!-- PTS AREA -->
-<h1>Phoronix Test Suite 1.0 Suite Specification</h1>
+<h1>Phoronix Test Suite Suite Specification</h1>
 <p>This document describes the XML tags for writing a test suite.</p>
 <h2>PhoronixTestSuite/SuiteInformation/</h2>
 <p><strong>Tag:</strong> Title<br>
@@ -85,6 +85,8 @@ DEFAULTS, it will run the test mentioned in the <em>Test</em> tag in the default
 <strong>Internal Reference:</strong> P_SUITE_TEST_OVERRIDE_OPTIONS<br>
 <strong>Required:</strong> No<br>
 <strong>Description:</strong> If this tag is used, it can override XML tags within a test profile, such as to change the number of times that test is run, just only for that instance within the suite. Specify either just the tag name or the entire path to that tag and then specify the forced value when it's delimited by an equal sign. Multiple tags can be forced when each forced option is delimited by a semicolon.</p>
+<!-- TODO: weighted suite documentation -->
+<p><strong>The ability to have weighted test suites that would generate a composite / weighted score off all of the test runs within a suite was introduced in Phoronix Test Suite 2.2. However, the tags for weighted suites are not yet finalized or documented.</strong></p>
 <!-- END OF PTS AREA -->
 </div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</div></div></div>
 </body>

@@ -93,6 +93,11 @@ define("P_SUITE_TEST_MODE", "PhoronixTestSuite/RunTest/Mode"); // Modes (if avai
 define("P_SUITE_TEST_ARGUMENTS", "PhoronixTestSuite/RunTest/Arguments"); // Arguments of tests in suite
 define("P_SUITE_TEST_DESCRIPTION", "PhoronixTestSuite/RunTest/Description"); // Description of tests in suite
 define("P_SUITE_TEST_OVERRIDE_OPTIONS", "PhoronixTestSuite/RunTest/OverrideTestOptions"); // Settings to force/override in a test profile
+define("P_SUITE_TEST_WEIGHT", "PhoronixTestSuite/RunTest/Weight"); // This is only used on a weighted suite
+
+define("P_SUITE_WEIGHTED_BASE_FROM_TEST", "PhoronixTestSuite/WeightInformation/BaseFromTestProfile"); // Test profile to acquire needed information from for the weighted test
+define("P_SUITE_WEIGHTED_INITIAL_VALUE", "PhoronixTestSuite/WeightInformation/InitialValue"); // Initial value of the weight
+define("P_SUITE_WEIGHTED_FINAL_WEIGHT_EXPRESSION", "PhoronixTestSuite/WeightInformation/FinalWeight"); // Final weight expression
 
 //
 // TEST DOWNLOAD SPECIFICATION

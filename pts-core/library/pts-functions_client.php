@@ -185,6 +185,14 @@ function pts_evaluate_script_type($script)
 
 	return $script_type;
 }
+function pts_evaluate_math_expression($expr)
+{
+	// TODO: add security check to ensure that only math is being done in expr
+
+	eval("\$result = $expr;");
+
+	return $result;
+}
 function pts_proximity_match($search, $match_to)
 {
 	// Proximity search in $search string for * against $match_to

@@ -90,6 +90,12 @@ class recover_run implements pts_option_interface
 
 		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
 		{
+			if(!($test_run_request instanceOf pts_test_run_request))
+			{
+				// TODO: determine how to handle arrays a pts_weighted_test_run_manager here
+				continue;
+			}
+
 			$request_hash = $test_run_request->get_comparison_hash();
 			$add_test = false;
 

@@ -199,63 +199,112 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 			$test_flag = pts_process_test_run_request($tandem_xml, $results_identifier, $tests_to_run[$i], $display_mode, $save_name, ($i + 1), $tests_to_run_count);
 		}
 	}
-}
-function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_test_run_request, &$display_mode, $save_name = null, $run_position = 1, $run_count = 1)
-{
-	$to_run = $pts_test_run_request->get_identifier();
 
-	if(pts_is_test($to_run))
+	if(is_file(SAVE_RESULTS_DIR . $save_name . "/active.xml"))
 	{
-		$active_xml = SAVE_RESULTS_DIR . $save_name . "/active.xml";
-		if($save_name != null)
+		unlink(SAVE_RESULTS_DIR . $save_name . "/active.xml");
+	}
+}
+function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$display_mode, $save_name = null, $run_position = 1, $run_count = 1)
+{
+	$result = false;
+
+	if($pts_run instanceOf pts_weighted_test_run_manager)
+	{
+		$test_run_requests = $pts_run->get_tests_to_run();
+		$weighted_value = $pts_run->get_weight_initial_value();
+		$is_weighted_run = true;
+	}
+	else
+	{
+		$test_run_requests = array($pts_run);
+		$is_weighted_run = false;
+	}
+
+	$active_xml = SAVE_RESULTS_DIR . $save_name . "/active.xml";
+	if($save_name != null)
+	{
+		file_put_contents($active_xml, $tandem_xml->getXML());
+	}
+
+	foreach($test_run_requests as $test_run_request)
+	{
+		if(pts_is_test($test_run_request->get_identifier()))
 		{
-			file_put_contents($active_xml, $tandem_xml->getXML());
-		}
+			pts_set_assignment("TEST_RUN_POSITION", $run_position);
+			pts_set_assignment("TEST_RUN_COUNT", $run_count);
 
-		pts_set_assignment("TEST_RUN_POSITION", $run_position);
-		pts_set_assignment("TEST_RUN_COUNT", $run_count);
+			$result = pts_run_test($test_run_request, $display_mode);
 
-		$result = pts_run_test($to_run, $display_mode, $pts_test_run_request->get_arguments(), $pts_test_run_request->get_arguments_description(), $pts_test_run_request->get_override_options());
-
-		if(is_file(PTS_USER_DIR . "halt-testing"))
-		{
-			unlink(PTS_USER_DIR . "halt-testing");
-			return false;
-		}
-
-		if($result instanceof pts_test_result)
-		{
-			$end_result = $result->get_result();
-
-			if(!empty($identifier) && count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
+			if($is_weighted_run)
 			{
-				$tandem_id = pts_request_new_id();
-				pts_set_assignment("TEST_RAN", true);
+				if($result instanceOf pts_test_result)
+				{
+					$this_result = $result->get_result();
+					$this_weight_expression = $test_run_request->get_weight_expression();
+					$weighted_value = pts_evaluate_math_expression(str_replace("\$RESULT_VALUE", $this_result, str_replace("\$WEIGHTED_VALUE", $weighted_value, $this_weight_expression)));
+				}
+				else
+				{
+					return false;
+				}
+			}
 
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_attribute("TEST_TITLE"));
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_attribute("TEST_VERSION"));
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_attribute("TEST_DESCRIPTION"));
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_result_proportion());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_attribute("TEST_IDENTIFIER"));
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
+			if(is_file(PTS_USER_DIR . "halt-testing"))
+			{
+				unlink(PTS_USER_DIR . "halt-testing");
+				return false;
+			}
+
+			if(($run_position == 1 && $run_count == 1) || $run_position < $run_count || $is_weighted_run)
+			{
+				sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 			}
 		}
+	}
 
-		if(($run_position == 1 && $run_count == 1) || $run_position < $run_count)
+	if($is_weighted_run)
+	{
+		$ws_xml_parser = new pts_suite_tandem_XmlReader($pts_run->get_weight_suite_identifier());
+		$bt_xml_parser = new pts_test_tandem_XmlReader($pts_run->get_weight_test_profile());
+		$result = new pts_test_result();
+
+		if(($final_expression = $pts_run->get_weight_final_expression()) != null)
 		{
-			sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
+			$weighted_value = pts_evaluate_math_expression(str_replace("\$WEIGHTED_VALUE", $weighted_value, $final_expression));
 		}
-		else
+
+		$result->set_result($weighted_value);
+		$result->set_result_scale($bt_xml_parser->getXMLValue(P_TEST_SCALE));
+		$result->set_result_proportion($bt_xml_parser->getXMLValue(P_TEST_PROPORTION));
+		$result->set_result_format($bt_xml_parser->getXMLValue(P_TEST_RESULTFORMAT));
+		$result->set_attribute("EXTRA_ARGUMENTS", null); // TODO: build string as a composite of suite version + all test versions
+		$result->set_attribute("TEST_IDENTIFIER", $pts_run->get_weight_suite_identifier());
+		$result->set_attribute("TEST_TITLE", $ws_xml_parser->getXMLValue(P_SUITE_TITLE));
+		$result->set_attribute("TEST_VERSION", $ws_xml_parser->getXMLValue(P_SUITE_VERSION));
+		$result->set_attribute("TEST_DESCRIPTION", $bt_xml_parser->getXMLValue(P_TEST_DESCRIPTION));
+	}
+
+	if($result instanceof pts_test_result)
+	{
+		$end_result = $result->get_result();
+
+		if(!empty($identifier) && count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
 		{
-			if(is_file($active_xml))
-			{
-				unlink($active_xml);
-			}
+			$tandem_id = pts_request_new_id();
+			pts_set_assignment("TEST_RAN", true);
+
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_attribute("TEST_TITLE"));
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_attribute("TEST_VERSION"));
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_attribute("TEST_DESCRIPTION"));
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_result_proportion());
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_attribute("TEST_IDENTIFIER"));
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
+			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
+			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
+			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
 		}
 	}
 
@@ -300,8 +349,13 @@ function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
 
 	return $real_name;
 }
-function pts_run_test($test_identifier, &$display_mode, $extra_arguments = "", $arguments_description = "", $override_test_options = null)
+function pts_run_test(&$test_run_request, &$display_mode)
 {
+	$test_identifier = $test_run_request->get_identifier();
+	$extra_arguments = $test_run_request->get_arguments();
+	$arguments_description = $test_run_request->get_arguments_description();
+	$override_test_options = $test_run_request->get_override_options();
+
 	// Do the actual test running process
 	$pts_test_result = new pts_test_result();
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
