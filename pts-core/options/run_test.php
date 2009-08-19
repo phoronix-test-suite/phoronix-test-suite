@@ -356,7 +356,7 @@ class run_test implements pts_option_interface
 
 		// Run the actual tests
 		pts_module_process("__pre_run_process", $test_run_manager->get_tests_to_run());
-		pts_call_test_runs($test_run_manager->get_tests_to_run(), $display_mode, $xml_results_writer, $results_identifier, $proposed_file_name);
+		pts_call_test_runs($test_run_manager, $display_mode, $xml_results_writer, $results_identifier, $proposed_file_name);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_process("__post_run_process", $test_run_manager->get_tests_to_run());
 

@@ -143,7 +143,7 @@ function pts_verify_test_installation($identifiers)
 
 	return $valid_op;
 }
-function pts_call_test_runs($tests_to_run, &$display_mode, &$tandem_xml = null, $identifier = null, $save_name = null)
+function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = null, $identifier = null, $save_name = null)
 {
 	if(is_file(PTS_USER_DIR . "halt-testing"))
 	{
@@ -151,6 +151,7 @@ function pts_call_test_runs($tests_to_run, &$display_mode, &$tandem_xml = null, 
 	}
 
 	$test_flag = true;
+	$tests_to_run = $test_run_manager->get_tests_to_run();
 	$tests_to_run_count = count($tests_to_run);
 
 	if(($total_loop_time = getenv("TOTAL_LOOP_TIME")) != false && is_numeric($total_loop_time))
