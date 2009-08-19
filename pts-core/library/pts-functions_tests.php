@@ -533,6 +533,17 @@ function pts_estimated_run_time($identifier, $return_total_time = true, $return_
 	$estimated_lengths = array();
 	$estimated_total = 0;
 
+	if($identifier instanceOf pts_test_run_manager && is_array(($trq_r = $identifier->get_tests_to_run())))
+	{
+		// Run the test process
+		$identifier = array();
+
+		foreach($trq_r as $test_run_request)
+		{
+			array_push($identifier, $test_run_request->get_identifier());
+		}
+	}
+
 	foreach(pts_contained_tests($identifier, false, true, false) as $test)
 	{
 		if(pts_test_installed($test))
