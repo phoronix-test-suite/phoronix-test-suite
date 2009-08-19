@@ -97,6 +97,7 @@ function pts_prompt_results_identifier($file_name = null, &$test_run_manager)
 	}
 
 	pts_set_assignment_once("TEST_RESULTS_IDENTIFIER", $results_identifier);
+	pts_set_assignment_once("SAVE_FILE_NAME", $file_name);
 
 	return $results_identifier;
 }

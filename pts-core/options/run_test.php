@@ -234,7 +234,6 @@ class run_test implements pts_option_interface
 				$file_name_result = pts_prompt_save_file_name($auto_name);
 				$proposed_file_name = $file_name_result[0];
 				$custom_title = $file_name_result[1];
-				pts_set_assignment("SAVE_FILE_NAME", $proposed_file_name);
 
 				// Prompt Identifier
 				$results_identifier = pts_prompt_results_identifier($proposed_file_name, $test_run_manager);
@@ -274,30 +273,7 @@ class run_test implements pts_option_interface
 			}
 		}
 
-		if(!$save_results)
-		{
-			$results_identifier = "";
-			$save_results = false;
-			pts_set_assignment("SAVE_FILE_NAME", null);
-		}
-
 		// Run the test process
-		if($test_run_manager->get_test_count() > 1)
-		{
-			$test_names = array();
-
-			foreach($test_run_manager->get_tests_to_run() as $t)
-			{
-				array_push($test_names, $t->get_identifier());
-			}
-
-			$estimated_length = pts_estimated_run_time($test_names);
-
-			if($estimated_length > 1)
-			{
-				echo pts_string_header("Estimated Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60));
-			}
-		}
 
 		if(isset($pre_run_message))
 		{
@@ -306,7 +282,7 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
-			$results_directory = pts_setup_result_directory($proposed_file_name . "/file.file") . "/";
+			$results_directory = pts_setup_result_directory($proposed_file_name . "/file.file") . "/"; // TODO: use of file.file there is just a hack so directory sets up right
 
 			if(pts_read_assignment("IS_BATCH_MODE") != false)
 			{
@@ -351,10 +327,13 @@ class run_test implements pts_option_interface
 			$pso->save_to_file($pt2so_location);
 			unset($pso);
 		}
-
-		$display_mode = pts_get_display_mode_object();
+		else
+		{
+			$results_identifier = "";
+		}
 
 		// Run the actual tests
+		$display_mode = pts_get_display_mode_object();
 		pts_module_process("__pre_run_process", $test_run_manager);
 		pts_call_test_runs($test_run_manager, $display_mode, $xml_results_writer, $results_identifier, $proposed_file_name);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
