@@ -232,10 +232,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 						if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
 						{
-							if(is_file($download_destination_temp))
-							{
-								unlink($download_destination_temp);
-							}
+							pts_unlink($download_destination_temp);
 
 							$file_downloaded = false;
 							$fail_count++;
@@ -335,12 +332,7 @@ function pts_remove_local_download_test_files($identifier)
 	// Remove locally downloaded files for a given test
 	foreach(pts_objects_test_downloads($identifier) as $test_file)
 	{
-		$file_location = TEST_ENV_DIR . $identifier . "/" . $test_file->get_filename();
-
-		if(is_file($file_location))
-		{
-			unlink($file_location);
-		}
+		pts_unlink(TEST_ENV_DIR . $identifier . "/" . $test_file->get_filename());
 	}
 }
 function pts_setup_install_test_directory($identifier, $remove_old_files = false)
@@ -470,10 +462,7 @@ function pts_install_test($identifier, &$display_mode)
 						if($install_exit_status != "0")
 						{
 							// TODO: perhaps better way to handle this than to remove pts-install.xml
-							if(is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml"))
-							{
-								unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
-							}
+							pts_unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
 
 							pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
 

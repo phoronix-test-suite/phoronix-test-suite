@@ -74,6 +74,10 @@ function pts_mkdir($dir)
 {
 	return !is_dir($dir) && mkdir($dir);
 }
+function pts_unlink($file)
+{
+	return is_file($file) && unlink($file);
+}
 function pts_trim_spaces($string)
 {
 	$s_l = strlen($string);

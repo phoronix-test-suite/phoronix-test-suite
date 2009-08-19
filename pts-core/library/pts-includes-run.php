@@ -145,10 +145,7 @@ function pts_verify_test_installation($identifiers)
 }
 function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = null)
 {
-	if(is_file(PTS_USER_DIR . "halt-testing"))
-	{
-		unlink(PTS_USER_DIR . "halt-testing");
-	}
+	pts_unlink(PTS_USER_DIR . "halt-testing");
 
 	$test_flag = true;
 	$results_identifier = $test_run_manager->get_results_identifier();
@@ -200,10 +197,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		}
 	}
 
-	if(is_file(SAVE_RESULTS_DIR . $save_name . "/active.xml"))
-	{
-		unlink(SAVE_RESULTS_DIR . $save_name . "/active.xml");
-	}
+	pts_unlink(SAVE_RESULTS_DIR . $save_name . "/active.xml");
 }
 function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$display_mode, $save_name = null, $run_position = 1, $run_count = 1)
 {
