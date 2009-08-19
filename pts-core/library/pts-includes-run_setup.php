@@ -21,9 +21,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_prompt_results_identifier($file_name = null, &$test_run_manager)
+function pts_prompt_results_identifier(&$test_run_manager)
 {
 	// Prompt for a results identifier
+	$file_name = $test_run_manager->get_file_name();
 	$results_identifier = null;
 	$show_identifiers = array();
 	$no_repeated_tests = true;
@@ -97,11 +98,11 @@ function pts_prompt_results_identifier($file_name = null, &$test_run_manager)
 	}
 
 	pts_set_assignment_once("TEST_RESULTS_IDENTIFIER", $results_identifier);
-	pts_set_assignment_once("SAVE_FILE_NAME", $file_name);
+	$test_run_manager->set_results_identifier($results_identifier);
 
 	return $results_identifier;
 }
-function pts_prompt_save_file_name($check_env = true)
+function pts_prompt_save_file_name(&$test_run_manager, $check_env = true)
 {
 	// Prompt to save a file when running a test
 	$proposed_name = null;
@@ -142,7 +143,10 @@ function pts_prompt_save_file_name($check_env = true)
 	{
 		$custom_title = $proposed_name;
 	}
+
+	pts_set_assignment_once("SAVE_FILE_NAME", $proposed_name);
 	pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $custom_title);
+	$test_run_manager->set_file_name($proposed_name);
 
 	return array($proposed_name, $custom_title);
 }
@@ -272,7 +276,7 @@ function pts_prompt_test_options($identifier)
 
 	return array($user_args, $text_args);
 }
-function pts_promt_user_tags($default_tags = "")
+function pts_prompt_user_tags($default_tags = "")
 {
 	$tags_input = "";
 
@@ -295,11 +299,7 @@ function pts_promt_user_tags($default_tags = "")
 
 	if(empty($tags_input))
 	{
-		if(!is_array($default_tags) && !empty($default_tags))
-		{
-			$default_tags = array($default_tags);
-		}
-
+		$default_tags = pts_to_array($default_tags);
 		$tags_input = pts_global_auto_tags($default_tags);
 	}
 

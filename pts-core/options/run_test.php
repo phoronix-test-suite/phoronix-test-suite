@@ -124,7 +124,6 @@ class run_test implements pts_option_interface
 				echo pts_string_header("Comparison: " . $to_run);
 
 				$xml_parser = new pts_results_tandem_XmlReader($to_run);
-				$custom_title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
 				$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
 				$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
 				$test_previous_properties = $xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
@@ -194,11 +193,6 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
-		if($unique_test_count > 1)
-		{
-			pts_set_assignment("MULTI_TYPE_RUN", true);
-		}
-
 		$xml_results_writer = new tandem_XmlWriter();
 
 		echo "\n";
@@ -231,12 +225,10 @@ class run_test implements pts_option_interface
 				}
 
 				// Prompt Save File Name
-				$file_name_result = pts_prompt_save_file_name($auto_name);
-				$proposed_file_name = $file_name_result[0];
-				$custom_title = $file_name_result[1];
+				list($proposed_file_name, $custom_title) = pts_prompt_save_file_name($test_run_manager, $auto_name);
 
 				// Prompt Identifier
-				$results_identifier = pts_prompt_results_identifier($proposed_file_name, $test_run_manager);
+				pts_prompt_results_identifier($test_run_manager);
 
 				if($unique_test_count > 1 || !isset($test_description))
 				{
@@ -305,7 +297,7 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, $id, date("F j, Y h:i A"));
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, $id, trim($test_notes));
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $id, PTS_VERSION);
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $results_identifier);
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $test_run_manager->get_results_identifier());
 
 				$id = pts_request_new_id();
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $custom_title);
@@ -321,21 +313,16 @@ class run_test implements pts_option_interface
 			$pso->add_object("test_run_manager", $test_run_manager);
 			$pso->add_object("system_hardware", pts_hw_string(false));
 			$pso->add_object("system_software", pts_sw_string(false));
-			$pso->add_object("results_identifier", $results_identifier);
 
 			$pt2so_location = $results_directory . "objects.pt2so";
 			$pso->save_to_file($pt2so_location);
 			unset($pso);
 		}
-		else
-		{
-			$results_identifier = "";
-		}
 
 		// Run the actual tests
 		$display_mode = pts_get_display_mode_object();
 		pts_module_process("__pre_run_process", $test_run_manager);
-		pts_call_test_runs($test_run_manager, $display_mode, $xml_results_writer, $results_identifier, $proposed_file_name);
+		pts_call_test_runs($test_run_manager, $display_mode, $xml_results_writer);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_process("__post_run_process", $test_run_manager);
 
@@ -367,7 +354,7 @@ class run_test implements pts_option_interface
 
 			if($upload_results)
 			{
-				$tags_input = pts_promt_user_tags(array($results_identifier));
+				$tags_input = pts_prompt_user_tags($results_identifier);
 				$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml", $tags_input);
 
 				if(!empty($upload_url))

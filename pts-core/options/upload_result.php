@@ -36,7 +36,7 @@ class upload_result implements pts_option_interface
 		{
 			if(!pts_is_assignment("AUTOMATED_MODE"))
 			{
-				$tags_input = pts_promt_user_tags();
+				$tags_input = pts_prompt_user_tags();
 				echo "\n";
 			}
 

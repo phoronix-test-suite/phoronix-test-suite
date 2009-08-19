@@ -82,7 +82,7 @@ class recover_run implements pts_option_interface
 
 		// Recovered test_run_manager
 		$test_run_manager = $pt2so_objects->read_object("test_run_manager");
-		$recovered_identifier = $pt2so_objects->read_object("results_identifier");
+		$recovered_identifier = $test_run_manager->get_results_identifier();
 
 		// Processing
 		$tests_to_run = array();

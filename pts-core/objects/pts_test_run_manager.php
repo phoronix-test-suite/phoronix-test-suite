@@ -23,20 +23,17 @@
 class pts_test_run_manager
 {
 	var $tests_to_run;
-	var $instance_name;
+	var $file_name;
+	var $results_identifier;
 
-	public function __construct($name = null)
+	public function __construct()
 	{
 		$this->tests_to_run = array();
-		$this->instance_name = $name;
+		$this->file_name = null;
+		$this->results_identifier = null;
 	}
 	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "", $override_test_options = null)
 	{
-		if(count($this->tests_to_run) == 0)
-		{
-			$this->instance_name = $test_identifier;
-		}
-
 		$this_run_request = new pts_test_run_request($test_identifier, $arguments, $descriptions, $override_test_options);
 
 		if(!in_array($this_run_request, $this->tests_to_run))
@@ -118,13 +115,25 @@ class pts_test_run_manager
 	{
 		return $this->tests_to_run;
 	}
-	public function get_instance_name()
-	{
-		return $this->instance_name;
-	}
 	public function get_test_count()
 	{
 		return count($this->get_tests_to_run());
+	}
+	public function set_file_name($file_name)
+	{
+		$this->file_name = $file_name;
+	}
+	public function set_results_identifier($results_identifier)
+	{
+		$this->results_identifier = $results_identifier;
+	}
+	public function get_file_name()
+	{
+		return $this->file_name;
+	}
+	public function get_results_identifier()
+	{
+		return $this->results_identifier;
 	}
 }
 

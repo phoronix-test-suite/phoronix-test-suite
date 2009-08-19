@@ -143,7 +143,7 @@ function pts_verify_test_installation($identifiers)
 
 	return $valid_op;
 }
-function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = null, $identifier = null, $save_name = null)
+function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = null)
 {
 	if(is_file(PTS_USER_DIR . "halt-testing"))
 	{
@@ -151,6 +151,8 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 	}
 
 	$test_flag = true;
+	$results_identifier = $test_run_manager->get_results_identifier();
+	$save_name = $test_run_manager->get_file_name();
 	$tests_to_run = $test_run_manager->get_tests_to_run();
 	$tests_to_run_count = count($tests_to_run);
 
@@ -165,7 +167,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, 1, 1);
+				$test_flag = pts_process_test_run_request($tandem_xml, $results_identifier, $tests_to_run[$i], $display_mode, $save_name, 1, 1);
 			}
 		}
 		while(time() < $loop_end_time && $test_flag);
@@ -181,7 +183,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
+				$test_flag = pts_process_test_run_request($tandem_xml, $results_identifier, $tests_to_run[$i], $display_mode, $save_name, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
 			}
 		}
 	}
@@ -194,7 +196,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 
 		for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 		{
-			$test_flag = pts_process_test_run_request($tandem_xml, $identifier, $tests_to_run[$i], $display_mode, $save_name, ($i + 1), $tests_to_run_count);
+			$test_flag = pts_process_test_run_request($tandem_xml, $results_identifier, $tests_to_run[$i], $display_mode, $save_name, ($i + 1), $tests_to_run_count);
 		}
 	}
 }
