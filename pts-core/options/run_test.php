@@ -75,18 +75,17 @@ class run_test implements pts_option_interface
 				if(pts_read_assignment("IS_BATCH_MODE") != false)
 				{
 					$option_output = pts_generate_batch_run_options($to_run);
-					$test_run_manager->add_single_test_run($to_run, $option_output[0], $option_output[1]);
 				}
 				else if(pts_read_assignment("IS_DEFAULTS_MODE") == true)
 				{
 					$option_output = pts_defaults_test_options($to_run);
-					$test_run_manager->add_single_test_run($to_run, $option_output[0], $option_output[1]);
 				}
 				else
 				{
 					$option_output = pts_prompt_test_options($to_run);
-					$test_run_manager->add_single_test_run($to_run, $option_output[0], $option_output[1]);
 				}
+
+				$test_run_manager->add_single_test_run($to_run, $option_output[0], $option_output[1]);
 
 				if($unique_test_count == 1)
 				{
@@ -232,7 +231,7 @@ class run_test implements pts_option_interface
 				}
 
 				// Prompt Save File Name
-				$file_name_result = pts_prompt_save_file_name($auto_name, $test_run_manager->get_instance_name());
+				$file_name_result = pts_prompt_save_file_name($auto_name);
 				$proposed_file_name = $file_name_result[0];
 				$custom_title = $file_name_result[1];
 				pts_set_assignment("SAVE_FILE_NAME", $proposed_file_name);

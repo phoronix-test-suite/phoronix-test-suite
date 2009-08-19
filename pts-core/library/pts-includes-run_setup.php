@@ -100,7 +100,7 @@ function pts_prompt_results_identifier($file_name = null, &$test_run_manager)
 
 	return $results_identifier;
 }
-function pts_prompt_save_file_name($check_env = true, $to_run)
+function pts_prompt_save_file_name($check_env = true)
 {
 	// Prompt to save a file when running a test
 	$proposed_name = null;
@@ -131,11 +131,6 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 			$custom_title = $proposed_name;
 			$proposed_name = pts_input_string_to_identifier($proposed_name);
 		}
-
-		if(!pts_validate_save_file_name($proposed_name, $to_run))
-		{
-			echo "\n\nNOTE: " . $proposed_name . " is associated with a different test/suite.\n";
-		}
 	}
 
 	if(empty($proposed_name))
@@ -149,26 +144,6 @@ function pts_prompt_save_file_name($check_env = true, $to_run)
 	pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $custom_title);
 
 	return array($proposed_name, $custom_title);
-}
-function pts_validate_save_file_name($proposed_save_name, $to_run)
-{
-	$is_validated = true;
-
-	if(is_file(SAVE_RESULTS_DIR . $proposed_save_name . "/composite.xml") && !pts_is_assignment("AUTO_SAVE_NAME"))
-	{
-		$xml_parser = new pts_results_tandem_XmlReader($proposed_save_name);
-		$test_suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
-
-		if(!pts_is_assignment("GLOBAL_COMPARISON"))
-		{
-			if($test_suite != $to_run && !pts_is_assignment("MULTI_TYPE_RUN"))
-			{
-				$is_validated = false;
-			}
-		}
-	}
-
-	return $is_validated;
 }
 function pts_prompt_svg_result_options($svg_file)
 {
