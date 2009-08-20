@@ -145,7 +145,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 
 	// Render overview chart
 	// TODO: Get chart working
-	/*
+
 	if($save_to_dir != false)
 	{
 		$chart = new pts_Chart();
@@ -154,7 +154,6 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 		$chart->loadData($results_values);
 		$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
 	}
-	*/
 
 	return $generated_graphs;
 }

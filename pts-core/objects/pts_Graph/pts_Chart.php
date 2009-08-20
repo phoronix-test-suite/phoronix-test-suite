@@ -49,7 +49,6 @@ class pts_Chart
 	}
 	public function renderChart($file)
 	{
-		return;
 		if(is_file(PTS_USER_DIR . "graph-config.xml"))
 		{
 			$f = file_get_contents(PTS_USER_DIR . "graph-config.xml");
@@ -61,9 +60,8 @@ class pts_Chart
 
 		$read_config = new tandem_XmlReader($f);
 
-		$this->renderer = bilde_renderer::setup_renderer(pts_read_graph_config(P_GRAPH_RENDERER, null, $read_config), 100, 100);
-
-		$font_type = "Sans.ttf";
+		$this->renderer = bilde_renderer::setup_renderer("SVG", 100, 100);
+		$font_type = null;
 
 		$left_header = strlen($r = $this->find_longest_string($this->left_headers)) > strlen($this->left_headers_title) ? $r : $this->left_headers_title;
 		$left_header = $this->renderer->soft_text_string_dimensions($left_header, $font_type, 10);
@@ -122,7 +120,7 @@ class pts_Chart
 		$longest_string = "";
 		$longest_string_length = 0;
 
-		foreach($string_r as $one_string)
+		foreach(pts_to_array($string_r) as $one_string)
 		{
 			if(($new_length = strlen($one_string)) > $longest_string_length)
 			{
