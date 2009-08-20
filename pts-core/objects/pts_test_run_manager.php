@@ -94,6 +94,8 @@ class pts_test_run_manager
 
 		if($is_weighted_suite)
 		{
+			echo "\nThe weighted suite option is currently EXPERIMENTAL.\n"; // TODO
+			
 			$weight_expressions = $xml_parser->getXMLArrayValues(P_SUITE_TEST_WEIGHT);
 
 			$weighted_manager = new pts_weighted_test_run_manager();

@@ -27,7 +27,8 @@ class list_installed_tests implements pts_option_interface
 		echo pts_string_header("Phoronix Test Suite - Installed Tests");
 		foreach(pts_installed_tests_array() as $identifier)
 		{
-		 	echo new pts_installed_test_details($identifier);
+			$xml_parser = new pts_test_tandem_XmlReader($identifier);
+		 	echo (($name = $xml_parser->getXMLValue(P_TEST_TITLE)) != false ? sprintf("%-18ls - %-30ls\n", $identifier, $name) : null);
 		}
 		echo "\n";
 	}

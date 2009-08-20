@@ -80,7 +80,9 @@ class pts_test_option
 		$names = array();
 
 		for($i = 0; $i < $this->option_count(); $i++)
+		{
 			array_push($names, $this->get_option_name($i));
+		}
 
 		return $names;
 	}

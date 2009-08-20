@@ -40,7 +40,6 @@ function pts_basic_init()
 	date_default_timezone_set("UTC");
 
 	// PTS Defines
-	define("PTS_TEMP_DIR", "/tmp/phoronix-test-suite/");
 	define("PHP_BIN", getenv("PHP_BIN"));
 	define("PTS_INIT_TIME", time());
 
@@ -62,7 +61,7 @@ function pts_basic_init()
 		define("IS_DEBUG_MODE", false);
 	}
 
-	$dir_init = array(PTS_USER_DIR, PTS_TEMP_DIR);
+	$dir_init = array(PTS_USER_DIR);
 	foreach($dir_init as $dir)
 	{
 		pts_mkdir($dir);

@@ -62,15 +62,7 @@ class pts_test_profile_details
 	public function get_maintainer()
 	{
 		$test_maintainer = array_map("trim", explode("|", $this->maintainer));
-
-		if(count($test_maintainer) == 2)
-		{
-			$test_maintainer = $test_maintainer[0] . " <" . $test_maintainer[1] . ">";
-		}
-		else
-		{
-			$test_maintainer = $test_maintainer[0];
-		}
+		$test_maintainer = $test_maintainer[0] . (count($test_maintainer) == 2 ? " <" . $test_maintainer[1] . ">" : null);
 
 		return $test_maintainer;
 	}

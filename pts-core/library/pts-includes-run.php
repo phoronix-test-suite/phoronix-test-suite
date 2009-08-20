@@ -244,9 +244,8 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$dis
 				}
 			}
 
-			if(is_file(PTS_USER_DIR . "halt-testing"))
+			if(pts_unlink(PTS_USER_DIR . "halt-testing"))
 			{
-				unlink(PTS_USER_DIR . "halt-testing");
 				return false;
 			}
 

@@ -8,7 +8,6 @@
 	tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite.
 
 	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
-	A work in progress. This was originally designed for just some select needs in the past. No XML validation is done with this parser, etc.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
