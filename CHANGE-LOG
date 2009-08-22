@@ -36,6 +36,7 @@ Phoronix Test Suite (Git)
 - pts: Add chess test suite for test profiles that use chess AI
 - pts: Add john-the-ripper test profile for John The Ripper password cracker benchmark
 - pts: Add geekbench test profile for Primate Labs Geekbench benchmark
+- pts: Add npb test profile for NASA NAS Parallel Benchmark
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009
