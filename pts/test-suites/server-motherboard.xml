@@ -45,12 +45,12 @@
 	</RunTest>
 	<RunTest>
 		<Test>ramspeed</Test>
-		<Arguments>COPY -b 3 -l 10</Arguments>
+		<Arguments>COPY -b 3</Arguments>
 		<Description>Integer BatchRun Copy</Description>
 	</RunTest>
 	<RunTest>
 		<Test>ramspeed</Test>
-		<Arguments>ADD -b 3 -l 10</Arguments>
+		<Arguments>ADD -b 3</Arguments>
 		<Description>Integer BatchRun Add</Description>
 	</RunTest>
 	<RunTest>

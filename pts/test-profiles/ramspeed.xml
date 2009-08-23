@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.1</Version>
+		<Version>1.2.0</Version>
 		<TestType>Memory</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -54,6 +54,7 @@
 			<DisplayName>Benchmark</DisplayName>
 			<Identifier>benchmark</Identifier>
 			<ArgumentPrefix>-b </ArgumentPrefix>
+			<ArgumentPostfix>-l 10</ArgumentPostfix>
 			<Menu>
 				<Entry>
 					<Name>Integer</Name>
@@ -62,25 +63,6 @@
 				<Entry>
 					<Name>Floating Point</Name>
 					<Value>6</Value>
-				</Entry>
-			</Menu>
-		</Option>
-		<Option>
-			<DisplayName>Length</DisplayName>
-			<Identifier>length</Identifier>
-			<ArgumentPrefix>-l </ArgumentPrefix>
-			<Menu>
-				<Entry>
-					<Name>3 Times</Name>
-					<Value>3</Value>
-				</Entry>
-				<Entry>
-					<Name>10 Times</Name>
-					<Value>10</Value>
-				</Entry>
-				<Entry>
-					<Name>25 Times</Name>
-					<Value>25</Value>
 				</Entry>
 			</Menu>
 		</Option>

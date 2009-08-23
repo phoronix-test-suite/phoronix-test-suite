@@ -38,6 +38,7 @@ Phoronix Test Suite (Git)
 - pts: Add john-the-ripper test profile for John The Ripper password cracker benchmark
 - pts: Add geekbench test profile for Primate Labs Geekbench benchmark
 - pts: Add npb test profile for NASA NAS Parallel Benchmark
+- pts: Drop test length option from ramspeed test profile, default to 10
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009

@@ -134,17 +134,17 @@
 	</RunTest>
 	<RunTest>
 		<Test>ramspeed</Test>
-		<Arguments>ADD -b 3 -l 10</Arguments>
+		<Arguments>ADD -b 3</Arguments>
 		<Description>Integer Add</Description>
 	</RunTest>
 	<RunTest>
 		<Test>ramspeed</Test>
-		<Arguments>COPY -b 3 -l 10</Arguments>
+		<Arguments>COPY -b 3</Arguments>
 		<Description>Integer Copy</Description>
 	</RunTest>
 	<RunTest>
 		<Test>ramspeed</Test>
-		<Arguments>SCALE -b 3 -l 10</Arguments>
+		<Arguments>SCALE -b 3</Arguments>
 		<Description>Integer Scale</Description>
 	</RunTest>
 </PhoronixTestSuite>
