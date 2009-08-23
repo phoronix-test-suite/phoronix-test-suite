@@ -198,6 +198,11 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 	}
 
 	pts_unlink(SAVE_RESULTS_DIR . $save_name . "/active.xml");
+
+	foreach(glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
+	{
+		unlink($cache_share_file);
+	}
 }
 function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$display_mode, $save_name = null, $run_position = 1, $run_count = 1)
 {
@@ -383,6 +388,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$default_arguments = $xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
 	$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 	$root_required = $xml_parser->getXMLValue(P_TEST_ROOTNEEDED) == "TRUE";
+	$allow_cache_share = $xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE) == "TRUE";
 	$env_testing_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE);
 
 	if($test_type == "Graphics" && getenv("DISPLAY") == false)
@@ -472,6 +478,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$extra_runtime_variables["PHP_BIN"] = PHP_BIN;
 
 	// Start
+	$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
 	$pts_test_result->set_attribute("TEST_TITLE", $test_title);
 	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
 	$pts_test_result->set_attribute("TEST_IDENTIFIER", $test_identifier);
@@ -479,7 +486,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	pts_module_process("__pre_test_run", $pts_test_result);
 
 	$time_test_start = time();
-	echo pts_call_test_script($test_identifier, "pre", "\nRunning Pre-Test Scripts...\n", $test_directory, $extra_runtime_variables);
+
+	if(!($allow_cache_share && is_file($cache_share_pt2so)))
+	{
+		echo pts_call_test_script($test_identifier, "pre", "\nRunning Pre-Test Scripts...\n", $test_directory, $extra_runtime_variables);
+	}
 
 	pts_user_message($pre_run_message);
 
@@ -497,6 +508,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$execute_binary_prepend .= " ";
 	}
 
+	if($allow_cache_share && !is_file($cache_share_pt2so))
+	{
+		$cache_share = new pts_storage_object(false, false);
+	}
+
 	$display_mode->test_run_start($pts_test_result);
 
 	for($i = 0; $i < $times_to_run; $i++)
@@ -508,7 +524,19 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		"LOG_FILE" => $benchmark_log_file
 		));
 
-		$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1", $test_extra_runtime_variables);
+		if($allow_cache_share && is_file($cache_share_pt2so))
+		{
+			$cache_share = pts_storage_object::recover_from_file($cache_share_pt2so);
+			$test_results = $cache_share->read_object("test_results_output_" . $i);
+			$test_extra_runtime_variables["LOG_FILE"] = $cache_share->read_object("log_file_location_" . $i);
+			file_put_contents($test_extra_runtime_variables["LOG_FILE"], $cache_share->read_object("log_file_" . $i));
+			unset($cache_share);
+		}
+		else
+		{
+			$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1", $test_extra_runtime_variables);
+		}
+		
 
 		if(!isset($test_results[10240]))
 		{
@@ -572,12 +600,23 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			{
 				$pts_test_result->add_trial_run_result(trim($test_results));
 			}
+
+			if($allow_cache_share && !is_file($cache_share_pt2so))
+			{
+				$cache_share->add_object("test_results_output_" . $i, $test_results);
+				$cache_share->add_object("log_file_location_" . $i, $test_extra_runtime_variables["LOG_FILE"]);
+				$cache_share->add_object("log_file_" . $i, (is_file($benchmark_log_file) ? file_get_contents($benchmark_log_file) : null));
+			}
 		}
 		if($times_to_run > 1 && $i < ($times_to_run - 1))
 		{
-			echo pts_call_test_script($test_identifier, "interim", null, $test_directory, $extra_runtime_variables);
+			if(!($allow_cache_share && is_file($cache_share_pt2so)))
+			{
+				echo pts_call_test_script($test_identifier, "interim", null, $test_directory, $extra_runtime_variables);
+				sleep(2); // Rest for a moment between tests
+			}
+
 			pts_module_process("__interim_test_run", $pts_test_result);
-			sleep(2); // Rest for a moment between tests
 		}
 
 		if(is_file($benchmark_log_file))
@@ -603,7 +642,16 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		}
 	}
 
-	echo pts_call_test_script($test_identifier, "post", null, $test_directory, $extra_runtime_variables);
+	if($allow_cache_share && !is_file($cache_share_pt2so) && $cache_share instanceOf pts_storage_object)
+	{
+		$cache_share->save_to_file($cache_share_pt2so);
+		unset($cache_share);
+	}
+
+	if(!($allow_cache_share && is_file($cache_share_pt2so)))
+	{
+		echo pts_call_test_script($test_identifier, "post", null, $test_directory, $extra_runtime_variables);
+	}
 
 	// End
 	$time_test_end = time();

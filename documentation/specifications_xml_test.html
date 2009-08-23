@@ -265,6 +265,11 @@ every time.</p>
 <strong>Description:</strong> As an alternative to using the testing environment directory, this 
 tag can containe different paths to check for the test executable. Multiple paths 
 need to be separated by a comma.</p>
+<p><strong>Tag:</strong> AllowCacheShare<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Default/<br>
+<strong>Internal Reference:</strong> P_TEST_ALLOW_CACHE_SHARE<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If this tag is present and is set to <em>TRUE</em>, the result output from the test run will be cached and then submitted to the test profile again later on if it's being run multiple times in the suite or test run. This is used for preventing a test from running multiple times with different settings, but all of the different options are tested in that single run, and the only change in options is what from the result output is returned.</p>
 <h2>PhoronixTestSuite/TestSettings/Option/<br>
 NOTE: Multiple instances of these tags are allowed for multiple options in the 
 test</h2>

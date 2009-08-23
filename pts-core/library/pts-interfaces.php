@@ -63,6 +63,7 @@ define("P_TEST_REFERENCE_SYSTEMS", "PhoronixTestSuite/TestProfile/ReferenceSyste
 
 define("P_TEST_DEFAULTARGUMENTS", "PhoronixTestSuite/TestSettings/Default/Arguments"); // Default arguments
 define("P_TEST_POSSIBLEPATHS", "PhoronixTestSuite/TestSettings/Default/PossiblePaths"); // Possible paths
+define("P_TEST_ALLOW_CACHE_SHARE", "PhoronixTestSuite/TestSettings/Default/AllowCacheShare"); // Allow the result output to be cached and shared?
 define("P_TEST_OPTIONS_DISPLAYNAME", "PhoronixTestSuite/TestSettings/Option/DisplayName"); // The option names to show to the end-user
 define("P_TEST_OPTIONS_ARGPREFIX", "PhoronixTestSuite/TestSettings/Option/ArgumentPrefix"); // The option argument prefix
 define("P_TEST_OPTIONS_ARGPOSTFIX", "PhoronixTestSuite/TestSettings/Option/ArgumentPostfix"); // The option argument postfix

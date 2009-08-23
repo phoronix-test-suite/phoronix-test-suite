@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TestType>Memory</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -15,12 +15,15 @@
 	<TestInformation>
 		<Title>Stream</Title>
 		<Version>2009-04-11</Version>
-		<TimesToRun>5</TimesToRun>
+		<TimesToRun>10</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This benchmark tests the system memory (RAM) performance.</Description>
 	</TestInformation>
 	<TestSettings>
+		<Default>
+			<AllowCacheShare>TRUE</AllowCacheShare>
+		</Default>
 		<Option>
 			<DisplayName>Type</DisplayName>
 			<Identifier>run-type</Identifier>
