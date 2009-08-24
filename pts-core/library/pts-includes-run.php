@@ -107,6 +107,10 @@ function pts_verify_test_installation($identifiers)
 			{
 				array_push($needs_installing, $test);
 			}
+			else
+			{
+				$valid_op = false;
+			}
 		}
 		else
 		{
