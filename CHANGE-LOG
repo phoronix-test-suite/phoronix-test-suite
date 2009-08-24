@@ -26,6 +26,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add experimental support for weighted suites / results
 - pts-core: Add "cache share" support for test profiles and the AllowCacheShare XML tag to expose this functionality
 - pts-core: Add "Test All Options" to test menu when prompting for test option selection
+- phodevi: Be more non-RandR friendly in phodevi_gpu::gpu_available_modes()
 - phodevi: Add infrastructure so that properties / settings can be set using phodevi::set_property()
 - tandem_XmlWriter: Don't add the "Generated" timestamp each time that getXML() is called, since it's now being hit multiple times with each test run
 - pts: Add glibc-development as an external dependency for providing GNU C library development files

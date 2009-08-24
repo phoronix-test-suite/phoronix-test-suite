@@ -330,9 +330,6 @@ class phodevi_gpu extends pts_device_interface
 			array(960, 720), array(1152, 864), array(1280, 720), array(1360, 768), array(1792, 1344), 
 			array(1800, 1440), array(1856, 1392), array(2048, 1536));
 
-		$info = shell_exec("xrandr 2>&1");
-		$xrandr_lines = array_reverse(explode("\n", $info));
-
 		if($override_check = (($override_modes = getenv("OVERRIDE_VIDEO_MODES")) != false))
 		{
 			$override_modes = explode(",", $override_modes);
@@ -343,28 +340,33 @@ class phodevi_gpu extends pts_device_interface
 			}
 		}
 
-		foreach($xrandr_lines as $xrandr_mode)
+		if(pts_executable_in_path("xrandr") != false)
 		{
-			if(($cut_point = strpos($xrandr_mode, "(")) > 0)
+			$xrandr_lines = array_reverse(explode("\n", shell_exec("xrandr 2>&1")));
+
+			foreach($xrandr_lines as $xrandr_mode)
 			{
-				$xrandr_mode = substr($xrandr_mode, 0, $cut_point);
-			}
-
-			$res = array_map("trim", explode("x", $xrandr_mode));
-
-			if(count($res) == 2)
-			{
-				$res[0] = substr($res[0], strrpos($res[0], " "));
-				$res[1] = substr($res[1], 0, strpos($res[1], " "));
-
-				if(is_numeric($res[0]) && is_numeric($res[1]) && $res[0] >= 800 && $res[1] >= 600)
+				if(($cut_point = strpos($xrandr_mode, "(")) > 0)
 				{
-					$ratio = pts_trim_double($res[0] / $res[1], 2);
-					$this_mode = array($res[0], $res[1]);
+					$xrandr_mode = substr($xrandr_mode, 0, $cut_point);
+				}
 
-					if(in_array($ratio, $supported_ratios) && !in_array($this_mode, $ignore_modes) && (!$override_check || in_array($stock_modes[$i], $override_modes)))
+				$res = array_map("trim", explode("x", $xrandr_mode));
+
+				if(count($res) == 2)
+				{
+					$res[0] = substr($res[0], strrpos($res[0], " "));
+					$res[1] = substr($res[1], 0, strpos($res[1], " "));
+
+					if(is_numeric($res[0]) && is_numeric($res[1]) && $res[0] >= 800 && $res[1] >= 600)
 					{
-						array_push($available_modes, $this_mode);
+						$ratio = pts_trim_double($res[0] / $res[1], 2);
+						$this_mode = array($res[0], $res[1]);
+
+						if(in_array($ratio, $supported_ratios) && !in_array($this_mode, $ignore_modes) && (!$override_check || in_array($stock_modes[$i], $override_modes)))
+						{
+							array_push($available_modes, $this_mode);
+						}
 					}
 				}
 			}

@@ -46,6 +46,9 @@
 		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
+		<Test>dcraw</Test>
+	</RunTest>
+	<RunTest>
 		<Test>build-apache</Test>
 	</RunTest>
 	<RunTest>
@@ -65,9 +68,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
-	</RunTest>
-	<RunTest>
-		<Test>tachyon</Test>
 	</RunTest>
 	<RunTest>
 		<Test>byte</Test>
@@ -93,15 +93,6 @@
 		<Test>scimark2</Test>
 		<Arguments>DENSE</Arguments>
 		<Description>Dense LU Matrix Factorization</Description>
-	</RunTest>
-	<RunTest>
-		<Test>sqlite</Test>
-	</RunTest>
-	<RunTest>
-		<Test>crafty</Test>
-	</RunTest>
-	<RunTest>
-		<Test>tscp</Test>
 	</RunTest>
 	<RunTest>
 		<Test>tiobench</Test>
@@ -143,6 +134,12 @@
 		<Mode>BATCH</Mode>
 	</RunTest>
 	<RunTest>
+		<Test>mafft</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
 		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>
@@ -150,6 +147,18 @@
 	</RunTest>
 	<RunTest>
 		<Test>pybench</Test>
+	</RunTest>
+	<RunTest>
+		<Test>crafty</Test>
+	</RunTest>
+	<RunTest>
+		<Test>tscp</Test>
+	</RunTest>
+	<RunTest>
+		<Test>tachyon</Test>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
 	</RunTest>
 	<RunTest>
 		<Test>java</Test>
