@@ -8,13 +8,17 @@ cd ../..
 echo "#!/bin/sh
 cd openarena-0.8.1/
 
-case \$OS_ARCH in
-	\"x86_64\" )
-	./openarena.x86_64 \$@ > \$LOG_FILE 2>&1
+case $OS_TYPE in
+	\"MacOSX\" )
+		./OpenArena.app/Contents/MacOS/openarena.ub \$@ > \$LOG_FILE 2>&1
 	;;
-	* )
-	./openarena.i386 \$@ > \$LOG_FILE 2>&1
+	\"Linux\" )
+		if [ $OS_ARCH = \"x86_64\" ]
+		then
+			./openarena.x86_64 \$@ > \$LOG_FILE 2>&1
+		else
+			./openarena.i386 \$@ > \$LOG_FILE 2>&1
+		fi
 	;;
-esac
-cat \$LOG_FILE | grep fps" > openarena
+esac" > openarena
 chmod +x openarena
