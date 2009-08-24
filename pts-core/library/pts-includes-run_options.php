@@ -42,7 +42,6 @@ function pts_prompt_test_options($identifier)
 		$o = $test_options[$this_option_pos];
 		$option_count = $o->option_count();
 		$option_identifier = $o->get_identifier();
-		$user_args = array();
 
 		if($option_count == 0)
 		{
@@ -155,20 +154,14 @@ function pts_defaults_test_options($identifier)
 		{
 			for($i = 0; $i < $option_count; $i++)
 			{
-				$this_arg = $o->format_option_value_from_select($i);
-				$this_arg_description = $o->format_option_display_from_select($i);
-
-				array_push($option_args, $this_arg);
-				array_push($option_args_description, $this_arg_description);
+				array_push($option_args, $o->format_option_value_from_select($i));
+				array_push($option_args_description, $o->format_option_display_from_select($i));
 			}
 		}
 		else
 		{
-			$this_arg = $o->format_option_value_from_select($default_entry);
-			$this_arg_description = $o->format_option_display_from_select($default_entry);
-
-			array_push($option_args, $this_arg);
-			array_push($option_args_description, $this_arg_description);
+			array_push($option_args, $o->format_option_value_from_select($default_entry));
+			array_push($option_args_description, $o->format_option_display_from_select($default_entry));
 		}
 
 		array_push($all_args_real, $option_args);
@@ -202,11 +195,8 @@ function pts_generate_batch_run_options($identifier)
 
 		for($i = 0; $i < $option_count; $i++)
 		{
-			$this_arg = $o->format_option_value_from_select($i);
-			$this_arg_description = $o->format_option_display_from_select($i);
-
-			array_push($option_args, $this_arg);
-			array_push($option_args_description, $this_arg_description);
+			array_push($option_args, $o->format_option_value_from_select($i));
+			array_push($option_args_description, $o->format_option_display_from_select($i));
 		}
 
 		if($i > 1)
