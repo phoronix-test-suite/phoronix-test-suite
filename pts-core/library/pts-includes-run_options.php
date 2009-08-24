@@ -21,7 +21,119 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_prompt_test_options($identifier)
+{
+	$user_args = array();
+	$text_args = array();
+	$test_options = pts_test_options($identifier);
 
+	if(count($test_options) > 0)
+	{
+		echo pts_string_header("Test Configuration: " . pts_test_identifier_to_name($identifier));
+	}
+
+	if(pts_is_assignment("AUTOMATED_MODE"))
+	{
+		$preset_selections = pts_read_assignment("AUTO_TEST_OPTION_SELECTIONS");
+	}
+
+	for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
+	{
+		$o = $test_options[$this_option_pos];
+		$option_count = $o->option_count();
+		$option_identifier = $o->get_identifier();
+		$user_args = array();
+
+		if($option_count == 0)
+		{
+			// User inputs their option
+			if(pts_is_assignment("AUTOMATED_MODE") && isset($preset_selections[$identifier][$option_identifier]))
+			{
+				$value = $preset_selections[$identifier][$option_identifier];
+			}
+			else
+			{
+				do
+				{
+					echo "\n" . $o->get_name() . "\n" . "Enter Value: ";
+					$value = trim(fgets(STDIN));
+				}
+				while(empty($value));
+			}
+
+			array_push($text_args, array(""));
+			array_push($user_args, array($o->format_option_value_from_input($value)));
+		}
+		else
+		{
+			if($option_count == 1)
+			{
+				// Only one option in menu, so auto-select it
+				$bench_choice = 0;
+			}
+			else
+			{
+				// Have the user select the desired option
+				if(pts_is_assignment("AUTOMATED_MODE") && isset($preset_selections[$identifier][$option_identifier]))
+				{
+					$bench_choice = $preset_selections[$identifier][$option_identifier];
+				}
+				else
+				{
+					do
+					{
+						echo "\n" . $o->get_name() . ":\n";
+
+						$i = 1;
+						foreach($o->get_all_option_names() as $option_name)
+						{
+							echo $i . ": " . $option_name . "\n";
+							$i++;
+						}
+						echo $i . ": Test All Options\n";
+						echo "\nEnter Your Choice: ";
+						$bench_choice = trim(fgets(STDIN));
+					}
+					while($bench_choice != $i && ($bench_choice = $o->is_valid_select_choice($bench_choice)) === false);
+
+					if($bench_choice == $i)
+					{
+						$bench_choice--;
+					}
+				}
+			}
+
+			// Format the selected option
+			if($bench_choice == $o->option_count())
+			{
+				$option_args = array();
+				$option_args_description = array();
+
+				for($i = 0; $i < $o->option_count(); $i++)
+				{
+					array_push($option_args, $o->format_option_value_from_select($i));
+					array_push($option_args_description, $o->format_option_display_from_select($i));
+				}
+
+				array_push($text_args, $option_args_description);
+				array_push($user_args, $option_args);
+			}
+			else
+			{
+				array_push($text_args, array($o->format_option_display_from_select($bench_choice)));
+				array_push($user_args, array($o->format_option_value_from_select($bench_choice)));
+			}
+		}
+	}
+
+	$test_args = array();
+	pts_all_combos($test_args, "", $user_args, 0);
+
+	$test_args_description = array();
+	pts_all_combos($test_args_description, "", $text_args, 0, " - ");
+
+	return array($test_args, $test_args_description);
+}
 function pts_defaults_test_options($identifier)
 {
 	// Defaults mode for single test
@@ -43,13 +155,8 @@ function pts_defaults_test_options($identifier)
 		{
 			for($i = 0; $i < $option_count; $i++)
 			{
-				$this_arg = $o->get_option_prefix() . $o->get_option_value($i) . $o->get_option_postfix();
-				$this_arg_description = $o->get_name() . ": " . $o->get_option_name($i);
-
-				if(($cut_point = strpos($this_arg_description, "(")) > 1 && strpos($this_arg_description, ")") > $cut_point)
-				{
-					$this_arg_description = substr($this_arg_description, 0, $cut_point);
-				}
+				$this_arg = $o->format_option_value_from_select($i);
+				$this_arg_description = $o->format_option_display_from_select($i);
 
 				array_push($option_args, $this_arg);
 				array_push($option_args_description, $this_arg_description);
@@ -57,13 +164,9 @@ function pts_defaults_test_options($identifier)
 		}
 		else
 		{
-			$this_arg = $o->get_option_prefix() . $o->get_option_value($default_entry) . $o->get_option_postfix();
-			$this_arg_description = $o->get_name() . ": " . $o->get_option_name($default_entry);
+			$this_arg = $o->format_option_value_from_select($default_entry);
+			$this_arg_description = $o->format_option_display_from_select($default_entry);
 
-			if(($cut_point = strpos($this_arg_description, "(")) > 1 && strpos($this_arg_description, ")") > $cut_point)
-			{
-				$this_arg_description = substr($this_arg_description, 0, $cut_point);
-			}
 			array_push($option_args, $this_arg);
 			array_push($option_args_description, $this_arg_description);
 		}
@@ -99,14 +202,9 @@ function pts_generate_batch_run_options($identifier)
 
 		for($i = 0; $i < $option_count; $i++)
 		{
-			// A bit redundant processing, but will ensure against malformed XML problems and extra stuff added
-			$this_arg = $o->get_option_prefix() . $o->get_option_value($i) . $o->get_option_postfix();
-			$this_arg_description = $o->get_name() . ": " . $o->get_option_name($i);
+			$this_arg = $o->format_option_value_from_select($i);
+			$this_arg_description = $o->format_option_display_from_select($i);
 
-			if(($cut_point = strpos($this_arg_description, "(")) > 1 && strpos($this_arg_description, ")") > $cut_point)
-			{
-				$this_arg_description = substr($this_arg_description, 0, $cut_point);
-			}
 			array_push($option_args, $this_arg);
 			array_push($option_args_description, $this_arg_description);
 		}

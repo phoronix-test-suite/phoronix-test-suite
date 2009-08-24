@@ -926,6 +926,7 @@ class gui_gtk implements pts_option_interface
 							{
 								$combobox->append_text($option_name);
 							}
+							$combobox->append_text("Test All Options");
 							$combobox->set_active(0);
 
 							$selected_options[$identifier][$o->get_identifier()] = $combobox;
