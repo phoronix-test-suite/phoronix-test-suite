@@ -121,6 +121,25 @@
 		<Description>64MB Read - 32 Threads</Description>
 	</RunTest>
 	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Copy</Arguments>
+		<Description>Copy</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Scale</Arguments>
+		<Description>Scale</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Add</Arguments>
+		<Description>Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>john-the-ripper</Test>
+		<Mode>BATCH</Mode>
+	</RunTest>
+	<RunTest>
 		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>

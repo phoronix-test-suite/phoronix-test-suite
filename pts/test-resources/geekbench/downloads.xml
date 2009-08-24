@@ -2,13 +2,11 @@
 	<Downloads>
 		<Package>
 			<URL>http://www.primatelabs.ca/download/Geekbench21-MacOSX.dmg.gz</URL>
-			<MD5>1d43c839e7ab9fdf62d18a805f91515f</MD5>
 			<FileSize>8264391</FileSize>
 			<PlatformSpecific>MacOSX</PlatformSpecific>
 		</Package>
 		<Package>
 			<URL>http://www.primatelabs.ca/download/Geekbench21-Linux.tar.gz</URL>
-			<MD5>7e1d226cab563bf73ce8e15773326fd5</MD5>
 			<FileSize>2641015</FileSize>
 			<PlatformSpecific>Linux</PlatformSpecific>
 		</Package>

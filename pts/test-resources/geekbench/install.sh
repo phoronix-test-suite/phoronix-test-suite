@@ -3,10 +3,9 @@
 case $OS_TYPE in
 	"MacOSX" )
 		gzip -d -f Geekbench21-MacOSX.dmg.gz
-		# TODO: verify this works
 
 		echo "#!/bin/sh
-		echo 'n' | ./Geekbench21-MacOSX.dmg > \$LOG_FILE 2>&1
+		echo 'n' | .//Volumes/Geekbench\ 2.1/Geekbench > \$LOG_FILE 2>&1
 		echo \$? > ~/test-exit-status" > geekbench
 		chmod +x geekbench
 	;;
