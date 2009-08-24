@@ -19,6 +19,11 @@
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
+		<Test>openarena</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
 		<Test>xplane9</Test>
 		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT --no_sound</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>

@@ -4,6 +4,13 @@
 			<URL>http://data.rodix.free.fr/warsow/files/warsow_0.42_unified.zip, http://mirror.nation64.de/warsow/warsow_0.42_unified.zip, http://wahs.de/warsow/warsow_0.42_unified.zip, http://wahs.de/warsow/warsow_0.42_unified.zip</URL>
 			<MD5>cba5fe9b8af01b378e685959098fa84f</MD5>
 			<FileSize>193348129</FileSize>
+			<PlatformSpecific>Linux</PlatformSpecific>
+		</Package>
+		<Package>
+			<URL>http://www.warsow.net/release/warsow_0.42_mac.zip, http://data.rodix.free.fr/warsow/files/warsow_0.42_mac.zip, http://tastyspleen.net/quake/downloads/mods/warsow/warsow_0.42_mac.zip/warsow_0.42_mac.zip</URL>
+			<MD5>7af556c7072554e83153d56a6ff0ca12</MD5>
+			<FileSize>191986359</FileSize>
+			<PlatformSpecific>MacOSX</PlatformSpecific>
 		</Package>
 		<Package>
 			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-warsow-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-warsow-1.tar.gz</URL>

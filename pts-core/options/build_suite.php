@@ -60,7 +60,7 @@ class build_suite implements pts_option_interface
 				case "Add Test":
 					$test_to_add = pts_text_select_menu("Enter test name", $possible_tests);
 
-					$option_output = pts_prompt_test_options($test_to_add);
+					$option_output = pts_prompt_test_options($test_to_add); // TODO: this is broken now after test option changes
 
 					$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_to_add);
 
