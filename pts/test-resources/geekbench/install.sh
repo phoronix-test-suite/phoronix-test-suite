@@ -5,7 +5,7 @@ case $OS_TYPE in
 		gzip -d -f Geekbench21-MacOSX.dmg.gz
 
 		echo "#!/bin/sh
-		echo 'n' | .//Volumes/Geekbench\ 2.1/Geekbench > \$LOG_FILE 2>&1
+		echo 'n' | open /Volumes/Geekbench\ 2.1/Geekbench.app/Contents/MacOS/Geekbench > \$LOG_FILE 2>&1
 		echo \$? > ~/test-exit-status" > geekbench
 		chmod +x geekbench
 	;;

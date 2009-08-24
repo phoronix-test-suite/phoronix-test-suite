@@ -46,6 +46,9 @@
 		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
+		<Test>build-apache</Test>
+	</RunTest>
+	<RunTest>
 		<Test>build-php</Test>
 	</RunTest>
 	<RunTest>
