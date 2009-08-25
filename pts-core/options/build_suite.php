@@ -60,16 +60,15 @@ class build_suite implements pts_option_interface
 				case "Add Test":
 					$test_to_add = pts_text_select_menu("Enter test name", $possible_tests);
 
-					$option_output = pts_prompt_test_options($test_to_add); // TODO: this is broken now after test option changes
+					list($args, $description) = pts_prompt_test_options($test_to_add);
 
-					$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_to_add);
-
-					if(!empty($option_output[0]) && !empty($option_output[0]))
+					for($i = 0; $i < count($args); $i++)
 					{
-						$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $write_position, trim($option_output[0]));
-						$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $write_position, $option_output[1]);
+						$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_to_add);
+						$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $write_position, $args[$i]);
+						$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $write_position, $description[$i]);
+						$write_position++;
 					}
-					$write_position++;
 					break;
 				case "Add Sub-Suite":
 					$suite_to_add = pts_text_select_menu("Enter test suite", $possible_suites);

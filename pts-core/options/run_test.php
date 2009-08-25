@@ -196,7 +196,7 @@ class run_test implements pts_option_interface
 		$xml_results_writer = new tandem_XmlWriter();
 
 		echo "\n";
-		$proposed_file_name = false;
+		$file_name = false;
 		$save_results = false;
 		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1)
 		{
@@ -225,7 +225,7 @@ class run_test implements pts_option_interface
 				}
 
 				// Prompt Save File Name
-				list($proposed_file_name, $custom_title) = pts_prompt_save_file_name($test_run_manager, $auto_name);
+				list($file_name, $file_name_title) = pts_prompt_save_file_name($test_run_manager, $auto_name);
 
 				// Prompt Identifier
 				pts_prompt_results_identifier($test_run_manager);
@@ -274,7 +274,7 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
-			$results_directory = pts_setup_result_directory($proposed_file_name . "/file.file") . "/"; // TODO: use of file.file there is just a hack so directory sets up right
+			$results_directory = pts_setup_result_directory($file_name . "/file.file") . "/"; // TODO: use of file.file there is just a hack so directory sets up right
 
 			if(pts_read_assignment("IS_BATCH_MODE") != false)
 			{
@@ -300,7 +300,7 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $test_run_manager->get_results_identifier());
 
 				$id = pts_request_new_id();
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $custom_title);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $file_name_title);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, $id, pts_read_assignment("TO_RUN"));
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, $id, $test_version);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
@@ -335,16 +335,16 @@ class run_test implements pts_option_interface
 		{
 			if(!pts_is_assignment("TEST_RAN"))
 			{
-				pts_remove(SAVE_RESULTS_DIR . $proposed_file_name);
+				pts_remove(SAVE_RESULTS_DIR . $file_name);
 				return false;
 			}
 
 			pts_unlink($pt2so_location);
 
-			pts_save_test_file($proposed_file_name, $xml_results_writer);
-			echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";
-			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $proposed_file_name);
-			pts_display_web_browser(SAVE_RESULTS_DIR . $proposed_file_name . "/index.html");
+			pts_save_test_file($file_name, $xml_results_writer);
+			echo "Results Saved To: " . SAVE_RESULTS_DIR . $file_name . "/composite.xml\n";
+			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $file_name);
+			pts_display_web_browser(SAVE_RESULTS_DIR . $file_name . "/index.html");
 
 			if(pts_is_assignment("AUTOMATED_MODE"))
 			{
@@ -358,7 +358,7 @@ class run_test implements pts_option_interface
 			if($upload_results)
 			{
 				$tags_input = pts_prompt_user_tags($results_identifier);
-				$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml", $tags_input);
+				$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $file_name . "/composite.xml", $tags_input);
 
 				if(!empty($upload_url))
 				{
