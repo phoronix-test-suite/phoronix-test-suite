@@ -168,4 +168,14 @@
 	<RunTest>
 		<Test>java</Test>
 	</RunTest>
+	<RunTest>
+		<Test>video-cpu-usage</Test>
+		<Arguments>-vo gl2</Arguments>
+		<Description>Video Playback: GL2</Description>
+	</RunTest>
+	<RunTest>
+		<Test>video-cpu-usage</Test>
+		<Arguments>-vo corevideo</Arguments>
+		<Description>Video Playback: CoreVideo</Description>
+	</RunTest>
 </PhoronixTestSuite>

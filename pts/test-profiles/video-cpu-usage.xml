@@ -43,6 +43,10 @@
 					<Name>VDPAU</Name>
 					<Value>-vo vdpau -vc ffh264vdpau</Value>
 				</Entry>
+				<Entry>
+					<Name>OS X CoreVideo</Name>
+					<Value>-vo corevideo</Value>
+				</Entry>
 			</Menu>
 		</Option>
 	</TestSettings>
