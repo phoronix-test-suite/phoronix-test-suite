@@ -331,12 +331,15 @@ class run_test implements pts_option_interface
 			pts_user_message($post_run_message);
 		}
 
-		if($save_results) // possibly add back: && pts_is_assignment("TEST_RAN")
+		if($save_results)
 		{
-			if(is_file($pt2so_location))
+			if(!pts_is_assignment("TEST_RAN"))
 			{
-				unlink($pt2so_location);
+				pts_remove(SAVE_RESULTS_DIR . $proposed_file_name);
+				return false;
 			}
+
+			pts_unlink($pt2so_location);
 
 			pts_save_test_file($proposed_file_name, $xml_results_writer);
 			echo "Results Saved To: " . SAVE_RESULTS_DIR . $proposed_file_name . "/composite.xml\n";

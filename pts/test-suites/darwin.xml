@@ -64,6 +64,26 @@
 		<Test>dcraw</Test>
 	</RunTest>
 	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB</Arguments>
+		<Description>HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-lat 10x10-5%</Arguments>
+		<Description>Local Adaptive Thresholding</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-resize 50%</Arguments>
+		<Description>Resizing</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-sharpen 0x1.0</Arguments>
+		<Description>Sharpen</Description>
+	</RunTest>
+	<RunTest>
 		<Test>build-apache</Test>
 	</RunTest>
 	<RunTest>
@@ -174,26 +194,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>c-ray</Test>
-	</RunTest>
-	<RunTest>
-		<Test>graphics-magick</Test>
-		<Arguments>-colorspace HWB</Arguments>
-		<Description>HWB Color Space</Description>
-	</RunTest>
-	<RunTest>
-		<Test>graphics-magick</Test>
-		<Arguments>-lat 10x10-5%</Arguments>
-		<Description>Local Adaptive Thresholding</Description>
-	</RunTest>
-	<RunTest>
-		<Test>graphics-magick</Test>
-		<Arguments>-resize 50%</Arguments>
-		<Description>Resizing</Description>
-	</RunTest>
-	<RunTest>
-		<Test>graphics-magick</Test>
-		<Arguments>-sharpen 0x1.0</Arguments>
-		<Description>Sharpen</Description>
 	</RunTest>
 	<RunTest>
 		<Test>java</Test>
