@@ -416,6 +416,13 @@ class phodevi_cpu extends pts_device_interface
 			$info = explode(" ", pts_trim_spaces(array_pop(explode("\n", trim(shell_exec("sar -u 1 1 2>&1"))))));
 			$percent = $info[1];
 		}
+		else if(IS_MACOSX)
+		{
+			// CPU usage for user
+			$top = shell_exec("top -n 1 -l 1 2>&1");
+			$top = substr($top, strpos($top, "CPU usage: ") + 11);
+			$percent = substr($top, 0, strpos($top, "%"));
+		}
 		else
 		{
 			$percent = null;
