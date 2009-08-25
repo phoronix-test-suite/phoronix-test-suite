@@ -340,7 +340,7 @@ class phodevi_gpu extends pts_device_interface
 			}
 		}
 
-		if(pts_executable_in_path("xrandr") != false)
+		if(pts_executable_in_path("xrandr") != false && !IS_MACOSX) // MacOSX has xrandr but currently on at least my setup will emit a Bus Error when called
 		{
 			$xrandr_lines = array_reverse(explode("\n", shell_exec("xrandr 2>&1")));
 

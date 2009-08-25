@@ -24,7 +24,7 @@ rm -f .warsow/basewsw/1.log
 
 case \$OS_TYPE in
 	\"MacOSX\" )
-		./Warsow.app/Contents/MacOS/Warsow \$@ > \$LOG_FILE 2>&1
+		./Warsow.app/Contents/MacOS/Warsow \$@ > \$LOG_FILE 2>&1 # TODO: the Mac OS X binary doesn't seem to listen to command line arguments that are passed
 	;;
 	\"Linux\" )
 		cd warsow_0.42_unified/

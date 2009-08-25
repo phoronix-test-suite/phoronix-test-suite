@@ -482,7 +482,11 @@ function pts_install_test($identifier, &$display_mode)
 				}
 				else
 				{
-					echo "No installation script found for " . $identifier . "\n";
+					if(!pts_is_base_test($identifier))
+					{
+						echo "No installation script found for " . $identifier . "\n";
+					}
+
 					$installed = true;
 					pts_test_generate_install_xml($identifier);
 				}
