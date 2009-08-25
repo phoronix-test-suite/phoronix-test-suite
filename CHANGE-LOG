@@ -44,6 +44,7 @@ Phoronix Test Suite (Git)
 - pts: Drop test length option from ramspeed test profile, default to 10
 - pts: Add Mac OS X support for openarena test profile
 - pts: Add Mac OS X support to warsow test profile
+- pts: In nexuiz test profile change from demos/bench1 to demos/demo2 for now
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009
