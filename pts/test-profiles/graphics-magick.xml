@@ -2,20 +2,20 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>21.7</EnvironmentSize>
+		<EnvironmentSize>22</EnvironmentSize>
 		<Extends>photo-sample</Extends>
 		<ExternalDependencies>build-utilities, jpeg-development</ExternalDependencies>
 		<ProjectURL>http://www.graphicsmagick.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
 		<Title>GraphicsMagick</Title>
-		<Version>1.3.3</Version>
+		<Version>1.3.6</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Iterations Per Minute</ResultScale>
 		<Proportion>HIB</Proportion>

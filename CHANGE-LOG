@@ -48,6 +48,7 @@ Phoronix Test Suite (Git)
 - pts: Add Mac OS X support to warsow test profile
 - pts: In nexuiz test profile change from demos/bench1 to demos/demo2 for now
 - pts: In video-cpu-usage test profile add support to use CoreVideo vo adapter on Mac OS X
+- pts: Update graphics-magick test profile against GraphicsMagick 1.3.6
 
 Phoronix Test Suite 2.0.0 "Sandtorg"
 August 4, 2009

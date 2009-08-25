@@ -1,16 +1,16 @@
 #!/bin/sh
 
-tar -xjf GraphicsMagick-1.3.3.tar.bz2
+tar -xjf GraphicsMagick-1.3.6.tar.bz2
 
 mkdir $HOME/gm_
 
-cd GraphicsMagick-1.3.3/
+cd GraphicsMagick-1.3.6/
 ./configure --without-perl --prefix=$HOME/gm_ > /dev/null
 make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 make install
 cd ..
-rm -rf GraphicsMagick-1.3.3/
+rm -rf GraphicsMagick-1.3.6/
 rm -rf gm_/share/doc/GraphicsMagick/
 rm -rf gm_/share/man/
 rm -rf gm_/lib/

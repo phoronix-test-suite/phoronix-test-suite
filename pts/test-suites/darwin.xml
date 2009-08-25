@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.2</Version>
+		<Version>1.2.0</Version>
 		<TestType>System</TestType>
 		<Title>Darwin Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -27,6 +27,16 @@
 		<Test>xplane9</Test>
 		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT --no_sound</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>
+	</RunTest>
+	<RunTest>
+		<Test>video-cpu-usage</Test>
+		<Arguments>-vo gl2</Arguments>
+		<Description>Video Playback: GL2</Description>
+	</RunTest>
+	<RunTest>
+		<Test>video-cpu-usage</Test>
+		<Arguments>-vo corevideo</Arguments>
+		<Description>Video Playback: CoreVideo</Description>
 	</RunTest>
 	<RunTest>
 		<Test>j2dbench</Test>
@@ -166,16 +176,26 @@
 		<Test>c-ray</Test>
 	</RunTest>
 	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB</Arguments>
+		<Description>HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-lat 10x10-5%</Arguments>
+		<Description>Local Adaptive Thresholding</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-resize 50%</Arguments>
+		<Description>Resizing</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-sharpen 0x1.0</Arguments>
+		<Description>Sharpen</Description>
+	</RunTest>
+	<RunTest>
 		<Test>java</Test>
-	</RunTest>
-	<RunTest>
-		<Test>video-cpu-usage</Test>
-		<Arguments>-vo gl2</Arguments>
-		<Description>Video Playback: GL2</Description>
-	</RunTest>
-	<RunTest>
-		<Test>video-cpu-usage</Test>
-		<Arguments>-vo corevideo</Arguments>
-		<Description>Video Playback: CoreVideo</Description>
 	</RunTest>
 </PhoronixTestSuite>
