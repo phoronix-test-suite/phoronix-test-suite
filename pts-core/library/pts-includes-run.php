@@ -312,16 +312,16 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$dis
 
 	return true;
 }
-function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
+function pts_save_test_file($file_name, &$results = null, $raw_text = null)
 {
 	// Save the test file
 	$j = 1;
-	while(is_file(SAVE_RESULTS_DIR . $proposed_name . "/test-" . $j . ".xml"))
+	while(is_file(SAVE_RESULTS_DIR . $file_name . "/test-" . $j . ".xml"))
 	{
 		$j++;
 	}
 
-	$real_name = $proposed_name . "/test-" . $j . ".xml";
+	$real_name = $file_name . "/test-" . $j . ".xml";
 
 	if($results != null)
 	{
@@ -338,15 +338,15 @@ function pts_save_test_file($proposed_name, &$results = null, $raw_text = null)
 
 	pts_save_result($real_name, $r_file);
 
-	if(!is_file(SAVE_RESULTS_DIR . $proposed_name . "/composite.xml"))
+	if(!is_file(SAVE_RESULTS_DIR . $file_name . "/composite.xml"))
 	{
-		pts_save_result($proposed_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name));
+		pts_save_result($file_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name));
 	}
 	else
 	{
 		// Merge Results
-		$merged_results = pts_merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $proposed_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
-		pts_save_result($proposed_name . "/composite.xml", $merged_results);
+		$merged_results = pts_merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $file_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
+		pts_save_result($file_name . "/composite.xml", $merged_results);
 	}
 
 	return $real_name;
