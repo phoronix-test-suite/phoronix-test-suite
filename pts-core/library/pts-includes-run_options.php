@@ -68,14 +68,14 @@ function pts_prompt_test_options($identifier)
 			if($option_count == 1)
 			{
 				// Only one option in menu, so auto-select it
-				$bench_choice = 0;
+				$bench_choice = array(0);
 			}
 			else
 			{
 				// Have the user select the desired option
 				if(pts_is_assignment("AUTOMATED_MODE") && isset($preset_selections[$identifier][$option_identifier]))
 				{
-					$bench_choice = $preset_selections[$identifier][$option_identifier];
+					$bench_choice = pts_to_array($preset_selections[$identifier][$option_identifier]);
 				}
 				else
 				{
@@ -93,35 +93,22 @@ function pts_prompt_test_options($identifier)
 						echo "\nEnter Your Choice: ";
 						$bench_choice = trim(fgets(STDIN));
 					}
-					while($bench_choice != $i && ($bench_choice = $o->is_valid_select_choice($bench_choice)) === false);
-
-					if($bench_choice == $i)
-					{
-						$bench_choice--;
-					}
+					while(count($bench_choice = $o->parse_selection_choice_input($bench_choice)) == 0);
 				}
 			}
 
-			// Format the selected option
-			if($bench_choice == $o->option_count())
-			{
-				$option_args = array();
-				$option_args_description = array();
+			// Format the selected option(s)
+			$option_args = array();
+			$option_args_description = array();
 
-				for($i = 0; $i < $o->option_count(); $i++)
-				{
-					array_push($option_args, $o->format_option_value_from_select($i));
-					array_push($option_args_description, $o->format_option_display_from_select($i));
-				}
-
-				array_push($text_args, $option_args_description);
-				array_push($user_args, $option_args);
-			}
-			else
+			foreach($bench_choice as $c)
 			{
-				array_push($text_args, array($o->format_option_display_from_select($bench_choice)));
-				array_push($user_args, array($o->format_option_value_from_select($bench_choice)));
+				array_push($option_args, $o->format_option_value_from_select($c));
+				array_push($option_args_description, $o->format_option_display_from_select($c));
 			}
+
+			array_push($text_args, $option_args_description);
+			array_push($user_args, $option_args);
 		}
 	}
 

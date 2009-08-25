@@ -27,6 +27,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add "cache share" support for test profiles and the AllowCacheShare XML tag to expose this functionality
 - pts-core: Add "Test All Options" to test menu when prompting for test option selection
 - pts-core: Don't uselessly prompt a user for test options when trying to run an unsupported test
+- pts-core: Allow the user to select multiple test options when running a test by delimiting each option with a comma
 - phodevi: Be more non-RandR friendly in phodevi_gpu::gpu_available_modes()
 - phodevi: Add infrastructure so that properties / settings can be set using phodevi::set_property()
 - phodevi: Add CPU usage monitoring support for Mac OS X

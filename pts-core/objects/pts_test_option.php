@@ -143,6 +143,31 @@ class pts_test_option
 
 		return $valid;
 	}
+	public function parse_selection_choice_input($input)
+	{
+		$return_keys = array();
+
+		foreach(array_map("trim", explode(",", $input)) as $input_choice)
+		{
+			if($input_choice == (($c = $this->option_count()) + 1))
+			{
+				for($i = 0; $i < $c; $i++)
+				{
+					array_push($return_keys, $i);
+				}
+				break;
+			}
+			else if(($c = $this->is_valid_select_choice($input_choice)) !== false)
+			{
+				array_push($return_keys, $c);
+			}
+		}
+
+		$return_keys = array_unique($return_keys);
+		sort($return_keys);
+
+		return $return_keys;
+	}
 }
 
 ?>
