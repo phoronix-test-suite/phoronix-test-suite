@@ -16,6 +16,6 @@ rm -rf gm_/share/man/
 rm -rf gm_/lib/
 
 echo "#!/bin/sh
-OMP_NUM_THREADS=\$NUM_CPU_CORES ./gm_/bin/gm benchmark -duration 60 convert \$TEST_EXTENDS/DSC_4185.JPG \$@ null: > \$LOG_FILE 2>&1
+OMP_NUM_THREADS=\$NUM_CPU_CORES ./gm_/bin/gm benchmark -duration 60 convert \$TEST_EXTENDS/DSC_6782.png \$@ null: > \$LOG_FILE 2>&1
 echo \$? > ~/test-exit-status" > graphics-magick
 chmod +x graphics-magick

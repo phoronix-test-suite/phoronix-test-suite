@@ -1,3 +1,3 @@
 #!/bin/sh
 
-tar -xvf pts-sample-photos.tar.bz2
+tar -xvf pts-sample-photos-2.tar.bz2
