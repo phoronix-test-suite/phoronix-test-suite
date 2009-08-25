@@ -4,6 +4,8 @@ define("PTS_MODE", "SILENT");
 define("PTS_AUTO_LOAD_OBJECTS", true);
 require(getenv("PTS_DIR") . "pts-core/phoronix-test-suite.php");
 
+phodevi::initial_setup();
+
 switch($argv[1])
 {
 	case "cpu.usage":
