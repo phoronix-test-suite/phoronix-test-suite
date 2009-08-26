@@ -81,7 +81,7 @@ class pts_BarGraph extends pts_CustomGraph
 	protected function render_graph_bars()
 	{
  		$bar_count = count($this->graph_data);
-		$bar_width = floor($this->identifier_width / $bar_count) - ($bar_count * 16);
+		$bar_width = floor(($this->identifier_width - 8 - ($bar_count * 8)) / $bar_count);
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -93,7 +93,7 @@ class pts_BarGraph extends pts_CustomGraph
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
 				$value_plot_top = $this->graph_top_end + 1 - $graph_size;
 
-				$px_bound_left = $this->graph_left_start + ($this->identifier_width * $i) + ($bar_width * $i_o) + 8;
+				$px_bound_left = $this->graph_left_start + ($this->identifier_width * $i) + ($bar_width * $i_o) + (8 * ($i_o + 1));
 				$px_bound_right = $px_bound_left + $bar_width;
 
 				if($value_plot_top < 1)

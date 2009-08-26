@@ -285,7 +285,7 @@ class run_test implements pts_option_interface
 				array_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
-			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN"))
+			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($file_name) || !pts_test_result_contains_result_identifier($file_name, $test_run_manager->get_results_identifier())))
 			{
 				$test_notes = pts_test_notes_manager::generate_test_notes($test_type);
 

@@ -156,5 +156,11 @@ function pts_result_file_results_to_xml(&$result_manager, &$xml_writer)
 		$results_added++;
 	}
 }
+function pts_test_result_contains_result_identifier($test_result, $results_identifier)
+{
+	$result_file = new pts_result_file($test_result);
+
+	return in_array($results_identifier, $result_file->get_system_identifiers());	
+}
 
 ?>
