@@ -1,4 +1,4 @@
 #!/bin/sh
 
-dd if=/dev/urandom of=encryptfile bs=1M count=2048
+dd if=/dev/zero of=2gbfile bs=2048 count=1048576
 
