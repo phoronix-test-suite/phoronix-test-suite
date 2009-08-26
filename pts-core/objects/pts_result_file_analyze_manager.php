@@ -146,7 +146,26 @@ class pts_result_file_analyze_manager
 							}
 
 							$mto->flush_result_data();
-							$mto->set_format("LINE_GRAPH");
+
+							$do_line_graph = true;
+							foreach($similar_ids_names as $id_name_check)
+							{
+								if(str_replace(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "x", " "), "", $id_name_check) != null)
+								{
+									$do_line_graph = false;
+									break;
+								}
+							}
+
+							if($do_line_graph)
+							{
+								$mto->set_format("LINE_GRAPH");
+							}
+							else
+							{
+								$mto->set_format("BAR_ANALYZE_GRAPH");
+							}
+
 							$mto->set_attributes($diff_index . " Analysis");
 							$mto->set_scale($mto->get_scale() . " | " . implode(",", $similar_ids_names));
 

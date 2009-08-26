@@ -1,4 +1,4 @@
 #!/bin/sh
 
-dd if=/dev/zero of=2gbfile bs=2048 count=1048576
+dd if=/dev/zero of=compressfile bs=2048 count=1048576
 

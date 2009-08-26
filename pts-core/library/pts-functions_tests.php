@@ -174,9 +174,17 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 		$raw_values = array_reverse($raw_values);
 	}
 
-	if($result_format == "LINE_GRAPH")
+	if($result_format == "LINE_GRAPH" || $result_format == "BAR_ANALYZE_GRAPH")
 	{
-		$t = new pts_LineGraph($name, $r_o->get_attributes(), $r_o->get_scale_formatted());
+		if($result_format == "LINE_GRAPH")
+		{
+			$t = new pts_LineGraph($name, $r_o->get_attributes(), $r_o->get_scale_formatted());
+		}
+		else
+		{
+			$t = new pts_BarGraph($name, $r_o->get_attributes(), $r_o->get_scale_formatted());
+		}
+
 		//$t->hideGraphIdentifiers();
 
 		for($i = 0; $i < count($values); $i++)
