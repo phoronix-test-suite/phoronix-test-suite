@@ -560,7 +560,7 @@ function read_xorg_module_version($module)
 
 	return $module_version;
 }
-function read_osx_system_profiler($data_type, $object, $multiple_objects = false)
+function read_osx_system_profiler($data_type, $object, $multiple_objects = false, $ignore_values = array())
 {
 	$value = ($multiple_objects ? array() : false);
 
@@ -583,7 +583,7 @@ function read_osx_system_profiler($data_type, $object, $multiple_objects = false
 			{
 				$this_value = trim($line[1]);
 			
-				if(!empty($this_value))
+				if(!empty($this_value) && !in_array($this_value, $ignore_values))
 				{
 					if($multiple_objects)
 					{
