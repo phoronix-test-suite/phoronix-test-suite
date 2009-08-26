@@ -535,9 +535,8 @@ abstract class pts_Graph
 			{
 				$this_color = $this->next_paint_color();
 				$key_counter += 1;
-				$key_offset = $key_counter % 4;
 
-				$component_x = $this->graph_left_start + 15 + (($this->graph_left_end - $this->graph_left_start) / 4) * $key_offset;
+				$component_x = $this->graph_left_start + 15 + (($this->graph_left_end - $this->graph_left_start) / 4) * (($key_counter - 1) % 4);
 
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
 

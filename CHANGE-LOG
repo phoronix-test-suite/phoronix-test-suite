@@ -35,6 +35,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add infrastructure so that properties / settings can be set using phodevi::set_property()
 - phodevi: Add CPU usage monitoring support for Mac OS X
 - tandem_XmlWriter: Don't add the "Generated" timestamp each time that getXML() is called, since it's now being hit multiple times with each test run
+- pts_Graph: Properly order keys in the header when rendering
 - pts: Add glibc-development as an external dependency for providing GNU C library development files
 - pts: Add python external dependency for Python language
 - pts: Add stream test profile for Stream memory benchmark
