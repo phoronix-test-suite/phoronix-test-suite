@@ -36,9 +36,6 @@ function pts_basic_init()
 {
 	// Initialize The Phoronix Test Suite
 
-	// Set time-zone
-	date_default_timezone_set("UTC");
-
 	// PTS Defines
 	define("PHP_BIN", getenv("PHP_BIN"));
 	define("PTS_INIT_TIME", time());
