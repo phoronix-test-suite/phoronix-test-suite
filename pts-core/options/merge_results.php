@@ -57,7 +57,7 @@ class merge_results implements pts_option_interface
 		$merged_results = call_user_func_array("pts_merge_test_results", $result_files_to_merge);
 		pts_save_result($merge_to_file, $merged_results);
 		echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $merge_to_file . "\n\n";
-		pts_display_web_browser(SAVE_RESULTS_DIR . $merge_to_file);
+			pts_display_web_browser(SAVE_RESULTS_DIR . dirname($merge_to_file) . "/index.html");
 	}
 }
 
