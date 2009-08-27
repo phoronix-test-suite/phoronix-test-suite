@@ -756,9 +756,10 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	pts_user_message($post_run_message);
 	pts_module_process("__post_test_run", $pts_test_result);
-	pts_test_refresh_install_xml($test_identifier, $time_test_elapsed);
+	$report_elapsed_time = !($allow_cache_share && is_file($cache_share_pt2so)) && $pts_test_result->get_result() != 0;
+	pts_test_refresh_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
 
-	if(!($allow_cache_share && is_file($cache_share_pt2so)) && pts_anonymous_usage_reporting() && $time_test_elapsed >= 60)
+	if($report_elapsed_time && pts_anonymous_usage_reporting() && $time_test_elapsed >= 60)
 	{
 		pts_global_upload_usage_data("test_complete", $pts_test_result);
 	}

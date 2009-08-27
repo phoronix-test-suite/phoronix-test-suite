@@ -33,6 +33,7 @@ Phoronix Test Suite (Git)
 - pts-core: Smarter detection when dealing with user trying to input a results identifier that is already found in the results file
 - pts-core: Launch web browser (instead of DashCode) on Mac OS X for analyze-batch and merge-results command
 - pts-core: Add remove-from-result-file option for removing a set of test results from a saved file
+- pts-core: Don't report the elapsed time for a test run when it's using a cache share or no valid results were gathered
 - phodevi: Be more non-RandR friendly in phodevi_gpu::gpu_available_modes()
 - phodevi: Add infrastructure so that properties / settings can be set using phodevi::set_property()
 - phodevi: Add CPU usage monitoring support for Mac OS X
