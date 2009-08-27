@@ -287,26 +287,23 @@ class run_test implements pts_option_interface
 
 			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($file_name) || !pts_test_result_contains_result_identifier($file_name, $test_run_manager->get_results_identifier())))
 			{
-				$test_notes = pts_test_notes_manager::generate_test_notes($test_type);
-
-				$id = pts_request_new_id();
 				$xml_results_writer->setXslBinding("pts-results-viewer.xsl");
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $id, pts_hw_string());
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $id, pts_sw_string());
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $id, pts_current_user());
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, $id, date("F j, Y h:i A"));
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, $id, trim($test_notes));
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $id, PTS_VERSION);
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $id, $test_run_manager->get_results_identifier());
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, 0, pts_hw_string());
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, 0, pts_sw_string());
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, 0, pts_current_user());
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, 0, date("F j, Y h:i A"));
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type));
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, 0, PTS_VERSION);
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, 0, $test_run_manager->get_results_identifier());
 
 				$id = pts_request_new_id();
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, $id, $file_name_title);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, $id, pts_read_assignment("TO_RUN"));
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, $id, $test_version);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, $id, $test_description);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, $id, $test_type);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, $id, $module_store);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, $id, implode(";", $test_properties));
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $file_name_title);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, pts_read_assignment("TO_RUN"));
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 1, $test_version);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_description);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, 1, $test_type);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 1, $module_store);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 1, implode(";", $test_properties));
 			}
 
 			$pso = new pts_storage_object(true, false);
@@ -340,6 +337,8 @@ class run_test implements pts_option_interface
 			}
 
 			pts_unlink($pt2so_location);
+
+			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type));
 
 			pts_save_test_file($file_name, $xml_results_writer);
 			echo "Results Saved To: " . SAVE_RESULTS_DIR . $file_name . "/composite.xml\n";
