@@ -67,8 +67,8 @@ function pts_basic_init()
 		pts_mkdir($dir);
 	}
 
-	phodevi::restore_smart_cache(PTS_USER_DIR, PTS_VERSION);
 	phodevi::initial_setup();
+	phodevi::restore_smart_cache(PTS_USER_DIR, PTS_VERSION);
 
 	define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
 }

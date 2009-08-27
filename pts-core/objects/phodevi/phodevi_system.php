@@ -45,6 +45,9 @@ class phodevi_system extends pts_device_interface
 			case "power-consumption":
 				$sensor = "sys_power_consumption_rate";
 				break;
+			case "uptime":
+				$sensor = "sys_uptime";
+				break;
 			default:
 				$sensor = false;
 				break;
@@ -181,7 +184,7 @@ class phodevi_system extends pts_device_interface
 
 		return $temp_c;
 	}
-	function sys_power_consumption_rate()
+	public static function sys_power_consumption_rate()
 	{
 		// Returns power consumption rate in mW
 		$battery = array("/battery/BAT0/state", "/battery/BAT1/state");
@@ -212,6 +215,70 @@ class phodevi_system extends pts_device_interface
 		}
 
 		return $rate;
+	}
+	public static function sys_uptime()
+	{
+		// Returns the system's uptime in seconds
+		$uptime = 1;
+
+		if(is_file("/proc/uptime"))
+		{
+			$uptime = array_shift(explode(" ", file_get_contents("/proc/uptime")));
+		}
+		else if(($uptime_cmd = pts_executable_in_path("uptime")) != false)
+		{
+			$uptime_counter = 0;
+			$uptime_output = shell_exec($uptime_cmd . " 2>&1");
+			$uptime_output = substr($uptime_output, strpos($uptime_output, " up") + 3);
+			$uptime_output = substr($uptime_output, 0, strpos($uptime_output, " user"));
+			$uptime_output = substr($uptime_output, 0, strrpos($uptime_output, ",")) . " ";
+
+			if(($day_end_pos = strpos($uptime_output, " day")) !== false)
+			{
+				$day_output = substr($uptime_output, 0, $day_end_pos);
+				$day_output = substr($day_output, strrpos($day_output, " ") + 1);
+
+				if(is_numeric($day_output))
+				{
+					$uptime_counter += $day_output * 86400;
+				}
+			}
+
+			if(($mins_end_pos = strpos($uptime_output, " mins")) !== false)
+			{
+				$mins_output = substr($uptime_output, 0, $day_end_pos);
+				$mins_output = substr($mins_output, strrpos($mins_output, " ") + 1);
+
+				if(is_numeric($mins_output))
+				{
+					$uptime_counter += $mins_output * 60;
+				}
+			}
+
+			if(($time_split_pos = strpos($uptime_output, ":")) !== false)
+			{
+				$hours_output = substr($uptime_output, 0, $time_split_pos);
+				$hours_output = substr($hours_output, strrpos($hours_output, " ") + 1);
+				$mins_output = substr($uptime_output, $time_split_pos + 1);
+				$mins_output = substr($mins_output, 0, strpos($mins_output, " "));
+
+				if(is_numeric($hours_output))
+				{
+					$uptime_counter += $hours_output * 3600;
+				}
+				if(is_numeric($mins_output))
+				{
+					$uptime_counter += $mins_output * 60;
+				}
+			}
+
+			if(is_numeric($uptime_counter) && $uptime_counter > 0)
+			{
+				$uptime = $uptime_counter;
+			}
+		}
+
+		return intval($uptime);
 	}
 	public static function sw_username()
 	{

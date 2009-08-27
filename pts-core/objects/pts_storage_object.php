@@ -88,11 +88,9 @@ class pts_storage_object
 			{
 				if(($restore->get_span_versions() || $restore->get_pts_version() == PTS_VERSION) && md5(serialize($restore->get_objects())) == $restore->get_object_checksum())
 				{
-					if(!$restore->get_span_reboots() && is_file("/proc/uptime"))
+					if(!$restore->get_span_reboots())
 					{
-						// TODO: come up with cross-platform way to read uptime besides depending upon /proc/uptime
-						$uptime = (is_file("/proc/uptime") ? array_shift(explode(" ", file_get_contents("/proc/uptime"))) : 0);
-						$continue_loading = $restore->get_creation_time() > (time() - $uptime);
+						$continue_loading = $restore->get_creation_time() > (time() - phodevi::read_sensor("system", "uptime"));
 					}
 					else
 					{
