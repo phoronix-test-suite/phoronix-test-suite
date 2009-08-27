@@ -133,6 +133,11 @@ function pts_result_file_results_to_xml(&$result_manager, &$xml_writer)
 	$results_added = 0;
 	foreach($result_manager->get_results() as $result_object)
 	{
+		if(count($result_object->get_identifiers()) == 0)
+		{
+			continue;
+		}
+
 		$use_id = pts_request_new_id();
 		$xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->get_name());
 		$xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->get_version());
