@@ -92,6 +92,12 @@ function pts_extended_init()
 	{
 		pts_mkdir($dir);
 	}
+
+	// Setup PTS Results Viewer
+	pts_mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
+	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
+	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
+	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
 }
 function pts_core_storage_init()
 {

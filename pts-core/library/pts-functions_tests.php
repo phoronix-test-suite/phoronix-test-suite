@@ -21,18 +21,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_setup_results_viewer()
-{
-	pts_mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
-	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
-	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
-	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
-}
 function pts_setup_result_directory($save_to)
 {
 	$save_to_dir = dirname(SAVE_RESULTS_DIR . $save_to);
 
-	pts_mkdir(SAVE_RESULTS_DIR);
 	if($save_to_dir != ".")
 	{
 		pts_mkdir($save_to_dir);
@@ -49,7 +41,6 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 	}
 
 	$save_to_dir = pts_setup_result_directory($save_to);
-	pts_setup_results_viewer();
 	
 	if($save_to == null || $save_results == null)
 	{
@@ -269,28 +260,6 @@ function pts_get_results_viewer_xsl_formatted()
 	//$raw_xsl = str_replace("<!-- OVERVIEW TAG -->", $overview_string, $raw_xsl);
 
 	return $raw_xsl;
-}
-function pts_parse_svg_options($svg_file)
-{
-	$svg_parser = new tandem_XmlReader($svg_file);
-	$svg_test = array_pop($svg_parser->getStatement("Test"));
-	$svg_identifier = array_pop($svg_parser->getStatement("Identifier"));
-
-	$run_options = array();
-	if(pts_is_test($svg_test))
-	{
-		array_push($run_options, array($svg_test, "Run this test (" . $svg_test . ")"));
-	}
-	if(pts_is_suite($svg_identifier))
-	{
-		array_push($run_options, array($svg_identifier, "Run this suite (" . $svg_identifier . ")"));
-	}
-	else if(pts_is_global_id($svg_identifier))
-	{
-		array_push($run_options, array($svg_identifier, "Run this Phoronix Global comparison (" . $svg_identifier . ")"));
-	}
-
-	return $run_options;
 }
 function pts_suite_needs_updated_install($identifier)
 {
@@ -1068,18 +1037,6 @@ function pts_result_file_reference_tests($result)
 
 	return $reference_tests;
 }
-function pts_archive_result_directory($identifier, $save_to = null)
-{
-	if($save_to == null)
-	{
-		$save_to = SAVE_RESULTS_DIR . $identifier . ".zip";
-	}
-
-	if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
-	{
-		pts_compress(SAVE_RESULTS_DIR . $identifier . "/", $save_to);
-	}
-}
 function pts_test_download_caches()
 {
 	$cache_directories = pts_download_cache_user_directories();
@@ -1107,87 +1064,6 @@ function pts_test_download_caches()
 	}
 
 	return $cache_directories;
-}
-function pts_test_download_files_locally_available($identifier)
-{
-	foreach(pts_contained_tests($identifier, true, true, false) as $name)
-	{
-		$test_object_downloads = pts_objects_test_downloads($name);
-
-		foreach($test_object_downloads as $download_package)
-		{
-			if(!pts_test_download_file_local($name, $download_package->get_filename()))
-			{
-				return false;
-			}
-		}
-
-		if(count($test_object_downloads) == 0 && !pts_is_base_test($name) && !is_file(pts_location_test_resources($name) . "install.sh") && !is_file(pts_location_test_resources($name) . "install.php"))
-		{
-			$xml_parser = new pts_test_tandem_XmlReader($name);
-			$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
-			$execute_path = array_map("trim", explode(",", $xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS)));
-			array_push($execute_path, TEST_ENV_DIR . $name . "/");
-
-			if(empty($execute_binary))
-			{
-				$execute_binary = $name;
-			}
-
-			foreach($execute_path as $path_check)
-			{
-				if(is_file($path_check . execute_binary))
-				{
-					continue;
-				}
-			}
-
-			return false;
-		}
-	}
-
-	return true;
-}
-function pts_test_external_dependencies_satisfied($identifier)
-{
-	$missing_dependencies = pts_external_dependencies_missing();
-
-	foreach(pts_contained_tests($identifier, true, true, false) as $name)
-	{
-		$tp = new pts_test_profile_details($name);
-
-		foreach($tp->get_dependencies() as $dependency)
-		{
-			if(in_array($dependency, $missing_dependencies))
-			{
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-function pts_test_download_file_local($test_identifier, $download_name)
-{
-	$is_local = false;
-
-	if(is_file(TEST_ENV_DIR . $test_identifier . "/" . $download_name))
-	{
-		$is_local = true;
-	}
-	else
-	{
-		foreach(pts_test_download_caches() as $download_cache)
-		{
-			if(is_file($download_cache . $download_name))
-			{
-				$is_local = true;
-				break;
-			}
-		}
-	}
-
-	return $is_local;
 }
 
 ?>

@@ -219,6 +219,28 @@ function pts_prompt_user_tags($default_tags = "")
 
 	return $tags_input;
 }
+function pts_parse_svg_options($svg_file)
+{
+	$svg_parser = new tandem_XmlReader($svg_file);
+	$svg_test = array_pop($svg_parser->getStatement("Test"));
+	$svg_identifier = array_pop($svg_parser->getStatement("Identifier"));
+
+	$run_options = array();
+	if(pts_is_test($svg_test))
+	{
+		array_push($run_options, array($svg_test, "Run this test (" . $svg_test . ")"));
+	}
+	if(pts_is_suite($svg_identifier))
+	{
+		array_push($run_options, array($svg_identifier, "Run this suite (" . $svg_identifier . ")"));
+	}
+	else if(pts_is_global_id($svg_identifier))
+	{
+		array_push($run_options, array($svg_identifier, "Run this Phoronix Global comparison (" . $svg_identifier . ")"));
+	}
+
+	return $run_options;
+}
 function pts_input_string_to_identifier($input)
 {
 	$input = pts_swap_variables($input, "pts_user_runtime_variables");

@@ -163,5 +163,98 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 
 	return $test_names;
 }
+function pts_test_download_files_locally_available($identifier)
+{
+	foreach(pts_contained_tests($identifier, true, true, false) as $name)
+	{
+		$test_object_downloads = pts_objects_test_downloads($name);
+
+		foreach($test_object_downloads as $download_package)
+		{
+			if(!pts_test_download_file_local($name, $download_package->get_filename()))
+			{
+				return false;
+			}
+		}
+
+		if(count($test_object_downloads) == 0 && !pts_is_base_test($name) && !is_file(pts_location_test_resources($name) . "install.sh") && !is_file(pts_location_test_resources($name) . "install.php"))
+		{
+			$xml_parser = new pts_test_tandem_XmlReader($name);
+			$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
+			$execute_path = array_map("trim", explode(",", $xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS)));
+			array_push($execute_path, TEST_ENV_DIR . $name . "/");
+
+			if(empty($execute_binary))
+			{
+				$execute_binary = $name;
+			}
+
+			foreach($execute_path as $path_check)
+			{
+				if(is_file($path_check . execute_binary))
+				{
+					continue;
+				}
+			}
+
+			return false;
+		}
+	}
+
+	return true;
+}
+function pts_test_download_file_local($test_identifier, $download_name)
+{
+	$is_local = false;
+
+	if(is_file(TEST_ENV_DIR . $test_identifier . "/" . $download_name))
+	{
+		$is_local = true;
+	}
+	else
+	{
+		foreach(pts_test_download_caches() as $download_cache)
+		{
+			if(is_file($download_cache . $download_name))
+			{
+				$is_local = true;
+				break;
+			}
+		}
+	}
+
+	return $is_local;
+}
+function pts_test_external_dependencies_satisfied($identifier)
+{
+	$missing_dependencies = pts_external_dependencies_missing();
+
+	foreach(pts_contained_tests($identifier, true, true, false) as $name)
+	{
+		$tp = new pts_test_profile_details($name);
+
+		foreach($tp->get_dependencies() as $dependency)
+		{
+			if(in_array($dependency, $missing_dependencies))
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+function pts_archive_result_directory($identifier, $save_to = null)
+{
+	if($save_to == null)
+	{
+		$save_to = SAVE_RESULTS_DIR . $identifier . ".zip";
+	}
+
+	if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
+	{
+		pts_compress(SAVE_RESULTS_DIR . $identifier . "/", $save_to);
+	}
+}
 
 ?>
