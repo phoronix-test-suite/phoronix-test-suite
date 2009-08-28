@@ -40,7 +40,7 @@
 				</div>
 				<h1>Additional Details</h1>
 				<div class="pts_table_box">
-				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><strong>Administrator:</strong> <xsl:value-of select="Author" /><br /><strong>Date:</strong> <xsl:value-of select="TestDate" /> (UTC)<br /><strong>PTS Version:</strong> <xsl:value-of select="Version" /><br /><strong>Test Notes:</strong><br /><xsl:value-of select="TestNotes" /></div></div></div></xsl:for-each>
+				<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><strong>Administrator:</strong> <xsl:value-of select="Author" /><br /><strong>Date:</strong> <xsl:value-of select="TestDate" /><br /><strong>PTS Version:</strong> <xsl:value-of select="Version" /><br /><strong>Test Notes:</strong><br /><xsl:value-of select="TestNotes" /></div></div></div></xsl:for-each>
 				</div>
 				<h1>Results Overview</h1>
 					<p align="center"><!-- OVERVIEW TAG --></p>
