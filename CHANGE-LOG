@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add display mode support to download-test-files option
+
 Phoronix Test Suite 2.2.0 Alpha 1
 August 27, 2009
 
