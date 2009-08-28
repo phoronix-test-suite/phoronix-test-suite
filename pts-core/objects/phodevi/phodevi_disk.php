@@ -58,6 +58,11 @@ class phodevi_disk extends pts_device_interface
 			$capacity = read_osx_system_profiler("SPSerialATADataType", "Capacity");
 			$model = read_osx_system_profiler("SPSerialATADataType", "Model");
 
+			if(($cut = strpos($capacity, " (")) !== false)
+			{
+				$capacity = substr($capacity, 0, $cut);
+			}
+
 			if(!empty($capacity) && !empty($model))
 			{
 				$disks = array($capacity . " " . $model);
