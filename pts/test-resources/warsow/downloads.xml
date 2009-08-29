@@ -1,21 +1,21 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://data.rodix.free.fr/warsow/files/warsow_0.42_unified.zip, http://mirror.nation64.de/warsow/warsow_0.42_unified.zip, http://wahs.de/warsow/warsow_0.42_unified.zip, http://wahs.de/warsow/warsow_0.42_unified.zip</URL>
-			<MD5>cba5fe9b8af01b378e685959098fa84f</MD5>
-			<FileSize>193348129</FileSize>
+			<URL>http://343meterprosekunde.de/mirror/warsow/warsow_0.5_unified.zip, http://www.derchris.eu/warsow/warsow_0.5_unified.zip, http://woe.crying-wolves.net/warsow_0.5_unified.zip, http://static.warsow.net/release/warsow_0.5_unified.zip, http://weseo.de/downloads/warsow_0.5_unified.zip</URL>
+			<MD5>d0cb961256bbc1b93bf240b8bcf8eff5</MD5>
+			<FileSize>256768515</FileSize>
 			<PlatformSpecific>Linux</PlatformSpecific>
 		</Package>
 		<Package>
-			<URL>http://www.warsow.net/release/warsow_0.42_mac.zip, http://data.rodix.free.fr/warsow/files/warsow_0.42_mac.zip, http://tastyspleen.net/quake/downloads/mods/warsow/warsow_0.42_mac.zip/warsow_0.42_mac.zip</URL>
-			<MD5>7af556c7072554e83153d56a6ff0ca12</MD5>
-			<FileSize>191986359</FileSize>
+			<URL>http://warsow.hangy.de/warsow_0.5_mac_intel.zip, http://static.warsow.net/release/warsow_0.5_mac_intel.zip</URL>
+			<MD5>6bd8a32522eb1d5175601d4cce4b87f7</MD5>
+			<FileSize>253719530</FileSize>
 			<PlatformSpecific>MacOSX</PlatformSpecific>
 		</Package>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-warsow-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-warsow-1.tar.gz</URL>
-			<MD5>2461da4eeedfa37e3447a4b3ad3f07a4</MD5>
-			<FileSize>316260</FileSize>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-warsow-2.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-warsow-2.tar.gz</URL>
+			<MD5>46067cb8300509d2006084816edb66ee</MD5>
+			<FileSize>109697</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

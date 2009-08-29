@@ -2,21 +2,20 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.1</Version>
+		<Version>1.2.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>195</EnvironmentSize>
+		<EnvironmentSize>502</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<ExternalDependencies>xorg-development, curl</ExternalDependencies>
 		<ProjectURL>http://www.warsow.net/</ProjectURL>
 		<SupportedPlatforms>MacOSX, Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Warsow</Title>
-		<Version>0.42</Version>
+		<Version>0.5</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
@@ -24,7 +23,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>+exec pts-warsow.cfg +timedemo 1 +demo pts-warsow-04 +next "quit" +r_mode -1</Arguments>
+			<Arguments>+exec pts-warsow.cfg +timedemo 1 +demo pts-bardu +next "quit" +r_mode -1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
