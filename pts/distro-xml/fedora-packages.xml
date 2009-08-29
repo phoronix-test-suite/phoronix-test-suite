@@ -152,7 +152,7 @@
 		</Package>
 		<Package>
 			<GenericName>popt</GenericName>
-			<PackageName>popt</PackageName>
+			<PackageName>popt-devel</PackageName>
 			<FileCheck>/usr/include/popt.h</FileCheck>
 		</Package>
 		<Package>
@@ -173,7 +173,7 @@
 		<Package>
 			<GenericName>blas-development</GenericName>
 			<PackageName>blas blas-devel</PackageName>
-			<FileCheck>/usr/include/cblas.h OR /usr/lib/libblas.so.3</FileCheck>
+			<FileCheck>/usr/lib/libblas.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
