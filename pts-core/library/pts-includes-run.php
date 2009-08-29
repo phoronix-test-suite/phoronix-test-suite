@@ -528,15 +528,23 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		"LOG_FILE" => $benchmark_log_file
 		));
 
+		$restored_from_cache = false;
 		if($allow_cache_share && is_file($cache_share_pt2so))
 		{
 			$cache_share = pts_storage_object::recover_from_file($cache_share_pt2so);
-			$test_results = $cache_share->read_object("test_results_output_" . $i);
-			$test_extra_runtime_variables["LOG_FILE"] = $cache_share->read_object("log_file_location_" . $i);
-			file_put_contents($test_extra_runtime_variables["LOG_FILE"], $cache_share->read_object("log_file_" . $i));
+
+			if($cache_share != false)
+			{
+				$test_results = $cache_share->read_object("test_results_output_" . $i);
+				$test_extra_runtime_variables["LOG_FILE"] = $cache_share->read_object("log_file_location_" . $i);
+				file_put_contents($test_extra_runtime_variables["LOG_FILE"], $cache_share->read_object("log_file_" . $i));
+				$restored_from_cache = true;
+			}
+
 			unset($cache_share);
 		}
-		else
+
+		if(!$restored_from_cache)
 		{
 			$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1", $test_extra_runtime_variables);
 		}

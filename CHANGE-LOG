@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add display mode support to download-test-files option
+- pts-core: Handle pts_storage_object on failure correctly to avoid fatal error during testing process
 - phodevi: Don't report hard drive bytes on Mac OS X 10.6 when reporting the capacity of a disk
 
 Phoronix Test Suite 2.2.0 Alpha 1
