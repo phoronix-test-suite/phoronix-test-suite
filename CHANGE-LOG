@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts: Update Fedora external dependencies XML for blas-development and popt
 - pts: Update warsow test profile against Warsow 0.5
 - pts: Update gnupg test profile against GnuPG 2.0.11
+- pts: Update build-imagemagick test profile against ImageMagick 6.5.5
 
 Phoronix Test Suite 2.2.0 Alpha 1
 August 27, 2009

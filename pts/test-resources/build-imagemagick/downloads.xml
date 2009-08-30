@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://superb-east.dl.sourceforge.net/sourceforge/imagemagick/ImageMagick-6.5.0-6.tar.bz2, http://superb-west.dl.sourceforge.net/sourceforge/imagemagick/ImageMagick-6.5.0-6.tar.bz2, http://heanet.dl.sourceforge.net/sourceforge/imagemagick/ImageMagick-6.5.0-6.tar.bz2, http://internode.dl.sourceforge.net/sourceforge/imagemagick/ImageMagick-6.5.0-6.tar.bz2</URL>
-			<MD5>4ce842197dc899b7b18fe4e5cf571722</MD5>
-			<FileSize>8795531</FileSize>
+			<URL>http://superb-east.dl.sourceforge.net/sourceforge/imagemagick/ImageMagick-6.5.5-3.tar.bz2, http://superb-west.dl.sourceforge.net/sourceforge/imagemagick/ImageMagick-6.5.5-3.tar.bz2, http://heanet.dl.sourceforge.net/sourceforge/imagemagick/ImageMagick-6.5.5-3.tar.bz2, http://internode.dl.sourceforge.net/sourceforge/imagemagick/ImageMagick-6.5.5-3.tar.bz2</URL>
+			<MD5>2435951dac6e658e927a8f076d64b1d7</MD5>
+			<FileSize>8823928</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
