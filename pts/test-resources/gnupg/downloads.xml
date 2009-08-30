@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-1.4.9.tar.gz, ftp://ftp.usa.openbsd.org/pub/OpenBSD/distfiles/gnupg-1.4.9.tar.gz</URL>
-			<MD5>3537dedea45cc09e8d88d1ef4f774246</MD5>
-			<FileSize>4664291</FileSize>
+			<URL>ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-2.0.11.tar.bz2, ftp://ftp.usa.openbsd.org/pub/OpenBSD/distfiles/gnupg-2.0.11.tar.bz2</URL>
+			<MD5>a3014f3b3c919662278060f9a4818b89</MD5>
+			<FileSize>3852869</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
