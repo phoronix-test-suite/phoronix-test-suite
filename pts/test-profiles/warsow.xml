@@ -23,7 +23,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>+exec pts-warsow.cfg +timedemo 1 +demo pts-bardu +next "quit" +r_mode -1</Arguments>
+			<Arguments>+logconsole pts-log +exec pts-warsow.cfg +timedemo 1 +demo pts-bardu +next "quit" +r_mode -1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
