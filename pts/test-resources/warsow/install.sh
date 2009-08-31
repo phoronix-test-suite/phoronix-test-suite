@@ -5,9 +5,9 @@ tar -xvf pts-warsow-2.tar.gz
 case $OS_TYPE in
 	"MacOSX" )
 		unzip -o warsow_0.5_mac_intel.zip
-		# TODO: fixup Mac support for Warsow 0.5
-		cp -f pts-bardu.wd11 Warsow.app/Contents/Resources/Warsow/basewsw/demos
-		cp -f pts-warsow.cfg Warsow.app/Contents/Resources/Warsow/basewsw
+		mkdir ~/.warsow/basewsw/demos/
+		cp -f pts-bardu.wd11 ~/.warsow/basewsw/demos/
+		cp -f pts-warsow.cfg ~/.warsow/basewsw/
 	;;
 	"Linux" )
 		unzip -o warsow_0.5_unified.zip
@@ -22,7 +22,7 @@ rm -f .warsow/basewsw/1.log
 
 case \$OS_TYPE in
 	\"MacOSX\" )
-		./Warsow.app/Contents/MacOS/Warsow \$@ > \$LOG_FILE 2>&1 # TODO: the Mac OS X binary doesn't seem to listen to command line arguments that are passed
+		/Volumes/Warsow\ 0.5/Warsow\ SDL.app/Contents/MacOS/Warsow\ SDL \$@ > \$LOG_FILE 2>&1
 	;;
 	\"Linux\" )
 		if [ \$OS_ARCH = \"x86_64\" ]
