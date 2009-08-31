@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.2.0</Version>
+		<Version>1.2.1</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -10,7 +10,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>22</EnvironmentSize>
 		<Extends>photo-sample</Extends>
-		<ExternalDependencies>build-utilities, jpeg-development, libpng-development</ExternalDependencies>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.graphicsmagick.org/</ProjectURL>
 	</TestProfile>
 	<TestInformation>

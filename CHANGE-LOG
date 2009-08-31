@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts: Update gnupg test profile against GnuPG 2.0.11
 - pts: Update build-imagemagick test profile against ImageMagick 6.5.5
 - pts: Use OpenMP support in stream test profile
+- pts: Build libpng within graphics-magick test profile so it will run on Mac OS X 10.6
 
 Phoronix Test Suite 2.2.0 Alpha 1
 August 27, 2009

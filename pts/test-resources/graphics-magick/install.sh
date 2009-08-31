@@ -1,8 +1,15 @@
 #!/bin/sh
 
+tar -xvf libpng-1.2.39.tar.gz
 tar -xjf GraphicsMagick-1.3.6.tar.bz2
 
 mkdir $HOME/gm_
+
+cd libpng-1.2.39/
+./configure --prefix=$HOME/gm_ > /dev/null
+make -j $NUM_CPU_JOBS
+make install
+cd ..
 
 cd GraphicsMagick-1.3.6/
 ./configure --without-perl --prefix=$HOME/gm_ > /dev/null
