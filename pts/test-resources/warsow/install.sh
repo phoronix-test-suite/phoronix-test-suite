@@ -5,9 +5,9 @@ tar -xvf pts-warsow-2.tar.gz
 case $OS_TYPE in
 	"MacOSX" )
 		unzip -o warsow_0.5_mac_intel.zip
-		mkdir ~/.warsow/basewsw/demos/
-		cp -f pts-bardu.wd11 ~/.warsow/basewsw/demos/
-		cp -f pts-warsow.cfg ~/.warsow/basewsw/
+		mkdir -p $DEBUG_REAL_HOME/Library/Application\ Support/Warsow-0.5/basewsw/demos
+		cp -f pts-bardu.wd11 $DEBUG_REAL_HOME/Library/Application\ Support/Warsow-0.5/basewsw/demos/
+		cp -f pts-warsow.cfg $DEBUG_REAL_HOME/Library/Application\ Support/Warsow-0.5/basewsw/
 	;;
 	"Linux" )
 		unzip -o warsow_0.5_unified.zip
