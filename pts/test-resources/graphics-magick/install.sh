@@ -12,7 +12,7 @@ make install
 cd ..
 
 cd GraphicsMagick-1.3.6/
-./configure --without-perl --prefix=$HOME/gm_ --with-png=yes > /dev/null
+LDFLAGS="-L$HOME/gm_/lib" CPPFLAGS="-I$HOME/gm_/include" ./configure --without-perl --prefix=$HOME/gm_ --with-png=yes > /dev/null
 make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 make install
