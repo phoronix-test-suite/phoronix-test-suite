@@ -397,13 +397,13 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if($test_type == "Graphics" && getenv("DISPLAY") == false)
 	{
-		pts_release_test_lock($test_fp, $locK_file);
+		pts_release_test_lock($test_fp, $lock_file);
 		return $pts_test_result;
 	}
 
 	if(getenv("NO_" . strtoupper($test_type) . "_TESTS") != false || (($e = getenv("SKIP_TESTS")) != false && in_array($test_identifier, explode(",", $e))))
 	{
-		pts_release_test_lock($test_fp, $locK_file);
+		pts_release_test_lock($test_fp, $lock_file);
 		return $pts_test_result;
 	}
 
@@ -411,7 +411,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	{
 		// Ensure enough space is available on disk during testing process
 		$display_mode->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run. " . $env_testing_size . " MB of space is needed.");
-		pts_release_test_lock($test_fp, $locK_file);
+		pts_release_test_lock($test_fp, $lock_file);
 		return $pts_test_result;
 	}
 
@@ -460,7 +460,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	if(empty($to_execute))
 	{
 		$display_mode->test_run_error("The test executable for " . $test_identifier . " could not be found. Skipping test.");
-		pts_release_test_lock($test_fp, $locK_file);
+		pts_release_test_lock($test_fp, $lock_file);
 		return $pts_test_result;
 	}
 
@@ -653,7 +653,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(is_file(PTS_USER_DIR . "halt-testing"))
 		{
-			pts_release_test_lock($test_fp, $locK_file);
+			pts_release_test_lock($test_fp, $lock_file);
 			return $pts_test_result;
 		}
 	}
@@ -777,15 +777,15 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	// Remove lock
-	pts_release_test_lock($test_fp, $locK_file);
+	pts_release_test_lock($test_fp, $lock_file);
 
 	return $result_format == "NO_RESULT" ? false : $pts_test_result;
 }
-function pts_release_test_lock(&$file_pointer, $locK_file)
+function pts_release_test_lock(&$file_pointer, $lock_file)
 {
 	// Remove lock
 	fclose($file_pointer);
-	unlink($locK_file);
+	pts_unlink($lock_file);
 }
 function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 {
