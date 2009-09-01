@@ -157,6 +157,8 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 	$tests_to_run = $test_run_manager->get_tests_to_run();
 	$tests_to_run_count = count($tests_to_run);
 
+	$display_mode->test_run_process_start($test_run_manager);
+
 	if(($total_loop_time_minutes = getenv("TOTAL_LOOP_TIME")) != false && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
 	{
 		$total_loop_time_seconds = $total_loop_time_minutes * 60;

@@ -77,6 +77,10 @@ class pts_standard_display_mode implements pts_display_mode_interface
 			echo $to_output;
 		}
 	}
+	public function test_run_process_start(&$test_run_manager)
+	{
+		return;
+	}
 	public function test_run_start(&$test_result)
 	{
 		return;

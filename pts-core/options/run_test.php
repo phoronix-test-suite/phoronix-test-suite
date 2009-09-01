@@ -274,7 +274,7 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
-			$results_directory = pts_setup_result_directory($file_name . "/file.file") . "/"; // TODO: use of file.file there is just a hack so directory sets up right
+			$results_directory = pts_setup_result_directory($file_name . "/file.file") . "/"; // use of file.file there is just a hack so directory sets up right
 
 			if(pts_read_assignment("IS_BATCH_MODE") != false)
 			{

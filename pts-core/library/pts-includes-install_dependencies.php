@@ -240,7 +240,7 @@ function pts_install_packages_on_distribution_process($install_objects, &$displa
 
 		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
 		{
-			// TODO: hook into $display_mode here if it's desired
+			// hook into $display_mode here if it's desired
 			echo "\nThe following dependencies will be installed: \n";
 
 			foreach(explode(" ", $install_objects) as $obj)

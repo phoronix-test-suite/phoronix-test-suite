@@ -23,6 +23,9 @@
 
 class pts_batch_display_mode implements pts_display_mode_interface
 {
+	var $run_process_tests_remaining_to_run;
+	var $run_process_test_count;
+
 	public function __construct()
 	{
 
@@ -85,6 +88,17 @@ class pts_batch_display_mode implements pts_display_mode_interface
 	{
 		return;
 	}
+	public function test_run_process_start(&$test_run_manager)
+	{
+		$this->run_process_tests_remaining_to_run = array();
+
+		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
+		{
+			array_push($this->run_process_tests_remaining_to_run, $test_run_request->get_identifier());
+		}
+
+		$this->run_process_test_count = count($this->run_process_tests_remaining_to_run);
+	}
 	public function test_run_start(&$test_result)
 	{
 		echo "\n" . $test_result->get_attribute("TEST_TITLE") . ":\n\t" . $test_result->get_attribute("TEST_IDENTIFIER");
@@ -101,12 +115,18 @@ class pts_batch_display_mode implements pts_display_mode_interface
 		if($test_run_count > 1 && $test_run_position <= $test_run_count)
 		{
 			echo "\tTest Run " . $test_run_position . " of " . $test_run_count . "\n";
+
+			if($this->run_process_test_count == $test_run_count && $test_run_position != $test_run_count && ($remaining_length = pts_estimated_run_time($this->run_process_tests_remaining_to_run)) > 1)
+			{
+				echo "\tEstimated Time Remaining: " . pts_format_time_string($remaining_length, "SECONDS", true, 60) . "\n";
+			}
+			array_shift($this->run_process_tests_remaining_to_run);
 		}
 
 		$estimated_length = pts_estimated_run_time($test_result->get_attribute("TEST_IDENTIFIER"));
 		if($estimated_length > 1)
 		{
-			echo "\tEstimated Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
+			echo "\tEstimated Test Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
 		}
 
 		echo "\tTrial Run Count: " . $test_result->get_attribute("TIMES_TO_RUN") . "\n";
