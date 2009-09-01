@@ -24,6 +24,11 @@
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
+		<Test>prey</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
 		<Test>etqw-demo</Test>
 		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
@@ -37,21 +42,6 @@
 		<Test>unigine-sanctuary</Test>
 		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
-		<Test>specviewperf9</Test>
-		<Arguments>3dsmax</Arguments>
-		<Description>3DS Max</Description>
-	</RunTest>
-	<RunTest>
-		<Test>specviewperf9</Test>
-		<Arguments>maya</Arguments>
-		<Description>Maya</Description>
-	</RunTest>
-	<RunTest>
-		<Test>specviewperf9</Test>
-		<Arguments>light</Arguments>
-		<Description>Light</Description>
 	</RunTest>
 	<RunTest>
 		<Test>graphics-magick</Test>
@@ -78,15 +68,6 @@
 		<Mode>BATCH</Mode>
 	</RunTest>
 	<RunTest>
-		<Test>build-php</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-mysql</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-imagemagick</Test>
-	</RunTest>
-	<RunTest>
 		<Test>compress-pbzip2</Test>
 	</RunTest>
 	<RunTest>
@@ -105,13 +86,7 @@
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
-		<Test>sqlite</Test>
-	</RunTest>
-	<RunTest>
-		<Test>sunflow</Test>
-	</RunTest>
-	<RunTest>
-		<Test>bwfirt</Test>
+		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>
 		<Test>c-ray</Test>
@@ -120,17 +95,20 @@
 		<Test>povray</Test>
 	</RunTest>
 	<RunTest>
-		<Test>byte</Test>
-		<Arguments>TEST_DHRY2</Arguments>
-		<Description>Dhrystone 2</Description>
+		<Test>tachyon</Test>
 	</RunTest>
 	<RunTest>
-		<Test>scimark2</Test>
-		<Arguments>TEST_COMPOSITE</Arguments>
-		<Description>Composite</Description>
+		<Test>crafty</Test>
 	</RunTest>
 	<RunTest>
-		<Test>fhourstones</Test>
+		<Test>tscp</Test>
+	</RunTest>
+	<RunTest>
+		<Test>mafft</Test>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Mode>BATCH</Mode>
 	</RunTest>
 	<RunTest>
 		<Test>ramspeed</Test>

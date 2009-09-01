@@ -58,7 +58,7 @@
 		<Package>
 			<GenericName>java</GenericName>
 			<PackageName>java-1_6_0-openjdk</PackageName>
-			<FileCheck>/usr/lib/jvm/</FileCheck>
+			<FileCheck>/usr/lib/jvm/ OR /usr/lib64/jvm/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
