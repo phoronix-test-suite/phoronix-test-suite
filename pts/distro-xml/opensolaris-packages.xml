@@ -120,5 +120,25 @@
 			<PackageName>SUNWcmake</PackageName>
 			<FileCheck>/usr/bin/cmake</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>bzip2-development</GenericName>
+			<PackageName>SUNWbzip</PackageName>
+			<FileCheck>/usr/include/bzlib.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>tcl</GenericName>
+			<PackageName>SUNWTcl</PackageName>
+			<FileCheck>/usr/bin/tclsh</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>glibc-development</GenericName>
+			<PackageName>SUNWlibC</PackageName>
+			<FileCheck>/usr/lib/libC.so.5</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python</GenericName>
+			<PackageName>SUNWPython</PackageName>
+			<FileCheck>/usr/bin/python</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

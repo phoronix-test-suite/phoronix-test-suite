@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: With the batch display mode, report the "estimated time remaining" at the start of each run
 - phodevi: Don't report hard drive bytes on Mac OS X 10.6 when reporting the capacity of a disk
 - pts: Update Fedora external dependencies XML for blas-development and popt
+- pts: Update OpenSolaris external dependencies XML
 - pts: Update warsow test profile against Warsow 0.5
 - pts: Update gnupg test profile against GnuPG 2.0.11
 - pts: Update build-imagemagick test profile against ImageMagick 6.5.5
