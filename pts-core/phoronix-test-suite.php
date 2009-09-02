@@ -76,10 +76,10 @@ if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 }
 
 define("PTS_USER_LOCK", PTS_USER_DIR . "run_lock");
-$pts_fp = fopen(PTS_USER_LOCK, "w");
-if(!($remove_lock = flock($pts_fp, LOCK_EX | LOCK_NB)))
+$pts_fp = null;
+if(!pts_create_lock(PTS_USER_LOCK, $pts_fp))
 {
-	echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running...\nFor proper results, only run one instance at a time.");
+	echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
 }
 
 register_shutdown_function("pts_shutdown");
@@ -103,10 +103,9 @@ while(($current_option = pts_run_option_next(false)) != false)
 	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
 }
 
-if($remove_lock)
+if($pts_fp)
 {
-	fclose($pts_fp);
-	unlink(PTS_USER_LOCK);
+	pts_release_lock($pts_fp, PTS_USER_LOCK);
 }
 
 ?>
