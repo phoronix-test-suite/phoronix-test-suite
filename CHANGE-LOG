@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix reporting of test notes at end of testing process
 - pts-core: Release the run_lock when a test is running and returns due to an error
 - pts-core: With the batch display mode, report the "estimated time remaining" at the start of each run
+- pts-core: Add change-results-display-order option for changing the ordering of the results within the results viewer / graphs
 - phodevi: Don't report hard drive bytes on Mac OS X 10.6 when reporting the capacity of a disk
 - pts: Update Fedora external dependencies XML for blas-development and popt
 - pts: Update OpenSolaris external dependencies XML

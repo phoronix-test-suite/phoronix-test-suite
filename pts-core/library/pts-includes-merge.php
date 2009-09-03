@@ -27,6 +27,11 @@ function pts_merge_test_results()
 	// Pass the result file names/paths for each test result file to merge
 	$files_to_combine = func_get_args();
 
+	if(count($files_to_combine) == 1 && is_array($files_to_combine[0]))
+	{
+		$files_to_combine = $files_to_combine[0];
+	}
+
 	$results = new tandem_XmlWriter();
 	$test_result_manager = new pts_result_file_merge_manager();
 

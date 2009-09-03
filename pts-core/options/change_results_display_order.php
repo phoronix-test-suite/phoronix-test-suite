@@ -45,20 +45,31 @@ class change_results_display_order implements pts_option_interface
 			return false;
 		}
 
-		$extract_identifier = pts_text_select_menu("Select the test run to extract", $result_file_identifiers);
-		$extract_select = new pts_result_merge_select($result, $extract_identifier);
+		$extract_selects = array();
+		echo "\nEnter The New Order To Display The New Results, From Left To Right.\n";
 
 		do
 		{
-			echo "\nEnter new result file to extract to: ";
-			$extract_to = trim(fgets(STDIN));
-		}
-		while(empty($extract_to) || is_file(SAVE_RESULTS_DIR . $extract_to . "/composite.xml"));
+			$extract_identifier = pts_text_select_menu("Select the test run to be showed next", $result_file_identifiers);
+			array_push($extract_selects, new pts_result_merge_select($result, $extract_identifier));
 
-		$extract_result = pts_merge_test_results($extract_select);
-		pts_save_result($extract_to . "/composite.xml", $extract_result);
-		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $extract_to);
-		pts_display_web_browser(SAVE_RESULTS_DIR . $extract_to . "/composite.xml");
+			$old_identifiers = $result_file_identifiers;
+			$result_file_identifiers = array();
+
+			foreach($old_identifiers as $identifier)
+			{
+				if($identifier != $extract_identifier)
+				{
+					array_push($result_file_identifiers, $identifier);
+				}
+			}
+		}
+		while(count($result_file_identifiers) > 0);
+
+		$ordered_result = pts_merge_test_results($extract_selects);
+		pts_save_result($r[0] . "/composite.xml", $ordered_result);
+		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $r[0]);
+		pts_display_web_browser(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
 	}
 }
 

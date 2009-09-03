@@ -43,6 +43,11 @@ function pts_text_select_menu($user_string, $options_r)
 {
 	$option_count = count($options_r);
 
+	if($option_count == 1)
+	{
+		return array_pop($options_r);
+	}
+
 	do
 	{
 		echo "\n";
