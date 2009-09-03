@@ -103,9 +103,6 @@ while(($current_option = pts_run_option_next(false)) != false)
 	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
 }
 
-if($pts_fp)
-{
-	pts_release_lock($pts_fp, PTS_USER_LOCK);
-}
+pts_release_lock($pts_fp, PTS_USER_LOCK);
 
 ?>

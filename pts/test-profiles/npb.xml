@@ -15,7 +15,7 @@
 	<TestInformation>
 		<Title>NAS Parallel Benchmarks</Title>
 		<Version>3.3</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Total Mop/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>NPB, NAS Parallel Benchmarks, is a benchmark developed by NASA for high-end computer systems. This test profile currently uses the OpenMP version of NPB.</Description>

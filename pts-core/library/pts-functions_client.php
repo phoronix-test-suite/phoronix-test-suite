@@ -139,15 +139,19 @@ function pts_exit($string = "")
 	echo $string;
 	exit(0);
 }
-function pts_create_lock($lock_file, &$test_fp)
+function pts_create_lock($lock_file, &$file_pointer)
 {
-	$test_fp = fopen($lock_file, "w");
-	return $test_fp != false && flock($test_fp, LOCK_EX | LOCK_NB);
+	$file_pointer = fopen($lock_file, "w");
+	return $file_pointer != false && flock($file_pointer, LOCK_EX | LOCK_NB);
 }
 function pts_release_lock(&$file_pointer, $lock_file)
 {
 	// Remove lock
-	fclose($file_pointer);
+	if(is_resource($file_pointer))
+	{
+		fclose($file_pointer);
+	}
+
 	pts_unlink($lock_file);
 }
 function pts_shutdown()
