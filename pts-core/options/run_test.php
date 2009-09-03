@@ -28,7 +28,7 @@ class run_test implements pts_option_interface
 	}
 	public static function run($to_run_identifiers)
 	{
-		if(pts_read_assignment("IS_BATCH_MODE") != false && !pts_batch_mode_configured() && !pts_is_assignment("AUTOMATED_MODE"))
+		if(pts_read_assignment("IS_BATCH_MODE") && !pts_batch_mode_configured() && !pts_is_assignment("AUTOMATED_MODE"))
 		{
 			echo pts_string_header("The batch mode must first be configured.\nRun: phoronix-test-suite batch-setup");
 			return false;
@@ -72,11 +72,11 @@ class run_test implements pts_option_interface
 					}
 				}
 
-				if(pts_read_assignment("IS_BATCH_MODE") != false)
+				if(pts_read_assignment("IS_BATCH_MODE"))
 				{
 					$option_output = pts_generate_batch_run_options($to_run);
 				}
-				else if(pts_read_assignment("IS_DEFAULTS_MODE") == true)
+				else if(pts_read_assignment("IS_DEFAULTS_MODE"))
 				{
 					$option_output = pts_defaults_test_options($to_run);
 				}
@@ -200,11 +200,11 @@ class run_test implements pts_option_interface
 		$save_results = false;
 		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1)
 		{
-			if(pts_is_assignment("AUTO_SAVE_NAME") || getenv("TEST_RESULTS_NAME") != false)
+			if(pts_is_assignment("AUTO_SAVE_NAME") || getenv("TEST_RESULTS_NAME"))
 			{
 				$save_results = true;
 			}
-			else if(pts_is_assignment("DO_NOT_SAVE_RESULTS") == true)
+			else if(pts_is_assignment("DO_NOT_SAVE_RESULTS"))
 			{
 				$save_results = false;
 			}
@@ -215,7 +215,7 @@ class run_test implements pts_option_interface
 
 			if($save_results)
 			{
-				if(($unique_test_count == 1 || pts_is_assignment("AUTOMATED_MODE")) && ($asn = pts_read_assignment("AUTO_SAVE_NAME")) != false)
+				if(($unique_test_count == 1 || pts_is_assignment("AUTOMATED_MODE")) && ($asn = pts_read_assignment("AUTO_SAVE_NAME")))
 				{
 					$auto_name = $asn;
 				}
@@ -276,11 +276,11 @@ class run_test implements pts_option_interface
 		{
 			$results_directory = pts_setup_result_directory($file_name . "/file.file") . "/"; // use of file.file there is just a hack so directory sets up right
 
-			if(pts_read_assignment("IS_BATCH_MODE") != false)
+			if(pts_read_assignment("IS_BATCH_MODE"))
 			{
 				array_push($test_properties, "PTS_BATCH_MODE");
 			}
-			else if(pts_read_assignment("IS_DEFAULTS_MODE") != false)
+			else if(pts_read_assignment("IS_DEFAULTS_MODE"))
 			{
 				array_push($test_properties, "PTS_DEFAULTS_MODE");
 			}

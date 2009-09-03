@@ -209,7 +209,7 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$reference_comparison_objects = array();
-		if(($prev_identifier = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) != false && pts_read_assignment("PREV_COMMAND") != "reference_comparison")
+		if(($prev_identifier = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) && pts_read_assignment("PREV_COMMAND") != "reference_comparison")
 		{
 			$reference_tests = pts_result_file_reference_tests($prev_identifier);
 			if(count($reference_tests) > 0)
@@ -286,16 +286,16 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function check_events_for_header(&$button_box)
 	{
-		if(($p = pts_read_assignment("PREV_SAVE_NAME_TITLE")) != false)
+		if(($p = pts_read_assignment("PREV_SAVE_NAME_TITLE")))
 		{
 			$button_box->add(new pts_gtk_label("<b>" . $p . "</b> "));
 		}
-		if(($p = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) != false)
+		if(($p = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")))
 		{
 			$tr_button = new pts_gtk_button("View Test Results", array("gui_gtk", "launch_web_browser"), SAVE_RESULTS_DIR . $p . "/composite.xml");
 			$button_box->add($tr_button);
 		}
-		if(($p = pts_read_assignment("PREV_TEST_INSTALLED")) != false)
+		if(($p = pts_read_assignment("PREV_TEST_INSTALLED")))
 		{
 			$button_box->add(new pts_gtk_label("<b>Installed " . pts_test_identifier_to_name($p) . "</b> "));
 
@@ -303,24 +303,24 @@ class gui_gtk implements pts_option_interface
 			$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), $p);
 			$button_box->add($ti_button);
 		}
-		if(($p = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL")) != false)
+		if(($p = pts_read_assignment("PREV_GLOBAL_UPLOAD_URL")))
 		{
 			$pg_button = new pts_gtk_button("View On Phoronix Global", array("gui_gtk", "launch_web_browser"), $p);
 			$button_box->add($pg_button);
 		}
-		if(($p = pts_read_assignment("PREV_PDF_FILE")) != false)
+		if(($p = pts_read_assignment("PREV_PDF_FILE")))
 		{
 			$button_box->add(new pts_gtk_label("<b>PDF File Saved To:</b> " . $p));
 		}
-		if(($p = pts_read_assignment("PREV_CSV_FILE")) != false)
+		if(($p = pts_read_assignment("PREV_CSV_FILE")))
 		{
 			$button_box->add(new pts_gtk_label("<b>CSV File Saved To:</b> " . $p));
 		}
-		if(($p = pts_read_assignment("PREV_TXT_FILE")) != false)
+		if(($p = pts_read_assignment("PREV_TXT_FILE")))
 		{
 			$button_box->add(new pts_gtk_label("<b>Text File Saved To:</b> " . $p));
 		}
-		if(($p = pts_read_assignment("PREV_GLOBAL_ACCT_SETUP")) != false)
+		if(($p = pts_read_assignment("PREV_GLOBAL_ACCT_SETUP")))
 		{
 			$button_box->add(new pts_gtk_label("<b>" . $p . "</b>"));
 		}
@@ -875,12 +875,12 @@ class gui_gtk implements pts_option_interface
 
 		$menu_items = array();
 
-		if(pts_read_assignment("GTK_BATCH_MODE") != false)
+		if(pts_read_assignment("GTK_BATCH_MODE"))
 		{
 			array_push($menu_items, new pts_gtk_label("Test Options", "Sans 19"));
 			array_push($menu_items, new GtkLabel("No user options, running in batch mode."));
 		}
-		else if(pts_read_assignment("GTK_DEFAULTS_MODE") != false)
+		else if(pts_read_assignment("GTK_DEFAULTS_MODE"))
 		{
 			array_push($menu_items, new pts_gtk_label("Test Options", "Sans 19"));
 			array_push($menu_items, new GtkLabel("No user options, running in defaults mode."));
@@ -1091,7 +1091,7 @@ class gui_gtk implements pts_option_interface
 	public static function launch_phoronix_global_action($action)
 	{
 		$id_entry = pts_read_assignment("GTK_OBJ_GLOBAL_ID");
-		$global_id = ($id_entry != false ? trim($id_entry->get_text()) : false);
+		$global_id = ($id_entry ? trim($id_entry->get_text()) : false);
 
 		/*
 		if(!pts_is_global_id($global_id))

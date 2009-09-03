@@ -57,7 +57,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-		if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || pts_read_assignment("IS_PCQS_MODE") != false || getenv("SAVE_SYSTEM_DETAILS") != false || pts_is_assignment("IS_BATCH_MODE")))
+		if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || pts_read_assignment("IS_PCQS_MODE") || getenv("SAVE_SYSTEM_DETAILS") || pts_is_assignment("IS_BATCH_MODE")))
 		{
 			$test_results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER");
 
@@ -100,7 +100,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 }
 function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 {
-	if($save_to_dir != false && !is_dir($save_to_dir . "/result-graphs"))
+	if($save_to_dir && !is_dir($save_to_dir . "/result-graphs"))
 	{
 		mkdir($save_to_dir . "/result-graphs", 0777, true);
 	}
@@ -119,7 +119,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 		$i++;
 		$save_to = $save_to_dir;
 
-		if($save_to_dir != false && is_dir($save_to_dir))
+		if($save_to_dir && is_dir($save_to_dir))
 		{
 			$save_to .= "/result-graphs/" . $i . ".BILDE_EXTENSION";
 		}
@@ -129,7 +129,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	}
 
 	// Save XSL
-	if(count($generated_graphs) > 0 && $save_to_dir != false)
+	if(count($generated_graphs) > 0 && $save_to_dir)
 	{
 		file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted());
 	}
@@ -137,7 +137,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	// Render overview chart
 	// TODO: Get chart working
 
-	if($save_to_dir != false)
+	if($save_to_dir)
 	{
 		$chart = new pts_Chart();
 		$chart->loadLeftHeaders("", $results_name);
@@ -157,7 +157,7 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 	$values = $r_o->get_values();
 	$raw_values = $r_o->get_raw_values();
 
-	if(getenv("REVERSE_GRAPH_ORDER") != false)
+	if(getenv("REVERSE_GRAPH_ORDER"))
 	{
 		// Plot results in reverse order on graphs if REVERSE_GRAPH_ORDER env variable is set
 		$identifiers = array_reverse($identifiers);
@@ -224,7 +224,7 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 		$t->addInternalIdentifier("User", pts_current_user());
 	}
 
-	if($save_as != false)
+	if($save_as)
 	{
 		$t->saveGraphToFile($save_as);
 	}

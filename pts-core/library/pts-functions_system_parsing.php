@@ -54,7 +54,7 @@ function read_hal($name, $UDI = null)
 	// Read HAL - Hardware Abstraction Layer
 	$info = false;
 
-	if(pts_executable_in_path("lshal") != false)
+	if(pts_executable_in_path("lshal"))
 	{
 		static $remove_words = null;
 		$name = pts_to_array($name);
@@ -108,7 +108,7 @@ function read_sensors($attributes)
 	// Read LM_Sensors
 	$value = false;
 
-	if(pts_executable_in_path("sensors") != false)
+	if(pts_executable_in_path("sensors"))
 	{
 		$sensors = shell_exec("sensors 2>&1");
 		$sensors_lines = explode("\n", $sensors);
@@ -151,7 +151,7 @@ function read_pci($desc, $clean_string = true)
 		{
 			$lspci_cmd = "/sbin/lspci";
 		}
-		else if(($lspci = pts_executable_in_path("lspci")) != false)
+		else if(($lspci = pts_executable_in_path("lspci")))
 		{
 			$lspci_cmd = $lspci;
 		}
@@ -212,7 +212,7 @@ function read_lsb($desc)
 	// Read LSB Release information, Linux Standards Base
 	$info = false;
 
-	if(pts_executable_in_path("lsb_release") != false)
+	if(pts_executable_in_path("lsb_release"))
 	{
 		static $output = null;
 
@@ -235,7 +235,7 @@ function read_sysctl($desc)
 	// Read sysctl, used by *BSDs
 	$info = false;
 
-	if(pts_executable_in_path("sysctl") != false)
+	if(pts_executable_in_path("sysctl"))
 	{
 		$desc = pts_to_array($desc);
 
@@ -281,7 +281,7 @@ function read_nvidia_extension($attribute)
 	// Read NVIDIA's NV Extension
 	$nv_info = false;
 
-	if(pts_executable_in_path("nvidia-settings") != false)
+	if(pts_executable_in_path("nvidia-settings"))
 	{
 		$info = shell_exec("nvidia-settings --query " . $attribute . " 2>&1");
 
@@ -300,7 +300,7 @@ function read_xdpy_monitor_info()
 	// Read xdpyinfo monitor information
 	$monitor_info = array();
 
-	if(pts_executable_in_path("xdpyinfo") != false)
+	if(pts_executable_in_path("xdpyinfo"))
 	{
 		$info = trim(shell_exec("xdpyinfo -ext XINERAMA 2>&1 | grep head"));
 
@@ -320,7 +320,7 @@ function read_amd_graphics_adapters()
 	// Read ATI/AMD graphics hardware using aticonfig
 	$adapters = array();
 
-	if(pts_executable_in_path("aticonfig") != false)
+	if(pts_executable_in_path("aticonfig"))
 	{
 		$info = trim(shell_exec("aticonfig --list-adapters 2>&1"));
 
@@ -340,7 +340,7 @@ function read_amd_pcsdb($attribute)
 	// Read AMD's AMDPCSDB, AMD Persistent Configuration Store Database
 	$ati_info = null;
 
-	if(pts_executable_in_path("aticonfig") != false)
+	if(pts_executable_in_path("aticonfig"))
 	{
 		$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
 
@@ -389,7 +389,7 @@ function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 				$prefix_matches = true;
 				$header = array_reverse(explode("/", substr($line, 1, -1)));
 
-				for($i = 0; $i < count($attribute_prefix) && $i < count($header) && $prefix_matches == true; $i++)
+				for($i = 0; $i < count($attribute_prefix) && $i < count($header) && $prefix_matches; $i++)
 				{
 					if($attribute_prefix[$i] != $header[$i] && !pts_proximity_match($attribute_prefix[$i], $header[$i]))
 					{
@@ -457,7 +457,7 @@ function read_ati_overdrive($attribute, $adapter = 0)
 	// OverDrive supported in fglrx 8.52+ drivers
 	$value = false;
 
-	if(pts_executable_in_path("aticonfig") != false)
+	if(pts_executable_in_path("aticonfig"))
 	{
 		if($attribute == "Temperature")
 		{
@@ -504,7 +504,7 @@ function read_hddtemp($disk = null)
 	// Read hard drive temperature using hddtemp
 	$hdd_temperature = -1;
 
-	if(pts_executable_in_path("hddtemp") != false)
+	if(pts_executable_in_path("hddtemp"))
 	{
 		if(empty($disk))
 		{
@@ -564,7 +564,7 @@ function read_osx_system_profiler($data_type, $object, $multiple_objects = false
 {
 	$value = ($multiple_objects ? array() : false);
 
-	if(pts_executable_in_path("system_profiler") != false)
+	if(pts_executable_in_path("system_profiler"))
 	{
 		$info = trim(shell_exec("system_profiler " . $data_type . " 2>&1"));
 		$lines = explode("\n", $info);
@@ -605,7 +605,7 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore =
 	// Read Linux dmidecode
 	$value = array();
 
-	if(is_readable("/dev/mem") && pts_executable_in_path("dmidecode") != false)
+	if(is_readable("/dev/mem") && pts_executable_in_path("dmidecode"))
 	{
 		$ignore = pts_to_array($ignore);
 
@@ -643,7 +643,7 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore =
 	{
 		$value = false;
 	}
-	else if($find_once != false && count($value) == 1)
+	else if($find_once && count($value) == 1)
 	{
 		$value = $value[0];
 	}

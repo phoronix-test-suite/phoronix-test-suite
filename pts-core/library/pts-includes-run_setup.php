@@ -75,8 +75,8 @@ function pts_prompt_results_identifier(&$test_run_manager)
 		$times_tried = 0;
 		do
 		{
-			if($times_tried == 0 && (($env_identifier = getenv("TEST_RESULTS_IDENTIFIER")) != false || 
-			($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")) != false))
+			if($times_tried == 0 && (($env_identifier = getenv("TEST_RESULTS_IDENTIFIER")) || 
+			($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER"))))
 			{
 				$results_identifier = $env_identifier;
 				echo "Test Identifier: " . $results_identifier . "\n";
@@ -113,9 +113,9 @@ function pts_prompt_save_file_name(&$test_run_manager, $check_env = true)
 	$proposed_name = null;
 	$custom_title = null;
 
-	if($check_env != false)
+	if($check_env)
 	{
-		if(!empty($check_env) || ($check_env = getenv("TEST_RESULTS_NAME")) != false)
+		if(!empty($check_env) || ($check_env = getenv("TEST_RESULTS_NAME")))
 		{
 			$custom_title = $check_env;
 			$proposed_name = pts_input_string_to_identifier($check_env);

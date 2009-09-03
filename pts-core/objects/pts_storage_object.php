@@ -33,8 +33,8 @@ class pts_storage_object
 	public function __construct($span_reboots = true, $span_versions = true)
 	{
 		$this->creation_time = time();
-		$this->span_reboots = $span_reboots == true;
-		$this->span_versions = $span_versions == true;
+		$this->span_reboots = $span_reboots;
+		$this->span_versions = $span_versions;
 		$this->pts_version = PTS_VERSION;
 		$this->object_cache = array();
 	}

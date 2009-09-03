@@ -26,13 +26,13 @@ require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 
 function pts_cleanup_tests_to_run(&$to_run_identifiers)
 {
-	$skip_tests = (($e = getenv("SKIP_TESTS")) != false ? explode(",", $e) : false);
+	$skip_tests = (($e = getenv("SKIP_TESTS")) ? explode(",", $e) : false);
 
 	for($i = 0; $i < count($to_run_identifiers); $i++)
 	{
 		$lower_identifier = strtolower($to_run_identifiers[$i]);
 
-		if($skip_tests != false && in_array($lower_identifier, $skip_tests))
+		if($skip_tests && in_array($lower_identifier, $skip_tests))
 		{
 			echo pts_string_header("Skipping test: " . $lower_identifier);
 			unset($to_run_identifiers[$i]);
@@ -159,7 +159,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 
 	$display_mode->test_run_process_start($test_run_manager);
 
-	if(($total_loop_time_minutes = getenv("TOTAL_LOOP_TIME")) != false && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
+	if(($total_loop_time_minutes = getenv("TOTAL_LOOP_TIME")) && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
 	{
 		$total_loop_time_seconds = $total_loop_time_minutes * 60;
 		$loop_end_time = time() + $total_loop_time_seconds;
@@ -175,7 +175,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		}
 		while(time() < $loop_end_time && $test_flag);
 	}
-	else if(($total_loop_count = getenv("TOTAL_LOOP_COUNT")) != false && is_numeric($total_loop_count))
+	else if(($total_loop_count = getenv("TOTAL_LOOP_COUNT")) && is_numeric($total_loop_count))
 	{
 		if(($estimated_length = pts_estimated_run_time($test_run_manager)) > 1)
 		{
@@ -404,7 +404,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		return $pts_test_result;
 	}
 
-	if(getenv("NO_" . strtoupper($test_type) . "_TESTS") != false || (($e = getenv("SKIP_TESTS")) != false && in_array($test_identifier, explode(",", $e))))
+	if(getenv("NO_" . strtoupper($test_type) . "_TESTS") || (($e = getenv("SKIP_TESTS")) && in_array($test_identifier, explode(",", $e))))
 	{
 		pts_release_lock($test_fp, $lock_file);
 		return $pts_test_result;
@@ -427,7 +427,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$times_to_run = 1;
 	}
 
-	if(($force_runs = getenv("FORCE_TIMES_TO_RUN")) != false && is_int($force_runs))
+	if(($force_runs = getenv("FORCE_TIMES_TO_RUN")) && is_int($force_runs))
 	{
 		$times_to_run = $force_runs;
 	}
@@ -539,7 +539,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			$cache_share = pts_storage_object::recover_from_file($cache_share_pt2so);
 
-			if($cache_share != false)
+			if($cache_share)
 			{
 				$test_results = $cache_share->read_object("test_results_output_" . $i);
 				$test_extra_runtime_variables["LOG_FILE"] = $cache_share->read_object("log_file_location_" . $i);

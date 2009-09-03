@@ -342,7 +342,7 @@ abstract class pts_Graph
 			$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
 		}
 
-		if($this->graph_hide_identifiers == true)
+		if($this->graph_hide_identifiers)
 		{
 			$this->graph_top_end += $this->graph_top_end_opp / 2;
 		}
@@ -397,7 +397,7 @@ abstract class pts_Graph
 		// Background Color
 		$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background);
 
-		if($this->graph_attr_big_border == true)
+		if($this->graph_attr_big_border)
 		{
 			$this->graph_image->draw_rectangle_border(0, 0, $this->graph_attr_width - 1, $this->graph_attr_height - 1, $this->graph_color_border);
 		}
@@ -416,7 +416,7 @@ abstract class pts_Graph
 	}
 	protected function render_graph_base()
 	{
-		if(count($this->graph_data_title) > 1 || $this->graph_show_key == true)
+		if(count($this->graph_data_title) > 1 || $this->graph_show_key)
 		{
 			$num_key_lines = ceil(count($this->graph_data_title) / 4);
 			$this->graph_top_start += 8 + ($num_key_lines * 11);
@@ -491,7 +491,7 @@ abstract class pts_Graph
 				$this->graph_image->write_text_right($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2, $px_from_left_start - 1, $px_from_top - 2);
 			}
 
-			if($i != 0 && $this->graph_background_lines == true)
+			if($i != 0 && $this->graph_background_lines)
 			{
 				$line_width = 6;
 				for($y = $px_from_left_end + $line_width; $y < $this->graph_left_end; $y += ($line_width * 2))
