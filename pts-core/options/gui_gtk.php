@@ -32,7 +32,7 @@ class gui_gtk implements pts_option_interface
 		{
 			echo "\nThe PHP GTK module must be loaded for the GUI.\nThis module can be found @ http://gtk.php.net/\n\n";
 
-			if($_ENV["TERM"] == null)
+			if(getenv("TERM") == null)
 			{
 				pts_display_web_browser(STATIC_DIR . "error-gui.html", null, true, true);
 			}

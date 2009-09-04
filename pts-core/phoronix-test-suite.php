@@ -40,7 +40,7 @@ if(PTS_MODE != "CLIENT")
 
 pts_client_init(); // Initalize the Phoronix Test Suite (pts-core) client
 
-$sent_command = strtolower(str_replace("-", "_", $argv[1]));
+$sent_command = strtolower(str_replace("-", "_", (isset($argv[1]) ? $argv[1] : null)));
 
 if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 {
