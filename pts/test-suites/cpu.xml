@@ -19,11 +19,6 @@
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
-		<Test>vdrift</Test>
-		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
 		<Test>prey</Test>
 		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
@@ -80,13 +75,13 @@
 		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
-		<Test>gnupg</Test>
-	</RunTest>
-	<RunTest>
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
 		<Test>pgbench</Test>
+	</RunTest>
+	<RunTest>
+		<Test>apache</Test>
 	</RunTest>
 	<RunTest>
 		<Test>c-ray</Test>
@@ -111,18 +106,7 @@
 		<Mode>BATCH</Mode>
 	</RunTest>
 	<RunTest>
-		<Test>ramspeed</Test>
-		<Arguments>ADD -b 3</Arguments>
-		<Description>Integer Add</Description>
-	</RunTest>
-	<RunTest>
-		<Test>ramspeed</Test>
-		<Arguments>COPY -b 3</Arguments>
-		<Description>Integer Copy</Description>
-	</RunTest>
-	<RunTest>
-		<Test>ramspeed</Test>
-		<Arguments>SCALE -b 3</Arguments>
-		<Description>Integer Scale</Description>
+		<Test>stream</Test>
+		<Mode>BATCH</Mode>
 	</RunTest>
 </PhoronixTestSuite>
