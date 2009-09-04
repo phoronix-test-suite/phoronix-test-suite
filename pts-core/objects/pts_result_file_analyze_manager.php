@@ -150,7 +150,7 @@ class pts_result_file_analyze_manager
 							$do_line_graph = true;
 							foreach($similar_ids_names as $id_name_check)
 							{
-								if(str_replace(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "x", " "), "", $id_name_check) != null)
+								if(str_replace(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "x", "M", "K", "B", " "), "", $id_name_check) != null)
 								{
 									$do_line_graph = false;
 									break;

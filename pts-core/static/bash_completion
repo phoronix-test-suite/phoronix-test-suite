@@ -5,6 +5,7 @@ _phoronix-test-suite-show()
 
         COMPREPLY=()
         cur=${COMP_WORDS[COMP_CWORD]}
+       #  COMPREPLYBROKEN=(`phoronix-test-suite dump-possible-options TRUE | tr ' ' ' '`)
         COMPREPLY=($( compgen -W 'analyze-all-runs analyze-batch batch-benchmark batch-run batch-setup benchmark build-suite clone-global-result core-version default-benchmark default-run diagnostics download-test-files estimate-run-time extract-from-result-file finish-run force-install global-login gui-gtk info install-all install-all-dependencies install-dependencies install-test list-all-tests list-installed-dependencies list-installed-suites list-installed-tests list-missing-dependencies list-modules list-possible-dependencies list-saved-results list-suites list-test-usage list-tests list-unsupported-tests make-download-cache merge-results module-info module-setup recover-run reference-comparison refresh-graphs remove-all-results remove-installed-test remove-result removed-option result-file-to-csv result-file-to-pdf result-file-to-ps result-file-to-suite result-file-to-text run-test show-result system-info test-module upload-result user-config-get user-config-reset user-config-set validate-test-profile validate-test-suite' -- $cur ))
 }
 complete -F _phoronix-test-suite-show phoronix-test-suite

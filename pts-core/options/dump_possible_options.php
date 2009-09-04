@@ -36,7 +36,7 @@ class dump_possible_options implements pts_option_interface
 			}
 		}
 
-		echo implode($r[0] == "TRUE" ? " " : "\n", $options) . "\n";
+		echo implode($r[0] == "TRUE" ? " " : "\n", $options) . ($r[0] == "TRUE" ? "" : "\n");
 	}
 }
 

@@ -42,29 +42,23 @@ function pts_merge_test_results()
 	{
 		if(is_object($files_to_combine[$merge_pos]) && $files_to_combine[$merge_pos] instanceOf pts_result_merge_select)
 		{
-			$result_file = $files_to_combine[$merge_pos]->get_result_file();
 			$selected_identifiers = $files_to_combine[$merge_pos]->get_selected_identifiers();
-
-			if($selected_identifiers != null)
-			{
-				$selected_identifiers = pts_to_array($selected_identifiers);
-			}
+			$result_merge_select = $files_to_combine[$merge_pos];
 		}
 		else
 		{
-			$result_file = $files_to_combine[$merge_pos];
-			$selected_identifiers = null;
+			$result_merge_select = new pts_result_merge_select($files_to_combine[$merge_pos], null);
 		}
 
-		$this_result_file = new pts_result_file($result_file);
+		$this_result_file = new pts_result_file($result_merge_select->get_result_file());
 
 		if($merge_pos == 0)
 		{
 			pts_result_file_suite_info_to_xml($this_result_file, $results);
 		}
 
-		pts_result_file_system_info_to_xml($this_result_file, $results, $added_systems_hash, $selected_identifiers);
-		$test_result_manager->add_test_result_set($this_result_file->get_result_objects(), $selected_identifiers);
+		pts_result_file_system_info_to_xml($this_result_file, $results, $added_systems_hash, $result_merge_select);
+		$test_result_manager->add_test_result_set($this_result_file->get_result_objects(), $result_merge_select);
 	}
 
 	// Write the actual test results
@@ -99,7 +93,7 @@ function pts_result_file_suite_info_to_xml(&$pts_result_file, &$xml_writer)
 	$xml_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $pts_result_file->get_suite_extensions());
 	$xml_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $pts_result_file->get_suite_properties());
 }
-function pts_result_file_system_info_to_xml(&$pts_result_file, &$xml_writer, &$systems_hash, $selected_identifiers = null)
+function pts_result_file_system_info_to_xml(&$pts_result_file, &$xml_writer, &$systems_hash, $result_merge_select)
 {
 	$system_hardware = $pts_result_file->get_system_hardware();
 	$system_software = $pts_result_file->get_system_software();
@@ -113,7 +107,7 @@ function pts_result_file_system_info_to_xml(&$pts_result_file, &$xml_writer, &$s
 
 	for($i = 0; $i < count($system_hardware); $i++)
 	{
-		if($selected_identifiers == null || in_array($associated_identifiers[$i], $selected_identifiers))
+		if(!($result_merge_select instanceOf pts_result_merge_select) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
 		{
 			$this_hash = md5($associated_identifiers[$i] . ";" . $system_hardware[$i] . ";" . $system_software[$i] . ";" . $system_date[$i]);
 

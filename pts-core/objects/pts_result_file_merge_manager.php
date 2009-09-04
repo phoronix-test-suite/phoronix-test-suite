@@ -28,14 +28,14 @@ class pts_result_file_merge_manager
 	{
 		$this->test_results = array();
 	}
-	public function add_test_result_set($merge_test_objects_array, $select_identifiers = null)
+	public function add_test_result_set($merge_test_objects_array, &$result_merge_select)
 	{
 		foreach($merge_test_objects_array as $merge_test_object)
 		{
-			$this->add_test_result($merge_test_object, $select_identifiers);
+			$this->add_test_result($merge_test_object, $result_merge_select);
 		}
 	}
-	public function add_test_result($merge_test_object, $select_identifiers = null)
+	public function add_test_result($merge_test_object, &$result_merge_select)
 	{
 		/*
 		if(empty($merge_test_object->get_identifiers()) || is_array($merge_test_object->get_identifiers()) && count($merge_test_object->get_identifiers()) == 0)
@@ -44,10 +44,7 @@ class pts_result_file_merge_manager
 		}
 		*/
 
-		if($select_identifiers != null)
-		{
-			$select_identifiers = pts_to_array($select_identifiers);
-		}
+		$select_identifiers = $result_merge_select->get_selected_identifiers();
 
 		$merged = false;
 		for($i = 0; $i < count($this->test_results) && !$merged; $i++)
