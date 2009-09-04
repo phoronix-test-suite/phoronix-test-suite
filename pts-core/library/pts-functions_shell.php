@@ -142,10 +142,10 @@ function pts_remove($object, $ignore_files = null)
 		{
 			pts_remove($to_remove, $ignore_files);
 
-			//if(count(glob($to_remove . "/*")) == 0)
-			//{
-				@rmdir($object);
-			//}
+			if(count(glob($to_remove . "/*")) == 0)
+			{
+				@rmdir($to_remove);
+			}
 		}
 	}
 }

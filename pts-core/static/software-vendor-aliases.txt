@@ -7,3 +7,4 @@ nexentacore = ubuntu
 ptslinuxlive = ubuntu
 ptsdesktoplive = ubuntu
 dragonfly = netbsd
+jolicloud = ubuntu

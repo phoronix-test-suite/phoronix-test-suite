@@ -4,7 +4,7 @@ tar -xjf ffmpeg-0.5.tar.bz2
 mkdir ffmpeg_/
 
 cd ffmpeg-0.5/
-./configure --prefix=$HOME/ffmpeg_/
+./configure --disable-zlib --prefix=$HOME/ffmpeg_/
 make
 echo $? > ~/install-exit-status
 make install
