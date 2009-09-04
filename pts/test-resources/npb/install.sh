@@ -15,7 +15,6 @@ make lu CLASS=A
 make mg CLASS=B
 make sp CLASS=A
 make ua CLASS=A
-make dc CLASS=W
 
 echo \$? > ~/test-exit-status
 

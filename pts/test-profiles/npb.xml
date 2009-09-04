@@ -61,10 +61,6 @@
 					<Name>UA.A</Name>
 					<Value>ua.A</Value>
 				</Entry>
-				<Entry>
-					<Name>DC.W</Name>
-					<Value>dc.W</Value>
-				</Entry>
 			</Menu>
 		</Option>
 	</TestSettings>
