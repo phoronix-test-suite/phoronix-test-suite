@@ -59,6 +59,11 @@ class pts_result_file_merge_manager
 				{
 					if($select_identifiers == null || in_array($identifiers[$j], $select_identifiers))
 					{
+						if(($renamed = $result_merge_select->get_rename_identifier()) != null)
+						{
+							$identifiers[$j] = $renamed;
+						}
+
 						if(!$this->result_already_contained($i, $identifiers[$j], $values[$j]))
 						{
 							$this->test_results[$i]->add_identifier($identifiers[$j]);
@@ -91,6 +96,11 @@ class pts_result_file_merge_manager
 
 				for($j = 0; $j < count($identifiers); $j++)
 				{
+					if(($renamed = $result_merge_select->get_rename_identifier()) != null)
+					{
+						$identifiers[$j] = $renamed;
+					}
+
 					if(in_array($identifiers[$j], $select_identifiers))
 					{
 						$merge_test_object->add_identifier($identifiers[$j]);

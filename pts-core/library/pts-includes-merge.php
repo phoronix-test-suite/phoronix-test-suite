@@ -113,6 +113,11 @@ function pts_result_file_system_info_to_xml(&$pts_result_file, &$xml_writer, &$s
 
 			if(!in_array($this_hash, $systems_hash))
 			{
+				if(($renamed = $result_merge_select->get_rename_identifier()) != null)
+				{
+					$associated_identifiers[$i] = $renamed;
+				}
+
 				$use_id = pts_request_new_id();
 				$xml_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $use_id, $system_hardware[$i]);
 				$xml_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $use_id, $system_software[$i]);

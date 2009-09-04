@@ -24,11 +24,13 @@ class pts_result_merge_select
 {
 	var $result_file;
 	var $selected_identifiers;
+	var $rename_identifier;
 
 	public function __construct($result_file, $selected_identifiers = null)
 	{
 		$this->result_file = $result_file;
 		$this->selected_identifiers = ($selected_identifiers != null ? pts_to_array($selected_identifiers) : null);
+		$this->rename_identifier = null;
 	}
 	public function get_result_file()
 	{
@@ -41,6 +43,14 @@ class pts_result_merge_select
 	public function __toString()
 	{
 		return $this->get_result_file() . ":" . $this->get_selected_identifiers();
+	}
+	public function rename_identifier($new_name)
+	{
+		$this->rename_identifier = (count($this->selected_identifiers) == 1 ? $new_name : null);
+	}
+	public function get_rename_identifier()
+	{
+		return $this->rename_identifier;
 	}
 }
 
