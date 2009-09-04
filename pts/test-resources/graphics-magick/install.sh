@@ -18,6 +18,7 @@ echo $? > ~/install-exit-status
 make install
 cd ..
 rm -rf GraphicsMagick-1.3.6/
+rm -rf libpng-1.2.39/
 rm -rf gm_/share/doc/GraphicsMagick/
 rm -rf gm_/share/man/
 
