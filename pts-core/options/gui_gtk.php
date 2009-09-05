@@ -165,8 +165,6 @@ class gui_gtk implements pts_option_interface
 			new pts_gtk_menu_item("_Preferences", array("gui_gtk", "show_preferences_interface"), null, Gtk::STOCK_PREFERENCES)),
 		"_View" => $view_menu,
 		"_Tools" => array(
-		// TODO: Implement build suite option
-		//	new pts_gtk_menu_item(array("GTK_OBJ_BUILD_SUITE", "Build Suite"), array("gui_gtk", ""), "STRING", Gtk::STOCK_NEW),
 			new pts_gtk_menu_item(array("GTK_OBJ_MERGE_RESULTS", "Merge Results"), array("gui_gtk", "")),
 			null,
 			new pts_gtk_menu_item(array("GTK_OBJ_ANALYZE_RUNS", "Analyze All Runs"), array("gui_gtk", "quick_operation", "analyze_all_runs")),
@@ -193,7 +191,6 @@ class gui_gtk implements pts_option_interface
 		//
 
 		$header_box = new GtkEventBox();
-		pts_set_assignment("GTK_HEADER_BOX", $header_box);
 		$header_box->set_size_request(-1, 35);
 		$header_box->modify_bg(Gtk::STATE_NORMAL, $window->get_style()->base[Gtk::STATE_SELECTED]); // or do STATE_ACTIVE
 		$header_bbox = new GtkHButtonBox();
@@ -375,10 +372,6 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function update_details_frame_from_select($object)
 	{
-		// TODO: the below code does not seem to be working
-		// $header_box = pts_read_assignment("GTK_HEADER_BOX");
-		// $header_box->hide();
-
 		$previous_select = (is_array($p = pts_read_assignment("GTK_SELECTED_ITEM_PREV")) ? $p : array());
 		$identifiers = pts_gtk_selected_items($object);
 		pts_set_assignment("GTK_MULTIPLE_SELECT_ITEMS", ($multiple_selected = count($identifiers) > 1));
@@ -564,7 +557,7 @@ class gui_gtk implements pts_option_interface
 
 		foreach($reference_tests as $merge_select_object)
 		{
-			$ref_check_button = new GtkCheckButton($merge_select_object->get_selected_identifiers());
+			$ref_check_button = new GtkCheckButton(array_pop($merge_select_object->get_selected_identifiers()));
 			$ref_check_button->set_active(false);
 			$ref_check_button->connect("toggled", array("gui_gtk", "toggle_reference_systems"), $merge_select_object, $compare_results);
 
@@ -908,7 +901,6 @@ class gui_gtk implements pts_option_interface
 					if($option_count == 0)
 					{
 						// User inputs their option
-						// TODO: could add check to make sure the text field isn't empty when pressed
 						$selected_options[$identifier][$o->get_identifier()] = new GtkEntry();
 						array_push($menu_items, array(new GtkLabel($o->get_name() . ":"), $selected_options[$identifier][$o->get_identifier()]));
 					}
