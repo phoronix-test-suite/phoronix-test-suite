@@ -43,6 +43,9 @@ then
 elif [ -x /usr/php/bin/php ]
 then
 	export PHP_BIN="/usr/php/bin/php"
+elif [ ! "X$PHP_BIN" = "X" ] && [ -x $PHP_BIN ]
+then
+	export PHP_BIN=$PHP_BIN
 else
 	export PHP_BIN=""
 fi
