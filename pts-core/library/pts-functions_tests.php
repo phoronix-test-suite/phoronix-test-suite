@@ -315,19 +315,6 @@ function pts_test_installed_checksum_installer($identifier)
 
 	return $version;
 }
-function pts_input_correct_results_path($path)
-{
-	// Correct an input path for an XML file
-	if(strpos($path, "/") === false)
-	{
-		$path = SAVE_RESULTS_DIR . $path;
-	}
-	if(strpos($path, ".xml") === false)
-	{
-		$path = $path . ".xml";
-	}
-	return $path;
-}
 function pts_test_installed_system_identifier($identifier)
 {
 	// Read installer checksum of installed tests

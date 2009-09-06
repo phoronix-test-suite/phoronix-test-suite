@@ -409,19 +409,6 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 				}
 			}
 		}
-		else if(is_file(($file_path = pts_input_correct_results_path($object)))) // Object is a local file
-		{
-			$xml_parser = new tandem_XmlReader($file_path);
-			$tests_in_file = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-
-			foreach($tests_in_file as $test)
-			{
-				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
-				{
-					array_push($tests, $sub_test);
-				}
-			}
-		}
 	}
 
 	if($remove_duplicates)
@@ -486,11 +473,7 @@ function pts_virtual_suite_tests($object)
 function pts_find_result_file($file, $check_global = true)
 {
 	// PTS Find A Saved File
-	if(is_file($file))
-	{
-		$USE_FILE = $file;
-	}
-	else if(pts_is_test_result($file))
+	if(pts_is_test_result($file))
 	{
 		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
 	}

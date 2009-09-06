@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add change-results-display-order option for changing the ordering of the results within the results viewer / graphs
 - pts-core: Add rename-identifier-in-result-file option for changing the name of a test identifier within a results file
 - pts-core: With GTK2 GUI don't get to the point of emiting a fatal error over GtkWindow
+- pts-core: No longer support having test result XML files outside of the test-results/ directory where an absolute path was supplied to PTS
 - phodevi: Don't report hard drive bytes on Mac OS X 10.6 when reporting the capacity of a disk
 - pts: Update Fedora external dependencies XML for blas-development and popt
 - pts: Update OpenSolaris external dependencies XML

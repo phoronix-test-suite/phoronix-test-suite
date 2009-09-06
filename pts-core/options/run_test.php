@@ -119,7 +119,7 @@ class run_test implements pts_option_interface
 
 				$test_run_manager->add_suite_run($to_run);
 			}
-			else if(pts_is_test_result($to_run) || is_file(pts_input_correct_results_path($to_run)))
+			else if(pts_is_test_result($to_run))
 			{
 				echo pts_string_header("Comparison: " . $to_run);
 
