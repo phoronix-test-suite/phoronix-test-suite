@@ -26,15 +26,16 @@ class change_results_display_order implements pts_option_interface
 	{
 		return array("merge");
 	}
-	public static function run($r)
+	public static function argument_checks()
 	{
-		$result = pts_find_result_file($r[0]);
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
+		);
 
-		if($result == false)
-		{
-			echo "\nNo result file was specified.\n";
-			return false;
-		}
+	}
+	public static function run($args)
+	{
+		$result = $args["result_file"];
 
 		$result_file = new pts_result_file($result);
 		$result_file_identifiers = $result_file->get_system_identifiers();
@@ -67,9 +68,9 @@ class change_results_display_order implements pts_option_interface
 		while(count($result_file_identifiers) > 0);
 
 		$ordered_result = pts_merge_test_results($extract_selects);
-		pts_save_result($r[0] . "/composite.xml", $ordered_result);
-		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $r[0]);
-		pts_display_web_browser(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
+		pts_save_result($args[0] . "/composite.xml", $ordered_result);
+		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $args[0]);
+		pts_display_web_browser(SAVE_RESULTS_DIR . $args[0] . "/composite.xml");
 	}
 }
 

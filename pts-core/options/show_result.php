@@ -22,21 +22,22 @@
 
 class show_result implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
+		);
+	}
 	public static function run($r)
 	{
-		if(($URL = pts_find_result_file($r[0])) != false)
-		{
-			if(!is_dir(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/"))
-			{
-				pts_generate_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
-			}
+		$URL = $r["result_file"];
 
-			pts_display_web_browser($URL, null, false, true);
-		}
-		else
+		if(!is_dir(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/"))
 		{
-			echo "\n" . $r[0] . " was not found.\n";
+			pts_generate_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 		}
+
+		pts_display_web_browser($URL, null, false, true);
 	}
 }
 

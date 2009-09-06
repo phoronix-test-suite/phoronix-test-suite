@@ -22,9 +22,9 @@
 
 class info implements pts_option_interface
 {
-	public static function run($r)
+	public static function run($args)
 	{
-		$to_info = $r[0];
+		$to_info = $args[0];
 
 		if(pts_is_suite($to_info))
 		{

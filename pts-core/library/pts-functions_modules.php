@@ -335,6 +335,10 @@ function pts_module_process_extensions($extensions, &$write_to)
 		pts_auto_detect_modules();
 	}
 }
+function pts_is_module($name)
+{
+	return pts_module_type($name) != false;
+}
 function pts_module_type($name)
 {
 	// Determine the code type of a module

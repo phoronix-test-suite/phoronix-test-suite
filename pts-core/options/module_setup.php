@@ -22,6 +22,12 @@
 
 class module_setup implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_is_module", null, "No module found.")
+		);
+	}
 	public static function run($r)
 	{
 		$module = strtolower($r[0]);

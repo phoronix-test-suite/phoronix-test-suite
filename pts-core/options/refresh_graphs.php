@@ -22,31 +22,31 @@
 
 class refresh_graphs implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
+		);
+	}
 	public static function run($r)
 	{
 		$identifier = $r[0];
+		$file = $r["result_file"];
 
-		if(($file = pts_find_result_file($identifier)) != false)
+		$composite_xml = file_get_contents($file);
+
+		if(!is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
 		{
-			$composite_xml = file_get_contents($file);
-
-			if(!is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
-			{
-				pts_save_result($identifier . "/composite.xml", $composite_xml);
-			}
-			else
-			{
-				pts_generate_graphs($composite_xml, SAVE_RESULTS_DIR . $identifier . "/");
-			}
-
-			echo "\nThe Phoronix Test Suite Graphs Have Been Re-Rendered.\n";
-			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
-			pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
+			pts_save_result($identifier . "/composite.xml", $composite_xml);
 		}
 		else
 		{
-			echo pts_string_header($identifier . " was not found.");
+			pts_generate_graphs($composite_xml, SAVE_RESULTS_DIR . $identifier . "/");
 		}
+
+		echo "\nThe Phoronix Test Suite Graphs Have Been Re-Rendered.\n";
+		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
+		pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
 	}
 }
 

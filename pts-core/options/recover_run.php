@@ -26,13 +26,14 @@ class recover_run implements pts_option_interface
 	{
 		return array("merge");
 	}
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_is_test_result", null, "No test result was found found.")
+		);
+	}
 	public static function run($r)
 	{
-		if(!pts_is_test_result($r[0]) && !is_dir(SAVE_RESULTS_DIR . $r[0]))
-		{
-			echo "\nThe name of a test result file must be passed as an argument.\n";
-			return false;
-		}
 		if(!is_file(SAVE_RESULTS_DIR . $r[0] . "/objects.pt2so"))
 		{
 			if(is_file(SAVE_RESULTS_DIR . $r[0] . "/composite.xml"))

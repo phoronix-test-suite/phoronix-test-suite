@@ -26,15 +26,15 @@ class reference_comparison implements pts_option_interface
 	{
 		return array("merge");
 	}
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "result", "No result file was found.")
+		);
+	}
 	public static function run($r)
 	{
-		$result = pts_find_result_file($r[0]);
-
-		if($result == false)
-		{
-			echo "\nNo result file was specified.\n";
-			return false;
-		}
+		$result = $r["result"];
 
 		$reference_test_globals = pts_result_file_reference_tests($result);
 

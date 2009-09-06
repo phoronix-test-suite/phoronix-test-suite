@@ -22,25 +22,27 @@
 
 class analyze_all_runs implements pts_option_interface
 {
-	public static function run($r)
+	public static function argument_checks()
 	{
-		$identifier = $r[0];
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "identifier", "No result file was found.")
+		);
 
-		if(($file = pts_find_result_file($identifier)) != false)
-		{
-			$composite_xml = file_get_contents($file);
+	}
+	public static function run($args)
+	{
+		$identifier = $args[0];
+		$file = $args["identifier"];
 
-			pts_set_assignment("GRAPH_RENDER_TYPE", "CANDLESTICK");
-			if(pts_save_result($identifier . "/composite.xml", $composite_xml))
-			{
-				echo "\n" . $identifier . " has been re-rendered to show all test runs.\n";
-				pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
-				pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
-			}
-		}
-		else
+		$composite_xml = file_get_contents($file);
+
+		pts_set_assignment("GRAPH_RENDER_TYPE", "CANDLESTICK");
+
+		if(pts_save_result($identifier . "/composite.xml", $composite_xml))
 		{
-			echo pts_string_header($identifier . " was not found.");
+			echo "\nThe " . $identifier . " result file graphs have been re-rendered to show all test runs.\n";
+			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
+			pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
 		}
 	}
 }

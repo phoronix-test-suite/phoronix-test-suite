@@ -26,31 +26,31 @@ class download_test_files implements pts_option_interface
 	{
 		return array("install");
 	}
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "!pts_empty", null, "The name of a test, suite, or result file must be entered.")
+		);
+
+	}
 	public static function run($r)
 	{
 		$test = $r[0];
 
-		if(empty($test))
+		$tests = pts_contained_tests(strtolower($test), true);
+
+		if(count($tests) == 0)
 		{
-			echo "\nThe test or suite name to install must be supplied.\n";
+			echo "\n" . $test . " is not recognized.\n";
 		}
 		else
 		{
-			$tests = pts_contained_tests(strtolower($test), true);
-
-			if(count($tests) == 0)
+			foreach($tests as $this_test)
 			{
-				echo "\n" . $test . " is not recognized.\n";
-			}
-			else
-			{
-				foreach($tests as $this_test)
-				{
-					// Download Test Files
-					$display_mode = new pts_standard_display_mode();
-					pts_setup_install_test_directory($this_test, false);
-					pts_download_test_files($this_test, $display_mode);
-				}
+				// Download Test Files
+				$display_mode = new pts_standard_display_mode();
+				pts_setup_install_test_directory($this_test, false);
+				pts_download_test_files($this_test, $display_mode);
 			}
 		}
 	}

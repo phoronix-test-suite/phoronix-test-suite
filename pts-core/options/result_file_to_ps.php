@@ -22,6 +22,12 @@
 
 class result_file_to_ps implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
+		);
+	}
 	public static function run($r)
 	{
 		echo pts_string_header("Result File To PostScript Converter");
@@ -35,7 +41,7 @@ class result_file_to_ps implements pts_option_interface
 		putenv("JPG_DEBUG=true"); // Force to JPEG mode
 		pts_generate_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
-		$xml_parser = new pts_results_tandem_XmlReader($saved_results_file);
+		$xml_parser = new pts_results_tandem_XmlReader($r["result_file"]);
 		$ps = ps_new();
 		$page_width = 596;
 		$page_height = 842;

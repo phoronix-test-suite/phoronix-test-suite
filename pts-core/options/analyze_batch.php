@@ -26,44 +26,31 @@ class analyze_batch implements pts_option_interface
 	{
 		return array("merge");
 	}
-	public static function run($r)
+	public static function argument_checks()
 	{
-		if(($base_file = pts_find_result_file($r[0])) == false)
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "base_file", "No result file was found.")
+		);
+
+	}
+	public static function run($args)
+	{
+		$base_file = $args["base_file"];
+
+		do
 		{
-			echo "\n" . $r[0] . " could not be found.\n";
+			$rand_file = rand(1000, 9999);
+			$save_to = "analyze-" . $rand_file . '/';
 		}
-		else
-		{
-			$save_to = $r[1];
+		while(is_dir(SAVE_RESULTS_DIR . $save_to));
+		$save_to .= "composite.xml";
 
-			if(!empty($save_to) && !is_dir(SAVE_RESULTS_DIR . $save_to))
-			{
-				$save_to .= "/composite.xml";
-			}
-			else
-			{
-				$save_to = null;
-			}
-
-			if(empty($save_to))
-			{
-				do
-				{
-					$rand_file = rand(1000, 9999);
-					$save_to = "analyze-" . $rand_file . '/';
-				}
-				while(is_dir(SAVE_RESULTS_DIR . $save_to));
-
-				$save_to .= "composite.xml";
-			}
-
-			// Analyze Results
-			$SAVED_RESULTS = pts_generate_analytical_batch_xml($base_file);
-			pts_save_result($save_to, $SAVED_RESULTS);
-			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $save_to);
-			echo "Results Saved To: " . SAVE_RESULTS_DIR . $save_to . "\n\n";
-			pts_display_web_browser(SAVE_RESULTS_DIR . dirname($save_to) . "/index.html");
-		}
+		// Analyze Results
+		$SAVED_RESULTS = pts_generate_analytical_batch_xml($base_file);
+		pts_save_result($save_to, $SAVED_RESULTS);
+		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $save_to);
+		echo "Results Saved To: " . SAVE_RESULTS_DIR . $save_to . "\n\n";
+		pts_display_web_browser(SAVE_RESULTS_DIR . dirname($save_to) . "/index.html");
 	}
 }
 

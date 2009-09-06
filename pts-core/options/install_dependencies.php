@@ -26,18 +26,17 @@ class install_dependencies implements pts_option_interface
 	{
 		return array("install");
 	}
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "!pts_empty", null, "The name of a test, suite, or result file must be entered.")
+		);
+	}
 	public static function run($r)
 	{
 		$r = array_map("strtolower", $r);
-
-		if(empty($r[0]))
-		{
-			echo "\nThe test or suite name to install external dependencies for must be supplied.\n";
-		}
-		else
-		{
-			pts_install_package_on_distribution($r[0]);
-		}
+		$display_mode = new pts_standard_display_mode();
+		pts_install_package_on_distribution($r, $display_mode);
 	}
 }
 

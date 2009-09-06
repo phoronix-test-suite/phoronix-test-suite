@@ -107,13 +107,13 @@ function pts_result_file_system_info_to_xml(&$pts_result_file, &$xml_writer, &$s
 
 	for($i = 0; $i < count($system_hardware); $i++)
 	{
-		if(!($result_merge_select instanceOf pts_result_merge_select) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
+		if(!($is_pts_rms = ($result_merge_select instanceOf pts_result_merge_select)) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
 		{
 			$this_hash = md5($associated_identifiers[$i] . ";" . $system_hardware[$i] . ";" . $system_software[$i] . ";" . $system_date[$i]);
 
 			if(!in_array($this_hash, $systems_hash))
 			{
-				if(($renamed = $result_merge_select->get_rename_identifier()) != null)
+				if($is_pts_rms && ($renamed = $result_merge_select->get_rename_identifier()) != null)
 				{
 					$associated_identifiers[$i] = $renamed;
 				}

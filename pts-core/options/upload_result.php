@@ -26,32 +26,33 @@ class upload_result implements pts_option_interface
 	{
 		return array("run");
 	}
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
+		);
+	}
 	public static function run($r)
 	{
-		if(($use_file = pts_find_result_file($r[0], false)) == false)
+		$use_file = $r["result_file"];
+
+		if(!pts_is_assignment("AUTOMATED_MODE"))
 		{
-			echo "\nThis result does not exist.\n";
+			$tags_input = pts_prompt_user_tags();
+			echo "\n";
+		}
+
+		$upload_url = pts_global_upload_result($use_file, $tags_input);
+
+		if(!empty($upload_url))
+		{
+			echo "\nResults Uploaded To: " . $upload_url . "\n\n";
+			pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
+			pts_module_process("__event_global_upload", $upload_url);
 		}
 		else
 		{
-			if(!pts_is_assignment("AUTOMATED_MODE"))
-			{
-				$tags_input = pts_prompt_user_tags();
-				echo "\n";
-			}
-
-			$upload_url = pts_global_upload_result($use_file, $tags_input);
-
-			if(!empty($upload_url))
-			{
-				echo "\nResults Uploaded To: " . $upload_url . "\n\n";
-				pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
-				pts_module_process("__event_global_upload", $upload_url);
-			}
-			else
-			{
-				echo "\nResults Failed To Upload.\n";
-			}
+			echo "\nResults Failed To Upload.\n";
 		}
 	}
 }

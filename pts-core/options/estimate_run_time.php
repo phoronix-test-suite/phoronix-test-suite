@@ -22,16 +22,24 @@
 
 class estimate_run_time implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "!pts_empty", null, "The name of a test, suite, or result file must be entered.")
+		);
+
+	}
 	public static function run($r)
 	{
-		if(empty($r[0]))
-		{
-			echo "\nThe name of a test, suite, or result file must be specified.\n";
-		}
-
 		echo "\n";
 		$accurate = true;
 		$run_times = pts_estimated_run_time($r, false);
+
+		if(count($run_times) == 0)
+		{
+			echo pts_string_header("No test, suite, or result file was found.");
+			return false;
+		}
 
 		foreach($run_times as $test => $time)
 		{

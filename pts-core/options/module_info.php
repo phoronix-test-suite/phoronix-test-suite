@@ -22,19 +22,21 @@
 
 class module_info implements pts_option_interface
 {
-	public static function run($r)
+	public static function argument_checks()
 	{
-		$module = strtolower($r[0]);
+		return array(
+		new pts_argument_check(0, "pts_is_module", null, "No module found.")
+		);
+	}
+	public static function run($args)
+	{
+		$module = strtolower($args[0]);
 
-		if(is_file(($path = MODULE_DIR . $module . ".php")) || is_file(($path = MODULE_DIR . $module . ".sh")))
+		if(is_file(($path = MODULE_DIR . $module . ".php")) || is_file(($path = MODULE_DIR . $module . ".sh"))) // TODO: come up with better way to avoid this
 		{
 			$module = new pts_user_module_details($path);
 			echo $module->info_string();
 			echo "\n";
-		}
-		else
-		{
-			echo "\n" . $module . " is not recognized.\n";
 		}
 	}
 }

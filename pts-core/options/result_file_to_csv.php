@@ -22,15 +22,15 @@
 
 class result_file_to_csv implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
+		);
+	}
 	public static function run($r)
 	{
-		if(!is_file(($saved_results_file = SAVE_RESULTS_DIR . $r[0] . "/composite.xml")))
-		{
-			echo "\n" . $r[0] . " is not a saved results file.\n\n";
-			return;
-		}
-
-		$result_file = new pts_result_file($r[0]);
+		$result_file = new pts_result_file($r["result_file"]);
 		$result_output = null;
 
 		$result_output .= $result_file->get_suite_title() . "\n" . $result_file->get_suite_name() . " - " . $result_file->get_suite_version() . "\n";

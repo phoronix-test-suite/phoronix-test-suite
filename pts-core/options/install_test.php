@@ -26,61 +26,28 @@ class install_test implements pts_option_interface
 	{
 		return array("install");
 	}
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "!pts_empty", null, "The name of a test, suite, or result file must be entered.")
+		);
+	}
 	public static function run($items_to_install)
 	{
-		if(count($items_to_install) == 0)
+		$items_to_install = array_unique(array_map("strtolower", $items_to_install));
+		echo "\n";
+
+		$display_mode = pts_get_display_mode_object();
+
+		// Any external dependencies?
+		if(!pts_install_package_on_distribution($items_to_install, $display_mode))
 		{
-			echo "\nThe test, suite name, or saved identifier must be supplied.\n";
+			echo "\nInstallation of needed test dependencies failed.\n\n";
+			return false;
 		}
-		else
-		{
-			$items_to_install = array_unique(array_map("strtolower", $items_to_install));
 
-			/*
-			foreach($items_to_install as $this_install)
-			{
-				if(strpos($this_install, "pcqs-") !== false && !pts_pcqs_is_installed())
-				{
-					// Install the Phoronix Certification & Qualification Suite
-					$agreement = wordwrap(pts_pcqs_user_license(), 65);
-
-					if(strpos($agreement, "PCQS") == false)
-					{
-						echo pts_string_header("An error occurred while connecting to the Phoronix Test Suite server. Try again later.");
-						return false;
-					}
-
-					echo "\n\n" . $agreement;
-					$agree = pts_bool_question("Do you agree to these terms in full and wish to proceed (y/n)?", false);
-
-					if($agree)
-					{
-						pts_pcqs_install_package();
-						break;
-					}
-					else
-					{
-						echo pts_string_header("In order to run PCQS you must agree to the listed terms.");
-						return false;
-					}
-				}
-			}
-			*/
-
-			echo "\n";
-
-			$display_mode = pts_get_display_mode_object();
-
-			// Any external dependencies?
-			if(!pts_install_package_on_distribution($items_to_install, $display_mode))
-			{
-				echo "\nInstallation of needed test dependencies failed.\n\n";
-				return false;
-			}
-
-			// Install tests
-			pts_start_install($items_to_install, $display_mode);
-		}
+		// Install tests
+		pts_start_install($items_to_install, $display_mode);
 	}
 }
 

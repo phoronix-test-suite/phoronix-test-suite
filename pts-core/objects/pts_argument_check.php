@@ -31,7 +31,7 @@ class pts_argument_check
 	{
 		$this->argument_index = $index;
 		$this->function_check = $function;
-		$this->function_return_key = $return_key;
+		$this->function_return_key = $return_key; // set to null when you don't want it to be set
 		$this->error_string = $error_string;
 	}
 	public function get_argument_index()

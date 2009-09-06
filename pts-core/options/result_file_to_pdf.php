@@ -22,6 +22,12 @@
 
 class result_file_to_pdf implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
+		);
+	}
 	public static function run($r)
 	{
 		echo pts_string_header("Result File To PDF Converter");
@@ -36,16 +42,10 @@ class result_file_to_pdf implements pts_option_interface
 			return;
 		}
 
-		if(!is_file(($saved_results_file = SAVE_RESULTS_DIR . $r[0] . "/composite.xml")))
-		{
-			echo "\n" . $r[0] . " is not a saved results file.\n\n";
-			return;
-		}
-
 		putenv("JPG_DEBUG=true"); // Force to JPEG mode
 		pts_generate_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
-		$xml_parser = new pts_results_tandem_XmlReader($saved_results_file);
+		$xml_parser = new pts_results_tandem_XmlReader($r["result_file"]);
 		$pdf = new pts_pdf_template($xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE), $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME));
 
 		$pdf->AddPage();

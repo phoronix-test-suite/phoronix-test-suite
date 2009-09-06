@@ -22,32 +22,31 @@
 
 class test_module implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_is_module", null, "No module found.")
+		);
+	}
 	public static function run($r)
 	{
 		$module = strtolower($r[0]);
-		if(is_file(MODULE_DIR . $module . ".php") || is_file(MODULE_DIR . $module . ".sh"))
+		pts_load_module($module);
+		pts_attach_module($module);
+
+		echo pts_string_header("Starting Module Test Process");
+
+		foreach(pts_module_processes() as $process)
 		{
-			pts_load_module($module);
-			pts_attach_module($module);
-
-			echo pts_string_header("Starting Module Test Process");
-
-			foreach(pts_module_processes() as $process)
+			if(IS_DEBUG_MODE || pts_is_assignment("DEBUG_MODULE"))
 			{
-				if(IS_DEBUG_MODE || pts_is_assignment("DEBUG_MODULE"))
-				{
-					echo "Calling: " . $process . "()\n";
-				}
-
-				pts_module_process($process);
-				sleep(1);
+				echo "Calling: " . $process . "()\n";
 			}
-			echo "\n";
+
+			pts_module_process($process);
+			sleep(1);
 		}
-		else
-		{
-			echo "\n" . $module . " is not recognized.\n";
-		}
+		echo "\n";
 	}
 }
 

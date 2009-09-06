@@ -26,15 +26,15 @@ class rename_identifier_in_result_file implements pts_option_interface
 	{
 		return array("merge");
 	}
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
+		);
+	}
 	public static function run($r)
 	{
-		$result = pts_find_result_file($r[0]);
-
-		if($result == false)
-		{
-			echo "\nNo result file was specified.\n";
-			return false;
-		}
+		$result = $r["result_file"];
 
 		$result_file = new pts_result_file($result);
 		$result_file_identifiers = $result_file->get_system_identifiers();

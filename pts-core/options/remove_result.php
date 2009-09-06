@@ -22,18 +22,16 @@
 
 class remove_result implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_is_test_result", null, "No result file found.")
+		);
+	}
 	public static function run($r)
 	{
-		if(is_file(SAVE_RESULTS_DIR . $r[0] . "/composite.xml"))
-		{
-			echo "\n";
-			pts_remove(SAVE_RESULTS_DIR . $r[0]);
-			echo "\n";
-		}
-		else
-		{
-			echo "\nThis result does not exist.\n";
-		}
+		pts_remove(SAVE_RESULTS_DIR . $r[0]);
+		echo "\n" . $r[0] . " was removed.\n";
 	}
 }
 

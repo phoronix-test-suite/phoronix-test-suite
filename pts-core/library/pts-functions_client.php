@@ -35,25 +35,33 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 
 		foreach($argument_checks as $argument_check)
 		{
-			if(!isset($pass_args[$argument_check->get_argument_index()]))
+			$function_check = $argument_check->get_function_check();
+
+			if(substr($function_check, 0, 1) == "!")
 			{
-				continue;
+				$function_check = substr($function_check, 1);
+				$return_fails_on = true;
 			}
-			if(!function_exists($argument_check->get_function_check()))
+			else
+			{
+				$return_fails_on = false;
+			}
+
+			if(!function_exists($function_check))
 			{
 				continue;
 			}
 
-			$return_value = call_user_func_array($argument_check->get_function_check(), array($pass_args[$argument_check->get_argument_index()]));
+			$return_value = call_user_func_array($function_check, array((isset($pass_args[$argument_check->get_argument_index()]) ? $pass_args[$argument_check->get_argument_index()] : null)));
 
-			if($return_value == false)
+			if($return_value == $return_fails_on)
 			{
 				echo pts_string_header($argument_check->get_error_string());
 				return false;
 			}
 			else
 			{
-				if(!isset($pass_args[$argument_check->get_function_return_key()]))
+				if($argument_check->get_function_return_key() != null && !isset($pass_args[$argument_check->get_function_return_key()]))
 				{
 					$pass_args[$argument_check->get_function_return_key()] = $return_value;
 				}

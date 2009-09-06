@@ -22,25 +22,24 @@
 
 class remove_installed_test implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, "pts_test_installed", null, "No installed test found.")
+		);
+	}
 	public static function run($r)
 	{
 		$identifier = $r[0];
 
-		if(pts_test_installed($identifier))
+		if(pts_bool_question("Are you sure you wish to remove the test " . $identifier . " (y/N)?", false))
 		{
-			if(pts_bool_question("Are you sure you wish to remove the test " . $identifier . " (y/N)?", false))
-			{
-				pts_remove(TEST_ENV_DIR . $identifier);
-				echo "\nThe " . $identifier . " test has been removed.\n\n";
-			}
-			else
-			{
-				echo "\n";
-			}
+			pts_remove(TEST_ENV_DIR . $identifier);
+			echo "\nThe " . $identifier . " test has been removed.\n\n";
 		}
 		else
 		{
-			echo "\n" . $identifier . " is not installed.\n\n";
+			echo "\n";
 		}
 	}
 }

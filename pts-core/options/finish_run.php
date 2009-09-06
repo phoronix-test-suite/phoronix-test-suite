@@ -22,15 +22,16 @@
 
 class finish_run implements pts_option_interface
 {
-	public static function run($r)
+	public static function argument_checks()
 	{
-		if(!pts_is_test_result($r[0]))
-		{
-			echo "\nThe name of a test result file must be passed as an argument.\n";
-			return false;
-		}
+		return array(
+		new pts_argument_check(0, "pts_is_test_result", null, "The name of a test result file must be entered.")
+		);
 
-		$result_file = new pts_result_file($r[0]);
+	}
+	public static function run($args)
+	{
+		$result_file = new pts_result_file($args[0]);
 
 		$system_identifiers = $result_file->get_system_identifiers();
 		$test_positions = array();

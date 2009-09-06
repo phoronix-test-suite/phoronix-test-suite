@@ -22,28 +22,21 @@
 
 class clone_global_result implements pts_option_interface
 {
-	public static function run($r)
+	public static function argument_checks()
 	{
-		$identifier = $r[0];
+		return array(
+		new pts_argument_check(0, "!pts_is_test_result", null, "A saved result already exists with the same name."),
+		new pts_argument_check(0, "pts_is_global_id", null, "No Phoronix Global result file found.")
+		);
 
-		if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
-		{
-			echo "A saved result already exists with the same name.\n\n";
-		}
-		else
-		{
-			if(pts_is_global_id($identifier))
-			{
-				pts_save_result($identifier . "/composite.xml", pts_global_download_xml($identifier));
-				echo "Result Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
-				pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
-				//pts_display_web_browser(SAVE_RESULTS_DIR . $ARG_1 . "/index.html");
-			}
-			else
-			{
-				echo $identifier . " is an unrecognized Phoronix Global ID.\n\n";
-			}
-		}
+	}
+	public static function run($args)
+	{
+		$identifier = $args[0];
+		pts_save_result($identifier . "/composite.xml", pts_global_download_xml($identifier));
+		echo "\nResult Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
+		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
+		//pts_display_web_browser(SAVE_RESULTS_DIR . $ARG_1 . "/index.html");
 	}
 }
 
