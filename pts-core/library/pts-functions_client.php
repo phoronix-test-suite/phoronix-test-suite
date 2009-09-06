@@ -29,6 +29,38 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 		pts_load_run_option($command);
 	}
 
+	if(method_exists($command, "argument_checks"))
+	{
+		eval("\$argument_checks = " . $command . "::" . "argument_checks();");
+
+		foreach($argument_checks as $argument_check)
+		{
+			if(!isset($pass_args[$argument_check->get_argument_index()]))
+			{
+				continue;
+			}
+			if(!function_exists($argument_check->get_function_check()))
+			{
+				continue;
+			}
+
+			$return_value = call_user_func_array($argument_check->get_function_check(), array($pass_args[$argument_check->get_argument_index()]));
+
+			if($return_value == false)
+			{
+				echo pts_string_header($argument_check->get_error_string());
+				return false;
+			}
+			else
+			{
+				if(!isset($pass_args[$argument_check->get_function_return_key()]))
+				{
+					$pass_args[$argument_check->get_function_return_key()] = $return_value;
+				}
+			}
+		}
+	}
+
 	pts_clear_assignments();
 	pts_set_assignment(array("START_TIME", "THIS_OPTION_IDENTIFIER"), time()); // For now THIS_OPTION_IDENTIFIER is also time
 	pts_set_assignment("COMMAND", $command);

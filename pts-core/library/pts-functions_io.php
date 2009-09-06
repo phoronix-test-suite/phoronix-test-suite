@@ -113,6 +113,11 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 function pts_string_header($heading, $char = '=')
 {
 	// Return a string header
+	if(!isset($heading[1]))
+	{
+		return null;
+	}
+
 	$header_size = 36;
 
 	foreach(explode("\n", $heading) as $line)
