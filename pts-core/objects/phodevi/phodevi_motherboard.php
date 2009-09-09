@@ -90,16 +90,21 @@ class phodevi_motherboard extends pts_device_interface
 			$product = read_system_hal(array("system.hardware.product", "system.board.product"));
 			$version = read_system_hal(array("system.hardware.version", "smbios.system.version"));
 
-			$info = ($vendor != false ? $vendor : "");
+			$info = null;
 
 			if(empty($product) && (strpos($version, ".") === false && !empty($version)))
 			{
 				$product = $version;
 			}
 
-			if(!empty($product) && !empty($product))
+			if(!empty($product))
 			{
-				$info .= " " . $product;
+				if($vendor != false && strpos($product, $vendor . " ") === false)
+				{
+					$info .= $vendor . " ";
+				}
+
+				$info .= $product;
 			}
 
 			if(empty($info))

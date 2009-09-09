@@ -27,14 +27,12 @@ class analyze_all_runs implements pts_option_interface
 		return array(
 		new pts_argument_check(0, "pts_find_result_file", "identifier", "No result file was found.")
 		);
-
 	}
 	public static function run($args)
 	{
 		$identifier = $args[0];
-		$file = $args["identifier"];
 
-		$composite_xml = file_get_contents($file);
+		$composite_xml = file_get_contents($args["identifier"]);
 
 		pts_set_assignment("GRAPH_RENDER_TYPE", "CANDLESTICK");
 

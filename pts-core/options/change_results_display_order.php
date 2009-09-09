@@ -31,7 +31,6 @@ class change_results_display_order implements pts_option_interface
 		return array(
 		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
 		);
-
 	}
 	public static function run($args)
 	{
