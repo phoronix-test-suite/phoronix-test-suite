@@ -343,7 +343,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 	if($remove_old_files)
 	{
 		// Remove any (old) files that were installed
-		$ignore_files = array("pts-install.xml");
+		$ignore_files = array("pts-install.xml", "install-failed.log");
 		foreach(pts_objects_test_downloads($identifier) as $download_object)
 		{
 			array_push($ignore_files, $download_object->get_filename());
@@ -449,7 +449,8 @@ function pts_install_test($identifier, &$display_mode)
 
 					if(!empty($install_log))
 					{
-						@file_put_contents(TEST_ENV_DIR . $identifier . "/install.log", $install_log);
+						file_put_contents(TEST_ENV_DIR . $identifier . "/install.log", $install_log);
+						pts_unlink(TEST_ENV_DIR . $identifier . "/install-failed.log");
 						$display_mode->test_install_output($install_log);
 					}
 
@@ -463,7 +464,7 @@ function pts_install_test($identifier, &$display_mode)
 						{
 							// TODO: perhaps better way to handle this than to remove pts-install.xml
 							pts_unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
-
+							pts_copy(TEST_ENV_DIR . $identifier . "/install.log", TEST_ENV_DIR . $identifier . "/install-failed.log");
 							pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
 
 							echo "\nThe " . $identifier . " installer exited with a non-zero exit status. Installation failed.\n";
