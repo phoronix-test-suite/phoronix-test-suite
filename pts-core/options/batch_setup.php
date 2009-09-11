@@ -45,6 +45,7 @@ class batch_setup implements pts_option_interface
 			$batch_options[P_OPTION_BATCH_PROMPTSAVENAME] = "FALSE";
 		}
 
+		$batch_options[P_OPTION_BATCH_TESTALLOPTIONS] = pts_config_bool_to_string(pts_bool_question("Run all test options (Y/n)?", true));
 		$batch_options[P_OPTION_BATCH_CONFIGURED] = "TRUE";
 
 		pts_user_config_init($batch_options);

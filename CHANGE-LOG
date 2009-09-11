@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: No longer support having test result XML files outside of the test-results/ directory where an absolute path was supplied to PTS
 - pts-core: Add support for performing argument / start-up checks for a PTS option prior to ever calling the run function
 - pts-core: When a test installation fails, save the install.log to install-failed.log
+- pts-core: Add option in batch-setup for still prompting for test option selection when running in batch mode
 - phodevi: Don't repeat the system vendor in motherboard string if it's also present in the product string
 - phodevi: Don't report hard drive bytes on Mac OS X 10.6 when reading the capacity of a disk
 - pts: Update Fedora external dependencies XML for blas-development and popt

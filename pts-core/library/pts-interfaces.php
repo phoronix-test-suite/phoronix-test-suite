@@ -200,6 +200,7 @@ define("P_OPTION_BATCH_UPLOADRESULTS", "PhoronixTestSuite/Options/BatchMode/Uplo
 define("P_OPTION_BATCH_PROMPTIDENTIFIER", "PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier"); // Batch mode prompt for test identifier
 define("P_OPTION_BATCH_PROMPTDESCRIPTION", "PhoronixTestSuite/Options/BatchMode/PromptForTestDescription"); // Batch mode prompt for test description
 define("P_OPTION_BATCH_PROMPTSAVENAME", "PhoronixTestSuite/Options/BatchMode/PromptSaveName"); // Batch mode prompt for save results name
+define("P_OPTION_BATCH_TESTALLOPTIONS", "PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations"); // Batch mode prompt to run all test options
 
 //
 // MODULE CONFIGURATION SPECIFICATION

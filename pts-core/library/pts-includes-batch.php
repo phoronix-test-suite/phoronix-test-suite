@@ -37,5 +37,9 @@ function pts_batch_prompt_save_name()
 {
 	return pts_string_bool(pts_read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"));
 }
+function pts_batch_run_all_test_options()
+{
+	return pts_string_bool(pts_read_user_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"));
+}
 
 ?>

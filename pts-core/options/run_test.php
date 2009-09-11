@@ -72,7 +72,7 @@ class run_test implements pts_option_interface
 					}
 				}
 
-				if(pts_read_assignment("IS_BATCH_MODE"))
+				if(pts_read_assignment("IS_BATCH_MODE") && pts_batch_run_all_test_options())
 				{
 					$option_output = pts_generate_batch_run_options($to_run);
 				}
