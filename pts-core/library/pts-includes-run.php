@@ -383,7 +383,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
 	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));
-	$ignore_runs = array_map("trim", explode(",", $xml_parser->getXMLValue(P_TEST_IGNORERUNS)));
+	$ignore_runs = pts_trim_explode(",", $xml_parser->getXMLValue(P_TEST_IGNORERUNS));
 	$pre_run_message = $xml_parser->getXMLValue(P_TEST_PRERUNMSG);
 	$post_run_message = $xml_parser->getXMLValue(P_TEST_POSTRUNMSG);
 	$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
@@ -446,7 +446,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$execute_binary = $test_identifier;
 	}
 
-	$execute_path_check = array_map("trim", explode(",", $execute_path));
+	$execute_path_check = pts_trim_explode(",", $execute_path);
 	array_push($execute_path_check, $test_directory);
 	$to_execute = null;
 

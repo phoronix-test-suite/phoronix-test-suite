@@ -35,9 +35,9 @@ function read_acpi($point, $match)
 
 			for($i = 0; $i < count($acpi_lines) && $value == false; $i++)
 			{
-				$line = explode(": ", $acpi_lines[$i]);
-				$this_attribute = trim($line[0]);
-				$this_value = (count($line) > 1 ? trim($line[1]) : null);
+				$line = pts_trim_explode(": ", $acpi_lines[$i]);
+				$this_attribute = $line[0];
+				$this_value = (count($line) > 1 ? $line[1] : null);
 
 				if($this_attribute == $match)
 				{
@@ -62,19 +62,12 @@ function read_hal($name, $UDI = null)
 		if(empty($remove_words) && is_file(STATIC_DIR . "hal-values-remove.txt"))
 		{
 			$word_file = trim(file_get_contents(STATIC_DIR . "hal-values-remove.txt"));
-			$remove_words = array_map("trim", explode("\n", $word_file));
+			$remove_words = pts_trim_explode("\n", $word_file);
 		}
 
 		for($i = 0; $i < count($name) && empty($info); $i++)
 		{
-			if(empty($UDI))
-			{
-				$info = shell_exec("lshal 2>&1 | grep \"" . $name[$i] . "\"");
-			}
-			else
-			{
-				$info = shell_exec("lshal -u $UDI 2>&1 | grep \"" . $name[$i] . "\"");
-			}
+			$info = shell_exec("lshal " . (!empty($UDI) ? "-u " . $UDI : "") . " 2>&1 | grep \"" . $name[$i] . "\"");
 
 			if(($pos = strpos($info, $name[$i] . " = '")) !== false)
 			{
@@ -119,8 +112,8 @@ function read_sensors($attributes)
 			$attribute = $attributes[$j];
 			for($i = 0; $i < count($sensors_lines) && $value == false; $i++)
 			{
-				$line = explode(": ", $sensors_lines[$i]);
-				$this_attribute = trim($line[0]);
+				$line = pts_trim_explode(": ", $sensors_lines[$i]);
+				$this_attribute = $line[0];
 
 				if($this_attribute == $attribute)
 				{
@@ -263,9 +256,9 @@ function read_cpuinfo($attribute)
 
 		foreach($cpuinfo_lines as $line)
 		{
-			$line = explode(": ", $line);
-			$this_attribute = trim($line[0]);
-			$this_value = (count($line) > 1 ? trim($line[1]) : "");
+			$line = pts_trim_explode(": ", $line);
+			$this_attribute = $line[0];
+			$this_value = (count($line) > 1 ? $line[1] : "");
 
 			if($this_attribute == $attribute)
 			{
@@ -626,11 +619,11 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore =
 				$found_in_section = false;
 				for($i = 0; $i < count($dmidecode_elements) && $found_in_section == false; $i++)
 				{
-					$dmidecode_r = explode(":", $dmidecode_elements[$i]);
+					$dmidecode_r = pts_trim_explode(":", $dmidecode_elements[$i]);
 
-					if(trim($dmidecode_r[0]) == $object && isset($dmidecode_r[1]) && !in_array(trim($dmidecode_r[1]), $ignore))
+					if($dmidecode_r[0] == $object && isset($dmidecode_r[1]) && !in_array($dmidecode_r[1], $ignore))
 					{
-						array_push($value, trim($dmidecode_r[1]));
+						array_push($value, $dmidecode_r[1]);
 						$found_in_section = true;
 					}
 				}
@@ -676,9 +669,9 @@ function read_sun_ddu_dmi_info($object, $args = "")
 
 		foreach($lines as $line)
 		{
-			$line = explode(":", $line);
+			$line = pts_trim_explode(":", $line);
 			$line_object = str_replace(" ", "", $line[0]);
-			$this_value = (count($line) > 1 ? trim($line[1]) : "");
+			$this_value = (count($line) > 1 ? $line[1] : "");
 
 			if(empty($this_value) && !empty($section))
 			{

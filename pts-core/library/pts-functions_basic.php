@@ -150,5 +150,9 @@ function pts_to_array($var)
 {
 	return !is_array($var) ? array($var) : $var;
 }
+function pts_trim_explode($delimiter, &$to_explode)
+{
+	return array_map("trim", explode($delimiter, $to_explode));
+}
 
 ?>

@@ -572,7 +572,7 @@ function pts_test_architecture_supported($identifier)
 
 		if(!empty($archs))
 		{
-			$archs = array_map("trim", explode(",", $archs));
+			$archs = pts_trim_explode(",", $archs);
 			$supported = pts_cpu_arch_compatible($archs);
 		}
 	}
@@ -594,7 +594,7 @@ function pts_test_platform_supported($identifier)
 		{
 			if(!empty($un_platforms))
 			{
-				$un_platforms = array_map("trim", explode(",", $un_platforms));
+				$un_platforms = pts_trim_explode(",", $un_platforms);
 
 				if(in_array(OPERATING_SYSTEM, $un_platforms))
 				{
@@ -603,7 +603,7 @@ function pts_test_platform_supported($identifier)
 			}
 			if(!empty($platforms))
 			{
-				$platforms = array_map("trim", explode(",", $platforms));
+				$platforms = pts_trim_explode(",", $platforms);
 
 				if(!in_array(OPERATING_SYSTEM, $platforms))
 				{
@@ -894,13 +894,13 @@ function pts_objects_test_downloads($test_identifier)
 
 			if(!empty($package_platform[$i]))
 			{
-				$platforms = array_map("trim", explode(",", $package_platform[$i]));
+				$platforms = pts_trim_explode(",", $package_platform[$i]);
 				$file_exempt = !in_array(OPERATING_SYSTEM, $platforms);
 			}
 
 			if(!empty($package_architecture[$i]))
 			{
-				$architectures = array_map("trim", explode(",", $package_architecture[$i]));
+				$architectures = pts_trim_explode(",", $package_architecture[$i]);
 				$file_exempt = !pts_cpu_arch_compatible($architectures);
 			}
 
@@ -936,7 +936,7 @@ function pts_generic_reference_system_comparison_ids()
 
 	if($comparison_ids == null)
 	{
-		$comparison_ids = array_map("trim", explode("\n", file_get_contents(STATIC_DIR . "reference-system-comparisons.txt")));
+		$comparison_ids = pts_trim_explode("\n", file_get_contents(STATIC_DIR . "reference-system-comparisons.txt"));
 	}
 
 	return $comparison_ids;
@@ -969,7 +969,7 @@ function pts_result_file_reference_tests($result)
 		$reference_systems_xml = null;
 	}
 
-	$reference_ids = array_map("trim", explode(",", $reference_systems_xml));
+	$reference_ids = pts_trim_explode(",", $reference_systems_xml);
 	$reference_file_ids = pts_generic_reference_system_comparison_ids();
 
 	foreach(array_merge($reference_ids, $reference_file_ids) as $global_id)

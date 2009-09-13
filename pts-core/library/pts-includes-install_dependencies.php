@@ -141,7 +141,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 
 	if(!empty($dependencies))
 	{
-		$dependencies = array_map("trim", explode(",", $dependencies));
+		$dependencies = pts_trim_explode(",", $dependencies);
 
 		if(!pts_is_assignment("PTS_EXDEP_FIRST_RUN"))
 		{
@@ -190,7 +190,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 				{
 					$add_dependency = (!empty($file_check[$i]) ? pts_file_missing_check(explode(",", $file_check[$i])) : true);
 					$arch_compliant = empty($arch_specific[$i]) || 
-					in_array(phodevi::read_property("system", "kernel-architecture"), array_map("trim", explode(",", $arch_specific[$i])));
+					in_array(phodevi::read_property("system", "kernel-architecture"), pts_trim_explode(",", $arch_specific[$i]));
 
 					if($add_dependency && $arch_compliant)
 					{

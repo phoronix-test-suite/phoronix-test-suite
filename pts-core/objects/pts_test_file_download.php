@@ -36,7 +36,7 @@ class pts_test_file_download
 	}
 	public function get_download_url_array()
 	{
-		return array_map("trim", explode(",", $this->url));
+		return pts_trim_explode(",", $this->url);
 	}
 	public function get_filename()
 	{

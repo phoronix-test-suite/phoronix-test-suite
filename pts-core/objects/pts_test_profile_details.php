@@ -61,7 +61,7 @@ class pts_test_profile_details
 	}
 	public function get_maintainer()
 	{
-		$test_maintainer = array_map("trim", explode("|", $this->maintainer));
+		$test_maintainer = pts_trim_explode("|", $this->maintainer);
 		$test_maintainer = $test_maintainer[0] . (count($test_maintainer) == 2 ? " <" . $test_maintainer[1] . ">" : null);
 
 		return $test_maintainer;
@@ -100,7 +100,7 @@ class pts_test_profile_details
 	}
 	public function get_dependencies()
 	{
-		return array_map("trim", explode(",", $this->dependencies));
+		return pts_trim_explode(",", $this->dependencies);
 	}
 	public function suites_using_this_test()
 	{

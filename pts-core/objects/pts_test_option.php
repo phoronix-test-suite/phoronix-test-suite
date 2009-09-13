@@ -147,7 +147,7 @@ class pts_test_option
 	{
 		$return_keys = array();
 
-		foreach(array_map("trim", explode(",", $input)) as $input_choice)
+		foreach(pts_trim_explode(",", $input) as $input_choice)
 		{
 			if($input_choice == (($c = $this->option_count()) + 1))
 			{

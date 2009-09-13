@@ -148,12 +148,12 @@ function pts_clean_information_string($str)
 	if($remove_phrases == null && is_file(STATIC_DIR . "info-strings-remove.txt"))
 	{
 		$word_file = trim(file_get_contents(STATIC_DIR . "info-strings-remove.txt"));
-		$remove_phrases = array_map("trim", explode("\n", $word_file));
+		$remove_phrases = pts_trim_explode("\n", $word_file);
 	}
 	if($change_phrases == null && is_file(STATIC_DIR . "info-strings-replace.txt"))
 	{
 		$word_file = trim(file_get_contents(STATIC_DIR . "info-strings-replace.txt"));
-		$phrases_r = array_map("trim", explode("\n", $word_file));
+		$phrases_r = pts_trim_explode("\n", $word_file);
 		$change_phrases = array();
 
 		foreach($phrases_r as $phrase)
