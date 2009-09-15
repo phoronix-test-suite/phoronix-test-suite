@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.2 Alpha 2
+September 15, 2009
 
 - pts-core: Add display mode support to download-test-files option
 - pts-core: Handle pts_storage_object on failure correctly to avoid fatal error during testing process
@@ -26,7 +27,7 @@ Phoronix Test Suite (Git)
 - pts: Build libpng within graphics-magick test profile so it will run on Mac OS X 10.6
 - pts: Add aio-stress test profile
 
-Phoronix Test Suite 2.2.0 Alpha 1
+Phoronix Test Suite 2.2 Alpha 1
 August 27, 2009
 
 - pts-core: Begin writing the results XML during the test run process earlier
