@@ -353,6 +353,60 @@ function pts_get_display_mode_object()
 
 	return $display_mode;
 }
+function pts_http_get_contents($url)
+{
+	$proxy_address = pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, null);
+	$proxy_port = pts_read_user_config(P_OPTION_NET_PROXY_PORT, null);
+	$contents = false;
+
+	if($proxy_address != null && is_numeric($proxy_port))
+	{
+		$net_fp = fsockopen($proxy_address, $proxy_port);
+
+		if(!$net_fp)
+		{
+			return false;
+		}
+
+		fputs($net_fp, "GET " . $url . " HTTP/1.0\r\nHost: " . $proxy_address . "\r\n\r\n");
+
+		while(!feof($net_fp))
+		{
+			$contents .= fread($net_fp, 4096);
+		}
+
+		fclose($net_fp);
+
+		$contents = substr($contents, strpos($contents, "\r\n\r\n") + 4);
+	}
+	else
+	{
+		$contents = file_get_contents($url);
+	}
+
+	return $contents;
+}
+function pts_http_upload_via_post($url, $to_post_data)
+{
+	$upload_data = http_build_query($to_post_data);
+	$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
+
+	$proxy_address = pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, null);
+	$proxy_port = pts_read_user_config(P_OPTION_NET_PROXY_PORT, null);
+
+	if($proxy_address != null && is_numeric($proxy_port))
+	{
+		echo "Bangs Proxy!";
+		$http_parameters["http"]["proxy"] = "tcp://" . $proxy_address . ":" . $proxy_port;
+		$http_parameters["http"]["request_fulluri"] = true;
+	}
+
+	$stream_context = stream_context_create($http_parameters);
+	$opened_url = @fopen($url, "rb", false, $stream_context);
+	$response = @stream_get_contents($opened_url);
+
+	return $response;
+}
 function pts_anonymous_usage_reporting()
 {
 	return pts_string_bool(pts_read_user_config(P_OPTION_USAGE_REPORTING, 0));

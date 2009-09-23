@@ -59,6 +59,11 @@
 			<h3>PromptSaveName: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/BatchMode/PromptSaveName" /></span></h3>
 			<p>If this option is set to <em>TRUE</em>, when running in batch mode the user will be prompted to enter a test name. If this option is set to <em>FALSE</em>, a test name will be automatically generated.</p>
 
+			<h1>Networking Options</h1>
+			<h3>ProxyAddress: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyAddress" /></span></h3>
+			<p>If you wish to use a HTTP proxy server to allow the Phoronix Test Suite to communicate with Phoronix Global and other web services, enter the IP address / server name of the proxy server in this tag.</p>
+			<h3>ProxyPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyPort" /></span></h3>
+			<p>If using a proxy server, enter the TCP port in this tag.</p>
 
 		</div>
 		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2009 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>

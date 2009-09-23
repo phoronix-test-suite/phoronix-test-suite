@@ -27,7 +27,7 @@ function pts_pcqs_is_installed()
 }
 function pts_pcqs_user_license()
 {
-	return file_get_contents("http://www.phoronix-test-suite.com/pcqs/pcqs-license.txt");
+	return pts_http_get_contents("http://www.phoronix-test-suite.com/pcqs/pcqs-license.txt");
 }
 function pts_pcqs_install_package()
 {

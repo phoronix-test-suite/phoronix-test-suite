@@ -34,7 +34,7 @@ class update_checker extends pts_module_interface
 		if(IS_FIRST_RUN_TODAY)
 		{
 			// Check For pts-core updates
-			$latest_reported_version = trim(@file_get_contents("http://www.phoronix-test-suite.com/LATEST"));
+			$latest_reported_version = trim(pts_http_get_contents("http://www.phoronix-test-suite.com/LATEST"));
 			$current_e = explode(".", PTS_VERSION);
 			$latest_e = explode(".", $latest_reported_version);
 

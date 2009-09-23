@@ -24,12 +24,12 @@
 function pts_is_global_id($global_id)
 {
 	// Checks if a string is a valid Phoronix Global ID
-	return pts_global_valid_id_string($global_id) && trim(@file_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id)) == "REMOTE_FILE";
+	return pts_global_valid_id_string($global_id) && trim(pts_http_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id)) == "REMOTE_FILE";
 }
 function pts_global_download_xml($global_id)
 {
 	// Download a saved test result from Phoronix Global
-	return @file_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $global_id);
+	return pts_http_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $global_id);
 }
 function pts_clone_from_global($global_id, $render_graphs = true)
 {
@@ -58,7 +58,7 @@ function pts_global_valid_id_string($global_id)
 }
 function pts_global_setup_account($username, $password)
 {
-	$uploadkey = @file_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=" . $username . "&user_md5_pass=" . $password);
+	$uploadkey = pts_http_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=" . $username . "&user_md5_pass=" . $password);
 
 	if(!empty($uploadkey))
 	{
@@ -69,7 +69,7 @@ function pts_global_setup_account($username, $password)
 }
 function pts_global_request_gsid()
 {
-	$gsid = trim(@file_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION . "&os=" . phodevi::read_property("system", "vendor-identifier")));
+	$gsid = trim(pts_http_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION . "&os=" . phodevi::read_property("system", "vendor-identifier")));
 
 	return pts_global_gsid_valid($gsid) ? $gsid : false;
 }
@@ -119,17 +119,6 @@ function pts_global_upload_result($result_file, $tags = "")
 	$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags);
 
 	return pts_http_upload_via_post("http://www.phoronix-test-suite.com/global/user-upload.php", $upload_data);
-}
-function pts_http_upload_via_post($url, $to_post_data)
-{
-	$upload_data = http_build_query($to_post_data);
-	$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
-
-	$stream_context = stream_context_create($http_parameters);
-	$opened_url = @fopen($url, "rb", false, $stream_context);
-	$response = @stream_get_contents($opened_url);
-
-	return $response;
 }
 
 ?>
