@@ -96,13 +96,13 @@ class pts_result_file_merge_manager
 
 				for($j = 0; $j < count($identifiers); $j++)
 				{
-					if(($renamed = $result_merge_select->get_rename_identifier()) != null)
-					{
-						$identifiers[$j] = $renamed;
-					}
-
 					if(in_array($identifiers[$j], $select_identifiers))
 					{
+						if(($renamed = $result_merge_select->get_rename_identifier()) != null)
+						{
+							$identifiers[$j] = $renamed;
+						}
+
 						$merge_test_object->add_identifier($identifiers[$j]);
 						$merge_test_object->add_value($values[$j]);
 						$merge_test_object->add_raw_value($raw_values[$j]);
