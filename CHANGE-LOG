@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite 2.2 (Git)
+
+- tandem_Xml: Add addXmlObjectFromReader() functionality for improved performance
+
 Phoronix Test Suite 2.2 Alpha 2
 September 15, 2009
 

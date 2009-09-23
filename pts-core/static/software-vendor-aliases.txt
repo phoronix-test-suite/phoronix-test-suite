@@ -8,3 +8,6 @@ ptslinuxlive = ubuntu
 ptsdesktoplive = ubuntu
 dragonfly = netbsd
 jolicloud = ubuntu
+gnewsense = ubuntu
+fluxbuntu = ubuntu
+mythbuntu = ubuntu
