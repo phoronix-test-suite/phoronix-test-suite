@@ -353,15 +353,15 @@ function pts_get_display_mode_object()
 
 	return $display_mode;
 }
-function pts_http_get_contents($url)
+function pts_http_get_contents($url, $override_proxy = false, $override_proxy_port = false)
 {
-	$proxy_address = pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, null);
-	$proxy_port = pts_read_user_config(P_OPTION_NET_PROXY_PORT, null);
+	$proxy_address = $override_proxy ? $override_proxy : pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, null);
+	$proxy_port = $override_proxy_port ? $override_proxy_port : pts_read_user_config(P_OPTION_NET_PROXY_PORT, null);
 	$contents = false;
 
 	if($proxy_address != null && is_numeric($proxy_port))
 	{
-		$net_fp = fsockopen($proxy_address, $proxy_port);
+		$net_fp = @fsockopen($proxy_address, $proxy_port);
 
 		if(!$net_fp)
 		{
