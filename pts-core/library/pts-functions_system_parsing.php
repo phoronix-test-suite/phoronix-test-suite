@@ -643,7 +643,7 @@ function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore =
 
 	return $value;
 }
-function read_sun_ddu_dmi_info($object, $args = "")
+function read_sun_ddu_dmi_info($find_objects, $args = "")
 {
 	// Read Sun's Device Driver Utility for OpenSolaris
 	$values = array();
@@ -662,34 +662,38 @@ function read_sun_ddu_dmi_info($object, $args = "")
 		$info = shell_exec($dmi_info . " " . $args . " 2>&1");
 		$lines = explode("\n", $info);
 
-		$objects = explode(",", $object);
-		$this_section = "";
-
-		if(count($objects) == 2)
+		$find_objects = pts_to_array($find_objects);
+		for($i = 0; $i < count($find_objects) && count($values) == 0; $i++)
 		{
-			$section = $objects[0];
-			$object = $objects[1];
-		}
-		else
-		{
-			$section = "";
-			$object = $objects[0];
-		}
+			$objects = explode(",", $find_objects[$i]);
+			$this_section = "";
 
-		foreach($lines as $line)
-		{
-			$line = pts_trim_explode(":", $line);
-			$line_object = str_replace(" ", "", $line[0]);
-			$this_value = (count($line) > 1 ? $line[1] : "");
-
-			if(empty($this_value) && !empty($section))
+			if(count($objects) == 2)
 			{
-				$this_section = $line_object;
+				$section = $objects[0];
+				$object = $objects[1];
+			}
+			else
+			{
+				$section = "";
+				$object = $objects[0];
 			}
 
-			if($line_object == $object && ($this_section == $section || pts_proximity_match($section, $this_section)) && !empty($this_value) && $this_value != "Unknown")
+			foreach($lines as $line)
 			{
-				array_push($values, $this_value);
+				$line = pts_trim_explode(":", $line);
+				$line_object = str_replace(" ", "", $line[0]);
+				$this_value = (count($line) > 1 ? $line[1] : "");
+
+				if(empty($this_value) && !empty($section))
+				{
+					$this_section = $line_object;
+				}
+
+				if($line_object == $object && ($this_section == $section || pts_proximity_match($section, $this_section)) && !empty($this_value) && $this_value != "Unknown")
+				{
+					array_push($values, $this_value);
+				}
 			}
 		}
 	}

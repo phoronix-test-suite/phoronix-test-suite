@@ -64,8 +64,8 @@ class phodevi_motherboard extends pts_device_interface
 		}
 		else if(IS_SOLARIS)
 		{
-			$manufacturer = read_sun_ddu_dmi_info("MotherBoardInformation,Manufacturer");
-			$product = read_sun_ddu_dmi_info("MotherBoardInformation,Product");
+			$manufacturer = read_sun_ddu_dmi_info(array("MotherBoardInformation,Manufacturer", "SystemInformation,Manufacturer"));
+			$product = read_sun_ddu_dmi_info(array("MotherBoardInformation,Product", "SystemInformation,Product", "SystemInformation,Model"));
 
 			if(count($manufacturer) == 1 && count($product) == 1)
 			{

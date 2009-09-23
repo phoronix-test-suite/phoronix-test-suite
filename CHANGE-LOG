@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite 2.2 (Git)
 
 - phodevi: Improve hardware detection for OpenSolaris SPARC systems using DDU information
+- phodevi: Improve motherboard detection for Sun SPARC systems
 - tandem_Xml: Add addXmlObjectFromReader() function for improved performance
 - tandem_Xml: Add saveXMLFile() function
 
