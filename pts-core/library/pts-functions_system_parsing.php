@@ -648,7 +648,16 @@ function read_sun_ddu_dmi_info($object, $args = "")
 	// Read Sun's Device Driver Utility for OpenSolaris
 	$values = array();
 
-	if(is_executable(($dmi_info = "/usr/ddu/bin/dmi_info")) || is_executable(($dmi_info = "/usr/ddu/bin/i386/dmi_info")))
+	if(in_array(phodevi::read_property("system", "kernel-architecture"), array("i686", "x86_64")))
+	{
+		$dmi_info = "/usr/ddu/bin/i386/dmi_info";
+	}
+	else
+	{
+		$dmi_info = "/usr/ddu/bin/sparc/dmi_info";
+	}
+
+	if(is_executable($dmi_info) || is_executable(($dmi_info = "/usr/ddu/bin/dmi_info")))
 	{
 		$info = shell_exec($dmi_info . " " . $args . " 2>&1");
 		$lines = explode("\n", $info);
