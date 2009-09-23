@@ -355,6 +355,11 @@ function pts_get_display_mode_object()
 }
 function pts_http_get_contents($url, $override_proxy = false, $override_proxy_port = false)
 {
+	if(pts_string_bool(pts_read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")))
+	{
+		return false;
+	}
+
 	$proxy_address = $override_proxy ? $override_proxy : pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, null);
 	$proxy_port = $override_proxy_port ? $override_proxy_port : pts_read_user_config(P_OPTION_NET_PROXY_PORT, null);
 	$contents = false;
@@ -388,6 +393,11 @@ function pts_http_get_contents($url, $override_proxy = false, $override_proxy_po
 }
 function pts_http_upload_via_post($url, $to_post_data)
 {
+	if(pts_string_bool(pts_read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")))
+	{
+		return false;
+	}
+
 	$upload_data = http_build_query($to_post_data);
 	$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
 

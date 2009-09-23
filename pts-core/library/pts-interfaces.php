@@ -202,6 +202,7 @@ define("P_OPTION_BATCH_PROMPTDESCRIPTION", "PhoronixTestSuite/Options/BatchMode/
 define("P_OPTION_BATCH_PROMPTSAVENAME", "PhoronixTestSuite/Options/BatchMode/PromptSaveName"); // Batch mode prompt for save results name
 define("P_OPTION_BATCH_TESTALLOPTIONS", "PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations"); // Batch mode prompt to run all test options
 
+define("P_OPTION_NET_NO_NETWORK", "PhoronixTestSuite/Options/Networking/NoNetworkCommunication"); // Do not use the network at all
 define("P_OPTION_NET_PROXY_ADDRESS", "PhoronixTestSuite/Options/Networking/ProxyAddress"); // IP / URL if using a proxy
 define("P_OPTION_NET_PROXY_PORT", "PhoronixTestSuite/Options/Networking/ProxyPort"); // Port if using a proxy
 
