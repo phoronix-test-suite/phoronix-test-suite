@@ -152,34 +152,31 @@ function pts_graph_config_init($new_config_values = "")
 	$config = new tandem_XmlWriter();
 
 	// General
-	$config->addXmlObject(P_GRAPH_SIZE_WIDTH, 1, pts_read_graph_config(P_GRAPH_SIZE_WIDTH, "580", $read_config));
-	$config->addXmlObject(P_GRAPH_SIZE_HEIGHT, 1, pts_read_graph_config(P_GRAPH_SIZE_HEIGHT, "300", $read_config));
-	$config->addXmlObject(P_GRAPH_RENDERER, 1, pts_read_graph_config(P_GRAPH_RENDERER, "PNG", $read_config));
-	$config->addXmlObject(P_GRAPH_MARKCOUNT, 1, pts_read_graph_config(P_GRAPH_MARKCOUNT, "6", $read_config));
-	$config->addXmlObject(P_GRAPH_WATERMARK, 1, pts_read_graph_config(P_GRAPH_WATERMARK, "PHORONIX-TEST-SUITE.COM", $read_config));
-	$config->addXmlObject(P_GRAPH_BORDER, 1, pts_read_graph_config(P_GRAPH_BORDER, "FALSE", $read_config));
+	$config->addXmlObjectFromReader(P_GRAPH_SIZE_WIDTH, 1, $read_config, "580");
+	$config->addXmlObjectFromReader(P_GRAPH_SIZE_HEIGHT, 1, $read_config, "300");
+	$config->addXmlObjectFromReader(P_GRAPH_RENDERER, 1, $read_config, "PNG");
+	$config->addXmlObjectFromReader(P_GRAPH_MARKCOUNT, 1, $read_config, "6");
+	$config->addXmlObjectFromReader(P_GRAPH_WATERMARK, 1, $read_config, "PHORONIX-TEST-SUITE.COM");
+	$config->addXmlObjectFromReader(P_GRAPH_BORDER, 1, $read_config, "FALSE");
 
-	// Colors
-	$config->addXmlObject(P_GRAPH_COLOR_BACKGROUND, 2, pts_read_graph_config(P_GRAPH_COLOR_BACKGROUND, "#FFFFFF", $read_config));
-	$config->addXmlObject(P_GRAPH_COLOR_BODY, 2, pts_read_graph_config(P_GRAPH_COLOR_BODY, "#8B8F7C", $read_config));
-	$config->addXmlObject(P_GRAPH_COLOR_NOTCHES, 2, pts_read_graph_config(P_GRAPH_COLOR_NOTCHES, "#000000", $read_config));
-	$config->addXmlObject(P_GRAPH_COLOR_BORDER, 2, pts_read_graph_config(P_GRAPH_COLOR_BORDER, "#FFFFFF", $read_config));
-	$config->addXmlObject(P_GRAPH_COLOR_ALTERNATE, 2, pts_read_graph_config(P_GRAPH_COLOR_ALTERNATE, "#B0B59E", $read_config));
-	$config->addXmlObject(P_GRAPH_COLOR_PAINT, 2, pts_read_graph_config(P_GRAPH_COLOR_PAINT, "#3B433A, #BB2413, #FF9933, #006C00, #5028CA, #B30000, #A8BC00, #00F6FF, #8A00AC, #790066, #797766, #5598b1", $read_config));
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_BACKGROUND, 2, $read_config, "#FFFFFF");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_BODY, 2, $read_config, "#8B8F7C");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_NOTCHES, 2, $read_config, "#000000");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_BORDER, 2, $read_config, "#FFFFFF");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_ALTERNATE, 2, $read_config, "#B0B59E");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_PAINT, 2, $read_config, "#3B433A, #BB2413, #FF9933, #006C00, #5028CA, #B30000, #A8BC00, #00F6FF, #8A00AC, #790066, #797766, #5598b1");
 
-	// Text Colors
-	$config->addXmlObject(P_GRAPH_COLOR_HEADERS, 2, pts_read_graph_config(P_GRAPH_COLOR_HEADERS, "#2b6b29", $read_config));
-	$config->addXmlObject(P_GRAPH_COLOR_MAINHEADERS, 2, pts_read_graph_config(P_GRAPH_COLOR_MAINHEADERS, "#2b6b29", $read_config));
-	$config->addXmlObject(P_GRAPH_COLOR_TEXT, 2, pts_read_graph_config(P_GRAPH_COLOR_TEXT, "#000000", $read_config));
-	$config->addXmlObject(P_GRAPH_COLOR_BODYTEXT, 2, pts_read_graph_config(P_GRAPH_COLOR_BODYTEXT, "#FFFFFF", $read_config));
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_HEADERS, 2, $read_config, "#2b6b29");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_MAINHEADERS, 2, $read_config, "#2b6b29");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_TEXT, 2, $read_config, "#000000");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_BODYTEXT, 2, $read_config, "#FFFFFF");
 
-	// Text Size
-	$config->addXmlObject(P_GRAPH_FONT_TYPE, 3, pts_read_graph_config(P_GRAPH_FONT_TYPE, "", $read_config));
-	$config->addXmlObject(P_GRAPH_FONT_SIZE_HEADERS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_HEADERS, "18", $read_config));
-	$config->addXmlObject(P_GRAPH_FONT_SIZE_SUBHEADERS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_SUBHEADERS, "12", $read_config));
-	$config->addXmlObject(P_GRAPH_FONT_SIZE_TEXT, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_TEXT, "12", $read_config));
-	$config->addXmlObject(P_GRAPH_FONT_SIZE_IDENTIFIERS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_IDENTIFIERS, "11", $read_config));
-	$config->addXmlObject(P_GRAPH_FONT_SIZE_AXIS, 3, pts_read_graph_config(P_GRAPH_FONT_SIZE_AXIS, "11", $read_config));
+	$config->addXmlObjectFromReader(P_GRAPH_FONT_TYPE, 3, $read_config, "");
+	$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_HEADERS, 3, $read_config, "18");
+	$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_SUBHEADERS, 3, $read_config, "12");
+	$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_TEXT, 3, $read_config, "12");
+	$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_IDENTIFIERS, 3, $read_config, "11");
+	$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_AXIS, 3, $read_config, "11");
 
 	file_put_contents(PTS_USER_DIR . "graph-config.xml", $config->getXML());
 }
