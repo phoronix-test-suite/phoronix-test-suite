@@ -96,7 +96,7 @@ class build_suite implements pts_option_interface
 		}
 		$save_to = XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml";
 
-		$fp = file_put_contents($save_to, $xml_writer->getXML());
+		$fp = $xml_writer->saveXMLFile($save_to);
 
 		if($fp != false)
 		{

@@ -87,7 +87,7 @@ class result_file_to_suite implements pts_option_interface
 		}
 		$save_to = XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml";
 
-		if(file_put_contents($save_to, $xml_writer->getXML()) != false)
+		if($xml_writer->saveXMLFile($save_to) != false)
 		{
 			echo "\n\nSaved To: " . $save_to . "\nTo run this suite, type: phoronix-test-suite benchmark " . $suite_identifier . "\n\n";
 		}

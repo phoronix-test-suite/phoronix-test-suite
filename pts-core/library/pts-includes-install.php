@@ -546,7 +546,7 @@ function pts_test_generate_install_xml($identifier)
 	$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $average_test_duration);
 	$xml_writer->addXmlObject(P_INSTALL_TEST_LATEST_RUNTIME, 2, $latest_test_duration);
 
-	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
+	$xml_writer->saveXMLFile(TEST_ENV_DIR . $identifier . "/pts-install.xml");
 }
 function pts_is_valid_download_url($string, $basename = null)
 {

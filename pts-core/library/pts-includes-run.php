@@ -229,7 +229,7 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$dis
 	$active_xml = SAVE_RESULTS_DIR . $save_name . "/active.xml";
 	if($save_name != null)
 	{
-		file_put_contents($active_xml, $tandem_xml->getXML());
+		$tandem_xml->saveXMLFile($active_xml);
 	}
 
 	foreach($test_run_requests as $test_run_request)
@@ -842,7 +842,7 @@ function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 	$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $test_duration);
 	$xml_writer->addXmlObject(P_INSTALL_TEST_LATEST_RUNTIME, 2, $this_test_duration);
 
-	file_put_contents(TEST_ENV_DIR . $identifier . "/pts-install.xml", $xml_writer->getXML());
+	$xml_writer->saveXMLFile(TEST_ENV_DIR . $identifier . "/pts-install.xml");
 }
 
 ?>

@@ -75,7 +75,7 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObjectFromReader(P_OPTION_BATCH_TESTALLOPTIONS, 5, $read_config, "TRUE");
 	$config->addXmlObjectFromReader(P_OPTION_BATCH_CONFIGURED, 5, $read_config, "FALSE");
 
-	file_put_contents(PTS_USER_DIR . "user-config.xml", $config->getXML());
+	$config->saveXMLFile(PTS_USER_DIR . "user-config.xml");
 
 	pts_mkdir(PTS_USER_DIR . "xsl/");
 	pts_copy(STATIC_DIR . "pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
@@ -138,7 +138,7 @@ function pts_module_config_init($SetOptions = null)
 		}
 	}
 
-	file_put_contents(PTS_USER_DIR . "modules-config.xml", $config->getXML());
+	$config->saveXMLFile(PTS_USER_DIR . "modules-config.xml");
 }
 function pts_config_bool_to_string($bool)
 {
@@ -178,7 +178,7 @@ function pts_graph_config_init($new_config_values = "")
 	$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_IDENTIFIERS, 3, $read_config, "11");
 	$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_AXIS, 3, $read_config, "11");
 
-	file_put_contents(PTS_USER_DIR . "graph-config.xml", $config->getXML());
+	$config->saveXMLFile(PTS_USER_DIR . "graph-config.xml");
 }
 function pts_read_user_config($xml_pointer, $value = null, $tandem_xml = null)
 {

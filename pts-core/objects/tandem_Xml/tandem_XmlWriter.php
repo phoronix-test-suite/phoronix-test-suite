@@ -124,6 +124,10 @@ class tandem_XmlWriter
 
 		return $return_string;
 	}
+	function saveXMLFile($to_file)
+	{
+		return file_put_contents($to_file, $this->getXML());
+	}
 	function getXML()
 	{
 		$formatted_xml = $this->getXMLBelow($this->xml_objects, 0);
