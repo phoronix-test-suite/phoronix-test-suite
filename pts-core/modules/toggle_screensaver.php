@@ -24,14 +24,15 @@
 class toggle_screensaver extends pts_module_interface
 {
 	const module_name = "Toggle Screensaver";
-	const module_version = "1.0.2";
+	const module_version = "1.1.0";
 	const module_description = "This module toggles the system's screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.";
 	const module_author = "Phoronix Media";
 
-	static $screensaver_halted = FALSE;
-	static $gnome_screensaver_halted = FALSE;
-	static $kde_screensaver_halted = FALSE;
-	static $gnome_gconftool = FALSE;
+	static $xdg_screensaver_available = true;
+	static $screensaver_halted = false;
+	static $gnome_screensaver_halted = false;
+	static $kde_screensaver_halted = false;
+	static $gnome_gconftool = false;
 
 	public static function __startup()
 	{
@@ -55,7 +56,7 @@ class toggle_screensaver extends pts_module_interface
 			{
 				// Stop the GNOME Screensaver
 				shell_exec(self::$gnome_gconftool . " --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1");
-				self::$gnome_screensaver_halted = TRUE;
+				self::$gnome_screensaver_halted = true;
 			}
 		}
 		else
@@ -67,60 +68,60 @@ class toggle_screensaver extends pts_module_interface
 			{
 				// Stop the KDE Screensaver
 				shell_exec("dcop kdesktop KScreensaverIface enable false 2>&1");
-				self::$kde_screensaver_halted = TRUE;
+				self::$kde_screensaver_halted = true;
 			}
 		}
 
 		if(self::$gnome_screensaver_halted || self::$kde_screensaver_halted)
 		{
-			self::$screensaver_halted = TRUE;
+			self::$screensaver_halted = true;
 		}
-		else if(pts_executable_in_path("xdg-screensaver") == false)
+
+		if(pts_executable_in_path("xdg-screensaver") == false)
 		{
-			// xdg-screensaver is not available
-			return PTS_MODULE_UNLOAD;
+			if(!self::$screensaver_halted)
+			{
+				return PTS_MODULE_UNLOAD;
+			}
+
+			self::$xdg_screensaver_available = false;
 		}
 	}
 	public static function __shutdown()
 	{
-		if(self::$gnome_screensaver_halted == TRUE)
+		if(self::$gnome_screensaver_halted == true)
 		{
 			// Restore the GNOME Screensaver
 			shell_exec(self::$gnome_gconftool . " --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1");
 		}
-		else if(self::$kde_screensaver_halted == TRUE)
+		else if(self::$kde_screensaver_halted == true)
 		{
 			// Restore the KDE Screensaver
 			shell_exec("dcop kdesktop KScreensaverIface enable true 2>&1");
 		}
 	}
-	public static function __pre_option_process()
+	public static function xdg_screensaver_reset()
 	{
-		if(!self::$screensaver_halted)
+		if(!self::$screensaver_halted && self::$xdg_screensaver_available)
 		{
 			shell_exec("xdg-screensaver reset 2>&1");
 		}
+	}
+	public static function __pre_option_process()
+	{
+		self::xdg_screensaver_reset();
 	}
 	public static function __pre_run_process()
 	{
-		if(!self::$screensaver_halted)
-		{
-			shell_exec("xdg-screensaver reset 2>&1");
-		}
+		self::xdg_screensaver_reset();
 	}
 	public static function __pre_test_run()
 	{
-		if(!self::$screensaver_halted)
-		{
-			shell_exec("xdg-screensaver reset 2>&1");
-		}
+		self::xdg_screensaver_reset();
 	}
 	public static function __post_run_process()
 	{
-		if(!self::$screensaver_halted)
-		{
-			shell_exec("xdg-screensaver reset 2>&1");
-		}
+		self::xdg_screensaver_reset();
 	}
 }
 
