@@ -52,6 +52,11 @@ function pts_start_install($to_install, &$display_mode)
 	{
 		if(!pts_test_needs_updated_install($test))
 		{
+			if(!pts_is_assignment("SILENCE_MESSAGES"))
+			{
+				echo "Already Installed: " . $test . "\n";
+			}
+
 			unset($tests[$key]);
 		}
 	}
@@ -495,11 +500,6 @@ function pts_install_test($identifier, &$display_mode)
 			else
 			{
 				$installed = true;
-
-				if(!pts_is_assignment("SILENCE_MESSAGES"))
-				{
-					echo "Already Installed: " . $identifier . "\n";
-				}
 			}
 		}
 	}

@@ -8,6 +8,7 @@ Phoronix Test Suite 2.2 (Git)
 - pts-core: Set timeout on HTTP connections to eight seconds
 - pts-core: Fix for results not showing up if renaming the first result identifier using rename-identifier-in-result-file option
 - pts-core: Fixes for FreeBSD 8.0 support
+- pts-core: Fix for reporting "Already Installed" tests with install option
 - phodevi: Improve hardware detection for OpenSolaris SPARC systems using DDU information
 - phodevi: Improve motherboard detection for Sun SPARC systems
 - tandem_Xml: Add addXmlObjectFromReader() function for improved performance
