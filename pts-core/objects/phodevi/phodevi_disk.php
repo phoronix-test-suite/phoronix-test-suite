@@ -131,7 +131,29 @@ class phodevi_disk extends pts_device_interface
 			}
 		}
 
-		$disks = (count($disks) == 0 ? ceil(disk_total_space("/") / 1073741824) . "GB" : implode(" + ", $disks));
+		if(count($disks) == 0)
+		{
+			$root_disk_size = ceil(disk_total_space("/") / 1073741824);
+			$pts_disk_size = ceil(disk_total_space(TEST_ENV_DIR) / 1073741824);
+
+			if($pts_disk_size > $root_disk_size)
+			{
+				$root_disk_size = $pts_disk_size;
+			}
+
+			if($root_disk_size > 1)
+			{
+				$disks = $root_disk_size . "GB";
+			}
+			else
+			{
+				$disks = "Unknown";
+			}
+		}
+		else
+		{
+			$disks = implode(" + ", $disks);
+		}
 
 		return $disks;
 	}

@@ -10,6 +10,7 @@ Phoronix Test Suite 2.2 (Git)
 - pts-core: Fixes for FreeBSD 8.0 support
 - pts-core: Fix for reporting "Already Installed" tests with install option
 - pts-core: Better handle toggle_screensaver module when xdg-screensaver is missing
+- pts-core: Greater fallback disk support, should help with some BSD operating systems
 - phodevi: Improve hardware detection for OpenSolaris SPARC systems using DDU information
 - phodevi: Improve motherboard detection for Sun SPARC systems
 - tandem_Xml: Add addXmlObjectFromReader() function for improved performance
