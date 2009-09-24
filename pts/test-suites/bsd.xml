@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>BSD</Title>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<TestType>System</TestType>
 		<Description>A collection of tests that are compatible with BSD operating systems like FreeBSD, OpenBSD, NetBSD, and PC-BSD.</Description>
@@ -31,6 +31,16 @@
 	</RunTest>
 	<RunTest>
 		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>john-the-ripper</Test>
+		<Mode>BATCH</Mode>
+	</RunTest>
+	<RunTest>
+		<Test>dcraw</Test>
+	</RunTest>
+	<RunTest>
+		<Test>mafft</Test>
 	</RunTest>
 	<RunTest>
 		<Test>graphics-magick</Test>
@@ -93,5 +103,40 @@
 	</RunTest>
 	<RunTest>
 		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Copy</Arguments>
+		<Description>Copy</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Scale</Arguments>
+		<Description>Scale</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Add</Arguments>
+		<Description>Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 4</Arguments>
+		<Description>64MB Write - 4 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -f 64 -t 32</Arguments>
+		<Description>64MB Random Write - 32 Threads</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Read - 32 Threads</Description>
 	</RunTest>
 </PhoronixTestSuite>

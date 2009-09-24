@@ -577,7 +577,7 @@ class phodevi_system extends pts_device_interface
 		$vendor = phodevi::read_property("system", "os-vendor");
 		$version = phodevi::read_property("system", "os-version");
 
-		if($vendor == "Unknown" && $version == "Unknown")
+		if($vendor == "Unknown" || $version == "Unknown")
 		{
 			$os = null;
 
@@ -739,7 +739,7 @@ class phodevi_system extends pts_device_interface
 		$pos = (($p = strrpos($info, "Release Date")) !== false ? $p : strrpos($info, "Build Date"));	
 		$info = trim(substr($info, 0, $pos));
 
-		if($pos === false)
+		if($pos === false || getenv("DISPLAY") == false)
 		{
 			$info = "Unknown";
 		}
