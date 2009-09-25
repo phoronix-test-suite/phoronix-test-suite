@@ -1,8 +1,4 @@
 #!/bin/sh
-
-# Portions based on Debian fglrx install script
-# http://phorogit.com/index.php?p=fglrx-packaging.git&b=c67ac96d765ca95130bd07cb240ab69cfc06baa2
-
 if [ `whoami` != "root" ]; then
 	if [ -x /usr/bin/gksudo ] && [ ! -z "$DISPLAY" ]; then
 		ROOT="/usr/bin/gksudo"
@@ -15,8 +11,10 @@ else
 	ROOT=""
 fi
 
-# if [ -x /usr/sbin/synaptic ] && [ ! -z "$DISPLAY" ]; then
-#	$ROOT "sh -c 'echo \"$@ install\" | /usr/sbin/synaptic --set-selections --non-interactive --hide-main-window'"
-# else
+if [ -x /usr/bin/aptitude ]; then
+	# aptitude is nice since it doesn't fail if a non-existant package is hit
+	# See: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=503215
+	$ROOT "aptitude -y install $*"
+else
 	$ROOT "apt-get -y --ignore-missing install $*"
-# fi
+fi
