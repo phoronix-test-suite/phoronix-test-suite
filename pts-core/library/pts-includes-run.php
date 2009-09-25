@@ -634,7 +634,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			$current_standard_deviation = pts_percent_standard_deviation($pts_test_result->get_trial_results());
 
-			if($current_standard_deviation >= 3.5 && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_DYNAMIC_ON_LENGTH"))
+			if($current_standard_deviation >= pts_read_assignment("PTS_STATS_STD_DEVIATION_THRESHOLD") && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_DYNAMIC_ON_LENGTH"))
 			{
 				$times_to_run++;
 				$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);

@@ -68,6 +68,7 @@ function pts_user_config_init($new_config_values = null)
 
 	$config->addXmlObjectFromReader(P_OPTION_STATS_DYNAMIC_RUN_COUNT, 4, $read_config, "TRUE");
 	$config->addXmlObjectFromReader(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, 4, $read_config, "20");
+	$config->addXmlObjectFromReader(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 4, $read_config, "3.50");
 
 	$config->addXmlObjectFromReader(P_OPTION_BATCH_SAVERESULTS, 5, $read_config, "TRUE");
 	$config->addXmlObjectFromReader(P_OPTION_BATCH_LAUNCHBROWSER, 5, $read_config, "FALSE");
