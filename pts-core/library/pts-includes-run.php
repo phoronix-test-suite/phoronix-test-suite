@@ -510,12 +510,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if($root_required)
 	{
-		$execute_binary_prepend = TEST_LIBRARIES_DIR . "root-access.sh";
-	}
-
-	if(!empty($execute_binary_prepend))
-	{
-		$execute_binary_prepend .= " ";
+		$execute_binary_prepend = TEST_LIBRARIES_DIR . "root-access.sh ";
 	}
 
 	if($allow_cache_share && !is_file($cache_share_pt2so))
@@ -524,6 +519,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$display_mode->test_run_start($pts_test_result);
+	$defined_times_to_run = $times_to_run;
 
 	for($i = 0; $i < $times_to_run; $i++)
 	{
@@ -552,7 +548,9 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(!$restored_from_cache)
 		{
+			$test_run_time_start = time();
 			$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1", $test_extra_runtime_variables);
+			$test_run_time = time() - $test_run_time_start;
 		}
 		
 
@@ -595,6 +593,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 					$test_extra_runtime_variables_post = array_merge($test_extra_runtime_variables_post, array("TIMER_RESULT" => $run_time));
 				}
 			}
+			else
+			{
+				$run_time = 0;
+			}
+
 			if(is_file($benchmark_log_file))
 			{
 				$test_results = "";
@@ -602,7 +605,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 			$test_results = pts_call_test_script($test_identifier, "parse-results", null, $test_results, $test_extra_runtime_variables_post);
 
-			if(empty($test_results) && isset($run_time) && is_numeric($run_time))
+			if(empty($test_results) && $run_time > 1)
 			{
 				$test_results = $run_time;
 			}
@@ -616,7 +619,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 			if(!empty($test_results))
 			{
-				$pts_test_result->add_trial_run_result(trim($test_results));
+				$pts_test_result->add_trial_run_result($test_results);
 			}
 
 			if($allow_cache_share && !is_file($cache_share_pt2so))
@@ -626,6 +629,18 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				$cache_share->add_object("log_file_" . $i, (is_file($benchmark_log_file) ? file_get_contents($benchmark_log_file) : null));
 			}
 		}
+
+		if($i > 1 && $pts_test_result->trial_run_count() > 0 && pts_read_assignment("PTS_STATS_DYNAMIC_RUN_COUNT") && $times_to_run < ($defined_times_to_run * 2))
+		{
+			$current_standard_deviation = pts_percent_standard_deviation($pts_test_result->get_trial_results());
+
+			if($current_standard_deviation >= 3.5 && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_DYNAMIC_ON_LENGTH"))
+			{
+				$times_to_run++;
+				$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);
+			}
+		}
+
 		if($times_to_run > 1 && $i < ($times_to_run - 1))
 		{
 			if(!($allow_cache_share && is_file($cache_share_pt2so)))

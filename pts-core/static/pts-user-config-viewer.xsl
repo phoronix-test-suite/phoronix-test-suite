@@ -44,6 +44,12 @@
 			<h3>ResultsDirectory: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Testing/ResultsDirectory" /></span></h3>
 			<p>This option sets the directory where test results will be saved by the Phoronix Test Suite. The full path to the directory on the local file-system should be specified, though <em>~</em> is a valid character for denoting the user's home directory. The default value is <em>~/.phoronix-test-suite/test-results/</em>.</p>
 
+			<h1>Statistics Options</h1>
+			<h3>DynamicRunCount: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Statistics/DynamicRunCount" /></span></h3>
+			<p>If this option is set to <em>TRUE</em>, the Phoronix Test Suite will automatically increase the number of times a test is to be run if the standard deviation of the test results exceeds a predefined threshold. This option is set to <em>TRUE</em> by default and is designed to ensure the statistical signifiance of the test results. The run count will increase until the standard deviation falls below the threshold or when the total number of run counts exceeds twice the amount that is set to run by default from the given test profile.</p>
+			<h3>LimitDynamicToTestLength: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Statistics/LimitDynamicToTestLength" /></span></h3>
+			<p>If <em>DynamicRunCount</em> is set to <em>TRUE</em>, this option sets a limit on the maximum length a test can run (in minutes) for the run count to be adjusted. This option is to prevent tests that take a very long amount of time to run from consuming too much time. By default this value is set to <em>20</em> minutes where.</p>
+
 			<h1>Batch Mode Options</h1>
 			<p>The batch mode options are only used when using either the <em>batch-run</em> or <em>batch-benchmark</em> options with the Phoronix Test Suite. This mode is designed to fully automate the operation of the Phoronix Test Suite except for areas where the user would like to be prompted. To configure the batch mode options, it is recommended to run <em>phoronix-test-suite batch-setup</em> instead of modifying these values by hand.</p>
 			<h3>SaveResults: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/BatchMode/SaveResults" /></span></h3>

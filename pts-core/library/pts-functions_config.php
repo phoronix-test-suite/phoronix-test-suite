@@ -48,23 +48,26 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObjectFromReader(P_OPTION_GLOBAL_USERNAME, 0, $read_config, "Default User");
 	$config->addXmlObjectFromReader(P_OPTION_GLOBAL_UPLOADKEY, 0, $read_config, "");
 
-	$config->addXmlObjectFromReader(P_OPTION_USAGE_REPORTING, 2, $read_config, "UNKNOWN");
-	$config->addXmlObjectFromReader(P_OPTION_LOAD_MODULES, 2, $read_config, "");
-	$config->addXmlObjectFromReader(P_OPTION_DEFAULT_BROWSER, 2, $read_config, "");
-	$config->addXmlObjectFromReader(P_OPTION_PHODEVI_CACHE, 2, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_DISPLAY_MODE, 2, $read_config, "DEFAULT");
+	$config->addXmlObjectFromReader(P_OPTION_USAGE_REPORTING, 1, $read_config, "UNKNOWN");
+	$config->addXmlObjectFromReader(P_OPTION_LOAD_MODULES, 1, $read_config, "");
+	$config->addXmlObjectFromReader(P_OPTION_DEFAULT_BROWSER, 1, $read_config, "");
+	$config->addXmlObjectFromReader(P_OPTION_PHODEVI_CACHE, 1, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_DISPLAY_MODE, 1, $read_config, "DEFAULT");
 
-	$config->addXmlObjectFromReader(P_OPTION_TEST_REMOVEDOWNLOADS, 3, $read_config, $remove_downloaded_files);
-	$config->addXmlObjectFromReader(P_OPTION_CACHE_SEARCHMEDIA, 3, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_CACHE_SYMLINK, 3, $read_config, $symlink_default);
-	$config->addXmlObjectFromReader(P_OPTION_PROMPT_DOWNLOADLOC, 3, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_TEST_ENVIRONMENT, 3, $read_config, "~/.phoronix-test-suite/installed-tests/");
-	$config->addXmlObjectFromReader(P_OPTION_CACHE_DIRECTORY, 3, $read_config, "~/.phoronix-test-suite/download-cache/");
+	$config->addXmlObjectFromReader(P_OPTION_TEST_REMOVEDOWNLOADS, 2, $read_config, $remove_downloaded_files);
+	$config->addXmlObjectFromReader(P_OPTION_CACHE_SEARCHMEDIA, 2, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_CACHE_SYMLINK, 2, $read_config, $symlink_default);
+	$config->addXmlObjectFromReader(P_OPTION_PROMPT_DOWNLOADLOC, 2, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_TEST_ENVIRONMENT, 2, $read_config, "~/.phoronix-test-suite/installed-tests/");
+	$config->addXmlObjectFromReader(P_OPTION_CACHE_DIRECTORY, 2, $read_config, "~/.phoronix-test-suite/download-cache/");
 
-	$config->addXmlObjectFromReader(P_OPTION_TEST_SLEEPTIME, 4, $read_config, "10");
-	$config->addXmlObjectFromReader(P_OPTION_LOG_VSYSDETAILS, 4, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_LOG_BENCHMARKFILES, 4, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_RESULTS_DIRECTORY, 4, $read_config, "~/.phoronix-test-suite/test-results/");
+	$config->addXmlObjectFromReader(P_OPTION_TEST_SLEEPTIME, 3, $read_config, "10");
+	$config->addXmlObjectFromReader(P_OPTION_LOG_VSYSDETAILS, 3, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_LOG_BENCHMARKFILES, 3, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_RESULTS_DIRECTORY, 3, $read_config, "~/.phoronix-test-suite/test-results/");
+
+	$config->addXmlObjectFromReader(P_OPTION_STATS_DYNAMIC_RUN_COUNT, 4, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, 4, $read_config, "20");
 
 	$config->addXmlObjectFromReader(P_OPTION_BATCH_SAVERESULTS, 5, $read_config, "TRUE");
 	$config->addXmlObjectFromReader(P_OPTION_BATCH_LAUNCHBROWSER, 5, $read_config, "FALSE");

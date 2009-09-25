@@ -186,6 +186,9 @@ define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/Testing/SaveSystem
 define("P_OPTION_LOG_BENCHMARKFILES", "PhoronixTestSuite/Options/Testing/SaveBenchmarkLogs"); // Save benchmark logs?
 define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/Testing/ResultsDirectory"); // Results save directory
 
+define("P_OPTION_STATS_DYNAMIC_RUN_COUNT", "PhoronixTestSuite/Options/Statistics/DynamicRunCount"); // Increase run count if needed
+define("P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH", "PhoronixTestSuite/Options/Statistics/LimitDynamicToTestLength"); // Only for tests that take less than XX time
+
 define("P_OPTION_TEST_REMOVEDOWNLOADS", "PhoronixTestSuite/Options/Installation/RemoveDownloadFiles"); // Remove downloaded files after test is installed
 define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/Installation/EnvironmentDirectory"); // Results save directory
 define("P_OPTION_CACHE_DIRECTORY", "PhoronixTestSuite/Options/Installation/CacheDirectory"); // Directory for reading/writing to download cache
