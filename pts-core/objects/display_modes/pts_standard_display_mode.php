@@ -38,7 +38,7 @@ class pts_standard_display_mode implements pts_display_mode_interface
 		{
 			$download_append = "\nEstimated Download Size: " . $size . " MB";
 		}
-		echo pts_string_header("Downloading Files For: " . $identifier . $download_append);
+		echo pts_string_header("Downloading Files: " . $identifier . $download_append);
 	}
 	public function test_install_download_file(&$pts_test_file_download, $process)
 	{
