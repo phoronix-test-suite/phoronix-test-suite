@@ -1052,5 +1052,16 @@ function pts_test_download_caches()
 
 	return $cache_directories;
 }
+function pts_test_comparison_hash($test_identifier, $arguments, $attributes = null, $version = null)
+{
+	$hash_table = array(
+	$test_identifier,
+	trim($arguments),
+	trim($attributes),
+	$version
+	);
+
+	return base64_encode(implode(",", $hash_table));
+}
 
 ?>

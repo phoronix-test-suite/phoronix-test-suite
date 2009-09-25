@@ -70,21 +70,7 @@ class pts_result_file_merge_test
 	}
 	public function get_comparison_hash($show_version_and_attributes = true)
 	{
-		// this function is shared with pts_test_run_request hashes
-		// TODO: should be standardized to new object for comparison hashes
-
-		$hash_table = array(
-		$this->get_test_name(),
-		trim($this->get_arguments())
-		);
-
-		if($show_version_and_attributes)
-		{
-			array_push($hash_table, trim($this->get_attributes()));
-			array_push($hash_table, $this->get_version());
-		}
-
-		return base64_encode(implode(",", $hash_table));
+		return $show_version_and_attributes ? pts_test_comparison_hash($this->get_test_name(), $this->get_arguments(), $this->get_attributes(), $this->get_version()) : pts_test_comparison_hash($test_identifier, $arguments);
 	}
 	public function get_name()
 	{

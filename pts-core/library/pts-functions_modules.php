@@ -264,11 +264,7 @@ function pts_module_call($module, $process, $object_pass = null)
 }
 function pts_sh_module_call($module, $process)
 {
-	if(is_file(($module_file = MODULE_DIR . $module . ".sh")))
-	{
-		$module_return = trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
-	}
-	else if(is_file(($module_file = MODULE_LOCAL_DIR . $module . ".sh")))
+	if(is_file(($module_file = MODULE_DIR . $module . ".sh")) || is_file(($module_file = MODULE_LOCAL_DIR . $module . ".sh")))
 	{
 		$module_return = trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
 	}

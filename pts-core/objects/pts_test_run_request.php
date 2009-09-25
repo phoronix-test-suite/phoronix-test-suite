@@ -56,15 +56,7 @@ class pts_test_run_request
 	}
 	public function get_comparison_hash()
 	{
-		// this function is shared with pts_result_file_merge_test hashes
-		// TODO: should be standardized to new object for comparison hashes
-
-		$hash_table = array(
-		$this->get_identifier(),
-		trim($this->get_arguments())
-		);
-
-		return base64_encode(implode(",", $hash_table));
+		return pts_test_comparison_hash($this->get_identifier(), $this->get_arguments());
 	}
 }
 
