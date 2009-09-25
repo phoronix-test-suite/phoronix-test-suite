@@ -14,6 +14,7 @@ Phoronix Test Suite 2.2 (Git)
 - pts-core: Add support for pts-core to dynamically increase a test's run count if the standard deviation exceeds a predefined threshold
 - pts-core: Add DynamicRunCount and LimitDynamicToTestLength for controlling the statistics / standard deviation settings
 - pts-core: Add StandardDeviationThreshold to user-config.xml for setting the standard deviation threshold percentage
+- pts-core: Better support floating values within the preferences window of the GTK2 GUI
 - phodevi: Improve hardware detection for OpenSolaris SPARC systems using DDU information
 - phodevi: Improve motherboard detection for Sun SPARC systems
 - tandem_Xml: Add addXmlObjectFromReader() function for improved performance

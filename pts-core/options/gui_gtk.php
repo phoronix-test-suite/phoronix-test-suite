@@ -1473,7 +1473,15 @@ class gui_gtk implements pts_option_interface
 			}
 			else if(is_numeric($current_value))
 			{
-				$spin[$i] = GtkSpinButton::new_with_range(0, 1024, 1);
+				if(strpos($current_value, "."))
+				{
+					$spin[$i] = GtkSpinButton::new_with_range(0, 100, 0.1);
+				}
+				else
+				{
+					$spin[$i] = GtkSpinButton::new_with_range(0, 1024, 1);
+				}
+
 				$spin[$i]->set_value($current_value);
 
 				$preference_objects[$preference] = $spin[$i];
