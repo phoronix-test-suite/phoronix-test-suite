@@ -25,7 +25,7 @@ require_once(PTS_LIBRARY_PATH . "pts-functions_system_parsing.php");
 
 function pts_hw_string($return_string = true)
 {
-	return phodevi::system_hardware();
+	return phodevi::system_hardware($return_string);
 }
 function pts_sw_string($return_string = true)
 {

@@ -28,11 +28,11 @@ case \$OS_TYPE in
 	\"Linux\" )
 		if [ \$OS_ARCH = \"x86_64\" ]
 		then
-			./warsow.x86_64 \$@ > \$LOG_FILE 2>&1
+			./warsow.x86_64 \$@
 		else
-			./warsow.i386 \$@ > \$LOG_FILE 2>&1
+			./warsow.i386 \$@
 		fi
-		cat ~/.warsow/basewsw/pts-log.log > \$LOG_FILE
+		cat ~/.warsow-0.5/basewsw/pts-log.log > \$LOG_FILE
 	;;
 esac" > warsow
 chmod +x warsow
