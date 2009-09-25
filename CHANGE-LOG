@@ -16,6 +16,8 @@ Phoronix Test Suite 2.2 (Git)
 - pts-core: Add StandardDeviationThreshold to user-config.xml for setting the standard deviation threshold percentage
 - pts-core: Better support floating values within the preferences window of the GTK2 GUI
 - pts-core: Add batch-install option if only to run the install process in the batch mode
+- pts-core: Updates to PTS user module architecture
+- pts-core: Support for having SH modules in the module local directory
 - phodevi: Improve hardware detection for OpenSolaris SPARC systems using DDU information
 - phodevi: Improve motherboard detection for Sun SPARC systems
 - tandem_Xml: Add addXmlObjectFromReader() function for improved performance

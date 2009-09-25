@@ -264,12 +264,17 @@ function pts_module_call($module, $process, $object_pass = null)
 }
 function pts_sh_module_call($module, $process)
 {
-	$module_file = MODULE_DIR . $module . ".sh";
-	$module_return = "";
-
-	if(is_file($module_file))
+	if(is_file(($module_file = MODULE_DIR . $module . ".sh")))
 	{
 		$module_return = trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
+	}
+	else if(is_file(($module_file = MODULE_LOCAL_DIR . $module . ".sh")))
+	{
+		$module_return = trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
+	}
+	else
+	{
+		$module_return = null;
 	}
 
 	return $module_return;
@@ -354,6 +359,10 @@ function pts_module_type($name)
 		{
 			$type = "PHP";
 		}
+		else if(is_file(MODULE_LOCAL_DIR . $name . ".sh"))
+		{
+			$type = "SH";
+		}
 		else if(is_file(MODULE_DIR . $name . ".sh"))
 		{
 			$type = "SH";
@@ -405,7 +414,7 @@ function pts_module($process, $value = null)
 			array_unique($module_r);
 			for($i = 0; $i < count($module_r); $i++)
 			{
-				if(!is_file(MODULE_DIR . $module_r[$i] . ".php"))
+				if(!is_file(MODULE_DIR . $module_r[$i] . ".php") && !is_file(MODULE_LOCAL_DIR . $module_r[$i] . ".php"))
 				{
 					unset($module_r[$i]);
 				}
@@ -465,10 +474,26 @@ function pts_module_activity($process, $value = null)
 }
 function pts_available_modules()
 {
-	$modules = pts_array_merge(glob(MODULE_DIR . "*.sh"), glob(MODULE_DIR . "*.php"));
-	asort($modules);
+	$modules = pts_array_merge(glob(MODULE_DIR . "*"), glob(MODULE_LOCAL_DIR . "*"));
+	$module_names = array();
 
-	return $modules;
+	foreach($modules as $module)
+	{
+		$module = basename($module);
+
+		if(substr($module, -3) == ".sh")
+		{
+			array_push($module_names, substr($module, 0, -3));
+		}
+		else if(substr($module, -4) == ".php")
+		{
+			array_push($module_names, substr($module, 0, -4));
+		}
+	}
+
+	asort($module_names);
+
+	return $module_names;
 }
 
 ?>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,15 +30,10 @@ class pts_user_module_details
 	var $description;
 	var $information;
 
-	public function __construct($module_file_path)
+	public function __construct($module)
 	{
-		$this->module = basename(substr($module_file_path, 0, strrpos($module_file_path, ".")));
-
-		if(!class_exists($this->module) && substr($module_file_path, -3) == "php")
-		{
-			include_once($module_file_path);
-		}
-
+		pts_load_module($module);
+		$this->module = $module;
 		$this->name = pts_module_call($this->module, "module_name");
 		$this->version = pts_module_call($this->module, "module_version");
 		$this->author = pts_module_call($this->module, "module_author");

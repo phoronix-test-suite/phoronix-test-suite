@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,14 +30,9 @@ class module_info implements pts_option_interface
 	}
 	public static function run($args)
 	{
-		$module = strtolower($args[0]);
-
-		if(is_file(($path = MODULE_DIR . $module . ".php")) || is_file(($path = MODULE_DIR . $module . ".sh"))) // TODO: come up with better way to avoid this
-		{
-			$module = new pts_user_module_details($path);
-			echo $module->info_string();
-			echo "\n";
-		}
+		$module = new pts_user_module_details($args[0]);
+		echo $module->info_string();
+		echo "\n";
 	}
 }
 
