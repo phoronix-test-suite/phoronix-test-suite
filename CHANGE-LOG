@@ -21,6 +21,7 @@ Phoronix Test Suite 2.2 (Git)
 - pts-core: Standardize PTS test comparison hashes
 - phodevi: Improve hardware detection for OpenSolaris SPARC systems using DDU information
 - phodevi: Improve motherboard detection for Sun SPARC systems
+- phodevi: Start new reporting infrastructure
 - tandem_Xml: Add addXmlObjectFromReader() function for improved performance
 - tandem_Xml: Add saveXMLFile() function
 - pts: Fixes for compress-lzma and compress-pbzip2 test profiles with name change of compressfile

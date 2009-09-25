@@ -23,27 +23,13 @@
 
 require_once(PTS_LIBRARY_PATH . "pts-functions_system_parsing.php");
 
-// TODO: Further integration with Phodevi
-
 function pts_hw_string($return_string = true)
 {
-	// Returns string of hardware information
-	$hw = array();
-
-	$hw["Processor"] = phodevi::read_name("cpu");
-	$hw["Motherboard"] = phodevi::read_name("motherboard");
-	$hw["Chipset"] = phodevi::read_name("chipset");
-	$hw["System Memory"] = phodevi::read_name("memory");
-	$hw["Disk"] = phodevi::read_name("disk");
-	$hw["Graphics"] = phodevi::read_name("gpu");
-	$hw["Monitor"] = phodevi::read_name("monitor");
-
-	$hw = pts_remove_unsupported_entries($hw);
-
-	return pts_process_string_array($return_string, $hw);
+	return phodevi::system_hardware();
 }
 function pts_sw_string($return_string = true)
 {
+	// TODO: port to Phodevi module similar to the pts_hw_string()
 	// Returns string of software information
 	$sw = array();
 

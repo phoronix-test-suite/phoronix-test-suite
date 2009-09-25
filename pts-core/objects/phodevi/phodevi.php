@@ -34,6 +34,22 @@ class phodevi
 	{
 		return phodevi::read_property($device, "identifier");
 	}
+	public static function available_hardware_devices()
+	{
+		return array(
+		"Processor" => "cpu",
+		"Motherboard" => "motherboard",
+		"Chipset" => "chipset",
+		"System Memory" => "memory",
+		"Disk" => "disk",
+		"Graphics" => "gpu",
+		"Monitor" => "monitor"
+		);
+	}
+	public static function system_hardware($return_as_string = true)
+	{
+		return self::system_information_parse(self::available_hardware_devices(), $return_as_string);
+	}
 	public static function read_sensor($device, $read_sensor)
 	{
 		$value = false;
@@ -238,6 +254,39 @@ class phodevi
 			file_put_contents($store_dir . "phodevi.cache", 
 				serialize(new phodevi_cache(self::$smart_cache, $store_dir, $client_version)));
 		}
+	}
+	protected static function system_information_parse($component_array, $return_as_string = true)
+	{
+		// Returns string of hardware information
+		$info = array();
+
+		foreach($component_array as $string => $id)
+		{
+			$value = self::read_name($id);
+
+			if($value != -1 && !empty($value))
+			{
+				$info[$string] = $value;
+			}
+		}
+
+		if($return_as_string)
+		{
+			$info_array = $info;
+			$info = "";
+
+			foreach($info_array as $type => $value)
+			{
+				if($info != "")
+				{
+					$info .= ", ";
+				}
+
+				$info .= $type . ": " . $value;
+			}
+		}
+
+		return $info;
 	}
 }
 
