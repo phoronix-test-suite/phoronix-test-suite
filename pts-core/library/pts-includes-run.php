@@ -637,9 +637,9 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if($i > 1 && $pts_test_result->trial_run_count() > 0 && pts_read_assignment("PTS_STATS_DYNAMIC_RUN_COUNT") && $times_to_run < ($defined_times_to_run * 2))
 		{
-			$current_standard_deviation = pts_percent_standard_deviation($pts_test_result->get_trial_results());
+			$std_dev = pts_percent_standard_deviation($pts_test_result->get_trial_results());
 
-			if($current_standard_deviation >= pts_read_assignment("PTS_STATS_STD_DEVIATION_THRESHOLD") && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_DYNAMIC_ON_LENGTH"))
+			if($std_dev >= pts_read_assignment("PTS_STATS_STD_DEV_THRESHOLD") && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_ON_LENGTH"))
 			{
 				$times_to_run++;
 				$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);
