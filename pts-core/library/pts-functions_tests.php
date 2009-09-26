@@ -100,9 +100,19 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 }
 function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 {
-	if($save_to_dir && !is_dir($save_to_dir . "/result-graphs"))
+	if($save_to_dir)
 	{
-		mkdir($save_to_dir . "/result-graphs", 0777, true);
+		if(!is_dir($save_to_dir . "/result-graphs"))
+		{
+			mkdir($save_to_dir . "/result-graphs", 0777, true);
+		}
+		else
+		{
+			foreach(glob($save_to_dir . "/result-graphs/*") as $old_file)
+			{
+				unlink($old_file);
+			}
+		}
 	}
 
 	$result_file = new pts_result_file($test_results_identifier);
