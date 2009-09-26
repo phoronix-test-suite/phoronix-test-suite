@@ -510,6 +510,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if($root_required)
 	{
+		if(pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
+		{
+			return $pts_test_result;
+		}
+
 		$execute_binary_prepend = TEST_LIBRARIES_DIR . "root-access.sh ";
 	}
 
