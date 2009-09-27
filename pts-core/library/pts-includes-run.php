@@ -358,7 +358,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$test_identifier = $test_run_request->get_identifier();
 	$extra_arguments = $test_run_request->get_arguments();
 	$arguments_description = $test_run_request->get_arguments_description();
-	$override_test_options = $test_run_request->get_override_options();
 
 	// Do the actual test running process
 	$pts_test_result = new pts_test_result();
@@ -366,7 +365,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if(!is_dir($test_directory))
 	{
-		return $pts_test_result;
+		return false;
 	}
 
 	$lock_file = $test_directory . "run_lock";
@@ -374,11 +373,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	if(!pts_create_lock($lock_file, $test_fp))
 	{
 		$display_mode->test_run_error("The " . $test_identifier . " test is already running.");
-		return $pts_test_result;
+		return false;
 	}
 
 	$xml_parser = new pts_test_tandem_XmlReader($test_identifier);
-	$xml_parser->overrideXMLValues($override_test_options);
+	$xml_parser->overrideXMLValues($test_run_request->get_override_options());
 	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
@@ -401,13 +400,13 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	if($test_type == "Graphics" && getenv("DISPLAY") == false)
 	{
 		pts_release_lock($test_fp, $lock_file);
-		return $pts_test_result;
+		return false;
 	}
 
 	if(getenv("NO_" . strtoupper($test_type) . "_TESTS") || (($e = getenv("SKIP_TESTS")) && in_array($test_identifier, explode(",", $e))))
 	{
 		pts_release_lock($test_fp, $lock_file);
-		return $pts_test_result;
+		return false;
 	}
 
 	if(!empty($env_testing_size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $env_testing_size)
@@ -415,7 +414,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		// Ensure enough space is available on disk during testing process
 		$display_mode->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run. " . $env_testing_size . " MB of space is needed.");
 		pts_release_lock($test_fp, $lock_file);
-		return $pts_test_result;
+		return false;
 	}
 
 	if(empty($result_format))
@@ -464,7 +463,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	{
 		$display_mode->test_run_error("The test executable for " . $test_identifier . " could not be found. Skipping test.");
 		pts_release_lock($test_fp, $lock_file);
-		return $pts_test_result;
+		return false;
 	}
 
 	if(pts_test_needs_updated_install($test_identifier))
@@ -512,7 +511,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	{
 		if(pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
 		{
-			return $pts_test_result;
+			return false;
 		}
 
 		$execute_binary_prepend = TEST_LIBRARIES_DIR . "root-access.sh ";
@@ -525,9 +524,9 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	$display_mode->test_run_start($pts_test_result);
 	$defined_times_to_run = $times_to_run;
-	$continue_testing = true;
+	$abort_testing = false;
 
-	for($i = 0; $i < $times_to_run && $continue_testing; $i++)
+	for($i = 0; $i < $times_to_run && !$abort_testing; $i++)
 	{
 		$display_mode->test_run_instance_header($pts_test_result, ($i + 1), $times_to_run);
 		$benchmark_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
@@ -579,7 +578,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			$exit_status = trim(file_get_contents(TEST_ENV_DIR . $test_identifier . "/test-exit-status"));
 			unlink(TEST_ENV_DIR . $test_identifier . "/test-exit-status");
 
-			if($exit_status != "0")
+			if($exit_status != 0)
 			{
 				$display_mode->test_run_error("The test exited with a non-zero exit status. Test run failed.");
 				$exit_status_pass = false;
@@ -653,7 +652,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 					case 2:
 						// Results are bad, abandon testing and do not record results
 						$request_increase = false;
-						$continue_testing = false;
+						$abort_testing = true;
 						break;
 					default:
 						// Return was 0, results are valid, or was some other exit status
@@ -705,7 +704,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if(is_file(PTS_USER_DIR . "halt-testing"))
 		{
 			pts_release_lock($test_fp, $lock_file);
-			return $pts_test_result;
+			return false;
 		}
 	}
 
@@ -720,7 +719,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		echo pts_call_test_script($test_identifier, "post", null, $test_directory, $extra_runtime_variables);
 	}
 
-	if(!$continue_testing)
+	if($abort_testing)
 	{
 		return false;
 	}
@@ -772,7 +771,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	{
 		$arguments_description = str_replace("$" . $key, $value, $arguments_description);
 
-		if($key != "VIDEO_MEMORY" && $key != "NUM_CPU_CORES" && $key != "NUM_CPU_JOBS")
+		if(!in_array($key, array("VIDEO_MEMORY", "NUM_CPU_CORES", "NUM_CPU_JOBS")))
 		{
 			$extra_arguments = str_replace("$" . $key, $value, $extra_arguments);
 		}
