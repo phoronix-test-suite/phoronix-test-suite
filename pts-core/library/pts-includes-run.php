@@ -40,8 +40,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 		}
 		else if(pts_is_test($lower_identifier))
 		{
-			$xml_parser = new pts_test_tandem_XmlReader($lower_identifier);
-			$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
+			$test_title = pts_test_xml_option($lower_identifier, P_TEST_TITLE);
 
 			if(empty($test_title))
 			{

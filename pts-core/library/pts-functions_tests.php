@@ -315,28 +315,17 @@ function pts_test_checksum_installer($identifier)
 function pts_test_installed_checksum_installer($identifier)
 {
 	// Read installer checksum of installed tests
-	$version = "";
-
-	if(pts_test_installed($identifier))
-	{
-	 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
-		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
-	}
-
-	return $version;
+	return pts_installed_test_xml_option($identifier, P_INSTALL_TEST_CHECKSUM);
 }
 function pts_test_installed_system_identifier($identifier)
 {
 	// Read installer checksum of installed tests
-	$value = "";
-
-	if(pts_test_installed($identifier))
-	{
-	 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
-		$value = $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
-	}
-
-	return $value;
+	return pts_installed_test_xml_option($identifier, P_INSTALL_TEST_SYSIDENTIFY);
+}
+function pts_test_installed_profile_version($identifier)
+{
+	// Checks installed version
+	return pts_installed_test_xml_option($identifier, P_INSTALL_TEST_VERSION);
 }
 function pts_test_profile_version($identifier)
 {
@@ -345,24 +334,29 @@ function pts_test_profile_version($identifier)
 
 	if(pts_is_test($identifier))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-		$version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
+		$version = pts_test_xml_option($identifier, P_TEST_PTSVERSION);		
 	}
 
 	return $version;
 }
-function pts_test_installed_profile_version($identifier)
+function pts_installed_test_xml_option($identifier, $xml_option)
 {
-	// Checks installed version
-	$version = "";
+	$read = null;
 
 	if(pts_test_installed($identifier))
 	{
 	 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
-		$version = $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
+		$read = $xml_parser->getXMLValue($xml_option);
 	}
 
-	return $version;
+	return $read;
+}
+function pts_test_xml_option($identifier, $xml_option)
+{
+ 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
+	$read = $xml_parser->getXMLValue($xml_option);
+
+	return $read;
 }
 function pts_test_installed($identifier)
 {
@@ -379,9 +373,7 @@ function pts_test_name_to_identifier($name)
 
 		foreach(pts_available_tests_array() as $identifier)
 		{
-		 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-
-			if($xml_parser->getXMLValue(P_TEST_TITLE) == $name)
+			if(pts_test_xml_option($identifier, P_TEST_TITLE) == $name)
 			{
 				$this_identifier = $identifier;
 			}
@@ -427,8 +419,7 @@ function pts_test_identifier_to_name($identifier)
 
 		if(!empty($identifier) && pts_is_test($identifier))
 		{
-		 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-			$name = $xml_parser->getXMLValue(P_TEST_TITLE);
+			$name = pts_test_xml_option($identifier, P_TEST_TITLE);
 		}
 
 		$cache[$identifier] = $name;
@@ -489,8 +480,7 @@ function pts_estimated_environment_size($identifier)
 
 	foreach(pts_contained_tests($identifier, true) as $test)
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader($test);
-		$this_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
+		$this_size = pts_test_xml_option($test, P_TEST_ENVIRONMENTSIZE);
 
 		if(!empty($this_size) && is_numeric($this_size))
 		{
@@ -549,8 +539,7 @@ function pts_estimated_run_time($identifier, $return_total_time = true, $return_
 			}
 			else
 			{
-				$xml_parser = new pts_test_tandem_XmlReader($test);
-				$el = $xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
+				$el = pts_test_xml_option($test, P_TEST_ESTIMATEDTIME);
 
 				if(is_numeric($el) && $el > 0)
 				{
@@ -577,8 +566,7 @@ function pts_test_architecture_supported($identifier)
 
 	if(pts_is_test($identifier))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-		$archs = $xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS);
+		$archs = pts_test_xml_option($identifier, P_TEST_SUPPORTEDARCHS);
 
 		if(!empty($archs))
 		{
@@ -632,9 +620,7 @@ function pts_test_version_supported($identifier)
 
 	if(pts_is_test($identifier))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-		$requires_core_version = $xml_parser->getXMLValue(P_TEST_SUPPORTS_COREVERSION);
-
+		$requires_core_version = pts_test_xml_option($identifier, P_TEST_SUPPORTS_COREVERSION);
 		$supported = pts_test_version_compatible($requires_core_version);
 	}
 
@@ -971,8 +957,7 @@ function pts_result_file_reference_tests($result)
 	}
 	else if(pts_is_test($result_test))
 	{
-		$xml_parser = new pts_test_tandem_XmlReader($result_test);
-		$reference_systems_xml = $xml_parser->getXMLValue(P_TEST_REFERENCE_SYSTEMS);
+		$reference_systems_xml = pts_test_xml_option($result_test, P_TEST_REFERENCE_SYSTEMS);
 	}
 	else
 	{
