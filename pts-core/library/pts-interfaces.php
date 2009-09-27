@@ -189,6 +189,7 @@ define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/Testing/ResultsD
 define("P_OPTION_STATS_DYNAMIC_RUN_COUNT", "PhoronixTestSuite/Options/Statistics/DynamicRunCount"); // Increase run count if needed
 define("P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH", "PhoronixTestSuite/Options/Statistics/LimitDynamicToTestLength"); // Only for tests that take less than XX time
 define("P_OPTION_STATS_STD_DEVIATION_THRESHOLD", "PhoronixTestSuite/Options/Statistics/StandardDeviationThreshold"); // The threshold for the standard deviation percent
+define("P_OPTION_STATS_EXPORT_RESULTS_TO", "PhoronixTestSuite/Options/Statistics/ExportResultsTo"); // Connect to an external script
 
 define("P_OPTION_TEST_REMOVEDOWNLOADS", "PhoronixTestSuite/Options/Installation/RemoveDownloadFiles"); // Remove downloaded files after test is installed
 define("P_OPTION_TEST_ENVIRONMENT", "PhoronixTestSuite/Options/Installation/EnvironmentDirectory"); // Results save directory

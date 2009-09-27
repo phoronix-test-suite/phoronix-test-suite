@@ -322,6 +322,7 @@ class run_test implements pts_option_interface
 		pts_set_assignment("PTS_STATS_DYNAMIC_RUN_COUNT", pts_string_bool(pts_read_user_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE")));
 		pts_set_assignment("PTS_STATS_NO_ON_LENGTH", pts_read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, "20"));
 		pts_set_assignment("PTS_STATS_STD_DEV_THRESHOLD", pts_read_user_config(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, "3.50"));
+		pts_set_assignment("PTS_STATS_EXPORT_TO", pts_read_user_config(P_OPTION_STATS_EXPORT_RESULTS_TO, null));
 		pts_call_test_runs($test_run_manager, $display_mode, $xml_results_writer);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_process("__post_run_process", $test_run_manager);

@@ -640,7 +640,34 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			$std_dev = pts_percent_standard_deviation($pts_test_result->get_trial_results());
 
-			if($std_dev >= pts_read_assignment("PTS_STATS_STD_DEV_THRESHOLD") && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_ON_LENGTH"))
+			if(($ex_file = pts_read_assignment("PTS_STATS_EXPORT_TO")) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_DIR . $ex_file)))
+			{
+				$exit_status = trim(shell_exec($ex_file . " " . $pts_test_result->get_trial_results_string() . " > /dev/null 2>&1; echo $?"));
+
+				switch($exit_status)
+				{
+					case 1:
+						// Run the test again
+						$request_increase = true;
+						break;
+					case 2:
+						// Results are bad, abandon testing and do not record results
+						$request_increase = false;
+						$continue_testing = false;
+						break;
+					default:
+						// Return was 0, results are valid, or was some other exit status
+						$request_increase = false;
+						break;
+
+				}
+			}
+			else
+			{
+				$request_increase = false;
+			}
+
+			if(($request_increase || $std_dev >= pts_read_assignment("PTS_STATS_STD_DEV_THRESHOLD")) && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_ON_LENGTH"))
 			{
 				$times_to_run++;
 				$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);
@@ -691,6 +718,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	if(!($allow_cache_share && is_file($cache_share_pt2so)))
 	{
 		echo pts_call_test_script($test_identifier, "post", null, $test_directory, $extra_runtime_variables);
+	}
+
+	if(!$continue_testing)
+	{
+		return false;
 	}
 
 	// End
