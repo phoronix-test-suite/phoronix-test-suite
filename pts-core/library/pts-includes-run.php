@@ -525,8 +525,9 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	$display_mode->test_run_start($pts_test_result);
 	$defined_times_to_run = $times_to_run;
+	$continue_testing = true;
 
-	for($i = 0; $i < $times_to_run; $i++)
+	for($i = 0; $i < $times_to_run && $continue_testing; $i++)
 	{
 		$display_mode->test_run_instance_header($pts_test_result, ($i + 1), $times_to_run);
 		$benchmark_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
