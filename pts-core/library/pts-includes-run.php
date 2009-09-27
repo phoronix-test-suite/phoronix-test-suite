@@ -737,6 +737,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$result_scale = trim(file_get_contents($test_directory . "pts-results-scale"));
 		unlink($test_directory . "pts-results-scale");
 	}
+	if(empty($result_proportion) && is_file($test_directory . "pts-results-proportion"))
+	{
+		$result_proportion = trim(file_get_contents($test_directory . "pts-results-proportion"));
+		unlink($test_directory . "pts-results-proportion");
+	}
 	if(empty($result_quantifier) && is_file($test_directory . "pts-results-quantifier"))
 	{
 		$result_quantifier = trim(file_get_contents($test_directory . "pts-results-quantifier"));
