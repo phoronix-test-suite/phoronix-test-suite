@@ -47,8 +47,7 @@ function pts_is_weighted_suite($object)
 
 	if(pts_is_suite($object))
 	{
-		$xml_parser = new pts_suite_tandem_XmlReader($object);
-		$is_weighted_suite = $xml_parser->getXMLValue(P_SUITE_WEIGHTED_BASE_FROM_TEST) != false;
+		$is_weighted_suite = pts_suite_read_xml($object, P_SUITE_WEIGHTED_BASE_FROM_TEST) != false;
 	}
 
 	return $is_weighted_suite;
@@ -341,8 +340,7 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 	{
 		if(pts_is_suite($object)) // Object is suite
 		{
-			$xml_parser = new pts_suite_tandem_XmlReader($object);
-			$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+			$tests_in_suite = array_unique(pts_suite_read_xml($object, P_SUITE_TEST_NAME));
 
 			foreach($tests_in_suite as $test)
 			{

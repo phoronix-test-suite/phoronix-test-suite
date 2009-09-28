@@ -24,7 +24,7 @@ class install_test implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("install");
+		return array("install", "execution");
 	}
 	public static function argument_checks()
 	{

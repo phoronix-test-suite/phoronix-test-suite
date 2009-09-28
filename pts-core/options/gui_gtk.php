@@ -24,7 +24,7 @@ class gui_gtk implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("gui", "run", "gtk", "install_dependencies");
+		return array("gui", "run", "gtk", "install", "install_dependencies", "comparisons");
 	}
 	public static function run($r)
 	{

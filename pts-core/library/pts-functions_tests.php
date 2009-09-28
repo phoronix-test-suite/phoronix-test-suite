@@ -358,6 +358,13 @@ function pts_test_read_xml($identifier, $xml_option)
 
 	return $read;
 }
+function pts_suite_read_xml($identifier, $xml_option)
+{
+ 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
+	$read = $xml_parser->getXMLValue($xml_option);
+
+	return $read;
+}
 function pts_test_installed($identifier)
 {
 	return is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml");
@@ -395,9 +402,7 @@ function pts_suite_name_to_identifier($name)
 
 		foreach(pts_available_suites_array() as $identifier)
 		{
-		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
-
-			if($xml_parser->getXMLValue(P_SUITE_TITLE) == $name)
+			if(pts_suite_read_xml($identifier, P_SUITE_TITLE) == $name)
 			{
 				$this_identifier = $identifier;
 			}
@@ -438,8 +443,7 @@ function pts_suite_identifier_to_name($identifier)
 
 		if(!empty($identifier) && pts_is_suite($identifier))
 		{
-		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
-			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
+			$name = pts_suite_read_xml($identifier, P_SUITE_TITLE);
 		}
 
 		$cache[$identifier] = $name;
@@ -813,46 +817,6 @@ function pts_supported_suites_array()
 
 	return $cache;
 }
-function pts_call_test_script($test_identifier, $script_name, $print_string = "", $pass_argument = "", $extra_vars = null, $use_ctp = true)
-{
-	$result = null;
-	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
-
-	$tests_r = ($use_ctp ? pts_contained_tests($test_identifier, true) : array($test_identifier));
-
-	foreach($tests_r as $this_test)
-	{
-		if(is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".php")) || is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".sh")))
-		{
-			$file_extension = substr($run_file, (strrpos($run_file, ".") + 1));
-
-			if(!empty($print_string))
-			{
-				echo $print_string;
-			}
-
-			if($file_extension == "php")
-			{
-				$this_result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
-			}
-			else if($file_extension == "sh")
-			{
-				$this_result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
-			}
-			else
-			{
-				$this_result = null;
-			}
-
-			if(trim($this_result) != "")
-			{
-				$result = $this_result;
-			}
-		}
-	}
-
-	return $result;
-}
 function pts_cpu_arch_compatible($check_against)
 {
 	$compatible = true;
@@ -936,116 +900,6 @@ function pts_generic_reference_system_comparison_ids()
 	}
 
 	return $comparison_ids;
-}
-function pts_result_file_reference_tests($result)
-{
-	$result_file = new pts_result_file($result);
-	$result_test = $result_file->get_suite_name();
-	$result_identifiers = $result_file->get_system_identifiers();
-	$test_result_hashes = array();
-	$reference_tests = array();
-
-	foreach($result_file->get_result_objects() as $result_object)
-	{
-		array_push($test_result_hashes, $result_object->get_comparison_hash());
-	}
-
-	if(pts_is_suite($result_test))
-	{
-		$xml_parser = new pts_suite_tandem_XmlReader($result_test);
-		$reference_systems_xml = $xml_parser->getXMLValue(P_SUITE_REFERENCE_SYSTEMS);
-	}
-	else if(pts_is_test($result_test))
-	{
-		$reference_systems_xml = pts_test_read_xml($result_test, P_TEST_REFERENCE_SYSTEMS);
-	}
-	else
-	{
-		$reference_systems_xml = null;
-	}
-
-	$reference_ids = pts_trim_explode(",", $reference_systems_xml);
-	$reference_file_ids = pts_generic_reference_system_comparison_ids();
-
-	foreach(array_merge($reference_ids, $reference_file_ids) as $global_id)
-	{
-		if(pts_is_global_id($global_id))
-		{
-			if(!pts_is_test_result($global_id))
-			{
-				pts_clone_from_global($global_id, false);
-			}
-
-			$global_result_file = new pts_result_file($global_id);
-			$global_result_hashes = array();
-
-			$global_result_identifiers = $global_result_file->get_system_identifiers();
-
-			foreach($global_result_identifiers as $index => $identifier_check)
-			{
-				if(in_array($identifier_check, $result_identifiers))
-				{
-					unset($global_result_identifiers[$index]);
-				}
-			}
-
-			if(count($global_result_identifiers) > 0)
-			{
-				$hash_failed = false;
-
-				foreach($global_result_file->get_result_objects() as $result_object)
-				{
-					array_push($global_result_hashes, $result_object->get_comparison_hash());
-				}
-				foreach($test_result_hashes as $hash)
-				{
-					if(!in_array($hash, $global_result_hashes))
-					{
-						$hash_failed = true;
-						break;
-					}
-				}
-
-				if(!$hash_failed)
-				{
-					foreach($global_result_identifiers as $system_identifier)
-					{
-						array_push($reference_tests, new pts_result_merge_select($global_id, $system_identifier));
-					}
-				}
-			}
-		}
-	}
-
-	return $reference_tests;
-}
-function pts_test_download_caches()
-{
-	$cache_directories = pts_download_cache_user_directories();
-
-	$possible_cache_dirs = array("/var/cache/phoronix-test-suite/");
-	foreach($possible_cache_dirs as $dir)
-	{
-		if(is_dir($dir))
-		{
-			array_push($cache_directories, $dir);
-		}
-	}
-
-	if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
-	{
-		$download_cache_dirs = array_merge(
-		glob("/media/*/download-cache/"),
-		glob("/Volumes/*/download-cache/")
-		);
-
-		foreach($download_cache_dirs as $dir)
-		{
-			array_push($cache_directories, $dir);
-		}
-	}
-
-	return $cache_directories;
 }
 function pts_test_comparison_hash($test_identifier, $arguments, $attributes = null, $version = null)
 {

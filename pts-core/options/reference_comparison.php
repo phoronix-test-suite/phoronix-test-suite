@@ -24,7 +24,7 @@ class reference_comparison implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("merge");
+		return array("merge", "comparisons");
 	}
 	public static function argument_checks()
 	{

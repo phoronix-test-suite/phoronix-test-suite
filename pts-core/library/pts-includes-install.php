@@ -554,4 +554,33 @@ function pts_is_valid_download_url($string, $basename = null)
 	return !(strpos($string, "://") == false || !empty($basename) && $basename != basename($string));
 }
 
+function pts_test_download_caches()
+{
+	$cache_directories = pts_download_cache_user_directories();
+
+	$possible_cache_dirs = array("/var/cache/phoronix-test-suite/");
+	foreach($possible_cache_dirs as $dir)
+	{
+		if(is_dir($dir))
+		{
+			array_push($cache_directories, $dir);
+		}
+	}
+
+	if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
+	{
+		$download_cache_dirs = array_merge(
+		glob("/media/*/download-cache/"),
+		glob("/Volumes/*/download-cache/")
+		);
+
+		foreach($download_cache_dirs as $dir)
+		{
+			array_push($cache_directories, $dir);
+		}
+	}
+
+	return $cache_directories;
+}
+
 ?>

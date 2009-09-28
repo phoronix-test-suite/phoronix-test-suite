@@ -24,7 +24,7 @@ class run_test implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("run", "merge", "batch");
+		return array("run", "merge", "batch", "execution");
 	}
 	public static function run($to_run_identifiers)
 	{
