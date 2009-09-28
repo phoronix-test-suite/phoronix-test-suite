@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite 2.2 (Git)
+Phoronix Test Suite 2.2 Alpha 3
+September 28, 2009
 
 - pts-core: Add support for HTTP communication through a proxy server
 - pts-core: Add network-setup option for configuring network settings
@@ -32,6 +33,8 @@ Phoronix Test Suite 2.2 (Git)
 - pts: Fix for warsow test profile results not showing up on Linux
 - pts: Support using aptitude for external dependencies when available on Ubuntu/Debian
 - pts: Update minion test profile against Minion 0.9
+- pts: Add OpenMPI to external dependencies as openmpi-development
+- pts: Add ATLAS math to external dependencies as atlas-development
 
 Phoronix Test Suite 2.2 Alpha 2
 September 15, 2009

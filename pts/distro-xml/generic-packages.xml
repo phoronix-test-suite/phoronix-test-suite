@@ -225,6 +225,19 @@
 			<FileCheck>/usr/lib/liblapack.so</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>atlas-development</GenericName>
+			<Title>Linear Algebra Pack</Title>
+			<PossibleNames>libatlas-base-dev</PossibleNames>
+			<FileCheck>/usr/lib/libatlas.a</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>openmpi-development</GenericName>
+			<Title>OpenMPI</Title>
+			<PossibleNames>libopenmpi-dev, openmpi-bin</PossibleNames>
+			<FileCheck>/usr/lib/openmpi/lib/libmpi.so, /usr/bin/mpirun.openmpi</FileCheck>
+		</Package>
+
+		<Package>
 			<GenericName>cmake</GenericName>
 			<Title>CMake</Title>
 			<PossibleNames>cmake</PossibleNames>

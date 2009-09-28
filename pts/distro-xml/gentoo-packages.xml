@@ -210,5 +210,15 @@
 			<PackageName>dev-lang/python</PackageName>
 			<FileCheck>/usr/bin/python</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>atlas-development</GenericName>
+			<PackageName>sci-libs/lapack-atlas</PackageName>
+			<FileCheck>/usr/lib/libatlas.a</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>openmpi-development</GenericName>
+			<PackageName>sys-cluster/openmpi</PackageName>
+			<FileCheck>/usr/lib/openmpi/lib/libmpi.so, /usr/bin/mpirun.openmpi</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

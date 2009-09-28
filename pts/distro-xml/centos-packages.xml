@@ -175,5 +175,15 @@
 			<PackageName>python</PackageName>
 			<FileCheck>/usr/bin/python</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>atlas-development</GenericName>
+			<PackageName>atlas-devel</PackageName>
+			<FileCheck>/usr/lib/libatlas.a</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>openmpi-development</GenericName>
+			<PackageName>openmpi-libs</PackageName>
+			<FileCheck>/usr/lib/openmpi/lib/libmpi.so, /usr/bin/mpirun.openmpi</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
