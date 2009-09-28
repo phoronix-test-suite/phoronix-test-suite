@@ -35,6 +35,7 @@ September 28, 2009
 - pts: Update minion test profile against Minion 0.9
 - pts: Add OpenMPI to external dependencies as openmpi-development
 - pts: Add ATLAS math to external dependencies as atlas-development
+- pts: Add hpcc test profile for HPC Challenge
 
 Phoronix Test Suite 2.2 Alpha 2
 September 15, 2009
