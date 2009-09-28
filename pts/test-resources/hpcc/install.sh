@@ -229,7 +229,7 @@ cd hpcc-1.3.1
 rm -f hpccoutf.txt
 cat _hpccinf.txt | sed -e s/##NUM_CPU_CORES##/\$NUM_CPU_CORES/ > hpccinf.txt
 mpirun.openmpi -np \$NUM_CPU_CORES hpcc
-echo $? > ~/test-exit-status
+echo \$? > ~/test-exit-status
 cd ..
 cp hpcc-1.3.1/hpccoutf.txt \$LOG_FILE
 " > hpcc
