@@ -81,8 +81,8 @@ function pts_validate_local_test_profile($identifier)
 
 		if(is_file(($sp = XML_PROFILE_DIR . $identifier . ".xml")))
 		{
-			$lp_version = pts_test_xml_option($lp, P_TEST_PTSVERSION);
-			$sp_version = pts_test_xml_option($sp, P_TEST_PTSVERSION);
+			$lp_version = pts_test_read_xml($lp, P_TEST_PTSVERSION);
+			$sp_version = pts_test_read_xml($sp, P_TEST_PTSVERSION);
 
 			if(pts_version_newer($lp_version, $sp_version) == $sp_version)
 			{
@@ -110,8 +110,8 @@ function pts_validate_local_test_suite($identifier)
 
 		if(is_file(($ss = XML_SUITE_DIR . $identifier . ".xml")))
 		{
-			$ls_version = pts_test_xml_option($ls, P_SUITE_VERSION);
-			$ss_version = pts_test_xml_option($ss, P_SUITE_VERSION);
+			$ls_version = pts_test_read_xml($ls, P_SUITE_VERSION);
+			$ss_version = pts_test_read_xml($ss, P_SUITE_VERSION);
 
 			if(pts_version_newer($ls_version, $ss_version) == $ss_version)
 			{
@@ -308,7 +308,7 @@ function pts_test_extends_below($object)
 	{
 		if(pts_is_test($test_extends))
 		{
-			$test_extends = pts_test_xml_option($test_extends, P_TEST_CTPEXTENDS);
+			$test_extends = pts_test_read_xml($test_extends, P_TEST_CTPEXTENDS);
 
 			if(!empty($test_extends))
 			{
@@ -421,7 +421,7 @@ function pts_virtual_suite_tests($object)
 		case TYPE_VIRT_SUITE_SUBSYSTEM:
 			foreach(pts_supported_tests_array() as $test)
 			{
-				$type = pts_test_xml_option($test, P_TEST_HARDWARE_TYPE);
+				$type = pts_test_read_xml($test, P_TEST_HARDWARE_TYPE);
 
 				if(strtolower($type) == $object && pts_test_supported($test))
 				{
@@ -432,7 +432,7 @@ function pts_virtual_suite_tests($object)
 		case TYPE_VIRT_SUITE_ALL:
 			foreach(pts_supported_tests_array() as $test)
 			{
-				$result_format = pts_test_xml_option($test, P_TEST_RESULTFORMAT);
+				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
 
 				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")))
 				{
@@ -443,7 +443,7 @@ function pts_virtual_suite_tests($object)
 		case TYPE_VIRT_SUITE_FREE:
 			foreach(pts_supported_tests_array() as $test)
 			{
-				$test_license = pts_test_xml_option($test, P_TEST_LICENSE);
+				$test_license = pts_test_read_xml($test, P_TEST_LICENSE);
 
 				if($test_license == "FREE")
 				{

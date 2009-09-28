@@ -40,7 +40,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 		}
 		else if(pts_is_test($lower_identifier))
 		{
-			$test_title = pts_test_xml_option($lower_identifier, P_TEST_TITLE);
+			$test_title = pts_test_read_xml($lower_identifier, P_TEST_TITLE);
 
 			if(empty($test_title))
 			{
@@ -395,6 +395,8 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$root_required = $xml_parser->getXMLValue(P_TEST_ROOTNEEDED) == "TRUE";
 	$allow_cache_share = $xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE) == "TRUE";
 	$env_testing_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE);
+	$default_test_descriptor = $xml_parser->getXMLValue(P_TEST_SUBTITLE);
+	unset($xml_parser);
 
 	if($test_type == "Graphics" && getenv("DISPLAY") == false)
 	{
@@ -501,9 +503,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	pts_user_message($pre_run_message);
-
 	$runtime_identifier = pts_unique_runtime_identifier();
-
 	$execute_binary_prepend = "";
 
 	if($root_required)
@@ -522,10 +522,8 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$display_mode->test_run_start($pts_test_result);
-	$defined_times_to_run = $times_to_run;
-	$abort_testing = false;
 
-	for($i = 0; $i < $times_to_run && !$abort_testing; $i++)
+	for($i = 0, $abort_testing = false, $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
 		$display_mode->test_run_instance_header($pts_test_result, ($i + 1), $times_to_run);
 		$benchmark_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
@@ -732,43 +730,34 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		pts_test_notes_manager::add_note(trim(file_get_contents($test_directory . "/pts-test-note")));
 		unlink($test_directory . "pts-test-note");
 	}
-	if(empty($result_scale) && is_file($test_directory . "pts-results-scale"))
+
+	// Fill in missing test details
+
+	if(empty($arguments_description) && !empty($default_test_descriptor))
 	{
-		$result_scale = trim(file_get_contents($test_directory . "pts-results-scale"));
-		unlink($test_directory . "pts-results-scale");
+		$arguments_description = $default_test_descriptor;
 	}
-	if(empty($result_proportion) && is_file($test_directory . "pts-results-proportion"))
+
+	$file_var_checks = array(
+	"result_scale" => "pts-results-scale",
+	"result_proportion" => "pts-results-proportion",
+	"result_quantifier" => "pts-results-quantifier",
+	"test_version" => "pts-test-version",
+	"arguments_description" => "pts-test-description"
+	);
+
+	foreach($file_var_checks as $var_check => $file_check)
 	{
-		$result_proportion = trim(file_get_contents($test_directory . "pts-results-proportion"));
-		unlink($test_directory . "pts-results-proportion");
+		if(empty($$var_check) && is_file($test_directory . $file_check))
+		{
+			$$var_check = trim(file_get_contents($test_directory . $file_check));
+			unlink($test_directory . $file_check);
+		}
 	}
-	if(empty($result_quantifier) && is_file($test_directory . "pts-results-quantifier"))
-	{
-		$result_quantifier = trim(file_get_contents($test_directory . "pts-results-quantifier"));
-		unlink($test_directory . "pts-results-quantifier");
-	}
-	if(empty($test_version) && is_file($test_directory . "pts-test-version"))
-	{
-		$test_version = file_get_contents($test_directory . "pts-test-version");
-		unlink($test_directory . "pts-test-version");
-	}
+
 	if(empty($arguments_description))
 	{
-		$default_test_descriptor = $xml_parser->getXMLValue(P_TEST_SUBTITLE);
-
-		if(!empty($default_test_descriptor))
-		{
-			$arguments_description = $default_test_descriptor;
-		}
-		else if(is_file($test_directory . "pts-test-description"))
-		{
-			$arguments_description = file_get_contents($test_directory . "pts-test-description");
-			unlink($test_directory . "pts-test-description");
-		}
-		else
-		{
-			$arguments_description = "Phoronix Test Suite v" . PTS_VERSION;
-		}
+		$arguments_description = "Phoronix Test Suite v" . PTS_VERSION;
 	}
 
 	foreach(pts_env_variables() as $key => $value)
