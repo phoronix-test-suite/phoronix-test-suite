@@ -340,7 +340,7 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 	{
 		if(pts_is_suite($object)) // Object is suite
 		{
-			$tests_in_suite = array_unique(pts_suite_read_xml($object, P_SUITE_TEST_NAME));
+			$tests_in_suite = array_unique(pts_suite_read_xml_array($object, P_SUITE_TEST_NAME));
 
 			foreach($tests_in_suite as $test)
 			{

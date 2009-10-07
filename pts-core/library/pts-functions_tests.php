@@ -358,10 +358,24 @@ function pts_test_read_xml($identifier, $xml_option)
 
 	return $read;
 }
+function pts_test_read_xml_array($identifier, $xml_option)
+{
+ 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
+	$read = $xml_parser->getXMLArrayValues($xml_option);
+
+	return $read;
+}
 function pts_suite_read_xml($identifier, $xml_option)
 {
  	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
 	$read = $xml_parser->getXMLValue($xml_option);
+
+	return $read;
+}
+function pts_suite_read_xml_array($identifier, $xml_option)
+{
+ 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
+	$read = $xml_parser->getXMLArrayValues($xml_option);
 
 	return $read;
 }
