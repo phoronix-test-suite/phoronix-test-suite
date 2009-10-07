@@ -236,5 +236,20 @@
 			<PackageName>python</PackageName>
 			<FileCheck>/usr/bin/python</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>python-boost-development</GenericName>
+			<PackageName>libboost-python-dev</PackageName>
+			<FileCheck>/usr/include/boost/python.hpp</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>boost-thread-development</GenericName>
+			<PackageName>libboost-thread-dev</PackageName>
+			<FileCheck>/usr/include/boost/thread.hpp</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>python-numpy</PackageName>
+			<FileCheck>/usr/share/pyshared/numpy/version.py</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

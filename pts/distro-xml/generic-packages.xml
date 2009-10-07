@@ -273,5 +273,23 @@
 			<PossibleNames>python</PossibleNames>
 			<FileCheck>/usr/bin/python</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>python-boost-development</GenericName>
+			<Title>Python Boost Development Libraries</Title>
+			<PossibleNames>libboost-python-dev</PossibleNames>
+			<FileCheck>/usr/include/boost/python.hpp</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>boost-thread-development</GenericName>
+			<Title>Boost Thread Development Libraries</Title>
+			<PossibleNames>libboost-thread-dev</PossibleNames>
+			<FileCheck>/usr/include/boost/thread.hpp</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<Title>Python Numpy</Title>
+			<PossibleNames>python-numpy</PossibleNames>
+			<FileCheck>/usr/shared/pyshared/numpy/version.py</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
