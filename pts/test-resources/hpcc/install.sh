@@ -86,9 +86,9 @@ HPLlib       = $(LIBdir)/libhpl.a
 # header files,  MPlib  is defined  to be the name of  the library to be                                 
 # used. The variable MPdir is only used for defining MPinc and MPlib.                                    
 #                                                                                                        
-MPdir        = /usr
-MPinc        = -I/usr/include/mpi
-MPlib        = $(MPdir)/lib/openmpi/lib/libmpi.so
+MPdir        = 
+MPinc        = 
+MPlib        = 
 #                                                                                                        
 # ----------------------------------------------------------------------                                 
 # - Linear Algebra library (BLAS or VSIPL) -----------------------------                                 
@@ -97,9 +97,9 @@ MPlib        = $(MPdir)/lib/openmpi/lib/libmpi.so
 # header files,  LAlib  is defined  to be the name of  the library to be                                 
 # used. The variable LAdir is only used for defining LAinc and LAlib.                                    
 #                                                                                                        
-LAdir        = /usr
+LAdir        = /usr/lib
 LAinc        =
-LAlib        = /usr/lib/libcblas.a /usr/lib/libatlas.a
+LAlib        = $(LAdir)/libcblas.a $(LAdir)/libatlas.a
 #                                                                                                        
 # ----------------------------------------------------------------------                                 
 # - F77 / C interface --------------------------------------------------                                 
@@ -171,11 +171,11 @@ HPL_DEFS     = $(F2CDEFS) $(HPL_OPTS) $(HPL_INCLUDES)
 # - Compilers / linkers - Optimization flags ---------------------------
 # ----------------------------------------------------------------------
 #
-CC           = /usr/bin/gcc
+CC           = /usr/bin/mpicc.openmpi
 CCNOOPT      = $(HPL_DEFS)
 CCFLAGS      = $(HPL_DEFS) -fomit-frame-pointer -O3 -funroll-loops -W -Wall
 #
-LINKER       = /usr/bin/gcc
+LINKER       = /usr/bin/mpif77.openmpi
 LINKFLAGS    = $(CCFLAGS)
 #
 ARCHIVER     = ar
