@@ -2,7 +2,7 @@
 
 [ -d Nexuiz_/data ] && chmod +w Nexuiz_/data
 rm -rf Nexuiz Nexuiz_
-unzip -o nexuiz-25.zip
+unzip -o nexuiz-252.zip
 mv Nexuiz Nexuiz_
 
 echo "#!/bin/sh

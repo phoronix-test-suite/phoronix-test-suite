@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts: Add initial opencl-ati test profile
 - pts: Add python-boost-development, boost-thread-development, and python-numpy external dependencies
 - pts: Add initial pyopencl test profile
+- pts: Update Nexuiz test profile against Nexuiz 2.5.2
 
 Phoronix Test Suite 2.2 Alpha 3
 September 28, 2009
