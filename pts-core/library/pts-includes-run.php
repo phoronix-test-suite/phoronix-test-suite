@@ -149,6 +149,7 @@ function pts_verify_test_installation($identifiers)
 function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = null)
 {
 	pts_unlink(PTS_USER_DIR . "halt-testing");
+	pts_unlink(PTS_USER_DIR . "skip-test");
 
 	$test_flag = true;
 	$results_identifier = $test_run_manager->get_results_identifier();
@@ -256,7 +257,13 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$dis
 
 			if(pts_unlink(PTS_USER_DIR . "halt-testing"))
 			{
+				// Stop the testing process entirely
 				return false;
+			}
+			else if(pts_unlink(PTS_USER_DIR . "skip-test"))
+			{
+				// Just skip the current test and do not save the results, but continue testing
+				continue;
 			}
 
 			if(($run_position == 1 && $run_count == 1) || $run_position < $run_count || $is_weighted_run)
@@ -698,7 +705,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			unlink($benchmark_log_file);
 		}
 
-		if(is_file(PTS_USER_DIR . "halt-testing"))
+		if(is_file(PTS_USER_DIR . "halt-testing") || is_file(PTS_USER_DIR . "skip-test"))
 		{
 			pts_release_lock($test_fp, $lock_file);
 			return false;

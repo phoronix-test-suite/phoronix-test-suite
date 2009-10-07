@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix regression that caused running/installing suites to fail from Alpha 3
+- pts-core: Add support for stopping/skipping the current test by touching ~/.phoronix-test-suite/skip-test during the process
 - pts: Updates to hpcc test profile
 - pts: Add initial opencl-ati test profile
 - pts: Add python-boost-development, boost-thread-development, and python-numpy external dependencies
