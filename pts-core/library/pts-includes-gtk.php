@@ -35,12 +35,13 @@ function pts_gtk_add_menu($vbox, $menu)
 
 	foreach($menu as $this_menu => $sub_menu)
 	{
+		$this_menu_identifier = strtoupper(str_replace(" ", "_", $this_menu));
 		$new_menu = new GtkMenuItem($this_menu);
 		$menu_bar->append($new_menu);
 		$menu = new GtkMenu();
 		$new_menu->set_submenu($menu);
 
-		pts_set_assignment("GTK_OBJ_MENU_" . strtoupper(str_replace(" ", "_", $this_menu)), $menu);
+		pts_set_assignment("GTK_OBJ_MENU_" . $this_menu_identifier, $menu);
 
 		$sub_menu = pts_to_array($sub_menu);
 		foreach($sub_menu as $this_identifier => $this_object)
@@ -60,8 +61,13 @@ function pts_gtk_add_menu($vbox, $menu)
 				{
 					$menu_item = new GtkCheckMenuItem($this_object->get_title());
 					$menu_item->connect("toggled", $this_object->get_function_call(), $this_object->get_function_argument());
+					$menu_item->connect("toggled", array("pts_gtk_multi_select_manager", "set_check_select"), $this_menu_identifier . "_" . $this_object->get_title());
 
-					if($this_object->get_active_default())
+					if(($predefined_select = pts_gtk_multi_select_manager::get_select($this_menu_identifier . "_" . $this_object->get_title())) != -1)
+					{
+						$menu_item->set_active($predefined_select);
+					}
+					else if($this_object->get_active_default())
 					{
 						$menu_item->set_active(true);
 					}
@@ -74,15 +80,23 @@ function pts_gtk_add_menu($vbox, $menu)
 					$radio[0] = null;
 					$i = 0;
 
+					$default = $this_object->get_active_default();
+					$predefined_select = pts_gtk_multi_select_manager::get_select($this_menu_identifier);
+
 					foreach($this_object->get_title() as $radio_item)
 					{
 						$radio[$i] = new GtkRadioMenuItem($radio[0], $radio_item);
 						$radio[$i]->connect("toggled", $this_object->get_function_call(), $this_object->get_function_argument());
+						$radio[$i]->connect("toggled", array("pts_gtk_multi_select_manager", "set_radio_select"), $this_menu_identifier);
 						$menu->append($radio[$i]);
+
+						if($predefined_select == $radio_item)
+						{
+							$default = $i;
+						}		
+
 						$i++;
 					}
-
-					$default = $this_object->get_active_default();
 
 					if(!isset($radio[$default]))
 					{
