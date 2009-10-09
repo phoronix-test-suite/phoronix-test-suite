@@ -153,43 +153,50 @@ class tandem_XmlReader
 	function parseXMLString($xml_tag, $to_parse, $multi_search = true)
 	{
 		$return = false;
-		$temp_r = array();
-		$temp = $to_parse;
 
 		$open_tag = "<" . $xml_tag . ">";
 		$close_tag  = "</" . $xml_tag . ">";
 		$open_tag_length = strlen($open_tag);
 		$close_tag_length = strlen($close_tag);
 
-		do
+		if($multi_search)
 		{
-			$return = null;
+			$temp = $to_parse;
+			$return = array();
 
-			if(($start = strpos($temp, $open_tag)) !== false)
+			do
 			{
-				$temp = substr($temp, $start + $open_tag_length);
+				$found = false;
 
-				if(($end = strpos($temp, $close_tag)) !== false)
+				if(($start = strpos($temp, $open_tag)) !== false)
 				{
-					$return = substr($temp, 0, $end);
-					$temp = substr($temp, strlen($return) + $close_tag_length);
+					$temp = substr($temp, $start + $open_tag_length);
+
+					if(($end = strpos($temp, $close_tag)) !== false)
+					{
+						array_push($return, substr($temp, 0, $end));
+						$temp = substr($temp, strlen($return) + $close_tag_length);
+						$found = true;
+					}
 				}
 			}
+			while($found);
 
-			if($return != null)
+			if(!isset($return[0]))
 			{
-				array_push($temp_r, $return);
+				$return = false;
 			}
 		}
-		while($return != null && $multi_search);
-
-		if(count($temp_r) > 0)
+		else
 		{
-			$return = $temp_r;
-
-			if($multi_search == false)
+			if(($start = strpos($to_parse, $open_tag)) !== false)
 			{
-				$return = $return[0];
+				$to_parse = substr($to_parse, $start + $open_tag_length);
+
+				if(($end = strpos($to_parse, $close_tag)) !== false)
+				{
+					$return = substr($to_parse, 0, $end);
+				}
 			}
 		}
 
