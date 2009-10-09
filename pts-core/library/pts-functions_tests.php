@@ -295,7 +295,7 @@ function pts_suite_needs_updated_install($identifier)
 function pts_test_needs_updated_install($identifier)
 {
 	// Checks if test needs updating
-	return !pts_test_installed($identifier)  || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != pts_system_identifier_string() || pts_is_assignment("PTS_FORCE_INSTALL");
+	return !pts_test_installed($identifier) || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != pts_system_identifier_string() || pts_is_assignment("PTS_FORCE_INSTALL");
 }
 function pts_test_checksum_installer($identifier)
 {

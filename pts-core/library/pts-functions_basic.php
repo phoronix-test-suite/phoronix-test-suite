@@ -86,7 +86,7 @@ function pts_trim_spaces($string)
 {
 	do
 	{
-		$string_l = $s_l;
+		$string_l = $string;
 		$string = str_replace("  ", " ", $string);
 	}
 	while($string_l != $string);
