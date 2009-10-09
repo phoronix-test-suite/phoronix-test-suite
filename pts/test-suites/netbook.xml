@@ -2,23 +2,22 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.3.0</Version>
+		<Version>1.4.0</Version>
 		<TestType>System</TestType>
 		<Title>Netbook Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite is designed to test various aspects of a netbook/net-top/UMPC computer.</Description>
 	</SuiteInformation>
 	<RunTest>
+		<Test>openarena</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
 		<Test>encode-mp3</Test>
 	</RunTest>
 	<RunTest>
-		<Test>encode-ogg</Test>
-	</RunTest>
-	<RunTest>
 		<Test>ffmpeg</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-imagemagick</Test>
 	</RunTest>
 	<RunTest>
 		<Test>compress-7zip</Test>
@@ -54,16 +53,24 @@
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
-		<Test>gnupg</Test>
-	</RunTest>
-	<RunTest>
-		<Test>c-ray</Test>
+		<Test>john-the-ripper</Test>
+		<Mode>BATCH</Mode>
 	</RunTest>
 	<RunTest>
 		<Test>crafty</Test>
 	</RunTest>
 	<RunTest>
 		<Test>dcraw</Test>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Add</Arguments>
+		<Description>Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Copy</Arguments>
+		<Description>Copy</Description>
 	</RunTest>
 	<RunTest>
 		<Test>gui-toolkits</Test>

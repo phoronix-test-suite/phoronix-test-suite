@@ -86,10 +86,10 @@ function pts_trim_spaces($string)
 {
 	do
 	{
-		$string_l = $string;
+		$string_copy = $string;
 		$string = str_replace("  ", " ", $string);
 	}
-	while($string_l != $string);
+	while($string_copy != $string);
 
 	return trim($string);
 }
