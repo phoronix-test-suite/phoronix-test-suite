@@ -160,7 +160,8 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 }
 function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_version = PTS_VERSION)
 {
-	$name = $r_o->get_name() . (strlen($r_o->get_version()) > 2 ? " v" . $r_o->get_version() : "");
+	$version = $r_o->get_version();
+	$name = $r_o->get_name() . (isset($version[2]) ? " v" . $version : "");
 	$result_format = $r_o->get_format();
 
 	$identifiers = $r_o->get_identifiers();
@@ -837,7 +838,7 @@ function pts_cpu_arch_compatible($check_against)
 	$this_arch = phodevi::read_property("system", "kernel-architecture");
 	$check_against = pts_to_array($check_against);
 
-	if(strlen($this_arch) > 3 && substr($this_arch, -2) == "86")
+	if(isset($this_arch[2]) && substr($this_arch, -2) == "86")
 	{
 		$this_arch = "x86";
 	}

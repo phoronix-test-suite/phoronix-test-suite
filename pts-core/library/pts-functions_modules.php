@@ -76,7 +76,9 @@ function pts_load_modules()
 	// Load the modules list
 
 	// Check for modules to auto-load from the configuration file
-	if(strlen(($load_modules = pts_read_user_config(P_OPTION_LOAD_MODULES, ""))) > 0)
+	$load_modules = pts_read_user_config(P_OPTION_LOAD_MODULES, null);
+
+	if(!empty($load_modules))
 	{
 		foreach(explode(",", $load_modules) as $module)
 		{

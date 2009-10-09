@@ -216,7 +216,7 @@ function pts_all_combos(&$return_arr, $current_string, $options, $counter, $deli
 		{
 			$new_current_string = $current_string;
 
-			if(strlen($new_current_string) > 0)
+			if(!empty($new_current_string))
 			{
 				$new_current_string .= $delimiter;
 			}

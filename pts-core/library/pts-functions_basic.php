@@ -84,14 +84,12 @@ function pts_empty($var)
 }
 function pts_trim_spaces($string)
 {
-	$s_l = strlen($string);
-
 	do
 	{
 		$string_l = $s_l;
 		$string = str_replace("  ", " ", $string);
 	}
-	while($string_l != ($s_l = strlen($string)));
+	while($string_l != $string);
 
 	return trim($string);
 }

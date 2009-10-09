@@ -1523,8 +1523,9 @@ class gui_gtk implements pts_option_interface
 	public static function caps_to_spaces($str)
 	{
 		$new_str = "";
+		$str_length = strlen($str);
 
-		for($i = 0; $i < strlen($str); $i++)
+		for($i = 0; $i < $str_length; $i++)
 		{
 			$new_str .= ($i > 0 && ($ascii = ord($str[$i])) > 64 && $ascii < 91 ? " " : "") . $str[$i];
 		}

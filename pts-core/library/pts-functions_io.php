@@ -122,9 +122,9 @@ function pts_string_header($heading, $char = '=')
 
 	foreach(explode("\n", $heading) as $line)
 	{
-		if(($line_length = strlen($line)) > $header_size)
+		if(isset($line[($header_size + 1)])) // Line to write is longer than header size
 		{
-			$header_size = $line_length;
+			$header_size = strlen($line);
 		}
 	}
 

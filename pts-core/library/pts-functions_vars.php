@@ -130,6 +130,7 @@ function pts_run_additional_vars($identifier)
 }
 function pts_swap_variables($user_str, $replace_function)
 {
+	// TODO: possibly optimize this function
 	if(!function_exists($replace_function))
 	{
 		return $user_str;
