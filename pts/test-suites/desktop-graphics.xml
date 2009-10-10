@@ -14,13 +14,8 @@
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT w/ HDR</Description>
 	</RunTest>
 	<RunTest>
-		<Test>openarena</Test>
-		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
-		<Test>warsow</Test>
-		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
+		<Test>vdrift</Test>
+		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
@@ -47,11 +42,6 @@
 		<Test>etqw</Test>
 		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
-		<Test>xplane9</Test>
-		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT --no_sound</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>
 	</RunTest>
 	<RunTest>
 		<Test>unigine-sanctuary</Test>
