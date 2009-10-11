@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Remember radio and check button selects in menu on GTK2 GUI for the duration of the program
 - pts-core: Optimize a few common code paths
 - pts-core: Improve detection of Catalyst driver with newer releases
+- pts-core: Don't go awry when computing standard deviation on an array that may also contain errors from a test run due to parsing failure
 - phodevi: Support reading OpenGL vendor string
 - tandem_Xml: Optimize the XML string parser
 - pts: Updates to hpcc test profile

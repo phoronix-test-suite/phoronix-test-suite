@@ -23,6 +23,14 @@
 
 function pts_standard_deviation($values)
 {
+	foreach($values as $i => $value)
+	{
+		if(!is_numeric($value))
+		{
+			unset($values[$i]);
+		}
+	}
+
 	$total = array_sum($values);
 	$count = count($values);
 	$mean = $total / $count;
