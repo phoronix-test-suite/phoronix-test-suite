@@ -28,7 +28,7 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		if((!extension_loaded("gtk") && !extension_loaded("php-gtk")) || !class_exists("GtkWindow"))
+		if((!extension_loaded("gtk") && !extension_loaded("php-gtk")) || !class_exists("GtkWindow", false))
 		{
 			echo "\nThe PHP GTK module must be loaded for the GUI.\nThis module can be found @ http://gtk.php.net/\n\n";
 
@@ -37,7 +37,7 @@ class gui_gtk implements pts_option_interface
 				pts_display_web_browser(STATIC_DIR . "error-gui.html", null, true, true);
 			}
 
-			return;
+			return false;
 		}
 
 		gui_gtk::show_main_interface();
