@@ -88,11 +88,11 @@ class pts_test_option
 	}
 	public function get_option_name($index)
 	{
-		return $this->options[$index][0];
+		return isset($this->options[$index][0]) ? $this->options[$index][0] : null;
 	}
 	public function get_option_value($index)
 	{
-		return $this->options[$index][1];
+		return isset($this->options[$index][1]) ? $this->options[$index][1] : null;
 	}
 	public function option_count()
 	{
