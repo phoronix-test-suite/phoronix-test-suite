@@ -59,11 +59,6 @@
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
-		<Test>vdrift</Test>
-		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
 		<Test>gui-toolkits</Test>
 	</RunTest>
 </PhoronixTestSuite>

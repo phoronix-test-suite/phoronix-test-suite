@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for stopping/skipping the current test by touching ~/.phoronix-test-suite/skip-test during the process
 - pts-core: Remember radio and check button selects in menu on GTK2 GUI for the duration of the program
 - pts-core: Optimize a few common code paths
+- phodevi: Support reading OpenGL vendor string
 - tandem_Xml: Optimize the XML string parser
 - pts: Updates to hpcc test profile
 - pts: Add initial opencl-ati test profile

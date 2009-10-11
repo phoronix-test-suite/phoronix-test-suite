@@ -92,6 +92,9 @@ class phodevi_system extends pts_device_interface
 			case "opengl-driver":
 				$property = new pts_device_property("sw_opengl_driver", PHODEVI_STAND_CACHE);
 				break;
+			case "opengl-vendor":
+				$property = new pts_device_property("sw_opengl_vendor", PHODEVI_SMART_CACHE);
+				break;
 			case "desktop-environment":
 				$property = new pts_device_property("sw_desktop_environment", PHODEVI_STAND_CACHE);
 				break;
@@ -800,6 +803,23 @@ class phodevi_system extends pts_device_interface
 			$info = substr($info, $pos + 23);
 			$info = trim(substr($info, 0, strpos($info, "\n")));
 			$info = str_replace(array(" Release"), "", $info);
+		}
+
+		return $info;
+	}
+	public static function sw_opengl_vendor()
+	{
+		// OpenGL version
+		$info = pts_executable_in_path("glxinfo") != false ? shell_exec("glxinfo 2>&1 | grep vendor") : null;
+
+		if(($pos = strpos($info, "OpenGL vendor string:")) === false)
+		{
+			$info = false;
+		}
+		else
+		{
+			$info = substr($info, $pos + 22);
+			$info = trim(substr($info, 0, strpos($info, "\n")));
 		}
 
 		return $info;
