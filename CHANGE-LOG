@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix fatal error message with GtkWindow missing
 - pts-core: Fend off possible warnings on pts_test_option
 - pts-core: Rename pts_batch_display_mode to pts_concise_display_mode
+- pts-core: Fix in subtitle reporting on graphs for tests with no options under certain conditions where it reported ":"
 - phodevi: Support reading OpenGL vendor string
 - tandem_Xml: Optimize the XML string parser
 - pts: Updates to hpcc test profile

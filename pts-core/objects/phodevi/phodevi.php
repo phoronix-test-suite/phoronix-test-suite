@@ -199,7 +199,7 @@ class phodevi
 		define("OS_PREFIX", strtolower(OPERATING_SYSTEM) . "_");
 
 		// OpenGL / graphics detection
-		$graphics_detection = array("NVIDIA", array("ATI", "fglrx"), "Mesa");
+		$graphics_detection = array("NVIDIA", array("ATI", "fglrx"), array("Mesa", "SGI"));
 		$opengl_driver = phodevi::read_property("system", "opengl-driver") . " " . phodevi::read_property("system", "opengl-vendor") . " " . phodevi::read_property("system", "dri-display-driver");
 		$found_gpu_match = false;
 

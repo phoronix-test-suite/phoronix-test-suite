@@ -111,13 +111,14 @@ class pts_test_option
 	public function format_option_display_from_select($select_pos)
 	{
 		$display_name = $this->get_option_name($select_pos);
+		$name = $this->get_name();
 
 		if(($cut_point = strpos($display_name, "(")) > 1 && strpos($display_name, ")") > $cut_point)
 		{
 			$display_name = substr($display_name, 0, $cut_point);
 		}
 
-		return $this->get_name() . ": " . $display_name;
+		return $name != null && $display_name != null ? $this->get_name() . ": " . $display_name : null;
 	}
 	public function is_valid_select_choice($select_pos)
 	{
