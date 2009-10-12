@@ -34,7 +34,7 @@ class remove_from_result_file implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$result = $r["result_file"];
+		$result = $r["result"];
 
 		$result_file = new pts_result_file($result);
 		$result_file_identifiers = $result_file->get_system_identifiers();
@@ -53,6 +53,14 @@ class remove_from_result_file implements pts_option_interface
 			if($identifier != $remove_identifier)
 			{
 				array_push($keep_identifiers, $identifier);
+			}
+		}
+
+		foreach(array("benchmark-logs", "system-logs") as $dir_name)
+		{
+			if(is_dir(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $remove_identifier))
+			{
+				pts_remove(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $remove_identifier);
 			}
 		}
 
