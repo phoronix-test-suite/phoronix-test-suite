@@ -337,12 +337,13 @@ function pts_get_display_mode_object()
 	switch((($env_mode = getenv("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT") == "BATCH"))
 	{
 		case "BATCH":
-			$display_mode = new pts_batch_display_mode();
+		case "CONCISE":
+			$display_mode = new pts_concise_display_mode();
 			break;
 		default:
 			if(pts_is_assignment("IS_BATCH_MODE"))
 			{
-				$display_mode = new pts_batch_display_mode();
+				$display_mode = new pts_concise_display_mode();
 			}
 			else
 			{

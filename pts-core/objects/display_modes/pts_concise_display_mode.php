@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2009, Phoronix Media
 	Copyright (C) 2009, Michael Larabel
-	pts_batch_display_mode.php: The batch display mode
+	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_batch_display_mode implements pts_display_mode_interface
+class pts_concise_display_mode implements pts_display_mode_interface
 {
 	var $run_process_tests_remaining_to_run;
 	var $run_process_test_count;

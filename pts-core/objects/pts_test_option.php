@@ -68,7 +68,7 @@ class pts_test_option
 		return $this->postfix;
 	}
 	public function get_option_default()
-	{
+	{		
 		return $this->default_entry == -1 ? $this->option_count() - 1 : $this->default_entry;
 	}
 	public function add_option($name, $value)
