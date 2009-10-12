@@ -55,6 +55,14 @@ class rename_identifier_in_result_file implements pts_option_interface
 			array_push($merge_selects, $this_merge_select);
 		}
 
+		foreach(array("benchmark-logs", "system-logs") as $dir_name)
+		{
+			if(is_dir(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $rename_identifier))
+			{
+				rename(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $rename_identifier, SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $rename_identifier_new);
+			}
+		}
+
 		$extract_result = pts_merge_test_results($merge_selects);
 		pts_save_result($r[0] . "/composite.xml", $extract_result);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $r[0]);

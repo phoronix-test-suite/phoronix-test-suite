@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fend off possible warnings on pts_test_option
 - pts-core: Rename pts_batch_display_mode to pts_concise_display_mode
 - pts-core: Fix in subtitle reporting on graphs for tests with no options under certain conditions where it reported ":"
+- pts-core: When using rename-identifier-in-result-file option, rename the benchmark-logs and system-logs folders too for that identifier
 - phodevi: Support reading OpenGL vendor string
 - tandem_Xml: Optimize the XML string parser
 - pts: Updates to hpcc test profile
