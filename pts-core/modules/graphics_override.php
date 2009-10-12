@@ -71,8 +71,8 @@ class graphics_override extends pts_module_interface
 			// First backup any existing override, then set the new value
 			if(IS_NVIDIA_GRAPHICS)
 			{
-				self::$preset_aa = read_nvidia_extension("FSAA");
-				self::$preset_aa_control = read_nvidia_extension("FSAAAppControlled");
+				self::$preset_aa = phodevi_parser::read_nvidia_extension("FSAA");
+				self::$preset_aa_control = phodevi_parser::read_nvidia_extension("FSAAAppControlled");
 
 				switch($force_aa)
 				{
@@ -98,8 +98,8 @@ class graphics_override extends pts_module_interface
 			}
 			else if(IS_ATI_GRAPHICS)
 			{
-				self::$preset_aa = read_amd_pcsdb("OpenGL,AntiAliasSamples");
-				self::$preset_aa_control = read_amd_pcsdb("OpenGL,AAF");
+				self::$preset_aa = phodevi_parser::read_amd_pcsdb("OpenGL,AntiAliasSamples");
+				self::$preset_aa_control = phodevi_parser::read_amd_pcsdb("OpenGL,AAF");
 
 				switch($force_aa)
 				{
@@ -131,8 +131,8 @@ class graphics_override extends pts_module_interface
 			// First backup any existing override, then set the new value
 			if(IS_NVIDIA_GRAPHICS)
 			{
-				self::$preset_af = read_nvidia_extension("LogAniso");
-				self::$preset_af_control = read_nvidia_extension("LogAnisoAppControlled");
+				self::$preset_af = phodevi_parser::read_nvidia_extension("LogAniso");
+				self::$preset_af_control = phodevi_parser::read_nvidia_extension("LogAnisoAppControlled");
 
 				switch($force_af)
 				{
@@ -158,7 +158,7 @@ class graphics_override extends pts_module_interface
 			}
 			else if(IS_ATI_GRAPHICS)
 			{
-				self::$preset_af = read_amd_pcsdb("OpenGL,AnisoDegree");
+				self::$preset_af = phodevi_parser::read_amd_pcsdb("OpenGL,AnisoDegree");
 
 				switch($force_af)
 				{

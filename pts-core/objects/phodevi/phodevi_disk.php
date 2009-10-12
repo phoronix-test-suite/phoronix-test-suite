@@ -55,8 +55,8 @@ class phodevi_disk extends pts_device_interface
 		if(IS_MACOSX)
 		{
 			// TODO: Support reading non-SATA drives and more than one drive
-			$capacity = read_osx_system_profiler("SPSerialATADataType", "Capacity");
-			$model = read_osx_system_profiler("SPSerialATADataType", "Model");
+			$capacity = phodevi_parser::read_osx_system_profiler("SPSerialATADataType", "Capacity");
+			$model = phodevi_parser::read_osx_system_profiler("SPSerialATADataType", "Model");
 
 			if(($cut = strpos($capacity, " (")) !== false)
 			{
@@ -74,7 +74,7 @@ class phodevi_disk extends pts_device_interface
 
 			do
 			{
-				$disk = read_sysctl("dev.ad." . $i . ".%desc");
+				$disk = phodevi_parser::read_sysctl("dev.ad." . $i . ".%desc");
 
 				if($disk != false)
 				{
@@ -160,7 +160,7 @@ class phodevi_disk extends pts_device_interface
 	public static function hdd_temperature($disk = null)
 	{
 		// Attempt to read temperature using hddtemp
-		return read_hddtemp($disk);
+		return phodevi_parser::read_hddtemp($disk);
 	}
 }
 

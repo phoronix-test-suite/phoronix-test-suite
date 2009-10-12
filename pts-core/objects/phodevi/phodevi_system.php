@@ -122,25 +122,25 @@ class phodevi_system extends pts_device_interface
 	}
 	public static function sys_cpu_voltage()
 	{
-		$voltage = read_sensors("VCore");
+		$voltage = phodevi_parser::read_sensors("VCore");
 
 		return ($voltage == null ? -1 : $voltage);
 	}
 	public static function sys_v3_voltage()
 	{
-		$voltage = read_sensors(array("V3.3", "+3.3V"));
+		$voltage = phodevi_parser::read_sensors(array("V3.3", "+3.3V"));
 
 		return ($voltage == null ? -1 : $voltage);
 	}
 	public static function sys_v5_voltage()
 	{
-		$voltage = read_sensors(array("V5", "+5V"));
+		$voltage = phodevi_parser::read_sensors(array("V5", "+5V"));
 
 		return ($voltage == null ? -1 : $voltage);
 	}
 	public static function sys_v12_voltage()
 	{
-		$voltage = read_sensors(array("V12", "+12V"));
+		$voltage = phodevi_parser::read_sensors(array("V12", "+12V"));
 
 		return ($voltage == null ? -1 : $voltage);
 	}
@@ -151,7 +151,7 @@ class phodevi_system extends pts_device_interface
 
 		if(IS_LINUX)
 		{
-			$sensors = read_sensors(array("Sys Temp", "Board Temp"));
+			$sensors = phodevi_parser::read_sensors(array("Sys Temp", "Board Temp"));
 
 			if($sensors != false && is_numeric($sensors))
 			{
@@ -159,7 +159,7 @@ class phodevi_system extends pts_device_interface
 			}
 			else
 			{
-				$acpi = read_acpi(array(
+				$acpi = phodevi_parser::read_acpi(array(
 					"/thermal_zone/THM1/temperature",
 					"/thermal_zone/TZ00/temperature",
 					"/thermal_zone/TZ01/temperature"), "temperature");
@@ -172,7 +172,7 @@ class phodevi_system extends pts_device_interface
 		}
 		else if(IS_BSD)
 		{
-			$acpi = read_sysctl("hw.acpi.thermal.tz1.temperature");
+			$acpi = phodevi_parser::read_sysctl("hw.acpi.thermal.tz1.temperature");
 
 			if(($end = strpos($acpi, 'C')) > 0)
 			{
@@ -191,9 +191,9 @@ class phodevi_system extends pts_device_interface
 	{
 		// Returns power consumption rate in mW
 		$battery = array("/battery/BAT0/state", "/battery/BAT1/state");
-		$state = read_acpi($battery, "charging state");
-		$power = read_acpi($battery, "present rate");
-		$voltage = read_acpi($battery, "present voltage");
+		$state = phodevi_parser::read_acpi($battery, "charging state");
+		$power = phodevi_parser::read_acpi($battery, "present rate");
+		$voltage = phodevi_parser::read_acpi($battery, "present voltage");
 		$rate = -1;
 
 		if($state == "discharging")
@@ -333,7 +333,7 @@ class phodevi_system extends pts_device_interface
 
 		if(IS_MACOSX)
 		{
-			$fs = read_osx_system_profiler("SPSerialATADataType", "FileSystem");
+			$fs = phodevi_parser::read_osx_system_profiler("SPSerialATADataType", "FileSystem");
 		}
 		else if(IS_BSD)
 		{
@@ -537,7 +537,7 @@ class phodevi_system extends pts_device_interface
 		// Returns OS version
 		if(IS_MACOSX)
 		{
-			$os = read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
+			$os = phodevi_parser::read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
 		
 			$start_pos = strpos($os, ".");
 			$end_pos = strrpos($os, ".");
@@ -548,7 +548,7 @@ class phodevi_system extends pts_device_interface
 		}
 		else if(IS_LINUX)
 		{
-			$os_version = read_lsb("Release");
+			$os_version = phodevi_parser::read_lsb("Release");
 		}
 		else
 		{
@@ -565,7 +565,7 @@ class phodevi_system extends pts_device_interface
 	public static function sw_os_vendor()
 	{
 		// Returns OS vendor
-		$vendor = IS_LINUX ? read_lsb("Distributor ID") : false;
+		$vendor = IS_LINUX ? phodevi_parser::read_lsb("Distributor ID") : false;
 
 		if($vendor == false)
 		{
@@ -645,7 +645,7 @@ class phodevi_system extends pts_device_interface
 		
 		if(IS_MACOSX)
 		{
-			$os = read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
+			$os = phodevi_parser::read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
 		
 			if(($cut_point = strpos($os, "(")) > 0)
 			{
@@ -769,7 +769,7 @@ class phodevi_system extends pts_device_interface
 
 		if(!empty($dri_driver))
 		{
-			$driver_version = read_xorg_module_version($dri_driver . "_drv");
+			$driver_version = phodevi_parser::read_xorg_module_version($dri_driver . "_drv");
 
 			if(!empty($driver_version))
 			{
@@ -779,7 +779,7 @@ class phodevi_system extends pts_device_interface
 		else if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
 		{
 			// xf86-video-nv is an open-source driver but currently doesn't support DRI
-			$nv_driver_version = read_xorg_module_version("nv_drv.so");
+			$nv_driver_version = phodevi_parser::read_xorg_module_version("nv_drv.so");
 
 			if(!empty($nv_driver_version))
 			{

@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix in subtitle reporting on graphs for tests with no options under certain conditions where it reported ":"
 - pts-core: When using rename-identifier-in-result-file option, rename the benchmark-logs and system-logs folders too for that identifier
 - pts-core: When using remove-from-result-file, remove the benchmark-logs and system-logs folders for that identifier if present
+- pts-core: Move system parsing functions out of pts-core and into phodevi_parser object in Phodevi
 - phodevi: Don't try using aticonfig when reading the AMDPCSDB on an unsupported graphics adapter, use the internal parser instead
 - phodevi: Support reading OpenGL vendor string
 - tandem_Xml: Optimize the XML string parser

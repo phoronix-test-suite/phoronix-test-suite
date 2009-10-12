@@ -38,7 +38,7 @@ class graphics_event_checker extends pts_module_interface
 
 	public static function __pre_run_process()
 	{
-		if(count(read_xdpy_monitor_info()) > 1)
+		if(count(phodevi_parser::read_xdpy_monitor_info()) > 1)
 		{
 			echo "\nThe graphics_event_checker currently does not support multiple monitors.\n";
 			return PTS_MODULE_UNLOAD;
@@ -49,11 +49,11 @@ class graphics_event_checker extends pts_module_interface
 
 		if(IS_ATI_GRAPHICS)
 		{
-			$vsync_val = read_amd_pcsdb("AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,VSyncControl"); // Check for vSync
+			$vsync_val = phodevi_parser::read_amd_pcsdb("AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,VSyncControl"); // Check for vSync
 			if($vsync_val == "0x00000002" || $vsync_val == "0x00000003")
 				self::$start_vertical_sync = TRUE;
 
-			$catalyst_ai_val = read_amd_pcsdb("AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,CatalystAI"); // Check for Catalyst AI
+			$catalyst_ai_val = phodevi_parser::read_amd_pcsdb("AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,CatalystAI"); // Check for Catalyst AI
 			if($catalyst_ai_val == "0x00000001" || $catalyst_ai_val == "0x00000002")
 				echo "\nCatalyst AI is enabled, which will use driver-specific optimizations in some tests that may offer extra performance enhancements.\n";
 		}
@@ -61,7 +61,7 @@ class graphics_event_checker extends pts_module_interface
 		{
 			self::$error_pointer = self::nvidia_gpu_error_count(); // Set the error pointer
 
-			if(read_nvidia_extension("SyncToVBlank") == "1")
+			if(phodevi_parser::read_nvidia_extension("SyncToVBlank") == "1")
 				self::$start_vertical_sync = TRUE;
 		}
 
@@ -131,7 +131,7 @@ class graphics_event_checker extends pts_module_interface
 	}
 	protected static function nvidia_gpu_error_count()
 	{
-		$count = read_nvidia_extension("GPUErrors");
+		$count = phodevi_parser::read_nvidia_extension("GPUErrors");
 
 		if($count == null || !is_numeric($count))
 			$count = 0;

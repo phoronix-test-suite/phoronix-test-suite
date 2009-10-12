@@ -21,8 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(PTS_LIBRARY_PATH . "pts-functions_system_parsing.php");
-
 function pts_hw_string($return_string = true)
 {
 	return phodevi::system_hardware($return_string);

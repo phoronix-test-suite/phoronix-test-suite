@@ -73,14 +73,14 @@ class phodevi_monitor extends pts_device_interface
 		$monitor_count = 0;
 
 		// First try reading number of monitors from xdpyinfo
-		$monitor_count = count(read_xdpy_monitor_info());
+		$monitor_count = count(phodevi_parser::read_xdpy_monitor_info());
 
 		if($monitor_count == 0)
 		{
-			// Fallback support for ATI and NVIDIA if read_xdpy_monitor_info() fails
+			// Fallback support for ATI and NVIDIA if phodevi_parser::read_xdpy_monitor_info() fails
 			if(IS_NVIDIA_GRAPHICS)
 			{
-				$enabled_displays = read_nvidia_extension("EnabledDisplays");
+				$enabled_displays = phodevi_parser::read_nvidia_extension("EnabledDisplays");
 
 				switch($enabled_displays)
 				{
@@ -97,7 +97,7 @@ class phodevi_monitor extends pts_device_interface
 			}
 			else if(IS_ATI_GRAPHICS)
 			{
-				$amdpcsdb_enabled_monitors = read_amd_pcsdb("SYSTEM/BUSID-*/DDX,EnableMonitor");
+				$amdpcsdb_enabled_monitors = phodevi_parser::read_amd_pcsdb("SYSTEM/BUSID-*/DDX,EnableMonitor");
 				$amdpcsdb_enabled_monitors = pts_to_array($amdpcsdb_enabled_monitors);
 
 				foreach($amdpcsdb_enabled_monitors as $enabled_monitor)
@@ -123,7 +123,7 @@ class phodevi_monitor extends pts_device_interface
 
 		if(phodevi::read_property("monitor", "count") > 1)
 		{
-			$xdpy_monitors = read_xdpy_monitor_info();
+			$xdpy_monitors = phodevi_parser::read_xdpy_monitor_info();
 			$hit_0_0 = false;
 			for($i = 0; $i < count($xdpy_monitors); $i++)
 			{
@@ -151,7 +151,7 @@ class phodevi_monitor extends pts_device_interface
 				// Something went wrong with xdpy information, go to fallback support
 				if(IS_ATI_GRAPHICS)
 				{
-					$amdpcsdb_monitor_layout = read_amd_pcsdb("SYSTEM/BUSID-*/DDX,DesktopSetup");
+					$amdpcsdb_monitor_layout = phodevi_parser::read_amd_pcsdb("SYSTEM/BUSID-*/DDX,DesktopSetup");
 					$amdpcsdb_monitor_layout = pts_to_array($amdpcsdb_monitor_layout);
 
 					foreach($amdpcsdb_monitor_layout as $card_monitor_configuration)
@@ -189,7 +189,7 @@ class phodevi_monitor extends pts_device_interface
 		}
 		else
 		{
-			foreach(read_xdpy_monitor_info() as $monitor_line)
+			foreach(phodevi_parser::read_xdpy_monitor_info() as $monitor_line)
 			{
 				$this_resolution = substr($monitor_line, strpos($monitor_line, ":") + 2);
 				$this_resolution = substr($this_resolution, 0, strpos($this_resolution, " "));
