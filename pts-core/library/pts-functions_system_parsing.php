@@ -331,16 +331,32 @@ function read_amd_graphics_adapters()
 function read_amd_pcsdb($attribute)
 {
 	// Read AMD's AMDPCSDB, AMD Persistent Configuration Store Database
+	static $try_aticonfig = true;
+	static $is_first_read = true;
 	$ati_info = null;
 
-	if(pts_executable_in_path("aticonfig"))
+	if($try_aticonfig)
 	{
-		$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
-
-		if(($pos = strpos($info, ":")) > 0 && strpos($info, "Error") === false)
+		if(pts_executable_in_path("aticonfig"))
 		{
-			$ati_info = substr($info, $pos + 2);
-			$ati_info = substr($ati_info, 0, strpos($ati_info, " "));
+			$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
+
+			if($is_first_read && strpos($info, "No supported adapters") != false)
+			{
+				$try_aticonfig = false;
+			}
+			else
+			{
+				if(($pos = strpos($info, ":")) > 0 && strpos($info, "Error") === false)
+				{
+					$ati_info = substr($info, $pos + 2);
+					$ati_info = substr($ati_info, 0, strpos($ati_info, " "));
+				}
+			}
+		}
+		else
+		{
+			$try_aticonfig = false;
 		}
 	}
 
@@ -349,6 +365,8 @@ function read_amd_pcsdb($attribute)
 		// Using aticonfig --get-pcs-key failed, switch to the PTS direct parser of AMDPCSDB
 		$ati_info = read_amd_pcsdb_direct_parser($attribute);
 	}
+
+	$is_first_read = false;
 
 	return $ati_info;
 }
