@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.2 Alpha 4
+October 12, 2009
 
 - pts-core: Fix regression that caused running/installing suites to fail from Alpha 3
 - pts-core: Add support for stopping/skipping the current test by touching ~/.phoronix-test-suite/skip-test during the process
