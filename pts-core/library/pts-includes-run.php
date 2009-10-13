@@ -794,15 +794,15 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(count($extra_gfx_settings) > 0)
 		{
-			if($arguments_description != null)
-			{
-				$arguments_description .= " | ";
-			}
-
 			$extra_gfx_settings = implode(" - ", $extra_gfx_settings);
 
 			if(strpos($arguments_description, $extra_gfx_settings) === false)
 			{
+				if($arguments_description != null)
+				{
+					$arguments_description .= " | ";
+				}
+
 				$arguments_description .= $extra_gfx_settings;
 			}
 		}
