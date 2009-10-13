@@ -41,6 +41,12 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 
 			if($file_extension == "php")
 			{
+				if($script_name == "parse-results")
+				{
+					$extra_vars["PARSE_RESULTS_SCRIPT"] = $run_file;
+					$run_file = TEST_LIBRARIES_DIR . "results-parsing-functions.php";
+				}
+
 				$this_result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
 			}
 			else if($file_extension == "sh")
