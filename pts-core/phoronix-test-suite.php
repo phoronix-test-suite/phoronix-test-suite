@@ -24,6 +24,11 @@
 setlocale(LC_NUMERIC, "C");
 define("PTS_PATH", dirname(dirname(__FILE__)) . "/");
 
+if(version_compare(PHP_VERSION, "5.3.0") === 1 && ini_get("date.timezone") == null)
+{
+	date_default_timezone_set("UTC");
+}
+
 // PTS_MODE types
 // CLIENT = Standard Phoronix Test Suite Client
 // LIB = Only load select PTS files
