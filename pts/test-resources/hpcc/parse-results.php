@@ -42,5 +42,5 @@ switch($test_unit) {
 $path=dirname($log_file_name);
 file_put_contents($path.'/pts-results-scale',$unit);
 file_put_contents($path.'/pts-results-proportion',$proportion);
-echo $result;
+pts_report_numeric_result($BENCHMARK_RESULTS);
 ?>

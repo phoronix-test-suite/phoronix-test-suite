@@ -34,5 +34,5 @@ foreach($array as $value)
 		array_push($array2, $value);
 
 if(!empty($array2[2]))
-	echo $array2[2] * $factor;
+	pts_report_numeric_result($array2[2] * $factor);
 ?>

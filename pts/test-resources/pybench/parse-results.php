@@ -1,9 +1,9 @@
 <?php
 
-$file = @file_get_contents(getenv("LOG_FILE"));
+$file = pts_read_log_file();
 $results = trim(substr($file, strrpos($file, "Totals:") + 8));
 $results = substr($results, 0, strpos($results, "ms"));
 
-echo $results;
+pts_report_numeric_result($results);
 
 ?>

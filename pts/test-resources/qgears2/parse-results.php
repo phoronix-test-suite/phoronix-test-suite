@@ -1,6 +1,6 @@
 <?php
 
-$log_file = file_get_contents(getenv("LOG_FILE"));
+$log_file = pts_read_log_file();
 $fps_values = array();
 
 foreach(explode("\n", $log_file) as $log_line)
@@ -15,6 +15,6 @@ foreach(explode("\n", $log_file) as $log_line)
 }
 
 if(count($fps_values) > 0)
-	echo (array_sum($fps_values) / count($fps_values));
+	pts_report_numeric_result(array_sum($fps_values) / count($fps_values));
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-$log_file = file_get_contents(getenv("LOG_FILE"));
+$log_file = pts_read_log_file();
 
 // find the line with "reclean" on it
 $BENCHMARK_RESULTS = substr($log_file, strrpos($log_file, "reclen"));
@@ -42,6 +42,6 @@ foreach($BENCHMARK_RESULTS as $R)
 if($result != 0)
 	$result = $result / 1024;
 
-echo $result;
+pts_report_numeric_result($result);
 
 ?>

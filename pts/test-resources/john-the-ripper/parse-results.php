@@ -1,6 +1,6 @@
 <?php
 
-$log_file = file_get_contents(getenv("LOG_FILE"));
+$log_file = pts_read_log_file();
 $test_target = getenv("PTS_TEST_ARGUMENTS");
 
 switch($test_target)
@@ -30,6 +30,6 @@ if(substr($result, -1) == "K")
 	$result = substr($result, 0, -1) . "000";
 }
 
-echo $result;
+pts_report_numeric_result($result);
 
 ?>

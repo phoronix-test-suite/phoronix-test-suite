@@ -1,5 +1,6 @@
 <?php
-$log_file = file_get_contents(getenv("LOG_FILE"));
+
+$log_file = pts_read_log_file();
 
 if(trim(getenv("PTS_TEST_ARGUMENTS")) == "WRITE")
 {
@@ -11,5 +12,8 @@ else
 }
 
 $BENCHMARK_RESULTS = substr($BENCHMARK_RESULTS, strpos($BENCHMARK_RESULTS, ":") + 1);
-echo substr($BENCHMARK_RESULTS, 0, strpos($BENCHMARK_RESULTS, "\n"));
+$BENCHMARK_RESULTS = substr($BENCHMARK_RESULTS, 0, strpos($BENCHMARK_RESULTS, "\n"));
+
+pts_report_numeric_result($BENCHMARK_RESULTS);
+
 ?>

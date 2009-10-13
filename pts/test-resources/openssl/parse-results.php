@@ -1,6 +1,6 @@
 <?php
 
-$log_file = file_get_contents(getenv("LOG_FILE"));
+$log_file = pts_read_log_file();
 $BENCHMARK_RESULTS = substr($log_file, strrpos($log_file, "rsa 4096 bits") + 13);
 
 $i = 0;
@@ -19,6 +19,6 @@ foreach(explode(" ", $BENCHMARK_RESULTS) as $item)
 
 }
 
-echo $BENCHMARK_RESULTS;
+pts_report_numeric_result($BENCHMARK_RESULTS);
 
 ?>

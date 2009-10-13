@@ -25,6 +25,7 @@ Phoronix Test Suite (Git)
 - pts: Add initial pyopencl test profile
 - pts: Update Nexuiz test profile against Nexuiz 2.5.2
 - pts: Update netbook test suite
+- pts: Change over relevant test profiles to using pts_report_numeric_result() rather than print statements
 
 Phoronix Test Suite 2.2 Alpha 3
 September 28, 2009

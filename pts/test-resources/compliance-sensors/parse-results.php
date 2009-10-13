@@ -1,1 +1,1 @@
-<?php echo trim(file_get_contents(getenv("LOG_FILE"))); ?>
+<?php echo trim(pts_read_log_file()); ?>

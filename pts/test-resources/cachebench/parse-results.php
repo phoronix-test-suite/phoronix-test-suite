@@ -1,6 +1,6 @@
 <?php
 
-$log_file = file_get_contents(getenv("LOG_FILE"));
+$log_file = pts_read_log_file();
 
 $total = 0;
 $count = 0;
@@ -21,6 +21,7 @@ foreach(explode("\n", $log_file) as $line)
 	}
 }
 
-echo ($count > 0 ? $total / $count : 0);
+$BENCHMARK_RESULTS = ($count > 0 ? $total / $count : 0);
+pts_report_numeric_result($BENCHMARK_RESULTS);
 
 ?>

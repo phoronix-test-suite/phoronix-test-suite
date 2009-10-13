@@ -1,6 +1,6 @@
 <?php
 
-$log_file = trim(file_get_contents(getenv("LOG_FILE")));
+$log_file = trim(pts_read_log_file());
 
 if($log_file == "")
     echo "PASS";

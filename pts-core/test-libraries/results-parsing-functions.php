@@ -20,10 +20,21 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_read_log_file()
+{
+	return file_get_contents(getenv("LOG_FILE"));
+}
 function pts_report_numeric_result($result)
 {
+	if(is_numeric($result))
+	{
+		pts_report_result($result);
+	}
+}
+function pts_report_result($result)
+{
 	// For now it's just a matter of printing the result
-	echo is_numeric($result) ? $result : null;
+	echo $result;
 }
 
 include(getenv("PARSE_RESULTS_SCRIPT"));

@@ -1,5 +1,5 @@
 <?php
 
-echo file_get_contents(getenv("LOG_FILE"));
+echo pts_read_log_file();
 
 ?>
