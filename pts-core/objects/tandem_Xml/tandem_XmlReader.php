@@ -174,8 +174,9 @@ class tandem_XmlReader
 
 					if(($end = strpos($temp, $close_tag)) !== false)
 					{
-						array_push($return, substr($temp, 0, $end));
-						$temp = substr($temp, strlen($return) + $close_tag_length);
+						$contents = substr($temp, 0, $end);
+						$temp = substr($temp, strlen($contents) + $close_tag_length);
+						array_push($return, $contents);
 						$found = true;
 					}
 				}
