@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix for running result files that have forced AA/AF levels and then fail to merge
+- pts-core: On missing timezone setting, set to UTC if the PHP version is 5.3.0 or newer, emits a warning otherwise
 
 Phoronix Test Suite 2.2 Alpha 4
 October 12, 2009

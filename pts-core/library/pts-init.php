@@ -69,7 +69,7 @@ function pts_basic_init()
 
 	define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
 
-	if(IS_MACOSX && ini_get("date.timezone") == null)
+	if((IS_MACOSX || version_compare(PHP_VERSION, "5.3.0") === 1) && ini_get("date.timezone") == null)
 	{
 		date_default_timezone_set("UTC");
 	}
