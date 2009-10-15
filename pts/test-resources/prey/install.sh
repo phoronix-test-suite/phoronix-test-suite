@@ -5,7 +5,6 @@ rm -rf guis/
 rm -rf meta/
 rm -rf scripts/
 
-tar -C .prey/base/ -jxf prey-retail-client-pts-1.tar.bz2
 mv data/prey-linux-data/base/* data/prey-linux-x86/base
 
 if [ -f prey-base-files.tar ]
@@ -22,6 +21,8 @@ if [ -f preykey.tar ]
   else
      echo "Copy Your Game Key File To $DEBUG_REAL_HOME/.prey/base/preykey"
 fi
+
+tar -C $DEBUG_REAL_HOME/.prey/base/ -jxf prey-retail-client-pts-1.tar.bz2
 
 echo "#!/bin/sh
 cd data/prey-linux-x86/
