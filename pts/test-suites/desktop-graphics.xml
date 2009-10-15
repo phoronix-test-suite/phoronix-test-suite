@@ -10,38 +10,38 @@
 	</SuiteInformation>
 	<RunTest>
 		<Test>nexuiz</Test>
-		<Arguments>+vid_width 2560 +vid_height 1600 +r_hdr 1 -nosound</Arguments>
-		<Description>2560 x 1600 w/ HDR</Description>
+		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +r_hdr 1 -nosound</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT w/ HDR</Description>
 	</RunTest>
 	<RunTest>
 		<Test>vdrift</Test>
-		<Arguments>2560 1600</Arguments>
-		<Description>2560 x 1600</Description>
+		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>doom3</Test>
-		<Arguments>+set r_customWidth 2560 +set r_customHeight 1600 +set com_machineSpec 3</Arguments>
-		<Description>2560 x 1600 - Ultra Quality</Description>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT +set com_machineSpec 3</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - Ultra Quality</Description>
 	</RunTest>
 	<RunTest>
 		<Test>etqw</Test>
-		<Arguments>+set r_customWidth 2560 +set r_customHeight 1600</Arguments>
-		<Description>2560 x 1600</Description>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>unigine-sanctuary</Test>
-		<Arguments>-video_width 2560 -video_height 1600</Arguments>
-		<Description>2560 x 1600</Description>
+		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>unigine-tropics</Test>
-		<Arguments>-video_width 2560 -video_height 1600</Arguments>
-		<Description>2560 x 1600</Description>
+		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>lightsmark</Test>
-		<Arguments>2560'x'1600</Arguments>
-		<Description>2560 x 1600</Description>
+		<Arguments>$VIDEO_WIDTH'x'$VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
 		<Test>gtkperf</Test>

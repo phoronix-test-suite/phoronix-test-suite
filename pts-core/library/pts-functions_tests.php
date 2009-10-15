@@ -147,7 +147,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	// Render overview chart
 	// TODO: Get chart working
 
-	if($save_to_dir)
+	if($save_to_dir && false) // not working right yet
 	{
 		$chart = new pts_Chart();
 		$chart->loadLeftHeaders("", $results_name);
