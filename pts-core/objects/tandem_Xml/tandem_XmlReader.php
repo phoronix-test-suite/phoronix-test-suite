@@ -272,7 +272,11 @@ class tandem_XmlReader
 			if($extraction_tags_count == 1)
 			{
 				$this_item = $this->getValue($xml_tag, $extraction_tags[0], $xml_matches[$i], false);
-				array_push($return_r, $this_item);
+
+				if($this_item != false)
+				{
+					array_push($return_r, $this_item);
+				}
 			}
 			else
 			{
@@ -287,7 +291,11 @@ class tandem_XmlReader
 				foreach($extraction_tags as $extract)
 				{
 					$this_item = $this->getValue($xml_tag, $extract, $xml_matches[$i], false);
-					array_push($return_r[$extract], $this_item);
+
+					if($this_item != false)
+					{
+						array_push($return_r[$extract], $this_item);
+					}
 				}
 			}
 		}

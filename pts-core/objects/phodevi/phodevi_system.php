@@ -773,7 +773,7 @@ class phodevi_system extends pts_device_interface
 			{
 				$dri_driver = "fglrx";
 			}
-			if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
+			else if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
 			{
 				$dri_driver = "nv";
 			}
