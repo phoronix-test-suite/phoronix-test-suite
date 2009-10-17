@@ -49,10 +49,7 @@ class tandem_XmlReader
 				$this->xml_cache_tags = false;
 			}
 
-			// If you are going to be banging XML files hard through the course of the script, you will want to flush the PHP file cache
-			// clearstatcache();
-
-			$this->xml_file_time = ($remote_file ? null : filemtime($read_xml));
+			$this->xml_file_time = ($remote_file ? 0 : filemtime($read_xml));
 			$this->xml_file_name = $read_xml;
 
 			if($this->xml_cache_file && isset(self::$file_cache[$this->xml_file_name][$this->xml_file_time]))
@@ -251,6 +248,7 @@ class tandem_XmlReader
 	}
 	function getArrayValues($xml_tag, $xml_match)
 	{
+		$return_r = array();
 		$xml_steps = explode("/", $xml_tag);
 		$xml_steps_count = count($xml_steps);
 		$this_xml = $xml_match;
@@ -261,44 +259,18 @@ class tandem_XmlReader
 		}
 
 		$xml_matches = $this->parseXMLString($xml_steps[($xml_steps_count - 2)], $this_xml);
-		$xml_matches_count = count($xml_matches);
+		$end_tag = end($xml_steps);
 
-		$return_r = array();
-		$extraction_tags = explode(",", end($xml_steps));
-		$extraction_tags_count = count($extraction_tags);
-
-		for($i = 0; $i < $xml_matches_count; $i++)
+		foreach($xml_matches as $match)
 		{
-			if($extraction_tags_count == 1)
+			$this_item = $this->getValue($xml_tag, $end_tag, $match, false);
+
+			if($this_item != false)
 			{
-				$this_item = $this->getValue($xml_tag, $extraction_tags[0], $xml_matches[$i], false);
-
-				if($this_item != false)
-				{
-					array_push($return_r, $this_item);
-				}
-			}
-			else
-			{
-				if($i == 0)
-				{
-					foreach($extraction_tags as $extract)
-					{
-						$return_r[$extract] = array();
-					}
-				}
-
-				foreach($extraction_tags as $extract)
-				{
-					$this_item = $this->getValue($xml_tag, $extract, $xml_matches[$i], false);
-
-					if($this_item != false)
-					{
-						array_push($return_r[$extract], $this_item);
-					}
-				}
+				array_push($return_r, $this_item);
 			}
 		}
+
 		return $return_r;
 	}
 	function setFileCaching($do_cache)
