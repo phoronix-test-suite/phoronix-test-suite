@@ -33,13 +33,14 @@ function pts_standard_deviation($values)
 
 	$total = array_sum($values);
 	$count = count($values);
-	$mean = $total / $count;
-	$standard_sum = 0;
 
 	if($count < 2)
 	{
 		return 0;
 	}
+
+	$mean = $total / $count;
+	$standard_sum = 0;
 
 	foreach($values as $value)
 	{
@@ -53,7 +54,7 @@ function pts_percent_standard_deviation($values)
 	$standard_deviation = pts_standard_deviation($values);
 	$average_value = array_sum($values) / count($values);
 
-	return $standard_deviation / $average_value * 100;
+	return $average_value != 0 ? ($standard_deviation / $average_value * 100) : 0;
 }
 
 ?>
