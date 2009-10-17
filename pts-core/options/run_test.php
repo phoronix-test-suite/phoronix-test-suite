@@ -39,7 +39,7 @@ class run_test implements pts_option_interface
 			return false;
 		}
 		
-		$module_store = pts_module_store_var("TO_STRING");
+		$module_store = pts_module_manager::var_store_string();
 		$test_properties = array();
 		$types_of_tests = array();
 

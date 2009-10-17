@@ -102,7 +102,7 @@ function pts_load_modules()
 		{
 			$module = trim($module);
 
-			if(!in_array($module, pts_attached_modules()))
+			if(!pts_module_manager::pts_module_attached($module))
 			{
 				pts_attach_module($module);
 			}
@@ -113,10 +113,10 @@ function pts_load_modules()
 	pts_auto_detect_modules();
 
 	// Clean-up modules list
-	pts_module("CLEAN");
+	pts_module_manager::clean_module_list();
 
 	// Reset counter
-	pts_module_activity("CLEAR_CURRENT");
+	pts_module_manager::set_current_module(null);
 
 	// Load the modules
 	$module_store_list = array();
@@ -151,7 +151,7 @@ function pts_load_modules()
 
 		if($var_value != false && !empty($var_value))
 		{
-			pts_module_store_var("ADD", $var, $var_value);
+			pts_module_manager::var_store_add($var, $var_value);
 		}
 	}
 }
@@ -166,7 +166,7 @@ function pts_attach_module($module)
 	}
 
 	pts_load_module($module);
-	pts_module("ATTACH", $module);
+	pts_module_manager::attach_module($module);
 
 	if(defined("PTS_STARTUP_TASK_PERFORMED"))
 	{
@@ -298,11 +298,11 @@ function pts_module_process($process, $object_pass = null)
 	{
 		pts_module_process_task($module, $process, $object_pass);
 	}
-	pts_module_activity("CLEAR_CURRENT");
+	pts_module_manager::set_current_module(null);
 }
 function pts_module_process_task($module, $process, $object_pass = null)
 {
-	pts_module_activity("SET_CURRENT", $module);
+	pts_module_manager::set_current_module($module);
 
 	$module_response = pts_module_call($module, $process, $object_pass);
 
@@ -312,7 +312,7 @@ function pts_module_process_task($module, $process, $object_pass = null)
 		{
 			case PTS_MODULE_UNLOAD:
 				// Unload the PTS module
-				pts_module("DETACH", $module);
+				pts_module_manager::detach_module($module);
 				break;
 			case PTS_QUIT:
 				// Stop the Phoronix Test Suite immediately
@@ -377,98 +377,15 @@ function pts_module_type($name)
 }
 function pts_module_attached($module)
 {
-	return in_array($module, pts_attached_modules());
+	return pts_module_manager::is_module_attached($module);
 }
 function pts_attached_modules()
 {
-	return pts_module("ATTACHED");
+	return pts_module_manager::attached_modules();
 }
 function pts_module_current()
 {
-	return pts_module_activity("READ_CURRENT");
-}
-function pts_module($process, $value = null)
-{
-	static $module_r;
-	$return = false;
-
-	if(empty($module_r))
-	{
-		$module_r = array();
-	}
-
-	switch($process)
-	{
-		case "ATTACH":
-			array_push($module_r, $value);
-			break;
-		case "DETACH":
-			unset($module_r[$value]);
-			break;
-		case "ATTACHED":
-			$return = $module_r;
-			break;
-		case "CLEAN":
-			array_unique($module_r);
-			for($i = 0; $i < count($module_r); $i++)
-			{
-				if(!is_file(MODULE_DIR . $module_r[$i] . ".php") && !is_file(MODULE_LOCAL_DIR . $module_r[$i] . ".php"))
-				{
-					unset($module_r[$i]);
-				}
-			}
-			break;
-		case "CLEAR_ALL":
-			$assignments = array();
-			break;
-		case "IS_SET":
-			$return = isset($module_r[$i]);
-			break;
-	}
-
-	return $return;
-}
-function pts_module_store_var($process, $var = null, $value = null)
-{
-	static $var_r;
-	$return = false;
-
-	if(empty($var_r))
-	{
-		$var_r = array();
-	}
-
-	switch($process)
-	{
-		case "ADD":
-			array_push($var_r, $var . "=" . $value);
-			break;
-		case "TO_STRING":
-			$return = implode(";", $var_r);
-			break;
-	}
-
-	return $return;
-}
-function pts_module_activity($process, $value = null)
-{
-	static $current_module = false;
-	$return = false;
-
-	switch($process)
-	{
-		case "SET_CURRENT":
-			$current_module = $value;
-			break;
-		case "READ_CURRENT":
-			$return = $current_module;
-			break;
-		case "CLEAR_CURRENT":
-			$current_module = false;
-			break;
-	}
-
-	return $return;
+	return pts_module_manager::get_current_module();
 }
 function pts_available_modules()
 {
