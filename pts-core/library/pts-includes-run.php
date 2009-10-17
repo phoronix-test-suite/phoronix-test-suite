@@ -384,16 +384,16 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	$xml_parser = new pts_test_tandem_XmlReader($test_identifier);
 	$xml_parser->overrideXMLValues($test_run_request->get_override_options());
-	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
+	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE, $test_identifier);
 	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
-	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT));
+	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT, 3));
 	$ignore_runs = pts_trim_explode(",", $xml_parser->getXMLValue(P_TEST_IGNORERUNS));
 	$pre_run_message = $xml_parser->getXMLValue(P_TEST_PRERUNMSG);
 	$post_run_message = $xml_parser->getXMLValue(P_TEST_POSTRUNMSG);
 	$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
 	$result_proportion = $xml_parser->getXMLValue(P_TEST_PROPORTION);
-	$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
+	$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT, "BAR_GRAPH");
 	$result_quantifier = $xml_parser->getXMLValue(P_TEST_QUANTIFIER);
 	$arg_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
 	$execute_path = $xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS);
@@ -427,32 +427,19 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		return false;
 	}
 
-	if(empty($result_format))
-	{
-		$result_format = "BAR_GRAPH";
-	}
-	else if(strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_") // Currently tests that output multiple results in one run can only be run once
-	{
-		$times_to_run = 1;
-	}
-
 	if(($force_runs = getenv("FORCE_TIMES_TO_RUN")) && is_int($force_runs))
 	{
 		$times_to_run = $force_runs;
 	}
-	else if(empty($times_to_run) || !is_int($times_to_run))
+
+	if($times_to_run < 1 || (strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_")) // Currently tests that output multiple results in one run can only be run once
 	{
-		$times_to_run = 3;
+		$times_to_run = 1;
 	}
 
 	if(!empty($test_type))
 	{
 		pts_set_assignment_once("TEST_" . strtoupper($test_type), 1);
-	}
-
-	if(empty($execute_binary))
-	{
-		$execute_binary = $test_identifier;
 	}
 
 	$execute_path_check = pts_trim_explode(",", $execute_path);

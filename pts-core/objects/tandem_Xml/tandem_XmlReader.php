@@ -104,9 +104,9 @@ class tandem_XmlReader
 
 		return $return_r;
 	}
-	function getXMLValue($xml_tag)
+	function getXMLValue($xml_tag, $fallback_value = false)
 	{
-		return $this->getValue($xml_tag);
+		return ($v = $this->getValue($xml_tag)) != false ? $v : $fallback_value;
 	}
 	function isDefined($xml_tag)
 	{
