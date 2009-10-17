@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add MinimumLength tag to XML test profile specification
 - pts-core: Add MaximumLength tag to XML test profile specification
 - pts-core: Few fixes/changes to test execution code
+- pts-core: When dealing with the stats support for validating test results, don't increase the run count prematurely
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - tandem_Xml: Add check to not insert null elements during ->getXmlArrayValues() call
