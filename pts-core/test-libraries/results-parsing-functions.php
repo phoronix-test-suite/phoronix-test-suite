@@ -22,7 +22,9 @@
 
 function pts_read_log_file()
 {
-	return file_get_contents(getenv("LOG_FILE"));
+	$log_file = getenv("LOG_FILE");
+
+	return is_file($log_file) ? file_get_contents($log_file) : null;
 }
 function pts_report_numeric_result($result)
 {

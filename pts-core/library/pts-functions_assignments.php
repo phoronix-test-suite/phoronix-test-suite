@@ -21,65 +21,29 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_assignment($process, $assignment = null, $value = null)
-{
-	static $assignments;
-	$return = false;
-
-	switch($process)
-	{
-		case "SET":
-			$assignments[$assignment] = $value;
-			break;
-		case "READ":
-			if(isset($assignments[$assignment]))
-			{
-				$return = $assignments[$assignment];
-			}
-			break;
-		case "IS_SET":
-			$return = isset($assignments[$assignment]);
-			break;
-		case "CLEAR":
-			unset($assignments[$assignment]);
-			break;
-		case "CLEAR_ALL":
-			$assignments = array();
-			break;
-	}
-
-	return $return;
-}
 function pts_set_assignment_once($assignment, $value)
 {
-	return !pts_is_assignment($assignment) && pts_set_assignment($assignment, $value);
+	return pts_assignment::set_once($assignment, $value);
 }
 function pts_set_assignment($assignment, $value)
 {
-	$assignment = pts_to_array($assignment);
-
-	foreach($assignment as $this_assignment)
-	{
-		pts_assignment("SET", $this_assignment, $value);
-	}
-
-	return true;
+	return pts_assignment::set($assignment, $value);
 }
 function pts_read_assignment($assignment)
 {
-	return pts_assignment("READ", $assignment);
+	return pts_assignment::read($assignment);
 }
 function pts_is_assignment($assignment)
 {
-	return pts_assignment("IS_SET", $assignment);
+	return pts_assignment::is_set($assignment);
 }
 function pts_clear_assignments()
 {
-	pts_assignment("CLEAR_ALL");
+	pts_assignment::clear_all();
 }
 function pts_clear_assignment($assignment)
 {
-	pts_assignment("CLEAR", $assignment);
+	pts_assignment::clear($assignment);
 }
 function pts_set_assignment_next($assignment, $value)
 {

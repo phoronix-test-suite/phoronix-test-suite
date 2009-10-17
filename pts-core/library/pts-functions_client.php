@@ -70,7 +70,9 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 	}
 
 	pts_clear_assignments();
-	pts_set_assignment(array("START_TIME", "THIS_OPTION_IDENTIFIER"), time()); // For now THIS_OPTION_IDENTIFIER is also time
+	$time = time();
+	pts_set_assignment("START_TIME", $time);
+	pts_set_assignment("THIS_OPTION_IDENTIFIER", $time); // For now THIS_OPTION_IDENTIFIER is also time
 	pts_set_assignment("COMMAND", $command);
 
 	if(is_array($preset_assignments))
