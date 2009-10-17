@@ -401,6 +401,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 	$root_required = $xml_parser->getXMLValue(P_TEST_ROOTNEEDED) == "TRUE";
 	$allow_cache_share = $xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE) == "TRUE";
+	$min_length = $xml_parser->getXMLValue(P_TEST_MIN_LENGTH);
 	$env_testing_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE);
 	$default_test_descriptor = $xml_parser->getXMLValue(P_TEST_SUBTITLE);
 	unset($xml_parser);
@@ -529,6 +530,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$display_mode->test_run_start($pts_test_result);
+	$time_test_start_actual = time();
 
 	for($i = 0, $abort_testing = false, $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
@@ -712,6 +714,8 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		}
 	}
 
+	$time_test_end_actual = time();
+
 	if($allow_cache_share && !is_file($cache_share_pt2so) && $cache_share instanceOf pts_storage_object)
 	{
 		$cache_share->save_to_file($cache_share_pt2so);
@@ -731,6 +735,16 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	// End
 	$time_test_end = time();
 	$time_test_elapsed = $time_test_end - $time_test_start;
+	$time_test_elapsed_actual = $time_test_end_actual - $time_test_start_actual;
+
+	if(!empty($min_length))
+	{
+		if($min_length > ($time_test_elapsed_actual / 60))
+		{
+			// The test ended too quickly
+			return false;
+		}
+	}
 
 	if(is_file($test_directory . "/pts-test-note"))
 	{
