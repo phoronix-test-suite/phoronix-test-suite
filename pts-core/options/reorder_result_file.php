@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class change_results_display_order implements pts_option_interface
+class reorder_result_file implements pts_option_interface
 {
 	public static function required_function_sets()
 	{

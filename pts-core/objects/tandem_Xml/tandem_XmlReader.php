@@ -261,14 +261,17 @@ class tandem_XmlReader
 		$xml_matches = $this->parseXMLString($xml_steps[($xml_steps_count - 2)], $this_xml);
 		$end_tag = end($xml_steps);
 
-		foreach($xml_matches as $match)
+		if($xml_matches != false)
 		{
-			$this_item = $this->getValue($xml_tag, $end_tag, $match, false);
+			foreach($xml_matches as $match)
+			{
+				$this_item = $this->getValue($xml_tag, $end_tag, $match, false);
 
-			//if($this_item != false)
-			//{
-				array_push($return_r, $this_item);
-			//}
+				//if($this_item != false)
+				//{
+					array_push($return_r, $this_item);
+				//}
+			}
 		}
 
 		return $return_r;
