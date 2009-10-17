@@ -265,10 +265,10 @@ class tandem_XmlReader
 		{
 			$this_item = $this->getValue($xml_tag, $end_tag, $match, false);
 
-			if($this_item != false)
-			{
+			//if($this_item != false)
+			//{
 				array_push($return_r, $this_item);
-			}
+			//}
 		}
 
 		return $return_r;
