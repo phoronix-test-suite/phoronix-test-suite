@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Change change-results-display-order option command to reorder-result-file
 - pts-core: Add edit-result-file meta option
 - pts-core: Add MinimumLength tag to XML test profile specification
+- pts-core: Add MaximumLength tag to XML test profile specification
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - tandem_Xml: Add check to not insert null elements during ->getXmlArrayValues() call

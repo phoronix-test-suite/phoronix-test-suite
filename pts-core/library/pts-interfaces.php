@@ -65,6 +65,7 @@ define("P_TEST_DEFAULTARGUMENTS", "PhoronixTestSuite/TestSettings/Default/Argume
 define("P_TEST_POSSIBLEPATHS", "PhoronixTestSuite/TestSettings/Default/PossiblePaths"); // Possible paths
 define("P_TEST_ALLOW_CACHE_SHARE", "PhoronixTestSuite/TestSettings/Default/AllowCacheShare"); // Allow the result output to be cached and shared?
 define("P_TEST_MIN_LENGTH", "PhoronixTestSuite/TestSettings/Default/MinimumLength"); // The minimum length/run-time for results to be valid
+define("P_TEST_MAX_LENGTH", "PhoronixTestSuite/TestSettings/Default/MaximumLength"); // The maximum length/run-time for results to be valid
 define("P_TEST_OPTIONS_DISPLAYNAME", "PhoronixTestSuite/TestSettings/Option/DisplayName"); // The option names to show to the end-user
 define("P_TEST_OPTIONS_ARGPREFIX", "PhoronixTestSuite/TestSettings/Option/ArgumentPrefix"); // The option argument prefix
 define("P_TEST_OPTIONS_ARGPOSTFIX", "PhoronixTestSuite/TestSettings/Option/ArgumentPostfix"); // The option argument postfix

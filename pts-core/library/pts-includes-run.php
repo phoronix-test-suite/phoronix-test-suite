@@ -402,6 +402,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$root_required = $xml_parser->getXMLValue(P_TEST_ROOTNEEDED) == "TRUE";
 	$allow_cache_share = $xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE) == "TRUE";
 	$min_length = $xml_parser->getXMLValue(P_TEST_MIN_LENGTH);
+	$max_length = $xml_parser->getXMLValue(P_TEST_MAX_LENGTH);
 	$env_testing_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE);
 	$default_test_descriptor = $xml_parser->getXMLValue(P_TEST_SUBTITLE);
 	unset($xml_parser);
@@ -739,9 +740,18 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if(!empty($min_length))
 	{
-		if($min_length > ($time_test_elapsed_actual / 60))
+		if($min_length > $time_test_elapsed_actual)
 		{
-			// The test ended too quickly
+			// The test ended too quickly, results are not valid
+			return false;
+		}
+	}
+
+	if(!empty($max_length))
+	{
+		if($max_length < $time_test_elapsed_actual)
+		{
+			// The test took too much time, results are not valid
 			return false;
 		}
 	}

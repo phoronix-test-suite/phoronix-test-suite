@@ -274,7 +274,12 @@ need to be separated by a comma.</p>
 <strong>Location:</strong> PhoronixTestSuite/TestSettings/Default/<br>
 <strong>Internal Reference:</strong> P_TEST_MIN_LENGTH<br>
 <strong>Required:</strong> No<br>
-<strong>Description:</strong> If a test must run for at least a certain number of minutes to produce meaningful results, enter the time (in minutes) into this tag. If the actual test run-time ends up being less than this value, the results will not be considered valid. This is to address the possibility of a test ending prematurely, crashes (segmentation faults, etc), or the process being killed by the user. This tag should only be used if the test will always at least run for the specified amount of time when properly executed.</p>
+<strong>Description:</strong> If a test must run for at least a certain amount of time to produce meaningful results, enter the time (in seconds) into this tag. If the actual test run-time ends up being less than this value, the results will not be considered valid. This is to address the possibility of a test ending prematurely, crashes (segmentation faults, etc), or the process being killed by the user. This tag should only be used if the test will always at least run for the specified amount of time when properly executed.</p>
+<p><strong>Tag:</strong> MaximumLength<br>
+<strong>Location:</strong> PhoronixTestSuite/TestSettings/Default/<br>
+<strong>Internal Reference:</strong> P_TEST_MAX_LENGTH<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> This option is similar to the <em>MinimumLength</em> tag, but is to be used for invalidating a test result if the test takes too long to complete. Enter the time (in seconds) into this tag. If the actual test run-time is greater than this value, the results will not be considered valid. This tag should only be used if the test will always be less than the specified amount of time when properly executed.</p>
 <h2>PhoronixTestSuite/TestSettings/Option/<br>
 NOTE: Multiple instances of these tags are allowed for multiple options in the 
 test</h2>
