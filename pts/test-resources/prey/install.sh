@@ -26,6 +26,5 @@ tar -C $DEBUG_REAL_HOME/.prey/base/ -jxf prey-retail-client-pts-1.tar.bz2
 
 echo "#!/bin/sh
 cd data/prey-linux-x86/
-./prey.x86 \$@ > \$LOG_FILE
-cat \$LOG_FILE | grep fps" > prey
+./prey.x86 \$@ > \$LOG_FILE" > prey
 chmod +x prey

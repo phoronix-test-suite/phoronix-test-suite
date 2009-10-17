@@ -767,6 +767,18 @@ class phodevi_system extends pts_device_interface
 		$ddx_info = "";
 		$dri_driver = phodevi::read_property("system", "dri-display-driver");
 
+		if(empty($dri_driver))
+		{
+			if(IS_ATI_GRAPHICS)
+			{
+				$dri_driver = "fglrx";
+			}
+			if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
+			{
+				$dri_driver = "nv";
+			}
+		}
+
 		if(!empty($dri_driver))
 		{
 			$driver_version = phodevi_parser::read_xorg_module_version($dri_driver . "_drv");
@@ -774,16 +786,6 @@ class phodevi_system extends pts_device_interface
 			if(!empty($driver_version))
 			{
 				$ddx_info = $dri_driver . " " . $driver_version;
-			}
-		}
-		else if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
-		{
-			// xf86-video-nv is an open-source driver but currently doesn't support DRI
-			$nv_driver_version = phodevi_parser::read_xorg_module_version("nv_drv.so");
-
-			if(!empty($nv_driver_version))
-			{
-				$ddx_info = "nv " . $nv_driver_version;
 			}
 		}
 

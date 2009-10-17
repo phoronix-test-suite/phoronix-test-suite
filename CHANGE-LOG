@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Fix for running result files that have forced AA/AF levels and then fail to merge
 - pts-core: On missing timezone setting, set to UTC if the PHP version is 5.3.0 or newer, emits a warning otherwise
+- phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile
 
