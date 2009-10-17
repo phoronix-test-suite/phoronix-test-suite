@@ -41,7 +41,7 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 	{
 		$this->override_values = $test_options;
 	}
-	function getXMLValue($xml_tag)
+	function getXMLValue($xml_tag, $fallback_value = false)
 	{
 		if(!empty($this->override_values))
 		{
@@ -59,7 +59,7 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 			}
 		}
 
-		return $this->getValue($xml_tag);
+		return parent::getXmlValue($xml_tag, $fallback_value);
 	}
 	function handleXmlZeroTagFallback($xml_tag)
 	{

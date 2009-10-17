@@ -14,7 +14,6 @@ Phoronix Test Suite (Git)
 - pts-core: Improve performance of PTS assignment functions
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
-- tandem_Xml: Add check to not insert null elements during ->getXmlArrayValues() call
 - pts: Fix for prey test profile
 
 Phoronix Test Suite 2.2 Alpha 4
