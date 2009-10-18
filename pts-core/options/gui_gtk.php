@@ -226,15 +226,11 @@ class gui_gtk implements pts_option_interface
 		}
 		else
 		{
-			$event_box = new GtkEventBox();
-			//$event_box->connect_simple("button-press-event", array("gui_gtk", "launch_web_browser"), "");
 			$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
 			$logo->set_size_request(158, 82);
-			$event_box->add($logo);
-			$main_frame_objects = array($event_box);
+			$main_frame_objects = array($logo);
 
-			$welcome = file_get_contents(STATIC_DIR . "short-description.txt");
-			array_push($main_frame_objects, $t = new pts_gtk_text_area($welcome, -1, -1, true));
+			array_push($main_frame_objects, array(array(new pts_gtk_event_label("<b>www.phoronix-test-suite.com</b>", array("gui_gtk", "launch_web_browser"), "Sans 10"), null)));
 		}
 
 		$main_frame_box = pts_gtk_array_to_boxes($main_frame, $main_frame_objects, 6);
