@@ -86,14 +86,17 @@ define("PTS_USER_LOCK", PTS_USER_DIR . "run_lock");
 $pts_fp = null;
 $release_lock = true;
 
-if(!pts_create_lock(PTS_USER_LOCK, $pts_fp))
+if(!QUICK_START)
 {
-	echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
-	$release_lock = false;
-}
+	if(!pts_create_lock(PTS_USER_LOCK, $pts_fp))
+	{
+		echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
+		$release_lock = false;
+	}
 
-register_shutdown_function("pts_shutdown");
-pts_module_startup_init(); // Initialize the PTS module system
+	register_shutdown_function("pts_shutdown");
+	pts_module_startup_init(); // Initialize the PTS module system
+}
 
 // Read passed arguments
 $pass_args = array();
@@ -105,7 +108,11 @@ for($i = 2; $i < $argc; $i++)
 	}
 }
 
-pts_user_agreement_check($sent_command);
+if(!QUICK_START)
+{
+	pts_user_agreement_check($sent_command);
+}
+
 pts_run_option_next($sent_command, $pass_args);
 
 while(($current_option = pts_run_option_manager::pull_next_run_option()) != null)
@@ -113,7 +120,7 @@ while(($current_option = pts_run_option_manager::pull_next_run_option()) != null
 	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
 }
 
-if($release_lock)
+if(!QUICK_START && $release_lock)
 {
 	pts_release_lock($pts_fp, PTS_USER_LOCK);
 }

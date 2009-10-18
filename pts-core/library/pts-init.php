@@ -24,6 +24,12 @@
 function pts_client_init()
 {
 	pts_define_directories(); // Define directories
+
+	if(QUICK_START)
+	{
+		return;
+	}
+
 	pts_basic_init(); // Initalize common / needed PTS start-up work
 
 	pts_core_storage_init();
@@ -35,10 +41,6 @@ function pts_client_init()
 function pts_basic_init()
 {
 	// Initialize The Phoronix Test Suite
-	if(QUICK_START)
-	{
-		return;
-	}
 
 	// PTS Defines
 	define("PHP_BIN", getenv("PHP_BIN"));
