@@ -44,7 +44,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 	
 	if($save_to == null || $save_results == null)
 	{
-		$bool = true;
+		$bool = false;
 	}
 	else
 	{
@@ -911,7 +911,7 @@ function pts_generic_reference_system_comparison_ids()
 
 	if($comparison_ids == null)
 	{
-		$comparison_ids = pts_trim_explode("\n", file_get_contents(STATIC_DIR . "reference-system-comparisons.txt"));
+		$comparison_ids = pts_trim_explode("\n", trim(file_get_contents(STATIC_DIR . "reference-system-comparisons.txt")));
 	}
 
 	return $comparison_ids;

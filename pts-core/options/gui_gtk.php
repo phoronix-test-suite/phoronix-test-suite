@@ -72,8 +72,16 @@ class gui_gtk implements pts_option_interface
 	public static function startup_tasks()
 	{
 		$startup_tasks = array(
-
+		"pts_all_generic_reference_system_comparison_results_available" => array("pts_download_all_generic_reference_system_comparison_results", "Downloading Reference Comparison Results")
 		);
+
+		foreach($startup_tasks as $task_check => $task)
+		{
+			if(call_user_func($task_check) != false)
+			{
+				unset($startup_tasks[$task_check]);
+			}
+		}
 
 		if(($task_count = count($startup_tasks)) == 0)
 		{
@@ -83,10 +91,13 @@ class gui_gtk implements pts_option_interface
 		$progress_window = new pts_gtk_progress_window("Phoronix Test Suite v" . PTS_VERSION);
 
 		$tasks_completed = 0;
-		foreach($startup_tasks as $function => $task_string)
+		foreach($startup_tasks as $function => $task)
 		{
+			list($task_call, $task_string) = $task;
 			$progress_window->update_progress_bar(($tasks_completed / $task_count) * 100, $task_string);
+			call_user_func($task_call);
 			$tasks_completed++;
+			$progress_window->update_progress_bar(($tasks_completed / $task_count) * 100, $task_string);
 		}
 
 		$progress_window->completed();
