@@ -84,6 +84,23 @@ class pts_module_interface
 		// Passed is an array of the test identifiers for all tests about to be installed
 		return;
 	}
+	public static function __pre_test_download($obj = null)
+	{
+		// Passed is an array where as the first element is the test identifier for the name of the test about to have its files downloaded
+		// The second element in this array is an additional array containing the pts_test_file_download objects that will be downloaded
+		return;
+	}
+	public static function __interim_test_download($obj = null)
+	{
+		// Passed is an array where as the first element is the test identifier for the name of the test about to have its files downloaded
+		// The second element in this array is an additional array containing the pts_test_file_download objects that will be downloaded
+		return;
+	}
+	public static function __post_test_download($obj = null)
+	{
+		// Passed as the first argument to this function is the test identifier for the name of the test where the file(s) were just downloaded
+		return;
+	}
 	public static function __pre_test_install($obj = null)
 	{
 		// Passed as the first argument to this function is the test identifier for the name of the test about to be installed

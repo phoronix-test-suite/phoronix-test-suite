@@ -67,6 +67,18 @@ class dummy_module extends pts_module_interface
 	{
 		echo "\nGetting ready to check for test(s) that need installing...\nCalled: __pre_install_process()\n";
 	}
+	public static function __pre_test_download()
+	{
+		echo "\nGetting ready to download files for a test!\nCalled: __pre_test_download()\n";
+	}
+	public static function __interim_test_download()
+	{
+		echo "\nJust finished downloading a file for a test.\nCalled: __interim_test_download()\n";
+	}
+	public static function __post_test_download()
+	{
+		echo "\nJust finished the download process for a test.\nCalled: __post_test_download()\n";
+	}
 	public static function __pre_test_install()
 	{
 		echo "\nGetting ready to actually install a test!\nCalled: __pre_test_install()\n";

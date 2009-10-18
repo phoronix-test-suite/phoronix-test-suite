@@ -176,8 +176,7 @@ function pts_load_module($module)
 }
 function pts_module_processes()
 {
-	return array("__startup", "__pre_option_process", "__pre_install_process", "__pre_test_install", "__post_test_install", "__post_install_process", 
-			"__pre_run_process", "__pre_test_run", "__interim_test_run", "__post_test_run", "__post_run_process", "__post_option_process", "__shutdown");
+	return array("__startup", "__pre_option_process", "__pre_install_process", "__pre_test_download", "__interim_test_download", "__post_test_download", "__pre_test_install", "__post_test_install", "__post_install_process", "__pre_run_process", "__pre_test_run", "__interim_test_run", "__post_test_run", "__post_run_process", "__post_option_process", "__shutdown");
 }
 function pts_module_events()
 {
@@ -240,7 +239,7 @@ function pts_module_run_user_command($module, $command, $arguments = null)
 		echo "\n";
 	}
 }
-function pts_module_call($module, $process, $object_pass = null)
+function pts_module_call($module, $process, &$object_pass = null)
 {
 	$module_type = pts_module_type($module);
 
@@ -272,20 +271,20 @@ function pts_sh_module_call($module, $process)
 
 	return $module_return;
 }
-function pts_php_module_call($module, $process, $object_pass = null)
+function pts_php_module_call($module, $process, &$object_pass = null)
 {
 	if(method_exists($module, $process))
 	{
 		eval("\$module_val = " . $module . "::" . $process . "(\$object_pass);");
 	}
-	else
+	else if(property_exists($module, $process))
 	{
 		eval("\$module_val = " . $module . "::" . $process . ";");
 	}
 
 	return $module_val;
 }
-function pts_module_process($process, $object_pass = null)
+function pts_module_process($process, &$object_pass = null)
 {
 	// Run a module process on all registered modules
 	foreach(pts_module_manager::attached_modules() as $module)
@@ -294,7 +293,7 @@ function pts_module_process($process, $object_pass = null)
 	}
 	pts_module_manager::set_current_module(null);
 }
-function pts_module_process_task($module, $process, $object_pass = null)
+function pts_module_process_task($module, $process, &$object_pass = null)
 {
 	pts_module_manager::set_current_module($module);
 

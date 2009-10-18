@@ -29,6 +29,7 @@ class gui_gtk_events extends pts_module_interface
 	const module_author = "Phoronix Media";
 
 	static $progress_window;
+	static $test_install_count = 0;
 
 	public static function __startup()
 	{
@@ -37,15 +38,25 @@ class gui_gtk_events extends pts_module_interface
 			// The GTK interface isn't being used
 			return PTS_MODULE_UNLOAD;
 		}
+		self::$progress_window = new pts_gtk_advanced_progress_window("Phoronix Test Suite v" . PTS_VERSION);
 	}
 
 	//
 	// Installation Functions
 	//
 
+	public static function __pre_install_process($test_install_array)
+	{
+		self::$test_install_count = count($test_install_array);
+		self::$progress_window = new pts_gtk_advanced_progress_window("Test Installation");
+	}
 	public static function __pre_test_install($identifier)
 	{
-		self::notify_send_message("Installing " . $identifier);
+		self::$progress_window->update_progress_bar((0 / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Running " . $pts_test_result->get_attribute("TEST_TITLE"));
+	}
+	public static function __post_install_process()
+	{
+		self::$progress_window->completed();
 	}
 
 	//
@@ -54,7 +65,7 @@ class gui_gtk_events extends pts_module_interface
 
 	public static function __pre_run_process()
 	{
-		self::$progress_window = new pts_gtk_simple_progress_window("Phoronix Test Suite v" . PTS_VERSION);
+		self::$progress_window = new pts_gtk_advanced_progress_window("Phoronix Test Suite v" . PTS_VERSION);
 	}
 	public static function __pre_test_run($pts_test_result)
 	{

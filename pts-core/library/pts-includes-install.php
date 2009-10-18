@@ -123,6 +123,9 @@ function pts_download_test_files($identifier, &$display_mode)
 			return false;
 		}
 
+		$module_pass = array($identifier, $download_packages);
+		pts_module_process("__pre_test_download", $module_pass);
+
 		for($i = 0; $i < count($download_packages); $i++)
 		{
 			$download_location = TEST_ENV_DIR . $identifier . "/";
@@ -288,8 +291,11 @@ function pts_download_test_files($identifier, &$display_mode)
 					while(!$file_downloaded);
 				}
 			}
+			pts_module_process("__interim_test_download", $module_pass);
 		}
+		pts_module_process("__post_test_download", $identifier);
 	}
+
 	return true;
 }
 function pts_validate_md5_download_file($filename, $verified_md5)
@@ -401,6 +407,7 @@ function pts_install_test($identifier, &$display_mode)
 			{
 				pts_setup_install_test_directory($identifier, true);
 				$display_mode->test_install_start($identifier);
+
 				$download_test_files = pts_download_test_files($identifier, $display_mode);
 
 				if($download_test_files == false)
