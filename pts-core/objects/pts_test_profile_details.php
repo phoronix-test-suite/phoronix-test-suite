@@ -23,84 +23,67 @@
 class pts_test_profile_details
 {
 	private $identifier;
-	private $name;
-	private $maintainer;
-	private $project_url;
-	private $description;
-	private $version;
-	private $profile_version;
-	private $license;
-	private $status;
-	private $test_version;
-	private $hardware_type;
-	private $software_type;
-	private $test_download_size;
-	private $test_environment_size;
-	private $test_maintainer;
-	private $dependencies;
+	private $xml_parser;
 
 	public function __construct($identifier)
 	{
-		$xml_parser = new pts_test_tandem_XmlReader($identifier);
+		$this->xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
-		$this->name = $xml_parser->getXMLValue(P_TEST_TITLE);
-		$this->license = $xml_parser->getXMLValue(P_TEST_LICENSE);
-		$this->description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
-		$this->maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
-		$this->status = $xml_parser->getXMLValue(P_TEST_STATUS);
-		$this->test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
-		$this->version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
-		$this->test_maintainer = $xml_parser->getXMLValue(P_TEST_MAINTAINER);
-		$this->hardware_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
-		$this->software_type = $xml_parser->getXMLValue(P_TEST_SOFTWARE_TYPE);
-		$this->dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
-		$this->project_url = $xml_parser->getXMLValue(P_TEST_PROJECTURL);
-
-		$this->test_download_size = pts_estimated_download_size($identifier);
-		$this->test_environment_size = pts_estimated_environment_size($identifier);
 	}
 	public function get_maintainer()
 	{
-		$test_maintainer = pts_trim_explode("|", $this->maintainer);
+		$test_maintainer = pts_trim_explode("|", $this->xml_parser->getXMLValue(P_TEST_MAINTAINER));
 		$test_maintainer = $test_maintainer[0] . (count($test_maintainer) == 2 ? " <" . $test_maintainer[1] . ">" : null);
 
 		return $test_maintainer;
 	}
 	public function get_test_hardware_type()
 	{
-		return $this->hardware_type;
+		return $this->xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
 	}
 	public function get_test_software_type()
 	{
-		return $this->software_type;
+		return $this->xml_parser->getXMLValue(P_TEST_SOFTWARE_TYPE);
+	}
+	public function get_status()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_STATUS);
 	}
 	public function get_license()
 	{
-		return $this->license;
+		return $this->xml_parser->getXMLValue(P_TEST_LICENSE);
+	}
+	public function get_test_profile_version()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_PTSVERSION);
+	}
+	public function get_version()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_VERSION);
 	}
 	public function get_project_url()
 	{
-		return $this->project_url;
+		return $this->xml_parser->getXMLValue(P_TEST_PROJECTURL);
 	}
 	public function get_download_size()
 	{
-		return $this->test_download_size;
+		return pts_estimated_download_size($this->identifier);
 	}
 	public function get_environment_size()
 	{
-		return $this->test_environment_size;
+		return pts_estimated_environment_size($this->identifier);
 	}
 	public function get_description()
 	{
-		return $this->description;
+		return $this->xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 	}
 	public function get_name()
 	{
-		return $this->name;
+		return $this->xml_parser->getXMLValue(P_TEST_TITLE);
 	}
 	public function get_dependencies()
 	{
-		return pts_trim_explode(",", $this->dependencies);
+		return pts_trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_EXDEP));
 	}
 	public function suites_using_this_test()
 	{
@@ -124,28 +107,32 @@ class pts_test_profile_details
 	{
 		$str = "";
 
-		$test_title = $this->name;
-		if(!empty($this->test_version))
+		$test_title = $this->get_name();
+		$test_version = $this->get_version();
+		if(!empty($test_version))
 		{
-			$test_title .= " " . $this->test_version;
+			$test_title .= " " . $test_version;
 		}
 		$str .= pts_string_header($test_title);
 
-		$str .= "Test Version: " . $this->version . "\n";
+		$str .= "Profile Version: " . $this->get_test_profile_version() . "\n";
 		$str .= "Maintainer: " . $this->get_maintainer() . "\n";
 		$str .= "Test Type: " . $this->get_test_hardware_type() . "\n";
 		$str .= "Software Type: " . $this->get_test_software_type() . "\n";
 		$str .= "License Type: " . $this->get_license() . "\n";
-		$str .= "Test Status: " . $this->status . "\n";
+		$str .= "Test Status: " . $this->get_status() . "\n";
 		$str .= "Project Web-Site: " . $this->get_project_url() . "\n";
 
-		if(!empty($this->test_download_size))
+		$download_size = $this->get_download_size();
+		if(!empty($download_size))
 		{
-			$str .= "Download Size: " . $this->test_download_size . " MB\n";
+			$str .= "Download Size: " . $download_size . " MB\n";
 		}
-		if(!empty($this->test_environment_size))
+
+		$environment_size = $this->get_environment_size();
+		if(!empty($environment_size))
 		{
-			$str .= "Environment Size: " . $this->test_environment_size . " MB\n";
+			$str .= "Environment Size: " . $environment_size . " MB\n";
 		}
 		if(($el = pts_estimated_run_time($this->identifier)) > 0)
 		{
@@ -189,10 +176,11 @@ class pts_test_profile_details
 			$str .= "\nTest Installed: No\n";
 		}
 
-		if(!empty($this->dependencies))
+		$dependencies = $this->get_dependencies();
+		if(!empty($dependencies))
 		{
 			$str .= "\nSoftware Dependencies:\n";
-			foreach($this->dependency_names() as $dependency)
+			foreach($this->get_dependency_names() as $dependency)
 			{
 					$str .= "- " . $dependency . "\n";
 			}
@@ -213,7 +201,7 @@ class pts_test_profile_details
 	}
 	public function verified_state()
 	{
-		return !in_array($this->status, array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED"));
+		return !in_array($this->get_status(), array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED"));
 	}
 	public function __toString()
 	{
@@ -221,16 +209,16 @@ class pts_test_profile_details
 
 		if(getenv("PTS_DEBUG"))
 		{
-			$str = sprintf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $this->identifier, $this->test_version, $this->version, $this->status, $this->license, $this->test_download_size, $this->test_environment_size, $this->test_maintainer);
+			$str = sprintf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $this->identifier, $this->get_test_profile_version(), $this->get_version(), $this->get_status(), $this->get_license(), $this->get_download_size(), $this->get_environment_size(), $this->get_maintainer());
 		}
-		else if(!empty($this->name) && (pts_is_assignment("LIST_ALL_TESTS") || $this->verified_state()))
+		else if($this->get_name() != null && (pts_is_assignment("LIST_ALL_TESTS") || $this->verified_state()))
 		{
-			$str = sprintf("%-18ls - %-36ls [%s, %10ls]\n", $this->identifier, $this->name, $this->status, $this->license);
+			$str = sprintf("%-18ls - %-36ls [%s, %10ls]\n", $this->identifier, $this->$this->get_name(), $this->get_status(), $this->get_license());
 		}
 
 		return $str;
 	}
-	public function dependency_names()
+	public function get_dependency_names()
 	{
 		$dependency_names = array();
 
