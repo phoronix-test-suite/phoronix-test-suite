@@ -23,6 +23,7 @@ Phoronix Test Suite (Git)
 - pts-core: Improve desktop responsiveness of GTK2 GUI
 - pts-core: Add automated Internet connectivity check on start
 - pts-core: More efficient paths for determining reference system comparisons
+- pts-core: Add __pre_test_download, __interim_test_download, and __post_test_download hooks to the PTS module API
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile

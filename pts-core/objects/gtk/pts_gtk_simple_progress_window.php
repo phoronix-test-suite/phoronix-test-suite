@@ -22,21 +22,25 @@
 
 class pts_gtk_simple_progress_window extends GtkDialog
 {
-	var $gtk_progress_bar;
-	var $loading_label;
+	protected $gtk_progress_bar;
+	protected $loading_label;
 
 	public function __construct($title = null)
 	{
 		parent::__construct(($title == null ? "Phoronix Test Suite v" . PTS_VERSION : $title), null, Gtk::DIALOG_MODAL);
+
+		$this->loading_label = new pts_gtk_label("Loading...");
+		$this->gtk_progress_bar = new pts_gtk_progress_bar();
+
+		if(get_class($this) != "pts_gtk_simple_progress_window")
+		{
+			return;
+		}
+
 		$this->set_size_request(360, 270);
 
 		$logo = GtkImage::new_from_file(STATIC_DIR . "pts-308x160-t.png");
 		$logo->set_size_request(308, 160);
-
-		$this->loading_label = new pts_gtk_label("Loading...");
-
-		$this->gtk_progress_bar = new GtkProgressBar();
-		$this->gtk_progress_bar->set_orientation(Gtk::PROGRESS_LEFT_TO_RIGHT);
 
 		pts_gtk_array_to_boxes($this->vbox, array(null, $logo, null, $this->gtk_progress_bar, $this->loading_label), 2, true);
 
@@ -45,13 +49,7 @@ class pts_gtk_simple_progress_window extends GtkDialog
 	}
 	public function update_progress_bar($percent, $label = null)
 	{
-		$this->gtk_progress_bar->set_fraction($percent / 100);
-		$this->gtk_progress_bar->set_text(intval($percent, 0) . "% Complete");
-
-		if($label != null)
-		{
-			$this->loading_label->set_text($label);
-		}
+		$this->apply_progress_update($this->gtk_progress_bar, $this->loading_label, $percent, $label);
 
 		while(Gtk::events_pending())
 		{
@@ -61,6 +59,20 @@ class pts_gtk_simple_progress_window extends GtkDialog
 	public function completed()
 	{
 		$this->destroy();
+	}
+
+	protected function apply_progress_update(&$progress_bar, &$label, $percent, $label_string)
+	{
+		if($percent >= 0)
+		{
+			$progress_bar->set_fraction($percent / 100);
+			$progress_bar->set_text(intval($percent) . "% Complete");
+		}
+
+		if($label_string != null)
+		{
+			$label->set_text($label_string);
+		}
 	}
 }
 
