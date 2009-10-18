@@ -21,6 +21,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support "all" as an argument with remove-installed-test option
 - pts-core: Improve object security
 - pts-core: Improve desktop responsiveness of GTK2 GUI
+- pts-core: Add automated Internet connectivity check on start
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile

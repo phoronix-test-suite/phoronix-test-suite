@@ -95,6 +95,14 @@ if(!QUICK_START)
 	}
 
 	register_shutdown_function("pts_shutdown");
+
+	if(pts_string_bool(pts_read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")) || pts_http_get_contents("http://www.phoronix-test-suite.com/PTS", false, false) != "PTS")
+	{
+		// TODO: possibly be smarter than to bang PTS server on each run, perhaps each day and use PTS_CORE_STORAGE for remembering
+		define("NO_NETWORK_COMMUNICATION", true);
+		echo "\nNetwork Communication Is Disabled.\n\n";
+	}
+
 	pts_module_startup_init(); // Initialize the PTS module system
 }
 

@@ -24,7 +24,7 @@
 function pts_is_global_id($global_id)
 {
 	// Checks if a string is a valid Phoronix Global ID
-	return pts_global_valid_id_string($global_id) && trim(pts_http_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id)) == "REMOTE_FILE";
+	return pts_global_valid_id_string($global_id) && pts_http_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id) == "REMOTE_FILE";
 }
 function pts_global_download_xml($global_id)
 {
@@ -69,7 +69,7 @@ function pts_global_setup_account($username, $password)
 }
 function pts_global_request_gsid()
 {
-	$gsid = trim(pts_http_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION . "&os=" . phodevi::read_property("system", "vendor-identifier")));
+	$gsid = pts_http_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION . "&os=" . phodevi::read_property("system", "vendor-identifier"));
 
 	return pts_global_gsid_valid($gsid) ? $gsid : false;
 }

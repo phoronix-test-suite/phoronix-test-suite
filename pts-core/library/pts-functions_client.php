@@ -313,19 +313,19 @@ function pts_http_stream_context_create($http_parameters = null)
 }
 function pts_http_get_contents($url, $override_proxy = false, $override_proxy_port = false)
 {
-	if(pts_string_bool(pts_read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")))
+	if(defined("NO_NETWORK_COMMUNICATION"))
 	{
 		return false;
 	}
 
 	$stream_context = pts_http_stream_context_create();
-	$contents = file_get_contents($url, 0, $stream_context);
+	$contents = trim(file_get_contents($url, 0, $stream_context));
 
 	return $contents;
 }
 function pts_http_upload_via_post($url, $to_post_data)
 {
-	if(pts_string_bool(pts_read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")))
+	if(defined("NO_NETWORK_COMMUNICATION"))
 	{
 		return false;
 	}

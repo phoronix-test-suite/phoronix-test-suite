@@ -36,7 +36,7 @@ class network_setup implements pts_option_interface
 
 		echo "\nTesting Proxy Server (" . $proxy_address . ":" . $proxy_port . ")\n";
 
-		if(pts_http_get_contents("http://www.phoronix-test-suite.com/LATEST", $proxy_address, $proxy_port))
+		if(pts_http_get_contents("http://www.phoronix-test-suite.com/PTS", $proxy_address, $proxy_port) == "PTS")
 		{
 			echo "\nProxy Setup Completed; Storing Network Settings.\n";
 			pts_user_config_init(array(P_OPTION_NET_PROXY_ADDRESS => $proxy_address, P_OPTION_NET_PROXY_PORT => $proxy_port));
