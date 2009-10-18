@@ -57,7 +57,7 @@ class make_download_cache implements pts_option_interface
 		$xml_writer = new tandem_XmlWriter();
 		$file_counter = 0;
 	
-		foreach(pts_array_merge(pts_available_base_tests_array(), pts_supported_tests_array()) as $test)
+		foreach(pts_installed_tests_array() as $test)
 		{
 			$downloads_file = pts_location_test_resources($test) . "downloads.xml";
 
