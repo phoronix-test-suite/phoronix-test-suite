@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add in additional LC_NUMERIC override to eliminate non-US decimal problems with test results
 - pts-core: Various test run code clean-ups
 - pts-core: With make-download-cache option only check for downloads on installed tests
+- pts-core: Support "all" as an argument with remove-installed-test option
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile

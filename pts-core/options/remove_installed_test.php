@@ -34,8 +34,16 @@ class remove_installed_test implements pts_option_interface
 
 		if(pts_bool_question("Are you sure you wish to remove the test " . $identifier . " (y/N)?", false))
 		{
-			pts_remove(TEST_ENV_DIR . $identifier);
-			echo "\nThe " . $identifier . " test has been removed.\n\n";
+			if($identifier == "all")
+			{
+				$identifier = pts_installed_tests_array();
+			}
+
+			foreach(pts_to_array($identifier) as $install_identifier)
+			{
+				pts_remove(TEST_ENV_DIR . $install_identifier);
+				echo "\nThe " . $install_identifier . " test has been removed.\n\n";
+			}
 		}
 		else
 		{
