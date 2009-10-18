@@ -138,6 +138,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_output(&$to_output)
 	{
+		if(pts_is_assignment("DEBUG_TEST_PROFILE"))
+		{
+			echo $to_output;
+		}
+
 		return;
 	}
 	public function test_run_end(&$test_result)

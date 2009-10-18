@@ -547,18 +547,25 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(!$restored_from_cache)
 		{
+			$test_run_command = "cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1";
+
+			if(pts_is_assignment("DEBUG_TEST_PROFILE"))
+			{
+				$display_mode->test_run_error("Test Run Command: " . $test_run_command);
+			}
+
 			$test_run_time_start = time();
-			$test_results = pts_exec("cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1", $test_extra_runtime_variables);
+			$test_results = pts_exec($test_run_command, $test_extra_runtime_variables);
 			$test_run_time = time() - $test_run_time_start;
 		}
 		
 
-		if(!isset($test_results[10240]))
+		if(!isset($test_results[10240]) || pts_is_assignment("DEBUG_TEST_PROFILE"))
 		{
 			$display_mode->test_run_output($test_results);
 		}
 
-		if(is_file($benchmark_log_file) && trim($test_results) == "" && filesize($benchmark_log_file) < 10240)
+		if(is_file($benchmark_log_file) && trim($test_results) == "" && (filesize($benchmark_log_file) < 10240 || pts_is_assignment("DEBUG_TEST_PROFILE")))
 		{
 			$benchmark_log_file_contents = file_get_contents($benchmark_log_file);
 			$display_mode->test_run_output($benchmark_log_file_contents);
@@ -607,6 +614,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			if(empty($test_results) && $run_time > 1)
 			{
 				$test_results = $run_time;
+			}
+
+			if(pts_is_assignment("DEBUG_TEST_PROFILE"))
+			{
+				$display_mode->test_run_error("Test Result Value: " . $test_results);
 			}
 
 			$validate_result = trim(pts_call_test_script($test_identifier, "validate-result", null, $test_results, $test_extra_runtime_variables_post));
@@ -693,7 +705,15 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 				copy($benchmark_log_file, $backup_log_dir . $backup_filename);
 			}
-			unlink($benchmark_log_file);
+
+			if(pts_is_assignment("DEBUG_TEST_PROFILE"))
+			{
+				$display_mode->test_run_error("Log File At: " . $benchmark_log_file);
+			}
+			else
+			{
+				unlink($benchmark_log_file);
+			}
 		}
 
 		if(is_file(PTS_USER_DIR . "halt-testing") || is_file(PTS_USER_DIR . "skip-test"))
