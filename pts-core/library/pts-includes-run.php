@@ -471,6 +471,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
 	$extra_runtime_variables = pts_run_additional_vars($test_identifier);
 	$extra_runtime_variables["LC_ALL"] = "";
+	$extra_runtime_variables["LC_NUMERIC"] = "en_US.UTF-8";
 	$extra_runtime_variables["LC_CTYPE"] = "";
 	$extra_runtime_variables["LC_MESSAGES"] = "";
 	$extra_runtime_variables["LANG"] = "";
