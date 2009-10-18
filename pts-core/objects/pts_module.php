@@ -213,7 +213,7 @@ class pts_module
 	{
 		$module_name = "unknown";
 
-		if(($current = pts_module_current()) != false)
+		if(($current = pts_module_manager::get_current_module()) != null)
 		{
 			$module_name = $current;
 		}

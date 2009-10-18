@@ -36,7 +36,7 @@ class module_setup implements pts_option_interface
 		{
 			$pre_message = "";
 
-			if(!in_array($module, pts_attached_modules()) && !class_exists($module))
+			if(!class_exists($module))
 			{
 				pts_load_module($module);
 			}

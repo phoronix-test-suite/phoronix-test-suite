@@ -59,7 +59,7 @@ function pts_auto_detect_modules()
 			$env_var = $module_var[0];
 			$module = $module_var[1];
 
-			if(!pts_module_attached($module) && ($e = getenv($env_var)) != false && !empty($e))
+			if(!pts_module_manager::is_module_attached($module) && ($e = getenv($env_var)) != false && !empty($e))
 			{
 				if(IS_DEBUG_MODE)
 				{
@@ -102,7 +102,7 @@ function pts_load_modules()
 		{
 			$module = trim($module);
 
-			if(!pts_module_manager::pts_module_attached($module))
+			if(!pts_module_manager::is_module_attached($module))
 			{
 				pts_attach_module($module);
 			}
@@ -120,7 +120,7 @@ function pts_load_modules()
 
 	// Load the modules
 	$module_store_list = array();
-	foreach(pts_attached_modules() as $module)
+	foreach(pts_module_manager::attached_modules() as $module)
 	{
 		$module_type = pts_module_type($module);
 		if($module_type == "PHP")
@@ -209,7 +209,7 @@ function pts_module_valid_user_command($module, $command = null)
 
 	if(pts_module_type($module) == "PHP")
 	{
-		if(!pts_module_attached($module))
+		if(!pts_module_manager::is_module_attached($module))
 		{
 			pts_attach_module($module);
 		}
@@ -294,7 +294,7 @@ function pts_module_process($process, $object_pass = null)
 {
 	// Run a module process on all registered modules
 	pts_debug_message($process);
-	foreach(pts_attached_modules() as $module)
+	foreach(pts_module_manager::attached_modules() as $module)
 	{
 		pts_module_process_task($module, $process, $object_pass);
 	}
@@ -374,18 +374,6 @@ function pts_module_type($name)
 	}
 
 	return $cache[$name];
-}
-function pts_module_attached($module)
-{
-	return pts_module_manager::is_module_attached($module);
-}
-function pts_attached_modules()
-{
-	return pts_module_manager::attached_modules();
-}
-function pts_module_current()
-{
-	return pts_module_manager::get_current_module();
 }
 function pts_available_modules()
 {
