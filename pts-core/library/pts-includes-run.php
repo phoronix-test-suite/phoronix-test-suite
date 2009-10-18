@@ -432,31 +432,23 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$times_to_run = $force_runs;
 	}
 
-	if($times_to_run < 1 || (strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_")) // Currently tests that output multiple results in one run can only be run once
+	if($times_to_run < 1 || (strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_"))
 	{
+		// Currently tests that output multiple results in one run can only be run once
 		$times_to_run = 1;
 	}
 
-	if(!empty($test_type))
-	{
-		pts_set_assignment_once("TEST_" . strtoupper($test_type), 1);
-	}
-
-	$execute_path_check = pts_trim_explode(",", $execute_path);
-	array_push($execute_path_check, $test_directory);
 	$to_execute = null;
-
-	while(count($execute_path_check) > 0)
+	foreach(array_merge(array($test_directory), pts_trim_explode(",", $execute_path)) as $possible_dir)
 	{
-		$path_check = array_pop($execute_path_check);
-
-		if(is_executable($path_check . $execute_binary))
+		if(is_executable($possible_dir . $execute_binary))
 		{
-			$to_execute = $path_check;
-		}	
+			$to_execute = $possible_dir;
+			break;
+		}
 	}
 
-	if(empty($to_execute))
+	if($to_execute == null)
 	{
 		$display_mode->test_run_error("The test executable for " . $test_identifier . " could not be found. Skipping test.");
 		pts_release_lock($test_fp, $lock_file);
@@ -469,23 +461,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
-	$extra_runtime_variables = pts_run_additional_vars($test_identifier);
-	$extra_runtime_variables["LC_ALL"] = "";
-	$extra_runtime_variables["LC_NUMERIC"] = "en_US.UTF-8";
-	$extra_runtime_variables["LC_CTYPE"] = "";
-	$extra_runtime_variables["LC_MESSAGES"] = "";
-	$extra_runtime_variables["LANG"] = "";
-	$extra_runtime_variables["PTS_TEST_ARGUMENTS"] = "'" . $pts_test_arguments . "'";
-	$extra_runtime_variables["TEST_LIBRARIES_DIR"] = TEST_LIBRARIES_DIR;
-	$extra_runtime_variables["TIMER_START"] = TEST_LIBRARIES_DIR . "timer-start.sh";
-	$extra_runtime_variables["TIMER_STOP"] = TEST_LIBRARIES_DIR . "timer-stop.sh";
-	$extra_runtime_variables["TIMED_KILL"] = TEST_LIBRARIES_DIR . "timed-kill.sh";
-	$extra_runtime_variables["SYSTEM_MONITOR_START"] = TEST_LIBRARIES_DIR . "system-monitoring-start.sh";
-	$extra_runtime_variables["SYSTEM_MONITOR_STOP"] = TEST_LIBRARIES_DIR . "system-monitoring-stop.sh";
-	$extra_runtime_variables["PHP_BIN"] = PHP_BIN;
+	$extra_runtime_variables = pts_extra_run_time_vars($test_identifier, $pts_test_arguments);
 
 	// Start
 	$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
+	$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
 	$pts_test_result->set_attribute("TEST_TITLE", $test_title);
 	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
 	$pts_test_result->set_attribute("TEST_IDENTIFIER", $test_identifier);
@@ -494,7 +474,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	$time_test_start = time();
 
-	if(!($allow_cache_share && is_file($cache_share_pt2so)))
+	if(!$cache_share_present)
 	{
 		echo pts_call_test_script($test_identifier, "pre", "\nRunning Pre-Test Scripts...\n", $test_directory, $extra_runtime_variables);
 	}
@@ -503,7 +483,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$runtime_identifier = pts_unique_runtime_identifier();
 	$execute_binary_prepend = "";
 
-	if($root_required)
+	if(!$cache_share_present && $root_required)
 	{
 		if(pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
 		{
@@ -519,9 +499,8 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$display_mode->test_run_start($pts_test_result);
-	$time_test_start_actual = time();
 
-	for($i = 0, $abort_testing = false, $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
+	for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
 		$display_mode->test_run_instance_header($pts_test_result, ($i + 1), $times_to_run);
 		$benchmark_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
@@ -531,7 +510,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		));
 
 		$restored_from_cache = false;
-		if($allow_cache_share && is_file($cache_share_pt2so))
+		if($cache_share_present)
 		{
 			$cache_share = pts_storage_object::recover_from_file($cache_share_pt2so);
 
@@ -550,10 +529,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			$test_run_command = "cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1";
 
-			if(pts_is_assignment("DEBUG_TEST_PROFILE"))
-			{
-				$display_mode->test_run_error("Test Run Command: " . $test_run_command);
-			}
+			pts_test_profile_debug_message($display_mode, "Test Run Command: " . $test_run_command);
 
 			$test_run_time_start = time();
 			$test_results = pts_exec($test_run_command, $test_extra_runtime_variables);
@@ -617,11 +593,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				$test_results = $run_time;
 			}
 
-			if(pts_is_assignment("DEBUG_TEST_PROFILE"))
-			{
-				$display_mode->test_run_error("Test Result Value: " . $test_results);
-			}
-
+			pts_test_profile_debug_message($display_mode, "Test Result Value: " . $test_results);
 			$validate_result = trim(pts_call_test_script($test_identifier, "validate-result", null, $test_results, $test_extra_runtime_variables_post));
 
 			if(!empty($validate_result) && !pts_string_bool($validate_result))
@@ -683,7 +655,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if($times_to_run > 1 && $i < ($times_to_run - 1))
 		{
-			if(!($allow_cache_share && is_file($cache_share_pt2so)))
+			if(!$cache_share_present)
 			{
 				echo pts_call_test_script($test_identifier, "interim", null, $test_directory, $extra_runtime_variables);
 				sleep(2); // Rest for a moment between tests
@@ -707,11 +679,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				copy($benchmark_log_file, $backup_log_dir . $backup_filename);
 			}
 
-			if(pts_is_assignment("DEBUG_TEST_PROFILE"))
-			{
-				$display_mode->test_run_error("Log File At: " . $benchmark_log_file);
-			}
-			else
+			if(!pts_test_profile_debug_message($display_mode, "Log File At: " . $benchmark_log_file))
 			{
 				unlink($benchmark_log_file);
 			}
@@ -732,7 +700,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		unset($cache_share);
 	}
 
-	if(!($allow_cache_share && is_file($cache_share_pt2so)))
+	if(!$cache_share_present)
 	{
 		echo pts_call_test_script($test_identifier, "post", null, $test_directory, $extra_runtime_variables);
 	}
@@ -812,6 +780,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if($test_type == "Graphics")
 	{
+		// TODO: integrate such reporting capabilities through a Phodevi interface
 		$extra_gfx_settings = array();
 		$aa_level = phodevi::read_property("gpu", "aa-level");
 		$af_level = phodevi::read_property("gpu", "af-level");
@@ -856,7 +825,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	pts_user_message($post_run_message);
 	pts_module_process("__post_test_run", $pts_test_result);
-	$report_elapsed_time = !($allow_cache_share && is_file($cache_share_pt2so)) && $pts_test_result->get_result() != 0;
+	$report_elapsed_time = !$cache_share_present && $pts_test_result->get_result() != 0;
 	pts_test_refresh_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
 
 	if($report_elapsed_time && pts_anonymous_usage_reporting() && $time_test_elapsed >= 60)
@@ -928,6 +897,18 @@ function pts_test_refresh_install_xml($identifier, $this_test_duration = 0)
 	$xml_writer->addXmlObject(P_INSTALL_TEST_LATEST_RUNTIME, 2, $this_test_duration);
 
 	$xml_writer->saveXMLFile(TEST_ENV_DIR . $identifier . "/pts-install.xml");
+}
+function pts_test_profile_debug_message(&$display_mode, $message)
+{
+	$reported = false;
+
+	if(pts_is_assignment("DEBUG_TEST_PROFILE"))
+	{
+		$display_mode->test_run_error($message);
+		$reported = true;
+	}
+
+	return $reported;
 }
 
 ?>

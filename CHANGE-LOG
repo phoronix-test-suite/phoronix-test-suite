@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add debug-run option to provide more run-time information to assist test profile writers in debugging / verifying profiles
 - pts-core: Drop central pts-core debugging code since it was very rarely used and not too helpful
 - pts-core: Add in additional LC_NUMERIC override to eliminate non-US decimal problems with test results
+- pts-core: Various test run code clean-ups
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile
