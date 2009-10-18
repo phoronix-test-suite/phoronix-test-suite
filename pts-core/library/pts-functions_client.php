@@ -99,39 +99,9 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 	pts_set_assignment_next("PREV_COMMAND", $command);
 	pts_clear_assignments();
 }
-function pts_run_option_next($command = false, $pass_args = null, $set_assignments = "")
+function pts_run_option_next($command, $pass_args = null, $set_assignments = "")
 {
-	$options = pts_run_option_static_array();
-
-	if($command == false)
-	{
-		$return = (count($options) == 0 ? false : array_shift($options));
-	}
-	else
-	{
-		array_push($options, new pts_run_option($command, $pass_args, $set_assignments));
-		$return = true;
-	}
-
-	pts_run_option_static_array($options);
-
-	return $return;
-}
-function pts_run_option_static_array($array = "")
-{
-	static $options;
-
-	if(is_array($array))
-	{
-		$options = $array;
-		return null;
-	}
-	else if(!is_array($options))
-	{
-		$options = array();
-	}
-
-	return $options;
+	return pts_run_option_manager::add_run_option($command, $pass_args, $set_assignments);
 }
 function pts_request_new_id()
 {

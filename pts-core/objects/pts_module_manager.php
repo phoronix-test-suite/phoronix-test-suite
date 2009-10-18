@@ -22,9 +22,9 @@
 
 class pts_module_manager
 {
-	static $modules = array();
-	static $var_storage = array();
-	static $current_module = null;
+	private static $modules = array();
+	private static $var_storage = array();
+	private static $current_module = null;
 
 	//
 	// Module Handling

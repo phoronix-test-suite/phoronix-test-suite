@@ -106,7 +106,7 @@ for($i = 2; $i < $argc; $i++)
 pts_user_agreement_check($sent_command);
 pts_run_option_next($sent_command, $pass_args);
 
-while(($current_option = pts_run_option_next(false)) != false)
+while(($current_option = pts_run_option_manager::pull_next_run_option()) != null)
 {
 	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
 }

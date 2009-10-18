@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: When dealing with the stats support for validating test results, don't increase the run count prematurely
 - pts-core: Fend off divide by zero errors in the standard deviation code
 - pts-core: Improve performance of PTS assignment functions
+- pts-core: Don't remove the PTS run_lock when running a secondary instance of PTS
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile
