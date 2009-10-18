@@ -110,6 +110,7 @@ class gui_gtk implements pts_option_interface
 		$window->set_position(Gtk::WIN_POS_CENTER_ALWAYS);
 		$window->connect("drag-data-received", array("gui_gtk", "drag_drop_item"), $window);
 		pts_set_assignment("GTK_OBJ_WINDOW", $window);
+		pts_set_assignment("GTK_GUI_INIT", true);
 		$vbox = new GtkVBox();
 		$vbox->set_spacing(4);
 		$window->add($vbox);
@@ -244,7 +245,6 @@ class gui_gtk implements pts_option_interface
 		$main_notebook->connect("switch-page", array("gui_gtk", "notebook_main_page_select"));
 		$main_notebook->set_size_request(-1, 300);
 		pts_set_assignment("GTK_OBJ_MAIN_NOTEBOOK", $main_notebook);
-		gui_gtk::update_main_notebook();
 
 		// Bottom Line
 		$check_mode_batch = new GtkCheckButton("Batch Mode");
@@ -275,6 +275,9 @@ class gui_gtk implements pts_option_interface
 			gui_gtk::system_tray_monitor();
 			pts_attach_module("gui_gtk_events");
 		}
+
+		pts_set_assignment("GTK_GUI_INIT", false);
+		gui_gtk::update_main_notebook();
 
 		pts_attach_module("notify_send_events");
 
@@ -618,7 +621,7 @@ class gui_gtk implements pts_option_interface
 	{
 		$main_notebook = pts_read_assignment("GTK_OBJ_MAIN_NOTEBOOK");
 
-		if($main_notebook == null)
+		if($main_notebook == null || pts_read_assignment("GTK_GUI_INIT"))
 		{
 			return;
 		}
@@ -1325,31 +1328,22 @@ class gui_gtk implements pts_option_interface
 	public static function check_test_select($object, $type)
 	{
 		$item = $object->child->get_label();
-		//$to_add = $object->get_active();
+		$item_active = $object->get_active();
 
 		$items_to_show = pts_read_assignment(($type == "SUBSYSTEMS" ? "GTK_TEST_TYPES_TO_SHOW" : "GTK_TEST_LICENSES_TO_SHOW"));
 
-		if($items_to_show == null)
+		if($items_to_show == false)
 		{
 			$items_to_show = array();
 		}
 
-		if(!in_array($item, $items_to_show))
+		if($item_active)
 		{
-			array_push($items_to_show, $item);
+			$items_to_show[$item] = $item;
 		}
 		else
 		{
-			$items_to_show_1 = $items_to_show;
-			$items_to_show = array();
-
-			foreach($items_to_show_1 as $show)
-			{
-				if($show != $item)
-				{
-					array_push($items_to_show, $show);
-				}
-			}
+			unset($items_to_show[$item]);
 		}
 
 		pts_set_assignment(($type == "SUBSYSTEMS" ? "GTK_TEST_TYPES_TO_SHOW" : "GTK_TEST_LICENSES_TO_SHOW"), $items_to_show);
