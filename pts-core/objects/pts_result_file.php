@@ -85,6 +85,32 @@ class pts_result_file
 	{
 		return $this->xml_reader->getXMLValue(P_RESULTS_SUITE_TYPE);
 	}
+	public function get_result_object_hashes()
+	{
+		$object_hashes = array();
+
+		if($this->result_objects != null)
+		{
+			foreach($this->result_objects as $result_object)
+			{
+				array_push($object_hashes, $result_object->get_comparison_hash());
+			}
+		}
+		else
+		{
+			$results_name = $this->xml_reader->getXMLArrayValues(P_RESULTS_TEST_TITLE);
+			$results_arguments = $this->xml_reader->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
+			$results_attributes = $this->xml_reader->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+			$results_version = $this->xml_reader->getXMLArrayValues(P_RESULTS_TEST_VERSION);
+
+			for($i = 0; $i < count($results_name); $i++)
+			{
+				array_push($object_hashes, pts_test_comparison_hash($results_name[$i], $results_arguments[$i], $results_attributes[$i], $results_version[$i]));
+			}
+		}
+
+		return $object_hashes;
+	}
 	public function get_result_objects()
 	{
 		if($this->result_objects == null)

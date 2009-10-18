@@ -31,9 +31,9 @@ function pts_result_file_reference_tests($result)
 	$test_result_hashes = array();
 	$reference_tests = array();
 
-	foreach($result_file->get_result_objects() as $result_object)
+	foreach($result_file->get_result_object_hashes() as $object_hash)
 	{
-		array_push($test_result_hashes, $result_object->get_comparison_hash());
+		array_push($test_result_hashes, $object_hash);
 	}
 
 	if(!isset($ref_systems_xml_strings[$result_test]))
@@ -81,9 +81,9 @@ function pts_result_file_reference_tests($result)
 			{
 				$hash_failed = false;
 
-				foreach($global_result_file->get_result_objects() as $result_object)
+				foreach($global_result_file->get_result_object_hashes() as $object_hash)
 				{
-					array_push($global_result_hashes, $result_object->get_comparison_hash());
+					array_push($global_result_hashes, $object_hash);
 				}
 				foreach($test_result_hashes as $hash)
 				{

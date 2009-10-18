@@ -41,7 +41,7 @@ function pts_clear_assignment($assignment)
 {
 	pts_assignment_manager::clear($assignment);
 }
-function pts_set_assignment_next($assignment, &$value)
+function pts_set_assignment_next($assignment, $value)
 {
 	pts_run_option_manager::add_assignment_to_next_run_option($assignment, $value);
 }
