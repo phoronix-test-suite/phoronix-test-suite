@@ -23,27 +23,23 @@
 
 function pts_set_assignment_once($assignment, $value)
 {
-	return pts_assignment::set_once($assignment, $value);
+	return pts_assignment_manager::set_once($assignment, $value);
 }
 function pts_set_assignment($assignment, $value)
 {
-	return pts_assignment::set($assignment, $value);
+	return pts_assignment_manager::set($assignment, $value);
 }
 function pts_read_assignment($assignment)
 {
-	return pts_assignment::read($assignment);
+	return pts_assignment_manager::read($assignment);
 }
 function pts_is_assignment($assignment)
 {
-	return pts_assignment::is_set($assignment);
-}
-function pts_clear_assignments()
-{
-	pts_assignment::clear_all();
+	return pts_assignment_manager::is_set($assignment);
 }
 function pts_clear_assignment($assignment)
 {
-	pts_assignment::clear($assignment);
+	pts_assignment_manager::clear($assignment);
 }
 function pts_set_assignment_next($assignment, $value)
 {

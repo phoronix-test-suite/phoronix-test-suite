@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_assignment
+class pts_assignment_manager
 {
 	static $assignments = array();
 

@@ -69,7 +69,7 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 		}
 	}
 
-	pts_clear_assignments();
+	pts_assignment_manager::clear_all();
 	$time = time();
 	pts_set_assignment("START_TIME", $time);
 	pts_set_assignment("THIS_OPTION_IDENTIFIER", $time); // For now THIS_OPTION_IDENTIFIER is also time
@@ -97,7 +97,7 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 
 	pts_module_process("__post_option_process", $command);
 	pts_set_assignment_next("PREV_COMMAND", $command);
-	pts_clear_assignments();
+	pts_assignment_manager::clear_all();
 }
 function pts_run_option_next($command, $pass_args = null, $set_assignments = "")
 {
