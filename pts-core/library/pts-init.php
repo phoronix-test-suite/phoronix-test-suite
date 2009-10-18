@@ -35,28 +35,14 @@ function pts_client_init()
 function pts_basic_init()
 {
 	// Initialize The Phoronix Test Suite
+	if(QUICK_START)
+	{
+		return;
+	}
 
 	// PTS Defines
 	define("PHP_BIN", getenv("PHP_BIN"));
 	define("PTS_INIT_TIME", time());
-
-	// Run in debug mode?
-	if(($debug_file = getenv("DEBUG_FILE")) != false || getenv("DEBUG") == "1" || getenv("PTS_DEBUG") == "1")
-	{
-		define("PTS_DEBUG_MODE", 1);
-		define("IS_DEBUG_MODE", true);
-
-		if($debug_file != false)
-		{
-			define("PTS_DEBUG_FILE", $debug_file);
-		}
-
-		error_reporting(E_ALL | E_NOTICE); // Set error reporting to all and strict
-	}
-	else
-	{
-		define("IS_DEBUG_MODE", false);
-	}
 
 	$dir_init = array(PTS_USER_DIR);
 	foreach($dir_init as $dir)

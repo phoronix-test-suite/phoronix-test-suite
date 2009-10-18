@@ -38,7 +38,7 @@ class test_module implements pts_option_interface
 
 		foreach(pts_module_processes() as $process)
 		{
-			if(IS_DEBUG_MODE || pts_is_assignment("DEBUG_MODULE"))
+			if(pts_is_assignment("DEBUG_MODULE"))
 			{
 				echo "Calling: " . $process . "()\n";
 			}

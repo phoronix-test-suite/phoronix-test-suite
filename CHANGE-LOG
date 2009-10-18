@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Improve performance of PTS assignment functions
 - pts-core: Don't remove the PTS run_lock when running a secondary instance of PTS
 - pts-core: Add debug-run option to provide more run-time information to assist test profile writers in debugging / verifying profiles
+- pts-core: Drop central pts-core debugging code since it was very rarely used and not too helpful
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile

@@ -61,11 +61,6 @@ function pts_auto_detect_modules()
 
 			if(!pts_module_manager::is_module_attached($module) && ($e = getenv($env_var)) != false && !empty($e))
 			{
-				if(IS_DEBUG_MODE)
-				{
-					echo "Attempting To Add Module: " . $module . "\n";
-				}
-
 				pts_attach_module($module);
 			}
 		}
@@ -293,7 +288,6 @@ function pts_php_module_call($module, $process, $object_pass = null)
 function pts_module_process($process, $object_pass = null)
 {
 	// Run a module process on all registered modules
-	pts_debug_message($process);
 	foreach(pts_module_manager::attached_modules() as $module)
 	{
 		pts_module_process_task($module, $process, $object_pass);

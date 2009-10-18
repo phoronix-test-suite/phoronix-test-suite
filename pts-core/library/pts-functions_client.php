@@ -180,16 +180,6 @@ function pts_shutdown()
 	{
 		phodevi::remove_smart_cache(PTS_USER_DIR);
 	}
-
-	if(IS_DEBUG_MODE && defined("PTS_DEBUG_FILE"))
-	{
-		pts_mkdir(PTS_USER_DIR . "debug-messages/");
-
-		if(file_put_contents(PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE, pts_debug_message()))
-		{
-			echo "\nDebug Message Saved To: " . PTS_USER_DIR . "debug-messages/" . PTS_DEBUG_FILE . "\n";
-		}
-	}
 }
 function pts_evaluate_script_type($script)
 {
@@ -244,33 +234,6 @@ function pts_proximity_match($search, $match_to)
 	}
 
 	return $is_match;
-}
-function pts_debug_message($message = null)
-{
-	static $debug_messages = "";
-
-	if(defined("PTS_END_TIME") && $message == null)
-	{
-		return $debug_messages;
-	}
-	// Writes a PTS debug message
-	if(IS_DEBUG_MODE && !empty($message))
-	{
-		if(strpos($message, "$") > 0)
-		{
-			foreach(pts_env_variables() as $key => $value)
-			{
-				$message = str_replace("$" . $key, $value, $message);
-			}
-		}
-
-		echo "DEBUG: " . ($output = $message . "\n");
-
-		if(defined("PTS_DEBUG_FILE"))
-		{
-			$debug_messages .= $output;
-		}
-	}
 }
 function pts_check_option_for_function($option, $check_function)
 {

@@ -24,11 +24,6 @@
 setlocale(LC_NUMERIC, "C");
 define("PTS_PATH", dirname(dirname(__FILE__)) . "/");
 
-if(version_compare(PHP_VERSION, "5.2.99") === 1 && ini_get("date.timezone") == null)
-{
-	date_default_timezone_set("UTC");
-}
-
 // PTS_MODE types
 // CLIENT = Standard Phoronix Test Suite Client
 // LIB = Only load select PTS files
@@ -43,9 +38,16 @@ if(PTS_MODE != "CLIENT")
 	return;
 }
 
-pts_client_init(); // Initalize the Phoronix Test Suite (pts-core) client
+if(version_compare(PHP_VERSION, "5.2.99") === 1 && ini_get("date.timezone") == null)
+{
+	date_default_timezone_set("UTC");
+}
 
 $sent_command = strtolower(str_replace("-", "_", (isset($argv[1]) ? $argv[1] : null)));
+$quick_start_options = array("dump_possible_options");
+define("QUICK_START", in_array($sent_command, $quick_start_options));
+
+pts_client_init(); // Initalize the Phoronix Test Suite (pts-core) client
 
 if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 {

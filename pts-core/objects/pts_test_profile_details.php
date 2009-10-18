@@ -219,7 +219,7 @@ class pts_test_profile_details
 	{
 		$str = "";
 
-		if(IS_DEBUG_MODE)
+		if(getenv("PTS_DEBUG"))
 		{
 			$str = sprintf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $this->identifier, $this->test_version, $this->version, $this->status, $this->license, $this->test_download_size, $this->test_environment_size, $this->test_maintainer);
 		}

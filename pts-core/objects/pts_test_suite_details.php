@@ -110,7 +110,7 @@ class pts_test_suite_details
 	{
 		$str = "";
 
-		if(IS_DEBUG_MODE)
+		if(getenv("PTS_DEBUG"))
 		{
 			$str = sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $this->identifier_show_prefix . " " . $this->identifier, $this->name, $this->version, $this->type);
 		}
