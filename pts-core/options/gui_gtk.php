@@ -88,7 +88,7 @@ class gui_gtk implements pts_option_interface
 			return;
 		}
 
-		$progress_window = new pts_gtk_progress_window("Phoronix Test Suite v" . PTS_VERSION);
+		$progress_window = new pts_gtk_simple_progress_window();
 
 		$tasks_completed = 0;
 		foreach($startup_tasks as $function => $task)
@@ -301,14 +301,13 @@ class gui_gtk implements pts_option_interface
 		// Setup System Tray
 		if(class_exists("GtkStatusIcon"))
 		{
-			// TOOD: re-enable and get working properly
 			gui_gtk::system_tray_monitor();
-			pts_attach_module("gui_gtk_events");
 		}
 
 		pts_set_assignment("GTK_GUI_INIT", false);
 		gui_gtk::update_main_notebook();
 
+		pts_attach_module("gui_gtk_events");
 		pts_attach_module("notify_send_events");
 
 		$window->show_all();

@@ -24,9 +24,11 @@
 class gui_gtk_events extends pts_module_interface
 {
 	const module_name = "GUI GTK Events";
-	const module_version = "1.0.0";
+	const module_version = "2.0.0";
 	const module_description = "This module is used in conjunction with the Phoronix Test Suite GTK2 GUI interface. This module is automatically loaded when needed.";
 	const module_author = "Phoronix Media";
+
+	static $progress_window;
 
 	public static function __startup()
 	{
@@ -41,17 +43,9 @@ class gui_gtk_events extends pts_module_interface
 	// Installation Functions
 	//
 
-	public static function __pre_install_process()
-	{
-		gui_gtk::system_tray_monitor(null, true);
-	}
 	public static function __pre_test_install($identifier)
 	{
-		gui_gtk::system_tray_monitor("Now installing: " . $identifier);
-	}
-	public static function __post_install_process()
-	{
-		gui_gtk::system_tray_monitor("Phoronix Test Suite v" . PTS_VERSION, false);
+		self::notify_send_message("Installing " . $identifier);
 	}
 
 	//
@@ -60,19 +54,19 @@ class gui_gtk_events extends pts_module_interface
 
 	public static function __pre_run_process()
 	{
-		gui_gtk::system_tray_monitor(null, true);
+		self::$progress_window = new pts_gtk_simple_progress_window("Phoronix Test Suite v" . PTS_VERSION);
 	}
 	public static function __pre_test_run($pts_test_result)
 	{
-		gui_gtk::system_tray_monitor("Running " . $pts_test_result->get_attribute("TEST_TITLE") . " (Run 1 of " . $pts_test_result->get_attribute("TIMES_TO_RUN") . ")");
+		self::$progress_window->update_progress_bar((0 / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Running " . $pts_test_result->get_attribute("TEST_TITLE"));
 	}
 	public static function __interim_test_run($pts_test_result)
 	{
-		gui_gtk::system_tray_monitor("Running " . $pts_test_result->get_attribute("TEST_TITLE") . " (Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN") . ")");
+		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Running " . $pts_test_result->get_attribute("TEST_TITLE"));
 	}
 	public static function __post_run_process()
 	{
-		gui_gtk::system_tray_monitor("Phoronix Test Suite v" . PTS_VERSION, false);
+		self::$progress_window->completed();
 	}
 }
 

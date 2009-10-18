@@ -20,14 +20,14 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_gtk_progress_window extends GtkDialog
+class pts_gtk_simple_progress_window extends GtkDialog
 {
 	var $gtk_progress_bar;
 	var $loading_label;
 
-	public function __construct($title)
+	public function __construct($title = null)
 	{
-		parent::__construct($title, null, Gtk::DIALOG_MODAL);
+		parent::__construct(($title == null ? "Phoronix Test Suite v" . PTS_VERSION : $title), null, Gtk::DIALOG_MODAL);
 		$this->set_size_request(360, 270);
 
 		$logo = GtkImage::new_from_file(STATIC_DIR . "pts-308x160-t.png");
