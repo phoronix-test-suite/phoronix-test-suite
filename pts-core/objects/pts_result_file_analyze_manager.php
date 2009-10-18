@@ -22,8 +22,8 @@
 
 class pts_result_file_analyze_manager
 {
-	var $test_results;
-	var $relations;
+	private $test_results;
+	private $relations;
 
 	public function __construct()
 	{

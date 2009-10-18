@@ -22,17 +22,17 @@
 
 class pts_test_suite_details
 {
-	var $identifier;
-	var $identifier_show_prefix;
-	var $name;
-	var $maintainer;
-	var $description;
-	var $version;
-	var $type;
-	var $test_type;
-	var $unique_tests;
-	var $only_partially_supported = false;
-	var $not_supported = false;
+	private $identifier;
+	private $identifier_show_prefix;
+	private $name;
+	private $maintainer;
+	private $description;
+	private $version;
+	private $type;
+	private $test_type;
+	private $unique_tests;
+	private $only_partially_supported = false;
+	private $not_supported = false;
 
 	public function __construct($identifier)
 	{

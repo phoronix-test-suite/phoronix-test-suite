@@ -27,8 +27,8 @@ define("PHODEVI_SMART_CACHE", 2); // Smart caching
 
 class phodevi
 {
-	static $device_cache = null;
-	static $smart_cache = null;
+	private static $device_cache = null;
+	private static $smart_cache = null;
 
 	public static function read_name($device)
 	{

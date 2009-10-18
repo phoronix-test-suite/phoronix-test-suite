@@ -22,18 +22,18 @@
 
 class pts_result_file_merge_test
 {
-	var $name;
-	var $version;
-	var $attributes;
-	var $scale;
-	var $test_name;
-	var $arguments;
-	var $proportion;
-	var $format;
+	private $name;
+	private $version;
+	private $attributes;
+	private $scale;
+	private $test_name;
+	private $arguments;
+	private $proportion;
+	private $format;
 
-	var $identifiers;
-	var $values;
-	var $raw_values;
+	private $identifiers;
+	private $values;
+	private $raw_values;
 
 	public function __construct($name, $version, $attributes, $scale, $test_name, $arguments, $proportion, $format, $result_identifiers, $result_values, $result_raw_values)
 	{

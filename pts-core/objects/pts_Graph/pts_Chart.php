@@ -23,12 +23,12 @@
 
 class pts_Chart
 {
-	var $renderer;
+	protected $renderer;
 
-	var $left_headers_title;
-	var $top_headers;
-	var $left_headers;
-	var $data;
+	protected $left_headers_title;
+	protected $top_headers;
+	protected $left_headers;
+	protected $data;
 
 	public function __construct()
 	{

@@ -22,7 +22,7 @@
 
 class pts_result_file_merge_manager
 {
-	var $test_results;
+	private $test_results;
 
 	public function __construct()
 	{

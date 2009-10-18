@@ -22,10 +22,10 @@
 
 class pts_test_file_download
 {
-	var $url;
-	var $filename;
-	var $filesize;
-	var $md5;
+	private $url;
+	private $filename;
+	private $filesize;
+	private $md5;
 
 	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null)
 	{

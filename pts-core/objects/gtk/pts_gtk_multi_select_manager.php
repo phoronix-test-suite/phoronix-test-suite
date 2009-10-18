@@ -22,7 +22,7 @@
 
 class pts_gtk_multi_select_manager
 {
-	static $selects = array();
+	private static $selects = array();
 
 	public static function set_check_select($select, $name)
 	{

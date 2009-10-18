@@ -24,10 +24,10 @@
 abstract class bilde_renderer
 {
 	var $renderer = "bilde_renderer";
-	var $image;
-	var $image_width = -1;
-	var $image_height = -1;
-	var $embed_identifiers = null;
+	protected $image;
+	protected $image_width = -1;
+	protected $image_height = -1;
+	protected $embed_identifiers = null;
 
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
 	abstract static function renderer_supported();

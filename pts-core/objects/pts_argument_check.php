@@ -22,10 +22,10 @@
 
 class pts_argument_check
 {
-	var $argument_index;
-	var $function_check;
-	var $function_return_key;
-	var $error_string;
+	private $argument_index;
+	private $function_check;
+	private $function_return_key;
+	private $error_string;
 
 	public function __construct($index, $function, $return_key, $error_string)
 	{

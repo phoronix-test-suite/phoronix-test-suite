@@ -22,22 +22,22 @@
 
 class pts_test_profile_details
 {
-	var $identifier;
-	var $name;
-	var $maintainer;
-	var $project_url;
-	var $description;
-	var $version;
-	var $profile_version;
-	var $license;
-	var $status;
-	var $test_version;
-	var $hardware_type;
-	var $software_type;
-	var $test_download_size;
-	var $test_environment_size;
-	var $test_maintainer;
-	var $dependencies;
+	private $identifier;
+	private $name;
+	private $maintainer;
+	private $project_url;
+	private $description;
+	private $version;
+	private $profile_version;
+	private $license;
+	private $status;
+	private $test_version;
+	private $hardware_type;
+	private $software_type;
+	private $test_download_size;
+	private $test_environment_size;
+	private $test_maintainer;
+	private $dependencies;
 
 	public function __construct($identifier)
 	{

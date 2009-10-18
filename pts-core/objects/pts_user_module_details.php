@@ -22,13 +22,13 @@
 
 class pts_user_module_details
 {
-	var $identifier;
-	var $name;
-	var $module;
-	var $version;
-	var $author;
-	var $description;
-	var $information;
+	private $identifier;
+	private $name;
+	private $module;
+	private $version;
+	private $author;
+	private $description;
+	private $information;
 
 	public function __construct($module)
 	{

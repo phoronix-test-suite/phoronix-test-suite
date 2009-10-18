@@ -23,8 +23,8 @@
 
 class pts_concise_display_mode implements pts_display_mode_interface
 {
-	var $run_process_tests_remaining_to_run;
-	var $run_process_test_count;
+	private $run_process_tests_remaining_to_run;
+	private $run_process_test_count;
 
 	public function __construct()
 	{

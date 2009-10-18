@@ -22,12 +22,12 @@
 
 class pts_sensor
 {
-	var $hw_type;
-	var $hw_type_string;
-	var $sensor_type;
-	var $read_function;
-	var $sensor_unit;
-	var $sensor_string;
+	private $hw_type;
+	private $hw_type_string;
+	private $sensor_type;
+	private $read_function;
+	private $sensor_unit;
+	private $sensor_string;
 
 	public function __construct($sensor_type, $hw_type, $read_function, $sensor_unit, $alternate_hw_type = null)
 	{

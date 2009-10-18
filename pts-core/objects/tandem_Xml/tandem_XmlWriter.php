@@ -27,13 +27,13 @@
 
 class tandem_XmlWriter
 {
-	var $xml_objects = array();
-	var $xml_string_paths = array();
-	var $xml_statements = array();
+	protected $xml_objects = array();
+	protected $xml_string_paths = array();
+	protected $xml_statements = array();
 
-	var $xml_checksum = false;
-	var $format_xml = true;
-	var $xsl_binding = null;
+	protected $xml_checksum = false;
+	protected $format_xml = true;
+	protected $xsl_binding = null;
 
 	function __construct($nice_formatting = true)
 	{

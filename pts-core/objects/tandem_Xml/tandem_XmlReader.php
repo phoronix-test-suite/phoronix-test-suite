@@ -25,17 +25,17 @@
 
 class tandem_XmlReader
 {
-	var $xml_data = ""; // XML contents
-	var $xml_file_time = null; // File modification time
-	var $xml_file_name = null; // File name
+	protected $xml_data = ""; // XML contents
+	protected $xml_file_time = null; // File modification time
+	protected $xml_file_name = null; // File name
 
-	var $xml_cache_file = false; // Cache the entire XML file being parsed?
-	var $xml_cache_tags = true; // Cache the tags that are being called?
+	protected $xml_cache_file = false; // Cache the entire XML file being parsed?
+	protected $xml_cache_tags = true; // Cache the tags that are being called?
 
-	var $tag_fallback_value = null; // Fallback value if tag is not present
+	protected $tag_fallback_value = null; // Fallback value if tag is not present
 
-	static $tag_cache = null; // The cache for the tag cache
-	static $file_cache = null; // The cache for the file cache
+	protected static $tag_cache = null; // The cache for the tag cache
+	protected static $file_cache = null; // The cache for the file cache
 
 	function __construct($read_xml, $cache_support = true)
 	{

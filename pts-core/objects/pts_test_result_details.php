@@ -22,12 +22,12 @@
 
 class pts_test_result_details
 {
-	var $saved_results_file;
-	var $saved_identifier;
-	var $title;
-	var $suite;
-	var $unique_tests_r;
-	var $identifiers_r;
+	private $saved_results_file;
+	private $saved_identifier;
+	private $title;
+	private $suite;
+	private $unique_tests_r;
+	private $identifiers_r;
 
 	public function __construct($saved_results_file, $identifier = null)
 	{

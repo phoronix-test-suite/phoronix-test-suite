@@ -22,9 +22,9 @@
 
 class pts_run_option
 {
-	var $command;
-	var $arguments;
-	var $preset_assignments;
+	private $command;
+	private $arguments;
+	private $preset_assignments;
 
 	public function __construct($command, $pass_args = null, $set_assignments = "")
 	{

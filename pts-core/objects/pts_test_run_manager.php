@@ -22,9 +22,9 @@
 
 class pts_test_run_manager
 {
-	var $tests_to_run;
-	var $file_name;
-	var $results_identifier;
+	private $tests_to_run;
+	private $file_name;
+	private $results_identifier;
 
 	public function __construct()
 	{

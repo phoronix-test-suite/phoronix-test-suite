@@ -22,7 +22,7 @@
 
 class pts_assignment_manager
 {
-	static $assignments = array();
+	private static $assignments = array();
 
 	public static function set($assignment, &$value)
 	{

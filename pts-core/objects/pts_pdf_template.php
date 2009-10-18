@@ -22,8 +22,8 @@
 
 class pts_pdf_template extends FPDF
 {
-	var $pts_title = "";
-	var $pts_sub_title = "";
+	private $pts_title = "";
+	private $pts_sub_title = "";
 
 	function __construct($Title = "", $SubTitle = "")
 	{

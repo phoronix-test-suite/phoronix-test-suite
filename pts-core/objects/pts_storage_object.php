@@ -23,12 +23,12 @@
 
 class pts_storage_object
 {
-	var $object_cache;
-	var $object_cs;
-	var $creation_time;
-	var $span_reboots;
-	var $span_versions;
-	var $pts_version;
+	private $object_cache;
+	private $object_cs;
+	private $creation_time;
+	private $span_reboots;
+	private $span_versions;
+	private $pts_version;
 
 	public function __construct($span_reboots = true, $span_versions = true)
 	{

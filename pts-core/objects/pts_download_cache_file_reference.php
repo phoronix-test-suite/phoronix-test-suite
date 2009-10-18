@@ -22,9 +22,9 @@
 
 class pts_download_cache_file_reference
 {
-	var $cache_directory;
-	var $filename;
-	var $md5;
+	private $cache_directory;
+	private $filename;
+	private $md5;
 
 	public function __construct($cache_directory, $filename, $md5)
 	{

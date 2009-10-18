@@ -22,11 +22,11 @@
 
 class pts_ps_template 
 {
-	var $pts_title = "";
-	var $pts_sub_title = "";
-	var $ps_id = "";
-	var $pages = 0;
-	var $pageNo = 0;
+	private $pts_title = "";
+	private $pts_sub_title = "";
+	private $ps_id = "";
+	private $pages = 0;
+	private $pageNo = 0;
 	/**
 		Default Constructor for Postscript Template Object
 		@param $Title The title of the Postscript Document

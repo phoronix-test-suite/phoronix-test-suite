@@ -22,10 +22,10 @@
 
 class pts_weighted_test_run_manager extends pts_test_run_manager
 {
-	var $weight_suite_identifier;
-	var $weight_test_profile;
-	var $weight_initial_value;
-	var $weight_final_expression;
+	private $weight_suite_identifier;
+	private $weight_test_profile;
+	private $weight_initial_value;
+	private $weight_final_expression;
 
 	public function set_weight_suite_identifier($suite_identifier)
 	{

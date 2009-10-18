@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,12 +22,12 @@
 
 class pts_test_usage_details
 {
-	var $identifier;
-	var $install_time;
-	var $last_run_time;
-	var $installed_version;
-	var $average_run_time;
-	var $times_run;
+	private $identifier;
+	private $install_time;
+	private $last_run_time;
+	private $installed_version;
+	private $average_run_time;
+	private $times_run;
 
 	public function __construct($identifier)
 	{

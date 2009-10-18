@@ -22,10 +22,10 @@
 
 class pts_test_run_request
 {
-	var $test_identifier;
-	var $test_arguments;
-	var $test_arguments_description;
-	var $override_options;
+	private $test_identifier;
+	private $test_arguments;
+	private $test_arguments_description;
+	private $override_options;
 
 	public function __construct($test_identifier, $test_arguments = "", $test_arguments_description, $override_test_options = null)
 	{

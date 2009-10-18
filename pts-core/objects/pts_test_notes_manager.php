@@ -22,7 +22,7 @@
 
 class pts_test_notes_manager
 {
-	static $notes = array();
+	private static $notes = array();
 
 	public static function add_note($note)
 	{

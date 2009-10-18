@@ -26,7 +26,7 @@
 
 class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 {
-	var $override_values;
+	protected $override_values;
 
 	public function __construct($new_values = null)
 	{

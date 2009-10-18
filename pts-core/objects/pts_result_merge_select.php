@@ -22,9 +22,9 @@
 
 class pts_result_merge_select
 {
-	var $result_file;
-	var $selected_identifiers;
-	var $rename_identifier;
+	private $result_file;
+	private $selected_identifiers;
+	private $rename_identifier;
 
 	public function __construct($result_file, $selected_identifiers = null)
 	{

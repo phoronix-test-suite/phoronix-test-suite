@@ -24,68 +24,68 @@
 abstract class pts_Graph
 {
 	// Defaults
-	var $graph_attr_marks = 6; // Number of marks to make on vertical axis
-	var $graph_attr_width = 580; // Graph width
-	var $graph_attr_height = 300; // Graph height
-	var $graph_attr_big_border = false; // Border around graph or not
+	protected $graph_attr_marks = 6; // Number of marks to make on vertical axis
+	protected $graph_attr_width = 580; // Graph width
+	protected $graph_attr_height = 300; // Graph height
+	protected $graph_attr_big_border = false; // Border around graph or not
 
-	var $graph_left_start = 10; // Distance in px to start graph from left side
-	var $graph_left_end_opp = 10; // Distance in px to end graph from right side
-	var $graph_top_start = 62; // Distance in px to start graph from top side
-	var $graph_top_end_opp = 22; // Distance in px to end graph from bottom side
+	protected $graph_left_start = 10; // Distance in px to start graph from left side
+	protected $graph_left_end_opp = 10; // Distance in px to end graph from right side
+	protected $graph_top_start = 62; // Distance in px to start graph from top side
+	protected $graph_top_end_opp = 22; // Distance in px to end graph from bottom side
 
 	// Colors
-	var $graph_color_notches = "#000000"; // Color for notches
-	var $graph_color_text = "#000000"; // Color for text
-	var $graph_color_border = "#000000"; // Color for border (if used)
-	var $graph_color_main_headers = "#2b6b29"; // Color of main text headers
-	var $graph_color_headers = "#2b6b29"; // Color of other headers
-	var $graph_color_background = "#FFFFFF"; // Color of background
-	var $graph_color_body = "#8b8f7c"; // Color of graph body
-	var $graph_color_body_text = "#FFFFFF"; // Color of graph body text
-	var $graph_color_body_light = "#B0B59E"; // Color of the border around graph bars (if doing a bar graph)
+	protected $graph_color_notches = "#000000"; // Color for notches
+	protected $graph_color_text = "#000000"; // Color for text
+	protected $graph_color_border = "#000000"; // Color for border (if used)
+	protected $graph_color_main_headers = "#2b6b29"; // Color of main text headers
+	protected $graph_color_headers = "#2b6b29"; // Color of other headers
+	protected $graph_color_background = "#FFFFFF"; // Color of background
+	protected $graph_color_body = "#8b8f7c"; // Color of graph body
+	protected $graph_color_body_text = "#FFFFFF"; // Color of graph body text
+	protected $graph_color_body_light = "#B0B59E"; // Color of the border around graph bars (if doing a bar graph)
 
-	var $graph_color_paint = array("#3B433A", "#BB2413", "#FF9933", "#006C00", "#5028CA", "#B30000", 
+	protected $graph_color_paint = array("#3B433A", "#BB2413", "#FF9933", "#006C00", "#5028CA", "#B30000", 
 	"#A8BC00", "#00F6FF", "#8A00AC", "#790066", "#797766", "#5598b1"); // Colors to use for the bars / lines, one color for each key
 
 	// Text
-	var $graph_font = "Sans.ttf"; // TTF file name
-	var $graph_font_size_tick_mark = 10; // Tick mark size
-	var $graph_font_size_key = 9; // Size of height for keys
-	var $graph_font_size_heading = 18; // Font size of headings
-	var $graph_font_size_bars = 12; // Font size for text on the bars/objects
-	var $graph_font_size_identifiers = 11; // Font size of identifiers
-	var $graph_font_size_sub_heading = 12; // Font size of headers
-	var $graph_font_size_axis_heading = 11; // Font size of axis headers
-	var $graph_watermark_text = "PHORONIX-TEST-SUITE.COM"; // Text for watermark in upper right hand corner. If null, no watermark will display
-	var $graph_version = "";
-	var $graph_proportion = "";
+	protected $graph_font = "Sans.ttf"; // TTF file name
+	protected $graph_font_size_tick_mark = 10; // Tick mark size
+	protected $graph_font_size_key = 9; // Size of height for keys
+	protected $graph_font_size_heading = 18; // Font size of headings
+	protected $graph_font_size_bars = 12; // Font size for text on the bars/objects
+	protected $graph_font_size_identifiers = 11; // Font size of identifiers
+	protected $graph_font_size_sub_heading = 12; // Font size of headers
+	protected $graph_font_size_axis_heading = 11; // Font size of axis headers
+	protected $graph_watermark_text = "PHORONIX-TEST-SUITE.COM"; // Text for watermark in upper right hand corner. If null, no watermark will display
+	protected $graph_version = "";
+	protected $graph_proportion = "";
 
 	// Not user-friendly changes below this line
-	var $graph_body_image = false;
-	var $graph_hide_identifiers = false;
-	var $graph_show_key = false;
-	var $graph_background_lines = false;
-	var $graph_type = "GRAPH";
-	var $graph_value_type = "NUMERICAL";
-	var $graph_image;
-	var $graph_maximum_value;
+	protected $graph_body_image = false;
+	protected $graph_hide_identifiers = false;
+	protected $graph_show_key = false;
+	protected $graph_background_lines = false;
+	protected $graph_type = "GRAPH";
+	protected $graph_value_type = "NUMERICAL";
+	protected $graph_image;
+	protected $graph_maximum_value;
 
-	var $graph_output = null;
-	var $graph_renderer = "PNG";
-	var $graph_data = array();
-	var $graph_data_raw = array();
-	var $graph_data_title = array();
-	var $graph_sub_titles = array();
-	var $graph_color_paint_index = -1;
-	var $graph_identifiers;
-	var $graph_title;
-	var $graph_y_title;
-	var $graph_y_title_hide = false;
-	var $graph_top_end;
-	var $graph_left_end;
+	protected $graph_output = null;
+	protected $graph_renderer = "PNG";
+	protected $graph_data = array();
+	protected $graph_data_raw = array();
+	protected $graph_data_title = array();
+	protected $graph_sub_titles = array();
+	protected $graph_color_paint_index = -1;
+	protected $graph_identifiers;
+	protected $graph_title;
+	protected $graph_y_title;
+	protected $graph_y_title_hide = false;
+	protected $graph_top_end;
+	protected $graph_left_end;
 
-	var $graph_internal_identifiers = array();
+	protected $graph_internal_identifiers = array();
 
 	// Internal Switches
 	// var $graph_format_heading = "NORMAL";

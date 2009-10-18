@@ -22,7 +22,7 @@
 
 class pts_weighted_test_run_request extends pts_test_run_request
 {
-	var $weight_expression;
+	private $weight_expression;
 
 	public function set_weight_expression($weight)
 	{

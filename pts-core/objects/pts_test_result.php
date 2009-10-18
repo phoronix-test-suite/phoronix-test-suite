@@ -22,13 +22,13 @@
 
 class pts_test_result
 {
-	var $result;
-	var $result_scale;
-	var $result_format;
-	var $result_proportion;
-	var $result_quantifier;
-	var $trial_results;
-	var $attributes;
+	private $result;
+	private $result_scale;
+	private $result_format;
+	private $result_proportion;
+	private $result_quantifier;
+	private $trial_results;
+	private $attributes;
 
 	public function __construct($result = 0, $result_scale = "", $result_format = "")
 	{

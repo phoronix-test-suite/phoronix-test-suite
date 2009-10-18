@@ -23,8 +23,8 @@
 
 class pts_BarGraph extends pts_CustomGraph
 {
-	var $identifier_width = -1;
-	var $minimum_identifier_font = 6;
+	protected $identifier_width = -1;
+	protected $minimum_identifier_font = 6;
 
 	public function __construct($title, $sub_title, $y_axis_title)
 	{

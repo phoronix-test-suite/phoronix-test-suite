@@ -22,8 +22,8 @@
 
 class pts_result_file
 {
-	var $result_objects = null;
-	var $xml_reader = null;
+	private $result_objects = null;
+	private $xml_reader = null;
 
 	public function __construct($result_file)
 	{

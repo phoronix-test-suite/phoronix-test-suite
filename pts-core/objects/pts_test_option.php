@@ -23,12 +23,12 @@
 
 class pts_test_option
 {
-	var $identifier = "";
-	var $option_name = "";
-	var $prefix = "";
-	var $postfix = "";
-	var $default_entry = -1;
-	var $options = array();
+	private $identifier = "";
+	private $option_name = "";
+	private $prefix = "";
+	private $postfix = "";
+	private $default_entry = -1;
+	private $options = array();
 
 	public function __construct($identifier, $option)
 	{

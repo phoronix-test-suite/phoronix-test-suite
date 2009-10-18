@@ -23,11 +23,11 @@
 
 class pts_module_option
 {
-	var $option_identifier;
-	var $option_question;
-	var $option_supported_values;
-	var $option_default_value;
-	var $option_function_check;
+	private $option_identifier;
+	private $option_question;
+	private $option_supported_values;
+	private $option_default_value;
+	private $option_function_check;
 
 	public function __construct($identifier, $question_string, $supported_values = null, $default_value = null, $function_to_check = null)
 	{
