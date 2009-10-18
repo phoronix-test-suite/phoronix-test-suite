@@ -669,6 +669,10 @@ class gui_gtk implements pts_option_interface
 		$r_i = pts_saved_test_results_identifiers();
 		$test_results = pts_gtk_table(array(count($r_i) . " Test Results"), $r_i, array("gui_gtk", "update_details_frame_from_select"), "No test results have been saved.");
 		pts_gtk_add_notebook_tab($main_notebook, $test_results, "Test Results");
+
+		//$main_notebook->set_current_page(1);
+
+		gui_gtk::redraw_main_window();
 	}
 	public static function radio_test_suite_select($object)
 	{
@@ -678,7 +682,6 @@ class gui_gtk implements pts_option_interface
 			pts_set_assignment("GTK_TEST_OR_SUITE", ($item == "Tests" ? "TEST" : "SUITE"));
 
 			gui_gtk::update_main_notebook();
-			gui_gtk::redraw_main_window();
 		}
 	}
 	public static function radio_test_dependencies_select($object)
@@ -703,7 +706,6 @@ class gui_gtk implements pts_option_interface
 			pts_set_assignment("GTK_DEPENDENCY_LIMIT", $dependency_limit);
 
 			gui_gtk::update_main_notebook();
-			gui_gtk::redraw_main_window();
 		}
 	}
 	public static function radio_test_downloads_select($object)
@@ -728,7 +730,6 @@ class gui_gtk implements pts_option_interface
 			pts_set_assignment("GTK_DOWNLOADS_LIMIT", $downloads_limit);
 
 			gui_gtk::update_main_notebook();
-			gui_gtk::redraw_main_window();
 		}
 	}
 	public static function confirmation_button_clicked($button_call, $identifiers = "")
@@ -1349,7 +1350,6 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment(($type == "SUBSYSTEMS" ? "GTK_TEST_TYPES_TO_SHOW" : "GTK_TEST_LICENSES_TO_SHOW"), $items_to_show);
 
 		gui_gtk::update_main_notebook();
-		gui_gtk::redraw_main_window();
 	}
 	public static function show_about_interface()
 	{

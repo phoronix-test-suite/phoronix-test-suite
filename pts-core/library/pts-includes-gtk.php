@@ -274,7 +274,7 @@ function pts_gtk_selected_items($object)
 
 	return $return_items;
 }
-function pts_gtk_add_notebook_tab($notebook, $widget, $label)
+function pts_gtk_add_notebook_tab(&$notebook, $widget, $label)
 {
 	$page_no = $notebook->append_page($widget, new GtkLabel($label));
 }

@@ -3,6 +3,8 @@
 Phoronix Test Suite
 =================================
 
+** For all available options, view the included HTML documentation. **
+
 Installation Options:
     install <suite / test>: Install or update the specified suite/test(s)
     install-dependencies <suite / test>: Install the distribution dependencies
