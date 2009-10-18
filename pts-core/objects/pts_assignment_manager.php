@@ -24,11 +24,11 @@ class pts_assignment_manager
 {
 	static $assignments = array();
 
-	public static function set($assignment, $value)
+	public static function set($assignment, &$value)
 	{
 		self::$assignments[$assignment] = $value;
 	}
-	public static function set_once($assignment, $value)
+	public static function set_once($assignment, &$value)
 	{
 		return !self::is_set($assignment) ? self::set($assignment, $value): false;
 	}

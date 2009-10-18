@@ -21,11 +21,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_set_assignment_once($assignment, $value)
+function pts_set_assignment_once($assignment, &$value)
 {
 	return pts_assignment_manager::set_once($assignment, $value);
 }
-function pts_set_assignment($assignment, $value)
+function pts_set_assignment($assignment, &$value)
 {
 	return pts_assignment_manager::set($assignment, $value);
 }
@@ -41,7 +41,7 @@ function pts_clear_assignment($assignment)
 {
 	pts_assignment_manager::clear($assignment);
 }
-function pts_set_assignment_next($assignment, $value)
+function pts_set_assignment_next($assignment, &$value)
 {
 	pts_run_option_manager::add_assignment_to_next_run_option($assignment, $value);
 }
