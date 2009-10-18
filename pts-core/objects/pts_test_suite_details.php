@@ -23,28 +23,15 @@
 class pts_test_suite_details
 {
 	private $identifier;
-	private $identifier_show_prefix;
-	private $name;
-	private $maintainer;
-	private $description;
-	private $version;
-	private $type;
-	private $test_type;
-	private $unique_tests;
-	private $only_partially_supported = false;
+	private $xml_parser;
 	private $not_supported = false;
+	private $only_partially_supported = false;
+	private $identifier_show_prefix = null;
 
 	public function __construct($identifier)
 	{
-		$xml_parser = new pts_suite_tandem_XmlReader($identifier);
+		$this->xml_parser = new pts_suite_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
-		$this->name = $xml_parser->getXMLValue(P_SUITE_TITLE);
-		$this->test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-		$this->version = $xml_parser->getXMLValue(P_SUITE_VERSION);
-		$this->type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-		$this->maintainer = $xml_parser->getXMLValue(P_SUITE_MAINTAINER);
-		$this->description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
-		$this->unique_tests = count(pts_contained_tests($identifier));
 
 		$suite_support_code = pts_suite_supported($identifier);
 
@@ -70,11 +57,23 @@ class pts_test_suite_details
 	}
 	public function get_description()
 	{
-		return $this->description;
+		return $this->xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
+	}
+	public function get_name()
+	{
+		return $this->xml_parser->getXMLValue(P_SUITE_TITLE);
+	}
+	public function get_version()
+	{
+		return $this->xml_parser->getXMLValue(P_SUITE_VERSION);
+	}
+	public function get_unique_test_count()
+	{
+		return count(pts_contained_tests($this->identifier));
 	}
 	public function get_maintainer()
 	{
-		$suite_maintainer = array_map("trim", explode("|", $this->maintainer));
+		$suite_maintainer = array_map("trim", explode("|", $this->xml_parser->getXMLValue(P_SUITE_MAINTAINER)));
 
 		if(count($suite_maintainer) == 2)
 		{
@@ -89,16 +88,16 @@ class pts_test_suite_details
 	}
 	public function get_suite_type()
 	{
-		return $this->test_type;
+		return $this->xml_parser->getXMLValue(P_SUITE_TYPE);
 	}
 	public function info_string()
 	{
 		$str = "\n";
 
-		$str .= "Suite Version: " . $this->version . "\n";
+		$str .= "Suite Version: " . $this->get_version() . "\n";
 		$str .= "Maintainer: " . $this->get_maintainer() . "\n";
 		$str .= "Suite Type: " . $this->get_suite_type() . "\n";
-		$str .= "Unique Tests: " . $this->unique_tests . "\n";
+		$str .= "Unique Tests: " . $this->get_unique_test_count() . "\n";
 		$str .= "Suite Description: " . $this->get_description() . "\n";
 		$str .= "\n";
 
@@ -112,11 +111,11 @@ class pts_test_suite_details
 
 		if(getenv("PTS_DEBUG"))
 		{
-			$str = sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $this->identifier_show_prefix . " " . $this->identifier, $this->name, $this->version, $this->type);
+			$str = sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $this->identifier_show_prefix . " " . $this->identifier, $this->get_name(), $this->get_version(), $this->get_suite_type());
 		}
-		else if(!empty($this->name))
+		else if($this->get_name() != null)
 		{
-			$str = sprintf("%-24ls - %-32ls [Type: %s]\n", $this->identifier_show_prefix . " " . $this->identifier, $this->name, $this->test_type);
+			$str = sprintf("%-24ls - %-32ls [Type: %s]\n", $this->identifier_show_prefix . " " . $this->identifier, $this->get_name(), $this->get_suite_type());
 		}
 
 		return $str;
