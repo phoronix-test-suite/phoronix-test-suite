@@ -40,6 +40,7 @@ class gui_gtk implements pts_option_interface
 			return false;
 		}
 
+		gui_gtk::startup_tasks();
 		gui_gtk::show_main_interface();
 	}
 	public static function kill_gtk_window()
@@ -67,6 +68,28 @@ class gui_gtk implements pts_option_interface
 		{
 			$system_tray->set_blinking($icon_blink);
 		}
+	}
+	public static function startup_tasks()
+	{
+		$startup_tasks = array(
+
+		);
+
+		if(($task_count = count($startup_tasks)) == 0)
+		{
+			return;
+		}
+
+		$progress_window = new pts_gtk_progress_window("Phoronix Test Suite v" . PTS_VERSION);
+
+		$tasks_completed = 0;
+		foreach($startup_tasks as $function => $task_string)
+		{
+			$progress_window->update_progress_bar(($tasks_completed / $task_count) * 100, $task_string);
+			$tasks_completed++;
+		}
+
+		$progress_window->completed();
 	}
 	public static function system_tray_activate()
 	{
@@ -479,12 +502,12 @@ class gui_gtk implements pts_option_interface
 		$values = array();
 		foreach($info_r as $head => $show)
 		{
-			$label_head = new GtkLabel(($show == null ? null : $head . ": "));
+			$label_head = new pts_gtk_label(($show == null ? null : "<b>" . $head . ":</b> "));
 			$label_head->set_alignment(0, 0);
 			$label_head->set_padding(0, 0);
 			array_push($titles, $label_head);
 
-			$label_show = new GtkLabel($show);
+			$label_show = new pts_gtk_label($show);
 			$label_show->set_alignment(0, 0);
 			array_push($values, $label_show);
 		}
