@@ -28,6 +28,7 @@ class pts_gtk_simple_progress_window extends GtkDialog
 	public function __construct($title = null)
 	{
 		parent::__construct(($title == null ? "Phoronix Test Suite v" . PTS_VERSION : $title), null, Gtk::DIALOG_MODAL);
+		$this->set_icon(GdkPixbuf::new_from_file(STATIC_DIR . "pts-icon.png"));
 
 		$this->loading_label = new pts_gtk_label("Loading...");
 		$this->gtk_progress_bar = new pts_gtk_progress_bar();

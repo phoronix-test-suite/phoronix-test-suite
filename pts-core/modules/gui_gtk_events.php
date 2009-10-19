@@ -40,6 +40,7 @@ class gui_gtk_events extends pts_module_interface
 
 	static $test_run_count = 0;
 	static $test_run_pos = 0;
+	static $tests_remaining_to_run;
 
 	public static function __startup()
 	{
@@ -98,28 +99,61 @@ class gui_gtk_events extends pts_module_interface
 
 	public static function __pre_run_process($test_run_manager)
 	{
+		self::$tests_remaining_to_run = array();
+
+		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
+		{
+			array_push(self::$tests_remaining_to_run, $test_run_request->get_identifier());
+		}
+
 		self::$test_run_pos = 0;
-		self::$test_run_count = count($test_run_manager->get_tests_to_run());
+		self::$test_run_count = count(self::$tests_remaining_to_run);
 
 		self::$progress_window = new pts_gtk_advanced_progress_window("Phoronix Test Suite v" . PTS_VERSION);
 		self::$progress_window->update_progress_bar(0, " ", 0, " ");
 	}
 	public static function __pre_test_run($pts_test_result)
 	{
+		array_shift(self::$tests_remaining_to_run);
+		self::update_run_time_remaining($pts_test_result);
 		self::$progress_window->update_progress_bar(0, "Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
 	}
 	public static function __interim_test_run($pts_test_result)
 	{
-		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
+		self::update_run_time_remaining($pts_test_result);
+		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), ((self::$test_run_pos + ($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN"))) / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
 	}
 	public static function __post_test_run($pts_test_result)
 	{
-		self::$progress_window->update_progress_bar(100, "Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
 		self::$test_run_pos++;
+		self::update_run_time_remaining($pts_test_result);
+		self::$progress_window->update_progress_bar(100, "Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
 	}
 	public static function __post_run_process()
 	{
 		self::$progress_window->completed();
+	}
+	protected static function update_run_time_remaining(&$test_result)
+	{
+		$test_run_position = pts_read_assignment("TEST_RUN_POSITION");
+		$test_run_count = pts_read_assignment("TEST_RUN_COUNT");
+
+		if(self::$test_run_count == $test_run_count)
+		{
+			$remaining_length = pts_estimated_run_time(self::$tests_remaining_to_run);
+
+			$estimated_length = pts_estimated_run_time($test_result->get_attribute("TEST_IDENTIFIER"));
+			if($estimated_length > 1)
+			{
+				$remaining_length += $estimated_length * (($test_result->get_attribute("TIMES_TO_RUN") - $test_result->trial_run_count()) / $test_result->get_attribute("TIMES_TO_RUN"));
+			}
+
+			if($remaining_length > 0)
+			{
+				$time_remaining = pts_format_time_string($remaining_length, "SECONDS", true);
+				self::$progress_window->update_secondary_label("Estimated Time Remaining: " . $time_remaining);
+			}
+		}
 	}
 }
 

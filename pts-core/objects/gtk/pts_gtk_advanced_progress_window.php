@@ -24,6 +24,7 @@ class pts_gtk_advanced_progress_window extends pts_gtk_simple_progress_window
 {
 	protected $gtk_progress_bar_overall;
 	protected $loading_label_overall;
+	protected $secondary_label;
 
 	public function __construct($title = null)
 	{
@@ -35,10 +36,11 @@ class pts_gtk_advanced_progress_window extends pts_gtk_simple_progress_window
 
 		$this->loading_label = new pts_gtk_label(null);
 		$this->loading_label_overall = new pts_gtk_label(null);
+		$this->secondary_label = new pts_gtk_label(null);
 
 		$this->gtk_progress_bar_overall = new pts_gtk_progress_bar();
 
-		pts_gtk_array_to_boxes($this->vbox, array(null, $logo, null, $this->gtk_progress_bar, $this->loading_label, null, $this->gtk_progress_bar_overall, $this->loading_label_overall), 2, true);
+		pts_gtk_array_to_boxes($this->vbox, array(null, $logo, null, $this->gtk_progress_bar, $this->loading_label, null, $this->gtk_progress_bar_overall, $this->loading_label_overall, $this->secondary_label), 2, true);
 
 		$this->set_has_separator(false);
 		$this->show_all();
@@ -52,6 +54,11 @@ class pts_gtk_advanced_progress_window extends pts_gtk_simple_progress_window
 		{
 			Gtk::main_iteration();
 		}
+	}
+	public function update_secondary_label($label_string)
+	{
+		$this->secondary_label->set_text($label_string);
+
 	}
 }
 
