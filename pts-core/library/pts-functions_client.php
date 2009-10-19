@@ -91,8 +91,11 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 	}
 	else if(pts_module_valid_user_command($command))
 	{
-		$module_command = explode(".", $command);
-		pts_module_run_user_command(array_shift($module_command), array_pop($module_command), $pass_args);
+		list($module, $module_command) = explode(".", $command);
+
+		pts_module_manager::set_current_module($module);
+		pts_module_run_user_command($module, $module_command, $pass_args);
+		pts_module_manager::set_current_module(null);
 	}
 
 	pts_module_process("__post_option_process", $command);

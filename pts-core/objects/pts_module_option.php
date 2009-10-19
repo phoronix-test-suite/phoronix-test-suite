@@ -105,6 +105,23 @@ class pts_module_option
 						$supported = true;
 					}
 					break;
+				case "LOCAL_DIRECTORY":
+					if(is_dir($input))
+					{
+						$supported = true;
+					}
+					break;
+				case "LOCAL_EXECUTABLE":
+					if(is_executable($input))
+					{
+						$supported = true;
+					}
+					break;
+				case "PTS_TEST_RESULT":
+					if(pts_is_test_result($input))
+					{
+						$supported = true;
+					}
 				case "":
 					$supported = true;
 					break;
