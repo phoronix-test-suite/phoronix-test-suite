@@ -29,7 +29,17 @@ class gui_gtk_events extends pts_module_interface
 	const module_author = "Phoronix Media";
 
 	static $progress_window;
+
 	static $test_install_count = 0;
+	static $test_install_current = null;
+	static $test_install_pos = 0;
+	static $install_overall_percent = 0;
+	static $test_download_count = 0;
+	static $test_download_current = null;
+	static $test_download_pos = 0;
+
+	static $test_run_count = 0;
+	static $test_run_pos = 0;
 
 	public static function __startup()
 	{
@@ -38,7 +48,6 @@ class gui_gtk_events extends pts_module_interface
 			// The GTK interface isn't being used
 			return PTS_MODULE_UNLOAD;
 		}
-		self::$progress_window = new pts_gtk_advanced_progress_window("Phoronix Test Suite v" . PTS_VERSION);
 	}
 
 	//
@@ -48,11 +57,35 @@ class gui_gtk_events extends pts_module_interface
 	public static function __pre_install_process($test_install_array)
 	{
 		self::$test_install_count = count($test_install_array);
-		self::$progress_window = new pts_gtk_advanced_progress_window("Test Installation");
+		self::$test_install_pos = 0;
+		self::$progress_window = new pts_gtk_advanced_progress_window("Phoronix Test Suite: Test Installation");
+		self::$progress_window->update_progress_bar(0, " ", 0, "Installing: " . $test_install_array[0]);
+	}
+	public static function __pre_test_download($obj)
+	{
+		self::$test_install_current = pts_test_identifier_to_name($obj[0]);
+		self::$test_download_count = count($obj[1]);
+		self::$progress_window->update_progress_bar(0, "Downloading: " . $obj[1][0]->get_filename() . " (" . pts_trim_double($obj[1][0]->get_filesize() / 1048576, 1) . "MB)", self::$install_overall_percent, "Installing: " . self::$test_install_current);
+	}
+	public static function __interim_test_download($obj)
+	{
+		self::$test_download_pos++;
+
+		if(isset($obj[1][self::$test_download_pos]))
+		{
+			self::$progress_window->update_progress_bar((self::$test_download_pos / self::$test_download_count) * 50, "Downloading: " . $obj[1][self::$test_download_pos]->get_filename() . " (" . pts_trim_double($obj[1][self::$test_download_pos]->get_filesize() / 1048576, 1) . "MB)", self::$install_overall_percent, "Installing: " . self::$test_install_current);
+		}
 	}
 	public static function __pre_test_install($identifier)
 	{
-		self::$progress_window->update_progress_bar((0 / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Running " . $pts_test_result->get_attribute("TEST_TITLE"));
+		self::$test_install_current = $identifier;
+		self::$progress_window->update_progress_bar(50, "Running Installation Script", self::$install_overall_percent, "Installing: " . self::$test_install_current);
+	}
+	public static function __post_test_install($obj = null)
+	{
+		self::$progress_window->update_progress_bar(100, "Installation Completed", self::$install_overall_percent, "Installing: " . self::$test_install_current);
+		self::$test_install_pos++;
+		self::$install_overall_percent = (self::$test_install_pos / self::$test_install_count) * 100;
 	}
 	public static function __post_install_process()
 	{
@@ -63,17 +96,26 @@ class gui_gtk_events extends pts_module_interface
 	// Run Functions
 	//
 
-	public static function __pre_run_process()
+	public static function __pre_run_process($test_run_manager)
 	{
+		self::$test_run_pos = 0;
+		self::$test_run_count = count($test_run_manager->get_tests_to_run());
+
 		self::$progress_window = new pts_gtk_advanced_progress_window("Phoronix Test Suite v" . PTS_VERSION);
+		self::$progress_window->update_progress_bar(0, " ", 0, " ");
 	}
 	public static function __pre_test_run($pts_test_result)
 	{
-		self::$progress_window->update_progress_bar((0 / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Running " . $pts_test_result->get_attribute("TEST_TITLE"));
+		self::$progress_window->update_progress_bar(0, "Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
 	}
 	public static function __interim_test_run($pts_test_result)
 	{
-		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Running " . $pts_test_result->get_attribute("TEST_TITLE"));
+		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
+	}
+	public static function __post_test_run($pts_test_result)
+	{
+		self::$progress_window->update_progress_bar(100, "Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
+		self::$test_run_pos++;
 	}
 	public static function __post_run_process()
 	{

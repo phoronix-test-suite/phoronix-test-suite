@@ -65,7 +65,8 @@ class pts_gtk_simple_progress_window extends GtkDialog
 	{
 		if($percent >= 0)
 		{
-			$progress_bar->set_fraction($percent / 100);
+			$fraction = $percent / 100;
+			$progress_bar->set_fraction(($fraction > 1 ? 1 : $fraction));
 			$progress_bar->set_text(intval($percent) . "% Complete");
 		}
 

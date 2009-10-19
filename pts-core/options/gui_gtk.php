@@ -308,7 +308,7 @@ class gui_gtk implements pts_option_interface
 		gui_gtk::update_main_notebook();
 
 		pts_attach_module("gui_gtk_events");
-		pts_attach_module("notify_send_events");
+		// pts_attach_module("notify_send_events");
 
 		$window->show_all();
 		Gtk::main();
