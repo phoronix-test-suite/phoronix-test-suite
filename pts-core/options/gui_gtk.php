@@ -71,6 +71,11 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function startup_tasks()
 	{
+		if(!define("GUI_GTK_STARTUP_TASKS", true))
+		{
+			return;
+		}
+
 		$startup_tasks = array(
 		"pts_all_generic_reference_system_comparison_results_available" => array("pts_download_all_generic_reference_system_comparison_results", "Downloading Reference Comparison Results")
 		);

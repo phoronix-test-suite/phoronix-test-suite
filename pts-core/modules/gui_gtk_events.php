@@ -60,7 +60,7 @@ class gui_gtk_events extends pts_module_interface
 		self::$test_install_count = count($test_install_array);
 		self::$test_install_pos = 0;
 		self::$progress_window = new pts_gtk_advanced_progress_window("Phoronix Test Suite: Test Installation");
-		self::$progress_window->update_progress_bar(0, " ", 0, "Installing: " . $test_install_array[0]);
+		self::$progress_window->update_progress_bar(0, " ", 0, "Installing: " . pts_test_identifier_to_name($test_install_array[0]));
 	}
 	public static function __pre_test_download($obj)
 	{
@@ -115,25 +115,27 @@ class gui_gtk_events extends pts_module_interface
 	public static function __pre_test_run($pts_test_result)
 	{
 		array_shift(self::$tests_remaining_to_run);
-		self::update_run_time_remaining($pts_test_result);
-		self::$progress_window->update_progress_bar(0, "Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
+		self::$progress_window->update_progress_bar(0, $pts_test_result->get_attribute("TEST_TITLE") . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Test " . (self::$test_run_pos + 1) . " of " . self::$test_run_count . ": " . self::run_time_remaining($pts_test_result) . " Remaining");
 	}
 	public static function __interim_test_run($pts_test_result)
 	{
-		self::update_run_time_remaining($pts_test_result);
-		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, "Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), ((self::$test_run_pos + ($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN"))) / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
+		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN")) * 100, $pts_test_result->get_attribute("TEST_TITLE") . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), ((self::$test_run_pos + ($pts_test_result->trial_run_count() / $pts_test_result->get_attribute("TIMES_TO_RUN"))) / self::$test_run_count) * 100, "Test " . (self::$test_run_pos + 1) . " of " . self::$test_run_count . ": " . self::run_time_remaining($pts_test_result) . " Remaining");
 	}
 	public static function __post_test_run($pts_test_result)
 	{
 		self::$test_run_pos++;
-		self::update_run_time_remaining($pts_test_result);
-		self::$progress_window->update_progress_bar(100, "Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Running: " . $pts_test_result->get_attribute("TEST_TITLE"));
+		self::run_time_remaining($pts_test_result);
+		self::$progress_window->update_progress_bar(100, $pts_test_result->get_attribute("TEST_TITLE") . ", Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Test " . (self::$test_run_pos + 1) . " of " . self::$test_run_count . ": " . self::run_time_remaining($pts_test_result) . " Remaining");
 	}
 	public static function __post_run_process()
 	{
-		self::$progress_window->completed();
+		if(self::$progress_window != null)
+		{
+			self::$progress_window->completed();
+			self::$progress_window = null;
+		}
 	}
-	protected static function update_run_time_remaining(&$test_result)
+	protected static function run_time_remaining(&$test_result)
 	{
 		$test_run_position = pts_read_assignment("TEST_RUN_POSITION");
 		$test_run_count = pts_read_assignment("TEST_RUN_COUNT");
@@ -150,8 +152,8 @@ class gui_gtk_events extends pts_module_interface
 
 			if($remaining_length > 0)
 			{
-				$time_remaining = pts_format_time_string($remaining_length, "SECONDS", true);
-				self::$progress_window->update_secondary_label("Estimated Time Remaining: " . $time_remaining);
+				return pts_format_time_string($remaining_length, "SECONDS", true);
+				//self::$progress_window->update_secondary_label("Estimated Time Remaining: " . $time_remaining);
 			}
 		}
 	}

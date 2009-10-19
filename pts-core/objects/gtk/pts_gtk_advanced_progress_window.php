@@ -58,7 +58,6 @@ class pts_gtk_advanced_progress_window extends pts_gtk_simple_progress_window
 	public function update_secondary_label($label_string)
 	{
 		$this->secondary_label->set_text($label_string);
-
 	}
 }
 
