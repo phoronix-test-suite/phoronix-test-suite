@@ -113,9 +113,7 @@ function pts_module_config_init($SetOptions = null)
 		foreach($SetOptions as $this_option_set => $this_option_value)
 		{
 			$replaced = false;
-			$this_option_set = explode("__", $this_option_set);
-			$this_option_module = $this_option_set[0];
-			$this_option_identifier = $this_option_set[1];
+			list($this_option_module, $this_option_identifier) = explode("__", $this_option_set);
 
 			for($i = 0; $i < count($option_module) && !$replaced; $i++)
 			{
@@ -139,7 +137,7 @@ function pts_module_config_init($SetOptions = null)
 
 	for($i = 0; $i < count($option_module); $i++)
 	{
-		if(pts_module_type($option_module[$i]) != "")
+		if(isset($option_module[$i]) && pts_module_type($option_module[$i]) != "")
 		{
 			$config->addXmlObject(P_MODULE_OPTION_NAME, $i, $option_module[$i]);
 			$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $option_identifier[$i]);
