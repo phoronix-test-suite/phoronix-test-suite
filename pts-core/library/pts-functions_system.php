@@ -80,13 +80,18 @@ function pts_sys_sensors_string($return_string = true)
 }
 function pts_supported_sensors()
 {
-	$supported_sensors = array();
+	static $supported_sensors = null;
 
-	foreach(pts_available_sensors() as $pts_sensor)
+	if($supported_sensors == null)
 	{
-		if($pts_sensor->read_sensor() != -1)
+		$supported_sensors = array();
+
+		foreach(pts_available_sensors() as $pts_sensor)
 		{
-			array_push($supported_sensors, $pts_sensor);
+			if($pts_sensor->read_sensor() != -1)
+			{
+				array_push($supported_sensors, $pts_sensor);
+			}
 		}
 	}
 

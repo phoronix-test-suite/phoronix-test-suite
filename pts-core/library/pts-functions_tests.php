@@ -387,62 +387,38 @@ function pts_test_installed($identifier)
 function pts_test_name_to_identifier($name)
 {
 	// Convert test name to identifier
-	static $available_tests = null;
-	static $cache = array();
+	static $cache = null;
 
-	if(!isset($cache[$name]))
+	if($cache == null)
 	{
-		$this_identifier = false;
+		$cache = array();
 
-		if($available_tests == null)
+		foreach(pts_available_tests_array() as $identifier)
 		{
-			$available_tests = pts_available_tests_array();
+			$title = pts_test_read_xml($identifier, P_TEST_TITLE);
+			$cache[$title] = $identifier;
 		}
-
-		foreach($available_tests as $i => $identifier)
-		{
-			if(pts_test_read_xml($identifier, P_TEST_TITLE) == $name)
-			{
-				$this_identifier = $identifier;
-				unset($available_tests[$i]);
-				break;
-			}
-		}
-
-		$cache[$name] = $this_identifier;
 	}
 
-	return $cache[$name];
+	return isset($cache[$name]) ? $cache[$name] : false;
 }
 function pts_suite_name_to_identifier($name)
 {
 	// Convert test name to identifier
-	static $available_suites = null;
-	static $cache = array();
+	static $cache = null;
 
-	if(!isset($cache[$name]))
+	if($cache == null)
 	{
-		$this_identifier = false;
+		$cache = array();
 
-		if($available_suites == null)
+		foreach(pts_available_suites_array() as $identifier)
 		{
-			$available_suites = pts_available_suites_array();
+			$title = pts_suite_read_xml($identifier, P_SUITE_TITLE);
+			$cache[$title] = $identifier;
 		}
-
-		foreach($available_suites as $i => $identifier)
-		{
-			if(pts_suite_read_xml($identifier, P_SUITE_TITLE) == $name)
-			{
-				$this_identifier = $identifier;
-				unset($available_suites[$i]);
-				break;
-			}
-		}
-
-		$cache[$name] = $this_identifier;
 	}
 
-	return $cache[$name];
+	return isset($cache[$name]) ? $cache[$name] : false;
 }
 function pts_test_identifier_to_name($identifier)
 {
@@ -813,17 +789,22 @@ function pts_available_suites_array()
 }
 function pts_installed_suites_array()
 {
-	$installed_suites = array();
-
-	foreach(pts_available_suites_array() as $suite)
+	if(!pts_is_assignment("CACHE_INSTALLED_SUITES"))
 	{
-		if(!pts_suite_needs_updated_install($suite))
+		$installed_suites = array();
+
+		foreach(pts_available_suites_array() as $suite)
 		{
-			array_push($installed_suites, $suite);
+			if(!pts_suite_needs_updated_install($suite))
+			{
+				array_push($installed_suites, $suite);
+			}
 		}
+
+		pts_set_assignment("CACHE_INSTALLED_SUITES", $installed_suites);
 	}
 
-	return $installed_suites;
+	return pts_read_assignment("CACHE_INSTALLED_SUITES");
 }
 function pts_supported_suites_array()
 {

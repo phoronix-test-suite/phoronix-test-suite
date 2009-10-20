@@ -24,7 +24,7 @@ class gui_gtk implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("gui", "run", "gtk", "install", "install_dependencies", "comparisons");
+		return array("gui", "run", "gtk", "install", "install_dependencies", "comparisons", "unit_caching");
 	}
 	public static function run($r)
 	{
@@ -77,6 +77,10 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$startup_tasks = array(
+		array("pts_cache_hardware_calls", "Building Hardware Information"),
+		array("pts_cache_software_calls", "Building Software Information"),
+		array("pts_cache_suite_calls", "Caching Suite Information"),
+		array("pts_cache_test_calls", "Caching Test Information"),
 		array("pts_download_all_generic_reference_system_comparison_results", "Downloading Reference Comparison Results")
 		);
 
