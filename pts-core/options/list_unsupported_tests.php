@@ -24,15 +24,7 @@ class list_unsupported_tests implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Unsupported Tests");
-		foreach(pts_available_tests_array() as $identifier)
-		{
-			if(!pts_test_supported($identifier))
-			{
-				echo new pts_test_profile_details($identifier);
-			}
-		}
-		echo "\n";
+		pts_run_option_next("list_tests", $r, array("LIST_UNSUPPORTED" => true));
 	}
 }
 

@@ -26,6 +26,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add __pre_test_download, __interim_test_download, and __post_test_download hooks to the PTS module API
 - pts-core: Start work on GTK2 GUI interface for during the test installation and run processes
 - pts-core: Rewrite web-browser launching code
+- pts-core: Rework list-tests option code
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile

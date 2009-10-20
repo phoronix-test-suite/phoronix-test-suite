@@ -203,21 +203,6 @@ class pts_test_profile_details
 	{
 		return !in_array($this->get_status(), array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED"));
 	}
-	public function __toString()
-	{
-		$str = "";
-
-		if(getenv("PTS_DEBUG"))
-		{
-			$str = sprintf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $this->identifier, $this->get_test_profile_version(), $this->get_version(), $this->get_status(), $this->get_license(), $this->get_download_size(), $this->get_environment_size(), $this->get_maintainer());
-		}
-		else if($this->get_name() != null && (pts_is_assignment("LIST_ALL_TESTS") || $this->verified_state()))
-		{
-			$str = sprintf("%-18ls - %-36ls [%s, %10ls]\n", $this->identifier, $this->$this->get_name(), $this->get_status(), $this->get_license());
-		}
-
-		return $str;
-	}
 	public function get_dependency_names()
 	{
 		$dependency_names = array();
