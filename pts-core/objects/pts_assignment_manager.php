@@ -49,7 +49,7 @@ class pts_assignment_manager
 	}
 	public static function clear_all()
 	{
-		self::$assignments[$assignment] = array();
+		self::$assignments = array();
 	}
 }
 

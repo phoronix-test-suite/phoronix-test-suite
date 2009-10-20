@@ -1180,7 +1180,7 @@ class gui_gtk implements pts_option_interface
 					break;
 			}
 		}
-		else if($url == "")
+		else if($url == null)
 		{
 			$url = "http://www.phoronix-test-suite.com/";
 		}
@@ -1223,7 +1223,7 @@ class gui_gtk implements pts_option_interface
 
 				$str = "Software Dependencies: ";
 				$i = 0;
-				foreach($obj->dependency_names() as $dependency)
+				foreach($obj->get_dependency_names() as $dependency)
 				{
 					if($i > 0)
 					{

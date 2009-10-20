@@ -23,7 +23,7 @@
 
 function pts_display_web_browser($URL, $alt_text = null, $default_open = false, $auto_open = false)
 {
-	if(pts_read_assignment("AUTOMATED_MODE") != false || getenv("DISPLAY") == false)
+	if(pts_read_assignment("AUTOMATED_MODE") || getenv("DISPLAY") == false)
 	{
 		return;
 	}
@@ -49,7 +49,32 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 
 	if($view_results)
 	{
-		pts_run_shell_script(PTS_PATH . "pts-core/scripts/launch-browser.sh", array("\"$URL\"", pts_read_user_config(P_OPTION_DEFAULT_BROWSER, null)));
+		static $browser = null;
+
+		if($browser == null)
+		{
+			$config_browser = pts_read_user_config(P_OPTION_DEFAULT_BROWSER, null);
+
+			if($config_browser != null && (is_executable($config_browser) || ($config_browser = pts_executable_in_path($config_browser))))
+			{
+				$browser = $config_browser;
+			}
+			else
+			{
+				$possible_browsers = array("xdg-open", "epiphany", "firefox", "mozilla", "x-www-browser", "open");
+
+				foreach($possible_browsers as $b)
+				{
+					if(($b = pts_executable_in_path($b)))
+					{
+						$browser = $b;
+						break;
+					} else echo $b . "\n";
+				}
+			}
+		}
+		echo $URL . "\n";
+		shell_exec($browser . " \"" . $URL . "\" &");
 	}
 }
 function pts_exec($exec, $extra_vars = null)
