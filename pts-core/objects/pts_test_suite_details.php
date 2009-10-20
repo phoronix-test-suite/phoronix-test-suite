@@ -47,6 +47,10 @@ class pts_test_suite_details
 			$this->only_partially_supported = true;
 		}
 	}
+	public function get_identifier_prefix()
+	{
+		return $this->identifier_show_prefix;
+	}
 	public function partially_supported()
 	{
 		return $this->only_partially_supported;
@@ -90,33 +94,10 @@ class pts_test_suite_details
 	{
 		return $this->xml_parser->getXMLValue(P_SUITE_TYPE);
 	}
-	public function info_string()
+	public function pts_format_contained_tests_string()
 	{
-		$str = "\n";
-
-		$str .= "Suite Version: " . $this->get_version() . "\n";
-		$str .= "Maintainer: " . $this->get_maintainer() . "\n";
-		$str .= "Suite Type: " . $this->get_suite_type() . "\n";
-		$str .= "Unique Tests: " . $this->get_unique_test_count() . "\n";
-		$str .= "Suite Description: " . $this->get_description() . "\n";
-		$str .= "\n";
-
+		$str = null;
 		$this->pts_print_format_tests($this->identifier, $str);
-
-		return $str;
-	}
-	public function __toString()
-	{
-		$str = "";
-
-		if(getenv("PTS_DEBUG"))
-		{
-			$str = sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $this->identifier_show_prefix . " " . $this->identifier, $this->get_name(), $this->get_version(), $this->get_suite_type());
-		}
-		else if($this->get_name() != null)
-		{
-			$str = sprintf("%-24ls - %-32ls [Type: %s]\n", $this->identifier_show_prefix . " " . $this->identifier, $this->get_name(), $this->get_suite_type());
-		}
 
 		return $str;
 	}
