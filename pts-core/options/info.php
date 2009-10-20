@@ -135,7 +135,25 @@ class info implements pts_option_interface
 		}
 		else if(($file = pts_find_result_file($to_info)) != false)
 		{
-			echo new pts_test_result_details($file, $to_info);
+			$tr = new pts_test_result_details($file, $to_info);
+
+			echo "Title: " . $tr->get_title() . "\nIdentifier: " . $tr->get_saved_identifier() . "\nTest: " . $tr->get_suite() . "\n";
+			echo "\nTest Result Identifiers:\n";
+
+			foreach($tr->get_identifiers() as $id)
+			{
+				echo "- " . $id . "\n";
+			}
+
+			if(count($tr->get_unique_tests()) > 1)
+			{
+				echo "\nContained Tests:\n";
+				foreach($tr->get_unique_tests() as $test)
+				{
+					echo "- " . $test . "\n";
+				}
+			}
+			echo "\n";
 		}
 		else
 		{

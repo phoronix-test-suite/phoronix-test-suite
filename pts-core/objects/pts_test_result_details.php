@@ -22,33 +22,32 @@
 
 class pts_test_result_details
 {
+	private $xml_parser;
 	private $saved_results_file;
 	private $saved_identifier;
-	private $title;
-	private $suite;
-	private $unique_tests_r;
 	private $identifiers_r;
 
 	public function __construct($saved_results_file, $identifier = null)
 	{
-		$xml_parser = new pts_results_tandem_XmlReader($saved_results_file);
+		$this->xml_parser = new pts_results_tandem_XmlReader($saved_results_file);
 		$this->saved_results_file = $saved_results_file;
 		$this->saved_identifier = ($identifier == null ? pts_extract_identifier_from_path($saved_results_file) : $identifier);
-		$this->title = $xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
-		$this->suite = $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
-		$this->unique_tests_r = array_unique($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE));
-		$raw_results = $xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
+		$raw_results = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 
 		$results_xml = new tandem_XmlReader($raw_results[0]);
 		$this->identifiers_r = $results_xml->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
 	}
 	public function get_title()
 	{
-		return $this->title;
+		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
+	}
+	public function get_saved_identifier()
+	{
+		return $this->saved_identifier;
 	}
 	public function get_suite()
 	{
-		return $this->suite;
+		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
 	}
 	public function get_identifiers()
 	{
@@ -56,7 +55,7 @@ class pts_test_result_details
 	}
 	public function get_unique_tests()
 	{
-		return $this->unique_tests_r;
+		return array_unique($this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE));
 	}
 	public function unique_tests_string()
 	{
@@ -90,43 +89,6 @@ class pts_test_result_details
 
 			$str .= " " . $id;
 			$i++;
-		}
-
-		return $str;
-	}
-	public function show_basic_details()
-	{
-		$str = "";
-
-		if(!empty($this->title))
-		{
-			$str .= $this->get_title() . "\n";
-			$str .= sprintf("Saved Name: %-18ls Test: %-18ls \n", $this->saved_identifier, $this->suite);
-
-			foreach($this->get_identifiers() as $id)
-			{
-				$str .= "\t- " . $id . "\n";
-			}
-		}
-
-		return $str;
-	}
-	public function __toString()
-	{
-		$str = "\nTitle: " . $this->get_title() . "\nIdentifier: " . $this->saved_identifier . "\nTest: " . $this->get_suite() . "\n";
-		$str .= "\nTest Result Identifiers:\n";
-		foreach($this->get_identifiers() as $id)
-		{
-			$str .= "- " . $id . "\n";
-		}
-
-		if(count($this->get_unique_tests()) > 1)
-		{
-			$str .= "\nContained Tests:\n";
-			foreach($this->get_unique_tests() as $test)
-			{
-				$str .= "- " . $test . "\n";
-			}
 		}
 
 		return $str;
