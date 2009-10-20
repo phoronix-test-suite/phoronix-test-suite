@@ -27,16 +27,19 @@ class list_saved_results implements pts_option_interface
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		foreach(pts_saved_test_results_identifiers() as $saved_results_identifier)
 		{
-			$tr = new pts_test_result_details($saved_results_identifier, $saved_results_identifier);
+			$result_file = new pts_result_file($saved_results_identifier);
 
-			if($tr->get_title() != null)
+			if(($title = $result_file->get_title()) != null)
 			{
-				echo $tr->get_title() . "\n";
-				echo sprintf("Saved Name: %-18ls Test: %-18ls \n", $tr->get_saved_identifier(), $tr->get_suite());
+				echo $title . "\n";
+				echo sprintf("Saved Name: %-18ls Test: %-18ls \n", $saved_results_identifier, $result_file->get_suite_name());
 
-				foreach($tr->get_identifiers() as $id)
+				foreach($result_file->get_system_identifiers() as $id)
 				{
-					echo "\t- " . $id . "\n";
+					if(!empty($id))
+					{
+						echo "\t- " . $id . "\n";
+					}
 				}
 				echo "\n";
 			}

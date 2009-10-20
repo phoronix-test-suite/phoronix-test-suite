@@ -447,11 +447,11 @@ class gui_gtk implements pts_option_interface
 		{
 			$test_menu_items_sensitive = true;
 
-			$result_file = new pts_test_result_details($identifier);
+			$result_file = new pts_result_file($identifier);
 
 			$info_r["Title"] = $result_file->get_title();
 			$info_r["null1"] = null;
-			$info_r["Test"] = $result_file->get_suite();
+			$info_r["Test"] = $result_file->get_suite_name();
 			$info_r["null2"] = null;
 
 			$reference_tests = pts_result_file_reference_tests($identifier);
@@ -461,14 +461,14 @@ class gui_gtk implements pts_option_interface
 			}
 			else
 			{
-				if(count($result_file->get_identifiers()) > 1)
+				if(count($result_file->get_system_identifiers()) > 1)
 				{
-					array_push($append_elements, new pts_gtk_text_area($result_file->identifiers_string(), -1, -1, true));
+					array_push($append_elements, new pts_gtk_text_area("Identifiers: " . implode(", ", $result_file->get_system_identifiers()), -1, -1, true));
 				}
-				if(count($result_file->get_unique_tests()) > 1)
+				if(count($result_file->get_unique_test_titles()) > 1)
 				{
 					//array_push($append_elements, null);
-					array_push($append_elements, new pts_gtk_text_area($result_file->unique_tests_string(), -1, -1, true));
+					array_push($append_elements, new pts_gtk_text_area("Contained Tests: " . implode(", ", $result_file->get_unique_test_titles()), -1, -1, true));
 				}
 			}
 		}

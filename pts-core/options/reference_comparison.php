@@ -83,7 +83,7 @@ class reference_comparison implements pts_option_interface
 		if(($title = pts_read_assignment("PREV_SAVE_NAME_TITLE")) == false)
 		{
 			$result_file = new pts_result_file($r[0]);
-			$title = $result_file->get_suite_title();
+			$title = $result_file->get_title();
 		}
 
 		pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $title . (strpos($title, "Comparison") === false ? " Comparison" : null));

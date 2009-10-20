@@ -133,22 +133,22 @@ class info implements pts_option_interface
 			}
 			echo "\n";
 		}
-		else if(($file = pts_find_result_file($to_info)) != false)
+		else if(pts_find_result_file($to_info) != false)
 		{
-			$tr = new pts_test_result_details($file, $to_info);
+			$result_file = new pts_result_file($to_info);
 
-			echo "Title: " . $tr->get_title() . "\nIdentifier: " . $tr->get_saved_identifier() . "\nTest: " . $tr->get_suite() . "\n";
+			echo "Title: " . $result_file->get_title() . "\nIdentifier: " . $to_info . "\nTest: " . $result_file->get_suite_name() . "\n";
 			echo "\nTest Result Identifiers:\n";
 
-			foreach($tr->get_identifiers() as $id)
+			foreach($result_file->get_system_identifiers() as $id)
 			{
 				echo "- " . $id . "\n";
 			}
 
-			if(count($tr->get_unique_tests()) > 1)
+			if(count(($tests = $result_file->get_unique_test_titles())) > 1)
 			{
 				echo "\nContained Tests:\n";
-				foreach($tr->get_unique_tests() as $test)
+				foreach($tests as $test)
 				{
 					echo "- " . $test . "\n";
 				}
