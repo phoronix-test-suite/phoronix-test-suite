@@ -31,7 +31,17 @@ class module_info implements pts_option_interface
 	public static function run($args)
 	{
 		$module = new pts_user_module_details($args[0]);
-		echo $module->info_string();
+		echo pts_string_header("Module: " . $module->get_module_name());
+
+		if(in_array($args[0], pts_module_manager::attached_modules()))
+		{
+			echo "** This module is currently loaded. **\n";
+		}
+
+		echo "Version: " . $module->get_module_version() . "\n";
+		echo "Author: " . $module->get_module_author() . "\n";
+		echo "Description: " . $module->get_module_description() . "\n";
+		echo "\n" . $module->get_module_info() . "\n";
 		echo "\n";
 	}
 }

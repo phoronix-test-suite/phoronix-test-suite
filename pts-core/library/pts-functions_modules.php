@@ -277,7 +277,7 @@ function pts_php_module_call($module, $process, &$object_pass = null)
 	{
 		eval("\$module_val = " . $module . "::" . $process . "(\$object_pass);");
 	}
-	else if(property_exists($module, $process))
+	else
 	{
 		eval("\$module_val = " . $module . "::" . $process . ";");
 	}

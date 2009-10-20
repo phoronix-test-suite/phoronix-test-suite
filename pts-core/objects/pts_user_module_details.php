@@ -22,51 +22,33 @@
 
 class pts_user_module_details
 {
-	private $identifier;
-	private $name;
-	private $module;
-	private $version;
-	private $author;
-	private $description;
-	private $information;
+	private $module = null;
 
 	public function __construct($module)
 	{
-		pts_load_module($module);
 		$this->module = $module;
-		$this->name = pts_module_call($this->module, "module_name");
-		$this->version = pts_module_call($this->module, "module_version");
-		$this->author = pts_module_call($this->module, "module_author");
-		$this->description = pts_module_call($this->module, "module_description");
-		$this->information = pts_module_call($this->module, "module_info");
+		pts_load_module($module);
 	}
-	public function info_string()
+	public function get_module_name()
 	{
-		$str = "";
-
-		$str .= pts_string_header("Module: " . $this->name);
-
-		if(in_array($this->module, pts_attached_modules()))
-		{
-			$str .= "** This module is currently loaded. **\n";
-		}
-
-		$str .= "Version: " . $this->version . "\n";
-		$str .= "Author: " . $this->author . "\n";
-		$str .= "Description: " . $this->description . "\n";
-
-		if(!empty($this->information))
-		{
-			$str .= "\n" . $this->information . "\n";
-		}
-
-		return $str;
+		return pts_module_call($this->module, "module_name");
 	}
-	public function __toString()
+	public function get_module_version()
 	{
-		return sprintf("%-22ls - %-30ls [%s]\n", $this->module, $this->name . " v" . $this->version, $this->author);
+		return pts_module_call($this->module, "module_version");
 	}
-
+	public function get_module_author()
+	{
+		return pts_module_call($this->module, "module_author");
+	}
+	public function get_module_description()
+	{
+		return pts_module_call($this->module, "module_description");
+	}
+	public function get_module_info()
+	{
+		return pts_module_call($this->module, "module_info");
+	}
 }
 
 ?>
