@@ -312,7 +312,7 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function check_events_for_header(&$button_box)
 	{
-		if(($p = pts_read_assignment("PREV_SAVE_NAME_TITLE")))
+		if(($p = pts_read_assignment("PREV_SAVE_NAME_TITLE")) || ($p = pts_read_assignment("REPORT_STRING")))
 		{
 			$button_box->add(new pts_gtk_label("<b>" . $p . "</b> "));
 		}
@@ -349,6 +349,11 @@ class gui_gtk implements pts_option_interface
 		if(($p = pts_read_assignment("PREV_GLOBAL_ACCT_SETUP")))
 		{
 			$button_box->add(new pts_gtk_label("<b>" . $p . "</b>"));
+		}
+		if(($b_s = pts_read_assignment("BROWSER_BUTTON_STRING")) && ($b_u = pts_read_assignment("BROWSER_BUTTON_URL")))
+		{
+			$pg_button = new pts_gtk_button($b_s, array("gui_gtk", "launch_web_browser"), $b_u);
+			$button_box->add($pg_button);
 		}
 	}
 	public static function drag_drop_item($widget, $context, $x, $y, $data, $info, $time, $img)

@@ -28,7 +28,7 @@ class update_checker extends pts_module_interface
 	const module_description = "This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.";
 	const module_author = "Phoronix Media";
 
-	public static function __startup()
+	public static function __pre_option_process()
 	{
 		// Once a day check for new version
 		if(IS_FIRST_RUN_TODAY)
@@ -42,6 +42,13 @@ class update_checker extends pts_module_interface
 			{
 				// New version of PTS is available
 				echo pts_string_header("An outdated version of the Phoronix Test Suite is installed.\nThe version in use is v" . PTS_VERSION . ", but the latest is v" . $latest_reported_version . ".\nVisit http://www.phoronix-test-suite.com/ to update this software.");
+
+				if(pts_read_assignment("COMMAND") == "gui_gtk")
+				{
+						pts_set_assignment("REPORT_STRING", "Phoronix Test Suite v" . $latest_reported_version . " Available");
+						pts_set_assignment("BROWSER_BUTTON_STRING", "Download Update");
+						pts_set_assignment("BROWSER_BUTTON_URL", "http://www.phoronix-test-suite.com/index.php?k=downloads");
+				}
 			}
 		}
 
