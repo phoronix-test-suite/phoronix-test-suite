@@ -68,9 +68,9 @@ function pts_is_base_test($object)
 
 	return $type == TYPE_BASE_TEST;
 }
-function pts_is_test_result($object)
+function pts_is_test_result($identifier)
 {
-	return is_file(SAVE_RESULTS_DIR . $object . "/composite.xml");
+	return is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 }
 function pts_validate_local_test_profile($identifier)
 {

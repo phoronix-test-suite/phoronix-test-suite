@@ -107,21 +107,6 @@ function pts_result_file_reference_tests($result)
 
 	return $reference_tests;
 }
-function pts_all_generic_reference_system_comparison_results_available()
-{
-	$all_available = true;
-
-	foreach(pts_generic_reference_system_comparison_ids() as $comparison_id)
-	{
-		if(!pts_is_test_result($comparison_id))
-		{
-			$all_available = false;
-			break;
-		}
-	}
-
-	return $all_available;
-}
 function pts_download_all_generic_reference_system_comparison_results()
 {
 	foreach(pts_generic_reference_system_comparison_ids() as $comparison_id)

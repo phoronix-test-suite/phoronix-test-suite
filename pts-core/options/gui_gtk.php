@@ -77,25 +77,13 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$startup_tasks = array(
-		"pts_all_generic_reference_system_comparison_results_available" => array("pts_download_all_generic_reference_system_comparison_results", "Downloading Reference Comparison Results")
+		array("pts_download_all_generic_reference_system_comparison_results", "Downloading Reference Comparison Results")
 		);
-
-		foreach($startup_tasks as $task_check => $task)
-		{
-			if(call_user_func($task_check) != false)
-			{
-				unset($startup_tasks[$task_check]);
-			}
-		}
-
-		if(($task_count = count($startup_tasks)) == 0)
-		{
-			return;
-		}
 
 		$progress_window = new pts_gtk_simple_progress_window();
 
 		$tasks_completed = 0;
+		$task_count = count($startup_tasks);
 		foreach($startup_tasks as $function => $task)
 		{
 			list($task_call, $task_string) = $task;

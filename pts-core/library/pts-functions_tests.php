@@ -387,17 +387,25 @@ function pts_test_installed($identifier)
 function pts_test_name_to_identifier($name)
 {
 	// Convert test name to identifier
-	static $cache;
+	static $available_tests = null;
+	static $cache = array();
 
 	if(!isset($cache[$name]))
 	{
 		$this_identifier = false;
 
-		foreach(pts_available_tests_array() as $identifier)
+		if($available_tests == null)
+		{
+			$available_tests = pts_available_tests_array();
+		}
+
+		foreach($available_tests as $i => $identifier)
 		{
 			if(pts_test_read_xml($identifier, P_TEST_TITLE) == $name)
 			{
 				$this_identifier = $identifier;
+				unset($available_tests[$i]);
+				break;
 			}
 		}
 
@@ -409,17 +417,25 @@ function pts_test_name_to_identifier($name)
 function pts_suite_name_to_identifier($name)
 {
 	// Convert test name to identifier
-	static $cache;
+	static $available_suites = null;
+	static $cache = array();
 
 	if(!isset($cache[$name]))
 	{
 		$this_identifier = false;
 
-		foreach(pts_available_suites_array() as $identifier)
+		if($available_suites == null)
+		{
+			$available_suites = pts_available_suites_array();
+		}
+
+		foreach($available_suites as $i => $identifier)
 		{
 			if(pts_suite_read_xml($identifier, P_SUITE_TITLE) == $name)
 			{
 				$this_identifier = $identifier;
+				unset($available_suites[$i]);
+				break;
 			}
 		}
 
