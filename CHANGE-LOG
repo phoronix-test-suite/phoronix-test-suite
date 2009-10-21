@@ -30,6 +30,7 @@ Phoronix Test Suite (Git)
 - pts-core: Build select caches on start-up when running GTK2 GUI
 - pts-core: New bash completion support
 - pts-core: Support using the update_checker module from the GTK2 GUI for notifying of new PTS releases
+- pts-core: Add initial git_bisect module to allow users to hook PTS into any Git repository for bisecting with external script
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile
