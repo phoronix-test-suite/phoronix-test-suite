@@ -34,6 +34,7 @@ Phoronix Test Suite (Git)
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile
+- pts: Update openal external dependency in fedora-packages.xml
 
 Phoronix Test Suite 2.2 Alpha 4
 October 12, 2009

@@ -73,7 +73,6 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 				}
 			}
 		}
-		echo $URL . "\n";
 		shell_exec($browser . " \"" . $URL . "\" &");
 	}
 }
