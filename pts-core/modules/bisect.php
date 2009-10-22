@@ -20,30 +20,30 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class git_bisect extends pts_module_interface
+class bisect extends pts_module_interface
 {
-	const module_name = "PTS Git Revision Tracker";
+	const module_name = "PTS Bisect / Regression Tracker";
 	const module_version = "0.1.0";
-	const module_description = "This module layers the Phoronix Test Suite atop the Git revision control system to automate the process of bisecting a Git repository to track down a performance regression. Read the included documentation for instructions.";
+	const module_description = "This module layers the Phoronix Test Suite atop the Git revision control system to automate the process of bisecting a Git repository to track down a performance regression. Read the included documentation for instructions. Other version control systems to be supported in the future.";
 	const module_author = "Phoronix Media";
 
 	public static function module_setup()
 	{
 		return array(
-		new pts_module_option("git_dir", "Enter the path to the local folder of the Git repository to be tested", "LOCAL_DIRECTORY"),
-		new pts_module_option("git_good", "Enter the revision of a good version", null, "Original Head"),
-		new pts_module_option("git_bad", "Enter the revision of a bad version"),
+		new pts_module_option("repo_dir", "Enter the path to the local folder of the repository to be tested", "LOCAL_DIRECTORY"),
+		new pts_module_option("rev_good", "Enter the revision of a good version", null, "Original Head"),
+		new pts_module_option("rev_bad", "Enter the revision of a bad version"),
 		new pts_module_option("build_script", "Enter the location of the program's build script", "LOCAL_EXECUTABLE"),
 		new pts_module_option("initial_result_file", "Enter the test result identifier that exhibits the regression", "PTS_TEST_RESULT"),
 		);
 	}
 	public static function module_setup_validate($options)
 	{
-		$options["git_dir"] = pts_add_trailing_slash($options["git_dir"]);
+		$options["repo_dir"] = pts_add_trailing_slash($options["repo_dir"]);
 
-		if(!is_dir($options["git_dir"] . ".git"))
+		if(!is_dir($options["repo_dir"] . ".git"))
 		{
-			echo $options["git_dir"] . " is not a Git directory!\n";
+			echo $options["repo_dir"] . " is not a Git directory!\n";
 			return array();
 		}
 
@@ -105,26 +105,26 @@ class git_bisect extends pts_module_interface
 			return false;
 		}
 
-		$git_dir = pts_module::read_option("git_dir");
+		$repo_dir = pts_module::read_option("repo_dir");
 		$build_script = pts_module::read_option("build_script");
 
 		if(pts_module::read_option("current_status") == false || pts_module::read_option("current_status") == "START")
 		{
 			$xml_writer = new tandem_XmlWriter();
-			$xml_writer->addXmlObject(P_SUITE_TITLE, 0, "Git Bisect");
+			$xml_writer->addXmlObject(P_SUITE_TITLE, 0, "Bisect");
 			$xml_writer->addXmlObject(P_SUITE_VERSION, 0, "1.0.0");
 			$xml_writer->addXmlObject(P_SUITE_MAINTAINER, 0, "Phoronix Media");
 			$xml_writer->addXmlObject(P_SUITE_TYPE, 0, "System");
-			$xml_writer->addXmlObject(P_SUITE_DESCRIPTION, 0, "This is for automated Git testing.");
+			$xml_writer->addXmlObject(P_SUITE_DESCRIPTION, 0, "This is for automated testing.");
 			$xml_writer->addXmlObject(P_SUITE_TEST_NAME, 1, pts_module::read_option("test_name"));
 			$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, 1,pts_module::read_option("test_args"));
 			$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, 1, pts_module::read_option("test_attr"));
-			$xml_writer->saveXMLFile(XML_SUITE_LOCAL_DIR . "git-bisect-test.xml");
+			$xml_writer->saveXMLFile(XML_SUITE_LOCAL_DIR . "bisect-test.xml");
 
-			$git_good = pts_module::read_option("git_good");
+			$rev_good = pts_module::read_option("rev_good");
 			pts_module::set_option("current_status", "GOOD_TEST");
-			pts_module::set_option("current_git_revision", $git_good);
-			shell_exec("cd $git_dir; $git_bin checkout $git_good; $build_script;");
+			pts_module::set_option("current_revision", $rev_good);
+			shell_exec("cd $repo_dir; $git_bin checkout $rev_good; $build_script;");
 
 			// TODO: Add back script to recover PTS run if a reboot occurs during the build progress, or just leave it up to the build script
 		}
@@ -133,8 +133,8 @@ class git_bisect extends pts_module_interface
 		{
 			pts_module::set_option("current_status", "PROCESS_GOOD_TEST");
 			pts_module::set_option("current_result", -1);
-			pts_run_option_next("run_test", "git-bisect-test", array("AUTOMATED_MODE" => true, "DO_NOT_SAVE_RESULTS" => true));
-			pts_run_option_next("git-bisect.start");
+			pts_run_option_next("run_test", "bisect-test", array("AUTOMATED_MODE" => true, "DO_NOT_SAVE_RESULTS" => true));
+			pts_run_option_next("bisect.start");
 			return true;
 		}
 
@@ -157,16 +157,16 @@ class git_bisect extends pts_module_interface
 
 		if(pts_module::read_option("current_status") == "START_BISECT")
 		{
-			$git_bad = pts_module::read_option("git_bad");
-			$git_good = pts_module::read_option("git_good");
+			$rev_bad = pts_module::read_option("rev_bad");
+			$rev_good = pts_module::read_option("rev_good");
 
-			$output = shell_exec("cd $git_dir; $git_bin checkout -f; $git_bin bisect start; $git_bin bisect bad $git_bad; $git_bin bisect good $git_good");
+			$output = shell_exec("cd $repo_dir; $git_bin checkout -f; $git_bin bisect start; $git_bin bisect bad $rev_bad; $git_bin bisect good $rev_good");
 
 			if(($start = strrpos($output, "[")) !== false)
 			{
 				$output = substr($output, $start + 1);
 				$output = substr($output, 0, strpos($output, "]"));
-				pts_module::set_option("current_git_revision", $output);
+				pts_module::set_option("current_revision", $output);
 			}
 
 			pts_module::set_option("current_status", "RUN_BUILD_SCRIPT");
@@ -175,15 +175,15 @@ class git_bisect extends pts_module_interface
 		if(pts_module::read_option("current_status") == "RUN_BUILD_SCRIPT")
 		{
 			pts_module::set_option("current_status", "RUN_TEST");
-			shell_exec("cd $git_dir; $build_script;");
+			shell_exec("cd $repo_dir; $build_script;");
 		}
 
 		if(pts_module::read_option("current_status") == "RUN_TEST")
 		{
 			pts_module::set_option("current_status", "PROCESS_TEST");
 			pts_module::set_option("current_result", -1);
-			pts_run_option_next("run_test", "git-bisect-test", array("AUTOMATED_MODE" => true, "DO_NOT_SAVE_RESULTS" => true));
-			pts_run_option_next("git-bisect.start");
+			pts_run_option_next("run_test", "bisect-test", array("AUTOMATED_MODE" => true, "DO_NOT_SAVE_RESULTS" => true));
+			pts_run_option_next("bisect.start");
 			return true;
 		}
 
@@ -202,7 +202,7 @@ class git_bisect extends pts_module_interface
 				$regression_threshold = pts_module::read_option("regression_threshold");
 				$good_result = pts_module::read_option("good_result");
 				$biggest_delta = pts_module::read_option("biggest_delta");
-				$current_git_revision = pts_module::read_option("current_git_revision");
+				$current_revision = pts_module::read_option("current_revision");
 
 				if(pts_module::read_option("HIB"))
 				{
@@ -211,7 +211,7 @@ class git_bisect extends pts_module_interface
 					if($compare_fraction > $biggest_delta)
 					{
 						pts_module::set_option("biggest_delta", $compare_fraction);
-						pts_module::set_option("biggest_delta_rev", $current_git_revision);
+						pts_module::set_option("biggest_delta_rev", $current_revision);
 					}
 
 					if($result < ($regression_threshold * 1.03))
@@ -232,7 +232,7 @@ class git_bisect extends pts_module_interface
 					if($compare_fraction > $biggest_delta)
 					{
 						pts_module::set_option("biggest_delta", $compare_fraction);
-						pts_module::set_option("biggest_delta_rev", $current_git_revision);
+						pts_module::set_option("biggest_delta_rev", $current_revision);
 					}
 
 					if($result > ($regression_threshold * 0.97))
@@ -256,13 +256,13 @@ class git_bisect extends pts_module_interface
 
 		if(pts_module::read_option("current_status") == "GOOD_NEXT_BISECT" || pts_module::read_option("current_status") == "BAD_NEXT_BISECT")
 		{
-			$output = trim(shell_exec("cd $git_dir; $git_bin checkout -f; $git_bin bisect " . (substr(pts_module::read_option("current_status"), 0, 3) == "BAD" ? "bad" : "good")));
+			$output = trim(shell_exec("cd $repo_dir; $git_bin checkout -f; $git_bin bisect " . (substr(pts_module::read_option("current_status"), 0, 3) == "BAD" ? "bad" : "good")));
 
 			if(strpos($output, "first bad commit"))
 			{
 				echo $output;
 				$commit = substr($output, 0, strpos($output, " "));
-				pts_module::set_option("bad_git_revision", $commit);
+				pts_module::set_option("bad_revision", $commit);
 				return true;
 			}
 
@@ -270,7 +270,7 @@ class git_bisect extends pts_module_interface
 			{
 				$output = substr($output, $start + 1);
 				$output = substr($output, 0, strpos($output, "]"));
-				pts_module::set_option("current_git_revision", $output);
+				pts_module::set_option("current_revision", $output);
 			}
 
 			pts_module::set_option("current_status", "RUN_BUILD_SCRIPT");
