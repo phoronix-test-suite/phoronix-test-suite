@@ -78,6 +78,10 @@ function pts_unlink($file)
 {
 	return is_file($file) && unlink($file);
 }
+function pts_array_push(&$array, $to_push)
+{
+	return !in_array($to_push, $array) && array_push($array, $to_push);
+}
 function pts_empty($var)
 {
 	return trim($var) == null;

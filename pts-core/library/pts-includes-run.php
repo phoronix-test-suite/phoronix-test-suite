@@ -81,64 +81,55 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 function pts_verify_test_installation($identifiers)
 {
 	// Verify a test is installed
-	$tests = array();
 	$identifiers = pts_to_array($identifiers);
+	$contains_a_suite = false;
+	$tests_missing = array();
+	$tests_installed = array();
 
 	foreach($identifiers as $identifier)
 	{
-		foreach(pts_contained_tests($identifier) as $this_test)
+		if(!$contains_a_suite && pts_is_suite($identifier))
 		{
-			array_push($tests, $this_test);
+			$contains_a_suite = true;
 		}
-	}
 
-	$tests = array_unique($tests);
-	$needs_installing = array();
-	$pass_count = 0;
-	$valid_op = true;
-
-	foreach($tests as $test)
-	{
-		if(!pts_test_installed($test))
+		foreach(pts_contained_tests($identifier) as $test)
 		{
-			if(pts_test_supported($test))
+			if(!pts_test_installed($test))
 			{
-				array_push($needs_installing, $test);
+				if(pts_test_supported($test))
+				{
+					pts_array_push($tests_missing, $test);
+				}
 			}
 			else
 			{
-				$valid_op = false;
+				pts_array_push($tests_installed, $test);
 			}
 		}
-		else
-		{
-			$pass_count++;
-		}
 	}
-	
-	if(count($needs_installing) > 0)
-	{
-		$needs_installing = array_unique($needs_installing);
 
-		if(count($needs_installing) == 1)
+	if(($test_missing_count = count($tests_missing)) > 0)
+	{
+		if(count($tests_missing) == 1)
 		{
-			echo pts_string_header($needs_installing[0] . " isn't installed.\nTo install, run: phoronix-test-suite install " . $needs_installing[0]);
+			echo pts_string_header(($m = array_pop($tests_missing)) . " is not installed.\nTo install, run: phoronix-test-suite install " . $m);
 		}
 		else
 		{
-			$message = "Multiple tests need to be installed before proceeding:\n\n";
-			foreach($needs_installing as $single_package)
+			$message = "Multiple tests need to be installed:\n\n";
+			foreach($tests_missing as $single_package)
 			{
 				$message .= "- " . $single_package . "\n";
 			}
 
-			$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(" ", $identifiers);
+			$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(" ", $tests_missing);
 
 			echo pts_string_header($message);
 		}
 	}
 
-	return $valid_op;
+	return count($tests_installed) > 0 && ($test_missing_count == 0 || $contains_a_suite);
 }
 function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = null)
 {
