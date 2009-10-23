@@ -35,6 +35,7 @@ Phoronix Test Suite (Git)
 - pts-core: Check for allow_url_fopen php.ini setting if it's disabled rather than letting it produce a warning
 - phodevi: Fend off possible infinite loop on OpenBSD when phodevi_parser::read_sysctl() fails
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
+- phodevi: Improve motherboard detection on BSD operating systems
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile
 - pts: Update openal external dependency in fedora-packages.xml

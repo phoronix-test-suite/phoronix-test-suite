@@ -620,7 +620,7 @@ class phodevi_parser
 			{
 				$output = shell_exec("sysctl " . $desc[$i] . " 2>&1");
 
-				if((($point = strpos($output, ":")) > 0 || ($point = strpos($output, "=")) > 0) && strpos($output, "unknown oid") === false && strpos($output, "is invalid") === false)
+				if((($point = strpos($output, ":")) > 0 || ($point = strpos($output, "=")) > 0) && strpos($output, "unknown oid") === false && strpos($output, "is invalid") === false && strpos($output, "not available") === false)
 				{
 					$info = trim(substr($output, $point + 1));
 				}

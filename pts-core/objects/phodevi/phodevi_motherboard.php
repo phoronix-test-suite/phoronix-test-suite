@@ -74,9 +74,16 @@ class phodevi_motherboard extends pts_device_interface
 		}
 		else if(IS_BSD)
 		{
-			if(($vendor = phodevi_parser::read_sysctl("hw.vendor")) != false && ($version = phodevi_parser::read_sysctl("hw.version")) != false)
+			if(($vendor = phodevi_parser::read_sysctl("hw.vendor")) != false)
 			{
-				$info = trim($vendor . " " . $version);
+				if(($version = phodevi_parser::read_sysctl("hw.version")) != false || ($version = phodevi_parser::read_sysctl("hw.product")) != false)
+				{
+					$info = trim($vendor . " " . $version);
+				}
+				else
+				{
+					$info = $vendor;
+				}
 			}
 			else if(($acpi = phodevi_parser::read_sysctl("dev.acpi.0.%desc")) != false)
 			{
