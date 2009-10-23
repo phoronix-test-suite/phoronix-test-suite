@@ -41,7 +41,7 @@ class info implements pts_option_interface
 		}
 		else if(pts_is_test($to_info))
 		{
-			$test = new pts_test_profile_details($to_info);
+			$test = new pts_test_profile($to_info);
 			$test_title = $test->get_name();
 			$test_version = $test->get_version();
 			if(!empty($test_version))
@@ -121,7 +121,7 @@ class info implements pts_option_interface
 				}
 			}
 
-			$associated_suites = $test->suites_using_this_test();
+			$associated_suites = pts_suites_containing_test($to_info);
 			if(count($associated_suites) > 0)
 			{
 				asort($associated_suites);

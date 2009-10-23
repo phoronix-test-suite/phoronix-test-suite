@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_test_profile_details
+class pts_test_profile
 {
 	private $identifier;
 	private $xml_parser;
@@ -32,10 +32,7 @@ class pts_test_profile_details
 	}
 	public function get_maintainer()
 	{
-		$test_maintainer = pts_trim_explode("|", $this->xml_parser->getXMLValue(P_TEST_MAINTAINER));
-		$test_maintainer = $test_maintainer[0] . (count($test_maintainer) == 2 ? " <" . $test_maintainer[1] . ">" : null);
-
-		return $test_maintainer;
+		return $this->xml_parser->getXMLValue(P_TEST_MAINTAINER);
 	}
 	public function get_test_hardware_type()
 	{
@@ -85,25 +82,7 @@ class pts_test_profile_details
 	{
 		return pts_trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_EXDEP));
 	}
-	public function suites_using_this_test()
-	{
-		$associated_suites = array();
-
-		foreach(pts_available_suites_array() as $identifier)
-		{
-		 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
-			$name = $xml_parser->getXMLValue(P_SUITE_TITLE);
-			$tests = pts_contained_tests($identifier);
-
-			if(in_array($this->identifier, $tests))
-			{
-				array_push($associated_suites, $identifier);
-			}
-		}
-
-		return $associated_suites;
-	}
-	public function verified_state()
+	public function is_verified_state()
 	{
 		return !in_array($this->get_status(), array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED"));
 	}

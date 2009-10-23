@@ -92,7 +92,7 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 
 	foreach($installed as $test)
 	{
-		$tp = new pts_test_profile_details($test);
+		$tp = new pts_test_profile($test);
 		$hw_type = $tp->get_test_hardware_type();
 		$license = $tp->get_license();
 
@@ -115,11 +115,11 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 
 	foreach($test_names as $name)
 	{
-		$tp = new pts_test_profile_details($name);
+		$tp = new pts_test_profile($name);
 		$hw_type = $tp->get_test_hardware_type();
 		$license = $tp->get_license();
 
-		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->verified_state())
+		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->is_verified_state())
 		{
 			$show = true;
 
@@ -231,7 +231,7 @@ function pts_test_external_dependencies_satisfied($identifier)
 
 	foreach(pts_contained_tests($identifier, true, true, false) as $name)
 	{
-		$tp = new pts_test_profile_details($name);
+		$tp = new pts_test_profile($name);
 
 		foreach($tp->get_dependencies() as $dependency)
 		{

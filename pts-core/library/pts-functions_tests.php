@@ -924,5 +924,19 @@ function pts_test_comparison_hash($test_identifier, $arguments, $attributes = nu
 
 	return base64_encode(implode(",", $hash_table));
 }
+function pts_suites_containing_test($test_identifier)
+{
+	$associated_suites = array();
+
+	foreach(pts_available_suites_array() as $identifier)
+	{
+		if(in_array($test_identifier, pts_contained_tests($identifier)))
+		{
+			array_push($associated_suites, pts_suite_read_xml($identifier, P_SUITE_TITLE));
+		}
+	}
+
+	return $associated_suites;
+}
 
 ?>

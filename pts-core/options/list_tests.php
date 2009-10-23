@@ -29,13 +29,13 @@ class list_tests implements pts_option_interface
 		{
 			if((pts_is_assignment("LIST_UNSUPPORTED") xor pts_test_supported($identifier)) || pts_is_assignment("LIST_ALL_TESTS"))
 			{
-				$tp = new pts_test_profile_details($identifier);
+				$tp = new pts_test_profile($identifier);
 
 				if(getenv("PTS_DEBUG"))
 				{
 					echo sprintf("%-18ls %-6ls %-6ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $identifier, $tp->get_test_profile_version(), $tp->get_version(), $tp->get_status(), $tp->get_license(), $tp->get_download_size(), $tp->get_environment_size(), $tp->get_maintainer());
 				}
-				else if($tp->get_name() != null && (pts_is_assignment("LIST_ALL_TESTS") || $tp->verified_state()))
+				else if($tp->get_name() != null && (pts_is_assignment("LIST_ALL_TESTS") || $tp->is_verified_state()))
 				{
 					echo sprintf("%-18ls - %-36ls [%s, %10ls]\n", $identifier, $tp->get_name(), $tp->get_status(), $tp->get_license());
 				}

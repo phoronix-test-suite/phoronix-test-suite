@@ -472,7 +472,7 @@ class gui_gtk implements pts_option_interface
 		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "TEST")
 		{
 			$identifier = pts_test_name_to_identifier($identifier);
-			$test_profile = new pts_test_profile_details($identifier);
+			$test_profile = new pts_test_profile($identifier);
 
 			$info_r["Maintainer"] = $test_profile->get_maintainer();
 			$info_r["Test Type"] = $test_profile->get_test_hardware_type();
@@ -1216,7 +1216,7 @@ class gui_gtk implements pts_option_interface
 			else
 			{
 				$identifier = pts_test_name_to_identifier($identifier);
-				$obj = new pts_test_profile_details($identifier);
+				$obj = new pts_test_profile($identifier);
 
 				$str = "Software Dependencies: ";
 				$i = 0;
@@ -1244,7 +1244,7 @@ class gui_gtk implements pts_option_interface
 
 				$str = "Suites Using This Test: ";
 				$i = 0;
-				foreach($obj->suites_using_this_test() as $suite)
+				foreach(pts_suites_containing_test($identifier) as $suite)
 				{
 					if($i > 0)
 					{
