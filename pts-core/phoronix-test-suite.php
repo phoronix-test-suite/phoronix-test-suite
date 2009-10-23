@@ -96,7 +96,12 @@ if(!QUICK_START)
 
 	register_shutdown_function("pts_shutdown");
 
-	if(pts_string_bool(pts_read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")) || pts_http_get_contents("http://www.phoronix-test-suite.com/PTS", false, false) != "PTS")
+	if(ini_get("allow_url_fopen") == "Off")
+	{
+		echo "\nThe allow_url_fopen option in your PHP configuration must be enabled for network support.\n\n";
+		define("NO_NETWORK_COMMUNICATION", true);
+	}
+	else if(pts_string_bool(pts_read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")) || pts_http_get_contents("http://www.phoronix-test-suite.com/PTS", false, false) != "PTS")
 	{
 		// TODO: possibly be smarter than to bang PTS server on each run, perhaps each day and use PTS_CORE_STORAGE for remembering
 		define("NO_NETWORK_COMMUNICATION", true);
