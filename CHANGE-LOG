@@ -36,6 +36,7 @@ Phoronix Test Suite (Git)
 - phodevi: Fend off possible infinite loop on OpenBSD when phodevi_parser::read_sysctl() fails
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
 - phodevi: Improve motherboard detection on BSD operating systems
+- phodevi: Improve CPU temperature detection on BSD operating systems
 - tandem_Xml: XML parsing fix when reading
 - pts: Fix for prey test profile
 - pts: Update openal external dependency in fedora-packages.xml

@@ -272,11 +272,11 @@ class phodevi_cpu extends pts_device_interface
 		if(IS_BSD)
 		{
 
-			$cpu_temp = phodevi_parser::read_sysctl("dev.cpu.0.temperature");
+			$cpu_temp = phodevi_parser::read_sysctl(array("dev.cpu.0.temperature", "hw.sensors.cpu0.temp0"));
 
 			if($cpu_temp != false)
 			{
-				if(($end = strpos($cpu_temp, 'C')) > 0)
+				if(($end = strpos($cpu_temp, 'C')) > 0 || ($end = strpos($cpu_temp, "degC")))
 				{
 					$cpu_temp = substr($cpu_temp, 0, $end);
 				}
