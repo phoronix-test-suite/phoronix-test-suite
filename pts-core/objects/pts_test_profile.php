@@ -25,10 +25,15 @@ class pts_test_profile
 	private $identifier;
 	private $xml_parser;
 
-	public function __construct($identifier)
+	public function __construct($identifier, $override_values = null)
 	{
 		$this->xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
+
+		if($override_values != null && is_array($override_values))
+		{
+			$this->xml_parser->overrideXMLValues($override_values);
+		}
 	}
 	public function get_maintainer()
 	{
@@ -74,7 +79,7 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 	}
-	public function get_name()
+	public function get_test_title()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_TITLE);
 	}
@@ -107,6 +112,75 @@ class pts_test_profile
 		}
 
 		return $dependency_names;
+	}
+
+	public function get_default_arguments()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
+	}
+	public function get_test_executable()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_EXECUTABLE, $this->identifier);
+	}
+	public function get_test_executable_paths()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS);
+	}
+	public function get_times_to_run()
+	{
+		return intval($this->xml_parser->getXMLValue(P_TEST_RUNCOUNT, 3));
+	}
+	public function get_runs_to_ignore()
+	{
+		return pts_trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_IGNORERUNS));
+	}
+	public function get_pre_run_message()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_PRERUNMSG);
+	}
+	public function get_post_run_message()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_POSTRUNMSG);
+	}
+	public function get_test_scale()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_SCALE);
+	}
+	public function get_test_proportion()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_PROPORTION);
+	}
+	public function get_test_result_format()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_RESULTFORMAT, "BAR_GRAPH");
+	}
+	public function get_test_quantifier()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_QUANTIFIER);
+	}
+	public function is_root_required()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_ROOTNEEDED) == "TRUE";
+	}
+	public function allow_cache_share()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE) == "TRUE";
+	}
+	public function get_min_length()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_MIN_LENGTH);
+	}
+	public function get_max_length()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_MAX_LENGTH);
+	}
+	public function get_environment_testing_size()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE, -1);
+	}
+	public function get_test_subtitle()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_SUBTITLE);
 	}
 }
 

@@ -382,30 +382,19 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		return false;
 	}
 
-	$xml_parser = new pts_test_tandem_XmlReader($test_identifier);
-	$xml_parser->overrideXMLValues($test_run_request->get_override_options());
-	$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE, $test_identifier);
-	$test_title = $xml_parser->getXMLValue(P_TEST_TITLE);
-	$test_version = $xml_parser->getXMLValue(P_TEST_VERSION);
-	$times_to_run = intval($xml_parser->getXMLValue(P_TEST_RUNCOUNT, 3));
-	$ignore_runs = pts_trim_explode(",", $xml_parser->getXMLValue(P_TEST_IGNORERUNS));
-	$pre_run_message = $xml_parser->getXMLValue(P_TEST_PRERUNMSG);
-	$post_run_message = $xml_parser->getXMLValue(P_TEST_POSTRUNMSG);
-	$result_scale = $xml_parser->getXMLValue(P_TEST_SCALE);
-	$result_proportion = $xml_parser->getXMLValue(P_TEST_PROPORTION);
-	$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT, "BAR_GRAPH");
-	$result_quantifier = $xml_parser->getXMLValue(P_TEST_QUANTIFIER);
-	$arg_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
-	$execute_path = $xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS);
-	$default_arguments = $xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
-	$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
-	$root_required = $xml_parser->getXMLValue(P_TEST_ROOTNEEDED) == "TRUE";
-	$allow_cache_share = $xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE) == "TRUE";
-	$min_length = $xml_parser->getXMLValue(P_TEST_MIN_LENGTH);
-	$max_length = $xml_parser->getXMLValue(P_TEST_MAX_LENGTH);
-	$env_testing_size = $xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE);
-	$default_test_descriptor = $xml_parser->getXMLValue(P_TEST_SUBTITLE);
-	unset($xml_parser);
+	$test_profile = new pts_test_profile($test_identifier, $test_run_request->get_override_options());
+	$execute_binary = $test_profile->get_test_executable();
+	$times_to_run = $test_profile->get_times_to_run();
+	$ignore_runs = $test_profile->get_runs_to_ignore();
+	$pre_run_message = $test_profile->get_pre_run_message();
+	$post_run_message = $test_profile->get_post_run_message();
+	$result_format = $test_profile->get_test_result_format();
+	$execute_path = $test_profile->get_test_executable_paths();
+	$test_type = $test_profile->get_test_hardware_type();
+	$allow_cache_share = $test_profile->allow_cache_share();
+	$min_length = $test_profile->get_min_length();
+	$max_length = $test_profile->get_max_length();
+	$default_test_descriptor = $test_profile->get_test_subtitle();
 
 	if($test_type == "Graphics" && getenv("DISPLAY") == false)
 	{
@@ -419,10 +408,10 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		return false;
 	}
 
-	if(!empty($env_testing_size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $env_testing_size)
+	if($test_profile->get_environment_testing_size() != -1 && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $test_profile->get_environment_testing_size())
 	{
 		// Ensure enough space is available on disk during testing process
-		$display_mode->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run. " . $env_testing_size . " MB of space is needed.");
+		$display_mode->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run.");
 		pts_release_lock($test_fp, $lock_file);
 		return false;
 	}
@@ -457,19 +446,24 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if(pts_test_needs_updated_install($test_identifier))
 	{
-		echo pts_string_header("NOTE: This test installation is out of date.\nFor best results, " . $test_title . " should be re-installed.");
+		echo pts_string_header("NOTE: This test installation is out of date.\nIt is recommended that " . $test_identifier . " be re-installed.");
 	}
 
-	$pts_test_arguments = trim($default_arguments . " " . str_replace($default_arguments, "", $extra_arguments));
+	$pts_test_arguments = trim($test_profile->get_default_arguments() . " " . str_replace($test_profile->get_default_arguments(), "", $extra_arguments));
 	$extra_runtime_variables = pts_extra_run_time_vars($test_identifier, $pts_test_arguments);
 
 	// Start
 	$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
 	$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
-	$pts_test_result->set_attribute("TEST_TITLE", $test_title);
+	$pts_test_result->set_attribute("TEST_TITLE", $test_profile->get_test_title());
+	$pts_test_result->set_attribute("TEST_VERSION", $test_profile->get_version());
 	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
 	$pts_test_result->set_attribute("TEST_IDENTIFIER", $test_identifier);
 	$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);
+	$pts_test_result->set_result_format($result_format);
+	$pts_test_result->set_result_proportion($test_profile->get_test_proportion());
+	$pts_test_result->set_result_scale($test_profile->get_test_scale());
+	$pts_test_result->set_result_quantifier($test_profile->get_test_quantifier());
 	pts_module_process("__pre_test_run", $pts_test_result);
 
 	$time_test_start = time();
@@ -483,7 +477,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$runtime_identifier = pts_unique_runtime_identifier();
 	$execute_binary_prepend = "";
 
-	if(!$cache_share_present && $root_required)
+	if(!$cache_share_present && $test_profile->is_root_required())
 	{
 		if(pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
 		{
@@ -499,6 +493,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$display_mode->test_run_start($pts_test_result);
+	unset($test_profile);
 
 	for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
@@ -812,13 +807,8 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	// Result Calculation
 	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
-	$pts_test_result->set_attribute("TEST_VERSION", $test_version);
 	$pts_test_result->set_attribute("EXTRA_ARGUMENTS", $extra_arguments);
 	$pts_test_result->set_attribute("ELAPSED_TIME", $time_test_elapsed);
-	$pts_test_result->set_result_format($result_format);
-	$pts_test_result->set_result_proportion($result_proportion);
-	$pts_test_result->set_result_scale($result_scale);
-	$pts_test_result->set_result_quantifier($result_quantifier);
 	$pts_test_result->calculate_end_result(); // Process results
 
 	$display_mode->test_run_end($pts_test_result);

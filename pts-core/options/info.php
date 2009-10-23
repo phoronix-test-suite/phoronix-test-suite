@@ -42,7 +42,7 @@ class info implements pts_option_interface
 		else if(pts_is_test($to_info))
 		{
 			$test = new pts_test_profile($to_info);
-			$test_title = $test->get_name();
+			$test_title = $test->get_test_title();
 			$test_version = $test->get_version();
 			if(!empty($test_version))
 			{

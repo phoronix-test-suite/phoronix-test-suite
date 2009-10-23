@@ -96,7 +96,7 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 		$hw_type = $tp->get_test_hardware_type();
 		$license = $tp->get_license();
 
-		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->get_name() != "")
+		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->get_test_title() != "")
 		{
 			array_push($installed_tests, $test);
 		}
