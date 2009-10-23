@@ -82,7 +82,7 @@ class phodevi_disk extends pts_device_interface
 				}
 				$i++;
 			}
-			while($disk != false);
+			while($disk != false && $i < 128);
 		}
 		else if(IS_LINUX)
 		{
