@@ -81,7 +81,6 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 function pts_verify_test_installation($identifiers)
 {
 	// Verify a test is installed
-	$identifiers_o = $identifiers;
 	$tests = array();
 	$identifiers = pts_to_array($identifiers);
 
@@ -136,11 +135,6 @@ function pts_verify_test_installation($identifiers)
 			$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(" ", $identifiers);
 
 			echo pts_string_header($message);
-		}
-
-		if(pts_is_test($identifiers_o))
-		{
-			$valid_op = false;
 		}
 	}
 
