@@ -211,10 +211,9 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$dis
 		$is_weighted_run = false;
 	}
 
-	$active_xml = SAVE_RESULTS_DIR . $save_name . "/active.xml";
 	if($save_name != null)
 	{
-		$tandem_xml->saveXMLFile($active_xml);
+		$tandem_xml->saveXMLFile(SAVE_RESULTS_DIR . $save_name . "/active.xml");
 	}
 
 	foreach($test_run_requests as $test_run_request)

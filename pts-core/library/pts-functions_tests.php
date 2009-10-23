@@ -671,9 +671,9 @@ function pts_suite_supported($identifier)
 	$tests = pts_contained_tests($identifier, false, false, true);
 	$supported_size = $original_size = count($tests);
 
-	for($i = 0; $i < $original_size; $i++)
+	foreach($tests as $test)
 	{
-		if(!pts_test_supported(@$tests[$i]))
+		if(!pts_test_supported($test))
 		{
 			$supported_size--;
 		}

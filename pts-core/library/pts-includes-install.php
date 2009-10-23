@@ -33,10 +33,9 @@ function pts_start_install($to_install, &$display_mode)
 	{
 		foreach(pts_contained_tests($to_install_test, true) as $test)
 		{
-			array_push($tests, $test);
+			pts_array_push($tests, $test);
 		}
 	}
-	$tests = array_unique($tests);
 
 	if(count($tests) == 0)
 	{
@@ -126,10 +125,10 @@ function pts_download_test_files($identifier, &$display_mode)
 		$module_pass = array($identifier, $download_packages);
 		pts_module_process("__pre_test_download", $module_pass);
 
-		for($i = 0; $i < count($download_packages); $i++)
+		foreach($download_packages as $download_package)
 		{
 			$download_location = TEST_ENV_DIR . $identifier . "/";
-			$package_filename = $download_packages[$i]->get_filename();
+			$package_filename = $download_package->get_filename();
 			$package_filename_temp = $package_filename . ".pts";
 			$download_destination = $download_location . $package_filename;
 			$download_destination_temp = $download_location . $package_filename_temp;
@@ -142,8 +141,8 @@ function pts_download_test_files($identifier, &$display_mode)
 					$header_displayed = true;
 				}
 
-				$urls = $download_packages[$i]->get_download_url_array();
-				$package_md5 = $download_packages[$i]->get_md5();
+				$urls = $download_package->get_download_url_array();
+				$package_md5 = $download_package->get_md5();
 
 				$found_in_remote_cache = false;
 				if(($remote_download_file_count = count($remote_download_files)) > 0)
@@ -152,7 +151,7 @@ function pts_download_test_files($identifier, &$display_mode)
 					{
 						if($remote_download_files[$f]->get_filename() == $package_filename && $remote_download_files[$f]->get_md5() == $package_md5)
 						{
-							$display_mode->test_install_download_file($download_packages[$i], "DOWNLOAD_FROM_CACHE");
+							$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE");
 							echo pts_download($remote_download_files[$f]->get_download_cache_directory() . $package_filename, $download_destination_temp);
 							echo "\n";
 
@@ -182,12 +181,12 @@ function pts_download_test_files($identifier, &$display_mode)
 							if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
 							{
 								// P_OPTION_CACHE_SYMLINK is disabled by default for now
-								$display_mode->test_install_download_file($download_packages[$i], "LINK_FROM_CACHE");
+								$display_mode->test_install_download_file($download_package, "LINK_FROM_CACHE");
 								pts_symlink($local_cache_directories[$j] . $package_filename, $download_destination);
 							}
 							else
 							{
-								$display_mode->test_install_download_file($download_packages[$i], "COPY_FROM_CACHE");
+								$display_mode->test_install_download_file($download_package, "COPY_FROM_CACHE");
 								copy($local_cache_directories[$j] . $package_filename, $download_destination);
 							}
 
@@ -235,7 +234,7 @@ function pts_download_test_files($identifier, &$display_mode)
 							while(!pts_is_valid_download_url($url));
 						}
 
-						$display_mode->test_install_download_file($download_packages[$i], "DOWNLOAD");
+						$display_mode->test_install_download_file($download_package, "DOWNLOAD");
 						echo pts_download($url, $download_destination_temp);
 
 						if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))

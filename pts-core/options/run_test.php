@@ -138,10 +138,7 @@ class run_test implements pts_option_interface
 
 				foreach(explode(";", $test_previous_properties) as $test_prop)
 				{
-					if(!in_array($test_prop, $test_properties))
-					{
-						array_push($test_properties, $test_prop);
-					}
+					pts_array_push($test_properties, $test_prop);
 				}
 
 				pts_module_process_extensions($test_extensions, $module_store);

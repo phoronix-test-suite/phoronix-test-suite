@@ -36,10 +36,7 @@ class pts_test_run_manager
 	{
 		$this_run_request = new pts_test_run_request($test_identifier, $arguments, $descriptions, $override_test_options);
 
-		if(!in_array($this_run_request, $this->tests_to_run))
-		{
-			array_push($this->tests_to_run, $this_run_request);
-		}
+		pts_array_push($this->tests_to_run, $this_run_request);
 	}
 	public function add_single_test_run($test_identifier, $arguments, $descriptions, $override_test_options = null)
 	{
