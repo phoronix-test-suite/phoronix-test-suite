@@ -35,7 +35,7 @@ class install_dependencies implements pts_option_interface
 	public static function run($r)
 	{
 		$r = array_map("strtolower", $r);
-		$display_mode = new pts_standard_display_mode();
+		$display_mode = pts_get_display_mode_object();
 		pts_install_package_on_distribution($r, $display_mode);
 	}
 }

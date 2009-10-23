@@ -285,7 +285,7 @@ function pts_get_display_mode_object()
 			}
 			else
 			{
-				$display_mode = new pts_standard_display_mode();
+				$display_mode = new pts_basic_display_mode();
 			}
 			break;
 	}
