@@ -551,7 +551,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			$exit_status = trim(file_get_contents(TEST_ENV_DIR . $test_identifier . "/test-exit-status"));
 			unlink(TEST_ENV_DIR . $test_identifier . "/test-exit-status");
 
-			if($exit_status != 0)
+			if($exit_status != 0 && !IS_BSD)
 			{
 				$display_mode->test_run_error("The test exited with a non-zero exit status. Test run failed.");
 				$exit_status_pass = false;

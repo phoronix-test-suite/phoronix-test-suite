@@ -472,7 +472,7 @@ function pts_install_test($identifier, &$display_mode)
 						$install_exit_status = trim(file_get_contents(TEST_ENV_DIR . $identifier . "/install-exit-status"));
 						unlink(TEST_ENV_DIR . $identifier . "/install-exit-status");
 
-						if($install_exit_status != "0")
+						if($install_exit_status != 0 && !IS_BSD)
 						{
 							// TODO: perhaps better way to handle this than to remove pts-install.xml
 							pts_unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
