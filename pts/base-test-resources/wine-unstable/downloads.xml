@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://voxel.dl.sourceforge.net/sourceforge/wine/wine-1.1.25.tar.bz2, http://internap.dl.sourceforge.net/sourceforge/wine/wine-1.1.25.tar.bz2, http://heanet.dl.sourceforge.net/sourceforge/wine/wine-1.1.25.tar.bz2, http://waix.dl.sourceforge.net/sourceforge/wine/wine-1.1.25.tar.bz2</URL>
-			<MD5>fccfb3aa05b29c7e8f877b38352eca39</MD5>
-			<FileSize>15555891</FileSize>
+			<URL>http://voxel.dl.sourceforge.net/sourceforge/wine/wine-1.1.32.tar.bz2, http://internap.dl.sourceforge.net/sourceforge/wine/wine-1.1.32.tar.bz2, http://heanet.dl.sourceforge.net/sourceforge/wine/wine-1.1.32.tar.bz2, http://waix.dl.sourceforge.net/sourceforge/wine/wine-1.1.32.tar.bz2</URL>
+			<MD5>4a3fe87363b75cdca55ed9187fcf5f08</MD5>
+			<FileSize>15871530</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

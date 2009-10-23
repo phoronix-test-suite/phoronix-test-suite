@@ -7,6 +7,6 @@
 		<ExternalDependencies>glut, libpng-development, xorg-development, bison, flex, build-utilities</ExternalDependencies>
 	</TestProfile>
 	<TestInformation>
-		<SubTitle>WINE v1.1.25</SubTitle>
+		<SubTitle>Wine v1.1.32</SubTitle>
 	</TestInformation>
 </PhoronixTestSuite>
