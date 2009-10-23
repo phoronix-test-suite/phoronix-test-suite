@@ -1,16 +1,16 @@
 #!/bin/sh
 
 tar -xvf pts-sqlite-tests-1.tar.gz
-tar -xvf sqlite-3.6.13.tar.gz
+tar -xvf sqlite-3.6.19.tar.gz
 mkdir sqlite_/
 
-cd sqlite-3.6.13/
+cd sqlite-3.6.19/
 ./configure --prefix=$HOME/sqlite_/
 make
 echo $? > ~/install-exit-status
 make install
 cd ..
-rm -rf sqlite-3.6.13/
+rm -rf sqlite-3.6.19/
 rm -rf sqlite_/lib/
 
 echo "#!/bin/sh
