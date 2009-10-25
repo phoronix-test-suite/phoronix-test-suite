@@ -11,3 +11,4 @@ jolicloud = ubuntu
 gnewsense = ubuntu
 fluxbuntu = ubuntu
 mythbuntu = ubuntu
+centos = fedora

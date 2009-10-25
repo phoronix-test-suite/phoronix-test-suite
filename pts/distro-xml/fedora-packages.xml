@@ -23,7 +23,7 @@
 		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>tcsh</PackageName>
-			<FileCheck>/bin/tcsh</FileCheck>
+			<FileCheck>/bin/tcsh OR /usr/bin/tcsh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
@@ -217,7 +217,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>openmpi-libs</PackageName>
+			<PackageName>openmpi-libs openmpi-devel openmpi</PackageName>
 			<FileCheck>/usr/lib/openmpi/lib/libmpi.so, /usr/bin/mpirun.openmpi</FileCheck>
 		</Package>
 	</ExternalDependencies>
