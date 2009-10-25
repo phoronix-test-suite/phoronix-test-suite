@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "2.2.0a4");
+define("PTS_VERSION", "2.2.0b1");
 define("PTS_CODENAME", "BARDU");
 
 function pts_codename($full_string = false)
