@@ -5,7 +5,7 @@ tar -xvf minion-0.9-src.tar.gz
 cd minion-0.9/
 mkdir build
 cd build/
-cmake ..
+cmake -DQUICK ..
 make minion -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 cd ../..

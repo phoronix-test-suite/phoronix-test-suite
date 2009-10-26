@@ -46,6 +46,7 @@ Phoronix Test Suite 2.2 Beta 1
 - pts: Update wine-unstable base test profile against Wine 1.1.32
 - pts: Update graphics-magick test profile against GraphicsMagick 1.3.7
 - pts: Use fedora-packages.xml external dependencies on CentOS instead of centos-packages.xml that is the same but less maintained
+- pts: Upstream request regarding cmake change for minion test profile
 
 Phoronix Test Suite 2.2 Alpha 4
 October 12, 2009
