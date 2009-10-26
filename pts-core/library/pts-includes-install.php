@@ -71,12 +71,23 @@ function pts_start_install($to_install, &$display_mode)
 	pts_set_assignment("TEST_INSTALL_COUNT", $install_count);
 
 	pts_module_process("__pre_install_process", $tests);
+	$failed_installs = array();
 	foreach($tests as $i => $test)
 	{
 		pts_set_assignment("TEST_INSTALL_POSITION", ($i + 1));
-		pts_install_test($test, $display_mode);
+		pts_install_test($display_mode, $test, $failed_installs);
 	}
 	pts_module_process("__post_install_process", $tests);
+
+	if(!pts_is_assignment("SILENCE_MESSAGES") && count($failed_installs) > 0 && count($tests) > 1)
+	{
+		echo "\nThe following tests failed to install:\n\n";
+		foreach($failed_installs as $fail)
+		{
+			echo "\t- " . $fail . "\n";
+		}
+		echo "\n";
+	}
 
 	do
 	{
@@ -367,7 +378,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 		pts_symlink($xauth_file, TEST_ENV_DIR . $identifier . "/.Xauthority");
 	}
 }
-function pts_install_test($identifier, &$display_mode)
+function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 {
 	if(!pts_is_test($identifier))
 	{
@@ -412,6 +423,7 @@ function pts_install_test($identifier, &$display_mode)
 				if($download_test_files == false)
 				{
 					echo "\nInstallation of " . $identifier . " test failed.\n";
+					array_push($failed_installs, $identifier);
 					return false;
 				}
 
@@ -479,6 +491,7 @@ function pts_install_test($identifier, &$display_mode)
 							pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
 
 							echo "\nThe " . $identifier . " installer exited with a non-zero exit status. Installation failed.\n";
+							array_push($failed_installs, $identifier);
 							return false;
 						}
 					}
