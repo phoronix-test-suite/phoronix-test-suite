@@ -40,6 +40,10 @@ class pts_assignment_manager
 	{
 		return isset(self::$assignments[$assignment]);
 	}
+	public static function get_all_assignments()
+	{
+		return self::$assignments;
+	}
 	public static function clear($assignment)
 	{
 		if(self::is_set($assignment))

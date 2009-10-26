@@ -42,7 +42,11 @@ class run_test implements pts_option_interface
 		$test_properties = array();
 
 		// Cleanup tests to run
-		pts_cleanup_tests_to_run($to_run_identifiers);
+		if(!pts_cleanup_tests_to_run($to_run_identifiers))
+		{
+			return false;
+		}
+
 		pts_set_assignment("TO_RUN_IDENTIFIERS", $to_run_identifiers);
 		$unique_test_count = count(array_unique($to_run_identifiers));
 		$test_run_manager = new pts_test_run_manager();

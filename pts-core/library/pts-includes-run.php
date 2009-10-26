@@ -59,11 +59,20 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 			continue;
 		}
 
-		if(pts_verify_test_installation($lower_identifier) == false)
+		$verify_install = pts_verify_test_installation($lower_identifier);
+
+		if($verify_install == false)
 		{
 			// Eliminate this test, it's not properly installed
 			unset($to_run_identifiers[$i]);
 			continue;
+		}
+		else if(is_array($verify_install))
+		{
+			pts_set_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS", true);
+			pts_run_option_next("install_test", $verify_install, pts_assignment_manager::get_all_assignments());
+			pts_run_option_next("run_test", $to_run_identifiers, pts_assignment_manager::get_all_assignments());
+			return false;
 		}
 			
 		if(is_file($to_run_identifiers[$i]) && substr(basename($to_run_identifiers[$i]), -4) == ".svg")
@@ -77,6 +86,8 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 			}
 		}
 	}
+
+	return true;
 }
 function pts_verify_test_installation($identifiers)
 {
@@ -88,7 +99,7 @@ function pts_verify_test_installation($identifiers)
 
 	foreach($identifiers as $identifier)
 	{
-		if(!$contains_a_suite && pts_is_suite($identifier))
+		if(!$contains_a_suite && (pts_is_suite($identifier) || pts_is_test_result($identifier)))
 		{
 			$contains_a_suite = true;
 		}
@@ -113,11 +124,11 @@ function pts_verify_test_installation($identifiers)
 	{
 		if(count($tests_missing) == 1)
 		{
-			echo pts_string_header(($m = array_pop($tests_missing)) . " is not installed.\nTo install, run: phoronix-test-suite install " . $m);
+			echo pts_string_header($tests_missing[0] . " is not installed.\nTo install, run: phoronix-test-suite install " . $tests_missing[0]);
 		}
 		else
 		{
-			$message = "Multiple tests need to be installed:\n\n";
+			$message = "Multiple tests are not installed:\n\n";
 			foreach($tests_missing as $single_package)
 			{
 				$message .= "- " . $single_package . "\n";
@@ -126,6 +137,16 @@ function pts_verify_test_installation($identifiers)
 			$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(" ", $tests_missing);
 
 			echo pts_string_header($message);
+		}
+
+		if(!pts_read_assignment("AUTOMATED_MODE") && !pts_read_assignment("IS_BATCH_MODE") && !pts_read_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS"))
+		{
+			$stop_and_install = pts_bool_question("Would you like to install these tests now (Y/n)?", true);
+
+			if($stop_and_install)
+			{
+				return $tests_missing;
+			}
 		}
 	}
 

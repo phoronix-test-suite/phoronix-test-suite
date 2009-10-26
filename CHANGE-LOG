@@ -35,6 +35,7 @@ Phoronix Test Suite 2.2 Beta 1
 - pts-core: Check for allow_url_fopen php.ini setting if it's disabled rather than letting it produce a warning
 - pts-core: Rename the pts_standard_display_mode to pts_basic_display_mode
 - pts-core: When running in batch mode or with debug-run, at end of testing report any tests/options that failed to properly run
+- pts-core: When tests are not installed when called in run-test option, prompt the user to automatically install the tests from there
 - pts-core: Various bug fixes
 - phodevi: Fend off possible infinite loop on OpenBSD when phodevi_parser::read_sysctl() fails
 - phodevi: Fix for reporting fglrx version string with newer versions of ATI Catalyst Linux driver
