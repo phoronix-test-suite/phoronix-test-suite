@@ -314,18 +314,16 @@ function pts_module_process_task($module, $process, &$object_pass = null)
 		}
 	}
 }
-function pts_module_process_extensions($extensions, &$write_to)
+function pts_module_process_extensions($extensions)
 {
 	// Process extensions for modules
 	if(!empty($extensions))
 	{
-		$write_to = $extensions;
-		$extensions = explode(";", $extensions);
-
-		foreach($extensions as $ev)
+		foreach(explode(";", $extensions) as $ev)
 		{
-			$ev_r = explode("=", $ev);
-			pts_set_environment_variable($ev_r[1], $ev_r[2]);
+			list($var, $value) = explode("=", $ev);
+			pts_set_environment_variable($var, $value);
+			pts_module_maanager::var_store_add($var, $value);
 		}
 
 		pts_auto_detect_modules();

@@ -23,7 +23,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Option>
-			<DisplayName>Test Item</DisplayName>
+			<DisplayName>Test</DisplayName>
 			<Identifier>test-item</Identifier>
 			<Menu>
 				<Entry>
@@ -45,7 +45,7 @@
 			</Menu>
 		</Option>
 		<Option>
-			<DisplayName>Filesize Per Thread</DisplayName>
+			<DisplayName>Size Per Thread</DisplayName>
 			<Identifier>filesize-per-thread</Identifier>
 			<ArgumentPrefix>-f </ArgumentPrefix>
 			<Menu>

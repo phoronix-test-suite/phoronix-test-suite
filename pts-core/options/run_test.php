@@ -38,24 +38,21 @@ class run_test implements pts_option_interface
 			echo pts_string_header("The test, suite, or saved identifier must be supplied.");
 			return false;
 		}
-		
-		$module_store = pts_module_manager::var_store_string();
+
 		$test_properties = array();
-		$types_of_tests = array();
 
 		// Cleanup tests to run
 		pts_cleanup_tests_to_run($to_run_identifiers);
+		pts_set_assignment("TO_RUN_IDENTIFIERS", $to_run_identifiers);
 		$unique_test_count = count(array_unique($to_run_identifiers));
 		$test_run_manager = new pts_test_run_manager();
 
 		foreach($to_run_identifiers as $to_run)
 		{
 			$to_run = strtolower($to_run);
-			pts_set_assignment_once("TO_RUN", $to_run);
 
 			if(!pts_is_test_result($to_run) && pts_is_global_id($to_run))
 			{
-				pts_set_assignment_once("GLOBAL_COMPARISON", true);
 				pts_clone_from_global($to_run);
 			}
 
@@ -74,18 +71,18 @@ class run_test implements pts_option_interface
 
 				if(pts_read_assignment("IS_BATCH_MODE") && pts_batch_run_all_test_options())
 				{
-					$option_output = pts_generate_batch_run_options($to_run);
+					list($test_arguments, $test_arguments_description) = pts_generate_batch_run_options($to_run);
 				}
 				else if(pts_read_assignment("IS_DEFAULTS_MODE"))
 				{
-					$option_output = pts_defaults_test_options($to_run);
+					list($test_arguments, $test_arguments_description) = pts_defaults_test_options($to_run);
 				}
 				else
 				{
-					$option_output = pts_prompt_test_options($to_run);
+					list($test_arguments, $test_arguments_description) = pts_prompt_test_options($to_run);
 				}
 
-				$test_run_manager->add_single_test_run($to_run, $option_output[0], $option_output[1]);
+				$test_run_manager->add_single_test_run($to_run, $test_arguments, $test_arguments_description);
 
 				if($unique_test_count == 1)
 				{
@@ -141,7 +138,7 @@ class run_test implements pts_option_interface
 					pts_array_push($test_properties, $test_prop);
 				}
 
-				pts_module_process_extensions($test_extensions, $module_store);
+				pts_module_process_extensions($test_extensions);
 
 				if(pts_is_assignment("FINISH_INCOMPLETE_RUN"))
 				{
@@ -197,13 +194,13 @@ class run_test implements pts_option_interface
 		$save_results = false;
 		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1)
 		{
+			if(pts_is_assignment("DO_NOT_SAVE_RESULTS"))
+			{
+				$save_results = false;
+			}
 			if(pts_is_assignment("AUTO_SAVE_NAME") || getenv("TEST_RESULTS_NAME"))
 			{
 				$save_results = true;
-			}
-			else if(pts_is_assignment("DO_NOT_SAVE_RESULTS"))
-			{
-				$save_results = false;
 			}
 			else
 			{
@@ -275,11 +272,11 @@ class run_test implements pts_option_interface
 
 			if(pts_read_assignment("IS_BATCH_MODE"))
 			{
-				array_push($test_properties, "PTS_BATCH_MODE");
+				pts_array_push($test_properties, "PTS_BATCH_MODE");
 			}
 			else if(pts_read_assignment("IS_DEFAULTS_MODE"))
 			{
-				array_push($test_properties, "PTS_DEFAULTS_MODE");
+				pts_array_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
 			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($file_name) || !pts_test_result_contains_result_identifier($file_name, $test_run_manager->get_results_identifier())))
@@ -295,11 +292,11 @@ class run_test implements pts_option_interface
 
 				$id = pts_request_new_id();
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $file_name_title);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, pts_read_assignment("TO_RUN"));
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? array_shift(pts_read_assignment("TO_RUN_IDENTIFIERS")) : "custom"));
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 1, $test_version);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_description);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, 1, $test_type);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 1, $module_store);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 1, pts_module_manager::var_store_string());
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 1, implode(";", $test_properties));
 			}
 

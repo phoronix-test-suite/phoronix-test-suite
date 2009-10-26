@@ -68,7 +68,10 @@ class pts_module_manager
 
 	public static function var_store_add($var, $value)
 	{
-		array_push(self::$var_storage, $var . "=" . $value);
+		if(!in_array($var . "=" . $value, self::$var_storage))
+		{
+			array_push(self::$var_storage, $var . "=" . $value);
+		}
 	}
 	public static function var_store_string()
 	{

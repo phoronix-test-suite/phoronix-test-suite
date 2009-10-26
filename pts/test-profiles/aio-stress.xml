@@ -16,7 +16,7 @@
 	<TestInformation>
 		<Title>AIO-Stress</Title>
 		<Version>0.21</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>AIO-Stress is an a-synchronous I/O benchmark created by SuSE. Current this profile uses a single thread, a 1024MB test file, a 64KB record size, </Description>

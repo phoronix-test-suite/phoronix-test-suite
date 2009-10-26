@@ -176,11 +176,8 @@ class system_monitor extends pts_module_interface
 						$graph_unit = $unit[$sub_array[0]];
 						$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
 						$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
-
-						if(($temp = pts_read_assignment("TO_RUN")) != false)
-							$sub_title .= $temp;
-						else
-							$sub_title .= date("g:i A");
+						$sub_title .= implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
+						// $sub_title .= date("g:i A");
 
 						$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
 
