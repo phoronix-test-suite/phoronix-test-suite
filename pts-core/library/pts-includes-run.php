@@ -155,7 +155,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $results_identifier, $tests_to_run[$i], $display_mode, $save_name, 1, 1);
+				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $tests_to_run[$i], $display_mode, $results_identifier, $save_name, 1, 1);
 			}
 		}
 		while(time() < $loop_end_time && $test_flag);
@@ -171,7 +171,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
-				$test_flag = pts_process_test_run_request($tandem_xml, $results_identifier, $tests_to_run[$i], $display_mode, $save_name, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
+				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $tests_to_run[$i], $display_mode, $results_identifier, $save_name, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
 			}
 		}
 	}
@@ -184,7 +184,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 
 		for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 		{
-			$test_flag = pts_process_test_run_request($tandem_xml, $results_identifier, $tests_to_run[$i], $display_mode, $save_name, ($i + 1), $tests_to_run_count);
+			$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $tests_to_run[$i], $display_mode, $results_identifier, $save_name, ($i + 1), $tests_to_run_count);
 		}
 	}
 
@@ -195,7 +195,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		unlink($cache_share_file);
 	}
 }
-function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$display_mode, $save_name = null, $run_position = 1, $run_count = 1)
+function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$pts_run, &$display_mode, $identifier, $save_name = null, $run_position = 1, $run_count = 1)
 {
 	$result = false;
 
@@ -299,6 +299,10 @@ function pts_process_test_run_request(&$tandem_xml, $identifier, $pts_run, &$dis
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
+		}
+		else
+		{
+			$test_run_manager->add_failed_test_run_request($test_run_request);
 		}
 	}
 

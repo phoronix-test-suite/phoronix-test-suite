@@ -25,10 +25,12 @@ class pts_test_run_manager
 	private $tests_to_run;
 	private $file_name;
 	private $results_identifier;
+	private $failed_tests_to_run;
 
 	public function __construct()
 	{
 		$this->tests_to_run = array();
+		$this->failed_tests_to_run = array();
 		$this->file_name = null;
 		$this->results_identifier = null;
 	}
@@ -173,6 +175,17 @@ class pts_test_run_manager
 	public function get_results_identifier()
 	{
 		return $this->results_identifier;
+	}
+	public function add_failed_test_run_request($test_run_request)
+	{
+		if($test_run_request instanceOf pts_test_run_request)
+		{
+			array_push($this->failed_tests_to_run, $test_run_request);
+		}
+	}
+	public function get_failed_test_run_requests()
+	{
+		return $this->failed_tests_to_run;
 	}
 }
 

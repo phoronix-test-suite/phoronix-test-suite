@@ -329,6 +329,23 @@ class run_test implements pts_option_interface
 			pts_user_message($post_run_message);
 		}
 
+		if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("DEBUG_TEST_PROFILE"))
+		{
+			$failed_runs = $test_run_manager->get_failed_test_run_requests();
+
+			if(count($failed_runs) > 0)
+			{
+				echo "\nNotice: The following tests failed to properly run:\n\n";
+
+				foreach($failed_runs as $run_request)
+				{
+					echo "\t- " . $run_request->get_identifier() . ($run_request->get_arguments_description() != null ? ": " . $run_request->get_arguments_description() : null) . "\n";
+				}
+
+				echo "\n";
+			}
+		}
+
 		if($save_results)
 		{
 			if(!pts_is_assignment("TEST_RAN"))
