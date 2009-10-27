@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Title>Workstation</Title>
+		<Version>1.0.0</Version>
+		<Maintainer>Michael Larabel</Maintainer>
+		<TestType>System</TestType>
+		<Description>This is a collection of tests designed to test a system's workstation / server capabilities.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>apache</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>48</Arguments>
+		<Description>Client Count: 48</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 2048M -i0</Arguments>
+		<Description>Size: 2GB - Disk Test: Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 2048M -i0 -i1</Arguments>
+		<Description>Size: 2GB - Disk Test: Read Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -f 256 -t 16</Arguments>
+		<Description>Test Item: Random Write - Filesize Per Thread: 256MB - Thread Count: 16</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k2 -k1 -f 256 -t 16</Arguments>
+		<Description>Test Item: Random Read - Filesize Per Thread: 256MB - Thread Count: 16</Description>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB</Arguments>
+		<Description>Operation: HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-resize 50%</Arguments>
+		<Description>Operation: Resizing</Description>
+	</RunTest>
+	<RunTest>
+		<Test>john-the-ripper</Test>
+		<Arguments>BLOWFISH</Arguments>
+		<Description>Test: Blowfish</Description>
+	</RunTest>
+	<RunTest>
+		<Test>mafft</Test>
+	</RunTest>
+	<RunTest>
+		<Test>md-gromacs</Test>
+		<Arguments>villin single-node double</Arguments>
+		<Description>Molecule: Villin - Run-type: Single Node  - Precision: Double Precision</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>ep.B</Arguments>
+		<Description>Test / Class: EP.B</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>lu.A</Arguments>
+		<Description>Test / Class: LU.A</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>ensight</Arguments>
+		<Description>SPECViewPerf Test: ensight-03</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf9</Test>
+		<Arguments>maya</Arguments>
+		<Description>SPECViewPerf Test: maya-02</Description>
+	</RunTest>
+</PhoronixTestSuite>
