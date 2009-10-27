@@ -24,7 +24,7 @@
 class toggle_screensaver extends pts_module_interface
 {
 	const module_name = "Toggle Screensaver";
-	const module_version = "1.1.0";
+	const module_version = "1.2.0";
 	const module_description = "This module toggles the system's screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.";
 	const module_author = "Phoronix Media";
 
@@ -33,6 +33,7 @@ class toggle_screensaver extends pts_module_interface
 	static $gnome_screensaver_halted = false;
 	static $kde_screensaver_halted = false;
 	static $gnome_gconftool = false;
+	static $sleep_display_ac = false;
 
 	public static function __startup()
 	{
@@ -58,6 +59,15 @@ class toggle_screensaver extends pts_module_interface
 				shell_exec(self::$gnome_gconftool . " --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1");
 				self::$gnome_screensaver_halted = true;
 			}
+
+			$sleep_display_ac = trim(shell_exec(self::$gnome_gconftool . " -g /apps/gnome-power-manager/timeout/sleep_display_ac 2>&1"));
+
+			if($sleep_display_ac != 0)
+			{
+				// Don't sleep the display when on AC power
+				shell_exec(self::$gnome_gconftool . " --type int --set /apps/gnome-power-manager/timeout/sleep_display_ac 0 2>&1");
+				self::$sleep_display_ac = $sleep_display_ac;
+			}
 		}
 		else
 		{
@@ -77,18 +87,19 @@ class toggle_screensaver extends pts_module_interface
 			self::$screensaver_halted = true;
 		}
 
-		if(pts_executable_in_path("xdg-screensaver") == false)
+		if(($xdg = pts_executable_in_path("xdg-screensaver")) == false)
 		{
-			if(!self::$screensaver_halted)
-			{
-				return PTS_MODULE_UNLOAD;
-			}
-
-			self::$xdg_screensaver_available = false;
+			self::$xdg_screensaver_available = $xdg;
 		}
 	}
 	public static function __shutdown()
 	{
+		if(self::$sleep_display_ac)
+		{
+			// Restore the screen sleep state when on AC power
+			shell_exec(self::$gnome_gconftool . " --type int --set /apps/gnome-power-manager/timeout/sleep_display_ac " . self::$sleep_display_ac . " 2>&1");
+		}
+
 		if(self::$gnome_screensaver_halted == true)
 		{
 			// Restore the GNOME Screensaver
@@ -104,7 +115,7 @@ class toggle_screensaver extends pts_module_interface
 	{
 		if(!self::$screensaver_halted && self::$xdg_screensaver_available)
 		{
-			shell_exec("xdg-screensaver reset 2>&1");
+			shell_exec(self::$xdg_screensaver_available . " reset 2>&1");
 		}
 	}
 	public static function __pre_option_process()
