@@ -1,17 +1,106 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.0</Version>
-		<TestType>System</TestType>
-		<Title>Server Test Suite</Title>
+		<Title>Server Motherboard</Title>
+		<Version>1.1.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
-		<Description>This test suite consists of server-oriented tests.</Description>
+		<TestType>System</TestType>
+		<Description>A collection of motherboard tests for a server environment.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>apache</Test>
+		<Test>build-php</Test>
 	</RunTest>
 	<RunTest>
-		<Test>pgbench</Test>
+		<Test>postmark</Test>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 4096M -i0</Arguments>
+		<Description>Size: 4GB - Disk Test: Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 4096M -i0 -i1</Arguments>
+		<Description>Size: 4GB - Disk Test: Read Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>povray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>crafty</Test>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB</Arguments>
+		<Description>Operation: HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>john-the-ripper</Test>
+		<Arguments>BLOWFISH</Arguments>
+		<Description>Blowfish</Description>
+	</RunTest>
+	<RunTest>
+		<Test>mafft</Test>
+	</RunTest>
+	<RunTest>
+		<Test>hmmer</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-mp3</Test>
+	</RunTest>
+	<RunTest>
+		<Test>ffmpeg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-lzma</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-pbzip2</Test>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>ep.B</Arguments>
+		<Description>Test / Class: EP.B</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>is.C</Arguments>
+		<Description>Test / Class: IS.C</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>lu.A</Arguments>
+		<Description>Test / Class: LU.A</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>mg.B</Arguments>
+		<Description>Test / Class: MG.B</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Copy</Arguments>
+		<Description>Type: Copy</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Scale</Arguments>
+		<Description>Type: Scale</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Add</Arguments>
+		<Description>Type: Add</Description>
+	</RunTest>
+	<RunTest>
+		<Test>stream</Test>
+		<Arguments>Triad</Arguments>
+		<Description>Type: Triad</Description>
 	</RunTest>
 </PhoronixTestSuite>

@@ -132,7 +132,7 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null)
 {
 	$vars = pts_run_additional_vars($test_identifier);
 	$vars["LC_ALL"] = "";
-	$vars["LC_NUMERIC"] = "en_US.UTF-8";
+	$vars["LC_NUMERIC"] = "";
 	$vars["LC_CTYPE"] = "";
 	$vars["LC_MESSAGES"] = "";
 	$vars["LANG"] = "";

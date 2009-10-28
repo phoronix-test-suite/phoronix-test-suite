@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phodevi: Fix possible space when getting resolutions from xrandr
 - pts: Add workstation test suite
 - pts: Add disk-ssd test suite
+- pts: Revamp server test suite
 
 Phoronix Test Suite 2.2 Beta 1
 October 27, 2009
