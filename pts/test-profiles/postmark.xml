@@ -15,7 +15,7 @@
 		<Title>PostMark</Title>
 		<Version>1.51</Version>
 		<SubTitle>Disk Transaction Performance</SubTitle>
-		<TimesToRun>4</TimesToRun>
+		<TimesToRun>5</TimesToRun>
 		<ResultScale>TPS</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of NetApp's PostMark benchmark designed to simulate small-file testing similar to the tasks endured by web and mail servers. This test profile will set PostMark to perform 25,000 transactions with 500 files simultaneously with the file sizes ranging between 5 and 512 kilobytes.</Description>

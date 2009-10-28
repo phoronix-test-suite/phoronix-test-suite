@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Title>Disk SSD Testing</Title>
+		<Version>1.0.0</Version>
+		<Maintainer>Michael Larabel</Maintainer>
+		<TestType>Disk</TestType>
+		<Description>This is a collection of tests that can be used for benchmarking a solid state disk.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>aio-stress</Test>
+		<Arguments>-o 2</Arguments>
+		<Description>Test: Random Write</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 4096M -i0</Arguments>
+		<Description>Size: 4GB - Disk Test: Write Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>iozone</Test>
+		<Arguments>-s 4096M -i0 -i1</Arguments>
+		<Description>Size: 4GB - Disk Test: Read Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>6</Arguments>
+		<Description>Client Count: 6</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>12</Arguments>
+		<Description>Client Count: 12</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>48</Arguments>
+		<Description>Client Count: 48</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>128</Arguments>
+		<Description>Client Count: 128</Description>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
+	</RunTest>
+	<RunTest>
+		<Test>postmark</Test>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k3 -k2 -f 256 -t 32</Arguments>
+		<Description>Test: Random Write - Size Per Thread: 256MB - Thread Count: 32</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tiobench</Test>
+		<Arguments>-k2 -k1 -f 256 -t 32</Arguments>
+		<Description>Test: Random Read - Size Per Thread: 256MB - Thread Count: 32</Description>
+	</RunTest>
+</PhoronixTestSuite>

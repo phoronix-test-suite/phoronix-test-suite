@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: With toggle_screensaver module, disable the display(s) from sleeping when on AC power in GNOME during testing
 - pts-core: Clean-up more code used during the test execution process
 - pts: Add workstation test suite
+- pts: Add disk-ssd test suite
 
 Phoronix Test Suite 2.2 Beta 1
 October 27, 2009
