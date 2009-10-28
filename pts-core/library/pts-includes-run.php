@@ -158,10 +158,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 	pts_unlink(PTS_USER_DIR . "skip-test");
 
 	$test_flag = true;
-	$results_identifier = $test_run_manager->get_results_identifier();
-	$save_name = $test_run_manager->get_file_name();
 	$tests_to_run_count = $test_run_manager->get_test_count();
-
 	$display_mode->test_run_process_start($test_run_manager);
 
 	if(($total_loop_time_minutes = getenv("TOTAL_LOOP_TIME")) && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
@@ -175,7 +172,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 			{
-				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, $results_identifier, $save_name, 1, 1);
+				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, 1, 1);
 			}
 		}
 		while(time() < $loop_end_time && $test_flag);
@@ -191,7 +188,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
-				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, $results_identifier, $save_name, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
+				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
 			}
 		}
 	}
@@ -204,18 +201,18 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 
 		for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 		{
-			$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, $results_identifier, $save_name, ($i + 1), $tests_to_run_count);
+			$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, ($i + 1), $tests_to_run_count);
 		}
 	}
 
-	pts_unlink(SAVE_RESULTS_DIR . $save_name . "/active.xml");
+	pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/active.xml");
 
 	foreach(glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
 	{
 		unlink($cache_share_file);
 	}
 }
-function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$display_mode, $run_index, $identifier, $save_name = null, $run_position = 1, $run_count = 1)
+function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$display_mode, $run_index, $run_position = 1, $run_count = 1)
 {
 	$result = false;
 	$test_run_request = $test_run_manager->get_test_to_run($run_index);
@@ -232,9 +229,9 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 		$is_weighted_run = false;
 	}
 
-	if($save_name != null)
+	if($test_run_manager->get_file_name() != null)
 	{
-		$tandem_xml->saveXMLFile(SAVE_RESULTS_DIR . $save_name . "/active.xml");
+		$tandem_xml->saveXMLFile(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/active.xml");
 	}
 
 	foreach($test_run_requests as $test_run_request)
@@ -303,8 +300,9 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 	if($result instanceof pts_test_result)
 	{
 		$end_result = $result->get_result();
+		$test_identifier = $test_run_manager->get_results_identifier();
 
-		if(!empty($identifier) && count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
+		if(!empty($test_identifier) && count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
 		{
 			$tandem_id = pts_request_new_id();
 			pts_set_assignment("TEST_RAN", true);
@@ -317,7 +315,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_attribute("TEST_IDENTIFIER"));
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
-			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $identifier, 5);
+			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $test_identifier, 5);
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
 		}
