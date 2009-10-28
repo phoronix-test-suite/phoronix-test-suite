@@ -284,6 +284,7 @@ class phodevi_gpu extends pts_device_interface
 				$res = array_map("trim", explode("x", $info));
 				$res[0] = substr($res[0], strrpos($res[0], " "));
 				$res[1] = substr($res[1], 0, strpos($res[1], " "));
+				$res = array_map("trim", $res);
 
 				$info = (is_numeric($res[0]) && is_numeric($res[1]) ? array($res[0], $res[1]) : null);
 			}
