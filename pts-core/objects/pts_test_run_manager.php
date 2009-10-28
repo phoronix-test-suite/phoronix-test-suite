@@ -156,6 +156,10 @@ class pts_test_run_manager
 	{
 		return $this->tests_to_run;
 	}
+	public function get_test_to_run($index)
+	{
+		return isset($this->tests_to_run[$index]) ? $this->tests_to_run[$index] : false;
+	}
 	public function get_test_count()
 	{
 		return count($this->get_tests_to_run());

@@ -160,8 +160,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 	$test_flag = true;
 	$results_identifier = $test_run_manager->get_results_identifier();
 	$save_name = $test_run_manager->get_file_name();
-	$tests_to_run = $test_run_manager->get_tests_to_run();
-	$tests_to_run_count = count($tests_to_run);
+	$tests_to_run_count = $test_run_manager->get_test_count();
 
 	$display_mode->test_run_process_start($test_run_manager);
 
@@ -176,7 +175,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 			{
-				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $tests_to_run[$i], $display_mode, $results_identifier, $save_name, 1, 1);
+				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, $results_identifier, $save_name, 1, 1);
 			}
 		}
 		while(time() < $loop_end_time && $test_flag);
@@ -192,7 +191,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
-				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $tests_to_run[$i], $display_mode, $results_identifier, $save_name, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
+				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, $results_identifier, $save_name, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
 			}
 		}
 	}
@@ -205,7 +204,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 
 		for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 		{
-			$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $tests_to_run[$i], $display_mode, $results_identifier, $save_name, ($i + 1), $tests_to_run_count);
+			$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, $results_identifier, $save_name, ($i + 1), $tests_to_run_count);
 		}
 	}
 
@@ -216,19 +215,20 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		unlink($cache_share_file);
 	}
 }
-function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$pts_run, &$display_mode, $identifier, $save_name = null, $run_position = 1, $run_count = 1)
+function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$display_mode, $run_index, $identifier, $save_name = null, $run_position = 1, $run_count = 1)
 {
 	$result = false;
+	$test_run_request = $test_run_manager->get_test_to_run($run_index);
 
-	if($pts_run instanceOf pts_weighted_test_run_manager)
+	if($test_run_request instanceOf pts_weighted_test_run_manager)
 	{
-		$test_run_requests = $pts_run->get_tests_to_run();
-		$weighted_value = $pts_run->get_weight_initial_value();
+		$test_run_requests = $test_run_request->get_tests_to_run();
+		$weighted_value = $test_run_request->get_weight_initial_value();
 		$is_weighted_run = true;
 	}
 	else
 	{
-		$test_run_requests = array($pts_run);
+		$test_run_requests = array($test_run_request);
 		$is_weighted_run = false;
 	}
 
@@ -280,11 +280,11 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$pts_ru
 
 	if($is_weighted_run)
 	{
-		$ws_xml_parser = new pts_suite_tandem_XmlReader($pts_run->get_weight_suite_identifier());
-		$bt_xml_parser = new pts_test_tandem_XmlReader($pts_run->get_weight_test_profile());
+		$ws_xml_parser = new pts_suite_tandem_XmlReader($test_run_request->get_weight_suite_identifier());
+		$bt_xml_parser = new pts_test_tandem_XmlReader($test_run_request->get_weight_test_profile());
 		$result = new pts_test_result();
 
-		if(($final_expression = $pts_run->get_weight_final_expression()) != null)
+		if(($final_expression = $test_run_request->get_weight_final_expression()) != null)
 		{
 			$weighted_value = pts_evaluate_math_expression(str_replace("\$WEIGHTED_VALUE", $weighted_value, $final_expression));
 		}
@@ -294,7 +294,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$pts_ru
 		$result->set_result_proportion($bt_xml_parser->getXMLValue(P_TEST_PROPORTION));
 		$result->set_result_format($bt_xml_parser->getXMLValue(P_TEST_RESULTFORMAT));
 		$result->set_attribute("EXTRA_ARGUMENTS", null); // TODO: build string as a composite of suite version + all test versions
-		$result->set_attribute("TEST_IDENTIFIER", $pts_run->get_weight_suite_identifier());
+		$result->set_attribute("TEST_IDENTIFIER", $test_run_request->get_weight_suite_identifier());
 		$result->set_attribute("TEST_TITLE", $ws_xml_parser->getXMLValue(P_SUITE_TITLE));
 		$result->set_attribute("TEST_VERSION", $ws_xml_parser->getXMLValue(P_SUITE_VERSION));
 		$result->set_attribute("TEST_DESCRIPTION", $bt_xml_parser->getXMLValue(P_TEST_DESCRIPTION));
@@ -395,15 +395,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$execute_binary = $test_profile->get_test_executable();
 	$times_to_run = $test_profile->get_times_to_run();
 	$ignore_runs = $test_profile->get_runs_to_ignore();
-	$pre_run_message = $test_profile->get_pre_run_message();
-	$post_run_message = $test_profile->get_post_run_message();
 	$result_format = $test_profile->get_test_result_format();
-	$execute_path = $test_profile->get_test_executable_paths();
 	$test_type = $test_profile->get_test_hardware_type();
 	$allow_cache_share = $test_profile->allow_cache_share();
 	$min_length = $test_profile->get_min_length();
 	$max_length = $test_profile->get_max_length();
-	$default_test_descriptor = $test_profile->get_test_subtitle();
 
 	if($test_type == "Graphics" && getenv("DISPLAY") == false)
 	{
@@ -437,7 +433,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$to_execute = null;
-	foreach(array_merge(array($test_directory), pts_trim_explode(",", $execute_path)) as $possible_dir)
+	foreach(array_merge(array($test_directory), pts_trim_explode(",", $test_profile->get_test_executable_paths())) as $possible_dir)
 	{
 		if(is_executable($possible_dir . $execute_binary))
 		{
@@ -482,7 +478,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		echo pts_call_test_script($test_identifier, "pre", "\nRunning Pre-Test Scripts...\n", $test_directory, $extra_runtime_variables);
 	}
 
-	pts_user_message($pre_run_message);
+	pts_user_message($test_profile->get_pre_run_message());
 	$runtime_identifier = pts_unique_runtime_identifier();
 	$execute_binary_prepend = "";
 
@@ -502,7 +498,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$display_mode->test_run_start($pts_test_result);
-	unset($test_profile);
 
 	for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
@@ -745,9 +740,9 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	// Fill in missing test details
 
-	if(empty($arguments_description) && !empty($default_test_descriptor))
+	if(empty($arguments_description))
 	{
-		$arguments_description = $default_test_descriptor;
+		$arguments_description = $test_profile->get_test_subtitle();
 	}
 
 	$file_var_checks = array(
@@ -822,7 +817,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	$display_mode->test_run_end($pts_test_result);
 
-	pts_user_message($post_run_message);
+	pts_user_message($test_profile->get_post_run_message());
 	pts_module_process("__post_test_run", $pts_test_result);
 	$report_elapsed_time = !$cache_share_present && $pts_test_result->get_result() != 0;
 	pts_test_refresh_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
