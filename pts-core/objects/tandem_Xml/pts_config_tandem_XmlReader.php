@@ -47,6 +47,21 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 
 		parent::__construct($file, true);
 	}
+	function handleXmlZeroTagFallback($xml_tag)
+	{
+		switch($xml_tag)
+		{
+			case P_OPTION_LOG_VSYSDETAILS:
+				// SaveSystemDetails changed to SaveSystemLogs in Phoronix Test Suite 2.2
+				$fallback = $this->getXMLValue("PhoronixTestSuite/Options/Testing/SaveSystemDetails");
+				break;
+			default:
+				$fallback = $this->tag_fallback_value;
+				break;
+		}
+
+		return $fallback;
+	}
 	function getValue($xml_path, $xml_tag = null, $xml_match = null, $cache_tag = true, $is_fallback_call = false)
 	{
 		if($this->override_values != false)

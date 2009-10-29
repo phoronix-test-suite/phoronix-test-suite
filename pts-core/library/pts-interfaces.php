@@ -184,7 +184,7 @@ define("P_OPTION_PHODEVI_CACHE", "PhoronixTestSuite/Options/General/UsePhodeviCa
 define("P_OPTION_DISPLAY_MODE", "PhoronixTestSuite/Options/General/DefaultDisplayMode"); // The display mode to use by default
 
 define("P_OPTION_TEST_SLEEPTIME", "PhoronixTestSuite/Options/Testing/SleepTimeBetweenTests"); // Time in seconds to sleep between tests
-define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/Testing/SaveSystemDetails"); // Log verbose system details?
+define("P_OPTION_LOG_VSYSDETAILS", "PhoronixTestSuite/Options/Testing/SaveSystemLogs"); // Log verbose system details?
 define("P_OPTION_LOG_BENCHMARKFILES", "PhoronixTestSuite/Options/Testing/SaveBenchmarkLogs"); // Save benchmark logs?
 define("P_OPTION_RESULTS_DIRECTORY", "PhoronixTestSuite/Options/Testing/ResultsDirectory"); // Results save directory
 
