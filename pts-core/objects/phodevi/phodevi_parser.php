@@ -61,9 +61,9 @@ class phodevi_parser
 			static $remove_words = null;
 			$name = pts_to_array($name);
 
-			if(empty($remove_words) && is_file(STATIC_DIR . "hal-values-remove.txt"))
+			if($remove_words == null && is_file(STATIC_DIR . "lists/hal-values-remove.txt"))
 			{
-				$word_file = trim(file_get_contents(STATIC_DIR . "hal-values-remove.txt"));
+				$word_file = trim(file_get_contents(STATIC_DIR . "lists/hal-values-remove.txt"));
 				$remove_words = pts_trim_explode("\n", $word_file);
 			}
 

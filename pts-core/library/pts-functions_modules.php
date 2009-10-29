@@ -33,7 +33,7 @@ function pts_module_startup_init()
 	{
 		// Enable the toggling of the system screensaver by default.
 		// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
-		foreach(pts_trim_explode("\n", file_get_contents(STATIC_DIR . "default-modules.txt")) as $default_module)
+		foreach(pts_trim_explode("\n", file_get_contents(STATIC_DIR . "lists/default-modules.txt")) as $default_module)
 		{
 			pts_attach_module($default_module);
 		}
@@ -47,8 +47,7 @@ function pts_module_startup_init()
 function pts_auto_detect_modules()
 {
 	// Auto detect modules to load
-	$module_variables_file = file_get_contents(STATIC_DIR . "module-variables.txt");
-	$module_variables = explode("\n", $module_variables_file);
+	$module_variables = explode("\n", file_get_contents(STATIC_DIR . "lists/module-variables.txt"));
 
 	foreach($module_variables as $module_var)
 	{

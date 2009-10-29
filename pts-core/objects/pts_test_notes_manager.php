@@ -51,9 +51,9 @@ class pts_test_notes_manager
 	{
 		static $check_processes = null;
 
-		if(empty($check_processes) && is_file(STATIC_DIR . "process-reporting-checks.txt"))
+		if(empty($check_processes) && is_file(STATIC_DIR . "lists/process-reporting-checks.txt"))
 		{
-			$word_file = trim(file_get_contents(STATIC_DIR . "process-reporting-checks.txt"));
+			$word_file = trim(file_get_contents(STATIC_DIR . "lists/process-reporting-checks.txt"));
 			$processes_r = pts_trim_explode("\n", $word_file);
 			$check_processes = array();
 

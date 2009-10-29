@@ -288,9 +288,9 @@ function pts_package_vendor_identifier()
 
 	if(!is_file(XML_DISTRO_DIR . $os_vendor . "-packages.xml") && !is_file(SCRIPT_DISTRO_DIR . "install-" . $os_vendor . "-packages.sh"))
 	{
-		if(is_file(STATIC_DIR . "software-vendor-aliases.txt"))
+		if(is_file(STATIC_DIR . "lists/software-vendor-aliases.txt"))
 		{
-			$vendors_alias_file = trim(file_get_contents(STATIC_DIR . "software-vendor-aliases.txt"));
+			$vendors_alias_file = trim(file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.txt"));
 			$vendors_r = explode("\n", $vendors_alias_file);
 
 			foreach($vendors_r as $vendor)
