@@ -40,7 +40,7 @@ print_r($preset_selections);
 	else if(($cli_presets_env = getenv("PRESET_OPTIONS")) != false)
 	{
 		// To specify test options externally from an environment variable
-		// i.e. PRESET_OPTIONS="stream:run-type=Add" ./phoronix-test-suite benchmark stream
+		// i.e. PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream
 
 		pts_set_assignment("CLI_PRESET_OPTIONS", true);
 		$cli_presets = array();
@@ -51,7 +51,7 @@ print_r($preset_selections);
 			{
 				list($prefix, $value) = array_map("trim", $preset);
 
-				if(count($prefix = explode(":", $prefix)) == 2)
+				if(count($prefix = explode(".", $prefix)) == 2)
 				{
 					list($test_identifier, $option_identifier) = array_map("trim", $prefix);
 					$cli_presets[$test_identifier][$option_identifier] = $value;
