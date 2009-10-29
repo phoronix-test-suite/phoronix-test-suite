@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rename SaveSystemDetails user-config.xml option to SaveSystemLogs
 - pts-core: Add option to archive a test's installation log to a sub-directory of the results file
 - pts-core: Check for user-config-template.xml template in pts-core/static/
+- pts-core: Add PTS Desktop Live user-config.xml template
 - phodevi: Fix possible space when getting resolutions from xrandr
 - pts: Add workstation test suite
 - pts: Add disk-ssd test suite

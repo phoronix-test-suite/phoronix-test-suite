@@ -32,17 +32,6 @@ function pts_user_config_init($new_config_values = null)
 
 	$read_config = new pts_config_tandem_XmlReader($new_config_values);
 
-	if(IS_PTS_LIVE)
-	{
-		$symlink_default = "TRUE";
-		$remove_downloaded_files = "TRUE";
-	}
-	else
-	{
-		$symlink_default = "FALSE";
-		$remove_downloaded_files = "FALSE";
-	}
-
 	$config = new tandem_XmlWriter();
 	$config->setXslBinding("xsl/pts-user-config-viewer.xsl");
 	$config->addXmlObjectFromReader(P_OPTION_GLOBAL_USERNAME, 0, $read_config, "Default User");
@@ -54,9 +43,9 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObjectFromReader(P_OPTION_PHODEVI_CACHE, 1, $read_config, "TRUE");
 	$config->addXmlObjectFromReader(P_OPTION_DISPLAY_MODE, 1, $read_config, "DEFAULT");
 
-	$config->addXmlObjectFromReader(P_OPTION_TEST_REMOVEDOWNLOADS, 2, $read_config, $remove_downloaded_files);
+	$config->addXmlObjectFromReader(P_OPTION_TEST_REMOVEDOWNLOADS, 2, $read_config, "FALSE");
 	$config->addXmlObjectFromReader(P_OPTION_CACHE_SEARCHMEDIA, 2, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_CACHE_SYMLINK, 2, $read_config, $symlink_default);
+	$config->addXmlObjectFromReader(P_OPTION_CACHE_SYMLINK, 2, $read_config, "FALSE");
 	$config->addXmlObjectFromReader(P_OPTION_PROMPT_DOWNLOADLOC, 2, $read_config, "FALSE");
 	$config->addXmlObjectFromReader(P_OPTION_TEST_ENVIRONMENT, 2, $read_config, "~/.phoronix-test-suite/installed-tests/");
 	$config->addXmlObjectFromReader(P_OPTION_CACHE_DIRECTORY, 2, $read_config, "~/.phoronix-test-suite/download-cache/");

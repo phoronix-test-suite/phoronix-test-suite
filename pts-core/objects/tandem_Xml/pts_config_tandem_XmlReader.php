@@ -38,6 +38,10 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 		{
 			$file = file_get_contents(STATIC_DIR . "user-config-template.xml");
 		}
+		else if(IS_PTS_LIVE && is_file(STATIC_DIR . "pts-live-user-config-template.xml"))
+		{
+			$file = file_get_contents(STATIC_DIR . "pts-live-user-config-template.xml");
+		}
 		else
 		{
 			$file = null;

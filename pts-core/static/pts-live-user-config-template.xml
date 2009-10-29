@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<Options>
+		<General>
+			<DefaultDisplayMode>BATCH</DefaultDisplayMode>
+		</General>
+		<Installation>
+			<RemoveDownloadFiles>TRUE</RemoveDownloadFiles>
+			<SymLinkFilesFromCache>TRUE</SymLinkFilesFromCache>
+		</Installation>
+	</Options>
+</PhoronixTestSuite>
