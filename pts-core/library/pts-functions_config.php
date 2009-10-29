@@ -64,6 +64,7 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObjectFromReader(P_OPTION_TEST_SLEEPTIME, 3, $read_config, "10");
 	$config->addXmlObjectFromReader(P_OPTION_LOG_VSYSDETAILS, 3, $read_config, "FALSE");
 	$config->addXmlObjectFromReader(P_OPTION_LOG_BENCHMARKFILES, 3, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_LOG_INSTALLATION, 3, $read_config, "FALSE");
 	$config->addXmlObjectFromReader(P_OPTION_RESULTS_DIRECTORY, 3, $read_config, "~/.phoronix-test-suite/test-results/");
 
 	$config->addXmlObjectFromReader(P_OPTION_STATS_DYNAMIC_RUN_COUNT, 4, $read_config, "TRUE");

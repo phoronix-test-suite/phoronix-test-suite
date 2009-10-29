@@ -653,14 +653,10 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			if($archive_log_files)
 			{
-				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/benchmark-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
+				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/test-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
 				$backup_filename = basename($benchmark_log_file);
 
-				if(!is_dir($backup_log_dir))
-				{
-					mkdir($backup_log_dir, 0777, true);
-				}
-
+				pts_mkdir($backup_log_dir, 0777, true);
 				copy($benchmark_log_file, $backup_log_dir . $backup_filename);
 			}
 
@@ -678,12 +674,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$time_test_end_actual = time();
-
-	if($allow_cache_share && !is_file($cache_share_pt2so) && $cache_share instanceOf pts_storage_object)
-	{
-		$cache_share->save_to_file($cache_share_pt2so);
-		unset($cache_share);
-	}
 
 	if(!$cache_share_present)
 	{
@@ -715,6 +705,22 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			// The test took too much time, results are not valid
 			return false;
+		}
+	}
+
+	if($allow_cache_share && !is_file($cache_share_pt2so) && $cache_share instanceOf pts_storage_object)
+	{
+		$cache_share->save_to_file($cache_share_pt2so);
+		unset($cache_share);
+	}
+
+	if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_INSTALLATION, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
+	{
+		if(is_file(TEST_ENV_DIR . $test_identifier . "/install.log"))
+		{
+			$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/installation-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
+			pts_mkdir($backup_log_dir, 0777, true);
+			copy(TEST_ENV_DIR . $test_identifier . "/install.log", $backup_log_dir . $test_identifier . ".log");
 		}
 	}
 

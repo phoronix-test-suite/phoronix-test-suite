@@ -70,9 +70,9 @@ function pts_array_merge($array1, $array2)
 {
 	return is_array($array1) && is_array($array2) ? array_merge($array1, $array2) : $array1;
 }
-function pts_mkdir($dir)
+function pts_mkdir($dir, $mode = 0777, $recursive = false)
 {
-	return !is_dir($dir) && mkdir($dir);
+	return !is_dir($dir) && mkdir($dir, $mode, $recursive);
 }
 function pts_unlink($file)
 {

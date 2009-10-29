@@ -62,8 +62,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 			$test_results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER");
 
 			// Save verbose system information here
-			pts_mkdir($save_to_dir . "/system-logs/");
-			pts_mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $test_results_identifier));
+			pts_mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $test_results_identifier), 0777, true);
 
 			// Backup system files
 			$system_log_files = array("/var/log/Xorg.0.log", "/proc/cpuinfo");
