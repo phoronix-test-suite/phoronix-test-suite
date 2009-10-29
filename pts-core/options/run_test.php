@@ -359,7 +359,7 @@ class run_test implements pts_option_interface
 
 			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type), 0);
 
-			pts_save_test_file($file_name, $xml_results_writer);
+			pts_save_test_file($xml_results_writer, $file_name);
 			echo "Results Saved To: " . SAVE_RESULTS_DIR . $file_name . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $file_name);
 			pts_display_web_browser(SAVE_RESULTS_DIR . $file_name . "/index.html");

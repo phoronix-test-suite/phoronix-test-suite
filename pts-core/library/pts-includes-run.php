@@ -327,7 +327,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 
 	return true;
 }
-function pts_save_test_file($file_name, &$results = null, $raw_text = null)
+function pts_save_test_file(&$results, $file_name)
 {
 	// Save the test file
 	$j = 1;
@@ -338,20 +338,7 @@ function pts_save_test_file($file_name, &$results = null, $raw_text = null)
 
 	$real_name = $file_name . "/test-" . $j . ".xml";
 
-	if($results != null)
-	{
-		$r_file = $results->getXML();
-	}
-	else if($raw_text != null)
-	{
-		$r_file = $raw_text;
-	}
-	else
-	{
-		return false;
-	}
-
-	pts_save_result($real_name, $r_file);
+	pts_save_result($real_name, $results->getXML());
 
 	if(!is_file(SAVE_RESULTS_DIR . $file_name . "/composite.xml"))
 	{
@@ -496,6 +483,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$display_mode->test_run_start($pts_test_result);
+	$archive_log_files = pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE"));
 
 	for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
@@ -663,7 +651,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(is_file($benchmark_log_file))
 		{
-			if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
+			if($archive_log_files)
 			{
 				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/benchmark-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
 				$backup_filename = basename($benchmark_log_file);
