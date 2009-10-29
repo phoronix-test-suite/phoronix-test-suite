@@ -202,7 +202,7 @@ class run_test implements pts_option_interface
 			{
 				$save_results = false;
 			}
-			if(pts_is_assignment("AUTO_SAVE_NAME") || getenv("TEST_RESULTS_NAME"))
+			else if(pts_is_assignment("AUTO_SAVE_NAME") || getenv("TEST_RESULTS_NAME"))
 			{
 				$save_results = true;
 			}
