@@ -34,13 +34,13 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 		{
 			$file = file_get_contents(PTS_USER_DIR . "user-config.xml");
 		}
-		else if(is_file(ETC_DIR . "user-config-template.xml"))
+		else if(is_file(STATIC_DIR . "user-config-template.xml"))
 		{
-			$file = file_get_contents(ETC_DIR . "user-config-template.xml");
+			$file = file_get_contents(STATIC_DIR . "user-config-template.xml");
 		}
 		else
 		{
-			$file = "";
+			$file = null;
 		}
 
 		$this->override_values = (is_array($new_values) ? $new_values : false);

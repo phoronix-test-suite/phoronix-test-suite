@@ -37,7 +37,6 @@ function pts_define_directories()
 	define("SCRIPT_DISTRO_DIR", PTS_PATH . "pts/distro-scripts/");
 
 	// Misc Locations
-	define("ETC_DIR", PTS_PATH . "pts/etc/");
 	define("MODULE_DIR", PTS_CORE_PATH . "modules/");
 	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
 	define("RESULTS_VIEWER_DIR", PTS_CORE_PATH . "results-viewer/");

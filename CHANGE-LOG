@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Clean-up more code used during the test execution process
 - pts-core: Rename SaveSystemDetails user-config.xml option to SaveSystemLogs
 - pts-core: Add option to archive a test's installation log to a sub-directory of the results file
+- pts-core: Check for user-config-template.xml template in pts-core/static/
 - phodevi: Fix possible space when getting resolutions from xrandr
 - pts: Add workstation test suite
 - pts: Add disk-ssd test suite
@@ -17,7 +18,7 @@ October 27, 2009
 
 - pts-core: Fix for running result files that have forced AA/AF levels and then fail to merge
 - pts-core: On missing timezone setting, set to UTC if the PHP version is 5.3.0 or newer, emits a warning otherwise
-- pts-core: Change change-results-display-order option command to reorder-result-file
+- pts-core: Rename change-results-display-order option command to reorder-result-file
 - pts-core: Add edit-result-file meta option
 - pts-core: Add MinimumLength tag to XML test profile specification
 - pts-core: Add MaximumLength tag to XML test profile specification
