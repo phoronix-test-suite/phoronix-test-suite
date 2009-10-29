@@ -822,7 +822,7 @@ class gui_gtk implements pts_option_interface
 							}
 							else if($value instanceOf GtkComboBox)
 							{
-								$preset_test_options[$test_name][$name] = $value->get_active();
+								$preset_test_options[$test_name][$name] = ($value->get_active() + 1);
 							}
 						}
 					}

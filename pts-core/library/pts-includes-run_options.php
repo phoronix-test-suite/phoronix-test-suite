@@ -35,6 +35,29 @@ function pts_prompt_test_options($identifier)
 	if(pts_is_assignment("AUTOMATED_MODE"))
 	{
 		$preset_selections = pts_read_assignment("AUTO_TEST_OPTION_SELECTIONS");
+print_r($preset_selections);
+	}
+	else if(($cli_presets_env = getenv("PRESET_OPTIONS")) != false)
+	{
+		// To specify test options externally from an environment variable
+		// i.e. PRESET_OPTIONS="stream:run-type=Add" ./phoronix-test-suite benchmark stream
+
+		pts_set_assignment("CLI_PRESET_OPTIONS", true);
+		$cli_presets = array();
+
+		foreach(explode(";", $cli_presets_env) as $preset)
+		{
+			if(count($preset = explode("=", $preset)) == 2)
+			{
+				list($prefix, $value) = array_map("trim", $preset);
+
+				if(count($prefix = explode(":", $prefix)) == 2)
+				{
+					list($test_identifier, $option_identifier) = array_map("trim", $prefix);
+					$cli_presets[$test_identifier][$option_identifier] = $value;
+				}
+			}
+		}					
 	}
 
 	for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
@@ -75,7 +98,14 @@ function pts_prompt_test_options($identifier)
 				// Have the user select the desired option
 				if(pts_is_assignment("AUTOMATED_MODE") && isset($preset_selections[$identifier][$option_identifier]))
 				{
-					$bench_choice = pts_to_array($preset_selections[$identifier][$option_identifier]);
+					$bench_choice = $o->parse_selection_choice_input($preset_selections[$identifier][$option_identifier]);
+				}
+				else if(pts_is_assignment("CLI_PRESET_OPTIONS") && isset($cli_presets[$identifier][$option_identifier]))
+				{
+					// TODO: possibly first make sure $cli_presets[$identifier][$option_identifier] is a valid choice
+					// See that the count() of $o->parse_selection_choice_input($cli_presets[$identifier][$option_identifier]) is not 0
+
+					$bench_choice = $o->parse_selection_choice_input($cli_presets[$identifier][$option_identifier]);
 				}
 				else
 				{
