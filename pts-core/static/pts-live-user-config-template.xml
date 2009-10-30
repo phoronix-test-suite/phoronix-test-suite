@@ -8,5 +8,11 @@
 			<RemoveDownloadFiles>TRUE</RemoveDownloadFiles>
 			<SymLinkFilesFromCache>TRUE</SymLinkFilesFromCache>
 		</Installation>
+		<UserInterface>
+			<Menus>
+				<SelectDependencies>All Dependencies Installed</SelectDependencies>
+				<SelectDownloads>All Files Available Locally</SelectDownloads>
+			</Menus>
+		</UserInterface>
 	</Options>
 </PhoronixTestSuite>

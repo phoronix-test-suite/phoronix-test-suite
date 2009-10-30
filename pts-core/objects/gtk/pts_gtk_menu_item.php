@@ -47,6 +47,11 @@ class pts_gtk_menu_item
 			$title = pts_to_array($title);
 		}
 
+		if($set_active_default != false && !is_numeric($set_active_default) && is_array($title) && ($pos = array_search($set_active_default, $title)) !== false)
+		{
+			$set_active_default = $pos;
+		}
+
 		$this->to_call_arg = (count($to_call) > 2 ? array_pop($to_call) : null);
 		$this->title = $title;
 		$this->to_call = $to_call;

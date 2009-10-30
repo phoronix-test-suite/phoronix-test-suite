@@ -35,45 +35,48 @@ function pts_user_config_init($new_config_values = null)
 	$config = new tandem_XmlWriter();
 	$config->setXslBinding("xsl/pts-user-config-viewer.xsl");
 	$config->addXmlObjectFromReader(P_OPTION_GLOBAL_USERNAME, 0, $read_config, "Default User");
-	$config->addXmlObjectFromReader(P_OPTION_GLOBAL_UPLOADKEY, 0, $read_config, "");
+	$config->addXmlObjectFromReader(P_OPTION_GLOBAL_UPLOADKEY, 0, $read_config, null);
 
 	$config->addXmlObjectFromReader(P_OPTION_USAGE_REPORTING, 1, $read_config, "UNKNOWN");
-	$config->addXmlObjectFromReader(P_OPTION_DEFAULT_BROWSER, 1, $read_config, "");
+	$config->addXmlObjectFromReader(P_OPTION_DEFAULT_BROWSER, 1, $read_config, null);
 	$config->addXmlObjectFromReader(P_OPTION_PHODEVI_CACHE, 1, $read_config, "TRUE");
 	$config->addXmlObjectFromReader(P_OPTION_DISPLAY_MODE, 1, $read_config, "DEFAULT");
 
-	$config->addXmlObjectFromReader(P_OPTION_LOAD_MODULES, 7, $read_config, "toggle_screensaver, update_checker");
+	$config->addXmlObjectFromReader(P_OPTION_LOAD_MODULES, 2, $read_config, "toggle_screensaver, update_checker");
 
-	$config->addXmlObjectFromReader(P_OPTION_TEST_REMOVEDOWNLOADS, 2, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_CACHE_SEARCHMEDIA, 2, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_CACHE_SYMLINK, 2, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_PROMPT_DOWNLOADLOC, 2, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_TEST_ENVIRONMENT, 2, $read_config, "~/.phoronix-test-suite/installed-tests/");
-	$config->addXmlObjectFromReader(P_OPTION_CACHE_DIRECTORY, 2, $read_config, "~/.phoronix-test-suite/download-cache/");
+	$config->addXmlObjectFromReader(P_OPTION_TEST_REMOVEDOWNLOADS, 3, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_CACHE_SEARCHMEDIA, 3, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_CACHE_SYMLINK, 3, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_PROMPT_DOWNLOADLOC, 3, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_TEST_ENVIRONMENT, 3, $read_config, "~/.phoronix-test-suite/installed-tests/");
+	$config->addXmlObjectFromReader(P_OPTION_CACHE_DIRECTORY, 3, $read_config, "~/.phoronix-test-suite/download-cache/");
 
-	$config->addXmlObjectFromReader(P_OPTION_TEST_SLEEPTIME, 3, $read_config, "10");
-	$config->addXmlObjectFromReader(P_OPTION_LOG_VSYSDETAILS, 3, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_LOG_BENCHMARKFILES, 3, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_LOG_INSTALLATION, 3, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_RESULTS_DIRECTORY, 3, $read_config, "~/.phoronix-test-suite/test-results/");
+	$config->addXmlObjectFromReader(P_OPTION_TEST_SLEEPTIME, 4, $read_config, "10");
+	$config->addXmlObjectFromReader(P_OPTION_LOG_VSYSDETAILS, 4, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_LOG_BENCHMARKFILES, 4, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_LOG_INSTALLATION, 4, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_RESULTS_DIRECTORY, 4, $read_config, "~/.phoronix-test-suite/test-results/");
 
-	$config->addXmlObjectFromReader(P_OPTION_STATS_DYNAMIC_RUN_COUNT, 4, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, 4, $read_config, "20");
-	$config->addXmlObjectFromReader(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 4, $read_config, "3.50");
-	$config->addXmlObjectFromReader(P_OPTION_STATS_EXPORT_RESULTS_TO, 4, $read_config, null);
+	$config->addXmlObjectFromReader(P_OPTION_STATS_DYNAMIC_RUN_COUNT, 5, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, 5, $read_config, "20");
+	$config->addXmlObjectFromReader(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 5, $read_config, "3.50");
+	$config->addXmlObjectFromReader(P_OPTION_STATS_EXPORT_RESULTS_TO, 5, $read_config, null);
 
-	$config->addXmlObjectFromReader(P_OPTION_BATCH_SAVERESULTS, 5, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_BATCH_LAUNCHBROWSER, 5, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_BATCH_UPLOADRESULTS, 5, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTIDENTIFIER, 5, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTDESCRIPTION, 5, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTSAVENAME, 5, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_BATCH_TESTALLOPTIONS, 5, $read_config, "TRUE");
-	$config->addXmlObjectFromReader(P_OPTION_BATCH_CONFIGURED, 5, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_BATCH_SAVERESULTS, 6, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_BATCH_LAUNCHBROWSER, 6, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_BATCH_UPLOADRESULTS, 6, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTIDENTIFIER, 6, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTDESCRIPTION, 6, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTSAVENAME, 6, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_BATCH_TESTALLOPTIONS, 6, $read_config, "TRUE");
+	$config->addXmlObjectFromReader(P_OPTION_BATCH_CONFIGURED, 6, $read_config, "FALSE");
 
-	$config->addXmlObjectFromReader(P_OPTION_NET_NO_NETWORK, 6, $read_config, "FALSE");
-	$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_ADDRESS, 6, $read_config, null);
-	$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_PORT, 6, $read_config, null);
+	$config->addXmlObjectFromReader(P_OPTION_NET_NO_NETWORK, 7, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_ADDRESS, 7, $read_config, null);
+	$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_PORT, 7, $read_config, null);
+
+	$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DEPENDENCIES, 8, $read_config, null);
+	$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DOWNLOADS, 8, $read_config, null);
 
 	$config->saveXMLFile(PTS_USER_DIR . "user-config.xml");
 

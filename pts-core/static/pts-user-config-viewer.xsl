@@ -81,6 +81,12 @@
 			<h3>ProxyPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyPort" /></span></h3>
 			<p>If using a proxy server, enter the TCP port in this tag.</p>
 
+			<h1>User-Interface Options</h1>
+			<h3>SelectDependencies: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/UserInterface/Menus/SelectDependencies" /></span></h3>
+			<p>This option is currently not documented. Edit with caution.</p>
+			<h3>SelectDownloads: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/UserInterface/Menus/SelectDownloads" /></span></h3>
+			<p>This option is currently not documented. Edit with caution.</p>
+
 		</div>
 		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2009 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
 	</body>
