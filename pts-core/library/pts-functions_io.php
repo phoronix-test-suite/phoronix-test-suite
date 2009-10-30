@@ -39,7 +39,7 @@ function pts_text_input($question)
 
 	return $answer;
 }
-function pts_text_select_menu($user_string, $options_r)
+function pts_text_select_menu($user_string, $options_r, $allow_multi_select = false)
 {
 	$option_count = count($options_r);
 
@@ -57,8 +57,11 @@ function pts_text_select_menu($user_string, $options_r)
 		}
 		echo "\n" . $user_string . ": ";
 		$test_choice = trim(fgets(STDIN));
+
+		// TODO: no checks actually done right now with multi-select (comma delimited selection), add at some point
+		$multi_select_pass = $allow_multi_select && count(explode(",", $test_choice)) > 0;
 	}
-	while(!(in_array($test_choice, $options_r) || isset($options_r[($test_choice - 1)]) && ($test_choice = $options_r[($test_choice - 1)]) != ""));
+	while(!$multi_select_pass && !(in_array($test_choice, $options_r) || isset($options_r[($test_choice - 1)]) && ($test_choice = $options_r[($test_choice - 1)]) != ""));
 
 	return $test_choice;
 }

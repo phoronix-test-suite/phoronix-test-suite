@@ -144,15 +144,16 @@ class pts_test_option
 
 		return $valid;
 	}
-	public function parse_selection_choice_input($input)
+	public function parse_selection_choice_input($input, $use_default_on_empty = true)
 	{
 		$return_keys = array();
 
 		foreach(pts_trim_explode(",", $input) as $input_choice)
 		{
-			if($input_choice == (($c = $this->option_count()) + 1))
+			if($input_choice == ($this->option_count() + 1) || $input_choice == "Test All Options")
 			{
-				for($i = 0; $i < $c; $i++)
+				// Add all options
+				foreach(array_keys($this->options) as $i)
 				{
 					array_push($return_keys, $i);
 				}
@@ -166,6 +167,12 @@ class pts_test_option
 
 		$return_keys = array_unique($return_keys);
 		sort($return_keys);
+
+		if($use_default_on_empty && count($return_keys) == 0)
+		{
+			// Use the default as no valid options were presented
+			array_push($return_keys, $this->get_option_default());
+		}
 
 		return $return_keys;
 	}

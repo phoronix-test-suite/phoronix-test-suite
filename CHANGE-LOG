@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Move txt file lists from pts-core/static/ to pts-core/static/lists/
 - pts-core: Allow test options to be specified externally via PRESET_OPTIONS environmental variable (see commit for example)
 - pts-core: Fix bug where from GTK2 GUI selecting to not save test results would prompt you from CLI to save results or not
+- pts-core: Vastly re-work the pts-includes-run_options code
 - phodevi: Fix possible space when getting resolutions from xrandr
 - pts: Add workstation test suite
 - pts: Add disk-ssd test suite

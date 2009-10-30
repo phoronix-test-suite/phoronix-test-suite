@@ -25,17 +25,10 @@ function pts_prompt_test_options($identifier)
 {
 	$user_args = array();
 	$text_args = array();
-	$test_options = pts_test_options($identifier);
-
-	if(count($test_options) > 0)
-	{
-		echo pts_string_header("Test Configuration: " . pts_test_identifier_to_name($identifier));
-	}
 
 	if(pts_is_assignment("AUTOMATED_MODE"))
 	{
 		$preset_selections = pts_read_assignment("AUTO_TEST_OPTION_SELECTIONS");
-print_r($preset_selections);
 	}
 	else if(($cli_presets_env = getenv("PRESET_OPTIONS")) != false)
 	{
@@ -60,27 +53,30 @@ print_r($preset_selections);
 		}					
 	}
 
-	for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
+	foreach(pts_test_options($identifier) as $i => $o)
 	{
-		$o = $test_options[$this_option_pos];
-		$option_count = $o->option_count();
+		if($i == 0)
+		{
+			echo pts_string_header("Test Configuration: " . pts_test_identifier_to_name($identifier));
+		}
+
 		$option_identifier = $o->get_identifier();
 
-		if($option_count == 0)
+		if($o->option_count() == 0)
 		{
 			// User inputs their option
 			if(pts_is_assignment("AUTOMATED_MODE") && isset($preset_selections[$identifier][$option_identifier]))
 			{
 				$value = $preset_selections[$identifier][$option_identifier];
 			}
+			else if(pts_is_assignment("CLI_PRESET_OPTIONS") && isset($cli_presets[$identifier][$option_identifier]))
+			{
+				$value = $cli_presets[$identifier][$option_identifier];
+			}
 			else
 			{
-				do
-				{
-					echo "\n" . $o->get_name() . "\n" . "Enter Value: ";
-					$value = trim(fgets(STDIN));
-				}
-				while(empty($value));
+				echo "\n" . $o->get_name() . "\n";
+				$value = pts_text_input("Enter Value");
 			}
 
 			array_push($text_args, array(""));
@@ -88,44 +84,25 @@ print_r($preset_selections);
 		}
 		else
 		{
-			if($option_count == 1)
+			// Have the user select the desired option
+			if(pts_is_assignment("AUTOMATED_MODE") && isset($preset_selections[$identifier][$option_identifier]))
 			{
-				// Only one option in menu, so auto-select it
-				$bench_choice = array(0);
+				$bench_choice = $preset_selections[$identifier][$option_identifier];
+			}
+			else if(pts_is_assignment("CLI_PRESET_OPTIONS") && isset($cli_presets[$identifier][$option_identifier]))
+			{
+				$bench_choice = $cli_presets[$identifier][$option_identifier];
 			}
 			else
 			{
-				// Have the user select the desired option
-				if(pts_is_assignment("AUTOMATED_MODE") && isset($preset_selections[$identifier][$option_identifier]))
-				{
-					$bench_choice = $o->parse_selection_choice_input($preset_selections[$identifier][$option_identifier]);
-				}
-				else if(pts_is_assignment("CLI_PRESET_OPTIONS") && isset($cli_presets[$identifier][$option_identifier]))
-				{
-					// TODO: possibly first make sure $cli_presets[$identifier][$option_identifier] is a valid choice
-					// See that the count() of $o->parse_selection_choice_input($cli_presets[$identifier][$option_identifier]) is not 0
+				$option_names = $o->get_all_option_names();
+				array_push($option_names, "Test All Options");
 
-					$bench_choice = $o->parse_selection_choice_input($cli_presets[$identifier][$option_identifier]);
-				}
-				else
-				{
-					do
-					{
-						echo "\n" . $o->get_name() . ":\n";
-
-						$i = 1;
-						foreach($o->get_all_option_names() as $option_name)
-						{
-							echo $i . ": " . $option_name . "\n";
-							$i++;
-						}
-						echo $i . ": Test All Options\n";
-						echo "\nEnter Your Choice: ";
-						$bench_choice = trim(fgets(STDIN));
-					}
-					while(count($bench_choice = $o->parse_selection_choice_input($bench_choice)) == 0);
-				}
+				echo "\n" . $o->get_name() . ":\n";
+				$bench_choice = pts_text_select_menu("Enter Your Choice", $option_names, true);
 			}
+
+			$bench_choice = $o->parse_selection_choice_input($bench_choice);
 
 			// Format the selected option(s)
 			$option_args = array();
@@ -143,9 +120,9 @@ print_r($preset_selections);
 	}
 
 	$test_args = array();
-	pts_all_combos($test_args, "", $user_args, 0);
-
 	$test_args_description = array();
+
+	pts_all_combos($test_args, "", $user_args, 0);
 	pts_all_combos($test_args_description, "", $text_args, 0, " - ");
 
 	return array($test_args, $test_args_description);
@@ -155,21 +132,17 @@ function pts_defaults_test_options($identifier)
 	// Defaults mode for single test
 	$all_args_real = array();
 	$all_args_description = array();
-	$test_options = pts_test_options($identifier);
 
-	for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
+	foreach(pts_test_options($identifier) as $o)
 	{
-		$o = $test_options[$this_option_pos];
-		$option_count = $o->option_count();
-
 		$option_args = array();
 		$option_args_description = array();
 
 		$default_entry = $o->get_option_default();
 
-		if($option_count == 2)
+		if($o->option_count() == 2)
 		{
-			for($i = 0; $i < $option_count; $i++)
+			for($i = 0; $i < 2; $i++)
 			{
 				array_push($option_args, $o->format_option_value_from_select($i));
 				array_push($option_args_description, $o->format_option_display_from_select($i));
@@ -186,11 +159,10 @@ function pts_defaults_test_options($identifier)
 	}
 
 	$test_args = array();
-	pts_all_combos($test_args, "", $all_args_real, 0);
-
 	$test_args_description = array();
-	$description_separate = " - ";
-	pts_all_combos($test_args_description, "", $all_args_description, 0, $description_separate);
+
+	pts_all_combos($test_args, "", $all_args_real, 0);
+	pts_all_combos($test_args_description, "", $all_args_description, 0, " - ");
 
 	return array($test_args, $test_args_description);
 }
@@ -199,16 +171,12 @@ function pts_generate_batch_run_options($identifier)
 	// Batch mode for single test
 	$batch_all_args_real = array();
 	$batch_all_args_description = array();
-	$description_separate = " ";
-	$test_options = pts_test_options($identifier);
 
-	for($this_option_pos = 0; $this_option_pos < count($test_options); $this_option_pos++)
+	foreach(pts_test_options($identifier) as $o)
 	{
-		$o = $test_options[$this_option_pos];
-		$option_count = $o->option_count();
-
 		$option_args = array();
 		$option_args_description = array();
+		$option_count = $o->option_count();
 
 		for($i = 0; $i < $option_count; $i++)
 		{
@@ -216,20 +184,15 @@ function pts_generate_batch_run_options($identifier)
 			array_push($option_args_description, $o->format_option_display_from_select($i));
 		}
 
-		if($i > 1)
-		{
-			$description_separate = " - ";
-		}
-
 		array_push($batch_all_args_real, $option_args);
 		array_push($batch_all_args_description, $option_args_description);
 	}
 
 	$test_args = array();
-	pts_all_combos($test_args, "", $batch_all_args_real, 0);
-
 	$test_args_description = array();
-	pts_all_combos($test_args_description, "", $batch_all_args_description, 0, $description_separate);
+
+	pts_all_combos($test_args, "", $batch_all_args_real, 0);
+	pts_all_combos($test_args_description, "", $batch_all_args_description, 0, " - ");
 
 	return array($test_args, $test_args_description);
 }
@@ -461,9 +424,8 @@ function pts_test_options($identifier)
 		pts_auto_process_test_option($identifier, $settings_identifier[$option_count], $option_names, $option_values);
 
 		$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
-		$prefix = $settings_argument_prefix[$option_count];
 
-		$user_option->set_option_prefix($prefix);
+		$user_option->set_option_prefix($settings_argument_prefix[$option_count]);
 		$user_option->set_option_postfix($settings_argument_postfix[$option_count]);
 
 		for($i = 0; $i < count($option_names) && $i < count($option_values); $i++)
