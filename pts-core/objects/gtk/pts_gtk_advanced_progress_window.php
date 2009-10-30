@@ -31,7 +31,7 @@ class pts_gtk_advanced_progress_window extends pts_gtk_simple_progress_window
 		parent::__construct($title);
 		$this->set_size_request(500, 380);
 
-		$logo = GtkImage::new_from_file(STATIC_DIR . "pts-308x160-t.png");
+		$logo = GtkImage::new_from_file(STATIC_DIR . "images/pts-308x160-t.png");
 		$logo->set_size_request(308, 160);
 
 		$this->loading_label = new pts_gtk_label(null);

@@ -53,7 +53,7 @@ class result_file_to_ps implements pts_option_interface
 		//ps_set_info("Subject", "Phoronix Test Suite");
 
 		ps_begin_page($ps, $page_width, $page_height);
-		$pdf->Image(STATIC_DIR . "pts-308x160.png", 69, 85, 73, 38);
+		$pdf->Image(STATIC_DIR . "images/pts-308x160.png", 69, 85, 73, 38);
 		$pdf->Ln(120);
 		$pdf->WriteStatementCenter("www.phoronix-test-suite.com");
 		$pdf->Ln(15);

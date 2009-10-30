@@ -28,7 +28,7 @@ class pts_gtk_simple_progress_window extends GtkDialog
 	public function __construct($title = null)
 	{
 		parent::__construct(($title == null ? "Phoronix Test Suite v" . PTS_VERSION : $title), null, Gtk::DIALOG_MODAL);
-		$this->set_icon(GdkPixbuf::new_from_file(STATIC_DIR . "pts-icon.png"));
+		$this->set_icon(GdkPixbuf::new_from_file(STATIC_DIR . "images/pts-icon.png"));
 
 		$this->loading_label = new pts_gtk_label("Loading...");
 		$this->gtk_progress_bar = new pts_gtk_progress_bar();
@@ -40,7 +40,7 @@ class pts_gtk_simple_progress_window extends GtkDialog
 
 		$this->set_size_request(360, 270);
 
-		$logo = GtkImage::new_from_file(STATIC_DIR . "pts-308x160-t.png");
+		$logo = GtkImage::new_from_file(STATIC_DIR . "images/pts-308x160-t.png");
 		$logo->set_size_request(308, 160);
 
 		pts_gtk_array_to_boxes($this->vbox, array(null, $logo, null, $this->gtk_progress_bar, $this->loading_label), 2, true);
