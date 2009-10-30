@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - pts-core: Move images to pts-core/static/images/
 - pts-core: Create modules tag section in user-config.xml, move default modules to load into the LoadModules tag instead of text file
 - pts-core: Start adding user-interface options to the user-config.xml
+- phodevi: Improve phodevi smart caching, bring actual caching into pts-core and place the cache_store in the core.pt2so
 - phodevi: Fix possible space when getting resolutions from xrandr
 - pts: Add workstation test suite
 - pts: Add disk-ssd test suite

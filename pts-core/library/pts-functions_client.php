@@ -177,11 +177,11 @@ function pts_shutdown()
 	// Generate Phodevi Smart Cache
 	if(pts_string_bool(pts_read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
 	{
-		phodevi::create_smart_cache(PTS_USER_DIR, PTS_VERSION);
+		pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", phodevi::get_phodevi_cache_object(PTS_USER_DIR, PTS_VERSION));
 	}
 	else
 	{
-		phodevi::remove_smart_cache(PTS_USER_DIR);
+		pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", null);
 	}
 }
 function pts_evaluate_script_type($script)

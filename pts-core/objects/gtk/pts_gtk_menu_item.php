@@ -22,13 +22,13 @@
 
 class pts_gtk_menu_item
 {
-	var $title;
-	var $to_call;
-	var $to_call_arg;
-	var $type;
-	var $attach_image;
-	var $active_default;
-	var $attach_to_pts_assignment;
+	private $title;
+	private $to_call;
+	private $to_call_arg;
+	private $type;
+	private $attach_image;
+	private $active_default;
+	private $attach_to_pts_assignment;
 
 	public function __construct($title, $to_call = null, $type = "STRING", $attach_image = null, $set_active_default = false)
 	{

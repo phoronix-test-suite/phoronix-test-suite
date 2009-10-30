@@ -231,29 +231,17 @@ class phodevi
 
 		define("IS_UNKNOWN_GRAPHICS", ($found_gpu_match == false));
 	}
-	public static function restore_smart_cache($restore_dir, $client_version = 0)
+	public static function set_device_cache($cache_array)
 	{
-		if(is_file($restore_dir . "phodevi.cache"))
+		if(is_array($cache_array) && !empty($cache_array))
 		{
-			$restore_cache = unserialize(file_get_contents($restore_dir . "phodevi.cache"));
-
-			if($restore_cache instanceOf phodevi_cache)
-			{
-				self::$device_cache = $restore_cache->restore_cache($restore_dir, $client_version);
-			}
+			self::$smart_cache = array_merge(self::$smart_cache, $cache_array);
+			self::$device_cache = array_merge(self::$device_cache, $cache_array);
 		}
 	}
-	public static function remove_smart_cache($store_dir)
+	public static function get_phodevi_cache_object($store_dir, $client_version = 0)
 	{
-		return is_file($store_dir . "phodevi.cache") && unlink($store_dir . "phodevi.cache");
-	}
-	public static function create_smart_cache($store_dir, $client_version = 0)
-	{
-		if(!empty(self::$smart_cache) && is_writable($store_dir))
-		{
-			file_put_contents($store_dir . "phodevi.cache", 
-				serialize(new phodevi_cache(self::$smart_cache, $store_dir, $client_version)));
-		}
+		return new phodevi_cache(self::$smart_cache, $store_dir, $client_version);
 	}
 	protected static function system_information_parse($component_array, $return_as_string = true)
 	{

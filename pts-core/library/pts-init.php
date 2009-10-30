@@ -53,7 +53,6 @@ function pts_basic_init()
 	}
 
 	phodevi::initial_setup();
-	phodevi::restore_smart_cache(PTS_USER_DIR, PTS_VERSION);
 
 	define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
 
@@ -146,6 +145,15 @@ function pts_core_storage_init()
 	}
 
 	$pso->add_object("user_agreement_cs", $agreement_cs); // User agreement check-sum
+
+	// Phodevi Cache Handling
+	$phodevi_cache = $pso->read_object("phodevi_smart_cache");
+
+	if($phodevi_cache instanceOf phodevi_cache)
+	{
+		$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_DIR, PTS_VERSION);
+		phodevi::set_device_cache($phodevi_cache);
+	}
 
 	// Archive to disk
 	$pso->save_to_file(PTS_CORE_STORAGE);

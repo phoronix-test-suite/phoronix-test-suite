@@ -107,6 +107,16 @@ class pts_storage_object
 
 		return $restore_obj;
 	}
+	public static function set_in_file($storage_file, $identifier, $object)
+	{
+		$storage = self::recover_from_file($storage_file);
+
+		if($storage != false)
+		{
+			$storage->add_object($identifier, $object);
+			$storage->save_to_file($storage_file);
+		}
+	}
 }
 
 ?>
