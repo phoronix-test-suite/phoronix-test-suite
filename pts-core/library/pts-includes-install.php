@@ -480,7 +480,7 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 					if(is_file(TEST_ENV_DIR . $identifier . "/install-exit-status"))
 					{
 						// If the installer writes its exit status to ~/install-exit-status, if it's non-zero the install failed
-						$install_exit_status = trim(file_get_contents(TEST_ENV_DIR . $identifier . "/install-exit-status"));
+						$install_exit_status = pts_file_get_contents(TEST_ENV_DIR . $identifier . "/install-exit-status");
 						unlink(TEST_ENV_DIR . $identifier . "/install-exit-status");
 
 						if($install_exit_status != 0 && !IS_BSD)

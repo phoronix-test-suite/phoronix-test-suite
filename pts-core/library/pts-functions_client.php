@@ -122,12 +122,12 @@ function pts_clean_information_string($str)
 
 	if($remove_phrases == null && is_file(STATIC_DIR . "lists/info-strings-remove.txt"))
 	{
-		$word_file = trim(file_get_contents(STATIC_DIR . "lists/info-strings-remove.txt"));
+		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-remove.txt");
 		$remove_phrases = pts_trim_explode("\n", $word_file);
 	}
 	if($change_phrases == null && is_file(STATIC_DIR . "lists/info-strings-replace.txt"))
 	{
-		$word_file = trim(file_get_contents(STATIC_DIR . "lists/info-strings-replace.txt"));
+		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-replace.txt");
 		$phrases_r = pts_trim_explode("\n", $word_file);
 		$change_phrases = array();
 
@@ -322,7 +322,7 @@ function pts_http_get_contents($url, $override_proxy = false, $override_proxy_po
 	}
 
 	$stream_context = pts_http_stream_context_create();
-	$contents = trim(file_get_contents($url, 0, $stream_context));
+	$contents = pts_file_get_contents($url, 0, $stream_context);
 
 	return $contents;
 }

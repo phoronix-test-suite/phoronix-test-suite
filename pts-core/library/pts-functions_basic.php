@@ -86,6 +86,10 @@ function pts_empty($var)
 {
 	return trim($var) == null;
 }
+function pts_file_get_contents($filename, $flags = 0, $context = null)
+{
+	return trim(file_get_contents($filename, $flags, $context));
+}
 function pts_trim_spaces($string)
 {
 	do

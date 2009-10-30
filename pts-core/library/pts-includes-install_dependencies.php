@@ -290,7 +290,7 @@ function pts_package_vendor_identifier()
 	{
 		if(is_file(STATIC_DIR . "lists/software-vendor-aliases.txt"))
 		{
-			$vendors_alias_file = trim(file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.txt"));
+			$vendors_alias_file = pts_file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.txt");
 			$vendors_r = explode("\n", $vendors_alias_file);
 
 			foreach($vendors_r as $vendor)

@@ -538,7 +538,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if(is_file(TEST_ENV_DIR . $test_identifier . "/test-exit-status"))
 		{
 			// If the test script writes its exit status to ~/test-exit-status, if it's non-zero the test run failed
-			$exit_status = trim(file_get_contents(TEST_ENV_DIR . $test_identifier . "/test-exit-status"));
+			$exit_status = pts_file_get_contents(TEST_ENV_DIR . $test_identifier . "/test-exit-status");
 			unlink(TEST_ENV_DIR . $test_identifier . "/test-exit-status");
 
 			if($exit_status != 0 && !IS_BSD)
@@ -553,7 +553,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			$test_extra_runtime_variables_post = $test_extra_runtime_variables;
 			if(is_file(TEST_ENV_DIR . $test_identifier . "/pts-timer"))
 			{
-				$run_time = trim(file_get_contents(TEST_ENV_DIR . $test_identifier . "/pts-timer"));
+				$run_time = pts_file_get_contents(TEST_ENV_DIR . $test_identifier . "/pts-timer");
 				unlink(TEST_ENV_DIR . $test_identifier . "/pts-timer");
 
 				if(is_numeric($run_time))
@@ -726,7 +726,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if(is_file($test_directory . "/pts-test-note"))
 	{
-		pts_test_notes_manager::add_note(trim(file_get_contents($test_directory . "/pts-test-note")));
+		pts_test_notes_manager::add_note(pts_file_get_contents($test_directory . "/pts-test-note"));
 		unlink($test_directory . "pts-test-note");
 	}
 
@@ -749,7 +749,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	{
 		if(empty($$var_check) && is_file($test_directory . $file_check))
 		{
-			$$var_check = trim(file_get_contents($test_directory . $file_check));
+			$$var_check = pts_file_get_contents($test_directory . $file_check);
 			unlink($test_directory . $file_check);
 		}
 	}
