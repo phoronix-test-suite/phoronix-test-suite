@@ -38,10 +38,11 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObjectFromReader(P_OPTION_GLOBAL_UPLOADKEY, 0, $read_config, "");
 
 	$config->addXmlObjectFromReader(P_OPTION_USAGE_REPORTING, 1, $read_config, "UNKNOWN");
-	$config->addXmlObjectFromReader(P_OPTION_LOAD_MODULES, 1, $read_config, "");
 	$config->addXmlObjectFromReader(P_OPTION_DEFAULT_BROWSER, 1, $read_config, "");
 	$config->addXmlObjectFromReader(P_OPTION_PHODEVI_CACHE, 1, $read_config, "TRUE");
 	$config->addXmlObjectFromReader(P_OPTION_DISPLAY_MODE, 1, $read_config, "DEFAULT");
+
+	$config->addXmlObjectFromReader(P_OPTION_LOAD_MODULES, 7, $read_config, "toggle_screensaver, update_checker");
 
 	$config->addXmlObjectFromReader(P_OPTION_TEST_REMOVEDOWNLOADS, 2, $read_config, "FALSE");
 	$config->addXmlObjectFromReader(P_OPTION_CACHE_SEARCHMEDIA, 2, $read_config, "TRUE");

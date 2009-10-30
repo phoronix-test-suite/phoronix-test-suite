@@ -20,6 +20,10 @@
 			<h3>DefaultDisplayMode: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/General/DefaultDisplayMode" /></span></h3>
 			<p>This option affects how text is displayed on the command-line interface during the testing process. If this option is set to <em>DEFAULT</em>, the text interface will be the traditional Phoronix Test Suite output. If this option is set to <em>CONCISE</em>, the display mode is shorter and more concise. This is the default mode used during batch testing. The default value is <em>DEFAULT</em>.</p>
 
+			<h1>Modules Options</h1>
+			<h3>LoadModules: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Modules/LoadModules" /></span></h3>
+			<p>This tag contains a string of the names of the Phoronix Test Suite modules to load by default when running the Phoronix Test Suite. Multiple modules can be listed when delimited by a comma. Modules that load via setting an environmental variable can also be specified here (i.e. <em>FORCE_AA=8</em> as an option in this string to load the <em>graphics_override</em> module with the 8x forced anti-aliasing). The default value is <em>toggle_screensaver, update_checker</em>.</p>
+
 			<h1>Installation Options</h1>
 			<h3>RemoveDownloadFiles: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Installation/RemoveDownloadFiles" /></span></h3>
 			<p>If this option is set to <em>TRUE</em>, once a test has been installed the downloaded files will be removed. Enabling this option will conserve disk space and in nearly all circumstances will not result in any problems. However, if a test profile directly depends upon a file that was downloaded (as opposed to something extracted from a downloaded file during the installation process), enabling this option will cause issues. If this option is set to <em>FALSE</em>, the downloaded files will not be removed unless the test is uninstalled. The default value is <em>FALSE</em>.</p>

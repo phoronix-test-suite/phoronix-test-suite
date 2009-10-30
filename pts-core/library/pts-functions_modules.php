@@ -31,13 +31,6 @@ function pts_module_startup_init()
 	// Process initially called when PTS starts up
 	if(getenv("PTS_IGNORE_MODULES") == false && PTS_MODE == "CLIENT")
 	{
-		// Enable the toggling of the system screensaver by default.
-		// To disable w/o code modification, set HALT_SCREENSAVER=NO environmental variable
-		foreach(pts_trim_explode("\n", file_get_contents(STATIC_DIR . "lists/default-modules.txt")) as $default_module)
-		{
-			pts_attach_module($default_module);
-		}
-
 		pts_load_modules();
 		pts_module_process("__startup");
 		define("PTS_STARTUP_TASK_PERFORMED", true);
@@ -76,11 +69,11 @@ function pts_load_modules()
 	{
 		foreach(explode(",", $load_modules) as $module)
 		{
-			$module_r = explode("=", $module);
+			$module_r = pts_trim_explode("=", $module);
 
 			if(count($module_r) == 2)
 			{
-				pts_set_environment_variable(trim($module_r[0]), trim($module_r[1]));
+				pts_set_environment_variable($module_r[0], $module_r[1]);
 			}
 			else
 			{

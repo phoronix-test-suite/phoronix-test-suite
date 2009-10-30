@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix bug where from GTK2 GUI selecting to not save test results would prompt you from CLI to save results or not
 - pts-core: Vastly re-work the pts-includes-run_options code
 - pts-core: Move images to pts-core/static/images/
+- pts-core: Create modules tag section in user-config.xml, move default modules to load into the LoadModules tag instead of text file
 - phodevi: Fix possible space when getting resolutions from xrandr
 - pts: Add workstation test suite
 - pts: Add disk-ssd test suite
