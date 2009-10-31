@@ -22,6 +22,7 @@
 */
 
 define("PTS_VERSION", "2.2.0b1");
+define("PTS_BUILD_INT", 2190);
 define("PTS_CODENAME", "BARDU");
 
 function pts_codename($full_string = false)

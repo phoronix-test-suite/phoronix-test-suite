@@ -44,7 +44,7 @@ class pts_result_file_merge_manager
 		}
 		*/
 
-		$select_identifiers = $result_merge_select->get_selected_identifiers();
+		$select_identifiers = $result_merge_select instanceOf pts_result_file_merge_select ? $result_merge_select->get_selected_identifiers() : null;
 
 		$merged = false;
 		for($i = 0; $i < count($this->test_results) && !$merged; $i++)
@@ -59,7 +59,7 @@ class pts_result_file_merge_manager
 				{
 					if($select_identifiers == null || in_array($identifiers[$j], $select_identifiers))
 					{
-						if(($renamed = $result_merge_select->get_rename_identifier()) != null)
+						if($result_merge_select != null && ($renamed = $result_merge_select->get_rename_identifier()) != null)
 						{
 							$identifiers[$j] = $renamed;
 						}

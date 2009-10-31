@@ -42,15 +42,20 @@ function pts_merge_test_results()
 	{
 		if(is_object($files_to_combine[$merge_pos]) && $files_to_combine[$merge_pos] instanceOf pts_result_merge_select)
 		{
-			$selected_identifiers = $files_to_combine[$merge_pos]->get_selected_identifiers();
 			$result_merge_select = $files_to_combine[$merge_pos];
+			$this_result_file = new pts_result_file($result_merge_select->get_result_file());
+
+		}
+		else if(is_object($files_to_combine[$merge_pos]) && $files_to_combine[$merge_pos] instanceOf pts_result_file)
+		{
+			$result_merge_select = null;
+			$this_result_file = $files_to_combine[$merge_pos];
 		}
 		else
 		{
 			$result_merge_select = new pts_result_merge_select($files_to_combine[$merge_pos], null);
+			$this_result_file = new pts_result_file($result_merge_select->get_result_file());
 		}
-
-		$this_result_file = new pts_result_file($result_merge_select->get_result_file());
 
 		if($merge_pos == 0)
 		{

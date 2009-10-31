@@ -30,17 +30,22 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 
 	public function __construct($new_values = null)
 	{
-		if(is_file(PTS_USER_DIR . "graph-config.xml"))
+		$file = null;
+
+		if(PTS_MODE == "CLIENT")
 		{
-			$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
+			if(is_file(PTS_USER_DIR . "graph-config.xml"))
+			{
+				$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
+			}
+			else if(is_file(RESULTS_VIEWER_DIR . "graph-config-template.xml"))
+			{
+				$file = file_get_contents(RESULTS_VIEWER_DIR . "graph-config-template.xml");
+			}
 		}
-		else if(is_file(RESULTS_VIEWER_DIR . "graph-config-template.xml"))
+		else if(defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML))
 		{
-			$file = file_get_contents(RESULTS_VIEWER_DIR . "graph-config-template.xml");
-		}
-		else
-		{
-			$file = "";
+			$file = PTS_LIB_GRAPH_CONFIG_XML;
 		}
 
 		$this->override_values = (is_array($new_values) ? $new_values : false);

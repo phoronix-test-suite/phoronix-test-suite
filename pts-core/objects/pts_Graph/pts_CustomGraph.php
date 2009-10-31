@@ -25,15 +25,19 @@ class pts_CustomGraph extends pts_Graph
 {
 	function __construct($Title, $SubTitle, $YTitle)
 	{
-		if(PTS_MODE == "CLIENT")
-		{
-			$this->setup_custom_values();
-		}
+		$this->setup_custom_values();
 
 		parent::__construct($Title, $SubTitle, $YTitle);
 	}
 	private function setup_custom_values()
 	{
+		if(!(PTS_MODE == "CLIENT" || (defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML))))
+		{
+			// setting custom values through pts_CustomGraph is only supported when called from client OR
+			// when running as a library, but with a file of the config XML specified
+			return;
+		}
+
 		$read_config = new pts_graph_config_tandem_XmlReader();
 
 		$this->graph_attr_width = pts_read_graph_config(P_GRAPH_SIZE_WIDTH, null, $read_config); // Graph width

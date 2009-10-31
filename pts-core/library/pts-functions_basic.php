@@ -160,5 +160,18 @@ function pts_trim_explode($delimiter, &$to_explode)
 {
 	return array_map("trim", explode($delimiter, $to_explode));
 }
+function pts_is_file(&$file_check)
+{
+	// $file_check could contain the XML markup already, so first check for < as the start of an open tag from say <?xml version
+	return substr($file_check, 0, 1) != "<" && is_file($file_check);
+}
+function pts_request_new_id()
+{
+	// Request a new ID for a counter
+	static $id = 1;
+	$id++;
+
+	return $id;
+}
 
 ?>

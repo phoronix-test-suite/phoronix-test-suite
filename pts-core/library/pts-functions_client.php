@@ -106,14 +106,6 @@ function pts_run_option_next($command, $pass_args = null, $set_assignments = "")
 {
 	return pts_run_option_manager::add_run_option($command, $pass_args, $set_assignments);
 }
-function pts_request_new_id()
-{
-	// Request a new ID for a counter
-	static $id = 1;
-	$id++;
-
-	return $id;
-}
 function pts_clean_information_string($str)
 {
 	// Clean a string containing hardware information of some common things to change/strip out
