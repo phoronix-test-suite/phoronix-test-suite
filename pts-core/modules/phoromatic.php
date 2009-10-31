@@ -156,10 +156,12 @@ class phoromatic extends pts_module_interface
 	{
 		do
 		{
+			echo "\nChecking Status From Phoromatic Server @ " . date("H:i:s");
 			$server_response = phoromatic::upload_to_remote_server(array("r" => "status_check"));
 
 			$xml_parser = new tandem_XmlReader($server_response);
 			$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
+			echo " [" . $response . "]\n";
 
 			switch($response)
 			{

@@ -41,7 +41,7 @@ function pts_start_install($to_install, &$display_mode)
 	{
 		if(!pts_is_assignment("SILENCE_MESSAGES"))
 		{
-			echo pts_string_header("Not recognized: " . $to_install[0]);
+			echo pts_string_header("Not Recognized: " . $to_install[0]);
 		}
 
 		return false;

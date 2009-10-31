@@ -34,16 +34,7 @@ class pts_CustomGraph extends pts_Graph
 	}
 	private function setup_custom_values()
 	{
-		if(is_file(PTS_USER_DIR . "graph-config.xml"))
-		{
-			$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
-		}
-		else
-		{
-			$file = "";
-		}
-
-		$read_config = new tandem_XmlReader($file);
+		$read_config = new pts_graph_config_tandem_XmlReader();
 
 		$this->graph_attr_width = pts_read_graph_config(P_GRAPH_SIZE_WIDTH, null, $read_config); // Graph width
 		$this->graph_attr_height = pts_read_graph_config(P_GRAPH_SIZE_HEIGHT, null, $read_config); // Graph height

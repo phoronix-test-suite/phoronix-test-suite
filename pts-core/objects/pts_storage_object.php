@@ -117,6 +117,18 @@ class pts_storage_object
 			$storage->save_to_file($storage_file);
 		}
 	}
+	public static function read_from_file($storage_file, $identifier)
+	{
+		$storage = self::recover_from_file($storage_file);
+		$object = false;
+
+		if($storage != false)
+		{
+			$object = $storage->read_object($identifier);
+		}
+
+		return $object;
+	}
 }
 
 ?>

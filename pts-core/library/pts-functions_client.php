@@ -345,5 +345,58 @@ function pts_anonymous_usage_reporting()
 {
 	return pts_string_bool(pts_read_user_config(P_OPTION_USAGE_REPORTING, 0));
 }
+function pts_find_home($path)
+{
+	// Find home directory if needed
+	if(strpos($path, "~/") !== false)
+	{
+		$home_path = pts_user_home();
+		$path = str_replace("~/", $home_path, $path);
+	}
 
+	return pts_add_trailing_slash($path);
+}
+function pts_user_home()
+{
+	// Gets the system user's home directory
+	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
+	{
+		$userinfo = posix_getpwuid(posix_getuid());
+		$userhome = $userinfo["dir"];
+	}
+	else
+	{
+		$userhome = getenv("HOME");
+	}
+
+	return $userhome . "/";
+}
+function pts_current_user()
+{
+	// Current system user
+	return ($pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User")) != "Default User" ? $pts_user : phodevi::read_property("system", "username");
+}
+function pts_download_cache_user_directories()
+{
+	// Returns directory of the PTS Download Cache
+	$dir_string = null;
+	$cache_user_directories = array();
+
+	if(($dir = getenv("PTS_DOWNLOAD_CACHE")) != false)
+	{
+		$dir_string .= $dir . ":";
+	}
+
+	$dir_string .= pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/");
+
+	foreach(array_map("trim", explode(":", $dir_string)) as $dir_check)
+	{
+		if($dir_check != null)
+		{
+			array_push($cache_user_directories, pts_add_trailing_slash(pts_find_home($dir_check)));
+		}
+	}
+
+	return $cache_user_directories;
+}
 ?>

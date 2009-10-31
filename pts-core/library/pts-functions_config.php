@@ -84,63 +84,6 @@ function pts_user_config_init($new_config_values = null)
 	pts_copy(STATIC_DIR . "pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
 	pts_copy(STATIC_DIR . "images/pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
 }
-function pts_module_config_init($SetOptions = null)
-{
-	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
-
-	if(is_file(PTS_USER_DIR . "modules-config.xml"))
-	{
-		$file = file_get_contents(PTS_USER_DIR . "modules-config.xml");
-	}
-	else
-	{
-		$file = "";
-	}
-
-	$module_config_parser = new tandem_XmlReader($file);
-	$option_module = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_NAME);
-	$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
-	$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
-
-	if(is_array($SetOptions) && count($SetOptions) > 0)
-	{
-		foreach($SetOptions as $this_option_set => $this_option_value)
-		{
-			$replaced = false;
-			list($this_option_module, $this_option_identifier) = explode("__", $this_option_set);
-
-			for($i = 0; $i < count($option_module) && !$replaced; $i++)
-			{
-				if($option_module[$i] == $this_option_module && $option_identifier[$i] == $this_option_identifier)
-				{
-					$option_value[$i] = $this_option_value;
-					$replaced = true;
-				}
-			}
-
-			if(!$replaced)
-			{
-				array_push($option_module, $this_option_module);
-				array_push($option_identifier, $this_option_identifier);
-				array_push($option_value, $this_option_value);
-			}
-		}
-	}
-
-	$config = new tandem_XmlWriter();
-
-	for($i = 0; $i < count($option_module); $i++)
-	{
-		if(isset($option_module[$i]) && pts_module_type($option_module[$i]) != "")
-		{
-			$config->addXmlObject(P_MODULE_OPTION_NAME, $i, $option_module[$i]);
-			$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $option_identifier[$i]);
-			$config->addXmlObject(P_MODULE_OPTION_VALUE, $i, $option_value[$i]);
-		}
-	}
-
-	$config->saveXMLFile(PTS_USER_DIR . "modules-config.xml");
-}
 function pts_config_bool_to_string($bool)
 {
 	return $bool ? "TRUE" : "FALSE";
@@ -214,60 +157,6 @@ function pts_read_config($config_file, $xml_pointer, $value, $tandem_xml)
 	}
 
 	return $value;
-}
-function pts_find_home($path)
-{
-	// Find home directory if needed
-	if(strpos($path, "~/") !== false)
-	{
-		$home_path = pts_user_home();
-		$path = str_replace("~/", $home_path, $path);
-	}
-
-	return pts_add_trailing_slash($path);
-}
-function pts_user_home()
-{
-	// Gets the system user's home directory
-	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
-	{
-		$userinfo = posix_getpwuid(posix_getuid());
-		$userhome = $userinfo["dir"];
-	}
-	else
-	{
-		$userhome = getenv("HOME");
-	}
-
-	return $userhome . "/";
-}
-function pts_current_user()
-{
-	// Current system user
-	return ($pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User")) != "Default User" ? $pts_user : phodevi::read_property("system", "username");
-}
-function pts_download_cache_user_directories()
-{
-	// Returns directory of the PTS Download Cache
-	$dir_string = null;
-	$cache_user_directories = array();
-
-	if(($dir = getenv("PTS_DOWNLOAD_CACHE")) != false)
-	{
-		$dir_string .= $dir . ":";
-	}
-
-	$dir_string .= pts_read_user_config(P_OPTION_CACHE_DIRECTORY, "~/.phoronix-test-suite/download-cache/");
-
-	foreach(array_map("trim", explode(":", $dir_string)) as $dir_check)
-	{
-		if($dir_check != null)
-		{
-			array_push($cache_user_directories, pts_add_trailing_slash(pts_find_home($dir_check)));
-		}
-	}
-
-	return $cache_user_directories;
 }
 
 ?>
