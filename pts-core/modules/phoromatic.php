@@ -56,7 +56,7 @@ class phoromatic extends pts_module_interface
 			$options["remote_host"] .= "phoromatic.php";
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "setup", "h" => pts_hw_string(),  "s" => pts_sw_string()),
+		$server_response = phoromatic::upload_to_remote_server(array("r" => "setup", "h" => pts_hw_string(),  "s" => pts_sw_string(),  "o" => phodevi::read_property("system", "hostname")),
 		$options["remote_host"], $options["remote_account"], $options["remote_verifier"]);
 
 		$xml_parser = new tandem_XmlReader($server_response);

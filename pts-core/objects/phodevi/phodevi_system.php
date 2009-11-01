@@ -63,7 +63,7 @@ class phodevi_system extends pts_device_interface
 				$property = new pts_device_property("sw_username", PHODEVI_STAND_CACHE);
 				break;
 			case "hostname":
-				$property = new pts_device_property("sw_hostname", PHODEVI_STAND_CACHE);
+				$property = new pts_device_property("sw_hostname", PHODEVI_SMART_CACHE);
 				break;
 			case "vendor-identifier":
 				$property = new pts_device_property("sw_vendor_identifier", PHODEVI_SMART_CACHE);
