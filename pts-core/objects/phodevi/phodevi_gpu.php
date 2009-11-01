@@ -534,9 +534,21 @@ class phodevi_gpu extends pts_device_interface
 	public static function gpu_frequency_string()
 	{
 		$freq = (IS_ATI_GRAPHICS ? phodevi::read_property("gpu", "stock-frequency") : phodevi_gpu::gpu_current_frequency());
-		$freq_string = $freq[0] . "/" . $freq[1];
+		$freq_string = null;
 
-		return ($freq_string == "0/0" ? "" : " (" . $freq_string . "MHz)");
+		if($freq[0] != 0)
+		{
+			$freq_string = $freq[0];
+
+			if($freq[1] != 0)
+			{
+				$freq_string .= "/" . $freq[1];
+			}
+
+			$freq_string .= "MHz";
+		}
+
+		return ($freq_string != null ? " (" . $freq_string . ")" : null);
 	}
 	public static function gpu_stock_frequency()
 	{
