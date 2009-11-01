@@ -96,6 +96,7 @@ class phoromatic extends pts_module_interface
 		self::$phoromatic_verifier = pts_module::read_option("remote_verifier");
 		self::$phoromatic_system = pts_module::read_option("remote_system");
 
+		echo "\nRegistering Status With Phoromatic Server\n";
 		$update_sd = phoromatic::update_system_details();
 
 		if(!$update_sd)
@@ -154,8 +155,8 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_system_process()
 	{
-		static $last_communication_minute = 1;
-		static $communication_attemps = 0;
+		$last_communication_minute = date("i");
+		$communication_attemps = 0;
 
 		do
 		{
@@ -251,6 +252,13 @@ class phoromatic extends pts_module_interface
 	protected static function update_system_status($current_task)
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task));
+
+		$xml_parser = new tandem_XmlReader($server_response);
+		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == "TRUE";
+	}
+	protected static function report_warning_to_phoromatic($warning)
+	{
+		$server_response = phoromatic::upload_to_remote_server(array("r" => "report_pts_warning", "a" => $warning));
 
 		$xml_parser = new tandem_XmlReader($server_response);
 		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == "TRUE";

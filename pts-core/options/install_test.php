@@ -42,6 +42,7 @@ class install_test implements pts_option_interface
 		// Any external dependencies?
 		if(!pts_install_package_on_distribution($items_to_install, $display_mode))
 		{
+			// TODO: rather than completely failing, install the test(s) that have the dependencies satisfied
 			echo "\nInstallation of needed test dependencies failed.\n\n";
 			return false;
 		}
