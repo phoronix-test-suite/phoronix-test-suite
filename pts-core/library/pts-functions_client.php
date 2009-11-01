@@ -29,7 +29,7 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 		pts_load_run_option($command);
 	}
 
-	if(method_exists($command, "argument_checks"))
+	if(is_file(OPTIONS_DIR . $command . ".php") && method_exists($command, "argument_checks"))
 	{
 		eval("\$argument_checks = " . $command . "::" . "argument_checks();");
 

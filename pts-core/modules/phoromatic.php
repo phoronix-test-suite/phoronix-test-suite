@@ -188,6 +188,7 @@ class phoromatic extends pts_module_interface
 				case "exit":
 					break;
 				default:
+					phoromatic::update_system_status("Idling, Waiting For Task");
 					sleep((10 - (date("i") % 10)) * 60); // Check with server every 10 minutes
 					break;
 			}
@@ -202,9 +203,9 @@ class phoromatic extends pts_module_interface
 
 	public static function __pre_test_install($test_identifier)
 	{
-		static $last_update_time = null;
+		static $last_update_time = 0;
 
-		if($last_update_time == null || time() > ($last_update_time + 600))
+		if(time() > ($last_update_time + 600))
 		{
 			phoromatic::update_system_status("Installing Tests");
 			$last_update_time = time();
@@ -222,13 +223,16 @@ class phoromatic extends pts_module_interface
 	protected static function update_system_details()
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => pts_hw_string(),  "s" => pts_sw_string()));
-		$xml_parser = new tandem_XmlReader($server_response);
 
+		$xml_parser = new tandem_XmlReader($server_response);
 		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == "TRUE";
 	}
 	protected static function update_system_status($current_task)
 	{
-		phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task));
+		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task));
+
+		$xml_parser = new tandem_XmlReader($server_response);
+		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == "TRUE";
 	}
 
 	//
