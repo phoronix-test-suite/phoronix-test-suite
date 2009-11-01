@@ -154,13 +154,34 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_system_process()
 	{
+		static $last_communication_minute = 1;
+		static $communication_attemps = 0;
+
 		do
 		{
 			echo "\nChecking Status From Phoromatic Server @ " . date("H:i:s");
-			$server_response = phoromatic::upload_to_remote_server(array("r" => "status_check"));
 
-			$xml_parser = new tandem_XmlReader($server_response);
-			$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
+			if($last_communication_minute == date("i") && $communication_attempts > 2)
+			{
+				// Something is wrong, Phoromatic shouldn't be communicating with server more than three times a minute
+				$response = "forced_idle";
+			}
+			else
+			{
+				$server_response = phoromatic::upload_to_remote_server(array("r" => "status_check"));
+
+				$xml_parser = new tandem_XmlReader($server_response);
+				$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
+
+				if(date("i") != $last_communication_minute)
+				{
+					$last_communication_minute = date("i");
+					$communication_attempts = 0;
+				}
+
+				$communication_attempts++;
+			}
+
 			echo " [" . $response . "]\n";
 
 			switch($response)
