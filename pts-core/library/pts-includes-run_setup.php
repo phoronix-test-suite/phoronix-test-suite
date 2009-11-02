@@ -192,7 +192,7 @@ function pts_prompt_svg_result_options($svg_file)
 }
 function pts_prompt_user_tags($default_tags = "")
 {
-	$tags_input = "";
+	$tags_input = null;
 
 	if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
 	{
@@ -211,7 +211,7 @@ function pts_prompt_user_tags($default_tags = "")
 		$tags_input = trim($tags_input);
 	}
 
-	if(empty($tags_input))
+	if($tags_input == null)
 	{
 		$default_tags = pts_to_array($default_tags);
 		$tags_input = pts_global_auto_tags($default_tags);

@@ -20,6 +20,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Support for reporting system/PTS warnings to Phoromatic server
 - phoromatic: Support for setting the default system title on the Phoromatic server as the test system's hostname
 - phoromatic: Report new system software / hardware for test system to Phoromatic server when appropriate
+- phoromatic: Add support for uploading Phoromatic-sanctioned test results to Phoronix Global, if Phoromatic server tells it to
 - phodevi: Improve phodevi smart caching, bring actual caching into pts-core and place the cache_store in the core.pt2so
 - phodevi: Fix possible space when getting resolutions from xrandr
 - phodevi: Don't report GPU memory clock in GPU string when GPU memory clock is 0MHz (NVIDIA reports this for at least some IGPs)

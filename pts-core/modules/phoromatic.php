@@ -23,6 +23,7 @@
 define("M_PHOROMATIC_GEN_RESPONSE", "PhoronixTestSuite/Phoromatic/General/Response");
 define("M_PHOROMATIC_ID", "PhoronixTestSuite/Phoromatic/General/ID");
 define("M_PHOROMATIC_SYS_NAME", "PhoronixTestSuite/Phoromatic/General/SystemName");
+define("M_PHOROMATIC_UPLOAD_TO_GLOBAL", "PhoronixTestSuite/Phoromatic/General/UploadToGlobal");
 
 class phoromatic extends pts_module_interface
 {
@@ -116,7 +117,7 @@ class phoromatic extends pts_module_interface
 		{
 			// Upload test results
 
-			if(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml")
+			if(is_file(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml"))
 			{
 				$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
 
@@ -204,6 +205,11 @@ class phoromatic extends pts_module_interface
 					$args_to_pass["PHOROMATIC_TITLE"] = $xml_parser->getXMLValue(P_SUITE_TITLE);
 					$args_to_pass["PHOROMATIC_SCHEDULE_ID"] = $xml_parser->getXMLValue(M_PHOROMATIC_ID);
 					$args_to_pass["AUTO_TEST_RESULTS_IDENTIFIER"] = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
+
+					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, "FALSE")))
+					{
+						$args_to_pass["AUTO_UPLOAD_TO_GLOBAL"] = true;
+					}
 
 					file_put_contents(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml", $server_response);
 
