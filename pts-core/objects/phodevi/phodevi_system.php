@@ -302,9 +302,9 @@ class phodevi_system extends pts_device_interface
 	{
 		$hostname = "Unknown";
 
-		if(is_executable("/bin/hostname"))
+		if(($bin = pts_executable_in_path("hostname")))
 		{
-			$hostname = trim(shell_exec("/bin/hostname 2>&1"));
+			$hostname = trim(shell_exec($bin . " 2>&1"));
 		}
 
 		return $hostname;

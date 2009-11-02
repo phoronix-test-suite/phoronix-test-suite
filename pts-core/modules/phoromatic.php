@@ -48,12 +48,7 @@ class phoromatic extends pts_module_interface
 	{
 		if(substr($options["remote_host"], -14) != "phoromatic.php")
 		{
-			if(substr($options["remote_host"], -1) != "/")
-			{
-				$options["remote_host"] .= "/";
-			}
-
-			$options["remote_host"] .= "phoromatic.php";
+			$options["remote_host"] = pts_add_trailing_slash($options["remote_host"]) . "phoromatic.php";
 		}
 
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "setup", "h" => pts_hw_string(),  "s" => pts_sw_string(),  "o" => phodevi::read_property("system", "hostname")),
@@ -65,6 +60,7 @@ class phoromatic extends pts_module_interface
 		if(!empty($returned_id))
 		{
 			$options["remote_system"] = $returned_id;
+			echo "\nRun Phoromatic by entering: phoronix-test-suite phoromatic.start\n";
 		}
 		else
 		{
@@ -95,15 +91,6 @@ class phoromatic extends pts_module_interface
 		self::$phoromatic_account = pts_module::read_option("remote_account");
 		self::$phoromatic_verifier = pts_module::read_option("remote_verifier");
 		self::$phoromatic_system = pts_module::read_option("remote_system");
-
-		echo "\nRegistering Status With Phoromatic Server\n";
-		$update_sd = phoromatic::update_system_details();
-
-		if(!$update_sd)
-		{
-			echo "\nConnection to server failed.\n\n";
-			return false;
-		}
 
 		pts_attach_module("phoromatic");
 		phoromatic::user_system_process();
@@ -157,6 +144,23 @@ class phoromatic extends pts_module_interface
 	{
 		$last_communication_minute = date("i");
 		$communication_attemps = 0;
+		static $current_hw = null;
+		static $current_sw = null;
+
+		if(define("PHOROMATIC_START", true))
+		{
+			echo "\nRegistering Status With Phoromatic Server\n";
+			$update_sd = phoromatic::update_system_details();
+
+			if(!$update_sd)
+			{
+				echo "\nConnection to server failed.\n\n";
+				return false;
+			}
+
+			$current_hw = pts_hw_string();
+			$current_sw = pts_sw_string();
+		}
 
 		do
 		{
@@ -213,6 +217,15 @@ class phoromatic extends pts_module_interface
 					phoromatic::update_system_status("Idling, Waiting For Task");
 					sleep((10 - (date("i") % 10)) * 60); // Check with server every 10 minutes
 					break;
+			}
+
+			if(pts_hw_string() != $current_hw || pts_sw_string() != $current_sw)
+			{
+				// Hardware and/or software has changed while PTS/Phoromatic has been running, update the Phoromatic Server
+				echo "Updating Installed Hardware / Software With Phoromatic Server\n";
+				phoromatic::update_system_details();
+				$current_hw = pts_hw_string();
+				$current_sw = pts_sw_string();
 			}
 		}
 		while(!in_array($response, array("exit", "benchmark")));
