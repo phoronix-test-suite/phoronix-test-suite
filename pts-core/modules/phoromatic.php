@@ -213,6 +213,11 @@ class phoromatic extends pts_module_interface
 					break;
 				case "exit":
 					break;
+				case "server_maintenance":
+					// The Phoromatic server is down for maintenance, so don't bother updating system status and wait longer before checking back
+					echo "\nThe Phoromatic server is currently down for maintenance. Waiting for service to be restored.\n";
+					sleep((15 - (date("i") % 15)) * 60);
+					break;
 				default:
 					phoromatic::update_system_status("Idling, Waiting For Task");
 					sleep((10 - (date("i") % 10)) * 60); // Check with server every 10 minutes
