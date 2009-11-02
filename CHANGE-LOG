@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Create modules tag section in user-config.xml, move default modules to load into the LoadModules tag instead of text file
 - pts-core: Start adding user-interface options to the user-config.xml
 - pts-core: Updates for library / Phoromatic server usage
+- pts-core: Don't ask user whether to try again on a failed test download when in automated/batch mode
 - phoromatic: Prevent overloading the Phoromatic server if the client module keeps trying to communicate too many times per minute
 - phoromatic: Support for reporting system/PTS warnings to Phoromatic server
 - phoromatic: Support for setting the default system title on the Phoromatic server as the test system's hostname

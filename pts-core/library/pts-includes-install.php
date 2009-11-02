@@ -269,15 +269,11 @@ function pts_download_test_files($identifier, &$display_mode)
 								}
 								else
 								{
-									$try_again = pts_bool_question("Would you like to try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN");
+									$try_again = pts_read_assignment("IS_BATCH_MODE") || pts_read_assignment("AUTOMATED_MODE") ? false : pts_bool_question("Would you like to try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN");
 
 									if($try_again)
 									{
 										array_push($urls, $url);
-									}
-									else
-									{
-										$try_again = false;
 									}
 								}
 							}
