@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ class remove_result implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		pts_remove(SAVE_RESULTS_DIR . $r[0]);
+		pts_remove_test_result_dir($r[0]);
 		echo "\n" . $r[0] . " was removed.\n";
 	}
 }

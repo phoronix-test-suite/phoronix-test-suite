@@ -24,6 +24,7 @@ define("M_PHOROMATIC_GEN_RESPONSE", "PhoronixTestSuite/Phoromatic/General/Respon
 define("M_PHOROMATIC_ID", "PhoronixTestSuite/Phoromatic/General/ID");
 define("M_PHOROMATIC_SYS_NAME", "PhoronixTestSuite/Phoromatic/General/SystemName");
 define("M_PHOROMATIC_UPLOAD_TO_GLOBAL", "PhoronixTestSuite/Phoromatic/General/UploadToGlobal");
+define("M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY", "PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally");
 
 class phoromatic extends pts_module_interface
 {
@@ -136,6 +137,11 @@ class phoromatic extends pts_module_interface
 					echo "\nERROR OCCURRED IN UPLOADING RESULTS\n";
 					return;
 				}
+
+				if(!pts_read_assignment("PHOROMATIC_ARCHIVE_RESULTS"))
+				{
+					pts_remove_test_result_dir($save_identifier);
+				}
 			}
 		}
 
@@ -209,6 +215,11 @@ class phoromatic extends pts_module_interface
 					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, "FALSE")))
 					{
 						$args_to_pass["AUTO_UPLOAD_TO_GLOBAL"] = true;
+					}
+
+					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY, "TRUE")))
+					{
+						$args_to_pass["PHOROMATIC_ARCHIVE_RESULTS"] = true;
 					}
 
 					file_put_contents(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml", $server_response);

@@ -937,5 +937,14 @@ function pts_suites_containing_test($test_identifier)
 
 	return $associated_suites;
 }
+function pts_remove_test_result_dir($identifier)
+{
+	pts_remove(SAVE_RESULTS_DIR . $identifier);
+
+	if(is_dir(SAVE_RESULTS_DIR . $identifier))
+	{
+		rmdir(SAVE_RESULTS_DIR . $identifier);
+	}
+}
 
 ?>

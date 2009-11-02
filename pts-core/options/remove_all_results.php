@@ -31,14 +31,7 @@ class remove_all_results implements pts_option_interface
 			foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $saved_results_file)
 			{
 				$saved_identifier = pts_extract_identifier_from_path($saved_results_file);
-				$saved_dir = SAVE_RESULTS_DIR . $saved_identifier;
-
-				pts_remove($saved_dir);
-
-				if(is_dir($saved_dir))
-				{
-					rmdir($saved_dir);
-				}
+				pts_remove_test_result_dir($saved_identifier);
 			}
 			echo "\n";
 		}
