@@ -44,6 +44,8 @@ class install_test implements pts_option_interface
 		if(!pts_install_package_on_distribution($display_mode, $items_to_install, $satisfied_tests))
 		{
 			echo "\nInstallation of needed test dependencies failed.\n\n";
+			$user_error = new pts_user_error("Installation of test dependencies for " . implode(", ", array_diff($items_to_install, $satisfied_tests)) . " failed.");
+			pts_module_process("__event_user_error", $user_error);
 
 			if(count($satisfied_tests) > 0)
 			{

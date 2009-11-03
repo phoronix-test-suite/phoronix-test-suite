@@ -156,6 +156,11 @@ class pts_module_interface
 		// Passed is a string of the URL for the test results uploaded to Phoronix Global
 		return;
 	}
+	public static function __event_user_error($obj = null)
+	{
+		// Passed is a read-only copy of the pts_user_error object
+		return;
+	}
 }
 
 ?>
