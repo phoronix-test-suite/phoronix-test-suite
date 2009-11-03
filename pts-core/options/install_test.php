@@ -40,11 +40,20 @@ class install_test implements pts_option_interface
 		$display_mode = pts_get_display_mode_object();
 
 		// Any external dependencies?
-		if(!pts_install_package_on_distribution($items_to_install, $display_mode))
+		$satisfied_tests = array(); // Tests with no dependencies or with all dependencies installed
+		if(!pts_install_package_on_distribution($display_mode, $items_to_install, $satisfied_tests))
 		{
-			// TODO: rather than completely failing, install the test(s) that have the dependencies satisfied
 			echo "\nInstallation of needed test dependencies failed.\n\n";
-			return false;
+
+			if(count($satisfied_tests) > 0)
+			{
+				echo "Only installing:\n\n" . implode("\n- ", $satisfied_tests) . "\n";
+				$items_to_install = $satisfied_tests;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		// Install tests

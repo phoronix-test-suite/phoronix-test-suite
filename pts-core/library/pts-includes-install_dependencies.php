@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_install_package_on_distribution($identifiers, &$display_mode)
+function pts_install_package_on_distribution(&$display_mode, &$identifiers, &$tests_with_satisfied_dependencies)
 {
 	// PTS External Dependencies install on distribution
 	if(!pts_is_assignment("SILENCE_MESSAGES"))
@@ -29,17 +29,34 @@ function pts_install_package_on_distribution($identifiers, &$display_mode)
 		echo "Checking For Needed External Dependencies.\n";
 	}
 
+	$tests_checked = array();
 	$install_objects = array();
+	$install_objects_count = 0;
+
 	foreach(pts_to_array($identifiers) as $identifier)
 	{
 		foreach(pts_contained_tests($identifier, true) as $test)
 		{
-			if(pts_test_supported($test))
+			if(pts_test_supported($test) && !in_array($test, $tests_checked))
 			{
 				pts_install_external_dependencies_list($test, $install_objects);
+
+				// Calculate tests that have all dependencies satisfied, if needs to selectively install these tests
+				// This is particularly useful when running in automated mode where below if user is not root returns false
+				if(($c = count($install_objects)) == $install_objects_count)
+				{
+					array_push($tests_with_satisfied_dependencies, $test);
+				}
+				else
+				{
+					$install_objects_count = $c;
+				}
+
+				array_push($tests_checked, $test);
 			}
 		}
 	}
+
 	$install_objects = array_unique($install_objects);
 
 	if(pts_is_assignment("AUTOMATED_MODE") && pts_current_user() != "root")
@@ -127,14 +144,9 @@ function pts_external_dependency_generic_packages()
 
 	return $packages;
 }
-function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
+function pts_install_external_dependencies_list($identifier, &$install_objects)
 {
 	// Install from a list of external dependencies
-	if(!pts_is_test($identifier))
-	{
-		return;
-	}
-
 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
 	$dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
@@ -153,7 +165,7 @@ function pts_install_external_dependencies_list($identifier, &$INSTALL_OBJ)
 			pts_set_assignment("PTS_EXDEP_FIRST_RUN", 1);
 		}
 
-		if(!pts_package_generic_to_distro_name($INSTALL_OBJ, $dependencies))
+		if(!pts_package_generic_to_distro_name($install_objects, $dependencies))
 		{
 			$package_string = "";
 			foreach($dependencies as $dependency)
