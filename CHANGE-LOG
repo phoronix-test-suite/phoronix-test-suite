@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix API breakage for installing dependencies from install-dependencies option call
+- phodevi: Add support for GPU fan speed monitoring (currently only implemented for NVIDIA's binary display driver)
 - pts: Update for Fedora external dependencies XML
 
 Phoronix Test Suite 2.2 Beta 2

@@ -258,7 +258,7 @@ class phodevi_parser
 		{
 			$info = shell_exec("nvidia-settings --query " . $attribute . " 2>&1");
 
-			if(($pos = strpos($info, $attribute)) > 0)
+			if(($pos = strpos($info, array_pop(explode("/", $attribute)))) > 0 && strpos($info, "ERROR:") === false)
 			{
 				$nv_info = substr($info, strpos($info, "):") + 3);
 				$nv_info = substr($nv_info, 0, strpos($nv_info, "\n"));

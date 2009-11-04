@@ -30,6 +30,9 @@ class phodevi_gpu extends pts_device_interface
 			case "temperature":
 				$sensor = "gpu_temperature";
 				break;
+			case "fan-speed":
+				$sensor = "gpu_fan_speed";
+				break;
 			case "current-frequency":
 				$sensor = array("gpu_current_frequency", false);
 				break;
@@ -753,7 +756,24 @@ class phodevi_gpu extends pts_device_interface
 			$temp_c = false;
 		}
 
-		return (is_numeric($temp_c) ? $temp_c : -1);
+		return is_numeric($temp_c) ? $temp_c : -1;
+	}
+	public static function gpu_fan_speed()
+	{
+		// Report graphics processor fan speed
+		if(IS_NVIDIA_GRAPHICS)
+		{
+			// NVIDIA fan speed reading support in NVIDIA 190.xx and newer
+			// TODO: support for multiple fans, also for reading GPUFanTarget to get appropriate fan
+			// nvidia-settings --describe GPUFanTarget 
+			$fan_speed = phodevi_parser::read_nvidia_extension("[fan:0]/GPUCurrentFanSpeed");
+		}
+		else
+		{
+			$fan_speed = -1;
+		}
+
+		return is_numeric($fan_speed) ? $fan_speed : -1;
 	}
 	public static function gpu_current_frequency($show_memory = true)
 	{

@@ -63,7 +63,8 @@ function pts_available_sensors()
 	new pts_sensor("usage", "gpu", array("gpu", "core-usage"), "Percent"),
 	new pts_sensor("memory", "system", array("memory", "physical-usage"), "Megabytes"),
 	new pts_sensor("memory", "swap", array("memory", "swap-usage"), "Megabytes"),
-	new pts_sensor("memory", "total", array("memory", "total-usage"), "Megabytes")
+	new pts_sensor("memory", "total", array("memory", "total-usage"), "Megabytes"),
+	new pts_sensor("fan-speed", "gpu", array("gpu", "fan-speed"), "Percent")
 	);
 }
 
