@@ -150,12 +150,13 @@ class phoromatic extends pts_module_interface
 	public static function user_system_process()
 	{
 		$last_communication_minute = date("i");
-		$communication_attemps = 0;
+		$communication_attempts = 0;
 		static $current_hw = null;
 		static $current_sw = null;
 
-		if(define("PHOROMATIC_START", true))
+		if(!defined("PHOROMATIC_START"))
 		{
+			define("PHOROMATIC_START", true)
 			echo "\nRegistering Status With Phoromatic Server\n";
 			$update_sd = phoromatic::update_system_details();
 
@@ -310,6 +311,25 @@ class phoromatic extends pts_module_interface
 
 	protected static function upload_to_remote_server($to_post, $host = null, $account = null, $verifier = null, $system = null)
 	{
+		static $last_communication_minute = null;
+		static $communication_attempts = 0;
+
+		if($last_communication_minute == date("i") && $communication_attempts > 3)
+		{
+				// Something is wrong, Phoromatic shouldn't be communicating with server more than four times a minute
+				return false;
+		}
+		else
+		{
+			if(date("i") != $last_communication_minute)
+			{
+				$last_communication_minute = date("i");
+				$communication_attempts = 0;
+			}
+
+			$communication_attempts++;
+		}
+
 		if($host != null)
 		{
 			//$host
