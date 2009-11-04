@@ -22,23 +22,9 @@
 
 class install_all_dependencies implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("install");
-	}
 	public static function run($r)
 	{
-		$packages_to_install = array();
-		pts_package_generic_to_distro_name($packages_to_install, "all");
-
-		if(empty($packages_to_install))
-		{
-			echo pts_string_header("No packages found. Your operating system may not support this feature.\nSeek support from http://www.phoronix-test-suite.com/.");
-		}
-		else
-		{
-			pts_install_packages_on_distribution_process($packages_to_install);
-		}
+		pts_run_option_next("install_dependencies", "all");
 	}
 }
 

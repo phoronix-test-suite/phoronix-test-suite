@@ -2,6 +2,11 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Fix API breakage for installing dependencies from install-dependencies option call
+
+Phoronix Test Suite 2.2 Beta 2
+November 3, 2009
+
 - pts-core: With toggle_screensaver module, disable the display(s) from sleeping when on AC power in GNOME during testing
 - pts-core: Clean-up more code used during the test execution process
 - pts-core: Rename SaveSystemDetails user-config.xml option to SaveSystemLogs
