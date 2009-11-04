@@ -173,7 +173,7 @@
 		<Package>
 			<GenericName>blas-development</GenericName>
 			<PackageName>blas blas-devel</PackageName>
-			<FileCheck>/usr/lib/libblas.so</FileCheck>
+			<FileCheck>/usr/lib/libblas.so OR /usr/lib64/libblas.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
@@ -203,7 +203,7 @@
 		<Package>
 			<GenericName>glibc-development</GenericName>
 			<PackageName>glibc-devel</PackageName>
-			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib/libc.a</FileCheck>
+			<FileCheck>/usr/lib/libc.so OR /usr/lib64/libc.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
@@ -213,12 +213,12 @@
 		<Package>
 			<GenericName>atlas-development</GenericName>
 			<PackageName>atlas-devel</PackageName>
-			<FileCheck>/usr/lib/libatlas.a</FileCheck>
+			<FileCheck>/usr/lib/atlas/ OR /usr/lib64/atlas/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>openmpi-libs openmpi-devel openmpi</PackageName>
-			<FileCheck>/usr/lib/openmpi/lib/libmpi.so, /usr/bin/mpirun.openmpi</FileCheck>
+			<PackageName>openmpi-devel openmpi</PackageName>
+			<FileCheck>/usr/lib/openmpi/ OR /usr/lib64/openmpi/</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

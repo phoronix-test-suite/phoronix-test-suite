@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix API breakage for installing dependencies from install-dependencies option call
+- pts: Update for Fedora external dependencies XML
 
 Phoronix Test Suite 2.2 Beta 2
 November 3, 2009
