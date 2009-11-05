@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
 	<TestProfile>
 		<Version>1.7.0</Version>
-		<TestType>System</TestType>
+		<TestType>Disk</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
