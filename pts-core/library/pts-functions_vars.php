@@ -47,7 +47,7 @@ function pts_env_variables()
 		"OS_ARCH" => phodevi::read_property("system", "kernel-architecture"),
 		"OS_TYPE" => OPERATING_SYSTEM,
 		"THIS_RUN_TIME" => PTS_INIT_TIME,
-		"DEBUG_REAL_HOME" => getenv("HOME") . "/"
+		"DEBUG_REAL_HOME" => pts_user_home()
 		);
 	}
 

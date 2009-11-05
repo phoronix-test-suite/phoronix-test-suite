@@ -55,7 +55,7 @@ class gui_gtk implements pts_option_interface
 		{
 			$system_tray = new GtkStatusIcon();
 			$system_tray->set_from_file(STATIC_DIR . "images/pts-icon.png");
-			$system_tray->set_tooltip("Phoronix Test Suite v" . PTS_VERSION);
+			$system_tray->set_tooltip(pts_title());
 			$system_tray->connect("activate", array("gui_gtk", "system_tray_activate"));
 			$system_tray->connect("popup-menu", array("gui_gtk", "system_tray_menu"));
 		}
@@ -136,7 +136,7 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_main_interface()
 	{
-		$window = new pts_gtk_window("Phoronix Test Suite v" . PTS_VERSION);
+		$window = new pts_gtk_window(pts_title());
 		$window->drag_dest_set(Gtk::DEST_DEFAULT_ALL, array(array("text/uri-list", 0, 0)), Gdk::ACTION_COPY);
 		$window->set_position(Gtk::WIN_POS_CENTER_ALWAYS);
 		$window->connect("drag-data-received", array("gui_gtk", "drag_drop_item"), $window);
@@ -1390,7 +1390,7 @@ class gui_gtk implements pts_option_interface
 		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
 		$logo->set_size_request(158, 82);
 
-		$label_version = new GtkLabel("Version " . PTS_VERSION);
+		$label_version = $label_version != null ? new GtkLabel("Version " . PTS_VERSION) : null;
 
 		$event_box = new GtkEventBox();
 		$label_url = new GtkLabel("www.phoronix-test-suite.com");

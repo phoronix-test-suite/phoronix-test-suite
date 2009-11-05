@@ -31,5 +31,9 @@ function pts_codename($full_string = false)
 
 	return ($full_string ? "PhoronixTestSuite/" : "") . $codename;
 }
+function pts_title($show_both = false)
+{
+	return "Phoronix Test Suite" . (PTS_VERSION != null ? " v" . PTS_VERSION : null) . (PTS_CODENAME != null && (PTS_VERSION == null || $show_both ) ? " (" . ucwords(strtolower(PTS_CODENAME)) . ")" : null);
+}
 
 ?>

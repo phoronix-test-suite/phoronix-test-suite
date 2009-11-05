@@ -67,7 +67,7 @@ class pts_pdf_template extends FPDF
 
 		$this->SetY(-10);
 		$this->SetFont("Arial", "B", 7);
-		$this->Cell(0, 0, "Phoronix Test Suite v" . PTS_VERSION, 0, 0, "L");
+		$this->Cell(0, 0, pts_title(), 0, 0, "L");
 		$this->Cell(0, 0, "www.phoronix-test-suite.com", 0, 0, "R");
 	}
 	function WriteBigHeaderCenter($Header)

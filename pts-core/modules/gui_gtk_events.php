@@ -109,7 +109,7 @@ class gui_gtk_events extends pts_module_interface
 		self::$test_run_pos = 0;
 		self::$test_run_count = count(self::$tests_remaining_to_run);
 
-		self::$progress_window = new pts_gtk_advanced_progress_window("Phoronix Test Suite v" . PTS_VERSION);
+		self::$progress_window = new pts_gtk_advanced_progress_window(pts_title());
 		self::$progress_window->update_progress_bar(0, " ", 0, " ");
 	}
 	public static function __pre_test_run($pts_test_result)
