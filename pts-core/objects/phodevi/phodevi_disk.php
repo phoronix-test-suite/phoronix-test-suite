@@ -44,6 +44,9 @@ class phodevi_disk extends pts_device_interface
 			case "identifier":
 				$property = new pts_device_property("hdd_string", PHODEVI_SMART_CACHE);
 				break;
+			case "scheduler":
+				$property = new pts_device_property("hdd_scheduler", PHODEVI_SMART_CACHE);
+				break;
 		}
 
 		return $property;
@@ -156,6 +159,22 @@ class phodevi_disk extends pts_device_interface
 		}
 
 		return $disks;
+	}
+	public static function hdd_scheduler()
+	{
+		$scheduler = null;
+
+		if(is_readable("/sys/block/sda/queue/scheduler"))
+		{
+			$scheduler = pts_file_get_contents("/sys/block/sda/queue/scheduler");
+
+			if(($s = strpos($scheduler, "[")) !== false && ($e = strpos($scheduler, "]", $s)) !== false)
+			{
+				$scheduler = strtoupper(substr($scheduler, $s + 1, $e - $s - 1));
+			}
+		}
+
+		return $scheduler;
 	}
 	public static function hdd_temperature($disk = null)
 	{

@@ -800,6 +800,15 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			}
 		}
 	}
+	else if($test_type == "Disk")
+	{
+		$disk_scheduler = phodevi::read_property("disk", "scheduler");
+
+		if(!empty($disk_scheduler))
+		{
+			pts_test_notes_manager::add_note("Disk Scheduler: " . $disk_scheduler);
+		}
+	}
 
 	// Result Calculation
 	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
