@@ -30,6 +30,7 @@ class info implements pts_option_interface
 		if(pts_is_suite($to_info))
 		{
 			$suite = new pts_test_suite_details($to_info);
+			echo pts_string_header($suite->get_name());
 			echo "Suite Version: " . $suite->get_version() . "\n";
 			echo "Maintainer: " . $suite->get_maintainer() . "\n";
 			echo "Suite Type: " . $suite->get_suite_type() . "\n";
@@ -37,6 +38,32 @@ class info implements pts_option_interface
 			echo "Suite Description: " . $suite->get_description() . "\n";
 			echo "\n";
 			echo $suite->pts_format_contained_tests_string();
+			echo "\n";
+		}
+		else if(pts_is_virtual_suite($to_info))
+		{
+			echo pts_string_header("Virtual Suite: " . $to_info);
+
+			switch(pts_location_virtual_suite($to_info))
+			{
+				case TYPE_VIRT_SUITE_ALL: 
+					echo "This virtual suite contains all supported Phoronix Test Suite tests.\n";
+					break;
+				case TYPE_VIRT_SUITE_FREE: 
+					echo "This virtual suite contains all supported Phoronix Test Suite tests that are considered free.\n";
+					break;
+				case TYPE_VIRT_SUITE_SUBSYSTEM: 
+					echo "This virtual suite contains all supported Phoronix Test Suite tests for the " . $to_info . " subsystem.\n";
+					break;
+			}
+
+			echo "\nContained Tests:\n\n";
+
+			foreach(pts_virtual_suite_tests($to_info) as $test)
+			{
+				echo "- " . $test . "\n";
+			}
+
 			echo "\n";
 		}
 		else if(pts_is_test($to_info))

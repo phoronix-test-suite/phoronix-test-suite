@@ -206,6 +206,7 @@ function pts_location_virtual_suite($identifier)
 		// Ensure $identifier is not a real suite/test object
 		if(count(pts_contained_tests($identifier, false, false)) == 0)
 		{
+			// When updating any of this, don't forget to update (if needed) the info run option for support
 			if($identifier == "all")
 			{
 				// All tests
