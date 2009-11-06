@@ -218,7 +218,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 					do
 					{
-						if(!pts_is_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE") && pts_string_bool(pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE")) && count($urls) > 1)
+						if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE") && pts_string_bool(pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE")) && count($urls) > 1)
 						{
 							// Prompt user to select mirror
 							do

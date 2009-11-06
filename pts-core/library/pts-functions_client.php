@@ -274,7 +274,7 @@ function pts_get_display_mode_object()
 			$display_mode = new pts_concise_display_mode();
 			break;
 		default:
-			if(pts_is_assignment("IS_BATCH_MODE") || pts_is_assignment("AUTOMATED_MODE"))
+			if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("AUTOMATED_MODE"))
 			{
 				$display_mode = new pts_concise_display_mode();
 			}

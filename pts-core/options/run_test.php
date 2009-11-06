@@ -306,6 +306,7 @@ class run_test implements pts_option_interface
 
 			$pso = new pts_storage_object(true, false);
 			$pso->add_object("test_run_manager", $test_run_manager);
+			$pso->add_object("batch_mode", pts_read_assignment("IS_BATCH_MODE"));
 			$pso->add_object("system_hardware", pts_hw_string(false));
 			$pso->add_object("system_software", pts_sw_string(false));
 

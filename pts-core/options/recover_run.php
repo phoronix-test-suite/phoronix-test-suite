@@ -82,6 +82,7 @@ class recover_run implements pts_option_interface
 		}
 
 		// Recovered test_run_manager
+		$is_batch_mode = $pt2so_objects->read_object("batch_mode");
 		$test_run_manager = $pt2so_objects->read_object("test_run_manager");
 		$recovered_identifier = $test_run_manager->get_results_identifier();
 
@@ -143,7 +144,7 @@ class recover_run implements pts_option_interface
 			return false;
 		}
 
-		pts_run_option_next("run_test", $r, array("RECOVER_RUN" => true, "RECOVER_RUN_REQUESTS" => $tests_to_run, "AUTO_TEST_RESULTS_IDENTIFIER" => $recovered_identifier));
+		pts_run_option_next("run_test", $r, array("RECOVER_RUN" => true, "RECOVER_RUN_REQUESTS" => $tests_to_run, "AUTO_TEST_RESULTS_IDENTIFIER" => $recovered_identifier, "BATCH_MODE" => $is_batch_mode));
 	}
 }
 
