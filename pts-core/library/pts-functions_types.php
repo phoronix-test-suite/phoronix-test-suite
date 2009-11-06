@@ -432,8 +432,9 @@ function pts_virtual_suite_tests($object)
 			foreach(pts_supported_tests_array() as $test)
 			{
 				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
+				$test_license = pts_test_read_xml($test, P_TEST_LICENSE);
 
-				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")))
+				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")) && !in_array($test_license, array("RETAIL", "RESTRICTED")))
 				{
 					array_push($contained_tests, $test);
 				}
