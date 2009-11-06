@@ -40,31 +40,11 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 		}
 		else if(pts_is_test($lower_identifier))
 		{
-			if(!is_dir(TEST_ENV_DIR . $lower_identifier . "/"))
-			{
-				return false;
-			}
-
 			$test_title = pts_test_read_xml($lower_identifier, P_TEST_TITLE);
-			$test_type = pts_test_read_xml($lower_identifier, P_TEST_HARDWARE_TYPE);
 
 			if(empty($test_title))
 			{
 				echo pts_string_header($lower_identifier . " is not a test.");
-				unset($to_run_identifiers[$i]);
-				continue;
-			}
-
-			if($test_type == "Graphics" && getenv("DISPLAY") == false)
-			{
-				echo pts_string_header("No display server running, cannot run " . $lower_identifier . ".");
-				unset($to_run_identifiers[$i]);
-				continue;
-			}
-
-			if(getenv("NO_" . strtoupper($test_type) . "_TESTS"))
-			{
-				echo pts_string_header("NO_" . strtoupper($test_type) . "_TESTS is set, not running " . $lower_identifier . ".");
 				unset($to_run_identifiers[$i]);
 				continue;
 			}
@@ -383,6 +363,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$pts_test_result = new pts_test_result();
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
 
+	if(!is_dir($test_directory))
+	{
+		return false;
+	}
+
 	$lock_file = $test_directory . "run_lock";
 	$test_fp = null;
 	if(!pts_create_lock($lock_file, $test_fp))
@@ -400,6 +385,18 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$allow_cache_share = $test_profile->allow_cache_share();
 	$min_length = $test_profile->get_min_length();
 	$max_length = $test_profile->get_max_length();
+
+	if($test_type == "Graphics" && getenv("DISPLAY") == false)
+	{
+		pts_release_lock($test_fp, $lock_file);
+		return false;
+	}
+
+	if(getenv("NO_" . strtoupper($test_type) . "_TESTS") || (($e = getenv("SKIP_TESTS")) && in_array($test_identifier, explode(",", $e))))
+	{
+		pts_release_lock($test_fp, $lock_file);
+		return false;
+	}
 
 	if($test_profile->get_environment_testing_size() != -1 && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $test_profile->get_environment_testing_size())
 	{
