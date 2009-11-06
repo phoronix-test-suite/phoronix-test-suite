@@ -1385,12 +1385,13 @@ class gui_gtk implements pts_option_interface
 	public static function show_about_interface()
 	{
 		$window = new pts_gtk_window("About");
+		$window->set_border_width(10);
 		$window->set_resizable(false);
 
 		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
 		$logo->set_size_request(158, 82);
 
-		$label_version = PTS_VERSION != null ? new GtkLabel("Version " . PTS_VERSION) : null;
+		$label_version = new GtkLabel((PTS_VERSION != null ? "Version " . PTS_VERSION : "API Build " . PTS_BUILD_INT));
 
 		$event_box = new GtkEventBox();
 		$label_url = new GtkLabel("www.phoronix-test-suite.com");
@@ -1399,7 +1400,7 @@ class gui_gtk implements pts_option_interface
 
 		pts_gtk_array_to_boxes($window, array($logo,
 			new pts_gtk_label(ucwords(strtolower(PTS_CODENAME)), "Sans 19"), $label_version, $event_box,
-			new pts_gtk_label("Copyright (C) 2008 - 2009 By Phoronix Media\nCopyright (C) 2008 - 2009 By Michael Larabel", "Sans 9")), 6);
+			new pts_gtk_label("Copyright (C) 2008 - 2009 By Phoronix Media\nCopyright (C) 2008 - 2009 By Michael Larabel", "Sans 9")), 8);
 
 		$window->show_all();
 		Gtk::main();
