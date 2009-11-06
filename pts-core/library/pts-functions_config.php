@@ -75,6 +75,7 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_ADDRESS, 7, $read_config, null);
 	$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_PORT, 7, $read_config, null);
 
+	$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_SUITESORTESTS, 8, $read_config, null);
 	$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DEPENDENCIES, 8, $read_config, null);
 	$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DOWNLOADS, 8, $read_config, null);
 

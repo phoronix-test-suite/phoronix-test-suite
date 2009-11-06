@@ -69,11 +69,11 @@ class pts_test_profile
 	}
 	public function get_download_size()
 	{
-		return pts_estimated_download_size($this->identifier);
+		return ($s = pts_estimated_download_size($this->identifier)) > 10 ? round($s) : $s;
 	}
 	public function get_environment_size()
 	{
-		return pts_estimated_environment_size($this->identifier);
+		return ($s = pts_estimated_environment_size($this->identifier)) > 10 ? round($s) : $s;
 	}
 	public function get_description()
 	{

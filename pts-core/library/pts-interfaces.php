@@ -215,6 +215,7 @@ define("P_OPTION_NET_NO_NETWORK", "PhoronixTestSuite/Options/Networking/NoNetwor
 define("P_OPTION_NET_PROXY_ADDRESS", "PhoronixTestSuite/Options/Networking/ProxyAddress"); // IP / URL if using a proxy
 define("P_OPTION_NET_PROXY_PORT", "PhoronixTestSuite/Options/Networking/ProxyPort"); // Port if using a proxy
 
+define("P_OPTION_UI_SELECT_SUITESORTESTS", "PhoronixTestSuite/Options/UserInterface/Menus/SelectSuitesOrTests"); // Menu item for test or suites showing
 define("P_OPTION_UI_SELECT_DEPENDENCIES", "PhoronixTestSuite/Options/UserInterface/Menus/SelectDependencies"); // Menu item for "Dependencies" menu item
 define("P_OPTION_UI_SELECT_DOWNLOADS", "PhoronixTestSuite/Options/UserInterface/Menus/SelectDownloads"); // Menu item for "File Downloads" menu item
 

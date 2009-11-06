@@ -181,7 +181,7 @@ class gui_gtk implements pts_option_interface
 			new pts_gtk_menu_item("System _Information", array("gui_gtk", "show_system_info_interface")),
 			new pts_gtk_menu_item("Software _Dependencies", array("gui_gtk", "show_dependency_info_interface")),
 			null,
-			new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON"),
+			new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON", null, pts_read_user_config(P_OPTION_UI_SELECT_SUITESORTESTS)),
 			null,
 			"License" => $license_type,
 			"Subsystem" => $subsystem_type,
