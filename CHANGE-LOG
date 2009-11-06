@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add initial analyze-result-file command for showing basic analytical / stats for a given result file
 - pts-core: Support showing information from info command when supplying a virtual suite
 - pts-core: Don't contain tests that are of license RETAIL or RESTRICTED in the "all" virtual suite
+- pts-core: Fix where recover-run would not recognize the result file if there was not at least one successful one previously
 - phodevi: Add support for GPU fan speed monitoring (currently only implemented for NVIDIA's binary display driver)
 - phodevi: Add property to disk object for reading the scheduler in use
 - phodevi: DMI parsing support on Linux through /sys/class/dmi/id/ interface, for now implement motherboard way

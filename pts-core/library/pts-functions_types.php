@@ -72,6 +72,10 @@ function pts_is_test_result($identifier)
 {
 	return is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 }
+function pts_is_test_result_directory($identifier)
+{
+	return is_dir(SAVE_RESULTS_DIR . $identifier);
+}
 function pts_validate_local_test_profile($identifier)
 {
 	if(is_file(($lp = XML_PROFILE_LOCAL_DIR . $identifier . ".xml")))
