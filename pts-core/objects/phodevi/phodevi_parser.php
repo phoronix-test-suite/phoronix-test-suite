@@ -551,6 +551,29 @@ class phodevi_parser
 
 		return $module_version;
 	}
+	public static function read_sys_dmi($identifier)
+	{
+		$dmi = false;
+
+		if(is_dir("/sys/class/dmi/id/"))
+		{
+			foreach(pts_to_array($identifier) as $id)
+			{
+				if(is_readable("/sys/class/dmi/id/" . $id))
+				{
+					$dmi_file = pts_file_get_contents("/sys/class/dmi/id/" . $id);
+
+					if(!empty($dmi_file))
+					{
+						$dmi = $dmi_file;
+						break;
+					}
+				}
+			}
+		}
+
+		return $dmi;
+	}
 	public static function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore = null)
 	{
 		// Read Linux dmidecode

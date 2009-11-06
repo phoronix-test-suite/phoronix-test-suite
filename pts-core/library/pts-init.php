@@ -149,7 +149,7 @@ function pts_core_storage_init()
 	// Phodevi Cache Handling
 	$phodevi_cache = $pso->read_object("phodevi_smart_cache");
 
-	if($phodevi_cache instanceOf phodevi_cache)
+	if($phodevi_cache instanceOf phodevi_cache && getenv("NO_PHODEVI_CACHE") != 1)
 	{
 		$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_DIR, PTS_VERSION);
 		phodevi::set_device_cache($phodevi_cache);

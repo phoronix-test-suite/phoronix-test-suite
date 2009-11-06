@@ -56,7 +56,7 @@ class phodevi_motherboard extends pts_device_interface
 	public static function motherboard_string()
 	{
 		// Returns the motherboard / system model name or number
-		$info = "";
+		$info = null;
 
 		if(IS_MACOSX)
 		{
@@ -83,47 +83,64 @@ class phodevi_motherboard extends pts_device_interface
 				$info = trim($acpi);
 			}
 		}
+		else if(IS_LINUX)
+		{
+			$vendor = phodevi_parser::read_sys_dmi("board_vendor");
+			$name = phodevi_parser::read_sys_dmi("board_name");
+			$version = phodevi_parser::read_sys_dmi("board_version");
 
-		if(empty($info))
-		{	
-			$vendor = phodevi_parser::read_system_hal(array("system.hardware.vendor", "system.board.vendor"));
-			$product = phodevi_parser::read_system_hal(array("system.hardware.product", "system.board.product"));
-			$version = phodevi_parser::read_system_hal(array("system.hardware.version", "smbios.system.version"));
-
-			$info = null;
-
-			if(empty($product) && (strpos($version, ".") === false && !empty($version)))
+			if($vendor != false && $name != false)
 			{
-				$product = $version;
-			}
+				$info = $vendor . " " . $name;
 
-			if(!empty($product))
-			{
-				if($vendor != false && strpos($product, $vendor . " ") === false)
+				if($version != false && strpos($info, $version) === false)
 				{
-					$info .= $vendor . " ";
-				}
-
-				$info .= $product;
-			}
-
-			if(empty($info))
-			{
-				$fw_version = explode(" ", phodevi_parser::read_system_hal("system.firmware.version"));
-
-				if(count($fw_version) > 1)
-				{
-					$info = $fw_version[0] . " " . $fw_version[1];
+					$info .= (substr($version, 0, 1) == "v" ? " " : " v") . $version;
 				}
 			}
 
 			if(empty($info))
 			{
-				$pci_vendor = phodevi_parser::read_hal("pci.subsys_vendor");
+				// Read motherboard from HAL
+				$vendor = phodevi_parser::read_system_hal(array("system.hardware.vendor", "system.board.vendor"));
+				$product = phodevi_parser::read_system_hal(array("system.hardware.product", "system.board.product"));
+				$version = phodevi_parser::read_system_hal(array("system.hardware.version", "smbios.system.version"));
 
-				if(strpos($pci_vendor, "(") === false)
+				$info = null;
+
+				if(empty($product) && (strpos($version, ".") === false && !empty($version)))
 				{
-					$info = $pci_vendor;
+					$product = $version;
+				}
+
+				if(!empty($product))
+				{
+					if($vendor != false && strpos($product, $vendor . " ") === false)
+					{
+						$info .= $vendor . " ";
+					}
+
+					$info .= $product;
+				}
+
+				if(empty($info))
+				{
+					$fw_version = explode(" ", phodevi_parser::read_system_hal("system.firmware.version"));
+
+					if(count($fw_version) > 1)
+					{
+						$info = $fw_version[0] . " " . $fw_version[1];
+					}
+				}
+
+				if(empty($info))
+				{
+					$pci_vendor = phodevi_parser::read_hal("pci.subsys_vendor");
+
+					if(strpos($pci_vendor, "(") === false)
+					{
+						$info = $pci_vendor;
+					}
 				}
 			}
 		}
