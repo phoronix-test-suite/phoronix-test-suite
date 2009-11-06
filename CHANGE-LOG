@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix API breakage for installing dependencies from install-dependencies option call
 - pts-core: Report the disk scheduler to the test notes area when a disk test is run
 - pts-core: Add SelectSuitesOrTests tag to user-config.xml for selecting between tests / suites showing by default in GUI
+- pts-core: Add initial analyze-result-file command for showing basic analytical / stats for a given result file
 - phodevi: Add support for GPU fan speed monitoring (currently only implemented for NVIDIA's binary display driver)
 - phodevi: Add property to disk object for reading the scheduler in use
 - pts: Update for Fedora external dependencies XML
