@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add property to disk object for reading the scheduler in use
 - phodevi: DMI parsing support on Linux through /sys/class/dmi/id/ interface, for now implement motherboard way
 - pts: Update for Fedora external dependencies XML
+- pts: Start adding new reference comparison systems with runs against Phoronix Test Suite 2.2
 
 Phoronix Test Suite 2.2 Beta 2
 November 3, 2009

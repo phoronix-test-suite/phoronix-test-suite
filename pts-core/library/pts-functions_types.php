@@ -276,7 +276,7 @@ function pts_location_test_resources($identifier)
 			{
 				$location = TEST_RESOURCE_LOCAL_DIR . $identifier . "/";
 			}
-			else if($type == "TYPE_LOCAL_TEST" && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
+			else if($type == "TYPE_BASE_TEST" && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
 			{
 				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
 			}

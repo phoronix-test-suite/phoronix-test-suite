@@ -139,7 +139,7 @@ function pts_download_test_files($identifier, &$display_mode)
 		foreach($download_packages as $download_package)
 		{
 			$download_location = TEST_ENV_DIR . $identifier . "/";
-			$package_filename = $download_package->get_filename();
+			echo "!!!!!" . $package_filename = $download_package->get_filename();
 			$package_filename_temp = $package_filename . ".pts";
 			$download_destination = $download_location . $package_filename;
 			$download_destination_temp = $download_location . $package_filename_temp;
@@ -409,12 +409,10 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 		}
 		else
 		{
-	echo "!!!!" . $identifier . "\n";
 			if(pts_test_needs_updated_install($identifier))
 			{
 				pts_setup_install_test_directory($identifier, true);
 				$display_mode->test_install_start($identifier);
-
 				$download_test_files = pts_download_test_files($identifier, $display_mode);
 
 				if($download_test_files == false)
