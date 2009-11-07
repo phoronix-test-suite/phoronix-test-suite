@@ -1190,6 +1190,11 @@ class gui_gtk implements pts_option_interface
 
 		if(pts_read_assignment("GTK_MAIN_NOTEBOOK_SELECTED") == "Test Results")
 		{
+			if(!is_dir(SAVE_RESULTS_DIR . $identifier . "/result-graphs/"))
+			{
+				pts_generate_graphs($identifier, SAVE_RESULTS_DIR . $identifier . "/");
+			}
+
 			pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html", null, true, true);
 		}
 		else
