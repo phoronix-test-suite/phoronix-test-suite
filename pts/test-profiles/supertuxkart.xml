@@ -12,7 +12,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://supertuxkart.sourceforge.net/</ProjectURL>
 		<ExternalDependencies>glut</ExternalDependencies>
-		<SupportedPlatforms>Linux</USupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>SuperTuxKart</Title>

@@ -21,16 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("TYPE_TEST", "TEST"); // Type is test
-define("TYPE_TEST_SUITE", "TEST_SUITE"); // Type is a test suite
-define("TYPE_LOCAL_TEST", "LOCAL_TEST"); // Type is local test
-define("TYPE_LOCAL_TEST_SUITE", "LOCAL_TEST_SUITE"); // Type is a test suite
-define("TYPE_BASE_TEST", "BASE_TEST"); // Type is a base test
-
-define("TYPE_VIRT_SUITE_SUBSYSTEM", "VIRT_SUITE_SUBSYSTEM"); // Type is a virtual suite for a subsystem
-define("TYPE_VIRT_SUITE_ALL", "VIRT_SUITE_ALL");
-define("TYPE_VIRT_SUITE_FREE", "VIRT_SUITE_FREE");
-
 function pts_is_run_object($object)
 {
 	return pts_is_test($object) || pts_is_suite($object);
@@ -39,7 +29,7 @@ function pts_is_suite($object)
 {
 	$type = pts_test_type($object);
 
-	return $type == TYPE_TEST_SUITE || $type == TYPE_LOCAL_TEST_SUITE;
+	return $type == "TYPE_TEST_SUITE" || $type == "TYPE_LOCAL_TEST_SUITE";
 }
 function pts_is_weighted_suite($object)
 {
@@ -60,13 +50,13 @@ function pts_is_test($object)
 {
 	$type = pts_test_type($object);
 
-	return $type == TYPE_TEST || $type == TYPE_LOCAL_TEST || $type == TYPE_BASE_TEST;
+	return $type == "TYPE_TEST" || $type == "TYPE_LOCAL_TEST" || $type == "TYPE_BASE_TEST";
 }
 function pts_is_base_test($object)
 {
 	$type = pts_test_type($object);
 
-	return $type == TYPE_BASE_TEST;
+	return $type == "TYPE_BASE_TEST";
 }
 function pts_is_test_result($identifier)
 {
@@ -147,23 +137,23 @@ function pts_test_type($identifier)
 		{
 			if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_profile($identifier))
 			{
-				$test_type = TYPE_LOCAL_TEST;
+				$test_type = "TYPE_LOCAL_TEST";
 			}
 			else if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_suite($identifier))
 			{
-				$test_type = TYPE_LOCAL_TEST_SUITE;
+				$test_type = "TYPE_LOCAL_TEST_SUITE";
 			}
 			else if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 			{
-				$test_type = TYPE_TEST;
+				$test_type = "TYPE_TEST";
 			}
 			else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
 			{
-				$test_type = TYPE_TEST_SUITE;
+				$test_type = "TYPE_TEST_SUITE";
 			}
 			else if(is_file(XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml"))
 			{
-				$test_type = TYPE_BASE_TEST;
+				$test_type = "TYPE_BASE_TEST";
 			}
 		}
 
@@ -184,11 +174,11 @@ function pts_location_suite($identifier)
 		{
 			$type = pts_test_type($identifier);
 
-			if($type == TYPE_TEST_SUITE)
+			if($type == "TYPE_TEST_SUITE")
 			{
 				$location = XML_SUITE_DIR . $identifier . ".xml";
 			}
-			else if($type == TYPE_LOCAL_TEST_SUITE)
+			else if($type == "TYPE_LOCAL_TEST_SUITE")
 			{
 				$location = XML_SUITE_LOCAL_DIR . $identifier . ".xml";
 			}
@@ -214,11 +204,11 @@ function pts_location_virtual_suite($identifier)
 			if($identifier == "all")
 			{
 				// All tests
-				$virtual_suite = TYPE_VIRT_SUITE_ALL;
+				$virtual_suite = "TYPE_VIRT_SUITE_ALL";
 			}
 			else if($identifier == "free")
 			{
-				$virtual_suite = TYPE_VIRT_SUITE_FREE;
+				$virtual_suite = "TYPE_VIRT_SUITE_FREE";
 			}
 			else
 			{
@@ -227,7 +217,7 @@ function pts_location_virtual_suite($identifier)
 				{
 					if(strtolower($type) == $identifier)
 					{
-						$virtual_suite = TYPE_VIRT_SUITE_SUBSYSTEM;
+						$virtual_suite = "TYPE_VIRT_SUITE_SUBSYSTEM";
 						break;
 					}
 				}
@@ -251,15 +241,15 @@ function pts_location_test($identifier)
 		{
 			$type = pts_test_type($identifier);
 
-			if($type == TYPE_TEST)
+			if($type == "TYPE_TEST")
 			{
 				$location = XML_PROFILE_DIR . $identifier . ".xml";
 			}
-			else if($type == TYPE_LOCAL_TEST)
+			else if($type == "TYPE_LOCAL_TEST")
 			{
 				$location = XML_PROFILE_LOCAL_DIR . $identifier . ".xml";
 			}
-			else if($type == TYPE_BASE_TEST)
+			else if($type == "TYPE_BASE_TEST")
 			{
 				$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
 			}
@@ -282,17 +272,16 @@ function pts_location_test_resources($identifier)
 		{
 			$type = pts_test_type($identifier);
 
-			if($type == TYPE_LOCAL_TEST && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
+			if($type == "TYPE_LOCAL_TEST" && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
 			{
 				$location = TEST_RESOURCE_LOCAL_DIR . $identifier . "/";
 			}
-			else if($type == TYPE_BASE_TEST && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
+			else if($type == "TYPE_LOCAL_TEST" && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
 			{
 				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
 			}
 			else if(is_dir(TEST_RESOURCE_DIR . $identifier))
 			{
-				// TYPE_TEST
 				$location = TEST_RESOURCE_DIR . $identifier . "/";
 			}
 		}
@@ -421,7 +410,7 @@ function pts_virtual_suite_tests($object)
 
 	switch($virtual_suite_type)
 	{
-		case TYPE_VIRT_SUITE_SUBSYSTEM:
+		case "TYPE_VIRT_SUITE_SUBSYSTEM":
 			foreach(pts_supported_tests_array() as $test)
 			{
 				$type = pts_test_read_xml($test, P_TEST_HARDWARE_TYPE);
@@ -432,7 +421,7 @@ function pts_virtual_suite_tests($object)
 				}
 			}
 			break;
-		case TYPE_VIRT_SUITE_ALL:
+		case "TYPE_VIRT_SUITE_ALL":
 			foreach(pts_supported_tests_array() as $test)
 			{
 				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
@@ -444,7 +433,7 @@ function pts_virtual_suite_tests($object)
 				}
 			}
 			break;
-		case TYPE_VIRT_SUITE_FREE:
+		case "TYPE_VIRT_SUITE_FREE":
 			foreach(pts_supported_tests_array() as $test)
 			{
 				$test_license = pts_test_read_xml($test, P_TEST_LICENSE);

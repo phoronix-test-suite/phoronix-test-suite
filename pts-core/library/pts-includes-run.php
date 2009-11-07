@@ -212,6 +212,71 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		unlink($cache_share_file);
 	}
 }
+function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mode)
+{
+	$failed_tests = array();
+	$validated_run_requests = array();
+
+	foreach($test_run_manager->get_tests_to_run() as $test_run_request)
+	{
+		if(!($test_run_request instanceOf pts_test_run_request))
+		{
+			// TODO: $test_run_request probably a pts_weighted_test_run_manager then, decide how to validate
+			array_push($validated_run_requests, $test_run_request);
+			continue;
+		}
+
+		// Validate the pts_test_run_request
+		$test_identifier = $test_run_request->get_identifier();
+
+		if(in_array($test_identifier, $failed_tests))
+		{
+			// The test has already been determined to not be installed right or other issue
+			continue;
+		}
+
+		if(!is_dir(TEST_ENV_DIR . $test_identifier))
+		{
+			// The test is not setup
+			array_push($failed_tests, $test_identifier);
+			continue;
+		}
+
+		$test_profile = new pts_test_profile($test_identifier, $test_run_request->get_override_options());
+		$test_type = $test_profile->get_test_hardware_type();
+
+		if($test_type == "Graphics" && getenv("DISPLAY") == false)
+		{
+			$display_mode->test_run_error("No display server was found, cannot run " . $test_identifier);
+			array_push($failed_tests, $test_identifier);
+			continue;
+		}
+
+		if(getenv("NO_" . strtoupper($test_type) . "_TESTS") || (($e = getenv("SKIP_TESTS")) && in_array($test_identifier, explode(",", $e))))
+		{
+			array_push($failed_tests, $test_identifier);
+			continue;
+		}
+
+		if($test_profile->is_root_required() && pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
+		{
+			$display_mode->test_run_error("Cannot run " . $test_identifier . " in batch mode as root access is required.");
+			array_push($failed_tests, $test_identifier);
+			continue;
+		}
+
+		if(pts_find_test_executable($test_identifier, $test_profile) == null)
+		{
+			$display_mode->test_run_error("The test executable for " . $test_identifier . " could not be found.");
+			array_push($failed_tests, $test_identifier);
+			continue;
+		}
+
+		array_push($validated_run_requests, $test_run_request);
+	}
+
+	$test_run_manager->set_tests_to_run($validated_run_requests);
+}
 function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$display_mode, $run_index, $run_position = 1, $run_count = 1)
 {
 	$result = false;
@@ -353,6 +418,23 @@ function pts_save_test_file(&$results, $file_name)
 
 	return $real_name;
 }
+function pts_find_test_executable($test_identifier, &$test_profile)
+{
+	$to_execute = null;
+	$possible_paths = array_merge(array(TEST_ENV_DIR . $test_identifier . "/"), pts_trim_explode(",", $test_profile->get_test_executable_paths()));
+	$execute_binary = $test_profile->get_test_executable();
+
+	foreach($possible_paths as $possible_dir)
+	{
+		if(is_executable($possible_dir . $execute_binary))
+		{
+			$to_execute = $possible_dir;
+			break;
+		}
+	}
+
+	return $to_execute;
+}
 function pts_run_test(&$test_run_request, &$display_mode)
 {
 	$test_identifier = $test_run_request->get_identifier();
@@ -386,18 +468,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$min_length = $test_profile->get_min_length();
 	$max_length = $test_profile->get_max_length();
 
-	if($test_type == "Graphics" && getenv("DISPLAY") == false)
-	{
-		pts_release_lock($test_fp, $lock_file);
-		return false;
-	}
-
-	if(getenv("NO_" . strtoupper($test_type) . "_TESTS") || (($e = getenv("SKIP_TESTS")) && in_array($test_identifier, explode(",", $e))))
-	{
-		pts_release_lock($test_fp, $lock_file);
-		return false;
-	}
-
 	if($test_profile->get_environment_testing_size() != -1 && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $test_profile->get_environment_testing_size())
 	{
 		// Ensure enough space is available on disk during testing process
@@ -417,22 +487,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$times_to_run = 1;
 	}
 
-	$to_execute = null;
-	foreach(array_merge(array($test_directory), pts_trim_explode(",", $test_profile->get_test_executable_paths())) as $possible_dir)
-	{
-		if(is_executable($possible_dir . $execute_binary))
-		{
-			$to_execute = $possible_dir;
-			break;
-		}
-	}
-
-	if($to_execute == null)
-	{
-		$display_mode->test_run_error("The test executable for " . $test_identifier . " could not be found. Skipping test.");
-		pts_release_lock($test_fp, $lock_file);
-		return false;
-	}
+	$to_execute = pts_find_test_executable($test_identifier, $test_profile);
 
 	if(pts_test_needs_updated_install($test_identifier))
 	{
@@ -469,11 +524,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if(!$cache_share_present && $test_profile->is_root_required())
 	{
-		if(pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
-		{
-			return false;
-		}
-
 		$execute_binary_prepend = TEST_LIBRARIES_DIR . "root-access.sh ";
 	}
 

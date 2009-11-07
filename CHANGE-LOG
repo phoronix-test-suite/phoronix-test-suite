@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Don't contain tests that are of license RETAIL or RESTRICTED in the "all" virtual suite
 - pts-core: Fix where recover-run would not recognize the result file if there was not at least one successful one previously
 - pts-core: When using recover-run, put back in batch mode state if the test was originally run in batch mode
+- pts-core: Validate test installations earlier in the test run process
 - phodevi: Add support for GPU fan speed monitoring (currently only implemented for NVIDIA's binary display driver)
 - phodevi: Add property to disk object for reading the scheduler in use
 - phodevi: DMI parsing support on Linux through /sys/class/dmi/id/ interface, for now implement motherboard way

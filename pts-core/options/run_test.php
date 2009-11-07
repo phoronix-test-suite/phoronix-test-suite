@@ -264,6 +264,13 @@ class run_test implements pts_option_interface
 		}
 
 		// Run the test process
+		$display_mode = pts_get_display_mode_object();
+		pts_validate_test_installations_to_run($test_run_manager, $display_mode);
+
+		if($test_run_manager->get_tests_to_run_count() == 0)
+		{
+			return false;
+		}
 
 		if(isset($pre_run_message))
 		{
@@ -316,7 +323,6 @@ class run_test implements pts_option_interface
 		}
 
 		// Run the actual tests
-		$display_mode = pts_get_display_mode_object();
 		pts_module_process("__pre_run_process", $test_run_manager);
 		pts_set_assignment("PTS_STATS_DYNAMIC_RUN_COUNT", pts_string_bool(pts_read_user_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE")));
 		pts_set_assignment("PTS_STATS_NO_ON_LENGTH", pts_read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, "20"));

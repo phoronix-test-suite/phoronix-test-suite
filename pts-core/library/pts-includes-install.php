@@ -409,6 +409,7 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 		}
 		else
 		{
+	echo "!!!!" . $identifier . "\n";
 			if(pts_test_needs_updated_install($identifier))
 			{
 				pts_setup_install_test_directory($identifier, true);

@@ -46,13 +46,13 @@ class info implements pts_option_interface
 
 			switch(pts_location_virtual_suite($to_info))
 			{
-				case TYPE_VIRT_SUITE_ALL: 
+				case "TYPE_VIRT_SUITE_ALL":
 					echo "This virtual suite contains all supported Phoronix Test Suite tests.\n";
 					break;
-				case TYPE_VIRT_SUITE_FREE: 
+				case "TYPE_VIRT_SUITE_FREE":
 					echo "This virtual suite contains all supported Phoronix Test Suite tests that are considered free.\n";
 					break;
-				case TYPE_VIRT_SUITE_SUBSYSTEM: 
+				case "TYPE_VIRT_SUITE_SUBSYSTEM":
 					echo "This virtual suite contains all supported Phoronix Test Suite tests for the " . $to_info . " subsystem.\n";
 					break;
 			}

@@ -152,9 +152,20 @@ class pts_test_run_manager
 			array_push($this->tests_to_run, $weighted_manager);
 		}
 	}
+	public function set_tests_to_run($tests_to_run)
+	{
+		if(is_array($tests_to_run))
+		{
+			$this->tests_to_run = $tests_to_run;
+		}
+	}
 	public function get_tests_to_run()
 	{
 		return $this->tests_to_run;
+	}
+	public function get_tests_to_run_count()
+	{
+		return count($this->tests_to_run);
 	}
 	public function get_test_to_run($index)
 	{
