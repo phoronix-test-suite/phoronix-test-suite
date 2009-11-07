@@ -44,7 +44,7 @@ class pts_result_file_merge_manager
 		}
 		*/
 
-		$select_identifiers = $result_merge_select instanceOf pts_result_file_merge_select ? $result_merge_select->get_selected_identifiers() : null;
+		$select_identifiers = $result_merge_select instanceOf pts_result_merge_select ? $result_merge_select->get_selected_identifiers() : null;
 
 		$merged = false;
 		for($i = 0; $i < count($this->test_results) && !$merged; $i++)

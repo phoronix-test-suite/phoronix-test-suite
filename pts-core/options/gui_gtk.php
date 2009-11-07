@@ -591,11 +591,14 @@ class gui_gtk implements pts_option_interface
 
 		foreach($reference_tests as $merge_select_object)
 		{
-			$ref_check_button = new GtkCheckButton(array_pop($merge_select_object->get_selected_identifiers()));
-			$ref_check_button->set_active(false);
-			$ref_check_button->connect("toggled", array("gui_gtk", "toggle_reference_systems"), $merge_select_object, $compare_results);
+			if(count($merge_select_object->get_selected_identifiers()) != 0)
+			{
+				$ref_check_button = new GtkCheckButton(array_pop($merge_select_object->get_selected_identifiers()));
+				$ref_check_button->set_active(false);
+				$ref_check_button->connect("toggled", array("gui_gtk", "toggle_reference_systems"), $merge_select_object, $compare_results);
 
-			array_push($append_elements, $ref_check_button);
+				array_push($append_elements, $ref_check_button);
+			}
 		}
 		array_push($append_elements, $compare_results);
 	}

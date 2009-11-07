@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: When using recover-run, put back in batch mode state if the test was originally run in batch mode
 - pts-core: Validate test installations earlier in the test run process
 - pts-core: When clicking "View Results" from GTK2 GUI, generate graphs if needed
+- pts-core: Fix regression that broke reference comparisons and removing identifiers from result files
 - phodevi: Add support for GPU fan speed monitoring (currently only implemented for NVIDIA's binary display driver)
 - phodevi: Add property to disk object for reading the scheduler in use
 - phodevi: DMI parsing support on Linux through /sys/class/dmi/id/ interface, for now implement motherboard way

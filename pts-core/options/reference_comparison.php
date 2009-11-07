@@ -61,7 +61,11 @@ class reference_comparison implements pts_option_interface
 
 			foreach($reference_test_globals as $merge_select_object)
 			{
-				echo $reference_count . ": " . $merge_select_object->get_selected_identifiers() . "\n";
+				if(count($merge_select_object->get_selected_identifiers()) != 0)
+				{
+					echo $reference_count . ": " . array_pop($merge_select_object->get_selected_identifiers()) . "\n";
+				}
+
 				$reference_count++;
 			}
 
