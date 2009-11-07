@@ -765,27 +765,37 @@ class phodevi_system extends pts_device_interface
 	public static function sw_display_driver()
 	{
 		$ddx_info = "";
-		$dri_driver = phodevi::read_property("system", "dri-display-driver");
+		$xorg_module_driver = phodevi::read_property("system", "dri-display-driver");
 
-		if(empty($dri_driver))
+		if(empty($xorg_module_driver))
 		{
 			if(IS_ATI_GRAPHICS)
 			{
-				$dri_driver = "fglrx";
+				$xorg_module_driver = "fglrx";
 			}
 			else if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
 			{
-				$dri_driver = "nv";
+				$xorg_module_driver = "nv";
+			}
+			else if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
+			{
+				$xorg_module_driver = "cirrus";
+			}
+			else
+			{
+				// Fallback to hopefully detect the module, takes the first word off the GPU string and sees if it is the module
+				// This works in at least the case of the Cirrus driver
+				$xorg_module_driver = strtolower(array_shift(explode(" ", phodevi::read_name("gpu"))));
 			}
 		}
 
-		if(!empty($dri_driver))
+		if(!empty($xorg_module_driver))
 		{
-			$driver_version = phodevi_parser::read_xorg_module_version($dri_driver . "_drv");
+			$driver_version = phodevi_parser::read_xorg_module_version($xorg_module_driver . "_drv");
 
 			if(!empty($driver_version))
 			{
-				$ddx_info = $dri_driver . " " . $driver_version;
+				$ddx_info = $xorg_module_driver . " " . $driver_version;
 			}
 		}
 
