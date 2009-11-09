@@ -299,7 +299,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 		$tandem_xml->saveXMLFile(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/active.xml");
 	}
 
-	foreach($test_run_requests as $test_run_request)
+	foreach($test_run_requests as &$test_run_request)
 	{
 		if(pts_is_test($test_run_request->get_identifier()))
 		{

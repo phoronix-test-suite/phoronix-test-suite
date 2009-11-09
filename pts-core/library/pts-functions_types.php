@@ -330,7 +330,7 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 	$tests = array();
 	$objects = pts_to_array($objects);
 
-	foreach($objects as $object)
+	foreach($objects as &$object)
 	{
 		if(pts_is_suite($object)) // Object is suite
 		{

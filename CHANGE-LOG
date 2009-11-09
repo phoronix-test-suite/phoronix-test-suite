@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.2 Beta 3
+November 9, 2009
 
 - pts-core: Fix API breakage for installing dependencies from install-dependencies option call
 - pts-core: Report the disk scheduler to the test notes area when a disk test is run
