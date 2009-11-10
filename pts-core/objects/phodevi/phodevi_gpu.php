@@ -760,13 +760,17 @@ class phodevi_gpu extends pts_device_interface
 	}
 	public static function gpu_fan_speed()
 	{
-		// Report graphics processor fan speed
+		// Report graphics processor fan speed as a percent
 		if(IS_NVIDIA_GRAPHICS)
 		{
 			// NVIDIA fan speed reading support in NVIDIA 190.xx and newer
 			// TODO: support for multiple fans, also for reading GPUFanTarget to get appropriate fan
 			// nvidia-settings --describe GPUFanTarget 
 			$fan_speed = phodevi_parser::read_nvidia_extension("[fan:0]/GPUCurrentFanSpeed");
+		}
+		else if(IS_ATI_GRAPHICS)
+		{
+			$fan_speed = phodevi_parser::read_ati_overdrive("FanSpeed");
 		}
 		else
 		{

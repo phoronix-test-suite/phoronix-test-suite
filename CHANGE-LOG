@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Various code path optimizations and cleaning
+- phodevi: Support for the GPU fan-speed sensor with ATI graphics driver
+
 Phoronix Test Suite 2.2 Beta 3
 November 9, 2009
 

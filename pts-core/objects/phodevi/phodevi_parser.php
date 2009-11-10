@@ -460,6 +460,22 @@ class phodevi_parser
 					$value = substr($info, 0, strpos($info, " C"));
 				}
 			}
+			else if($attribute == "FanSpeed")
+			{
+				// Right now there is no standardized interface to get the fan speed through besides the pplib command
+				$info = shell_exec("aticonfig --adapter=" . $adapter . " --pplib-cmd \"get fanspeed 0\" 2>&1");
+
+				if(($start = strpos($info, "Fan Speed:")) !== false)
+				{
+					$info = substr($info, $start + 11);
+					$info = substr($info, 0, strpos($info, "%"));
+
+					if(is_numeric($info))
+					{
+						$value = $info;
+					}
+				}
+			}
 			else
 			{
 				$info = shell_exec("aticonfig --adapter=" . $adapter . " --od-getclocks 2>&1");
