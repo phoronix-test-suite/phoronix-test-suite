@@ -29,9 +29,9 @@ function pts_start_install($to_install, &$display_mode)
 
 	$tests = array();
 
-	foreach($to_install as $to_install_test)
+	foreach($to_install as &$to_install_test)
 	{
-		foreach(pts_contained_tests($to_install_test, true) as $test)
+		foreach(pts_contained_tests($to_install_test, true) as &$test)
 		{
 			pts_array_push($tests, $test);
 		}
@@ -136,7 +136,7 @@ function pts_download_test_files($identifier, &$display_mode)
 		$module_pass = array($identifier, $download_packages);
 		pts_module_process("__pre_test_download", $module_pass);
 
-		foreach($download_packages as $download_package)
+		foreach($download_packages as &$download_package)
 		{
 			$download_location = TEST_ENV_DIR . $identifier . "/";
 			$package_filename = $download_package->get_filename();

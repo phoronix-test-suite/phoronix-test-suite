@@ -174,13 +174,14 @@ function pts_location_suite($identifier)
 		{
 			$type = pts_test_type($identifier);
 
-			if($type == "TYPE_TEST_SUITE")
+			switch($type)
 			{
-				$location = XML_SUITE_DIR . $identifier . ".xml";
-			}
-			else if($type == "TYPE_LOCAL_TEST_SUITE")
-			{
-				$location = XML_SUITE_LOCAL_DIR . $identifier . ".xml";
+				case "TYPE_TEST_SUITE":
+					$location = XML_SUITE_DIR . $identifier . ".xml";
+					break;
+				case "TYPE_LOCAL_TEST_SUITE":
+					$location = XML_SUITE_LOCAL_DIR . $identifier . ".xml";
+					break;
 			}
 		}
 
@@ -201,26 +202,25 @@ function pts_location_virtual_suite($identifier)
 		if(count(pts_contained_tests($identifier, false, false)) == 0)
 		{
 			// When updating any of this, don't forget to update (if needed) the info run option for support
-			if($identifier == "all")
+			switch($identifier)
 			{
-				// All tests
-				$virtual_suite = "TYPE_VIRT_SUITE_ALL";
-			}
-			else if($identifier == "free")
-			{
-				$virtual_suite = "TYPE_VIRT_SUITE_FREE";
-			}
-			else
-			{
-				// Check if object is a subsystem test type
-				foreach(pts_subsystem_test_types() as $type)
-				{
-					if(strtolower($type) == $identifier)
+				case "all":
+					$virtual_suite = "TYPE_VIRT_SUITE_ALL";
+					break;
+				case "free":
+					$virtual_suite = "TYPE_VIRT_SUITE_FREE";
+					break;
+				default:
+					// Check if object is a subsystem test type
+					foreach(pts_subsystem_test_types() as $type)
 					{
-						$virtual_suite = "TYPE_VIRT_SUITE_SUBSYSTEM";
-						break;
+						if(strtolower($type) == $identifier)
+						{
+							$virtual_suite = "TYPE_VIRT_SUITE_SUBSYSTEM";
+							break;
+						}
 					}
-				}
+					break;
 			}
 		}
 
@@ -241,17 +241,17 @@ function pts_location_test($identifier)
 		{
 			$type = pts_test_type($identifier);
 
-			if($type == "TYPE_TEST")
+			switch($type)
 			{
-				$location = XML_PROFILE_DIR . $identifier . ".xml";
-			}
-			else if($type == "TYPE_LOCAL_TEST")
-			{
-				$location = XML_PROFILE_LOCAL_DIR . $identifier . ".xml";
-			}
-			else if($type == "TYPE_BASE_TEST")
-			{
-				$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
+				case "TYPE_TEST":
+					$location = XML_PROFILE_DIR . $identifier . ".xml";
+					break;
+				case "TYPE_LOCAL_TEST":
+					$location = XML_PROFILE_LOCAL_DIR . $identifier . ".xml";
+					break;
+				case "TYPE_BASE_TEST":
+					$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
+					break;
 			}
 		}
 
@@ -334,9 +334,7 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 	{
 		if(pts_is_suite($object)) // Object is suite
 		{
-			$tests_in_suite = array_unique(pts_suite_read_xml_array($object, P_SUITE_TEST_NAME));
-
-			foreach($tests_in_suite as $test)
+			foreach(array_unique(pts_suite_read_xml_array($object, P_SUITE_TEST_NAME)) as $test)
 			{
 				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
 				{
@@ -361,9 +359,8 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 		else if(pts_is_test_result($object)) // Object is a saved results file
 		{
 			$xml_parser = new pts_results_tandem_XmlReader($object);
-			$tests_in_save = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 
-			foreach($tests_in_save as $test)
+			foreach($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME) as $test)
 			{
 				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
 				{
@@ -373,10 +370,9 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 		}
 		else if(pts_is_global_id($object)) // Object is a Phoronix Global file
 		{
-			$xml_parser = new tandem_XmlReader(pts_global_download_xml($object));
-			$tests_in_global = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+			$xml_parser = new pts_results_tandem_XmlReader(pts_global_download_xml($object));
 
-			foreach($tests_in_global as $test)
+			foreach($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME) as $test)
 			{
 				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
 				{

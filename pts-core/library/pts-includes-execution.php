@@ -28,7 +28,7 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 
 	$tests_r = ($use_ctp ? pts_contained_tests($test_identifier, true) : array($test_identifier));
 
-	foreach($tests_r as $this_test)
+	foreach($tests_r as &$this_test)
 	{
 		if(is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".php")) || is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".sh")))
 		{

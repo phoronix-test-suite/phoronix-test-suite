@@ -305,17 +305,15 @@ function pts_package_vendor_identifier()
 			$vendors_alias_file = pts_file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.txt");
 			$vendors_r = explode("\n", $vendors_alias_file);
 
-			foreach($vendors_r as $vendor)
+			foreach($vendors_r as &$vendor)
 			{
-				$vendor_r = explode("=", $vendor);
+				$vendor_r = pts_trim_explode("=", $vendor);
 
 				if(count($vendor_r) == 2)
 				{
-					$to_replace = trim($vendor_r[0]);
-
-					if($os_vendor == $to_replace)
+					if($os_vendor == $vendor_r[0])
 					{
-						$os_vendor = trim($vendor_r[1]);
+						$os_vendor = $vendor_r[1];
 						break;
 					}
 				}

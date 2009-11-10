@@ -85,7 +85,7 @@ function pts_result_file_reference_tests($result)
 				{
 					array_push($global_result_hashes, $object_hash);
 				}
-				foreach($test_result_hashes as $hash)
+				foreach($test_result_hashes as &$hash)
 				{
 					if(!in_array($hash, $global_result_hashes))
 					{
@@ -96,7 +96,7 @@ function pts_result_file_reference_tests($result)
 
 				if(!$hash_failed)
 				{
-					foreach($global_result_identifiers as $system_identifier)
+					foreach($global_result_identifiers as &$system_identifier)
 					{
 						array_push($reference_tests, new pts_result_merge_select($global_id, $system_identifier));
 					}

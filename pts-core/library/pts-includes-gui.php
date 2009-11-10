@@ -23,8 +23,7 @@
 
 function pts_gui_installed_suites()
 {
-	$installed_suites = pts_installed_suites_array();
-	$installed_suites = array_map("pts_suite_identifier_to_name", $installed_suites);
+	$installed_suites = array_map("pts_suite_identifier_to_name", pts_installed_suites_array());
 	sort($installed_suites);
 
 	return $installed_suites;
@@ -35,7 +34,7 @@ function pts_gui_available_suites($to_show_types, $license_types = "", $dependen
 	$test_suites = pts_supported_suites_array();
 	$to_show_names = array();
 
-	foreach($test_suites as $name)
+	foreach($test_suites as &$name)
 	{
 		$ts = new pts_test_suite_details($name);
 		$hw_type = $ts->get_suite_type();
@@ -90,7 +89,7 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 	$installed = pts_installed_tests_array();
 	$license_types = array_map("strtoupper", $license_types);
 
-	foreach($installed as $test)
+	foreach($installed as &$test)
 	{
 		$tp = new pts_test_profile($test);
 		$hw_type = $tp->get_test_hardware_type();
@@ -113,7 +112,7 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 	$to_show_names = array();
 	$license_types = array_map("strtoupper", $license_types);
 
-	foreach($test_names as $name)
+	foreach($test_names as &$name)
 	{
 		$tp = new pts_test_profile($name);
 		$hw_type = $tp->get_test_hardware_type();
@@ -169,7 +168,7 @@ function pts_test_download_files_locally_available($identifier)
 	{
 		$test_object_downloads = pts_objects_test_downloads($name);
 
-		foreach($test_object_downloads as $download_package)
+		foreach($test_object_downloads as &$download_package)
 		{
 			if(!pts_test_download_file_local($name, $download_package->get_filename()))
 			{

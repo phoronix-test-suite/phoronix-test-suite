@@ -38,7 +38,7 @@ function pts_merge_test_results()
 	$results->setXslBinding("pts-results-viewer.xsl");
 	$added_systems_hash = array();
 
-	for($merge_pos = 0; $merge_pos < count($files_to_combine); $merge_pos++)
+	foreach(array_keys($files_to_combine) as $merge_pos)
 	{
 		if(is_object($files_to_combine[$merge_pos]) && $files_to_combine[$merge_pos] instanceOf pts_result_merge_select)
 		{

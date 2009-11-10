@@ -44,49 +44,49 @@ function pts_gtk_add_menu($vbox, $menu)
 		pts_set_assignment("GTK_OBJ_MENU_" . $this_menu_identifier, $menu);
 
 		$sub_menu = pts_to_array($sub_menu);
-		foreach($sub_menu as $this_identifier => $this_object)
+		foreach(array_keys($sub_menu) as $key)
 		{
-			if($this_object == null)
+			if($sub_menu[$key] == null)
 			{
 				$menu_item = new GtkSeparatorMenuItem();
 				$menu->append($menu_item);
 			}
-			else if(is_array($this_object))
+			else if(is_array($sub_menu[$key]))
 			{
-				pts_gtk_add_menu($menu, array($this_identifier => $this_object));
+				pts_gtk_add_menu($menu, array($key => $sub_menu[$key]));
 			}
 			else
 			{
-				if($this_object->get_type() == "CHECK_BUTTON")
+				if($sub_menu[$key]->get_type() == "CHECK_BUTTON")
 				{
-					$menu_item = new GtkCheckMenuItem($this_object->get_title());
-					$menu_item->connect("toggled", $this_object->get_function_call(), $this_object->get_function_argument());
-					$menu_item->connect("toggled", array("pts_gtk_multi_select_manager", "set_check_select"), $this_menu_identifier . "_" . $this_object->get_title());
+					$menu_item = new GtkCheckMenuItem($sub_menu[$key]->get_title());
+					$menu_item->connect("toggled", $sub_menu[$key]->get_function_call(), $sub_menu[$key]->get_function_argument());
+					$menu_item->connect("toggled", array("pts_gtk_multi_select_manager", "set_check_select"), $this_menu_identifier . "_" . $sub_menu[$key]->get_title());
 
-					if(($predefined_select = pts_gtk_multi_select_manager::get_select($this_menu_identifier . "_" . $this_object->get_title())) != -1)
+					if(($predefined_select = pts_gtk_multi_select_manager::get_select($this_menu_identifier . "_" . $sub_menu[$key]->get_title())) != -1)
 					{
 						$menu_item->set_active($predefined_select);
 					}
-					else if($this_object->get_active_default())
+					else if($sub_menu[$key]->get_active_default())
 					{
 						$menu_item->set_active(true);
 					}
 
 					$menu->append($menu_item);
 				}
-				else if($this_object->get_type() == "RADIO_BUTTON")
+				else if($sub_menu[$key]->get_type() == "RADIO_BUTTON")
 				{
 					$radio = array();
 					$radio[0] = null;
 					$i = 0;
 
-					$default = $this_object->get_active_default();
+					$default = $sub_menu[$key]->get_active_default();
 					$predefined_select = pts_gtk_multi_select_manager::get_select($this_menu_identifier);
 
-					foreach($this_object->get_title() as $radio_item)
+					foreach($sub_menu[$key]->get_title() as $radio_item)
 					{
 						$radio[$i] = new GtkRadioMenuItem($radio[0], $radio_item);
-						$radio[$i]->connect("toggled", $this_object->get_function_call(), $this_object->get_function_argument());
+						$radio[$i]->connect("toggled", $sub_menu[$key]->get_function_call(), $sub_menu[$key]->get_function_argument());
 						$radio[$i]->connect("toggled", array("pts_gtk_multi_select_manager", "set_radio_select"), $this_menu_identifier);
 						$menu->append($radio[$i]);
 
@@ -107,23 +107,23 @@ function pts_gtk_add_menu($vbox, $menu)
 				}
 				else
 				{
-					if($this_object->get_image() == null)
+					if($sub_menu[$key]->get_image() == null)
 					{
-						$menu_item = new GtkMenuItem($this_object->get_title());
+						$menu_item = new GtkMenuItem($sub_menu[$key]->get_title());
 					}
 					else
 					{
-						$menu_item = new GtkImageMenuItem($this_object->get_title());
-						$menu_item->set_image(GtkImage::new_from_stock($this_object->get_image(), Gtk::ICON_SIZE_MENU));
+						$menu_item = new GtkImageMenuItem($sub_menu[$key]->get_title());
+						$menu_item->set_image(GtkImage::new_from_stock($sub_menu[$key]->get_image(), Gtk::ICON_SIZE_MENU));
 					}
 
-					$menu_item->connect("activate", $this_object->get_function_call(), $this_object->get_function_argument());
+					$menu_item->connect("activate", $sub_menu[$key]->get_function_call(), $sub_menu[$key]->get_function_argument());
 					$menu->append($menu_item);
 				}
 
-				if($this_object->get_attach_to_pts_assignment() != null)
+				if($sub_menu[$key]->get_attach_to_pts_assignment() != null)
 				{
-					pts_set_assignment($this_object->get_attach_to_pts_assignment(), $menu_item);
+					pts_set_assignment($sub_menu[$key]->get_attach_to_pts_assignment(), $menu_item);
 					$menu_item->set_sensitive(false);
 				}
 			}
@@ -237,7 +237,7 @@ function pts_gtk_array_to_boxes($widget, $items, $set_spacing = -1, $append_to =
 		$add_to->set_spacing($set_spacing);
 	}
 
-	foreach($items as $item)
+	foreach($items as &$item)
 	{
 		if(is_array($item))
 		{

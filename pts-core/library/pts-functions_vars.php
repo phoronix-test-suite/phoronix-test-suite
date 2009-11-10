@@ -93,10 +93,11 @@ function pts_variables_export_string($vars = null)
 
 	$vars = ($vars == null ? pts_env_variables() : array_merge(pts_env_variables(), $vars));
 
-	foreach($vars as $name => $var)
+	foreach(array_keys($vars) as $key)
 	{
-		$return_string .= "export " . $name . "=" . $var . ";";
+		$return_string .= "export " . $key . "=" . $vars[$key] . ";";
 	}
+
 	return $return_string . " ";
 }
 function pts_run_additional_vars($identifier)
@@ -106,8 +107,7 @@ function pts_run_additional_vars($identifier)
 	$extra_vars["HOME"] = TEST_ENV_DIR . $identifier . "/";
 
 	$ctp_extension_string = "";
-	$extends = pts_test_extends_below($identifier);
-	foreach($extends as $extended_test)
+	foreach(pts_test_extends_below($identifier) as $extended_test)
 	{
 		if(is_dir(TEST_ENV_DIR . $extended_test . "/"))
 		{
