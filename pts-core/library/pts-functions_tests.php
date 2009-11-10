@@ -506,7 +506,7 @@ function pts_tests_within_run_manager($test_run_manager)
 
 	if($test_run_manager instanceOf pts_test_run_manager && is_array(($trq_r = $test_run_manager->get_tests_to_run())))
 	{
-		foreach($trq_r as $test_run_request)
+		foreach($trq_r as &$test_run_request)
 		{
 			if($test_run_request instanceOf pts_test_run_request)
 			{
@@ -670,7 +670,7 @@ function pts_suite_supported($identifier)
 	$tests = pts_contained_tests($identifier, false, false, true);
 	$supported_size = $original_size = count($tests);
 
-	foreach($tests as $test)
+	foreach($tests as &$test)
 	{
 		if(!pts_test_supported($test))
 		{
@@ -699,29 +699,41 @@ function pts_test_supported($identifier)
 }
 function pts_available_tests_array()
 {
-	$tests = glob(XML_PROFILE_DIR . "*.xml");
-	$local_tests = glob(XML_PROFILE_LOCAL_DIR . "*.xml");
-	$tests = array_unique(pts_array_merge($tests, $local_tests));
-	asort($tests);
+	static $cache = null;
 
-	for($i = 0; $i < count($tests); $i++)
+	if($cache == null)
 	{
-		$tests[$i] = basename($tests[$i], ".xml");
+		$tests = array_unique(array_merge(glob(XML_PROFILE_DIR . "*.xml"), glob(XML_PROFILE_LOCAL_DIR . "*.xml")));
+		asort($tests);
+
+		foreach($tests as &$test)
+		{
+			$test = basename($test, ".xml");
+		}
+
+		$cache = $tests;
 	}
 
-	return $tests;
+	return $cache;
 }
 function pts_available_base_tests_array()
 {
-	$base_tests = glob(XML_PROFILE_CTP_BASE_DIR . "*.xml");
-	asort($base_tests);
+	static $cache = null;
 
-	for($i = 0; $i < count($base_tests); $i++)
+	if($cache == null)
 	{
-		$base_tests[$i] = basename($base_tests[$i], ".xml");
+		$base_tests = glob(XML_PROFILE_CTP_BASE_DIR . "*.xml");
+		asort($base_tests);
+
+		foreach($base_tests as &$base_test)
+		{
+			$base_test = basename($base_test, ".xml");
+		}
+
+		$cache = $base_tests;
 	}
 
-	return $base_tests;
+	return $cache;
 }
 function pts_supported_tests_array()
 {
@@ -771,14 +783,12 @@ function pts_available_suites_array()
 
 	if($cache == null)
 	{
-		$suites = glob(XML_SUITE_DIR . "*.xml");
-		$local_suites = glob(XML_SUITE_LOCAL_DIR . "*.xml");
-		$suites = array_unique(pts_array_merge($suites, $local_suites));
+		$suites = array_unique(array_merge(glob(XML_SUITE_DIR . "*.xml"), glob(XML_SUITE_LOCAL_DIR . "*.xml")));
 		asort($suites);
 
-		for($i = 0; $i < count($suites); $i++)
+		foreach($suites as &$suite)
 		{
-			$suites[$i] = basename($suites[$i], ".xml");
+			$suite = basename($suite, ".xml");
 		}
 
 		$cache = $suites;

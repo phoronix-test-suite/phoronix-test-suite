@@ -33,7 +33,7 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 	{
 		eval("\$argument_checks = " . $command . "::" . "argument_checks();");
 
-		foreach($argument_checks as $argument_check)
+		foreach($argument_checks as &$argument_check)
 		{
 			$function_check = $argument_check->get_function_check();
 
@@ -77,9 +77,9 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 
 	if(is_array($preset_assignments))
 	{
-		foreach($preset_assignments as $key => $assign)
+		foreach(array_keys($preset_assignments) as $key)
 		{
-			pts_set_assignment_once($key, $assign);
+			pts_set_assignment_once($key, $preset_assignments[$key]);
 		}
 	}
 
@@ -123,7 +123,7 @@ function pts_clean_information_string($str)
 		$phrases_r = pts_trim_explode("\n", $word_file);
 		$change_phrases = array();
 
-		foreach($phrases_r as $phrase)
+		foreach($phrases_r as &$phrase)
 		{
 			$phrase_r = explode("=", $phrase);
 			$change_phrases[trim($phrase_r[1])] = trim($phrase_r[0]);

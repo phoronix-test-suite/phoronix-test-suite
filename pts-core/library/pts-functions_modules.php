@@ -40,9 +40,7 @@ function pts_module_startup_init()
 function pts_auto_detect_modules()
 {
 	// Auto detect modules to load
-	$module_variables = explode("\n", file_get_contents(STATIC_DIR . "lists/module-variables.txt"));
-
-	foreach($module_variables as $module_var)
+	foreach(explode("\n", pts_file_get_contents(STATIC_DIR . "lists/module-variables.txt")) as $module_var)
 	{
 		$module_var = pts_trim_explode("=", $module_var);
 
@@ -381,7 +379,7 @@ function pts_available_modules()
 
 	return $module_names;
 }
-function pts_module_config_init($SetOptions = null)
+function pts_module_config_init($set_options = null)
 {
 	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
@@ -399,9 +397,9 @@ function pts_module_config_init($SetOptions = null)
 	$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
 	$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 
-	if(is_array($SetOptions) && count($SetOptions) > 0)
+	if(is_array($set_options) && count($set_options) > 0)
 	{
-		foreach($SetOptions as $this_option_set => $this_option_value)
+		foreach($set_options as $this_option_set => $this_option_value)
 		{
 			$replaced = false;
 			list($this_option_module, $this_option_identifier) = explode("__", $this_option_set);

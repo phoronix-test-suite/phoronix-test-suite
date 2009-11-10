@@ -41,10 +41,7 @@ function pts_trim_double($double, $accuracy = 2)
 		}
 		else if($strlen < $accuracy)
 		{
-			for($i = $strlen; $i < $accuracy; $i++)
-			{
-				$return[1] .= '0';
-			}
+			$return[1] .= str_repeat('0', ($accuracy - $strlen));
 		}
 
 		$return = $return[0] . "." . $return[1];

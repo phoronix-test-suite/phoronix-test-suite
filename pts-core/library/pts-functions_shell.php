@@ -63,7 +63,7 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 			{
 				$possible_browsers = array("xdg-open", "epiphany", "firefox", "mozilla", "x-www-browser", "open");
 
-				foreach($possible_browsers as $b)
+				foreach($possible_browsers as &$b)
 				{
 					if(($b = pts_executable_in_path($b)))
 					{
@@ -73,6 +73,7 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 				}
 			}
 		}
+
 		shell_exec($browser . " \"" . $URL . "\" &");
 	}
 }
@@ -125,10 +126,7 @@ function pts_executable_in_path($executable)
 
 		foreach($paths as $path)
 		{
-			if(substr($path, -1) != "/")
-			{
-				$path .= "/";
-			}
+			$path = pts_add_trailing_slash($path);
 
 			if(is_executable($path . $executable))
 			{
@@ -144,9 +142,9 @@ function pts_executable_in_path($executable)
 }
 function pts_remove($object, $ignore_files = null)
 {
-	if(is_dir($object) && substr($object, -1) != "/")
+	if(is_dir($object))
 	{
-		$object .= "/";
+		$path = pts_add_trailing_slash($object);
 	}
 
 	foreach(glob($object . "*") as $to_remove)
