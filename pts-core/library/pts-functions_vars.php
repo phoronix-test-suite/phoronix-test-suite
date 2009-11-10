@@ -107,7 +107,8 @@ function pts_run_additional_vars($identifier)
 	$extra_vars["HOME"] = TEST_ENV_DIR . $identifier . "/";
 
 	$ctp_extension_string = "";
-	foreach(pts_test_extends_below($identifier) as $extended_test)
+	$extends = pts_test_extends_below($identifier);
+	foreach($extends as $extended_test)
 	{
 		if(is_dir(TEST_ENV_DIR . $extended_test . "/"))
 		{

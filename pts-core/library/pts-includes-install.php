@@ -31,7 +31,7 @@ function pts_start_install($to_install, &$display_mode)
 
 	foreach($to_install as &$to_install_test)
 	{
-		foreach(pts_contained_tests($to_install_test, true) as &$test)
+		foreach(pts_contained_tests($to_install_test, true) as $test)
 		{
 			pts_array_push($tests, $test);
 		}
