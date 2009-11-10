@@ -144,7 +144,7 @@ function pts_remove($object, $ignore_files = null)
 {
 	if(is_dir($object))
 	{
-		$path = pts_add_trailing_slash($object);
+		$object = pts_add_trailing_slash($object);
 	}
 
 	foreach(glob($object . "*") as $to_remove)
