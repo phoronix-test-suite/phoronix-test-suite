@@ -110,6 +110,10 @@ class pts_sensor
 
 		return $value;
 	}
+	public function __toString()
+	{
+		return $this->get_identifier();
+	}
 }
 
 ?>
