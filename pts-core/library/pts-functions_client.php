@@ -125,8 +125,8 @@ function pts_clean_information_string($str)
 
 		foreach($phrases_r as &$phrase)
 		{
-			$phrase_r = explode("=", $phrase);
-			$change_phrases[trim($phrase_r[1])] = trim($phrase_r[0]);
+			$phrase_r = pts_trim_explode("=", $phrase);
+			$change_phrases[$phrase_r[1]] = $phrase_r[0];
 		}
 	}
 

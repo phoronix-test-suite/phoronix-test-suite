@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
 		<TestType>System</TestType>
 		<Title>Darwin Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -21,6 +21,11 @@
 	<RunTest>
 		<Test>openarena</Test>
 		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>warsow</Test>
+		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
@@ -173,6 +178,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>apache</Test>
 	</RunTest>
 	<RunTest>
 		<Test>pgbench</Test>

@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Various code path optimizations and cleaning
 - pts-core: Add dump-sensors option to display a readout of all supported Phodevi sensors and their values and print unsupported sensors
 - phodevi: Support for the GPU fan-speed sensor with ATI graphics driver
+- pts: Update darwin test suite
 
 Phoronix Test Suite 2.2 Beta 3
 November 9, 2009

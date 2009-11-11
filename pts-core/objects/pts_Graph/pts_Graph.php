@@ -45,7 +45,7 @@ abstract class pts_Graph
 	protected $graph_color_body_text = "#FFFFFF"; // Color of graph body text
 	protected $graph_color_body_light = "#B0B59E"; // Color of the border around graph bars (if doing a bar graph)
 
-	protected $graph_color_paint = array("#3B433A", "#BB2413", "#FF9933", "#006C00", "#5028CA", "#B30000", 
+	protected $graph_color_paint = array("#3B433A", "#BB2413", "#FF9933", "#006C00", "#5028CA", "#0094B3", 
 	"#A8BC00", "#00F6FF", "#8A00AC", "#790066", "#797766", "#5598b1"); // Colors to use for the bars / lines, one color for each key
 
 	// Text

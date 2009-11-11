@@ -244,7 +244,7 @@ function pts_parse_svg_options($svg_file)
 function pts_input_string_to_identifier($input)
 {
 	$input = pts_swap_variables($input, "pts_user_runtime_variables");
-	$input = trim(str_replace(array(' ', '/', '&', '\''), "", strtolower($input)));
+	$input = trim(str_replace(array(' ', '/', '&', '?', '\''), "", strtolower($input)));
 
 	return $input;
 }

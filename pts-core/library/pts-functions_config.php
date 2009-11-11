@@ -109,7 +109,7 @@ function pts_graph_config_init($new_config_values = "")
 	$config->addXmlObjectFromReader(P_GRAPH_COLOR_NOTCHES, 2, $read_config, "#000000");
 	$config->addXmlObjectFromReader(P_GRAPH_COLOR_BORDER, 2, $read_config, "#FFFFFF");
 	$config->addXmlObjectFromReader(P_GRAPH_COLOR_ALTERNATE, 2, $read_config, "#B0B59E");
-	$config->addXmlObjectFromReader(P_GRAPH_COLOR_PAINT, 2, $read_config, "#3B433A, #BB2413, #FF9933, #006C00, #5028CA, #B30000, #A8BC00, #00F6FF, #8A00AC, #790066, #797766, #5598b1");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_PAINT, 2, $read_config, "#3B433A, #BB2413, #FF9933, #006C00, #5028CA, #0094B3, #A8BC00, #00F6FF, #8A00AC, #790066, #797766, #5598b1");
 
 	$config->addXmlObjectFromReader(P_GRAPH_COLOR_HEADERS, 2, $read_config, "#2b6b29");
 	$config->addXmlObjectFromReader(P_GRAPH_COLOR_MAINHEADERS, 2, $read_config, "#2b6b29");
