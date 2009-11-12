@@ -536,7 +536,7 @@ class phodevi_gpu extends pts_device_interface
 	}
 	public static function gpu_frequency_string()
 	{
-		$freq = (IS_ATI_GRAPHICS ? phodevi::read_property("gpu", "stock-frequency") : phodevi_gpu::gpu_current_frequency());
+		$freq = (IS_ATI_GRAPHICS || IS_MESA_GRAPHICS ? phodevi::read_property("gpu", "stock-frequency") : phodevi_gpu::gpu_current_frequency());
 		$freq_string = null;
 
 		if($freq[0] != 0)
@@ -575,6 +575,24 @@ class phodevi_gpu extends pts_device_interface
 			{
 				$core_freq = array_shift($od_clocks);
 				$mem_freq = array_pop($od_clocks);
+			}
+		}
+		else if(IS_MESA_GRAPHICS)
+		{
+			switch(phodevi::read_property("system", "dri-display-driver"))
+			{
+				case "radeon":
+					// Sure would be nice if there was a cleaner way of handling this...
+					$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep \" Clock: \"");
+
+					$core_freq = substr($log_parse, strpos($log_parse, "Default Engine Clock: ") + 23);
+					$core_freq = substr($core_freq, 0, strpos($core_freq, "\n"));
+					$core_freq = is_numeric($core_freq) ? $core_freq / 1000 : 0;
+
+					$mem_freq = substr($log_parse, strpos($log_parse, "Default Memory Clock: ") + 23);
+					$mem_freq = substr($mem_freq, 0, strpos($mem_freq, "\n"));
+					$mem_freq = is_numeric($mem_freq) ? $mem_freq / 1000 : 0;					
+					break;
 			}
 		}
 
