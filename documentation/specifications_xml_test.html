@@ -59,7 +59,7 @@ list them in this tag with each architecture delimited by a comma.<br>
 <p><strong>Tag:</strong> SupportedPlatforms<br>
 <strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
 <strong>Internal Reference:</strong> P_TEST_SUPPORTEDPLATFORMS<br>
-<strong>Required:</strong> No - Defaults to assume all operating systems are supported<br>
+<strong>Required:</strong> Recommended - Defaults to assume all operating systems are supported<br>
 <strong>Description:</strong> If the test software is limited to running on select operating systems, 
 list them in this tag with each OS being delimited by a comma.<br>
 <strong>Supported Values:</strong> Linux, Solaris, FreeBSD, BSD</p>
@@ -69,7 +69,7 @@ list them in this tag with each OS being delimited by a comma.<br>
 <strong>Required:</strong> No - Defaults to assume all operating systems are supported<br>
 <strong>Description:</strong> If the test software is limited to running on select operating systems, 
 list the ones NOT supported by this test. This tag is the opposite of SupportedPlatforms. Operating systems 
-not listed here are assumed to be supported.<br>
+not listed here are assumed to be supported. <em>This option will be dropped in Phoronix Test Suite 2.4 and later, using the SupportedPlatforms tag is the preferred way of reporting OS compatibility.</em><br>
 <strong>Supported Values:</strong> Linux, Solaris, FreeBSD, BSD</p>
 <p><strong>Tag:</strong> ExternalDependencies<br>
 <strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
