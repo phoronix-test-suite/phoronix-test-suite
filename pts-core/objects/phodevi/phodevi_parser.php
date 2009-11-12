@@ -550,7 +550,7 @@ class phodevi_parser
 		$module_version = false;
 		if(is_file("/var/log/Xorg.0.log"))
 		{
-			$xorg_log = @file_get_contents("/var/log/Xorg.0.log");
+			$xorg_log = file_get_contents("/var/log/Xorg.0.log");
 
 			if(($module_start = strpos($xorg_log, $module)) > 0)
 			{

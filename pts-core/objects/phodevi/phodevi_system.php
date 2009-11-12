@@ -793,6 +793,22 @@ class phodevi_system extends pts_device_interface
 		{
 			$driver_version = phodevi_parser::read_xorg_module_version($xorg_module_driver . "_drv");
 
+			if($driver_version == false)
+			{
+				switch($xorg_module_driver)
+				{
+					case "radeon":
+						// RadeonHD driver also reports DRI driver as "radeon", so try reading that instead
+						$driver_version = phodevi_parser::read_xorg_module_version("radeonhd_drv");
+
+						if($driver_version != false)
+						{
+							$xorg_module_driver = "radeonhd";
+						}
+						break;
+				}
+			}
+
 			if(!empty($driver_version))
 			{
 				$ddx_info = $xorg_module_driver . " " . $driver_version;
