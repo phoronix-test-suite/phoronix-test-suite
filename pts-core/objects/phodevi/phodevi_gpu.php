@@ -274,7 +274,7 @@ class phodevi_gpu extends pts_device_interface
 		{
 			$resolution = array();
 			$info = phodevi_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution");
-			$info = array_map("trim", explode(" ", $info));
+			$info = pts_trim_explode(" ", $info);
 			$resolution[0] = $info[0];
 			$resolution[1] = $info[2];
 		}
@@ -284,12 +284,12 @@ class phodevi_gpu extends pts_device_interface
 
 			if(strpos($info, "*") !== false)
 			{
-				$res = array_map("trim", explode("x", $info));
+				$res = pts_trim_explode("x", $info);
 				$res[0] = substr($res[0], strrpos($res[0], " "));
 				$res[1] = substr($res[1], 0, strpos($res[1], " "));
 				$res = array_map("trim", $res);
 
-				$info = (is_numeric($res[0]) && is_numeric($res[1]) ? array($res[0], $res[1]) : null);
+				$info = is_numeric($res[0]) && is_numeric($res[1]) ? array($res[0], $res[1]) : null;
 			}
 			else
 			{
@@ -355,7 +355,7 @@ class phodevi_gpu extends pts_device_interface
 					$xrandr_mode = substr($xrandr_mode, 0, $cut_point);
 				}
 
-				$res = array_map("trim", explode("x", $xrandr_mode));
+				$res = pts_trim_explode("x", $xrandr_mode);
 
 				if(count($res) == 2)
 				{

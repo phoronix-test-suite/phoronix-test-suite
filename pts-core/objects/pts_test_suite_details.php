@@ -77,7 +77,7 @@ class pts_test_suite_details
 	}
 	public function get_maintainer()
 	{
-		$suite_maintainer = array_map("trim", explode("|", $this->xml_parser->getXMLValue(P_SUITE_MAINTAINER)));
+		$suite_maintainer = pts_trim_explode("|", $this->xml_parser->getXMLValue(P_SUITE_MAINTAINER));
 
 		if(count($suite_maintainer) == 2)
 		{

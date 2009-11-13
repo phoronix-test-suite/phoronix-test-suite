@@ -70,7 +70,7 @@ class pts_test_run_manager
 		{
 			foreach(explode(";", $override_test_options_string) as $override_string)
 			{
-				$override_segments = array_map("trim", explode("=", $override_string));
+				$override_segments = pts_trim_explode("=", $override_string);
 
 				if(count($override_segments) == 2 && !empty($override_segments[0]) && !empty($override_segments[1]))
 				{
