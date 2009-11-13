@@ -287,17 +287,20 @@ function pts_get_display_mode_object()
 
 	return $display_mode;
 }
-function pts_http_stream_context_create($http_parameters = null)
+function pts_http_stream_context_create($http_parameters = null, $proxy_address = false, $proxy_port = false)
 {
 	if(!is_array($http_parameters))
 	{
 		$http_parameters = array();
 	}
 
-	$proxy_address = pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, null);
-	$proxy_port = pts_read_user_config(P_OPTION_NET_PROXY_PORT, null);
+	if($proxy_address == false && $proxy_port == false)
+	{
+		$proxy_address = pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, false);
+		$proxy_port = pts_read_user_config(P_OPTION_NET_PROXY_PORT, false);
+	}
 
-	if($proxy_address != null && is_numeric($proxy_port))
+	if($proxy_address != false && $proxy_port != false && is_numeric($proxy_port))
 	{
 		$http_parameters["http"]["proxy"] = "tcp://" . $proxy_address . ":" . $proxy_port;
 		$http_parameters["http"]["request_fulluri"] = true;
@@ -316,7 +319,7 @@ function pts_http_get_contents($url, $override_proxy = false, $override_proxy_po
 		return false;
 	}
 
-	$stream_context = pts_http_stream_context_create();
+	$stream_context = pts_http_stream_context_create(null, $override_proxy, $override_proxy_port);
 	$contents = pts_file_get_contents($url, 0, $stream_context);
 
 	return $contents;
