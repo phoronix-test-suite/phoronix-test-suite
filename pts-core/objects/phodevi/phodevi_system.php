@@ -777,10 +777,6 @@ class phodevi_system extends pts_device_interface
 			{
 				$xorg_module_driver = "nv";
 			}
-			else if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
-			{
-				$xorg_module_driver = "cirrus";
-			}
 			else
 			{
 				// Fallback to hopefully detect the module, takes the first word off the GPU string and sees if it is the module

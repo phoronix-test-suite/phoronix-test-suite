@@ -219,7 +219,7 @@ class run_test implements pts_option_interface
 				}
 				else
 				{
-					$auto_name = null;
+					$auto_name = true;
 				}
 
 				// Prompt Save File Name
