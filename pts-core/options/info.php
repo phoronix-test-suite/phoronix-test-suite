@@ -55,6 +55,9 @@ class info implements pts_option_interface
 				case "TYPE_VIRT_SUITE_SUBSYSTEM":
 					echo "This virtual suite contains all supported Phoronix Test Suite tests for the " . $to_info . " subsystem.\n";
 					break;
+				case "TYPE_VIRT_SUITE_INSTALLED_TESTS":
+					echo "This virtual suite contains all Phoronix Test Suite test suites that are currently installed on this system.\n";
+					break;
 			}
 
 			echo "\nContained Tests:\n\n";

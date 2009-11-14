@@ -2,6 +2,7 @@
 <PhoronixTestSuite>
 	<TestProfile>
 		<ProjectURL>http://www.humus.name/</ProjectURL>
+		<TestType>Graphics</TestType>
 		<Extends>wine-unstable</Extends>
 		<Status>VERIFIED</Status>
 		<SupportedPlatforms>Linux</SupportedPlatforms>

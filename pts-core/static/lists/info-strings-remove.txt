@@ -16,6 +16,7 @@ unknown device
 video device
 /pci/sse2/3dnow!
 /pci/sse2
+memory balloon
 limited.
 co. ltd.
 co. ltd

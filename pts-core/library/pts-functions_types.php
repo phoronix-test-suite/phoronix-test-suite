@@ -207,6 +207,9 @@ function pts_location_virtual_suite($identifier)
 				case "all":
 					$virtual_suite = "TYPE_VIRT_SUITE_ALL";
 					break;
+				case "installed-tests":
+					$virtual_suite = "TYPE_VIRT_SUITE_INSTALLED_TESTS";
+					break;
 				case "free":
 					$virtual_suite = "TYPE_VIRT_SUITE_FREE";
 					break;
@@ -424,6 +427,17 @@ function pts_virtual_suite_tests($object)
 				$test_license = pts_test_read_xml($test, P_TEST_LICENSE);
 
 				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")) && !in_array($test_license, array("RETAIL", "RESTRICTED")))
+				{
+					array_push($contained_tests, $test);
+				}
+			}
+			break;
+		case "TYPE_VIRT_SUITE_INSTALLED_TESTS":
+			foreach(pts_installed_tests_array() as $test)
+			{
+				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
+
+				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")))
 				{
 					array_push($contained_tests, $test);
 				}
