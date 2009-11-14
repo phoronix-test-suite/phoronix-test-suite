@@ -584,11 +584,10 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function pts_gtk_reference_system_comparison_objects($result_identifier, $reference_tests, &$append_elements)
 	{
-		pts_set_assignment("REFERENCE_COMPARISONS_IDENTIFIER", $result_identifier);
-		array_push($append_elements, new GtkLabel("Reference Systems"));
 		$compare_results = new pts_gtk_button("Compare Results", array("gui_gtk", "compare_reference_systems"), null);
 		$compare_results->set_sensitive(false);
 
+		$check_elements = array();
 		foreach($reference_tests as $merge_select_object)
 		{
 			if(count($merge_select_object->get_selected_identifiers()) != 0)
@@ -597,10 +596,25 @@ class gui_gtk implements pts_option_interface
 				$ref_check_button->set_active(false);
 				$ref_check_button->connect("toggled", array("gui_gtk", "toggle_reference_systems"), $merge_select_object, $compare_results);
 
-				array_push($append_elements, $ref_check_button);
+				array_push($check_elements, $ref_check_button);
 			}
 		}
+
+		if(!isset($check_elements[0]))
+		{
+			return;
+		}
+
+		array_push($append_elements, new GtkLabel("Reference Systems"));
+
+		foreach(array_keys($check_elements) as $key)
+		{
+			array_push($append_elements, $check_elements[$key]);
+		}
+
 		array_push($append_elements, $compare_results);
+
+		pts_set_assignment("REFERENCE_COMPARISONS_IDENTIFIER", $result_identifier);
 	}
 	public static function compare_reference_systems()
 	{

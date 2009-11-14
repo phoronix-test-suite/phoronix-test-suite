@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix network-setup network testing check actually use the proxy, hook in the HTTP proxy override properly
 - pts-core: Clean-up download cache directories code
 - pts-core: Add "installed-tests" virtual suite of tests that are currently installed
+- pts-core: On GTK2 GUI Don't show buttons/header for reference system comparisons for results when there are actually no results to compare to
 - phodevi: Support for the GPU fan-speed sensor with ATI graphics driver
 - phodevi: Add support for reading the stock GPU engine/memory clock when using the open-source Radeon driver
 - phodevi: Fixed detection of the xf86-video-radeonhd display driver
