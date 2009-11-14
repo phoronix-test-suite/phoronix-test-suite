@@ -264,6 +264,12 @@ function pts_process_running_bool($process)
 		$running = shell_exec("ps -C " . strtolower($process) . " 2>&1");
 		$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
 	}
+	else if(IS_SOLARIS)
+	{
+		// Checks if process is running on the system
+		$ps = shell_exec("ps -ef 2>&1");
+		$running = strpos($ps, " " . strtolower($process)) != false ? "TRUE" : null;
+	}
 	else if(pts_executable_in_path("ps") != false)
 	{
 		// Checks if process is running on the system
