@@ -69,7 +69,7 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 					{
 						$browser = $b;
 						break;
-					} else echo $b . "\n";
+					}
 				}
 			}
 		}

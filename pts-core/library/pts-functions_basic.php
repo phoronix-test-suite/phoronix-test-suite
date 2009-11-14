@@ -70,6 +70,10 @@ function pts_mkdir($dir, $mode = 0777, $recursive = false)
 {
 	return !is_dir($dir) && mkdir($dir, $mode, $recursive);
 }
+function pts_rmdir($dir)
+{
+	return is_dir($dir) && rmdir($dir);
+}
 function pts_unlink($file)
 {
 	return is_file($file) && unlink($file);

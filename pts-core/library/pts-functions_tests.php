@@ -71,6 +71,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 			{
 				if(is_file($file))
 				{
+					// copy() can't be used in this case since it will result in a blank file for /proc/ file-system
 					file_put_contents($system_log_dir . "/" . basename($file), file_get_contents($file));
 				}
 			}
@@ -85,9 +86,11 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 
 			foreach($system_log_commands as $command_string)
 			{
-				if(pts_executable_in_path($command = array_pop(explode(" ", $command_string))))
+				$command = pts_to_array($command_string);
+
+				if(($command_bin = pts_executable_in_path($command[0])))
 				{
-					@file_put_contents($system_log_dir . "/" . $command, shell_exec($command_string . " 2>&1"));
+					file_put_contents($system_log_dir . "/" . $command[0], shell_exec("cd " . dirname($command_bin) . " && ./" . $command_string . " 2>&1"));
 				}
 			}
 		}
@@ -101,11 +104,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 {
 	if($save_to_dir)
 	{
-		if(!is_dir($save_to_dir . "/result-graphs"))
-		{
-			mkdir($save_to_dir . "/result-graphs", 0777, true);
-		}
-		else
+		if(!pts_mkdir($save_to_dir . "/result-graphs", 0777, true))
 		{
 			foreach(glob($save_to_dir . "/result-graphs/*") as $old_file)
 			{
@@ -121,16 +120,14 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 		$pts_version = PTS_VERSION;
 	}
 
-	$i = 0;
 	$generated_graphs = array();
-	foreach($result_file->get_result_objects() as $result_object)
+	foreach($result_file->get_result_objects() as $key => $result_object)
 	{
-		$i++;
 		$save_to = $save_to_dir;
 
 		if($save_to_dir && is_dir($save_to_dir))
 		{
-			$save_to .= "/result-graphs/" . $i . ".BILDE_EXTENSION";
+			$save_to .= "/result-graphs/" . ($key + 1) . ".BILDE_EXTENSION";
 		}
 
 		$graph = pts_render_graph($result_object, $save_to, $result_file->get_suite_name(), $pts_version);
@@ -145,7 +142,6 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 
 	// Render overview chart
 	// TODO: Get chart working
-
 	if($save_to_dir && false) // not working right yet
 	{
 		$chart = new pts_Chart();
@@ -299,7 +295,7 @@ function pts_test_needs_updated_install($identifier)
 function pts_test_checksum_installer($identifier)
 {
 	// Calculate installed checksum
-	$md5_checksum = "";
+	$md5_checksum = null;
 
 	if(is_file(pts_location_test_resources($identifier) . "install.php"))
 	{
@@ -330,7 +326,7 @@ function pts_test_installed_profile_version($identifier)
 function pts_test_profile_version($identifier)
 {
 	// Checks PTS profile version
-	$version = "";
+	$version = null;
 
 	if(pts_is_test($identifier))
 	{
@@ -354,30 +350,22 @@ function pts_installed_test_read_xml($identifier, $xml_option)
 function pts_test_read_xml($identifier, $xml_option)
 {
  	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-	$read = $xml_parser->getXMLValue($xml_option);
-
-	return $read;
+	return $xml_parser->getXMLValue($xml_option);
 }
 function pts_test_read_xml_array($identifier, $xml_option)
 {
  	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-	$read = $xml_parser->getXMLArrayValues($xml_option);
-
-	return $read;
+	return $xml_parser->getXMLArrayValues($xml_option);
 }
 function pts_suite_read_xml($identifier, $xml_option)
 {
  	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
-	$read = $xml_parser->getXMLValue($xml_option);
-
-	return $read;
+	return $xml_parser->getXMLValue($xml_option);
 }
 function pts_suite_read_xml_array($identifier, $xml_option)
 {
  	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
-	$read = $xml_parser->getXMLArrayValues($xml_option);
-
-	return $read;
+	return $xml_parser->getXMLArrayValues($xml_option);
 }
 function pts_test_installed($identifier)
 {
@@ -950,11 +938,7 @@ function pts_suites_containing_test($test_identifier)
 function pts_remove_test_result_dir($identifier)
 {
 	pts_remove(SAVE_RESULTS_DIR . $identifier);
-
-	if(is_dir(SAVE_RESULTS_DIR . $identifier))
-	{
-		rmdir(SAVE_RESULTS_DIR . $identifier);
-	}
+	pts_rmdir(SAVE_RESULTS_DIR . $identifier);
 }
 
 ?>
