@@ -28,14 +28,14 @@ function p_str($str_o)
 	//  $_ENV["LANG"]
 	return $str_o;
 }
-function pts_text_input($question)
+function pts_text_input($question, $allow_null = false)
 {
 	do
 	{
 		echo "\n" . $question . ": ";
 		$answer = trim(fgets(STDIN));
 	}
-	while(empty($answer));
+	while(!$allow_null && empty($answer));
 
 	return $answer;
 }
