@@ -224,16 +224,9 @@ function pts_download_test_files($identifier, &$display_mode)
 							do
 							{
 								echo "\nAvailable Download Mirrors:\n\n";
-								for($j = 0; $j < count($urls); $j++)
-								{
-									echo ($j + 1) . ": " . $urls[$j] . "\n";
-								}
-								echo "\nEnter Your Preferred Mirror: ";
-								$mirror_choice = trim(fgets(STDIN));
+								$mirror_choice = pts_text_select_menu("Select Your Preferred Mirror", $urls, false);
 							}
-							while(($mirror_choice < 1 || $mirror_choice > count($urls)) && !pts_is_valid_download_url($mirror_choice, $package_filename));
-
-							$url = (is_numeric($mirror_choice) ? $urls[($mirror_choice - 1)] : $mirror_choice);
+							while(!pts_is_valid_download_url($mirror_choice));
 						}
 						else
 						{
@@ -254,8 +247,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 							$file_downloaded = false;
 							$fail_count++;
-							echo "\nThe MD5 check-sum of the downloaded file is incorrect.\n";
-							echo "Failed URL: " . $url . "\n";
+							$display_mode->test_install_error("The MD5 check-sum of the downloaded file is incorrect.\nFailed URL: " . $url);
 
 							if($fail_count > 3)
 							{
@@ -265,7 +257,7 @@ function pts_download_test_files($identifier, &$display_mode)
 							{
 								if(count($urls) > 0 && $urls[0] != "")
 								{
-									echo "Attempting to re-download from another mirror.\n";
+									$display_mode->test_install_error("Attempting to re-download from another mirror.");
 								}
 								else
 								{
@@ -290,7 +282,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 						if(!$try_again)
 						{
-							echo "\nDownload of Needed Test Dependencies Failed! Exiting.\n\n";
+							$display_mode->test_install_error("Download of Needed Test Dependencies Failed! Exiting.");
 							return false;
 						}
 					}
@@ -567,7 +559,6 @@ function pts_is_valid_download_url($string, $basename = null)
 	// Checks for valid download URL
 	return !(strpos($string, "://") == false || !empty($basename) && $basename != basename($string));
 }
-
 function pts_test_download_cache_directories()
 {
 	$cache_directories = array();

@@ -88,6 +88,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		return;
 	}
+	public function test_install_error($error_string)
+	{
+		echo "\n" . $error_string . "\n";
+	}
 	public function test_run_process_start(&$test_run_manager)
 	{
 		$this->run_process_tests_remaining_to_run = array();

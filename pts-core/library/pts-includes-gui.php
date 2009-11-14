@@ -28,6 +28,42 @@ function pts_gui_installed_suites()
 
 	return $installed_suites;
 }
+function pts_gui_process_show_test($identifier, $dependency_limit, $downloads_limit)
+{
+	$show = true;
+
+	if($dependency_limit != null)
+	{
+		$dependencies_satisfied = pts_test_external_dependencies_satisfied($identifier);
+
+		switch($dependency_limit)
+		{
+			case "DEPENDENCIES_INSTALLED":
+				$show = $dependencies_satisfied;
+				break;
+			case "DEPENDENCIES_MISSING":
+				$show = !$dependencies_satisfied;
+				break;
+		}
+	}
+
+	if($show && $downloads_limit != null)
+	{
+		$all_files_are_local = pts_test_download_files_locally_available($identifier);
+
+		switch($downloads_limit)
+		{
+			case "DOWNLOADS_LOCAL":
+				$show = $all_files_are_local;
+				break;
+			case "DOWNLOADS_MISSING":
+				$show = !$all_files_are_local;
+				break;
+		}
+	}
+
+	return $show;
+}
 function pts_gui_available_suites($to_show_types, $license_types = "", $dependency_limit = null, $downloads_limit = null)
 {
 	// TODO: Right now a suite could include both free/non-free tests, so $license_types needs to be decided
@@ -41,37 +77,7 @@ function pts_gui_available_suites($to_show_types, $license_types = "", $dependen
 
 		if(empty($hw_type) || in_array($hw_type, $to_show_types))
 		{
-			$show = true;
-
-			if($dependency_limit != null)
-			{
-				$dependencies_satisfied = pts_test_external_dependencies_satisfied($name);
-
-				if($dependency_limit == "DEPENDENCIES_INSTALLED")
-				{
-					$show = $dependencies_satisfied;
-				}
-				else if($dependency_limit == "DEPENDENCIES_MISSING")
-				{
-					$show = !$dependencies_satisfied;
-				}
-			}
-
-			if($show && $downloads_limit != null)
-			{
-				$all_files_are_local = pts_test_download_files_locally_available($name);
-
-				if($downloads_limit == "DOWNLOADS_LOCAL")
-				{
-					$show = $all_files_are_local;
-				}
-				else if($downloads_limit == "DOWNLOADS_MISSING")
-				{
-					$show = !$all_files_are_local;
-				}
-			}
-
-			if($show)
+			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit))
 			{
 				array_push($to_show_names, $name);
 			}
@@ -120,37 +126,7 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 
 		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->is_verified_state())
 		{
-			$show = true;
-
-			if($dependency_limit != null)
-			{
-				$dependencies_satisfied = pts_test_external_dependencies_satisfied($name);
-
-				if($dependency_limit == "DEPENDENCIES_INSTALLED")
-				{
-					$show = $dependencies_satisfied;
-				}
-				else if($dependency_limit == "DEPENDENCIES_MISSING")
-				{
-					$show = !$dependencies_satisfied;
-				}
-			}
-
-			if($show && $downloads_limit != null)
-			{
-				$all_files_are_local = pts_test_download_files_locally_available($name);
-
-				if($downloads_limit == "DOWNLOADS_LOCAL")
-				{
-					$show = $all_files_are_local;
-				}
-				else if($downloads_limit == "DOWNLOADS_MISSING")
-				{
-					$show = !$all_files_are_local;
-				}
-			}
-
-			if($show)
+			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit))
 			{
 				array_push($to_show_names, $name);
 			}
