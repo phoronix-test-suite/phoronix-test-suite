@@ -77,18 +77,7 @@ class pts_test_suite_details
 	}
 	public function get_maintainer()
 	{
-		$suite_maintainer = pts_trim_explode("|", $this->xml_parser->getXMLValue(P_SUITE_MAINTAINER));
-
-		if(count($suite_maintainer) == 2)
-		{
-			$suite_maintainer = $suite_maintainer[0] . " <" . $suite_maintainer[1] . ">";
-		}
-		else
-		{
-			$suite_maintainer = $suite_maintainer[0];
-		}
-
-		return $suite_maintainer;
+		return $this->xml_parser->getXMLValue(P_SUITE_MAINTAINER);
 	}
 	public function get_suite_type()
 	{

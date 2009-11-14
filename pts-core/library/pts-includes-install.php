@@ -108,7 +108,7 @@ function pts_download_test_files($identifier, &$display_mode)
 		$remote_download_files = array();
 		$local_cache_directories = array();
 
-		foreach(pts_test_download_caches() as $dc_directory)
+		foreach(pts_test_download_cache_directories() as $dc_directory)
 		{
 			if(strpos($dc_directory, "://") > 0 && ($xml_dc_file = @file_get_contents($dc_directory . "pts-download-cache.xml")) != false)
 			{
@@ -568,16 +568,38 @@ function pts_is_valid_download_url($string, $basename = null)
 	return !(strpos($string, "://") == false || !empty($basename) && $basename != basename($string));
 }
 
-function pts_test_download_caches()
+function pts_test_download_cache_directories()
 {
-	$cache_directories = pts_download_cache_user_directories();
+	$cache_directories = array();
 
-	$possible_cache_dirs = array("/var/cache/phoronix-test-suite/");
-	foreach($possible_cache_dirs as $dir)
+	// User Defined Directory Checking
+	$dir_string = ($dir = getenv("PTS_DOWNLOAD_CACHE")) != false ? $dir . ":" : null;
+	$dir_string .= pts_read_user_config(P_OPTION_CACHE_DIRECTORY, DEFAULT_DOWNLOAD_CACHE_DIR);
+
+	foreach(pts_trim_explode(":", $dir_string) as $dir_check)
 	{
-		if(is_dir($dir))
+		if($dir_check == null)
 		{
-			array_push($cache_directories, $dir);
+			continue;
+		}
+
+		$dir_check = pts_find_home($dir_check);
+
+		if(strpos($dir_check, "://") === false && !is_dir($dir_check))
+		{
+			continue;
+		}
+
+		array_push($cache_directories, pts_add_trailing_slash($dir_check));
+	}
+
+	// Other Possible Directories
+	$additional_dir_checks = array("/var/cache/phoronix-test-suite/");
+	foreach($additional_dir_checks as $dir_check)
+	{
+		if(is_dir($dir_check))
+		{
+			array_push($cache_directories, $dir_check);
 		}
 	}
 

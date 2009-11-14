@@ -64,18 +64,8 @@ function pts_basic_init()
 function pts_extended_init()
 {
 	// Extended Initalization Process
-
-	// Create Other Directories
-	foreach(pts_download_cache_user_directories() as $dc_directory)
-	{
-		if(pts_mkdir($dc_directory))
-		{
-			@file_put_contents($dc_directory . "make-cache-howto", file_get_contents(STATIC_DIR . "make-download-cache-howto.txt"));
-		}
-	}
-
 	$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, XML_SUITE_LOCAL_DIR, 
-	TEST_RESOURCE_LOCAL_DIR, XML_PROFILE_LOCAL_DIR, MODULE_LOCAL_DIR);
+	TEST_RESOURCE_LOCAL_DIR, XML_PROFILE_LOCAL_DIR, MODULE_LOCAL_DIR, DEFAULT_DOWNLOAD_CACHE_DIR);
 
 	foreach($directory_check as $dir)
 	{

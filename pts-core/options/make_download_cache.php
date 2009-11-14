@@ -22,6 +22,10 @@
 
 class make_download_cache implements pts_option_interface
 {
+	public static function required_function_sets()
+	{
+		return array("install");
+	}
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Generating Download Cache");
@@ -29,11 +33,12 @@ class make_download_cache implements pts_option_interface
 		// Generates a PTS Download Cache
 		$dc_write_directory = null;
 
-		foreach(pts_download_cache_user_directories() as $dc_directory)
+		foreach(pts_test_download_cache_directories() as $dc_directory)
 		{
 			if(is_writable($dc_directory))
 			{
 				$dc_write_directory = $dc_directory;
+				pts_mkdir($dc_write_directory);
 				break;
 			}
 		}
@@ -45,14 +50,6 @@ class make_download_cache implements pts_option_interface
 		}
 
 		echo "\nDownload Cache Directory: " . $dc_write_directory . "\n";
-
-		if(!pts_mkdir($dc_write_directory))
-		{
-			if(is_file($dc_write_directory . "make-cache-howto"))
-			{
-				unlink($dc_write_directory . "make-cache-howto");
-			}
-		}
 
 		$xml_writer = new tandem_XmlWriter();
 		$file_counter = 0;

@@ -39,6 +39,7 @@ function pts_define_directories()
 	// Misc Locations
 	define("MODULE_DIR", PTS_CORE_PATH . "modules/");
 	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
+	define("DEFAULT_DOWNLOAD_CACHE_DIR", PTS_USER_DIR . "download-cache/");
 	define("RESULTS_VIEWER_DIR", PTS_CORE_PATH . "results-viewer/");
 	define("TEST_LIBRARIES_DIR", PTS_CORE_PATH . "test-libraries/");
 	define("STATIC_DIR", PTS_CORE_PATH . "static/");
