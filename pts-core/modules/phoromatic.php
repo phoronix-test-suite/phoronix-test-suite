@@ -156,7 +156,7 @@ class phoromatic extends pts_module_interface
 
 		if(!defined("PHOROMATIC_START"))
 		{
-			define("PHOROMATIC_START", true)
+			define("PHOROMATIC_START", true);
 			echo "\nRegistering Status With Phoromatic Server\n";
 			$update_sd = phoromatic::update_system_details();
 

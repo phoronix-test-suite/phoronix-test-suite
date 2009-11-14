@@ -97,17 +97,17 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 		}
 		while($input != "y" && $input != "n" && $input != "");
 
-		if($input == "y")
+		switch($input)
 		{
-			$answer = true;
-		}
-		else if($input == "n")
-		{
-			$answer = false;
-		}
-		else
-		{
-			$answer = $default;
+			case "y":
+				$answer = true;
+				break;
+			case "n":
+				$answer = false;
+				break;
+			default:
+				$answer = $default;
+				break;
 		}
 	}
 

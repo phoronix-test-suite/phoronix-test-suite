@@ -49,7 +49,7 @@ function pts_global_valid_id_string($global_id)
 		$is_valid = false;
 	}
 
-	if(strlen($global_id) < 13) // Shortest Possible ID would be X-000-000-000
+	if(!isset($global_id[12])) // Shortest Possible ID would be X-000-000-000, needs to be at least 13 chars
 	{
 		$is_valid = false;
 	}

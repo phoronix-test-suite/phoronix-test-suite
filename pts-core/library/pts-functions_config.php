@@ -135,7 +135,7 @@ function pts_read_graph_config($xml_pointer, $value = null, $tandem_xml = null)
 	// Read an option from a user's graph config file
 	return pts_read_config("graph-config.xml", $xml_pointer, $value, $tandem_xml);
 }
-function pts_read_config($config_file, $xml_pointer, $value, $tandem_xml)
+function pts_read_config($config_file, $xml_pointer, $value, &$tandem_xml)
 {
 	// Generic call for reading a config file
 	if(!($tandem_xml instanceOf tandem_XmlReader))

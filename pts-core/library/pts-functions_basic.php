@@ -60,8 +60,7 @@ function pts_add_trailing_slash($path)
 function pts_string_bool($string)
 {
 	// Used for evaluating if the user inputted a string that evaluates to true
-	$string = strtolower($string);
-	return $string == "true" || $string == "1" || $string == "on";
+	return in_array(strtolower($string), array("true", "1", "on"));
 }
 function pts_array_merge($array1, $array2)
 {

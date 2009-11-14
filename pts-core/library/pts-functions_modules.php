@@ -46,8 +46,7 @@ function pts_auto_detect_modules()
 
 		if(count($module_var) == 2)
 		{
-			$env_var = $module_var[0];
-			$module = $module_var[1];
+			list($env_var, $module) = $module_var;
 
 			if(!pts_module_manager::is_module_attached($module) && ($e = getenv($env_var)) != false && !empty($e))
 			{
@@ -83,10 +82,8 @@ function pts_load_modules()
 	// Check for modules to load manually in PTS_MODULES
 	if(($load_modules = getenv("PTS_MODULES")) !== false)
 	{
-		foreach(explode(",", $load_modules) as $module)
+		foreach(pts_trim_explode(",", $load_modules) as $module)
 		{
-			$module = trim($module);
-
 			if(!pts_module_manager::is_module_attached($module))
 			{
 				pts_attach_module($module);
@@ -108,6 +105,7 @@ function pts_load_modules()
 	foreach(pts_module_manager::attached_modules() as $module)
 	{
 		$module_type = pts_module_type($module);
+
 		if($module_type == "PHP")
 		{
 			eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
@@ -117,7 +115,7 @@ function pts_load_modules()
 			$module_store_vars = array();
 		}
 
-		if(is_array($module_store_vars) && count($module_store_vars) > 0)
+		if(is_array($module_store_vars))
 		{
 			foreach($module_store_vars as $store_var)
 			{
@@ -134,7 +132,7 @@ function pts_load_modules()
 	{
 		$var_value = getenv($var);
 
-		if($var_value != false && !empty($var_value))
+		if(!empty($var_value))
 		{
 			pts_module_manager::var_store_add($var, $var_value);
 		}
@@ -174,7 +172,7 @@ function pts_module_events()
 }
 function pts_is_php_module($module)
 {
-	return is_file(MODULE_DIR . $module . ".php") || is_file(MODULE_LOCAL_DIR . $module . ".php");
+	return pts_module_type($module) == "PHP";
 }
 function pts_module_valid_user_command($module, $command = null)
 {

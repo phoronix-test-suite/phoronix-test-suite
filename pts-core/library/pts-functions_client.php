@@ -70,9 +70,9 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 	}
 
 	pts_assignment_manager::clear_all();
-	$time = time();
-	pts_set_assignment("START_TIME", $time);
-	pts_set_assignment("THIS_OPTION_IDENTIFIER", $time); // For now THIS_OPTION_IDENTIFIER is also time
+	$start_time = time();
+	pts_set_assignment("START_TIME", $start_time);
+	pts_set_assignment("THIS_OPTION_IDENTIFIER", $start_time); // For now THIS_OPTION_IDENTIFIER is also time
 	pts_set_assignment("COMMAND", $command);
 
 	if(is_array($preset_assignments))
@@ -125,8 +125,8 @@ function pts_clean_information_string($str)
 
 		foreach($phrases_r as &$phrase)
 		{
-			$phrase_r = pts_trim_explode("=", $phrase);
-			$change_phrases[$phrase_r[1]] = $phrase_r[0];
+			list($replace, $replace_with) = pts_trim_explode("=", $phrase);
+			$change_phrases[$replace_with] = $replace;
 		}
 	}
 
@@ -203,7 +203,6 @@ function pts_evaluate_script_type($script)
 function pts_evaluate_math_expression($expr)
 {
 	// TODO: add security check to ensure that only math is being done in expr
-
 	eval("\$result = $expr;");
 
 	return $result;
@@ -258,7 +257,7 @@ function pts_user_message($message)
 	{
 		echo $message . "\n";
 
-		if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE"))
+		if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
 		{
 			echo "\nHit Any Key To Continue...\n";
 			fgets(STDIN);
