@@ -31,6 +31,10 @@ class pts_test_usage_details
 
 	public function __construct($identifier)
 	{
+
+		// TODO: rework this class to make it useful to other areas of code using pts_installed_test_tandem_XmlReader() rather than just
+		// using pts_test_usage_details object within list-test-usage option.... Potentially rename object to pts_installed_test to reflect or something similar
+
 		$xml_parser = new pts_installed_test_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
 		$this->install_time = substr($xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME), 0, 10);

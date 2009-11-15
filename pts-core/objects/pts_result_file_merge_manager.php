@@ -37,13 +37,6 @@ class pts_result_file_merge_manager
 	}
 	public function add_test_result($merge_test_object, &$result_merge_select)
 	{
-		/*
-		if(empty($merge_test_object->get_identifiers()) || is_array($merge_test_object->get_identifiers()) && count($merge_test_object->get_identifiers()) == 0)
-		{
-			return;
-		}
-		*/
-
 		$select_identifiers = $result_merge_select instanceOf pts_result_merge_select ? $result_merge_select->get_selected_identifiers() : null;
 
 		$merged = false;

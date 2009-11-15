@@ -476,7 +476,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		return false;
 	}
 
-	if(($force_runs = getenv("FORCE_TIMES_TO_RUN")) && is_int($force_runs))
+	if(($force_runs = getenv("FORCE_TIMES_TO_RUN")) && is_numeric($force_runs))
 	{
 		$times_to_run = $force_runs;
 	}

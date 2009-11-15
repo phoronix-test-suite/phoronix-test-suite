@@ -37,14 +37,15 @@ class pts_test_suite_details
 
 		$this->identifier_show_prefix = " ";
 
-		if($suite_support_code == 0)
+		switch($suite_support_code)
 		{
-			$this->not_supported = true;
-		}
-		else if($suite_support_code == 1)
-		{
-			$this->identifier_show_prefix = "*";
-			$this->only_partially_supported = true;
+			case 0:
+				$this->not_supported = true;
+				break;
+			case 1:
+				$this->identifier_show_prefix = "*";
+				$this->only_partially_supported = true;
+				break;
 		}
 	}
 	public function get_identifier_prefix()

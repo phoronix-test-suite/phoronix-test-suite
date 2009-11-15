@@ -110,7 +110,7 @@ function pts_download($download, $to)
 	}
 	else
 	{
-		$download_output = "No downloading application available.";
+		$download_output = "No download application available.";
 	}
 
 	return $download_output;
