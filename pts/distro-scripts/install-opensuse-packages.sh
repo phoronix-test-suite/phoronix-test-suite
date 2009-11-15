@@ -1,7 +1,13 @@
 #!/bin/sh
 
-# Mandriva package installation
+# OpenSuSE package installation
 
 echo "Please enter your root password below:" 1>&2
-su root -c "yast -i $*"
+
+if [ -x /usr/bin/zypper ]; then
+	su root -c "zypper install -l --force-resolution $*"
+else
+	su root -c "yast -i $*"
+fi
+
 exit

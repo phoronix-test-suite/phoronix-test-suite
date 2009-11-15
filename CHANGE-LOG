@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - phodevi: Fixed detection of the xf86-video-radeonhd display driver
 - phodevi: Fix throwing SUSE Linux 11.2 into an infinite loop when running "X -version" on this OS, "Xorg -version" works fine instead
 - pts: Update darwin test suite
+- pts: Support using zypper to install external dependencies on SuSE/OpenSuSE since it can ignore missing / removed packages without failing
 - documentation: Update documentation for Phoronix Test Suite 2.2
 
 Phoronix Test Suite 2.2 Beta 3
