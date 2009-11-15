@@ -125,7 +125,7 @@ class gui_gtk_events extends pts_module_interface
 	{
 		self::$test_run_pos++;
 		self::run_time_remaining($pts_test_result);
-		self::$progress_window->update_progress_bar(100, $pts_test_result->get_attribute("TEST_TITLE") . ", Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Test " . (self::$test_run_pos + 1) . " of " . self::$test_run_count . ": " . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(100, $pts_test_result->get_attribute("TEST_TITLE") . ", Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_attribute("TIMES_TO_RUN"), (self::$test_run_pos / self::$test_run_count) * 100, "Test " . self::$test_run_pos . " of " . self::$test_run_count . ": " . self::run_time_remaining($pts_test_result));
 	}
 	public static function __post_run_process()
 	{
@@ -143,8 +143,8 @@ class gui_gtk_events extends pts_module_interface
 		if(self::$test_run_count == $test_run_count)
 		{
 			$remaining_length = pts_estimated_run_time(self::$tests_remaining_to_run);
-
 			$estimated_length = pts_estimated_run_time($test_result->get_attribute("TEST_IDENTIFIER"));
+
 			if($estimated_length > 1)
 			{
 				$remaining_length += $estimated_length * (($test_result->get_attribute("TIMES_TO_RUN") - $test_result->trial_run_count()) / $test_result->get_attribute("TIMES_TO_RUN"));
