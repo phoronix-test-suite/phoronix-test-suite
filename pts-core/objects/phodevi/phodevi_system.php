@@ -737,8 +737,13 @@ class phodevi_system extends pts_device_interface
 	}
 	public static function sw_display_server()
 	{
+		if(!(($x_bin = pts_executable_in_path("Xorg")) || ($x_bin = pts_executable_in_path("X"))))
+		{
+			return false;
+		}
+
 		// Find graphics subsystem version
-		$info = shell_exec("X " . (IS_SOLARIS ? ":0" : "") . " -version 2>&1");
+		$info = shell_exec($x_bin . " " . (IS_SOLARIS ? ":0" : "") . " -version 2>&1");
 		$pos = (($p = strrpos($info, "Release Date")) !== false ? $p : strrpos($info, "Build Date"));	
 		$info = trim(substr($info, 0, $pos));
 

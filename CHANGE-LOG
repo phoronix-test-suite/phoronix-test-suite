@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support for the GPU fan-speed sensor with ATI graphics driver
 - phodevi: Add support for reading the stock GPU engine/memory clock when using the open-source Radeon driver
 - phodevi: Fixed detection of the xf86-video-radeonhd display driver
+- phodevi: Fix throwing SUSE Linux 11.2 into an infinite loop when running "X -version" on this OS, "Xorg -version" works fine instead
 - pts: Update darwin test suite
 - documentation: Update documentation for Phoronix Test Suite 2.2
 
