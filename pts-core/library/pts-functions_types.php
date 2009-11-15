@@ -436,8 +436,9 @@ function pts_virtual_suite_tests($object)
 			foreach(pts_installed_tests_array() as $test)
 			{
 				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
+				$test_title = pts_test_read_xml($test, P_TEST_TITLE);
 
-				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")))
+				if(!empty($test_title) && !in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")))
 				{
 					array_push($contained_tests, $test);
 				}

@@ -98,7 +98,7 @@
 		<Package>
 			<GenericName>ncurses-development</GenericName>
 			<PackageName>SUNWncurses</PackageName>
-			<FileCheck>/usr/gnu/include/ncurses/curses.h</FileCheck>
+			<FileCheck>/usr/gnu/include/ncurses/curses.h OR /usr/include/ncurses/curses.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>popt</GenericName>

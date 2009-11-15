@@ -46,7 +46,7 @@
 			</Menu>
 		</Option>
 		<Option>
-			<DisplayName>Run-type</DisplayName>
+			<DisplayName>Run-Type</DisplayName>
 			<Identifier>runtype</Identifier>
 			<Menu>
 				<Entry>

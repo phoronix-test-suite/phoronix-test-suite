@@ -190,7 +190,8 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 			$t->loadGraphValues($values[$i], $identifiers[$i]);
 		}
 
-		if(count(($ss = explode(",", $r_o->get_scale_special()))) > 0)
+		$scale_special = $r_o->get_scale_special();
+		if(!empty($scale_special) && count(($ss = explode(",", $scale_special))) > 0)
 		{
 			$t->loadGraphIdentifiers($ss);
 		}

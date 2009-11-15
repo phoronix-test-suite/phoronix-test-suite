@@ -115,7 +115,7 @@ class pts_test_option
 
 		if(($cut_point = strpos($display_name, "(")) > 1 && strpos($display_name, ")") > $cut_point)
 		{
-			$display_name = substr($display_name, 0, $cut_point);
+			$display_name = trim(substr($display_name, 0, $cut_point));
 		}
 
 		return $name != null && $display_name != null ? $this->get_name() . ": " . $display_name : null;
