@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add dump-core-storage option for dumping the contents of the core.pt2so object
+
 Phoronix Test Suite 2.2.0 "Bardu"
 November 16, 2009
 
