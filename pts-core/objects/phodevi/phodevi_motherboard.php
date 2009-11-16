@@ -50,6 +50,10 @@ class phodevi_motherboard extends pts_device_interface
 		{
 			$return_status = "This computer was running on battery power";
 		}
+		else if(IS_WINDOWS)
+		{
+			$info = phodevi_windows_parser::read_cpuz("Mainboard Model", null);
+		}
 
 		return $return_status;
 	}

@@ -306,6 +306,10 @@ class phodevi_system extends pts_device_interface
 		{
 			$hostname = trim(shell_exec($bin . " 2>&1"));
 		}
+		else if(IS_WINDOWS)
+		{
+			$hostname = getenv("USERDOMAIN");
+		}
 
 		return $hostname;
 	}
@@ -513,12 +517,12 @@ class phodevi_system extends pts_device_interface
 	}
 	public static function sw_kernel()
 	{
-		return trim(shell_exec("uname -r 2>&1"));
+		return php_uname("r");
 	}
 	public static function sw_kernel_architecture()
 	{
 		// Find out the kernel archiecture
-		$kernel_arch = trim(shell_exec("uname -m 2>&1"));
+		$kernel_arch = php_uname("m");
 
 		switch($kernel_arch)
 		{
@@ -526,6 +530,7 @@ class phodevi_system extends pts_device_interface
 				$kernel_arch = "x86_64";
 				break;
 			case "i86pc":
+			case "i586":
 				$kernel_arch = "i686";
 				break;
 		}
@@ -630,7 +635,7 @@ class phodevi_system extends pts_device_interface
 
 			if($os == null)
 			{
-				$os = shell_exec("uname -s 2>&1");
+				$os = php_uname("s");
 			}
 		}
 		else
@@ -737,32 +742,40 @@ class phodevi_system extends pts_device_interface
 	}
 	public static function sw_display_server()
 	{
-		if(!(($x_bin = pts_executable_in_path("Xorg")) || ($x_bin = pts_executable_in_path("X"))))
+		if(IS_WINDOWS)
 		{
-			return false;
-		}
-
-		// Find graphics subsystem version
-		$info = shell_exec($x_bin . " " . (IS_SOLARIS ? ":0" : "") . " -version 2>&1");
-		$pos = (($p = strrpos($info, "Release Date")) !== false ? $p : strrpos($info, "Build Date"));	
-		$info = trim(substr($info, 0, $pos));
-
-		if($pos === false || getenv("DISPLAY") == false)
-		{
-			$info = "Unknown";
-		}
-		else if(($pos = strrpos($info, "(")) === false)
-		{
-			$info = trim(substr($info, strrpos($info, " ")));
+			// TODO: determine what to do for Windows support
+			$info = false;
 		}
 		else
 		{
-			$info = trim(substr($info, strrpos($info, "Server") + 6));
-		}
+			if(!(($x_bin = pts_executable_in_path("Xorg")) || ($x_bin = pts_executable_in_path("X"))))
+			{
+				return false;
+			}
 
-		if($info != "Unknown")
-		{
-			$info = "X.Org Server " . $info;
+			// Find graphics subsystem version
+			$info = shell_exec($x_bin . " " . (IS_SOLARIS ? ":0" : "") . " -version 2>&1");
+			$pos = (($p = strrpos($info, "Release Date")) !== false ? $p : strrpos($info, "Build Date"));	
+			$info = trim(substr($info, 0, $pos));
+
+			if($pos === false || getenv("DISPLAY") == false)
+			{
+				$info = "Unknown";
+			}
+			else if(($pos = strrpos($info, "(")) === false)
+			{
+				$info = trim(substr($info, strrpos($info, " ")));
+			}
+			else
+			{
+				$info = trim(substr($info, strrpos($info, "Server") + 6));
+			}
+
+			if($info != "Unknown")
+			{
+				$info = "X.Org Server " . $info;
+			}
 		}
 
 		return $info;
@@ -821,17 +834,24 @@ class phodevi_system extends pts_device_interface
 	public static function sw_opengl_driver()
 	{
 		// OpenGL version
-		$info = pts_executable_in_path("glxinfo") != false ? shell_exec("glxinfo 2>&1 | grep version") : null;
-
-		if(($pos = strpos($info, "OpenGL version string:")) === false)
+		if(IS_WINDOWS)
 		{
-			$info = "N/A";
+			$info = null; // TODO: Windows support
 		}
 		else
 		{
-			$info = substr($info, $pos + 23);
-			$info = trim(substr($info, 0, strpos($info, "\n")));
-			$info = str_replace(array(" Release"), "", $info);
+			$info = pts_executable_in_path("glxinfo") != false ? shell_exec("glxinfo 2>&1 | grep version") : null;
+
+			if(($pos = strpos($info, "OpenGL version string:")) === false)
+			{
+				$info = "N/A";
+			}
+			else
+			{
+				$info = substr($info, $pos + 23);
+				$info = trim(substr($info, 0, strpos($info, "\n")));
+				$info = str_replace(array(" Release"), "", $info);
+			}
 		}
 
 		return $info;

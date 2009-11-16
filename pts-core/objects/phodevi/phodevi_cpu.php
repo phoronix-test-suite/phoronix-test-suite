@@ -101,6 +101,10 @@ class phodevi_cpu extends pts_device_interface
 		{
 			$info = phodevi_parser::read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
 		}
+		else if(IS_WINDOWS)
+		{
+			$info = getenv("NUMBER_OF_PROCESSORS");
+		}
 		else
 		{
 			$info = null;
@@ -122,6 +126,19 @@ class phodevi_cpu extends pts_device_interface
 			$cpu_speeds = phodevi_parser::read_cpuinfo("cpu MHz");
 			$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
 			$info = pts_trim_double($cpu_speeds[$cpu_core] / 1000, 2);
+		}
+		else if(IS_WINDOWS)
+		{
+			$info = phodevi_windows_parser::read_cpuz("Processor 1", "Stock frequency");
+			if($info != null)
+			{
+				if(($e = strpos($info, " MHz")) !== false)
+				{
+					$info = substr($info, 0, $e);
+				}
+
+				$info = pts_trim_double($info / 1000);
+			}
 		}
 		else
 		{
@@ -251,6 +268,10 @@ class phodevi_cpu extends pts_device_interface
 		else if(IS_MACOSX)
 		{
 			$info = phodevi_parser::read_osx_system_profiler("SPHardwareDataType", "ProcessorName");
+		}
+		else if(IS_WINDOWS)
+		{
+			$info = phodevi_windows_parser::read_cpuz("Processor 1", "Name");
 		}
 
 		if(!empty($info))

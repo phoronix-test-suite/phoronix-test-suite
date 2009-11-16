@@ -357,9 +357,14 @@ function pts_user_home()
 		$userinfo = posix_getpwuid(posix_getuid());
 		$userhome = $userinfo["dir"];
 	}
+	else if(($home = getenv("HOME")) || ($home = getenv("HOMEPATH")))
+	{
+		$userhome = $home;
+	}
 	else
 	{
-		$userhome = getenv("HOME");
+		echo "\nERROR: Can't find home directory!\n";
+		$userhome = null;
 	}
 
 	return $userhome . "/";

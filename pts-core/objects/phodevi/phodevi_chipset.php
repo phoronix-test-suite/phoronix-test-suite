@@ -49,6 +49,20 @@ class phodevi_chipset extends pts_device_interface
 			// TODO: Can't find Northbridge
 			$info = $sb_vendor . " " . $sb_product;
 		}
+		else if(IS_WINDOWS)
+		{
+			$info = phodevi_windows_parser::read_cpuz("Northbridge", null);
+
+			if($info != null)
+			{
+				if(($e = strpos($info, "rev")) !== false)
+				{
+					$info = substr($info, 0, $e);
+				}
+
+				$info = trim($info);
+			}
+		}
 		else
 		{
 			$info = phodevi_parser::read_pci(array("RAM memory", "Host bridge"));

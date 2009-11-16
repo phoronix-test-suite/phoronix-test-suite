@@ -708,6 +708,10 @@ class phodevi_gpu extends pts_device_interface
 				$info = $drm_info;
 			}
 		}
+		else if(IS_WINDOWS)
+		{
+			$info = phodevi_windows_parser::read_cpuz("Display Adapters", "Name");
+		}
 	
 		if(empty($info) || strpos($info, "Mesa ") !== false || $info == "Software Rasterizer")
 		{
