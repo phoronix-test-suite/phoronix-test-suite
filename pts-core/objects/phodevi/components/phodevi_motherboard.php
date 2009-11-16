@@ -95,7 +95,8 @@ class phodevi_motherboard extends pts_device_interface
 
 			if($vendor != false && $name != false)
 			{
-				$info = $vendor . " " . $name;
+				$info = strpos($name, $vendor . " ") === false ? $vendor . " " : null;
+				$info .= $name;
 
 				if($version != false && strpos($info, $version) === false && strlen(pts_remove_chars($version, false, false, true, true, true, true)) == 0)
 				{
