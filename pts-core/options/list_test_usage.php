@@ -38,7 +38,7 @@ class list_test_usage implements pts_option_interface
 				$last_run = $installed_test->get_last_run_date();
 				$last_run = $last_run == "0000-00-00" ? "NEVER" : $last_run;
 
-				echo sprintf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $installed_test->get_installed_version(), $installed_test->get_install_date(), $last_run, $avg_time, $installed_test->get_run_count());
+				printf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $installed_test->get_installed_version(), $installed_test->get_install_date(), $last_run, $avg_time, $installed_test->get_run_count());
 			}
 		}
 		echo "\n";

@@ -11,7 +11,7 @@
 		<Maintainer>Andrew Schofield</Maintainer>
 		<ProjectURL>http://align.bmr.kyushu-u.ac.jp/mafft/software/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>Solaris</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed MAFFT Alignment</Title>

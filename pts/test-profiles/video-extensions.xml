@@ -12,7 +12,7 @@
 		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
 		<ExternalDependencies>build-utilities, xorg-development, xorg-video</ExternalDependencies>
 		<Extends>mplayer-base</Extends>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>MPlayer Video Playback Tests</Title>

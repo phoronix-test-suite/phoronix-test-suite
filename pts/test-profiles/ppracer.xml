@@ -12,7 +12,7 @@
 		<SupportedArchitectures>x86</SupportedArchitectures>
 		<ExternalDependencies>build-utilities, glut, sdl-development, libpng-development</ExternalDependencies>
 		<ProjectURL>http://developer.berlios.de/projects/ppracer/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Planet Penguin Racer</Title>

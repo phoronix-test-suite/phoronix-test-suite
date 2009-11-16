@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support loading pts-core objects deeper in the directory
 - pts-core: Move the PTS External Dependencies XML and scripts from pts/ into pts-core/static/
 - pts-core: Move pts-core/scripts/ contents to pts-core/static/scripts/
+- pts-core: Drop support for UnsupportedPlatforms tag in PTS test profile specification, tests should be using SupportedPlatforms tag
 - phodevi: Split out phodevi_parser module into phodevi_linux_parser, phodevi_osx_parser, and phodevi_solaris_parser for OS-specific functions
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
 

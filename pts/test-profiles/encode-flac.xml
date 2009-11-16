@@ -8,7 +8,7 @@
 		<ProjectURL>http://flac.sourceforge.net/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>
 		<EnvironmentSize>8.1</EnvironmentSize>
-		<UnsupportedPlatforms>MacOSX, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>FLAC Audio Encoding</Title>

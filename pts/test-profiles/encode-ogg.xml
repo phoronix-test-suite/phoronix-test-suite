@@ -8,7 +8,7 @@
 		<ProjectURL>http://www.vorbis.com/</ProjectURL>
 		<Extends>timed-audio-encode</Extends>
 		<EnvironmentSize>4.3</EnvironmentSize>
-		<UnsupportedPlatforms>BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Ogg Encoding</Title>

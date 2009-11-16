@@ -11,6 +11,7 @@
 		<EnvironmentSize>365</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://www.apache.org/</ProjectURL>
+		<SupportedPlatforms>Linux, MacOSX, BSD, Solaris</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Apache Benchmark</Title>

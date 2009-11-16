@@ -11,7 +11,7 @@
 		<EnvironmentSize>0.12</EnvironmentSize>
 		<ProjectURL>http://www.freedesktop.org/</ProjectURL>
 		<ExternalDependencies>build-utilities, imlib2-development, xorg-development</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 		<Extends>2d-test</Extends>
 	</TestProfile>
 	<TestInformation>

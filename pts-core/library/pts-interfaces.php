@@ -50,7 +50,6 @@ define("P_TEST_LICENSE", "PhoronixTestSuite/TestProfile/License"); // Test softw
 define("P_TEST_STATUS", "PhoronixTestSuite/TestProfile/Status"); // The status of the test profile
 define("P_TEST_SUPPORTEDARCHS", "PhoronixTestSuite/TestProfile/SupportedArchitectures"); // The system architectures supported by this test
 define("P_TEST_SUPPORTEDPLATFORMS", "PhoronixTestSuite/TestProfile/SupportedPlatforms"); // The OS software platforms supported by this test
-define("P_TEST_UNSUPPORTEDPLATFORMS", "PhoronixTestSuite/TestProfile/UnsupportedPlatforms"); // The OS software platforms NOT supported by this test
 define("P_TEST_EXDEP", "PhoronixTestSuite/TestProfile/ExternalDependencies"); // Test external dependencies
 define("P_TEST_CTPEXTENDS", "PhoronixTestSuite/TestProfile/Extends"); // Does this test profile extend another test? (Cascading Test Profiles)
 define("P_TEST_ROOTNEEDED", "PhoronixTestSuite/TestProfile/RequiresRoot"); // Is root access needed? If set to "TRUE"

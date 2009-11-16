@@ -11,7 +11,7 @@
 		<EnvironmentSize>0.5</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://icl.cs.utk.edu/projects/llcbench/index.html</ProjectURL>
-		<UnsupportedPlatforms>MacOSX</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux, BSD, Solaris</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>CacheBench</Title>

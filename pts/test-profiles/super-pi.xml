@@ -10,7 +10,7 @@
 		<Maintainer>Pekka Panula</Maintainer>
 		<EnvironmentSize>1.4</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Super PI</Title>

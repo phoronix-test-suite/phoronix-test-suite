@@ -12,7 +12,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>libstdcpp5</ExternalDependencies>
 		<ProjectURL>http://www.unrealtournament2003.com/ut2004/index.html</ProjectURL>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Unreal Tournament 2004 Demo</Title>

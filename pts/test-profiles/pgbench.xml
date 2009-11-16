@@ -11,7 +11,7 @@
 		<EnvironmentSize>230</EnvironmentSize>
 		<ProjectURL>http://www.postgresql.org/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>PostgreSQL pgbench</Title>

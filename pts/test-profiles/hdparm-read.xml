@@ -9,7 +9,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<ProjectURL>http://sourceforge.net/projects/hdparm/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 		<RequiresRoot>TRUE</RequiresRoot>
 	</TestProfile>
 	<TestInformation>

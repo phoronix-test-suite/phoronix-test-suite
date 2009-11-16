@@ -11,6 +11,7 @@
 		<EnvironmentSize>0.9</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<ProjectURL>http://blogbench.pureftpd.org/project/blogbench/</ProjectURL>
+		<SupportedPlatforms>Linux, MacOSX, BSD, Solaris</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>BlogBench</Title>

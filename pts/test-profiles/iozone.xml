@@ -11,7 +11,7 @@
 		<EnvironmentSize>2.3</EnvironmentSize>
 		<ProjectURL>http://www.iozone.org/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<UnsupportedPlatforms>MacOSX, Solaris, BSD</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>IOzone</Title>

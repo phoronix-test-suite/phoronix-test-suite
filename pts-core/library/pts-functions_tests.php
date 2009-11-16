@@ -584,27 +584,14 @@ function pts_test_platform_supported($identifier)
 	{
 	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$platforms = $xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
-		$un_platforms = $xml_parser->getXMLValue(P_TEST_UNSUPPORTEDPLATFORMS);
 
-		if(OPERATING_SYSTEM != "Unknown")
+		if(!empty($platforms))
 		{
-			if(!empty($un_platforms))
-			{
-				$un_platforms = pts_trim_explode(",", $un_platforms);
+			$platforms = pts_trim_explode(",", $platforms);
 
-				if(in_array(OPERATING_SYSTEM, $un_platforms))
-				{
-					$supported = false;
-				}
-			}
-			if(!empty($platforms))
+			if(!in_array(OPERATING_SYSTEM, $platforms))
 			{
-				$platforms = pts_trim_explode(",", $platforms);
-
-				if(!in_array(OPERATING_SYSTEM, $platforms))
-				{
-					$supported = false;
-				}
+				$supported = false;
 			}
 		}
 	}

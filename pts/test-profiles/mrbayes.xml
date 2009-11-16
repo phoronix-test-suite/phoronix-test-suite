@@ -10,7 +10,7 @@
 		<Maintainer>Andrew Schofield</Maintainer>
 		<EnvironmentSize>22</EnvironmentSize>
 		<ProjectURL>http://mrbayes.csit.fsu.edu/</ProjectURL>
-		<UnsupportedPlatforms>MacOSX, Solaris</UnsupportedPlatforms>
+		<SupportedPlatforms>Linux, BSD</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed MrBayes Analysis</Title>
