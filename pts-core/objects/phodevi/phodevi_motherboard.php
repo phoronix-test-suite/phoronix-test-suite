@@ -43,16 +43,16 @@ class phodevi_motherboard extends pts_device_interface
 	public static function power_mode()
 	{
 		// Returns the power mode
-		$power_state = phodevi_parser::read_acpi("/ac_adapter/AC/state", "state");
 		$return_status = "";
 
-		if($power_state == "off-line")
+		if(IS_LINUX)
 		{
-			$return_status = "This computer was running on battery power";
-		}
-		else if(IS_WINDOWS)
-		{
-			$info = phodevi_windows_parser::read_cpuz("Mainboard Model", null);
+			$power_state = phodevi_linux_parser::read_acpi("/ac_adapter/AC/state", "state");
+
+			if($power_state == "off-line")
+			{
+				$return_status = "This computer was running on battery power";
+			}
 		}
 
 		return $return_status;
@@ -64,12 +64,12 @@ class phodevi_motherboard extends pts_device_interface
 
 		if(IS_MACOSX)
 		{
-			$info = phodevi_parser::read_osx_system_profiler("SPHardwareDataType", "ModelName");
+			$info = phodevi_osx_parser::read_osx_system_profiler("SPHardwareDataType", "ModelName");
 		}
 		else if(IS_SOLARIS)
 		{
-			$manufacturer = phodevi_parser::read_sun_ddu_dmi_info(array("MotherBoardInformation,Manufacturer", "SystemInformation,Manufacturer"));
-			$product = phodevi_parser::read_sun_ddu_dmi_info(array("MotherBoardInformation,Product", "SystemInformation,Product", "SystemInformation,Model"));
+			$manufacturer = phodevi_solaris_parser::read_sun_ddu_dmi_info(array("MotherBoardInformation,Manufacturer", "SystemInformation,Manufacturer"));
+			$product = phodevi_solaris_parser::read_sun_ddu_dmi_info(array("MotherBoardInformation,Product", "SystemInformation,Product", "SystemInformation,Model"));
 
 			if(count($manufacturer) == 1 && count($product) == 1)
 			{
@@ -78,20 +78,20 @@ class phodevi_motherboard extends pts_device_interface
 		}
 		else if(IS_BSD)
 		{
-			if(($vendor = phodevi_parser::read_sysctl("hw.vendor")) != false && ($version = phodevi_parser::read_sysctl(array("hw.version", "hw.product"))) != false)
+			if(($vendor = phodevi_bsd_parser::read_sysctl("hw.vendor")) != false && ($version = phodevi_bsd_parser::read_sysctl(array("hw.version", "hw.product"))) != false)
 			{
 				$info = trim($vendor . " " . $version);
 			}
-			else if(($acpi = phodevi_parser::read_sysctl("dev.acpi.0.%desc")) != false)
+			else if(($acpi = phodevi_bsd_parser::read_sysctl("dev.acpi.0.%desc")) != false)
 			{
 				$info = trim($acpi);
 			}
 		}
 		else if(IS_LINUX)
 		{
-			$vendor = phodevi_parser::read_sys_dmi("board_vendor");
-			$name = phodevi_parser::read_sys_dmi("board_name");
-			$version = phodevi_parser::read_sys_dmi("board_version");
+			$vendor = phodevi_linux_parser::read_sys_dmi("board_vendor");
+			$name = phodevi_linux_parser::read_sys_dmi("board_name");
+			$version = phodevi_linux_parser::read_sys_dmi("board_version");
 
 			if($vendor != false && $name != false)
 			{
@@ -106,9 +106,9 @@ class phodevi_motherboard extends pts_device_interface
 			if(empty($info))
 			{
 				// Read motherboard from HAL
-				$vendor = phodevi_parser::read_system_hal(array("system.hardware.vendor", "system.board.vendor"));
-				$product = phodevi_parser::read_system_hal(array("system.hardware.product", "system.board.product"));
-				$version = phodevi_parser::read_system_hal(array("system.hardware.version", "smbios.system.version"));
+				$vendor = phodevi_linux_parser::read_system_hal(array("system.hardware.vendor", "system.board.vendor"));
+				$product = phodevi_linux_parser::read_system_hal(array("system.hardware.product", "system.board.product"));
+				$version = phodevi_linux_parser::read_system_hal(array("system.hardware.version", "smbios.system.version"));
 
 				$info = null;
 
@@ -129,7 +129,7 @@ class phodevi_motherboard extends pts_device_interface
 
 				if(empty($info))
 				{
-					$fw_version = explode(" ", phodevi_parser::read_system_hal("system.firmware.version"));
+					$fw_version = explode(" ", phodevi_linux_parser::read_system_hal("system.firmware.version"));
 
 					if(count($fw_version) > 1)
 					{
@@ -139,7 +139,7 @@ class phodevi_motherboard extends pts_device_interface
 
 				if(empty($info))
 				{
-					$pci_vendor = phodevi_parser::read_hal("pci.subsys_vendor");
+					$pci_vendor = phodevi_linux_parser::read_hal("pci.subsys_vendor");
 
 					if(strpos($pci_vendor, "(") === false)
 					{
@@ -147,6 +147,10 @@ class phodevi_motherboard extends pts_device_interface
 					}
 				}
 			}
+		}
+		else if(IS_WINDOWS)
+		{
+			$info = phodevi_windows_parser::read_cpuz("Mainboard Model", null);
 		}
 
 		$info = pts_clean_information_string($info);

@@ -104,9 +104,6 @@ class phodevi_system extends pts_device_interface
 			case "os-version":
 				$property = new pts_device_property("sw_os_version", PHODEVI_SMART_CACHE);
 				break;
-			case "os-vendor":
-				$property = new pts_device_property("sw_os_vendor", PHODEVI_SMART_CACHE);
-				break;
 			case "kernel":
 				$property = new pts_device_property("sw_kernel", PHODEVI_SMART_CACHE);
 				break;
@@ -122,27 +119,55 @@ class phodevi_system extends pts_device_interface
 	}
 	public static function sys_cpu_voltage()
 	{
-		$voltage = phodevi_parser::read_sensors("VCore");
+		if(IS_LINUX)
+		{
+			$sensor = phodevi_linux_parser::read_sensors("VCore");
+		}
+		else
+		{
+			$sensor = null;
+		}
 
-		return ($voltage == null ? -1 : $voltage);
+		return is_numeric($sensor) ? $sensor : -1;
 	}
 	public static function sys_v3_voltage()
 	{
-		$voltage = phodevi_parser::read_sensors(array("V3.3", "+3.3V"));
+		if(IS_LINUX)
+		{
+			$sensor = phodevi_linux_parser::read_sensors(array("V3.3", "+3.3V"));
+		}
+		else
+		{
+			$sensor = null;
+		}
 
-		return ($voltage == null ? -1 : $voltage);
+		return is_numeric($sensor) ? $sensor : -1;
 	}
 	public static function sys_v5_voltage()
 	{
-		$voltage = phodevi_parser::read_sensors(array("V5", "+5V"));
+		if(IS_LINUX)
+		{
+			$sensor = phodevi_linux_parser::read_sensors(array("V5", "+5V"));
+		}
+		else
+		{
+			$sensor = null;
+		}
 
-		return ($voltage == null ? -1 : $voltage);
+		return is_numeric($sensor) ? $sensor : -1;
 	}
 	public static function sys_v12_voltage()
 	{
-		$voltage = phodevi_parser::read_sensors(array("V12", "+12V"));
+		if(IS_LINUX)
+		{
+			$sensor = phodevi_linux_parser::read_sensors(array("V12", "+12V"));
+		}
+		else
+		{
+			$sensor = null;
+		}
 
-		return ($voltage == null ? -1 : $voltage);
+		return is_numeric($sensor) ? $sensor : -1;
 	}
 	public static function sys_temperature()
 	{
@@ -151,7 +176,7 @@ class phodevi_system extends pts_device_interface
 
 		if(IS_LINUX)
 		{
-			$sensors = phodevi_parser::read_sensors(array("Sys Temp", "Board Temp"));
+			$sensors = phodevi_linux_parser::read_sensors(array("Sys Temp", "Board Temp"));
 
 			if($sensors != false && is_numeric($sensors))
 			{
@@ -159,7 +184,7 @@ class phodevi_system extends pts_device_interface
 			}
 			else
 			{
-				$acpi = phodevi_parser::read_acpi(array(
+				$acpi = phodevi_linux_parser::read_acpi(array(
 					"/thermal_zone/THM1/temperature",
 					"/thermal_zone/TZ00/temperature",
 					"/thermal_zone/TZ01/temperature"), "temperature");
@@ -172,7 +197,7 @@ class phodevi_system extends pts_device_interface
 		}
 		else if(IS_BSD)
 		{
-			$acpi = phodevi_parser::read_sysctl("hw.acpi.thermal.tz1.temperature");
+			$acpi = phodevi_bsd_parser::read_sysctl("hw.acpi.thermal.tz1.temperature");
 
 			if(($end = strpos($acpi, 'C')) > 0)
 			{
@@ -190,30 +215,35 @@ class phodevi_system extends pts_device_interface
 	public static function sys_power_consumption_rate()
 	{
 		// Returns power consumption rate in mW
-		$battery = array("/battery/BAT0/state", "/battery/BAT1/state");
-		$state = phodevi_parser::read_acpi($battery, "charging state");
-		$power = phodevi_parser::read_acpi($battery, "present rate");
-		$voltage = phodevi_parser::read_acpi($battery, "present voltage");
 		$rate = -1;
 
-		if($state == "discharging")
+		if(IS_LINUX)
 		{
-			$power_unit = substr($power, strrpos($power, " ") + 1);
-			$power = substr($power, 0, strpos($power, " "));
+			$battery = array("/battery/BAT0/state", "/battery/BAT1/state");
+			$state = phodevi_linux_parser::read_acpi($battery, "charging state");
+			$power = phodevi_linux_parser::read_acpi($battery, "present rate");
+			$voltage = phodevi_linux_parser::read_acpi($battery, "present voltage");
+			$rate = -1;
 
-			if($power_unit == "mA")
+			if($state == "discharging")
 			{
-				$voltage_unit = substr($voltage, strrpos($voltage, " ") + 1);
-				$voltage = substr($voltage, 0, strpos($voltage, " "));
+				$power_unit = substr($power, strrpos($power, " ") + 1);
+				$power = substr($power, 0, strpos($power, " "));
 
-				if($voltage_unit == "mV")
+				if($power_unit == "mA")
 				{
-					$rate = round(($power * $voltage) / 1000);
-				}				
-			}
-			else if($power_unit == "mW")
-			{
-				$rate = $power;
+					$voltage_unit = substr($voltage, strrpos($voltage, " ") + 1);
+					$voltage = substr($voltage, 0, strpos($voltage, " "));
+
+					if($voltage_unit == "mV")
+					{
+						$rate = round(($power * $voltage) / 1000);
+					}				
+				}
+				else if($power_unit == "mW")
+				{
+					$rate = $power;
+				}
 			}
 		}
 
@@ -316,9 +346,9 @@ class phodevi_system extends pts_device_interface
 	public static function sw_vendor_identifier()
 	{
 		// Returns the vendor identifier used with the External Dependencies and other distro-specific features
-		$vendor = str_replace(" ", "", phodevi::read_property("system", "os-vendor"));
+		$vendor = IS_LINUX ? phodevi_linux_parser::read_lsb("Distributor ID") : false;
 
-		if($vendor == "Unknown")
+		if(!$vendor)
 		{
 			$vendor = phodevi::read_property("system", "operating-system");
 
@@ -337,7 +367,7 @@ class phodevi_system extends pts_device_interface
 
 		if(IS_MACOSX)
 		{
-			$fs = phodevi_parser::read_osx_system_profiler("SPSerialATADataType", "FileSystem");
+			$fs = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "FileSystem");
 		}
 		else if(IS_BSD)
 		{
@@ -542,7 +572,7 @@ class phodevi_system extends pts_device_interface
 		// Returns OS version
 		if(IS_MACOSX)
 		{
-			$os = phodevi_parser::read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
+			$os = phodevi_osx_parser::read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
 		
 			$start_pos = strpos($os, ".");
 			$end_pos = strrpos($os, ".");
@@ -553,7 +583,7 @@ class phodevi_system extends pts_device_interface
 		}
 		else if(IS_LINUX)
 		{
-			$os_version = phodevi_parser::read_lsb("Release");
+			$os_version = phodevi_linux_parser::read_lsb("Release");
 		}
 		else
 		{
@@ -567,25 +597,13 @@ class phodevi_system extends pts_device_interface
 	
 		return $os_version;
 	}
-	public static function sw_os_vendor()
-	{
-		// Returns OS vendor
-		$vendor = IS_LINUX ? phodevi_parser::read_lsb("Distributor ID") : false;
-
-		if($vendor == false)
-		{
-			$vendor = "Unknown";
-		}
-
-		return $vendor;
-	}
 	public static function sw_operating_system()
 	{
 		// Determine the operating system release
-		$vendor = phodevi::read_property("system", "os-vendor");
+		$vendor = IS_LINUX ? phodevi_linux_parser::read_lsb("Distributor ID") : false;
 		$version = phodevi::read_property("system", "os-version");
 
-		if($vendor == "Unknown" || $version == "Unknown")
+		if(!$vendor || $version == "Unknown")
 		{
 			$os = null;
 
@@ -650,7 +668,7 @@ class phodevi_system extends pts_device_interface
 		
 		if(IS_MACOSX)
 		{
-			$os = phodevi_parser::read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
+			$os = phodevi_osx_parser::read_osx_system_profiler("SPSoftwareDataType", "SystemVersion");
 		
 			if(($cut_point = strpos($os, "(")) > 0)
 			{

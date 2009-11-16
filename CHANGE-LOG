@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add dump-phodevi-smart-cache option for dumping the contents of the Phodevi Smart Cache from core.pt2so
 - pts-core: Initial Windows support for the Phoronix Test Suite; this drop is mostly the .bat launcher and initial hardware detection support
 - pts-core: Support loading pts-core objects deeper in the directory
+- phodevi: Split out phodevi_parser module into phodevi_linux_parser, phodevi_osx_parser, and phodevi_solaris_parser for OS-specific functions
 
 Phoronix Test Suite 2.2.0 "Bardu"
 November 16, 2009

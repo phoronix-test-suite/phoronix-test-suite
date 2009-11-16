@@ -87,7 +87,7 @@ class phodevi_cpu extends pts_device_interface
 	{
 		if(IS_LINUX)
 		{
-			$info = count(phodevi_parser::read_cpuinfo("processor"));
+			$info = count(phodevi_linux_parser::read_cpuinfo("processor"));
 		}
 		else if(IS_SOLARIS)
 		{
@@ -95,11 +95,11 @@ class phodevi_cpu extends pts_device_interface
 		}
 		else if(IS_BSD)
 		{
-			$info = intval(phodevi_parser::read_sysctl("hw.ncpu"));
+			$info = intval(phodevi_bsd_parser::read_sysctl("hw.ncpu"));
 		}
 		else if(IS_MACOSX)
 		{
-			$info = phodevi_parser::read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
+			$info = phodevi_osx_parser::read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
 		}
 		else if(IS_WINDOWS)
 		{
@@ -115,17 +115,21 @@ class phodevi_cpu extends pts_device_interface
 	public static function cpu_default_frequency($cpu_core = 0)
 	{
 		// Find out the processor frequency
-		// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
-		if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"))
+
+		if(IS_LINUX)
 		{
-			$info = pts_file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq");
-			$info = pts_trim_double(intval($info) / 1000000, 2);
-		}
-		else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
-		{
-			$cpu_speeds = phodevi_parser::read_cpuinfo("cpu MHz");
-			$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
-			$info = pts_trim_double($cpu_speeds[$cpu_core] / 1000, 2);
+			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+			if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"))
+			{
+				$info = pts_file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq");
+				$info = pts_trim_double(intval($info) / 1000000, 2);
+			}
+			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
+			{
+				$cpu_speeds = phodevi_linux_parser::read_cpuinfo("cpu MHz");
+				$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
+				$info = pts_trim_double($cpu_speeds[$cpu_core] / 1000, 2);
+			}
 		}
 		else if(IS_WINDOWS)
 		{
@@ -186,10 +190,10 @@ class phodevi_cpu extends pts_device_interface
 
 		if(IS_LINUX)
 		{
-			$physical_cpu_ids = phodevi_parser::read_cpuinfo("physical id");
+			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo("physical id");
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
-			$cpu_strings = phodevi_parser::read_cpuinfo("model name");
+			$cpu_strings = phodevi_linux_parser::read_cpuinfo("model name");
 			$cpu_strings_unique = array_unique($cpu_strings);
 
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))
@@ -231,11 +235,11 @@ class phodevi_cpu extends pts_device_interface
 		}
 		else if(IS_SOLARIS)
 		{
-			$dmi_cpu = phodevi_parser::read_sun_ddu_dmi_info("CPUType", "-C");
+			$dmi_cpu = phodevi_solaris_parser::read_sun_ddu_dmi_info("CPUType", "-C");
 
 			if(count($dmi_cpu) == 0)
 			{
-				$dmi_cpu = phodevi_parser::read_sun_ddu_dmi_info("ProcessorName");
+				$dmi_cpu = phodevi_solaris_parser::read_sun_ddu_dmi_info("ProcessorName");
 			}
 
 			if(count($dmi_cpu) > 0)
@@ -249,12 +253,12 @@ class phodevi_cpu extends pts_device_interface
 
 				if(empty($info))
 				{
-					$info = array_pop(phodevi_parser::read_sun_ddu_dmi_info("ProcessorManufacturer"));
+					$info = array_pop(phodevi_solaris_parser::read_sun_ddu_dmi_info("ProcessorManufacturer"));
 				}
 			}
 
 			//TODO: Add in proper support for reading multiple CPUs, similar to the code from above
-			$physical_cpu_count = count(phodevi_parser::read_sun_ddu_dmi_info("ProcessorSocketType"));
+			$physical_cpu_count = count(phodevi_solaris_parser::read_sun_ddu_dmi_info("ProcessorSocketType"));
 			if($physical_cpu_count > 1 && !empty($info))
 			{
 				// TODO: For now assuming when multiple CPUs are installed, that they are of the same type
@@ -263,11 +267,11 @@ class phodevi_cpu extends pts_device_interface
 		}
 		else if(IS_BSD)
 		{
-			$info = phodevi_parser::read_sysctl("hw.model");
+			$info = phodevi_bsd_parser::read_sysctl("hw.model");
 		}
 		else if(IS_MACOSX)
 		{
-			$info = phodevi_parser::read_osx_system_profiler("SPHardwareDataType", "ProcessorName");
+			$info = phodevi_osx_parser::read_osx_system_profiler("SPHardwareDataType", "ProcessorName");
 		}
 		else if(IS_WINDOWS)
 		{
@@ -293,7 +297,7 @@ class phodevi_cpu extends pts_device_interface
 		if(IS_BSD)
 		{
 
-			$cpu_temp = phodevi_parser::read_sysctl(array("dev.cpu.0.temperature", "hw.sensors.cpu0.temp0"));
+			$cpu_temp = phodevi_bsd_parser::read_sysctl(array("dev.cpu.0.temperature", "hw.sensors.cpu0.temp0"));
 
 			if($cpu_temp != false)
 			{
@@ -309,7 +313,7 @@ class phodevi_cpu extends pts_device_interface
 			}
 			else
 			{
-				$acpi = phodevi_parser::read_sysctl("hw.acpi.thermal.tz0.temperature");
+				$acpi = phodevi_bsd_parser::read_sysctl("hw.acpi.thermal.tz0.temperature");
 
 				if(($end = strpos($acpi, 'C')) > 0)
 				{
@@ -324,7 +328,7 @@ class phodevi_cpu extends pts_device_interface
 		}
 		else if(IS_LINUX)
 		{
-			$sensors = phodevi_parser::read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
+			$sensors = phodevi_linux_parser::read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
 
 			if($sensors != false && is_numeric($sensors))
 			{
@@ -332,7 +336,7 @@ class phodevi_cpu extends pts_device_interface
 			}
 			else
 			{
-				$acpi = phodevi_parser::read_acpi(array(
+				$acpi = phodevi_linux_parser::read_acpi(array(
 					"/thermal_zone/THM0/temperature", 
 					"/thermal_zone/TZ00/temperature"), "temperature");
 
@@ -348,17 +352,22 @@ class phodevi_cpu extends pts_device_interface
 	function cpu_current_frequency($cpu_core = 0)
 	{
 		// Determine the current processor frequency
-		// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
-		if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"))
+		$info = 0;
+
+		if(IS_LINUX)
 		{
-			$info = pts_file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq");
-			$info = pts_trim_double(intval($info) / 1000, 2);
-		}
-		else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
-		{
-			$cpu_speeds = phodevi_parser::read_cpuinfo("cpu MHz");
-			$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
-			$info = pts_trim_double(intval($cpu_speeds[$cpu_core]), 2);
+			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+			if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"))
+			{
+				$info = pts_file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq");
+				$info = pts_trim_double(intval($info) / 1000, 2);
+			}
+			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
+			{
+				$cpu_speeds = phodevi_linux_parser::read_cpuinfo("cpu MHz");
+				$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
+				$info = pts_trim_double(intval($cpu_speeds[$cpu_core]), 2);
+			}
 		}
 		else if(IS_SOLARIS)
 		{
@@ -369,12 +378,12 @@ class phodevi_cpu extends pts_device_interface
 		}
 		else if(IS_BSD)
 		{
-			$info = phodevi_parser::read_sysctl("dev.cpu.0.freq");
+			$info = phodevi_bsd_parser::read_sysctl("dev.cpu.0.freq");
 			$info = pts_trim_double(intval($info) / 1000, 2);
 		}
 		else if(IS_MACOSX)
 		{
-			$info = phodevi_parser::read_osx_system_profiler("SPHardwareDataType", "ProcessorSpeed");
+			$info = phodevi_osx_parser::read_osx_system_profiler("SPHardwareDataType", "ProcessorSpeed");
 		
 			if(($cut_point = strpos($info, " ")) > 0)
 			{
@@ -382,10 +391,6 @@ class phodevi_cpu extends pts_device_interface
 			}
 
 			$info = pts_trim_double($info, 2);
-		}
-		else
-		{
-			$info = 0;
 		}
 
 		return $info;

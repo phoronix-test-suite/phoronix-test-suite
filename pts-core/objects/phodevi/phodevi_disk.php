@@ -58,8 +58,8 @@ class phodevi_disk extends pts_device_interface
 		if(IS_MACOSX)
 		{
 			// TODO: Support reading non-SATA drives and more than one drive
-			$capacity = phodevi_parser::read_osx_system_profiler("SPSerialATADataType", "Capacity");
-			$model = phodevi_parser::read_osx_system_profiler("SPSerialATADataType", "Model");
+			$capacity = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "Capacity");
+			$model = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "Model");
 
 			if(($cut = strpos($capacity, " (")) !== false)
 			{
@@ -77,7 +77,7 @@ class phodevi_disk extends pts_device_interface
 
 			do
 			{
-				$disk = phodevi_parser::read_sysctl("dev.ad." . $i . ".%desc");
+				$disk = phodevi_bsd_parser::read_sysctl("dev.ad." . $i . ".%desc");
 
 				if($disk != false)
 				{

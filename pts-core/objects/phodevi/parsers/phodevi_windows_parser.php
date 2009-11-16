@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2009, Phoronix Media
 	Copyright (C) 2009, Michael Larabel
-	phodevi_parser.php: General parsing functions used on Windows OS
+	phodevi_windows_parser.php: General parsing functions specific to the Windows OS
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ class phodevi_windows_parser
 			}
 		}
 
-	return $return;
+		return $return;
 	}
 }
 

@@ -115,7 +115,7 @@ class phodevi_gpu extends pts_device_interface
 	public static function gpu_aa_level()
 	{
 		// Determine AA level if over-rode
-		$aa_level = "";
+		$aa_level = null;
 
 		if(IS_NVIDIA_GRAPHICS)
 		{
@@ -143,10 +143,10 @@ class phodevi_gpu extends pts_device_interface
 					break;
 			}
 		}
-		else if(IS_ATI_GRAPHICS)
+		else if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
-			$ati_fsaa = phodevi_parser::read_amd_pcsdb("OpenGL,AntiAliasSamples");
-			$ati_fsaa_filter = phodevi_parser::read_amd_pcsdb("OpenGL,AAF");
+			$ati_fsaa = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AntiAliasSamples");
+			$ati_fsaa_filter = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AAF");
 
 			if(!empty($ati_fsaa))
 			{
@@ -242,9 +242,9 @@ class phodevi_gpu extends pts_device_interface
 					break;
 			}
 		}
-		else if(IS_ATI_GRAPHICS)
+		else if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
-			$ati_af = phodevi_parser::read_amd_pcsdb("OpenGL,AnisoDegree");
+			$ati_af = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AnisoDegree");
 
 			if(!empty($ati_af))
 			{
@@ -273,7 +273,7 @@ class phodevi_gpu extends pts_device_interface
 		if(IS_MACOSX)
 		{
 			$resolution = array();
-			$info = phodevi_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution");
+			$info = phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution");
 			$info = pts_trim_explode(" ", $info);
 			$resolution[0] = $info[0];
 			$resolution[1] = $info[2];
@@ -517,7 +517,7 @@ class phodevi_gpu extends pts_device_interface
 			}
 			else if(IS_MACOSX)
 			{
-				$info = phodevi_parser::read_osx_system_profiler("SPDisplaysDataType", "VRAM");
+				$info = phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "VRAM");
 				$info = explode(" ", $info);
 				$video_ram = $info[0];
 			
@@ -567,9 +567,9 @@ class phodevi_gpu extends pts_device_interface
 			$core_freq = $nv_freq[0];
 			$mem_freq = $nv_freq[1];
 		}
-		else if(IS_ATI_GRAPHICS) // ATI GPU
+		else if(IS_ATI_GRAPHICS && IS_LINUX) // ATI GPU
 		{
-			$od_clocks = phodevi_parser::read_ati_overdrive("CurrentPeak");
+			$od_clocks = phodevi_linux_parser::read_ati_overdrive("CurrentPeak");
 
 			if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
 			{
@@ -623,9 +623,9 @@ class phodevi_gpu extends pts_device_interface
 			$info = "";
 		}
 
-		if(IS_ATI_GRAPHICS)
+		if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
-			$crossfire_status = phodevi_parser::read_amd_pcsdb("SYSTEM/Crossfire/chain/*,Enable");
+			$crossfire_status = phodevi_linux_parser::read_amd_pcsdb("SYSTEM/Crossfire/chain/*,Enable");
 			$crossfire_status = pts_to_array($crossfire_status);
 			$crossfire_card_count = 0;
 
@@ -637,7 +637,7 @@ class phodevi_gpu extends pts_device_interface
 				}
 			}			
 
-			$adapters = phodevi_parser::read_amd_graphics_adapters();
+			$adapters = phodevi_linux_parser::read_amd_graphics_adapters();
 
 			if(count($adapters) > 0)
 			{
@@ -692,11 +692,11 @@ class phodevi_gpu extends pts_device_interface
 		}
 		else if(IS_BSD)
 		{
-			$drm_info = phodevi_parser::read_sysctl("dev.drm.0.%desc");
+			$drm_info = phodevi_bsd_parser::read_sysctl("dev.drm.0.%desc");
 
 			if($drm_info == false)
 			{
-				$agp_info = phodevi_parser::read_sysctl("dev.agp.0.%desc");
+				$agp_info = phodevi_bsd_parser::read_sysctl("dev.agp.0.%desc");
 
 				if($agp_info != false)
 				{
@@ -725,11 +725,14 @@ class phodevi_gpu extends pts_device_interface
 			}
 			else
 			{
-				$info_pci = phodevi_parser::read_pci("VGA compatible controller", false);
-
-				if(!empty($info_pci))
+				if(IS_LINUX)
 				{
-					$info = $info_pci;
+					$info_pci = phodevi_linux_parser::read_pci("VGA compatible controller", false);
+
+					if(!empty($info_pci))
+					{
+						$info = $info_pci;
+					}
 				}
 
 				if(($start_pos = strpos($info, " DRI ")) > 0)
@@ -765,17 +768,15 @@ class phodevi_gpu extends pts_device_interface
 	public static function gpu_temperature()
 	{
 		// Report graphics processor temperature
+		$temp_c = -1;
+
 		if(IS_NVIDIA_GRAPHICS)
 		{
 			$temp_c = phodevi_parser::read_nvidia_extension("GPUCoreTemp");
 		}
-		else if(IS_ATI_GRAPHICS)
+		else if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
-			$temp_c = phodevi_parser::read_ati_overdrive("Temperature");
-		}
-		else
-		{
-			$temp_c = false;
+			$temp_c = phodevi_linux_parser::read_ati_overdrive("Temperature");
 		}
 
 		return is_numeric($temp_c) ? $temp_c : -1;
@@ -783,6 +784,8 @@ class phodevi_gpu extends pts_device_interface
 	public static function gpu_fan_speed()
 	{
 		// Report graphics processor fan speed as a percent
+		$fan_speed = -1;
+
 		if(IS_NVIDIA_GRAPHICS)
 		{
 			// NVIDIA fan speed reading support in NVIDIA 190.xx and newer
@@ -790,13 +793,9 @@ class phodevi_gpu extends pts_device_interface
 			// nvidia-settings --describe GPUFanTarget 
 			$fan_speed = phodevi_parser::read_nvidia_extension("[fan:0]/GPUCurrentFanSpeed");
 		}
-		else if(IS_ATI_GRAPHICS)
+		else if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
-			$fan_speed = phodevi_parser::read_ati_overdrive("FanSpeed");
-		}
-		else
-		{
-			$fan_speed = -1;
+			$fan_speed = phodevi_linux_parser::read_ati_overdrive("FanSpeed");
 		}
 
 		return is_numeric($fan_speed) ? $fan_speed : -1;
@@ -815,9 +814,9 @@ class phodevi_gpu extends pts_device_interface
 			$core_freq = $nv_freq[0];
 			$mem_freq = $nv_freq[1];
 		}
-		else if(IS_ATI_GRAPHICS) // ATI GPU
+		else if(IS_ATI_GRAPHICS && IS_LINUX) // ATI GPU
 		{
-			$od_clocks = phodevi_parser::read_ati_overdrive("CurrentClocks");
+			$od_clocks = phodevi_linux_parser::read_ati_overdrive("CurrentClocks");
 
 			if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
 			{
@@ -842,9 +841,9 @@ class phodevi_gpu extends pts_device_interface
 		// Determine GPU usage
 		$gpu_usage = -1;
 
-		if(IS_ATI_GRAPHICS)
+		if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
-			$gpu_usage = phodevi_parser::read_ati_overdrive("GPUload");
+			$gpu_usage = phodevi_linux_parser::read_ati_overdrive("GPUload");
 		}
 
 		return $gpu_usage;

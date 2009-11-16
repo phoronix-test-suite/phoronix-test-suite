@@ -63,17 +63,17 @@ class phodevi_memory extends pts_device_interface
 
 		if(IS_MACOSX)
 		{
-			$mem_size = phodevi_parser::read_osx_system_profiler("SPMemoryDataType", "Size", true, array("Empty"));
-			$mem_speed = phodevi_parser::read_osx_system_profiler("SPMemoryDataType", "Speed");
-			$mem_type = phodevi_parser::read_osx_system_profiler("SPMemoryDataType", "Type");
+			$mem_size = phodevi_osx_parser::read_osx_system_profiler("SPMemoryDataType", "Size", true, array("Empty"));
+			$mem_speed = phodevi_osx_parser::read_osx_system_profiler("SPMemoryDataType", "Speed");
+			$mem_type = phodevi_osx_parser::read_osx_system_profiler("SPMemoryDataType", "Type");
 
 			
 		}
 		else if(IS_SOLARIS)
 		{
-			$mem_size = phodevi_parser::read_sun_ddu_dmi_info("MemoryDevice*,InstalledSize");
-			$mem_speed = phodevi_parser::read_sun_ddu_dmi_info("MemoryDevice*,Speed");
-			$mem_type = phodevi_parser::read_sun_ddu_dmi_info("MemoryDevice*,MemoryDeviceType");
+			$mem_size = phodevi_solaris_parser::read_sun_ddu_dmi_info("MemoryDevice*,InstalledSize");
+			$mem_speed = phodevi_solaris_parser::read_sun_ddu_dmi_info("MemoryDevice*,Speed");
+			$mem_type = phodevi_solaris_parser::read_sun_ddu_dmi_info("MemoryDevice*,MemoryDeviceType");
 
 			if(is_array($mem_speed) && count($mem_speed) > 0)
 			{
@@ -88,11 +88,17 @@ class phodevi_memory extends pts_device_interface
 			$mem_type = array(phodevi_windows_parser::read_cpuz("Memory Type", null));
 			$mem_speed = intval(phodevi_windows_parser::read_cpuz("Memory Frequency", null)) . "MHz";
 		}
+		else if(IS_LINUX)
+		{
+			$mem_size = phodevi_linux_parser::read_dmidecode("memory", "Memory Device", "Size", false, array("Not Installed", "No Module Installed"));
+			$mem_speed = phodevi_linux_parser::read_dmidecode("memory", "Memory Device", "Speed", true, "Unknown");
+			$mem_type = phodevi_linux_parser::read_dmidecode("memory", "Memory Device", "Type", true, array("Unknown", "Other"));
+		}
 		else
 		{
-			$mem_size = phodevi_parser::read_dmidecode("memory", "Memory Device", "Size", false, array("Not Installed", "No Module Installed"));
-			$mem_speed = phodevi_parser::read_dmidecode("memory", "Memory Device", "Speed", true, "Unknown");
-			$mem_type = phodevi_parser::read_dmidecode("memory", "Memory Device", "Type", true, array("Unknown", "Other"));
+			$mem_size = false;
+			$mem_speed = false;
+			$mem_type = false;
 		}
 
 		if(is_array($mem_type))
@@ -172,18 +178,18 @@ class phodevi_memory extends pts_device_interface
 		}
 		else if(IS_BSD)
 		{
-			$mem_size = phodevi_parser::read_sysctl("hw.physmem");
+			$mem_size = phodevi_bsd_parser::read_sysctl("hw.physmem");
 
-			if(empty($mem_size))
+			if($mem_size == false)
 			{
-				$mem_size = phodevi_parser::read_sysctl("hw.realmem");
+				$mem_size = phodevi_bsd_parser::read_sysctl("hw.realmem");
 			}
 
 			$info = floor($mem_size / 1048576);
 		}
 		else if(IS_MACOSX)
 		{
-			$info = phodevi_parser::read_osx_system_profiler("SPHardwareDataType", "Memory");
+			$info = phodevi_osx_parser::read_osx_system_profiler("SPHardwareDataType", "Memory");
 			$info = explode(" ", $info);
 			$info = (isset($info[1]) && $info[1] == "GB" ? $info[0] * 1024 : $info[0]);
 		}

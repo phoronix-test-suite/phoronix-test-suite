@@ -38,8 +38,8 @@ class phodevi_chipset extends pts_device_interface
 	{
 		if(IS_MACOSX)
 		{
-			$sb_vendor = phodevi_parser::read_osx_system_profiler("SPSerialATADataType", "Vendor");
-			$sb_product = phodevi_parser::read_osx_system_profiler("SPSerialATADataType", "Product");
+			$sb_vendor = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "Vendor");
+			$sb_product = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "Product");
 		
 			if(($cut_point = strpos($sb_product, " ")) > 0)
 			{
@@ -63,13 +63,13 @@ class phodevi_chipset extends pts_device_interface
 				$info = trim($info);
 			}
 		}
-		else
+		else if(IS_LINUX)
 		{
-			$info = phodevi_parser::read_pci(array("RAM memory", "Host bridge"));
+			$info = phodevi_linux_parser::read_pci(array("RAM memory", "Host bridge"));
 
 			if(count(explode(" ", $info)) == 1)
 			{
-				$bridge = phodevi_parser::read_pci(array("Bridge", "PCI bridge"));
+				$bridge = phodevi_linux_parser::read_pci(array("Bridge", "PCI bridge"));
 
 				if(!empty($bridge))
 				{
@@ -91,7 +91,7 @@ class phodevi_chipset extends pts_device_interface
 			if(!isset($bridge) || !empty($bridge))
 			{
 				// Attempt to detect Southbridge (if applicable)
-				$southbridge = phodevi_parser::read_pci(array("ISA bridge", "SATA controller"), false);
+				$southbridge = phodevi_linux_parser::read_pci(array("ISA bridge", "SATA controller"), false);
 				$southbridge_clean = null;
 
 				if(($start_cut = strpos($southbridge, "(")) > 0 && ($end_cut = strpos($southbridge, ")", $start_cut + 1)) > 0)

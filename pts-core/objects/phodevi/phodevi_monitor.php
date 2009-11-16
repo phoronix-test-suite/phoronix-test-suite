@@ -95,9 +95,9 @@ class phodevi_monitor extends pts_device_interface
 						break;
 				}
 			}
-			else if(IS_ATI_GRAPHICS)
+			else if(IS_ATI_GRAPHICS && IS_LINUX)
 			{
-				$amdpcsdb_enabled_monitors = phodevi_parser::read_amd_pcsdb("SYSTEM/BUSID-*/DDX,EnableMonitor");
+				$amdpcsdb_enabled_monitors = phodevi_linux_parser::read_amd_pcsdb("SYSTEM/BUSID-*/DDX,EnableMonitor");
 				$amdpcsdb_enabled_monitors = pts_to_array($amdpcsdb_enabled_monitors);
 
 				foreach($amdpcsdb_enabled_monitors as $enabled_monitor)
@@ -149,9 +149,9 @@ class phodevi_monitor extends pts_device_interface
 			if(count($monitor_layout) == 1)
 			{
 				// Something went wrong with xdpy information, go to fallback support
-				if(IS_ATI_GRAPHICS)
+				if(IS_ATI_GRAPHICS && IS_LINUX)
 				{
-					$amdpcsdb_monitor_layout = phodevi_parser::read_amd_pcsdb("SYSTEM/BUSID-*/DDX,DesktopSetup");
+					$amdpcsdb_monitor_layout = phodevi_linux_parser::read_amd_pcsdb("SYSTEM/BUSID-*/DDX,DesktopSetup");
 					$amdpcsdb_monitor_layout = pts_to_array($amdpcsdb_monitor_layout);
 
 					foreach($amdpcsdb_monitor_layout as $card_monitor_configuration)
