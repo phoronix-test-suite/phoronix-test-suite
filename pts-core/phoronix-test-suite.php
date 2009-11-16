@@ -59,7 +59,7 @@ if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 	}
 	else
 	{
-		$alias_file = trim(file_get_contents(STATIC_DIR . "lists/option-command-aliases.txt"));
+		$alias_file = pts_file_get_contents(STATIC_DIR . "lists/option-command-aliases.list");
 		$alias_r = array_map("trim", explode("\n", $alias_file));
 
 		for($i = 0; $i < count($alias_r) && !$replaced; $i++)

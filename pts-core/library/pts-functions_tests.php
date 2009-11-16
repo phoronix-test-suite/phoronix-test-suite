@@ -906,7 +906,7 @@ function pts_generic_reference_system_comparison_ids()
 
 	if($comparison_ids == null)
 	{
-		$comparison_ids = pts_trim_explode("\n", pts_file_get_contents(STATIC_DIR . "lists/reference-system-comparisons.txt"));
+		$comparison_ids = pts_trim_explode("\n", pts_file_get_contents(STATIC_DIR . "lists/reference-system-comparisons.list"));
 	}
 
 	return $comparison_ids;

@@ -112,14 +112,14 @@ function pts_clean_information_string($str)
 	static $remove_phrases = null;
 	static $change_phrases = null;
 
-	if($remove_phrases == null && is_file(STATIC_DIR . "lists/info-strings-remove.txt"))
+	if($remove_phrases == null)
 	{
-		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-remove.txt");
+		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-remove.list");
 		$remove_phrases = pts_trim_explode("\n", $word_file);
 	}
-	if($change_phrases == null && is_file(STATIC_DIR . "lists/info-strings-replace.txt"))
+	if($change_phrases == null)
 	{
-		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-replace.txt");
+		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-replace.list");
 		$phrases_r = pts_trim_explode("\n", $word_file);
 		$change_phrases = array();
 

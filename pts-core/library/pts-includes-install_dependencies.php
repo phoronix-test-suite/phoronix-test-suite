@@ -300,22 +300,19 @@ function pts_package_vendor_identifier()
 
 	if(!is_file(XML_DISTRO_DIR . $os_vendor . "-packages.xml") && !is_file(SCRIPT_DISTRO_DIR . "install-" . $os_vendor . "-packages.sh"))
 	{
-		if(is_file(STATIC_DIR . "lists/software-vendor-aliases.txt"))
+		$vendors_alias_file = pts_file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.list");
+		$vendors_r = explode("\n", $vendors_alias_file);
+
+		foreach($vendors_r as &$vendor)
 		{
-			$vendors_alias_file = pts_file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.txt");
-			$vendors_r = explode("\n", $vendors_alias_file);
+			$vendor_r = pts_trim_explode("=", $vendor);
 
-			foreach($vendors_r as &$vendor)
+			if(count($vendor_r) == 2)
 			{
-				$vendor_r = pts_trim_explode("=", $vendor);
-
-				if(count($vendor_r) == 2)
+				if($os_vendor == $vendor_r[0])
 				{
-					if($os_vendor == $vendor_r[0])
-					{
-						$os_vendor = $vendor_r[1];
-						break;
-					}
+					$os_vendor = $vendor_r[1];
+					break;
 				}
 			}
 		}
