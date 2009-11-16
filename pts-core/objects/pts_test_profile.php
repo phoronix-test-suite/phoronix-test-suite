@@ -95,7 +95,7 @@ class pts_test_profile
 	{
 		$dependency_names = array();
 
-		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
+		$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
 		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 

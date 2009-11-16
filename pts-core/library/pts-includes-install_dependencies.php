@@ -73,18 +73,15 @@ function pts_external_dependency_generic_title($generic_name)
 	// Get the generic information for a PTS External Dependency generic
 	$generic_title = null;
 
-	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
-	{
-		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
-		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+	$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+	$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+	$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 
-		for($i = 0; $i < count($package_name) && $generic_title == null; $i++)
+	for($i = 0; $i < count($package_name) && $generic_title == null; $i++)
+	{
+		if($generic_name == $package_name[$i])
 		{
-			if($generic_name == $package_name[$i])
-			{
-				$generic_title = $title[$i];
-			}
+			$generic_title = $title[$i];
 		}
 	}
 
@@ -95,52 +92,44 @@ function pts_external_dependency_generic_info($Name)
 	// Get the generic information for a PTS External Dependency generic
 	$generic_information = "";
 
-	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
+	$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+	$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+	$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+	$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
+	$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
+
+	$selection = -1;
+	$pts_exdep_support = true;
+
+	for($i = 0; $i < count($title) && $selection == -1; $i++)
 	{
-		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
-		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
-		$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
-		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
-
-		$selection = -1;
-		$pts_exdep_support = true;
-
-		for($i = 0; $i < count($title) && $selection == -1; $i++)
+		if($Name == $package_name[$i])
 		{
-			if($Name == $package_name[$i])
+			$selection = $i;
+			if(pts_file_missing_check(explode(",", $file_check[$selection])))
 			{
-				$selection = $i;
-				if(pts_file_missing_check(explode(",", $file_check[$selection])))
+				if($pts_exdep_support)
 				{
-					if($pts_exdep_support)
-					{
-						$pts_exdep_support = false;
-					}
-
-					echo pts_string_header($title[$selection] . "\nPossible Package Names: " . $possible_packages[$selection]);
+					$pts_exdep_support = false;
 				}
+
+				echo pts_string_header($title[$selection] . "\nPossible Package Names: " . $possible_packages[$selection]);
 			}
 		}
+	}
 
-		if(!$pts_exdep_support)
-		{
-			echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
-			fgets(STDIN);
-		}
+	if(!$pts_exdep_support)
+	{
+		echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
+		fgets(STDIN);
 	}
 
 	return $generic_information;
 }
 function pts_external_dependency_generic_packages()
 {
-	$packages = array();
-
-	if(is_file(XML_DISTRO_DIR . "generic-packages.xml"))
-	{
-		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . "generic-packages.xml");
-		$packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-	}
+	$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+	$packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 
 	return $packages;
 }
@@ -186,9 +175,9 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 	$vendor = pts_package_vendor_identifier();
 	$generated = false;
 
-	if(is_file(XML_DISTRO_DIR . $vendor . "-packages.xml"))
+	if(is_file(STATIC_DIR . "distro-xml/" . $vendor . "-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(XML_DISTRO_DIR . $vendor . "-packages.xml");
+		$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/" . $vendor . "-packages.xml");
 		$generic_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$distro_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_SPECIFIC);
 		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
@@ -250,7 +239,7 @@ function pts_install_packages_on_distribution_process($install_objects, &$displa
 
 		$distribution = pts_package_vendor_identifier();
 
-		if(is_file(SCRIPT_DISTRO_DIR . "install-" . $distribution . "-packages.sh"))
+		if(is_file(STATIC_DIR . "distro-scripts/install-" . $distribution . "-packages.sh"))
 		{
 			// hook into $display_mode here if it's desired
 			echo "\nThe following dependencies will be installed: \n";
@@ -262,7 +251,7 @@ function pts_install_packages_on_distribution_process($install_objects, &$displa
 
 			echo "\nThis process may take several minutes.\n";
 
-			echo shell_exec("cd " . SCRIPT_DISTRO_DIR . " && sh install-" . $distribution . "-packages.sh " . $install_objects);
+			echo shell_exec("cd " . STATIC_DIR . "distro-scripts/ && sh install-" . $distribution . "-packages.sh " . $install_objects);
 		}
 		else
 		{
@@ -298,7 +287,7 @@ function pts_package_vendor_identifier()
 {
 	$os_vendor = phodevi::read_property("system", "vendor-identifier");
 
-	if(!is_file(XML_DISTRO_DIR . $os_vendor . "-packages.xml") && !is_file(SCRIPT_DISTRO_DIR . "install-" . $os_vendor . "-packages.sh"))
+	if(!is_file(STATIC_DIR . "distro-xml/" . $os_vendor . "-packages.xml") && !is_file(STATIC_DIR . "distro-scripts/install-" . $os_vendor . "-packages.sh"))
 	{
 		$vendors_alias_file = pts_file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.list");
 		$vendors_r = explode("\n", $vendors_alias_file);

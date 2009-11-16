@@ -32,10 +32,6 @@ function pts_define_directories()
 		define("PTS_CORE_STORAGE", PTS_USER_DIR . "core.pt2so");
 	}
 
-	// Distribution External Dependency Locations
-	define("XML_DISTRO_DIR", PTS_PATH . "pts/distro-xml/");
-	define("SCRIPT_DISTRO_DIR", PTS_PATH . "pts/distro-scripts/");
-
 	// Misc Locations
 	define("MODULE_DIR", PTS_CORE_PATH . "modules/");
 	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
