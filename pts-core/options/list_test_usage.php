@@ -28,7 +28,18 @@ class list_test_usage implements pts_option_interface
 		printf("%-18ls   %-8ls %-13ls %-11ls %-13ls %-10ls\n", "TEST", "VERSION", "INSTALL DATE", "LAST RUN", "AVG RUN-TIME", "TIMES RUN");
 		foreach(pts_installed_tests_array() as $identifier)
 		{
-			echo new pts_test_usage_details($identifier);
+			$installed_test = new pts_installed_test($identifier);
+
+			if($installed_test->get_installed_version() != null)
+			{
+				$avg_time = $installed_test->get_average_run_time();
+				$avg_time = !empty($avg_time) ? pts_format_time_string($avg_time, "SECONDS", false) : "N/A";
+
+				$last_run = $installed_test->get_last_run_date();
+				$last_run = $last_run == "0000-00-00" ? "NEVER" : $last_run;
+
+				echo sprintf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $installed_test->get_installed_version(), $installed_test->get_install_date(), $last_run, $avg_time, $installed_test->get_run_count());
+			}
 		}
 		echo "\n";
 	}

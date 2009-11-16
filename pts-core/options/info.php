@@ -108,32 +108,20 @@ class info implements pts_option_interface
 
 			if(pts_test_installed($to_info))
 			{
-				$xml_parser = new pts_installed_test_tandem_XmlReader($to_info, false);
-				$last_run = $xml_parser->getXMLValue(P_INSTALL_TEST_LASTRUNTIME);
-				$avg_time = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
+				$installed_test = new pts_installed_test($to_info);
+				$last_run = $installed_test->get_last_run_date();
+				$last_run = $last_run == "0000-00-00" ? "Never" : $last_run;
 
-				if($last_run == "0000-00-00 00:00:00")
-				{
-					$last_run = "Never";
-				}
+				$avg_time = $installed_test->get_average_run_time();
+				$avg_time = !empty($avg_time) ? pts_format_time_string($avg_time, "SECONDS") : "N/A";
 
 				echo "\nTest Installed: Yes\n";
 				echo "Last Run: " . $last_run . "\n";
+				echo "Average Run-Time: " . $avg_time . "\n";
 
-				if($avg_time > 0)
-				{
-					echo "Average Run-Time: " . $avg_time . " Seconds\n";
-				}
 				if($last_run != "Never")
 				{
-					$times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
-
-					if($times_run == null)
-					{
-						$times_run = 0;
-					}
-
-					echo "Times Run: " . $times_run . "\n";
+					echo "Times Run: " . $installed_test->get_run_count() . "\n";
 				}
 			}
 			else

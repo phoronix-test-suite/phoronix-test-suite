@@ -528,8 +528,7 @@ function pts_estimated_run_time($identifier, $return_total_time = true, $return_
 	{
 		if(pts_test_installed($test))
 		{
-		 	$xml_parser = new pts_installed_test_tandem_XmlReader($test);
-			$this_length = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
+			$this_length = pts_installed_test_read_xml($test, P_INSTALL_TEST_AVG_RUNTIME);
 			$estimated_length = 0;
 
 			if(is_numeric($this_length) && $this_length > 0)
