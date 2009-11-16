@@ -21,9 +21,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "2.2.0");
-define("PTS_BUILD_INT", 2200);
-define("PTS_CODENAME", "BARDU");
+define("PTS_VERSION", "2.4.0a0");
+define("PTS_BUILD_INT", 2300);
+define("PTS_CODENAME", "LENVIK");
 
 function pts_codename($full_string = false)
 {
