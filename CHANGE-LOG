@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.2.0 "Bardu"
+November 16, 2009
 
 - pts-core: Various code path optimizations and cleaning
 - pts-core: Add dump-system-sensors option to display a readout of all supported Phodevi sensors and their values and print unsupported sensors
@@ -8,7 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix network-setup network testing check actually use the proxy, hook in the HTTP proxy override properly
 - pts-core: Clean-up download cache directories code
 - pts-core: Add "installed-tests" virtual suite of tests that are currently installed
-- pts-core: On GTK2 GUI Don't show buttons/header for reference system comparisons for results when there are actually no results to compare to
+- pts-core: On GTK2 GUI Don't show buttons/header for reference system comparisons for results when there are actually no results to compare
 - pts-core: Small OpenSolaris 2010.02 support updates
 - pts-core: Various small bug fixes
 - phodevi: Support for the GPU fan-speed sensor with ATI graphics driver

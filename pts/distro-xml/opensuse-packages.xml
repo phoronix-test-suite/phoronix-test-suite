@@ -127,7 +127,7 @@
 		</Package>
 		<Package>
 			<GenericName>jam</GenericName>
-			<PackageName>jam</PackageName>
+			<PackageName>boost-jam</PackageName>
 			<FileCheck>/usr/bin/jam</FileCheck>
 		</Package>
 		<Package>
