@@ -483,7 +483,6 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 						}
 					}
 
-					pts_test_generate_install_xml($identifier);
 					pts_module_process("__post_test_install", $identifier);
 					$installed = true;
 
@@ -500,8 +499,9 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 					}
 
 					$installed = true;
-					pts_test_generate_install_xml($identifier);
 				}
+
+				pts_test_update_install_xml($identifier, 0, true);
 			}
 			else
 			{
@@ -511,48 +511,6 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 	}
 
 	return $installed;
-}
-function pts_test_generate_install_xml($identifier)
-{
-	// Refresh an install XML for pts-install.xml
-	// TODO: Similar to pts_test_refresh_install_xml()
- 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
-	$xml_writer = new tandem_XmlWriter();
-
-	$average_test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
-	if(!is_numeric($average_test_duration))
-	{
-		$average_test_duration = 0;
-	}
-
-	$latest_test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_LATEST_RUNTIME);
-	if(!is_numeric($latest_test_duration))
-	{
-		$latest_test_duration = 0;
-	}
-
-	$test_version = pts_test_profile_version($identifier);
-	$test_checksum = pts_test_checksum_installer($identifier);
-	$sys_identifier = pts_system_identifier_string();
-	$install_time = date("Y-m-d H:i:s");
-
-	$times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
-	if(empty($times_run))
-	{
-		$times_run = 0;
-	}
-
-	$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $identifier);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_VERSION, 1, $test_version);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, $test_checksum);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_SYSIDENTIFY, 1, $sys_identifier);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, $install_time);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, "0000-00-00 00:00:00");
-	$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, $times_run);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $average_test_duration);
-	$xml_writer->addXmlObject(P_INSTALL_TEST_LATEST_RUNTIME, 2, $latest_test_duration);
-
-	$xml_writer->saveXMLFile(TEST_ENV_DIR . $identifier . "/pts-install.xml");
 }
 function pts_is_valid_download_url($string, $basename = null)
 {
