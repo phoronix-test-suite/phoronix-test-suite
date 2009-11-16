@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Change default display mode to the pts_concise_display_mode object
 - pts-core: Add dump-core-storage option for dumping the contents of the core.pt2so object
 - pts-core: Add dump-phodevi-smart-cache option for dumping the contents of the Phodevi Smart Cache from core.pt2so
 

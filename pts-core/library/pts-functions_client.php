@@ -266,21 +266,17 @@ function pts_user_message($message)
 }
 function pts_get_display_mode_object()
 {
-	switch((($env_mode = getenv("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT") == "BATCH"))
+	switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = getenv("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT") == "BATCH"))
 	{
+		case "BASIC":
+			$display_mode = new pts_basic_display_mode();
+			break;
 		case "BATCH":
 		case "CONCISE":
 			$display_mode = new pts_concise_display_mode();
 			break;
 		default:
-			if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("AUTOMATED_MODE"))
-			{
-				$display_mode = new pts_concise_display_mode();
-			}
-			else
-			{
-				$display_mode = new pts_basic_display_mode();
-			}
+			$display_mode = new pts_concise_display_mode();
 			break;
 	}
 
