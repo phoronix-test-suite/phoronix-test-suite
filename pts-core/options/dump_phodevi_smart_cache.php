@@ -20,35 +20,25 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class dump_core_storage implements pts_option_interface
+class dump_phodevi_smart_cache implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite Core Storage");
+		echo pts_string_header("Phodevi Smart Cache");
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
+		$phodevi_sc = $pso->read_object("phodevi_smart_cache");
 
-		foreach($pso->get_objects() as $pso_index => $pso_object)
+		foreach($phodevi_sc as $index => $element)
 		{
-			if($pso_index != "phodevi_smart_cache")
+			if($index != "phodevi_cache")
 			{
-				echo $pso_index . ": ";
-
-				if(is_array($pso_object))
-				{
-					foreach($pso_object as $key => $element)
-					{
-						echo "\n\t" . $key . ": " . $element;
-					}
-					echo "\n";
-				}
-				else
-				{
-					echo $pso_object;
-				}
-
-				echo "\n";
+				echo $index . ": " . $element . "\n";
 			}
 		}
+
+		echo "\n";
+
+		print_r($phodevi_sc->read_cache());
 
 		echo "\n";
 	}

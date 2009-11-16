@@ -55,6 +55,10 @@ class phodevi_cache
 
 		return $restore_cache;
 	}
+	public function read_cache()
+	{
+		return $this->phodevi_cache;
+	}
 }
 
 ?>
