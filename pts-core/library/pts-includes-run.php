@@ -455,6 +455,7 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 	if($result_format == "IMAGE_COMPARISON")
 	{
 		$vars["IQC_IMPORT_IMAGE"] = TEST_LIBRARIES_DIR . "iqc-image-import.sh";
+		$vars["IQC_IMAGE_PNG"] = TEST_ENV_DIR . $test_identifier . "/iqc.png";
 	}
 
 	return $vars;
@@ -568,12 +569,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		"LOG_FILE" => $benchmark_log_file
 		));
 
-		if($result_format == "IMAGE_COMPARISON")
-		{
-			$iqc_image_png = $test_directory . $test_identifier . "-" . $runtime_identifier . "-iqc.png";
-			$test_extra_runtime_variables["IQC_IMAGE_PNG"] = $iqc_image_png;
-		}
-
 		$restored_from_cache = false;
 		if($cache_share_present)
 		{
@@ -631,6 +626,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if(!in_array(($i + 1), $ignore_runs) && $exit_status_pass)
 		{
 			$test_extra_runtime_variables_post = $test_extra_runtime_variables;
+
 			if(is_file(TEST_ENV_DIR . $test_identifier . "/pts-timer"))
 			{
 				$run_time = pts_file_get_contents(TEST_ENV_DIR . $test_identifier . "/pts-timer");
@@ -638,7 +634,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 				if(is_numeric($run_time))
 				{
-					$test_extra_runtime_variables_post = array_merge($test_extra_runtime_variables_post, array("TIMER_RESULT" => $run_time));
+					$test_extra_runtime_variables_post["TIMER_RESULT"] = $run_time;
 				}
 			}
 			else
@@ -666,9 +662,9 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				$test_results = null;
 			}
 
-			if($result_format == "IMAGE_COMPARISON" && is_file($iqc_image_png))
+			if($result_format == "IMAGE_COMPARISON" && is_file($test_extra_runtime_variables["IQC_IMAGE_PNG"]))
 			{
-				$test_results = $iqc_image_png;
+				$test_results = $test_extra_runtime_variables["IQC_IMAGE_PNG"];
 			}
 
 			if(!empty($test_results))

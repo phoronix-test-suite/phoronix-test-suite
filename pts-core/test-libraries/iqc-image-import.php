@@ -101,4 +101,5 @@ function imagecreatefromtga($tga_file)
    
 	return $img;
 }
+
 ?>
