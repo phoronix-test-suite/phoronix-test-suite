@@ -102,7 +102,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		$end_print = $test_result->get_attribute("TEST_TITLE") . ":\n" . $test_result->get_attribute("TEST_DESCRIPTION");
 		$end_print .= "\n" . ($test_result->get_attribute("TEST_DESCRIPTION") != "" ? "\n" : "");
 
-		if(in_array($test_result->get_result_format(), array("NO_RESULT", "LINE_GRAPH")))
+		if(in_array($test_result->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
 		{
 			return;
 		}

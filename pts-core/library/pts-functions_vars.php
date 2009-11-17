@@ -129,25 +129,6 @@ function pts_run_additional_vars($identifier)
 
 	return $extra_vars;
 }
-function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null)
-{
-	$vars = pts_run_additional_vars($test_identifier);
-	$vars["LC_ALL"] = "";
-	$vars["LC_NUMERIC"] = "";
-	$vars["LC_CTYPE"] = "";
-	$vars["LC_MESSAGES"] = "";
-	$vars["LANG"] = "";
-	$vars["PTS_TEST_ARGUMENTS"] = "'" . $pts_test_arguments . "'";
-	$vars["TEST_LIBRARIES_DIR"] = TEST_LIBRARIES_DIR;
-	$vars["TIMER_START"] = TEST_LIBRARIES_DIR . "timer-start.sh";
-	$vars["TIMER_STOP"] = TEST_LIBRARIES_DIR . "timer-stop.sh";
-	$vars["TIMED_KILL"] = TEST_LIBRARIES_DIR . "timed-kill.sh";
-	$vars["SYSTEM_MONITOR_START"] = TEST_LIBRARIES_DIR . "system-monitoring-start.sh";
-	$vars["SYSTEM_MONITOR_STOP"] = TEST_LIBRARIES_DIR . "system-monitoring-stop.sh";
-	$vars["PHP_BIN"] = PHP_BIN;
-
-	return $vars;
-}
 function pts_swap_variables($user_str, $replace_function)
 {
 	// TODO: possibly optimize this function

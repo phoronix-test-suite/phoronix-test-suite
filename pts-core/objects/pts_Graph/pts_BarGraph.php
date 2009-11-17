@@ -80,7 +80,7 @@ class pts_BarGraph extends pts_CustomGraph
 	}
 	protected function render_graph_bars()
 	{
- 		$bar_count = count($this->graph_data);
+		$bar_count = count($this->graph_data);
 		$separator_width = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$bar_width = floor(($this->identifier_width - $separator_width - ($bar_count * $separator_width)) / $bar_count);
 

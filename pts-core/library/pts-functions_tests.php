@@ -198,6 +198,7 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 	}
 	else
 	{
+		// TODO: make switch statement
 		if($result_format == "PASS_FAIL")
 		{
 			$t = new pts_PassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale_formatted());
@@ -205,6 +206,10 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 		else if($result_format == "MULTI_PASS_FAIL")
 		{
 			$t = new pts_MultiPassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale_formatted());
+		}
+		else if($result_format == "IMAGE_COMPARISON")
+		{
+			$t = new pts_ImageComparisonGraph($name, $r_o->get_attributes());
 		}
 		else if((function_exists("pts_read_assignment") && pts_read_assignment("GRAPH_RENDER_TYPE") == "CANDLESTICK") || (defined("GRAPH_RENDER_TYPE") && GRAPH_RENDER_TYPE == "CANDLESTICK"))
 		{

@@ -426,7 +426,7 @@ function pts_virtual_suite_tests($object)
 				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
 				$test_license = pts_test_read_xml($test, P_TEST_LICENSE);
 
-				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")) && !in_array($test_license, array("RETAIL", "RESTRICTED")))
+				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL", "IMAGE_COMPARISON")) && !in_array($test_license, array("RETAIL", "RESTRICTED")))
 				{
 					array_push($contained_tests, $test);
 				}
@@ -438,7 +438,7 @@ function pts_virtual_suite_tests($object)
 				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
 				$test_title = pts_test_read_xml($test, P_TEST_TITLE);
 
-				if(!empty($test_title) && !in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL")))
+				if(!empty($test_title) && !in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL", "IMAGE_COMPARISON")))
 				{
 					array_push($contained_tests, $test);
 				}

@@ -367,7 +367,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 		$end_result = $result->get_result();
 		$test_identifier = $test_run_manager->get_results_identifier();
 
-		if(!empty($test_identifier) && count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && strlen($end_result) > 2)))
+		if(!empty($test_identifier) && count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
 		{
 			$tandem_id = pts_request_new_id();
 			pts_set_assignment("TEST_RAN", true);
@@ -435,6 +435,30 @@ function pts_find_test_executable($test_identifier, &$test_profile)
 
 	return $to_execute;
 }
+function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $result_format = null)
+{
+	$vars = pts_run_additional_vars($test_identifier);
+	$vars["LC_ALL"] = "";
+	$vars["LC_NUMERIC"] = "";
+	$vars["LC_CTYPE"] = "";
+	$vars["LC_MESSAGES"] = "";
+	$vars["LANG"] = "";
+	$vars["PTS_TEST_ARGUMENTS"] = "'" . $pts_test_arguments . "'";
+	$vars["TEST_LIBRARIES_DIR"] = TEST_LIBRARIES_DIR;
+	$vars["TIMER_START"] = TEST_LIBRARIES_DIR . "timer-start.sh";
+	$vars["TIMER_STOP"] = TEST_LIBRARIES_DIR . "timer-stop.sh";
+	$vars["TIMED_KILL"] = TEST_LIBRARIES_DIR . "timed-kill.sh";
+	$vars["SYSTEM_MONITOR_START"] = TEST_LIBRARIES_DIR . "system-monitoring-start.sh";
+	$vars["SYSTEM_MONITOR_STOP"] = TEST_LIBRARIES_DIR . "system-monitoring-stop.sh";
+	$vars["PHP_BIN"] = PHP_BIN;
+
+	if($result_format == "IMAGE_COMPARISON")
+	{
+		$vars["IQC_IMPORT_IMAGE"] = TEST_LIBRARIES_DIR . "iqc-image-import.sh";
+	}
+
+	return $vars;
+}
 function pts_run_test(&$test_run_request, &$display_mode)
 {
 	$test_identifier = $test_run_request->get_identifier();
@@ -481,7 +505,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$times_to_run = $force_runs;
 	}
 
-	if($times_to_run < 1 || (strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_"))
+	if($times_to_run < 1 || (strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_" || substr($result_format, 0, 6) == "IMAGE_"))
 	{
 		// Currently tests that output multiple results in one run can only be run once
 		$times_to_run = 1;
@@ -495,7 +519,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$pts_test_arguments = trim($test_profile->get_default_arguments() . " " . str_replace($test_profile->get_default_arguments(), "", $extra_arguments));
-	$extra_runtime_variables = pts_extra_run_time_vars($test_identifier, $pts_test_arguments);
+	$extra_runtime_variables = pts_extra_run_time_vars($test_identifier, $pts_test_arguments, $result_format);
 
 	// Start
 	$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
@@ -543,6 +567,12 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
 		"LOG_FILE" => $benchmark_log_file
 		));
+
+		if($result_format == "IMAGE_COMPARISON")
+		{
+			$iqc_image_png = $test_directory . $test_identifier . "-" . $runtime_identifier . "-iqc.png";
+			$test_extra_runtime_variables["IQC_IMAGE_PNG"] = $iqc_image_png;
+		}
 
 		$restored_from_cache = false;
 		if($cache_share_present)
@@ -634,6 +664,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			if(!empty($validate_result) && !pts_string_bool($validate_result))
 			{
 				$test_results = null;
+			}
+
+			if($result_format == "IMAGE_COMPARISON" && is_file($iqc_image_png))
+			{
+				$test_results = $iqc_image_png;
 			}
 
 			if(!empty($test_results))

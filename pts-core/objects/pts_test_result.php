@@ -114,6 +114,8 @@ class pts_test_result
 				$return_str = "Maximum";
 			case "MIN":
 				$return_str = "Minimum";
+			case "NULL":
+				$return_str = "";
 			default:
 				$return_str = "Average";
 		}
@@ -124,6 +126,7 @@ class pts_test_result
 	{
 		$END_RESULT = 0;
 
+		// TODO: make switch statement
 		if($this->result_format == "NO_RESULT")
 		{
 			// Nothing to do
@@ -131,6 +134,17 @@ class pts_test_result
 		else if($this->result_format == "LINE_GRAPH")
 		{
 			$END_RESULT = $this->trial_results[0];
+		}
+		else if($this->result_format == "IMAGE_COMPARISON")
+		{
+			$iqc_image_png = $this->trial_results[0];
+
+			if(is_file($iqc_image_png))
+			{
+				$img_file_64 = base64_encode(file_get_contents($iqc_image_png, FILE_BINARY));
+				$END_RESULT = $img_file_64;
+				unlink($iqc_image_png);				
+			}
 		}
 		else if($this->result_format == "PASS_FAIL" || $this->result_format == "MULTI_PASS_FAIL")
 		{

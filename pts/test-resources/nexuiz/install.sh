@@ -9,9 +9,9 @@ echo "#!/bin/sh
 cd Nexuiz_/
 if [ \$OS_TYPE = \"MacOSX\" ]
 then
-	./Nexuiz.app/Contents/MacOS/nexuiz-osx-agl +exec high.cfg \$@ > \$LOG_FILE 2>&1
+	./Nexuiz.app/Contents/MacOS/nexuiz-osx-agl +exec effects-high.cfg \$@ > \$LOG_FILE 2>&1
 else
-	./nexuiz-linux-glx.sh +exec high.cfg \$@ > \$LOG_FILE 2>&1
+	./nexuiz-linux-glx.sh +exec effects-high.cfg \$@ > \$LOG_FILE 2>&1
 fi
 cat \$LOG_FILE | grep fps" > nexuiz
 chmod +x nexuiz

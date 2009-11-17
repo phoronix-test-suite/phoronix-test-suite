@@ -402,17 +402,20 @@ abstract class pts_Graph
 			$this->graph_image->draw_rectangle_border(0, 0, $this->graph_attr_width - 1, $this->graph_attr_height - 1, $this->graph_color_border);
 		}
 	}
-	protected function render_graph_heading()
+	protected function render_graph_heading($with_version = true)
 	{
 		// Default to NORMAL
 		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3);
 
 		for($i = 0; $i < count($this->graph_sub_titles); $i++)
 		{
-			$this->graph_image->write_text_center($this->graph_sub_titles[$i], $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (29 + ($i * 18)), $this->graph_left_end, (29 + ($i * 18)), false, true);
+			$this->graph_image->write_text_center($this->graph_sub_titles[$i], $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (31 + ($i * 18)), $this->graph_left_end, (31 + ($i * 18)), false, true);
 		}
 
-		$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9);
+		if($with_version)
+		{
+			$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9);
+		}
 	}
 	protected function render_graph_base()
 	{
@@ -558,9 +561,9 @@ abstract class pts_Graph
 			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $this->graph_left_end - 2, $this->graph_top_start + 8, $this->graph_left_end - 2, $this->graph_top_start + 8);
 		}
 	}
-	protected function return_graph_image()
+	protected function return_graph_image($quality = 85)
 	{
-		$return_object = $this->graph_image->render_to_file($this->graph_output, 85);
+		$return_object = $this->graph_image->render_to_file($this->graph_output, $quality);
 		$this->graph_image->destroy_image();
 
 		return $return_object;

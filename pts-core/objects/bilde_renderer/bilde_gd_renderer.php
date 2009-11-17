@@ -209,7 +209,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 			$height = imagesy($source_image_object);
 		}
 
-		imagecopy($this->image, $source_image_object, $to_x, $to_y, $source_x, $source_y, $width, $height);
+		imagecopyresampled($this->image, $source_image_object, $to_x, $to_y, $source_x, $source_y, $width, $height, $width, $height);
 	}
 	public function convert_hex_to_type($hex)
 	{
@@ -224,7 +224,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 
 	protected function init_new_gd_image($width, $height)
 	{
-		$img = imagecreate($width, $height);
+		$img = imagecreatetruecolor($width, $height);
 
 		imageinterlace($img, true);
 

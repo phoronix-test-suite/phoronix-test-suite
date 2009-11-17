@@ -58,7 +58,7 @@
 							<div class="pts_table_cell_header"><xsl:value-of select="Identifier" /></div>
 						<xsl:variable name="this_identify" select="Identifier" />
 							<xsl:for-each select="/PhoronixTestSuite/Benchmark/Results/Group/Entry[Identifier=$this_identify]">
-								<div class="pts_table_cell"><xsl:value-of select="Value" /></div>
+								<div class="pts_table_cell"><xsl:choose><xsl:when test="string-length(Value)&lt;20"><xsl:value-of select="Value"/></xsl:when></xsl:choose></div>
 							</xsl:for-each>
 						</div>
 					</xsl:for-each>
@@ -76,7 +76,7 @@
 									<xsl:for-each select="Results/Group">
 										<div style="padding: 5px 0;">
 											<xsl:for-each select="Entry">
-												<strong><xsl:value-of select="Identifier" />:</strong><span style="padding-left: 5px;"><xsl:value-of select="Value"/></span><br />
+												<strong><xsl:value-of select="Identifier" />:</strong><span style="padding-left: 5px;"><xsl:choose><xsl:when test="string-length(Value)&lt;20"><xsl:value-of select="Value"/></xsl:when></xsl:choose></span><br />
 											</xsl:for-each>
 										</div>
 									</xsl:for-each>
