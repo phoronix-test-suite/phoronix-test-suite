@@ -819,44 +819,23 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		}
 	}
 
-	if($test_type == "Graphics")
+	// Any device notes to add to PTS test notes area?
+	foreach(phodevi::read_device_notes($test_type) as $note)
 	{
-		// TODO: integrate such reporting capabilities through a Phodevi interface
-		$extra_gfx_settings = array();
-		$aa_level = phodevi::read_property("gpu", "aa-level");
-		$af_level = phodevi::read_property("gpu", "af-level");
-
-		if(!empty($aa_level))
-		{
-			array_push($extra_gfx_settings, "AA: " . $aa_level);
-		}
-		if(!empty($af_level))
-		{
-			array_push($extra_gfx_settings, "AF: " . $af_level);
-		}
-
-		if(count($extra_gfx_settings) > 0)
-		{
-			$extra_gfx_settings = implode(" - ", $extra_gfx_settings);
-
-			if(strpos($arguments_description, $extra_gfx_settings) === false)
-			{
-				if($arguments_description != null)
-				{
-					$arguments_description .= " | ";
-				}
-
-				$arguments_description .= $extra_gfx_settings;
-			}
-		}
+		pts_test_notes_manager::add_note($note);
 	}
-	else if($test_type == "Disk")
-	{
-		$disk_scheduler = phodevi::read_property("disk", "scheduler");
 
-		if(!empty($disk_scheduler))
+	// Any special information (such as forced AA/AF levels for graphics) to add to the description string of the result?
+	if(($special_string = phodevi::read_special_settings_string($test_type)) != null)
+	{
+		if(strpos($arguments_description, $special_string) === false)
 		{
-			pts_test_notes_manager::add_note("Disk Scheduler: " . $disk_scheduler);
+			if($arguments_description != null)
+			{
+				$arguments_description .= " | ";
+			}
+
+			$arguments_description .= $special_string;
 		}
 	}
 

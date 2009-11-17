@@ -30,6 +30,16 @@ abstract class pts_device_interface
 		return false;
 	}
 
+	public static function device_notes()
+	{
+		// Any important notes about that device subsystem (i.e. for disk the disk scheduler in use) that in the context of PTS will be reported to the test notes area when called
+		return array();
+	}
+	public static function special_settings_string()
+	{
+		// Any important settings that may be special or overridden settings that in the context of PTS will be appended to a test result's description string (i.e. forced AA / AF values)
+		return null;
+	}
 	public static function available_sensors()
 	{
 		return array();

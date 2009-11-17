@@ -98,7 +98,30 @@ class phodevi_gpu extends pts_device_interface
 
 		return $property;
 	}
-	function gpu_set_resolution($args)
+	public static function special_settings_string()
+	{
+		$special_string = null;
+		$extra_gfx_settings = array();
+		$aa_level = phodevi::read_property("gpu", "aa-level");
+		$af_level = phodevi::read_property("gpu", "af-level");
+
+		if(!empty($aa_level))
+		{
+			array_push($extra_gfx_settings, "AA: " . $aa_level);
+		}
+		if(!empty($af_level))
+		{
+			array_push($extra_gfx_settings, "AF: " . $af_level);
+		}
+
+		if(count($extra_gfx_settings) > 0)
+		{
+			$special_string = implode(" - ", $extra_gfx_settings);
+		}
+
+		return $special_string;
+	}
+	public static function gpu_set_resolution($args)
 	{
 		if(count($args) != 2)
 		{

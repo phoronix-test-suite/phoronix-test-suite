@@ -619,11 +619,11 @@ function pts_test_version_compatible($version_compare = "")
 	{
 		$current = pts_remove_chars(PTS_VERSION, true, false, false);
 
-		$version_compare = explode("-", $version_compare);	
-		$support_begins = pts_remove_chars(trim($version_compare[0]), true, false, false);
+		$version_compare = pts_trim_explode("-", $version_compare);	
+		$support_begins = pts_remove_chars($version_compare[0], true, false, false);
 
-		$support_ends = count($version_compare) == 2 ? trim($version_compare[1]) : PTS_VERSION;
-		$support_ends = pts_remove_chars(trim($support_ends), true, false, false);
+		$support_ends = count($version_compare) == 2 ? $version_compare[1] : PTS_VERSION;
+		$support_ends = pts_remove_chars($support_ends, true, false, false);
 
 		$compatible = $current >= $support_begins && $current <= $support_ends;
 	}

@@ -51,6 +51,17 @@ class phodevi_disk extends pts_device_interface
 
 		return $property;
 	}
+	public static function device_notes()
+	{
+		$notes = array();
+
+		if(($disk_scheduler = phodevi::read_property("disk", "scheduler")) != null)
+		{
+			array_push($notes, "Disk Scheduler: " . $disk_scheduler);
+		}
+
+		return $notes;
+	}
 	public static function hdd_string()
 	{
 		$disks = array();

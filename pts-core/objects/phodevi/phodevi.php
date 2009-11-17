@@ -50,6 +50,37 @@ class phodevi
 	{
 		return self::system_information_parse(self::available_hardware_devices(), $return_as_string);
 	}
+	public static function read_device_notes($device)
+	{
+		$devices = phodevi::available_hardware_devices();
+
+		if(isset($devices[$device]))
+		{
+			eval("\$notes_r = phodevi_" . $devices[$device] . "::device_notes();");
+		}
+		else
+		{
+			$notes_r = array();
+		}
+
+		return is_array($notes_r) ? $notes_r : array();
+	}
+	public static function read_special_settings_string($device)
+	{
+		$devices = phodevi::available_hardware_devices();
+
+		if(isset($devices[$device]))
+		{
+
+			eval("\$settings_special = phodevi_" . $devices[$device] . "::special_settings_string();");
+		}
+		else
+		{
+			$settings_special = null;
+		}
+
+		return $settings_special;
+	}
 	public static function read_sensor($device, $read_sensor)
 	{
 		$value = false;

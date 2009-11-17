@@ -24,7 +24,7 @@
 class graphics_override extends pts_module_interface
 {
 	const module_name = "Graphics Override";
-	const module_version = "1.0.3";
+	const module_version = "1.0.4";
 	const module_description = "This module allows you to override some graphics rendering settings for the ATI and NVIDIA drivers while running the Phoronix Test Suite.";
 	const module_author = "Michael Larabel";
 
@@ -49,7 +49,7 @@ class graphics_override extends pts_module_interface
 	public static function set_amd_pcsdb($attribute, $value)
 	{
 		// Sets a value for AMD's PCSDB, Persistent Configuration Store Database
-		if(IS_ATI_GRAPHICS && !empty($value))
+		if(IS_ATI_GRAPHICS && IS_LINUX && !empty($value))
 		{
 			$DISPLAY = substr(getenv("DISPLAY"), 1, 1);
 			$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
@@ -57,7 +57,7 @@ class graphics_override extends pts_module_interface
 	}
 	public static function __pre_run_process()
 	{
-		if(!(IS_NVIDIA_GRAPHICS || IS_ATI_GRAPHICS))
+		if(!(IS_NVIDIA_GRAPHICS || (IS_ATI_GRAPHICS && IS_LINUX)))
 		{
 			echo "\nNo supported driver found for graphics_override module!\n";
 			return PTS_MODULE_UNLOAD; // Not using a supported driver, quit the module
@@ -98,8 +98,8 @@ class graphics_override extends pts_module_interface
 			}
 			else if(IS_ATI_GRAPHICS)
 			{
-				self::$preset_aa = phodevi_parser::read_amd_pcsdb("OpenGL,AntiAliasSamples");
-				self::$preset_aa_control = phodevi_parser::read_amd_pcsdb("OpenGL,AAF");
+				self::$preset_aa = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AntiAliasSamples");
+				self::$preset_aa_control = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AAF");
 
 				switch($force_aa)
 				{
@@ -158,7 +158,7 @@ class graphics_override extends pts_module_interface
 			}
 			else if(IS_ATI_GRAPHICS)
 			{
-				self::$preset_af = phodevi_parser::read_amd_pcsdb("OpenGL,AnisoDegree");
+				self::$preset_af = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AnisoDegree");
 
 				switch($force_af)
 				{

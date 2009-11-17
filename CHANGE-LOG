@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Drop support for UnsupportedPlatforms tag in PTS test profile specification, tests should be using SupportedPlatforms tag
 - phodevi: Split out phodevi_parser module into phodevi_linux_parser, phodevi_osx_parser, and phodevi_solaris_parser for OS-specific functions
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
+- phodevi: Add device notes and special settings string functionality to API
 
 Phoronix Test Suite 2.2.0 "Bardu"
 November 16, 2009
