@@ -371,9 +371,9 @@ class phodevi_linux_parser
 			static $remove_words = null;
 			$name = pts_to_array($name);
 
-			if($remove_words == null && is_file(STATIC_DIR . "lists/hal-values-remove.txt"))
+			if($remove_words == null && is_file(STATIC_DIR . "lists/hal-values-remove.list"))
 			{
-				$word_file = pts_file_get_contents(STATIC_DIR . "lists/hal-values-remove.txt");
+				$word_file = pts_file_get_contents(STATIC_DIR . "lists/hal-values-remove.list");
 				$remove_words = pts_trim_explode("\n", $word_file);
 			}
 
@@ -399,11 +399,11 @@ class phodevi_linux_parser
 	public static function read_system_hal($name)
 	{
 		// Read system HAL
-		$hal = phodevi_parser::read_hal($name, "/org/freedesktop/Hal/devices/computer");
+		$hal = phodevi_linux_parser::read_hal($name, "/org/freedesktop/Hal/devices/computer");
 
 		if($hal == false)
 		{
-			$hal = phodevi_parser::read_hal($name);
+			$hal = phodevi_linux_parser::read_hal($name);
 		}
 
 		return $hal;
