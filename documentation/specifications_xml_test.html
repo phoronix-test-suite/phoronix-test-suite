@@ -137,6 +137,12 @@ it requires a version between 1.4.0 and 1.8.0, it must be written as <em>1.4.0 -
 <strong>Required:</strong> No<br>
 <strong>Description:</strong> If this test profile emits result formats or data that is not compatible with Phoronix Global or is the test profile is just intended for internal use only, set <em>AllowGlobalUploads</em> to <em>FALSE</em>. If this tag is set to <em>FALSE</em>, the result generated from this test profile will not give the user the ability to upload the results to Phoronix Global after testing has ended.<br>
 <strong>Supported Values:</strong> ( <em>FALSE</em> or <em>TRUE</em>. By default the value is assumed as <em>TRUE</em>. )</p>
+<p><strong>Tag:</strong> AutoSaveResults<br>
+<strong>Location:</strong> PhoronixTestSuite/TestProfile/<br>
+<strong>Internal Reference:</strong> P_TEST_AUTO_SAVE_RESULTS<br>
+<strong>Required:</strong> No<br>
+<strong>Description:</strong> If this tag is set to <em>TRUE</em>, the user will automatically be prompted to save the test results and will not be given the option of whether to save the test results. This is useful for test profiles that only produce meaningful results when saved (i.e. an image quality comparison). If this tag is not present, under normal conditions the user will be asked whether or not to save the test results.<br>
+<strong>Supported Values:</strong> ( <em>TRUE</em> or <em>FALSE</em> )</p>
 <h2>PhoronixTestSuite/TestInformation/</h2>
 <p><strong>Tag:</strong> Title<br>
 <strong>Location:</strong> PhoronixTestSuite/TestInformation/<br>

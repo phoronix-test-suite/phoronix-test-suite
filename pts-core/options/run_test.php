@@ -64,12 +64,13 @@ class run_test implements pts_option_interface
 			{
 				if(!pts_is_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE"))
 				{
-					$xml_parser = new pts_test_tandem_XmlReader($to_run);
-					$result_format = $xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
-
-					if($result_format == "NO_RESULT")
+					if(pts_test_read_xml($to_run, P_TEST_RESULTFORMAT) == "NO_RESULT")
 					{
 						pts_set_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE", true);
+					}
+					if(pts_test_read_xml($to_run, P_TEST_AUTO_SAVE_RESULTS) == "TRUE")
+					{
+						pts_set_assignment("TEST_PROFILE_REQUESTS_SAVE", true);
 					}
 				}
 
@@ -202,7 +203,7 @@ class run_test implements pts_option_interface
 			{
 				$save_results = false;
 			}
-			else if(pts_is_assignment("AUTO_SAVE_NAME") || getenv("TEST_RESULTS_NAME"))
+			else if(pts_read_assignment("TEST_PROFILE_REQUESTS_SAVE") || pts_is_assignment("AUTO_SAVE_NAME") || getenv("TEST_RESULTS_NAME"))
 			{
 				$save_results = true;
 			}
