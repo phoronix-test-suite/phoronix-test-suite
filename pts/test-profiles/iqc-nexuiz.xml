@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType> <!-- By making it of type System instead of Graphics it will be possible to directly compare overridden AA / AF levels -->
+		<Extends>nexuiz</Extends>
+		<AllowGlobalUploads>FALSE</AllowGlobalUploads>
+		<AutoSaveResults>TRUE</AutoSaveResults>
+	</TestProfile>
+	<TestInformation>
+		<Title>Nexuiz Image Quality</Title>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>NULL</ResultScale>
+		<Proportion>ABSTRACT</Proportion>
+		<ResultFormat>IMAGE_COMPARISON</ResultFormat>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<AllowCacheShare>TRUE</AllowCacheShare>
+			<Arguments> </Arguments>
+		</Default>
+		<Option>
+			<DisplayName>Scene</DisplayName>
+			<Identifier>scene</Identifier>
+			<Menu>
+				<Entry>
+					<Name>Weapon Rendering</Name>
+					<Value>nexuiz000085.tga</Value>
+				</Entry>
+				<Entry>
+					<Name>Enemy</Name>
+					<Value>nexuiz000090.tga</Value>
+				</Entry>
+				<Entry>
+					<Name>Explosion</Name>
+					<Value>nexuiz000112.tga</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>

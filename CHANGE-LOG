@@ -17,6 +17,7 @@ Phoronix Test Suite (Git)
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
 - phodevi: Add device notes and special settings string functionality to API
 - pts_Graph: Add pts_ImageComparisonGraph object
+- pts: Add initial iqc-nexuiz test profile for image quality comparison support
 
 Phoronix Test Suite 2.2.0 "Bardu"
 November 16, 2009
