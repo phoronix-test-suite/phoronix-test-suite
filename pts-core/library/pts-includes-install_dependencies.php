@@ -121,7 +121,11 @@ function pts_external_dependency_generic_info($Name)
 	if(!$pts_exdep_support)
 	{
 		echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
-		fgets(STDIN);
+
+		if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE"))
+		{		
+			pts_read_user_input();
+		}
 	}
 
 	return $generic_information;

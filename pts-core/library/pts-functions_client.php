@@ -260,7 +260,7 @@ function pts_user_message($message)
 		if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
 		{
 			echo "\nHit Any Key To Continue...\n";
-			fgets(STDIN);
+			pts_read_user_input();
 		}
 	}
 }

@@ -28,12 +28,16 @@ function p_str($str_o)
 	//  $_ENV["LANG"]
 	return $str_o;
 }
+function pts_read_user_input()
+{
+	return trim(fgets(STDIN));
+}
 function pts_text_input($question, $allow_null = false)
 {
 	do
 	{
 		echo "\n" . $question . ": ";
-		$answer = trim(fgets(STDIN));
+		$answer = pts_read_user_input();
 	}
 	while(!$allow_null && empty($answer));
 
@@ -56,7 +60,7 @@ function pts_text_select_menu($user_string, $options_r, $allow_multi_select = fa
 			echo ($i + 1) . ": " . $options_r[$i] . "\n";
 		}
 		echo "\n" . $user_string . ": ";
-		$select_choice = trim(fgets(STDIN));
+		$select_choice = pts_read_user_input();
 
 		// Validate possible multi-select
 		$multi_choice = pts_trim_explode(",", $select_choice);
@@ -113,7 +117,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 		do
 		{
 			echo $question . " ";
-			$input = trim(strtolower(fgets(STDIN)));
+			$input = strtolower(pts_read_user_input());
 		}
 		while($input != "y" && $input != "n" && $input != "");
 

@@ -51,7 +51,7 @@ class extract_from_result_file implements pts_option_interface
 		do
 		{
 			echo "\nEnter new result file to extract to: ";
-			$extract_to = trim(fgets(STDIN));
+			$extract_to = pts_read_user_input();
 		}
 		while(empty($extract_to) || is_file(SAVE_RESULTS_DIR . $extract_to . "/composite.xml"));
 

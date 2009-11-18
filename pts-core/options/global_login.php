@@ -26,9 +26,9 @@ class global_login implements pts_option_interface
 	{
 		echo "\nIf you have not already registered for your free Phoronix Global account, you can do so at http://global.phoronix-test-suite.com/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";
 		echo "User-Name: ";
-		$username = trim(fgets(STDIN));
+		$username = pts_read_user_input();
 		echo "Password: ";
-		$password = md5(trim(fgets(STDIN)));
+		$password = md5(pts_read_user_input());
 		$global_success = pts_global_setup_account($username, $password);
 
 		if($global_success)

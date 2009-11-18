@@ -84,7 +84,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 			else
 			{
 				echo "Enter a unique name for this test run: ";
-				$results_identifier = trim(str_replace(array("/"), "", fgets(STDIN)));
+				$results_identifier = trim(str_replace(array("/"), "", pts_read_user_input()));
 			}
 			$times_tried++;
 
@@ -134,7 +134,7 @@ function pts_prompt_save_file_name(&$test_run_manager, $check_env = true)
 			}
 
 			echo "Enter a name to save these results: ";
-			$proposed_name = trim(fgets(STDIN));
+			$proposed_name = pts_read_user_input();
 			$custom_title = $proposed_name;
 			$proposed_name = pts_input_string_to_identifier($proposed_name);
 		}
@@ -180,7 +180,7 @@ function pts_prompt_svg_result_options($svg_file)
 					}
 					echo "\nEnter Your Choice: ";
 
-					$run_choice = trim(fgets(STDIN));
+					$run_choice = pts_read_user_input();
 				}
 				while($run_choice < 1 || $run_choice > $run_option_count);
 				$test_to_run = $run_options[($run_choice - 1)][0];
