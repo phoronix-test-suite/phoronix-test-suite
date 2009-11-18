@@ -17,6 +17,7 @@ Phoronix Test Suite (Git)
 - phodevi: Split out phodevi_parser module into phodevi_linux_parser, phodevi_osx_parser, and phodevi_solaris_parser for OS-specific functions
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
 - phodevi: Add device notes and special settings string functionality to API
+- phoromatic: Use a locking system to prevent multiple copies of the Phoromatic module from running simultaneously
 - pts_Graph: Add pts_ImageComparisonGraph object
 - pts: Add initial iqc-nexuiz test profile for image quality comparison support
 

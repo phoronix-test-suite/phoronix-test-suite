@@ -33,6 +33,8 @@ class phoromatic extends pts_module_interface
 	const module_description = "The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/";
 	const module_author = "Phoronix Media";
 
+	static $phoromatic_lock = null;
+
 	static $phoromatic_host = null;
 	static $phoromatic_account = null;
 	static $phoromatic_verifier = null;
@@ -83,6 +85,11 @@ class phoromatic extends pts_module_interface
 
 	public static function user_start()
 	{
+		if(!pts_create_lock(PTS_USER_DIR . "phoromatic_lock", self::$phoromatic_lock))
+		{
+			echo pts_string_header("Phoromatic is already running.");
+			return false;
+		}
 		if(!pts_module::is_module_setup())
 		{
 			echo "\nYou first must run:\n\nphoronix-test-suite module-setup phoromatic\n\n";
@@ -230,6 +237,7 @@ class phoromatic extends pts_module_interface
 					pts_run_option_next("phoromatic.user_system_return", $suite_identifier, $args_to_pass);
 					break;
 				case "exit":
+					pts_release_lock(self::$phoromatic_lock, PTS_USER_DIR . "phoromatic_lock");
 					break;
 				case "server_maintenance":
 					// The Phoromatic server is down for maintenance, so don't bother updating system status and wait longer before checking back
