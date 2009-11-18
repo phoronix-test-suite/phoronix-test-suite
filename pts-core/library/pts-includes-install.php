@@ -156,61 +156,57 @@ function pts_download_test_files($identifier, &$display_mode)
 				$package_md5 = $download_package->get_md5();
 
 				$found_in_remote_cache = false;
-				if(($remote_download_file_count = count($remote_download_files)) > 0)
+				foreach($remote_download_files as &$download_file)
 				{
-					for($f = 0; $f < $remote_download_file_count && !$found_in_remote_cache; $f++)
+					if($download_file->get_filename() == $package_filename && $download_file->get_md5() == $package_md5)
 					{
-						if($remote_download_files[$f]->get_filename() == $package_filename && $remote_download_files[$f]->get_md5() == $package_md5)
+						$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE");
+						echo pts_download(array_pop($download_file->get_download_url_array()), $download_destination_temp);
+						echo "\n";
+
+						if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
 						{
-							$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE");
-							echo pts_download(array_pop($remote_download_files[$f]->get_download_url_array()), $download_destination_temp);
-							echo "\n";
-
-							if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
-							{
-								@unlink($download_destination_temp);
-							}
-							else
-							{
-								pts_move($package_filename_temp, $package_filename, $download_location);
-								$urls = array();
-							}
-
-							$found_in_remote_cache = true;
+							unlink($download_destination_temp);
 						}
+						else
+						{
+							pts_move($package_filename_temp, $package_filename, $download_location);
+							$urls = array();
+						}
+
+						$found_in_remote_cache = true;
+						break;
 					}
 				}
 
 				if(!$found_in_remote_cache)
 				{
-					$used_cache = false;
-					for($j = 0; $j < count($local_cache_directories) && $used_cache == false; $j++)
+					foreach($local_cache_directories as &$cache_directory)
 					{
-						if(pts_validate_md5_download_file($local_cache_directories[$j] . $package_filename, $package_md5))
+						if(pts_validate_md5_download_file($cache_directory . $package_filename, $package_md5))
 						{
-
 							if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
 							{
 								// P_OPTION_CACHE_SYMLINK is disabled by default for now
 								$display_mode->test_install_download_file($download_package, "LINK_FROM_CACHE");
-								pts_symlink($local_cache_directories[$j] . $package_filename, $download_destination);
+								pts_symlink($cache_directory . $package_filename, $download_destination);
 							}
 							else
 							{
 								$display_mode->test_install_download_file($download_package, "COPY_FROM_CACHE");
-								copy($local_cache_directories[$j] . $package_filename, $download_destination);
+								copy($cache_directory . $package_filename, $download_destination);
 							}
 
 							if(is_file($download_destination))
 							{
 								$urls = array();
-								$used_cache = true;
+								break;
 							}
 						}
 					}
 				}
 
-				if(count($urls) > 0 && $urls[0] != "")
+				if(count($urls) > 0 && $urls[0] != null)
 				{
 					shuffle($urls);
 					$fail_count = 0;
@@ -310,9 +306,9 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 		{
 			$real_md5 = md5_file($filename);
 
-			if(count(explode("://", $verified_md5)) > 1)
+			if(substr($verified_md5, 0, 7) == "http://")
 			{
-				$md5_file = explode("\n", trim(@file_get_contents($verified_md5)));
+				$md5_file = pts_trim_explode("\n", pts_http_get_contents($verified_md5));
 
 				for($i = 0; $i < count($md5_file) && $valid; $i++)
 				{
@@ -434,7 +430,7 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 					{
 						if(substr($install_agreement, 0, 7) == "http://")
 						{
-							$install_agreement = file_get_contents($install_agreement);
+							$install_agreement = pts_http_get_contents($install_agreement);
 
 							if(empty($install_agreement))
 							{
