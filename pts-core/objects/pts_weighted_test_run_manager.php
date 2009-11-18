@@ -39,21 +39,21 @@ class pts_weighted_test_run_manager extends pts_test_run_manager
 	{
 		$this->weight_test_profile = $test_profile_identifier;
 	}
-	public function get_weight_test_profile()
-	{
-		return $this->weight_test_profile;
-	}
 	public function set_weight_initial_value($initial_value)
 	{
 		$this->weight_initial_value = $initial_value;
+	}
+	public function set_weight_final_expression($final_expression)
+	{
+		$this->weight_final_expression = $final_expression;
 	}
 	public function get_weight_initial_value()
 	{
 		return $this->weight_initial_value;
 	}
-	public function set_weight_final_expression($final_expression)
+	public function get_weight_test_profile()
 	{
-		$this->weight_final_expression = $final_expression;
+		return $this->weight_test_profile;
 	}
 	public function get_weight_final_expression()
 	{

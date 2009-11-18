@@ -118,7 +118,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 				for($i = 0; $i < count($dc_file); $i++)
 				{
-					array_push($remote_download_files, new pts_download_cache_file_reference($dc_directory, $dc_file[$i], $dc_md5[$i]));
+					array_push($remote_download_files, new pts_test_file_download($dc_directory . $dc_file[$i], $dc_file[$i], 0, $dc_md5[$i]));
 				}
 			}
 			else
@@ -163,7 +163,7 @@ function pts_download_test_files($identifier, &$display_mode)
 						if($remote_download_files[$f]->get_filename() == $package_filename && $remote_download_files[$f]->get_md5() == $package_md5)
 						{
 							$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE");
-							echo pts_download($remote_download_files[$f]->get_download_cache_directory() . $package_filename, $download_destination_temp);
+							echo pts_download(array_pop($remote_download_files[$f]->get_download_url_array()), $download_destination_temp);
 							echo "\n";
 
 							if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))

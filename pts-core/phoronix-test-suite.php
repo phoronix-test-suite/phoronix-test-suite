@@ -120,12 +120,9 @@ if(!QUICK_START)
 
 // Read passed arguments
 $pass_args = array();
-for($i = 2; $i < $argc; $i++)
+for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 {
-	if(isset($argv[$i]))
-	{
-		array_push($pass_args, $argv[$i]);
-	}
+	array_push($pass_args, $argv[$i]);
 }
 
 if(!QUICK_START)
