@@ -126,101 +126,101 @@ class pts_test_result
 	{
 		$END_RESULT = 0;
 
-		// TODO: make switch statement
-		if($this->result_format == "NO_RESULT")
+		switch($this->result_format)
 		{
-			// Nothing to do
-		}
-		else if($this->result_format == "LINE_GRAPH")
-		{
-			$END_RESULT = $this->trial_results[0];
-		}
-		else if($this->result_format == "IMAGE_COMPARISON")
-		{
-			$iqc_image_png = $this->trial_results[0];
-
-			if(is_file($iqc_image_png))
-			{
-				$img_file_64 = base64_encode(file_get_contents($iqc_image_png, FILE_BINARY));
-				$END_RESULT = $img_file_64;
-				unlink($iqc_image_png);				
-			}
-		}
-		else if($this->result_format == "PASS_FAIL" || $this->result_format == "MULTI_PASS_FAIL")
-		{
-			// Calculate pass/fail type
-			$END_RESULT = -1;
-
-			if(count($this->trial_results) == 1)
-			{
+			case "NO_RESULT":
+				// Nothing to do, there are no results
+				break;
+			case "LINE_GRAPH":
+				// Just take the first result
 				$END_RESULT = $this->trial_results[0];
-			}
-			else
-			{
-				foreach($this->trial_results as $result)
+				break;
+			case "IMAGE_COMPARISON":
+				// Capture the image
+				$iqc_image_png = $this->trial_results[0];
+
+				if(is_file($iqc_image_png))
 				{
-					if($result == "FALSE" || $result == "0" || $result == "FAIL")
+					$img_file_64 = base64_encode(file_get_contents($iqc_image_png, FILE_BINARY));
+					$END_RESULT = $img_file_64;
+					unlink($iqc_image_png);				
+				}
+				break;
+			case "PASS_FAIL":
+			case "MULTI_PASS_FAIL":
+				// Calculate pass/fail type
+				$END_RESULT = -1;
+
+				if(count($this->trial_results) == 1)
+				{
+					$END_RESULT = $this->trial_results[0];
+				}
+				else
+				{
+					foreach($this->trial_results as $result)
 					{
-						if($END_RESULT == -1 || $END_RESULT == "PASS")
+						if($result == "FALSE" || $result == "0" || $result == "FAIL")
 						{
-							$END_RESULT = "FAIL";
+							if($END_RESULT == -1 || $END_RESULT == "PASS")
+							{
+								$END_RESULT = "FAIL";
+							}
+						}
+						else
+						{
+							if($END_RESULT == -1)
+							{
+								$END_RESULT = "PASS";
+							}
 						}
 					}
-					else
+				}
+				break;
+			default:
+				// Result is of a normal numerical type
+				if($this->result_quantifier == "MAX")
+				{
+					$max_value = $this->trial_results[0];
+					foreach($this->trial_results as $result)
 					{
-						if($END_RESULT == -1)
+						if($result > $max_value)
 						{
-							$END_RESULT = "PASS";
+							$max_value = $result;
+						}
+
+					}
+					$END_RESULT = $max_value;
+				}
+				else if($this->result_quantifier == "MIN")
+				{
+					$min_value = $this->trial_results[0];
+					foreach($this->trial_results as $result)
+					{
+						if($result < $min_value)
+						{
+							$min_value = $result;
 						}
 					}
+					$END_RESULT = $min_value;
 				}
-			}
-		}
-		else
-		{
-			// Result is of a normal numerical type
-			if($this->result_quantifier == "MAX")
-			{
-				$max_value = $this->trial_results[0];
-				foreach($this->trial_results as $result)
+				else
 				{
-					if($result > $max_value)
+					// assume AVG (average)
+					$TOTAL_RESULT = 0;
+					$TOTAL_COUNT = 0;
+
+					foreach($this->trial_results as $result)
 					{
-						$max_value = $result;
+						if(is_numeric($result))
+						{
+							$TOTAL_RESULT += trim($result);
+							$TOTAL_COUNT++;
+						}
 					}
 
+					$END_RESULT = pts_trim_double($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
 				}
-				$END_RESULT = $max_value;
-			}
-			else if($this->result_quantifier == "MIN")
-			{
-				$min_value = $this->trial_results[0];
-				foreach($this->trial_results as $result)
-				{
-					if($result < $min_value)
-					{
-						$min_value = $result;
-					}
-				}
-				$END_RESULT = $min_value;
-			}
-			else
-			{
-				// assume AVG (average)
-				$TOTAL_RESULT = 0;
-				$TOTAL_COUNT = 0;
-
-				foreach($this->trial_results as $result)
-				{
-					if(is_numeric($result))
-					{
-						$TOTAL_RESULT += trim($result);
-						$TOTAL_COUNT++;
-					}
-				}
-
-				$END_RESULT = pts_trim_double($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
-			}
+				break;
 		}
 
 		$this->set_result($END_RESULT);
