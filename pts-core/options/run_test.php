@@ -371,30 +371,33 @@ class run_test implements pts_option_interface
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $file_name);
 			pts_display_web_browser(SAVE_RESULTS_DIR . $file_name . "/index.html");
 
-			if(pts_is_assignment("AUTOMATED_MODE"))
+			if(!pts_read_assignment("BLOCK_GLOBAL_UPLOADS"))
 			{
-				$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL");
-			}
-			else
-			{
-				$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
-			}
-
-			if($upload_results)
-			{
-				$tags_input = pts_prompt_user_tags($results_identifier);
-				$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $file_name . "/composite.xml", $tags_input);
-
-				if(!empty($upload_url))
+				if(pts_is_assignment("AUTOMATED_MODE"))
 				{
-					echo "\nResults Uploaded To: " . $upload_url . "\n";
-					pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
-					pts_module_process("__event_global_upload", $upload_url);
-					pts_display_web_browser($upload_url, "Do you want to launch Phoronix Global", true);
+					$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL");
 				}
 				else
 				{
-					echo "\nResults Failed To Upload.\n";
+					$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
+				}
+
+				if($upload_results)
+				{
+					$tags_input = pts_prompt_user_tags($results_identifier);
+					$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $file_name . "/composite.xml", $tags_input);
+
+					if(!empty($upload_url))
+					{
+						echo "\nResults Uploaded To: " . $upload_url . "\n";
+						pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
+						pts_module_process("__event_global_upload", $upload_url);
+						pts_display_web_browser($upload_url, "Do you want to launch Phoronix Global", true);
+					}
+					else
+					{
+						echo "\nResults Failed To Upload.\n";
+					}
 				}
 			}
 			echo "\n";

@@ -59,6 +59,7 @@ define("P_TEST_ESTIMATEDTIME", "PhoronixTestSuite/TestProfile/EstimatedLength");
 define("P_TEST_PROJECTURL", "PhoronixTestSuite/TestProfile/ProjectURL"); // Estimated length of time it takes the test to complete (in minutes)
 define("P_TEST_SUPPORTS_COREVERSION", "PhoronixTestSuite/TestProfile/RequiresCoreVersion"); // If the test profile is bound to specific versions of the Phoronix Test Suite (pts-core)
 define("P_TEST_REFERENCE_SYSTEMS", "PhoronixTestSuite/TestProfile/ReferenceSystems"); // Phoronix Global IDs of reference systems for the test
+define("P_TEST_ALLOW_GLOBAL_UPLOADS", "PhoronixTestSuite/TestProfile/AllowGlobalUploads"); // Allow result uploads to Phoronix Global?
 
 define("P_TEST_DEFAULTARGUMENTS", "PhoronixTestSuite/TestSettings/Default/Arguments"); // Default arguments
 define("P_TEST_POSSIBLEPATHS", "PhoronixTestSuite/TestSettings/Default/PossiblePaths"); // Possible paths

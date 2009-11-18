@@ -166,6 +166,10 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE) == "TRUE";
 	}
+	public function allow_global_uploads()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_ALLOW_GLOBAL_UPLOADS) != "FALSE";
+	}
 	public function get_min_length()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_MIN_LENGTH);

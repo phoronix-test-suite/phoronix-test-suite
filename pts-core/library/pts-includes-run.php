@@ -216,6 +216,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 {
 	$failed_tests = array();
 	$validated_run_requests = array();
+	$allow_global_uploads = true;
 
 	foreach($test_run_manager->get_tests_to_run() as $test_run_request)
 	{
@@ -272,7 +273,18 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 			continue;
 		}
 
+		if($allow_global_uploads && !$test_profile->allow_global_uploads())
+		{
+			// One of the contained test profiles does not allow Global uploads, so block it
+			$allow_global_uploads = false;
+		}
+
 		array_push($validated_run_requests, $test_run_request);
+	}
+
+	if(!$allow_global_uploads)
+	{
+		pts_set_assignment("BLOCK_GLOBAL_UPLOADS", true);
 	}
 
 	$test_run_manager->set_tests_to_run($validated_run_requests);
