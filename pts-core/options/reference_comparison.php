@@ -56,27 +56,20 @@ class reference_comparison implements pts_option_interface
 		}
 		else
 		{
-			echo pts_string_header("Reference Comparison");
-			$reference_count = 1;
+			$comparable = array();
 
 			foreach($reference_test_globals as $merge_select_object)
 			{
 				if(count($merge_select_object->get_selected_identifiers()) != 0)
 				{
-					echo $reference_count . ": " . array_pop($merge_select_object->get_selected_identifiers()) . "\n";
+					array_push($comparable, array_pop($merge_select_object->get_selected_identifiers()));
 				}
 
-				$reference_count++;
 			}
 
-			do
-			{
-				echo "\nSelect a reference system to compare to: ";
-				$request_identifier = (trim(fgets(STDIN)) - 1);
-			}
-			while(!isset($reference_test_globals[$request_identifier]));
-
-			array_push($merge_args, $reference_test_globals[$request_identifier]);
+			echo pts_string_header("Reference Comparison");
+			$merge_index = pts_text_select_menu("Select a reference system", $comparable, false, true);
+			array_push($merge_args, $reference_test_globals[$merge_index]);
 		}
 
 		pts_set_assignment("REFERENCE_COMPARISON", true);

@@ -43,7 +43,7 @@ function pts_text_input($question, $allow_null = false)
 
 	return $answer;
 }
-function pts_text_select_menu($user_string, $options_r, $allow_multi_select = false)
+function pts_text_select_menu($user_string, $options_r, $allow_multi_select = false, $return_index = false)
 {
 	$option_count = count($options_r);
 
@@ -71,7 +71,7 @@ function pts_text_select_menu($user_string, $options_r, $allow_multi_select = fa
 			$multi_select = array();
 			foreach($multi_choice as $choice)
 			{
-				if(in_array($choice, $options_r) || isset($options_r[($choice - 1)]) && ($choice = $options_r[($choice - 1)]) != null)
+				if(in_array($choice, $options_r) || isset($options_r[($choice - 1)]) && ($return_index || $choice = $options_r[($choice - 1)]) != null)
 				{
 					array_push($multi_select, $choice);
 				}
@@ -85,7 +85,7 @@ function pts_text_select_menu($user_string, $options_r, $allow_multi_select = fa
 			}
 		}
 	}
-	while(!$multi_select_pass && !(in_array($select_choice, $options_r) || isset($options_r[($select_choice - 1)]) && ($select_choice = $options_r[($select_choice - 1)]) != null));
+	while(!$multi_select_pass && !(in_array($select_choice, $options_r) || isset($options_r[($select_choice - 1)]) && ($return_index || $select_choice = $options_r[($select_choice - 1)]) != null));
 
 	return $select_choice;
 }
