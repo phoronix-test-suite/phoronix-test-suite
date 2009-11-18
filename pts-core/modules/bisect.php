@@ -63,8 +63,9 @@ class bisect extends pts_module_interface
 			while(!isset($result_objects[($selected_index--)]));
 		}
 
-		$system_identifiers = $result_objects[$selected_index]->get_identifiers();
-		$values = $result_objects[$selected_index]->get_values();
+		$system_identifiers = $result_object->get_result_buffer()->get_identifiers();
+		$values = $result_object->get_result_buffer()->get_values();
+
 		$proportion = $result_objects[$selected_index]->get_proportion();
 
 		$bad_run = pts_text_select_menu("Select test run that regressed", $system_identifiers);

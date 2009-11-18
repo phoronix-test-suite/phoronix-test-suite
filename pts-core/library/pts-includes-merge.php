@@ -142,7 +142,9 @@ function pts_result_file_results_to_xml(&$result_manager, &$xml_writer)
 	$results_added = 0;
 	foreach($result_manager->get_results() as $result_object)
 	{
-		if(count($result_object->get_identifiers()) == 0)
+		$buffer_items = $result_object->get_result_buffer()->get_buffer_items();
+
+		if(count($buffer_items) == 0)
 		{
 			continue;
 		}
@@ -157,16 +159,13 @@ function pts_result_file_results_to_xml(&$result_manager, &$xml_writer)
 		$xml_writer->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $use_id, $result_object->get_arguments());
 		$xml_writer->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $use_id, $result_object->get_format());
 
-		$identifiers = $result_object->get_identifiers();
-		$values = $result_object->get_values();
-		$raw_values = $result_object->get_raw_values();
-
-		for($i = 0; $i < count($identifiers); $i++)
+		foreach($buffer_items as $i => &$buffer_item)
 		{
-			$xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $use_id, $identifiers[$i], 5, "o-$i-$results_added-r");
-			$xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $use_id, $values[$i], 5, "o-$i-$results_added-r");
-			$xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $use_id, $raw_values[$i], 5, "o-$i-$results_added-r");
+			$xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $use_id, $buffer_item->get_result_identifier(), 5, "o-$i-$results_added-r");
+			$xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $use_id, $buffer_item->get_result_value(), 5, "o-$i-$results_added-r");
+			$xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $use_id, $buffer_item->get_result_raw(), 5, "o-$i-$results_added-r");
 		}
+
 		$results_added++;
 	}
 }

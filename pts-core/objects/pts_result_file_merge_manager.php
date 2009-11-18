@@ -44,24 +44,20 @@ class pts_result_file_merge_manager
 		{
 			if($this->test_results[$i]->get_test_name() == $merge_test_object->get_test_name() && trim($this->test_results[$i]->get_arguments()) == trim($merge_test_object->get_arguments()) && $this->test_results[$i]->get_attributes() == $merge_test_object->get_attributes() && $this->test_results[$i]->get_version() == $merge_test_object->get_version())
 			{
-				$identifiers = $merge_test_object->get_identifiers();
-				$values = $merge_test_object->get_values();
-				$raw_values = $merge_test_object->get_raw_values();
-
-				for($j = 0; $j < count($identifiers); $j++)
+				foreach($merge_test_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 				{
-					if($select_identifiers == null || in_array($identifiers[$j], $select_identifiers))
+					$this_identifier = $buffer_item->get_result_identifier();
+
+					if($select_identifiers == null || in_array($this_identifier, $select_identifiers))
 					{
 						if($result_merge_select != null && ($renamed = $result_merge_select->get_rename_identifier()) != null)
 						{
-							$identifiers[$j] = $renamed;
+							$this_identifier = $renamed;
 						}
 
-						if(!$this->result_already_contained($i, $identifiers[$j], $values[$j]))
+						if(!$this->result_already_contained($i, $buffer_item))
 						{
-							$this->test_results[$i]->add_identifier($identifiers[$j]);
-							$this->test_results[$i]->add_value($values[$j]);
-							$this->test_results[$i]->add_raw_value($raw_values[$j]);
+							$this->test_results[$i]->add_result_to_buffer($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw());
 						}
 					}
 				}
@@ -81,24 +77,21 @@ class pts_result_file_merge_manager
 					$skip_adding = true;
 				}
 
-				$identifiers = $merge_test_object->get_identifiers();
-				$values = $merge_test_object->get_values();
-				$raw_values = $merge_test_object->get_raw_values();
+				$result_buffer = $merge_test_object->get_result_buffer();
+				$merge_test_object->flush_result_buffer();
 
-				$merge_test_object->flush_result_data();
-
-				for($j = 0; $j < count($identifiers); $j++)
+				foreach($result_buffer->get_buffer_items() as $buffer_item)
 				{
-					if(in_array($identifiers[$j], $select_identifiers))
+					$this_identifier = $buffer_item->get_result_identifier();
+
+					if(in_array($this_identifier, $select_identifiers))
 					{
 						if(($renamed = $result_merge_select->get_rename_identifier()) != null)
 						{
-							$identifiers[$j] = $renamed;
+							$this_identifier = $renamed;
 						}
 
-						$merge_test_object->add_identifier($identifiers[$j]);
-						$merge_test_object->add_value($values[$j]);
-						$merge_test_object->add_raw_value($raw_values[$j]);
+						$merge_test_object->add_result_to_buffer($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw());
 					}
 				}
 			}
@@ -110,15 +103,13 @@ class pts_result_file_merge_manager
 			}
 		}
 	}
-	protected function result_already_contained($test_results_location, $identifier, $value)
+	protected function result_already_contained($i, &$buffer_item)
 	{
 		$contained = false;
-		$keys = array_keys($this->test_results[$test_results_location]->get_identifiers(), $identifier);
-		$result_values = $this->test_results[$test_results_location]->get_values();
 
-		foreach($keys as $key)
+		foreach($this->test_results[$i] as $check_buffer_item)
 		{
-			if($result_values[$key] == $value)
+			if($buffer_item->get_result_identifier() == $check_buffer_item->get_result_identifier() && $buffer_item->get_result_value() == $check_buffer_item->get_result_value())
 			{
 				$contained = true;
 				break;

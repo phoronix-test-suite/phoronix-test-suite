@@ -158,17 +158,12 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 	$version = $r_o->get_version();
 	$name = $r_o->get_name() . (isset($version[2]) ? " v" . $version : "");
 	$result_format = $r_o->get_format();
-
-	$identifiers = $r_o->get_identifiers();
-	$values = $r_o->get_values();
-	$raw_values = $r_o->get_raw_values();
+	$result_buffer_items = $r_o->get_result_buffer()->get_buffer_items();
 
 	if(getenv("REVERSE_GRAPH_ORDER"))
 	{
 		// Plot results in reverse order on graphs if REVERSE_GRAPH_ORDER env variable is set
-		$identifiers = array_reverse($identifiers);
-		$values = array_reverse($values);
-		$raw_values = array_reverse($raw_values);
+		$result_buffer_items = array_reverse($result_buffer_items);
 	}
 
 	if($result_format == "LINE_GRAPH" || $result_format == "BAR_ANALYZE_GRAPH")
@@ -183,11 +178,9 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 		}
 
 		//$t->hideGraphIdentifiers();
-
-		for($i = 0; $i < count($values); $i++)
+		foreach($result_buffer_items as &$buffer_item)
 		{
-			$values[$i] = explode(",", $values[$i]);
-			$t->loadGraphValues($values[$i], $identifiers[$i]);
+			$t->loadGraphValues(explode(",", $buffer_item->get_result_values()), $buffer_item->get_result_identifier());
 		}
 
 		$scale_special = $r_o->get_scale_special();
@@ -219,6 +212,18 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 					$t = new pts_BarGraph($name, $r_o->get_attributes(), $r_o->get_scale_formatted());
 				}
 				break;
+		}
+
+		// TODO: this code below is dirty, should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph
+		$identifiers = array();
+		$values = array();
+		$raw_values = array();
+
+		foreach($result_buffer_items as &$buffer_item)
+		{
+			array_push($identifiers, $buffer_item->get_result_identifier());
+			array_push($values, $buffer_item->get_result_value());
+			array_push($raw_values, $buffer_item->get_result_raw());
 		}
 
 		$t->loadGraphIdentifiers($identifiers);

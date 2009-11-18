@@ -38,7 +38,7 @@ class finish_run implements pts_option_interface
 		$pos = 0;
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$this_result_object_identifiers = $result_object->get_identifiers();
+			$this_result_object_identifiers = $result_object->get_result_buffer()->get_identifiers();
 
 			foreach($system_identifiers as $system_identifier)
 			{

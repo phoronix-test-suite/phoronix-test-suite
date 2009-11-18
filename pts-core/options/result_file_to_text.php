@@ -50,8 +50,10 @@ class result_file_to_text implements pts_option_interface
 		{
 			$result_output .= pts_string_header(trim($result_object->get_name() . " " . $result_object->get_version() . "\n" . $result_object->get_attributes()));
 
-			$test_identifiers = $result_object->get_identifiers();
-			$test_values = $result_object->get_values();
+			foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+			{
+				$result_output .= $buffer_item->get_result_identifier() . ": " . $buffer_item->get_result_value() . "\n";
+			}
 
 			for($i = 0; $i < count($test_identifiers); $i++)
 			{

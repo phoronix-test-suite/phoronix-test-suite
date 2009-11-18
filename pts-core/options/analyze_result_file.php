@@ -45,8 +45,8 @@ class analyze_result_file implements pts_option_interface
 			$win = null;
 			$win_value = -1;
 
-			$identifiers = $result_object->get_identifiers();
-			$values = $result_object->get_values();
+			$identifiers = $result_object->get_result_buffer()->get_identifiers();
+			$values = $result_object->get_result_buffer()->get_values();
 
 			for($i = 0; $i < count($values); $i++)
 			{

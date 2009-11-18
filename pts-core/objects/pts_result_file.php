@@ -129,24 +129,30 @@ class pts_result_file
 			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
 			$results_proportion = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
 			$results_format = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
-
 			$results_raw = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 
-			$results_identifiers = array();
-			$results_values = array();
-			$results_raw_values = array();
+			$result_buffers = array();
 
 			foreach(array_keys($results_raw) as $results_raw_key)
 			{
+				$result_buffer = new pts_test_result_buffer();
 				$xml_results = new tandem_XmlReader($results_raw[$results_raw_key]);
-				array_push($results_identifiers, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER));
-				array_push($results_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE));
-				array_push($results_raw_values, $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW));
+
+				$identifiers = $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
+				$values = $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE);
+				$raw_values = $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW);
+
+				for($i = 0; $i < count($identifiers) && $i < count($values); $i++)
+				{
+					$result_buffer->add_test_result($identifiers[$i], $values[$i], $raw_values[$i]);
+				}
+
+				array_push($result_buffers, $result_buffer);
 			}
 
 			for($i = 0; $i < count($results_name); $i++)
 			{
-				$test_object = new pts_result_file_merge_test($results_name[$i], $results_version[$i], $results_attributes[$i], $results_scale[$i], $results_test_name[$i], $results_arguments[$i], $results_proportion[$i], $results_format[$i], $results_identifiers[$i], $results_values[$i], $results_raw_values[$i]);
+				$test_object = new pts_result_file_merge_test($results_name[$i], $results_version[$i], $results_attributes[$i], $results_scale[$i], $results_test_name[$i], $results_arguments[$i], $results_proportion[$i], $results_format[$i], $result_buffers[$i]);
 
 				array_push($this->result_objects, $test_object);
 			}

@@ -31,11 +31,9 @@ class pts_result_file_merge_test
 	private $proportion;
 	private $format;
 
-	private $identifiers;
-	private $values;
-	private $raw_values;
+	private $result_buffer;
 
-	public function __construct($name, $version, $attributes, $scale, $test_name, $arguments, $proportion, $format, $result_identifiers, $result_values, $result_raw_values)
+	public function __construct($name, $version, $attributes, $scale, $test_name, $arguments, $proportion, $format, $result_buffer)
 	{
 		$this->name = $name;
 		$this->version = $version;
@@ -46,27 +44,19 @@ class pts_result_file_merge_test
 		$this->proportion = $proportion;
 		$this->format = $format;
 
-		$this->identifiers = $result_identifiers;
-		$this->values = $result_values;
-		$this->raw_values = $result_raw_values;
+		$this->result_buffer = $result_buffer;
 	}
-	public function add_identifier($identifier)
+	public function add_result_to_buffer($identifier, $value, $raw_value)
 	{
-		array_push($this->identifiers, $identifier);
+		$this->result_buffer->add_test_result($identifier, $value, $raw_value);
 	}
-	public function add_value($value)
+	public function get_result_buffer()
 	{
-		array_push($this->values, $value);
+		return $this->result_buffer;
 	}
-	public function add_raw_value($raw_value)
+	public function flush_result_buffer()
 	{
-		array_push($this->raw_values, $raw_value);
-	}
-	public function flush_result_data()
-	{
-		$this->identifiers = array();
-		$this->values = array();
-		$this->raw_values = array();
+		$this->result_buffer = new pts_test_result_buffer();
 	}
 	public function get_comparison_hash($show_version_and_attributes = true)
 	{
@@ -125,18 +115,6 @@ class pts_result_file_merge_test
 	public function set_attributes($attributes)
 	{
 		$this->attributes = $attributes;
-	}
-	public function get_identifiers()
-	{
-		return $this->identifiers;
-	}
-	public function get_values()
-	{
-		return $this->values;
-	}
-	public function get_raw_values()
-	{
-		return $this->raw_values;
 	}
 }
 

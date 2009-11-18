@@ -121,22 +121,18 @@ class pts_result_file_analyze_manager
 							$mto = $this->test_results[$similar_ids[0]];
 							$results = array();
 
-							foreach($mto->get_identifiers() as $identifier)
+							foreach($mto->get_result_buffer() as $buffer_item)
 							{
-								$results[$identifier] = array();
+								$results[$buffer_item->get_result_identifier()] = array();
 							}
 
 							foreach($similar_ids as $id)
 							{
-								$mto_read = $this->test_results[$id];
-								$mto_identifiers = $mto_read->get_identifiers();
-								$mto_values = $mto_read->get_values();
-
 								foreach(array_keys($results) as $key)
 								{
-									for($i = 0; $i < count($mto_identifiers); $i++)
+									foreach($this->test_results[$id] as $buffer_item)
 									{
-										if($mto_identifiers[$i] == $key)
+										if($buffer_item->get_result_identifier() == $key)
 										{
 											array_push($results[$key], $mto_values[$i]);
 											break;
@@ -145,7 +141,7 @@ class pts_result_file_analyze_manager
 								}
 							}
 
-							$mto->flush_result_data();
+							$mto->flush_result_buffer();
 
 							$do_line_graph = true;
 							foreach($similar_ids_names as $id_name_check)
@@ -157,22 +153,13 @@ class pts_result_file_analyze_manager
 								}
 							}
 
-							if($do_line_graph)
-							{
-								$mto->set_format("LINE_GRAPH");
-							}
-							else
-							{
-								$mto->set_format("BAR_ANALYZE_GRAPH");
-							}
-
+							$mto->set_format(($do_line_graph ? "LINE_GRAPH" : "BAR_ANALYZE_GRAPH"));
 							$mto->set_attributes($diff_index . " Analysis");
 							$mto->set_scale($mto->get_scale() . " | " . implode(",", $similar_ids_names));
 
 							foreach($results as $identifier => $values)
 							{
-								$mto->add_identifier($identifier);
-								$mto->add_value(implode(",", $values));
+								$mto->add_result_to_buffer($identifier, implode(",", $values), null);
 							}
 
 							array_push($return_results, $mto);
