@@ -121,18 +121,22 @@ class pts_result_file_analyze_manager
 							$mto = $this->test_results[$similar_ids[0]];
 							$results = array();
 
-							foreach($mto->get_result_buffer() as $buffer_item)
+							foreach($mto->get_result_buffer()->get_identifiers() as $identifier)
 							{
-								$results[$buffer_item->get_result_identifier()] = array();
+								$results[$identifier] = array();
 							}
 
 							foreach($similar_ids as $id)
 							{
+								$mto_read = $this->test_results[$id];
+								$mto_identifiers = $mto_read->get_result_buffer()->get_identifiers();
+								$mto_values = $mto_read->get_result_buffer()->get_values();
+
 								foreach(array_keys($results) as $key)
 								{
-									foreach($this->test_results[$id] as $buffer_item)
+									for($i = 0; $i < count($mto_identifiers); $i++)
 									{
-										if($buffer_item->get_result_identifier() == $key)
+										if($mto_identifiers[$i] == $key)
 										{
 											array_push($results[$key], $mto_values[$i]);
 											break;

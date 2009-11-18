@@ -180,7 +180,7 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 		//$t->hideGraphIdentifiers();
 		foreach($result_buffer_items as &$buffer_item)
 		{
-			$t->loadGraphValues(explode(",", $buffer_item->get_result_values()), $buffer_item->get_result_identifier());
+			$t->loadGraphValues(explode(",", $buffer_item->get_result_value()), $buffer_item->get_result_identifier());
 		}
 
 		$scale_special = $r_o->get_scale_special();
