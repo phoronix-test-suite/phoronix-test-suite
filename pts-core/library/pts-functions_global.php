@@ -100,6 +100,11 @@ function pts_global_upload_usage_data($task, $data)
 }
 function pts_global_upload_result($result_file, $tags = "")
 {
+	if(!pts_global_allow_upload($use_file))
+	{
+		return false;
+	}
+
 	// Upload a test result to the Phoronix Global database
 	$test_results = file_get_contents($result_file);
 	$test_results = str_replace(array("\n", "\t"), "", $test_results);
@@ -119,6 +124,23 @@ function pts_global_upload_result($result_file, $tags = "")
 	$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags);
 
 	return pts_http_upload_via_post("http://www.phoronix-test-suite.com/global/user-upload.php", $upload_data);
+}
+function pts_global_allow_upload($result_file)
+{
+	$result_file = new pts_result_file($result_file);
+
+	foreach($result_file->get_result_objects() as $result_object)
+	{
+		$test_profile = new pts_test_profile($result_object->get_test_name());
+
+		if(!$test_profile->allow_global_uploads())
+		{
+			echo "\n" . $result_object->get_test_name() . " does not allow test results to be uploaded to Phoronix Global.\n\n";
+			return false;
+		}
+	}
+
+	return true;
 }
 
 ?>
