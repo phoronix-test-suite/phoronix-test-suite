@@ -35,6 +35,18 @@ class upload_result implements pts_option_interface
 	public static function run($r)
 	{
 		$use_file = $r["result_file"];
+		$result_file = new pts_result_file($use_file);
+
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$test_profile = new pts_test_profile($result_object->get_test_name());
+
+			if(!$test_profile->allow_global_uploads())
+			{
+				echo "\n" . $result_object->get_test_name() . " does not allow test results to be uploaded to Phoronix Global.\n\n";
+				return false;
+			}
+		}
 
 		if(!pts_is_assignment("AUTOMATED_MODE"))
 		{
