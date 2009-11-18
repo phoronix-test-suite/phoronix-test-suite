@@ -555,8 +555,8 @@ function pts_test_download_cache_directories()
 	if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
 	{
 		$download_cache_dirs = array_merge(
-		glob("/media/*/download-cache/"),
-		glob("/Volumes/*/download-cache/")
+		pts_glob("/media/*/download-cache/"),
+		pts_glob("/Volumes/*/download-cache/")
 		);
 
 		foreach($download_cache_dirs as $dir)

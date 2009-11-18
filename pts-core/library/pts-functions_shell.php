@@ -147,7 +147,7 @@ function pts_remove($object, $ignore_files = null)
 		$object = pts_add_trailing_slash($object);
 	}
 
-	foreach(glob($object . "*") as $to_remove)
+	foreach(pts_glob($object . "*") as $to_remove)
 	{
 		if(is_file($to_remove))
 		{
@@ -164,7 +164,7 @@ function pts_remove($object, $ignore_files = null)
 		{
 			pts_remove($to_remove, $ignore_files);
 
-			if(count(glob($to_remove . "/*")) == 0)
+			if(count(pts_glob($to_remove . "/*")) == 0)
 			{
 				@rmdir($to_remove);
 			}

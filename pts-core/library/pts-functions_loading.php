@@ -61,7 +61,7 @@ function pts_load_object($to_load)
 	{
 		$sub_objects = array();
 
-		foreach(array_merge(glob(PTS_PATH . "pts-core/objects/*/*.php"), glob(PTS_PATH . "pts-core/objects/*/*/*.php")) as $file)
+		foreach(array_merge(pts_glob(PTS_PATH . "pts-core/objects/*/*.php"), pts_glob(PTS_PATH . "pts-core/objects/*/*/*.php")) as $file)
 		{
 			$object_name = basename($file, ".php");
 			$sub_objects[$object_name] = $file;

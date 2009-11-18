@@ -70,6 +70,11 @@ function pts_mkdir($dir, $mode = 0777, $recursive = false)
 {
 	return !is_dir($dir) && mkdir($dir, $mode, $recursive);
 }
+function pts_glob($pattern, $flags = 0)
+{
+	$r = glob($pattern, $flags);
+	return is_array($r) ? $r : array();
+}
 function pts_rmdir($dir)
 {
 	return is_dir($dir) && rmdir($dir);

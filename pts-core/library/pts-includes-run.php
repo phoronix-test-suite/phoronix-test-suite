@@ -207,7 +207,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 
 	pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/active.xml");
 
-	foreach(glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
+	foreach(pts_glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
 	{
 		unlink($cache_share_file);
 	}

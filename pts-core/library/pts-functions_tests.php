@@ -106,7 +106,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	{
 		if(!pts_mkdir($save_to_dir . "/result-graphs", 0777, true))
 		{
-			foreach(glob($save_to_dir . "/result-graphs/*") as $old_file)
+			foreach(pts_glob($save_to_dir . "/result-graphs/*") as $old_file)
 			{
 				unlink($old_file);
 			}
@@ -683,7 +683,7 @@ function pts_available_tests_array()
 
 	if($cache == null)
 	{
-		$tests = array_unique(array_merge(glob(XML_PROFILE_DIR . "*.xml"), glob(XML_PROFILE_LOCAL_DIR . "*.xml")));
+		$tests = array_unique(array_merge(pts_glob(XML_PROFILE_DIR . "*.xml"), pts_glob(XML_PROFILE_LOCAL_DIR . "*.xml")));
 		asort($tests);
 
 		foreach($tests as &$test)
@@ -702,7 +702,7 @@ function pts_available_base_tests_array()
 
 	if($cache == null)
 	{
-		$base_tests = glob(XML_PROFILE_CTP_BASE_DIR . "*.xml");
+		$base_tests = pts_glob(XML_PROFILE_CTP_BASE_DIR . "*.xml");
 		asort($base_tests);
 
 		foreach($base_tests as &$base_test)
@@ -742,7 +742,7 @@ function pts_installed_tests_array()
 	{
 		$cleaned_tests = array();
 
-		foreach(glob(TEST_ENV_DIR . "*/pts-install.xml") as $test)
+		foreach(pts_glob(TEST_ENV_DIR . "*/pts-install.xml") as $test)
 		{
 			$test = pts_extract_identifier_from_path($test);
 
@@ -763,7 +763,7 @@ function pts_available_suites_array()
 
 	if($cache == null)
 	{
-		$suites = array_unique(array_merge(glob(XML_SUITE_DIR . "*.xml"), glob(XML_SUITE_LOCAL_DIR . "*.xml")));
+		$suites = array_unique(array_merge(pts_glob(XML_SUITE_DIR . "*.xml"), pts_glob(XML_SUITE_LOCAL_DIR . "*.xml")));
 		asort($suites);
 
 		foreach($suites as &$suite)
@@ -879,7 +879,7 @@ function pts_saved_test_results_identifiers()
 	$results = array();
 	$ignore_ids = pts_generic_reference_system_comparison_ids();
 
-	foreach(glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
+	foreach(pts_glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
 	{
 		$identifier = pts_extract_identifier_from_path($result_file);
 

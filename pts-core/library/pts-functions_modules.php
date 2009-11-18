@@ -356,7 +356,7 @@ function pts_module_type($name)
 }
 function pts_available_modules()
 {
-	$modules = pts_array_merge(glob(MODULE_DIR . "*"), glob(MODULE_LOCAL_DIR . "*"));
+	$modules = pts_array_merge(pts_glob(MODULE_DIR . "*"), pts_glob(MODULE_LOCAL_DIR . "*"));
 	$module_names = array();
 
 	foreach($modules as $module)

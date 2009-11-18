@@ -267,7 +267,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 				return;
 			}
 
-			$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
+			$all_devices = array_merge(pts_glob("/dev/hd*"), pts_glob("/dev/sd*"));
 			$all_devices_count = count($all_devices);
 
 			for($i = 0; $i < $all_devices_count; $i++)
@@ -322,7 +322,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 				return;
 			}
 
-			$all_devices = array_merge(glob("/dev/hd*"), glob("/dev/sd*"));
+			$all_devices = array_merge(pts_glob("/dev/hd*"), pts_glob("/dev/sd*"));
 			$all_devices_count = count($all_devices);
 
 			for($i = 0; $i < $all_devices_count; $i++)
@@ -349,7 +349,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 				return;
 			}
 
-			$removable_media = glob("/media/*/");
+			$removable_media = array_merge(pts_glob("/media/*/"), pts_glob("/Volumes/*/"));
 
 			for($i = 0; $i < count($removable_media); $i++)
 			{

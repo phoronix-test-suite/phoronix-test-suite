@@ -26,7 +26,7 @@ class dump_possible_options implements pts_option_interface
 	{
 		$options = array();
 
-		foreach(glob(OPTIONS_DIR . "*.php") as $option_php)
+		foreach(pts_glob(OPTIONS_DIR . "*.php") as $option_php)
 		{
 			$name = str_replace("_", "-", basename($option_php, ".php"));
 
