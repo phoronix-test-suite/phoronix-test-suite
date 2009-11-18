@@ -96,12 +96,12 @@ function pts_download($download, $to)
 	else if(($curl = pts_executable_in_path("curl")) != false)
 	{
 		// curl download
-		$download_output = shell_exec("cd " . $to_dir . " && " . $curl . " -L --fail --connect-timeout 25 --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && " . $curl . (defined("NETWORK_PROXY") ? " -x " . NETWORK_PROXY : null) . " -L --fail --connect-timeout 25 --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
 	}
 	else if(($wget = pts_executable_in_path("wget")) != false)
 	{
 		// wget download
-		$download_output = shell_exec("cd " . $to_dir . " && " . $wget . " --timeout=25 --tries=3 --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
+		$download_output = shell_exec((defined("NETWORK_PROXY") ? "export http_proxy=\"" . NETWORK_PROXY . "\"; export ftp_proxy=\"" . NETWORK_PROXY . "\"; " : null) . "cd " . $to_dir . " && " . $wget . " --timeout=25 --tries=3 --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
 	}
 	else if(IS_BSD && ($ftp = pts_executable_in_path("ftp")) != false)
 	{

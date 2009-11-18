@@ -289,10 +289,10 @@ function pts_http_stream_context_create($http_parameters = null, $proxy_address 
 		$http_parameters = array();
 	}
 
-	if($proxy_address == false && $proxy_port == false)
+	if($proxy_address == false && $proxy_port == false && defined("NETWORK_PROXY"))
 	{
-		$proxy_address = pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, false);
-		$proxy_port = pts_read_user_config(P_OPTION_NET_PROXY_PORT, false);
+		$proxy_address = NETWORK_PROXY_ADDRESS;
+		$proxy_port = NETWORK_PROXY_PORT;
 	}
 
 	if($proxy_address != false && $proxy_port != false && is_numeric($proxy_port))

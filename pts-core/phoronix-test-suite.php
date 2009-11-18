@@ -96,6 +96,13 @@ if(!QUICK_START)
 
 	register_shutdown_function("pts_shutdown");
 
+	if(($proxy_address = pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, false)) && ($proxy_port = pts_read_user_config(P_OPTION_NET_PROXY_PORT, false)))
+	{
+		define("NETWORK_PROXY", $proxy_address . ":" . $proxy_port);
+		define("NETWORK_PROXY_ADDRESS", $proxy_address);
+		define("NETWORK_PROXY_PORT", $proxy_port);
+	}
+
 	if(ini_get("allow_url_fopen") == "Off")
 	{
 		echo "\nThe allow_url_fopen option in your PHP configuration must be enabled for network support.\n\n";
