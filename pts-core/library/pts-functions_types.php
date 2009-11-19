@@ -194,7 +194,7 @@ function pts_location_virtual_suite($identifier)
 {
 	static $cache;
 
-	if(!isset($cache[$identifier]) || $identifier == "prev_identifier")
+	if(!isset($cache[$identifier]) || in_array($identifier, array("prev-test-identifier", "prev-save-identifier"))))
 	{
 		$virtual_suite = false;
 
@@ -213,10 +213,16 @@ function pts_location_virtual_suite($identifier)
 				case "free":
 					$virtual_suite = "TYPE_VIRT_SUITE_FREE";
 					break;
-				case "prev-identifier":
+				case "prev-test-identifier":
 					if(pts_read_assignment("PREV_TEST_IDENTIFIER"))
 					{
-						$virtual_suite = "TYPE_VIRT_PREV_IDENTIFIER";
+						$virtual_suite = "TYPE_VIRT_PREV_TEST_IDENTIFIER";
+					}
+					break;
+				case "prev-save-identifier":
+					if(pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER"))
+					{
+						$virtual_suite = "TYPE_VIRT_PREV_SAVE_IDENTIFIER";
 					}
 					break;
 				default:
@@ -461,8 +467,13 @@ function pts_virtual_suite_tests($object)
 				}
 			}
 			break;
-		case "TYPE_VIRT_PREV_IDENTIFIER":
+		case "TYPE_VIRT_PREV_TEST_IDENTIFIER":
 			foreach(pts_to_array(pts_read_assignment("PREV_TEST_IDENTIFIER")) as $test)
+			{
+				array_push($contained_tests, $test);
+			}
+		case "TYPE_VIRT_PREV_SAVE_IDENTIFIER":
+			foreach(pts_to_array(pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) as $test)
 			{
 				array_push($contained_tests, $test);
 			}
