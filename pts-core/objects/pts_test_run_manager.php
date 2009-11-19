@@ -163,6 +163,19 @@ class pts_test_run_manager
 	{
 		return $this->tests_to_run;
 	}
+	public function get_tests_to_run_identifiers()
+	{
+		$identifiers = array();
+
+		foreach($this->tests_to_run as $test_run_request)
+		{
+			array_push($identifiers, $test_run_request->get_identifier());
+		}
+
+		array_unique($identifiers);
+
+		return $identifiers;
+	}
 	public function get_tests_to_run_count()
 	{
 		return count($this->tests_to_run);

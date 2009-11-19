@@ -374,4 +374,16 @@ function pts_current_user()
 	// Current system user
 	return ($pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User")) != "Default User" ? $pts_user : phodevi::read_property("system", "username");
 }
+function pts_temp_dir()
+{
+	$temp_dir = sys_get_temp_dir();
+
+	do
+	{
+		$temp_folder_name = "/pts-" . rand(1000, 9999) . "/";
+	}
+	while(!pts_mkdir(($temp_path = $temp_dir . $temp_folder_name)));
+
+	return $temp_path;
+}
 ?>

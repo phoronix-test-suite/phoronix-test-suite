@@ -60,6 +60,7 @@ class install_test implements pts_option_interface
 
 		// Install tests
 		pts_start_install($items_to_install, $display_mode);
+		pts_set_assignment_next("PREV_TEST_IDENTIFIER", $items_to_install);
 	}
 }
 

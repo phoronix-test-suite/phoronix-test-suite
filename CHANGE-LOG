@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add AllowGlobalUploads tag to XML test profile specification to allow a test profile to block against Phoronix Global uploads
 - pts-core: Add AutoSaveResults tag to XML test profile specification to allow a test profile tu automatically have the results saved without the user option
 - pts-core: Hook in the Phoronix Test Suite proxy support to curl and wget
+- pts-core: Add prev-identifier virtual suite of whatever the previously executed command(s) were
 - phodevi: Split out phodevi_parser module into phodevi_linux_parser, phodevi_osx_parser, and phodevi_solaris_parser for OS-specific functions
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
 - phodevi: Add device notes and special settings string functionality to API
