@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
 - phodevi: Add device notes and special settings string functionality to API
 - phoromatic: Use a locking system to prevent multiple copies of the Phoromatic module from running simultaneously
+- embedded: Add a PTS module named "embedded" that is a collection of options to help those running PTS on embedded/mobile devices
 - pts_Graph: Add pts_ImageComparisonGraph object
 - pts: Add initial iqc-nexuiz test profile for image quality comparison support
 - pts: Add x264 test profile for x264 H.264/Y4M encoding application
