@@ -199,6 +199,11 @@ class phodevi_cpu extends pts_device_interface
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))
 			{
 				// Just one processor
+				if(($cut = strpos($cpu_strings[0], " (")) !== false)
+				{
+					$cpu_strings[0] = substr($cpu_strings[0], 0, $cut);
+				}
+
 				$info = $cpu_strings[0];
 			}
 			else if($physical_cpu_count > 1 && count($cpu_strings_unique) == 1)

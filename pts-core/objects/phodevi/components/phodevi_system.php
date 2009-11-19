@@ -497,20 +497,14 @@ class phodevi_system extends pts_device_interface
 	public static function sw_compiler()
 	{
 		// Returns version of the compiler (if present)
-		$info = trim(shell_exec("cc -dumpversion 2>&1"));
 		$compiler_info = null;
 
-		if(strlen(pts_remove_chars($info, false, false, true, true)) == 0)
+		if(pts_executable_in_path("gcc"))
 		{
 			// GCC
-			$gcc_info = trim(shell_exec("gcc -dumpversion 2>&1"));
-
-			if($gcc_info == $info)
-			{
-				$compiler_info = "GCC " . $info;
-			}
+			$compiler_info = "GCC " . trim(shell_exec("gcc -dumpversion 2>&1"));
 		}
-		else if(IS_SOLARIS)
+		else if(pts_executable_in_path("suncc"))
 		{
 			// Sun Studio / SunCC
 			$info = trim(shell_exec("suncc -V 2>&1"));
@@ -523,8 +517,7 @@ class phodevi_system extends pts_device_interface
 				$compiler_info = $info;
 			}
 		}
-
-		if($compiler_info == null)
+		else if(pts_executable_in_path("llvmc"))
 		{
 			// LLVM - Low Level Virtual Machine (llvmc)
 			$info = trim(shell_exec("llvmc -version 2>&1"));
@@ -536,11 +529,6 @@ class phodevi_system extends pts_device_interface
 
 				$compiler_info = trim($info);
 			}
-		}
-
-		if($compiler_info == null)
-		{
-			$compiler_info = "N/A";
 		}
 
 		return $compiler_info;
