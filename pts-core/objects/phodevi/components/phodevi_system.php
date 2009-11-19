@@ -263,7 +263,7 @@ class phodevi_system extends pts_device_interface
 			{
 				if(is_file($sys_current))
 				{
-					$getcurrent = pts_file_get_contents("/sys/devices/w1_bus_master1/32-00084051ca73/getcurrent");
+					$getcurrent = pts_file_get_contents($sys_current);
 
 					if(substr($getcurrent, 0, 1) == "-")
 					{
