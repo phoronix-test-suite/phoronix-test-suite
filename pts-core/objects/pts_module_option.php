@@ -122,6 +122,11 @@ class pts_module_option
 					{
 						$supported = true;
 					}
+				case "NOT_EMPTY":
+					if(!empty($input))
+					{
+						$supported = true;
+					}
 				case "":
 					$supported = true;
 					break;

@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add prev-save-identifier virtual suite of the previously saved identifier (if available)
 - pts-core: Add export-profile-package option for exporting a PTS test profile as a zip package
 - pts-core: Add import-profile-package option for importing a PTS test profile from a zip package
+- pts-core: Add support for /opt/bin/php
 - phodevi: Split out phodevi_parser module into phodevi_linux_parser, phodevi_osx_parser, and phodevi_solaris_parser for OS-specific functions
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
 - phodevi: Add device notes and special settings string functionality to API

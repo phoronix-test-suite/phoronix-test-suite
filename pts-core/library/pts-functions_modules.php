@@ -168,7 +168,7 @@ function pts_module_processes()
 }
 function pts_module_events()
 {
-	return array("__event_global_upload");
+	return array("__event_global_upload", "__event_results_saved", "__event_user_error");
 }
 function pts_is_php_module($module)
 {
