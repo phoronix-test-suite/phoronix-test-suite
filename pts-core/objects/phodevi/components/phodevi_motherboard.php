@@ -147,6 +147,16 @@ class phodevi_motherboard extends pts_device_interface
 						$info = $pci_vendor;
 					}
 				}
+
+				if(empty($info))
+				{
+					$hw_string = phodevi_linux_parser::read_cpuinfo("Hardware");
+
+					if(count($hw_string) == 1)
+					{
+						$info = $hw_string[0];
+					}
+				}
 			}
 		}
 		else if(IS_WINDOWS)

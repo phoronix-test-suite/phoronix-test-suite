@@ -123,6 +123,23 @@ class phodevi_parser
 
 		return $module_version;
 	}
+	public static function parse_equal_delimited_file($file, $key)
+	{
+		$return_value = false;
+
+		foreach(explode("\n", pts_file_get_contents($file)) as $build_line)
+		{
+			list($descriptor, $value) = pts_trim_explode("=", $build_line);
+
+			if($decriptor == $key)
+			{
+				$return_value = $value;
+				break;
+			}
+		}
+
+		return $return_value;
+	}
 }
 
 ?>

@@ -103,7 +103,7 @@ class phodevi_disk extends pts_device_interface
 			$disks_formatted = array();
 			$disks = array();
 
-			foreach(glob("/sys/block/sd*") as $sdx)
+			foreach(pts_glob("/sys/block/sd*") as $sdx)
 			{
 				if(is_file($sdx . "/device/model") && is_file($sdx . "/size"))
 				{

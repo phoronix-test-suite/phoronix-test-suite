@@ -319,20 +319,28 @@ class phodevi_linux_parser
 		// Read CPU information
 		$cpuinfo_matches = array();
 
-		if(is_file("/proc/cpuinfo"))
+		foreach(pts_to_array($attribute) as $attribute_check)
 		{
-			$cpuinfo_lines = explode("\n", file_get_contents("/proc/cpuinfo"));
-
-			foreach($cpuinfo_lines as $line)
+			if(is_file("/proc/cpuinfo"))
 			{
-				$line = pts_trim_explode(": ", $line);
-				$this_attribute = $line[0];
-				$this_value = (count($line) > 1 ? $line[1] : "");
+				$cpuinfo_lines = explode("\n", file_get_contents("/proc/cpuinfo"));
 
-				if($this_attribute == $attribute)
+				foreach($cpuinfo_lines as $line)
 				{
-					array_push($cpuinfo_matches, $this_value);
+					$line = pts_trim_explode(": ", $line);
+					$this_attribute = $line[0];
+					$this_value = (count($line) > 1 ? $line[1] : "");
+
+					if($this_attribute == $attribute_check)
+					{
+						array_push($cpuinfo_matches, $this_value);
+					}
 				}
+			}
+
+			if(count($cpuinfo_matches) != 0)
+			{
+				break;
 			}
 		}
 

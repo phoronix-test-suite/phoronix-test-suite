@@ -20,3 +20,4 @@ list_supported_tests = list_tests
 initial_config = user_config_reset
 result_info = info
 change_results_display_order = reorder_result_file
+test = benchmark

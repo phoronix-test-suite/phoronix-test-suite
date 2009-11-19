@@ -640,15 +640,18 @@ class phodevi_system extends pts_device_interface
 						$os = ucwords(substr(($n = basename($files[$i])), 0, strpos($n, "-")));
 					}			
 				}
+			}
 
-				if($os == null)
-				{
-					if(is_file("/etc/release"))
-					{
-						$file = file_get_contents("/etc/release");
-						$os = substr($file, 0, strpos($file, "\n"));
-					}
-				}
+			if($os == null && is_file("/etc/release"))
+			{
+				$file = file_get_contents("/etc/release");
+				$os = substr($file, 0, strpos($file, "\n"));
+			}
+
+			if($os == null && is_file("/etc/palm-build-info"))
+			{
+				// Palm / webOS Support
+				$os = parse_equal_delimited_file("/etc/palm-build-info", "PRODUCT_VERSION_STRING");
 			}
 
 			if($os == null)
