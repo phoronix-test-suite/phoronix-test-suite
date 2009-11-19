@@ -27,7 +27,7 @@ function pts_is_run_object($object)
 }
 function pts_is_suite($object)
 {
-	$type = pts_test_type($object);
+	$type = pts_testing_type($object);
 
 	return $type == "TYPE_TEST_SUITE" || $type == "TYPE_LOCAL_TEST_SUITE";
 }
@@ -48,13 +48,13 @@ function pts_is_virtual_suite($object)
 }
 function pts_is_test($object)
 {
-	$type = pts_test_type($object);
+	$type = pts_testing_type($object);
 
 	return $type == "TYPE_TEST" || $type == "TYPE_LOCAL_TEST" || $type == "TYPE_BASE_TEST";
 }
 function pts_is_base_test($object)
 {
-	$type = pts_test_type($object);
+	$type = pts_testing_type($object);
 
 	return $type == "TYPE_BASE_TEST";
 }
@@ -124,12 +124,12 @@ function pts_validate_local_test_suite($identifier)
 
 	return $valid;
 }
-function pts_test_type($identifier)
+function pts_testing_type($identifier, $rewrite_cache = false)
 {
 	// Determine type of test based on identifier
 	static $cache;
 
-	if(!isset($cache[$identifier]))
+	if(!isset($cache[$identifier]) || $rewrite_cache)
 	{
 		$test_type = false;
 
@@ -162,17 +162,17 @@ function pts_test_type($identifier)
 
 	return $cache[$identifier];
 }
-function pts_location_suite($identifier)
+function pts_location_suite($identifier, $rewrite_cache = false)
 {
 	static $cache;
 
-	if(!isset($cache[$identifier]))
+	if(!isset($cache[$identifier]) || $rewrite_cache)
 	{
 		$location = false;
 
 		if(pts_is_suite($identifier))
 		{
-			$type = pts_test_type($identifier);
+			$type = pts_testing_type($identifier);
 
 			switch($type)
 			{
@@ -232,17 +232,17 @@ function pts_location_virtual_suite($identifier)
 
 	return $cache[$identifier];
 }
-function pts_location_test($identifier)
+function pts_location_test($identifier, $rewrite_cache = false)
 {
 	static $cache;
 
-	if(!isset($cache[$identifier]))
+	if(!isset($cache[$identifier]) || $rewrite_cache)
 	{
 		$location = false;
 
 		if(pts_is_test($identifier))
 		{
-			$type = pts_test_type($identifier);
+			$type = pts_testing_type($identifier);
 
 			switch($type)
 			{
@@ -263,17 +263,17 @@ function pts_location_test($identifier)
 
 	return $cache[$identifier];
 }
-function pts_location_test_resources($identifier)
+function pts_location_test_resources($identifier, $rewrite_cache = false)
 {
 	static $cache;
 
-	if(!isset($cache[$identifier]))
+	if(!isset($cache[$identifier]) || $rewrite_cache)
 	{
 		$location = false;
 
 		if(pts_is_test($identifier))
 		{
-			$type = pts_test_type($identifier);
+			$type = pts_testing_type($identifier);
 
 			if($type == "TYPE_LOCAL_TEST" && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
 			{
@@ -481,6 +481,17 @@ function pts_find_result_file($file, $check_global = true)
 	}
 
 	return $USE_FILE;
+}
+function pts_rebuild_test_type_cache($identifier)
+{
+	pts_testing_type($identifier, true);
+	pts_location_test($identifier, true);
+	pts_location_test_resources($identifier, true);
+}
+function pts_rebuild_suite_type_cache($identifier)
+{
+	pts_testing_type($identifier, true);
+	pts_location_suite($identifier, true);
 }
 
 ?>

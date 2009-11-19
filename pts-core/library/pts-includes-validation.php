@@ -47,5 +47,27 @@ function pts_validation_print_problem($type, $problems_r)
 		}
 	}
 }
+function pts_validation_required_test_tags()
+{
+	return array(
+	array(P_TEST_TITLE, "A title tag is required for standard test profiles."),
+	array(P_TEST_PTSVERSION, "A version tag is required for standard test profiles."),
+	array(P_TEST_HARDWARE_TYPE, "A hardware type tag is required for standard test profiles."),
+	array(P_TEST_MAINTAINER, "Phoronix Media requires a maintainer tag for standard test profiles."),
+	array(P_TEST_LICENSE, "Phoronix Media requires a license tag for standard test profiles."),
+	array(P_TEST_STATUS, "Phoronix Media requires a status tag for standard test profiles."),
+	array(P_TEST_DESCRIPTION, "Phoronix Media requires a description tag for standard test profiles."),
+	array(P_TEST_SCALE, "A scale tag is required for most standard test profiles."),
+	array(P_TEST_PROPORTION, "A proportion tag is required for most standard test profiles.")
+	);
+}
+function pts_validation_recommended_test_tags()
+{
+	return array(
+	array(P_TEST_SOFTWARE_TYPE, "A tag for the software program's type is recommended for standard test profiles."),
+	array(P_TEST_ENVIRONMENTSIZE, "A tag for the approximate disk size needed (in MB) for the test profile is recommended."),
+	array(P_TEST_PROJECTURL, "A tag for the web-site URL of the tested software is recommended.")
+	);
+}
 
 ?>

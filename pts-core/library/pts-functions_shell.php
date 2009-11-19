@@ -187,9 +187,9 @@ function pts_symlink($from, $to)
 {
 	return @symlink($from, $to);
 }
-function pts_move($from, $to, $change_directory = "")
+function pts_move($from, $to, $cd = null)
 {
-	return shell_exec("cd " . $change_directory . " && mv " . $from . " " . $to . " 2>&1");
+	return shell_exec(($cd != null ? "cd " . $cd . " && " : null) . "mv " . $from . " " . $to . " 2>&1");
 }
 function pts_extract($file)
 {
@@ -208,7 +208,7 @@ function pts_extract($file)
 			$extract_cmd = "tar -jxf";
 			break;
 		case "zip":
-			$extract_cmd = "zip -O";
+			$extract_cmd = "unzip -o";
 			break;
 		default:
 			$extract_cmd = "";

@@ -178,5 +178,10 @@ function pts_request_new_id()
 
 	return $id;
 }
+function pts_is_file_or_url($path)
+{
+	// Basic check if $path is a file or possibly a download URL
+	return strpos($path, "://") != false || is_file($path) ? $path : false;
+}
 
 ?>
