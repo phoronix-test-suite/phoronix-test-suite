@@ -53,6 +53,7 @@ function pts_available_sensors()
 	new pts_sensor("temp", "hdd", array("disk", "temperature"), "°C"),
 	new pts_sensor("temp", "sys", array("system", "temperature"), "°C", "System"),
 	new pts_sensor("battery", "power", array("system", "power-consumption"), "Milliwatts"),
+	new pts_sensor("battery", "current", array("system", "power-current"), "microAmps"),
 	new pts_sensor("voltage", "cpu", array("system", "cpu-voltage"), "Volts"),
 	new pts_sensor("voltage", "v3", array("system", "v3-voltage"), "Volts", "+3.33V"),
 	new pts_sensor("voltage", "v5", array("system", "v5-voltage"), "Volts", "+5.00V"),

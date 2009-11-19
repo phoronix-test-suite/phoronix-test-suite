@@ -45,6 +45,9 @@ class phodevi_system extends pts_device_interface
 			case "power-consumption":
 				$sensor = "sys_power_consumption_rate";
 				break;
+			case "power-current":
+				$sensor = "sys_power_current";
+				break;
 			case "uptime":
 				$sensor = "sys_uptime";
 				break;
@@ -248,6 +251,27 @@ class phodevi_system extends pts_device_interface
 		}
 
 		return $rate;
+	}
+	public static function sys_power_current()
+	{
+		// Returns power consumption rate in uA
+		$current = -1;
+
+		if(IS_LINUX)
+		{
+			// TODO: need support besides the Palm Pre
+			if(is_readable("/sys/devices/w1_bus_master1/32-00084051ca73/getcurrent"))
+			{
+				$getcurrent = pts_file_get_contents("/sys/devices/w1_bus_master1/32-00084051ca73/getcurrent");
+
+				if(substr($getcurrent, 0, 1) == "-")
+				{
+					$current = substr($getcurrent, 1);
+				}
+			}
+		}
+
+		return $current;
 	}
 	public static function sys_uptime()
 	{

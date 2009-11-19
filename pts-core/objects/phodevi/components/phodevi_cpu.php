@@ -362,7 +362,7 @@ class phodevi_cpu extends pts_device_interface
 		if(IS_LINUX)
 		{
 			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
-			if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"))
+			if(is_readable("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"))
 			{
 				$info = pts_file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq");
 				$info = pts_trim_double(intval($info) / 1000, 2);
