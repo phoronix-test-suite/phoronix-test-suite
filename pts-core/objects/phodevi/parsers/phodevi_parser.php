@@ -131,7 +131,7 @@ class phodevi_parser
 		{
 			list($descriptor, $value) = pts_trim_explode("=", $build_line);
 
-			if($decriptor == $key)
+			if($descriptor == $key)
 			{
 				$return_value = $value;
 				break;
