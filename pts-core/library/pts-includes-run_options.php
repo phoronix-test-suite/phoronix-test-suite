@@ -142,7 +142,7 @@ function pts_defaults_test_options($identifier)
 
 		if($o->option_count() == 2)
 		{
-			for($i = 0; $i < 2; $i++)
+			foreach(array(0, 1) as $i)
 			{
 				array_push($option_args, $o->format_option_value_from_select($i));
 				array_push($option_args_description, $o->format_option_display_from_select($i));
@@ -268,15 +268,14 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 			}
 
 			$all_devices = array_merge(pts_glob("/dev/hd*"), pts_glob("/dev/sd*"));
-			$all_devices_count = count($all_devices);
 
-			for($i = 0; $i < $all_devices_count; $i++)
+			foreach($all_devices as &$device)
 			{
-				$last_char = substr($all_devices[$i], -1);
+				$last_char = substr($device, -1);
 
 				if(!is_numeric($last_char))
 				{
-					unset($all_devices[$i]);
+					unset($device);
 				}
 			}
 
@@ -323,15 +322,14 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 			}
 
 			$all_devices = array_merge(pts_glob("/dev/hd*"), pts_glob("/dev/sd*"));
-			$all_devices_count = count($all_devices);
 
-			for($i = 0; $i < $all_devices_count; $i++)
+			foreach($all_devices as &$device)
 			{
-				$last_char = substr($all_devices[$i], -1);
+				$last_char = substr($device, -1);
 
 				if(is_numeric($last_char))
 				{
-					unset($all_devices[$i]);
+					unset($device);
 				}
 			}
 

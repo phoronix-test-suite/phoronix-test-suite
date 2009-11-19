@@ -14,4 +14,7 @@
 	<RunTest>
 		<Test>ffmpeg</Test>
 	</RunTest>
+	<RunTest>
+		<Test>x264</Test>
+	</RunTest>
 </PhoronixTestSuite>

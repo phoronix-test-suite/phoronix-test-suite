@@ -473,7 +473,7 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 							pts_copy(TEST_ENV_DIR . $identifier . "/install.log", TEST_ENV_DIR . $identifier . "/install-failed.log");
 							pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
 
-							echo "\nThe " . $identifier . " installer exited with a non-zero exit status. Installation failed.\n";
+							echo "\nThe " . $identifier . " installer exited with a non-zero exit status.\nInstallation Log: " . TEST_ENV_DIR . $identifier . "/install-failed.log\nInstallation failed.\n";
 							array_push($failed_installs, $identifier);
 							return false;
 						}
