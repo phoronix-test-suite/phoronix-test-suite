@@ -651,7 +651,7 @@ class phodevi_system extends pts_device_interface
 			if($os == null && is_file("/etc/palm-build-info"))
 			{
 				// Palm / webOS Support
-				$os = parse_equal_delimited_file("/etc/palm-build-info", "PRODUCT_VERSION_STRING");
+				$os = phodevi_parser::parse_equal_delimited_file("/etc/palm-build-info", "PRODUCT_VERSION_STRING");
 			}
 
 			if($os == null)
