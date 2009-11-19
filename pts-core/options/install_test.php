@@ -36,7 +36,6 @@ class install_test implements pts_option_interface
 	{
 		$items_to_install = array_unique(array_map("strtolower", $items_to_install));
 		echo "\n";
-
 		$display_mode = pts_get_display_mode_object();
 
 		// Any external dependencies?
@@ -60,6 +59,12 @@ class install_test implements pts_option_interface
 
 		// Install tests
 		pts_start_install($items_to_install, $display_mode);
+
+		if($items_to_install = array("prev-test-identifier"))
+		{
+			$items_to_install = pts_virtual_suite_tests("prev-test-identifier");
+		}
+
 		pts_set_assignment_next("PREV_TEST_IDENTIFIER", $items_to_install);
 	}
 }

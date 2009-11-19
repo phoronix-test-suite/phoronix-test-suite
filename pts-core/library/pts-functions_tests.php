@@ -933,6 +933,22 @@ function pts_suites_containing_test($test_identifier)
 
 	return $associated_suites;
 }
+function pts_remove_test_profile($identifier)
+{
+	$xml_loc = pts_location_test($identifier);
+	$resources_loc = pts_location_test_resources($identifier);
+	$removed = false;
+
+	if(is_writable($xml_loc) && is_writable($resources_loc))
+	{
+		pts_unlink($xml_loc);
+		pts_remove($resources_loc);
+		pts_rmdir($resources_loc);
+		$removed = true;
+	}
+
+	return $removed;
+}
 function pts_remove_test_result_dir($identifier)
 {
 	pts_remove(SAVE_RESULTS_DIR . $identifier);

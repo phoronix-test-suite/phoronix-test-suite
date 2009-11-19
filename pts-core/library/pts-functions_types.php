@@ -194,7 +194,7 @@ function pts_location_virtual_suite($identifier)
 {
 	static $cache;
 
-	if(!isset($cache[$identifier]) || in_array($identifier, array("prev-test-identifier", "prev-save-identifier"))))
+	if(!isset($cache[$identifier]) || in_array($identifier, array("prev-test-identifier", "prev-save-identifier")))
 	{
 		$virtual_suite = false;
 
