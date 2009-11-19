@@ -259,15 +259,18 @@ class phodevi_system extends pts_device_interface
 
 		if(IS_LINUX)
 		{
-			// TODO: need support besides the Palm Pre
-			if(is_readable("/sys/devices/w1_bus_master1/32-00084051ca73/getcurrent"))
+			foreach(pts_glob("/sys/devices/w1_bus_master1/*/getcurrent") as $sys_current)
 			{
-				$getcurrent = pts_file_get_contents("/sys/devices/w1_bus_master1/32-00084051ca73/getcurrent");
-
-				if(substr($getcurrent, 0, 1) == "-")
+				if(is_file($sys_current))
 				{
-					$current = substr($getcurrent, 1);
+					$getcurrent = pts_file_get_contents("/sys/devices/w1_bus_master1/32-00084051ca73/getcurrent");
+
+					if(substr($getcurrent, 0, 1) == "-")
+					{
+						$current = substr($getcurrent, 1);
+					}
 				}
+				break;
 			}
 		}
 
