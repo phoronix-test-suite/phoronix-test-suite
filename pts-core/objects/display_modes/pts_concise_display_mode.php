@@ -49,7 +49,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_downloads($identifier, &$download_packages)
 	{
-		echo "\t\t" . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " To Download";
+		echo "\t\t" . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " Needed";
 
 		if(($size = pts_estimated_download_size($identifier)) > 0)
 		{
@@ -105,7 +105,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_result)
 	{
-		echo "\n" . $test_result->get_attribute("TEST_TITLE") . ":\n\t" . $test_result->get_attribute("TEST_IDENTIFIER");
+		echo "\n\n" . $test_result->get_attribute("TEST_TITLE") . ":\n\t" . $test_result->get_attribute("TEST_IDENTIFIER");
 
 		if(($test_description = $test_result->get_attribute("TEST_DESCRIPTION")) != false)
 		{

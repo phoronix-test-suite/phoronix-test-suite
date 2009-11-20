@@ -103,7 +103,7 @@ class recover_run implements pts_option_interface
 
 			if(($search_key = array_search($test_run_request->get_comparison_hash(), $result_file_hashes)) !== false)
 			{
-				if(!in_array($recovered_identifier, $result_file_objects[$search_key]$result_object->get_result_buffer()->get_identifiers()))
+				if(!in_array($recovered_identifier, $result_file_objects[$search_key]->get_result_buffer()->get_identifiers()))
 				{
 					$add_test = true;
 				}

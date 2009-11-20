@@ -100,7 +100,7 @@ function pts_global_upload_usage_data($task, $data)
 }
 function pts_global_upload_result($result_file, $tags = "")
 {
-	if(!pts_global_allow_upload($use_file))
+	if(!pts_global_allow_upload($result_file))
 	{
 		return false;
 	}

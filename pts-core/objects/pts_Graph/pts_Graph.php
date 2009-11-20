@@ -262,7 +262,8 @@ abstract class pts_Graph
 
 		if(is_numeric($maximum))
 		{
-			if($maximum <= 100 && $this->graph_y_title == "Percent")
+			// disable forcing 100 top when display Percent
+			if(false && $maximum <= 100 && $this->graph_y_title == "Percent")
 			{
 				$maximum = (ceil(100 / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
 			}
