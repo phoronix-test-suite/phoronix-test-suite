@@ -86,22 +86,47 @@ function pts_download($download, $to)
 {
 	$to_file = basename($to);
 	$to_dir = dirname($to);
-	$download_output = "";
+	$download_output = null;
 	$user_agent = pts_codename(true);
+	$connection_timeout = 25;
 
 	if(strpos($to_file, ".") === false)
 	{
 		$to_file = basename($download);
 	}
+
+	if(function_exists("curl_init"))
+	{
+		// TODO: with curl_multi_init we could do multiple downloads at once...
+		$cr = curl_init();
+		$fh = fopen(pts_add_trailing_slash($to_dir) . $to_file, 'w');
+
+		curl_setopt($cr, CURLOPT_FILE, $fh);
+		curl_setopt($cr, CURLOPT_URL, $download);
+		curl_setopt($cr, CURLOPT_HEADER, 0);
+		curl_setopt($cr, CURLOPT_USERAGENT, $user_agent);
+		curl_setopt($cr, CURLOPT_REFERER, "http://www.phoronix-test-suite.com/");
+		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, $connection_timeout);
+
+		if(defined("NETWORK_PROXY"))
+		{
+			curl_setopt($cr, CURLOPT_PROXY, NETWORK_PROXY);
+		}
+
+		curl_exec($cr);
+		curl_close($cr);
+		fclose($fh);
+	}
 	else if(($curl = pts_executable_in_path("curl")) != false)
 	{
 		// curl download
-		$download_output = shell_exec("cd " . $to_dir . " && " . $curl . (defined("NETWORK_PROXY") ? " -x " . NETWORK_PROXY : null) . " -L --fail --connect-timeout 25 --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
+		$download_output = shell_exec("cd " . $to_dir . " && " . $curl . (defined("NETWORK_PROXY") ? " -x " . NETWORK_PROXY : null) . " -L --fail --connect-timeout " . $connection_timeout . " --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
 	}
 	else if(($wget = pts_executable_in_path("wget")) != false)
 	{
 		// wget download
-		$download_output = shell_exec((defined("NETWORK_PROXY") ? "export http_proxy=\"" . NETWORK_PROXY . "\"; export ftp_proxy=\"" . NETWORK_PROXY . "\"; " : null) . "cd " . $to_dir . " && " . $wget . " --timeout=25 --tries=3 --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
+		$download_output = shell_exec((defined("NETWORK_PROXY") ? "export http_proxy=\"" . NETWORK_PROXY . "\"; export ftp_proxy=\"" . NETWORK_PROXY . "\"; " : null) . "cd " . $to_dir . " && " . $wget . " --timeout=" . $connection_timeout . " --tries=3 --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
 	}
 	else if(IS_BSD && ($ftp = pts_executable_in_path("ftp")) != false)
 	{

@@ -102,6 +102,12 @@ class pts_test_option
 	{
 		return $this->get_option_prefix() . $input . $this->get_option_postfix();
 	}
+	public function format_option_display_from_input($input)
+	{
+		$name = $this->get_name();
+
+		return $name != null && $input != null ? $name . ": " . $input : null;
+	}
 	public function format_option_value_from_select($select_pos)
 	{
 		$input = $this->get_option_value($select_pos);
@@ -111,14 +117,13 @@ class pts_test_option
 	public function format_option_display_from_select($select_pos)
 	{
 		$display_name = $this->get_option_name($select_pos);
-		$name = $this->get_name();
 
 		if(($cut_point = strpos($display_name, "(")) > 1 && strpos($display_name, ")") > $cut_point)
 		{
 			$display_name = trim(substr($display_name, 0, $cut_point));
 		}
 
-		return $name != null && $display_name != null ? $this->get_name() . ": " . $display_name : null;
+		return $this->format_option_display_from_input($input);
 	}
 	public function is_valid_select_choice($select_pos)
 	{

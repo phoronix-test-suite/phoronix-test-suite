@@ -79,7 +79,7 @@ function pts_prompt_test_options($identifier)
 				$value = pts_text_input("Enter Value");
 			}
 
-			array_push($text_args, array(""));
+			array_push($text_args, array($o->format_option_display_from_input($value)));
 			array_push($user_args, array($o->format_option_value_from_input($value)));
 		}
 		else
