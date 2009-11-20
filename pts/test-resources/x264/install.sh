@@ -4,7 +4,7 @@ tar -xjf x264-snapshot-20091118-2245.tar.bz2
 mkdir x264_/
 
 cd x264-snapshot-20091118-2245/
-./configure --disable-asm --prefix=$HOME/x264_/
+./configure --prefix=$HOME/x264_/
 make
 echo $? > ~/install-exit-status
 make install

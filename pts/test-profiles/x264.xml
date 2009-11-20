@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -10,7 +10,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>353</EnvironmentSize>
 		<ProjectURL>http://www.videolan.org/developers/x264.html</ProjectURL>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ExternalDependencies>build-utilities, yasm</ExternalDependencies>
 	</TestProfile>
 	<TestInformation>
 		<Title>x264</Title>
@@ -19,6 +19,6 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This is a simple test of the x264 H.264/AVC encoder that is worked on by the VLC project.</Description>
+		<Description>This is a simple test of the x264 H.264/AVC encoder.</Description>
 	</TestInformation>
 </PhoronixTestSuite>
