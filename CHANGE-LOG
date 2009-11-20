@@ -29,6 +29,7 @@ Phoronix Test Suite (Git)
 - embedded: Add a PTS module named "embedded" that is a collection of options to help those running PTS on embedded/mobile devices
 - scp_result_pusher: Add a PTS module for pushing test results automatically to a remote destination over SCP
 - pts_Graph: Add pts_ImageComparisonGraph object
+- pts_LineGraph: Don't plot lines all the way to the end unless relevant
 - pts: Add initial iqc-nexuiz test profile for image quality comparison support
 - pts: Add x264 test profile for x264 H.264/Y4M encoding application
 - pts: Add idle-power-usage test profile

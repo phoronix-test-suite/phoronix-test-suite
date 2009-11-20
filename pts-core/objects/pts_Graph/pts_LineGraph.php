@@ -77,6 +77,8 @@ class pts_LineGraph extends pts_CustomGraph
 	}
 	protected function renderGraphLines()
 	{
+		$identifiers_empty = count($this->graph_identifiers) == 0;
+
 		for($i_o = 0; $i_o < count($this->graph_data); $i_o++)
 		{
 			$previous_placement = -1;
@@ -105,35 +107,23 @@ class pts_LineGraph extends pts_CustomGraph
 					$this->graph_image->draw_line($previous_offset, $previous_placement, $px_from_left, $value_plot_top, $paint_color, 2);
 				}
 
-				if($i == 0)
+				
+				if($identifiers_empty && $i == 0)
 				{
 					$this->graph_image->draw_line($this->graph_left_start + 1, $value_plot_top, $px_from_left, $value_plot_top, $paint_color, 2);
 				}
-				else if($i == ($point_counter - 1))
+				else if($identifiers_empty && $i == ($point_counter - 1))
 				{
 					$this->graph_image->draw_line($px_from_left, $value_plot_top, $this->graph_left_end - 1, $value_plot_top, $paint_color, 2);
 				}
 
+				if(!$identifiers_empty && ($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)))
+				{
+					$this->render_graph_pointer($px_from_left, $value_plot_top);
+				}
+
 				$previous_placement = $value_plot_top;
 				$previous_offset = $px_from_left;
-			}
-
-			if($point_counter < 6)
-			{
-				$previous_placement = -1;
-				$previous_offset = -1;
-
-				for($i = 0; $i < $point_counter; $i++)
-				{
-					$value = $this->graph_data[$i_o][$i];
-					$value_plot_top = $this->graph_top_end + 1 - round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
-					$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
-
-					$this->render_graph_pointer($px_from_left, $value_plot_top);
-
-					$previous_placement = $value_plot_top;
-					$previous_offset = $px_from_left;
-				}
 			}
 		}
 	}
