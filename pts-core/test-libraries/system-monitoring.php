@@ -14,6 +14,9 @@ switch($argv[1])
 	case "mem.usage":
 		$call_function = "phodevi::read_sensor(\"memory\", \"physical-usage\")";
 		break;
+	case "system.current":
+		$call_function = "phodevi::read_sensor(\"system\", \"power-current\")";
+		break;
 	default:
 		exit();
 		break;

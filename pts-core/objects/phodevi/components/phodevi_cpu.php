@@ -370,8 +370,12 @@ class phodevi_cpu extends pts_device_interface
 			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
 			{
 				$cpu_speeds = phodevi_linux_parser::read_cpuinfo("cpu MHz");
-				$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
-				$info = pts_trim_double(intval($cpu_speeds[$cpu_core]), 2);
+
+				if(isset($cpu_speeds[0]))
+				{
+					$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
+					$info = pts_trim_double(intval($cpu_speeds[$cpu_core]), 2);
+				}
 			}
 		}
 		else if(IS_SOLARIS)
