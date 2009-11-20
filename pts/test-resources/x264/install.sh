@@ -12,6 +12,6 @@ cd ..
 rm -rf x264-snapshot-20091118-2245/
 
 echo "#!/bin/sh
-./x264_/bin/x264 -o /dev/null soccer_4cif.y4m > \$LOG_FILE 2>&1
+./x264_/bin/x264 -o /dev/null --threads \$NUM_CPU_CORES soccer_4cif.y4m > \$LOG_FILE 2>&1
 echo \$? > ~/test-exit-status" > x264
 chmod +x x264

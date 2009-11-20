@@ -69,6 +69,8 @@ function pts_start_install($to_install, &$display_mode)
 		"\nEstimated Install Size: " . pts_estimated_environment_size($tests) . " MB");
 	}
 	pts_set_assignment("TEST_INSTALL_COUNT", $install_count);
+	pts_set_assignment("DOWNLOAD_AVG_COUNT", pts_storage_object::read_from_file(PTS_CORE_STORAGE, "download_average_count"));
+	pts_set_assignment("DOWNLOAD_AVG_SPEED", pts_storage_object::read_from_file(PTS_CORE_STORAGE, "download_average_speed"));
 
 	pts_module_process("__pre_install_process", $tests);
 	$failed_installs = array();
@@ -78,6 +80,9 @@ function pts_start_install($to_install, &$display_mode)
 		pts_install_test($display_mode, $test, $failed_installs);
 	}
 	pts_module_process("__post_install_process", $tests);
+
+	pts_storage_object::set_in_file(PTS_CORE_STORAGE, "download_average_count", pts_read_and_clear_assignment("DOWNLOAD_AVG_COUNT"));
+	pts_storage_object::set_in_file(PTS_CORE_STORAGE, "download_average_speed", pts_read_and_clear_assignment("DOWNLOAD_AVG_SPEED"));
 
 	if(!pts_is_assignment("SILENCE_MESSAGES") && count($failed_installs) > 0 && count($tests) > 1)
 	{
@@ -235,7 +240,9 @@ function pts_download_test_files($identifier, &$display_mode)
 						}
 
 						$display_mode->test_install_download_file($download_package, "DOWNLOAD");
+						$download_start = time();
 						echo pts_download($url, $download_destination_temp);
+						$download_end = time();
 
 						if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
 						{
@@ -274,6 +281,24 @@ function pts_download_test_files($identifier, &$display_mode)
 							}
 							$file_downloaded = true;
 							$fail_count = 0;
+
+							if(($download_size = $download_package->get_filesize()) > 0)
+							{
+								$download_speed = floor($download_size / ($download_end - $download_start)); // bytes per second
+
+								if(($c_s = pts_read_assignment("DOWNLOAD_AVG_SPEED")) && ($c_c = pts_read_assignment("DOWNLOAD_AVG_COUNT")))
+								{
+									$avg_speed = floor((($c_s * $c_c) + $download_speed) / ($c_c + 1));
+
+									pts_set_assignment("DOWNLOAD_AVG_SPEED", $avg_speed);
+									pts_set_assignment("DOWNLOAD_AVG_COUNT", ($c_c + 1));
+								}
+								else
+								{
+									pts_set_assignment("DOWNLOAD_AVG_SPEED", $download_speed);
+									pts_set_assignment("DOWNLOAD_AVG_COUNT", 1);
+								}
+							}
 						}
 
 						if(!$try_again)

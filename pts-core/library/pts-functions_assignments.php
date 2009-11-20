@@ -33,6 +33,13 @@ function pts_read_assignment($assignment)
 {
 	return pts_assignment_manager::read($assignment);
 }
+function pts_read_and_clear_assignment($assignment)
+{
+	$read = pts_assignment_manager::read($assignment);
+	pts_assignment_manager::clear($assignment);
+
+	return $read;
+}
 function pts_is_assignment($assignment)
 {
 	return pts_assignment_manager::is_set($assignment);

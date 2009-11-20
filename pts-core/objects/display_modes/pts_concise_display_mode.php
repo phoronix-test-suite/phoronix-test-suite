@@ -51,9 +51,18 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo "\t\t" . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " Needed";
 
-		if(($size = pts_estimated_download_size($identifier)) > 0)
+		if(($size = pts_estimated_download_size($identifier, 1048576)) > 0)
 		{
 			echo " / " . $size . " MB";
+
+			/*
+			// TODO: the below code is currently disabled as this size is taking into account download caches, etc. Need to take that out of there otherwise number is overinflated.
+			if(($avg_speed = pts_read_assignment("DOWNLOAD_AVG_SPEED")) > 0)
+			{
+				$avg_time = ($size * 1048576) / $avg_speed;
+				echo " / " . pts_format_time_string($avg_time, "SECONDS", true, 60);
+			}
+			*/
 		}
 
 		echo "\n";
@@ -61,6 +70,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	public function test_install_download_file(&$pts_test_file_download, $process)
 	{
 		echo "\t\t" . $pts_test_file_download->get_filename() . ": ";
+		$expected_time = 0;
 
 		switch($process)
 		{
@@ -75,10 +85,17 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				break;
 			case "DOWNLOAD":
 				echo "Downloading";
+
+				if(($avg_speed = pts_read_assignment("DOWNLOAD_AVG_SPEED")) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
+				{
+					$expected_time = $this_size / $avg_speed;
+				}
 				break;
 		}
 
-		echo " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 1) . "MB]\n";
+		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_format_time_string($expected_time, "SECONDS", false, 60) : null;
+
+		echo " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 1) . "MB" . ($expected_time != null ? " / ~" . $expected_time : null) . "]\n";
 	}
 	public function test_install_process($identifier)
 	{
