@@ -130,5 +130,10 @@
 			<PackageName>python</PackageName>
 			<FileCheck>/usr/pkg/bin/python</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>yasm</GenericName>
+			<PackageName>yasm</PackageName>
+			<FileCheck>/usr/pkg/bin/yasm</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

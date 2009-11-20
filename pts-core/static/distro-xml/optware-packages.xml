@@ -8,7 +8,7 @@
 		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>gtk</PackageName>
-			<FileCheck>/usr/include/gtk-2.0</FileCheck>
+			<FileCheck>/opt/include/gtk-2.0</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
@@ -108,7 +108,7 @@
 		<Package>
 			<GenericName>tcl</GenericName>
 			<PackageName>tcl</PackageName>
-			<FileCheck>/usr/bin/tclsh</FileCheck>
+			<FileCheck>/opt/bin/tclsh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>

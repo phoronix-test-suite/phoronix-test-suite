@@ -140,5 +140,6 @@
 			<PackageName>SUNWPython</PackageName>
 			<FileCheck>/usr/bin/python</FileCheck>
 		</Package>
+		<!-- Check on yasm support for OpenSolaris -->s
 	</ExternalDependencies>
 </PhoronixTestSuite>

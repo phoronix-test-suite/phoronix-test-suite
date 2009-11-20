@@ -220,5 +220,10 @@
 			<PackageName>openmpi-devel openmpi</PackageName>
 			<FileCheck>/usr/lib/openmpi/ OR /usr/lib64/openmpi/</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>yasm</GenericName>
+			<PackageName>yasm</PackageName>
+			<FileCheck>/usr/bin/yasm</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

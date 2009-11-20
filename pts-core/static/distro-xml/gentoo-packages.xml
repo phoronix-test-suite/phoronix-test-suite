@@ -220,5 +220,10 @@
 			<PackageName>sys-cluster/openmpi</PackageName>
 			<FileCheck>/usr/lib/openmpi/lib/libmpi.so, /usr/bin/mpirun.openmpi</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>yasm</GenericName>
+			<PackageName>dev-lang/yasm</PackageName>
+			<FileCheck>/usr/bin/yasm</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

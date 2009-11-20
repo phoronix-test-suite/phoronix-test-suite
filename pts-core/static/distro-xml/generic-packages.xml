@@ -291,5 +291,11 @@
 			<PossibleNames>python-numpy</PossibleNames>
 			<FileCheck>/usr/shared/pyshared/numpy/version.py</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>yasm</GenericName>
+			<Title>Python Numpy</Title>
+			<PossibleNames>yasm</PossibleNames>
+			<FileCheck>/usr/bin/yasm OR /usr/local/bin/yasm</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
