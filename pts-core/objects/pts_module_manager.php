@@ -39,12 +39,15 @@ class pts_module_manager
 		{
 			foreach(get_class_methods($module) as $module_method)
 			{
-				if(!is_array(self::$module_process[$module_method]))
+				if(substr($module_method, 0, 2) == "__")
 				{
-					self::$module_process[$module_method] = array();
-				}
+					if(!is_array(self::$module_process[$module_method]))
+					{
+						self::$module_process[$module_method] = array();
+					}
 
-				array_push(self::$module_process[$module_method], $module);
+					array_push(self::$module_process[$module_method], $module);
+				}
 			}
 		}
 	}
