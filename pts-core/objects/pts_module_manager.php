@@ -58,9 +58,36 @@ class pts_module_manager
 			unset(self::$modules[$module]);
 		}
 	}
-	public static function attached_modules($process_name = null)
+	public static function attached_modules($process_name = null, $select_modules = false)
 	{
-		return $process_name == null ? self::$modules : (isset(self::$module_process[$process_name]) ? self::$module_process[$process_name] : array());
+		if($process_name == null)
+		{
+			$attached = self::$modules;
+		}
+		else if(isset(self::$module_process[$process_name]))
+		{
+			$attached = self::$module_process[$process_name];
+		}
+		else
+		{
+			$attached = array();
+		}
+
+		if($select_modules != false)
+		{
+			$all_attached = $attached;
+			$attached = array();
+
+			foreach(pts_to_array($select_modules) as $check_module)
+			{
+				if(in_array($check_module, $all_attached))
+				{
+					array_push($attached, $check_module);
+				}
+			}
+		}
+
+		return $attached;
 	}
 	public static function is_module_attached($module)
 	{

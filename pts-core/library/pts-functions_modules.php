@@ -134,7 +134,7 @@ function pts_attach_module($module)
 	// Attach a module
 	$module = trim($module);
 
-	if(pts_module_type($module) == false)
+	if(!pts_is_module($module))
 	{
 		return false;
 	}
@@ -144,7 +144,7 @@ function pts_attach_module($module)
 
 	if(defined("PTS_STARTUP_TASK_PERFORMED"))
 	{
-		pts_module_process_task($module, "__startup");
+		pts_module_process("__startup", null, $module);
 	}
 }
 function pts_load_module($module)
@@ -166,13 +166,7 @@ function pts_module_valid_user_command($module, $command = null)
 
 	if($command == null && strpos($module, ".") != false)
 	{
-		$dot_r = explode(".", $module);
-
-		if(count($dot_r) > 1)
-		{
-			$module = array_shift($dot_r);
-			$command = array_pop($dot_r);
-		}
+		list($module, $command) = explode(".", $module);
 	}
 
 	if(!pts_module_manager::is_module_attached($module))
@@ -182,8 +176,7 @@ function pts_module_valid_user_command($module, $command = null)
 
 	$all_options = pts_module_call($module, "user_commands");
 
-	$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || 
-		in_array($command, array("help")));
+	$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || in_array($command, array("help")));
 
 	return $valid;
 }
@@ -223,23 +216,15 @@ function pts_module_call($module, $process, &$object_pass = null)
 
 	return $module_val;
 }
-function pts_module_process($process, &$object_pass = null)
+function pts_module_process($process, &$object_pass = null, $select_modules = false)
 {
 	// Run a module process on all registered modules
-	foreach(pts_module_manager::attached_modules($process) as $module)
+	foreach(pts_module_manager::attached_modules($process, $select_modules) as $module)
 	{
-		pts_module_process_task($module, $process, $object_pass);
-	}
-	pts_module_manager::set_current_module(null);
-}
-function pts_module_process_task($module, $process, &$object_pass = null)
-{
-	pts_module_manager::set_current_module($module);
+		pts_module_manager::set_current_module($module);
 
-	$module_response = pts_module_call($module, $process, $object_pass);
+		$module_response = pts_module_call($module, $process, $object_pass);
 
-	if(!empty($module_response))
-	{
 		switch($module_response)
 		{
 			case PTS_MODULE_UNLOAD:
@@ -252,6 +237,7 @@ function pts_module_process_task($module, $process, &$object_pass = null)
 				break;
 		}
 	}
+	pts_module_manager::set_current_module(null);
 }
 function pts_module_process_extensions($extensions)
 {
@@ -260,7 +246,7 @@ function pts_module_process_extensions($extensions)
 	{
 		foreach(explode(";", $extensions) as $ev)
 		{
-			list($var, $value) = explode("=", $ev);
+			list($var, $value) = pts_trim_explode("=", $ev);
 			pts_set_environment_variable($var, $value);
 			pts_module_maanager::var_store_add($var, $value);
 		}
@@ -270,32 +256,7 @@ function pts_module_process_extensions($extensions)
 }
 function pts_is_module($name)
 {
-	return pts_module_type($name) != false;
-}
-function pts_module_type($name)
-{
-	// Determine the code type of a module
-	static $cache;
-
-	if(!isset($cache[$name]))
-	{
-		if(is_file(MODULE_LOCAL_DIR . $name . ".php"))
-		{
-			$type = "LOCAL_MODULE";
-		}
-		else if(is_file(MODULE_DIR . $name . ".php"))
-		{
-			$type = "MODULE";
-		}
-		else
-		{
-			$type = false;
-		}
-
-		$cache[$name] = $type;
-	}
-
-	return $cache[$name];
+	return is_file(MODULE_LOCAL_DIR . $name . ".php") || is_file(MODULE_DIR . $name . ".php");
 }
 function pts_available_modules()
 {
@@ -358,7 +319,7 @@ function pts_module_config_init($set_options = null)
 
 	for($i = 0; $i < count($option_module); $i++)
 	{
-		if(isset($option_module[$i]) && pts_module_type($option_module[$i]) != null)
+		if(isset($option_module[$i]) && pts_is_module($option_module[$i]))
 		{
 			$config->addXmlObject(P_MODULE_OPTION_NAME, $i, $option_module[$i]);
 			$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $option_identifier[$i]);

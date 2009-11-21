@@ -26,6 +26,7 @@ Phoronix Test Suite (Git)
 - pts-core: Drop support for SH PTS modules, since it was rarely used and just added overhead to pts-core module architecture
 - pts-core: Only process a PTS module API call to a module if it actually hooks into that method
 - pts-core: When running analyze-batch on a result file that already has line graphs, don't do funky things with the results
+- pts-core: PTS module architecture revisions
 - phodevi: Split out phodevi_parser module into phodevi_linux_parser, phodevi_osx_parser, and phodevi_solaris_parser for OS-specific functions
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
 - phodevi: Add device notes and special settings string functionality to API
