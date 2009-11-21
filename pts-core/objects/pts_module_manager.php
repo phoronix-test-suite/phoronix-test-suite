@@ -41,7 +41,7 @@ class pts_module_manager
 			{
 				if(substr($module_method, 0, 2) == "__")
 				{
-					if(!is_array(self::$module_process[$module_method]))
+					if(!isset(self::$module_process[$module_method]))
 					{
 						self::$module_process[$module_method] = array();
 					}

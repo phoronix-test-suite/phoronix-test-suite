@@ -72,6 +72,13 @@ class pts_result_file_analyze_manager
 					// Stub, no similar results to analyze
 					array_push($return_results, $this->test_results[$tests_of_same_name_and_version[0][0]]);
 				}
+				else if($this->test_results[$tests_of_same_name_and_version[0][0]]->get_format() == "LINE_GRAPH")
+				{
+					foreach($tests_of_same_name_and_version as $add)
+					{
+						array_push($return_results, $this->test_results[$add[0]]);
+					}
+				}
 				else
 				{
 					foreach($tests_of_same_name_and_version as $test_info)
