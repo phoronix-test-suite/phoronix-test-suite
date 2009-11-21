@@ -78,12 +78,14 @@ class pts_LineGraph extends pts_CustomGraph
 	protected function renderGraphLines()
 	{
 		$identifiers_empty = count($this->graph_identifiers) == 0;
+		$calculations_r = array();
 
 		for($i_o = 0; $i_o < count($this->graph_data); $i_o++)
 		{
 			$previous_placement = -1;
 			$previous_offset = -1;
 			$paint_color = $this->next_paint_color();
+			$calculations_r[$paint_color] = array();
 
 			$point_counter = count($this->graph_data[$i_o]);
 			for($i = 0; $i < $point_counter; $i++)
@@ -124,6 +126,21 @@ class pts_LineGraph extends pts_CustomGraph
 
 				$previous_placement = $value_plot_top;
 				$previous_offset = $px_from_left;
+				array_push($calculations_r[$paint_color], $value);
+			}
+		}
+
+		if($this->graph_y_title == "Percent")
+		{
+			$from_left = $this->graph_left_start + 2;
+			$this->graph_image->write_text_left("Averages:", $this->graph_font, 6, $this->graph_color_text, $from_left, $this->graph_top_start + 3, $from_left, $this->graph_top_start + 3);
+			$from_left += $this->text_string_width("Averages: ", $this->graph_font, 6);
+
+			foreach($calculations_r as $color => &$values)
+			{
+				$avg = $this->trim_double(array_sum($values) / count($values), 1) . "%";
+				$this->graph_image->write_text_left($avg, $this->graph_font, 6, $color, $from_left, $this->graph_top_start + 4, $from_left, $this->graph_top_start + 4);
+				$from_left += $this->text_string_width($avg, $this->graph_font, 6) + 2;
 			}
 		}
 	}
