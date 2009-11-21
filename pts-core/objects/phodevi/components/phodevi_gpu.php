@@ -857,6 +857,12 @@ class phodevi_gpu extends pts_device_interface
 			$mem_freq = 0;
 		}
 
+		if($core_freq == 0 && $mem_freq == 0)
+		{
+			$show_memory = false;
+			$core_freq = -1;
+		}
+
 		return ($show_memory ? array($core_freq, $mem_freq) : $core_freq);
 	}
 	public static function gpu_core_usage()

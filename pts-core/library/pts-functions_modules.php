@@ -168,6 +168,10 @@ function pts_module_valid_user_command($module, $command = null)
 	{
 		list($module, $command) = explode(".", $module);
 	}
+	else
+	{
+		return false;
+	}
 
 	if(!pts_module_manager::is_module_attached($module))
 	{
