@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.5.0";
+	const module_version = "1.9.9";
 	const module_description = "This module contains sensor monitoring support.";
 	const module_author = "Michael Larabel";
 
@@ -48,7 +48,7 @@ class system_monitor extends pts_module_interface
 	// General Functions
 	//
 
-	public static function __pre_option_process($obj = NULL)
+	public static function __pre_run_process()
 	{
 		self::$to_monitor = array();
 		$to_show = explode(",", getenv("MONITOR"));
@@ -66,28 +66,11 @@ class system_monitor extends pts_module_interface
 				}
 			}
 		}
-	}
-	public static function __pre_run_process()
-	{
+
 		pts_module::pts_timed_function(9, "pts_monitor_update");
 	}
-	public static function pts_monitor_update()
+	public static function __event_results_process(&$tandem_xml)
 	{
-		foreach(self::$to_monitor as $pts_sensor)
-		{
-			$sensor_value = $pts_sensor->read_sensor();
-
-			if($sensor_value != -1)
-			{
-				pts_module::save_file("logs/" . $pts_sensor->get_identifier(), $sensor_value, true);
-			}
-		}
-	}
-	public static function __post_option_process($obj = NULL)
-	{
-		if(defined("PTS_EXIT"))
-			return;
-
 		// Elapsed time
 
 		$device = array();
@@ -156,19 +139,14 @@ class system_monitor extends pts_module_interface
 				$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . ' ' . $unit[$i] . "\nHigh: " . pts_trim_double($high) . ' ' . $unit[$i] . "\nAverage: " . pts_trim_double($avg) . ' ' . $unit[$i];
 			}
 
-			if(trim($info_report) != "")
+			if(trim($info_report) != null)
 			{
-				$image_list = array();
-				pts_module::copy_file(RESULTS_VIEWER_DIR . "pts-monitor-viewer.html", "pts-monitor-viewer.html");
-				pts_module::copy_file(RESULTS_VIEWER_DIR . "pts.js", "pts-monitor-viewer/pts.js");
-				pts_module::copy_file(RESULTS_VIEWER_DIR . "pts-viewer.css", "pts-monitor-viewer/pts-viewer.css");
-
-				$image_count = 0;
 				foreach($type_index as $key => $sub_array)
 				{
 					if(count($sub_array) > 0)
 					{
 						$time_minutes = floor(pts_time_elapsed() / 60);
+
 						if($time_minutes == 0)
 							$time_minutes = 1;
 
@@ -177,33 +155,26 @@ class system_monitor extends pts_module_interface
 						$graph_unit = str_replace("°C", "Degrees Celsius", $graph_unit);
 						$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
 						$sub_title .= implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
-						// $sub_title .= date("g:i A");
 
-						$t = new pts_LineGraph($graph_title, $sub_title, $graph_unit);
 
-						$first_run = true;
+						$tandem_id = pts_request_new_id();
+						$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $graph_title);
+						$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, null);
+						$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $sub_title);
+						$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $graph_unit);
+						$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, null);
+						$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, "LINE_GRAPH");
+						$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);
+						$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $type[$sub_array[0]]);
+
 						foreach($sub_array as $id_point)
 						{
-							$t->loadGraphValues($m_array[$id_point], $device[$id_point]);
-
-							if($first_run)
-							{
-								$t->loadGraphIdentifiers($m_array[$id_point]);
-								$t->hideGraphIdentifiers();
-								$first_run = false;
-							}
+							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $device[$id_point], 5, "sys-monitor-" . $id_point);
+							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
+							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
 						}
-						$save_filename_base = pts_unique_runtime_identifier() . '-' . $image_count;
-						$t->loadGraphVersion("Phoronix Test Suite " . PTS_VERSION);
-						$t->saveGraphToFile(pts_module::save_dir() . $save_filename_base . ".BILDE_EXTENSION");
-						$t->renderGraph();
-						$save_filename = $save_filename_base . "." . strtolower($t->getRenderer());
-
-						array_push($image_list, $save_filename);
-						$image_count++;
 					}
 				}
-				$url = implode($image_list, ",");
 			}
 		}
 
@@ -213,12 +184,17 @@ class system_monitor extends pts_module_interface
 		// terminal output
 		if(!empty($info_report))
 			echo pts_string_header($info_report);
-
-		if(isset($m_array[0]) && count($m_array[0]) > 1 && !empty($url))
+	}
+	public static function pts_monitor_update()
+	{
+		foreach(self::$to_monitor as $pts_sensor)
 		{
-			$file = pts_module::save_file("link-latest.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=pts-monitor-viewer.html#$url\"></HEAD><BODY></BODY></HTML>");
-			if($file != FALSE)
-				pts_display_web_browser($file);
+			$sensor_value = $pts_sensor->read_sensor();
+
+			if($sensor_value != -1 && pts_module::is_file("logs/" . $pts_sensor->get_identifier()))
+			{
+				pts_module::save_file("logs/" . $pts_sensor->get_identifier(), $sensor_value, true);
+			}
 		}
 	}
 	private function parse_monitor_log($log_file)

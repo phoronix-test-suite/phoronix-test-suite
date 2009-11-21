@@ -162,6 +162,11 @@ class pts_module_interface
 		// Passed is a string of the URL for the test results uploaded to Phoronix Global
 		return;
 	}
+	public static function __event_results_process($obj = null)
+	{
+		// Passed is the pts_tandem_XmlWriter() used for saving the results
+		return;
+	}
 	public static function __event_results_saved($obj = null)
 	{
 		// Passed is a string of the results identifier that was saved
