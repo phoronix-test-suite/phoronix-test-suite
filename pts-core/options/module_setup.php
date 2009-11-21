@@ -32,66 +32,58 @@ class module_setup implements pts_option_interface
 	{
 		$module = strtolower($r[0]);
 
-		if(pts_is_php_module($module))
+		$pre_message = "";
+
+		if(!class_exists($module))
 		{
-			$pre_message = "";
+			pts_load_module($module);
+		}
 
-			if(!class_exists($module))
-			{
-				pts_load_module($module);
-			}
+		$module_name = pts_module_call($module, "module_name");
+		$module_description = pts_module_call($module, "module_description");
+		$module_setup = pts_module_call($module, "module_setup");
 
-			$module_name = pts_php_module_call($module, "module_name");
-			$module_description = pts_php_module_call($module, "module_description");
-			$module_setup = pts_php_module_call($module, "module_setup");
+		echo pts_string_header("Module: " . $module_name);
+		echo $module_description . "\n";
 
-			echo pts_string_header("Module: " . $module_name);
-			echo $module_description . "\n";
-
-			if(count($module_setup) == 0)
-			{
-				echo "\nThere are no options available for configuring with the " . $module . " module.\n";
-			}
-			else
-			{
-				$set_options = array();
-				foreach($module_setup as $module_option)
-				{
-					if($module_option instanceOf pts_module_option)
-					{
-						do
-						{
-							echo "\n" . $module_option->get_formatted_question();
-							$input = pts_read_user_input();
-						}
-						while(!$module_option->is_supported_value($input));
-
-						if(empty($input))
-						{
-							$input = $module_option->get_default_value();
-						}
-
-						$this_input_identifier = $module_option->get_identifier();
-						$set_options[$this_input_identifier] = $input;
-					}
-				}
-
-				$set_options = pts_php_module_call($module, "module_setup_validate", $set_options);
-
-				$formatted_options = array();
-				foreach($set_options as $option => $value)
-				{
-					$formatted_options[$module . "__" . $option] = $value;
-				}
-				pts_module_config_init($formatted_options);
-			}
-
-			echo "\n";
+		if(count($module_setup) == 0)
+		{
+			echo "\nThere are no options available for configuring with the " . $module . " module.\n";
 		}
 		else
 		{
-			echo "\n" . $module . " is not a recognized or configurable module.\n";
+			$set_options = array();
+			foreach($module_setup as $module_option)
+			{
+				if($module_option instanceOf pts_module_option)
+				{
+					do
+					{
+						echo "\n" . $module_option->get_formatted_question();
+						$input = pts_read_user_input();
+					}
+					while(!$module_option->is_supported_value($input));
+
+					if(empty($input))
+					{
+						$input = $module_option->get_default_value();
+					}
+
+					$this_input_identifier = $module_option->get_identifier();
+					$set_options[$this_input_identifier] = $input;
+				}
+			}
+
+			$set_options = pts_module_call($module, "module_setup_validate", $set_options);
+
+			$formatted_options = array();
+			foreach($set_options as $option => $value)
+			{
+				$formatted_options[$module . "__" . $option] = $value;
+			}
+			pts_module_config_init($formatted_options);
 		}
+		echo "\n";
 	}
 }
 

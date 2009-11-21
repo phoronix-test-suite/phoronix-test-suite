@@ -104,16 +104,7 @@ function pts_load_modules()
 	$module_store_list = array();
 	foreach(pts_module_manager::attached_modules() as $module)
 	{
-		$module_type = pts_module_type($module);
-
-		if($module_type == "PHP")
-		{
-			eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
-		}
-		else
-		{
-			$module_store_vars = array();
-		}
+		eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
 
 		if(is_array($module_store_vars))
 		{
@@ -159,8 +150,7 @@ function pts_attach_module($module)
 function pts_load_module($module)
 {
 	// Load the actual file needed that contains the module
-	return pts_module_type($module) == "PHP" && ((is_file(MODULE_LOCAL_DIR . $module . ".php") && include_once(MODULE_LOCAL_DIR . $module . ".php")) || 
-	(is_file(MODULE_DIR . $module . ".php") && include_once(MODULE_DIR . $module . ".php")));
+	return (is_file(MODULE_DIR . $module . ".php") && include_once(MODULE_DIR . $module . ".php")) || (is_file(MODULE_LOCAL_DIR . $module . ".php") && include_once(MODULE_LOCAL_DIR . $module . ".php"));
 }
 function pts_module_processes()
 {
@@ -169,10 +159,6 @@ function pts_module_processes()
 function pts_module_events()
 {
 	return array("__event_global_upload", "__event_results_saved", "__event_user_error");
-}
-function pts_is_php_module($module)
-{
-	return pts_module_type($module) == "PHP";
 }
 function pts_module_valid_user_command($module, $command = null)
 {
@@ -189,34 +175,31 @@ function pts_module_valid_user_command($module, $command = null)
 		}
 	}
 
-	if(pts_module_type($module) == "PHP")
+	if(!pts_module_manager::is_module_attached($module))
 	{
-		if(!pts_module_manager::is_module_attached($module))
-		{
-			pts_attach_module($module);
-		}
-
-		$all_options = pts_php_module_call($module, "user_commands");
-
-		$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || 
-			in_array($command, array("help")));
+		pts_attach_module($module);
 	}
+
+	$all_options = pts_module_call($module, "user_commands");
+
+	$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || 
+		in_array($command, array("help")));
 
 	return $valid;
 }
 function pts_module_run_user_command($module, $command, $arguments = null)
 {
-	$all_options = pts_php_module_call($module, "user_commands");
+	$all_options = pts_module_call($module, "user_commands");
 	
 	if(isset($all_options[$command]) && method_exists($module, $all_options[$command]))
 	{
-		pts_php_module_call($module, $all_options[$command], $arguments);
+		pts_module_call($module, $all_options[$command], $arguments);
 	}
 	else
 	{
 		// Not a valid command, list available options for the module 
 		// or help or list_options was called
-		$all_options = pts_php_module_call($module, "user_commands");
+		$all_options = pts_module_call($module, "user_commands");
 
 		echo "\nUser commands for the " . $module . " module:\n\n";
 
@@ -228,38 +211,6 @@ function pts_module_run_user_command($module, $command, $arguments = null)
 	}
 }
 function pts_module_call($module, $process, &$object_pass = null)
-{
-	$module_type = pts_module_type($module);
-
-	if($module_type == "PHP")
-	{
-		$module_response = pts_php_module_call($module, $process, $object_pass);
-	}
-	else if($module_type == "SH")
-	{
-		$module_response = pts_sh_module_call($module, $process);
-	}
-	else
-	{
-		$module_response = "";
-	}
-
-	return $module_response;
-}
-function pts_sh_module_call($module, $process)
-{
-	if(is_file(($module_file = MODULE_DIR . $module . ".sh")) || is_file(($module_file = MODULE_LOCAL_DIR . $module . ".sh")))
-	{
-		$module_return = trim(shell_exec("sh " . $module_file . " " . $process . " 2>&1"));
-	}
-	else
-	{
-		$module_return = null;
-	}
-
-	return $module_return;
-}
-function pts_php_module_call($module, $process, &$object_pass = null)
 {
 	if(method_exists($module, $process))
 	{
@@ -330,19 +281,11 @@ function pts_module_type($name)
 	{
 		if(is_file(MODULE_LOCAL_DIR . $name . ".php"))
 		{
-			$type = "PHP";
+			$type = "LOCAL_MODULE";
 		}
 		else if(is_file(MODULE_DIR . $name . ".php"))
 		{
-			$type = "PHP";
-		}
-		else if(is_file(MODULE_LOCAL_DIR . $name . ".sh"))
-		{
-			$type = "SH";
-		}
-		else if(is_file(MODULE_DIR . $name . ".sh"))
-		{
-			$type = "SH";
+			$type = "MODULE";
 		}
 		else
 		{
@@ -356,21 +299,12 @@ function pts_module_type($name)
 }
 function pts_available_modules()
 {
-	$modules = pts_array_merge(pts_glob(MODULE_DIR . "*"), pts_glob(MODULE_LOCAL_DIR . "*"));
+	$modules = pts_array_merge(pts_glob(MODULE_DIR . "*.php"), pts_glob(MODULE_LOCAL_DIR . "*.php"));
 	$module_names = array();
 
 	foreach($modules as $module)
 	{
-		$module = basename($module);
-
-		if(substr($module, -3) == ".sh")
-		{
-			array_push($module_names, substr($module, 0, -3));
-		}
-		else if(substr($module, -4) == ".php")
-		{
-			array_push($module_names, substr($module, 0, -4));
-		}
+		array_push($module_names, basename($module, ".php"));
 	}
 
 	asort($module_names);
@@ -387,7 +321,7 @@ function pts_module_config_init($set_options = null)
 	}
 	else
 	{
-		$file = "";
+		$file = null;
 	}
 
 	$module_config_parser = new tandem_XmlReader($file);
@@ -424,7 +358,7 @@ function pts_module_config_init($set_options = null)
 
 	for($i = 0; $i < count($option_module); $i++)
 	{
-		if(isset($option_module[$i]) && pts_module_type($option_module[$i]) != "")
+		if(isset($option_module[$i]) && pts_module_type($option_module[$i]) != null)
 		{
 			$config->addXmlObject(P_MODULE_OPTION_NAME, $i, $option_module[$i]);
 			$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $option_identifier[$i]);

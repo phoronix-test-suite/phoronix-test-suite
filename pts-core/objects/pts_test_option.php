@@ -123,7 +123,7 @@ class pts_test_option
 			$display_name = trim(substr($display_name, 0, $cut_point));
 		}
 
-		return $this->format_option_display_from_input($input);
+		return $this->format_option_display_from_input($display_name);
 	}
 	public function is_valid_select_choice($select_pos)
 	{

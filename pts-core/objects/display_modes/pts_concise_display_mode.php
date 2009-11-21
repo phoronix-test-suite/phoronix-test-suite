@@ -69,22 +69,21 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_download_file(&$pts_test_file_download, $process)
 	{
-		echo "\t\t" . $pts_test_file_download->get_filename() . ": ";
 		$expected_time = 0;
 
 		switch($process)
 		{
 			case "DOWNLOAD_FROM_CACHE":
-				echo "Downloading From Cache";
+				$process_string = "Downloading From Cache";
 				break;
 			case "LINK_FROM_CACHE":
-				echo "Linking From Cache";
+				$process_string = "Linking From Cache";
 				break;
 			case "COPY_FROM_CACHE":
-				echo "Copying From Cache";
+				$process_string = "Copying From Cache";
 				break;
 			case "DOWNLOAD":
-				echo "Downloading";
+				$process_string = "Downloading";
 
 				if(($avg_speed = pts_read_assignment("DOWNLOAD_AVG_SPEED")) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
 				{
@@ -95,6 +94,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_format_time_string($expected_time, "SECONDS", false, 60) : null;
 
+		echo "\t\t" . $process_string . ": " . $pts_test_file_download->get_filename();
 		echo " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 1) . "MB" . ($expected_time != null ? " / ~" . $expected_time : null) . "]\n";
 	}
 	public function test_install_process($identifier)

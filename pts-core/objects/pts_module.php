@@ -35,7 +35,7 @@ class pts_module
 		$module_name = self::module_name();
 		$is_setup = true;
 
-		$module_setup_options = pts_php_module_call($module_name, "module_setup");
+		$module_setup_options = pts_module_call($module_name, "module_setup");
 
 		foreach($module_setup_options as $option)
 		{
