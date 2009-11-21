@@ -45,6 +45,9 @@ class phodevi_system extends pts_device_interface
 			case "power-consumption":
 				$sensor = "sys_power_consumption_rate";
 				break;
+			case "battery-discharge-rate":
+				$sensor = "sys_power_consumption_rate";
+				break;
 			case "power-current":
 				$sensor = "sys_power_current";
 				break;

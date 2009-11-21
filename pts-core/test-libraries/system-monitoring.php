@@ -17,6 +17,9 @@ switch($argv[1])
 	case "system.current":
 		$call_function = "phodevi::read_sensor(\"system\", \"power-current\")";
 		break;
+	case "battery-discharge-rate":
+		$call_function = "phodevi::read_sensor(\"system\", \"battery-discharge-rate\")";
+		break;
 	default:
 		exit();
 		break;

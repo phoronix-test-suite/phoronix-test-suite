@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>System</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>1.0</EnvironmentSize>
+		<SupportedPlatforms>Linux</SupportedPlatforms>
+	</TestProfile>
+	<TestInformation>
+		<Title>Battery Power Usage</Title>
+		<SubTitle>System Current</SubTitle>
+		<TimesToRun>1</TimesToRun>
+		<ResultScale>Milliwatts</ResultScale>
+		<ResultFormat>LINE_GRAPH</ResultFormat>
+		<Description>This test is designed for notebooks and netbooks and monitor's the system's battery consumption as it idles for 60 seconds, then turns off the monitor for 60 seconds via DPMS, then turns the display back on and runs glxgears for 60 seconds, and then lastly it uses xdg-open to launch the default web-browser as it loads a sample, locally-stored HTML web-page. A line graph showing the power usage is then rendered.</Description>
+	</TestInformation>
+</PhoronixTestSuite>
