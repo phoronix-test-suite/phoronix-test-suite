@@ -48,6 +48,12 @@ class pts_module_interface
 	}
 
 	//
+	// The below methods are optional and can be implemented by any module
+	//
+
+	/*
+
+	//
 	// General Functions
 	//
 
@@ -166,6 +172,8 @@ class pts_module_interface
 		// Passed is a read-only copy of the pts_user_error object
 		return;
 	}
+
+	*/
 }
 
 ?>

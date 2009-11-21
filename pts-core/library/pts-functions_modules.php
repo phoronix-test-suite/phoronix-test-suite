@@ -226,7 +226,7 @@ function pts_module_call($module, $process, &$object_pass = null)
 function pts_module_process($process, &$object_pass = null)
 {
 	// Run a module process on all registered modules
-	foreach(pts_module_manager::attached_modules() as $module)
+	foreach(pts_module_manager::attached_modules($process) as $module)
 	{
 		pts_module_process_task($module, $process, $object_pass);
 	}

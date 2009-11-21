@@ -24,6 +24,7 @@ class pts_module_manager
 {
 	private static $modules = array();
 	private static $var_storage = array();
+	private static $module_process = array();
 	private static $current_module = null;
 
 	//
@@ -33,6 +34,19 @@ class pts_module_manager
 	public static function attach_module($module)
 	{
 		array_push(self::$modules, $module);
+
+		if(class_exists($module))
+		{
+			foreach(get_class_methods($module) as $module_method)
+			{
+				if(!is_array(self::$module_process[$module_method]))
+				{
+					self::$module_process[$module_method] = array();
+				}
+
+				array_push(self::$module_process[$module_method], $module);
+			}
+		}
 	}
 	public static function detach_module($module)
 	{
@@ -41,9 +55,9 @@ class pts_module_manager
 			unset(self::$modules[$module]);
 		}
 	}
-	public static function attached_modules()
+	public static function attached_modules($process_name = null)
 	{
-		return self::$modules;
+		return $process_name == null ? self::$modules : (isset(self::$module_process[$process_name]) ? self::$module_process[$process_name] : array());
 	}
 	public static function is_module_attached($module)
 	{
