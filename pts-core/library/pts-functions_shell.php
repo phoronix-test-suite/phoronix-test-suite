@@ -95,7 +95,7 @@ function pts_download($download, $to)
 		$to_file = basename($download);
 	}
 
-	if(function_exists("curl_init"))
+	if(function_exists("curl_init") && strpos($download, "sourceforge.net") == false) // SourceForge.net servers seem to have problem with below code
 	{
 		// TODO: with curl_multi_init we could do multiple downloads at once...
 		$cr = curl_init();
@@ -103,10 +103,10 @@ function pts_download($download, $to)
 
 		curl_setopt($cr, CURLOPT_FILE, $fh);
 		curl_setopt($cr, CURLOPT_URL, $download);
-		curl_setopt($cr, CURLOPT_HEADER, 0);
+		curl_setopt($cr, CURLOPT_HEADER, false);
 		curl_setopt($cr, CURLOPT_USERAGENT, $user_agent);
 		curl_setopt($cr, CURLOPT_REFERER, "http://www.phoronix-test-suite.com/");
-		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, $connection_timeout);
 
 		if(defined("NETWORK_PROXY"))

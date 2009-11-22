@@ -13,6 +13,7 @@ northbridge only dual slot pci-e_gfx and ht3 k8 part
 northbridge only dual slot pci-e_gfx and ht1 k8 part
 genuine
 unknown device
+express hub
 video device
 /pci/sse2/3dnow!
 /pci/sse2
