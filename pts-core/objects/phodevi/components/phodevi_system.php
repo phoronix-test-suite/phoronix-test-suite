@@ -180,22 +180,37 @@ class phodevi_system extends pts_device_interface
 
 		if(IS_LINUX)
 		{
-			$sensors = phodevi_linux_parser::read_sensors(array("Sys Temp", "Board Temp"));
-
-			if($sensors != false && is_numeric($sensors))
+			foreach(pts_glob("/sys/class/thermal/thermal_zone*/temp") as $temp)
 			{
-				$temp_c = $sensors;
-			}
-			else
-			{
-				$acpi = phodevi_linux_parser::read_acpi(array(
-					"/thermal_zone/THM1/temperature",
-					"/thermal_zone/TZ00/temperature",
-					"/thermal_zone/TZ01/temperature"), "temperature");
+				$temp = pts_file_get_contents($temp);
 
-				if(($end = strpos($acpi, ' ')) > 0)
+				if(is_numeric($temp))
 				{
-					$temp_c = substr($acpi, 0, $end);
+					// Assuming the first thermal sensor found is for the system temp and not something else
+					$temp_c = pts_trim_double(($temp / 1000), 2);
+					break;
+				}
+			}
+
+			if($temp_c == -1)
+			{
+				$sensors = phodevi_linux_parser::read_sensors(array("Sys Temp", "Board Temp"));
+
+				if($sensors != false && is_numeric($sensors))
+				{
+					$temp_c = $sensors;
+				}
+				else
+				{
+					$acpi = phodevi_linux_parser::read_acpi(array(
+						"/thermal_zone/THM1/temperature",
+						"/thermal_zone/TZ00/temperature",
+						"/thermal_zone/TZ01/temperature"), "temperature");
+
+					if(($end = strpos($acpi, ' ')) > 0)
+					{
+						$temp_c = substr($acpi, 0, $end);
+					}
 				}
 			}
 		}
@@ -223,30 +238,35 @@ class phodevi_system extends pts_device_interface
 
 		if(IS_LINUX)
 		{
-			$battery = array("/battery/BAT0/state", "/battery/BAT1/state");
-			$state = phodevi_linux_parser::read_acpi($battery, "charging state");
-			$power = phodevi_linux_parser::read_acpi($battery, "present rate");
-			$voltage = phodevi_linux_parser::read_acpi($battery, "present voltage");
-			$rate = -1;
+			// TODO: add support for reading from /sys/class/power_supply/BAT*
 
-			if($state == "discharging")
+			if($rate == -1)
 			{
-				$power_unit = substr($power, strrpos($power, " ") + 1);
-				$power = substr($power, 0, strpos($power, " "));
+				$battery = array("/battery/BAT0/state", "/battery/BAT1/state");
+				$state = phodevi_linux_parser::read_acpi($battery, "charging state");
+				$power = phodevi_linux_parser::read_acpi($battery, "present rate");
+				$voltage = phodevi_linux_parser::read_acpi($battery, "present voltage");
+				$rate = -1;
 
-				if($power_unit == "mA")
+				if($state == "discharging")
 				{
-					$voltage_unit = substr($voltage, strrpos($voltage, " ") + 1);
-					$voltage = substr($voltage, 0, strpos($voltage, " "));
+					$power_unit = substr($power, strrpos($power, " ") + 1);
+					$power = substr($power, 0, strpos($power, " "));
 
-					if($voltage_unit == "mV")
+					if($power_unit == "mA")
 					{
-						$rate = round(($power * $voltage) / 1000);
-					}				
-				}
-				else if($power_unit == "mW")
-				{
-					$rate = $power;
+						$voltage_unit = substr($voltage, strrpos($voltage, " ") + 1);
+						$voltage = substr($voltage, 0, strpos($voltage, " "));
+
+						if($voltage_unit == "mV")
+						{
+							$rate = round(($power * $voltage) / 1000);
+						}				
+					}
+					else if($power_unit == "mW")
+					{
+						$rate = $power;
+					}
 				}
 			}
 		}

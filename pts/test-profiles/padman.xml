@@ -10,6 +10,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>612</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+		<ExternalDependencies>sdl-development</ExternalDependencies>
 		<ProjectURL>http://www.worldofpadman.com/</ProjectURL>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
