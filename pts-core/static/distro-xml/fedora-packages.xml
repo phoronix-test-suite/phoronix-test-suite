@@ -32,8 +32,8 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc gcc-c++</PackageName>
-			<FileCheck>/usr/bin/gcc, /usr/bin/c++</FileCheck>
+			<PackageName>gcc gcc-c++ make autoconf automake</PackageName>
+			<FileCheck>/usr/bin/gcc, /usr/bin/c++, /usr/bin/make, /usr/bin, autoconf</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>

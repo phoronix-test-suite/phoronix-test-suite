@@ -167,9 +167,10 @@ class system_monitor extends pts_module_interface
 						$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);
 						$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $type[$sub_array[0]]);
 
+						// TODO: Merging support
 						foreach($sub_array as $id_point)
 						{
-							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $device[$id_point], 5, "sys-monitor-" . $id_point);
+							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, pts_read_assignment("TEST_RESULTS_IDENTIFIER") . " - " . $device[$id_point], 5, "sys-monitor-" . $id_point);
 							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
 							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
 						}
