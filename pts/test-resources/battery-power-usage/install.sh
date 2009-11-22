@@ -10,10 +10,6 @@ xset dpms force off
 sleep 60
 xset dpms force on
 sleep 5
-glxgears -fullscreen &
-\$TIMED_KILL glxgears 60
-sleep 5
-xdg-open sample_html_page/index.html &
-sleep 60
+\$TEST_MPLAYER_BASE/mplayer -vo xv -fs \$TEST_VIDEO_SAMPLE/Grey.ts
 \$SYSTEM_MONITOR_STOP \$LOG_FILE" > battery-power-usage
 chmod +x battery-power-usage
