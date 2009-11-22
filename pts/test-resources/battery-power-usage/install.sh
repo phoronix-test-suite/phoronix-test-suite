@@ -10,7 +10,7 @@ xset dpms force off
 sleep 60
 xset dpms force on
 sleep 5
-glxgears
+glxgears -fullscreen &
 \$TIMED_KILL glxgears 60
 sleep 5
 xdg-open sample_html_page/index.html &
