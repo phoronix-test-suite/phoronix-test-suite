@@ -130,19 +130,68 @@ class pts_LineGraph extends pts_CustomGraph
 			}
 		}
 
-		if($this->graph_y_title == "Percent")
+		$from_top = $this->graph_top_start + 3;
+
+		if(in_array($this->graph_y_title, array("Percent", "Milliwatts", "Megabytes", "Celsius")))
 		{
 			$from_left = $this->graph_left_start + 2;
-			$this->graph_image->write_text_left("Averages:", $this->graph_font, 6, $this->graph_color_text, $from_left, $this->graph_top_start + 3, $from_left, $this->graph_top_start + 3);
+			$this->graph_image->write_text_left("Averages:", $this->graph_font, 6, $this->graph_color_text, $from_left, $from_top, $from_left, $from_top);
 			$from_left += $this->text_string_width("Averages: ", $this->graph_font, 6);
 
 			foreach($calculations_r as $color => &$values)
 			{
-				$avg = $this->trim_double(array_sum($values) / count($values), 1) . "%";
-				$this->graph_image->write_text_left($avg, $this->graph_font, 6, $color, $from_left, $this->graph_top_start + 4, $from_left, $this->graph_top_start + 4);
+				$avg = $this->trim_double(array_sum($values) / count($values), 1);
+				$this->graph_image->write_text_left($avg, $this->graph_font, 6, $color, $from_left, $from_top + 1, $from_left, $from_top + 1);
 				$from_left += $this->text_string_width($avg, $this->graph_font, 6) + 2;
 			}
 		}
+		if(in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius")))
+		{
+			$from_top += 10;
+			$from_left = $this->graph_left_start + 2;
+			$this->graph_image->write_text_left("Peak:", $this->graph_font, 6, $this->graph_color_text, $from_left, $from_top, $from_left, $from_top);
+			$from_left += $this->text_string_width("Peak: ", $this->graph_font, 6);
+
+			foreach($calculations_r as $color => &$values)
+			{
+				$high = $values[0];
+				foreach($values as &$value_check)
+				{
+					if($value_check > $high)
+					{
+						$high = $value_check;
+					}
+				}
+				$high = $this->trim_double($high, 1);
+
+				$this->graph_image->write_text_left($high, $this->graph_font, 6, $color, $from_left, $from_top, $from_left, $from_top);
+				$from_left += $this->text_string_width($high, $this->graph_font, 6) + 2;
+			}
+		}
+		if(in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius")))
+		{
+			$from_top += 10;
+			$from_left = $this->graph_left_start + 2;
+			$this->graph_image->write_text_left("Low:", $this->graph_font, 6, $this->graph_color_text, $from_left, $from_top, $from_left, $from_top);
+			$from_left += $this->text_string_width("Low: ", $this->graph_font, 6);
+
+			foreach($calculations_r as $color => &$values)
+			{
+				$low = $values[0];
+				foreach($values as &$value_check)
+				{
+					if($value_check < $low)
+					{
+						$low = $value_check;
+					}
+				}
+				$low = $this->trim_double($low, 1);
+
+				$this->graph_image->write_text_left($low, $this->graph_font, 6, $color, $from_left, $from_top, $from_left, $from_top);
+				$from_left += $this->text_string_width($low, $this->graph_font, 6) + 2;
+			}
+		}
+
 	}
 	protected function render_graph_result()
 	{

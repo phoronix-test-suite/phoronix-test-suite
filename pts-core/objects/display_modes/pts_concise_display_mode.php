@@ -32,7 +32,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_start($identifier)
 	{
-		echo "\t" . $identifier . ":\n";
+		echo "\n\t" . $identifier . ":\n";
 
 		$test_install_position = pts_read_assignment("TEST_INSTALL_POSITION");
 		$test_install_count = pts_read_assignment("TEST_INSTALL_COUNT");
@@ -43,9 +43,8 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if(($size = pts_estimated_environment_size($identifier)) > 0)
 		{
-			echo "\t\tInstall Size: " . $size . " MB\n";
+			echo "\t\tInstallation Size: " . $size . " MB\n";
 		}
-		echo "\n";
 	}
 	public function test_install_downloads($identifier, &$download_packages)
 	{
@@ -99,6 +98,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_process($identifier)
 	{
+		echo "\t\tInstalling Test...\n";
 		return;
 	}
 	public function test_install_output(&$to_output)
