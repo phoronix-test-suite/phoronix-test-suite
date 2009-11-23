@@ -100,8 +100,9 @@ class phoromatic extends pts_module_interface
 		self::$phoromatic_account = pts_module::read_option("remote_account");
 		self::$phoromatic_verifier = pts_module::read_option("remote_verifier");
 		self::$phoromatic_system = pts_module::read_option("remote_system");
+		$phoromatic = "phoromatic";
 
-		pts_attach_module("phoromatic");
+		pts_attach_module($phoromatic);
 		phoromatic::user_system_process();
 	}
 

@@ -159,7 +159,7 @@ class pts_LineGraph extends pts_CustomGraph
 
 		if(in_array($this->graph_y_title, array("Percent", "Milliwatts", "Megabytes", "Celsius")))
 		{
-			array_push($to_display[$this->graph_color_text], "Averages:");
+			array_push($to_display[$this->graph_color_text], "Average:");
 
 			foreach($calculations_r as $color => &$values)
 			{
@@ -204,11 +204,12 @@ class pts_LineGraph extends pts_CustomGraph
 			}
 		}
 
+		// Do the actual rendering of avg / low / med high identifiers
 		$from_left = $this->graph_left_start + 2;
 
 		foreach($to_display as $color_key => &$column)
 		{
-			$from_top = $this->graph_top_start + 4 + ($color_key != $this->graph_color_text ? 1 : 0);
+			$from_top = $this->graph_top_start + 4 + ($color_key != $this->graph_color_text || $this->graph_image->get_renderer() == "SVG" ? 1 : 0);
 			$longest_string_width = 0;
 
 			foreach($column as &$write)
@@ -224,7 +225,7 @@ class pts_LineGraph extends pts_CustomGraph
 				$from_top += 10;
 			}
 
-			$from_left += $longest_string_width + 2;						
+			$from_left += $longest_string_width + 3;						
 		}
 	}
 	protected function render_graph_result()

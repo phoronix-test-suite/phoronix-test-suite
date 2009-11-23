@@ -5,7 +5,7 @@ mkdir x264_/
 
 cd x264-snapshot-20091118-2245/
 ./configure --prefix=$HOME/x264_/
-make
+make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 make install
 cd ..

@@ -98,7 +98,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_process($identifier)
 	{
-		echo "\t\tInstalling Test...\n";
+		echo "\t\tInstalling Test\n";
 		return;
 	}
 	public function test_install_output(&$to_output)
