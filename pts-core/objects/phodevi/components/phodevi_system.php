@@ -189,7 +189,7 @@ class phodevi_system extends pts_device_interface
 
 				if(is_numeric($temp))
 				{
-					// Assuming the first thermal sensor found is for the system temp and not something else
+					// Assuming the first thermal sensor is for the system, see TODO in phodevi_cpu
 					$temp_c = pts_trim_double(($temp / 1000), 2);
 					break;
 				}

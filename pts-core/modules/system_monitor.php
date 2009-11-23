@@ -67,7 +67,7 @@ class system_monitor extends pts_module_interface
 			}
 		}
 
-		pts_module::pts_timed_function(9, "pts_monitor_update");
+		pts_module::pts_timed_function(8, "pts_monitor_update");
 	}
 	public static function __event_results_process(&$tandem_xml)
 	{

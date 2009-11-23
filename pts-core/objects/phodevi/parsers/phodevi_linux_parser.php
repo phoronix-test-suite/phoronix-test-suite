@@ -95,7 +95,7 @@ class phodevi_linux_parser
 			}
 
 			$start_stat = pts_trim_spaces(file_get_contents($path));
-			sleep(1);
+			usleep(500000);
 			$end_stat = pts_trim_spaces(file_get_contents($path));
 
 			$start_stat = explode(" ", $start_stat);

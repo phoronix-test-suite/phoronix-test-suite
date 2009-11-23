@@ -341,13 +341,27 @@ class phodevi_cpu extends pts_device_interface
 			}
 			else
 			{
-				$acpi = phodevi_linux_parser::read_acpi(array(
-					"/thermal_zone/THM0/temperature", 
-					"/thermal_zone/TZ00/temperature"), "temperature");
+				$search_count = 0;
 
-				if(($end = strpos($acpi, ' ')) > 0)
+				foreach(pts_glob("/sys/class/thermal/thermal_zone*/temp") as $temp)
 				{
-					$temp_c = substr($acpi, 0, $end);
+					$temp = pts_file_get_contents($temp);
+
+					if(is_numeric($temp))
+					{
+						$search_count++;
+
+						if($search_count < 2)
+						{
+							continue;
+						}
+
+						// Assuming the system thermal sensor comes 2nd to the ACPI CPU temperature
+						// It appears that way on a ThinkPad T60, but TODO find a better way to validate
+
+						$temp_c = pts_trim_double(($temp / 1000), 2);
+						break;
+					}
 				}
 			}
 		}
