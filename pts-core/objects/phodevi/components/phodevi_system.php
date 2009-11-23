@@ -730,7 +730,7 @@ class phodevi_system extends pts_device_interface
 			// GNOME
 			$desktop_environment = "GNOME";
 
-			if(pts_executable_in_path("gnome-about") != false)
+			if(pts_executable_in_path("gnome-about"))
 			{
 				$desktop_version = array_pop(explode(" ", trim(shell_exec("gnome-about --version 2>&1"))));
 			}
@@ -758,6 +758,18 @@ class phodevi_system extends pts_device_interface
 					$desktop_version = $v;
 				}
 			}
+		}
+		else if(pts_process_running_bool("chromeos-wm"))
+		{
+			$chrome_output = trim(shell_exec("chromeos-wm -version"));
+
+			if($chrome_output == "chromeos-wm")
+			{
+				// No version actually reported
+				$chrome_output = "Chrome OS";
+			}
+
+			$desktop_environment = $chrome_output;
 		}
 		else if(pts_process_running_bool("lxde-settings"))
 		{

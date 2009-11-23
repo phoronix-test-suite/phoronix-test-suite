@@ -49,6 +49,11 @@ function pts_env_variables()
 		"THIS_RUN_TIME" => PTS_INIT_TIME,
 		"DEBUG_REAL_HOME" => pts_user_home()
 		);
+
+		if(!pts_executable_in_path("cc") && pts_executable_in_path("gcc"))
+		{
+			$env_variables["CC"] = "gcc";
+		}
 	}
 
 	return $env_variables;
