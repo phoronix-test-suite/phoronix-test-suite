@@ -79,6 +79,17 @@ class pts_LineGraph extends pts_CustomGraph
 	{
 		$identifiers_empty = count($this->graph_identifiers) == 0;
 		$calculations_r = array();
+		$point_count = count($this->graph_data[0]);
+		$varying_lengths = false;
+
+		foreach($this->graph_data as &$graph_r)
+		{
+			if(count($graph_r) != $point_c)
+			{
+				$varying_lengths = true;
+				break;
+			}
+		}
 
 		for($i_o = 0; $i_o < count($this->graph_data); $i_o++)
 		{
@@ -116,7 +127,15 @@ class pts_LineGraph extends pts_CustomGraph
 				}
 				else if($identifiers_empty && $i == ($point_counter - 1))
 				{
-					$this->graph_image->draw_line($px_from_left, $value_plot_top, $this->graph_left_end - 1, $value_plot_top, $paint_color, 2);
+					if($varying_lengths && ($point_counter * 1.1) < $point_count)
+					{
+						// This plotting ended prematurely
+						$this->graph_image->draw_line($px_from_left, $value_plot_top, $px_from_left, $this->graph_top_end - 1, $paint_color, 2);
+					}
+					else
+					{
+						$this->graph_image->draw_line($px_from_left, $value_plot_top, $this->graph_left_end - 1, $value_plot_top, $paint_color, 2);
+					}
 				}
 
 				if(!$identifiers_empty && ($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)))

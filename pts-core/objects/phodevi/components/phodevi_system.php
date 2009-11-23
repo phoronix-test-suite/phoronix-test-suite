@@ -406,7 +406,7 @@ class phodevi_system extends pts_device_interface
 			}
 		}
 
-		return strtolower($vendor);
+		return str_replace(" ", "", strtolower($vendor));
 	}
 	public static function sw_filesystem()
 	{
