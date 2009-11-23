@@ -52,6 +52,9 @@ class phodevi_system extends pts_device_interface
 			case "uptime":
 				$sensor = "sys_uptime";
 				break;
+			case "iowait":
+				$sensor = "sys_iowait";
+				break;
 			default:
 				$sensor = false;
 				break;
@@ -296,6 +299,31 @@ class phodevi_system extends pts_device_interface
 		}
 
 		return $current;
+	}
+	public static function sys_iowait()
+	{
+		$iowait = -1;
+
+		if(IS_LINUX && is_file("/proc/stat"))
+		{
+			$start_stat = pts_file_get_contents("/proc/stat");
+			sleep(1);
+			$end_stat = pts_file_get_contents("/proc/stat");
+
+			$start_stat = explode(" ", substr($start_stat, 0, strpos($start_stat, "\n")));
+			$end_stat = explode(" ", substr($end_stat, 0, strpos($end_stat, "\n")));
+
+			for($i = 2, $diff_cpu_total = 0; $i < 9; $i++)
+			{
+				$diff_cpu_total += $end_stat[$i] - $start_stat[$i];
+			}
+
+			$diff_iowait = $end_stat[6] - $start_stat[6];
+
+			$iowait = 1000 * $diff_iowait / $diff_cpu_total / 10;	
+		}
+
+		return $iowait;
 	}
 	public static function sys_uptime()
 	{
