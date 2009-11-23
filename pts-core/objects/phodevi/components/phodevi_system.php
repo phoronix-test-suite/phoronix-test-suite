@@ -320,7 +320,7 @@ class phodevi_system extends pts_device_interface
 
 			$diff_iowait = $end_stat[6] - $start_stat[6];
 
-			$iowait = 1000 * $diff_iowait / $diff_cpu_total / 10;	
+			$iowait = pts_trim_double(1000 * $diff_iowait / $diff_cpu_total / 10, 2);	
 		}
 
 		return $iowait;

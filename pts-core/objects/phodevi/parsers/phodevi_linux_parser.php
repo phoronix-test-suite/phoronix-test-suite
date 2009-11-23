@@ -73,6 +73,46 @@ class phodevi_linux_parser
 
 		return $value;
 	}
+	public static function read_sys_disk_speed($path, $to_read)
+	{
+		$speed = -1; // in MB/s
+
+		if(is_file($path))
+		{
+			switch($to_read)
+			{
+				case "WRITE":
+					$sector = 6;
+					$time = 7;
+					break;
+				case "READ":
+					$sector = 2;
+					$time = 3;
+					break;
+				default:
+					return $speed;
+					break;
+			}
+
+			$start_stat = pts_trim_spaces(file_get_contents($path));
+			sleep(1);
+			$end_stat = pts_trim_spaces(file_get_contents($path));
+
+			$start_stat = explode(" ", $start_stat);
+			$end_stat = explode(" ", $end_stat);
+
+			$delta_sectors = $end_stat[$sector] - $start_stat[$sector];
+			$delta_ms_spent = $end_stat[$time] - $start_stat[$time];
+
+			// assuming 512 byte sectors
+			$delta_mb = $delta_sectors * 512 / 1048576;
+			$delta_seconds = $delta_ms_spent / 1000;
+
+			$speed = $delta_seconds != 0 ? $delta_mb / $delta_seconds : 0;
+		}
+
+		return pts_trim_double($speed, 2);
+	}
 	public static function read_sys_dmi($identifier)
 	{
 		$dmi = false;

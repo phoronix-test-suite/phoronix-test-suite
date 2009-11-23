@@ -30,6 +30,12 @@ class phodevi_disk extends pts_device_interface
 			case "temperature":
 				$sensor = "hdd_temperature";
 				break;
+			case "read-speed":
+				$sensor = "hdd_read_speed";
+				break;
+			case "write-speed":
+				$sensor = "hdd_write_speed";
+				break;
 			default:
 				$sensor = false;
 				break;
@@ -191,6 +197,58 @@ class phodevi_disk extends pts_device_interface
 	{
 		// Attempt to read temperature using hddtemp
 		return phodevi_parser::read_hddtemp($disk);
+	}
+	public static function hdd_read_speed()
+	{
+		// speed in MB/s
+		$speed = -1;
+
+		if(IS_LINUX)
+		{
+			static $sys_disk = null;
+
+			if($sys_disk == null)
+			{
+				foreach(pts_glob("/sys/class/block/*/stat") as $check_disk)
+				{
+					if(pts_file_get_contents($check_disk) != null)
+					{
+						$sys_disk = $check_disk;
+						break;
+					}
+				}
+			}
+
+			$speed = phodevi_linux_parser::read_sys_disk_speed($sys_disk, "READ");
+		}
+
+		return $speed;
+	}
+	public static function hdd_write_speed()
+	{
+		// speed in MB/s
+		$speed = -1;
+
+		if(IS_LINUX)
+		{
+			static $sys_disk = null;
+
+			if($sys_disk == null)
+			{
+				foreach(pts_glob("/sys/class/block/*/stat") as $check_disk)
+				{
+					if(pts_file_get_contents($check_disk) != null)
+					{
+						$sys_disk = $check_disk;
+						break;
+					}
+				}
+			}
+
+			$speed = phodevi_linux_parser::read_sys_disk_speed($sys_disk, "WRITE");
+		}
+
+		return $speed;
 	}
 }
 
