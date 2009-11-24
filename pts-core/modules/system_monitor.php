@@ -143,14 +143,14 @@ class system_monitor extends pts_module_interface
 			{
 				foreach($type_index as $key => $sub_array)
 				{
-					if(count($sub_array) > 0)
+					foreach($sub_array as $id_point)
 					{
 						$time_minutes = floor(pts_time_elapsed() / 60);
 
 						if($time_minutes == 0)
 							$time_minutes = 1;
 
-						$graph_title = $type[$sub_array[0]] . " Monitor";
+						$graph_title = $device[$id_point] . " " . $type[$sub_array[0]] . " Monitor";
 						$graph_unit = $unit[$sub_array[0]];
 						$graph_unit = str_replace("°C", "Celsius", $graph_unit);
 						$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
@@ -167,12 +167,9 @@ class system_monitor extends pts_module_interface
 						$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);
 						$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $type[$sub_array[0]]);
 
-						foreach($sub_array as $id_point)
-						{
-							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, pts_read_assignment("TEST_RESULTS_IDENTIFIER") . " - " . $device[$id_point], 5, "sys-monitor-" . $id_point);
-							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
-							$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
-						}
+						$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, pts_read_assignment("TEST_RESULTS_IDENTIFIER"), 5, "sys-monitor-" . $id_point);
+						$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
+						$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
 					}
 				}
 			}
@@ -202,13 +199,28 @@ class system_monitor extends pts_module_interface
 		$log_f = pts_module::read_file($log_file);
 		pts_module::remove_file($log_file);
 		$line_breaks = explode("\n", $log_f);
+		$contains_a_non_zero = false;
 		$results = array();
 
 		foreach($line_breaks as $line)
 		{
 			$line = trim($line);
+
 			if(!empty($line))
+			{
 				array_push($results, $line);
+
+				if(!$contains_a_non_zero && $line != 0)
+				{
+					$contains_a_non_zero = true;
+				}
+			}
+		}
+
+		if(!$contains_a_non_zero)
+		{
+			// Sensor likely not doing anything if ALL of its readings are 0
+			return array();
 		}
 
 		return $results;
