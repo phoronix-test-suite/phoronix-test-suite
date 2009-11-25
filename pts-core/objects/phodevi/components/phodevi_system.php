@@ -248,7 +248,7 @@ class phodevi_system extends pts_device_interface
 				if(is_numeric($power_now))
 				{
 					// sysfs power_now seems to be displayed in microWatts
-					$rate = pts_trim_double($power_now / 1000000, 2);
+					$rate = pts_trim_double($power_now / 1000, 2);
 				}
 			}
 
