@@ -144,7 +144,7 @@ class phodevi_motherboard extends pts_device_interface
 					$info .= $product;
 				}
 
-				if(empty($info))
+				if($info == null)
 				{
 					$fw_version = explode(" ", phodevi_linux_parser::read_system_hal("system.firmware.version"));
 
@@ -154,7 +154,7 @@ class phodevi_motherboard extends pts_device_interface
 					}
 				}
 
-				if(empty($info))
+				if($info == null)
 				{
 					$pci_vendor = phodevi_linux_parser::read_hal("pci.subsys_vendor");
 
@@ -164,7 +164,7 @@ class phodevi_motherboard extends pts_device_interface
 					}
 				}
 
-				if(empty($info))
+				if($info == null)
 				{
 					$hw_string = phodevi_linux_parser::read_cpuinfo("Hardware");
 

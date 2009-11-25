@@ -105,11 +105,11 @@ class phodevi_gpu extends pts_device_interface
 		$aa_level = phodevi::read_property("gpu", "aa-level");
 		$af_level = phodevi::read_property("gpu", "af-level");
 
-		if(!empty($aa_level))
+		if($aa_level)
 		{
 			array_push($extra_gfx_settings, "AA: " . $aa_level);
 		}
-		if(!empty($af_level))
+		if($af_level)
 		{
 			array_push($extra_gfx_settings, "AF: " . $af_level);
 		}
@@ -123,7 +123,7 @@ class phodevi_gpu extends pts_device_interface
 	}
 	public static function gpu_set_resolution($args)
 	{
-		if(count($args) != 2)
+		if(count($args) != 2 || IS_WINDOWS || IS_MACOSX)
 		{
 			return false;
 		}
@@ -138,7 +138,7 @@ class phodevi_gpu extends pts_device_interface
 	public static function gpu_aa_level()
 	{
 		// Determine AA level if over-rode
-		$aa_level = null;
+		$aa_level = false;
 
 		if(IS_NVIDIA_GRAPHICS)
 		{
@@ -243,7 +243,7 @@ class phodevi_gpu extends pts_device_interface
 	public static function gpu_af_level()
 	{
 		// Determine AF level if over-rode
-		$af_level = "";
+		$af_level = false;
 
 		if(IS_NVIDIA_GRAPHICS)
 		{
@@ -309,7 +309,7 @@ class phodevi_gpu extends pts_device_interface
 
 				if(is_file($connector_path . "enabled") && pts_file_get_contents($connector_path . "enabled") == "enabled")
 				{
-					$info = explode("x", pts_file_get_contents($connector_path . $modes));
+					$info = explode("x", pts_file_get_contents($connector_path . "modes"));
 
 					if(count($info) == 2)
 					{
@@ -529,6 +529,17 @@ class phodevi_gpu extends pts_device_interface
 			{
 				$video_ram = $NVIDIA / 1024;
 			}
+			else if(IS_MACOSX)
+			{
+				$info = phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "VRAM");
+				$info = explode(" ", $info);
+				$video_ram = $info[0];
+			
+				if($info[1] == "GB")
+				{
+					$video_ram *= 1024;
+				}
+			}
 			else if(is_file("/var/log/Xorg.0.log"))
 			{
 				// Attempt Video RAM detection using X log
@@ -556,17 +567,6 @@ class phodevi_gpu extends pts_device_interface
 					{
 						$video_ram = intval($info) / 1024;
 					}
-				}
-			}
-			else if(IS_MACOSX)
-			{
-				$info = phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "VRAM");
-				$info = explode(" ", $info);
-				$video_ram = $info[0];
-			
-				if($info[1] == "GB")
-				{
-					$video_ram *= 1024;
 				}
 			}
 		}
@@ -604,11 +604,7 @@ class phodevi_gpu extends pts_device_interface
 
 		if(IS_NVIDIA_GRAPHICS) // NVIDIA GPU
 		{
-			$nv_freq = phodevi_parser::read_nvidia_extension("GPUDefault3DClockFreqs");
-
-			$nv_freq = explode(",", $nv_freq);
-			$core_freq = $nv_freq[0];
-			$mem_freq = $nv_freq[1];
+			list($core_freq, $mem_freq) = explode(",", phodevi_parser::read_nvidia_extension("GPUDefault3DClockFreqs"));
 		}
 		else if(IS_ATI_GRAPHICS && IS_LINUX) // ATI GPU
 		{
@@ -616,8 +612,7 @@ class phodevi_gpu extends pts_device_interface
 
 			if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
 			{
-				$core_freq = array_shift($od_clocks);
-				$mem_freq = array_pop($od_clocks);
+				list($core_freq, $mem_freq) = $od_clocks;
 			}
 		}
 		else if(IS_MESA_GRAPHICS)
