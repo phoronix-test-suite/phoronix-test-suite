@@ -258,7 +258,6 @@ class phodevi_system extends pts_device_interface
 				$state = phodevi_linux_parser::read_acpi($battery, "charging state");
 				$power = phodevi_linux_parser::read_acpi($battery, "present rate");
 				$voltage = phodevi_linux_parser::read_acpi($battery, "present voltage");
-				$rate = -1;
 
 				if($state == "discharging")
 				{

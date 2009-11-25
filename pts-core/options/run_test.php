@@ -42,8 +42,9 @@ class run_test implements pts_option_interface
 		$test_properties = array();
 
 		// Cleanup tests to run
-		if(!pts_cleanup_tests_to_run($to_run_identifiers))
+		if(!pts_cleanup_tests_to_run($to_run_identifiers) || count($to_run_identifiers) == 0)
 		{
+			echo pts_string_header("You must enter at least one test, suite, or result identifier to run.");
 			return false;
 		}
 
@@ -187,7 +188,7 @@ class run_test implements pts_option_interface
 			}
 		}
 
-		if(count($to_run_identifiers) == 0 || $test_run_manager->get_test_count() == 0)
+		if($test_run_manager->get_test_count() == 0)
 		{
 			return false;
 		}

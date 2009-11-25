@@ -296,38 +296,58 @@ class phodevi_gpu extends pts_device_interface
 		if(IS_MACOSX)
 		{
 			$resolution = array();
-			$info = phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution");
-			$info = pts_trim_explode(" ", $info);
+			$info = pts_trim_explode(" ", phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution"));
 			$resolution[0] = $info[0];
 			$resolution[1] = $info[2];
 		}
 		else
 		{
-			$info = shell_exec("xrandr 2>&1 | grep \"*\"");
-
-			if(strpos($info, "*") !== false)
+			// Before calling xrandr first try to get the resolution through KMS path
+			foreach(pts_glob("/sys/class/drm/card*/*/modes") as $connector_path)
 			{
-				$res = pts_trim_explode("x", $info);
-				$res[0] = substr($res[0], strrpos($res[0], " "));
-				$res[1] = substr($res[1], 0, strpos($res[1], " "));
-				$res = array_map("trim", $res);
+				$connector_path = pts_add_trailing_slash(dirname($connector_path));
 
-				$info = is_numeric($res[0]) && is_numeric($res[1]) ? array($res[0], $res[1]) : null;
-			}
-			else
-			{
-				$info = null;
-			}
-
-			if($info == null)
-			{
-				if(IS_NVIDIA_GRAPHICS && ($nvidia = phodevi_parser::read_nvidia_extension("FrontendResolution")) != "")
+				if(is_file($connector_path . "enabled") && pts_file_get_contents($connector_path . "enabled") == "enabled")
 				{
-					$info = explode(",", $nvidia);
+					$info = explode("x", pts_file_get_contents($connector_path . $modes));
+
+					if(count($info) == 2)
+					{
+						break;
+					}
+
+					$info = array();
+				}
+			}
+
+			if(!isset($info) || empty($info))
+			{
+				$info = shell_exec("xrandr 2>&1 | grep \"*\"");
+
+				if(strpos($info, "*") !== false)
+				{
+					$res = pts_trim_explode("x", $info);
+					$res[0] = substr($res[0], strrpos($res[0], " "));
+					$res[1] = substr($res[1], 0, strpos($res[1], " "));
+					$res = array_map("trim", $res);
+
+					$info = is_numeric($res[0]) && is_numeric($res[1]) ? array($res[0], $res[1]) : null;
 				}
 				else
 				{
-					$info = array(-1, -1);
+					$info = null;
+				}
+
+				if($info == null)
+				{
+					if(IS_NVIDIA_GRAPHICS && ($nvidia = phodevi_parser::read_nvidia_extension("FrontendResolution")) != "")
+					{
+						$info = explode(",", $nvidia);
+					}
+					else
+					{
+						$info = array(-1, -1);
+					}
 				}
 			}
 

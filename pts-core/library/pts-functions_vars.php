@@ -52,6 +52,7 @@ function pts_env_variables()
 
 		if(!pts_executable_in_path("cc") && pts_executable_in_path("gcc"))
 		{
+			// This helps some test profiles build correctly if they don't do a cc check internally
 			$env_variables["CC"] = "gcc";
 		}
 	}
@@ -127,7 +128,7 @@ function pts_run_additional_vars($identifier)
 		$extra_vars["PATH"] = $ctp_extension_string . "\$PATH";
 	}
 
-	if(count($extends) > 0)
+	if(isset($extends[0]))
 	{
 		$extra_vars["TEST_EXTENDS"] = TEST_ENV_DIR . $extends[0];
 	}
