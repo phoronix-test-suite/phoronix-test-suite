@@ -79,116 +79,40 @@ class system_monitor extends pts_module_interface
 	}
 	public static function __event_results_process(&$tandem_xml)
 	{
-		// Elapsed time
+		$time_minutes = floor(pts_time_elapsed() / 60);
 
-		$device = array();
-		$type = array();
-		$unit = array();
-		$m_array = array();
-		$type_index = array();
+		if($time_minutes == 0)
+		{
+			$time_minutes = 1;
+		}
 
-		foreach(self::$to_monitor as $pts_sensor)
+		foreach(self::$to_monitor as $id_point => &$pts_sensor)
 		{
 			$sensor_results = self::parse_monitor_log("logs/" . $pts_sensor->get_identifier());
 
-			if(count($sensor_results) > 0)
+			if(count($sensor_results) > 2)
 			{
-				if(!isset($type_index[$pts_sensor->get_sensor_string()]))
-				{
-					$type_index[$pts_sensor->get_sensor_string()] = array();
-				}
+				$graph_title = $pts_sensor->get_formatted_hardware_type() . " " . $pts_sensor->get_sensor_string() . " Monitor";
+				$graph_unit = $pts_sensor->get_sensor_unit();
+				$graph_unit = str_replace("°C", "Celsius", $graph_unit);
+				$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
+				$sub_title .= implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
 
-				array_push($device, $pts_sensor->get_formatted_hardware_type());
-				array_push($type, $pts_sensor->get_sensor_string());
-				array_push($unit, $pts_sensor->get_sensor_unit());
-				array_push($m_array, $sensor_results);
-				array_push($type_index[$pts_sensor->get_sensor_string()], count($m_array) - 1);
+				$tandem_id = pts_request_new_id();
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $graph_title);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, null);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $sub_title);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $graph_unit);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, null);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, "LINE_GRAPH");
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $pts_sensor->get_sensor_string());
+
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, pts_read_assignment("TEST_RESULTS_IDENTIFIER"), 5, "sys-monitor-" . $id_point);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
 			}
 		}
-
-		$info_report = "";
-		if(isset($m_array[0]) && count($m_array[0]) == 1)
-		{
-			$info_report .= "Current Sensor Readings:\n\n";
-			for($i = 0; $i < count($m_array); $i++)
-			{
-				$info_report .= $device[$i] . " " . $type[$i] . " Monitor: " . $m_array[$i][0] . " " .  $unit[$i];
-
-				if($i < (count($m_array) - 1))
-					$info_report .= "\n";
-			}
-		}
-		else
-		{
-			for($i = 0; $i < count($m_array); $i++)
-			{
-				// Calculate statistics
-				if($i > 0)
-					$info_report .= "\n\n";
-
-				$low = false;
-				$high = 0;
-				$total = 0;
-
-				foreach($m_array[$i] as $temp)
-				{
-					if($low == false)
-						$low = $temp;
-
-					if($temp < $low || ($low == 0 && $type[$i] <> "Usage"))
-						$low = $temp;
-					else if($temp > $high)
-						$high = $temp;
-
-					$total += $temp;
-				}
-				$avg = $total / count($m_array[$i]);
-
-				$info_report .= $device[$i] . " " . $type[$i] . " Statistics:\n\nLow: " . pts_trim_double($low) . ' ' . $unit[$i] . "\nHigh: " . pts_trim_double($high) . ' ' . $unit[$i] . "\nAverage: " . pts_trim_double($avg) . ' ' . $unit[$i];
-			}
-
-			if(trim($info_report) != null)
-			{
-				foreach($type_index as $key => $sub_array)
-				{
-					foreach($sub_array as $id_point)
-					{
-						$time_minutes = floor(pts_time_elapsed() / 60);
-
-						if($time_minutes == 0)
-							$time_minutes = 1;
-
-						$graph_title = $device[$id_point] . " " . $type[$sub_array[0]] . " Monitor";
-						$graph_unit = $unit[$sub_array[0]];
-						$graph_unit = str_replace("°C", "Celsius", $graph_unit);
-						$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
-						$sub_title .= implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
-
-
-						$tandem_id = pts_request_new_id();
-						$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $graph_title);
-						$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, null);
-						$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $sub_title);
-						$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $graph_unit);
-						$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, null);
-						$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, "LINE_GRAPH");
-						$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);
-						$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $type[$sub_array[0]]);
-
-						$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, pts_read_assignment("TEST_RESULTS_IDENTIFIER"), 5, "sys-monitor-" . $id_point);
-						$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
-						$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $m_array[$id_point]), 5, "sys-monitor-" . $id_point);
-					}
-				}
-			}
-		}
-
-		if(count($m_array) > 0)
-			$info_report .= "\n\nElapsed Time: " . pts_format_time_string(pts_time_elapsed());
-
-		// terminal output
-		if(!empty($info_report))
-			echo pts_string_header($info_report);
 	}
 	public static function pts_monitor_update()
 	{

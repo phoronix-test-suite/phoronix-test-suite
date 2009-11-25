@@ -40,6 +40,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Use a locking system to prevent multiple copies of the Phoromatic module from running simultaneously
 - embedded: Add a PTS module named "embedded" that is a collection of options to help those running PTS on embedded/mobile devices
 - system_monitor: Append sensor monitoring graphs to end of result file during testing
+- system_monitor: Rely on sensor results to be outputted to the test results file
 - scp_result_pusher: Add a PTS module for pushing test results automatically to a remote destination over SCP
 - pts_Graph: Add pts_ImageComparisonGraph object
 - pts_LineGraph: Don't plot lines all the way to the end unless relevant
