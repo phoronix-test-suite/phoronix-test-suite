@@ -197,13 +197,13 @@ class run_test implements pts_option_interface
 		echo "\n";
 		$file_name = false;
 		$save_results = false;
-		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1)
+		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1 || pts_read_assignment("FORCE_SAVE_RESULTS"))
 		{
 			if(pts_is_assignment("DO_NOT_SAVE_RESULTS"))
 			{
 				$save_results = false;
 			}
-			else if(pts_read_assignment("TEST_PROFILE_REQUESTS_SAVE") || pts_is_assignment("AUTO_SAVE_NAME") || getenv("TEST_RESULTS_NAME"))
+			else if(pts_read_assignment("TEST_PROFILE_REQUESTS_SAVE") || pts_is_assignment("AUTO_SAVE_NAME") || pts_read_assignment("FORCE_SAVE_RESULTS") || getenv("TEST_RESULTS_NAME"))
 			{
 				$save_results = true;
 			}

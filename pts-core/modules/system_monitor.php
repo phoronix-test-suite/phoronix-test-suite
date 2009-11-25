@@ -48,6 +48,14 @@ class system_monitor extends pts_module_interface
 	// General Functions
 	//
 
+	public static function __pre_option_process($command)
+	{
+		if($command == "run_test")
+		{
+			pts_set_assignment("FORCE_SAVE_RESULTS", true);
+		}
+	}
+
 	public static function __pre_run_process()
 	{
 		self::$to_monitor = array();
@@ -220,7 +228,7 @@ class system_monitor extends pts_module_interface
 		if(!$contains_a_non_zero)
 		{
 			// Sensor likely not doing anything if ALL of its readings are 0
-			return array();
+			$results = array();
 		}
 
 		return $results;
