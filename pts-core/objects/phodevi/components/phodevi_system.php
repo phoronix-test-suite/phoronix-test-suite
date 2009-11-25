@@ -241,7 +241,16 @@ class phodevi_system extends pts_device_interface
 
 		if(IS_LINUX)
 		{
-			// TODO: add support for reading from /sys/class/power_supply/BAT*
+			foreach(pts_glob("/sys/class/power_supply/*/power_now") as $power_now)
+			{
+				$power_now = pts_file_get_contents($power_now);
+
+				if(is_numeric($power_now))
+				{
+					// sysfs power_now seems to be displayed in microWatts
+					$rate = pts_trim_double($power_now / 1000000, 2);
+				}
+			}
 
 			if($rate == -1)
 			{

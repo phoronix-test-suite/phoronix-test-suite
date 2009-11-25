@@ -157,7 +157,7 @@ class pts_LineGraph extends pts_CustomGraph
 			$to_display[$color] = array();
 		}
 
-		if(in_array($this->graph_y_title, array("Percent", "Milliwatts", "Megabytes", "Celsius")))
+		if(in_array($this->graph_y_title, array("Percent", "Milliwatts", "Megabytes", "Celsius", "MB/s")))
 		{
 			array_push($to_display[$this->graph_color_text], "Average:");
 
@@ -167,7 +167,7 @@ class pts_LineGraph extends pts_CustomGraph
 				array_push($to_display[$color], $avg);
 			}
 		}
-		if(in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius")))
+		if(in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "MB/s")))
 		{
 			array_push($to_display[$this->graph_color_text], "Peak:");
 

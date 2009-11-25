@@ -43,15 +43,31 @@ class phodevi_motherboard extends pts_device_interface
 	public static function power_mode()
 	{
 		// Returns the power mode
-		$return_status = "";
+		$return_status = null;
 
 		if(IS_LINUX)
 		{
-			$power_state = phodevi_linux_parser::read_acpi("/ac_adapter/AC/state", "state");
+			$sysfs_checked = false;
 
-			if($power_state == "off-line")
+			foreach(pts_glob("/sys/class/power_supply/AC*/online") as $online)
 			{
-				$return_status = "This computer was running on battery power";
+				if(pts_file_get_contents($online) == '0')
+				{
+					$return_status = "This computer was running on battery power";
+					break;
+				}
+				$sysfs_checked = true;
+			}
+
+			if(!$sysfs_checked)
+			{
+				// There likely was no sysfs power_supply support for that power adapter
+				$power_state = phodevi_linux_parser::read_acpi("/ac_adapter/AC/state", "state");
+
+				if($power_state == "off-line")
+				{
+					$return_status = "This computer was running on battery power";
+				}
 			}
 		}
 

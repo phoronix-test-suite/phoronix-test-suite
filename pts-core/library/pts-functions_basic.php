@@ -75,6 +75,20 @@ function pts_glob($pattern, $flags = 0)
 	$r = glob($pattern, $flags);
 	return is_array($r) ? $r : array();
 }
+function pts_multi_glob()
+{
+	$multi = array();
+
+	foreach(func_get_args() as $arg_glob)
+	{
+		foreach(pts_glob($arg_glob) as $arg_select)
+		{
+			array_push($multi, $arg_select);
+		}
+	}
+
+	return $multi;
+}
 function pts_rmdir($dir)
 {
 	return is_dir($dir) && rmdir($dir);

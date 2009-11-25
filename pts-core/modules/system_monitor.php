@@ -93,8 +93,6 @@ class system_monitor extends pts_module_interface
 			if(count($sensor_results) > 2)
 			{
 				$graph_title = $pts_sensor->get_formatted_hardware_type() . " " . $pts_sensor->get_sensor_string() . " Monitor";
-				$graph_unit = $pts_sensor->get_sensor_unit();
-				$graph_unit = str_replace("°C", "Celsius", $graph_unit);
 				$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
 				$sub_title .= implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
 
@@ -102,7 +100,7 @@ class system_monitor extends pts_module_interface
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $graph_title);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, null);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $sub_title);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $graph_unit);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $pts_sensor->get_sensor_unit());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, null);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, "LINE_GRAPH");
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);

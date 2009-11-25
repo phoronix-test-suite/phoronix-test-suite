@@ -51,6 +51,9 @@ class pts_sensor
 			case "fan-speed":
 				$this->sensor_string = "Fan Speed";
 				break;
+			case "disk-speed":
+				$this->sensor_string = "Disk Speed";
+				break;
 			default:
 				$this->sensor_string = ucwords($sensor_type);
 				break;

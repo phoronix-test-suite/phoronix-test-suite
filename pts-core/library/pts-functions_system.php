@@ -48,10 +48,10 @@ function pts_sw_string($return_string = true)
 function pts_available_sensors()
 {
 	return array(
-	new pts_sensor("temp", "gpu", array("gpu", "temperature"), "°C"),
-	new pts_sensor("temp", "cpu", array("cpu", "temperature"), "°C"),
-	new pts_sensor("temp", "hdd", array("disk", "temperature"), "°C"),
-	new pts_sensor("temp", "sys", array("system", "temperature"), "°C", "System"),
+	new pts_sensor("temp", "gpu", array("gpu", "temperature"), "Celsius"),
+	new pts_sensor("temp", "cpu", array("cpu", "temperature"), "Celsius"),
+	new pts_sensor("temp", "hdd", array("disk", "temperature"), "Celsius"),
+	new pts_sensor("temp", "sys", array("system", "temperature"), "Celsius", "System"),
 	new pts_sensor("battery", "power", array("system", "power-consumption"), "Milliwatts"),
 	new pts_sensor("battery", "current", array("system", "power-current"), "microAmps"),
 	new pts_sensor("voltage", "cpu", array("system", "cpu-voltage"), "Volts"),
