@@ -132,6 +132,7 @@ class pts_test_result
 				// Nothing to do, there are no results
 				break;
 			case "LINE_GRAPH":
+			case "TEST_COUNT_PASS":
 				// Just take the first result
 				$END_RESULT = $this->trial_results[0];
 				break;

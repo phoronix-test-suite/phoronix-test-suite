@@ -29,6 +29,7 @@ Phoronix Test Suite (Git)
 - pts-core: PTS module architecture revisions
 - pts-core: Alias CC=gcc if gcc is present and cc is not
 - pts-core: Always save test log files, make them easily accessible from the PTS Results Viewer
+- pts-core: Add TEST_COUNT_PASS graph type for ResultFormat
 - phodevi: Split out phodevi_parser module into phodevi_linux_parser, phodevi_osx_parser, and phodevi_solaris_parser for OS-specific functions
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
 - phodevi: Add device notes and special settings string functionality to API

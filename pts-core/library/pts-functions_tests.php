@@ -199,6 +199,9 @@ function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_versi
 			case "MULTI_PASS_FAIL":
 				$t = new pts_MultiPassFailGraph($name, $r_o->get_attributes(), $r_o->get_scale_formatted());
 				break;
+			case "TEST_COUNT_PASS":
+				$t = new pts_TestCountPassGraph($name, $r_o->get_attributes(), $r_o->get_scale_formatted());
+				break;
 			case "IMAGE_COMPARISON":
 				$t = new pts_ImageComparisonGraph($name, $r_o->get_attributes());
 				break;
