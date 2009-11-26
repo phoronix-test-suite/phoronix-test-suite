@@ -102,7 +102,8 @@ class phodevi_disk extends pts_device_interface
 				}
 				$i++;
 			}
-			while($disk != false && $i < 128);
+			while(($disk != false || $i < 9) && $i < 128);
+			// On some systems, the first drive seems to be at dev.ad.8 rather than starting at dev.ad.0
 		}
 		else if(IS_LINUX)
 		{
