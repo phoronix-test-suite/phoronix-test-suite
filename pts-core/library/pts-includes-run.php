@@ -395,11 +395,22 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $test_identifier, 5);
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
+
+			static $xml_write_pos = 1;
+			pts_mkdir(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
+			rename(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/" . $test_run_manager->get_results_identifier() . "/");
+			$xml_write_pos++;
 		}
 		else
 		{
 			$test_run_manager->add_failed_test_run_request($test_run_request);
+
+			// For now delete the failed test log files, but it may be a good idea to keep them
+			pts_remove(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/");
+			pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/");
 		}
+
+		pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/");
 	}
 
 	return true;
@@ -569,8 +580,17 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$cache_share = new pts_storage_object(false, false);
 	}
 
+	if(($results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER")) && ($save_name = pts_read_assignment("SAVE_FILE_NAME")))
+	{
+		$backup_test_log_dir = SAVE_RESULTS_DIR . $save_name . "/test-logs/active/" . $results_identifier . "/";
+		pts_remove($backup_test_log_dir);
+	}
+	else
+	{
+		$backup_test_log_dir = false;
+	}
+
 	$display_mode->test_run_start($pts_test_result);
-	$archive_log_files = pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_BENCHMARKFILES, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE"));
 
 	for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
@@ -744,13 +764,10 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(is_file($benchmark_log_file))
 		{
-			if($archive_log_files)
+			if($backup_test_log_dir)
 			{
-				$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/test-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
-				$backup_filename = basename($benchmark_log_file);
-
-				pts_mkdir($backup_log_dir, 0777, true);
-				copy($benchmark_log_file, $backup_log_dir . $backup_filename);
+				pts_mkdir($backup_test_log_dir, 0777, true);
+				copy($benchmark_log_file, $backup_test_log_dir . $test_identifier . "-" . ($i + 1) . ".log");
 			}
 
 			if(!pts_test_profile_debug_message($display_mode, "Log File At: " . $benchmark_log_file))

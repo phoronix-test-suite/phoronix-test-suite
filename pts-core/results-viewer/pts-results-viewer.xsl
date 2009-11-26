@@ -76,7 +76,7 @@
 									<xsl:for-each select="Results/Group">
 										<div style="padding: 5px 0;">
 											<xsl:for-each select="Entry">
-												<strong><xsl:value-of select="Identifier" />:</strong><span style="padding-left: 5px;"><xsl:choose><xsl:when test="string-length(Value)&lt;20"><xsl:value-of select="Value"/></xsl:when></xsl:choose></span><br />
+												<strong><a style="text-decoration: none;"><xsl:attribute name="href">test-logs/<xsl:value-of select="position()" />/<xsl:value-of select="Identifier" />/</xsl:attribute><xsl:value-of select="Identifier" /></a>:</strong><span style="padding-left: 5px;"><xsl:choose><xsl:when test="string-length(Value)&lt;20"><xsl:value-of select="Value"/></xsl:when></xsl:choose></span><br />
 											</xsl:for-each>
 										</div>
 									</xsl:for-each>
