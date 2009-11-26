@@ -229,6 +229,13 @@ class phodevi
 
 		define("OS_PREFIX", strtolower(OPERATING_SYSTEM) . "_");
 
+		switch(OPERATING_SYSTEM)
+		{
+			case "BSD":
+				define("BSD_LINUX_COMPATIBILE", strpos(shell_exec("kldstat -n linux 2>&1"), "linux.ko") != false);
+				break;
+		}
+
 		// OpenGL / graphics detection
 		$graphics_detection = array("NVIDIA", array("ATI", "fglrx"), array("Mesa", "SGI"));
 		$opengl_driver = phodevi::read_property("system", "opengl-driver") . " " . phodevi::read_property("system", "opengl-vendor") . " " . phodevi::read_property("system", "dri-display-driver");

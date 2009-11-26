@@ -732,7 +732,17 @@ class phodevi_gpu extends pts_device_interface
 		{
 			$drm_info = phodevi_bsd_parser::read_sysctl("dev.drm.0.%desc");
 
-			if($drm_info == false)
+			if(!$drm_info)
+			{
+				$drm_info = phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%desc");
+
+				if($drm_info && stripos($drm_info, "NVIDIA") === false)
+				{
+					$drm_info = "NVIDIA " . $drm_info;
+				}
+			}
+
+			if(!$drm_info)
 			{
 				$agp_info = phodevi_bsd_parser::read_sysctl("dev.agp.0.%desc");
 

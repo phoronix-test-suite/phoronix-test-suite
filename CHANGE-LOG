@@ -41,6 +41,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add system.iowait sensor for the system's iowait as a percentage
 - phodevi: Add disk-speed.read and disk-speed.write system sensors in MB/s
 - phodevi: Support reading the current screen resolution from the kernel DRM when using a KMS driver
+- phodevi: Improve NVIDIA GPU detection on BSD systems when glxinfo is not installed
 - phoromatic: Use a locking system to prevent multiple copies of the Phoromatic module from running simultaneously
 - embedded: Add a PTS module named "embedded" that is a collection of options to help those running PTS on embedded/mobile devices
 - system_monitor: Append sensor monitoring graphs to end of result file during testing

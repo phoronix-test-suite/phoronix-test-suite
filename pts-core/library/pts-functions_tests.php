@@ -607,7 +607,7 @@ function pts_test_platform_supported($identifier)
 
 			if(!in_array(OPERATING_SYSTEM, $platforms))
 			{
-				if(IS_BSD && strpos(shell_exec("kldstat -n linux 2>&1"), "linux.ko") != false && in_array("Linux", $platforms))
+				if(IS_BSD && BSD_LINUX_COMPATIBILE && in_array("Linux", $platforms))
 				{
 					// The OS is BSD but there is Linux API/ABI compatibility support loaded
 					$supported = true;

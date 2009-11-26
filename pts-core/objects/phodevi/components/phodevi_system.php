@@ -939,24 +939,30 @@ class phodevi_system extends pts_device_interface
 	public static function sw_opengl_driver()
 	{
 		// OpenGL version
+		$info = null;
+
 		if(IS_WINDOWS)
 		{
 			$info = null; // TODO: Windows support
 		}
-		else
+		else if(pts_executable_in_path("glxinfo"))
 		{
-			$info = pts_executable_in_path("glxinfo") != false ? shell_exec("glxinfo 2>&1 | grep version") : null;
+			$info = shell_exec("glxinfo 2>&1 | grep version");
 
-			if(($pos = strpos($info, "OpenGL version string:")) === false)
-			{
-				$info = "N/A";
-			}
-			else
+			if(($pos = strpos($info, "OpenGL version string:")) !== false)
 			{
 				$info = substr($info, $pos + 23);
 				$info = trim(substr($info, 0, strpos($info, "\n")));
 				$info = str_replace(array(" Release"), "", $info);
 			}
+		}
+		else if(IS_BSD && phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%driver") && pts_executable_in_path("nvidia-settings"))
+		{
+			$info = phodevi_parser::read_nvidia_extension("OpenGLVersion");
+		}
+		else
+		{
+			$info = null;
 		}
 
 		return $info;
@@ -964,16 +970,21 @@ class phodevi_system extends pts_device_interface
 	public static function sw_opengl_vendor()
 	{
 		// OpenGL version
-		$info = pts_executable_in_path("glxinfo") != false ? shell_exec("glxinfo 2>&1 | grep vendor") : null;
+		$info = null;
 
-		if(($pos = strpos($info, "OpenGL vendor string:")) === false)
+		if(pts_executable_in_path("glxinfo"))
 		{
-			$info = false;
+			$info = shell_exec("glxinfo 2>&1 | grep vendor");
+
+			if(($pos = strpos($info, "OpenGL vendor string:")) !== false)
+			{
+				$info = substr($info, $pos + 22);
+				$info = trim(substr($info, 0, strpos($info, "\n")));
+			}
 		}
-		else
+		else if(IS_BSD && phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%driver"))
 		{
-			$info = substr($info, $pos + 22);
-			$info = trim(substr($info, 0, strpos($info, "\n")));
+			$info = "NVIDIA";
 		}
 
 		return $info;
