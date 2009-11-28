@@ -45,6 +45,24 @@ class phodevi_bsd_parser
 
 		return $info;
 	}
+	public static function read_acpiconf($desc)
+	{
+		$info = false;
+
+		if(pts_executable_in_path("acpiconf"))
+		{
+			$output = shell_exec("acpiconf -i0");
+
+			if(($point = strpos($output, $desc . ":")) !== false)
+			{
+				$info = substr($output, $point + strlen($desc) + 1);
+				$info = substr($info, 0, strpos("\n"));
+				$info = trim($info);
+			}
+		}
+
+		return $info;
+	}
 }
 
 ?>

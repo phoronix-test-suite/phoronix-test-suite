@@ -281,6 +281,15 @@ class phodevi_system extends pts_device_interface
 				}
 			}
 		}
+		else if(IS_BSD)
+		{
+			$battery = phodevi_bsd_parser::read_acpiconf("Present rate");
+
+			if($battery && substr($battery, -2) == "mW")
+			{
+				$rate = substr($battery, 0, strpos($battery, " "));
+			}
+		}
 
 		return $rate;
 	}

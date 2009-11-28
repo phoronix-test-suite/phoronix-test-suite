@@ -11,7 +11,12 @@ case $OS_TYPE in
 		make solaris-x86-64-cc
 	;;
 	"BSD" )
-		make freebsd-x86-64
+		if [ $OS_ARCH = "x86_64" ]
+		then
+			make freebsd-x86-64
+		else
+			make freebsd-x86-sse2
+		fi
 	;;
 	* )
 		if [ $OS_ARCH = "x86_64" ]
