@@ -243,7 +243,14 @@ class phodevi_system extends pts_device_interface
 		{
 			foreach(pts_glob("/sys/class/power_supply/*/power_now") as $power_now)
 			{
+				$battery_dir = pts_add_trailing_slash(dirname($power_now));
 				$power_now = pts_file_get_contents($power_now);
+
+				if(is_file($battery_dir . "status") && pts_file_get_contents($battery_dir . "status") == "Charging")
+				{
+					// We only want the values when the battery is discharging
+					continue;
+				}
 
 				if(is_numeric($power_now))
 				{
