@@ -13,9 +13,19 @@ else
 	VDPAU_STATUS=""
 fi
 
+case $OS_TYPE in
+	"BSD")
+	"Solaris")
+		MAKE_CMD=gmake
+	;;
+	*)
+		MAKE_CMD=make
+	;;
+esac
+
 ./configure --enable-xv --enable-xvmc $VDPAU_STATUS --disable-ivtv --prefix=$HOME/mplayer_ > /dev/null
-make -j $NUM_CPU_JOBS
-make install
+$MAKE_CMD -j $NUM_CPU_JOBS
+$MAKE_CMD install
 cd ..
 
 rm -rf mplayer-checkout-2009-06-04/

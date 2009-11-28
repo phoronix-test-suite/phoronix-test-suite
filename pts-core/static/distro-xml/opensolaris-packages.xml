@@ -32,8 +32,8 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc-dev</PackageName>
-			<FileCheck>/usr/bin/gcc OR /opt/csw/gcc4/bin/gcc</FileCheck>
+			<PackageName>gcc-dev SUNWgmake</PackageName>
+			<FileCheck>/usr/bin/gcc OR /opt/csw/gcc4/bin/gcc, /usr/bin/gmake</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>

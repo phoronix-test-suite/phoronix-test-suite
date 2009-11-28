@@ -144,7 +144,7 @@ function pts_attach_module($module)
 
 	if(defined("PTS_STARTUP_TASK_PERFORMED"))
 	{
-		pts_module_process("__startup", null, $module);
+		pts_module_process("__startup", ($temp = null), $module);
 	}
 }
 function pts_load_module($module)
