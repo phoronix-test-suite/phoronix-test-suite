@@ -397,12 +397,12 @@ class phodevi_cpu extends pts_device_interface
 			$info = shell_exec("psrinfo -v | grep MHz");
 			$info = substr($info, strrpos($info, "at") + 3);
 			$info = substr($info, 0, strpos($info, "MHz"));
-			$info = pts_trim_double(intval($info) / 1000, 2);
+			$info = pts_trim_double($info, 2);
 		}
 		else if(IS_BSD)
 		{
 			$info = phodevi_bsd_parser::read_sysctl("dev.cpu.0.freq");
-			$info = pts_trim_double(intval($info) / 1000, 2);
+			$info = pts_trim_double($info, 2);
 		}
 		else if(IS_MACOSX)
 		{
@@ -421,32 +421,41 @@ class phodevi_cpu extends pts_device_interface
 	public static function cpu_load_array($read_core = -1)
 	{
 		// CPU load array
-		$stat = @file_get_contents("/proc/stat");
-
-		if($read_core > -1 && ($l = strpos($stat, "cpu" . $read_core)) !== false)
-		{
-			$start_line = $l;
-		}
-		else
-		{
-			$start_line = 0;
-		}
-
-		$stat = substr($stat, $start_line, strpos($stat, "\n"));
-		$stat_break = explode(" ", $stat);
-
 		$load = array();
-		for($i = 1; $i < 6; $i++)
+
+		if(IS_LINUX && is_file("/proc/stat"))
 		{
-			array_push($load, $stat_break[$i]);
+			$stat = file_get_contents("/proc/stat");
+
+			if($read_core > -1 && ($l = strpos($stat, "cpu" . $read_core)) !== false)
+			{
+				$start_line = $l;
+			}
+			else
+			{
+				$start_line = 0;
+			}
+
+			$stat = substr($stat, $start_line, strpos($stat, "\n"));
+			$stat_break = explode(" ", $stat);
+
+			for($i = 1; $i < 6; $i++)
+			{
+				array_push($load, $stat_break[$i]);
+			}
 		}
+		else if(IS_BSD)
+		{
+			$load = explode(" ", phodevi_bsd_parser::read_sysctl("kern.cp_time"));
+		}
+	
 
 		return $load;
 	}
 	public static function cpu_usage($core = -1)
 	{
 		// Determine current percentage for processor usage
-		if(IS_LINUX)
+		if(IS_LINUX || IS_BSD)
 		{
 			$start_load = phodevi_cpu::cpu_load_array($core);
 			sleep(1);

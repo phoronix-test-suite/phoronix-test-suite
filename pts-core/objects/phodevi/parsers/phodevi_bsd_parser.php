@@ -56,7 +56,7 @@ class phodevi_bsd_parser
 			if(($point = strpos($output, $desc . ":")) !== false)
 			{
 				$info = substr($output, $point + strlen($desc) + 1);
-				$info = substr($info, 0, strpos("\n"));
+				$info = substr($info, 0, strpos($info, "\n"));
 				$info = trim($info);
 			}
 		}
