@@ -629,7 +629,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		}
 		
 
-		if(!isset($test_results[10240]) || pts_is_assignment("DEBUG_TEST_PROFILE"))
+		if(!isset($test_results[10240]) || pts_read_assignment("DEBUG_TEST_PROFILE"))
 		{
 			$display_mode->test_run_output($test_results);
 		}

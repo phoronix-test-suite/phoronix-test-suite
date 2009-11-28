@@ -71,7 +71,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_output(&$to_output)
 	{
-		if(!isset($to_output[10240]))
+		if(!isset($to_output[10240]) || pts_read_assignment("DEBUG_TEST_PROFILE"))
 		{
 			// Not worth printing files over 10kb to screen
 			echo $to_output;
