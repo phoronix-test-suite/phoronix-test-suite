@@ -282,7 +282,7 @@ function pts_download_test_files($identifier, &$display_mode)
 							$file_downloaded = true;
 							$fail_count = 0;
 
-							if(($download_size = $download_package->get_filesize()) > 0)
+							if(($download_size = $download_package->get_filesize()) > 0 && $download_end != $download_start)
 							{
 								$download_speed = floor($download_size / ($download_end - $download_start)); // bytes per second
 

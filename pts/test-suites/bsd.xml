@@ -105,6 +105,9 @@
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
+		<Test>himeno</Test>
+	</RunTest>
+	<RunTest>
 		<Test>stream</Test>
 		<Arguments>Copy</Arguments>
 		<Description>Copy</Description>

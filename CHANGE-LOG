@@ -56,6 +56,7 @@ Phoronix Test Suite (Git)
 - pts: Add x264 test profile for x264 H.264/Y4M encoding application
 - pts: Add idle-power-usage test profile
 - pts: Add battery-power-usage test profile
+- pts: Add himeno test profile for the Himeno pressure solver benchmark
 
 Phoronix Test Suite 2.2.0 "Bardu"
 November 16, 2009
