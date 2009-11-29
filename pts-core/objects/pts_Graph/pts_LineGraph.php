@@ -84,7 +84,7 @@ class pts_LineGraph extends pts_CustomGraph
 
 		foreach($this->graph_data as &$graph_r)
 		{
-			if(count($graph_r) != $point_c)
+			if(count($graph_r) != $point_count)
 			{
 				$varying_lengths = true;
 				break;

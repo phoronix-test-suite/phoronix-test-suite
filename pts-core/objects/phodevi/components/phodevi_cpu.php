@@ -156,7 +156,7 @@ class phodevi_cpu extends pts_device_interface
 		// Report string if CPU power savings feature is enabled
 		$return_string = "";
 
-		if(is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq") && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"))
+		if(is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq") && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"))
 		{
 			// if EIST / CnQ is disabled, the cpufreq folder shoudln't be present, but double check by comparing the min and max frequencies
 			$min = pts_file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");

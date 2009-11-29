@@ -398,7 +398,11 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 
 			static $xml_write_pos = 1;
 			pts_mkdir(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
-			rename(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/" . $test_run_manager->get_results_identifier() . "/");
+
+			if(is_dir(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier()))
+			{
+				rename(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/" . $test_run_manager->get_results_identifier() . "/");
+			}
 			$xml_write_pos++;
 		}
 		else
@@ -584,6 +588,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	{
 		$backup_test_log_dir = SAVE_RESULTS_DIR . $save_name . "/test-logs/active/" . $results_identifier . "/";
 		pts_remove($backup_test_log_dir);
+		pts_mkdir($backup_test_log_dir, 0777, true);
 	}
 	else
 	{
@@ -766,7 +771,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			if($backup_test_log_dir)
 			{
-				pts_mkdir($backup_test_log_dir, 0777, true);
 				copy($benchmark_log_file, $backup_test_log_dir . $test_identifier . "-" . ($i + 1) . ".log");
 			}
 

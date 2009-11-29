@@ -13,19 +13,10 @@ else
 	VDPAU_STATUS=""
 fi
 
-case $OS_TYPE in
-	"BSD")
-	"Solaris")
-		MAKE_CMD=gmake
-	;;
-	*)
-		MAKE_CMD=make
-	;;
-esac
-
 ./configure --enable-xv --enable-xvmc $VDPAU_STATUS --disable-ivtv --prefix=$HOME/mplayer_ > /dev/null
-$MAKE_CMD -j $NUM_CPU_JOBS
-$MAKE_CMD install
+# BSD and Solaris need gmake, not make
+make -j $NUM_CPU_JOBS
+make install
 cd ..
 
 rm -rf mplayer-checkout-2009-06-04/
