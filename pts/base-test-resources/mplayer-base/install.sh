@@ -14,9 +14,19 @@ else
 fi
 
 ./configure --enable-xv --enable-xvmc $VDPAU_STATUS --disable-ivtv --prefix=$HOME/mplayer_ > /dev/null
-# BSD and Solaris need gmake, not make
-make -j $NUM_CPU_JOBS
-make install
+
+case $OS_TYPE in
+	"Solaris")
+	"BSD")
+		gmake -j $NUM_CPU_JOBS
+		gmake install
+	;;
+	*)
+		make -j $NUM_CPU_JOBS
+		make install
+	;;
+esac
+
 cd ..
 
 rm -rf mplayer-2009-11-28/
