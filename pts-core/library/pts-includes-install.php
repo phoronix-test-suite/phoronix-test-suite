@@ -225,9 +225,9 @@ function pts_download_test_files($identifier, &$display_mode)
 							do
 							{
 								echo "\nAvailable Download Mirrors:\n\n";
-								$mirror_choice = pts_text_select_menu("Select Your Preferred Mirror", $urls, false);
+								$url = pts_text_select_menu("Select Your Preferred Mirror", $urls, false);
 							}
-							while(!pts_is_valid_download_url($mirror_choice));
+							while(!pts_is_valid_download_url($url));
 						}
 						else
 						{
