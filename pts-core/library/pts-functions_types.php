@@ -472,11 +472,13 @@ function pts_virtual_suite_tests($object)
 			{
 				array_push($contained_tests, $test);
 			}
+			break;
 		case "TYPE_VIRT_PREV_SAVE_IDENTIFIER":
 			foreach(pts_to_array(pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) as $test)
 			{
 				array_push($contained_tests, $test);
 			}
+			break;
 	}
 
 	if(count($contained_tests) > 0)

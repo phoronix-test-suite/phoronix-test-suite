@@ -1,10 +1,10 @@
 #!/bin/sh
 
-tar -xjf mplayer-2009-06-04.tar.bz2
+tar -xjf mplayer-2009-11-28.tar.bz2
 
 mkdir $HOME/mplayer_
 
-cd mplayer-checkout-2009-06-04/
+cd mplayer-2009-11-28/
 
 if [ -f "/usr/include/vdpau/vdpau.h" ]
 then
@@ -19,7 +19,7 @@ make -j $NUM_CPU_JOBS
 make install
 cd ..
 
-rm -rf mplayer-checkout-2009-06-04/
+rm -rf mplayer-2009-11-28/
 rm -rf mplayer_/share/
 
 ln -s mplayer_/bin/mplayer mplayer

@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/mplayer-2009-06-04.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/mplayer-2009-06-04.tar.bz2</URL>
-			<MD5>39adb549f49bb50d5467993c978fcd88</MD5>
-			<FileSize>15191483</FileSize>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/mplayer-2009-11-28.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/mplayer-2009-11-28.tar.bz2</URL>
+			<MD5>ccb1dfa3e2a50726e688b825aac0f7e8</MD5>
+			<FileSize>16893928</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

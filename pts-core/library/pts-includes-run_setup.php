@@ -268,6 +268,9 @@ function pts_global_auto_tags($extra_attr = null)
 		case 2:
 			array_push($tags_array, "Dual Core");
 			break;
+		case 3:
+			array_push($tags_array, "Triple Core");
+			break;
 		case 4:
 			array_push($tags_array, "Quad Core");
 			break;
@@ -299,16 +302,12 @@ function pts_global_auto_tags($extra_attr = null)
 		array_push($tags_array, "NVIDIA");
 	}
 
-	if(phodevi::read_property("system", "kernel-architecture") == "x86_64" && IS_LINUX)
+	if(phodevi::read_property("system", "kernel-architecture") == "x86_64")
 	{
-		array_push($tags_array, "64-bit Linux");
+		array_push($tags_array, "64-bit");
 	}
 
-	$os = phodevi::read_property("system", "operating-system");
-	if($os != "Unknown")
-	{
-		array_push($tags_array, $os);
-	}
+	array_push($tags_array, phodevi::read_property("system", "operating-system"));
 
 	return implode(", ", $tags_array);
 }

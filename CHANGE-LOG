@@ -62,6 +62,7 @@ Phoronix Test Suite (Git)
 - pts: Add idle-power-usage test profile
 - pts: Add battery-power-usage test profile
 - pts: Add himeno test profile for the Himeno pressure solver benchmark
+- pts: Update mplayer-base test profile against MPlayer 2009-11-28 SVN snapshot
 
 Phoronix Test Suite 2.2.0 "Bardu"
 November 16, 2009
