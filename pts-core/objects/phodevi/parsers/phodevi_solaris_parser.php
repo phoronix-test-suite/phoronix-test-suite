@@ -80,6 +80,17 @@ class phodevi_solaris_parser
 
 		return $values;
 	}
+	public static function read_hal_property($udi, $key)
+	{
+		$value = false;
+
+		if(pts_executable_in_path("hal-get-property"))
+		{
+			$value = trim(shell_exec("hal-get-property --udi " . $udi . " --key " . $key . " 2> /dev/null"));
+		}
+
+		return $value;
+	}
 }
 
 ?>

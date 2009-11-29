@@ -63,6 +63,11 @@ class phodevi_chipset extends pts_device_interface
 				$info = trim($info);
 			}
 		}
+		else if(IS_SOLARIS)
+		{
+			// TODO:
+			$info = null;
+		}
 		else if(IS_LINUX)
 		{
 			$info = phodevi_linux_parser::read_pci(array("RAM memory", "Host bridge"));

@@ -288,6 +288,15 @@ class phodevi_system extends pts_device_interface
 				}
 			}
 		}
+		else if(IS_SOLARIS)
+		{
+			$battery = phodevi_solaris_parser::read_hal_property("/org/freedesktop/Hal/devices/pseudo/acpi_drv_0_battery0_0", "battery.reporting.rate");
+
+			if(is_numeric($battery))
+			{
+				$rate = $battery;
+			}
+		}
 		else if(IS_BSD)
 		{
 			$battery = phodevi_bsd_parser::read_acpiconf("Present rate");

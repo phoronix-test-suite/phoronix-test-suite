@@ -46,6 +46,7 @@ Phoronix Test Suite (Git)
 - phodevi: Improve BSD hard drive detection
 - phodevi: Support monitoring the system's battery power consumption rate on BSD
 - phodevi: CPU usage monitoring support for BSD
+- phodevi: Support monitoring the system's battery power consumption rate on OpenSolaris
 - phoromatic: Use a locking system to prevent multiple copies of the Phoromatic module from running simultaneously
 - embedded: Add a PTS module named "embedded" that is a collection of options to help those running PTS on embedded/mobile devices
 - system_monitor: Append sensor monitoring graphs to end of result file during testing
