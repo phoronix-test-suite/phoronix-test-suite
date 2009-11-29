@@ -86,7 +86,16 @@ class phodevi_solaris_parser
 
 		if(pts_executable_in_path("hal-get-property"))
 		{
-			$value = trim(shell_exec("hal-get-property --udi " . $udi . " --key " . $key . " 2> /dev/null"));
+
+			foreach(pts_to_array($udi) as $udi_check)
+			{
+				$value = trim(shell_exec("hal-get-property --udi " . $udi_check . " --key " . $key . " 2> /dev/null"));
+
+				if($value != false)
+				{
+					break;
+				}
+			}
 		}
 
 		return $value;

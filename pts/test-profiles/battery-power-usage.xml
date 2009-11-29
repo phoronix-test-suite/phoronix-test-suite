@@ -9,7 +9,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>1.0</EnvironmentSize>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
+		<SupportedPlatforms>Linux, BSD, Solaris</SupportedPlatforms>
 		<Extends>mplayer-base</Extends>
 	</TestProfile>
 	<TestInformation>

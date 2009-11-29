@@ -36,6 +36,8 @@ class phodevi_chipset extends pts_device_interface
 	}
 	public static function chipset_string()
 	{
+		$info = false;
+
 		if(IS_MACOSX)
 		{
 			$sb_vendor = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "Vendor");
@@ -65,8 +67,15 @@ class phodevi_chipset extends pts_device_interface
 		}
 		else if(IS_SOLARIS)
 		{
-			// TODO:
-			$info = null;
+			// Vendor Detection
+			$vendor_possible_udis = array(
+				"/org/freedesktop/Hal/devices/pci_0_0/pci_ide_3_2_0",
+				"/org/freedesktop/Hal/devices/pci_0_0/pci_ide_1f_1_1",
+				);
+
+			$info = phodevi_solaris_parser::read_hal_property($vendor_possible_udis, "info.vendor");
+
+			// TODO: Northbridge and Southbridge Detection For Solaris
 		}
 		else if(IS_LINUX)
 		{
@@ -125,12 +134,9 @@ class phodevi_chipset extends pts_device_interface
 					$info .= " + " . $southbridge_clean;
 				}
 			}
-
-			if(empty($info))
-			{
-				$info = "Unknown";
-			}
 		}
+
+		$info = pts_clean_information_string($info);
 
 		return $info;
 	}
