@@ -81,6 +81,8 @@ class pts_LineGraph extends pts_CustomGraph
 		$calculations_r = array();
 		$point_count = count($this->graph_data[0]);
 		$varying_lengths = false;
+		$min_value = $this->graph_data[0][0];
+		$max_value = $this->graph_data[0][0];
 
 		foreach($this->graph_data as &$graph_r)
 		{
@@ -104,6 +106,15 @@ class pts_LineGraph extends pts_CustomGraph
 				$value = $this->graph_data[$i_o][$i];
 				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start)));
 				$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
+
+				if($value > $max_value)
+				{
+					$max_value = $value;
+				}
+				else if($value < $min_value)
+				{
+					$min_value = $value;
+				}
 
 				if($px_from_left > $this->graph_left_end)
 				{
@@ -167,7 +178,7 @@ class pts_LineGraph extends pts_CustomGraph
 				array_push($to_display[$color], $avg);
 			}
 		}
-		if(in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "MB/s")))
+		if(in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "MB/s")) || ($this->graph_y_title == "Percent" && $max_value < 100))
 		{
 			array_push($to_display[$this->graph_color_text], "Peak:");
 
