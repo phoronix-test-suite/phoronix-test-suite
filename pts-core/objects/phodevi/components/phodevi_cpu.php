@@ -128,7 +128,7 @@ class phodevi_cpu extends pts_device_interface
 			{
 				$cpu_speeds = phodevi_linux_parser::read_cpuinfo("cpu MHz");
 				$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
-				$info = pts_trim_double($cpu_speeds[$cpu_core] / 1000, 2);
+				$info = $cpu_speeds[$cpu_core] / 1000;
 			}
 		}
 		else if(IS_WINDOWS)
@@ -141,15 +141,21 @@ class phodevi_cpu extends pts_device_interface
 					$info = substr($info, 0, $e);
 				}
 
-				$info = pts_trim_double($info / 1000);
+				$info = $info / 1000;
 			}
 		}
 		else
 		{
 			$info = phodevi::read_sensor("cpu", "current-frequency");
+
+			if($info > 1000)
+			{
+				// Convert from MHz to GHz
+				$info = $info / 1000;
+			}
 		}
 
-		return $info;
+		return pts_trim_double($info);
 	}
 	public static function cpu_power_savings_mode()
 	{
@@ -396,7 +402,7 @@ class phodevi_cpu extends pts_device_interface
 		{
 			$info = shell_exec("psrinfo -v | grep MHz");
 			$info = substr($info, strrpos($info, "at") + 3);
-			$info = substr($info, 0, strpos($info, "MHz"));
+			$info = trim(substr($info, 0, strpos($info, "MHz")));
 			$info = pts_trim_double($info, 2);
 		}
 		else if(IS_BSD)
