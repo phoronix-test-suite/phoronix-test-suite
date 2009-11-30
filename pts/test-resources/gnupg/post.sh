@@ -1,3 +1,3 @@
 #!/bin/sh
 
-rm -f 2gbfile
+rm -f encryptfile

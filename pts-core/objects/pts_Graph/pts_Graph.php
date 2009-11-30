@@ -472,7 +472,7 @@ abstract class pts_Graph
 				}
 			}
 
-			$this->graph_image->write_text_left($str, $this->graph_font, 7, $this->graph_color_main_headers, $this->graph_left_start + $offset, $this->graph_top_start - 9, $this->graph_left_start + $offset, $this->graph_top_start - 9);
+			$this->graph_image->write_text_left($str, $this->graph_font, 7, $this->graph_color_main_headers, $this->graph_left_start + $offset, $this->graph_top_start - 7, $this->graph_left_start + $offset, $this->graph_top_start - 7);
 		}
 	}
 	protected function render_graph_value_ticks()

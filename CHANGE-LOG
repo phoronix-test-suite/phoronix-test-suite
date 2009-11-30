@@ -64,6 +64,7 @@ Phoronix Test Suite (Git)
 - pts: Add battery-power-usage test profile
 - pts: Add himeno test profile for the Himeno pressure solver benchmark
 - pts: Update mplayer-base test profile against MPlayer 2009-11-28 SVN snapshot
+- pts: Revert gnupg test profile to use GnuPG 1.4.9 until the proper, working GnuPG2 patches are received
 
 Phoronix Test Suite 2.2.0 "Bardu"
 November 16, 2009
