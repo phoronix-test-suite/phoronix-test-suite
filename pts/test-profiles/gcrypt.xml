@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>16</EnvironmentSize>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ProjectURL>http://www.gnupg.org/</ProjectURL>
+	</TestProfile>
+	<TestInformation>
+		<Title>Gcrypt Library</Title>
+		<SubTitle>CAMELLIA256-ECB Cipher</SubTitle>
+		<Version>1.4.4</Version>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Microseconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>This is a benchmark of libgcrypt's integrated benchmark with the CAMELLIA256-ECB cipher and 100 repetitions.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<Arguments>--cipher-repetition 100 cipher camellia256</Arguments>
+		</Default>
+	</TestSettings>
+</PhoronixTestSuite>
