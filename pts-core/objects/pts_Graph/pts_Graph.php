@@ -422,8 +422,7 @@ abstract class pts_Graph
 	{
 		if(count($this->graph_data_title) > 1 || $this->graph_show_key)
 		{
-			$num_key_lines = ceil(count($this->graph_data_title) / 4);
-			$this->graph_top_start += 8 + ($num_key_lines * 11);
+			$this->graph_top_start += 8 + (ceil(count($this->graph_data_title) / 4) * 12);
 		}
 
 		if(($sub_title_count = count($this->graph_sub_titles)) > 1)
@@ -530,7 +529,7 @@ abstract class pts_Graph
 		}
 
 		$key_counter = 0;
-		$component_y = $this->graph_top_start - 20;
+		$component_y = $this->graph_top_start - 19;
 		$this->reset_paint_index();
 
 		for($i = 0; $i < count($this->graph_data_title); $i++)
@@ -540,7 +539,7 @@ abstract class pts_Graph
 				$this_color = $this->next_paint_color();
 				$key_counter += 1;
 
-				$component_x = $this->graph_left_start + 15 + (($this->graph_left_end - $this->graph_left_start) / 4) * (($key_counter - 1) % 4);
+				$component_x = $this->graph_left_start + 14 + (($this->graph_left_end - $this->graph_left_start) / 4) * (($key_counter - 1) % 4);
 
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
 
@@ -549,7 +548,7 @@ abstract class pts_Graph
 
 				if($key_counter % 4 == 0)
 				{
-					$component_y -= 12;
+					$component_y -= 14;
 				}
 			}
 		}

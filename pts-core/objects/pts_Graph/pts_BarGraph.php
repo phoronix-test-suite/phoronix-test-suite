@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2008 - 2009, Michael Larabel
 	pts_BarGraph.php: The bar graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -105,9 +105,13 @@ class pts_BarGraph extends pts_CustomGraph
 				$this->graph_image->draw_rectangle_border($px_bound_left, $value_plot_top - 1, $px_bound_right, $this->graph_top_end - 1, $this->graph_color_body_light);
 				$this->graph_image->draw_rectangle($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end - 1, $paint_color);
 
-				if($graph_size > 20)
+				if($graph_size > 18)
 				{
-					$this->graph_image->write_text_center($this->graph_data[$i_o][$i], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left, $value_plot_top + 3, $px_bound_right, $value_plot_top + 3);
+					$this->graph_image->write_text_center($this->graph_data[$i_o][$i], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left, $value_plot_top + 2, $px_bound_right, $value_plot_top + 2);
+				}
+				else if($graph_size > 10)
+				{
+					$this->graph_image->write_text_center($this->graph_data[$i_o][$i], $this->graph_font, ceil($this->graph_font_size_bars * 0.6), $this->graph_color_body_text, $px_bound_left, $value_plot_top  + 1, $px_bound_right, $value_plot_top + 1);
 				}
 			}
 		}
