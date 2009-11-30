@@ -105,6 +105,12 @@ class pts_BarGraph extends pts_CustomGraph
 				$this->graph_image->draw_rectangle_border($px_bound_left, $value_plot_top - 1, $px_bound_right, $this->graph_top_end - 1, $this->graph_color_body_light);
 				$this->graph_image->draw_rectangle($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end - 1, $paint_color);
 
+				if(($px_bound_right - $px_bound_left) < 15)
+				{
+					// The bars are too skinny to be able to plot anything on them
+					continue;
+				}
+
 				if($graph_size > 18)
 				{
 					$this->graph_image->write_text_center($this->graph_data[$i_o][$i], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left, $value_plot_top + 2, $px_bound_right, $value_plot_top + 2);
