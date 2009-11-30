@@ -66,6 +66,7 @@ Phoronix Test Suite (Git)
 - pts: Update mplayer-base test profile against MPlayer 2009-11-28 SVN snapshot
 - pts: Revert gnupg test profile to use GnuPG 1.4.9 until the proper, working GnuPG2 patches are received
 - pts: Add gcrypt test profile that benchmarks libgcrypt's CAMELLIA256-ECB cipher
+- pts: Add bullet test profile for the Bullet Physics Engine
 
 Phoronix Test Suite 2.2.0 "Bardu"
 November 16, 2009

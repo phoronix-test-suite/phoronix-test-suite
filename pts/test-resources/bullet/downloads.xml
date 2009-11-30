@@ -1,0 +1,9 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://bullet.googlecode.com/files/bullet-2.75.tgz, http://dfn.dl.sourceforge.net/project/bullet/bullet-2.75.tgz, http://internode.dl.sourceforge.net/project/bullet/bullet-2.75.tgz</URL>
+			<MD5>8a10e9043961c62c36eebf65c2ec3b16</MD5>
+			<FileSize>8926562</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
