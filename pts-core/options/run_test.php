@@ -305,7 +305,7 @@ class run_test implements pts_option_interface
 
 				$id = pts_request_new_id();
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $file_name_title);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? array_shift(pts_read_assignment("TO_RUN_IDENTIFIERS")) : "custom"));
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? pts_first_element_in_array(pts_read_assignment("TO_RUN_IDENTIFIERS")) : "custom"));
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 1, $test_version);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_description);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, 1, $test_type);

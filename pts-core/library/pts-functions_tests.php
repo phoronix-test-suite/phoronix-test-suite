@@ -114,7 +114,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	}
 
 	$result_file = new pts_result_file($test_results_identifier);
-	$pts_version = array_pop($result_file->get_system_pts_version());
+	$pts_version = pts_last_element_in_array($result_file->get_system_pts_version());
 	if(empty($pts_version))
 	{
 		$pts_version = PTS_VERSION;

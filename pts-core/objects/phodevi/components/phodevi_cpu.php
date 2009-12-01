@@ -374,7 +374,7 @@ class phodevi_cpu extends pts_device_interface
 
 		return $temp_c;
 	}
-	function cpu_current_frequency($cpu_core = 0)
+	public static function cpu_current_frequency($cpu_core = 0)
 	{
 		// Determine the current processor frequency
 		$info = 0;

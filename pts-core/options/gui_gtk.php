@@ -409,7 +409,7 @@ class gui_gtk implements pts_option_interface
 		$previous_select = (is_array($p = pts_read_assignment("GTK_SELECTED_ITEM_PREV")) ? $p : array());
 		$identifiers = pts_gtk_selected_items($object);
 		pts_set_assignment("GTK_MULTIPLE_SELECT_ITEMS", ($multiple_selected = count($identifiers) > 1));
-		pts_set_assignment("GTK_LAST_SELECTED_ITEM", ($identifier = array_pop(array_diff($identifiers, $previous_select))));
+		pts_set_assignment("GTK_LAST_SELECTED_ITEM", ($identifier = pts_last_element_in_array(array_diff($identifiers, $previous_select))));
 		pts_set_assignment("GTK_SELECTED_ITEMS", $identifiers);
 		pts_set_assignment_once("GTK_HAS_TOUCHED_SELECT_MENU", true);
 
@@ -592,7 +592,7 @@ class gui_gtk implements pts_option_interface
 		{
 			if(count($merge_select_object->get_selected_identifiers()) != 0)
 			{
-				$ref_check_button = new GtkCheckButton(array_pop($merge_select_object->get_selected_identifiers()));
+				$ref_check_button = new GtkCheckButton(pts_last_element_in_array($merge_select_object->get_selected_identifiers()));
 				$ref_check_button->set_active(false);
 				$ref_check_button->connect("toggled", array("gui_gtk", "toggle_reference_systems"), $merge_select_object, $compare_results);
 

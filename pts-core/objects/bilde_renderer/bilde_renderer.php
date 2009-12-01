@@ -57,7 +57,7 @@ abstract class bilde_renderer
 	// Setup Functions
 	//
 
-	public function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = "")
+	public static function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = "")
 	{
 		bilde_renderer::setup_font_directory();
 		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG");
@@ -111,7 +111,7 @@ abstract class bilde_renderer
 	// Generic Functions
 	//
 
-	public function setup_font_directory()
+	public static function setup_font_directory()
 	{
 		// Setup directory for TTF Fonts
 		if(getenv("GDFONTPATH") == false)
@@ -134,7 +134,7 @@ abstract class bilde_renderer
 			}
 		}
 	}
-	public function find_default_ttf_font($find_font = null)
+	public static function find_default_ttf_font($find_font = null)
 	{
 		if(!defined("BILDE_DEFAULT_FONT"))
 		{
@@ -210,7 +210,7 @@ abstract class bilde_renderer
 
 		return $return_type;
 	}
-	public function soft_text_string_dimensions($text_string, $font_type, $font_size, $predefined_string = false)
+	public static function soft_text_string_dimensions($text_string, $font_type, $font_size, $predefined_string = false)
 	{
 		bilde_renderer::setup_font_directory();
 

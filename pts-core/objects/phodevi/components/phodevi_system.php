@@ -365,7 +365,7 @@ class phodevi_system extends pts_device_interface
 
 		if(is_file("/proc/uptime"))
 		{
-			$uptime = array_shift(explode(" ", file_get_contents("/proc/uptime")));
+			$uptime = pts_first_string_in_string(pts_file_get_contents("/proc/uptime"));
 		}
 		else if(($uptime_cmd = pts_executable_in_path("uptime")) != false)
 		{
@@ -793,7 +793,7 @@ class phodevi_system extends pts_device_interface
 
 			if(pts_executable_in_path("gnome-about"))
 			{
-				$desktop_version = array_pop(explode(" ", trim(shell_exec("gnome-about --version 2>&1"))));
+				$desktop_version = pts_last_string_in_string(trim(shell_exec("gnome-about --version 2> /dev/null")));
 			}
 		}
 		else if(($kde4 = pts_process_running_bool("kded4")) || pts_process_running_bool("kded"))
@@ -929,7 +929,7 @@ class phodevi_system extends pts_device_interface
 			{
 				// Fallback to hopefully detect the module, takes the first word off the GPU string and sees if it is the module
 				// This works in at least the case of the Cirrus driver
-				$xorg_module_driver = strtolower(array_shift(explode(" ", phodevi::read_name("gpu"))));
+				$xorg_module_driver = strtolower(pts_first_string_in_string(phodevi::read_name("gpu")));
 			}
 		}
 

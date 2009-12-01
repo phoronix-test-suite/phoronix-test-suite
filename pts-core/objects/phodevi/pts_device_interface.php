@@ -23,7 +23,10 @@
 
 abstract class pts_device_interface
 {
-	abstract static function read_property($identifier);
+	public static function read_property($identifier)
+	{
+		return false;
+	}
 
 	public static function read_sensor($identifier)
 	{

@@ -214,7 +214,7 @@ class phodevi_memory extends pts_device_interface
 
 		return $info;
 	}
-	function memory_usage($TYPE = "TOTAL", $READ = "USED")
+	public static function memory_usage($TYPE = "TOTAL", $READ = "USED")
 	{
 		// Reads system memory usage
 		$mem_usage = -1;

@@ -21,6 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// error_reporting(E_ERROR | E_STRICT);
+
 define("PTS_VERSION", "2.4.0a1");
 define("PTS_BUILD_INT", 2301);
 define("PTS_CODENAME", "LENVIK");

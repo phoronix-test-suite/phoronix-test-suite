@@ -57,6 +57,30 @@ function pts_add_trailing_slash($path)
 {
 	return $path . (substr($path, -1) == "/" ? null : "/"); 
 }
+function pts_first_string_in_string($string, $delimited_by = " ")
+{
+	// This function returns the first word/phrase/string on the end of a string that's separated by a space or something else
+	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
+	$string = explode($delimited_by, $string);
+	return array_shift($string);
+}
+function pts_last_string_in_string($string, $delimited_by = " ")
+{
+	// This function returns the last word/phrase/string on the end of a string that's separated by a space or something else
+	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
+	$string = explode($delimited_by, $string);
+	return array_pop($string);
+}
+function pts_first_element_in_array($array)
+{
+	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
+	return reset($array);
+}
+function pts_last_element_in_array($array)
+{
+	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
+	return end($array);
+}
 function pts_string_bool($string)
 {
 	// Used for evaluating if the user inputted a string that evaluates to true
@@ -175,7 +199,7 @@ function pts_to_array($var)
 {
 	return !is_array($var) ? array($var) : $var;
 }
-function pts_trim_explode($delimiter, &$to_explode)
+function pts_trim_explode($delimiter, $to_explode)
 {
 	return array_map("trim", explode($delimiter, $to_explode));
 }

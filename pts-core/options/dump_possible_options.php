@@ -30,7 +30,7 @@ class dump_possible_options implements pts_option_interface
 		{
 			$name = str_replace("_", "-", basename($option_php, ".php"));
 
-			if(!in_array(array_shift(explode("-", $name)), array("dump", "debug")))
+			if(!in_array(pts_first_string_in_string($name, '-'), array("dump", "debug")))
 			{
 				array_push($options, $name);
 			}
