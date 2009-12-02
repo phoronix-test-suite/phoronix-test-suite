@@ -61,4 +61,13 @@ function pts_time_elapsed()
 	return time() - (($time = pts_read_assignment("START_TIME")) != false ? $time : PTS_INIT_TIME);
 }
 
+/*
+function pts_assignment_bool_check()
+{
+	// Checks if at least one of the passed assignments is set and validates to true
+	$to_check = func_get_args();
+	return pts_assignment_manager::assignment_array_bool_check($to_check);
+}
+*/
+
 ?>

@@ -71,11 +71,6 @@
 		<Description>Test: Random Read - Size Per Thread: 64MB - Thread Count: 32</Description>
 	</RunTest>
 	<RunTest>
-		<Test>fio</Test>
-		<Arguments>examples/iometer-file-access-server</Arguments>
-		<Description>Test: Intel IOMeter File Server Access Pattern</Description>
-	</RunTest>
-	<RunTest>
 		<Test>dbench</Test>
 		<Arguments>1</Arguments>
 		<Description>Client Count: 1</Description>
@@ -178,13 +173,7 @@
 		<Test>tscp</Test>
 	</RunTest>
 	<RunTest>
-		<Test>crafty</Test>
-	</RunTest>
-	<RunTest>
 		<Test>dcraw</Test>
-	</RunTest>
-	<RunTest>
-		<Test>povray</Test>
 	</RunTest>
 	<RunTest>
 		<Test>c-ray</Test>

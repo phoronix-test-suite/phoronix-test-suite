@@ -55,6 +55,21 @@ class pts_assignment_manager
 	{
 		self::$assignments = array();
 	}
+
+	/*
+	public static function assignment_array_bool_check($assignment_check_array)
+	{
+		foreach($assignment_check_array as &$assignment)
+		{
+			if(self::read($assignment))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+	*/
 }
 
 ?>
