@@ -40,11 +40,6 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		{
 			echo "\t\tTest Installation " . $test_install_position . " of " . $test_install_count . "\n";
 		}
-
-		if(($size = pts_estimated_environment_size($identifier)) > 0)
-		{
-			echo "\t\tInstallation Size: " . $size . " MB\n";
-		}
 	}
 	public function test_install_downloads($identifier, &$download_packages)
 	{
@@ -66,7 +61,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		echo "\n";
 	}
-	public function test_install_download_file(&$pts_test_file_download, $process)
+	public function test_install_download_file(&$pts_test_file_download, $process, $offset_length = -1)
 	{
 		$expected_time = 0;
 
@@ -94,10 +89,16 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_format_time_string($expected_time, "SECONDS", false, 60) : null;
 
 		echo "\t\t" . $process_string . ": " . $pts_test_file_download->get_filename();
-		echo " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 1) . "MB" . ($expected_time != null ? " / ~" . $expected_time : null) . "]\n";
+		echo str_repeat(" ", ($offset_length > 0 ? ($offset_length - strlen($pts_test_file_download->get_filename())) : 0));
+		echo " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 2) . "MB" . ($expected_time != null ? " / ~" . $expected_time : null) . "]\n";
 	}
 	public function test_install_process($identifier)
 	{
+		if(($size = pts_estimated_environment_size($identifier)) > 0)
+		{
+			echo "\t\tInstallation Size: " . $size . " MB\n";
+		}
+
 		echo "\t\tInstalling Test\n";
 		return;
 	}

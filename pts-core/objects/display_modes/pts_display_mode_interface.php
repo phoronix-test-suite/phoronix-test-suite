@@ -26,7 +26,7 @@ interface pts_display_mode_interface
 	public function __construct();
 	public function test_install_process($identifier);
 	public function test_install_downloads($identifier, &$download_packages);
-	public function test_install_download_file(&$pts_test_file_download, $process);
+	public function test_install_download_file(&$pts_test_file_download, $process, $offset_length = -1);
 	public function test_run_process_start(&$test_run_manager);
 	public function test_install_start($test_identifier);
 	public function test_install_output(&$to_output);

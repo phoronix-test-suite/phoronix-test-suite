@@ -109,7 +109,6 @@ function pts_download_test_files($identifier, &$display_mode)
 
 	if(count($download_packages) > 0)
 	{
-		$header_displayed = false;
 		$remote_download_files = array();
 		$local_cache_directories = array();
 
@@ -141,6 +140,30 @@ function pts_download_test_files($identifier, &$display_mode)
 		$module_pass = array($identifier, $download_packages);
 		pts_module_process("__pre_test_download", $module_pass);
 
+		$longest_package_name_length = 0;
+		foreach($download_packages as $i => &$download_package)
+		{
+			if(!is_file(TEST_ENV_DIR . $identifier . "/" . $download_package->get_filename()))
+			{
+				// Compute the longest package name length so that the UI can know it if it wishes to align text correctly
+				if(($l = strlen($download_package->get_filename())) > $longest_package_name_length)
+				{
+					$longest_package_name_length = $l;
+				}
+			}
+			else
+			{
+				// The file is there so nothing is to be downloaded
+				unset($download_packages[$i]);
+			}
+		}
+
+		if(count($download_packages) > 0)
+		{
+			$display_mode->test_install_downloads($identifier, $download_packages);
+		}
+
+		// Get the missing packages
 		foreach($download_packages as &$download_package)
 		{
 			$download_location = TEST_ENV_DIR . $identifier . "/";
@@ -149,166 +172,157 @@ function pts_download_test_files($identifier, &$display_mode)
 			$download_destination = $download_location . $package_filename;
 			$download_destination_temp = $download_location . $package_filename_temp;
 
-			if(!is_file($download_destination))
+			$urls = $download_package->get_download_url_array();
+			$package_md5 = $download_package->get_md5();
+
+			$found_in_remote_cache = false;
+			foreach($remote_download_files as &$download_file)
 			{
-				if(!$header_displayed)
+				if($download_file->get_filename() == $package_filename && $download_file->get_md5() == $package_md5)
 				{
-					$display_mode->test_install_downloads($identifier, $download_packages);
-					$header_displayed = true;
-				}
+					$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE", $longest_package_name_length);
+					echo pts_download(array_pop($download_file->get_download_url_array()), $download_destination_temp);
+					echo "\n";
 
-				$urls = $download_package->get_download_url_array();
-				$package_md5 = $download_package->get_md5();
-
-				$found_in_remote_cache = false;
-				foreach($remote_download_files as &$download_file)
-				{
-					if($download_file->get_filename() == $package_filename && $download_file->get_md5() == $package_md5)
+					if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
 					{
-						$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE");
-						echo pts_download(array_pop($download_file->get_download_url_array()), $download_destination_temp);
-						echo "\n";
+						unlink($download_destination_temp);
+					}
+					else
+					{
+						pts_move($package_filename_temp, $package_filename, $download_location);
+						$urls = array();
+					}
 
-						if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
+					$found_in_remote_cache = true;
+					break;
+				}
+			}
+
+			if(!$found_in_remote_cache)
+			{
+				foreach($local_cache_directories as &$cache_directory)
+				{
+					if(pts_validate_md5_download_file($cache_directory . $package_filename, $package_md5))
+					{
+						if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
 						{
-							unlink($download_destination_temp);
+							// P_OPTION_CACHE_SYMLINK is disabled by default for now
+							$display_mode->test_install_download_file($download_package, "LINK_FROM_CACHE", $longest_package_name_length);
+							pts_symlink($cache_directory . $package_filename, $download_destination);
 						}
 						else
+						{
+							$display_mode->test_install_download_file($download_package, "COPY_FROM_CACHE", $longest_package_name_length);
+							copy($cache_directory . $package_filename, $download_destination);
+						}
+
+						if(is_file($download_destination))
+						{
+							$urls = array();
+							break;
+						}
+					}
+				}
+			}
+
+			if(count($urls) > 0 && $urls[0] != null)
+			{
+				shuffle($urls);
+				$fail_count = 0;
+				$try_again = true;
+
+				do
+				{
+					if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE") && pts_string_bool(pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE")) && count($urls) > 1)
+					{
+						// Prompt user to select mirror
+						do
+						{
+							echo "\nAvailable Download Mirrors:\n\n";
+							$url = pts_text_select_menu("Select Your Preferred Mirror", $urls, false);
+						}
+						while(!pts_is_valid_download_url($url));
+					}
+					else
+					{
+						// Auto-select mirror
+						do
+						{
+							$url = array_pop($urls);
+						}
+						while(!pts_is_valid_download_url($url));
+					}
+
+					$display_mode->test_install_download_file($download_package, "DOWNLOAD", $longest_package_name_length);
+					$download_start = time();
+					echo pts_download($url, $download_destination_temp);
+					$download_end = time();
+
+					if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
+					{
+						pts_unlink($download_destination_temp);
+
+						$file_downloaded = false;
+						$fail_count++;
+						$display_mode->test_install_error("The MD5 check-sum of the downloaded file is incorrect.\nFailed URL: " . $url);
+
+						if($fail_count > 3)
+						{
+							$try_again = false;
+						}
+						else
+						{
+							if(count($urls) > 0 && $urls[0] != "")
+							{
+								$display_mode->test_install_error("Attempting to re-download from another mirror.");
+							}
+							else
+							{
+								$try_again = pts_read_assignment("IS_BATCH_MODE") || pts_read_assignment("AUTOMATED_MODE") ? false : pts_bool_question("Would you like to try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN");
+
+								if($try_again)
+								{
+									array_push($urls, $url);
+								}
+							}
+						}
+					}
+					else
+					{
+						if(is_file($download_destination_temp))
 						{
 							pts_move($package_filename_temp, $package_filename, $download_location);
-							$urls = array();
 						}
+						$file_downloaded = true;
+						$fail_count = 0;
 
-						$found_in_remote_cache = true;
-						break;
-					}
-				}
-
-				if(!$found_in_remote_cache)
-				{
-					foreach($local_cache_directories as &$cache_directory)
-					{
-						if(pts_validate_md5_download_file($cache_directory . $package_filename, $package_md5))
+						if(($download_size = $download_package->get_filesize()) > 0 && $download_end != $download_start)
 						{
-							if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
+							$download_speed = floor($download_size / ($download_end - $download_start)); // bytes per second
+
+							if(($c_s = pts_read_assignment("DOWNLOAD_AVG_SPEED")) && ($c_c = pts_read_assignment("DOWNLOAD_AVG_COUNT")))
 							{
-								// P_OPTION_CACHE_SYMLINK is disabled by default for now
-								$display_mode->test_install_download_file($download_package, "LINK_FROM_CACHE");
-								pts_symlink($cache_directory . $package_filename, $download_destination);
+								$avg_speed = floor((($c_s * $c_c) + $download_speed) / ($c_c + 1));
+
+								pts_set_assignment("DOWNLOAD_AVG_SPEED", $avg_speed);
+								pts_set_assignment("DOWNLOAD_AVG_COUNT", ($c_c + 1));
 							}
 							else
 							{
-								$display_mode->test_install_download_file($download_package, "COPY_FROM_CACHE");
-								copy($cache_directory . $package_filename, $download_destination);
-							}
-
-							if(is_file($download_destination))
-							{
-								$urls = array();
-								break;
+								pts_set_assignment("DOWNLOAD_AVG_SPEED", $download_speed);
+								pts_set_assignment("DOWNLOAD_AVG_COUNT", 1);
 							}
 						}
 					}
-				}
 
-				if(count($urls) > 0 && $urls[0] != null)
-				{
-					shuffle($urls);
-					$fail_count = 0;
-					$try_again = true;
-
-					do
+					if(!$try_again)
 					{
-						if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE") && pts_string_bool(pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE")) && count($urls) > 1)
-						{
-							// Prompt user to select mirror
-							do
-							{
-								echo "\nAvailable Download Mirrors:\n\n";
-								$url = pts_text_select_menu("Select Your Preferred Mirror", $urls, false);
-							}
-							while(!pts_is_valid_download_url($url));
-						}
-						else
-						{
-							// Auto-select mirror
-							do
-							{
-								$url = array_pop($urls);
-							}
-							while(!pts_is_valid_download_url($url));
-						}
-
-						$display_mode->test_install_download_file($download_package, "DOWNLOAD");
-						$download_start = time();
-						echo pts_download($url, $download_destination_temp);
-						$download_end = time();
-
-						if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
-						{
-							pts_unlink($download_destination_temp);
-
-							$file_downloaded = false;
-							$fail_count++;
-							$display_mode->test_install_error("The MD5 check-sum of the downloaded file is incorrect.\nFailed URL: " . $url);
-
-							if($fail_count > 3)
-							{
-								$try_again = false;
-							}
-							else
-							{
-								if(count($urls) > 0 && $urls[0] != "")
-								{
-									$display_mode->test_install_error("Attempting to re-download from another mirror.");
-								}
-								else
-								{
-									$try_again = pts_read_assignment("IS_BATCH_MODE") || pts_read_assignment("AUTOMATED_MODE") ? false : pts_bool_question("Would you like to try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN");
-
-									if($try_again)
-									{
-										array_push($urls, $url);
-									}
-								}
-							}
-						}
-						else
-						{
-							if(is_file($download_destination_temp))
-							{
-								pts_move($package_filename_temp, $package_filename, $download_location);
-							}
-							$file_downloaded = true;
-							$fail_count = 0;
-
-							if(($download_size = $download_package->get_filesize()) > 0 && $download_end != $download_start)
-							{
-								$download_speed = floor($download_size / ($download_end - $download_start)); // bytes per second
-
-								if(($c_s = pts_read_assignment("DOWNLOAD_AVG_SPEED")) && ($c_c = pts_read_assignment("DOWNLOAD_AVG_COUNT")))
-								{
-									$avg_speed = floor((($c_s * $c_c) + $download_speed) / ($c_c + 1));
-
-									pts_set_assignment("DOWNLOAD_AVG_SPEED", $avg_speed);
-									pts_set_assignment("DOWNLOAD_AVG_COUNT", ($c_c + 1));
-								}
-								else
-								{
-									pts_set_assignment("DOWNLOAD_AVG_SPEED", $download_speed);
-									pts_set_assignment("DOWNLOAD_AVG_COUNT", 1);
-								}
-							}
-						}
-
-						if(!$try_again)
-						{
-							$display_mode->test_install_error("Download of Needed Test Dependencies Failed! Exiting.");
-							return false;
-						}
+						$display_mode->test_install_error("Download of Needed Test Dependencies Failed! Exiting.");
+						return false;
 					}
-					while(!$file_downloaded);
 				}
+				while(!$file_downloaded);
 			}
 			pts_module_process("__interim_test_download", $module_pass);
 		}
@@ -523,6 +537,7 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 				}
 
 				pts_test_update_install_xml($identifier, 0, true);
+				echo "\n";
 			}
 			else
 			{

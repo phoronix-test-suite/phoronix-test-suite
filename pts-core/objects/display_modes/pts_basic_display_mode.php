@@ -40,7 +40,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		}
 		echo pts_string_header("Downloading Files: " . $identifier . $download_append);
 	}
-	public function test_install_download_file(&$pts_test_file_download, $process)
+	public function test_install_download_file(&$pts_test_file_download, $process, $offset_length = -1)
 	{
 		switch($process)
 		{

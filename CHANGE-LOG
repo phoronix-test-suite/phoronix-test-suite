@@ -34,6 +34,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add debug-install option
 - pts-core: Fix files not downloading when PromptForDownloadMirror is set to TRUE
 - pts-core: Address several PHP E_STRICT warnings
+- pts-core: Better alignment for the concise display mode interface
 - phodevi: Split out phodevi_parser module into phodevi_linux_parser, phodevi_osx_parser, and phodevi_solaris_parser for OS-specific functions
 - phodevi: Avoid situations of the manufacturer/vendor string being repeated in the motherboard property
 - phodevi: Add device notes and special settings string functionality to API
