@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: Add support for the server to tell the client module whether to run the install command prior to testing (change from the web interface)
+
 Phoronix Test Suite 2.4 Alpha 1
 December 2, 2009
 

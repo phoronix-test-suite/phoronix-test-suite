@@ -25,11 +25,12 @@ define("M_PHOROMATIC_ID", "PhoronixTestSuite/Phoromatic/General/ID");
 define("M_PHOROMATIC_SYS_NAME", "PhoronixTestSuite/Phoromatic/General/SystemName");
 define("M_PHOROMATIC_UPLOAD_TO_GLOBAL", "PhoronixTestSuite/Phoromatic/General/UploadToGlobal");
 define("M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY", "PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally");
+define("M_PHOROMATIC_RUN_INSTALL_COMMAND", "PhoronixTestSuite/Phoromatic/General/RunInstallCommand");
 
 class phoromatic extends pts_module_interface
 {
 	const module_name = "Phoromatic Client";
-	const module_version = "0.1.0";
+	const module_version = "0.2.0";
 	const module_description = "The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/";
 	const module_author = "Phoronix Media";
 
@@ -233,7 +234,11 @@ class phoromatic extends pts_module_interface
 
 					file_put_contents(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml", $server_response);
 
-					pts_run_option_next("install_test", $suite_identifier, array("AUTOMATED_MODE" => true));
+					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_RUN_INSTALL_COMMAND, "TRUE")))
+					{
+						pts_run_option_next("install_test", $suite_identifier, array("AUTOMATED_MODE" => true));
+					}
+
 					pts_run_option_next("run_test", $suite_identifier, $args_to_pass);
 					pts_run_option_next("phoromatic.user_system_return", $suite_identifier, $args_to_pass);
 					break;
