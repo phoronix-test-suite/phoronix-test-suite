@@ -30,7 +30,6 @@ abstract class bilde_renderer
 	protected $embed_identifiers = null;
 
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
-	abstract static function renderer_supported();
 
 	abstract function html_embed_code($file_name, $attributes = null, $is_xsl = false);
 	abstract function render_image($output_file = null, $quality = 100);
@@ -52,6 +51,12 @@ abstract class bilde_renderer
 	abstract function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1);
 	abstract function convert_hex_to_type($hex);
 	abstract function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false);
+
+	public static function renderer_supported()
+	{
+		// This should be implemented by the different bilde renderers if the renderer is dependent upon some extensions or something else for the support
+		return true;
+	}
 
 	//
 	// Setup Functions

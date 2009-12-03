@@ -148,7 +148,14 @@ function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null, $a
 
 	if(count($headers) == 2)
 	{
-		$model = new GtkListStore(GObject::TYPE_STRING, GObject::TYPE_STRING);
+		if($headers[0] == null && is_object($data[0][$i]))
+		{
+			$model = new GtkListStore(GObject::TYPE_OBJECT, GObject::TYPE_STRING);
+		}
+		else
+		{
+			$model = new GtkListStore(GObject::TYPE_STRING, GObject::TYPE_STRING);
+		}
 	}
 	else
 	{
@@ -160,8 +167,18 @@ function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null, $a
 
 	for($i = 0; $i < count($headers); $i++)
 	{
-		$cell_renderer = new GtkCellRendererText();
-		$column = new GtkTreeViewColumn($headers[$i], $cell_renderer, "text", $i);
+		if($headers[$i] == null && is_object($data[0][$i]))
+		{
+			// TODO: this code is likely faulty
+			$cell_renderer = new GtkCellRendererToggle();
+			$column = new GtkTreeViewColumn($headers[$i], $cell_renderer, "active", $i);
+		}
+		else
+		{
+			$cell_renderer = new GtkCellRendererText();
+			$column = new GtkTreeViewColumn($headers[$i], $cell_renderer, "text", $i);
+		}
+
 		$view->append_column($column);
 	}
 

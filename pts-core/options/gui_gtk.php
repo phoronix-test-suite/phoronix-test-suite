@@ -32,7 +32,7 @@ class gui_gtk implements pts_option_interface
 		{
 			echo "\nThe PHP GTK module must be loaded for the GUI.\nThis module can be found @ http://gtk.php.net/\n\n";
 
-			if(getenv("TERM") == null)
+			if(getenv("TERM") == null && getenv("DISPLAY") != null)
 			{
 				pts_display_web_browser(STATIC_DIR . "error-gui.html", null, true, true);
 			}
@@ -194,6 +194,7 @@ class gui_gtk implements pts_option_interface
 		"_Edit" => array(
 			new pts_gtk_menu_item(array("GTK_OBJ_REFRESH_GRAPHS", "Regenerate Graphs"), array("gui_gtk", "quick_operation", "refresh_graphs")),
 			null,
+			new pts_gtk_menu_item("_Modules", array("gui_gtk", "show_modules_interface"), null, Gtk::STOCK_CONNECT),
 			new pts_gtk_menu_item("_Preferences", array("gui_gtk", "show_preferences_interface"), null, Gtk::STOCK_PREFERENCES)),
 		"_View" => $view_menu,
 		"_Tools" => array(
@@ -1746,6 +1747,30 @@ class gui_gtk implements pts_option_interface
 		pts_gtk_add_notebook_tab($notebook, $missing, "Missing Dependencies");
 
 		pts_gtk_array_to_boxes($window, array($notebook), 3);
+
+		$window->show_all();
+		Gtk::main();
+	}
+	public static function show_modules_interface()
+	{
+		$window = new pts_gtk_window("Phoronix Test Suite Modules");
+		$window->set_size_request(540, 250);
+
+		$rows = array();
+		foreach(pts_available_modules() as $module)
+		{
+			$module_details = new pts_user_module_details($module);
+
+			$enable_module[$module] = new GtkCheckButton();
+			$enable_module[$module]->set_active(true);
+			//$enable_module[$module]->set_sensitive(false); // Enabling / disabling modules from the GUI is currently not supported
+
+			// $enable_module[$module] should be passed for enabling toggling of the module, but not yet implemented
+			array_push($rows, array(null, $module_details->get_module_name()));
+		}
+
+		$modules_table = pts_gtk_table(array(null, "Modules"), $rows, null, "No modules available.", false);
+		pts_gtk_array_to_boxes($window, array($modules_table), 3);
 
 		$window->show_all();
 		Gtk::main();
