@@ -333,13 +333,9 @@ function pts_download_test_files($identifier, &$display_mode)
 }
 function pts_validate_md5_download_file($filename, $verified_md5)
 {
-	$valid = true;
+	$valid = false;
 
-	if(!is_file($filename))
-	{
-		$valid = false;
-	}
-	else
+	if(is_file($filename))
 	{
 		if(!empty($verified_md5))
 		{
@@ -347,24 +343,24 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 
 			if(substr($verified_md5, 0, 7) == "http://")
 			{
-				$md5_file = pts_trim_explode("\n", pts_http_get_contents($verified_md5));
-
-				for($i = 0; $i < count($md5_file) && $valid; $i++)
+				foreach(pts_trim_explode("\n", pts_http_get_contents($verified_md5)) as $md5_line)
 				{
-					$line_explode = explode(" ", trim($md5_file[$i]));
+					list($md5, $file) = explode(" ", $md5_line);
 
-					if($line_explode[(count($line_explode) - 1)] == $filename)
+					if($md5_file == $filename)
 					{
-						if($line_explode[0] != $real_md5)
+						if($md5 == $real_md5)
 						{
-							$valid = false;
+							$valid = true;
 						}
+
+						break;
 					}
 				}
 			}
-			else if($real_md5 != $verified_md5)
+			else if($real_md5 == $verified_md5)
 			{
-				$valid = false;
+				$valid = true;
 			}
 		}
 	}

@@ -869,26 +869,31 @@ function pts_objects_test_downloads($test_identifier)
 		$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
 		$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
 
-		for($i = 0; $i < count($package_url); $i++)
+		foreach(array_keys($package_url) as $i)
 		{
-			$file_exempt = false;
-
 			if(!empty($package_platform[$i]))
 			{
 				$platforms = pts_trim_explode(",", $package_platform[$i]);
-				$file_exempt = !in_array(OPERATING_SYSTEM, $platforms);
+
+				if(!in_array(OPERATING_SYSTEM, $platforms))
+				{
+					// This download does not match the operating system
+					continue;
+				}
 			}
 
 			if(!empty($package_architecture[$i]))
 			{
 				$architectures = pts_trim_explode(",", $package_architecture[$i]);
-				$file_exempt = !pts_cpu_arch_compatible($architectures);
+
+				if(!pts_cpu_arch_compatible($architectures))
+				{
+					// This download does not match the CPU architecture
+					continue;
+				}
 			}
 
-			if(!$file_exempt)
-			{
-				array_push($obj_r, new pts_test_file_download($package_url[$i], $package_filename[$i], $package_filesize[$i], $package_md5[$i]));
-			}
+			array_push($obj_r, new pts_test_file_download($package_url[$i], $package_filename[$i], $package_filesize[$i], $package_md5[$i]));
 		}
 	}
 
