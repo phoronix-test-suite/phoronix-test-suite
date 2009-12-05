@@ -111,6 +111,7 @@ function pts_run_additional_vars($identifier)
 	$extra_vars = array();
 
 	$extra_vars["HOME"] = TEST_ENV_DIR . $identifier . "/";
+	$extra_vars["TEST_" . strtoupper(str_replace("-", "_", $identifier))] = TEST_ENV_DIR . $identifier;
 
 	$ctp_extension_string = "";
 	$extends = pts_test_extends_below($identifier);

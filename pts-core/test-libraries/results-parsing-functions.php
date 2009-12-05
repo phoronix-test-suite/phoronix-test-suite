@@ -33,6 +33,13 @@ function pts_report_numeric_result($result)
 		pts_report_result($result);
 	}
 }
+function pts_report_line_graph_array($elements)
+{
+	if(is_array($elements))
+	{
+		pts_report_result(implode(",", $elements));
+	}
+}
 function pts_report_result($result)
 {
 	// For now it's just a matter of printing the result
