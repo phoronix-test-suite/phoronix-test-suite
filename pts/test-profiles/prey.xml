@@ -32,7 +32,7 @@
 			<Menu>
 				<Entry>
 					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Value>
+					<Value>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT +vid_restart</Value>
 				</Entry>
 			</Menu>
 		</Option>

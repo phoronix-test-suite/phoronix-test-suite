@@ -38,7 +38,7 @@ if(PTS_MODE != "CLIENT")
 	return;
 }
 
-if(version_compare(PHP_VERSION, "5.2.99") === 1 && ini_get("date.timezone") == null)
+if(ini_get("date.timezone") == null)
 {
 	date_default_timezone_set("UTC");
 }

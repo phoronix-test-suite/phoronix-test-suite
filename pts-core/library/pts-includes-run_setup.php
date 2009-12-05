@@ -84,7 +84,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 			else
 			{
 				echo "Enter a unique name for this test run: ";
-				$results_identifier = trim(str_replace(array("/"), "", pts_read_user_input()));
+				$results_identifier = trim(str_replace(array('/', '~', ':'), "", pts_read_user_input()));
 			}
 			$times_tried++;
 

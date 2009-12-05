@@ -55,11 +55,6 @@ function pts_basic_init()
 	phodevi::initial_setup();
 
 	define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
-
-	if((IS_MACOSX || IS_SOLARIS) && ini_get("date.timezone") == null)
-	{
-		date_default_timezone_set("UTC");
-	}
 }
 function pts_extended_init()
 {
