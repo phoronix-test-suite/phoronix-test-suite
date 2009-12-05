@@ -118,6 +118,10 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
 	}
+	public function get_default_post_arguments()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_DEFAULT_POST_ARGUMENTS);
+	}
 	public function get_test_executable()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_EXECUTABLE, $this->identifier);

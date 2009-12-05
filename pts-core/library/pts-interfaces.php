@@ -63,6 +63,7 @@ define("P_TEST_ALLOW_GLOBAL_UPLOADS", "PhoronixTestSuite/TestProfile/AllowGlobal
 define("P_TEST_AUTO_SAVE_RESULTS", "PhoronixTestSuite/TestProfile/AutoSaveResults"); // Automatically save test results?
 
 define("P_TEST_DEFAULTARGUMENTS", "PhoronixTestSuite/TestSettings/Default/Arguments"); // Default arguments
+define("P_TEST_DEFAULT_POST_ARGUMENTS", "PhoronixTestSuite/TestSettings/Default/PostArguments"); // Default post arguments
 define("P_TEST_POSSIBLEPATHS", "PhoronixTestSuite/TestSettings/Default/PossiblePaths"); // Possible paths
 define("P_TEST_ALLOW_CACHE_SHARE", "PhoronixTestSuite/TestSettings/Default/AllowCacheShare"); // Allow the result output to be cached and shared?
 define("P_TEST_MIN_LENGTH", "PhoronixTestSuite/TestSettings/Default/MinimumLength"); // The minimum length/run-time for results to be valid

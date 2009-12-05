@@ -546,7 +546,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		echo pts_string_header("NOTE: This test installation is out of date.\nIt is recommended that " . $test_identifier . " be re-installed.");
 	}
 
-	$pts_test_arguments = trim($test_profile->get_default_arguments() . " " . str_replace($test_profile->get_default_arguments(), "", $extra_arguments));
+	$pts_test_arguments = trim($test_profile->get_default_arguments() . " " . str_replace($test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_profile->get_default_post_arguments());
 	$extra_runtime_variables = pts_extra_run_time_vars($test_identifier, $pts_test_arguments, $result_format);
 
 	// Start
