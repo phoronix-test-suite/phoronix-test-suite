@@ -2,6 +2,11 @@
 
 tar -xjf vdrift-2009-06-15-src.tar.bz2
 tar -xjf vdrift-benchmark-2.tar.bz2
+tar -xjf vdrift-20090615-patches-1.tar.bz2
+
+patch -p0 < add-dumpfps-option.patch
+patch -p0 < add-recurring-screenshot-option.patch
+
 cd vdrift-2009-06-15/
 scons release=1
 

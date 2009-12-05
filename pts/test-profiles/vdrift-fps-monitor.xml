@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<Extends>vdrift</Extends>
+		<AutoSaveResults>TRUE</AutoSaveResults>
+	</TestProfile>
+	<TestInformation>
+		<TimesToRun>1</TimesToRun>
+		<ResultFormat>LINE_GRAPH</ResultFormat>
+		<Description>This test plots the frame-rate of VDrift, which is an cross-platform, open-source drift racing game.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<PostArguments>-dumpfps</PostArguments>
+		</Default>
+		<Option>
+			<DisplayName>Resolution</DisplayName>
+			<Identifier>auto-resolution</Identifier>
+			<Menu>
+				<Entry>
+					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+					<Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
+				</Entry>
+			</Menu>
+		</Option>
+	</TestSettings>
+</PhoronixTestSuite>

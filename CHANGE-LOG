@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add and implement PostArguments tag to test profile XML specification
 - pts-core: Export TEST_<SPECIAL-IDENTIFIER> as the HOME directory, similar to the variables when extending a test that are set
 - phoromatic: Add support for the server to tell the client module whether to run the install command prior to testing (change from the web interface)
+- pts: Add vdrift-fps-monitor test profile that charts out the FPS on a line graph during the testing process
 
 Phoronix Test Suite 2.4 Alpha 1
 December 2, 2009

@@ -10,5 +10,10 @@
 			<MD5>58cf51b2c0c143dfddb84be550eda5cd</MD5>
 			<FileSize>174420</FileSize>
 		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/vdrift-20090615-patches-1.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/vdrift-20090615-patches-1.tar.bz2</URL>
+			<MD5>474599a9718bbedad90652845623904c</MD5>
+			<FileSize>1596</FileSize>
+		</Package>
 	</Downloads>
 </PhoronixTestSuite>
