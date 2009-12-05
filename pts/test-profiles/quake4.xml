@@ -24,6 +24,7 @@
 	<TestSettings>
 		<Default>
 			<Arguments>+set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +timedemoquit pts +set in_tty 0</Arguments>
+			<PostArguments>+vid_restart</PostArguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
@@ -31,7 +32,7 @@
 			<Menu>
 				<Entry>
 					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT +vid_restart</Value>
+					<Value>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Value>
 				</Entry>
 			</Menu>
 		</Option>

@@ -23,7 +23,8 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>+exec tremulous-benchmark +timedemo 1 +set demodone "quit" +set demoloop1 "demo pts-demo; set nextdemo vstr demodone" +vstr demoloop1 +vid_restart</Arguments>
+			<Arguments>+exec tremulous-benchmark +timedemo 1 +set demodone "quit" +set demoloop1 "demo pts-demo; set nextdemo vstr demodone" +vstr demoloop1</Arguments>
+			<PostArguments>+vid_restart</PostArguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>

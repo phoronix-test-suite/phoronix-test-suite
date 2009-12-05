@@ -25,6 +25,7 @@
 	<TestSettings>
 		<Default>
 			<Arguments>+logconsole pts-log +exec pts-warsow.cfg +timedemo 1 +demo pts-bardu +next "quit" +r_mode -1</Arguments>
+			<PostArguments>+vid_restart</PostArguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
@@ -32,7 +33,7 @@
 			<Menu>
 				<Entry>
 					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Value>
+					<Value>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT</Value>
 				</Entry>
 			</Menu>
 		</Option>
