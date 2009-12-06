@@ -16,8 +16,7 @@ fi
 ./configure --enable-xv --enable-xvmc $VDPAU_STATUS --disable-ivtv --prefix=$HOME/mplayer_ > /dev/null
 
 case $OS_TYPE in
-	"Solaris")
-	"BSD")
+	BSD|Solaris)
 		gmake -j $NUM_CPU_JOBS
 		gmake install
 	;;

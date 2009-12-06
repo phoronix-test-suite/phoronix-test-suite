@@ -33,6 +33,12 @@ class pts_ImageComparisonGraph extends pts_CustomGraph
 	}
 	protected function render_graph_pre_init()
 	{
+		if(!function_exists("imagecreatefromstring"))
+		{
+			echo "\nCurrently you must have PHP-GD installed to utilize this feature.\n";
+			return false;
+		}
+
 		// Do some common work to this object
 		$draw_count = count($this->graph_identifiers);
 		$img_first = imagecreatefromstring(base64_decode($this->graph_data[0][0]));
@@ -47,6 +53,12 @@ class pts_ImageComparisonGraph extends pts_CustomGraph
 	}
 	public function renderGraph()
 	{
+		if(!function_exists("imagecreatefromstring"))
+		{
+			echo "\nCurrently you must have PHP-GD installed to utilize this feature.\n";
+			return false;
+		}
+
 		$this->render_graph_pre_init();
 		$this->render_graph_init();
 		$this->render_graph_heading(false);
