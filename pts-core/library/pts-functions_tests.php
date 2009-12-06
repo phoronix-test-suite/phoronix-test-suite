@@ -465,7 +465,7 @@ function pts_estimated_download_size($identifier, $divider = 1048576)
 	// Estimate the size of files to be downloaded
 	static $cache;
 
-	if(is_array($identifier) || !isset($cache[$identifier][$divider]))
+	if(($id_is_array = is_array($identifier)) || !isset($cache[$identifier][$divider]))
 	{
 		$estimated_size = 0;
 
@@ -478,15 +478,15 @@ function pts_estimated_download_size($identifier, $divider = 1048576)
 			}
 		}
 
-		$estimated_size = pts_trim_double($estimated_size / $divider);
+		$estimated_size = $estimated_size > 0 ? pts_trim_double($estimated_size / $divider) : 0;
 
-		if(!is_array($identifier))
+		if(!$id_is_array)
 		{
 			$cache[$identifier][$divider] = $estimated_size;
 		}
 	}
 
-	return is_array($identifier) ? $estimated_size : $cache[$identifier][$divider];
+	return $id_is_array ? $estimated_size : $cache[$identifier][$divider];
 }
 function pts_estimated_environment_size($identifier)
 {

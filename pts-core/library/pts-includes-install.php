@@ -363,6 +363,10 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 				$valid = true;
 			}
 		}
+		else
+		{
+			$valid = true;
+		}
 	}
 
 	return $valid;
