@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Start work on having a panel in the GTK2 GUI for managing the PTS modules
 - pts-core: Add and implement PostArguments tag to test profile XML specification
 - pts-core: Export TEST_<SPECIAL-IDENTIFIER> as the HOME directory, similar to the variables when extending a test that are set
+- pts-core: Add post-cache-share script support for test profiles to optionally implement that take advantage of PTS cache shares
 - phoromatic: Add support for the server to tell the client module whether to run the install command prior to testing (change from the web interface)
 - pts: Add vdrift-fps-monitor test profile that charts out the FPS on a line graph during the testing process
 
