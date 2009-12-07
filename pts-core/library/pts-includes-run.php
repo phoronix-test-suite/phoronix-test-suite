@@ -210,7 +210,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 	foreach(pts_glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
 	{
 		$test_identifier = pts_extract_identifier_from_path($cache_share_file);
-		echo pts_call_test_script($test_identifier, "post-cache-share", "\nProcessing Post Cache Share Scripts...\n", null, pts_run_additional_vars($test_identifier));
+		echo pts_call_test_script($test_identifier, "post-cache-share", null, null, pts_run_additional_vars($test_identifier));
 		unlink($cache_share_file);
 	}
 }

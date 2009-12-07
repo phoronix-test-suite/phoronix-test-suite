@@ -72,7 +72,7 @@ class pts_result_file_analyze_manager
 					// Stub, no similar results to analyze
 					array_push($return_results, $this->test_results[$tests_of_same_name_and_version[0][0]]);
 				}
-				else if($this->test_results[$tests_of_same_name_and_version[0][0]]->get_format() == "LINE_GRAPH")
+				else if(in_array($this->test_results[$tests_of_same_name_and_version[0][0]]->get_format(), array("IMAGE_COMPARISON", "LINE_GRAPH")))
 				{
 					foreach($tests_of_same_name_and_version as $add)
 					{
@@ -101,7 +101,7 @@ class pts_result_file_analyze_manager
 							{
 								if($diff_index == null)
 								{
-									$this_index = array_pop(array_keys($diff));
+									$this_index = pts_last_element_in_array(array_keys($diff));
 									//$this_index_value = $diff[$this_index];
 									$index_id = implode(",", array($test_name, $test_version, $this_index));
 
