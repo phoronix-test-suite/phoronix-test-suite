@@ -84,7 +84,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 			else
 			{
 				echo "Enter a unique name for this test run: ";
-				$results_identifier = trim(str_replace(array('/', '~', ':'), "", pts_read_user_input()));
+				$results_identifier = trim(str_replace(array('/'), "", pts_read_user_input()));
 			}
 			$times_tried++;
 
@@ -243,7 +243,7 @@ function pts_parse_svg_options($svg_file)
 function pts_input_string_to_identifier($input)
 {
 	$input = pts_swap_variables($input, "pts_user_runtime_variables");
-	$input = trim(str_replace(array(' ', '/', '&', '?', '\''), "", strtolower($input)));
+	$input = trim(str_replace(array(' ', '/', '&', '?', ':', '~', '\''), "", strtolower($input)));
 
 	return $input;
 }
