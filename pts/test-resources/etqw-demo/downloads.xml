@@ -6,9 +6,9 @@
 			<FileSize>691248874</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/etqw-demo-files-3.tar.bz2, http://www.phoronix-test-suite.com/benchmark-files/etqw-demo-files-3.tar.bz2</URL>
-			<MD5>639c2251ecd21bed218b1d99ff222db9</MD5>
-			<FileSize>982985</FileSize>
+			<URL>http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/etqw-demo-files-4.tar.bz2, http://www.phoronix-test-suite.com/benchmark-files/etqw-demo-files-4.tar.bz2</URL>
+			<MD5>321ba58c513dd142ecb565fa2ff53885</MD5>
+			<FileSize>1787611</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

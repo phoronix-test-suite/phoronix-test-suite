@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add support for the server to tell the client module whether to run the install command prior to testing (change from the web interface)
 - pts: Add vdrift-fps-monitor test profile that charts out the FPS on a line graph during the testing process
 - pts: Rename the iqc-nexuiz test profile to nexuiz-iqc
+- pts: Add etqw-demo-iqc test profile for image quality comparisons with ET: Quake Wars Demo
 
 Phoronix Test Suite 2.4 Alpha 1
 December 2, 2009

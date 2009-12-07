@@ -19,7 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-file_put_contents(getenv("IQC_IMAGE_PNG"), "111");
 
 if(!extension_loaded("gd"))
 {
