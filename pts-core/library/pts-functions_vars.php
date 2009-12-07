@@ -109,13 +109,11 @@ function pts_variables_export_string($vars = null)
 function pts_run_additional_vars($identifier)
 {
 	$extra_vars = array();
-
 	$extra_vars["HOME"] = TEST_ENV_DIR . $identifier . "/";
-	$extra_vars["TEST_" . strtoupper(str_replace("-", "_", $identifier))] = TEST_ENV_DIR . $identifier;
 
 	$ctp_extension_string = "";
 	$extends = pts_test_extends_below($identifier);
-	foreach($extends as $extended_test)
+	foreach(array_merge(array($identifier), $extends) as $extended_test)
 	{
 		if(is_dir(TEST_ENV_DIR . $extended_test . "/"))
 		{
