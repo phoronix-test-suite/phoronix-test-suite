@@ -46,7 +46,7 @@ class pts_ImageComparisonGraph extends pts_CustomGraph
 		$img_height = imagesy($img_first);
 
 		// Assume if the images are being rendered together they are same width and height
-		$this->graph_attr_height = 70 + ($draw_count * ($img_height + 22)); // 110 at top plus 20 px between images
+		$this->graph_attr_height = 72 + ($draw_count * ($img_height + 22)); // 110 at top plus 20 px between images
 		$this->graph_attr_width = $this->graph_attr_width < ($img_width + 20) ? $img_width + 20 : $this->graph_attr_width;
 
 		$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height);
@@ -75,10 +75,15 @@ class pts_ImageComparisonGraph extends pts_CustomGraph
 			$from_left = ($this->graph_attr_width / 2) - ($img_width / 2);
 			$from_top = 60 + ($i_o * ($img_height + 22));
 
-			$this->graph_image->draw_rectangle_border($from_left - 1, $from_top - 1, $from_left + $img_width + 1, $from_top + $img_height + 1, $this->graph_color_body_light);
+			$this->graph_image->draw_rectangle_border($from_left - 1, $from_top - 1, $from_left + $img_width, $from_top + $img_height, $this->graph_color_body_light);
 			$this->graph_image->image_copy_merge(imagecreatefromstring(base64_decode($this->graph_data[0][$i_o])), $from_left, $from_top, 0, 0, $img_width, $img_height);
 
 			$this->graph_image->write_text_center($this->graph_identifiers[$i_o], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_main_headers, 0, $from_top + $img_height + 3, $this->graph_attr_width, $from_top + $img_height + 3);
+		}
+
+		if(!empty($this->graph_watermark_text))
+		{
+			$this->graph_image->write_text_center($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, 0, $this->graph_attr_height - 15, $this->graph_attr_width, $this->graph_attr_height - 15);
 		}
 
 		return $this->return_graph_image(100);
