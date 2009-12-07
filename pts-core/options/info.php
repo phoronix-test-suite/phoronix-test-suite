@@ -130,7 +130,7 @@ class info implements pts_option_interface
 			}
 
 			$dependencies = $test->get_dependencies();
-			if(!empty($dependencies))
+			if(!empty($dependencies) && !empty($dependencies[0]))
 			{
 				echo "\nSoftware Dependencies:\n";
 				foreach($test->get_dependency_names() as $dependency)
