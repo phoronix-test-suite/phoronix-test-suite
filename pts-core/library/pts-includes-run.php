@@ -172,7 +172,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 			{
-				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, 1, 1);
+				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i);
 			}
 		}
 		while(time() < $loop_end_time && $test_flag);
@@ -291,7 +291,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 
 	$test_run_manager->set_tests_to_run($validated_run_requests);
 }
-function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$display_mode, $run_index, $run_position = 1, $run_count = 1)
+function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$display_mode, $run_index, $run_position = -1, $run_count = -1)
 {
 	$result = false;
 	$test_run_request = $test_run_manager->get_test_to_run($run_index);
@@ -320,6 +320,11 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			pts_set_assignment("TEST_RUN_POSITION", $run_position);
 			pts_set_assignment("TEST_RUN_COUNT", $run_count);
 
+			if(($run_position != 1 && count(pts_glob(TEST_ENV_DIR . $test_run_request->get_identifier() . "/cache-share-*.pt2so")) == 0) || $is_weighted_run)
+			{
+				sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
+			}
+
 			$result = pts_run_test($test_run_request, $display_mode);
 
 			if($is_weighted_run)
@@ -345,11 +350,6 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			{
 				// Just skip the current test and do not save the results, but continue testing
 				continue;
-			}
-
-			if(($run_position == 1 && $run_count == 1) || $run_position < $run_count || $is_weighted_run)
-			{
-				sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 			}
 		}
 	}

@@ -59,6 +59,12 @@ class tandem_XmlReader
 
 			if(empty($this->xml_data))
 			{
+				if(filesize($read_xml) > 3145728 && define("TANDEM_XML_MEM_SIZE_INCREASE", true))
+				{
+					// This is just a dirty, quick way of increasing PHP's memory size when dealing with large files so the memory will not be exhausted
+					ini_set("memory_limit", "128M");
+				}
+
 				$this->xml_data = file_get_contents($read_xml);
 
 				if($this->xml_cache_file)
