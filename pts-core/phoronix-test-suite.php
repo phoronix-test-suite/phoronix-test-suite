@@ -30,6 +30,9 @@ define("PTS_PATH", dirname(dirname(__FILE__)) . "/");
 // SILENT = Load all normal pts-core files, but don't run client code
 define("PTS_MODE", in_array(($m = getenv("PTS_MODE")), array("CLIENT", "LIB", "SILENT")) ? $m : "CLIENT");
 
+// Any PHP default memory limit should be fine for PTS, until you run image quality comparison tests that begins to consume memory
+ini_set("memory_limit", "128M");
+
 require(PTS_PATH . "pts-core/library/pts-functions.php");
 
 if(PTS_MODE != "CLIENT")

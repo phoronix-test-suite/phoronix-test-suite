@@ -206,7 +206,7 @@ function pts_trim_explode($delimiter, $to_explode)
 function pts_is_file(&$file_check)
 {
 	// $file_check could contain the XML markup already, so first check for < as the start of an open tag from say <?xml version
-	return substr($file_check, 0, 1) != "<" && is_file($file_check);
+	return !isset($file_check[1024]) && substr($file_check, 0, 1) != "<" && is_file($file_check);
 }
 function pts_request_new_id()
 {
