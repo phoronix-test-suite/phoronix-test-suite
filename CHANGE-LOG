@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Merging improvements for handling image quality comparisons, plus other safeguards merged too
 - pts-core: More aggressive sleep timer between tests, don't sleep before entering a PTS cache share
 - pts-core: Add analyze-image-delta option for carrying out delta image comparisons of test results
+- pts-core: Only show "Test All Options" option for tests when there is more than one option to select
 - phoromatic: Add support for the server to tell the client module whether to run the install command prior to testing (change from the web interface)
 - pts: Add vdrift-fps-monitor test profile that charts out the FPS on a line graph during the testing process
 - pts: Rename the iqc-nexuiz test profile to nexuiz-iqc

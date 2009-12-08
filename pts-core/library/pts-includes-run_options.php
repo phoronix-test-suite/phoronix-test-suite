@@ -96,7 +96,11 @@ function pts_prompt_test_options($identifier)
 			else
 			{
 				$option_names = $o->get_all_option_names();
-				array_push($option_names, "Test All Options");
+
+				if(count($option_names) > 1)
+				{
+					array_push($option_names, "Test All Options");
+				}
 
 				echo "\n" . $o->get_name() . ":\n";
 				$bench_choice = pts_text_select_menu("Enter Your Choice", $option_names, true);
