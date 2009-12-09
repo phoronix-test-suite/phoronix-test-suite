@@ -57,7 +57,7 @@ function pts_text_select_menu($user_string, $options_r, $allow_multi_select = fa
 		echo "\n";
 		for($i = 0; $i < $option_count; $i++)
 		{
-			echo ($i + 1) . ": " . $options_r[$i] . "\n";
+			echo ($i + 1) . ": " . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$i] . "\n";
 		}
 		echo "\n" . $user_string . ": ";
 		$select_choice = pts_read_user_input();

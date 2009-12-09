@@ -16,7 +16,7 @@ Phoronix Test Suite (Git)
 - pts: Rename the iqc-nexuiz test profile to nexuiz-iqc
 - pts: Add etqw-demo-iqc test profile for image quality comparisons with ET: Quake Wars Demo
 - pts: Add iqc test suite for image quality comparison tests
-- pts: Begin supporting unigin-heaven test profile
+- pts: Begin supporting unigine-heaven test profile
 
 Phoronix Test Suite 2.4 Alpha 1
 December 2, 2009
