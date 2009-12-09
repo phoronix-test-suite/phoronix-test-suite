@@ -67,27 +67,28 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 
 	return $result;
 }
-function pts_test_update_install_xml($identifier, $this_test_duration = 0, $is_install = false)
+function pts_test_update_install_xml($identifier, $this_duration = 0, $is_install = false)
 {
 	// Refresh/generate an install XML for pts-install.xml
  	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
 	$xml_writer = new tandem_XmlWriter();
 
 	$test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
-	if(!is_numeric($test_duration))
+	if(!is_numeric($test_duration) && !$is_install)
 	{
-		$test_duration = $this_test_duration;
+		$test_duration = $this_duration;
 	}
-	if(is_numeric($this_test_duration) && $this_test_duration > 0)
+	if(!$is_install && is_numeric($this_duration) && $this_duration > 0)
 	{
-		$test_duration = ceil((($test_duration * $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN)) + $this_test_duration) / ($xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1));
+		$test_duration = ceil((($test_duration * $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN)) + $this_duration) / ($xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1));
 	}
 
 	$test_version = $is_install ? pts_test_profile_version($identifier) : $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
 	$test_checksum = $is_install ? pts_test_checksum_installer($identifier) : $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
 	$sys_identifier = $is_install ? pts_system_identifier_string() : $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
 	$install_time = $is_install ? date("Y-m-d H:i:s") : $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);
-	$latest_run_time = $is_install || $this_test_duration == 0 ? $xml_parser->getXMLValue(P_INSTALL_TEST_LATEST_RUNTIME) : $this_test_duration;
+	$install_time_length = $is_install ? $this_duration : $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME_LENGTH);
+	$latest_run_time = $is_install || $this_test_duration == 0 ? $xml_parser->getXMLValue(P_INSTALL_TEST_LATEST_RUNTIME) : $this_duration;
 
 	$times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
 	if(empty($times_run))
@@ -115,6 +116,7 @@ function pts_test_update_install_xml($identifier, $this_test_duration = 0, $is_i
 	$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, $test_checksum);
 	$xml_writer->addXmlObject(P_INSTALL_TEST_SYSIDENTIFY, 1, $sys_identifier);
 	$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, $install_time);
+	$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME_LENGTH, 2, $install_time_length);
 	$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, $last_run);
 	$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, $times_run);
 	$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $test_duration);

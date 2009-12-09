@@ -449,6 +449,8 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 					return false;
 				}
 
+				$install_time_length = 0;
+
 				if(is_file(pts_location_test_resources($identifier) . "install.sh") || is_file(pts_location_test_resources($identifier) . "install.php"))
 				{
 					pts_module_process("__pre_test_install", $identifier);
@@ -489,7 +491,9 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 					}
 
 					pts_user_message($pre_install_message);
+					$install_time_length_start = time();
 					$install_log = pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
+					$install_time_length = time() - $install_time_length_start;
 					pts_user_message($post_install_message);
 
 					if(!empty($install_log))
@@ -536,7 +540,7 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 					$installed = true;
 				}
 
-				pts_test_update_install_xml($identifier, 0, true);
+				pts_test_update_install_xml($identifier, $install_time_length, true);
 				echo "\n";
 			}
 			else
