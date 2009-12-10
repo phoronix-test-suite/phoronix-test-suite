@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Log to the pts-install.xml how long it takes for a test to install
 - phodevi: Clean phodevi_linux_parser::read_sys_dmi() against hal-values-remove.list
 - phodevi: Better handle NVIDIA's detailed OpenGL version string
+- phodevi: Support for detecting the X.Org vesa driver
 - phoromatic: Add support for the server to tell the client module whether to run the install command prior to testing (change from the web interface)
 - pts: Add vdrift-fps-monitor test profile that charts out the FPS on a line graph during the testing process
 - pts: Rename the iqc-nexuiz test profile to nexuiz-iqc

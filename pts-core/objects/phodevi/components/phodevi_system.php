@@ -921,6 +921,10 @@ class phodevi_system extends pts_device_interface
 			{
 				$xorg_module_driver = "fglrx";
 			}
+			else if(IS_NVIDIA_GRAPHICS)
+			{
+				$xorg_module_driver = "nvidia";
+			}
 			else if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
 			{
 				$xorg_module_driver = "nv";
@@ -937,7 +941,7 @@ class phodevi_system extends pts_device_interface
 		{
 			$driver_version = phodevi_parser::read_xorg_module_version($xorg_module_driver . "_drv");
 
-			if($driver_version == false || IS_NVIDIA_LINUX)
+			if($driver_version == false || $driver_version == "1.0.0")
 			{
 				switch($xorg_module_driver)
 				{
@@ -956,9 +960,21 @@ class phodevi_system extends pts_device_interface
 
 						if(($pos = strpos($glxinfo, 'NVIDIA ')) != false)
 						{
-							$driver_version = substr($info, ($pos + 7));
+							$driver_version = substr($glxinfo, ($pos + 7));
 						}
 						break;
+				}
+			}
+
+			if($driver_version == false && IS_UNKNOWN_GRAPHICS)
+			{
+				// See if the VESA driver is in use
+				$vesa_version = phodevi_parser::read_xorg_module_version("vesa_drv");
+
+				if($vesa_version)
+				{
+					$xorg_module_driver = "vesa";
+					$driver_version = $vesa_version;
 				}
 			}
 
