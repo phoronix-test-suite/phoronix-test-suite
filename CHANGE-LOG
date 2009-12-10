@@ -21,6 +21,7 @@ Phoronix Test Suite (Git)
 - pts: Add iqc test suite for image quality comparison tests
 - pts: Begin supporting unigine-heaven test profile
 - pts: Overhaul the tiobench test profile
+- pts: Add fs-mark test profile
 
 Phoronix Test Suite 2.4 Alpha 1
 December 2, 2009
