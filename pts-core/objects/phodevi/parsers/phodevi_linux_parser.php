@@ -119,13 +119,15 @@ class phodevi_linux_parser
 
 		if(is_dir("/sys/class/dmi/id/"))
 		{
+			$ignore_words = phodevi_parser::hardware_values_to_remove();
+
 			foreach(pts_to_array($identifier) as $id)
 			{
 				if(is_readable("/sys/class/dmi/id/" . $id))
 				{
 					$dmi_file = pts_file_get_contents("/sys/class/dmi/id/" . $id);
 
-					if(!empty($dmi_file))
+					if(!empty($dmi_file) && !in_array(strtolower($dmi_file), $ignore_words))
 					{
 						$dmi = $dmi_file;
 						break;
@@ -416,14 +418,8 @@ class phodevi_linux_parser
 
 		if(pts_executable_in_path("lshal"))
 		{
-			static $remove_words = null;
 			$name = pts_to_array($name);
-
-			if($remove_words == null && is_file(STATIC_DIR . "lists/hal-values-remove.list"))
-			{
-				$word_file = pts_file_get_contents(STATIC_DIR . "lists/hal-values-remove.list");
-				$remove_words = pts_trim_explode("\n", $word_file);
-			}
+			$remove_words = phodevi_parser::hardware_values_to_remove();
 
 			for($i = 0; $i < count($name) && empty($info); $i++)
 			{

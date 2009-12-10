@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add analyze-image-delta option for carrying out delta image comparisons of test results
 - pts-core: Only show "Test All Options" option for tests when there is more than one option to select
 - pts-core: Log to the pts-install.xml how long it takes for a test to install
+- phodevi: Cleanse phodevi_linux_parser::read_sys_dmi() against hal-values-remove.list
 - phoromatic: Add support for the server to tell the client module whether to run the install command prior to testing (change from the web interface)
 - pts: Add vdrift-fps-monitor test profile that charts out the FPS on a line graph during the testing process
 - pts: Rename the iqc-nexuiz test profile to nexuiz-iqc

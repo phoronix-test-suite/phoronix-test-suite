@@ -124,7 +124,7 @@ class system_monitor extends pts_module_interface
 			}
 		}
 	}
-	private function parse_monitor_log($log_file)
+	private static function parse_monitor_log($log_file)
 	{
 		$log_f = pts_module::read_file($log_file);
 		pts_module::remove_file($log_file);
@@ -155,7 +155,7 @@ class system_monitor extends pts_module_interface
 
 		return $results;
 	}
-	private function monitor_arguments()
+	private static function monitor_arguments()
 	{
 		$args = array("all");
 
