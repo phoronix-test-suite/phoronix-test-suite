@@ -79,10 +79,6 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DOWNLOADS, 8, $read_config, null);
 
 	$config->saveXMLFile(PTS_USER_DIR . "user-config.xml");
-
-	pts_mkdir(PTS_USER_DIR . "xsl/");
-	pts_copy(STATIC_DIR . "pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
-	pts_copy(STATIC_DIR . "images/pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
 }
 function pts_config_bool_to_string($bool)
 {

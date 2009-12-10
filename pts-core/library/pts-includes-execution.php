@@ -72,6 +72,7 @@ function pts_test_update_install_xml($identifier, $this_duration = 0, $is_instal
 	// Refresh/generate an install XML for pts-install.xml
  	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
 	$xml_writer = new tandem_XmlWriter();
+	$xml_writer->setXslBinding("file://" . PTS_USER_DIR . "xsl/" . "pts-test-installation-viewer.xsl");
 
 	$test_duration = $xml_parser->getXMLValue(P_INSTALL_TEST_AVG_RUNTIME);
 	if(!is_numeric($test_duration) && !$is_install)
@@ -88,7 +89,7 @@ function pts_test_update_install_xml($identifier, $this_duration = 0, $is_instal
 	$sys_identifier = $is_install ? pts_system_identifier_string() : $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
 	$install_time = $is_install ? date("Y-m-d H:i:s") : $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);
 	$install_time_length = $is_install ? $this_duration : $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME_LENGTH);
-	$latest_run_time = $is_install || $this_test_duration == 0 ? $xml_parser->getXMLValue(P_INSTALL_TEST_LATEST_RUNTIME) : $this_duration;
+	$latest_run_time = $is_install || $this_duration == 0 ? $xml_parser->getXMLValue(P_INSTALL_TEST_LATEST_RUNTIME) : $this_duration;
 
 	$times_run = $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN);
 	if(empty($times_run))

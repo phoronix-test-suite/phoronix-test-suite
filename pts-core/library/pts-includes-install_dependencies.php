@@ -24,11 +24,6 @@
 function pts_install_package_on_distribution(&$display_mode, &$identifiers, &$tests_with_satisfied_dependencies)
 {
 	// PTS External Dependencies install on distribution
-	if(!pts_is_assignment("SILENCE_MESSAGES"))
-	{
-		echo "Checking For Needed External Dependencies.\n";
-	}
-
 	$tests_checked = array();
 	$install_objects = array();
 	$install_objects_count = 0;
@@ -246,7 +241,7 @@ function pts_install_packages_on_distribution_process($install_objects, &$displa
 		if(is_file(STATIC_DIR . "distro-scripts/install-" . $distribution . "-packages.sh"))
 		{
 			// hook into $display_mode here if it's desired
-			echo "\nThe following dependencies will be installed: \n";
+			echo "\nThe following dependencies are needed and will be installed: \n";
 
 			foreach(explode(" ", $install_objects) as $obj)
 			{
