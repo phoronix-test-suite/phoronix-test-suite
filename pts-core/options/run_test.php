@@ -366,7 +366,10 @@ class run_test implements pts_option_interface
 
 			pts_unlink($pt2so_location);
 
-			$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type), 0);
+			if(!pts_read_assignment("FINISH_INCOMPLETE_RUN"))
+			{
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type), 0);
+			}
 
 			pts_module_process("__event_results_process", $xml_results_writer);
 			pts_save_test_file($xml_results_writer, $file_name);

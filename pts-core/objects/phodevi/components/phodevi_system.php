@@ -937,7 +937,7 @@ class phodevi_system extends pts_device_interface
 		{
 			$driver_version = phodevi_parser::read_xorg_module_version($xorg_module_driver . "_drv");
 
-			if($driver_version == false)
+			if($driver_version == false || IS_NVIDIA_LINUX)
 			{
 				switch($xorg_module_driver)
 				{
@@ -948,6 +948,15 @@ class phodevi_system extends pts_device_interface
 						if($driver_version != false)
 						{
 							$xorg_module_driver = "radeonhd";
+						}
+						break;
+					case "nvidia":
+						// NVIDIA's binary driver appends their driver version on the end of the OpenGL version string
+						$glxinfo = phodevi_parser::software_glxinfo_version();
+
+						if(($pos = strpos($glxinfo, 'NVIDIA ')) != false)
+						{
+							$driver_version = substr($info, ($pos + 7));
 						}
 						break;
 				}
@@ -972,13 +981,11 @@ class phodevi_system extends pts_device_interface
 		}
 		else if(pts_executable_in_path("glxinfo"))
 		{
-			$info = shell_exec("glxinfo 2>&1 | grep version");
+			$info = phodevi_parser::software_glxinfo_version();
 
-			if(($pos = strpos($info, "OpenGL version string:")) !== false)
+			if(($pos = strpos($info, ' ')) != false)
 			{
-				$info = substr($info, $pos + 23);
-				$info = trim(substr($info, 0, strpos($info, "\n")));
-				$info = str_replace(array(" Release"), "", $info);
+				$info = substr($info, 0, $pos);
 			}
 		}
 		else if(IS_BSD && phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%driver") && pts_executable_in_path("nvidia-settings"))

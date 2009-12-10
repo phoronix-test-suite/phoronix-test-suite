@@ -152,6 +152,25 @@ class phodevi_parser
 
 		return $remove_words;
 	}
+	public static function software_glxinfo_version()
+	{
+		static $info = -1;
+
+		if($info == -1)
+		{
+			$info = null;
+			$glxinfo = shell_exec("glxinfo 2> /dev/null");
+
+			if(($pos = strpos($glxinfo, "OpenGL version string:")) !== false)
+			{
+				$info = substr($glxinfo, $pos + 23);
+				$info = substr($info, 0, strpos($info, "\n"));
+				$info = trim(str_replace(array(" Release"), "", $info));
+			}
+		}
+
+		return $info;
+	}
 }
 
 ?>
