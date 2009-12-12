@@ -25,6 +25,7 @@ Phoronix Test Suite (Git)
 - pts: Begin supporting unigine-heaven test profile
 - pts: Overhaul the tiobench test profile
 - pts: Add fs-mark test profile
+- pts: Add daily-system-tracker test suite
 
 Phoronix Test Suite 2.4 Alpha 1
 December 2, 2009
