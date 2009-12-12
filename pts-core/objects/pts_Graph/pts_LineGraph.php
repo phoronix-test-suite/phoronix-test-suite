@@ -168,7 +168,8 @@ class pts_LineGraph extends pts_CustomGraph
 			$to_display[$color] = array();
 		}
 
-		if(in_array($this->graph_y_title, array("Percent", "Milliwatts", "Megabytes", "Celsius", "MB/s", "Frames Per Second")))
+		// in_array($this->graph_y_title, array("Percent", "Milliwatts", "Megabytes", "Celsius", "MB/s", "Frames Per Second", "Seconds", "Iterations Per Minute"))
+		if(true)
 		{
 			array_push($to_display[$this->graph_color_text], "Average:");
 
@@ -178,7 +179,8 @@ class pts_LineGraph extends pts_CustomGraph
 				array_push($to_display[$color], $avg);
 			}
 		}
-		if(in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "MB/s", "Frames Per Second")) || ($this->graph_y_title == "Percent" && $max_value < 100))
+		// in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "MB/s", "Frames Per Second", "Seconds", "Iterations Per Minute"))
+		if($this->graph_y_title != "Percent" || $max_value < 100)
 		{
 			array_push($to_display[$this->graph_color_text], "Peak:");
 
@@ -196,7 +198,7 @@ class pts_LineGraph extends pts_CustomGraph
 				array_push($to_display[$color], $high);
 			}
 		}
-		if(in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "Frames Per Second")))
+		if($min_value > 0)
 		{
 			array_push($to_display[$this->graph_color_text], "Low:");
 

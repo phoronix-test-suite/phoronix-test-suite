@@ -70,9 +70,9 @@ class pts_result_file_merge_manager
 		{
 			$skip_adding = false;
 
-			if(is_array($select_identifiers))
+			if($result_merge_select != null || is_array($select_identifiers))
 			{
-				if(pts_read_assignment("REFERENCE_COMPARISON"))
+				if(PTS_MODE == "CLIENT" && pts_read_assignment("REFERENCE_COMPARISON"))
 				{
 					$skip_adding = true;
 				}
@@ -84,7 +84,7 @@ class pts_result_file_merge_manager
 				{
 					$this_identifier = $buffer_item->get_result_identifier();
 
-					if(in_array($this_identifier, $select_identifiers))
+					if($select_identifiers == null || in_array($this_identifier, $select_identifiers))
 					{
 						if(($renamed = $result_merge_select->get_rename_identifier()) != null)
 						{

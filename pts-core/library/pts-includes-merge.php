@@ -67,12 +67,16 @@ function pts_merge_test_results()
 			$this_result_file = new pts_result_file($result_merge_select->get_result_file());
 		}
 
-		if($merge_pos == 0)
+		if(!defined("ONLY_RESULTS_IN_XML"))
 		{
-			pts_result_file_suite_info_to_xml($this_result_file, $results);
+			if($merge_pos == 0)
+			{
+				pts_result_file_suite_info_to_xml($this_result_file, $results);
+			}
+
+			pts_result_file_system_info_to_xml($this_result_file, $results, $added_systems_hash, $result_merge_select);
 		}
 
-		pts_result_file_system_info_to_xml($this_result_file, $results, $added_systems_hash, $result_merge_select);
 		$test_result_manager->add_test_result_set($this_result_file->get_result_objects(), $result_merge_select);
 	}
 
