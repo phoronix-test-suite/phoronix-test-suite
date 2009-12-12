@@ -48,7 +48,17 @@ function pts_merge_test_results()
 		}
 		else if(is_object($files_to_combine[$merge_pos]) && $files_to_combine[$merge_pos] instanceOf pts_result_file)
 		{
-			$result_merge_select = null;
+			if(($t = $files_to_combine[$merge_pos]->read_extra_attribute("rename_result_identifier")) != false)
+			{
+				// This code path is currently used by Phoromatic
+				$result_merge_select = new pts_result_merge_select(null, null);
+				$result_merge_select->rename_identifier($t);
+			}
+			else
+			{
+				$result_merge_select = null;
+			}
+
 			$this_result_file = $files_to_combine[$merge_pos];
 		}
 		else

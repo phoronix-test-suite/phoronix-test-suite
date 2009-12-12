@@ -46,7 +46,8 @@ class pts_result_merge_select
 	}
 	public function rename_identifier($new_name)
 	{
-		$this->rename_identifier = (count($this->selected_identifiers) == 1 ? $new_name : null);
+		// $this->selected_identifers should either contain just the single identifer of what is being renamed or it should be null if being handled through Phoromatic
+		$this->rename_identifier = (count($this->selected_identifiers) < 2 ? $new_name : null);
 	}
 	public function get_rename_identifier()
 	{

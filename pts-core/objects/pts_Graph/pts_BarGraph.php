@@ -113,7 +113,7 @@ class pts_BarGraph extends pts_CustomGraph
 
 				if($graph_size > 18)
 				{
-					$this->graph_image->write_text_center($this->graph_data[$i_o][$i], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left - 2, $value_plot_top + 2, $px_bound_right + 2, $value_plot_top + 2);
+					$this->graph_image->write_text_center($this->graph_data[$i_o][$i], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left - 1, $value_plot_top + 2, $px_bound_right + 1, $value_plot_top + 2);
 				}
 				else if($graph_size > 10)
 				{

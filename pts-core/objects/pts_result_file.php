@@ -24,10 +24,20 @@ class pts_result_file
 {
 	private $result_objects = null;
 	private $xml_parser = null;
+	private $extra_attributes = null;
 
 	public function __construct($result_file)
 	{
 		$this->xml_parser = new pts_results_tandem_XmlReader($result_file);
+		$this->extra_attributes = array();
+	}
+	public function read_extra_attribute($key)
+	{
+		return isset($this->extra_attributes[$key]) ? $this->extra_attributes[$key] : false;
+	}
+	public function set_extra_attribute($key, $value)
+	{
+		$this->extra_attributes[$key] = $value;
 	}
 	public function get_system_hardware()
 	{
