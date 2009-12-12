@@ -243,6 +243,7 @@ class phoromatic extends pts_module_interface
 					pts_run_option_next("phoromatic.user_system_return", $suite_identifier, $args_to_pass);
 					break;
 				case "exit":
+					echo "\nPhoromatic received a remote command to exit.\n";
 					pts_release_lock(self::$phoromatic_lock, PTS_USER_DIR . "phoromatic_lock");
 					break;
 				case "server_maintenance":

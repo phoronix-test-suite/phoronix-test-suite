@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - phodevi: Better handle NVIDIA's detailed OpenGL version string
 - phodevi: Support for detecting the X.Org vesa driver
 - phoromatic: Add support for the server to tell the client module whether to run the install command prior to testing (change from the web interface)
+- phoromatic: The Phoromatic server (through the settings area) can now tell test machines to exit PTS when testing is done for the day
 - pts: Add vdrift-fps-monitor test profile that charts out the FPS on a line graph during the testing process
 - pts: Rename the iqc-nexuiz test profile to nexuiz-iqc
 - pts: Add etqw-demo-iqc test profile for image quality comparisons with ET: Quake Wars Demo
