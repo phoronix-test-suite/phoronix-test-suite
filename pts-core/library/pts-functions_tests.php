@@ -153,7 +153,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 
 	return $generated_graphs;
 }
-function pts_render_graph($r_o, $save_as = false, $suite_name = null, $pts_version = PTS_VERSION)
+function pts_render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_version = PTS_VERSION)
 {
 	$version = $r_o->get_version();
 	$name = $r_o->get_name() . (isset($version[2]) ? " v" . $version : "");

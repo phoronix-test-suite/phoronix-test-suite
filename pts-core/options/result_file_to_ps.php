@@ -38,7 +38,7 @@ class result_file_to_ps implements pts_option_interface
 			return;
 		}
 
-		putenv("JPG_DEBUG=true"); // Force to JPEG mode
+		define("BILDE_RENDERER", "JPG"); // Force to JPEG mode
 		pts_generate_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
 		$xml_parser = new pts_results_tandem_XmlReader($r["result_file"]);

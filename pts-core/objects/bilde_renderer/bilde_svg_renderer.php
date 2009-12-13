@@ -75,9 +75,9 @@ class bilde_svg_renderer extends bilde_renderer
 	public function render_image($output_file = null, $quality = 100)
 	{
 		// $quality is unused with SVG files
-		$svg_image = "<?xml version=\"1.0\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n";
+		$svg_image = $output_file != null ? "<?xml version=\"1.0\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n" : false;
 
-		if(is_array($this->embed_identifiers))
+		if($output_file != null && is_array($this->embed_identifiers))
 		{
 			foreach($this->embed_identifiers as $key => $value)
 			{
@@ -85,11 +85,11 @@ class bilde_svg_renderer extends bilde_renderer
 			}
 		}
 
-		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n\n";
+		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n\n";
 		$svg_image .= $this->get_svg_formatted_definitions();
 		$svg_image .= $this->image . "\n</svg>";
 
-		return ($output_file != null ? @file_put_contents($output_file, $svg_image) : $svg_image);
+		return $output_file != null ? @file_put_contents($output_file, $svg_image) : $svg_image;
 	}
 	public function destroy_image()
 	{
@@ -112,7 +112,7 @@ class bilde_svg_renderer extends bilde_renderer
 		{
 			$text_x = $bound_x1 - round($text_height / 4);
 			$text_y = $bound_y1 + round($text_height / 2);
-			$rotation = 270;
+			$rotation = 90;
 		}
 
 		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "LEFT");
@@ -155,27 +155,29 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "CENTER");
 	}
+	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color)
+	{
+		$width = $width - $x1;
+		$height = $height - $y1;
+		$x1 += $width < 0 ? $width : 0;
+		$y1 += $height < 0 ? $height : 0;
 
+		$class = $this->add_svg_style_definition("stroke: " . $border_color . "; " . "stroke-width: 1px;");
+		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" class=\"" . $class . "\" width=\"" . abs(round($width)) . "\" height=\"" . abs(round($height)) . "\" fill=\"" . $background_color . "\" />\n";
+	}
 	public function draw_rectangle($x1, $y1, $width, $height, $background_color)
 	{
 		$width = $width - $x1;
 		$height = $height - $y1;
+		$x1 += $width < 0 ? $width : 0;
+		$y1 += $height < 0 ? $height : 0;
 
-		if($width < 0)
-		{
-			$x1 += $width;
-		}
-		if($height < 0)
-		{
-			$y1 += $height;
-		}
-
+		// could add a add_svg_style_definition here if it could be smart
 		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . abs(round($width)) . "\" height=\"" . abs(round($height)) . "\" fill=\"" . $background_color . "\" />\n";
 	}
 	public function draw_rectangle_border($x1, $y1, $width, $height, $border_color)
 	{
-		$class = "r_" . substr($border_color, 1);
-		$this->add_svg_style_definition($class, "stroke: " . $border_color . "; " . "stroke-width: 1px; fill: transparent;");
+		$class = $this->add_svg_style_definition("stroke: " . $border_color . "; " . "stroke-width: 1px; fill: transparent;");
 
 		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . round($width - $x1) . "\" height=\"" . round($height - $y1) . "\" class=\"" . $class . "\" />\n";
 	}
@@ -204,9 +206,7 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
 	{
-		$class = "l_" . substr($color, 1) . "_" . $line_width;
-		$this->add_svg_style_definition($class, "stroke: " . $color . "; " . "stroke-width: " . $line_width . "px;");
-
+		$class = $this->add_svg_style_definition("stroke: " . $color . "; " . "stroke-width: " . $line_width . "px;");
 		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" class=\"" . $class . "\" />\n";
 	}
 
@@ -242,35 +242,32 @@ class bilde_svg_renderer extends bilde_renderer
 	{
 		$font_size += 1.5;
 
-		if($rotation != 0)
-		{
-			$text_y = (0 - ($text_y / 2));
-			$text_x = $text_y + 5;
-		}
-
 		switch($orientation)
 		{
 			case "CENTER":
-				$this->add_svg_style_definition("t_c", "text-anchor: middle; dominant-baseline: text-before-edge;");
-				$class = "t_c";
+				$class = $this->add_svg_style_definition("text-anchor: middle; dominant-baseline: text-before-edge; fill: $font_color;");
 				break;
 			case "RIGHT":
-				$this->add_svg_style_definition("t_r", "text-anchor: end; dominant-baseline: middle;");
-				$class = "t_r";
+				$class = $this->add_svg_style_definition("text-anchor: end; dominant-baseline: middle; fill: $font_color;");
 				break;
 			case "LEFT":
 			default:
-				$this->add_svg_style_definition("t_l", "text-anchor: start; dominant-baseline: middle;");
-				$class = "t_l";
+				$class = $this->add_svg_style_definition("text-anchor: start; dominant-baseline: middle; fill: $font_color;");
 				break;
 		}
 
 		// TODO: Implement $font_type through style="font-family: $font;"
-		$this->image .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\" fill=\"" . $font_color . "\" " . ($rotation == 0 ? "" : "transform=\"rotate(" . (360 - $rotation) . ", " . $rotation . ", 0)\" ") . "font-size=\"" . $font_size . "\" class=\"" . $class . "\">" . $string . "</text>\n";
+		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\" font-size=\"" . $font_size . "\" class=\"" . $class . "\">" . $string . "</text>\n";
 	}
-	private function add_svg_style_definition($style, $attributes)
+	private function add_svg_style_definition($attributes)
 	{
-		$this->svg_style_definitions[$style] = $attributes;
+		if(($key = array_search($attributes, $this->svg_style_definitions)) === false)
+		{
+			array_push($this->svg_style_definitions, $attributes);
+			$key = count($this->svg_style_definitions) - 1;
+		}
+
+		return "b_" . $key;
 	}
 	private function get_svg_formatted_definitions()
 	{
@@ -279,9 +276,9 @@ class bilde_svg_renderer extends bilde_renderer
 			$svg = "<defs>\n";
 			$svg .= "<style><![CDATA[\n";
 
-			foreach($this->svg_style_definitions as $style => $attributes)
+			foreach($this->svg_style_definitions as $key => $attributes)
 			{
-				$svg .= "." . $style . " { " . $attributes . " }\n";
+				$svg .= ".b_" . $key . " { " . $attributes . " }\n";
 			}
 
 			$svg .= "]]></style>\n";

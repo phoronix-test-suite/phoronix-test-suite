@@ -41,7 +41,7 @@ class tandem_XmlReader
 	{
 		$remote_file = isset($read_xml[8]) && substr($read_xml, 0, 7) == "http://";
 
-		if((substr($read_xml, 0, 1) != "<" && is_readable($read_xml)) || $remote_file)
+		if((substr(trim($read_xml), 0, 1) != "<" && is_readable($read_xml)) || $remote_file)
 		{
 			if($cache_support && !$remote_file)
 			{

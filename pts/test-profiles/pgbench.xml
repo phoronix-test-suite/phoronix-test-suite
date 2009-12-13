@@ -16,7 +16,7 @@
 	<TestInformation>
 		<Title>PostgreSQL pgbench</Title>
 		<SubTitle>TPC-B Transactions per second</SubTitle>
-		<TimesToRun>4</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<Executable>pgbench</Executable>
 		<Version>8.4.0</Version>
 		<ResultScale>TPS</ResultScale>

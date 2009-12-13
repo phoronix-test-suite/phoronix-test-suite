@@ -396,11 +396,13 @@ abstract class pts_Graph
 		}
 
 		// Background Color
-		$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background);
-
 		if($this->graph_attr_big_border)
 		{
-			$this->graph_image->draw_rectangle_border(0, 0, $this->graph_attr_width - 1, $this->graph_attr_height - 1, $this->graph_color_border);
+			$this->graph_image->draw_rectangle_with_border(0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background, $this->graph_color_border);
+		}
+		else
+		{
+			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background);
 		}
 	}
 	protected function render_graph_heading($with_version = true)
@@ -430,8 +432,7 @@ abstract class pts_Graph
 			$this->graph_top_start += (($sub_title_count - 1) * 14);
 		}
 
-		$this->graph_image->draw_rectangle($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body);
-		$this->graph_image->draw_rectangle_border($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches);
+		$this->graph_image->draw_rectangle_with_border($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body, $this->graph_color_notches);
 
 		if($this->graph_body_image != false)
 		{
@@ -543,8 +544,7 @@ abstract class pts_Graph
 
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
 
-				$this->graph_image->draw_rectangle($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color);
-				$this->graph_image->draw_rectangle_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this->graph_color_notches);
+				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this->graph_color_notches);
 
 				if($key_counter % 4 == 0)
 				{

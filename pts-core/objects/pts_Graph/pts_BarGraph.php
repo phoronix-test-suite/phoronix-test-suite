@@ -102,8 +102,7 @@ class pts_BarGraph extends pts_CustomGraph
 					$value_plot_top = 1;
 				}
 
-				$this->graph_image->draw_rectangle_border($px_bound_left, $value_plot_top - 1, $px_bound_right, $this->graph_top_end - 1, $this->graph_color_body_light);
-				$this->graph_image->draw_rectangle($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end - 1, $paint_color);
+				$this->graph_image->draw_rectangle_with_border($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end, $paint_color, $this->graph_color_body_light);
 
 				if(($px_bound_right - $px_bound_left) < 15)
 				{
@@ -121,6 +120,9 @@ class pts_BarGraph extends pts_CustomGraph
 				}
 			}
 		}
+
+		// write a new line along the bottom since the draw_rectangle_with_border above had written on top of it
+		$this->graph_image->draw_line($this->graph_left_start, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 1);
 	}
 	protected function render_graph_result()
 	{
