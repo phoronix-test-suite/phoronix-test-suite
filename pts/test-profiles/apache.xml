@@ -17,7 +17,7 @@
 		<Title>Apache Benchmark</Title>
 		<Version>2.2.11</Version>
 		<SubTitle>Static Web Page Serving</SubTitle>
-		<TimesToRun>4</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Requests Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This is a test of ab, which is the Apache Benchmark program. This test profile measures how many requests per second a given system can sustain when carrying out 500,000 requests with 100 requests being carried out concurrently.</Description>

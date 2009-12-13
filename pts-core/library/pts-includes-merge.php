@@ -189,5 +189,56 @@ function pts_test_result_contains_result_identifier($test_result, $results_ident
 
 	return in_array($results_identifier, $result_file->get_system_identifiers());	
 }
+function pts_list_regressions_linear(&$result_file, $threshold = 0.05, $show_only_active_regressions = true)
+{
+	$regressions = array();
+
+	foreach($result_file->get_result_objects() as $test_index => $result_object)
+	{
+		$prev_buffer_item = null;
+		$this_test_regressions = array();
+
+		foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+		{
+			if(!is_numeric($buffer_item->get_result_value()))
+			{
+				break;
+			}
+
+			if($prev_buffer_item != null && abs(1 - ($buffer_item->get_result_value() / $prev_buffer_item->get_result_value())) > $threshold)
+			{
+				$this_regression_marker = new pts_test_result_regression_marker($result_object, $prev_buffer_item, $buffer_item, $test_index);
+
+				if($show_only_active_regressions)
+				{
+					foreach($this_test_regressions as $index => &$regression_marker)
+					{
+						if(abs(1 - ($regression_marker->get_base_value() / $this_regression_marker->get_regressed_value())) < 0.03)
+						{
+							// 1% tolerance, regression seems to be corrected
+							unset($this_test_regressions[$index]);
+							$this_regression_market = null;
+							break;
+						}
+					}
+				}
+
+				if($this_regression_marker != null)
+				{
+					array_push($this_test_regressions, $this_regression_marker);
+				}
+			}
+
+			$prev_buffer_item = $buffer_item;
+		}
+
+		foreach($this_test_regressions as &$regression_marker)
+		{
+			array_push($regressions, $regression_marker);
+		}
+	}
+
+	return $regressions;
+}
 
 ?>
