@@ -134,6 +134,24 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
+		if($bound_x1 != $bound_x2)
+		{
+			$font_size += 1.5;
+			list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions($this->trim_double($text_string, 2), $font_type, $font_size);
+
+			while($text_width > abs($bound_x2 - $bound_x1 - 2))
+			{
+				$font_size -= 0.5;
+				list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions($this->trim_double($text_string, 2), $font_type, $font_size);
+			}
+			$font_size -= 1.5;
+
+			if($font_size < 4)
+			{
+				return;
+			}
+		}
+
 		$text_dimensions = $this->text_string_dimensions(strtoupper($text_string), $font_type, $font_size);
 		$text_height = $text_dimensions[1];
 
@@ -233,7 +251,7 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false)
 	{
-		return array(0, 0); // TODO: implement
+		return array(0, 0); // TODO: implement, though seems to do fine without it for the SVG renderer
 	}
 
 	// Privates
@@ -256,7 +274,7 @@ class bilde_svg_renderer extends bilde_renderer
 				break;
 		}
 
-		// TODO: Implement $font_type through style="font-family: $font;"
+		// Implement $font_type through font-family if desired
 		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\" font-size=\"" . $font_size . "\" class=\"" . $class . "\">" . $string . "</text>\n";
 	}
 	private function add_svg_style_definition($attributes)
@@ -282,7 +300,7 @@ class bilde_svg_renderer extends bilde_renderer
 			}
 
 			$svg .= "]]></style>\n";
-			$svg .= "</defs>\n\n";
+			$svg .= "</defs>\n";
 
 			return $svg;
 		}

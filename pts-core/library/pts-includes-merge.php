@@ -240,5 +240,76 @@ function pts_list_regressions_linear(&$result_file, $threshold = 0.05, $show_onl
 
 	return $regressions;
 }
+function pts_result_file_mto_compact(&$mto)
+{
+	// TODO: this may need to be cleaned up, its logic is rather messy
+	if(count($mto->get_scale_special()) > 0)
+	{
+		// It's already doing something
+		return;
+	}
+
+	$scale_special = array();
+	$days = array();
+	$systems = array();
+
+	foreach($mto->get_result_buffer()->get_identifiers() as $identifier)
+	{
+		$identifier = pts_trim_explode(": ", $identifier);
+
+		if(count($identifier) != 2)
+		{
+			// won't work
+			return;
+		}
+
+		$system = $identifier[0];
+		$date = $identifier[1];
+
+		if(!isset($systems[$system]))
+		{
+			$systems[$system] = 0;
+		}
+		if(!isset($days[$date]))
+		{
+			$days[$date] = null;
+		}
+	}
+
+	foreach(array_keys($days) as $day_key)
+	{
+		$days[$day_key] = $systems;
+	}
+
+	foreach($mto->get_result_buffer()->get_buffer_items() as $buffer_item)
+	{
+		list($system, $date) = pts_trim_explode(": ", $buffer_item->get_result_identifier());
+
+		$days[$date][$system] = $buffer_item->get_result_value();
+
+		if(!is_numeric($days[$date][$system]))
+		{
+			return;
+		}
+	}
+
+	$mto->set_scale($mto->get_scale() . ' | ' . implode(',', array_keys($days)));
+	$mto->set_format("BAR_ANALYZE_GRAPH");
+	$mto->flush_result_buffer();
+
+	$day_keys = array_keys($days);
+
+	foreach(array_keys($systems) as $system_key)
+	{
+		$results = array();
+
+		foreach($day_keys as $day_key)
+		{
+			array_push($results, $days[$day_key][$system_key]);
+		}
+
+		$mto->add_result_to_buffer($system_key, implode(',', $results), null);
+	}
+}
 
 ?>

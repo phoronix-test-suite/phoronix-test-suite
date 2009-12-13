@@ -281,9 +281,12 @@ abstract class pts_Graph
 	}
 	protected function text_size_bounds($string, $font, $font_size, $minimum_font_size, $bound_width, $bound_height = -1)
 	{
-		while($font_size > $minimum_font_size && ($this->text_string_width($string, $font, $font_size) > $bound_width || ($bound_height > 0 && $this->text_string_height($string, $font, $font_size) > $bound_height)))
+		list($string_width, $string_height) = $this->text_string_dimensions($string, $font, $font_size);
+
+		while($font_size > $minimum_font_size && $string_width > $bound_width || ($bound_height > 0 && $string_height > $bound_height))
 		{
 			$font_size -= 0.2;
+			list($string_width, $string_height) = $this->text_string_dimensions($string, $font, $font_size);
 		}
 
 		return $font_size;
@@ -544,7 +547,7 @@ abstract class pts_Graph
 
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
 
-				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this->graph_color_notches);
+				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
 
 				if($key_counter % 4 == 0)
 				{
