@@ -52,6 +52,30 @@ abstract class bilde_renderer
 	abstract function convert_hex_to_type($hex);
 	abstract function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false);
 
+	//
+	// Meta functions that could be implemented within renderer-specifc code if available
+	//
+
+	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color)
+	{
+		$this->draw_rectangle($x1, $y1, $width, $height, $background_color);
+		$this->draw_rectangle_border($x1, $y1, $width, $height, $border_color);
+	}
+	public function draw_arrow($tip_x1, $tip_y1, $tail_x1, $tail_y1, $background_color)
+	{
+		// TODO: Allow better support when arrow is running horizontally or on an angle instead of just vertical
+		$arrow_length = sqrt(pow(($tail_x1 - $tip_x1), 2) + pow(($tail_y1 - $tip_y1), 2));
+		$arrow_length_half = $arrow_length / 2;
+
+		$arrow_points = array(
+		$tip_x1, $tip_y1,
+		$tail_x1 + $arrow_length_half, $tail_y1,
+		$tail_x1 - $arrow_length_half, $tail_y1
+		);
+
+		$this->draw_polygon($arrow_points, $background_color);
+	}
+
 	public static function renderer_supported()
 	{
 		// This should be implemented by the different bilde renderers if the renderer is dependent upon some extensions or something else for the support
@@ -67,43 +91,31 @@ abstract class bilde_renderer
 		bilde_renderer::setup_font_directory();
 		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG");
 		$fallback_renderer = "SVG";
-		$selected_renderer = null;
+		$selected_renderer = $fallback_renderer;
 
-		foreach($available_renderers as $this_renderer)
+		if(($this_renderer = getenv("BILDE_RENDERER")) != false || defined("BILDE_RENDERER") && ($this_renderer = BILDE_RENDERER))
 		{
-			if(getenv(strtoupper($this_renderer) . "_DEBUG") != false)
-			{
-				eval("\$is_supported = bilde_" . strtolower($this_renderer) . "_renderer::renderer_supported();");
+			eval("\$is_supported = bilde_" . strtolower($this_renderer) . "_renderer::renderer_supported();");
 
-				if($is_supported)
-				{
-					$requested_renderer = $this_renderer;
-					break;
-				}
+			if($is_supported)
+			{
+				eval("\$renderer = new bilde_" . strtolower($this_renderer) . "_renderer(\$width, \$height, \$embed_identifiers);");
+				return $renderer;
 			}
 		}
 
 		foreach($available_renderers as $this_renderer)
 		{
-			if($requested_renderer == $this_renderer)
+			eval("\$is_supported = bilde_" . strtolower($this_renderer) . "_renderer::renderer_supported();");
+
+			if($is_supported)
 			{
-				eval("\$is_supported = bilde_" . strtolower($this_renderer) . "_renderer::renderer_supported();");
-
-				if($is_supported)
-				{
-					$selected_renderer = $this_renderer;
-					break;
-				}
+				$selected_renderer = $this_renderer;
+				break;
 			}
-		}
-
-		if(!in_array($selected_renderer, $available_renderers))
-		{
-			$selected_renderer = $fallback_renderer;
 		}
 
 		eval("\$renderer = new bilde_" . strtolower($selected_renderer) . "_renderer(\$width, \$height, \$embed_identifiers);");
-
 		return $renderer;
 	}
 	public function render_to_file($output_file = null, $quality = 100)
@@ -240,20 +252,6 @@ abstract class bilde_renderer
 
 		// Width x Height
 		return array($box_width, $box_height);
-	}
-	public function draw_arrow($tip_x1, $tip_y1, $tail_x1, $tail_y1, $background_color)
-	{
-		// TODO: Allow better support when arrow is running horizontally or on an angle instead of just vertical
-		$arrow_length = sqrt(pow(($tail_x1 - $tip_x1), 2) + pow(($tail_y1 - $tip_y1), 2));
-		$arrow_length_half = $arrow_length / 2;
-
-		$arrow_points = array(
-		$tip_x1, $tip_y1,
-		$tail_x1 + $arrow_length_half, $tail_y1,
-		$tail_x1 - $arrow_length_half, $tail_y1
-		);
-
-		$this->draw_polygon($arrow_points, $background_color);
 	}
 	protected function text_string_width($text_string, $font_type, $font_size)
 	{
