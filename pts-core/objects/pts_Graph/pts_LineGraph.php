@@ -95,12 +95,11 @@ class pts_LineGraph extends pts_CustomGraph
 
 		for($i_o = 0; $i_o < count($this->graph_data); $i_o++)
 		{
-			$previous_placement = -1;
-			$previous_offset = -1;
 			$paint_color = $this->next_paint_color();
 			$calculations_r[$paint_color] = array();
 
 			$point_counter = count($this->graph_data[$i_o]);
+			$poly_points = array();
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
@@ -126,37 +125,40 @@ class pts_LineGraph extends pts_CustomGraph
 					$value_plot_top = $this->graph_top_end - 1;
 				}
 
-				if($previous_placement != -1 && $previous_offset != -1)
-				{
-					$this->graph_image->draw_line($previous_offset, $previous_placement, $px_from_left, $value_plot_top, $paint_color, 2);
-				}
-
 				
 				if($identifiers_empty && $i == 0)
 				{
-					$this->graph_image->draw_line($this->graph_left_start + 1, $value_plot_top, $px_from_left, $value_plot_top, $paint_color, 2);
+					array_push($poly_points, array($this->graph_left_start + 1, $value_plot_top));
 				}
 				else if($identifiers_empty && $i == ($point_counter - 1))
 				{
+					array_push($poly_points, array($px_from_left, $value_plot_top));
 					if($varying_lengths && ($point_counter * 1.1) < $point_count)
 					{
 						// This plotting ended prematurely
-						$this->graph_image->draw_line($px_from_left, $value_plot_top, $px_from_left, $this->graph_top_end - 1, $paint_color, 2);
+						array_push($poly_points, array($px_from_left, $this->graph_top_end - 1));
 					}
 					else
 					{
-						$this->graph_image->draw_line($px_from_left, $value_plot_top, $this->graph_left_end - 1, $value_plot_top, $paint_color, 2);
+						array_push($poly_points, array($this->graph_left_end - 1, $value_plot_top));
 					}
 				}
-
-				if(!$identifiers_empty && ($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)))
+				else
 				{
-					$this->render_graph_pointer($px_from_left, $value_plot_top);
+					array_push($poly_points, array($px_from_left, $value_plot_top));
 				}
 
-				$previous_placement = $value_plot_top;
-				$previous_offset = $px_from_left;
 				array_push($calculations_r[$paint_color], $value);
+			}
+
+			$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
+
+			foreach($poly_points as $i => $x_y_pair)
+			{
+				if(!$identifiers_empty && ($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)))
+				{
+					$this->render_graph_pointer($x_y_pair[0], $x_y_pair[1]);
+				}
 			}
 		}
 

@@ -56,6 +56,16 @@ abstract class bilde_renderer
 	// Meta functions that could be implemented within renderer-specifc code if available
 	//
 
+	public function draw_poly_line($x_y_pair_array, $color, $line_width = 1)
+	{
+		$prev_pair = array_shift($x_y_pair_array);
+
+		foreach($x_y_pair_array as $x_y)
+		{
+			$this->draw_line($prev_pair[0], $prev_pair[1], $x_y[0], $x_y[1], $color, $line_width);
+			$prev_pair = $x_y;
+		}
+	}
 	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color)
 	{
 		$this->draw_rectangle($x1, $y1, $width, $height, $background_color);

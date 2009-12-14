@@ -195,7 +195,7 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function draw_rectangle_border($x1, $y1, $width, $height, $border_color)
 	{
-		$class = $this->add_svg_style_definition("stroke: " . $border_color . "; " . "stroke-width: 1px; fill: transparent;");
+		$class = $this->add_svg_style_definition("stroke: " . $border_color . "; " . "stroke-width: 1px; fill: none;");
 
 		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . round($width - $x1) . "\" height=\"" . round($height - $y1) . "\" class=\"" . $class . "\" />\n";
 	}
@@ -227,7 +227,17 @@ class bilde_svg_renderer extends bilde_renderer
 		$class = $this->add_svg_style_definition("stroke: " . $color . "; " . "stroke-width: " . $line_width . "px;");
 		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" class=\"" . $class . "\" />\n";
 	}
+	public function draw_poly_line($x_y_pair_array, $color, $line_width = 1)
+	{
+		foreach($x_y_pair_array as &$x_y)
+		{
+			$x_y = round($x_y[0]) . ',' . round($x_y[1]);
+		}
+		$poly_points = implode(' ', $x_y_pair_array);
 
+		$class = $this->add_svg_style_definition("stroke: " . $color . "; " . "stroke-width: " . $line_width . "px; fill: none;");
+		$this->image .= "<polyline points=\"" . $poly_points . "\" class=\"" . $class . "\" />\n";
+	}
 	public function png_image_to_type($file)
 	{
 		return false;

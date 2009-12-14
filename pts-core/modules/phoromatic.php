@@ -131,6 +131,7 @@ class phoromatic extends pts_module_interface
 			{
 				$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
 
+				phoromatic::update_system_status("Uploading Test Results");
 				$server_response = phoromatic::upload_to_remote_server(array(
 					"r" => "upload_test_results",
 					"c" => $composite_xml,
@@ -244,6 +245,7 @@ class phoromatic extends pts_module_interface
 					break;
 				case "exit":
 					echo "\nPhoromatic received a remote command to exit.\n";
+					phoromatic::update_system_status("Exiting Phoromatic");
 					pts_release_lock(self::$phoromatic_lock, PTS_USER_DIR . "phoromatic_lock");
 					break;
 				case "server_maintenance":
