@@ -501,17 +501,7 @@ abstract class pts_Graph
 			if($i != 0 && $this->graph_background_lines)
 			{
 				$line_width = 6;
-				for($y = $px_from_left_end + $line_width; $y < $this->graph_left_end; $y += ($line_width * 2))
-				{
-					if($y + $line_width < $this->graph_left_end)
-					{
-						$this->graph_image->draw_line($y, $px_from_top, $y += $line_width, $px_from_top, $this->graph_color_body_light);
-					}
-					else
-					{
-						$this->graph_image->draw_line($y, $px_from_top, $y += ($this->graph_left_end - $y) - 1, $px_from_top, $this->graph_color_body_light);
-					}
-				}
+				$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end, $px_from_top, $this->graph_color_body_light, 1, 8, 9);
 			}
 
 			$display_value += $this->trim_double($this->graph_maximum_value / $this->graph_attr_marks, 2);

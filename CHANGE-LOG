@@ -21,6 +21,7 @@ Phoronix Test Suite (Git)
 - phoromatic: The Phoromatic server (through the settings area) can now tell test machines to exit PTS when testing is done for the day
 - bilde_renderer: Add draw_rectangle_with_border to the drawing API
 - bilde_renderer: Add draw_poly_line to the drawing API
+- bilde_renderer: Add draw_dashed_line to the drawing API
 - bilde_renderer: Use the BILDE_RENDERER define or environmental variable to override the renderer
 - bilde_renderer: Vastly improve the SVG renderer back-end, make it proper for Phoromatic usage
 - pts: Add vdrift-fps-monitor test profile that charts out the FPS on a line graph during the testing process

@@ -227,6 +227,11 @@ class bilde_svg_renderer extends bilde_renderer
 		$class = $this->add_svg_style_definition("stroke: " . $color . "; " . "stroke-width: " . $line_width . "px;");
 		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" class=\"" . $class . "\" />\n";
 	}
+	public function draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length)
+	{
+		$class = $this->add_svg_style_definition("stroke: " . $color . "; " . "stroke-width: " . $line_width . "px;");
+		$this->image .= "<line stroke-dasharray=\"" . $dash_length . "," . $blank_length . "\" x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" class=\"" . $class . "\" />\n";
+	}
 	public function draw_poly_line($x_y_pair_array, $color, $line_width = 1)
 	{
 		foreach($x_y_pair_array as &$x_y)
