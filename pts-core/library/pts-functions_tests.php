@@ -23,12 +23,19 @@
 
 function pts_setup_result_directory($save_to)
 {
-	$save_to_dir = dirname(SAVE_RESULTS_DIR . $save_to);
+	$save_to_dir = SAVE_RESULTS_DIR . $save_to;
+
+	if(strpos(basename($save_to_dir), '.'))
+	{
+		$save_to_dir = dirname($save_to_dir);
+	}
 
 	if($save_to_dir != ".")
 	{
 		pts_mkdir($save_to_dir);
 	}
+
+	file_put_contents($save_to_dir . "/index.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=composite.xml\"></HEAD><BODY></BODY></HTML>");
 
 	return $save_to_dir;
 }
@@ -94,11 +101,24 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 				}
 			}
 		}
-
-		file_put_contents($save_to_dir . "/index.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=composite.xml\"></HEAD><BODY></BODY></HTML>");
 	}
 
 	return $bool;
+}
+function pts_quick_generate_graphs($result_file_identifier, $full_process_string = false)
+{
+	$save_to_dir = pts_setup_result_directory($result_file_identifier);
+	$generated_graphs = pts_generate_graphs($result_file_identifier, $save_to_dir);
+	$generated = count($generated_graphs) > 0;
+
+	if($generated && $full_process_string)
+	{
+		echo "\n" . $full_process_string . "\n";
+		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $result_file_identifier);
+		pts_display_web_browser(SAVE_RESULTS_DIR . $result_file_identifier . "/index.html");
+	}
+
+	return $generated;
 }
 function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 {

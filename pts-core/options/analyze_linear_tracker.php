@@ -36,16 +36,8 @@ class analyze_linear_tracker implements pts_option_interface
 	{
 		$identifier = $args[0];
 
-		$composite_xml = file_get_contents($args["identifier"]);
-
 		pts_set_assignment("LINEAR_TRACKER_COMPACT", true);
-
-		if(pts_save_result($identifier . "/composite.xml", $composite_xml))
-		{
-			echo "\nThe " . $identifier . " result file graphs have been re-rendered to show all test runs.\n";
-			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
-			pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
-		}
+		pts_quick_generate_graphs($identifier, "The " . $identifier . " result file graphs have been re-rendered to show the linear tracker.");
 	}
 }
 
