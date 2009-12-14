@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add pts-test-installation-viewer.xsl for viewing pts-install.xml files
 - pts-core: Support merging pts_result_file objects that also have results that need to be renamed
 - pts-core: Phoromatic updates
+- pts-core: Add analyze-linear-tracker command option
 - phodevi: Clean phodevi_linux_parser::read_sys_dmi() against hal-values-remove.list
 - phodevi: Better handle NVIDIA's detailed OpenGL version string
 - phodevi: Support for detecting the X.Org vesa driver

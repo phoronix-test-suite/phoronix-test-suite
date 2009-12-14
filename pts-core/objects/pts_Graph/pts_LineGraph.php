@@ -106,6 +106,11 @@ class pts_LineGraph extends pts_CustomGraph
 				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start)));
 				$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
+				if(($i == ($point_counter - 1)) && $value == 0)
+				{
+					break;
+				}
+
 				if($value > $max_value)
 				{
 					$max_value = $value;

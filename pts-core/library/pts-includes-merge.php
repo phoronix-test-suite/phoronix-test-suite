@@ -294,7 +294,7 @@ function pts_result_file_mto_compact(&$mto)
 	}
 
 	$mto->set_scale($mto->get_scale() . ' | ' . implode(',', array_keys($days)));
-	$mto->set_format("BAR_ANALYZE_GRAPH");
+	$mto->set_format((count($days) < 8 ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
 	$mto->flush_result_buffer();
 
 	$day_keys = array_keys($days);

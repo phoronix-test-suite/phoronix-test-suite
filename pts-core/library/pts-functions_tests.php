@@ -130,6 +130,11 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 			$save_to .= "/result-graphs/" . ($key + 1) . ".BILDE_EXTENSION";
 		}
 
+		if(pts_read_assignment("LINEAR_TRACKER_COMPACT"))
+		{
+			pts_result_file_mto_compact($result_object);
+		}
+
 		$graph = pts_render_graph($result_object, $save_to, $result_file->get_suite_name(), $pts_version);
 		array_push($generated_graphs, $graph);
 	}
