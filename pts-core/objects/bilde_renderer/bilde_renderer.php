@@ -58,26 +58,24 @@ abstract class bilde_renderer
 
 	public function draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length)
 	{
-		if($start_y != $end_y)
+		// TODO: does not currently support doing dashed lines on angles, below code can be cleaned up
+		if($start_y == $end_y)
 		{
-			// TODO: does not currently support doing dashed lines on angles
-			return false;
-		}
-
-		$current_x = $start_x;
-		$next_x = $current_x + $dash_length;
-
-		while($next_x <= $end_x)
-		{
-			$this->draw_line($current_x, $start_y, $next_x, $start_y, $color, $line_width);
-
-			$current_x = $next_x + $blank_length;
+			$current_x = $start_x;
 			$next_x = $current_x + $dash_length;
-		}
 
-		if($current_x < $end_x)
-		{
-			$this->draw_line($current_x, $start_y, $end_x, $start_y, $color, $line_width);
+			while($next_x <= $end_x)
+			{
+				$this->draw_line($current_x, $start_y, $next_x, $start_y, $color, $line_width);
+
+				$current_x = $next_x + $blank_length;
+				$next_x = $current_x + $dash_length;
+			}
+
+			if($current_x < $end_x)
+			{
+				$this->draw_line($current_x, $start_y, $end_x, $start_y, $color, $line_width);
+			}
 		}
 	}
 	public function draw_poly_line($x_y_pair_array, $color, $line_width = 1)

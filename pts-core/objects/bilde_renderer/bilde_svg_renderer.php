@@ -85,9 +85,9 @@ class bilde_svg_renderer extends bilde_renderer
 			}
 		}
 
-		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n\n";
+		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n";
 		$svg_image .= $this->get_svg_formatted_definitions();
-		$svg_image .= $this->image . "\n</svg>";
+		$svg_image .= $this->image . "</svg>";
 
 		return $output_file != null ? @file_put_contents($output_file, $svg_image) : $svg_image;
 	}
@@ -216,7 +216,7 @@ class bilde_svg_renderer extends bilde_renderer
 			} 
 		}
 
-		$this->image .= "<polygon fill=\"" . $body_color . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" points=\"" . implode(" ", $point_pairs) . "\" />\n";
+		$this->image .= "<polygon fill=\"" . $body_color . "\"" . ($border_color != null ? " stroke=\"" . $border_color . "\"" : null) . " stroke-width=\"" . $border_width . "\" points=\"" . implode(" ", $point_pairs) . "\" />\n";
 	}
 	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0)
 	{
