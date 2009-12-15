@@ -26,7 +26,7 @@
 
 class pts_test_tandem_XmlReader extends tandem_XmlReader
 {
-	protected $override_values = null;
+	protected $override_values;
 
 	public function __construct($read_xml, $cache_support = true)
 	{
@@ -35,27 +35,32 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 			$read_xml = pts_location_test($read_xml);
 		}
 
+		$this->override_values = array();
 		parent::__construct($read_xml, $cache_support);
 	}
 	public function overrideXMLValues($test_options)
 	{
-		$this->override_values = $test_options;
+		foreach($test_options as $xml_tag => $value)
+		{
+			$this->overrideXMLValue($xml_tag, $value);
+		}
+	}
+	public function overrideXMLValue($xml_tag, $value)
+	{
+		$this->override_values[$xml_tag] = $value;
 	}
 	function getXMLValue($xml_tag, $fallback_value = false)
 	{
-		if(!empty($this->override_values))
+		if(isset($this->override_values[$xml_tag]) && !empty($this->override_values[$xml_tag]))
 		{
-			if(isset($this->override_values[$xml_tag]) && !empty($this->override_values[$xml_tag]))
+			return $this->override_values[$xml_tag];
+		}
+		else
+		{
+			$tag_name = basename($xml_tag);
+			if(isset($this->override_values[$tag_name]) && !empty($this->override_values[$tag_name]))
 			{
-				return $this->override_values[$xml_tag];
-			}
-			else
-			{
-				$tag_name = basename($xml_tag);
-				if(isset($this->override_values[$tag_name]) && !empty($this->override_values[$tag_name]))
-				{
-					return $this->override_values[$tag_name];
-				}
+				return $this->override_values[$tag_name];
 			}
 		}
 

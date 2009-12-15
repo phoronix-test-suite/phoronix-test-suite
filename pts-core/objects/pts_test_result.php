@@ -35,6 +35,8 @@ class pts_test_result
 	private $version;
 	private $description;
 
+	private $test_profile;
+
 	// TODO: integrate pts_result_file_merge_test and pts_test_result_buffercapabilities into this
 	public function __construct($result = 0, $result_scale = "", $result_format = "")
 	{
@@ -47,6 +49,17 @@ class pts_test_result
 		$this->result_quantifier = null;
 		$this->result_proportion = null;
 	}
+
+	// The future is set_test_profile and get_test_profile
+	public function get_test_profile()
+	{
+		return $this->test_profile;
+	}
+	public function set_test_profile($test_profile)
+	{
+		$this->test_profile = $test_profile;
+	}
+
 	public function get_name()
 	{
 		return $this->name;
