@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.4 Alpha 2
+December 15, 2009
 
 - pts-core: Start work on having a panel in the GTK2 GUI for managing the PTS modules
 - pts-core: Add and implement PostArguments tag to test profile XML specification
