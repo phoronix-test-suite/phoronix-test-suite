@@ -91,7 +91,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count)
 	{
-		echo pts_string_header($test_result->get_attribute("TEST_TITLE") . " (Run " . $current_run . " of " . $total_run_count . ")");
+		echo pts_string_header($test_result->get_name() . " (Run " . $current_run . " of " . $total_run_count . ")");
 	}
 	public function test_run_output(&$to_output)
 	{
@@ -99,8 +99,8 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_end(&$test_result)
 	{
-		$end_print = $test_result->get_attribute("TEST_TITLE") . ":\n" . $test_result->get_attribute("TEST_DESCRIPTION");
-		$end_print .= "\n" . ($test_result->get_attribute("TEST_DESCRIPTION") != "" ? "\n" : "");
+		$end_print = $test_result->get_name() . ":\n" . $test_result->get_description();
+		$end_print .= "\n" . ($test_result->get_description(); != null ? "\n" : null);
 
 		if(in_array($test_result->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
 		{

@@ -284,7 +284,7 @@ class bisect extends pts_module_interface
 	
 	public static function __post_test_run($test_result)
 	{
-		if($test_result->get_attribute("TEST_IDENTIFIER") == pts_module::read_option("test_name") && $test_result->get_attribute("EXTRA_ARGUMENTS") == pts_module::read_option("test_args"))
+		if($test_result->get_test_identifier() == pts_module::read_option("test_name") && $test_result->get_attribute("EXTRA_ARGUMENTS") == pts_module::read_option("test_args"))
 		{
 			$result = $test_result->get_result();
 			pts_module::set_option("current_result", $result);

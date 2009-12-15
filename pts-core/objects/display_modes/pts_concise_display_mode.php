@@ -123,9 +123,9 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_result)
 	{
-		echo "\n\n" . $test_result->get_attribute("TEST_TITLE") . ":\n\t" . $test_result->get_attribute("TEST_IDENTIFIER");
+		echo "\n\n" . $test_result->get_name() . ":\n\t" . $test_result->get_test_identifier();
 
-		if(($test_description = $test_result->get_attribute("TEST_DESCRIPTION")) != false)
+		if(($test_description = $test_result->get_description()) != false)
 		{
 			echo " [" . $test_description . "]";
 		}
@@ -146,7 +146,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			array_shift($this->run_process_tests_remaining_to_run);
 		}
 
-		$estimated_length = pts_estimated_run_time($test_result->get_attribute("TEST_IDENTIFIER"));
+		$estimated_length = pts_estimated_run_time($test_result->get_test_identifier());
 		if($estimated_length > 1)
 		{
 			echo "\tEstimated Test Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60) . "\n";

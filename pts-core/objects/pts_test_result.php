@@ -30,6 +30,12 @@ class pts_test_result
 	private $trial_results;
 	private $attributes;
 
+	private $name;
+	private $test_identifier;
+	private $version;
+	private $description;
+
+	// TODO: integrate pts_result_file_merge_test and pts_test_result_buffercapabilities into this
 	public function __construct($result = 0, $result_scale = "", $result_format = "")
 	{
 		$this->result = $result;
@@ -40,6 +46,38 @@ class pts_test_result
 		$this->attributes = array();
 		$this->result_quantifier = null;
 		$this->result_proportion = null;
+	}
+	public function get_name()
+	{
+		return $this->name;
+	}
+	public function set_name($name)
+	{
+		$this->name = $name;
+	}
+	public function get_test_identifier()
+	{
+		return $this->test_identifier;
+	}
+	public function set_test_identifier($test_identifier)
+	{
+		$this->test_identifier = $test_identifier;
+	}
+	public function get_version()
+	{
+		return $this->version;
+	}
+	public function set_version($version)
+	{
+		$this->version = $version;
+	}
+	public function get_description()
+	{
+		return $this->description;
+	}
+	public function set_description($description)
+	{
+		$this->description = $description;
 	}
 	public function set_result($result)
 	{

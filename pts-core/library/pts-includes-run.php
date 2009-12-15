@@ -370,10 +370,10 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 		$result->set_result_proportion($bt_xml_parser->getXMLValue(P_TEST_PROPORTION));
 		$result->set_result_format($bt_xml_parser->getXMLValue(P_TEST_RESULTFORMAT));
 		$result->set_attribute("EXTRA_ARGUMENTS", null); // TODO: build string as a composite of suite version + all test versions
-		$result->set_attribute("TEST_IDENTIFIER", $test_run_request->get_weight_suite_identifier());
-		$result->set_attribute("TEST_TITLE", $ws_xml_parser->getXMLValue(P_SUITE_TITLE));
-		$result->set_attribute("TEST_VERSION", $ws_xml_parser->getXMLValue(P_SUITE_VERSION));
-		$result->set_attribute("TEST_DESCRIPTION", $bt_xml_parser->getXMLValue(P_TEST_DESCRIPTION));
+		$result->set_test_identifier($test_run_request->get_weight_suite_identifier());
+		$result->set_name($ws_xml_parser->getXMLValue(P_SUITE_TITLE));
+		$result->set_version($ws_xml_parser->getXMLValue(P_SUITE_VERSION));
+		$result->set_description($bt_xml_parser->getXMLValue(P_TEST_DESCRIPTION));
 	}
 
 	if($result instanceof pts_test_result)
@@ -386,13 +386,13 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			$tandem_id = pts_request_new_id();
 			pts_set_assignment("TEST_RAN", true);
 
-			$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_attribute("TEST_TITLE"));
-			$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_attribute("TEST_VERSION"));
-			$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_attribute("TEST_DESCRIPTION"));
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_name());
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_version());
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_description());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_result_scale());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_result_proportion());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
-			$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_attribute("TEST_IDENTIFIER"));
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_test_identifier());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $test_identifier, 5);
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
@@ -554,10 +554,10 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	// Start
 	$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
 	$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
-	$pts_test_result->set_attribute("TEST_TITLE", $test_profile->get_test_title());
-	$pts_test_result->set_attribute("TEST_VERSION", $test_profile->get_version());
-	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
-	$pts_test_result->set_attribute("TEST_IDENTIFIER", $test_identifier);
+	$pts_test_result->set_name($test_profile->get_test_title());
+	$pts_test_result->set_version($test_profile->get_version());
+	$pts_test_result->set_description($arguments_description);
+	$pts_test_result->set_test_identifier($test_identifier);
 	$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);
 	$pts_test_result->set_result_format($result_format);
 	$pts_test_result->set_result_proportion($test_profile->get_test_proportion());
@@ -906,7 +906,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	// Result Calculation
-	$pts_test_result->set_attribute("TEST_DESCRIPTION", $arguments_description);
+	$pts_test_result->set_description($arguments_description);
 	$pts_test_result->set_attribute("EXTRA_ARGUMENTS", $extra_arguments);
 	$pts_test_result->set_attribute("ELAPSED_TIME", $time_test_elapsed);
 	$pts_test_result->calculate_end_result(); // Process results
