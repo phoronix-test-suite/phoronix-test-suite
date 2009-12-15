@@ -241,7 +241,7 @@ function pts_install_packages_on_distribution_process($install_objects, &$displa
 		if(is_file(STATIC_DIR . "distro-scripts/install-" . $distribution . "-packages.sh"))
 		{
 			// hook into $display_mode here if it's desired
-			echo "\nThe following dependencies are needed and will be installed: \n";
+			echo "\nThe following dependencies are needed and will be installed: \n\n";
 
 			foreach(explode(" ", $install_objects) as $obj)
 			{

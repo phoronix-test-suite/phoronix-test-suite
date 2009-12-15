@@ -2,8 +2,8 @@
 if [ `whoami` != "root" ]; then
 	if [ -x /usr/bin/gksudo ] && [ ! -z "$DISPLAY" ]; then
 		ROOT="/usr/bin/gksudo"
-	elif [ -x /usr/bin/kdesu ] && [ ! -z "$DISPLAY" ]; then
-		ROOT="/usr/bin/kdesu"
+	elif [ -x /usr/bin/kdesudo ] && [ ! -z "$DISPLAY" ]; then
+		ROOT="/usr/bin/kdesudo"
 	elif [ -x /usr/bin/sudo ]; then
 		ROOT="/usr/bin/sudo"
 	fi
