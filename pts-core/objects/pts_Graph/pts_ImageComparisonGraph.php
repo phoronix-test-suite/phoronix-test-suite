@@ -23,8 +23,9 @@
 
 class pts_ImageComparisonGraph extends pts_CustomGraph
 {
-	public function __construct($title, $sub_title)
+	public function __construct($title, $sub_title, $y_axis_title)
 	{
+		// $y_axis_title is not used with this graph type
 		parent::__construct($title, $sub_title, null);
 		$this->graph_type = "IMAGE_COMPARISON";
 		$this->graph_value_type = "ABSTRACT";

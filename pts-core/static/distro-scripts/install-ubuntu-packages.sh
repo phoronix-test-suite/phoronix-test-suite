@@ -8,7 +8,7 @@ if [ `whoami` != "root" ]; then
 		ROOT="/usr/bin/sudo"
 	fi
 else
-	ROOT=""
+	ROOT="su -c"
 fi
 
 if [ -x /usr/bin/aptitude ]; then
