@@ -93,7 +93,8 @@ function pts_global_upload_usage_data($task, $data)
 	switch($task)
 	{
 		case "test_complete":
-			$upload_data = array("test_identifier" => $data->get_test_identifier(), "test_version" => $data->get_version(), "elapsed_time" => $data->get_attribute("ELAPSED_TIME"));
+			list($test_result, $time_elapsed) = $data;
+			$upload_data = array("test_identifier" => $test_result->get_test_identifier(), "test_version" => $test_result->get_version(), "elapsed_time" => $time_elapsed);
 			pts_http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/test-completion.php", $upload_data);
 			break;
 	}

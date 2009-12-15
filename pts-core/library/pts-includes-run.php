@@ -369,7 +369,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 		$result->set_result_scale($bt_xml_parser->getXMLValue(P_TEST_SCALE));
 		$result->set_result_proportion($bt_xml_parser->getXMLValue(P_TEST_PROPORTION));
 		$result->set_result_format($bt_xml_parser->getXMLValue(P_TEST_RESULTFORMAT));
-		$result->set_attribute("EXTRA_ARGUMENTS", null); // TODO: build string as a composite of suite version + all test versions
+		$result->set_used_arguments(null); // TODO: build string as a composite of suite version + all test versions
 		$result->set_test_identifier($test_run_request->get_weight_suite_identifier());
 		$result->set_name($ws_xml_parser->getXMLValue(P_SUITE_TITLE));
 		$result->set_version($ws_xml_parser->getXMLValue(P_SUITE_VERSION));
@@ -393,7 +393,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_result_proportion());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->get_result_format());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->get_test_identifier());
-			$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_attribute("EXTRA_ARGUMENTS"));
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_used_arguments());
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $test_identifier, 5);
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
 			$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
@@ -558,7 +558,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$pts_test_result->set_version($test_profile->get_version());
 	$pts_test_result->set_description($arguments_description);
 	$pts_test_result->set_test_identifier($test_identifier);
-	$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);
+	$pts_test_result->set_times_to_run($times_to_run);
 	$pts_test_result->set_result_format($result_format);
 	$pts_test_result->set_result_proportion($test_profile->get_test_proportion());
 	$pts_test_result->set_result_scale($test_profile->get_test_scale());
@@ -754,7 +754,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			if(($request_increase || $std_dev >= pts_read_assignment("PTS_STATS_STD_DEV_THRESHOLD")) && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_ON_LENGTH"))
 			{
 				$times_to_run++;
-				$pts_test_result->set_attribute("TIMES_TO_RUN", $times_to_run);
+				$pts_test_result->set_times_to_run($times_to_run);
 			}
 		}
 
@@ -907,8 +907,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	// Result Calculation
 	$pts_test_result->set_description($arguments_description);
-	$pts_test_result->set_attribute("EXTRA_ARGUMENTS", $extra_arguments);
-	$pts_test_result->set_attribute("ELAPSED_TIME", $time_test_elapsed);
+	$pts_test_result->set_used_arguments($extra_arguments);
 	$pts_test_result->calculate_end_result(); // Process results
 
 	$display_mode->test_run_end($pts_test_result);
@@ -920,7 +919,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if($report_elapsed_time && pts_anonymous_usage_reporting() && $time_test_elapsed >= 60)
 	{
-		pts_global_upload_usage_data("test_complete", $pts_test_result);
+		pts_global_upload_usage_data("test_complete", array($pts_test_result, $time_test_elapsed));
 	}
 
 	// Remove lock

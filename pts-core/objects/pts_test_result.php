@@ -34,8 +34,10 @@ class pts_test_result
 	private $test_identifier;
 	private $version;
 	private $description;
+	private $times_to_run;
 
 	private $test_profile;
+	private $used_arguments;
 
 	// TODO: integrate pts_result_file_merge_test and pts_test_result_buffercapabilities into this
 	public function __construct($result = 0, $result_scale = "", $result_format = "")
@@ -92,6 +94,22 @@ class pts_test_result
 	{
 		$this->description = $description;
 	}
+	public function get_times_to_run()
+	{
+		return $this->times_to_run;
+	}
+	public function set_times_to_run($times_to_run)
+	{
+		$this->times_to_run = $times_to_run;
+	}
+	public function get_used_arguments()
+	{
+		return $this->used_arguments;
+	}
+	public function set_used_arguments($used_arguments)
+	{
+		$this->used_arguments = $used_arguments;
+	}
 	public function set_result($result)
 	{
 		$this->result = $result;
@@ -111,10 +129,6 @@ class pts_test_result
 	public function set_result_quantifier($result_quantifier)
 	{
 		$this->result_quantifier = $result_quantifier;
-	}
-	public function set_attribute($name, $value)
-	{
-		$this->attributes[$name] = $value;
 	}
 	public function get_result()
 	{
@@ -139,10 +153,6 @@ class pts_test_result
 	public function get_trial_results_string()
 	{
 		return implode(":", $this->get_trial_results());
-	}
-	public function get_attribute($name)
-	{
-		return isset($this->attributes[$name]) ? $this->attributes[$name] : false;
 	}
 	public function add_trial_run_result($result)
 	{
