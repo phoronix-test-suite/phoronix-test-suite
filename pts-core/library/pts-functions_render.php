@@ -84,7 +84,7 @@ function pts_render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_vers
 		case "LINE_GRAPH":
 		case "BAR_ANALYZE_GRAPH":
 			//$graph->hideGraphIdentifiers();
-			foreach($r_o->get_result_buffer()->get_buffer_items() as &$buffer_item)
+			foreach($r_o->get_result_buffer()->get_buffer_items() as $buffer_item)
 			{
 				$graph->loadGraphValues(explode(",", $buffer_item->get_result_value()), $buffer_item->get_result_identifier());
 			}
@@ -101,7 +101,7 @@ function pts_render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_vers
 			$values = array();
 			$raw_values = array();
 
-			foreach($r_o->get_result_buffer()->get_buffer_items() as &$buffer_item)
+			foreach($r_o->get_result_buffer()->get_buffer_items() as $buffer_item)
 			{
 				array_push($identifiers, $buffer_item->get_result_identifier());
 				array_push($values, $buffer_item->get_result_value());
