@@ -164,6 +164,9 @@
 		<Test>dcraw</Test>
 	</RunTest>
 	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
 		<Test>john-the-ripper</Test>
 		<Arguments>BLOWFISH</Arguments>
 		<Description>Test: Blowfish</Description>

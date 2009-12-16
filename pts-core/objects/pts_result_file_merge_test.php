@@ -33,6 +33,7 @@ class pts_result_file_merge_test
 
 	private $result_buffer;
 
+	// TODO: potentially merge this with pts_test_result and/or pts_test_profile
 	public function __construct($name, $version, $attributes, $scale, $test_name, $arguments, $proportion, $format, $result_buffer)
 	{
 		$this->name = $name;
