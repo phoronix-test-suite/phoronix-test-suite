@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2004-2008, Michael Larabel
+	Copyright (C) 2008 - 2009, Phoronix Media
+	Copyright (C) 2004 - 2009, Michael Larabel
 	pts_suite_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite for test suites
 
 	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
@@ -26,14 +26,14 @@
 
 class pts_suite_tandem_XmlReader extends tandem_XmlReader
 {
-	public function __construct($read_xml, $cache_support = true)
+	public function __construct($read_xml)
 	{
 		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
 		{
 			$read_xml = pts_location_suite($read_xml);
 		}
 
-		parent::__construct($read_xml, $cache_support);
+		parent::__construct($read_xml);
 	}
 }
 ?>

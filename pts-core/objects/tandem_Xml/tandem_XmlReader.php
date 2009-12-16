@@ -25,54 +25,17 @@
 
 class tandem_XmlReader
 {
-	protected $xml_data = ""; // XML contents
-	protected $xml_file_time = null; // File modification time
-	protected $xml_file_name = null; // File name
-
-	protected $xml_cache_file = false; // Cache the entire XML file being parsed?
-	protected $xml_cache_tags = true; // Cache the tags that are being called?
-
+	protected $xml_data = null; // XML contents
 	protected $tag_fallback_value = null; // Fallback value if tag is not present
 
-	protected static $tag_cache = null; // The cache for the tag cache
-	protected static $file_cache = null; // The cache for the file cache
-
-	function __construct($read_xml, $cache_support = true)
+	function __construct($read_xml)
 	{
-		$remote_file = isset($read_xml[8]) && substr($read_xml, 0, 7) == "http://";
-
-		if((substr(trim($read_xml), 0, 1) != "<" && is_readable($read_xml)) || $remote_file)
+		if(substr(trim($read_xml), 0, 1) != '<' && is_readable($read_xml) || strpos($read_xml, "://") !== false)
 		{
-			if($cache_support && !$remote_file)
-			{
-				$this->xml_cache_file = false;
-				$this->xml_cache_tags = false;
-			}
-
-			$this->xml_file_time = ($remote_file ? 0 : filemtime($read_xml));
-			$this->xml_file_name = $read_xml;
-
-			if($this->xml_cache_file && isset(self::$file_cache[$this->xml_file_name][$this->xml_file_time]))
-			{
-				$this->xml_data = self::$file_cache[$this->xml_file_name][$this->xml_file_time];
-			}
-
-			if(empty($this->xml_data))
-			{
-				$this->xml_data = file_get_contents($read_xml);
-
-				if($this->xml_cache_file)
-				{
-					self::$file_cache[$this->xml_file_name][$this->xml_file_time] = $this->xml_data;
-				}
-			}
+			$read_xml = file_get_contents($read_xml);
 		}
-		else
-		{
-			$this->xml_cache_file = false;
-			$this->xml_cache_tags = false;
-			$this->xml_data = $read_xml;
-		}
+
+		$this->xml_data = $read_xml;
 	}
 	function getStatement($statement)
 	{
@@ -112,7 +75,7 @@ class tandem_XmlReader
 	{
 		return $this->getValue($xml_tag) != null;
 	}
-	function getValue($xml_path, $xml_tag = null, $xml_match = null, $cache_tag = true, $is_fallback_call = false)
+	function getValue($xml_path, $xml_tag = null, $xml_match = null, $is_fallback_call = false)
 	{
 		if($xml_tag == null)
 		{
@@ -123,25 +86,13 @@ class tandem_XmlReader
 			$xml_match = $this->xml_data;
 		}
 
-		if($this->xml_cache_tags && $cache_tag && isset(self::$tag_cache[$this->xml_file_name][$this->xml_file_time][$xml_tag]))
+		foreach(explode('/', $xml_tag) as $xml_step)
 		{
-			$xml_match = self::$tag_cache[$this->xml_file_name][$this->xml_file_time][$xml_tag];
-		}
-		else
-		{
-			foreach(explode("/", $xml_tag) as $xml_step)
-			{
-				$xml_match = $this->parseXMLString($xml_step, $xml_match, false);
+			$xml_match = $this->parseXMLString($xml_step, $xml_match, false);
 
-				if($xml_match == false)
-				{
-					$xml_match = (!$is_fallback_call ? $this->handleXmlZeroTagFallback($xml_path) : $this->tag_fallback_value);
-				}
-			}
-
-			if($this->xml_cache_tags && $cache_tag)
+			if($xml_match == false)
 			{
-				self::$tag_cache[$this->xml_file_name][$this->xml_file_time][$xml_tag] = $xml_match;
+				$xml_match = !$is_fallback_call ? $this->handleXmlZeroTagFallback($xml_path) : $this->tag_fallback_value;
 			}
 		}
 
@@ -255,7 +206,7 @@ class tandem_XmlReader
 
 		for($i = 0; $i < ($xml_steps_count - 2); $i++)
 		{
-			$this_xml = $this->getValue($xml_tag, $xml_steps[$i], $this_xml, false);
+			$this_xml = $this->getValue($xml_tag, $xml_steps[$i], $this_xml);
 		}
 
 		$xml_matches = $this->parseXMLString($xml_steps[($xml_steps_count - 2)], $this_xml);
@@ -265,7 +216,7 @@ class tandem_XmlReader
 		{
 			foreach($xml_matches as $match)
 			{
-				$this_item = $this->getValue($xml_tag, $end_tag, $match, false);
+				$this_item = $this->getValue($xml_tag, $end_tag, $match);
 
 				//if($this_item != false)
 				//{
@@ -275,19 +226,6 @@ class tandem_XmlReader
 		}
 
 		return $return_r;
-	}
-	function setFileCaching($do_cache)
-	{
-		$this->xml_cache_file = ($do_cache == true);
-	}
-	function setTagCaching($do_cache)
-	{
-		$this->xml_cache_tags = ($do_cache == true);
-	}
-	function setCaching($do_cache)
-	{
-		$this->setFileCaching($do_cache);
-		$this->setTagCaching($do_cache);
 	}
 }
 ?>

@@ -49,7 +49,7 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 
 		$this->override_values = (is_array($new_values) ? $new_values : false);
 
-		parent::__construct($file, true);
+		parent::__construct($file);
 	}
 	function handleXmlZeroTagFallback($xml_tag)
 	{
@@ -66,7 +66,7 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 
 		return $fallback;
 	}
-	function getValue($xml_path, $xml_tag = null, $xml_match = null, $cache_tag = true, $is_fallback_call = false)
+	function getValue($xml_path, $xml_tag = null, $xml_match = null, $is_fallback_call = false)
 	{
 		if($this->override_values != false)
 		{
@@ -80,7 +80,7 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 			}
 		}
 
-		return parent::getValue($xml_path, $xml_tag, $xml_match, $cache_tag, $is_fallback_call);
+		return parent::getValue($xml_path, $xml_tag, $xml_match, $is_fallback_call);
 	}
 }
 ?>

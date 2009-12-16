@@ -30,7 +30,7 @@ class pts_test_result
 
 	private $test_profile;
 
-	// TODO: integrate pts_result_file_merge_test and pts_test_result_buffercapabilities into this
+	// TODO: integrate pts_result_file_merge_test and pts_test_result_buffer capabilities into this
 	public function __construct(&$test_profile)
 	{
 		$this->test_profile = $test_profile;

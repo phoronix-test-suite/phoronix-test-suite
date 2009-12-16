@@ -26,14 +26,14 @@
 
 class pts_results_tandem_XmlReader extends tandem_XmlReader
 {
-	public function __construct($read_xml, $cache_support = true)
+	public function __construct($read_xml)
 	{
 		if(!pts_is_file($read_xml) && defined("SAVE_RESULTS_DIR") && is_file(SAVE_RESULTS_DIR . $read_xml . "/composite.xml"))
 		{
 			$read_xml = SAVE_RESULTS_DIR . $read_xml . "/composite.xml";
 		}
 
-		parent::__construct($read_xml, $cache_support);
+		parent::__construct($read_xml);
 	}
 }
 ?>

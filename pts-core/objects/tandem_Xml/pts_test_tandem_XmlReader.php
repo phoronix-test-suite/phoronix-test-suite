@@ -28,7 +28,7 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 {
 	protected $override_values;
 
-	public function __construct($read_xml, $cache_support = true)
+	public function __construct($read_xml)
 	{
 		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
 		{
@@ -36,7 +36,7 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 		}
 
 		$this->override_values = array();
-		parent::__construct($read_xml, $cache_support);
+		parent::__construct($read_xml);
 	}
 	public function overrideXMLValues($test_options)
 	{
@@ -71,19 +71,16 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 		// Cascading Test Profiles for finding a tag within an XML file being extended by another XML file
 		$fallback_value = $this->tag_fallback_value;
 
-		if(!empty($this->xml_file_name))
+		$test_extends = $this->getValue(P_TEST_CTPEXTENDS, null, null, true);
+
+		if(!empty($test_extends) && pts_is_test($test_extends))
 		{
-			$test_extends = $this->getValue(P_TEST_CTPEXTENDS, null, null, true, true);
+			$test_below_parser = new pts_test_tandem_XmlReader($test_extends);
+			$test_below_tag = $test_below_parser->getXMLValue($xml_tag);
 
-			if(!empty($test_extends) && pts_is_test($test_extends))
+			if(!empty($test_below_tag))
 			{
-				$test_below_parser = new pts_test_tandem_XmlReader($test_extends);
-				$test_below_tag = $test_below_parser->getXMLValue($xml_tag);
-
-				if(!empty($test_below_tag))
-				{
-					$fallback_value = $test_below_tag;
-				}
+				$fallback_value = $test_below_tag;
 			}
 		}
 
