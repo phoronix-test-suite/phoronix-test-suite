@@ -123,7 +123,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_result)
 	{
-		echo "\n\n" . $test_result->get_name() . ":\n\t" . $test_result->get_test_identifier();
+		echo "\n\n" . $test_result->get_test_profile()->get_test_title() . ":\n\t" . $test_result->get_test_profile()->get_identifier();
 
 		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
@@ -146,7 +146,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			array_shift($this->run_process_tests_remaining_to_run);
 		}
 
-		$estimated_length = pts_estimated_run_time($test_result->get_test_identifier());
+		$estimated_length = pts_estimated_run_time($test_result->get_test_profile()->get_identifier());
 		if($estimated_length > 1)
 		{
 			echo "\tEstimated Test Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
@@ -169,13 +169,13 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_end(&$test_result)
 	{
-		if(in_array($test_result->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
+		if(in_array($test_result->get_test_profile()->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
 		{
 			return;
 		}
-		else if(in_array($test_result->get_result_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
+		else if(in_array($test_result->get_test_profile()->get_result_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
 		{
-			$end_print .= "\t\tFinal: " . $test_result->get_result() . " (" . $test_result->get_result_scale() . ")\n";
+			$end_print .= "\t\tFinal: " . $test_result->get_result() . " (" . $test_result->get_test_profile()->get_result_scale() . ")\n";
 		}
 		else
 		{
@@ -186,7 +186,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$end_print .= "\t\t" . $result . "\n";
 			}
 
-			$end_print .= "\n\t" . $test_result->get_result_format_string() . ": " . $test_result->get_result() . " " . $test_result->get_result_scale() . "\n";
+			$end_print .= "\n\t" . pts_test_result_format_to_string($test_result->get_test_profile()->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->get_test_profile()->get_result_scale() . "\n";
 		}
 
 		echo $end_print . "\n";

@@ -23,42 +23,23 @@
 class pts_test_result
 {
 	private $result;
-	private $result_scale;
-	private $result_format;
-	private $result_proportion;
-	private $result_quantifier;
 	private $trial_results;
 	private $attributes;
-
-	private $name;
-	private $test_identifier;
-	private $version;
-
-	private $test_profile;
 	private $used_arguments;
 	private $arguments_description;
 
-	// TODO: integrate pts_result_file_merge_test and pts_test_result_buffercapabilities into this
-	public function __construct($result = 0, $result_scale = "", $result_format = "")
-	{
-		$this->result = $result;
-		$this->result_scale = $result_scale;
-		$this->result_format = $result_format;
+	private $test_profile;
 
+	// TODO: integrate pts_result_file_merge_test and pts_test_result_buffercapabilities into this
+	public function __construct(&$test_profile)
+	{
+		$this->test_profile = $test_profile;
 		$this->trial_results = array();
-		$this->attributes = array();
-		$this->result_quantifier = null;
-		$this->result_proportion = null;
 	}
 
-	// The future is set_test_profile and get_test_profile
 	public function get_test_profile()
 	{
 		return $this->test_profile;
-	}
-	public function set_test_profile(&$test_profile)
-	{
-		$this->test_profile = $test_profile;
 	}
 	public function get_arguments_description()
 	{
@@ -68,23 +49,6 @@ class pts_test_result
 	{
 		$this->arguments_description = $arguments_description;
 	}
-
-	public function get_name()
-	{
-		return $this->name;
-	}
-	public function set_name($name)
-	{
-		$this->name = $name;
-	}
-	public function get_test_identifier()
-	{
-		return $this->test_identifier;
-	}
-	public function set_test_identifier($test_identifier)
-	{
-		$this->test_identifier = $test_identifier;
-	}
 	public function get_used_arguments()
 	{
 		return $this->used_arguments;
@@ -93,41 +57,17 @@ class pts_test_result
 	{
 		$this->used_arguments = $used_arguments;
 	}
+	public function set_test_identifier($test_identifier)
+	{
+		$this->test_identifier = $test_identifier;
+	}
 	public function set_result($result)
 	{
 		$this->result = $result;
 	}
-	public function set_result_scale($result_scale)
-	{
-		$this->result_scale = $result_scale;
-	}
-	public function set_result_format($result_format)
-	{
-		$this->result_format = $result_format;
-	}
-	public function set_result_proportion($result_proportion)
-	{
-		$this->result_proportion = $result_proportion;
-	}
-	public function set_result_quantifier($result_quantifier)
-	{
-		$this->result_quantifier = $result_quantifier;
-	}
 	public function get_result()
 	{
 		return $this->result;
-	}
-	public function get_result_scale()
-	{
-		return $this->result_scale;
-	}
-	public function get_result_format()
-	{
-		return $this->result_format;
-	}
-	public function get_result_proportion()
-	{
-		return $this->result_proportion;
 	}
 	public function get_trial_results()
 	{
@@ -135,7 +75,7 @@ class pts_test_result
 	}
 	public function get_trial_results_string()
 	{
-		return implode(":", $this->get_trial_results());
+		return implode(':', $this->get_trial_results());
 	}
 	public function add_trial_run_result($result)
 	{
@@ -149,22 +89,6 @@ class pts_test_result
 	public function trial_run_count()
 	{
 		return count($this->trial_results);
-	}
-	public function get_result_format_string()
-	{
-		switch($this->get_result_format())
-		{
-			case "MAX":
-				$return_str = "Maximum";
-			case "MIN":
-				$return_str = "Minimum";
-			case "NULL":
-				$return_str = "";
-			default:
-				$return_str = "Average";
-		}
-
-		return $return_str;
 	}
 	public function calculate_end_result()
 	{
@@ -223,47 +147,46 @@ class pts_test_result
 				break;
 			default:
 				// Result is of a normal numerical type
-				if($this->result_quantifier == "MAX")
+				switch($this->get_test_profile()->get_result_quantifier())
 				{
-					$max_value = $this->trial_results[0];
-					foreach($this->trial_results as $result)
-					{
-						if($result > $max_value)
+					case "MAX":
+						$max_value = $this->trial_results[0];
+						foreach($this->trial_results as $result)
 						{
-							$max_value = $result;
+							if($result > $max_value)
+							{
+								$max_value = $result;
+							}
+
+						}
+						$END_RESULT = $max_value;
+						break;
+					case "MIN":
+						$min_value = $this->trial_results[0];
+						foreach($this->trial_results as $result)
+						{
+							if($result < $min_value)
+							{
+								$min_value = $result;
+							}
+						}
+						$END_RESULT = $min_value;
+						break;
+					default:
+						// assume AVG (average)
+						$TOTAL_RESULT = 0;
+						$TOTAL_COUNT = 0;
+
+						foreach($this->trial_results as $result)
+						{
+							if(is_numeric($result))
+							{
+								$TOTAL_RESULT += trim($result);
+								$TOTAL_COUNT++;
+							}
 						}
 
-					}
-					$END_RESULT = $max_value;
-				}
-				else if($this->result_quantifier == "MIN")
-				{
-					$min_value = $this->trial_results[0];
-					foreach($this->trial_results as $result)
-					{
-						if($result < $min_value)
-						{
-							$min_value = $result;
-						}
-					}
-					$END_RESULT = $min_value;
-				}
-				else
-				{
-					// assume AVG (average)
-					$TOTAL_RESULT = 0;
-					$TOTAL_COUNT = 0;
-
-					foreach($this->trial_results as $result)
-					{
-						if(is_numeric($result))
-						{
-							$TOTAL_RESULT += trim($result);
-							$TOTAL_COUNT++;
-						}
-					}
-
-					$END_RESULT = pts_trim_double($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
+						$END_RESULT = pts_trim_double($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
 				}
 				break;
 		}

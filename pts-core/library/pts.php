@@ -24,7 +24,7 @@
 error_reporting(E_ERROR | E_STRICT);
 
 define("PTS_VERSION", "2.4.0a2");
-define("PTS_BUILD_INT", 2310);
+define("PTS_BUILD_INT", 2314);
 define("PTS_CODENAME", "LENVIK");
 
 function pts_codename($full_string = false)

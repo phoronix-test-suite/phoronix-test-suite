@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Overhaul pts_test_result class
 - pts: Update ramspeed test profile against RAMspeed 2.6.0
 
 Phoronix Test Suite 2.4 Alpha 2

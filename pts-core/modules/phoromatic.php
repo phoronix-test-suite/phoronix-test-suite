@@ -288,7 +288,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function __pre_test_run($pts_test_result)
 	{
-		phoromatic::update_system_status("Running " . $pts_test_result->get_test_identifier() . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
+		phoromatic::update_system_status("Running " . $pts_test_result->get_test_profile()->get_identifier() . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
 	}
 	public static function __event_user_error($user_error)
 	{

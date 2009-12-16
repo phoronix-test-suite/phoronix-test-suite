@@ -35,6 +35,10 @@ class pts_test_profile
 			$this->xml_parser->overrideXMLValues($override_values);
 		}
 	}
+	public function get_identifier()
+	{
+		return $this->identifier;
+	}
 	public function get_maintainer()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_MAINTAINER);
@@ -146,19 +150,19 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_POSTRUNMSG);
 	}
-	public function get_test_scale()
+	public function get_result_scale()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_SCALE);
 	}
-	public function get_test_proportion()
+	public function get_result_proportion()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_PROPORTION);
 	}
-	public function get_test_result_format()
+	public function get_result_format()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_RESULTFORMAT, "BAR_GRAPH");
 	}
-	public function get_test_quantifier()
+	public function get_result_quantifier()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_QUANTIFIER);
 	}
@@ -198,6 +202,22 @@ class pts_test_profile
 	public function set_times_to_run($times)
 	{
 		$this->xml_parser->overrideXMLValue(P_TEST_RUNCOUNT, $times);
+	}
+	public function set_result_scale($scale)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_SCALE, $scale);
+	}
+	public function set_result_proportion($proportion)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_PROPORTION, $proportion);
+	}
+	public function set_result_quantifier($quantifier)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_QUANTIFIER, $quantifier);
+	}
+	public function set_version($version)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_VERSION, $version);
 	}
 }
 

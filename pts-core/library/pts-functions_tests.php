@@ -894,5 +894,25 @@ function pts_remove_test_result_dir($identifier)
 	pts_remove(SAVE_RESULTS_DIR . $identifier);
 	pts_rmdir(SAVE_RESULTS_DIR . $identifier);
 }
+function pts_test_result_format_to_string($result_format)
+{
+	switch($result_format)
+	{
+		case "MAX":
+			$return_str = "Maximum";
+			break;
+		case "MIN":
+			$return_str = "Minimum";
+			break;
+		case "NULL":
+			$return_str = null;
+			break;
+		default:
+			$return_str = "Average";
+			break;
+	}
+
+	return $return_str;
+}
 
 ?>
