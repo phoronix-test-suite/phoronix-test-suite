@@ -99,8 +99,8 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_end(&$test_result)
 	{
-		$end_print = $test_result->get_test_profile()->get_test_title() . ":\n" . $test_result->get_arguments_description();
-		$end_print .= "\n" . ($test_result->get_arguments_description(); != null ? "\n" : null);
+		$end_print = $test_result->get_test_profile()->get_test_title() . ":\n" . $test_result->get_used_arguments_description();
+		$end_print .= "\n" . ($test_result->get_used_arguments_description(); != null ? "\n" : null);
 
 		if(in_array($test_result->get_test_profile()->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
 		{

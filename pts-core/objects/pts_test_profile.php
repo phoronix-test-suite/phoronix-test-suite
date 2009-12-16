@@ -211,6 +211,10 @@ class pts_test_profile
 	{
 		$this->xml_parser->overrideXMLValue(P_TEST_PROPORTION, $proportion);
 	}
+	public function set_result_format($format)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_RESULTFORMAT, $format);
+	}
 	public function set_result_quantifier($quantifier)
 	{
 		$this->xml_parser->overrideXMLValue(P_TEST_QUANTIFIER, $quantifier);
@@ -218,6 +222,10 @@ class pts_test_profile
 	public function set_version($version)
 	{
 		$this->xml_parser->overrideXMLValue(P_TEST_VERSION, $version);
+	}
+	public function set_test_title($title)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_TITLE, $title);
 	}
 }
 

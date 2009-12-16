@@ -125,7 +125,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo "\n\n" . $test_result->get_test_profile()->get_test_title() . ":\n\t" . $test_result->get_test_profile()->get_identifier();
 
-		if(($test_description = $test_result->get_arguments_description()) != false)
+		if(($test_description = $test_result->get_used_arguments_description()) != false)
 		{
 			echo " [" . $test_description . "]";
 		}

@@ -557,7 +557,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
 	$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
 	$test_result->get_test_profile()->set_times_to_run($times_to_run);
-	$test_result->set_arguments_description($arguments_description);
+	$test_result->set_used_arguments_description($arguments_description);
 	pts_module_process("__pre_test_run", $test_result);
 
 	$time_test_start = time();
@@ -853,7 +853,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	array("pts-results-proportion", "set_result_proportion", null),
 	array("pts-results-quantifier", "set_result_quantifier", null),
 	array("pts-test-version", "set_version", null),
-	array("pts-test-description", null, "set_arguments_description")
+	array("pts-test-description", null, "set_used_arguments_description")
 	);
 
 	foreach($file_var_checks as &$file_check)
@@ -915,7 +915,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	// Result Calculation
-	$test_result->set_arguments_description($arguments_description);
+	$test_result->set_used_arguments_description($arguments_description);
 	$test_result->set_used_arguments($extra_arguments);
 	$test_result->calculate_end_result(); // Process results
 

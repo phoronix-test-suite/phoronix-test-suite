@@ -22,28 +22,22 @@
 
 class pts_result_file_merge_test
 {
-	private $name;
-	private $version;
-	private $attributes;
-	private $scale;
-	private $test_name;
-	private $arguments;
-	private $proportion;
-	private $format;
-
 	private $result_buffer;
+	private $test_result;
 
-	// TODO: potentially merge this with pts_test_result and/or pts_test_profile
-	public function __construct($name, $version, $attributes, $scale, $test_name, $arguments, $proportion, $format, $result_buffer)
+	// TODO: In process of transitioning this better to use pts_test_result
+	public function __construct($title, $version, $attributes, $scale, $test_identifier, $arguments, $proportion, $format, $result_buffer)
 	{
-		$this->name = $name;
-		$this->version = $version;
-		$this->attributes = $attributes;
-		$this->scale = $scale;
-		$this->test_name = $test_name;
-		$this->arguments = $arguments;
-		$this->proportion = $proportion;
-		$this->format = $format;
+		$test_profile = new pts_test_profile($test_identifier);
+		$test_profile->set_test_title($title);
+		$test_profile->set_version($version);
+		$test_profile->set_result_scale($scale);
+		$test_profile->set_result_proportion($proportion);
+		$test_profile->set_result_format($format);
+
+		$this->test_result = new pts_test_result($test_profile);
+		$this->test_result->set_used_arguments_description($attributes);
+		$this->test_result->set_used_arguments($arguments);
 
 		$this->result_buffer = $result_buffer;
 	}
@@ -65,19 +59,19 @@ class pts_result_file_merge_test
 	}
 	public function get_name()
 	{
-		return $this->name;
+		return $this->test_result->get_test_profile()->get_test_title();
 	}
 	public function get_version()
 	{
-		return $this->version;
+		return $this->test_result->get_test_profile()->get_version();
 	}
 	public function get_attributes()
 	{
-		return $this->attributes;
+		return $this->test_result->get_used_arguments_description();
 	}
 	public function get_scale()
 	{
-		return $this->scale;
+		return $this->test_result->get_test_profile()->get_result_scale();
 	}
 	public function get_scale_formatted()
 	{
@@ -85,37 +79,37 @@ class pts_result_file_merge_test
 	}
 	public function get_scale_special()
 	{
-		$scale_parts = explode("|", $this->scale);
+		$scale_parts = explode('|', $this->get_scale());
 
 		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
 	}
 	public function get_test_name()
 	{
-		return $this->test_name;
+		return $this->test_result->get_test_profile()->get_identifier();
 	}
 	public function get_arguments()
 	{
-		return $this->arguments;
+		return $this->test_result->get_used_arguments();
 	}
 	public function get_proportion()
 	{
-		return $this->proportion;
+		return $this->test_result->get_test_profile()->get_result_proportion();
 	}
 	public function get_format()
 	{
-		return $this->format;
+		return $this->test_result->get_test_profile()->get_result_format();
 	}
 	public function set_format($format)
 	{
-		$this->format = $format;
+		$this->test_result->get_test_profile()->set_result_format($format);
 	}
 	public function set_scale($scale)
 	{
-		$this->scale = $scale;
+		$this->test_result->get_test_profile()->set_result_scale($format);
 	}
 	public function set_attributes($attributes)
 	{
-		$this->attributes = $attributes;
+		$this->test_result->set_used_arguments_description($attributes);
 	}
 }
 

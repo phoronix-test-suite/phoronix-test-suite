@@ -26,45 +26,41 @@ class pts_test_result
 	private $trial_results;
 	private $attributes;
 	private $used_arguments;
-	private $arguments_description;
+	private $used_arguments_description;
 
 	private $test_profile;
 
-	// TODO: integrate pts_result_file_merge_test and pts_test_result_buffer capabilities into this
 	public function __construct(&$test_profile)
 	{
 		$this->test_profile = $test_profile;
 		$this->trial_results = array();
+	}
+	public function set_used_arguments_description($arguments_description)
+	{
+		$this->used_arguments_description = $arguments_description;
+	}
+	public function set_used_arguments($used_arguments)
+	{
+		$this->used_arguments = $used_arguments;
+	}
+	public function set_result($result)
+	{
+		$this->result = $result;
 	}
 
 	public function get_test_profile()
 	{
 		return $this->test_profile;
 	}
-	public function get_arguments_description()
-	{
-		return $this->arguments_description;
-	}
-	public function set_arguments_description($arguments_description)
-	{
-		$this->arguments_description = $arguments_description;
-	}
 	public function get_used_arguments()
 	{
 		return $this->used_arguments;
 	}
-	public function set_used_arguments($used_arguments)
+	public function get_used_arguments_description()
 	{
-		$this->used_arguments = $used_arguments;
+		return $this->used_arguments_description;
 	}
-	public function set_test_identifier($test_identifier)
-	{
-		$this->test_identifier = $test_identifier;
-	}
-	public function set_result($result)
-	{
-		$this->result = $result;
-	}
+
 	public function get_result()
 	{
 		return $this->result;
