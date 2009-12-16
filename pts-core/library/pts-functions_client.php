@@ -22,7 +22,7 @@
 */
 
 // Phoronix Test Suite - Functions
-function pts_run_option_command($command, $pass_args = null, $preset_assignments = "")
+function pts_run_command($command, $pass_args = null, $preset_assignments = "")
 {
 	if(is_file(OPTIONS_DIR . $command . ".php") && !class_exists($command, false))
 	{
@@ -104,7 +104,7 @@ function pts_run_option_command($command, $pass_args = null, $preset_assignments
 }
 function pts_run_option_next($command, $pass_args = null, $set_assignments = "")
 {
-	return pts_run_option_manager::add_run_option($command, $pass_args, $set_assignments);
+	return pts_command_run_manager::add_run_command($command, $pass_args, $set_assignments);
 }
 function pts_clean_information_string($str)
 {

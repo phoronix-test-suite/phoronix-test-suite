@@ -20,19 +20,19 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_run_option_manager
+class pts_command_run_manager
 {
 	private static $to_run = array();
 
-	public static function add_run_option($command, $pass_args = null, $set_assignments = "")
+	public static function add_run_command($command, $pass_args = null, $set_assignments = "")
 	{
-		return array_push(self::$to_run, new pts_run_option($command, $pass_args, $set_assignments));
+		return array_push(self::$to_run, new pts_command_run($command, $pass_args, $set_assignments));
 	}
-	public static function pull_next_run_option()
+	public static function pull_next_run_command()
 	{
 		return array_shift(self::$to_run);
 	}
-	public static function add_assignment_to_next_run_option($assignment, $value)
+	public static function add_assignment_to_next_command($assignment, $value)
 	{
 		if(($next_option = array_shift(self::$to_run)) != null)
 		{

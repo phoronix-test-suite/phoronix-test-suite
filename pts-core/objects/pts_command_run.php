@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_run_option
+class pts_command_run
 {
 	private $command;
 	private $arguments;

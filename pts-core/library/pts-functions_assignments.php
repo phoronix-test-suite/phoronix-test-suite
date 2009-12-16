@@ -50,7 +50,7 @@ function pts_clear_assignment($assignment)
 }
 function pts_set_assignment_next($assignment, $value)
 {
-	pts_run_option_manager::add_assignment_to_next_run_option($assignment, $value);
+	pts_command_run_manager::add_assignment_to_next_command($assignment, $value);
 }
 function pts_unique_runtime_identifier()
 {

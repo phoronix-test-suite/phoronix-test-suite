@@ -135,9 +135,9 @@ if(!QUICK_START)
 
 pts_run_option_next($sent_command, $pass_args);
 
-while(($current_option = pts_run_option_manager::pull_next_run_option()) != null)
+while(($current_option = pts_command_run_manager::pull_next_run_command()) != null)
 {
-	pts_run_option_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
+	pts_run_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
 }
 
 if(!QUICK_START && $release_lock)
