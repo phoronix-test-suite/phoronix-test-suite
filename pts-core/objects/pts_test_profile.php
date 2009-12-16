@@ -190,6 +190,15 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_SUBTITLE);
 	}
+
+	//
+	// Set Functions
+	//
+
+	public function set_times_to_run($times)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_RUNCOUNT, $times);
+	}
 }
 
 ?>

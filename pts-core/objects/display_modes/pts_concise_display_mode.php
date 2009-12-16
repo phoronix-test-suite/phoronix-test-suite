@@ -125,7 +125,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo "\n\n" . $test_result->get_name() . ":\n\t" . $test_result->get_test_identifier();
 
-		if(($test_description = $test_result->get_description()) != false)
+		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
 			echo " [" . $test_description . "]";
 		}
@@ -152,7 +152,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			echo "\tEstimated Test Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
 		}
 
-		echo "\tExpected Trial Run Count: " . $test_result->get_times_to_run() . "\n";
+		echo "\tExpected Trial Run Count: " . $test_result->get_test_profile()->get_times_to_run() . "\n";
 	}
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count)
 	{

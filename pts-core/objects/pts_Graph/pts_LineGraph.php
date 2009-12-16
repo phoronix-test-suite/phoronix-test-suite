@@ -163,7 +163,6 @@ class pts_LineGraph extends pts_CustomGraph
 			{
 				if(!$identifiers_empty && ($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)))
 				{
-					//$this->render_graph_pointer($x_y_pair[0], $x_y_pair[1]);
 					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $this->graph_color_notches, $paint_color, 1);
 				}
 			}

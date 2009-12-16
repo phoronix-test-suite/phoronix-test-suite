@@ -115,7 +115,9 @@ class pts_test_run_manager
 					// Currently weighted suites cannot be of BATCH or DEFAULTS sub-mode, but just a traditional test
 					$weighted_run_request = new pts_weighted_test_run_request($tests_in_suite[$i], $sub_arguments[$i], $sub_arguments_description[$i], $override_options);
 					$weighted_run_request->set_weight_expression($weight_expressions[$i]);
-					array_push($weighted_manager->tests_to_run, $weighted_run_request);
+
+					echo "\nWeighted test run manager is temporarily disabled.\n";
+					//array_push($weighted_manager->tests_to_run, $weighted_run_request);
 					continue;
 				}
 

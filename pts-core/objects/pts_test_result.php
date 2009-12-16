@@ -33,11 +33,10 @@ class pts_test_result
 	private $name;
 	private $test_identifier;
 	private $version;
-	private $description;
-	private $times_to_run;
 
 	private $test_profile;
 	private $used_arguments;
+	private $arguments_description;
 
 	// TODO: integrate pts_result_file_merge_test and pts_test_result_buffercapabilities into this
 	public function __construct($result = 0, $result_scale = "", $result_format = "")
@@ -57,9 +56,17 @@ class pts_test_result
 	{
 		return $this->test_profile;
 	}
-	public function set_test_profile($test_profile)
+	public function set_test_profile(&$test_profile)
 	{
 		$this->test_profile = $test_profile;
+	}
+	public function get_arguments_description()
+	{
+		return $this->arguments_description;
+	}
+	public function set_arguments_description($arguments_description)
+	{
+		$this->arguments_description = $arguments_description;
 	}
 
 	public function get_name()
@@ -77,30 +84,6 @@ class pts_test_result
 	public function set_test_identifier($test_identifier)
 	{
 		$this->test_identifier = $test_identifier;
-	}
-	public function get_version()
-	{
-		return $this->version;
-	}
-	public function set_version($version)
-	{
-		$this->version = $version;
-	}
-	public function get_description()
-	{
-		return $this->description;
-	}
-	public function set_description($description)
-	{
-		$this->description = $description;
-	}
-	public function get_times_to_run()
-	{
-		return $this->times_to_run;
-	}
-	public function set_times_to_run($times_to_run)
-	{
-		$this->times_to_run = $times_to_run;
 	}
 	public function get_used_arguments()
 	{
