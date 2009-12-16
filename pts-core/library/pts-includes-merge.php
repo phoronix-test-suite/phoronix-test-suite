@@ -213,7 +213,7 @@ function pts_list_regressions_linear(&$result_file, $threshold = 0.05, $show_onl
 				{
 					foreach($this_test_regressions as $index => &$regression_marker)
 					{
-						if(abs(1 - ($regression_marker->get_base_value() / $this_regression_marker->get_regressed_value())) < 0.03)
+						if(abs(1 - ($regression_marker->get_base_value() / $this_regression_marker->get_regressed_value())) < 0.04)
 						{
 							// 1% tolerance, regression seems to be corrected
 							unset($this_test_regressions[$index]);

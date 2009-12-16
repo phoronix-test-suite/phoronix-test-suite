@@ -93,7 +93,7 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function destroy_image()
 	{
-		$this->image = "";
+		$this->image = null;
 	}
 
 	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)

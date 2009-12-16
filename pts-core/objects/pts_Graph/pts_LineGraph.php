@@ -100,6 +100,7 @@ class pts_LineGraph extends pts_CustomGraph
 
 			$point_counter = count($this->graph_data[$i_o]);
 			$poly_points = array();
+
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
@@ -162,7 +163,8 @@ class pts_LineGraph extends pts_CustomGraph
 			{
 				if(!$identifiers_empty && ($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)))
 				{
-					$this->render_graph_pointer($x_y_pair[0], $x_y_pair[1]);
+					//$this->render_graph_pointer($x_y_pair[0], $x_y_pair[1]);
+					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $this->graph_color_notches, $paint_color, 1);
 				}
 			}
 		}
@@ -251,12 +253,6 @@ class pts_LineGraph extends pts_CustomGraph
 	protected function render_graph_result()
 	{
 		$this->renderGraphLines();
-	}
-	protected function render_graph_pointer($x, $y)
-	{
-		$this->graph_image->draw_line($x - 5, $y - 5, $x + 5, $y + 5, $this->graph_color_notches);
-		$this->graph_image->draw_line($x + 5, $y - 5, $x - 5, $y + 5, $this->graph_color_notches);
-		$this->graph_image->draw_rectangle($x - 2, $y - 2, $x + 3, $y + 3, $this->graph_color_notches);
 	}
 }
 
