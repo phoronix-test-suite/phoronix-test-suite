@@ -105,7 +105,7 @@ class pts_result_file_merge_test
 	}
 	public function set_scale($scale)
 	{
-		$this->test_result->get_test_profile()->set_result_scale($format);
+		$this->test_result->get_test_profile()->set_result_scale($scale);
 	}
 	public function set_attributes($attributes)
 	{
