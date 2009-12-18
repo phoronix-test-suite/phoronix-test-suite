@@ -39,7 +39,7 @@ function pts_define_directories()
 	define("RESULTS_VIEWER_DIR", PTS_CORE_PATH . "results-viewer/");
 	define("TEST_LIBRARIES_DIR", PTS_CORE_PATH . "test-libraries/");
 	define("STATIC_DIR", PTS_CORE_PATH . "static/");
-	define("OPTIONS_DIR", PTS_CORE_PATH . "options/");
+	define("COMMAND_OPTIONS_DIR", PTS_CORE_PATH . "options/");
 
 	// Test & Suite Locations
 	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");
