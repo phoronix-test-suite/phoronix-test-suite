@@ -132,8 +132,6 @@ function pts_load_modules()
 function pts_attach_module($module)
 {
 	// Attach a module
-	$module = trim($module);
-
 	if(!pts_is_module($module))
 	{
 		return false;
@@ -168,20 +166,16 @@ function pts_module_valid_user_command($module, $command = null)
 	if($command == null && strpos($module, ".") != false)
 	{
 		list($module, $command) = explode(".", $module);
-	}
-	else
-	{
-		return false;
-	}
 
-	if(!pts_module_manager::is_module_attached($module))
-	{
-		pts_attach_module($module);
+		if(!pts_module_manager::is_module_attached($module))
+		{
+			pts_attach_module($module);
+		}
+
+		$all_options = pts_module_call($module, "user_commands");
+
+		$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || in_array($command, array("help")));
 	}
-
-	$all_options = pts_module_call($module, "user_commands");
-
-	$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || in_array($command, array("help")));
 
 	return $valid;
 }
