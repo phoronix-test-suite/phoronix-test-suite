@@ -90,7 +90,7 @@ class pts_test_result
 	{
 		$END_RESULT = 0;
 
-		switch($this->result_format)
+		switch($this->test_profile->get_result_format())
 		{
 			case "NO_RESULT":
 				// Nothing to do, there are no results
@@ -141,6 +141,7 @@ class pts_test_result
 					}
 				}
 				break;
+			case "BAR_GRAPH":
 			default:
 				// Result is of a normal numerical type
 				switch($this->get_test_profile()->get_result_quantifier())
