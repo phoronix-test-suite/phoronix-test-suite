@@ -20,7 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_result_file_merge_test
+// formerly known as the pts_result_file_merge_test object
+class pts_result_file_result_object
 {
 	private $result_buffer;
 	private $test_result;

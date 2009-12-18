@@ -162,7 +162,7 @@ class pts_result_file
 
 			for($i = 0; $i < count($results_name); $i++)
 			{
-				$test_object = new pts_result_file_merge_test($results_name[$i], $results_version[$i], $results_attributes[$i], $results_scale[$i], $results_test_name[$i], $results_arguments[$i], $results_proportion[$i], $results_format[$i], $result_buffers[$i]);
+				$test_object = new pts_result_file_result_object($results_name[$i], $results_version[$i], $results_attributes[$i], $results_scale[$i], $results_test_name[$i], $results_arguments[$i], $results_proportion[$i], $results_format[$i], $result_buffers[$i]);
 
 				array_push($this->result_objects, $test_object);
 			}
