@@ -188,7 +188,7 @@ class pts_LineGraph extends pts_CustomGraph
 			}
 		}
 		// in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "MB/s", "Frames Per Second", "Seconds", "Iterations Per Minute"))
-		if($this->graph_y_title != "Percent" || $max_value < 100)
+		if($this->graph_y_title != "Percent" || $max_value < 100 && $max_value != $min_value)
 		{
 			array_push($to_display[$this->graph_color_text], "Peak:");
 
@@ -206,7 +206,7 @@ class pts_LineGraph extends pts_CustomGraph
 				array_push($to_display[$color], $high);
 			}
 		}
-		if($min_value > 0)
+		if($min_value > 0 && $max_value != $min_value)
 		{
 			array_push($to_display[$this->graph_color_text], "Low:");
 

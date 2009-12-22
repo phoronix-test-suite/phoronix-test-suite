@@ -145,7 +145,7 @@ class phoromatic extends pts_module_interface
 				if($response == "ERROR")
 				{
 					echo "\nERROR OCCURRED IN UPLOADING RESULTS\n";
-					return;
+					return false;
 				}
 
 				if(!pts_read_assignment("PHOROMATIC_ARCHIVE_RESULTS"))
@@ -164,16 +164,23 @@ class phoromatic extends pts_module_interface
 		static $current_hw = null;
 		static $current_sw = null;
 
-		if(!defined("PHOROMATIC_START"))
+		if(define("PHOROMATIC_START", true))
 		{
-			define("PHOROMATIC_START", true);
 			echo "\nRegistering Status With Phoromatic Server\n";
 			$update_sd = phoromatic::update_system_details();
 
 			if(!$update_sd)
 			{
-				echo "\nConnection to server failed.\n\n";
-				return false;
+				echo "\nConnection to server failed. Trying again in 30 seconds...\n";
+				sleep(30);
+
+				$update_sd = phoromatic::update_system_details();
+
+				if(!$update_sd)
+				{
+					echo "Server connection still failed. Exiting...\n";
+					return false;
+				}
 			}
 
 			$current_hw = pts_hw_string();
