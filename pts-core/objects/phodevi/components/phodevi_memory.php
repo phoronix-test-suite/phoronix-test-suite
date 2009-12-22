@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phodevi_memory extends pts_device_interface
+class phodevi_memory extends phodevi_device_interface
 {
 	public static function read_sensor($identifier)
 	{
@@ -48,10 +48,10 @@ class phodevi_memory extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("memory_string", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("memory_string", PHODEVI_SMART_CACHE);
 				break;
 			case "capacity":
-				$property = new pts_device_property("memory_capacity", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("memory_capacity", PHODEVI_SMART_CACHE);
 				break;
 		}
 

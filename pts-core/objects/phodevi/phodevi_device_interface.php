@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2009, Phoronix Media
 	Copyright (C) 2009, Michael Larabel
-	pts_device_interface: The abstract interface for the PTS Device Interface
+	phodevi_device_interface: The abstract interface for the PTS Device Interface
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-abstract class pts_device_interface
+abstract class phodevi_device_interface
 {
 	public static function read_property($identifier)
 	{

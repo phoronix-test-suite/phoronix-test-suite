@@ -21,23 +21,23 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phodevi_monitor extends pts_device_interface
+class phodevi_monitor extends phodevi_device_interface
 {
 	public static function read_property($identifier)
 	{
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("monitor_string", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("monitor_string", PHODEVI_SMART_CACHE);
 				break;
 			case "count":
-				$property = new pts_device_property("monitor_count", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("monitor_count", PHODEVI_STAND_CACHE);
 				break;
 			case "layout":
-				$property = new pts_device_property("monitor_layout", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("monitor_layout", PHODEVI_STAND_CACHE);
 				break;
 			case "modes":
-				$property = new pts_device_property("monitor_modes", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("monitor_modes", PHODEVI_STAND_CACHE);
 				break;
 		}
 

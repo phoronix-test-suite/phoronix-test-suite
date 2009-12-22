@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phodevi_system extends pts_device_interface
+class phodevi_system extends phodevi_device_interface
 {
 	public static function read_sensor($identifier)
 	{
@@ -67,58 +67,58 @@ class phodevi_system extends pts_device_interface
 		switch($identifier)
 		{
 			case "username":
-				$property = new pts_device_property("sw_username", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_username", PHODEVI_STAND_CACHE);
 				break;
 			case "hostname":
-				$property = new pts_device_property("sw_hostname", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("sw_hostname", PHODEVI_SMART_CACHE);
 				break;
 			case "vendor-identifier":
-				$property = new pts_device_property("sw_vendor_identifier", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("sw_vendor_identifier", PHODEVI_SMART_CACHE);
 				break;
 			case "filesystem":
-				$property = new pts_device_property("sw_filesystem", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("sw_filesystem", PHODEVI_SMART_CACHE);
 				break;
 			case "virtualized-mode":
-				$property = new pts_device_property("sw_virtualized_mode", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("sw_virtualized_mode", PHODEVI_SMART_CACHE);
 				break;
 			case "java-version":
-				$property = new pts_device_property("sw_java_version", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_java_version", PHODEVI_STAND_CACHE);
 				break;
 			case "python-version":
-				$property = new pts_device_property("sw_python_version", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_python_version", PHODEVI_STAND_CACHE);
 				break;
 			case "display-server":
-				$property = new pts_device_property("sw_display_server", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_display_server", PHODEVI_STAND_CACHE);
 				break;
 			case "display-driver":
-				$property = new pts_device_property("sw_display_driver", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_display_driver", PHODEVI_STAND_CACHE);
 				break;
 			case "dri-display-driver":
-				$property = new pts_device_property("sw_dri_display_driver", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_dri_display_driver", PHODEVI_STAND_CACHE);
 				break;
 			case "opengl-driver":
-				$property = new pts_device_property("sw_opengl_driver", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_opengl_driver", PHODEVI_STAND_CACHE);
 				break;
 			case "opengl-vendor":
-				$property = new pts_device_property("sw_opengl_vendor", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("sw_opengl_vendor", PHODEVI_SMART_CACHE);
 				break;
 			case "desktop-environment":
-				$property = new pts_device_property("sw_desktop_environment", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_desktop_environment", PHODEVI_STAND_CACHE);
 				break;
 			case "operating-system":
-				$property = new pts_device_property("sw_operating_system", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("sw_operating_system", PHODEVI_SMART_CACHE);
 				break;
 			case "os-version":
-				$property = new pts_device_property("sw_os_version", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("sw_os_version", PHODEVI_SMART_CACHE);
 				break;
 			case "kernel":
-				$property = new pts_device_property("sw_kernel", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("sw_kernel", PHODEVI_SMART_CACHE);
 				break;
 			case "kernel-architecture":
-				$property = new pts_device_property("sw_kernel_architecture", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("sw_kernel_architecture", PHODEVI_SMART_CACHE);
 				break;
 			case "compiler":
-				$property = new pts_device_property("sw_compiler", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_compiler", PHODEVI_STAND_CACHE);
 				break;
 		}
 

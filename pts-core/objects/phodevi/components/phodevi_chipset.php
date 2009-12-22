@@ -21,14 +21,14 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phodevi_chipset extends pts_device_interface
+class phodevi_chipset extends phodevi_device_interface
 {
 	public static function read_property($identifier)
 	{
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("chipset_string", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("chipset_string", PHODEVI_SMART_CACHE);
 				break;
 		}
 

@@ -121,7 +121,7 @@ class phodevi
 		{
 			eval("\$property = phodevi_" . $device . "::read_property(\$read_property);");
 
-			if(!($property instanceOf pts_device_property))
+			if(!($property instanceOf phodevi_device_property))
 			{
 				return false;
 			}

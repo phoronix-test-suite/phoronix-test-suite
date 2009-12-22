@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phodevi_disk extends pts_device_interface
+class phodevi_disk extends phodevi_device_interface
 {
 	public static function read_sensor($identifier)
 	{
@@ -48,10 +48,10 @@ class phodevi_disk extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("hdd_string", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("hdd_string", PHODEVI_SMART_CACHE);
 				break;
 			case "scheduler":
-				$property = new pts_device_property("hdd_scheduler", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("hdd_scheduler", PHODEVI_SMART_CACHE);
 				break;
 		}
 

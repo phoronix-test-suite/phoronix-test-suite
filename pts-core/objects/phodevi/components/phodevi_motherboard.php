@@ -21,20 +21,20 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phodevi_motherboard extends pts_device_interface
+class phodevi_motherboard extends phodevi_device_interface
 {
 	public static function read_property($identifier)
 	{
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("motherboard_string", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("motherboard_string", PHODEVI_SMART_CACHE);
 				break;
 			case "power-mode":
-				$property = new pts_device_property("power_mode", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("power_mode", PHODEVI_SMART_CACHE);
 				break;
 			default:
-				$property = new pts_device_property(null, false);
+				$property = new phodevi_device_property(null, false);
 				break;
 		}
 

@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2009, Phoronix Media
 	Copyright (C) 2009, Michael Larabel
-	pts_device_property.php: Device property object
+	phodevi_device_property.php: Device property object
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_device_property
+class phodevi_device_property
 {
 	var $object_function;
 	var $cache_code;

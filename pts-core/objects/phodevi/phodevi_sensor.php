@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_sensor
+class phodevi_sensor
 {
 	private $hw_type;
 	private $hw_type_string;

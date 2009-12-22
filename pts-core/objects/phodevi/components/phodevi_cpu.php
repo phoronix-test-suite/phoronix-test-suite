@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phodevi_cpu extends pts_device_interface
+class phodevi_cpu extends phodevi_device_interface
 {
 	public static function read_sensor($identifier)
 	{
@@ -51,19 +51,19 @@ class phodevi_cpu extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("cpu_string", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("cpu_string", PHODEVI_SMART_CACHE);
 				break;
 			case "model":
-				$property = new pts_device_property("cpu_model", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("cpu_model", PHODEVI_SMART_CACHE);
 				break;
 			case "default-frequency":
-				$property = new pts_device_property(array("cpu_default_frequency", 0), PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property(array("cpu_default_frequency", 0), PHODEVI_SMART_CACHE);
 				break;
 			case "core-count":
-				$property = new pts_device_property("cpu_core_count", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("cpu_core_count", PHODEVI_SMART_CACHE);
 				break;
 			case "power-savings-mode":
-				$property = new pts_device_property("cpu_power_savings_mode", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("cpu_power_savings_mode", PHODEVI_SMART_CACHE);
 				break;
 		}
 

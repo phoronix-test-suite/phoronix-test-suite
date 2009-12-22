@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phodevi_gpu extends pts_device_interface
+class phodevi_gpu extends phodevi_device_interface
 {
 	public static function read_sensor($identifier)
 	{
@@ -51,37 +51,37 @@ class phodevi_gpu extends pts_device_interface
 		switch($identifier)
 		{
 			case "identifier":
-				$property = new pts_device_property("gpu_string", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("gpu_string", PHODEVI_SMART_CACHE);
 				break;
 			case "model":
-				$property = new pts_device_property("gpu_model", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("gpu_model", PHODEVI_SMART_CACHE);
 				break;
 			case "frequency":
-				$property = new pts_device_property("gpu_frequency_string", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("gpu_frequency_string", PHODEVI_SMART_CACHE);
 				break;
 			case "stock-frequency":
-				$property = new pts_device_property("gpu_stock_frequency", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("gpu_stock_frequency", PHODEVI_SMART_CACHE);
 				break;
 			case "2d-accel-method":
-				$property = new pts_device_property("gpu_2d_accel_method", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("gpu_2d_accel_method", PHODEVI_STAND_CACHE);
 				break;
 			case "memory-capacity":
-				$property = new pts_device_property("gpu_memory_size", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("gpu_memory_size", PHODEVI_SMART_CACHE);
 				break;
 			case "aa-level":
-				$property = new pts_device_property("gpu_aa_level", PHODEVI_AVOID_CACHE);
+				$property = new phodevi_device_property("gpu_aa_level", PHODEVI_AVOID_CACHE);
 				break;
 			case "af-level":
-				$property = new pts_device_property("gpu_af_level", PHODEVI_AVOID_CACHE);
+				$property = new phodevi_device_property("gpu_af_level", PHODEVI_AVOID_CACHE);
 				break;
 			case "available-modes":
-				$property = new pts_device_property("gpu_available_modes", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("gpu_available_modes", PHODEVI_SMART_CACHE);
 				break;
 			case "screen-resolution":
-				$property = new pts_device_property("gpu_screen_resolution", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("gpu_screen_resolution", PHODEVI_SMART_CACHE);
 				break;
 			case "screen-resolution-string":
-				$property = new pts_device_property("gpu_screen_resolution_string", PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property("gpu_screen_resolution_string", PHODEVI_SMART_CACHE);
 				break;
 		}
 
