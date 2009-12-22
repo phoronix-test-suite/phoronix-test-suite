@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Overhaul pts_test_result class
+- phodevi: Add CPU fan speed sensor, currently implemented on Linux through sysfs interface
 - phoromatic: If initial Phoromatic server connection fails, wait 30 seconds and try again
 - tandem_XmlReader: Drop support for XML tag/file caching in the XML parser since now its more efficient and effective to let pts-core handle it
 - pts: Update ramspeed test profile against RAMspeed 2.6.0

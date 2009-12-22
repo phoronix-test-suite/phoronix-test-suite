@@ -30,6 +30,9 @@ class phodevi_cpu extends pts_device_interface
 			case "temperature":
 				$sensor = "cpu_temperature";
 				break;
+			case "fan-speed":
+				$sensor = "cpu_fan_speed";
+				break;
 			case "current-frequency":
 				$sensor = "cpu_current_frequency";
 				break;
@@ -373,6 +376,26 @@ class phodevi_cpu extends pts_device_interface
 		}
 
 		return $temp_c;
+	}
+	public static function cpu_fan_speed()
+	{
+		$fan_speed = -1;
+
+		if(IS_LINUX)
+		{
+			foreach(pts_glob("/sys/class/hwmon/hwmon*/fan1_input") as $fan_input_file)
+			{
+				$fan_input = pts_file_get_contents($fan_input_file);
+
+				if(is_numeric($fan_input))
+				{
+					$fan_speed = $fan_input;
+					break;
+				}
+			}
+		}
+
+		return $fan_speed;
 	}
 	public static function cpu_current_frequency($cpu_core = 0)
 	{

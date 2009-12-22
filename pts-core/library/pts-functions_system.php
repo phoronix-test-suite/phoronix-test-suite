@@ -66,6 +66,7 @@ function pts_available_sensors()
 	new pts_sensor("memory", "swap", array("memory", "swap-usage"), "Megabytes"),
 	new pts_sensor("memory", "total", array("memory", "total-usage"), "Megabytes"),
 	new pts_sensor("fan-speed", "gpu", array("gpu", "fan-speed"), "Percent"),
+	new pts_sensor("fan-speed", "cpu", array("cpu", "fan-speed"), "RPM"),
 	new pts_sensor("system", "iowait", array("system", "iowait"), "Percent"),
 	new pts_sensor("disk-speed", "read", array("disk", "read-speed"), "MB/s"),
 	new pts_sensor("disk-speed", "write", array("disk", "write-speed"), "MB/s")
