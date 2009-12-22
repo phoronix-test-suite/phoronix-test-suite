@@ -27,7 +27,7 @@ function pts_client_init()
 
 	if(QUICK_START)
 	{
-		return;
+		return true;
 	}
 
 	pts_basic_init(); // Initalize common / needed PTS start-up work
@@ -37,6 +37,8 @@ function pts_client_init()
 	define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 	define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
 	pts_extended_init();
+
+	return true;
 }
 function pts_basic_init()
 {
