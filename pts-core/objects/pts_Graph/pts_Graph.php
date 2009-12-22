@@ -456,12 +456,12 @@ abstract class pts_Graph
 					case "LIB":
 						$proportion = "Fewer Are Better";
 						$offset += 12;
-						$this->graph_image->draw_arrow($this->graph_left_start + 5, $this->graph_top_start - 4, $this->graph_left_start + 5, $this->graph_top_start - 11, $this->graph_color_main_headers);
+						$this->graph_image->draw_arrow($this->graph_left_start + 5, $this->graph_top_start - 4, $this->graph_left_start + 5, $this->graph_top_start - 11, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
 						break;
 					case "HIB":
 						//$proportion = "Higher Is Better";
 						$offset += 12;
-						$this->graph_image->draw_arrow($this->graph_left_start + 5, $this->graph_top_start - 11, $this->graph_left_start + 5, $this->graph_top_start - 4, $this->graph_color_main_headers);
+						$this->graph_image->draw_arrow($this->graph_left_start + 5, $this->graph_top_start - 11, $this->graph_left_start + 5, $this->graph_top_start - 4, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
 						break;
 				}
 

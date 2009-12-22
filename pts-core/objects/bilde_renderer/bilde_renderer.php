@@ -93,7 +93,7 @@ abstract class bilde_renderer
 		$this->draw_rectangle($x1, $y1, $width, $height, $background_color);
 		$this->draw_rectangle_border($x1, $y1, $width, $height, $border_color);
 	}
-	public function draw_arrow($tip_x1, $tip_y1, $tail_x1, $tail_y1, $background_color)
+	public function draw_arrow($tip_x1, $tip_y1, $tail_x1, $tail_y1, $background_color, $border_color = null, $border_width = 0)
 	{
 		// TODO: Allow better support when arrow is running horizontally or on an angle instead of just vertical
 		$arrow_length = sqrt(pow(($tail_x1 - $tip_x1), 2) + pow(($tail_y1 - $tip_y1), 2));
@@ -105,7 +105,7 @@ abstract class bilde_renderer
 		$tail_x1 - $arrow_length_half, $tail_y1
 		);
 
-		$this->draw_polygon($arrow_points, $background_color);
+		$this->draw_polygon($arrow_points, $background_color, $border_color, $border_width);
 	}
 
 	public static function renderer_supported()

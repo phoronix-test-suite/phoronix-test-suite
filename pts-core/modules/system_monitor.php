@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = "System Monitor";
-	const module_version = "1.9.9";
+	const module_version = "2.0.0";
 	const module_description = "This module contains sensor monitoring support.";
 	const module_author = "Michael Larabel";
 

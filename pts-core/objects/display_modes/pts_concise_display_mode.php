@@ -32,7 +32,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_start($identifier)
 	{
-		echo "\n\t" . $identifier . ":\n";
+		echo "\t" . $identifier . ":\n";
 
 		$test_install_position = pts_read_assignment("TEST_INSTALL_POSITION");
 		$test_install_count = pts_read_assignment("TEST_INSTALL_COUNT");
