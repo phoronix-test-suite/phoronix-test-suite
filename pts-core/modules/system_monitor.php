@@ -79,13 +79,6 @@ class system_monitor extends pts_module_interface
 	}
 	public static function __event_results_process(&$tandem_xml)
 	{
-		$time_minutes = floor(pts_time_elapsed() / 60);
-
-		if($time_minutes == 0)
-		{
-			$time_minutes = 1;
-		}
-
 		foreach(self::$to_monitor as $id_point => &$pts_sensor)
 		{
 			$sensor_results = self::parse_monitor_log("logs/" . $pts_sensor->get_identifier());
@@ -93,8 +86,7 @@ class system_monitor extends pts_module_interface
 			if(count($sensor_results) > 2)
 			{
 				$graph_title = $pts_sensor->get_formatted_hardware_type() . " " . $pts_sensor->get_sensor_string() . " Monitor";
-				$sub_title = "Elapsed Time: " . $time_minutes . " Minutes - ";
-				$sub_title .= implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
+				$sub_title = implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
 
 				$tandem_id = pts_request_new_id();
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $graph_title);
@@ -114,7 +106,7 @@ class system_monitor extends pts_module_interface
 	}
 	public static function pts_monitor_update()
 	{
-		foreach(self::$to_monitor as $pts_sensor)
+		foreach(self::$to_monitor as &$pts_sensor)
 		{
 			$sensor_value = $pts_sensor->read_sensor();
 
