@@ -129,23 +129,20 @@ class phoromatic extends pts_module_interface
 
 			if(is_file(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml"))
 			{
-				$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
-
 				phoromatic::update_system_status("Uploading Test Results");
-				$server_response = phoromatic::upload_to_remote_server(array(
-					"r" => "upload_test_results",
-					"c" => $composite_xml,
-					"i" => pts_read_assignment("PHOROMATIC_SCHEDULE_ID"),
-					"ti" => pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")
-					));
+				$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
 
-				$xml_parser = new tandem_XmlReader($server_response);
-				$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
-
-				if($response == "ERROR")
+				if(!$uploaded_test_results)
 				{
-					echo "\nERROR OCCURRED IN UPLOADING RESULTS\n";
-					return false;
+					"\nFailed to upload test results on first attempt. Trying again in 60 seconds...\n";
+					sleep(60);
+					$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
+
+					if(!$uploaded_test_results)
+					{
+						echo "\nERROR OCCURRED IN UPLOADING RESULTS\n";
+						return false;
+					}
 				}
 
 				if(!pts_read_assignment("PHOROMATIC_ARCHIVE_RESULTS"))
@@ -171,8 +168,8 @@ class phoromatic extends pts_module_interface
 
 			if(!$update_sd)
 			{
-				echo "\nConnection to server failed. Trying again in 30 seconds...\n";
-				sleep(30);
+				echo "\nConnection to server failed. Trying again in 60 seconds...\n";
+				sleep(60);
 
 				$update_sd = phoromatic::update_system_details();
 
@@ -324,6 +321,19 @@ class phoromatic extends pts_module_interface
 	protected static function report_warning_to_phoromatic($warning)
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "report_pts_warning", "a" => $warning));
+
+		$xml_parser = new tandem_XmlReader($server_response);
+		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == "TRUE";
+	}
+	protected static function upload_test_results($save_identifier)
+	{
+		$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
+		$server_response = phoromatic::upload_to_remote_server(array(
+			"r" => "upload_test_results",
+			"c" => $composite_xml,
+			"i" => pts_read_assignment("PHOROMATIC_SCHEDULE_ID"),
+			"ti" => pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")
+			));
 
 		$xml_parser = new tandem_XmlReader($server_response);
 		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == "TRUE";
