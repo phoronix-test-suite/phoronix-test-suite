@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.4 Alpha 3
+December 22, 2009
 
 - pts-core: Overhaul pts_test_result class
 - pts-core: Add open_basedir php.ini setting check when starting the Phoronix Test Suite
