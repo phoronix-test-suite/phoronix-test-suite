@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,12 +33,19 @@ class list_missing_dependencies implements pts_option_interface
 		$dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependencies_missing());
 		sort($dependencies);
 
-		foreach($dependencies as $title)
+		if(count($dependencies) == 0)
 		{
-			echo "- " . $title . "\n";
+			echo "\nAll dependencies are satisfied.\n\n";
 		}
+		else
+		{
+			foreach($dependencies as $title)
+			{
+				echo "- " . $title . "\n";
+			}
 
-		echo "\n";
+			echo "\n";
+		}
 	}
 }
 

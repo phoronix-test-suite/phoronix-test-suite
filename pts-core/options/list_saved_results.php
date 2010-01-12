@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,26 +25,35 @@ class list_saved_results implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Saved Results");
-		foreach(pts_saved_test_results_identifiers() as $saved_results_identifier)
+		$saved_results = pts_saved_test_results_identifiers();
+
+		if(count($saved_results) == 0)
 		{
-			$result_file = new pts_result_file($saved_results_identifier);
-
-			if(($title = $result_file->get_title()) != null)
-			{
-				echo $title . "\n";
-				echo sprintf("Saved Name: %-18ls Test: %-18ls \n", $saved_results_identifier, $result_file->get_suite_name());
-
-				foreach($result_file->get_system_identifiers() as $id)
-				{
-					if(!empty($id))
-					{
-						echo "\t- " . $id . "\n";
-					}
-				}
-				echo "\n";
-			}
+			echo "\nNo results have been saved.\n\n";
 		}
-		echo "\n";
+		else
+		{
+			foreach($saved_results as $saved_results_identifier)
+			{
+				$result_file = new pts_result_file($saved_results_identifier);
+
+				if(($title = $result_file->get_title()) != null)
+				{
+					echo $title . "\n";
+					echo sprintf("Saved Name: %-18ls Test: %-18ls \n", $saved_results_identifier, $result_file->get_suite_name());
+
+					foreach($result_file->get_system_identifiers() as $id)
+					{
+						if(!empty($id))
+						{
+							echo "\t- " . $id . "\n";
+						}
+					}
+					echo "\n";
+				}
+			}
+			echo "\n";
+		}
 	}
 }
 

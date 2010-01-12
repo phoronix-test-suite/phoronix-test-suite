@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,23 +25,32 @@ class list_test_usage implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Test Usage");
-		printf("%-18ls   %-8ls %-13ls %-11ls %-13ls %-10ls\n", "TEST", "VERSION", "INSTALL DATE", "LAST RUN", "AVG RUN-TIME", "TIMES RUN");
-		foreach(pts_installed_tests_array() as $identifier)
+		$installed_tests = pts_installed_tests_array();
+
+		if(count($installed_tests) == 0)
 		{
-			$installed_test = new pts_installed_test($identifier);
-
-			if($installed_test->get_installed_version() != null)
-			{
-				$avg_time = $installed_test->get_average_run_time();
-				$avg_time = !empty($avg_time) ? pts_format_time_string($avg_time, "SECONDS", false) : "N/A";
-
-				$last_run = $installed_test->get_last_run_date();
-				$last_run = $last_run == "0000-00-00" ? "NEVER" : $last_run;
-
-				printf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $installed_test->get_installed_version(), $installed_test->get_install_date(), $last_run, $avg_time, $installed_test->get_run_count());
-			}
+			echo "\nNo tests are currently installed.\n\n";
 		}
-		echo "\n";
+		else
+		{
+			printf("%-18ls   %-8ls %-13ls %-11ls %-13ls %-10ls\n", "TEST", "VERSION", "INSTALL DATE", "LAST RUN", "AVG RUN-TIME", "TIMES RUN");
+			foreach($installed_tests as $identifier)
+			{
+				$installed_test = new pts_installed_test($identifier);
+
+				if($installed_test->get_installed_version() != null)
+				{
+					$avg_time = $installed_test->get_average_run_time();
+					$avg_time = !empty($avg_time) ? pts_format_time_string($avg_time, "SECONDS", false) : "N/A";
+
+					$last_run = $installed_test->get_last_run_date();
+					$last_run = $last_run == "0000-00-00" ? "NEVER" : $last_run;
+
+					printf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $installed_test->get_installed_version(), $installed_test->get_install_date(), $last_run, $avg_time, $installed_test->get_run_count());
+				}
+			}
+			echo "\n";
+		}
 	}
 }
 

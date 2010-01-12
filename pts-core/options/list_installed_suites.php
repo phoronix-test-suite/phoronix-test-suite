@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,11 +25,20 @@ class list_installed_suites implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Installed Suites");
-		foreach(pts_installed_suites_array() as $identifier)
+		$installed_suites = pts_installed_suites_array();
+
+		if(count($installed_suites) == 0)
 		{
-		 	echo "- " . pts_suite_identifier_to_name($identifier) . "\n";
+			echo "\nNo tests / suites are currently installed.\n\n";
 		}
-		echo "\n";
+		else
+		{
+			foreach($installed_tests as $identifier)
+			{
+			 	echo "- " . pts_suite_identifier_to_name($identifier) . "\n";
+			}
+			echo "\n";
+		}
 	}
 }
 

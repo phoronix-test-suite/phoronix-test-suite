@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,9 +25,22 @@ class list_tests implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Tests");
+		$tests_to_display = array();
 		foreach(pts_available_tests_array() as $identifier)
 		{
 			if((pts_is_assignment("LIST_UNSUPPORTED") xor pts_test_supported($identifier)) || pts_is_assignment("LIST_ALL_TESTS"))
+			{
+				array_push($tests_to_display, $identifier);
+			}
+		}
+
+		if(count($tests_to_display) == 0)
+		{
+			echo "\nNo tests found.\n\n";
+		}
+		else
+		{
+			foreach($tests_to_display as $identifier)
 			{
 				$tp = new pts_test_profile($identifier);
 
@@ -40,8 +53,8 @@ class list_tests implements pts_option_interface
 					echo sprintf("%-18ls - %-36ls [%s, %10ls]\n", $identifier, $tp->get_test_title(), $tp->get_status(), $tp->get_license());
 				}
 			}
+			echo "\n";
 		}
-		echo "\n";
 	}
 }
 

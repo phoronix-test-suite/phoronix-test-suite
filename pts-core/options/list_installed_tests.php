@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,12 +25,21 @@ class list_installed_tests implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Installed Tests");
-		foreach(pts_installed_tests_array() as $identifier)
+		$installed_tests = pts_installed_tests_array();
+
+		if(count($installed_tests) == 0)
 		{
-			$xml_parser = new pts_test_tandem_XmlReader($identifier);
-		 	echo (($name = $xml_parser->getXMLValue(P_TEST_TITLE)) != false ? sprintf("%-18ls - %-30ls\n", $identifier, $name) : null);
+			echo "\nNo tests are currently installed.\n\n";
 		}
-		echo "\n";
+		else
+		{
+			foreach(pts_installed_tests_array() as $identifier)
+			{
+				$xml_parser = new pts_test_tandem_XmlReader($identifier);
+			 	echo (($name = $xml_parser->getXMLValue(P_TEST_TITLE)) != false ? sprintf("%-18ls - %-30ls\n", $identifier, $name) : null);
+			}
+			echo "\n";
+		}
 	}
 }
 
