@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	phodevi_windows_parser.php: General parsing functions specific to the Windows OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
 class phodevi_windows_parser
 {
-	public static function read_cpuz($section, $name)
+	public static function read_cpuz($section, $name, $match_multiple = false)
 	{
-		$return = false;
+		$return = $match_multiple ? array() : false;
 
 		if(is_executable("C:\Program Files\CPUID\CPU-Z\cpuz.exe"))
 		{
@@ -42,7 +42,9 @@ class phodevi_windows_parser
 				}
 			}
 
-			if(($s = strpos($cpuz_log, "\n" . $section)) !== false)
+			$s = 0;
+
+			while(($match_multiple || $s == 0) && ($s = strpos($cpuz_log, "\n" . $section, ($s + 1))) !== false)
 			{
 				$cpuz_section = substr($cpuz_log, $s);
 
@@ -54,14 +56,23 @@ class phodevi_windows_parser
 					}
 
 					$cpuz_section = substr($cpuz_section, $c, (strpos($cpuz_section, "\r\n", $c) - $c));
-					$return = substr($cpuz_section, strpos($cpuz_section, $name) + strlen($name));
+					$return_match = substr($cpuz_section, strpos($cpuz_section, $name) + strlen($name));
 
-					if(($e = strpos($return, "(")) !== false)
+					if(($e = strpos($return_match, "(")) !== false)
 					{
-						$return = substr($return, 0, $e);
+						$return_match = substr($return_match, 0, $e);
 					}
 
-					$return = trim($return);
+					$return_match = trim($return_match);
+
+					if($match_multiple)
+					{
+						array_push($return, $return_match);
+					}
+					else
+					{
+						$return = $return_match;
+					}
 				}
 			}
 		}

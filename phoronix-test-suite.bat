@@ -27,5 +27,6 @@ set PTS_MODE=CLIENT
 :: set PHP_BIN=C:\php-gtk2\php
 set PHP_BIN="C:\Program Files (x86)\PHP"\php
 
+cls
 %PHP_BIN% pts-core/phoronix-test-suite.php %*
 

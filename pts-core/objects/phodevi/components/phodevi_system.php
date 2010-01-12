@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -506,7 +506,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
-		else
+		else if(IS_LINUX || IS_BSD)
 		{
 			$fs = trim(shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null"));
 
@@ -568,6 +568,10 @@ class phodevi_system extends phodevi_device_interface
 					$fs = implode(" + ", $fs_r);
 				}
 			}
+		}
+		else if(IS_WINDOWS)
+		{
+			return null;
 		}
 
 		if(empty($fs))
@@ -912,6 +916,11 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_display_driver()
 	{
+		if(IS_WINDOWS)
+		{
+			return null;
+		}
+
 		$ddx_info = "";
 		$xorg_module_driver = phodevi::read_property("system", "dri-display-driver");
 

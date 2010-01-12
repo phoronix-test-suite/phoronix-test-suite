@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	phodevi_memory.php: The PTS Device Interface object for system memory
 
 	This program is free software; you can redistribute it and/or modify
@@ -84,8 +84,19 @@ class phodevi_memory extends phodevi_device_interface
 		}
 		else if(IS_WINDOWS)
 		{
-			$mem_size = array(phodevi::read_property("memory", "capacity") . "MB");
-			$mem_type = array(phodevi_windows_parser::read_cpuz("Memory Type", null));
+			$mem_size = phodevi_windows_parser::read_cpuz("DIMM #", "Size", true);
+
+			foreach($mem_size as $key => &$individual_size)
+			{
+				$individual_size = pts_first_element_in_array(explode(' ', $individual_size));
+
+				if(!is_numeric($individual_size))
+				{
+					unset($mem_size[$key]);
+				}				
+			}
+
+			$mem_type = phodevi_windows_parser::read_cpuz("Memory Type", null);
 			$mem_speed = intval(phodevi_windows_parser::read_cpuz("Memory Frequency", null)) . "MHz";
 		}
 		else if(IS_LINUX)

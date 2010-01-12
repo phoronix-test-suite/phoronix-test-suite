@@ -301,7 +301,7 @@ function pts_http_stream_context_create($http_parameters = null, $proxy_address 
 		$http_parameters["http"]["request_fulluri"] = true;
 	}
 
-	$http_parameters["http"]["timeout"] = 8;
+	$http_parameters["http"]["timeout"] = 12;
 
 	$stream_context = stream_context_create($http_parameters);
 
