@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phodevi: Windows improvements
+- pts: Result reporting fix for specviewperf10 test profile
 
 Phoronix Test Suite 2.4 Alpha 3
 December 22, 2009
