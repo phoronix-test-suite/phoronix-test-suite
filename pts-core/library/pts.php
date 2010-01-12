@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts.php: Version information for the Phoronix Test Suite.
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 error_reporting(E_ERROR | E_STRICT);
 
 define("PTS_VERSION", "2.4.0a3");
-define("PTS_BUILD_INT", 2330);
+define("PTS_BUILD_INT", 2331);
 define("PTS_CODENAME", "LENVIK");
 
 function pts_codename($full_string = false)

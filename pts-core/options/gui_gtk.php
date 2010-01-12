@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -1428,7 +1428,7 @@ class gui_gtk implements pts_option_interface
 
 		pts_gtk_array_to_boxes($window, array($logo,
 			new pts_gtk_label(ucwords(strtolower(PTS_CODENAME)), "Sans 19"), $label_version, $event_box,
-			new pts_gtk_label("Copyright (C) 2008 - 2009 By Phoronix Media\nCopyright (C) 2008 - 2009 By Michael Larabel", "Sans 9")), 8);
+			new pts_gtk_label("Copyright (C) 2008 - 2010 By Phoronix Media\nCopyright (C) 2008 - 2010 By Michael Larabel", "Sans 9")), 8);
 
 		$window->show_all();
 		Gtk::main();
