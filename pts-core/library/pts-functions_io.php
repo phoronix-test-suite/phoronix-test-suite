@@ -155,11 +155,14 @@ function pts_string_header($heading, $char = '=')
 		}
 	}
 
-	$terminal_width = trim(shell_exec("tput cols 2>&1"));
-
-	if(is_numeric($terminal_width) && $header_size > $terminal_width && $terminal_width > 1)
+	if(!IS_WINDOWS)
 	{
-		$header_size = $terminal_width;
+		$terminal_width = trim(shell_exec("tput cols 2>&1"));
+
+		if(is_numeric($terminal_width) && $header_size > $terminal_width && $terminal_width > 1)
+		{
+			$header_size = $terminal_width;
+		}
 	}
 
 	return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts-includes-gui.php: Generic functions frequently needed for a GUI front-end
 
 	This program is free software; you can redistribute it and/or modify
@@ -28,11 +28,23 @@ function pts_gui_installed_suites()
 
 	return $installed_suites;
 }
-function pts_gui_process_show_test($identifier, $dependency_limit, $downloads_limit)
+function pts_gui_process_show_test($identifier, $dependency_limit, $downloads_limit, $license_types)
 {
 	$show = true;
 
-	if($dependency_limit != null)
+	if(is_array($license_types))
+	{
+		$license_types = array_map("strtoupper", $license_types);
+		$tp = new pts_test_profile($identifier);
+		$license = $tp->get_license();
+
+		if(!empty($license) && !in_array($license, $license_types))
+		{
+			$show = false;
+		}
+	}
+
+	if($show && $dependency_limit != null)
 	{
 		$dependencies_satisfied = pts_test_external_dependencies_satisfied($identifier);
 
@@ -64,9 +76,8 @@ function pts_gui_process_show_test($identifier, $dependency_limit, $downloads_li
 
 	return $show;
 }
-function pts_gui_available_suites($to_show_types, $license_types = "", $dependency_limit = null, $downloads_limit = null)
+function pts_gui_available_suites($to_show_types, $license_types = null, $dependency_limit = null, $downloads_limit = null)
 {
-	// TODO: Right now a suite could include both free/non-free tests, so $license_types needs to be decided
 	$test_suites = pts_supported_suites_array();
 	$to_show_names = array();
 
@@ -77,7 +88,7 @@ function pts_gui_available_suites($to_show_types, $license_types = "", $dependen
 
 		if(empty($hw_type) || in_array($hw_type, $to_show_types))
 		{
-			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit))
+			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit, $license_types))
 			{
 				array_push($to_show_names, $name);
 			}
@@ -116,17 +127,15 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 {
 	$test_names = pts_supported_tests_array();
 	$to_show_names = array();
-	$license_types = array_map("strtoupper", $license_types);
 
 	foreach($test_names as &$name)
 	{
 		$tp = new pts_test_profile($name);
 		$hw_type = $tp->get_test_hardware_type();
-		$license = $tp->get_license();
 
-		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->is_verified_state())
+		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && $tp->is_verified_state())
 		{
-			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit))
+			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit, $license_types))
 			{
 				array_push($to_show_names, $name);
 			}

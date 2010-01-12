@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: When using the GTK2 GUI, support handling license type for suites
 - pts-core: Improve reporting of empty lists and other areas
 - phodevi: Windows improvements
 - pts: Result reporting fix for specviewperf10 test profile
