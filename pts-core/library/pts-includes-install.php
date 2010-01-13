@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-includes-install.php: Functions needed for installing tests for PTS.
 
 	This program is free software; you can redistribute it and/or modify
@@ -77,7 +77,7 @@ function pts_start_install($to_install, &$display_mode)
 	foreach($tests as $i => $test)
 	{
 		pts_set_assignment("TEST_INSTALL_POSITION", ($i + 1));
-		pts_install_test($display_mode, $test, $failed_installs);
+		pts_install_test($test, $display_mode, $failed_installs);
 	}
 	pts_module_process("__post_install_process", $tests);
 
@@ -114,7 +114,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 		foreach(pts_test_download_cache_directories() as $dc_directory)
 		{
-			if(strpos($dc_directory, "://") > 0 && ($xml_dc_file = @file_get_contents($dc_directory . "pts-download-cache.xml")) != false)
+			if(strpos($dc_directory, "://") > 0 && ($xml_dc_file = pts_http_get_contents($dc_directory . "pts-download-cache.xml")) != false)
 			{
 				$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
 				$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
@@ -129,12 +129,6 @@ function pts_download_test_files($identifier, &$display_mode)
 			{
 				array_push($local_cache_directories, $dc_directory);
 			}
-		}
-
-		if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_download_size($identifier) + 50))
-		{
-			echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
-			return false;
 		}
 
 		$module_pass = array($identifier, $download_packages);
@@ -401,7 +395,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 		pts_symlink($xauth_file, TEST_ENV_DIR . $identifier . "/.Xauthority");
 	}
 }
-function pts_install_test(&$display_mode, $identifier, &$failed_installs)
+function pts_install_test($identifier, &$display_mode, &$failed_installs)
 {
 	if(!pts_is_test($identifier))
 	{
@@ -425,6 +419,10 @@ function pts_install_test(&$display_mode, $identifier, &$failed_installs)
 	else if(($e = getenv("SKIP_TESTS")) != false && in_array($identifier, explode(",", $e)))
 	{
 		echo pts_string_header($identifier . " is being skipped from the installation process.");
+	}
+	else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_download_size($identifier) + 50))
+	{
+		echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
 	}
 	else
 	{
