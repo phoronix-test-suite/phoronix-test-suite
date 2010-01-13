@@ -495,7 +495,7 @@ class gui_gtk implements pts_option_interface
 		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 		{
 			$identifier = pts_suite_name_to_identifier($identifier);
-			$test_suite = new pts_test_suite_details($identifier);
+			$test_suite = new pts_test_suite($identifier);
 
 			$info_r["Maintainer"] = $test_suite->get_maintainer();
 			$info_r["Suite Type"] = $test_suite->get_suite_type();

@@ -35,12 +35,17 @@ function pts_gui_process_show_test($identifier, $dependency_limit, $downloads_li
 	if(is_array($license_types))
 	{
 		$license_types = array_map("strtoupper", $license_types);
-		$tp = new pts_test_profile($identifier);
-		$license = $tp->get_license();
 
-		if(!empty($license) && !in_array($license, $license_types))
+		foreach(pts_contained_tests($identifier) as $contained_test)
 		{
-			$show = false;
+			$tp = new pts_test_profile($contained_test);
+			$license = $tp->get_license();
+
+			if(!empty($license) && !in_array($license, $license_types))
+			{
+				$show = false;
+				break;
+			}
 		}
 	}
 
@@ -83,7 +88,7 @@ function pts_gui_available_suites($to_show_types, $license_types = null, $depend
 
 	foreach($test_suites as &$name)
 	{
-		$ts = new pts_test_suite_details($name);
+		$ts = new pts_test_suite($name);
 		$hw_type = $ts->get_suite_type();
 
 		if(empty($hw_type) || in_array($hw_type, $to_show_types))

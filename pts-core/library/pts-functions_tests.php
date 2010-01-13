@@ -746,7 +746,7 @@ function pts_supported_suites_array()
 
 		foreach(pts_available_suites_array() as $identifier)
 		{
-			$suite = new pts_test_suite_details($identifier);
+			$suite = new pts_test_suite($identifier);
 
 			if(!$suite->not_supported())
 			{

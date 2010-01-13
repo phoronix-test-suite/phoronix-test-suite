@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,32 +25,41 @@ class list_suites implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Suites");
-		$has_partially_supported_suite = false;
-		foreach(pts_available_suites_array() as $identifier)
+		$available_suites = pts_available_suites_array();
+
+		if(count($available_suites) == 0)
 		{
-			$suite_info = new pts_test_suite_details($identifier);
-
-			if(!$has_partially_supported_suite && $suite_info->partially_supported())
-			{
-				$has_partially_supported_suite = true;
-			}
-
-			if(!$suite_info->not_supported())
-			{
-				if(getenv("PTS_DEBUG"))
-				{
-					echo sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $suite_info->get_identifier_prefix() . " " . $identifier, $suite_info->get_name(), $suite_info->get_version(), $suite_info->get_suite_type());
-				}
-				else if($suite_info->get_name() != null)
-				{
-					echo sprintf("%-24ls - %-32ls [Type: %s]\n", $suite_info->get_identifier_prefix() . " " . $identifier, $suite_info->get_name(), $suite_info->get_suite_type());
-				}
-			}
+			echo "\nNo suites are available.\n\n";
 		}
-		echo "\n";
-		if($has_partially_supported_suite)
+		else
 		{
-			echo "* Indicates a partially supported suite.\n\n";
+			$has_partially_supported_suite = false;
+			foreach($available_suites as $identifier)
+			{
+				$suite_info = new pts_test_suite($identifier);
+
+				if(!$has_partially_supported_suite && $suite_info->partially_supported())
+				{
+					$has_partially_supported_suite = true;
+				}
+
+				if(!$suite_info->not_supported())
+				{
+					if(getenv("PTS_DEBUG"))
+					{
+						echo sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $suite_info->get_identifier_prefix() . " " . $identifier, $suite_info->get_name(), $suite_info->get_version(), $suite_info->get_suite_type());
+					}
+					else if($suite_info->get_name() != null)
+					{
+						echo sprintf("%-24ls - %-32ls [Type: %s]\n", $suite_info->get_identifier_prefix() . " " . $identifier, $suite_info->get_name(), $suite_info->get_suite_type());
+					}
+				}
+			}
+			echo "\n";
+			if($has_partially_supported_suite)
+			{
+				echo "* Indicates a partially supported suite.\n\n";
+			}
 		}
 	}
 }

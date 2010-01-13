@@ -29,7 +29,7 @@ class info implements pts_option_interface
 
 		if(pts_is_suite($to_info))
 		{
-			$suite = new pts_test_suite_details($to_info);
+			$suite = new pts_test_suite($to_info);
 			echo pts_string_header($suite->get_name());
 			echo "Suite Version: " . $suite->get_version() . "\n";
 			echo "Maintainer: " . $suite->get_maintainer() . "\n";

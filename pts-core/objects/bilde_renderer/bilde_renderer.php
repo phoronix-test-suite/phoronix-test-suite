@@ -270,7 +270,7 @@ abstract class bilde_renderer
 
 			if($predefined_string)
 			{
-				$box_array = imagettfbbox($font_size, 0, $font_type, "AZ@![]()@|_qy");
+				$box_array = imagettfbbox($font_size, 0, $font_type, "JAZ@![]()@|_qy");
 			}
 
 			$box_height = $box_array[1] - $box_array[7];
