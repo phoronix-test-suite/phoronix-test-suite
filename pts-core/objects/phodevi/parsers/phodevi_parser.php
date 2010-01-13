@@ -35,8 +35,12 @@ class phodevi_parser
 			if(($pos = strpos($info, pts_last_string_in_string($attribute, '/'))) > 0 && strpos($info, "ERROR:") === false)
 			{
 				$nv_info = substr($info, strpos($info, "):") + 3);
-				$nv_info = substr($nv_info, 0, strpos($nv_info, "\n"));
-				$nv_info = trim(substr($nv_info, 0, strrpos($nv_info, ".")));
+				$nv_info = trim(substr($nv_info, 0, strpos($nv_info, "\n")));
+
+				if(substr($nv_info, -1) == '.')
+				{
+					$nv_info = substr($nv_info, 0, -1);
+				}
 			}
 		}
 

@@ -238,8 +238,8 @@ class phodevi
 
 		// OpenGL / graphics detection
 		$graphics_detection = array("NVIDIA", array("ATI", "fglrx"), array("Mesa", "SGI"));
-		$opengl_driver = phodevi::read_property("system", "opengl-driver") . " " . phodevi::read_property("system", "opengl-vendor") . " " . phodevi::read_property("system", "dri-display-driver");
-		$opengl_driver = str_replace("Corporation", "", $opengl_driver); // Prevents a possible false positive for ATI being in CorporATIon
+		$opengl_driver = phodevi::read_property("system", "opengl-vendor") . " " . phodevi::read_property("system", "opengl-driver") . " " . phodevi::read_property("system", "dri-display-driver");
+		$opengl_driver = trim(str_replace("Corporation", "", $opengl_driver)); // Prevents a possible false positive for ATI being in CorporATIon
 		$found_gpu_match = false;
 
 		foreach($graphics_detection as $gpu_check)

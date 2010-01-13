@@ -964,12 +964,20 @@ class phodevi_system extends phodevi_device_interface
 						}
 						break;
 					case "nvidia":
-						// NVIDIA's binary driver appends their driver version on the end of the OpenGL version string
-						$glxinfo = phodevi_parser::software_glxinfo_version();
-
-						if(($pos = strpos($glxinfo, 'NVIDIA ')) != false)
+						// NVIDIA's binary driver usually ends up reporting 1.0.0
+						if(($nvs_value = phodevi_parser::read_nvidia_extension("NvidiaDriverVersion")))
 						{
-							$driver_version = substr($glxinfo, ($pos + 7));
+							$driver_version = $nvs_value;
+						}
+						else
+						{
+							// NVIDIA's binary driver appends their driver version on the end of the OpenGL version string
+							$glxinfo = phodevi_parser::software_glxinfo_version();
+
+							if(($pos = strpos($glxinfo, 'NVIDIA ')) != false)
+							{
+								$driver_version = substr($glxinfo, ($pos + 7));
+							}
 						}
 						break;
 				}
@@ -1013,7 +1021,7 @@ class phodevi_system extends phodevi_device_interface
 				$info = substr($info, 0, $pos);
 			}
 		}
-		else if(IS_BSD && phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%driver") && pts_executable_in_path("nvidia-settings"))
+		else if((IS_NVIDIA_LINUX || (IS_BSD && phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%driver"))) && pts_executable_in_path("nvidia-settings"))
 		{
 			$info = phodevi_parser::read_nvidia_extension("OpenGLVersion");
 		}
@@ -1038,6 +1046,10 @@ class phodevi_system extends phodevi_device_interface
 				$info = substr($info, $pos + 22);
 				$info = trim(substr($info, 0, strpos($info, "\n")));
 			}
+		}
+		else if(is_readable("/dev/nvidia0"))
+		{
+			$info = "NVIDIA";
 		}
 		else if(IS_BSD && phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%driver"))
 		{
