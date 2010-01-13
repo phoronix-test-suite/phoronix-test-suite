@@ -374,7 +374,7 @@ class run_test implements pts_option_interface
 			pts_module_process("__event_results_process", $xml_results_writer);
 			pts_save_test_file($xml_results_writer, $file_name);
 			pts_module_process("__event_results_saved", $file_name);
-			echo "Results Saved To: " . SAVE_RESULTS_DIR . $file_name . "/composite.xml\n";
+			echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $file_name . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $file_name);
 			pts_display_web_browser(SAVE_RESULTS_DIR . $file_name . "/index.html");
 

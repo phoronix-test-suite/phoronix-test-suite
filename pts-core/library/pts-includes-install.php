@@ -431,131 +431,132 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 	{
 		echo pts_string_header($identifier . " is being skipped from the installation process.");
 	}
-	else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_download_size($identifier) + 50))
+	else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_download_size($identifier) + 64))
 	{
-		echo pts_string_header("There is not enough space (at " . TEST_ENV_DIR . ") for this test.");
+		echo pts_string_header("There is not enough space at " . TEST_ENV_DIR . " for the test files.");
+	}
+	else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_environment_size($identifier) + 64))
+	{
+		echo pts_string_header("There is not enough space at " . TEST_ENV_DIR . " for this test.");
 	}
 	else
 	{
-		$custom_validated_output = trim(pts_call_test_script($identifier, "validate-install", "\nValidating Installation...\n", TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false));
+		$install_time_length = 0;
 
-		if(!empty($custom_validated_output) && !pts_string_bool($custom_validated_output))
+		if(pts_test_needs_updated_install($identifier))
 		{
-			$installed = false;
-		}
-		else
-		{
-			if(pts_test_needs_updated_install($identifier))
+			pts_setup_install_test_directory($identifier, true);
+			$display_mode->test_install_start($identifier);
+
+			// Download test files
+			$download_test_files = pts_download_test_files($identifier, $display_mode);
+
+			if($download_test_files == false)
 			{
-				pts_setup_install_test_directory($identifier, true);
-				$display_mode->test_install_start($identifier);
-				$download_test_files = pts_download_test_files($identifier, $display_mode);
+				echo "\nInstallation of " . $identifier . " test failed.\n";
+				array_push($failed_installs, $identifier);
+				return false;
+			}
 
-				if($download_test_files == false)
+			if(is_file(pts_location_test_resources($identifier) . "install.sh") || is_file(pts_location_test_resources($identifier) . "install.php"))
+			{
+				pts_module_process("__pre_test_install", $identifier);
+				$display_mode->test_install_process($identifier);
+
+				$xml_parser = new pts_test_tandem_XmlReader($identifier);
+				$pre_install_message = $xml_parser->getXMLValue(P_TEST_PREINSTALLMSG);
+				$post_install_message = $xml_parser->getXMLValue(P_TEST_POSTINSTALLMSG);
+				$install_agreement = $xml_parser->getXMLValue(P_TEST_INSTALLAGREEMENT);
+
+				if(!empty($install_agreement))
 				{
-					echo "\nInstallation of " . $identifier . " test failed.\n";
-					array_push($failed_installs, $identifier);
-					return false;
-				}
-
-				$install_time_length = 0;
-
-				if(is_file(pts_location_test_resources($identifier) . "install.sh") || is_file(pts_location_test_resources($identifier) . "install.php"))
-				{
-					pts_module_process("__pre_test_install", $identifier);
-					$display_mode->test_install_process($identifier);
-
-					if(!empty($size) && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $size)
+					if(substr($install_agreement, 0, 7) == "http://")
 					{
-						echo "\nThere is not enough space (at " . TEST_ENV_DIR . ") for this test to be installed.\n";
+						$install_agreement = pts_http_get_contents($install_agreement);
+
+						if(empty($install_agreement))
+						{
+							echo "\nThe user agreement could not be found. Test installation aborted.\n";
+							return false;
+						}
+					}
+
+					echo $install_agreement . "\n";
+					$user_agrees = pts_bool_question("Do you agree to these terms (y/N)?", false, "INSTALL_AGREEMENT");
+
+					if(!$user_agrees)
+					{
+						echo "\n" . $identifier . " will not be installed.\n";
 						return false;
 					}
-
-					$xml_parser = new pts_test_tandem_XmlReader($identifier);
-					$pre_install_message = $xml_parser->getXMLValue(P_TEST_PREINSTALLMSG);
-					$post_install_message = $xml_parser->getXMLValue(P_TEST_POSTINSTALLMSG);
-					$install_agreement = $xml_parser->getXMLValue(P_TEST_INSTALLAGREEMENT);
-
-					if(!empty($install_agreement))
-					{
-						if(substr($install_agreement, 0, 7) == "http://")
-						{
-							$install_agreement = pts_http_get_contents($install_agreement);
-
-							if(empty($install_agreement))
-							{
-								echo "\nThe user agreement could not be found. Test installation aborted.\n";
-								return false;
-							}
-						}
-
-						echo $install_agreement . "\n";
-						$user_agrees = pts_bool_question("Do you agree to these terms (y/N)?", false, "INSTALL_AGREEMENT");
-
-						if(!$user_agrees)
-						{
-							echo "\n" . $identifier . " will not be installed.\n";
-							return false;
-						}
-					}
-
-					pts_user_message($pre_install_message);
-					$install_time_length_start = time();
-					$install_log = pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
-					$install_time_length = time() - $install_time_length_start;
-					pts_user_message($post_install_message);
-
-					if(!empty($install_log))
-					{
-						file_put_contents(TEST_ENV_DIR . $identifier . "/install.log", $install_log);
-						pts_unlink(TEST_ENV_DIR . $identifier . "/install-failed.log");
-						$display_mode->test_install_output($install_log);
-					}
-
-					if(is_file(TEST_ENV_DIR . $identifier . "/install-exit-status"))
-					{
-						// If the installer writes its exit status to ~/install-exit-status, if it's non-zero the install failed
-						$install_exit_status = pts_file_get_contents(TEST_ENV_DIR . $identifier . "/install-exit-status");
-						unlink(TEST_ENV_DIR . $identifier . "/install-exit-status");
-
-						if($install_exit_status != 0 && !IS_BSD)
-						{
-							// TODO: perhaps better way to handle this than to remove pts-install.xml
-							pts_unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
-							pts_copy(TEST_ENV_DIR . $identifier . "/install.log", TEST_ENV_DIR . $identifier . "/install-failed.log");
-							pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
-
-							echo "\nThe " . $identifier . " installer exited with a non-zero exit status.\nInstallation Log: " . TEST_ENV_DIR . $identifier . "/install-failed.log\nInstallation failed.\n";
-							array_push($failed_installs, $identifier);
-							return false;
-						}
-					}
-
-					pts_module_process("__post_test_install", $identifier);
-					$installed = true;
-
-					if(pts_string_bool(pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
-					{
-						pts_remove_local_download_test_files($identifier); // Remove original downloaded files
-					}
 				}
-				else
+
+				pts_user_message($pre_install_message);
+				$install_time_length_start = time();
+				$install_log = pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
+				$install_time_length = time() - $install_time_length_start;
+				pts_user_message($post_install_message);
+
+				if(!empty($install_log))
 				{
-					if(!pts_is_base_test($identifier))
-					{
-						echo "No installation script found for " . $identifier . "\n";
-					}
-
-					$installed = true;
+					file_put_contents(TEST_ENV_DIR . $identifier . "/install.log", $install_log);
+					pts_unlink(TEST_ENV_DIR . $identifier . "/install-failed.log");
+					$display_mode->test_install_output($install_log);
 				}
 
-				pts_test_update_install_xml($identifier, $install_time_length, true);
-				echo "\n";
+				if(is_file(TEST_ENV_DIR . $identifier . "/install-exit-status"))
+				{
+					// If the installer writes its exit status to ~/install-exit-status, if it's non-zero the install failed
+					$install_exit_status = pts_file_get_contents(TEST_ENV_DIR . $identifier . "/install-exit-status");
+					unlink(TEST_ENV_DIR . $identifier . "/install-exit-status");
+
+					if($install_exit_status != 0 && !IS_BSD && !IS_WINDOWS)
+					{
+						// TODO: perhaps better way to handle this than to remove pts-install.xml
+						pts_unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
+						pts_copy(TEST_ENV_DIR . $identifier . "/install.log", TEST_ENV_DIR . $identifier . "/install-failed.log");
+						pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
+
+						echo "\nThe " . $identifier . " installer exited with a non-zero exit status.\nInstallation Log: " . TEST_ENV_DIR . $identifier . "/install-failed.log\nInstallation failed.\n";
+						array_push($failed_installs, $identifier);
+						return false;
+					}
+				}
+
+				pts_module_process("__post_test_install", $identifier);
+				$installed = true;
+
+				if(pts_string_bool(pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
+				{
+					// Remove original downloaded files
+					pts_remove_local_download_test_files($identifier);
+				}
 			}
 			else
 			{
+				if(!pts_is_base_test($identifier))
+				{
+					echo "No installation script found for " . $identifier . "\n";
+				}
 				$installed = true;
 			}
+
+			// Additional validation checks?
+			$custom_validated_output = pts_call_test_script($identifier, "validate-install", "\nValidating Installation...\n", TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
+			if(!empty($custom_validated_output) && !pts_string_bool($custom_validated_output))
+			{
+				$installed = false;
+			}
+		}
+		else
+		{
+			$installed = true;
+		}
+
+		if($installed)
+		{
+			pts_test_update_install_xml($identifier, $install_time_length, true);
+			echo "\n";
 		}
 	}
 
