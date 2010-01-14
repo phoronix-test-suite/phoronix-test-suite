@@ -388,7 +388,7 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(IS_LINUX)
 		{
-			foreach(pts_glob("/sys/class/hwmon/hwmon*/fan1_input") as $fan_input_file)
+			foreach(array_merge(pts_glob("/sys/class/hwmon/hwmon*/fan1_input"), pts_glob("/sys/class/hwmon/hwmon*/device/fan1_input")) as $fan_input_file)
 			{
 				$fan_input = pts_file_get_contents($fan_input_file);
 
