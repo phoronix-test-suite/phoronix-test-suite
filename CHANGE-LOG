@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Cleanup test installation code
 - phodevi: Windows improvements
 - phodevi: Improve NVIDIA binary driver detection without glxinfo
+- phodevi: Improve Mesa/DRI driver detection without glxinfo
 - phodevi: Rework the screen resolution detection code for Linux/BSD/OpenSolaris code paths
 - phodevi: Support reading the CPU fan speed for more systems
 - pts: Result reporting fix for specviewperf10 test profile

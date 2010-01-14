@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ class diagnostics implements pts_option_interface
 		$pts_defined_constants = get_defined_constants(true);
 		foreach($pts_defined_constants["user"] as $constant => $constant_value)
 		{
-			if(!in_array(substr($constant, 0, 2), array("P_", "S_")) && substr($constant, 0, 3) != "IS_" && substr($constant, 0, 5) != "TYPE_")
+			if($r[0] == "full" || (!in_array(substr($constant, 0, 2), array("P_", "S_")) && substr($constant, 0, 3) != "IS_" && substr($constant, 0, 5) != "TYPE_"))
 			{
 				echo $constant . " = " . $constant_value . "\n";
 			}

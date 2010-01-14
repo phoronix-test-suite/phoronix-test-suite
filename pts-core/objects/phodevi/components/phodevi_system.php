@@ -1051,6 +1051,10 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$info = "NVIDIA";
 		}
+		else if(is_readable("/dev/dri/card0"))
+		{
+			$info = "Mesa";
+		}
 		else if(IS_BSD && phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%driver"))
 		{
 			$info = "NVIDIA";
