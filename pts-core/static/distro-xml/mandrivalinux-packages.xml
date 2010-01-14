@@ -32,7 +32,7 @@
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
-			<PackageName>x11-devel</PackageName>
+			<PackageName>libxorg-x11-devel</PackageName>
 			<FileCheck>/usr/include/xorg, /usr/include/GL/glut.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
 		</Package>
 		<Package>

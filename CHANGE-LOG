@@ -8,6 +8,8 @@ Phoronix Test Suite (Git)
 - pts-core: When copying a MD5-matched file from a local PTS download cache, still verify that the MD5 of the copied file matches
 - pts-core: Cleanup test installation code
 - phodevi: Windows improvements
+- phodevi: Improve NVIDIA binary driver detection without glxinfo
+- phodevi: Rework the screen resolution detection code for Linux/BSD/OpenSolaris code paths
 - pts: Result reporting fix for specviewperf10 test profile
 
 Phoronix Test Suite 2.4 Alpha 3

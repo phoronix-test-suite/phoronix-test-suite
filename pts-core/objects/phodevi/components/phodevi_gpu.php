@@ -293,34 +293,47 @@ class phodevi_gpu extends phodevi_device_interface
 	}
 	public static function gpu_screen_resolution()
 	{
+		$resolution = false;
+
 		if(IS_MACOSX)
 		{
+			$info = pts_trim_explode(' ', phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution"));
 			$resolution = array();
-			$info = pts_trim_explode(" ", phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution"));
 			$resolution[0] = $info[0];
 			$resolution[1] = $info[2];
 		}
-		else
+		else if(IS_LINUX || IS_BSD || IS_SOLARIS)
 		{
 			// Before calling xrandr first try to get the resolution through KMS path
-			foreach(pts_glob("/sys/class/drm/card*/*/modes") as $connector_path)
+			if(IS_LINUX)
 			{
-				$connector_path = pts_add_trailing_slash(dirname($connector_path));
-
-				if(is_file($connector_path . "enabled") && pts_file_get_contents($connector_path . "enabled") == "enabled")
+				foreach(pts_glob("/sys/class/drm/card*/*/modes") as $connector_path)
 				{
-					$info = explode("x", pts_file_get_contents($connector_path . "modes"));
+					$connector_path = pts_add_trailing_slash(dirname($connector_path));
 
-					if(count($info) == 2)
+					if(is_file($connector_path . "enabled") && pts_file_get_contents($connector_path . "enabled") == "enabled")
 					{
-						break;
-					}
+						$mode = pts_first_element_in_array(explode("\n", pts_file_get_contents($connector_path . "modes")));
+						$info = pts_trim_explode('x', $mode);
 
-					$info = array();
+						if(count($info) == 2)
+						{
+							$resolution = $info;
+							break;
+						}
+					}
 				}
 			}
 
-			if(!isset($info) || empty($info))
+			if($resolution == false && IS_NVIDIA_GRAPHICS)
+			{
+				if(($frontend_res = phodevi_parser::read_nvidia_extension("FrontendResolution")) != false)
+				{
+					$resolution = explode(',', $frontend_res);
+				}
+			}
+
+			if($resolution == false && pts_executable_in_path("xrandr"))
 			{
 				$info = shell_exec("xrandr 2>&1 | grep \"*\"");
 
@@ -331,30 +344,15 @@ class phodevi_gpu extends phodevi_device_interface
 					$res[1] = substr($res[1], 0, strpos($res[1], " "));
 					$res = array_map("trim", $res);
 
-					$info = is_numeric($res[0]) && is_numeric($res[1]) ? array($res[0], $res[1]) : null;
-				}
-				else
-				{
-					$info = null;
-				}
-
-				if($info == null)
-				{
-					if(IS_NVIDIA_GRAPHICS && ($nvidia = phodevi_parser::read_nvidia_extension("FrontendResolution")) != "")
+					if(is_numeric($res[0]) && is_numeric($res[1]))
 					{
-						$info = explode(",", $nvidia);
-					}
-					else
-					{
-						$info = array(-1, -1);
+						$resolution = array($res[0], $res[1]);
 					}
 				}
 			}
-
-			$resolution = $info;
 		}
 
-		return $resolution;
+		return $resolution == false ? array(-1, -1) : $resolution;
 	}
 	public static function gpu_screen_resolution_string()
 	{
