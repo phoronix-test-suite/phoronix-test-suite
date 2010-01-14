@@ -467,7 +467,7 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
-		return str_replace(" ", "", strtolower($vendor));
+		return str_replace(array(' ', '/'), '', strtolower($vendor));
 	}
 	public static function sw_filesystem()
 	{

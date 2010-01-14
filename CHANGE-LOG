@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support reading from a remote PTS download cache via proxy
 - pts-core: When copying a MD5-matched file from a local PTS download cache, still verify that the MD5 of the copied file matches
 - pts-core: Cleanup test installation code
+- pts-core: Initial support for Debian's GNU/kFreeBSD
 - phodevi: Windows improvements
 - phodevi: Improve NVIDIA binary driver detection without glxinfo
 - phodevi: Improve Mesa/DRI driver detection without glxinfo

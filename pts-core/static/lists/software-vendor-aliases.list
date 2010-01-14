@@ -9,6 +9,7 @@ gnewsense = ubuntu
 fluxbuntu = ubuntu
 mythbuntu = ubuntu
 goobuntu = ubuntu
+gnukfreebsd = ubuntu
 dragonfly = netbsd
 moblin = fedora
 centos = fedora
