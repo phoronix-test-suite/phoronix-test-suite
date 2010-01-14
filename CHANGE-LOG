@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.4 Beta 1
+January 14, 2010
 
 - pts-core: When using the GTK2 GUI, support handling license type for suites
 - pts-core: Improve reporting of empty lists and other areas
