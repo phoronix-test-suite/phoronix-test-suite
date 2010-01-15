@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts_Graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -247,34 +247,47 @@ abstract class pts_Graph
 	}
 	protected function maximum_graph_value()
 	{
-		$maximum = 0;
+		$real_maximum = 0;
 
 		foreach($this->graph_data as $graph_set)
 		{
 			foreach($graph_set as $set_item)
 			{
-				if((is_numeric($set_item) && $set_item > $maximum) || (!is_numeric($set_item) && strlen($set_item) > strlen($maximum)))
+				if((is_numeric($set_item) && $set_item > $real_maximum) || (!is_numeric($set_item) && strlen($set_item) > strlen($real_maximum)))
 				{
-					$maximum = $set_item;
+					$real_maximum = $set_item;
 				}
 			}
 		}
 
-		if(is_numeric($maximum))
+		if(is_numeric($real_maximum))
 		{
 			// disable forcing 100 top when display Percent
-			if(false && $maximum <= 100 && $this->graph_y_title == "Percent")
+			if(false && $real_maximum <= 100 && $this->graph_y_title == "Percent")
 			{
 				$maximum = (ceil(100 / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
 			}
-			else if($maximum < $this->graph_attr_marks)
+			else if($real_maximum < $this->graph_attr_marks)
 			{
-				$maximum = $maximum * 1.35;
+				$maximum = $real_maximum * 1.35;
 			}
 			else
 			{
-				$maximum = (floor(round($maximum * 1.35) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+				$maximum = (floor(round($real_maximum * 1.35) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+
+				if($real_maximum > 100)
+				{
+					$round_num = 1 . str_repeat('0', strlen($maximum) - 2);
+					if(($maximum / $this->graph_attr_marks) % $round_num != 0)
+					{
+						$maximum += ($round_num - (($maximum / $this->graph_attr_marks) % $round_num)) * $this->graph_attr_marks;
+					}
+				}
 			}
+		}
+		else
+		{
+			$maximum = 0;
 		}
 
 		return $maximum;
