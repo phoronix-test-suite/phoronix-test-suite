@@ -109,27 +109,9 @@ function pts_download_test_files($identifier, &$display_mode)
 
 	if(count($download_packages) > 0)
 	{
-		$remote_download_files = array();
-		$local_cache_directories = array();
-
-		foreach(pts_test_download_cache_directories() as $dc_directory)
-		{
-			if(strpos($dc_directory, "://") > 0 && ($xml_dc_file = pts_http_get_contents($dc_directory . "pts-download-cache.xml")) != false)
-			{
-				$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
-				$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
-				$dc_md5 = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_MD5);
-
-				for($i = 0; $i < count($dc_file); $i++)
-				{
-					array_push($remote_download_files, new pts_test_file_download($dc_directory . $dc_file[$i], $dc_file[$i], 0, $dc_md5[$i]));
-				}
-			}
-			else
-			{
-				array_push($local_cache_directories, $dc_directory);
-			}
-		}
+		$remote_download_files = pts_test_download_cache_remote_files();
+		$local_cache_directories = pts_test_download_cache_local_directories();
+		$download_location = TEST_ENV_DIR . $identifier . "/";
 
 		$module_pass = array($identifier, $download_packages);
 		pts_module_process("__pre_test_download", $module_pass);
@@ -160,7 +142,6 @@ function pts_download_test_files($identifier, &$display_mode)
 		// Get the missing packages
 		foreach($download_packages as &$download_package)
 		{
-			$download_location = TEST_ENV_DIR . $identifier . "/";
 			$package_filename = $download_package->get_filename();
 			$package_md5 = $download_package->get_md5();
 			$urls = $download_package->get_download_url_array();
@@ -169,31 +150,25 @@ function pts_download_test_files($identifier, &$display_mode)
 			$download_destination = $download_location . $package_filename;
 			$download_destination_temp = $download_location . $package_filename_temp;
 
-			$found_in_remote_cache = false;
-			foreach($remote_download_files as &$download_file)
+			// Check to see if the file can be downloaded from a remote download cache
+			if(isset($remote_download_files[$package_md5]) && $remote_download_files[$package_md5]->get_filename() == $package_filename && $remote_download_files[$package_md5]->get_md5() == $package_md5)
 			{
-				if($download_file->get_filename() == $package_filename && $download_file->get_md5() == $package_md5)
+				$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE", $longest_package_name_length);
+				echo pts_download(pts_first_element_in_array($remote_download_files[$package_md5]->get_download_url_array()), $download_destination_temp);
+				echo "\n";
+
+				if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
 				{
-					$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE", $longest_package_name_length);
-					echo pts_download(pts_first_element_in_array($download_file->get_download_url_array()), $download_destination_temp);
-					echo "\n";
-
-					if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
-					{
-						pts_unlink($download_destination_temp);
-					}
-					else
-					{
-						pts_move($package_filename_temp, $package_filename, $download_location);
-						$urls = array();
-					}
-
-					$found_in_remote_cache = true;
-					break;
+					pts_move($package_filename_temp, $package_filename, $download_location);
+				}
+				else
+				{
+					pts_unlink($download_destination_temp);
 				}
 			}
 
-			if(!$found_in_remote_cache)
+			// Check to see if the file can be found in a local download cache
+			if(!is_file($download_destination))
 			{
 				foreach($local_cache_directories as &$cache_directory)
 				{
@@ -207,34 +182,42 @@ function pts_download_test_files($identifier, &$display_mode)
 						}
 						else
 						{
-							$display_mode->test_install_download_file($download_package, "COPY_FROM_CACHE", $longest_package_name_length);
-							copy($cache_directory . $package_filename, $download_destination_temp);
+							// Try up to two times to copy a file
+							$attempted_copies = 0;
 
-							// Verify that the file was copied fine
-							if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
+							do
 							{
-								pts_move($package_filename_temp, $package_filename, $download_location);
+								$display_mode->test_install_download_file($download_package, "COPY_FROM_CACHE", $longest_package_name_length);
+								copy($cache_directory . $package_filename, $download_destination_temp);
+
+								// Verify that the file was copied fine
+								if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
+								{
+									pts_move($package_filename_temp, $package_filename, $download_location);
+									break;
+								}
+								else
+								{
+									pts_unlink($download_destination_temp);
+								}
+								$attempted_copies++;
 							}
-							else
-							{
-								pts_unlink($download_destination_temp);
-							}
+							while($attempted_copies < 2);
 						}
 
 						if(is_file($download_destination))
 						{
-							$urls = array();
 							break;
 						}
 					}
 				}
 			}
 
-			if(count($urls) > 0 && $urls[0] != null)
+			// Not available in a download cache, download the file
+			if(!is_file($download_destination) && count($urls) > 0 && $urls[0] != null)
 			{
 				shuffle($urls);
 				$fail_count = 0;
-				$try_again = true;
 
 				do
 				{
@@ -263,13 +246,25 @@ function pts_download_test_files($identifier, &$display_mode)
 					echo pts_download($url, $download_destination_temp);
 					$download_end = time();
 
-					if(!pts_validate_md5_download_file($download_destination_temp, $package_md5))
+					if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
 					{
-						pts_unlink($download_destination_temp);
+						// Download worked
+						if(is_file($download_destination_temp))
+						{
+							pts_move($package_filename_temp, $package_filename, $download_location);
+						}
 
-						$file_downloaded = false;
-						$fail_count++;
+						if($download_package->get_filesize() > 0 && $download_end != $download_start)
+						{
+							pts_update_download_speed_average($download_package->get_filesize(), ($download_end - $download_start));
+						}
+					}
+					else
+					{
+						// Download failed
 						$display_mode->test_install_error("The MD5 check-sum of the downloaded file is incorrect.\nFailed URL: " . $url);
+						pts_unlink($download_destination_temp);
+						$fail_count++;
 
 						if($fail_count > 3)
 						{
@@ -280,6 +275,7 @@ function pts_download_test_files($identifier, &$display_mode)
 							if(count($urls) > 0 && $urls[0] != "")
 							{
 								$display_mode->test_install_error("Attempting to re-download from another mirror.");
+								$try_again = true;
 							}
 							else
 							{
@@ -291,43 +287,15 @@ function pts_download_test_files($identifier, &$display_mode)
 								}
 							}
 						}
-					}
-					else
-					{
-						if(is_file($download_destination_temp))
+
+						if(!$try_again)
 						{
-							pts_move($package_filename_temp, $package_filename, $download_location);
+							$display_mode->test_install_error("Download of Needed Test Dependencies Failed! Exiting.");
+							return false;
 						}
-						$file_downloaded = true;
-						$fail_count = 0;
-
-						if(($download_size = $download_package->get_filesize()) > 0 && $download_end != $download_start)
-						{
-							$download_speed = floor($download_size / ($download_end - $download_start)); // bytes per second
-
-							if(($c_s = pts_read_assignment("DOWNLOAD_AVG_SPEED")) && ($c_c = pts_read_assignment("DOWNLOAD_AVG_COUNT")))
-							{
-								$avg_speed = floor((($c_s * $c_c) + $download_speed) / ($c_c + 1));
-								$avg_count = $c_c + 1;
-							}
-							else
-							{
-								$avg_speed = $download_speed;
-								$avg_count = 1;
-							}
-
-							pts_set_assignment("DOWNLOAD_AVG_SPEED", $avg_speed);
-							pts_set_assignment("DOWNLOAD_AVG_COUNT", $avg_count);
-						}
-					}
-
-					if(!$try_again)
-					{
-						$display_mode->test_install_error("Download of Needed Test Dependencies Failed! Exiting.");
-						return false;
 					}
 				}
-				while(!$file_downloaded);
+				while(!is_file($download_destination));
 			}
 			pts_module_process("__interim_test_download", $module_pass);
 		}
@@ -569,53 +537,121 @@ function pts_is_valid_download_url($string, $basename = null)
 }
 function pts_test_download_cache_directories()
 {
-	$cache_directories = array();
-
-	// User Defined Directory Checking
-	$dir_string = ($dir = getenv("PTS_DOWNLOAD_CACHE")) != false ? $dir . ":" : null;
-	$dir_string .= pts_read_user_config(P_OPTION_CACHE_DIRECTORY, DEFAULT_DOWNLOAD_CACHE_DIR);
-
-	foreach(pts_trim_explode(":", $dir_string) as $dir_check)
+	if(!pts_is_assignment("DOWNLOAD_CACHE_DIRECTORIES"))
 	{
-		if($dir_check == null)
+		$cache_directories = array();
+
+		// User Defined Directory Checking
+		$dir_string = ($dir = getenv("PTS_DOWNLOAD_CACHE")) != false ? $dir . ':' : null;
+		$dir_string .= pts_read_user_config(P_OPTION_CACHE_DIRECTORY, DEFAULT_DOWNLOAD_CACHE_DIR);
+
+		foreach(pts_trim_explode(':', $dir_string) as $dir_check)
 		{
-			continue;
+			if($dir_check == null)
+			{
+				continue;
+			}
+
+			$dir_check = pts_find_home($dir_check);
+
+			if(strpos($dir_check, "://") === false && !is_dir($dir_check))
+			{
+				continue;
+			}
+
+			array_push($cache_directories, pts_add_trailing_slash($dir_check));
 		}
 
-		$dir_check = pts_find_home($dir_check);
-
-		if(strpos($dir_check, "://") === false && !is_dir($dir_check))
+		// Other Possible Directories
+		$additional_dir_checks = array("/var/cache/phoronix-test-suite/");
+		foreach($additional_dir_checks as $dir_check)
 		{
-			continue;
+			if(is_dir($dir_check))
+			{
+				array_push($cache_directories, $dir_check);
+			}
 		}
 
-		array_push($cache_directories, pts_add_trailing_slash($dir_check));
+		if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
+		{
+			$download_cache_dirs = array_merge(
+			pts_glob("/media/*/download-cache/"),
+			pts_glob("/Volumes/*/download-cache/")
+			);
+
+			foreach($download_cache_dirs as $dir)
+			{
+				array_push($cache_directories, $dir);
+			}
+		}
+
+		pts_set_assignment("DOWNLOAD_CACHE_DIRECTORIES", $cache_directories);
 	}
 
-	// Other Possible Directories
-	$additional_dir_checks = array("/var/cache/phoronix-test-suite/");
-	foreach($additional_dir_checks as $dir_check)
+	return pts_read_assignment("DOWNLOAD_CACHE_DIRECTORIES");
+}
+function pts_test_download_cache_remote_files()
+{
+	if(!pts_is_assignment("REMOTE_CACHE_FILES"))
 	{
-		if(is_dir($dir_check))
+		$remote_download_files = array();
+
+		foreach(pts_test_download_cache_directories() as $dc_directory)
 		{
-			array_push($cache_directories, $dir_check);
+			if(strpos($dc_directory, "://") > 0 && ($xml_dc_file = pts_http_get_contents($dc_directory . "pts-download-cache.xml")) != false)
+			{
+				$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
+				$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
+				$dc_md5 = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_MD5);
+
+				for($i = 0; $i < count($dc_file); $i++)
+				{
+					$remote_download_files[$dc_md5[$i]] = new pts_test_file_download($dc_directory . $dc_file[$i], $dc_file[$i], 0, $dc_md5[$i]);
+				}
+			}
 		}
+
+		pts_set_assignment("REMOTE_CACHE_FILES", $remote_download_files);
 	}
 
-	if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
+	return pts_read_assignment("REMOTE_CACHE_FILES");
+}
+function pts_test_download_cache_local_directories()
+{
+	if(!pts_is_assignment("LOCAL_CACHE_DIRS"))
 	{
-		$download_cache_dirs = array_merge(
-		pts_glob("/media/*/download-cache/"),
-		pts_glob("/Volumes/*/download-cache/")
-		);
+		$local_cache_directories = array();
 
-		foreach($download_cache_dirs as $dir)
+		foreach(pts_test_download_cache_directories() as $dc_directory)
 		{
-			array_push($cache_directories, $dir);
+			if(strpos($dc_directory, "://") === false)
+			{
+				array_push($local_cache_directories, $dc_directory);
+			}
 		}
+
+		pts_set_assignment("LOCAL_CACHE_DIRS", $local_cache_directories);
 	}
 
-	return $cache_directories;
+	return pts_read_assignment("LOCAL_CACHE_DIRS");
+}
+function pts_update_download_speed_average($download_size, $elapsed_time)
+{
+	$download_speed = floor($download_size / $elapsed_time); // bytes per second
+
+	if(($c_s = pts_read_assignment("DOWNLOAD_AVG_SPEED")) && ($c_c = pts_read_assignment("DOWNLOAD_AVG_COUNT")))
+	{
+		$avg_speed = floor((($c_s * $c_c) + $download_speed) / ($c_c + 1));
+		$avg_count = $c_c + 1;
+	}
+	else
+	{
+		$avg_speed = $download_speed;
+		$avg_count = 1;
+	}
+
+	pts_set_assignment("DOWNLOAD_AVG_SPEED", $avg_speed);
+	pts_set_assignment("DOWNLOAD_AVG_COUNT", $avg_count);
 }
 
 ?>
