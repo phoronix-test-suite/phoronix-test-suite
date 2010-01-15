@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -171,19 +171,33 @@ class pts_test_result
 						break;
 					default:
 						// assume AVG (average)
+						$is_float = false;
 						$TOTAL_RESULT = 0;
 						$TOTAL_COUNT = 0;
 
 						foreach($this->trial_results as $result)
 						{
+							$result = trim($result);
+
 							if(is_numeric($result))
 							{
-								$TOTAL_RESULT += trim($result);
+								$TOTAL_RESULT += $result;
 								$TOTAL_COUNT++;
+
+								if(!$is_float && strpos($result, '.') !== false)
+								{
+									$is_float = true;
+								}
 							}
 						}
 
 						$END_RESULT = pts_trim_double($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
+
+						if(!$is_float)
+						{
+							$END_RESULT = round($END_RESULT);
+						}
+						break;
 				}
 				break;
 		}
