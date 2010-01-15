@@ -111,7 +111,7 @@ function pts_download_test_files($identifier, &$display_mode)
 	{
 		$remote_download_files = pts_test_download_cache_remote_files();
 		$local_cache_directories = pts_test_download_cache_local_directories();
-		$download_location = TEST_ENV_DIR . $identifier . "/";
+		$download_location = TEST_ENV_DIR . $identifier . '/';
 
 		$module_pass = array($identifier, $download_packages);
 		pts_module_process("__pre_test_download", $module_pass);
@@ -272,7 +272,7 @@ function pts_download_test_files($identifier, &$display_mode)
 						}
 						else
 						{
-							if(count($urls) > 0 && $urls[0] != "")
+							if(count($urls) > 0 && $urls[0] != null)
 							{
 								$display_mode->test_install_error("Attempting to re-download from another mirror.");
 								$try_again = true;

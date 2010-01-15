@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Preserve decimal accuracy based upon result values
 - pts-core: Change the padding depth for the concise display mode
 - pts-core: If MD5 fails when copying a file from a local download cache that has been verified, try a second time
+- pts-core: Support specifying multiple result identifiers to extract when using extract-from-result-file
 
 Phoronix Test Suite 2.4 Beta 1
 January 14, 2010

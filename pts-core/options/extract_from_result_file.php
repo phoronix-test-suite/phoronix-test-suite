@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -45,17 +45,26 @@ class extract_from_result_file implements pts_option_interface
 			return false;
 		}
 
-		$extract_identifier = pts_text_select_menu("Select the test run to extract", $result_file_identifiers);
-		$extract_select = new pts_result_merge_select($result, $extract_identifier);
+		$extract_identifiers = explode(',', pts_text_select_menu("Select the test run to extract", $result_file_identifiers, true));
+		$extract_selects = array();
+
+		print_r($extract_identifiers);
+
+		foreach($extract_identifiers as $extract_identifier)
+		{
+			array_push($extract_selects, new pts_result_merge_select($result, $extract_identifier));
+		}
+
+		print_r($extract_selects);
 
 		do
 		{
 			echo "\nEnter new result file to extract to: ";
 			$extract_to = pts_read_user_input();
 		}
-		while(empty($extract_to) || is_file(SAVE_RESULTS_DIR . $extract_to . "/composite.xml"));
+		while(empty($extract_to) || pts_is_test_result($extract_to));
 
-		$extract_result = pts_merge_test_results($extract_select);
+		$extract_result = call_user_func_array("pts_merge_test_results", $extract_selects);
 		pts_save_result($extract_to . "/composite.xml", $extract_result);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $extract_to);
 		pts_display_web_browser(SAVE_RESULTS_DIR . $extract_to . "/composite.xml");
