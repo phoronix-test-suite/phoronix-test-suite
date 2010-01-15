@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -25,6 +25,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 {
 	private $run_process_tests_remaining_to_run;
 	private $run_process_test_count;
+	private $tab = "      ";
 
 	public function __construct()
 	{
@@ -32,18 +33,18 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_start($identifier)
 	{
-		echo "\t" . $identifier . ":\n";
+		echo $this->tab . $identifier . ":\n";
 
 		$test_install_position = pts_read_assignment("TEST_INSTALL_POSITION");
 		$test_install_count = pts_read_assignment("TEST_INSTALL_COUNT");
 		if($test_install_count > 1 && $test_install_position <= $test_install_count)
 		{
-			echo "\t\tTest Installation " . $test_install_position . " of " . $test_install_count . "\n";
+			echo $this->tab . $this->tab . "Test Installation " . $test_install_position . " of " . $test_install_count . "\n";
 		}
 	}
 	public function test_install_downloads($identifier, &$download_packages)
 	{
-		echo "\t\t" . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " Needed";
+		echo $this->tab . $this->tab . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " Needed";
 
 		if(($size = pts_estimated_download_size($identifier, 1048576)) > 0)
 		{
@@ -88,7 +89,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_format_time_string($expected_time, "SECONDS", false, 60) : null;
 
-		echo "\t\t" . $process_string . ": " . $pts_test_file_download->get_filename();
+		echo $this->tab . $this->tab . $process_string . ": " . $pts_test_file_download->get_filename();
 		echo str_repeat(" ", ($offset_length > 0 ? ($offset_length - strlen($pts_test_file_download->get_filename())) : 0));
 		echo " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 2) . "MB" . ($expected_time != null ? " / ~" . $expected_time : null) . "]\n";
 	}
@@ -96,10 +97,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		if(($size = pts_estimated_environment_size($identifier)) > 0)
 		{
-			echo "\t\tInstallation Size: " . $size . " MB\n";
+			echo $this->tab . $this->tab ."Installation Size: " . $size . " MB\n";
 		}
 
-		echo "\t\tInstalling Test\n";
+		echo $this->tab . $this->tab . "Installing Test\n";
 		return;
 	}
 	public function test_install_output(&$to_output)
@@ -123,7 +124,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_result)
 	{
-		echo "\n\n" . $test_result->get_test_profile()->get_test_title() . ":\n\t" . $test_result->get_test_profile()->get_identifier();
+		echo "\n\n" . $test_result->get_test_profile()->get_test_title() . ":\n" . $this->tab . $test_result->get_test_profile()->get_identifier();
 
 		if(($test_description = $test_result->get_used_arguments_description()) != false)
 		{
@@ -136,11 +137,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$test_run_count = pts_read_assignment("TEST_RUN_COUNT");
 		if($test_run_count > 1 && $test_run_position <= $test_run_count)
 		{
-			echo "\tTest Run " . $test_run_position . " of " . $test_run_count . "\n";
+			echo $this->tab . "Test Run " . $test_run_position . " of " . $test_run_count . "\n";
 
 			if($this->run_process_test_count == $test_run_count && $test_run_position != $test_run_count && ($remaining_length = pts_estimated_run_time($this->run_process_tests_remaining_to_run)) > 1)
 			{
-				echo "\tEstimated Time Remaining: " . pts_format_time_string($remaining_length, "SECONDS", true, 60) . "\n";
+				echo $this->tab . "Estimated Time Remaining: " . pts_format_time_string($remaining_length, "SECONDS", true, 60) . "\n";
 			}
 
 			array_shift($this->run_process_tests_remaining_to_run);
@@ -149,14 +150,14 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$estimated_length = pts_estimated_run_time($test_result->get_test_profile()->get_identifier());
 		if($estimated_length > 1)
 		{
-			echo "\tEstimated Test Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
+			echo $this->tab . "Estimated Test Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
 		}
 
-		echo "\tExpected Trial Run Count: " . $test_result->get_test_profile()->get_times_to_run() . "\n";
+		echo $this->tab . "Expected Trial Run Count: " . $test_result->get_test_profile()->get_times_to_run() . "\n";
 	}
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count)
 	{
-		echo "\t\tStarted Run " . $current_run . " @ " . date("H:i:s") . "\n";
+		echo $this->tab . $this->tab . "Started Run " . $current_run . " @ " . date("H:i:s") . "\n";
 	}
 	public function test_run_output(&$to_output)
 	{
@@ -175,18 +176,18 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 		else if(in_array($test_result->get_test_profile()->get_result_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
 		{
-			$end_print .= "\t\tFinal: " . $test_result->get_result() . " (" . $test_result->get_test_profile()->get_result_scale() . ")\n";
+			$end_print .= $this->tab . $this->tab . "Final: " . $test_result->get_result() . " (" . $test_result->get_test_profile()->get_result_scale() . ")\n";
 		}
 		else
 		{
-			$end_print = "\n\tTest Results:\n";
+			$end_print = "\n" . $this->tab . "Test Results:\n";
 
 			foreach($test_result->get_trial_results() as $result)
 			{
-				$end_print .= "\t\t" . $result . "\n";
+				$end_print .= $this->tab . $this->tab . $result . "\n";
 			}
 
-			$end_print .= "\n\t" . pts_test_result_format_to_string($test_result->get_test_profile()->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->get_test_profile()->get_result_scale() . "\n";
+			$end_print .= "\n" . $this->tab . pts_test_result_format_to_string($test_result->get_test_profile()->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->get_test_profile()->get_result_scale() . "\n";
 		}
 
 		echo $end_print . "\n";

@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Preserve decimal accuracy based upon result values
+- pts-core: Change the padding depth for the concise display mode
 
 Phoronix Test Suite 2.4 Beta 1
 January 14, 2010
