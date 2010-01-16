@@ -290,7 +290,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 						if(!$try_again)
 						{
-							$display_mode->test_install_error("Download of Needed Test Dependencies Failed! Exiting.");
+							$display_mode->test_install_error("Download of Needed Test Dependencies Failed!");
 							return false;
 						}
 					}

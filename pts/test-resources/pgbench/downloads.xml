@@ -1,7 +1,8 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.dk.postgresql.org/postgresql/source/v8.4.0/postgresql-8.4.0.tar.bz2, ftp://ftp.li.kernel.org/pub/.3/ftp.postgresql.org/source/v8.4.0/postgresql-8.4.0.tar.bz2, ftp://ftp.linux.hr/gentoo/distfiles/distfiles/postgresql-8.4.0.tar.bz2</URL>
+			<URL>http://cdnetworks-us-1.dl.sourceforge.net/project/pgsql/PostgreSQL%208.4.X/PostgreSQL%208.4.0/postgresql-8.4.0.tar.bz2, http://softlayer.sourceforge.net/project/pgsql/PostgreSQL%208.4.X/PostgreSQL%208.4.0/postgresql-8.4.0.tar.bz2, http://switch.dl.sourceforge.net/project/pgsql/PostgreSQL%208.4.X/PostgreSQL%208.4.0/postgresql-8.4.0.tar.bz2</URL>
+			<MD5>1f172d5f60326e972837f58fa5acd130</MD5>
 			<MD5>1f172d5f60326e972837f58fa5acd130</MD5>
 			<FileSize>13839282</FileSize>
 		</Package>
