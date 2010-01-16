@@ -653,11 +653,12 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_kernel_architecture()
 	{
 		// Find out the kernel archiecture
-		$kernel_arch = php_uname("m");
+		$kernel_arch = php_uname('m');
 
 		switch($kernel_arch)
 		{
 			case "X86-64":
+			case "amd64":
 				$kernel_arch = "x86_64";
 				break;
 			case "i86pc":
@@ -688,7 +689,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else
 		{
-			$os_version = php_uname("r");
+			$os_version = php_uname('r');
 		}
 
 		if(empty($os_version))

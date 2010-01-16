@@ -272,6 +272,29 @@ function pts_compress($to_compress, $compress_to)
 		shell_exec("cd " . $compress_base_dir . " && " . $extract_cmd . " 2>&1");
 	}
 }
+function pts_zip_archive_extract($zip_file, $extract_to)
+{
+	if(!class_exists("ZipArchive") || !is_readable($zip_file))
+	{
+		return false;
+	}
+
+	$zip = new ZipArchive();
+	$res = $zip->open($zip_file);
+
+	if($res === TRUE && is_writable($extract_to))
+	{
+		$zip->extractTo($extract_to);
+		$zip->close();
+		$success = true;
+	}
+	else
+	{
+		$success = false;
+	}
+
+	return $success;
+}
 function pts_run_shell_script($file, $arguments = "")
 {
 	if(is_array($arguments))
