@@ -207,7 +207,8 @@ abstract class bilde_renderer
 				"/usr/share/fonts/truetype/DejaVuSans.ttf",
 				"/usr/share/fonts/truetype/LiberationSans-Regular.ttf",
 				"/usr/share/fonts/TTF/dejavu/DejaVuSans.ttf",
-				"/usr/share/fonts/TTF/liberation/LiberationSans-Regular.ttf"
+				"/usr/share/fonts/TTF/liberation/LiberationSans-Regular.ttf",
+				"/usr/X11/lib/X11/fonts/TrueType/arphic/uming.ttf"
 				);
 
 				foreach($possible_fonts as $font_file)

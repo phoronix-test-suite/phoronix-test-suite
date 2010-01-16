@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support specifying multiple result identifiers to extract when using extract-from-result-file
 - pts-core: Show the "latest run time" with the info command when reading a test
 - pts_Graph: Be smarter with the steps to use for the axis on the scale
+- bilde_renderer: Don't use any GD-based renderer if no TTF font files can be found
 
 Phoronix Test Suite 2.4 Beta 1
 January 14, 2010

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	bilde_gd_renderer: An abstract class providing a GD library renderer that can then be extended by a PNG and JPEG renderer
 
 	This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	}
 	public static function renderer_supported()
 	{
-		return extension_loaded("gd") && function_exists("imagettftext");
+		return extension_loaded("gd") && function_exists("imagettftext") && self::find_default_ttf_font();
 	}
 	public function html_embed_code($file_name, $attributes = null, $is_xsl = false)
 	{
