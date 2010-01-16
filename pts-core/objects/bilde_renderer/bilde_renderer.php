@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	bilde_renderer.php: The Phoronix Multi-Format "Bilde" Image Renderer
 
 	This program is free software; you can redistribute it and/or modify
@@ -208,7 +208,8 @@ abstract class bilde_renderer
 				"/usr/share/fonts/truetype/LiberationSans-Regular.ttf",
 				"/usr/share/fonts/TTF/dejavu/DejaVuSans.ttf",
 				"/usr/share/fonts/TTF/liberation/LiberationSans-Regular.ttf",
-				"/usr/X11/lib/X11/fonts/TrueType/arphic/uming.ttf"
+				"/usr/X11/lib/X11/fonts/TrueType/arphic/uming.ttf",
+				"/usr/local/lib/X11/fonts/bitstream-vera/Vera.ttf"
 				);
 
 				foreach($possible_fonts as $font_file)
