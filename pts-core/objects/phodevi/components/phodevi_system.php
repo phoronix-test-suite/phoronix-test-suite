@@ -506,7 +506,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
-		else if(IS_LINUX || IS_BSD)
+		else if(IS_LINUX || IS_SOLARIS)
 		{
 			$fs = trim(shell_exec("stat " . TEST_ENV_DIR . " -L -f -c %T 2> /dev/null"));
 

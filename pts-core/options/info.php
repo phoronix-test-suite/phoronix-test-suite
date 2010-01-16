@@ -99,10 +99,6 @@ class info implements pts_option_interface
 			{
 				echo "Environment Size: " . $environment_size . " MB\n";
 			}
-			if(($el = pts_estimated_run_time($to_info)) > 0)
-			{
-				echo "Estimated Length: " . pts_format_time_string($el, "SECONDS", true, 60) . "\n";
-			}
 
 			echo "\nDescription: " . $test->get_description() . "\n";
 
@@ -114,10 +110,13 @@ class info implements pts_option_interface
 
 				$avg_time = $installed_test->get_average_run_time();
 				$avg_time = !empty($avg_time) ? pts_format_time_string($avg_time, "SECONDS") : "N/A";
+				$latest_time = $installed_test->get_latest_run_time();
+				$latest_time = !empty($latest_time) ? pts_format_time_string($latest_time, "SECONDS") : "N/A";
 
 				echo "\nTest Installed: Yes\n";
 				echo "Last Run: " . $last_run . "\n";
 				echo "Average Run-Time: " . $avg_time . "\n";
+				echo "Latest Run-Time: " . $latest_time . "\n";
 
 				if($last_run != "Never")
 				{

@@ -505,7 +505,7 @@ class phodevi_cpu extends phodevi_device_interface
 		else if(IS_SOLARIS)
 		{
 			// TODO: Add support for monitoring load on a per-core basis (through mpstat maybe?)
-			$info = explode(" ", pts_trim_spaces(array_pop(explode("\n", trim(shell_exec("sar -u 1 1 2>&1"))))));
+			$info = explode(' ', pts_trim_spaces(pts_last_element_in_array(explode("\n", trim(shell_exec("sar -u 1 1 2>&1"))))));
 			$percent = $info[1];
 		}
 		else if(IS_MACOSX)
