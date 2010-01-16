@@ -934,7 +934,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$xorg_module_driver = "nvidia";
 			}
-			else if(IS_MESA_GRAPHICS && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
+			else if((IS_MESA_GRAPHICS || IS_BSD) && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
 			{
 				$xorg_module_driver = "nv";
 			}

@@ -662,7 +662,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else
 		{
-			$info = "";
+			$info = null;
 		}
 
 		if(IS_ATI_GRAPHICS && IS_LINUX)
@@ -758,6 +758,17 @@ class phodevi_gpu extends phodevi_device_interface
 			else
 			{
 				$info = $drm_info;
+			}
+
+			if($info == null && is_readable("/var/log/Xorg.0.log"))
+			{
+				$xorg_log = file_get_contents("/var/log/Xorg.0.log");
+
+				if(($e = strpos($xorg_log, " at 01@00:00:0")) !== false)
+				{
+					$xorg_log = substr($xorg_log, 0, $e);
+					$info = substr($xorg_log, strrpos($xorg_log, "Found ") + 6);
+				}
 			}
 		}
 		else if(IS_WINDOWS)
