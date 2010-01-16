@@ -258,7 +258,7 @@ class gui_gtk implements pts_option_interface
 		}
 		else
 		{
-			$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
+			$logo = GtkImage::new_from_file(STATIC_DIR . "images/pts-158x82.png");
 			$logo->set_size_request(158, 82);
 			$main_frame_objects = array($logo);
 
@@ -1416,7 +1416,7 @@ class gui_gtk implements pts_option_interface
 		$window->set_border_width(10);
 		$window->set_resizable(false);
 
-		$logo = GtkImage::new_from_file(RESULTS_VIEWER_DIR . "pts-logo.png");
+		$logo = GtkImage::new_from_file(STATIC_DIR . "images/pts-158x82.png");
 		$logo->set_size_request(158, 82);
 
 		$label_version = new GtkLabel((PTS_VERSION != null ? "Version " . PTS_VERSION : "API Build " . PTS_BUILD_INT));

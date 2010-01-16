@@ -141,9 +141,9 @@ class pts_ps_template
 			return;
 		}
 
-		if(is_file(RESULTS_VIEWER_DIR . "pts-logo.jpg"))
+		if(is_file(STATIC_DIR . "images/pts-158x82.jpg"))
 		{
-			$this->Image(RESULTS_VIEWER_DIR . "pts-logo.jpg");
+			$this->Image(STATIC_DIR . "images/pts-158x82.jpg");
 		}
 
 		$this->SetFont("Arial", "B", 14);

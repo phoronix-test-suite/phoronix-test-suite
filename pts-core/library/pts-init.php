@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-init.php: Common start-up initialization functions for the Phoronix Test Suite.
 
 	This program is free software; you can redistribute it and/or modify
@@ -73,7 +73,7 @@ function pts_extended_init()
 	pts_mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
 	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
 	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
-	pts_copy(RESULTS_VIEWER_DIR . "pts-logo.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
+	pts_copy(STATIC_DIR . "images/pts-158x82.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
 
 	// Setup ~/.phoronix-test-suite/xsl/
 	pts_mkdir(PTS_USER_DIR . "xsl/");

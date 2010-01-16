@@ -45,9 +45,9 @@ class pts_pdf_template extends FPDF
 			return;
 		}
 
-		if(is_file(RESULTS_VIEWER_DIR . "pts-logo.jpg"))
+		if(is_file(STATIC_DIR . "images/pts-158x82.jpg"))
 		{
-			$this->Image(RESULTS_VIEWER_DIR . "pts-logo.jpg", 10, 8, 30);
+			$this->Image(STATIC_DIR . "images/pts-158x82.jpg", 10, 8, 30);
 		}
 
 		$this->SetFont("Arial", "B", 14);
