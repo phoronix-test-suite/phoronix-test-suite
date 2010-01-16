@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_directories.php: Functions needed for directories in the Phoronix Test Suite
 
 	This program is free software; you can redistribute it and/or modify
@@ -36,10 +36,10 @@ function pts_define_directories()
 	define("MODULE_DIR", PTS_CORE_PATH . "modules/");
 	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
 	define("DEFAULT_DOWNLOAD_CACHE_DIR", PTS_USER_DIR . "download-cache/");
-	define("RESULTS_VIEWER_DIR", PTS_CORE_PATH . "results-viewer/");
 	define("TEST_LIBRARIES_DIR", PTS_CORE_PATH . "test-libraries/");
 	define("STATIC_DIR", PTS_CORE_PATH . "static/");
 	define("COMMAND_OPTIONS_DIR", PTS_CORE_PATH . "options/");
+	define("RESULTS_VIEWER_DIR", STATIC_DIR . "results-viewer/");
 
 	// Test & Suite Locations
 	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");
