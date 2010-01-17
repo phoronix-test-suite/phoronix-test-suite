@@ -77,6 +77,9 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			case "COPY_FROM_CACHE":
 				$process_string = "Copying From Cache";
 				break;
+			case "FILE_FOUND":
+				$process_string = "File Found";
+				break;
 			case "DOWNLOAD":
 				$process_string = "Downloading";
 
@@ -88,6 +91,13 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 
 		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_format_time_string($expected_time, "SECONDS", false, 60) : null;
+
+		$default_width = 32;
+		if($offset_length < $default_width && pts_terminal_width() > (2 * strlen($this->tab) + strlen($process_string) + $default_width + 17))
+		{
+			// Set default length
+			$offset_length = $default_width;
+		}
 
 		echo $this->tab . $this->tab . $process_string . ": " . $pts_test_file_download->get_filename();
 		echo str_repeat(" ", ($offset_length > 0 ? ($offset_length - strlen($pts_test_file_download->get_filename())) : 0));

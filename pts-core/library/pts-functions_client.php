@@ -369,6 +369,27 @@ function pts_user_home()
 
 	return $userhome . "/";
 }
+function pts_terminal_width()
+{
+	if(!pts_is_assignment("TERMINAL_WIDTH"))
+	{
+		$chars = -1;
+
+		if(pts_executable_in_path("tput"))
+		{
+			$terminal_width = trim(shell_exec("tput cols 2>&1"));
+
+			if(is_numeric($terminal_width) && $terminal_width > 1)
+			{
+				$chars = $terminal_width;
+			}
+		}
+
+		pts_set_assignment("TERMINAL_WIDTH", $chars);
+	}
+
+	return pts_read_assignment("TERMINAL_WIDTH");
+}
 function pts_current_user()
 {
 	// Current system user

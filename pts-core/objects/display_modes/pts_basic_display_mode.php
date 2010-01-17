@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts_basic_display_mode.php: The basic display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -55,6 +55,8 @@ class pts_basic_display_mode implements pts_display_mode_interface
 				break;
 			case "DOWNLOAD":
 				echo "\n\nDownloading File: " . $pts_test_file_download->get_filename() . "\n\n";
+				break;
+			case "FILE_FOUND":
 				break;
 		}
 	}

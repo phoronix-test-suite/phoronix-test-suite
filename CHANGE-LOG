@@ -9,6 +9,8 @@ Phoronix Test Suite (Git)
 - pts-core: Show the "latest run time" with the info command when reading a test
 - pts-core: Move result-viewer files within the static directory
 - pts-core: Begin reworking the code path for when running on an operating system without PTS external dependencies support
+- pts-core: Better support for OpenBSD
+- pts-core: Add "File Found" reporting to the display mode interface
 - phodevi: Further fallback support for BSD graphics card detection
 - pts_Graph: Be smarter with the steps to use for the axis on the scale
 - bilde_renderer: Don't use any GD-based renderer if no TTF font files can be found

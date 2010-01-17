@@ -116,7 +116,9 @@ function pts_download_test_files($identifier, &$display_mode)
 		$module_pass = array($identifier, $download_packages);
 		pts_module_process("__pre_test_download", $module_pass);
 
+		// TODO: eventually move out this longest package name length cruft
 		$longest_package_name_length = 0;
+		$found_packages = array();
 		foreach($download_packages as $i => &$download_package)
 		{
 			if(!is_file(TEST_ENV_DIR . $identifier . "/" . $download_package->get_filename()))
@@ -130,8 +132,14 @@ function pts_download_test_files($identifier, &$display_mode)
 			else
 			{
 				// The file is there so nothing is to be downloaded
+				array_push($found_packages, $download_packages[$i]);
 				unset($download_packages[$i]);
 			}
+		}
+
+		foreach($found_packages as &$found)
+		{
+			$display_mode->test_install_download_file($found, "FILE_FOUND", $longest_package_name_length);
 		}
 
 		if(count($download_packages) > 0)

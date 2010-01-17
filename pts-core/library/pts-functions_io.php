@@ -145,7 +145,7 @@ function pts_string_header($heading, $char = '=')
 		return null;
 	}
 
-	$header_size = 36;
+	$header_size = 40;
 
 	foreach(explode("\n", $heading) as $line)
 	{
@@ -155,14 +155,9 @@ function pts_string_header($heading, $char = '=')
 		}
 	}
 
-	if(!IS_WINDOWS)
+	if(($terminal_width = pts_terminal_width()) < $header_size)
 	{
-		$terminal_width = trim(shell_exec("tput cols 2>&1"));
-
-		if(is_numeric($terminal_width) && $header_size > $terminal_width && $terminal_width > 1)
-		{
-			$header_size = $terminal_width;
-		}
+		echo "!!!!" . $header_size = $terminal_width;
 	}
 
 	return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";
