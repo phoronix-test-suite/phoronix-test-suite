@@ -3,7 +3,7 @@
 tar -jxf supertuxkart-0.6-linuxi486.tar.bz2
 
 mkdir .supertuxkart/
-tar -xvf supertuxkart-1.tar.gz
+tar -zxvf supertuxkart-1.tar.gz
 mv config .supertuxkart/
 
 echo "#!/bin/sh

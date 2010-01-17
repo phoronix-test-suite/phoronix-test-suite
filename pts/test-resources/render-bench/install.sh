@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -rf render_bench/
-tar -xvf render_bench.tar.gz
+tar -zxvf render_bench.tar.gz
 cd render_bench/
 make
 cd ..

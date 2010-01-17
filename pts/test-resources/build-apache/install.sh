@@ -2,7 +2,7 @@
 
 echo "#!/bin/sh
 rm -rf httpd-2.2.11/
-tar -xvf httpd-2.2.11.tar.gz
+tar -zxvf httpd-2.2.11.tar.gz
 cd httpd-2.2.11/
 ./configure > /dev/null
 sleep 3

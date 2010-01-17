@@ -10,7 +10,7 @@ case $OS_TYPE in
 		chmod +x geekbench
 	;;
 	"Linux" )
-		tar -xvf Geekbench21-Linux.tar.gz
+		tar -zxvf Geekbench21-Linux.tar.gz
 
 		echo "#!/bin/sh
 		cd Geekbench21-Linux/

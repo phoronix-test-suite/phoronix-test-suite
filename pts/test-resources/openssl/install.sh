@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf openssl-0.9.8k.tar.gz
+tar -zxvf openssl-0.9.8k.tar.gz
 
 mkdir openssl_/
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
-tar -xvf bzip2-1.0.5.tar.gz
-tar -xvf pbzip2-1.0.5.tar.gz
+tar -zxvf bzip2-1.0.5.tar.gz
+tar -zxvf pbzip2-1.0.5.tar.gz
 cd bzip2-1.0.5/
 make
 cp -f libbz2.a ../pbzip2-1.0.5

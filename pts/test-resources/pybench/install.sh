@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf pybench-2009-08-14.tar.gz
+tar -zxvf pybench-2009-08-14.tar.gz
 
 echo "#!/bin/sh
 cd pybench-2009-08-14/

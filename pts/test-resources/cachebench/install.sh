@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf llcbench.tar.gz
+tar -zxvf llcbench.tar.gz
 cd llcbench/
 
 make linux-mpich

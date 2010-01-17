@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf byte-benchmark-1.tar.gz
+tar -zxvf byte-benchmark-1.tar.gz
 cd bm/
 make clean
 make

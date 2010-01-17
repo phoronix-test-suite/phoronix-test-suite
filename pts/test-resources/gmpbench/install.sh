@@ -2,8 +2,8 @@
 
 mkdir $HOME/gmp_
 
-tar -xvf gexpr.c.tar.gz
-tar -xvf gmp-4.3.0.tar.gz
+tar -zxvf gexpr.c.tar.gz
+tar -zxvf gmp-4.3.0.tar.gz
 cd gmp-4.3.0/
 ./configure --prefix=$HOME/gmp_
 make -j $NUM_CPU_JOBS
@@ -11,7 +11,7 @@ make install
 cd ..
 rm -rf gmp-4.3.0/
 
-tar -xvf gmpbench-0.1.tar.gz
+tar -zxvf gmpbench-0.1.tar.gz
 cp gexpr.c gmpbench-0.1/
 
 cp gmp_/include/gmp.h gmpbench-0.1/

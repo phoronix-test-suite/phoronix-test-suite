@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -rf minion-0.9/
-tar -xvf minion-0.9-src.tar.gz
+tar -zxvf minion-0.9-src.tar.gz
 cd minion-0.9/
 mkdir build
 cd build/

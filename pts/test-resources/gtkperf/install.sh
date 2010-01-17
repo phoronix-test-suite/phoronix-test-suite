@@ -2,7 +2,7 @@
 
 mkdir $HOME/gtkperf_env
 
-tar -xvf gtkperf_0.40.tar.gz
+tar -zxvf gtkperf_0.40.tar.gz
 cd gtkperf/
 
 patch -p1 <<'EOT'

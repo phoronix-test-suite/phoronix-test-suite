@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf gutenberg-science.tar.gz
+tar -zxvf gutenberg-science.tar.gz
 unzip -o espeak-1.40.02-source.zip
 cd espeak-1.40.02-source/src/
 sed -i -e "s|/usr|$HOME/espeak_|g" Makefile

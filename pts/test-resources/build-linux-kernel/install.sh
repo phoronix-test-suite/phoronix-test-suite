@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf linux-2625-config.tar.gz
+tar -zxvf linux-2625-config.tar.gz
 
 echo "#!/bin/sh
 

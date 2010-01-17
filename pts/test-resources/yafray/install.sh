@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf yafray-0.0.9.tar.gz
+tar -zxvf yafray-0.0.9.tar.gz
 tar -jxvf yafray-render-1.tar.bz2
 
 mkdir $HOME/yafray_

@@ -10,7 +10,7 @@ echo "#!/bin/sh
 cat \$LOG_FILE | grep fps" > quake4
 chmod +x quake4
 
-tar -xvf quake4-pts-demo-1.tar.gz
+tar -zxvf quake4-pts-demo-1.tar.gz
 mkdir q4base/demos
 mv -f pts.demo q4base/demos/pts.demo
 

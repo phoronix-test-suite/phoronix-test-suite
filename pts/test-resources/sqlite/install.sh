@@ -1,7 +1,7 @@
 #!/bin/sh
 
-tar -xvf pts-sqlite-tests-1.tar.gz
-tar -xvf sqlite-3.6.19.tar.gz
+tar -zxvf pts-sqlite-tests-1.tar.gz
+tar -zxvf sqlite-3.6.19.tar.gz
 mkdir sqlite_/
 
 cd sqlite-3.6.19/

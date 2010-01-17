@@ -2,7 +2,7 @@
 
 mkdir $HOME/lame_
 
-tar -xvf lame-398-2.tar.gz
+tar -zxvf lame-398-2.tar.gz
 cd lame-398-2/
 ./configure --prefix=$HOME/lame_
 make -j $NUM_CPU_JOBS

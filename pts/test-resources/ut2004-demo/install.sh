@@ -6,7 +6,7 @@ chmod +x ut2004-lnx-demo3334.run
 
 ./ut2004-lnx-demo3334.run --noexec --target .
 
-tar -xvf UT2004-ptsconfig-2.tar.gz
+tar -zxvf UT2004-ptsconfig-2.tar.gz
 tar xvfj ut2004demo.tar.bz2
 
 case $OS_ARCH in

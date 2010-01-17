@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf trislam.tar.gz
+tar -zxvf trislam.tar.gz
 cp -f trislam-1.patch trislam/
 cd trislam/
 patch -p0 < trislam-1.patch

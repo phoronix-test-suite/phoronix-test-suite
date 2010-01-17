@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf GLMark-0.5.2.tar.gz
+tar -zxvf GLMark-0.5.2.tar.gz
 cd GLMark-0.5.2/
 
 patch -p0 <<'EOT'

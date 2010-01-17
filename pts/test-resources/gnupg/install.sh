@@ -2,7 +2,7 @@
 
 mkdir $HOME/gnupg_
 
-tar -xvf gnupg-1.4.9.tar.gz
+tar -zxvf gnupg-1.4.9.tar.gz
 cd gnupg-1.4.9/
 ./configure --prefix=$HOME/gnupg_
 make -j $NUM_CPU_JOBS

@@ -7,7 +7,7 @@ mkdir $HOME/fftw_
 mkdir $HOME/mpich2_
 mkdir $HOME/gromacs40_
 
-tar -xvf fftw-3.2.1.tar.gz
+tar -zxvf fftw-3.2.1.tar.gz
 cd fftw-3.2.1/
 ./configure --prefix=$HOME/fftw_ --enable-float --enable-sse --enable-threads
 make -j $NUM_CPU_JOBS
@@ -19,7 +19,7 @@ make install
 cd ..
 rm -rf fftw-3.2.1/
 
-tar -xvf mpich2-1.0.8p1.tar.gz
+tar -zxvf mpich2-1.0.8p1.tar.gz
 cd mpich2-1.0.8p1/
 ./configure --prefix=$HOME/mpich2_ --enable-fast=all --with-pm=gforker --disable-option-checking
 make
@@ -27,7 +27,7 @@ make install
 cd ..
 rm -rf mpich2-1.0.8p1/
 
-tar -xvf gromacs-4.0.5.tar.gz
+tar -zxvf gromacs-4.0.5.tar.gz
 cd gromacs-4.0.5/
 ./configure --prefix=$HOME/gromacs40_ --enable-mpi --program-suffix="_SSE_MPI" CPPFLAGS=-I$HOME/fftw_/include LDFLAGS=-L$HOME/fftw_/lib PATH=$HOME/mpich2_/bin/:$PATH
 make -j $NUM_CPU_JOBS PATH=$HOME/mpich2_/bin/:$PATH
@@ -50,7 +50,7 @@ if [ -f \$HOME/flopcount ]
     rm -f \$HOME/flopcount
 fi
 mkdir \$HOME/gmxbench
-tar -xvf gmxbench-3.0.tar.gz -C \$HOME/gmxbench/ 1>/dev/null 2>&1
+tar -zxvf gmxbench-3.0.tar.gz -C \$HOME/gmxbench/ 1>/dev/null 2>&1
 
 case \"\$3\" in
 \"single\")

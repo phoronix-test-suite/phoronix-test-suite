@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf tachyon-0.98.7.tar.gz
+tar -zxvf tachyon-0.98.7.tar.gz
 cd tachyon/unix/
 
 if [ $OS_TYPE = "MacOSX" ]

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf SPECViewperf9.0.3.tar.gz
+tar -zxvf SPECViewperf9.0.3.tar.gz
 cd SPECViewperf9.0/src
 if [ "$OS_TYPE" = "Solaris" ]; then
  echo 4|./Configure

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf Fhourstones.tar.gz
+tar -zxvf Fhourstones.tar.gz
 make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 

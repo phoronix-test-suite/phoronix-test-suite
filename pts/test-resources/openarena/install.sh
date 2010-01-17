@@ -2,7 +2,7 @@
 
 unzip -o oa081.zip
 cd openarena-0.8.1/baseoa
-tar -xvf ../../openarena-benchmark-files-4.tar.gz
+tar -zxvf ../../openarena-benchmark-files-4.tar.gz
 cd ../..
 
 echo "#!/bin/sh

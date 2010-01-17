@@ -1,8 +1,8 @@
 #!/bin/sh
 
 mkdir lib
-tar -xf pyopencl-0.91.3.tar.gz
-tar xzf pyopencl-2009-10-03.tgz
+tar -zxvf pyopencl-0.91.3.tar.gz
+tar -zxvf pyopencl-2009-10-03.tgz
 cd pyopencl-0.91.3
 
 PYTHON_V1=`python -c "import sys;v=sys.version_info;print v[0]"`

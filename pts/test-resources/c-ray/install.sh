@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf c-ray-1.1.tar.gz
+tar -zxvf c-ray-1.1.tar.gz
 
 cd c-ray-1.1/
 make -j $NUM_CPU_JOBS

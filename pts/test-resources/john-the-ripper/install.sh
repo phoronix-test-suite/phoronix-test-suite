@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf john-1.7.3.1.tar.gz
+tar -zxvf john-1.7.3.1.tar.gz
 cd john-1.7.3.1/src/
 
 case $OS_TYPE in

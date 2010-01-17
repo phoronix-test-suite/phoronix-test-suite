@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf stream-2009-04-11.tar.gz
+tar -zxvf stream-2009-04-11.tar.gz
 cc stream.c -O2 -fopenmp -o stream-bin
 echo \$? > ~/test-exit-status
 

@@ -36,7 +36,7 @@ cd ..
 rm -rf wop11/
 rm -rf wop12patch/
 
-tar -xvf wop-benchmark-1.tar.gz
+tar -zxvf wop-benchmark-1.tar.gz
 mkdir ~/.WoPadman/
 mkdir ~/.WoPadman/wop/
 mv wop_config.cfg ~/.WoPadman/wop/

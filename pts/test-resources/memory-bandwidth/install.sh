@@ -2,8 +2,8 @@
 
 rm -rf bandwidth-0.15/
 
-tar -xvf bandwidth-0.15.tar.gz
-tar -xvf bandwidth-patch-1.tar.gz
+tar -zxvf bandwidth-0.15.tar.gz
+tar -zxvf bandwidth-patch-1.tar.gz
 
 patch -p0 < bandwidth-015-add-options.patch
 cd bandwidth-0.15/

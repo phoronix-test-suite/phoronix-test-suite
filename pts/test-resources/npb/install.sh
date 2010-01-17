@@ -1,7 +1,7 @@
 #!/bin/sh
 
-tar -xvf NPB3.3.tar.gz
-tar -xvf npb-omp-make-def-1.tar.gz
+tar -zxvf NPB3.3.tar.gz
+tar -zxvf npb-omp-make-def-1.tar.gz
 
 mv -f make.def NPB3.3/NPB3.3-OMP/config/
 cd NPB3.3/NPB3.3-OMP/

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf ramspeed-2.6.0.tar.gz
+tar -zxvf ramspeed-2.6.0.tar.gz
 
 echo "#!/bin/sh
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf libpng-1.2.39.tar.gz
+tar -zxvf libpng-1.2.39.tar.gz
 tar -xjf GraphicsMagick-1.3.7.tar.bz2
 
 mkdir $HOME/gm_

@@ -232,7 +232,7 @@ class phodevi
 		switch(OPERATING_SYSTEM)
 		{
 			case "BSD":
-				define("BSD_LINUX_COMPATIBILE", strpos(shell_exec("kldstat -n linux 2>&1"), "linux.ko") != false);
+				define("BSD_LINUX_COMPATIBILE", pts_executable_in_path("kldstat") && strpos(shell_exec("kldstat -n linux 2>&1"), "linux.ko") != false);
 				break;
 		}
 

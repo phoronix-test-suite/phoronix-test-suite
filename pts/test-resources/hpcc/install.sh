@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf hpcc-1.3.1.tar.gz
+tar -zxvf hpcc-1.3.1.tar.gz
 
 cd hpcc-1.3.1
 echo '#                                                                                                        

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf pts-warsow-2.tar.gz
+tar -zxvf pts-warsow-2.tar.gz
 
 case $OS_TYPE in
 	"MacOSX")

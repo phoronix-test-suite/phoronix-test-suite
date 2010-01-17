@@ -82,48 +82,29 @@ function pts_external_dependency_generic_title($generic_name)
 
 	return $generic_title;
 }
-function pts_external_dependency_generic_info($Name)
+function pts_external_dependency_generic_info($missing_dependency_names)
 {
 	// Get the generic information for a PTS External Dependency generic
-	$generic_information = "";
-
+	$missing_count = 0;
 	$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
 	$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 	$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 	$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
 	$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 
-	$selection = -1;
-	$pts_exdep_support = true;
-
-	for($i = 0; $i < count($title) && $selection == -1; $i++)
+	for($i = 0; $i < count($title); $i++)
 	{
-		if($Name == $package_name[$i])
+		if(in_array($package_name[$i], $missing_dependency_names))
 		{
-			$selection = $i;
-			if(pts_file_missing_check(explode(",", $file_check[$selection])))
+			if(pts_file_missing_check(explode(",", $file_check[$i])))
 			{
-				if($pts_exdep_support)
-				{
-					$pts_exdep_support = false;
-				}
-
-				echo pts_string_header($title[$selection] . "\nPossible Package Names: " . $possible_packages[$selection]);
+				echo pts_string_header($title[$i] . "\nPossible Package Names: " . $possible_packages[$i]);
+				$missing_count++;
 			}
 		}
 	}
 
-	if(!$pts_exdep_support)
-	{
-		echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
-
-		if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE"))
-		{		
-			pts_read_user_input();
-		}
-	}
-
-	return $generic_information;
+	return $missing_count;
 }
 function pts_external_dependency_generic_packages()
 {
@@ -145,7 +126,7 @@ function pts_install_external_dependencies_list($identifier, &$install_objects)
 
 		if(!pts_is_assignment("PTS_EXDEP_FIRST_RUN"))
 		{
-			if(phodevi::read_property("system", "kernel-architecture") == "x86_64")
+			if(IS_LINUX && phodevi::read_property("system", "kernel-architecture") == "x86_64")
 			{
 				array_push($dependencies, "linux-32bit-libraries");
 			}
@@ -155,15 +136,20 @@ function pts_install_external_dependencies_list($identifier, &$install_objects)
 
 		if(!pts_package_generic_to_distro_name($install_objects, $dependencies))
 		{
-			$package_string = "";
-			foreach($dependencies as $dependency)
+			if(count($dependencies) > 0)
 			{
-				$package_string .= pts_external_dependency_generic_info($dependency);
-			}
+				echo "\nSome additional dependencies are required, and they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed for the test(s) to run properly.\n\n";
+				$missing_count = pts_external_dependency_generic_info($dependencies);
 
-			if(!empty($package_string))
-			{
-				echo "\nSome additional dependencies are required, and they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed for the test(s) to run properly.\n\n" . $package_string;
+				if($missing_count > 0)
+				{
+					echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
+
+					if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE"))
+					{		
+						pts_read_user_input();
+					}
+				}
 			}
 		}
 	}
@@ -181,6 +167,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 		$distro_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_SPECIFIC);
 		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 		$arch_specific = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_ARCHSPECIFIC);
+		$kernel_architecture = phodevi::read_property("system", "kernel-architecture");
 
 		for($i = 0; $i < count($generic_package); $i++)
 		{
@@ -190,7 +177,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 				{
 					$add_dependency = (!empty($file_check[$i]) ? pts_file_missing_check(explode(",", $file_check[$i])) : true);
 					$arch_compliant = empty($arch_specific[$i]) || 
-					in_array(phodevi::read_property("system", "kernel-architecture"), pts_trim_explode(",", $arch_specific[$i]));
+					in_array($kernel_architecture, pts_trim_explode(",", $arch_specific[$i]));
 
 					if($add_dependency && $arch_compliant)
 					{

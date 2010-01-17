@@ -2,7 +2,7 @@
 
 mkdir $HOME/flac_
 
-tar -xvf flac-1.2.1.tar.gz
+tar -zxvf flac-1.2.1.tar.gz
 
 echo "diff -Naur flac-1.2.1-orig/examples/cpp/encode/file/main.cpp flac-1.2.1/examples/cpp/encode/file/main.cpp
 --- flac-1.2.1-orig/examples/cpp/encode/file/main.cpp	2007-09-13 09:58:03.000000000 -0600

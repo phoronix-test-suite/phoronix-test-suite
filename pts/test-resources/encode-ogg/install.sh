@@ -2,9 +2,9 @@
 
 mkdir $HOME/vorbis
 
-tar -xvf libogg-1.1.3.tar.gz
-tar -xvf libvorbis-1.2.0.tar.gz
-tar -xvf vorbis-tools-1.2.0.tar.gz
+tar -zxvf libogg-1.1.3.tar.gz
+tar -zxvf libvorbis-1.2.0.tar.gz
+tar -zxvf vorbis-tools-1.2.0.tar.gz
 
 cd libogg-1.1.3/
 ./configure --prefix=$HOME/vorbis

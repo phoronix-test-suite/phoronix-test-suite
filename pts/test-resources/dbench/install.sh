@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf dbench-4.0.tar.gz
+tar -zxvf dbench-4.0.tar.gz
 
 mkdir $HOME/dbench_/
 cd dbench-4.0/

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 unzip -o tremulous-1.1.0.zip -d tremulous_/
-tar -xvf tremulous-benchmark-1.tar.gz
+tar -zxvf tremulous-benchmark-1.tar.gz
 
 mv tremulous-benchmark.cfg tremulous_/tremulous/base/
 mv demos/ tremulous_/tremulous/base/

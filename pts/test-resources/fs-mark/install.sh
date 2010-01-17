@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf fs_mark-3.3.tar.gz
+tar -zxvf fs_mark-3.3.tar.gz
 cd fs_mark-3.3/
 mkdir scratch
 make

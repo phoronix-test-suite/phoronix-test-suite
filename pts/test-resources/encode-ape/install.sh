@@ -2,7 +2,7 @@
 
 mkdir $HOME/ape_
 
-tar -xvf mac-3.99-u4-b5-s4.tar.gz
+tar -zxvf mac-3.99-u4-b5-s4.tar.gz
 cd mac-3.99-u4-b5-s4/
 CXXFLAGS="-DSHNTOOL" ./configure --prefix=$HOME/ape_
 make -j $NUM_CPU_JOBS

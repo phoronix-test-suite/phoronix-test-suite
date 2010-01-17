@@ -2,7 +2,7 @@
 
 mkdir $HOME/libxml2
 
-tar -xvf libxml2-2.6.31.tar.gz
+tar -zxvf libxml2-2.6.31.tar.gz
 
 cd libxml2-2.6.31/
 ./configure --prefix=$HOME/libxml2 > /dev/null

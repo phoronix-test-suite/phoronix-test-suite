@@ -2,8 +2,8 @@
 
 mkdir $HOME/httpd_
 
-tar -xvf apache-ab-test-files-1.tar.gz
-tar -xvf httpd-2.2.11.tar.gz
+tar -zxvf apache-ab-test-files-1.tar.gz
+tar -zxvf httpd-2.2.11.tar.gz
 
 cd httpd-2.2.11/
 ./configure --prefix=$HOME/httpd_

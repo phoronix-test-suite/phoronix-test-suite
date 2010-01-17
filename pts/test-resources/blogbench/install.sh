@@ -2,7 +2,7 @@
 
 mkdir $HOME/blogbench_/
 
-tar -xvf blogbench-1.0.tar.gz
+tar -zxvf blogbench-1.0.tar.gz
 cd blogbench-1.0/
 ./configure --prefix=$HOME/blogbench_/
 make -j $NUM_CPU_JOBS

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -xvf super_pi.tar.gz
+tar -zxvf super_pi.tar.gz
 
 # make wrapper shell script for total line
 echo "#!/bin/sh

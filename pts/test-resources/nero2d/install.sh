@@ -2,7 +2,7 @@
 
 mkdir $HOME/nero2d_
 
-tar -xvf nero2d-2.0.2.tar.gz
+tar -zxvf nero2d-2.0.2.tar.gz
 
 patch -p0 <<'EOT'
 --- nero2d-2.0.2.orig/src/nexus/nexus.cpp	2009-04-03 09:42:29.000000000 -0400
