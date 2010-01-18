@@ -96,7 +96,7 @@ function pts_external_dependency_generic_info($missing_dependency_names)
 	{
 		if(in_array($package_name[$i], $missing_dependency_names))
 		{
-			if(pts_file_missing_check(explode(",", $file_check[$i])))
+			if(pts_file_missing_check($file_check[$i]))
 			{
 				echo pts_string_header($title[$i] . "\nPossible Package Names: " . $possible_packages[$i]);
 				$missing_count++;
@@ -116,13 +116,11 @@ function pts_external_dependency_generic_packages()
 function pts_install_external_dependencies_list($identifier, &$install_objects)
 {
 	// Install from a list of external dependencies
-	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-	$title = $xml_parser->getXMLValue(P_TEST_TITLE);
-	$dependencies = $xml_parser->getXMLValue(P_TEST_EXDEP);
+	$dependencies = pts_test_read_xml($identifier, P_TEST_EXDEP);
 
 	if(!empty($dependencies))
 	{
-		$dependencies = pts_trim_explode(",", $dependencies);
+		$dependencies = pts_trim_explode(',', $dependencies);
 
 		if(!pts_is_assignment("PTS_EXDEP_FIRST_RUN"))
 		{
@@ -175,9 +173,8 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 			{
 				if(!in_array($distro_package[$i], $package_install_array))
 				{
-					$add_dependency = (!empty($file_check[$i]) ? pts_file_missing_check(explode(",", $file_check[$i])) : true);
-					$arch_compliant = empty($arch_specific[$i]) || 
-					in_array($kernel_architecture, pts_trim_explode(",", $arch_specific[$i]));
+					$add_dependency = empty($file_check[$i]) || pts_file_missing_check($file_check[$i]);
+					$arch_compliant = empty($arch_specific[$i]) || in_array($kernel_architecture, pts_trim_explode(',', $arch_specific[$i]));
 
 					if($add_dependency && $arch_compliant)
 					{
@@ -229,12 +226,7 @@ function pts_install_packages_on_distribution_process($install_objects, &$displa
 		{
 			// hook into $display_mode here if it's desired
 			echo "\nThe following dependencies are needed and will be installed: \n\n";
-
-			foreach(explode(" ", $install_objects) as $obj)
-			{
-				echo "- " . $obj . "\n";
-			}
-
+			echo pts_text_list(explode(' ', $install_objects));
 			echo "\nThis process may take several minutes.\n";
 
 			echo shell_exec("cd " . STATIC_DIR . "distro-scripts/ && sh install-" . $distribution . "-packages.sh " . $install_objects);
@@ -253,6 +245,11 @@ function pts_file_missing_check($file_arr)
 {
 	// Checks if file is missing
 	$file_missing = false;
+
+	if(!is_array($file_arr))
+	{
+		$file_arr = explode(',', $file_arr);
+	}
 
 	foreach($file_arr as $file)
 	{

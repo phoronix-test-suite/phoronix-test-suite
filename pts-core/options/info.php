@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -61,12 +61,7 @@ class info implements pts_option_interface
 			}
 
 			echo "\nContained Tests:\n\n";
-
-			foreach(pts_virtual_suite_tests($to_info) as $test)
-			{
-				echo "- " . $test . "\n";
-			}
-
+			echo pts_text_list(pts_virtual_suite_tests($to_info));
 			echo "\n";
 		}
 		else if(pts_is_test($to_info))
@@ -132,10 +127,7 @@ class info implements pts_option_interface
 			if(!empty($dependencies) && !empty($dependencies[0]))
 			{
 				echo "\nSoftware Dependencies:\n";
-				foreach($test->get_dependency_names() as $dependency)
-				{
-						echo "- " . $dependency . "\n";
-				}
+				echo pts_text_list($test->get_dependency_names());
 			}
 
 			$associated_suites = pts_suites_containing_test($to_info);
@@ -143,10 +135,7 @@ class info implements pts_option_interface
 			{
 				asort($associated_suites);
 				echo "\nSuites Using This Test:\n";
-				foreach($associated_suites as $suite)
-				{
-					echo "- " . $suite . "\n";
-				}
+				echo pts_text_list($associated_suites);
 			}
 			echo "\n";
 		}
@@ -156,19 +145,12 @@ class info implements pts_option_interface
 
 			echo "Title: " . $result_file->get_title() . "\nIdentifier: " . $to_info . "\nTest: " . $result_file->get_suite_name() . "\n";
 			echo "\nTest Result Identifiers:\n";
-
-			foreach($result_file->get_system_identifiers() as $id)
-			{
-				echo "- " . $id . "\n";
-			}
+			echo pts_text_list($result_file->get_system_identifiers());
 
 			if(count(($tests = $result_file->get_unique_test_titles())) > 1)
 			{
 				echo "\nContained Tests:\n";
-				foreach($tests as $test)
-				{
-					echo "- " . $test . "\n";
-				}
+				echo pts_text_list($tests);
 			}
 			echo "\n";
 		}

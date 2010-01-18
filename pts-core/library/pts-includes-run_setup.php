@@ -65,10 +65,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 		if(count($current_identifiers) > 0)
 		{
 			echo "\nCurrent Test Identifiers:\n";
-			foreach($current_identifiers as $identifier)
-			{
-				echo "- " . $identifier . "\n";
-			}
+			echo pts_text_list($current_identifiers);
 			echo "\n";
 		}
 

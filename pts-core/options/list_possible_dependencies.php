@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,11 +33,7 @@ class list_possible_dependencies implements pts_option_interface
 		$dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependency_generic_packages());
 		sort($dependencies);
 
-		foreach($dependencies as $title)
-		{
-			echo "- " . $title . "\n";
-		}
-
+		echo pts_text_list($dependencies);
 		echo "\n";
 	}
 }

@@ -39,11 +39,7 @@ class list_installed_dependencies implements pts_option_interface
 		}
 		else
 		{
-			foreach($dependencies as $title)
-			{
-				echo "- " . $title . "\n";
-			}
-
+			echo pts_text_list($dependencies);
 			echo "\n";
 		}
 	}

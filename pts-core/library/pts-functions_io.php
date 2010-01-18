@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_io.php: General user input / output functions
 
 	This program is free software; you can redistribute it and/or modify
@@ -88,6 +88,17 @@ function pts_text_select_menu($user_string, $options_r, $allow_multi_select = fa
 	while(!$multi_select_pass && !(in_array($select_choice, $options_r) || isset($options_r[($select_choice - 1)]) && ($return_index || $select_choice = $options_r[($select_choice - 1)]) != null));
 
 	return $select_choice;
+}
+function pts_text_list($list_items, $line_start = "- ")
+{
+	$list = null;
+
+	foreach($list_items as &$item)
+	{
+		$list .= $line_start . $item . "\n";
+	}
+
+	return $list;
 }
 function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 {
