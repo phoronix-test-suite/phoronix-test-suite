@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Begin reworking the code path for when running on an operating system without PTS external dependencies support
 - pts-core: Better support for OpenBSD
 - pts-core: Add "File Found" reporting to the display mode interface
+- pts-core: Support reading proxy settings (if not set in user-config.xml) from http_proxy environmental variable
 - phodevi: Further fallback support for BSD graphics card detection
 - pts_Graph: Be smarter with the steps to use for the axis on the scale
 - bilde_renderer: Don't use any GD-based renderer if no TTF font files can be found

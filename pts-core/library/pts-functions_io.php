@@ -157,7 +157,7 @@ function pts_string_header($heading, $char = '=')
 
 	if(($terminal_width = pts_terminal_width()) < $header_size)
 	{
-		echo "!!!!" . $header_size = $terminal_width;
+		$header_size = $terminal_width;
 	}
 
 	return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";
