@@ -1419,7 +1419,7 @@ class gui_gtk implements pts_option_interface
 		$logo = GtkImage::new_from_file(STATIC_DIR . "images/pts-158x82.png");
 		$logo->set_size_request(158, 82);
 
-		$label_version = new GtkLabel((PTS_VERSION != null ? "Version " . PTS_VERSION : "API Build " . PTS_BUILD_INT));
+		$label_version = new GtkLabel((PTS_VERSION != null ? "Version " . PTS_VERSION : "API Build " . PTS_CORE_VERSION));
 
 		$event_box = new GtkEventBox();
 		$label_url = new GtkLabel("www.phoronix-test-suite.com");

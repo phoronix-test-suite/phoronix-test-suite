@@ -552,29 +552,18 @@ function pts_test_version_supported($identifier)
 	if(pts_is_test($identifier))
 	{
 		$requires_core_version = pts_test_read_xml($identifier, P_TEST_SUPPORTS_COREVERSION);
-		$supported = pts_test_version_compatible($requires_core_version);
+		$supported = true;
+
+		if(!empty($requires_core_version))
+		{
+			$requires_core_version = pts_trim_explode('-', $requires_core_version);	
+			$support_begins = $requires_core_version[0];
+			$support_ends = isset($requires_core_version[1]) ? $requires_core_version[1] : PTS_CORE_VERSION;
+			$supported = PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
+		}
 	}
 
 	return $supported;
-}
-function pts_test_version_compatible($version_compare = "")
-{
-	$compatible = true;
-
-	if(!empty($version_compare))
-	{
-		$current = pts_remove_chars(PTS_VERSION, true, false, false);
-
-		$version_compare = pts_trim_explode("-", $version_compare);	
-		$support_begins = pts_remove_chars($version_compare[0], true, false, false);
-
-		$support_ends = count($version_compare) == 2 ? $version_compare[1] : PTS_VERSION;
-		$support_ends = pts_remove_chars($support_ends, true, false, false);
-
-		$compatible = $current >= $support_begins && $current <= $support_ends;
-	}
-
-	return $compatible;	
 }
 function pts_version_newer($version_a, $version_b)
 {
