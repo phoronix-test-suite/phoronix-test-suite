@@ -2,13 +2,16 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>Server Motherboard</Title>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<TestType>System</TestType>
 		<Description>A collection of motherboard tests for a server environment.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>build-php</Test>
+		<Test>apache</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>
 		<Test>postmark</Test>
@@ -33,6 +36,9 @@
 		<Test>crafty</Test>
 	</RunTest>
 	<RunTest>
+		<Test>gcrypt</Test>
+	</RunTest>
+	<RunTest>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>Operation: HWB Color Space</Description>
@@ -49,6 +55,9 @@
 		<Test>mafft</Test>
 	</RunTest>
 	<RunTest>
+		<Test>himeno</Test>
+	</RunTest>
+	<RunTest>
 		<Test>hmmer</Test>
 	</RunTest>
 	<RunTest>
@@ -62,6 +71,16 @@
 	</RunTest>
 	<RunTest>
 		<Test>compress-pbzip2</Test>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>3000 fall</Arguments>
+		<Description>Test: 3000 Fall</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>convex-trimesh</Arguments>
+		<Description>Test: Convex Trimesh</Description>
 	</RunTest>
 	<RunTest>
 		<Test>npb</Test>
