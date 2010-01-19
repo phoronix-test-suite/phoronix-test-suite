@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_tests.php: Functions needed for some test parameters
 
 	This program is free software; you can redistribute it and/or modify
@@ -519,8 +519,7 @@ function pts_test_platform_supported($identifier)
 
 	if(pts_is_test($identifier))
 	{
-	 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-		$platforms = $xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
+		$platforms = pts_test_read_xml($identifier, P_TEST_SUPPORTEDPLATFORMS);
 
 		if(!empty($platforms))
 		{
@@ -783,7 +782,7 @@ function pts_objects_test_downloads($test_identifier)
 		{
 			if(!empty($package_platform[$i]))
 			{
-				$platforms = pts_trim_explode(",", $package_platform[$i]);
+				$platforms = pts_trim_explode(',', $package_platform[$i]);
 
 				if(!in_array(OPERATING_SYSTEM, $platforms))
 				{
@@ -794,7 +793,7 @@ function pts_objects_test_downloads($test_identifier)
 
 			if(!empty($package_architecture[$i]))
 			{
-				$architectures = pts_trim_explode(",", $package_architecture[$i]);
+				$architectures = pts_trim_explode(',', $package_architecture[$i]);
 
 				if(!pts_cpu_arch_compatible($architectures))
 				{
@@ -896,6 +895,7 @@ function pts_test_result_format_to_string($result_format)
 		case "NULL":
 			$return_str = null;
 			break;
+		case "AVG":
 		default:
 			$return_str = "Average";
 			break;

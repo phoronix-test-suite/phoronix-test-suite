@@ -683,7 +683,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 			if(count($adapters) > 0)
 			{
-				$video_ram = ($video_ram > 64 ? " " . $video_ram . "MB" : ""); // assume more than 64MB of vRAM
+				$video_ram = $video_ram > 64 ? " " . $video_ram . "MB" : null; // assume more than 64MB of vRAM
 
 				if($crossfire_card_count > 1 && $crossfire_card_count <= count($adapters))
 				{

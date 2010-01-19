@@ -116,16 +116,16 @@ function pts_verify_test_installation($identifiers)
 
 		foreach(pts_contained_tests($identifier) as $test)
 		{
-			if(!pts_test_installed($test))
+			if(pts_test_installed($test))
+			{
+				pts_array_push($tests_installed, $test);
+			}
+			else
 			{
 				if(pts_test_supported($test))
 				{
 					pts_array_push($tests_missing, $test);
 				}
-			}
-			else
-			{
-				pts_array_push($tests_installed, $test);
 			}
 		}
 	}
@@ -140,7 +140,7 @@ function pts_verify_test_installation($identifiers)
 		{
 			$message = "Multiple tests are not installed:\n\n";
 			$message .= pts_text_list($tests_missing);
-			$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(" ", $tests_missing);
+			$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(' ', $tests_missing);
 
 			echo pts_string_header($message);
 		}
