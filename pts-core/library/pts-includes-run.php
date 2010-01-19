@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-includes-run.php: Functions needed for running tests/suites.
 
 	This program is free software; you can redistribute it and/or modify
@@ -26,55 +26,12 @@ require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 
 function pts_cleanup_tests_to_run(&$to_run_identifiers)
 {
-	$skip_tests = (($e = getenv("SKIP_TESTS")) ? explode(",", $e) : false);
+	$skip_tests = ($e = getenv("SKIP_TESTS")) ? explode(',', $e) : false;
 
 	for($i = 0; $i < count($to_run_identifiers); $i++)
 	{
-		$lower_identifier = strtolower($to_run_identifiers[$i]);
+		$test_passes = true;
 
-		if($skip_tests && in_array($lower_identifier, $skip_tests))
-		{
-			echo pts_string_header("Skipping test: " . $lower_identifier);
-			unset($to_run_identifiers[$i]);
-			continue;
-		}
-		else if(pts_is_test($lower_identifier))
-		{
-			$test_title = pts_test_read_xml($lower_identifier, P_TEST_TITLE);
-
-			if(empty($test_title))
-			{
-				echo pts_string_header($lower_identifier . " is not a test.");
-				unset($to_run_identifiers[$i]);
-				continue;
-			}
-		}
-		else if(pts_is_virtual_suite($lower_identifier))
-		{
-			foreach(pts_virtual_suite_tests($lower_identifier) as $virt_test)
-			{
-				array_push($to_run_identifiers, $virt_test);
-			}
-			unset($to_run_identifiers[$i]);
-			continue;
-		}
-
-		$verify_install = pts_verify_test_installation($lower_identifier);
-
-		if($verify_install == false)
-		{
-			// Eliminate this test, it's not properly installed
-			unset($to_run_identifiers[$i]);
-			continue;
-		}
-		else if(is_array($verify_install))
-		{
-			pts_set_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS", true);
-			pts_run_option_next("install_test", $verify_install, pts_assignment_manager::get_all_assignments());
-			pts_run_option_next("run_test", $to_run_identifiers, pts_assignment_manager::get_all_assignments());
-			return false;
-		}
-			
 		if(is_file($to_run_identifiers[$i]) && substr(basename($to_run_identifiers[$i]), -4) == ".svg")
 		{
 			// One of the arguments was an SVG results file, do prompts
@@ -84,6 +41,59 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 			{
 				$to_run_identifiers[$i] = $test_extracted;
 			}
+			else
+			{
+				$test_passes = false;
+			}
+		}
+
+		$lower_identifier = strtolower($to_run_identifiers[$i]);
+
+		if($skip_tests && in_array($lower_identifier, $skip_tests))
+		{
+			echo pts_string_header("Skipping test: " . $lower_identifier);
+			$test_passes = false;
+		}
+		else if(pts_is_test($lower_identifier))
+		{
+			$test_title = pts_test_read_xml($lower_identifier, P_TEST_TITLE);
+
+			if(empty($test_title))
+			{
+				echo pts_string_header($lower_identifier . " is not a test.");
+				$test_passes = false;
+			}
+		}
+		else if(pts_is_virtual_suite($lower_identifier))
+		{
+			foreach(pts_virtual_suite_tests($lower_identifier) as $virt_test)
+			{
+				array_push($to_run_identifiers, $virt_test);
+			}
+			$test_passes = false;
+		}
+
+		if($test_passes)
+		{
+			$verify_install = pts_verify_test_installation($lower_identifier);
+
+			if($verify_install == false)
+			{
+				// Eliminate this test, it's not properly installed
+				$test_passes = false;
+			}
+			else if(is_array($verify_install))
+			{
+				pts_set_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS", true);
+				pts_run_option_next("install_test", $verify_install, pts_assignment_manager::get_all_assignments());
+				pts_run_option_next("run_test", $to_run_identifiers, pts_assignment_manager::get_all_assignments());
+				return false;
+			}
+		}
+
+		if($test_passes == false)
+		{
+			unset($to_run_identifiers[$i]);
 		}
 	}
 
@@ -129,11 +139,7 @@ function pts_verify_test_installation($identifiers)
 		else
 		{
 			$message = "Multiple tests are not installed:\n\n";
-			foreach($tests_missing as $single_package)
-			{
-				$message .= "- " . $single_package . "\n";
-			}
-
+			$message .= pts_text_list($tests_missing);
 			$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(" ", $tests_missing);
 
 			echo pts_string_header($message);
