@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - pts-core: Various code cleaning
 - pts-core: Use PTS_CORE_VERSION rather than PTS_VERSION for RequiresCoreVersion tag in PTS test profile
 - phodevi: Further fallback support for BSD graphics card detection
+- phodevi: Add sensor for system fan speed monitoring
 - pts_Graph: Be smarter with the steps to use for the axis on the scale
 - bilde_renderer: Don't use any GD-based renderer if no TTF font files can be found
 - pts: Update download links for pgbench test profile

@@ -88,7 +88,6 @@ abstract class pts_Graph
 	protected $graph_internal_identifiers = array();
 
 	// Internal Switches
-	// var $graph_format_heading = "NORMAL";
 
 	public function __construct($title, $sub_title, $y_axis_title)
 	{
@@ -158,11 +157,11 @@ abstract class pts_Graph
 	}
 	public function loadGraphValues($data_array, $data_title = null)
 	{
-		for($i = 0; $i < count($data_array); $i++)
+		foreach($data_array as &$data_item)
 		{
-			if(is_float($data_array[$i]))
+			if(is_float($data_item))
 			{
-				$data_array[$i] = $this->trim_double($data_array[$i], 2);
+				$data_item = $this->trim_double($data_item, 2);
 			}
 		}
 
@@ -576,6 +575,7 @@ abstract class pts_Graph
 	}
 	protected function trim_double($double, $accuracy = 2)
 	{
+		// Should be same as pts_trim_double()
 		// Set precision for a variable's points after the decimal spot
 		$return = explode(".", $double);
 
@@ -594,10 +594,7 @@ abstract class pts_Graph
 			}
 			else if($strlen < $accuracy)
 			{
-				for($i = $strlen; $i < $accuracy; $i++)
-				{
-					$return[1] .= '0';
-				}
+				$return[1] .= str_repeat('0', ($accuracy - $strlen));
 			}
 
 			$return = $return[0] . "." . $return[1];

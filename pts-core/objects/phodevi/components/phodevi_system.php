@@ -55,6 +55,9 @@ class phodevi_system extends phodevi_device_interface
 			case "iowait":
 				$sensor = "sys_iowait";
 				break;
+			case "fan-speed":
+				$sensor = "sys_fan_speed";
+				break;
 			default:
 				$sensor = false;
 				break;
@@ -421,6 +424,26 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return intval($uptime);
+	}
+	public static function sys_fan_speed()
+	{
+		$fan_speed = -1;
+
+		if(IS_LINUX)
+		{
+			foreach(array_merge(pts_glob("/sys/class/hwmon/hwmon*/fan2_input"), pts_glob("/sys/class/hwmon/hwmon*/device/fan2_input")) as $fan_input_file)
+			{
+				$fan_input = pts_file_get_contents($fan_input_file);
+
+				if(is_numeric($fan_input) && $fan_input > 0)
+				{
+					$fan_speed = $fan_input;
+					break;
+				}
+			}
+		}
+
+		return $fan_speed;
 	}
 	public static function sw_username()
 	{

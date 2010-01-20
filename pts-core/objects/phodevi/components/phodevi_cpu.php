@@ -392,7 +392,7 @@ class phodevi_cpu extends phodevi_device_interface
 			{
 				$fan_input = pts_file_get_contents($fan_input_file);
 
-				if(is_numeric($fan_input))
+				if(is_numeric($fan_input) && $fan_input > 0)
 				{
 					$fan_speed = $fan_input;
 					break;

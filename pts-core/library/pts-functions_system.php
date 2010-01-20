@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_system.php: Include system functions.
 
 	This program is free software; you can redistribute it and/or modify
@@ -67,6 +67,7 @@ function pts_available_sensors()
 	new phodevi_sensor("memory", "total", array("memory", "total-usage"), "Megabytes"),
 	new phodevi_sensor("fan-speed", "gpu", array("gpu", "fan-speed"), "Percent"),
 	new phodevi_sensor("fan-speed", "cpu", array("cpu", "fan-speed"), "RPM"),
+	new phodevi_sensor("fan-speed", "sys", array("sys", "fan-speed"), "RPM"),
 	new phodevi_sensor("system", "iowait", array("system", "iowait"), "Percent"),
 	new phodevi_sensor("disk-speed", "read", array("disk", "read-speed"), "MB/s"),
 	new phodevi_sensor("disk-speed", "write", array("disk", "write-speed"), "MB/s")
