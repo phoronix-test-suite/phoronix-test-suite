@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -86,7 +86,8 @@ class system_monitor extends pts_module_interface
 			if(count($sensor_results) > 2)
 			{
 				$graph_title = $pts_sensor->get_formatted_hardware_type() . " " . $pts_sensor->get_sensor_string() . " Monitor";
-				$sub_title = implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
+				//$sub_title = implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
+				$sub_title = "System Monitor Module";
 
 				$tandem_id = pts_request_new_id();
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $graph_title);

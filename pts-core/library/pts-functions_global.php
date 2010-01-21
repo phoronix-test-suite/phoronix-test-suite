@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_global.php: Functions needed for Phoronix Global.
 
 	This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,11 @@ function pts_is_global_id($global_id)
 function pts_global_download_xml($global_id)
 {
 	// Download a saved test result from Phoronix Global
-	return pts_http_get_contents("http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $global_id);
+	return pts_http_get_contents(pts_global_download_base_url() . $global_id);
+}
+function pts_global_download_base_url()
+{
+	return "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=";
 }
 function pts_clone_from_global($global_id, $render_graphs = true)
 {

@@ -369,9 +369,12 @@ class phodevi_gpu extends phodevi_device_interface
 	public static function gpu_available_modes()
 	{
 		// XRandR available modes
+		$current_resolution = phodevi::read_property("gpu", "screen-resolution");
+		$current_pixel_count = $current_resolution[0] * $current_resolution[1];
 		$available_modes = array();
 		$supported_ratios = array(1.60, 1.25, 1.33, 1.70, 1.77);
 		$ignore_modes = array(
+			array(720, 480),
 			array(832, 624), array(960, 600),
 			array(896, 672), array(928, 696),
 			array(960, 720), array(1152, 864),
@@ -383,41 +386,36 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if($override_check = (($override_modes = getenv("OVERRIDE_VIDEO_MODES")) != false))
 		{
-			$override_modes = explode(",", $override_modes);
+			$override_modes = explode(',', $override_modes);
 
 			for($i = 0; $i < count($override_modes); $i++)
 			{
-				$override_modes[$i] = explode("x", $override_modes[$i]);
+				$override_modes[$i] = explode('x', $override_modes[$i]);
 			}
 		}
 
-		if(pts_executable_in_path("xrandr") != false && !IS_MACOSX) // MacOSX has xrandr but currently on at least my setup will emit a Bus Error when called
+		// Attempt reading available modes from xrandr
+		if(pts_executable_in_path("xrandr") && !IS_MACOSX) // MacOSX has xrandr but currently on at least my setup will emit a Bus Error when called
 		{
 			$xrandr_lines = array_reverse(explode("\n", shell_exec("xrandr 2>&1")));
 
 			foreach($xrandr_lines as $xrandr_mode)
 			{
-				if(($cut_point = strpos($xrandr_mode, "(")) > 0)
+				if(($cut_point = strpos($xrandr_mode, '(')) > 0)
 				{
 					$xrandr_mode = substr($xrandr_mode, 0, $cut_point);
 				}
 
-				$res = pts_trim_explode("x", $xrandr_mode);
+				$res = pts_trim_explode('x', $xrandr_mode);
 
 				if(count($res) == 2)
 				{
 					$res[0] = substr($res[0], strrpos($res[0], " "));
 					$res[1] = substr($res[1], 0, strpos($res[1], " "));
 
-					if(is_numeric($res[0]) && is_numeric($res[1]) && $res[0] >= 800 && $res[1] >= 600)
+					if(is_numeric($res[0]) && is_numeric($res[1]))
 					{
-						$ratio = pts_trim_double($res[0] / $res[1], 2);
-						$this_mode = array($res[0], $res[1]);
-
-						if(in_array($ratio, $supported_ratios) && !in_array($this_mode, $ignore_modes) && (!$override_check || in_array($stock_modes[$i], $override_modes)))
-						{
-							array_push($available_modes, $this_mode);
-						}
+						array_push($available_modes, array($res[0], $res[1]));
 					}
 				}
 			}
@@ -425,59 +423,76 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if(count($available_modes) < 2)
 		{
-			$stock_modes = array(array(800, 600), array(1024, 768), array(1280, 960), array(1280, 1024), 
-					array(1400, 1050), array(1680, 1050), array(1600, 1200), array(1920, 1080), array(2560, 1600));
+			// Fallback to providing stock modes
+			$stock_modes = array(
+				array(800, 600), array(1024, 768),
+				array(1280, 960), array(1280, 1024),
+				array(1400, 1050), array(1680, 1050),
+				array(1600, 1200), array(1920, 1080),
+				array(2560, 1600));
 			$available_modes = array();
-
-			$current_resolution = phodevi::read_property("gpu", "screen-resolution");
 
 			for($i = 0; $i < count($stock_modes); $i++)
 			{
 				if($stock_modes[$i][0] <= $current_resolution[0] && $stock_modes[$i][1] <= $current_resolution[1])
 				{
-					if(!$override_check || in_array($stock_modes[$i], $override_modes))
-					{
-						array_push($available_modes, $stock_modes[$i]);
-					}
+					array_push($available_modes, $stock_modes[$i]);
 				}
 			}
 		}
-		else
+
+		foreach($available_modes as $mode_index => $mode)
 		{
-			// Sort available modes in order
-			$modes = $available_modes;
-			$mode_pixel_counts = array();
-			$sorted_modes = array();
+			$this_ratio = pts_trim_double($mode[0] / $mode[1], 2);
 
-			foreach($modes as $this_mode)
+			if($override_check && !in_array($mode, $override_modes))
 			{
-				if(count($this_mode) == 2)
+				// Using override modes and this mode is not present
+				unset($available_modes[$mode_index]);
+			}
+			else if($current_pixel_count > 614400 && ($mode[0] * $mode[1]) < 480000)
+			{
+				// For displays larger than 1024 x 600, drop modes below 800 x 600
+				unset($available_modes[$mode_index]);
+			}
+			else if($current_pixel_count > 480000 && !in_array($this_ratio, $supported_ratios))
+			{
+				// For displays larger than 800 x 600, ensure reading from a supported ratio
+				unset($available_modes[$mode_index]);
+			}
+			else if(in_array($mode, $ignore_modes))
+			{
+				// Mode is to be ignored
+				unset($available_modes[$mode_index]);
+			}
+		}
+
+		// Sort available modes in order
+		$unsorted_modes = $available_modes;
+		$available_modes = array();
+		$mode_pixel_counts = array();
+
+		foreach($unsorted_modes as $this_mode)
+		{
+			if(count($this_mode) == 2)
+			{
+				array_push($mode_pixel_counts, $this_mode[0] * $this_mode[1]);
+			}
+		}
+
+		// Sort resolutions by true pixel count resolution
+		sort($mode_pixel_counts);
+		foreach($mode_pixel_counts as &$mode_pixel_count)
+		{
+			foreach($unsorted_modes as $mode_index => $mode)
+			{
+				if($mode[0] * $mode[1] == $mode_pixel_count)
 				{
-					array_push($mode_pixel_counts, $this_mode[0] * $this_mode[1]);
-				}
-				else
-				{
-					unset($this_mode);
+					array_push($available_modes, $mode);
+					unset($unsorted_modes[$mode_index]);
+					break;
 				}
 			}
-
-			sort($mode_pixel_counts);
-
-			for($i = 0; $i < count($mode_pixel_counts); $i++)
-			{
-				$hit = false;
-				for($j = 0; $j < count($modes) && !$hit; $j++)
-				{
-					if($modes[$j] != null && ($modes[$j][0] * $modes[$j][1]) == $mode_pixel_counts[$i])
-					{
-						array_push($sorted_modes, $modes[$j]);
-						$modes[$j] = null;
-						$hit = true;
-					}
-				}
-			}
-
-			$available_modes = $sorted_modes;
 		}
 
 		if(count($available_modes) == 0 && $override_check)

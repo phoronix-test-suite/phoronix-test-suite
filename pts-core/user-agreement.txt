@@ -1,4 +1,4 @@
-The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, OpenSolaris, Mac OS X, and BSD operating systems. The Phoronix Test Suite is designed to carry out tests in a clean, reproducible, and easy-to-use manner. This open-source software ships with over 120 test profiles and 50 test suites, but new tests and suites can be easily added through its extensible test profile architecture.
+The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, OpenSolaris, Mac OS X, and BSD operating systems. The Phoronix Test Suite is designed to carry out tests in a clean, reproducible, and easy-to-use manner. This open-source software ships with over 130 test profiles and 50 test suites, but new tests and suites can be easily added through its extensible test profile architecture.
 
 - The Phoronix Test Suite is open-source and licensed under the GNU GPLv3. However, some tests supported by the PTS are not open-source. To see the license of tests, run: phoronix-test-suite list-tests.
 
@@ -8,7 +8,7 @@ The Phoronix Test Suite is the most comprehensive testing and benchmarking platf
 
 - If you opt to submit your test results to Phoronix Global, the final results as well as basic hardware and software details (what is shown in the PTS Results Viewer) will be shared and publicly accessible through http://global.phoronix-test-suite.com/.
 
-- Public bug reports, feature requests, and other issues can be brought up in the Phoronix Test Suite forums or mailing list.
+- Public bug reports, feature requests, and other issues can be brought up in the Phoronix Test Suite forums, mailing list, or a direct email to Phoronix Media.
 
 Anonymous Usage Reporting / Statistics: If you opt to enable the anonymous usage reporting / statistics feature, some information about the Phoronix Test Suite runs will be submitted to Phoronix Global. This information is used for analytical purposes, including but not limited to, determining the most popular tests / suites and calculating average run-times for different test profiles. The test results are not reported in this process nor the installed software / hardware information, but just ambient information about the testing process. This information is stored anonymously. More information on this feature is available with the included documentation.
 

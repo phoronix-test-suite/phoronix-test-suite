@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_types.php: Functions needed for type handling of tests/suites.
 
 	This program is free software; you can redistribute it and/or modify
@@ -497,7 +497,7 @@ function pts_find_result_file($file, $check_global = true)
 	}
 	else if($check_global && pts_is_global_id($file))
 	{
-		$USE_FILE = "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=" . $file;
+		$USE_FILE = pts_global_download_base_url() . $file;
 	}
 	else
 	{
