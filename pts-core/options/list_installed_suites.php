@@ -29,7 +29,7 @@ class list_installed_suites implements pts_option_interface
 
 		if(count($installed_suites) == 0)
 		{
-			echo "\nNo tests / suites are currently installed.\n\n";
+			echo "\nNo suites are currently installed.\n\n";
 		}
 		else
 		{
