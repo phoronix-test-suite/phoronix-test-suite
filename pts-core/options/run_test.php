@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -302,6 +302,7 @@ class run_test implements pts_option_interface
 				//$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type));
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, 0, PTS_VERSION);
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, 0, $test_run_manager->get_results_identifier());
+				$wrote_system_xml = true;
 
 				$id = pts_request_new_id();
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $file_name_title);
@@ -311,6 +312,10 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, 1, $test_type);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 1, pts_module_manager::var_store_string());
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 1, implode(";", $test_properties));
+			}
+			else
+			{
+				$wrote_system_xml = false;
 			}
 
 			$pso = new pts_storage_object(true, false);
@@ -366,7 +371,7 @@ class run_test implements pts_option_interface
 
 			pts_unlink($pt2so_location);
 
-			if(!pts_read_assignment("FINISH_INCOMPLETE_RUN"))
+			if($wrote_system_xml)
 			{
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type), 0);
 			}

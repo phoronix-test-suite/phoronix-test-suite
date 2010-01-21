@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support reading proxy settings (if not set in user-config.xml) from http_proxy environmental variable
 - pts-core: Various code cleaning
 - pts-core: Use PTS_CORE_VERSION rather than PTS_VERSION for RequiresCoreVersion tag in PTS test profile
+- pts-core: Don't write empty system information XML to results file
 - phodevi: Further fallback support for BSD graphics card detection
 - phodevi: Add sensor for system fan speed monitoring
 - phodevi: Rework screen resolution mode code
