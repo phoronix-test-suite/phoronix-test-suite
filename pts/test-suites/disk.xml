@@ -2,17 +2,27 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Title>Disk Test Suite</Title>
 		<Version>1.2.0</Version>
-		<Maintainer>Michael Larabel</Maintainer>
 		<TestType>Disk</TestType>
-		<Description>This is a test suite designed to test storage disks -- both Hard Disk Drives (HDDs) and Solid State Drives (SSDs) and other storage mediums.</Description>
+		<Title>Disk Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>This test suite is designed to contain real-world disk and file-system tests.</Description>
+		<RunMode>PCQS</RunMode>
 	</SuiteInformation>
 	<RunTest>
-		<Test>pgbench</Test>
+		<Test>compress-pbzip2</Test>
 	</RunTest>
 	<RunTest>
-		<Test>postmark</Test>
+		<Test>compress-lzma</Test>
+	</RunTest>
+	<RunTest>
+		<Test>bork</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sqlite</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
@@ -42,7 +52,7 @@
 	<RunTest>
 		<Test>dbench</Test>
 		<Arguments>1</Arguments>
-		<Description>1 Client</Description>
+		<Description>1 Clients</Description>
 	</RunTest>
 	<RunTest>
 		<Test>dbench</Test>
@@ -51,8 +61,18 @@
 	</RunTest>
 	<RunTest>
 		<Test>dbench</Test>
-		<Arguments>128</Arguments>
+		<Arguments>48</Arguments>
+		<Description>48 Clients</Description>
+	</RunTest>
+	<RunTest>
+		<Test>dbench</Test>
+		<Arguments>48</Arguments>
 		<Description>128 Clients</Description>
+	</RunTest>
+	<RunTest>
+		<Test>fs-mark</Test>
+		<Arguments>-s 1048576 -n 1000</Arguments>
+		<Description>1000 Files, 1MB Size</Description>
 	</RunTest>
 	<RunTest>
 		<Test>fio</Test>
@@ -61,13 +81,8 @@
 	</RunTest>
 	<RunTest>
 		<Test>tiobench</Test>
-		<Arguments>-k3 -k2 -k1 -f 64 -t 32</Arguments>
-		<Description>64MB Write - 32 Threads</Description>
-	</RunTest>
-	<RunTest>
-		<Test>tiobench</Test>
-		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
-		<Description>64MB Read - 32 Threads</Description>
+		<Arguments>-k2 -k1 -f 64 -t 32</Arguments>
+		<Description>64MB Random Read - 32 Threads</Description>
 	</RunTest>
 	<RunTest>
 		<Test>tiobench</Test>
@@ -75,23 +90,12 @@
 		<Description>64MB Random Write - 32 Threads</Description>
 	</RunTest>
 	<RunTest>
-		<Test>tiobench</Test>
-		<Arguments>-k3 -k2 -k1 -f 256 -t 32</Arguments>
-		<Description>256MB Write - 32 Threads</Description>
+		<Test>postmark</Test>
 	</RunTest>
 	<RunTest>
-		<Test>tiobench</Test>
-		<Arguments>-k3 -k1 -f 256 -t 32</Arguments>
-		<Description>256MB Read - 32 Threads</Description>
+		<Test>aio-stress</Test>
 	</RunTest>
 	<RunTest>
-		<Test>blogbench</Test>
-		<Arguments>WRITE</Arguments>
-		<Description>Write Performance</Description>
-	</RunTest>
-	<RunTest>
-		<Test>blogbench</Test>
-		<Arguments>READ</Arguments>
-		<Description>Read Performance</Description>
+		<Test>unpack-linux</Test>
 	</RunTest>
 </PhoronixTestSuite>
