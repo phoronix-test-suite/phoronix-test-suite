@@ -527,7 +527,7 @@ function pts_test_platform_supported($identifier)
 
 			if(!in_array(OPERATING_SYSTEM, $platforms))
 			{
-				if(IS_BSD && BSD_LINUX_COMPATIBILE && in_array("Linux", $platforms))
+				if(IS_BSD && BSD_LINUX_COMPATIBLE && in_array("Linux", $platforms))
 				{
 					// The OS is BSD but there is Linux API/ABI compatibility support loaded
 					$supported = true;
@@ -784,7 +784,7 @@ function pts_objects_test_downloads($test_identifier)
 			{
 				$platforms = pts_trim_explode(',', $package_platform[$i]);
 
-				if(!in_array(OPERATING_SYSTEM, $platforms))
+				if(!in_array(OPERATING_SYSTEM, $platforms) && !(IS_BSD && BSD_LINUX_COMPATIBLE && in_array("Linux", $platforms)))
 				{
 					// This download does not match the operating system
 					continue;

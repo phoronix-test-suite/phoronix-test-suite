@@ -10,15 +10,6 @@
 		<RunMode>PCQS</RunMode>
 	</SuiteInformation>
 	<RunTest>
-		<Test>compress-pbzip2</Test>
-	</RunTest>
-	<RunTest>
-		<Test>compress-lzma</Test>
-	</RunTest>
-	<RunTest>
-		<Test>bork</Test>
-	</RunTest>
-	<RunTest>
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
@@ -98,8 +89,13 @@
 	</RunTest>
 	<RunTest>
 		<Test>aio-stress</Test>
+		<Arguments>-o 2</Arguments>
+		<Description>Random Write</Description>
 	</RunTest>
 	<RunTest>
 		<Test>unpack-linux</Test>
+	</RunTest>
+	<RunTest>
+		<Test>tar-linux</Test>
 	</RunTest>
 </PhoronixTestSuite>

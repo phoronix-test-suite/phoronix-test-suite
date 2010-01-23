@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<TestType>Processor</TestType>
 		<Title>CPU / Processor Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -16,16 +16,6 @@
 	<RunTest>
 		<Test>etqw-demo</Test>
 		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
-		<Test>unigine-tropics</Test>
-		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
-		<Test>unigine-sanctuary</Test>
-		<Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
@@ -55,16 +45,14 @@
 	</RunTest>
 	<RunTest>
 		<Test>john-the-ripper</Test>
-		<Arguments>MD5</Arguments>
-		<Description>MD5</Description>
-	</RunTest>
-	<RunTest>
-		<Test>john-the-ripper</Test>
 		<Arguments>BLOWFISH</Arguments>
 		<Description>Blowfish</Description>
 	</RunTest>
 	<RunTest>
 		<Test>compress-pbzip2</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-7zip</Test>
 	</RunTest>
 	<RunTest>
 		<Test>encode-mp3</Test>
@@ -73,10 +61,19 @@
 		<Test>encode-flac</Test>
 	</RunTest>
 	<RunTest>
+		<Test>x264</Test>
+	</RunTest>
+	<RunTest>
 		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gcrypt</Test>
+	</RunTest>
+	<RunTest>
+		<Test>himeno</Test>
 	</RunTest>
 	<RunTest>
 		<Test>pgbench</Test>

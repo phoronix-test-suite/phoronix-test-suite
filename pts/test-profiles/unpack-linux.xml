@@ -11,6 +11,7 @@
 		<EnvironmentTestingSize>360</EnvironmentTestingSize>
 		<SupportedPlatforms>Linux, BSD, Solaris, MacOSX</SupportedPlatforms>
 		<ProjectURL>http://www.kernel.org/</ProjectURL>
+		<Extends>linux-kernel-base</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>Unpacking The Linux Kernel</Title>
