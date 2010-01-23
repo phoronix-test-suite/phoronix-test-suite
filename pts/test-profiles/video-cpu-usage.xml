@@ -22,6 +22,7 @@
 	<TestSettings>
 		<Default>
 			<Arguments>-nosound -fs</Arguments>
+			<MinimumLength>30</MinimumLength>
 		</Default>
 		<Option>
 			<DisplayName>Video Decoding</DisplayName>

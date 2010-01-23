@@ -204,7 +204,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_error($error_string)
 	{
-		echo "\n" . $error_string . "\n\n";
+		echo $this->tab . $error_string . "\n\n";
 	}
 }
 
