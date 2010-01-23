@@ -25,6 +25,10 @@
 		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>
+		<Test>compilebench</Test>
+		<Mode>BATCH</Mode>
+	</RunTest>
+	<RunTest>
 		<Test>iozone</Test>
 		<Arguments>-s 2048M -i0</Arguments>
 		<Description>2GB Write Performance</Description>
