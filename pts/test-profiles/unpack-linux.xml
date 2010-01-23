@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Disk</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentTestingSize>360</EnvironmentTestingSize>
+		<SupportedPlatforms>Linux, BSD, Solaris, MacOSX</SupportedPlatforms>
+		<ProjectURL>http://www.kernel.org/</ProjectURL>
+	</TestProfile>
+	<TestInformation>
+		<Title>Unpacking The Linux Kernel</Title>
+		<TimesToRun>4</TimesToRun>
+		<SubTitle>linux-2.6.32.tar.bz2</SubTitle>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>This test measures how long it takes to extract the .tar.bz2 Linux kernel package.</Description>
+	</TestInformation>
+</PhoronixTestSuite>

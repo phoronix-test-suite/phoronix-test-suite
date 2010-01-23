@@ -94,4 +94,7 @@
 	<RunTest>
 		<Test>postmark</Test>
 	</RunTest>
+	<RunTest>
+		<Test>unpack-linux</Test>
+	</RunTest>
 </PhoronixTestSuite>

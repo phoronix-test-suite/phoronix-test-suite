@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts: Add unpack-linux test as a disk benchmark for timing how long it takes to extract the Linux kernel source
+
 Phoronix Test Suite 2.4 Beta 2
 January 21, 2010
 
