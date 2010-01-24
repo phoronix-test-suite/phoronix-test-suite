@@ -514,18 +514,7 @@ class gui_gtk implements pts_option_interface
 
 		$titles = array();
 		$values = array();
-		foreach($info_r as $head => $show)
-		{
-			$label_head = new pts_gtk_label(($show == null ? null : "<b>" . $head . ":</b> "));
-			$label_head->set_alignment(0, 0);
-			$label_head->set_padding(0, 0);
-			array_push($titles, $label_head);
-
-			$label_show = new pts_gtk_label($show);
-			$label_show->set_alignment(0, 0);
-			array_push($values, $label_show);
-		}
-
+		pts_gtk_2d_array_to_labels($info_r, $titles, $values);
 		$elements = array(array($titles, $values));
 
 		foreach($append_elements as $e)
@@ -561,17 +550,7 @@ class gui_gtk implements pts_option_interface
 
 		$titles = array();
 		$values = array();
-		foreach($info_r as $head => $show)
-		{
-			$label_head = new GtkLabel(($show == null ? null : $head . ": "));
-			$label_head->set_alignment(0, 0);
-			$label_head->set_padding(0, 0);
-			array_push($titles, $label_head);
-
-			$label_show = new GtkLabel($show);
-			$label_show->set_alignment(0, 0);
-			array_push($values, $label_show);
-		}
+		pts_gtk_2d_array_to_labels($info_r, $titles, $values);
 
 		$install_button = new pts_gtk_button("Install Now", null, null, 200, 100);
 		$install_button->connect_simple("clicked", array("gui_gtk", "confirmation_button_clicked"), "install", $to_install);
@@ -1442,7 +1421,7 @@ class gui_gtk implements pts_option_interface
 	{
 		$editable_preferences = array(
 		// User Settings
-		P_OPTION_USAGE_REPORTING, P_OPTION_DEFAULT_BROWSER, P_OPTION_PHODEVI_CACHE, P_OPTION_DISPLAY_MODE, 
+		P_OPTION_USAGE_REPORTING, P_OPTION_DEFAULT_BROWSER, P_OPTION_PHODEVI_CACHE, P_OPTION_DISPLAY_MODE, P_OPTION_EXTRA_REFERENCE_SYSTEMS, 
 		P_OPTION_LOAD_MODULES,
 		P_OPTION_TEST_REMOVEDOWNLOADS, P_OPTION_CACHE_SEARCHMEDIA, P_OPTION_CACHE_SYMLINK,
 		P_OPTION_PROMPT_DOWNLOADLOC, P_OPTION_TEST_ENVIRONMENT, P_OPTION_CACHE_DIRECTORY,

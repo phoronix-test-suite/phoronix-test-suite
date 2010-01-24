@@ -183,6 +183,7 @@ define("P_OPTION_USAGE_REPORTING", "PhoronixTestSuite/Options/General/AnonymousU
 define("P_OPTION_DEFAULT_BROWSER", "PhoronixTestSuite/Options/General/DefaultBrowser"); // Web browser to use to override the auto-detected browser
 define("P_OPTION_PHODEVI_CACHE", "PhoronixTestSuite/Options/General/UsePhodeviCache"); // Whether to use/create Phodevi smart cache in PTS
 define("P_OPTION_DISPLAY_MODE", "PhoronixTestSuite/Options/General/DefaultDisplayMode"); // The display mode to use by default
+define("P_OPTION_EXTRA_REFERENCE_SYSTEMS", "PhoronixTestSuite/Options/General/ReferenceSystems"); // Extra reference systems
 
 define("P_OPTION_LOAD_MODULES", "PhoronixTestSuite/Options/Modules/LoadModules"); // Modules to load by default
 

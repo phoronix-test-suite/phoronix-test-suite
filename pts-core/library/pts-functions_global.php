@@ -48,12 +48,12 @@ function pts_global_valid_id_string($global_id)
 	// Basic checking to see if the string is possibly a Global ID
 	$is_valid = true;
 
-	if(count(explode("-", $global_id)) < 3) // Global IDs should have three (or more) dashes
+	if(!isset($global_id[12])) // Shortest Possible ID would be X-000-000-000, needs to be at least 13 chars
 	{
 		$is_valid = false;
 	}
 
-	if(!isset($global_id[12])) // Shortest Possible ID would be X-000-000-000, needs to be at least 13 chars
+	if($is_valid && count(explode("-", $global_id)) < 3) // Global IDs should have three (or more) dashes
 	{
 		$is_valid = false;
 	}

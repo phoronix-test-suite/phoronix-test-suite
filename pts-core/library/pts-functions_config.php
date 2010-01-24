@@ -41,6 +41,7 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObjectFromReader(P_OPTION_DEFAULT_BROWSER, 1, $read_config, null);
 	$config->addXmlObjectFromReader(P_OPTION_PHODEVI_CACHE, 1, $read_config, "TRUE");
 	$config->addXmlObjectFromReader(P_OPTION_DISPLAY_MODE, 1, $read_config, "DEFAULT");
+	$config->addXmlObjectFromReader(P_OPTION_EXTRA_REFERENCE_SYSTEMS, 1, $read_config, null);
 
 	$config->addXmlObjectFromReader(P_OPTION_LOAD_MODULES, 2, $read_config, "toggle_screensaver, update_checker");
 

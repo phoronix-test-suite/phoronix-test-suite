@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts-includes-gtk.php: Functions needed for the GTK interface
 
 	This program is free software; you can redistribute it and/or modify
@@ -207,6 +207,20 @@ function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null, $a
 	}
 
 	return $scrolled_window;
+}
+function pts_gtk_2d_array_to_labels($array_2d, &$col_1, &$col_2)
+{
+	foreach($array_2d as $head => $show)
+	{
+		$label_head = new pts_gtk_label(($show == null ? null : "<b>" . $head . ":</b> "));
+		$label_head->set_alignment(0, 0);
+		$label_head->set_padding(0, 0);
+		array_push($col_1, $label_head);
+
+		$label_show = new GtkLabel($show);
+		$label_show->set_alignment(0, 0);
+		array_push($col_2, $label_show);
+	}
 }
 function pts_gtk_array_to_boxes($widget, $items, $set_spacing = -1, $append_to = false)
 {
