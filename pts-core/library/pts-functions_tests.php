@@ -195,8 +195,19 @@ function pts_get_results_viewer_xsl_formatted()
 		return;
 	}
 
+	$width = $pts_Graph->graphWidth();
+	$height = $pts_Graph->graphHeight();
+
+	if($pts_Graph->getRenderer() == "SVG")
+	{
+		// Hackish way to try to get all browsers to show the entire SVG graph when the graphs may be different size, etc
+		$height += 50;
+		$width = 600 > $width ? 600 : $width;
+		$height = 400 > $height ? 400 : $height;
+	}
+
 	$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
-	$graph_string = $pts_Graph->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $pts_Graph->graphWidth(), $pts_Graph->graphWidth());
+	$graph_string = $pts_Graph->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
 
 	$raw_xsl = str_replace("<!-- GRAPH TAGS -->", $graph_string, $raw_xsl);
 	//$raw_xsl = str_replace("<!-- OVERVIEW TAG -->", $overview_string, $raw_xsl);

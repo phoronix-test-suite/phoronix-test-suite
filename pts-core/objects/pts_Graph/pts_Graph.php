@@ -206,7 +206,7 @@ abstract class pts_Graph
 	{
 		$attributes = array();
 
-		if($this->graph_renderer == "SWF")
+		if(in_array($this->graph_renderer, array("SWF", "SVG")))
 		{
 			$attributes["width"] = $width;
 			$attributes["height"] = $height;

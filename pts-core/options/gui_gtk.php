@@ -757,7 +757,6 @@ class gui_gtk implements pts_option_interface
 			}
 
 			pts_set_assignment("GTK_DOWNLOADS_LIMIT", $downloads_limit);
-
 			gui_gtk::update_main_notebook();
 		}
 	}
