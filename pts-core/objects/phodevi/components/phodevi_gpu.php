@@ -304,9 +304,9 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(IS_LINUX || IS_BSD || IS_SOLARIS)
 		{
-			// Before calling xrandr first try to get the resolution through KMS path
 			if(IS_LINUX)
 			{
+				// Before calling xrandr first try to get the resolution through KMS path
 				foreach(pts_glob("/sys/class/drm/card*/*/modes") as $connector_path)
 				{
 					$connector_path = pts_add_trailing_slash(dirname($connector_path));
@@ -327,6 +327,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 			if($resolution == false && IS_NVIDIA_GRAPHICS)
 			{
+				// Way to find resolution through NVIDIA's NV-CONTROL extension
 				if(($frontend_res = phodevi_parser::read_nvidia_extension("FrontendResolution")) != false)
 				{
 					$resolution = explode(',', $frontend_res);
@@ -335,6 +336,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 			if($resolution == false && pts_executable_in_path("xrandr"))
 			{
+				// Read resolution from xrandr
 				$info = shell_exec("xrandr 2>&1 | grep \"*\"");
 
 				if(strpos($info, "*") !== false)
@@ -347,6 +349,23 @@ class phodevi_gpu extends phodevi_device_interface
 					if(is_numeric($res[0]) && is_numeric($res[1]))
 					{
 						$resolution = array($res[0], $res[1]);
+					}
+				}
+			}
+
+			if($resolution == false)
+			{
+				// Fallback to reading resolution from xdpyinfo
+				foreach(phodevi_parser::read_xdpy_monitor_info() as $monitor_line)
+				{
+					$this_resolution = substr($monitor_line, strpos($monitor_line, ': ') + 2);
+					$this_resolution = substr($this_resolution, 0, strpos($this_resolution, ' '));
+					$this_resolution = explode('x', $this_resolution);
+
+					if(count($this_resolution) == 2 && is_numeric($this_resolution[0]) && is_numeric($this_resolution[1]))
+					{
+						$resolution = $this_resolution;
+						break;
 					}
 				}
 			}

@@ -49,17 +49,22 @@ class phodevi_parser
 	public static function read_xdpy_monitor_info()
 	{
 		// Read xdpyinfo monitor information
-		$monitor_info = array();
+		static $monitor_info = null;
 
-		if(pts_executable_in_path("xdpyinfo"))
+		if($monitor_info == null)
 		{
-			$info = trim(shell_exec("xdpyinfo -ext XINERAMA 2>&1 | grep head"));
+			$monitor_info = array();
 
-			foreach(explode("\n", $info) as $xdpyinfo_line)
+			if(pts_executable_in_path("xdpyinfo"))
 			{
-				if(!empty($xdpyinfo_line) && strpos($xdpyinfo_line, "0x0") == false)
+				$info = trim(shell_exec("xdpyinfo -ext XINERAMA 2>&1 | grep head"));
+
+				foreach(explode("\n", $info) as $xdpyinfo_line)
 				{
-					array_push($monitor_info, $xdpyinfo_line);
+					if(!empty($xdpyinfo_line) && strpos($xdpyinfo_line, "0x0") == false)
+					{
+						array_push($monitor_info, $xdpyinfo_line);
+					}
 				}
 			}
 		}
