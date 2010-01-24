@@ -73,6 +73,10 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 			}
 			$test_passes = false;
 		}
+		else if(!pts_is_run_object($lower_identifier) && !pts_global_valid_id_string($lower_identifier))
+		{
+			echo pts_string_header($lower_identifier . " is not recognized.");
+		}
 
 		if($test_passes && pts_verify_test_installation($lower_identifier, $tests_missing) == false)
 		{
@@ -106,9 +110,8 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 
 			if($stop_and_install)
 			{
-				pts_set_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS", true);
 				pts_run_option_next("install_test", $tests_missing, pts_assignment_manager::get_all_assignments());
-				pts_run_option_next("run_test", $tests_missing, pts_assignment_manager::get_all_assignments());
+				pts_run_option_next("run_test", $tests_missing, pts_assignment_manager::get_all_assignments(array("NO_PROMPT_IN_RUN_ON_MISSING_TESTS" => true)));
 				return false;
 			}
 			else
