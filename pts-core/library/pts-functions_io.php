@@ -49,7 +49,7 @@ function pts_text_select_menu($user_string, $options_r, $allow_multi_select = fa
 
 	if($option_count == 1)
 	{
-		return array_pop($options_r);
+		return $return_index ? 0 : array_pop($options_r);
 	}
 
 	do

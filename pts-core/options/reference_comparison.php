@@ -69,11 +69,13 @@ class reference_comparison implements pts_option_interface
 
 			echo pts_string_header("Reference Comparison");
 			$merge_index = pts_text_select_menu("Select a reference system", $comparable, false, true);
+
 			array_push($merge_args, $reference_test_globals[$merge_index]);
 		}
 
 		pts_set_assignment("REFERENCE_COMPARISON", true);
 		$merged_results = call_user_func_array("pts_merge_test_results", $merge_args);
+
 		pts_save_result($r[0] . "/composite.xml", $merged_results);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $r[0]);
 

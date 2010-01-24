@@ -20,6 +20,9 @@
 		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
+		<Test>x264</Test>
+	</RunTest>
+	<RunTest>
 		<Test>compress-7zip</Test>
 	</RunTest>
 	<RunTest>

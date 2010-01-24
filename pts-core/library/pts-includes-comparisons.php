@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts-includes-comparisons.php: Functions needed for performing reference comparisons
 
 	This program is free software; you can redistribute it and/or modify
@@ -28,13 +28,8 @@ function pts_result_file_reference_tests($result)
 	$result_file = new pts_result_file($result);
 	$result_test = $result_file->get_suite_name();
 	$result_identifiers = $result_file->get_system_identifiers();
-	$test_result_hashes = array();
+	$test_result_hashes = $result_file->get_result_object_hashes();
 	$reference_tests = array();
-
-	foreach($result_file->get_result_object_hashes() as $object_hash)
-	{
-		array_push($test_result_hashes, $object_hash);
-	}
 
 	if(!isset($ref_systems_xml_strings[$result_test]))
 	{
@@ -52,10 +47,19 @@ function pts_result_file_reference_tests($result)
 		}
 	}
 
-	$reference_ids = pts_trim_explode(",", $ref_systems_xml_strings[$result_test]);
+	$specific_reference_ids = pts_trim_explode(",", $ref_systems_xml_strings[$result_test]);
 	$reference_file_ids = pts_generic_reference_system_comparison_ids();
 
-	foreach(array_merge($reference_ids, $reference_file_ids) as $global_id)
+	pts_process_reference_comparison_hashes($specific_reference_ids, $result_identifiers, $test_result_hashes, $reference_tests);
+	pts_process_reference_comparison_hashes($reference_file_ids, $result_identifiers, $test_result_hashes, $reference_tests, true);
+
+	return $reference_tests;
+}
+function pts_process_reference_comparison_hashes($reference_ids_to_process, $original_test_result_identifiers, &$original_test_hashes, &$reference_tests, $handle_cache = false)
+{
+	static $hash_cache = null;
+
+	foreach($reference_ids_to_process as $global_id)
 	{
 		if(pts_is_global_id($global_id))
 		{
@@ -64,14 +68,31 @@ function pts_result_file_reference_tests($result)
 				pts_clone_from_global($global_id, false);
 			}
 
-			$global_result_file = new pts_result_file($global_id);
-			$global_result_hashes = array();
+			if($handle_cache && isset($hash_cache[$global_id]))
+			{
+				$global_result_identifiers = $hash_cache[$global_id]["identifiers"];
+				$cache_hash_array = $hash_cache[$global_id]["hashes"];
+			}
+			else
+			{
+				$global_result_file = new pts_result_file($global_id);
+				$global_result_identifiers = $global_result_file->get_system_identifiers();
 
-			$global_result_identifiers = $global_result_file->get_system_identifiers();
+				if($handle_cache)
+				{
+					$hash_cache[$global_id]["identifiers"] = $global_result_identifiers;
+					$hash_cache[$global_id]["hashes"] = $global_result_file->get_result_object_hashes();
+					$cache_hash_array = $hash_cache[$global_id]["hashes"];
+				}
+				else
+				{
+					$cache_hash_array = false;
+				}
+			}
 
 			foreach($global_result_identifiers as $index => $identifier_check)
 			{
-				if(in_array($identifier_check, $result_identifiers))
+				if(in_array($identifier_check, $original_test_result_identifiers))
 				{
 					unset($global_result_identifiers[$index]);
 				}
@@ -79,24 +100,12 @@ function pts_result_file_reference_tests($result)
 
 			if(count($global_result_identifiers) > 0)
 			{
-				$hash_failed = false;
+				$global_result_hashes = $cache_hash_array != false ? $cache_hash_array : $global_result_file->get_result_object_hashes();
+				file_put_contents("/tmp/serial", serialize($global_result_hashes));
 
-				foreach($global_result_file->get_result_object_hashes() as $object_hash)
+				if(count(array_diff($original_test_hashes, $global_result_hashes)) == 0)
 				{
-					array_push($global_result_hashes, $object_hash);
-				}
-				foreach($test_result_hashes as &$hash)
-				{
-					if(!in_array($hash, $global_result_hashes))
-					{
-						$hash_failed = true;
-						break;
-					}
-				}
-
-				if(!$hash_failed)
-				{
-					foreach($global_result_identifiers as &$system_identifier)
+					foreach($global_result_identifiers as $system_identifier)
 					{
 						array_push($reference_tests, new pts_result_merge_select($global_id, $system_identifier));
 					}
@@ -104,8 +113,6 @@ function pts_result_file_reference_tests($result)
 			}
 		}
 	}
-
-	return $reference_tests;
 }
 function pts_download_all_generic_reference_system_comparison_results()
 {

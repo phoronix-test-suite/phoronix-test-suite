@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: When running on BSD with Linux binary compatibility loaded, download the Linux-specific files for a test too
 - pts-core: Better handling of missing tests
+- pts-core: Faster reference system comparison support
 - phodevi: Support reading the system temperature through the hwmon sysfs interface
 - phodevi: Fallback support to read the current monitor mode from xdpyinfo when available
 - phodevi: Support for reading newer version numbers of the KDE Software Compilation desktop

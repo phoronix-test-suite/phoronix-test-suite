@@ -50,10 +50,13 @@ class phodevi_linux_parser
 						{
 							$value_check_value = pts_file_get_contents($sysfs_dir . $node_check);
 
-							if(isset($value_check[0]) && $value_check[0] == '!' && $value_check_value == substr($value_check, 1))
+							if(isset($value_check[0]) && $value_check[0] == '!')
 							{
-								$skip_to_next = true;
-								break;
+								if($value_check_value == substr($value_check, 1))
+								{
+									$skip_to_next = true;
+									break;
+								}
 							}
 							else if($value_check_value != $value_check)
 							{

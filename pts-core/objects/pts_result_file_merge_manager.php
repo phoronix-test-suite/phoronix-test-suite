@@ -72,7 +72,7 @@ class pts_result_file_merge_manager
 
 			if($result_merge_select != null || is_array($select_identifiers))
 			{
-				if(PTS_MODE == "CLIENT" && pts_read_assignment("REFERENCE_COMPARISON"))
+				if(PTS_MODE == "CLIENT" && pts_read_assignment("REFERENCE_COMPARISON") && is_array($select_identifiers))
 				{
 					$skip_adding = true;
 				}
