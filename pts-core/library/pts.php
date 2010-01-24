@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-error_reporting(E_ERROR | E_STRICT);
+//error_reporting(E_ERROR | E_STRICT);
 
 define("PTS_VERSION", "2.4.0b2");
 define("PTS_CORE_VERSION", 2350);

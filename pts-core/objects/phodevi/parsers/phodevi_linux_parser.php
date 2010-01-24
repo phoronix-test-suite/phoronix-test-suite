@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	phodevi_linux_parser.php: General parsing functions specific to Linux
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,6 +23,77 @@
 
 class phodevi_linux_parser
 {
+	public static function read_sysfs_node($search, $type = "NUMERIC", $node_dir_check = null, $find_position = 1)
+	{
+		static $sysfs_file_cache = null;
+		$arg_hash = crc32(serialize(func_get_args()));
+
+		if(!isset($sysfs_file_cache[$arg_hash]))
+		{
+			$find_count = 0;
+
+			foreach(pts_glob($search) as $sysfs_file)
+			{
+				if(is_array($node_dir_check))
+				{
+					$sysfs_dir = dirname($sysfs_file) . '/';
+
+					foreach($node_dir_check as $node_check => $value_check)
+					{
+						if(!is_file($sysfs_dir . $node_check) || ($value_check !== true && pts_file_get_contents($sysfs_dir . $node_check) != $value_check))
+						{
+							continue;
+						}
+					}
+				}
+
+				$sysfs_value = pts_file_get_contents($sysfs_file);
+
+				switch($type)
+				{
+					case "NUMERIC":
+						if(is_numeric($sysfs_value))
+						{
+							$sysfs_file_cache[$arg_hash] = $sysfs_file;
+						}
+						break;
+					case "POSITIVE_NUMERIC":
+						if(is_numeric($sysfs_value) && $sysfs_value > 0)
+						{
+							$sysfs_file_cache[$arg_hash] = $sysfs_file;
+						}
+						break;
+					case "NOT_EMPTY":
+						if(!empty($sysfs_value))
+						{
+							$sysfs_file_cache[$arg_hash] = $sysfs_file;
+						}
+						break;
+					case "NO_CHECK":
+						$sysfs_file_cache[$arg_hash] = $sysfs_file;
+						break;
+				}
+
+				$find_count++;
+				if($find_count < $find_position)
+				{
+					unset($sysfs_file_cache[$arg_hash]);
+				}
+
+				if(isset($sysfs_file_cache[$arg_hash]))
+				{
+					break;
+				}
+			}
+
+			if(!isset($sysfs_file_cache[$arg_hash]))
+			{
+				$sysfs_file_cache[$arg_hash] = false;
+			}
+		}
+
+		return $sysfs_file_cache[$arg_hash] == false ? -1 : pts_file_get_contents($sysfs_file_cache[$arg_hash]);
+	}
 	public static function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore = null)
 	{
 		// Read Linux dmidecode

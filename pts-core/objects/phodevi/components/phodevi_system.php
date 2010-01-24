@@ -186,29 +186,39 @@ class phodevi_system extends phodevi_device_interface
 
 		if(IS_LINUX)
 		{
-			foreach(pts_glob("/sys/class/thermal/thermal_zone*/temp") as $temp)
-			{
-				$temp = pts_file_get_contents($temp);
+			// Assuming the first thermal sensor is for the system, see TODO in phodevi_cpu
+			$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/thermal/thermal_zone*/temp", "POSITIVE_NUMERIC");
 
-				if(is_numeric($temp))
+			if($raw_temp == -1)
+			{
+				$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/temp1_input", "POSITIVE_NUMERIC");
+			}
+
+			if($raw_temp == -1)
+			{
+				$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/temp1_input", "POSITIVE_NUMERIC");
+			}
+
+			if($raw_temp != -1)
+			{
+				if($raw_temp > 1000)
 				{
-					// Assuming the first thermal sensor is for the system, see TODO in phodevi_cpu
-					$temp_c = pts_trim_double(($temp / 1000), 2);
-					break;
+					$raw_temp = $raw_temp / 1000;
 				}
+
+				$temp_c = pts_trim_double($raw_temp, 2);	
 			}
 
 			if($temp_c == -1)
 			{
-				foreach(pts_glob("/sys/class/hwmon/hwmon*/device/temp1_input") as $temp)
-				{
-					$temp = pts_file_get_contents($temp);
+				$acpi = phodevi_linux_parser::read_acpi(array(
+					"/thermal_zone/THM1/temperature",
+					"/thermal_zone/TZ00/temperature",
+					"/thermal_zone/TZ01/temperature"), "temperature");
 
-					if(is_numeric($temp))
-					{
-						$temp_c = pts_trim_double(($temp / 1000), 2);
-						break;
-					}
+				if(($end = strpos($acpi, ' ')) > 0)
+				{
+					$temp_c = substr($acpi, 0, $end);
 				}
 			}
 
@@ -219,18 +229,6 @@ class phodevi_system extends phodevi_device_interface
 				if($sensors != false && is_numeric($sensors))
 				{
 					$temp_c = $sensors;
-				}
-				else
-				{
-					$acpi = phodevi_linux_parser::read_acpi(array(
-						"/thermal_zone/THM1/temperature",
-						"/thermal_zone/TZ00/temperature",
-						"/thermal_zone/TZ01/temperature"), "temperature");
-
-					if(($end = strpos($acpi, ' ')) > 0)
-					{
-						$temp_c = substr($acpi, 0, $end);
-					}
 				}
 			}
 		}
@@ -258,22 +256,12 @@ class phodevi_system extends phodevi_device_interface
 
 		if(IS_LINUX)
 		{
-			foreach(pts_glob("/sys/class/power_supply/*/power_now") as $power_now)
+			$power_now = phodevi_linux_parser::read_sysfs_node("/sys/class/power_supply/*/power_now", "POSITIVE_NUMERIC", array("status" => "Discharging"));
+
+			if($power_now != -1)
 			{
-				$battery_dir = pts_add_trailing_slash(dirname($power_now));
-				$power_now = pts_file_get_contents($power_now);
-
-				if(is_file($battery_dir . "status") && pts_file_get_contents($battery_dir . "status") == "Charging")
-				{
-					// We only want the values when the battery is discharging
-					continue;
-				}
-
-				if(is_numeric($power_now))
-				{
-					// sysfs power_now seems to be displayed in microWatts
-					$rate = pts_trim_double($power_now / 1000, 2);
-				}
+				// sysfs power_now seems to be displayed in microWatts
+				$rate = pts_trim_double($power_now / 1000, 2);
 			}
 
 			if($rate == -1)
@@ -333,18 +321,14 @@ class phodevi_system extends phodevi_device_interface
 
 		if(IS_LINUX)
 		{
-			foreach(pts_glob("/sys/devices/w1_bus_master1/*/getcurrent") as $sys_current)
-			{
-				if(is_file($sys_current))
-				{
-					$getcurrent = pts_file_get_contents($sys_current);
+			$raw_current = phodevi_linux_parser::read_sysfs_node("/sys/devices/w1_bus_master1/*/getcurrent", "NO_CHECK");
 
-					if(substr($getcurrent, 0, 1) == "-")
-					{
-						$current = substr($getcurrent, 1);
-					}
+			if($raw_current != -1)
+			{
+				if(substr($raw_current, 0, 1) == "-")
+				{
+					$current = substr($raw_current, 1);
 				}
-				break;
 			}
 		}
 
@@ -445,15 +429,21 @@ class phodevi_system extends phodevi_device_interface
 
 		if(IS_LINUX)
 		{
-			foreach(array_merge(pts_glob("/sys/class/hwmon/hwmon*/device/fan2_input"), pts_glob("/sys/class/hwmon/hwmon*/device/fan3_input"), pts_glob("/sys/class/hwmon/hwmon*/device/fan4_input")) as $fan_input_file)
-			{
-				$fan_input = pts_file_get_contents($fan_input_file);
+			$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/fan2_input", "POSITIVE_NUMERIC");
 
-				if(is_numeric($fan_input) && $fan_input > 0)
-				{
-					$fan_speed = $fan_input;
-					break;
-				}
+			if($raw_fan == -1)
+			{
+				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/fan3_input", "POSITIVE_NUMERIC");
+			}
+
+			if($raw_fan == -1)
+			{
+				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/fan4_input", "POSITIVE_NUMERIC");
+			}
+
+			if($raw_fan != -1)
+			{
+				$fan_speed = $raw_fan;
 			}
 		}
 

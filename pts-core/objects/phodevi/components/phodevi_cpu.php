@@ -348,42 +348,28 @@ class phodevi_cpu extends phodevi_device_interface
 		else if(IS_LINUX)
 		{
 			// Try hwmon interface
-			foreach(pts_glob("/sys/class/hwmon/hwmon*/device/temp1_input") as $temp_input_file)
-			{
-				$temp_dir = dirname($temp_input_file);
-				$temp_input = pts_file_get_contents($temp_input_file);
+			$sysfs_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/temp1_input", "POSITIVE_NUMERIC", array("name" => "coretemp"));
 
-				if(is_numeric($temp_input) && $temp_input > 0 && (pts_file_get_contents($temp_dir . "/name") == "coretemp" || pts_file_get_contents($temp_dir . "/temp1_label") == "Core 0"))
-				{
-					$temp_c = $temp_input;
-					break;
-				}
+			if($sysfs_temp != -1)
+			{
+				$temp_c = $sysfs_temp;
 			}
 
 			if($temp_c == -1)
 			{
 				// Try ACPI thermal
-				$search_count = 0;
+				// Assuming the system thermal sensor comes 2nd to the ACPI CPU temperature
+				// It appears that way on a ThinkPad T60, but TODO find a better way to validate
+				$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/thermal/thermal_zone*/temp", "POSITIVE_NUMERIC", null, 2);
 
-				foreach(pts_glob("/sys/class/thermal/thermal_zone*/temp") as $temp)
+				if($raw_temp != -1)
 				{
-					$temp = pts_file_get_contents($temp);
-
-					if(is_numeric($temp) && $temp > 0)
+					if($raw_temp > 1000)
 					{
-						$search_count++;
-
-						if($search_count < 2)
-						{
-							continue;
-						}
-
-						// Assuming the system thermal sensor comes 2nd to the ACPI CPU temperature
-						// It appears that way on a ThinkPad T60, but TODO find a better way to validate
-
-						$temp_c = pts_trim_double(($temp / 1000), 2);
-						break;
+						$raw_temp = $raw_temp / 1000;
 					}
+
+					$temp_c = pts_trim_double($raw_temp, 2);	
 				}
 			}
 
@@ -407,15 +393,16 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(IS_LINUX)
 		{
-			foreach(array_merge(pts_glob("/sys/class/hwmon/hwmon*/fan1_input"), pts_glob("/sys/class/hwmon/hwmon*/device/fan1_input")) as $fan_input_file)
-			{
-				$fan_input = pts_file_get_contents($fan_input_file);
+			$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/fan1_input", "POSITIVE_NUMERIC");
 
-				if(is_numeric($fan_input) && $fan_input > 0)
-				{
-					$fan_speed = $fan_input;
-					break;
-				}
+			if($raw_fan == -1)
+			{
+				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/fan1_input", "POSITIVE_NUMERIC");
+			}
+
+			if($raw_fan != -1)
+			{
+				$fan_speed = $raw_fan;
 			}
 		}
 

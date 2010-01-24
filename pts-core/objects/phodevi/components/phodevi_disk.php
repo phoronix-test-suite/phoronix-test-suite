@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
 
 	This program is free software; you can redistribute it and/or modify
@@ -210,6 +210,7 @@ class phodevi_disk extends phodevi_device_interface
 
 			if($sys_disk == null)
 			{
+				
 				foreach(pts_glob("/sys/class/block/sd*/stat") as $check_disk)
 				{
 					if(pts_file_get_contents($check_disk) != null)
