@@ -81,7 +81,8 @@ class gui_gtk implements pts_option_interface
 		array("pts_cache_software_calls", "Building Software Information"),
 		array("pts_cache_suite_calls", "Caching Suite Information"),
 		array("pts_cache_test_calls", "Caching Test Information"),
-		array("pts_download_all_generic_reference_system_comparison_results", "Downloading Reference Comparison Results")
+		array("pts_download_all_generic_reference_system_comparison_results", "Downloading Reference Comparison Results"),
+		array("pts_generic_reference_system_build_cache", "Building Reference Comparison Cache")
 		);
 
 		$progress_window = new pts_gtk_simple_progress_window();

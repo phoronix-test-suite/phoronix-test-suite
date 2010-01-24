@@ -48,10 +48,9 @@ function pts_result_file_reference_tests($result)
 	}
 
 	$specific_reference_ids = pts_trim_explode(",", $ref_systems_xml_strings[$result_test]);
-	$reference_file_ids = pts_generic_reference_system_comparison_ids();
 
 	pts_process_reference_comparison_hashes($specific_reference_ids, $result_identifiers, $test_result_hashes, $reference_tests);
-	pts_process_reference_comparison_hashes($reference_file_ids, $result_identifiers, $test_result_hashes, $reference_tests, true);
+	pts_process_reference_comparison_hashes(pts_generic_reference_system_comparison_ids(), $result_identifiers, $test_result_hashes, $reference_tests, true);
 
 	return $reference_tests;
 }
@@ -101,7 +100,6 @@ function pts_process_reference_comparison_hashes($reference_ids_to_process, $ori
 			if(count($global_result_identifiers) > 0)
 			{
 				$global_result_hashes = $cache_hash_array != false ? $cache_hash_array : $global_result_file->get_result_object_hashes();
-				file_put_contents("/tmp/serial", serialize($global_result_hashes));
 
 				if(count(array_diff($original_test_hashes, $global_result_hashes)) == 0)
 				{
@@ -113,6 +111,12 @@ function pts_process_reference_comparison_hashes($reference_ids_to_process, $ori
 			}
 		}
 	}
+}
+function pts_generic_reference_system_build_cache()
+{
+	$original_test_hashes = array();
+	$reference_tests = array();
+	pts_process_reference_comparison_hashes(pts_generic_reference_system_comparison_ids(), array(), $original_test_hashes, $reference_tests, true);
 }
 function pts_download_all_generic_reference_system_comparison_results()
 {
