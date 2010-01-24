@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support reading the system temperature through the hwmon sysfs interface
 - phodevi: Fallback support to read the current monitor mode from xdpyinfo when available
 - phodevi: Support for reading newer version numbers of the KDE Software Compilation desktop
+- phodevi: Better CPU thermal monitoring
 - pts: Add unpack-linux test as a disk benchmark for timing how long it takes to extract the Linux kernel source
 - pts: Drop filesystem test suite as its similar to the disk test suite, so move all the tests there
 - pts: Add compilebench test profile for Oracle's Compile Bench

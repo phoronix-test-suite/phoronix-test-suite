@@ -67,7 +67,7 @@ function pts_available_sensors()
 	new phodevi_sensor("memory", "total", array("memory", "total-usage"), "Megabytes"),
 	new phodevi_sensor("fan-speed", "gpu", array("gpu", "fan-speed"), "Percent"),
 	new phodevi_sensor("fan-speed", "cpu", array("cpu", "fan-speed"), "RPM"),
-	new phodevi_sensor("fan-speed", "sys", array("sys", "fan-speed"), "RPM"),
+	new phodevi_sensor("fan-speed", "sys", array("system", "fan-speed"), "RPM", "System"),
 	new phodevi_sensor("system", "iowait", array("system", "iowait"), "Percent"),
 	new phodevi_sensor("disk-speed", "read", array("disk", "read-speed"), "MB/s"),
 	new phodevi_sensor("disk-speed", "write", array("disk", "write-speed"), "MB/s")

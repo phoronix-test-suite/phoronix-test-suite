@@ -91,13 +91,13 @@ class phodevi_system extends phodevi_device_interface
 				$property = new phodevi_device_property("sw_python_version", PHODEVI_STAND_CACHE);
 				break;
 			case "display-server":
-				$property = new phodevi_device_property("sw_display_server", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_display_server", PHODEVI_SMART_CACHE);
 				break;
 			case "display-driver":
 				$property = new phodevi_device_property("sw_display_driver", PHODEVI_STAND_CACHE);
 				break;
 			case "dri-display-driver":
-				$property = new phodevi_device_property("sw_dri_display_driver", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_dri_display_driver", PHODEVI_SMART_CACHE);
 				break;
 			case "opengl-driver":
 				$property = new phodevi_device_property("sw_opengl_driver", PHODEVI_STAND_CACHE);
@@ -106,7 +106,7 @@ class phodevi_system extends phodevi_device_interface
 				$property = new phodevi_device_property("sw_opengl_vendor", PHODEVI_SMART_CACHE);
 				break;
 			case "desktop-environment":
-				$property = new phodevi_device_property("sw_desktop_environment", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property("sw_desktop_environment", PHODEVI_SMART_CACHE);
 				break;
 			case "operating-system":
 				$property = new phodevi_device_property("sw_operating_system", PHODEVI_SMART_CACHE);
@@ -445,7 +445,7 @@ class phodevi_system extends phodevi_device_interface
 
 		if(IS_LINUX)
 		{
-			foreach(array_merge(pts_glob("/sys/class/hwmon/hwmon*/fan2_input"), pts_glob("/sys/class/hwmon/hwmon*/device/fan2_input")) as $fan_input_file)
+			foreach(array_merge(pts_glob("/sys/class/hwmon/hwmon*/device/fan2_input"), pts_glob("/sys/class/hwmon/hwmon*/device/fan3_input"), pts_glob("/sys/class/hwmon/hwmon*/device/fan4_input")) as $fan_input_file)
 			{
 				$fan_input = pts_file_get_contents($fan_input_file);
 

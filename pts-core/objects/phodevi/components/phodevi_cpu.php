@@ -347,21 +347,29 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(IS_LINUX)
 		{
-			$sensors = phodevi_linux_parser::read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
+			// Try hwmon interface
+			foreach(pts_glob("/sys/class/hwmon/hwmon*/device/temp1_input") as $temp_input_file)
+			{
+				$temp_dir = dirname($temp_input_file);
+				$temp_input = pts_file_get_contents($temp_input_file);
 
-			if($sensors != false && is_numeric($sensors))
-			{
-				$temp_c = $sensors;
+				if(is_numeric($temp_input) && $temp_input > 0 && (pts_file_get_contents($temp_dir . "/name") == "coretemp" || pts_file_get_contents($temp_dir . "/temp1_label") == "Core 0"))
+				{
+					$temp_c = $temp_input;
+					break;
+				}
 			}
-			else
+
+			if($temp_c == -1)
 			{
+				// Try ACPI thermal
 				$search_count = 0;
 
 				foreach(pts_glob("/sys/class/thermal/thermal_zone*/temp") as $temp)
 				{
 					$temp = pts_file_get_contents($temp);
 
-					if(is_numeric($temp))
+					if(is_numeric($temp) && $temp > 0)
 					{
 						$search_count++;
 
@@ -376,6 +384,17 @@ class phodevi_cpu extends phodevi_device_interface
 						$temp_c = pts_trim_double(($temp / 1000), 2);
 						break;
 					}
+				}
+			}
+
+			if($temp_c == -1)
+			{
+				// Try LM_Sensors
+				$sensors = phodevi_linux_parser::read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
+
+				if($sensors != false && is_numeric($sensors) && $sensors > 0)
+				{
+					$temp_c = $sensors;
 				}
 			}
 		}
