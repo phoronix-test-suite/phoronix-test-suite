@@ -36,16 +36,36 @@ class phodevi_linux_parser
 			{
 				if(is_array($node_dir_check))
 				{
+					$skip_to_next = false;
 					$sysfs_dir = dirname($sysfs_file) . '/';
 
 					foreach($node_dir_check as $node_check => $value_check)
 					{
-						$opposite_check = isset($value_check[0]) && $value_check[0] == '!';
-
-						if(!is_file($sysfs_dir . $node_check) || ($value_check !== true && (pts_file_get_contents($sysfs_dir . $node_check) != $value_check || $opposite_check)))
+						if(!is_file($sysfs_dir . $node_check))
 						{
-							continue;
+							$skip_to_next = true;
+							break;
 						}
+						else if($value_check !== true)
+						{
+							$value_check_value = pts_file_get_contents($sysfs_dir . $node_check);
+
+							if(isset($value_check[0]) && $value_check[0] == '!' && $value_check_value == substr($value_check, 1))
+							{
+								$skip_to_next = true;
+								break;
+							}
+							else if($value_check_value != $value_check)
+							{
+								$skip_to_next = true;
+								break;
+							}
+						}
+					}
+
+					if($skip_to_next)
+					{
+						continue;
 					}
 				}
 
