@@ -849,7 +849,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$line_segments = explode(":", $kde_lines[$i]);
 
-				if($line_segments[0] == "KDE" && isset($line_segments[1]))
+				if(in_array($line_segments[0], array("KDE", "KDE Development Platform")) && isset($line_segments[1]))
 				{
 					$v = trim($line_segments[1]);
 
