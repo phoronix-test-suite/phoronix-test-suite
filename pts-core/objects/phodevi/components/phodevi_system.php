@@ -191,7 +191,7 @@ class phodevi_system extends phodevi_device_interface
 
 			if($raw_temp == -1)
 			{
-				$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/temp1_input", "POSITIVE_NUMERIC");
+				$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/temp1_input", "POSITIVE_NUMERIC", array("name" => "!coretemp"));
 			}
 
 			if($raw_temp == -1)
@@ -433,12 +433,12 @@ class phodevi_system extends phodevi_device_interface
 
 			if($raw_fan == -1)
 			{
-				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/fan3_input", "POSITIVE_NUMERIC");
+				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/fan3_input", "POSITIVE_NUMERIC");
 			}
 
 			if($raw_fan == -1)
 			{
-				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/fan4_input", "POSITIVE_NUMERIC");
+				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/fan4_input", "POSITIVE_NUMERIC");
 			}
 
 			if($raw_fan != -1)

@@ -40,7 +40,9 @@ class phodevi_linux_parser
 
 					foreach($node_dir_check as $node_check => $value_check)
 					{
-						if(!is_file($sysfs_dir . $node_check) || ($value_check !== true && pts_file_get_contents($sysfs_dir . $node_check) != $value_check))
+						$opposite_check = isset($value_check[0]) && $value_check[0] == '!';
+
+						if(!is_file($sysfs_dir . $node_check) || ($value_check !== true && (pts_file_get_contents($sysfs_dir . $node_check) != $value_check || $opposite_check)))
 						{
 							continue;
 						}

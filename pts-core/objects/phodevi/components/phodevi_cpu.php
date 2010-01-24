@@ -348,29 +348,24 @@ class phodevi_cpu extends phodevi_device_interface
 		else if(IS_LINUX)
 		{
 			// Try hwmon interface
-			$sysfs_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/temp1_input", "POSITIVE_NUMERIC", array("name" => "coretemp"));
+			$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/temp1_input", "POSITIVE_NUMERIC", array("name" => "coretemp"));
 
-			if($sysfs_temp != -1)
-			{
-				$temp_c = $sysfs_temp;
-			}
-
-			if($temp_c == -1)
+			if($raw_temp == -1)
 			{
 				// Try ACPI thermal
 				// Assuming the system thermal sensor comes 2nd to the ACPI CPU temperature
 				// It appears that way on a ThinkPad T60, but TODO find a better way to validate
 				$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/thermal/thermal_zone*/temp", "POSITIVE_NUMERIC", null, 2);
+			}
 
-				if($raw_temp != -1)
+			if($raw_temp != -1)
+			{
+				if($raw_temp > 1000)
 				{
-					if($raw_temp > 1000)
-					{
-						$raw_temp = $raw_temp / 1000;
-					}
-
-					$temp_c = pts_trim_double($raw_temp, 2);	
+					$raw_temp = $raw_temp / 1000;
 				}
+
+				$temp_c = pts_trim_double($raw_temp, 2);	
 			}
 
 			if($temp_c == -1)
