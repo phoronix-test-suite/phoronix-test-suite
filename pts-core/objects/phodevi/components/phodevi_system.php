@@ -200,6 +200,20 @@ class phodevi_system extends phodevi_device_interface
 
 			if($temp_c == -1)
 			{
+				foreach(pts_glob("/sys/class/hwmon/hwmon*/device/temp1_input") as $temp)
+				{
+					$temp = pts_file_get_contents($temp);
+
+					if(is_numeric($temp))
+					{
+						$temp_c = pts_trim_double(($temp / 1000), 2);
+						break;
+					}
+				}
+			}
+
+			if($temp_c == -1)
+			{
 				$sensors = phodevi_linux_parser::read_sensors(array("Sys Temp", "Board Temp"));
 
 				if($sensors != false && is_numeric($sensors))
