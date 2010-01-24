@@ -165,7 +165,7 @@ function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null, $a
 	$view = new GtkTreeView($model);
 	$scrolled_window->add($view);
 
-	for($i = 0; $i < count($headers); $i++)
+	foreach(array_keys($headers) as $i)
 	{
 		if($headers[$i] == null && is_object($data[0][$i]))
 		{
@@ -182,12 +182,12 @@ function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null, $a
 		$view->append_column($column);
 	}
 
-	for($r = 0; $r < count($data); $r++)
+	foreach(array_keys($data) as $r)
 	{
 		$values = array();
 
 		$data[$r] = pts_to_array($data[$r]);
-		for($c = 0; $c < count($data[$r]); $c++)
+		foreach(array_keys($data[$r]) as $c)
 		{
 			array_push($values, $data[$r][$c]);
 		}

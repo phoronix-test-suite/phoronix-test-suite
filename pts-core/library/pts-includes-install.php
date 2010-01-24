@@ -612,7 +612,7 @@ function pts_test_download_cache_remote_files()
 				$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
 				$dc_md5 = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_MD5);
 
-				for($i = 0; $i < count($dc_file); $i++)
+				foreach(array_keys($dc_file) as $i)
 				{
 					$remote_download_files[$dc_md5[$i]] = new pts_test_file_download($dc_directory . $dc_file[$i], $dc_file[$i], 0, $dc_md5[$i]);
 				}

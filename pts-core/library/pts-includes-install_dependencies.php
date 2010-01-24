@@ -72,11 +72,12 @@ function pts_external_dependency_generic_title($generic_name)
 	$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 	$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 
-	for($i = 0; $i < count($package_name) && $generic_title == null; $i++)
+	foreach(array_keys($package_name) as $i)
 	{
 		if($generic_name == $package_name[$i])
 		{
 			$generic_title = $title[$i];
+			break;
 		}
 	}
 
@@ -92,7 +93,7 @@ function pts_external_dependency_generic_info($missing_dependency_names)
 	$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
 	$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 
-	for($i = 0; $i < count($title); $i++)
+	foreach(array_keys($title) as $i)
 	{
 		if(in_array($package_name[$i], $missing_dependency_names))
 		{
@@ -167,7 +168,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 		$arch_specific = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_ARCHSPECIFIC);
 		$kernel_architecture = phodevi::read_property("system", "kernel-architecture");
 
-		for($i = 0; $i < count($generic_package); $i++)
+		foreach(array_keys($generic_package) as $i)
 		{
 			if(!empty($generic_package[$i]) && ($generic_names == "all" || in_array($generic_package[$i], $generic_names)))
 			{

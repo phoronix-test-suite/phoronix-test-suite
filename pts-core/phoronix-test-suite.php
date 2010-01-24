@@ -83,21 +83,21 @@ if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 	else
 	{
 		$alias_file = pts_file_get_contents(STATIC_DIR . "lists/option-command-aliases.list");
-		$alias_r = array_map("trim", explode("\n", $alias_file));
 
-		for($i = 0; $i < count($alias_r) && !$replaced; $i++)
+		foreach(pts_trim_explode("\n", $alias_file) as $alias_line)
 		{
-			$line_r = array_map("trim", explode("=", $alias_r[$i]));
+			list($link_cmd, $real_cmd) = pts_trim_explode('=', $alias_line);
 
-			if($line_r[0] == $sent_command && isset($line_r[1]))
+			if($link_cmd == $sent_command)
 			{
-				$sent_command = trim($line_r[1]);
+				$sent_command = $real_cmd;
 				$replaced = true;
+				break;
 			}
 		}
 	}
 
-	if(!$replaced)
+	if($replaced == false)
 	{
 		// Show general options, since there are no valid commands
 		echo file_get_contents(STATIC_DIR . "general-options.txt");

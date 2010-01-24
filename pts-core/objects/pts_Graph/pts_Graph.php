@@ -405,9 +405,9 @@ abstract class pts_Graph
 		$this->graph_color_body_text = $this->graph_image->convert_hex_to_type($this->graph_color_body_text);
 		$this->graph_color_body_light = $this->graph_image->convert_hex_to_type($this->graph_color_body_light);
 
-		for($i = 0; $i < count($this->graph_color_paint); $i++)
+		foreach($this->graph_color_paint as &$paint_color)
 		{
-			$this->graph_color_paint[$i] = $this->graph_image->convert_hex_to_type($this->graph_color_paint[$i]);
+			$paint_color = $this->graph_image->convert_hex_to_type($paint_color);
 		}
 
 		// Background Color
@@ -425,9 +425,9 @@ abstract class pts_Graph
 		// Default to NORMAL
 		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3);
 
-		for($i = 0; $i < count($this->graph_sub_titles); $i++)
+		foreach($this->graph_sub_titles as $i => $sub_title)
 		{
-			$this->graph_image->write_text_center($this->graph_sub_titles[$i], $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (31 + ($i * 18)), $this->graph_left_end, (31 + ($i * 18)), false, true);
+			$this->graph_image->write_text_center($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (31 + ($i * 18)), $this->graph_left_end, (31 + ($i * 18)), false, true);
 		}
 
 		if($with_version)

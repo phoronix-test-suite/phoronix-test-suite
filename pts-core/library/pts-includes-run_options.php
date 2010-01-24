@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-includes-run_setup.php: Test options functions needed for running tests/suites.
 
 	This program is free software; you can redistribute it and/or modify
@@ -351,14 +351,12 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 				return;
 			}
 
-			$removable_media = array_merge(pts_glob("/media/*/"), pts_glob("/Volumes/*/"));
-
-			for($i = 0; $i < count($removable_media); $i++)
+			foreach(array_merge(pts_glob("/media/*/"), pts_glob("/Volumes/*/")) as $media_check)
 			{
-				if(is_dir($removable_media[$i]) && is_writable($removable_media[$i])) // add more checks later on
+				if(is_dir($media_check) && is_writable($media_check)) // add more checks later on
 				{
-					array_push($option_names, $removable_media[$i]);
-					array_push($option_values, $removable_media[$i]);
+					array_push($option_names, $media_check);
+					array_push($option_values, $media_check);
 				}
 			}
 			break;
@@ -418,7 +416,7 @@ function pts_test_options($identifier)
 
 	$test_options = array();
 
-	for($option_count = 0; $option_count < count($settings_name); $option_count++)
+	foreach(array_keys($settings_name) as $option_count)
 	{
 		$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
 		$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
@@ -430,7 +428,7 @@ function pts_test_options($identifier)
 		$user_option->set_option_prefix($settings_argument_prefix[$option_count]);
 		$user_option->set_option_postfix($settings_argument_postfix[$option_count]);
 
-		for($i = 0; $i < count($option_names) && $i < count($option_values); $i++)
+		foreach(array_keys($option_names) as $i)
 		{
 			$user_option->add_option($option_names[$i], $option_values[$i]);
 		}

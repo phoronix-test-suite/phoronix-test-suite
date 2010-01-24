@@ -614,7 +614,7 @@ class phodevi_system extends phodevi_device_interface
 		$virtualized = null;
 		$gpu = phodevi::read_name("gpu");
 
-		if(strpos(phodevi::read_property("cpu", "model"), "QEMU") !== false)
+		if(strpos(phodevi::read_property("cpu", "model"), "QEMU") !== false || (is_readable("/sys/class/dmi/id/bios_vendor") && pts_file_get_contents("/sys/class/dmi/id/bios_vendor") == "QEMU"))
 		{
 			$virtualized = "QEMU";
 		}

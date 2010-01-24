@@ -105,7 +105,7 @@ class pts_test_profile
 
 		foreach($this->get_dependencies() as $dependency)
 		{
-			for($i = 0; $i < count($title); $i++)
+			foreach(array_keys($title) as $i)
 			{
 				if($dependency == $package_name[$i])
 				{

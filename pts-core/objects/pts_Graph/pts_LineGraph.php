@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -53,7 +53,7 @@ class pts_LineGraph extends pts_CustomGraph
 		$px_from_top_start = $this->graph_top_end - 5;
 		$px_from_top_end = $this->graph_top_end + 5;
 
-		for($i = 0; $i < count($this->graph_identifiers); $i++)
+		foreach(array_keys($this->graph_identifiers) as $i)
 		{
 			if(is_array($this->graph_identifiers[$i]) || $this->graph_identifiers[$i] == "Array")
 			{
@@ -93,7 +93,7 @@ class pts_LineGraph extends pts_CustomGraph
 			}
 		}
 
-		for($i_o = 0; $i_o < count($this->graph_data); $i_o++)
+		foreach(array_keys($this->graph_data) as $i_o)
 		{
 			$paint_color = $this->next_paint_color();
 			$calculations_r[$paint_color] = array();

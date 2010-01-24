@@ -124,7 +124,7 @@ function pts_result_file_system_info_to_xml(&$pts_result_file, &$xml_writer, &$s
 
 	// Write the system hardware/software information
 
-	for($i = 0; $i < count($system_hardware); $i++)
+	foreach(array_keys($system_hardware) as $i)
 	{
 		if(!($is_pts_rms = ($result_merge_select instanceOf pts_result_merge_select)) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
 		{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	gui_gtk_events.php: A module used in conjunction with the Phoronix Test Suite GTK2 GUI interface
 
 	This program is free software; you can redistribute it and/or modify
@@ -115,17 +115,17 @@ class gui_gtk_events extends pts_module_interface
 	public static function __pre_test_run($pts_test_result)
 	{
 		array_shift(self::$tests_remaining_to_run);
-		self::$progress_window->update_progress_bar(0, $pts_test_result->get_test_profile()->get_test_title() . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_test_profile()->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, "Test " . (self::$test_run_pos + 1) . " of " . self::$test_run_count . ": " . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(0, "<b>" . $pts_test_result->get_test_profile()->get_test_title() . "</b>" . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_test_profile()->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __interim_test_run($pts_test_result)
 	{
-		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->get_test_profile()->get_times_to_run()) * 100, $pts_test_result->get_test_profile()->get_test_title() . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_test_profile()->get_times_to_run(), ((self::$test_run_pos + ($pts_test_result->trial_run_count() / $pts_test_result->get_test_profile()->get_times_to_run())) / self::$test_run_count) * 100, "Test " . (self::$test_run_pos + 1) . " of " . self::$test_run_count . ": " . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->get_test_profile()->get_times_to_run()) * 100, "<b>" . $pts_test_result->get_test_profile()->get_test_title() . "</b>" . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->get_test_profile()->get_times_to_run(), ((self::$test_run_pos + ($pts_test_result->trial_run_count() / $pts_test_result->get_test_profile()->get_times_to_run())) / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __post_test_run($pts_test_result)
 	{
 		self::$test_run_pos++;
 		self::run_time_remaining($pts_test_result);
-		self::$progress_window->update_progress_bar(100, $pts_test_result->get_test_profile()->get_test_title() . ", Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_test_profile()->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, "Test " . self::$test_run_pos . " of " . self::$test_run_count . ": " . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(100, "<b>" . $pts_test_result->get_test_profile()->get_test_title() . "</b>" . ", Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_test_profile()->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(0) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __post_run_process()
 	{
@@ -134,6 +134,10 @@ class gui_gtk_events extends pts_module_interface
 			self::$progress_window->completed();
 			self::$progress_window = null;
 		}
+	}
+	protected static function test_run_position($add_to_run = 0)
+	{
+		return "<b>Test " . (self::$test_run_pos + $add_to_run) . " of " . self::$test_run_count . ":</b> ";
 	}
 	protected static function run_time_remaining(&$test_result)
 	{

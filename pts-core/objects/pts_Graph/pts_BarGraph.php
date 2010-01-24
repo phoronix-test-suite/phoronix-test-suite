@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts_BarGraph.php: The bar graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -51,7 +51,7 @@ class pts_BarGraph extends pts_CustomGraph
 		$px_from_top_start = $this->graph_top_end - 5;
 		$px_from_top_end = $this->graph_top_end + 5;
 
-		for($i = 0; $i < count($this->graph_identifiers); $i++)
+		foreach(array_keys($this->graph_identifiers) as $i)
 		{
 			$px_bound_left = $this->graph_left_start + ($this->identifier_width * $i);
 			$px_bound_right = $px_bound_left + $this->identifier_width;
@@ -88,7 +88,7 @@ class pts_BarGraph extends pts_CustomGraph
 		{
 			$paint_color = $this->next_paint_color();
 
-			for($i = 0; $i < count($this->graph_data[$i_o]); $i++)
+			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
 				$value = $this->trim_double($this->graph_data[$i_o][$i], 2);
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
