@@ -27,19 +27,20 @@ require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 function pts_cleanup_tests_to_run(&$to_run_identifiers)
 {
 	$skip_tests = ($e = getenv("SKIP_TESTS")) ? explode(',', $e) : false;
+	$tests_missing = array();
 
-	for($i = 0; $i < count($to_run_identifiers); $i++)
+	foreach($to_run_identifiers as $index => &$test_identifier)
 	{
 		$test_passes = true;
 
-		if(is_file($to_run_identifiers[$i]) && substr(basename($to_run_identifiers[$i]), -4) == ".svg")
+		if(is_file($test_identifier) && substr(basename($test_identifier), -4) == ".svg")
 		{
 			// One of the arguments was an SVG results file, do prompts
-			$test_extracted = pts_prompt_svg_result_options($to_run_identifiers[$i]);
+			$test_extracted = pts_prompt_svg_result_options($test_identifier);
 
 			if(!empty($test_extracted))
 			{
-				$to_run_identifiers[$i] = $test_extracted;
+				$test_identifier = $test_extracted;
 			}
 			else
 			{
@@ -47,7 +48,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 			}
 		}
 
-		$lower_identifier = strtolower($to_run_identifiers[$i]);
+		$lower_identifier = strtolower($test_identifier);
 
 		if($skip_tests && in_array($lower_identifier, $skip_tests))
 		{
@@ -73,39 +74,59 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 			$test_passes = false;
 		}
 
-		if($test_passes)
+		if($test_passes && pts_verify_test_installation($lower_identifier, $tests_missing) == false)
 		{
-			$verify_install = pts_verify_test_installation($lower_identifier);
-
-			if($verify_install == false)
-			{
-				// Eliminate this test, it's not properly installed
-				$test_passes = false;
-			}
-			else if(is_array($verify_install))
-			{
-				pts_set_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS", true);
-				pts_run_option_next("install_test", $verify_install, pts_assignment_manager::get_all_assignments());
-				pts_run_option_next("run_test", $to_run_identifiers, pts_assignment_manager::get_all_assignments());
-				return false;
-			}
+			// Eliminate this test, it's not properly installed
+			$test_passes = false;
 		}
 
 		if($test_passes == false)
 		{
-			unset($to_run_identifiers[$i]);
+			unset($to_run_identifiers[$index]);
+		}
+	}
+
+	if(count($tests_missing) > 0)
+	{
+		if(count($tests_missing) == 1)
+		{
+			echo pts_string_header($tests_missing[0] . " is not installed.\nTo install, run: phoronix-test-suite install " . $tests_missing[0]);
+		}
+		else
+		{
+			$message = "\n\nMultiple tests are not installed:\n\n";
+			$message .= pts_text_list($tests_missing);
+			$message .= "\nTo install, run: phoronix-test-suite install " . implode(' ', $tests_missing) . "\n\n";
+			echo $message;
+		}
+
+		if(!pts_read_assignment("AUTOMATED_MODE") && !pts_read_assignment("IS_BATCH_MODE") && !pts_read_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS"))
+		{
+			$stop_and_install = pts_bool_question("Would you like to install these tests now (Y/n)?", true);
+
+			if($stop_and_install)
+			{
+				pts_set_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS", true);
+				pts_run_option_next("install_test", $tests_missing, pts_assignment_manager::get_all_assignments());
+				pts_run_option_next("run_test", $tests_missing, pts_assignment_manager::get_all_assignments());
+				return false;
+			}
+			else
+			{
+				pts_set_assignment("USER_REJECTED_TEST_INSTALL_NOTICE", true);
+			}
 		}
 	}
 
 	return true;
 }
-function pts_verify_test_installation($identifiers)
+function pts_verify_test_installation($identifiers, &$tests_missing)
 {
 	// Verify a test is installed
 	$identifiers = pts_to_array($identifiers);
 	$contains_a_suite = false;
-	$tests_missing = array();
 	$tests_installed = array();
+	$current_tests_missing = array();
 
 	foreach($identifiers as $identifier)
 	{
@@ -124,39 +145,15 @@ function pts_verify_test_installation($identifiers)
 			{
 				if(pts_test_supported($test))
 				{
-					pts_array_push($tests_missing, $test);
+					pts_array_push($current_tests_missing, $test);
 				}
 			}
 		}
 	}
 
-	if(($test_missing_count = count($tests_missing)) > 0)
-	{
-		if(count($tests_missing) == 1)
-		{
-			echo pts_string_header($tests_missing[0] . " is not installed.\nTo install, run: phoronix-test-suite install " . $tests_missing[0]);
-		}
-		else
-		{
-			$message = "Multiple tests are not installed:\n\n";
-			$message .= pts_text_list($tests_missing);
-			$message .= "\nTo install these tests, run: phoronix-test-suite install " . implode(' ', $tests_missing);
+	$tests_missing = array_merge($tests_missing, $current_tests_missing);
 
-			echo pts_string_header($message);
-		}
-
-		if(!pts_read_assignment("AUTOMATED_MODE") && !pts_read_assignment("IS_BATCH_MODE") && !pts_read_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS"))
-		{
-			$stop_and_install = pts_bool_question("Would you like to install these tests now (Y/n)?", true);
-
-			if($stop_and_install)
-			{
-				return $tests_missing;
-			}
-		}
-	}
-
-	return count($tests_installed) > 0 && ($test_missing_count == 0 || $contains_a_suite);
+	return count($tests_installed) > 0 && (count($current_tests_missing) == 0 || $contains_a_suite);
 }
 function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = null)
 {

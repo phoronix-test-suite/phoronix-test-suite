@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: When running on BSD with Linux binary compatibility loaded, download the Linux-specific files for a test too
+- pts-core: Better handling of missing tests
 - phodevi: Support reading the system temperature through the hwmon sysfs interface
 - pts: Add unpack-linux test as a disk benchmark for timing how long it takes to extract the Linux kernel source
 - pts: Drop filesystem test suite as its similar to the disk test suite, so move all the tests there

@@ -42,9 +42,17 @@ class run_test implements pts_option_interface
 		$test_properties = array();
 
 		// Cleanup tests to run
-		if(!pts_cleanup_tests_to_run($to_run_identifiers) || count($to_run_identifiers) == 0)
+		if(pts_cleanup_tests_to_run($to_run_identifiers) == false)
 		{
-			echo pts_string_header("You must enter at least one test, suite, or result identifier to run.");
+			return false;
+		}
+		else if(count($to_run_identifiers) == 0)
+		{
+			if(!pts_read_assignment("USER_REJECTED_TEST_INSTALL_NOTICE"))
+			{
+				echo pts_string_header("You must enter at least one test, suite, or result identifier to run.");
+			}
+
 			return false;
 		}
 
