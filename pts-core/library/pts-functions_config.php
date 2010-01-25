@@ -72,6 +72,7 @@ function pts_user_config_init($new_config_values = null)
 	$config->addXmlObjectFromReader(P_OPTION_BATCH_CONFIGURED, 6, $read_config, "FALSE");
 
 	$config->addXmlObjectFromReader(P_OPTION_NET_NO_NETWORK, 7, $read_config, "FALSE");
+	$config->addXmlObjectFromReader(P_OPTION_NET_TIMEOUT, 7, $read_config, 20);
 	$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_ADDRESS, 7, $read_config, null);
 	$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_PORT, 7, $read_config, null);
 

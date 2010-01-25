@@ -84,27 +84,43 @@ function pts_exec($exec, $extra_vars = null)
 }
 function pts_download($download, $to, &$display_mode = null)
 {
+	if(getenv("PTS_USE_OLD_DOWNLOAD_CODE") == false)
+	{
+		pts_display_mode_holder($display_mode);
+
+		if(function_exists("curl_init"))
+		{
+			pts_curl_download($download, $to);
+		}
+		else
+		{
+			pts_stream_download($download, $to);
+		}
+
+		$display_mode = pts_display_mode_holder();
+
+		if($display_mode)
+		{
+			$display_mode->test_install_download_completed();
+		}
+
+		return;
+	}
+
+	// TODO: The below code will be dropped with Phoronix Test Suite 2.6
+	// In Phoronix Test Suite 2.4 if you want to use it set PTS_USE_OLD_DOWNLOAD_CODE=1 as an environmental variable
+
 	$to_file = basename($to);
 	$to_dir = pts_add_trailing_slash(dirname($to));
 	$download_output = null;
 	$user_agent = pts_codename(true);
-	$connection_timeout = 25;
-
-	pts_display_mode_holder($display_mode);
+	$connection_timeout = NETWORK_TIMEOUT;
 
 	if(strpos($to_file, ".") === false)
 	{
 		$to_file = basename($download);
 	}
 
-	if(false && function_exists("curl_init"))
-	{
-		pts_curl_download($download, $to, 25);
-	}
-	else if(true)
-	{
-		pts_stream_download($download, $to, 25);
-	}
 	else if(($curl = pts_executable_in_path("curl")) != false)
 	{
 		// curl download
@@ -123,13 +139,6 @@ function pts_download($download, $to, &$display_mode = null)
 	else
 	{
 		$download_output = "No download application available.";
-	}
-
-	$display_mode = pts_display_mode_holder();
-
-	if($display_mode)
-	{
-		$display_mode->test_install_download_completed();
 	}
 
 	return $download_output;

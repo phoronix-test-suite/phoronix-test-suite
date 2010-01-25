@@ -132,6 +132,8 @@ if(!QUICK_START)
 		define("NETWORK_PROXY_PORT", $env_proxy[1]);
 	}
 
+	define("NETWORK_TIMEOUT", pts_read_user_config(P_OPTION_NET_TIMEOUT, 20));
+
 	if(ini_get("allow_url_fopen") == "Off")
 	{
 		echo "\nThe allow_url_fopen option in your PHP configuration must be enabled for network support.\n\n";

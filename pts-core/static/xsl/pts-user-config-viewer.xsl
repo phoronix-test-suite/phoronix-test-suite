@@ -78,6 +78,8 @@
 			<h1>Networking Options</h1>
 			<h3>NoNetworkCommunication: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/NoNetworkCommunication" /></span></h3>
 			<p>If you wish to disable network support entirely within the Phoronix Test Suite, set this option to <em>TRUE</em>. The default value is <em>FALSE</em>.</p>
+			<h3>Timeout: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/Timeout" /></span></h3>
+			<p>This is the read timeout (in seconds) for network connections. The default value is <em>20</em>.</p>
 			<h3>ProxyAddress: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyAddress" /></span></h3>
 			<p>If you wish to use a HTTP proxy server to allow the Phoronix Test Suite to communicate with Phoronix Global and other web services, enter the IP address / server name of the proxy server in this tag.</p>
 			<h3>ProxyPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyPort" /></span></h3>
