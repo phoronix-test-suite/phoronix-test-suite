@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_client.php: General functions that are specific to the Phoronix Test Suite client
 
 	This program is free software; you can redistribute it and/or modify
@@ -281,58 +281,6 @@ function pts_get_display_mode_object()
 	}
 
 	return $display_mode;
-}
-function pts_http_stream_context_create($http_parameters = null, $proxy_address = false, $proxy_port = false)
-{
-	if(!is_array($http_parameters))
-	{
-		$http_parameters = array();
-	}
-
-	if($proxy_address == false && $proxy_port == false && defined("NETWORK_PROXY"))
-	{
-		$proxy_address = NETWORK_PROXY_ADDRESS;
-		$proxy_port = NETWORK_PROXY_PORT;
-	}
-
-	if($proxy_address != false && $proxy_port != false && is_numeric($proxy_port))
-	{
-		$http_parameters["http"]["proxy"] = "tcp://" . $proxy_address . ":" . $proxy_port;
-		$http_parameters["http"]["request_fulluri"] = true;
-	}
-
-	$http_parameters["http"]["timeout"] = 12;
-
-	$stream_context = stream_context_create($http_parameters);
-
-	return $stream_context;
-}
-function pts_http_get_contents($url, $override_proxy = false, $override_proxy_port = false)
-{
-	if(defined("NO_NETWORK_COMMUNICATION"))
-	{
-		return false;
-	}
-
-	$stream_context = pts_http_stream_context_create(null, $override_proxy, $override_proxy_port);
-	$contents = pts_file_get_contents($url, 0, $stream_context);
-
-	return $contents;
-}
-function pts_http_upload_via_post($url, $to_post_data)
-{
-	if(defined("NO_NETWORK_COMMUNICATION"))
-	{
-		return false;
-	}
-
-	$upload_data = http_build_query($to_post_data);
-	$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
-	$stream_context = pts_http_stream_context_create($http_parameters);
-	$opened_url = @fopen($url, "rb", false, $stream_context);
-	$response = @stream_get_contents($opened_url);
-
-	return $response;
 }
 function pts_anonymous_usage_reporting()
 {

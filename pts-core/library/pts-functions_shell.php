@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_shell.php: Functions for shell (and similar) commands that are abstracted
 
 	This program is free software; you can redistribute it and/or modify
@@ -85,7 +85,7 @@ function pts_exec($exec, $extra_vars = null)
 function pts_download($download, $to)
 {
 	$to_file = basename($to);
-	$to_dir = dirname($to);
+	$to_dir = pts_add_trailing_slash(dirname($to));
 	$download_output = null;
 	$user_agent = pts_codename(true);
 	$connection_timeout = 25;
@@ -95,28 +95,9 @@ function pts_download($download, $to)
 		$to_file = basename($download);
 	}
 
-	if(function_exists("curl_init") && strpos($download, "sourceforge.net") == false) // SourceForge.net servers seem to have problem with below code
+	if(function_exists("curl_init"))
 	{
-		// TODO: with curl_multi_init we could do multiple downloads at once...
-		$cr = curl_init();
-		$fh = fopen(pts_add_trailing_slash($to_dir) . $to_file, 'w');
-
-		curl_setopt($cr, CURLOPT_FILE, $fh);
-		curl_setopt($cr, CURLOPT_URL, $download);
-		curl_setopt($cr, CURLOPT_HEADER, false);
-		curl_setopt($cr, CURLOPT_USERAGENT, $user_agent);
-		curl_setopt($cr, CURLOPT_REFERER, "http://www.phoronix-test-suite.com/");
-		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, $connection_timeout);
-
-		if(defined("NETWORK_PROXY"))
-		{
-			curl_setopt($cr, CURLOPT_PROXY, NETWORK_PROXY);
-		}
-
-		curl_exec($cr);
-		curl_close($cr);
-		fclose($fh);
+		pts_curl_download($download, $to, 25);
 	}
 	else if(($curl = pts_executable_in_path("curl")) != false)
 	{
