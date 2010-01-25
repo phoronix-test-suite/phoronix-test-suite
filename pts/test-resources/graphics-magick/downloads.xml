@@ -6,7 +6,7 @@
 			<FileSize>6581207</FileSize>
 		</Package>
 		<Package>
-			<URL>http://voxel.dl.sourceforge.net/project/libpng/00-libpng-stable/1.2.39/libpng-1.2.39.tar.gz, http://dfn.dl.sourceforge.net/project/libpng/00-libpng-stable/1.2.39/libpng-1.2.39.tar.gz, http://internode.dl.sourceforge.net/project/libpng/00-libpng-stable/1.2.39/libpng-1.2.39.tar.gz</URL>
+			<URL>http://voxel.dl.sourceforge.net/project/libpng/libpng-stable/1.2.39/libpng-1.2.39.tar.gz, http://dfn.dl.sourceforge.net/project/libpng/libpng-stable/1.2.39/libpng-1.2.39.tar.gz, http://internode.dl.sourceforge.net/project/libpng/libpng-stable/1.2.39/libpng-1.2.39.tar.gz</URL>
 			<MD5>ddfeaf19b690985910c42e41974e8d65</MD5>
 			<FileSize>815679</FileSize>
 		</Package>
