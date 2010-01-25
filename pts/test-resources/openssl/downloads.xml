@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.openssl.org/source/openssl-0.9.8k.tar.gz, ftp://ftp.uni-rostock.de/pub/secure/openssl/source/openssl-0.9.8k.tar.gz, ftp://ftp2.nl.freebsd.org/gentoo/distfiles/openssl-0.9.8k.tar.gz, ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/openssl-0.9.8k.tar.gz</URL>
+			<URL>http://www.openssl.org/source/openssl-0.9.8k.tar.gz, ftp://ftp.uni-rostock.de/pub/secure/openssl/source/openssl-0.9.8k.tar.gz, ftp://ftp.tiscali.nl/pub/mirror/sunfreeware/SOURCES/openssl-0.9.8k.tar.gz, ftp://ftp.informatik.uni-hamburg.de/pub/os/unix/utils/openssl/openssl-0.9.8k.tar.gz, ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/openssl-0.9.8k.tar.gz</URL>
 			<MD5>e555c6d58d276aec7fdc53363e338ab3</MD5>
 			<FileSize>3852259</FileSize>
 		</Package>

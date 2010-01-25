@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.ffmpeg.org/releases/ffmpeg-0.5.tar.bz2, ftp://ftp.gwdg.de/pub/FreeBSD/ports/local-distfiles/kwm/ffmpeg-0.5.tar.bz2, ftp://ftp.li.kernel.org/pub/.5/gentoo/distfiles/ffmpeg-0.5.tar.bz2</URL>
+			<URL>http://www.ffmpeg.org/releases/ffmpeg-0.5.tar.bz2, ftp://ftp.armedslack.org/slacky.eu/slackware-13.0/multimedia/ffmpeg/0.5/src/ffmpeg-0.5.tar.bz2, ftp://ftp.uni-kl.de/pub/linux/gentoo/distfiles/ffmpeg-0.5.tar.bz2, ftp://ftp.li.kernel.org/pub/.5/gentoo/distfiles/ffmpeg-0.5.tar.bz2</URL>
 			<MD5>be8503f15c3b81ba00eb8379ca8dcf33</MD5>
 			<FileSize>2744768</FileSize>
 		</Package>

@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://superb-east.dl.sourceforge.net/sourceforge/bwfirt/bwfirt-0.666.tar.bz2, http://softlayer.dl.sourceforge.net/sourceforge/bwfirt/bwfirt-0.666.tar.bz2, http://heanet.dl.sourceforge.net/sourceforge/bwfirt/bwfirt-0.666.tar.bz2, http://internode.dl.sourceforge.net/sourceforge/bwfirt/bwfirt-0.666.tar.bz2, http://switch.dl.sourceforge.net/sourceforge/bwfirt/bwfirt-0.666.tar.bz2</URL>
+			<URL>http://softlayer.dl.sourceforge.net/sourceforge/bwfirt/bwfirt-0.666.tar.bz2, http://heanet.dl.sourceforge.net/sourceforge/bwfirt/bwfirt-0.666.tar.bz2, http://internode.dl.sourceforge.net/sourceforge/bwfirt/bwfirt-0.666.tar.bz2, http://switch.dl.sourceforge.net/sourceforge/bwfirt/bwfirt-0.666.tar.bz2</URL>
 			<MD5>f4658bdc580fea5d58916fc967619ad8</MD5>
 			<FileSize>67323</FileSize>
 		</Package>

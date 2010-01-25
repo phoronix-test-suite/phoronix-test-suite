@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://voxel.dl.sourceforge.net/sourceforge/tiobench/tiobench-0.3.3.tar.gz, http://fastbull.dl.sourceforge.net/sourceforge/tiobench/tiobench-0.3.3.tar.gz, http://transact.dl.sourceforge.net/sourceforge/tiobench/tiobench-0.3.3.tar.gz, http://softlayer.dl.sourceforge.net/sourceforge/tiobench/tiobench-0.3.3.tar.gz</URL>
+			<URL>http://voxel.dl.sourceforge.net/sourceforge/tiobench/tiobench-0.3.3.tar.gz, http://internode.dl.sourceforge.net/sourceforge/tiobench/tiobench-0.3.3.tar.gz, http://transact.dl.sourceforge.net/sourceforge/tiobench/tiobench-0.3.3.tar.gz, http://softlayer.dl.sourceforge.net/sourceforge/tiobench/tiobench-0.3.3.tar.gz</URL>
 			<MD5>bf485bf820e693c79e6bd2a38702a128</MD5>
 			<FileSize>28282</FileSize>
 		</Package>

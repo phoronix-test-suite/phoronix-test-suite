@@ -9,11 +9,6 @@
 		<Description>The opengl-demos suite contains tests that are considered OpenGL demos and not directly a game or other real-world OpenGL software test.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>glmark</Test>
-		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 24 0 VERTEX_ARRAY</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - Vertex Array</Description>
-	</RunTest>
-	<RunTest>
 		<Test>lightsmark</Test>
 		<Arguments>$VIDEO_WIDTH'x'$VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>

@@ -45,7 +45,7 @@ class debug_test_download_links implements pts_option_interface
 
 					if($file_pointer == false)
 					{
-						echo "\nDOWNLOAD: " . $test_file_download->get_filename() . " / " . $url "\n";
+						echo "\nDOWNLOAD: " . $test_file_download->get_filename() . " / " . $url . "\n";
 					}
 					else
 					{

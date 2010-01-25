@@ -1,9 +1,0 @@
-<PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://osdn.dl.sourceforge.net/sourceforge/glmark/GLMark-0.5.2.tar.gz, http://easynews.dl.sourceforge.net/sourceforge/glmark/GLMark-0.5.2.tar.gz, http://heanet.dl.sourceforge.net/sourceforgeglmark/GLMark-0.5.2.tar.gz</URL>
-			<MD5>4851a8ae0fdf17fcf63b09644039f47f</MD5>
-			<FileSize>949795</FileSize>
-		</Package>
-	</Downloads>
-</PhoronixTestSuite>

@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://mirror.mcs.anl.gov/pub/gentoo/distfiles/ut2004-lnx-demo3334.run, http://gentoo.cites.uiuc.edu/pub/gentoo/distfiles/ut2004-lnx-demo3334.run, http://gentoo.chem.wisc.edu/gentoo/distfiles/ut2004-lnx-demo3334.run</URL>
+			<URL>ftp://ftp.games.skynet.be/spool1/games/misc/ut2004-lnx-demo3334.run, http://gentoo.cites.uiuc.edu/pub/gentoo/distfiles/ut2004-lnx-demo3334.run, http://gentoo.chem.wisc.edu/gentoo/distfiles/ut2004-lnx-demo3334.run, ftp://gentoo.inode.at/source/distfiles/ut2004-lnx-demo3334.run</URL>
 			<MD5>bf9f483902c6006b94c327fb7b585086</MD5>
 			<FileSize>288950743</FileSize>
 		</Package>

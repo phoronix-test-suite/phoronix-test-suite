@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://mesh.dl.sourceforge.net/sourceforge/tremulous/tremulous-1.1.0.zip, http://nchc.dl.sourceforge.net/sourceforge/tremulous/tremulous-1.1.0.zip, http://ovh.dl.sourceforge.net/sourceforge/tremulous/tremulous-1.1.0.zip</URL>
+			<URL>http://softlayer.dl.sourceforge.net/sourceforge/tremulous/tremulous-1.1.0.zip, http://nchc.dl.sourceforge.net/sourceforge/tremulous/tremulous-1.1.0.zip, http://ovh.dl.sourceforge.net/sourceforge/tremulous/tremulous-1.1.0.zip</URL>
 			<MD5>3df5f7565571fb9524656308347bce1b</MD5>
 			<FileSize>105821907</FileSize>
 		</Package>

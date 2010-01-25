@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.smokinguns.fr/download/Smokin_Guns_1.0.zip, http://ftp.jeuxlinux.fr/files/Smokin_Guns_1.0.zip</URL>
+			<URL>http://ftp.jeuxlinux.fr/files/Smokin_Guns_1.0.zip</URL>
 			<MD5>6e6a980bd057e9241c66b7324729c7b9</MD5>
 			<FileSize>359156581</FileSize>
 		</Package>
