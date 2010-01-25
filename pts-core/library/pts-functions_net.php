@@ -114,7 +114,7 @@ function pts_curl_download($download, $download_to, $connection_timeout = 25)
 function pts_curl_status_callback($download_size, $downloaded)
 {
 	static $last_float = -1;
-	$downloaded_float = $downloaded / $download_size;
+	$downloaded_float = $download_size == 0 ? 0 : $downloaded / $download_size;
 
 	if(abs($downloaded_float - $last_float) < 0.05)
 	{
@@ -125,7 +125,7 @@ function pts_curl_status_callback($download_size, $downloaded)
 
 	if($display_mode)
 	{
-		$display_mode->test_install_update_download_status($download_float);
+		$display_mode->test_install_download_status_update($downloaded_float);
 		pts_display_mode_holder($display_mode);
 	}
 

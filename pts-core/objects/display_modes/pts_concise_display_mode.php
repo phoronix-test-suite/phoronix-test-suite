@@ -110,7 +110,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$download_string .= " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]";
 		echo $this->tab . $this->tab . $download_string . "\n";
 
-		$this->download_estimate = $expected_time != null ? '~' . $expected_time : "Downloading";
+		$this->download_estimate = $expected_time != null ? 'Est Time: ~' . $expected_time : "Downloading";
 		$this->download_last_float = -1;
 		$this->download_string_length = strlen($download_string);
 	}
@@ -128,6 +128,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		if($char_current > $this->progress_char_pos && $char_current <= $this->progress_char_count)
 		{
 			echo str_repeat('.', $char_current - $this->progress_char_pos);
+			$this->progress_char_pos = $char_current
 		}
 
 		$this->download_last_float = $download_float;		
@@ -140,7 +141,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		if(($size = pts_estimated_environment_size($identifier)) > 0)
 		{
-			echo $this->tab . $this->tab ."Installation Size: " . $size . " MB\n";
+			echo $this->tab . $this->tab . "Installation Size: " . $size . " MB\n";
 		}
 
 		echo $this->tab . $this->tab . "Installing Test\n";
