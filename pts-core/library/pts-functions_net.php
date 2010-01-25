@@ -92,8 +92,9 @@ function pts_curl_download($download, $download_to, $connection_timeout = 25)
 	//curl_setopt($cr, CURLOPT_REFERER, "http://www.phoronix-test-suite.com/"); // Setting the referer causes problems for SourceForge downloads
 	curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, $connection_timeout);
+	curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
 
-	if(false && PHP_VERSION_ID >= 503000) // TODO: finish
+	if(PHP_VERSION_ID >= 50300)
 	{
 		curl_setopt($cr, CURLOPT_NOPROGRESS, false);
 		curl_setopt($cr, CURLOPT_PROGRESSFUNCTION, "pts_curl_status_callback");
@@ -112,7 +113,23 @@ function pts_curl_download($download, $download_to, $connection_timeout = 25)
 }
 function pts_curl_status_callback($download_size, $downloaded)
 {
-	echo "\n" . $percent_downloaded = $downloaded / $download_size;
+	static $last_float = -1;
+	$downloaded_float = $downloaded / $download_size;
+
+	if(abs($downloaded_float - $last_float) < 0.05)
+	{
+		return;
+	}
+
+	$display_mode = pts_display_mode_holder();
+
+	if($display_mode)
+	{
+		$display_mode->test_install_update_download_status($download_float);
+		pts_display_mode_holder($display_mode);
+	}
+
+	$last_float = $downloaded_float;
 }
 
 ?>

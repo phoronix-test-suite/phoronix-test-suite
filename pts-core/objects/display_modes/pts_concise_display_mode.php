@@ -27,6 +27,13 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	private $run_process_test_count;
 	private $tab = "      ";
 
+	// Download bits
+	private $download_estimate = null;
+	private $download_last_float = -1;
+	private $download_string_length = 0;
+	private $progress_char_count = 0;
+	private $progress_char_pos = 0;
+
 	public function __construct()
 	{
 
@@ -99,9 +106,35 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			$offset_length = $default_width;
 		}
 
-		echo $this->tab . $this->tab . $process_string . ": " . $pts_test_file_download->get_filename();
-		echo str_repeat(" ", ($offset_length > 0 ? ($offset_length - strlen($pts_test_file_download->get_filename())) : 0));
-		echo " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 2) . "MB" . ($expected_time != null ? " / ~" . $expected_time : null) . "]\n";
+		$download_string = $process_string . ": " . $pts_test_file_download->get_filename() . str_repeat(" ", ($offset_length > 0 ? ($offset_length - strlen($pts_test_file_download->get_filename())) : 0));
+		$download_string .= " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]";
+		echo $this->tab . $this->tab . $download_string . "\n";
+
+		$this->download_estimate = $expected_time != null ? '~' . $expected_time : "Downloading";
+		$this->download_last_float = -1;
+		$this->download_string_length = strlen($download_string);
+	}
+	public function test_install_download_status_update($download_float)
+	{
+		if($this->download_last_float == -1)
+		{
+			echo $this->tab . $this->tab . $this->download_estimate;
+			$this->progress_char_count = $this->download_string_length - strlen($this->download_estimate);
+			$this->progress_char_pos = 0;
+		}
+
+		$char_current = floor($download_float * $this->progress_char_count);
+
+		if($char_current > $this->progress_char_pos && $char_current <= $this->progress_char_count)
+		{
+			echo str_repeat('.', $char_current - $this->progress_char_pos);
+		}
+
+		$this->download_last_float = $download_float;		
+	}
+	public function test_install_download_completed()
+	{
+		echo $this->download_last_float != -1 ? "\n" : null;
 	}
 	public function test_install_process($identifier)
 	{

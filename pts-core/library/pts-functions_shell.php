@@ -82,13 +82,15 @@ function pts_exec($exec, $extra_vars = null)
 	// Same as shell_exec() but with the PTS env variables added in
 	return shell_exec(pts_variables_export_string($extra_vars) . $exec);
 }
-function pts_download($download, $to)
+function pts_download($download, $to, &$display_mode = null)
 {
 	$to_file = basename($to);
 	$to_dir = pts_add_trailing_slash(dirname($to));
 	$download_output = null;
 	$user_agent = pts_codename(true);
 	$connection_timeout = 25;
+
+	pts_display_mode_holder($display_mode);
 
 	if(strpos($to_file, ".") === false)
 	{
@@ -117,6 +119,13 @@ function pts_download($download, $to)
 	else
 	{
 		$download_output = "No download application available.";
+	}
+
+	$display_mode = pts_display_mode_holder();
+
+	if($display_mode)
+	{
+		$display_mode->test_install_download_completed();
 	}
 
 	return $download_output;

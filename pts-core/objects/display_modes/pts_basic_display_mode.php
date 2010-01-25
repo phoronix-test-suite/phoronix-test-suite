@@ -60,6 +60,14 @@ class pts_basic_display_mode implements pts_display_mode_interface
 				break;
 		}
 	}
+	public function test_install_download_status_update($download_float)
+	{
+		return;
+	}
+	public function test_install_download_completed()
+	{
+		return;
+	}
 	public function test_install_process($identifier)
 	{
 		$install_header = "Installing Test: " . $identifier;
