@@ -97,6 +97,9 @@ function pts_download($download, $to, &$display_mode = null)
 			pts_stream_download($download, $to);
 		}
 
+		//echo "\nPHP CURL must either be installed or you must adjust your PHP settings file to support opening FTP/HTTP streams.\n";
+		//return false;
+
 		$display_mode = pts_display_mode_holder();
 
 		if($display_mode)

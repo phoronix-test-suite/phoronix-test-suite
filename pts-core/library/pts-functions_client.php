@@ -139,12 +139,12 @@ function pts_clean_information_string($str)
 
 	return pts_trim_spaces($str);
 }
-function pts_exit($string = "")
+function pts_exit($string = null, $exit_status = 0)
 {
 	// Have PTS exit abruptly
 	define("PTS_EXIT", 1);
 	echo $string;
-	exit(0);
+	exit($exit_status);
 }
 function pts_create_lock($lock_file, &$file_pointer)
 {

@@ -40,6 +40,11 @@ class gui_gtk implements pts_option_interface
 			return false;
 		}
 
+		if(defined("NO_NETWORK_COMMUNICATION"))
+		{
+			gui_gtk::show_phx_network_failure_interface();
+		}
+
 		gui_gtk::startup_tasks();
 		gui_gtk::show_main_interface();
 	}
@@ -1106,6 +1111,57 @@ class gui_gtk implements pts_option_interface
 		$window->show_all();
 		pts_set_assignment("GTK_OBJ_GLOBAL_WINDOW", $window);
 		Gtk::main();
+	}
+	public static function show_phx_network_failure_interface()
+	{
+		$window = new pts_gtk_window("Phoronix Test Suite");
+
+		$label_net_fail = new GtkLabel("No Internet connection could be established, which is needed for downloading remote test files and uploading results to Phoronix Global. Press try again once you have established your network/Internet connection, entered any proxy information below (if applicable), or press cancel to proceed without network support.\n");
+		$label_net_fail->set_size_request(460, -1);
+		$label_net_fail->set_line_wrap(true);
+
+		$addr_label = new GtkLabel("Proxy Address:");
+		$proxy_addr = new GtkEntry();
+		pts_set_assignment("GTK_OBJ_PROXY_ADDR", $proxy_addr);
+
+		$port_label = new GtkLabel("Proxy Port:");
+		$proxy_port = new GtkEntry();
+		pts_set_assignment("GTK_OBJ_PROXY_PORT", $proxy_port);
+
+		$try_button = new pts_gtk_button("Try Again", array("gui_gtk", "network_failure_process"), "try");
+		$cancel_button = new pts_gtk_button("Cancel", array("gui_gtk", "network_failure_process"), "cancel");
+
+		pts_gtk_array_to_boxes($window, array($label_net_fail, array($addr_label, $proxy_addr), array($port_label, $proxy_port), array($try_button, $cancel_button)), 4);
+		$window->show_all();
+		pts_set_assignment("GTK_OBJ_NETWORK_FAIL_WINDOW", $window);
+		Gtk::main();
+	}
+	public static function network_failure_process($action)
+	{
+		$fail_window = pts_read_assignment("GTK_OBJ_NETWORK_FAIL_WINDOW");
+		$fail_window->destroy();
+
+		switch($action)
+		{
+			case "cancel":
+				break;
+			case "try":
+				$proxy_address = pts_read_assignment("GTK_OBJ_PROXY_ADDR");
+				$proxy_port = pts_read_assignment("GTK_OBJ_PROXY_PORT");
+
+				$proxy_address = trim($proxy_address->get_text());
+				$proxy_port = trim($proxy_port->get_text());
+
+
+				if(pts_http_get_contents("http://www.phoronix-test-suite.com/PTS", $proxy_address, $proxy_port) == "PTS")
+				{					
+					pts_user_config_init(array(P_OPTION_NET_PROXY_ADDRESS => $proxy_address, P_OPTION_NET_PROXY_PORT => $proxy_port));
+					pts_exit("Restarting pts-core...\n", 8);					
+				}
+
+				$setup_success = pts_global_setup_account($username, $password);
+				break;
+		}
 	}
 	public static function phoronix_global_id_entry_changed($force = false)
 	{

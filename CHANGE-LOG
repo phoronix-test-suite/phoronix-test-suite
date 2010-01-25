@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add width and height attributes to SVG graphs to show better in more web browsers with the PTS Results Viewer
 - pts-core: New integrated network download engine
 - pts-core: Add Timeout tag to the user-config.xml for adjusting the network read timeout
+- pts-core: Launch a network support and proxy interface when launching the GTK GUI and no Internet is detected
 - phodevi: Support reading the system temperature through the hwmon sysfs interface
 - phodevi: Fallback support to read the current monitor mode from xdpyinfo when available
 - phodevi: Support for reading newer version numbers of the KDE Software Compilation desktop

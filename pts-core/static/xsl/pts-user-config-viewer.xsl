@@ -81,7 +81,7 @@
 			<h3>Timeout: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/Timeout" /></span></h3>
 			<p>This is the read timeout (in seconds) for network connections. The default value is <em>20</em>.</p>
 			<h3>ProxyAddress: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyAddress" /></span></h3>
-			<p>If you wish to use a HTTP proxy server to allow the Phoronix Test Suite to communicate with Phoronix Global and other web services, enter the IP address / server name of the proxy server in this tag.</p>
+			<p>If you wish to use a HTTP proxy server to allow the Phoronix Test Suite to communicate with Phoronix Global and other web services, enter the IP address / server name of the proxy server in this tag. If the proxy address and port tags are left empty but the <em>http_proxy</em> environmental variable is set, the Phoronix Test Suite will attempt to use that as the proxy information.</p>
 			<h3>ProxyPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyPort" /></span></h3>
 			<p>If using a proxy server, enter the TCP port in this tag.</p>
 
