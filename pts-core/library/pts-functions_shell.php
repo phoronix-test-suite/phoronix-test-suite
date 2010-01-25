@@ -97,9 +97,13 @@ function pts_download($download, $to, &$display_mode = null)
 		$to_file = basename($download);
 	}
 
-	if(function_exists("curl_init"))
+	if(false && function_exists("curl_init"))
 	{
 		pts_curl_download($download, $to, 25);
+	}
+	else if(true)
+	{
+		pts_stream_download($download, $to, 25);
 	}
 	else if(($curl = pts_executable_in_path("curl")) != false)
 	{

@@ -22,11 +22,11 @@
 */
 
 
-function pts_http_stream_context_create($http_parameters = null, $proxy_address = false, $proxy_port = false)
+function pts_stream_context_create($parameters = null, $proxy_address = false, $proxy_port = false)
 {
-	if(!is_array($http_parameters))
+	if(!is_array($parameters))
 	{
-		$http_parameters = array();
+		$parameters = array();
 	}
 
 	if($proxy_address == false && $proxy_port == false && defined("NETWORK_PROXY"))
@@ -37,13 +37,14 @@ function pts_http_stream_context_create($http_parameters = null, $proxy_address 
 
 	if($proxy_address != false && $proxy_port != false && is_numeric($proxy_port))
 	{
-		$http_parameters["http"]["proxy"] = "tcp://" . $proxy_address . ":" . $proxy_port;
-		$http_parameters["http"]["request_fulluri"] = true;
+		$parameters["http"]["proxy"] = "tcp://" . $proxy_address . ":" . $proxy_port;
+		$parameters["http"]["request_fulluri"] = true;
 	}
 
-	$http_parameters["http"]["timeout"] = 12;
+	$parameters["http"]["timeout"] = 12;
+	$parameters["http"]["user_agent"] = pts_codename(true);
 
-	$stream_context = stream_context_create($http_parameters);
+	$stream_context = stream_context_create($parameters);
 
 	return $stream_context;
 }
@@ -54,7 +55,7 @@ function pts_http_get_contents($url, $override_proxy = false, $override_proxy_po
 		return false;
 	}
 
-	$stream_context = pts_http_stream_context_create(null, $override_proxy, $override_proxy_port);
+	$stream_context = pts_stream_context_create(null, $override_proxy, $override_proxy_port);
 	$contents = pts_file_get_contents($url, 0, $stream_context);
 
 	return $contents;
@@ -68,11 +69,25 @@ function pts_http_upload_via_post($url, $to_post_data)
 
 	$upload_data = http_build_query($to_post_data);
 	$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
-	$stream_context = pts_http_stream_context_create($http_parameters);
+	$stream_context = pts_stream_context_create($http_parameters);
 	$opened_url = @fopen($url, "rb", false, $stream_context);
 	$response = @stream_get_contents($opened_url);
 
 	return $response;
+}
+function pts_stream_download($download, $download_to, $connection_timeout = 25)
+{
+	$stream_context = pts_stream_context_create();
+	stream_context_set_params($stream_context, array("notification" => "pts_stream_status_callback"));
+
+	$file_pointer = fopen($download, 'r', false, $stream_context);
+
+	if(is_resource($file_pointer) && file_put_contents($download_to, $file_pointer))
+	{
+		return true;
+	}
+
+	return false;
 }
 function pts_curl_download($download, $download_to, $connection_timeout = 25)
 {
@@ -96,6 +111,7 @@ function pts_curl_download($download, $download_to, $connection_timeout = 25)
 
 	if(PHP_VERSION_ID >= 50300)
 	{
+		// CURLOPT_PROGRESSFUNCTION only seems to work with PHP 5.3+
 		curl_setopt($cr, CURLOPT_NOPROGRESS, false);
 		curl_setopt($cr, CURLOPT_PROGRESSFUNCTION, "pts_curl_status_callback");
 	}
@@ -130,6 +146,36 @@ function pts_curl_status_callback($download_size, $downloaded)
 	}
 
 	$last_float = $downloaded_float;
+}
+function pts_stream_status_callback($notification_code, $arg1, $message, $message_code, $downloaded, $download_size)
+{
+	static $filesize = 0;
+	static $last_float = -1;
+
+	switch($notification_code)
+	{
+		case STREAM_NOTIFY_FILE_SIZE_IS:
+			$filesize = $download_size;
+			break;
+		case STREAM_NOTIFY_PROGRESS:
+			$downloaded_float = $filesize == 0 ? 0 : $downloaded / $filesize;
+
+			if(abs($downloaded_float - $last_float) < 0.05)
+			{
+				return;
+			}
+
+			$display_mode = pts_display_mode_holder();
+
+			if($display_mode)
+			{
+				$display_mode->test_install_download_status_update($downloaded_float);
+				pts_display_mode_holder($display_mode);
+			}
+
+			$last_float = $downloaded_float;
+			break;
+	}
 }
 
 ?>

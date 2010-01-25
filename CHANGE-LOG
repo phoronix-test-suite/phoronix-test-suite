@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Build reference system comparison cache when starting the GTK GUI
 - pts-core: Add ReferenceSystems tag to user-config.xml for specifying extra reference system comparison IDs
 - pts-core: Add width and height attributes to SVG graphs to show better in more web browsers with the PTS Results Viewer
+- pts-core: New integrated network download engine
 - phodevi: Support reading the system temperature through the hwmon sysfs interface
 - phodevi: Fallback support to read the current monitor mode from xdpyinfo when available
 - phodevi: Support for reading newer version numbers of the KDE Software Compilation desktop

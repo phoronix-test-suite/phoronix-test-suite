@@ -99,7 +99,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_format_time_string($expected_time, "SECONDS", false, 60) : null;
 
-		$default_width = 32;
+		$default_width = 36;
 		if($offset_length < $default_width && pts_terminal_width() > (2 * strlen($this->tab) + strlen($process_string) + $default_width + 17))
 		{
 			// Set default length
@@ -110,7 +110,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$download_string .= " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]";
 		echo $this->tab . $this->tab . $download_string . "\n";
 
-		$this->download_estimate = $expected_time != null ? 'Est Time: ~' . $expected_time : "Downloading";
+		$this->download_estimate = $expected_time != null ? "Estimated Download Time: " . $expected_time : "Downloading";
 		$this->download_last_float = -1;
 		$this->download_string_length = strlen($download_string);
 	}
@@ -118,8 +118,8 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		if($this->download_last_float == -1)
 		{
-			echo $this->tab . $this->tab . $this->download_estimate;
-			$this->progress_char_count = $this->download_string_length - strlen($this->download_estimate);
+			echo $this->tab . $this->tab . $this->download_estimate . ' ';
+			$this->progress_char_count = $this->download_string_length - strlen($this->download_estimate) - 1;
 			$this->progress_char_pos = 0;
 		}
 
@@ -128,14 +128,14 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		if($char_current > $this->progress_char_pos && $char_current <= $this->progress_char_count)
 		{
 			echo str_repeat('.', $char_current - $this->progress_char_pos);
-			$this->progress_char_pos = $char_current
+			$this->progress_char_pos = $char_current;
 		}
 
 		$this->download_last_float = $download_float;		
 	}
 	public function test_install_download_completed()
 	{
-		echo $this->download_last_float != -1 ? "\n" : null;
+		echo $this->download_last_float != -1 ? str_repeat('.', $this->progress_char_count - $this->progress_char_pos) . "\n" : null;
 	}
 	public function test_install_process($identifier)
 	{
