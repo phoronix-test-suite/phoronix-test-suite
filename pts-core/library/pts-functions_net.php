@@ -41,7 +41,7 @@ function pts_stream_context_create($parameters = null, $proxy_address = false, $
 		$parameters["http"]["request_fulluri"] = true;
 	}
 
-	$parameters["http"]["timeout"] = NETWORK_TIMEOUT;
+	$parameters["http"]["timeout"] = defined("NETWORK_TIMEOUT") ? NETWORK_TIMEOUT : 20;
 	$parameters["http"]["user_agent"] = pts_codename(true);
 
 	$stream_context = stream_context_create($parameters);
@@ -75,9 +75,9 @@ function pts_http_upload_via_post($url, $to_post_data)
 
 	return $response;
 }
-function pts_stream_download($download, $download_to)
+function pts_stream_download($download, $download_to, $stream_context_parameters = null, $callback_function = "pts_stream_status_callback")
 {
-	$stream_context = pts_stream_context_create();
+	$stream_context = pts_stream_context_create($stream_context_parameters);
 	stream_context_set_params($stream_context, array("notification" => "pts_stream_status_callback"));
 
 	$file_pointer = fopen($download, 'r', false, $stream_context);
@@ -106,7 +106,7 @@ function pts_curl_download($download, $download_to)
 	curl_setopt($cr, CURLOPT_USERAGENT, pts_codename(true));
 	//curl_setopt($cr, CURLOPT_REFERER, "http://www.phoronix-test-suite.com/"); // Setting the referer causes problems for SourceForge downloads
 	curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
-	curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, NETWORK_TIMEOUT);
+	curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, (defined("NETWORK_TIMEOUT") ? NETWORK_TIMEOUT : 20));
 	curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
 
 	if(PHP_VERSION_ID >= 50300)
