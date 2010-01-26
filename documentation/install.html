@@ -10,12 +10,7 @@
 <div class="pts_doc_main">
 <!-- PTS AREA -->
 <h1>Phoronix Test Suite Installation</h1>
-<p>A majority of the Phoronix Test Suite development and testing is done on Ubuntu and Fedora Linux, but this software should run virtually unmodified on any Linux distribution. The only distribution-specific bits deal with the external dependencies support feature. For instance, if you are not running one of the supported Linux distributions (Ubuntu, Fedora, Mandriva, Gentoo, PCLinuxOS, Arch Linux, Pardus, OpenSuSE, Zenwalk, and CentOS), OpenSolaris, FreeBSD, NetBSD, or Mac OS X, you may need to install a package manually in order for a test to run. For example, GCC and the OpenGL Utility Toolkit may need to be installed manually by the user to support the OpenGL source tests.</p>
-<h2>Running Locally</h2>
-<p>The Phoronix Test Suite can be simply extracted from the downloaded <em>.tar.gz</em> 
-file or it can also be installed system-wide. If you just wish to run the Phoronix 
-Test Suite without installing it, open a terminal and run <em>./phoronix-test-suite 
-&lt;options&gt;</em> from the same directory.</p>
+<p>The Phoronix Test Suite can run on almost any Linux distribution along with Apple Mac OS X, FreeBSD, OpenBSD, NetBSD, OpenSolaris, webOS / Optware, and other operating systems. The only Linux distribution-specific bits deal with the external dependencies support feature that are set by individual test profiles. If you are not running one of the supported Linux distributions (Ubuntu, Fedora, Mandriva, Gentoo, PCLinuxOS, Arch Linux, Pardus, OpenSuSE, Zenwalk, and CentOS), OpenSolaris, FreeBSD, NetBSD, or Mac OS X, you may need to install a package manually (as instructed by the Phoronix Test Suite) in order for a test to run. An example of an external dependency would be GCC and the OpenGL Utility Toolkit being needed for test profiles that build an OpenGL benchmark from source-code.</p>
 <h2>Dependencies</h2>
 <p>The only required dependencies for the Phoronix Test Suite on Linux systems 
 is PHP 5.x CLI (packages for it are commonly called <em>php5-cli</em> or <em>php-cli</em> 
@@ -23,27 +18,32 @@ or just <em>php</em>). It's important to note that only PHP 5 is needed and not 
 web server (Apache) or other packages commonly associated with PHP. Additionally, the PHP GD module (commonly called <em>php-gd</em> or 
 <em>php5-gd</em>) is recommended to render graphs to PNG image files, but other renderers are available. Likewise, if you wish to use the Adobe SWF renderer, the PHP Ming module (commonly called <em>php-ming</em> or <em>php5-ming</em>) is required. If you wish to use the <em>result-file-to-pdf</em> option, the PHP FPDF (commonly called <em>php-fpdf</em> or <em>php5-fpdf</em>) module is needed.</p>
 <p>There is a GTK2 interface written for the Phoronix Test Suite that can be used by running <em>phoronix-test-suite gui</em>. In order to 
-use the GTK user interface, the PHP GTK module must be installed and loaded. This PHP module can be found at <a href="http://gtk.php.net/">gtk.php.net</a>. PHP GTK for Mac OS X can be found <a href="http://php-gtk.eu/en/install-php-gtk-2-on-macos-x">here</a>. For instructions on building PHP GTK for Ubuntu/Debian, see <a href="http://ubuntuforums.org/showthread.php?t=1108731">this forum thread</a>.</p>
+use the GTK user interface, the PHP GTK module must be installed and loaded. This PHP module can be found at <a href="http://gtk.php.net/">gtk.php.net</a>. PHP GTK for Mac OS X can be found <a href="http://php-gtk.eu/en/install-php-gtk-2-on-macos-x">here</a>. For instructions on building PHP GTK for Ubuntu/Debian, see <a href="http://ubuntuforums.org/showthread.php?t=1108731">this forum thread</a>. Also highly recommended, but not required, is installing PHP CURL and PHP PCNTL support if they are not built by default with your PHP package.</p>
 <p><strong>Note #1:</strong> Depending upon your distribution's package configuration, you may also need <em>php-posix</em> package for providing the POSIX functions.</p>
 <p><strong>Note #2:</strong> You may need to modify the <em>php.ini</em> file on your system in order to support uploading results to Phoronix Global or logging into your Phoronix Global account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration and curl must be supported by the PHP installation. <a href="http://www.phoronix.com/forums/showpost.php?p=32484&postcount=4">Additional information</a>.
 <p>While PHP is the only required dependency, many of the test profiles 
 do require the standard Linux development tools/libraries (GCC, etc). On a clean 
-Ubuntu installation, it's as easy as first running <em>sudo apt-get install php5-cli</em> and then running the Phoronix Test Suite as it will take care of installing additional dependencies.</p>
+Ubuntu installation, it's as easy as first running <em>sudo apt-get install php5-cli</em> and then running the Phoronix Test Suite as it will take care of installing additional dependencies. Most Phoronix Test Suite development is done on Ubuntu and Fedora systems, but the Phoronix Test Suite is routinely tested against a variety of Linux distributions and other supported operating systems.</p>
 <p>The Phoronix Test Suite has a feature known as &quot;External Dependencies&quot; 
 where the Phoronix Test Suite can attempt to automatically install some of the 
 test-specific dependencies on supported distributions. If running on a distribution 
-where there is currently no External Dependencies profile, the needed package(s) 
+where there is currently no External Dependencies profile, the needed package name(s) 
 are listed. To see all possible External Dependencies, run <em>phoronix-test-suite list-possible-dependencies</em>. Running <em>phoronix-test-suite list-missing-dependencies</em> will attempt to report the external dependencies that are not installed on the given system.</p>
 <h2>File Structure</h2>
-<p>If manually changing the location of the phoronix-test-suite file, the 
+<p>If manually changing the location of the <em>phoronix-test-suite</em> launcher file, the 
 <em>PTS_USER_DIR</em> environmental variable must be adjusted inside the file to reflect the 
 absolute location that leads to the root directory of the <em>pts</em> and <em>pts-core</em> 
 folders. The <em>pts</em> folder houses the XML test profiles, XML test suites, 
-test resource files, the External Dependencies files, and other important information. 
-The <em>pts-core</em> directory is the &quot;engine&quot; of the Phoronix Test 
+test resource files, and other important information. 
+The <em>pts-core</em> directory contains the &quot;engine&quot; of the Phoronix Test 
 Suite.</p>
+<h2>Running Locally</h2>
+<p>The Phoronix Test Suite can be simply extracted from the downloaded <em>.tar.gz</em> 
+file or it can also be installed system-wide. If you just wish to run the Phoronix 
+Test Suite without installing it, open a terminal and run <em>./phoronix-test-suite 
+&lt;options&gt;</em> from the same directory.</p>
 <h2>Generic Installation</h2>
-<p>Running install-sh from the root directory of the Phoronix Test Suite will 
+<p>Running <em>install-sh</em> from the root directory of the Phoronix Test Suite will 
 install the software for system-wide access. By default the <em>phoronix-test-suite</em> 
 executable is in <em>/usr/bin/</em>, the Phoronix Test Suite files in <em>/usr/share/phoronix-test-suite/</em>, 
 and the documentation in /<em>usr/share/doc/phoronix-test-suite/</em>. Root access 
@@ -70,7 +70,7 @@ repository beginning with the Ubuntu 9.04 (Jaunty) release, but it may be out of
 <h2>OpenSolaris Installation</h2>
 <p>The Phoronix Test Suite core (pts-core) is supported on Solaris and OpenSolaris platforms, but some features may not fully function. Additionally, the PTS External Dependencies feature is supported on OpenSolaris using IPS (the Image Packaging System). However, not all test profiles are supported on Solaris / OpenSolaris, and it may be in violation of your end-user agreement to perform such benchmarks on the Sun Solaris operating system. Using the OpenSolaris Image Packaging System, installing <em>SUNWphp524</em> will provide PHP, PHP GD, and related dependencies.</p>
 <h2>BSD Installation</h2>
-<p>The Phoronix Test Suite also supports *BSD operating systems. However, like the Solaris support, not all test profiles are compatible with BSD operating systems, but pts-core has been tested against FreeBSD 7.0/8.0, NetBSD, PC-BSD 7.1, and OpenBSD 4.4.</p>
+<p>The Phoronix Test Suite also supports *BSD operating systems. However, like the Solaris support, not all test profiles are compatible with BSD operating systems, but pts-core has been tested against FreeBSD 7.0/7.2/8.0, NetBSD, PC-BSD 7.1, and OpenBSD 4.4/4.6.</p>
 <h2>Mac OS X Installation</h1>
 <p>The Phoronix Test Suite is fully supported on Apple's Mac OS X operating system. PHP ships with Mac OS X by default so it's as easy as just downloading the Phoronix Test Suite package, extracting it, and running the executable. For tests that rely upon a compiler, Apple's XCode with GCC will need to be installed.</p>
 <h2>Windows Installation</h2>

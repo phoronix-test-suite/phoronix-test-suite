@@ -134,6 +134,11 @@ if(!QUICK_START)
 
 	define("NETWORK_TIMEOUT", pts_read_user_config(P_OPTION_NET_TIMEOUT, 20));
 
+	if(ini_get("file_uploads") == "Off")
+	{
+		echo "\nThe file_uploads option in your PHP configuration must be enabled for network support.\n\n";
+	}
+
 	if(ini_get("allow_url_fopen") == "Off")
 	{
 		echo "\nThe allow_url_fopen option in your PHP configuration must be enabled for network support.\n\n";

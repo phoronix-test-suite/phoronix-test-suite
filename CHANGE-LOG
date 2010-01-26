@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Report to test notes area of PTS test results if the system was using eCryptfs
+
 Phoronix Test Suite 2.4 Beta 3
 January 25, 2010
 
