@@ -161,7 +161,7 @@ function pts_download_test_files($identifier, &$display_mode)
 			if(isset($remote_download_files[$package_md5]) && $remote_download_files[$package_md5]->get_filename() == $package_filename && $remote_download_files[$package_md5]->get_md5() == $package_md5)
 			{
 				$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE", $longest_package_name_length);
-				echo pts_download(pts_first_element_in_array($remote_download_files[$package_md5]->get_download_url_array()), $download_destination_temp, $display_mode); // TODO: with PTS 2.6 remove the echo
+				pts_download(pts_first_element_in_array($remote_download_files[$package_md5]->get_download_url_array()), $download_destination_temp, $display_mode);
 				echo "\n";
 
 				if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
@@ -250,7 +250,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 					$display_mode->test_install_download_file($download_package, "DOWNLOAD", $longest_package_name_length);
 					$download_start = time();
-					echo pts_download($url, $download_destination_temp, $display_mode); // TODO: with PTS 2.6 remove the echo
+					pts_download($url, $download_destination_temp, $display_mode);
 					$download_end = time();
 
 					if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
@@ -540,6 +540,7 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 function pts_is_valid_download_url($string, $basename = null)
 {
 	// Checks for valid download URL
+	// maybe replace below check with stream_is_local()
 	return !(strpos($string, "://") == false || !empty($basename) && $basename != basename($string));
 }
 function pts_test_download_cache_directories()

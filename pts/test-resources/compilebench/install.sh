@@ -1,7 +1,6 @@
 #!/bin/sh
 
 tar -jxvf compilebench-0.6.tar.bz2
-echo \$? > ~/test-exit-status
 
 echo "#!/bin/sh
 cd compilebench-0.6/
