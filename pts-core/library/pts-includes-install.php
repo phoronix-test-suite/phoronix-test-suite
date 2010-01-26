@@ -154,9 +154,8 @@ function pts_download_test_files($identifier, &$display_mode)
 			$package_md5 = $download_package->get_md5();
 			$urls = $download_package->get_download_url_array();
 
-			$package_filename_temp = $package_filename . ".pts";
 			$download_destination = $download_location . $package_filename;
-			$download_destination_temp = $download_location . $package_filename_temp;
+			$download_destination_temp = $download_destination . ".pts";
 
 			// Check to see if the file can be downloaded from a remote download cache
 			if(isset($remote_download_files[$package_md5]) && $remote_download_files[$package_md5]->get_filename() == $package_filename && $remote_download_files[$package_md5]->get_md5() == $package_md5)
@@ -167,7 +166,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 				if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
 				{
-					pts_move($package_filename_temp, $package_filename, $download_location);
+					pts_move($download_destination_temp, $download_destination);
 				}
 				else
 				{
@@ -201,7 +200,7 @@ function pts_download_test_files($identifier, &$display_mode)
 								// Verify that the file was copied fine
 								if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
 								{
-									pts_move($package_filename_temp, $package_filename, $download_location);
+									pts_move($download_destination_temp, $download_destination);
 									break;
 								}
 								else
@@ -259,7 +258,7 @@ function pts_download_test_files($identifier, &$display_mode)
 						// Download worked
 						if(is_file($download_destination_temp))
 						{
-							pts_move($package_filename_temp, $package_filename, $download_location);
+							pts_move($download_destination_temp, $download_destination);
 						}
 
 						if($download_package->get_filesize() > 0 && $download_end != $download_start)

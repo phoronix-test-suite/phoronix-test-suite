@@ -218,9 +218,9 @@ function pts_symlink($from, $to)
 {
 	return @symlink($from, $to);
 }
-function pts_move($from, $to, $cd = null)
+function pts_move($from, $to)
 {
-	return shell_exec(($cd != null ? "cd " . $cd . " && " : null) . "mv " . $from . " " . $to . " 2>&1");
+	return rename($from, $to);
 }
 function pts_extract($file)
 {
