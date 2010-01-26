@@ -16,7 +16,4 @@
 	<RunTest>
 		<Test>unigine</Test>
 	</RunTest>
-	<RunTest>
-		<Test>norsetto-shadow</Test>
-	</RunTest>
 </PhoronixTestSuite>
