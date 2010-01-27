@@ -125,7 +125,7 @@ class gui_gtk_events extends pts_module_interface
 	{
 		self::$test_run_pos++;
 		self::run_time_remaining($pts_test_result);
-		self::$progress_window->update_progress_bar(100, "<b>" . $pts_test_result->get_test_profile()->get_test_title() . "</b>" . ", Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_test_profile()->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(0) . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(100, "<b>" . $pts_test_result->get_test_profile()->get_test_title() . ":</b>" . " Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->get_test_profile()->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(0) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __post_run_process()
 	{

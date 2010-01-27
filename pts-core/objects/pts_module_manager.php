@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,6 +33,11 @@ class pts_module_manager
 
 	public static function attach_module($module)
 	{
+		if(in_array($module, self::$modules))
+		{
+			return false;
+		}
+
 		array_push(self::$modules, $module);
 
 		if(class_exists($module))

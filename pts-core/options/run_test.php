@@ -402,7 +402,7 @@ class run_test implements pts_option_interface
 
 				if($upload_results)
 				{
-					$tags_input = pts_prompt_user_tags($results_identifier);
+					$tags_input = pts_prompt_user_tags($to_run_identifiers);
 					$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $file_name . "/composite.xml", $tags_input);
 
 					if(!empty($upload_url))

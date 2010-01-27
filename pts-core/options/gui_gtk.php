@@ -104,6 +104,8 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$progress_window->completed();
+
+		pts_attach_module("gui_gtk_events");
 	}
 	public static function system_tray_activate()
 	{
@@ -245,7 +247,7 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$reference_comparison_objects = array();
-		if(($prev_identifier = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) && pts_read_assignment("PREV_COMMAND") != "reference_comparison")
+		if(($prev_identifier = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")))
 		{
 			$reference_tests = pts_result_file_reference_tests($prev_identifier);
 			if(count($reference_tests) > 0)
@@ -311,7 +313,6 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_GUI_INIT", false);
 		gui_gtk::update_main_notebook();
 
-		pts_attach_module("gui_gtk_events");
 		// pts_attach_module("notify_send_events");
 
 		$window->show_all();

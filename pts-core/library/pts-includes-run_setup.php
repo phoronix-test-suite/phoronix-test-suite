@@ -73,9 +73,9 @@ function pts_prompt_results_identifier(&$test_run_manager)
 		do
 		{
 			if($times_tried == 0 && (($env_identifier = getenv("TEST_RESULTS_IDENTIFIER")) || 
-			($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER"))))
+			($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")) || pts_read_assignment("AUTOMATED_MODE")))
 			{
-				$results_identifier = $env_identifier;
+				$results_identifier = isset($env_identifier) ? $env_identifier : null;
 				echo "Test Identifier: " . $results_identifier . "\n";
 			}
 			else
@@ -187,7 +187,7 @@ function pts_prompt_svg_result_options($svg_file)
 
 	return $test_to_run;
 }
-function pts_prompt_user_tags($default_tags = "")
+function pts_prompt_user_tags($default_tags = null)
 {
 	$tags_input = null;
 
