@@ -53,6 +53,11 @@ class pts_LineGraph extends pts_CustomGraph
 		$px_from_top_start = $this->graph_top_end - 5;
 		$px_from_top_end = $this->graph_top_end + 5;
 
+		if(!is_array($this->graph_identifiers))
+		{
+			return;
+		}
+
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
 			if(is_array($this->graph_identifiers[$i]) || $this->graph_identifiers[$i] == "Array")

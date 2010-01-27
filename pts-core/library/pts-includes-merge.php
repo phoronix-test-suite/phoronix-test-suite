@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-includes-merge.php: Functions needed to merge test result files
 
 	This program is free software; you can redistribute it and/or modify
@@ -36,19 +36,20 @@ function pts_merge_test_results()
 	$test_result_manager = new pts_result_file_merge_manager();
 
 	$results->setXslBinding("pts-results-viewer.xsl");
+	$has_written_suite_info = false;
 	$added_systems_hash = array();
 
-	foreach(array_keys($files_to_combine) as $merge_pos)
+	foreach($files_to_combine as &$file)
 	{
-		if(is_object($files_to_combine[$merge_pos]) && $files_to_combine[$merge_pos] instanceOf pts_result_merge_select)
+		if(is_object($file) && $file instanceOf pts_result_merge_select)
 		{
-			$result_merge_select = $files_to_combine[$merge_pos];
+			$result_merge_select = $file;
 			$this_result_file = new pts_result_file($result_merge_select->get_result_file());
 
 		}
-		else if(is_object($files_to_combine[$merge_pos]) && $files_to_combine[$merge_pos] instanceOf pts_result_file)
+		else if(is_object($file) && $file instanceOf pts_result_file)
 		{
-			if(($t = $files_to_combine[$merge_pos]->read_extra_attribute("rename_result_identifier")) != false)
+			if(($t = $file->read_extra_attribute("rename_result_identifier")) != false)
 			{
 				// This code path is currently used by Phoromatic
 				$result_merge_select = new pts_result_merge_select(null, null);
@@ -59,19 +60,20 @@ function pts_merge_test_results()
 				$result_merge_select = null;
 			}
 
-			$this_result_file = $files_to_combine[$merge_pos];
+			$this_result_file = $file;
 		}
 		else
 		{
-			$result_merge_select = new pts_result_merge_select($files_to_combine[$merge_pos], null);
+			$result_merge_select = new pts_result_merge_select($file, null);
 			$this_result_file = new pts_result_file($result_merge_select->get_result_file());
 		}
 
 		if(!defined("ONLY_RESULTS_IN_XML"))
 		{
-			if($merge_pos == 0)
+			if($has_written_suite_info == false)
 			{
 				pts_result_file_suite_info_to_xml($this_result_file, $results);
+				$has_written_suite_info = true;
 			}
 
 			pts_result_file_system_info_to_xml($this_result_file, $results, $added_systems_hash, $result_merge_select);
@@ -128,6 +130,7 @@ function pts_result_file_system_info_to_xml(&$pts_result_file, &$xml_writer, &$s
 	{
 		if(!($is_pts_rms = ($result_merge_select instanceOf pts_result_merge_select)) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
 		{
+			// Prevents any information from being repeated
 			$this_hash = md5($associated_identifiers[$i] . ";" . $system_hardware[$i] . ";" . $system_software[$i] . ";" . $system_date[$i]);
 
 			if(!in_array($this_hash, $systems_hash))

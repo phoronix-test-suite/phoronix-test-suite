@@ -412,6 +412,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 
 			if(is_dir(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier()))
 			{
+				// TODO: overwrite dest dir if needed
 				rename(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/" . $test_run_manager->get_results_identifier() . "/");
 			}
 			$xml_write_pos++;

@@ -393,8 +393,8 @@ class phodevi_gpu extends phodevi_device_interface
 		$available_modes = array();
 		$supported_ratios = array(1.60, 1.25, 1.33, 1.70, 1.77);
 		$ignore_modes = array(
-			array(720, 480),
-			array(832, 624), array(960, 600),
+			array(720, 480), array(832, 624),
+			array(960, 540), array(960, 600),
 			array(896, 672), array(928, 696),
 			array(960, 720), array(1152, 864),
 			array(1280, 720), array(1360, 768),

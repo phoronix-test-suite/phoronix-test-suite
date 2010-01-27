@@ -90,6 +90,12 @@ class pts_test_result
 	{
 		$END_RESULT = 0;
 
+		if(count($this->trial_results) == 0)
+		{
+			$this->set_result(0);
+			return false;
+		}
+
 		switch($this->test_profile->get_result_format())
 		{
 			case "NO_RESULT":
