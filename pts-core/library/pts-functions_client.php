@@ -353,7 +353,7 @@ function pts_terminal_width()
 }
 function pts_remove_installed_test($identifier)
 {
-	pts_remove($identifier, null, true);
+	pts_remove(TEST_ENV_DIR . $identifier, null, true);
 }
 function pts_current_user()
 {
