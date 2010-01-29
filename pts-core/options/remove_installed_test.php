@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ class remove_installed_test implements pts_option_interface
 
 			foreach(pts_to_array($identifier) as $install_identifier)
 			{
-				pts_remove(TEST_ENV_DIR . $install_identifier);
+				pts_remove_installed_test($install_identifier);
 				echo "\nThe " . $install_identifier . " test has been removed.\n\n";
 			}
 		}

@@ -171,7 +171,7 @@ function pts_executable_in_path($executable)
 
 	return $cache[$executable];
 }
-function pts_remove($object, $ignore_files = null)
+function pts_remove($object, $ignore_files = null, $remove_root_directory = false)
 {
 	if(is_dir($object))
 	{
@@ -193,13 +193,13 @@ function pts_remove($object, $ignore_files = null)
 		}
 		else if(is_dir($to_remove))
 		{
-			pts_remove($to_remove, $ignore_files);
-
-			if(count(pts_glob($to_remove . "/*")) == 0)
-			{
-				@rmdir($to_remove);
-			}
+			pts_remove($to_remove, $ignore_files, true);
 		}
+	}
+
+	if($remove_root_directory && is_dir($object) && count(pts_glob($object . "/*")) == 0)
+	{
+		rmdir($object);
 	}
 }
 function pts_copy($from, $to)

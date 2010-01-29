@@ -422,8 +422,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			$test_run_manager->add_failed_test_run_request($test_run_request);
 
 			// For now delete the failed test log files, but it may be a good idea to keep them
-			pts_remove(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/");
-			pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/");
+			pts_remove(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", null, true);
 		}
 
 		pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/");

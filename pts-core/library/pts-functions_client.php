@@ -351,6 +351,10 @@ function pts_terminal_width()
 
 	return pts_read_assignment("TERMINAL_WIDTH");
 }
+function pts_remove_installed_test($identifier)
+{
+	pts_remove($identifier, null, true);
+}
 function pts_current_user()
 {
 	// Current system user

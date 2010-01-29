@@ -74,8 +74,7 @@ class embedded extends pts_module_interface
 		foreach($test_identifiers as $test_identifier)
 		{
 			// Un-install the tests
-			pts_remove(TEST_ENV_DIR . $test_identifier);
-			pts_rmdir(TEST_ENV_DIR . $test_identifier);
+			pts_remove_installed_test($test_identifier);
 		}
 
 	}
