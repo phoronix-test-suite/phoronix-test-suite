@@ -571,12 +571,13 @@ function pts_test_download_cache_directories()
 		}
 
 		// Other Possible Directories
-		$additional_dir_checks = array("/var/cache/phoronix-test-suite/");
+		$additional_dir_checks = array("/var/cache/phoronix-test-suite/download-cache/", "/var/cache/phoronix-test-suite/");
 		foreach($additional_dir_checks as $dir_check)
 		{
 			if(is_dir($dir_check))
 			{
 				array_push($cache_directories, $dir_check);
+				break;
 			}
 		}
 
