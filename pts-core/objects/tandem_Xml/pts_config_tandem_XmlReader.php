@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts_config_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite for the user config
 
 	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
@@ -37,10 +37,6 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 		else if(is_file(STATIC_DIR . "user-config-template.xml"))
 		{
 			$file = file_get_contents(STATIC_DIR . "user-config-template.xml");
-		}
-		else if(IS_PTS_LIVE && is_file(STATIC_DIR . "pts-live-user-config-template.xml"))
-		{
-			$file = file_get_contents(STATIC_DIR . "pts-live-user-config-template.xml");
 		}
 		else
 		{

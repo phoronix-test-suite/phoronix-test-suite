@@ -56,7 +56,7 @@ function pts_basic_init()
 
 	phodevi::initial_setup();
 
-	define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
+	//define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
 }
 function pts_extended_init()
 {
