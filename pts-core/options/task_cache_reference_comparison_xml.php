@@ -33,6 +33,8 @@ class task_cache_reference_comparison_xml implements pts_option_interface
 
 		foreach(pts_generic_reference_system_comparison_ids() as $reference_id)
 		{
+			$reference_xml = pts_global_download_xml($reference_id);
+
 			if(!empty($reference_xml))
 			{
 				if($write_to_system_cache)
