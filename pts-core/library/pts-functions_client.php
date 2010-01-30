@@ -266,7 +266,7 @@ function pts_user_message($message)
 }
 function pts_get_display_mode_object()
 {
-	switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = getenv("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT") == "BATCH"))
+	switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = getenv("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
 	{
 		case "BASIC":
 			$display_mode = new pts_basic_display_mode();
