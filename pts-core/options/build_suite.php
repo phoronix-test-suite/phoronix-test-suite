@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -52,6 +52,27 @@ class build_suite implements pts_option_interface
 		$xml_writer->addXmlObject(P_SUITE_TYPE, 0, $suite_test_type);
 		$xml_writer->addXmlObject(P_SUITE_DESCRIPTION, 0, $suite_description);
 		$write_position = 1;
+
+		foreach($r as $test_object)
+		{
+			if(pts_is_test($test_object))
+			{
+				list($args, $description) = pts_prompt_test_options($test_object);
+
+				for($i = 0; $i < count($args); $i++)
+				{
+					$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_object);
+					$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $write_position, $args[$i]);
+					$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $write_position, $description[$i]);
+					$write_position++;
+				}
+			}
+			else if(pts_is_suite($test_object))
+			{
+				$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_object);
+				$write_position++;
+			}
+		}
 
 		do
 		{
