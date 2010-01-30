@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Report to test notes area of PTS test results if the system was using eCryptfs
 - pts-core: Fix GTK2 GUI bug of multiple instances of the GTK2 GUI test run-time window being shown
+- pts-core: Support passing multiple tests/suites to download-test-files option
 - pts_LineGraph: When there becomes too many point identifiers to be plot (such as with Phoromatic Tracker), only plot every so often
 
 Phoronix Test Suite 2.4 Beta 3

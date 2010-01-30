@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -34,19 +34,18 @@ class download_test_files implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$test = $r[0];
-
-		$tests = pts_contained_tests(strtolower($test), true);
+		$tests = pts_contained_tests($r, true);
 
 		if(count($tests) == 0)
 		{
-			echo "\n" . $test . " is not recognized.\n";
+			echo "\n" . $r[0] . " is not recognized.\n";
 		}
 		else
 		{
 			foreach($tests as $this_test)
 			{
 				// Download Test Files
+				echo "\n" . $this_test . ":\n";
 				$display_mode = pts_get_display_mode_object();
 				pts_setup_install_test_directory($this_test, false);
 				pts_download_test_files($this_test, $display_mode);
