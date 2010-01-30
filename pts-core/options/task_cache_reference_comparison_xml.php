@@ -24,11 +24,11 @@ class task_cache_reference_comparison_xml implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$write_to_system_cache = is_writable("/var/cache/phoronix-test-suite/");
+		$write_to_system_cache = is_writable("/var/");
 
 		if($write_to_system_cache)
 		{
-			pts_mkdir("/var/cache/phoronix-test-suite/reference-comparisons/");
+			pts_mkdir("/var/cache/phoronix-test-suite/reference-comparisons/", 0777, true);
 		}
 
 		foreach(pts_generic_reference_system_comparison_ids() as $reference_id)
