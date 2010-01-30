@@ -25,6 +25,7 @@ class pts_LineGraph extends pts_CustomGraph
 {
 	protected $identifier_width = -1;
 	protected $minimum_identifier_font = 7;
+	protected $show_select_identifiers = null;
 
 	public function __construct($title, $sub_title, $y_axis_title)
 	{
@@ -36,16 +37,67 @@ class pts_LineGraph extends pts_CustomGraph
 	protected function render_graph_pre_init()
 	{
 		// Do some common work to this object
-		$identifier_count = (($c = count($this->graph_identifiers)) > 1 ? $c : count($this->graph_data[0])) + 1;
-		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
+		$graph_identifiers_count = count($this->graph_identifiers);
+		$identifier_count = $graph_identifiers_count > 1 ? $graph_identifiers_count : count($this->graph_data[0]);
+		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / ($identifier_count + 1);
 
 		$longest_string = $this->find_longest_string($this->graph_identifiers);
-		$width = $this->identifier_width - 4;
-		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $width);
+		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $this->identifier_width - 4);
 
 		if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 		{
-			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $this->text_string_width($longest_string, $this->graph_font, 9));
+			list($text_width, $text_height) = $this->text_string_dimensions($longest_string, $this->graph_font, $this->minimum_identifier_font + 2);
+			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $text_width);
+
+			if(($text_height + 4) > $this->identifier_width && $graph_identifiers_count > 3)
+			{
+				// Showing all the identifiers will be cramped
+				$first_identifier = $this->graph_identifiers[0];
+				$predefined_shows = array(0, $graph_identifiers_count - 1, round($graph_identifiers_count / 2));
+				$showed_on_last = false;
+				$show_every_x_steps = 6;
+
+				if(is_numeric($first_identifier))
+				{
+					// Assume numerical array
+					$diff_1 = $this->graph_identifiers[1] - $this->graph_identifiers[0];
+					$this->show_select_identifiers = array();
+
+					for($i = 0; $i < $graph_identifiers_count; $i++)
+					{
+						if(in_array($i, $predefined_shows) || ($this->graph_identifiers[$i] - $this->graph_identifiers[($i - 1)]) != $diff_1 || ($i % $show_every_x_steps == 0 && $showed_on_last == false && !in_array($i + 1, $predefined_shows)))
+						{
+							array_push($this->show_select_identifiers, $i);
+							$showed_on_last = true;
+							continue;
+						}
+						else
+						{
+							$showed_on_last = false;
+						}
+					}
+				}
+				else if(is_numeric(str_replace('-', null, $first_identifier)))
+				{
+					// Assume its an array of dates, should add more checks
+					$diff_1 = strtotime($this->graph_identifiers[1]) - strtotime($this->graph_identifiers[0]);
+					$this->show_select_identifiers = array();
+
+					for($i = 0; $i < $graph_identifiers_count; $i++)
+					{
+						if(in_array($i, $predefined_shows) || (strtotime($this->graph_identifiers[$i]) - strtotime($this->graph_identifiers[($i - 1)])) != $diff_1 || ($i % $show_every_x_steps == 0 && $showed_on_last == false && !in_array($i + 1, $predefined_shows)))
+						{
+							array_push($this->show_select_identifiers, $i);
+							$showed_on_last = true;
+							continue;
+						}
+						else
+						{
+							$showed_on_last = false;
+						}
+					}
+				}
+			}
 		}
 	}
 	protected function render_graph_identifiers()
@@ -69,6 +121,11 @@ class pts_LineGraph extends pts_CustomGraph
 			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
 			$this->graph_image->draw_line($px_from_left, $px_from_top_start, $px_from_left, $px_from_top_end, $this->graph_color_notches);
+
+			if($this->show_select_identifiers != null && !in_array($i, $this->show_select_identifiers))
+			{
+				continue;
+			}
 
 			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 			{
