@@ -120,11 +120,22 @@ function pts_generic_reference_system_build_cache()
 }
 function pts_download_all_generic_reference_system_comparison_results()
 {
+	$reference_cache_dir = is_dir("/var/cache/phoronix-test-suite/reference-comparisons/") ? "/var/cache/phoronix-test-suite/reference-comparisons/" : false;
+
 	foreach(pts_generic_reference_system_comparison_ids() as $comparison_id)
 	{
 		if(!pts_is_test_result($comparison_id))
 		{
-			pts_clone_from_global($comparison_id, false);
+			if($reference_cache_dir && is_readable($reference_cache_dir . $comparison_id . ".xml"))
+			{
+				// A cache is already available locally (likely from a PTS Live OS)
+				pts_save_result($comparison_id . "/composite.xml", file_get_contents($reference_cache_dir . $comparison_id . ".xml"), false);
+			}
+			else
+			{
+				// Fetch from Phoronix Global
+				pts_clone_from_global($comparison_id, false);
+			}
 		}
 	}
 }

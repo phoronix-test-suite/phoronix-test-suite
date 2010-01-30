@@ -67,7 +67,7 @@ if(ini_get("date.timezone") == null)
 }
 
 $sent_command = strtolower(str_replace("-", "_", (isset($argv[1]) ? $argv[1] : null)));
-$quick_start_options = array("dump_possible_options");
+$quick_start_options = array("dump_possible_options", "task_cache_reference_comparison_xml"s);
 define("QUICK_START", in_array($sent_command, $quick_start_options));
 
 pts_client_init(); // Initalize the Phoronix Test Suite (pts-core) client

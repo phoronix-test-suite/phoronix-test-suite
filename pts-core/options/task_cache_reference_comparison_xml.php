@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2010, Phoronix Media
+	Copyright (C) 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,23 +20,32 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class dump_possible_options implements pts_option_interface
+class task_cache_reference_comparison_xml implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$options = array();
+		$write_to_system_cache = is_writable("/var/cache/phoronix-test-suite/");
 
-		foreach(pts_glob(COMMAND_OPTIONS_DIR . "*.php") as $option_php)
+		if($write_to_system_cache)
 		{
-			$name = str_replace("_", "-", basename($option_php, ".php"));
-
-			if(!in_array(pts_first_string_in_string($name, '-'), array("dump", "debug", "task")))
-			{
-				array_push($options, $name);
-			}
+			pts_mkdir("/var/cache/phoronix-test-suite/reference-comparisons/");
 		}
 
-		echo implode($r[0] == "TRUE" ? " " : "\n", $options) . ($r[0] == "TRUE" ? "" : "\n");
+		foreach(pts_generic_reference_system_comparison_ids() as $reference_id)
+		{
+			if(!empty($reference_xml))
+			{
+				if($write_to_system_cache)
+				{
+					$reference_xml = pts_global_download_xml($reference_id);
+					file_put_contents("/var/cache/phoronix-test-suite/reference-comparisons/" . $reference_id . ".xml", $reference_xml);
+				}
+				else if(!pts_is_test_result($reference_id))
+				{
+					pts_clone_from_global($reference_id, false);
+				}
+			}
+		}
 	}
 }
 
