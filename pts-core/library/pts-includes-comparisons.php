@@ -60,7 +60,7 @@ function pts_process_reference_comparison_hashes($reference_ids_to_process, $ori
 
 	foreach($reference_ids_to_process as $global_id)
 	{
-		if(pts_is_global_id($global_id))
+		if(pts_global_valid_id_string($global_id))
 		{
 			if(!pts_is_test_result($global_id))
 			{

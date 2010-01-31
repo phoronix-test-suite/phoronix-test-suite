@@ -1,6 +1,6 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.4.0
 
 - pts-core: Report to test notes area of PTS test results if the system was using eCryptfs
 - pts-core: Fix GTK2 GUI bug of multiple instances of the GTK2 GUI test run-time window being shown
