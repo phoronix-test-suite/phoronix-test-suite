@@ -8,6 +8,7 @@ Phoronix Test Suite 2.4.0
 - pts-core: Allow arguments to be passed and used by the build-suite option for specifying tests/suites
 - pts-core: Fix a bug that caused the basic display mode to be used on Anzhofen
 - pts-core: Add task-cache-reference-comparison-xml option for more easily building caches on Anzhofen
+- phodevi: Workaround for Radeon KMS not reporting all available modes when connected to a 2560 x 1600 panel
 - pts_LineGraph: When there becomes too many point identifiers to be plot (such as with Phoromatic Tracker), only plot every so often
 - pts: Add pts-desktop-live suite for Anzhofen
 
