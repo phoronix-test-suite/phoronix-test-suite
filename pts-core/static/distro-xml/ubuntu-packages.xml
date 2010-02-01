@@ -6,6 +6,11 @@
 			<Name>Ubuntu</Name>
 		</Information>
 		<Package>
+			<GenericName>linux-32bit-libraries</GenericName>
+			<PackageName>ia32-libs</PackageName>
+			<FileCheck>/usr/share/doc/ia32-libs</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>libgtk2.0-dev</PackageName>
 			<FileCheck>/usr/include/gtk-2.0</FileCheck>

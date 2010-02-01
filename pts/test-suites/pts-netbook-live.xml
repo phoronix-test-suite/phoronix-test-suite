@@ -1,26 +1,12 @@
 <?xml version="1.0"?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Title>PTS Desktop Live</Title>
+		<Title>PTS Netbook Live</Title>
 		<Version>1.0.0</Version>
 		<Maintainer>Phoronix Media</Maintainer>
 		<TestType>System</TestType>
-		<Description>This is a suite containing the tests that are found by default on the PTS Desktop Live operating system. This suite has been updated against the PTS Desktop Live 2010.1 (Anzhofen) release.</Description>
+		<Description>This is a suite containing the tests that are found by default on the PTS Netbook Live operating system. This suite has been updated against the PTS Netbook Live 2010.1 (Anzhofen) release.</Description>
 	</SuiteInformation>
-	<RunTest>
-		<Test>aio-stress</Test>
-		<Arguments>-o 2</Arguments>
-		<Description>Random Write</Description>
-	</RunTest>
-	<RunTest>
-		<Test>apache</Test>
-	</RunTest>
-	<RunTest>
-		<Test>battery-power-usage</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-apache</Test>
-	</RunTest>
 	<RunTest>
 		<Test>bullet</Test>
 		<Arguments>3000 fall</Arguments>
@@ -35,9 +21,6 @@
 		<Test>bullet</Test>
 		<Arguments>convex-trimesh</Arguments>
 		<Description>Convex Trimesh</Description>
-	</RunTest>
-	<RunTest>
-		<Test>bwfirt</Test>
 	</RunTest>
 	<RunTest>
 		<Test>byte</Test>
@@ -76,9 +59,6 @@
 		<Test>encode-ogg</Test>
 	</RunTest>
 	<RunTest>
-		<Test>espeak</Test>
-	</RunTest>
-	<RunTest>
 		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
@@ -89,21 +69,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>gmpbench</Test>
-	</RunTest>
-	<RunTest>
-		<Test>graphics-magick</Test>
-		<Arguments>-colorspace HWB</Arguments>
-		<Description>Operation: HWB Color Space</Description>
-	</RunTest>
-	<RunTest>
-		<Test>graphics-magick</Test>
-		<Arguments>-lat 10x10-5%</Arguments>
-		<Description>Operation: Local Adaptive Thresholding</Description>
-	</RunTest>
-	<RunTest>
-		<Test>graphics-magick</Test>
-		<Arguments>-resize 50%</Arguments>
-		<Description>Operation: Resizing</Description>
 	</RunTest>
 	<RunTest>
 		<Test>himeno</Test>
@@ -119,30 +84,7 @@
 		<Description>Blowfish</Description>
 	</RunTest>
 	<RunTest>
-		<Test>mafft</Test>
-	</RunTest>
-	<RunTest>
 		<Test>n-queens</Test>
-	</RunTest>
-	<RunTest>
-		<Test>npb</Test>
-		<Arguments>bt.A</Arguments>
-		<Description>Test / Class: BT.A</Description>
-	</RunTest>
-	<RunTest>
-		<Test>npb</Test>
-		<Arguments>ep.B</Arguments>
-		<Description>Test / Class: EP.B</Description>
-	</RunTest>
-	<RunTest>
-		<Test>npb</Test>
-		<Arguments>lu.A</Arguments>
-		<Description>Test / Class: LU.A</Description>
-	</RunTest>
-	<RunTest>
-		<Test>npb</Test>
-		<Arguments>sp.A</Arguments>
-		<Description>Test / Class: SP.A</Description>
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
@@ -177,18 +119,15 @@
 		<Test>sudokut</Test>
 	</RunTest>
 	<RunTest>
-		<Test>tachyon</Test>
+		<Test>tscp</Test>
+	</RunTest>
+	<RunTest>
+		<Test>x264</Test>
 	</RunTest>
 	<RunTest>
 		<Test>jxrendermark</Test>
 		<Arguments>128</Arguments>
 		<Description>Rects - Size: 128x128</Description>
-	</RunTest>
-	<RunTest>
-		<Test>tscp</Test>
-	</RunTest>
-	<RunTest>
-		<Test>x264</Test>
 	</RunTest>
 	<RunTest>
 		<Test>jxrendermark</Test>
@@ -206,23 +145,8 @@
 		<Description>12pt Text LCD - Size: 128x128</Description>
 	</RunTest>
 	<RunTest>
-		<Test>qgears2</Test>
-		<Arguments>-render GEARSFANCY</Arguments>
-		<Description>Rendering: XRender Extension - Gears</Description>
-	</RunTest>
-	<RunTest>
-		<Test>qgears2</Test>
-		<Arguments>-render COMPO</Arguments>
-		<Description>Rendering: XRender Extension - Image Scaling</Description>
-	</RunTest>
-	<RunTest>
 		<Test>tremulous</Test>
 		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
-		<Test>warsow</Test>
-		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>

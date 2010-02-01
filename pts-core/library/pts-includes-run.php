@@ -73,7 +73,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 			}
 			$test_passes = false;
 		}
-		else if(!pts_is_run_object($lower_identifier) && !pts_global_valid_id_string($lower_identifier))
+		else if(!pts_is_run_object($lower_identifier) && !pts_global_valid_id_string($lower_identifier) && !pts_is_test_result($lower_identifier))
 		{
 			echo pts_string_header($lower_identifier . " is not recognized.");
 		}
