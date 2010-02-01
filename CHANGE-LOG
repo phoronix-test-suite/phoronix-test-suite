@@ -12,6 +12,7 @@ Phoronix Test Suite 2.4.0
 - pts_LineGraph: When there becomes too many point identifiers to be plot (such as with Phoromatic Tracker), only plot every so often
 - pts: Add pts-desktop-live suite for Anzhofen
 - pts: Add pts-netbook-live suite for Anzhofen Netbook
+- pts: Update out of date download links within test profiles
 
 Phoronix Test Suite 2.4 Beta 3
 January 25, 2010

@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.games.skynet.be/spool1/games/wolfenstein/et-linux-2.60.x86.run, ftp://ftp.csie.ncu.edu.tw/FreeBSD/ports/distfiles/et-linux-2.60.x86.run, ftp://ftp.eenet.ee/pub/FreeBSD/distfiles/et-linux-2.60.x86.run, ftp://ftp.tw.freebsd.org/pub/ports/distfiles/et-linux-2.60.x86.run</URL>
+			<URL>ftp://ftp.csie.ncu.edu.tw/FreeBSD/ports/distfiles/et-linux-2.60.x86.run, ftp://ftp.eenet.ee/pub/FreeBSD/distfiles/et-linux-2.60.x86.run, ftp://ftp.tw.freebsd.org/pub/ports/distfiles/et-linux-2.60.x86.run</URL>
 			<MD5>2d2373f29f02e18d365d7f1860eee435</MD5>
 			<FileSize>270965248</FileSize>
 		</Package>

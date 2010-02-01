@@ -6,7 +6,7 @@
 			<FileSize>4734599</FileSize>
 		</Package>
 		<Package>
-			<URL>ftp://ftp1.midnightbsd.org/pub/MidnightBSD/mports/distfiles/php-5.2.9.tar.bz2, http://us.php.net/distributions/php-5.2.9.tar.bz2, http://us2.php.net/distributions/php-5.2.9.tar.bz2, http://au.php.net/distributions/php-5.2.9.tar.bz2, ftp://ftp.scw.net.br/pub/slamd64/slamd64-12.2/patches/source/php/php-5.2.9.tar.bz2</URL>
+			<URL>http://us.php.net/distributions/php-5.2.9.tar.bz2, http://us2.php.net/distributions/php-5.2.9.tar.bz2, http://au.php.net/distributions/php-5.2.9.tar.bz2, ftp://ftp.scw.net.br/pub/slamd64/slamd64-12.2/patches/source/php/php-5.2.9.tar.bz2</URL>
 			<MD5>280d6cda7f72a4fc6de42fda21ac2db7</MD5>
 			<FileName>php-5.2.9.tar.bz2</FileName>
 			<FileSize>10203122</FileSize>
