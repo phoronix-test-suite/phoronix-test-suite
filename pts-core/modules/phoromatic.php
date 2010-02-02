@@ -67,8 +67,7 @@ class phoromatic extends pts_module_interface
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "setup", "h" => pts_hw_string(),  "s" => pts_sw_string(),  "o" => phodevi::read_property("system", "hostname")),
 		$options["remote_host"], $options["remote_account"], $options["remote_verifier"]);
 
-		$xml_parser = new tandem_XmlReader($server_response);
-		$returned_id = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
+		$returned_id = pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE);
 
 		if(!empty($returned_id))
 		{
@@ -329,22 +328,19 @@ class phoromatic extends pts_module_interface
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => pts_hw_string(), "s" => pts_sw_string(), "gsid" => PTS_GSID));
 
-		$xml_parser = new tandem_XmlReader($server_response);
-		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function update_system_status($current_task)
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task));
 
-		$xml_parser = new tandem_XmlReader($server_response);
-		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function report_warning_to_phoromatic($warning)
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "report_pts_warning", "a" => $warning));
 
-		$xml_parser = new tandem_XmlReader($server_response);
-		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function upload_test_results($save_identifier)
 	{
@@ -356,8 +352,7 @@ class phoromatic extends pts_module_interface
 			"ti" => pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")
 			));
 
-		$xml_parser = new tandem_XmlReader($server_response);
-		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function upload_unscheduled_test_results($save_identifier)
 	{

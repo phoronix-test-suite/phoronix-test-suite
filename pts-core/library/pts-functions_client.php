@@ -161,6 +161,11 @@ function pts_release_lock(&$file_pointer, $lock_file)
 
 	pts_unlink($lock_file);
 }
+function pts_xml_read_single_value($file, $xml_option)
+{
+ 	$xml_parser = new tandem_XmlReader($file);
+	return $xml_parser->getXMLValue($xml_option);
+}
 function pts_shutdown()
 {
 	// Shutdown process for PTS
