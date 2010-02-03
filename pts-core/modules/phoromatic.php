@@ -95,7 +95,8 @@ class phoromatic extends pts_module_interface
 			"upload_results" => "upload_unscheduled_results",
 			"clone_results" => "clone_results",
 			"system_schedule" => "system_schedule",
-			"system_schedule_today" => "system_schedule_today"
+			"system_schedule_today" => "system_schedule_today",
+			"send_message" => "report_message_to_server"
 			);
 	}
 
@@ -234,6 +235,28 @@ class phoromatic extends pts_module_interface
 		}
 
 		echo "\n";
+	}
+	public static function send_message_to_server($msg)
+	{
+		if(!phoromatic::phoromatic_setup_module())
+		{
+			return false;
+		}
+
+		if(empty($msg))
+		{
+			echo "\nPass the message as the first argument.\n";
+			return false;
+		}
+
+		if(self::report_warning_to_phoromatic("MESSAGE: " . implode(' ', $msg)))
+		{
+			echo "\nMessage Sent To Phoromatic Server.\n";
+		}
+		else
+		{
+			echo "\nMessage Failed To Send.\n";
+		}
 	}
 
 	//
