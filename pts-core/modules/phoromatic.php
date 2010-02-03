@@ -27,6 +27,11 @@ define("M_PHOROMATIC_UPLOAD_TO_GLOBAL", "PhoronixTestSuite/Phoromatic/General/Up
 define("M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY", "PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally");
 define("M_PHOROMATIC_RUN_INSTALL_COMMAND", "PhoronixTestSuite/Phoromatic/General/RunInstallCommand");
 
+define("M_PHOROMATIC_SCHEDULE_TEST_TITLE", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Title");
+define("M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Description");
+define("M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/ActiveOn");
+define("M_PHOROMATIC_SCHEDULE_TEST_START", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/RunAt");
+
 define("M_PHOROMATIC_RESPONSE_IDLE", "idle");
 define("M_PHOROMATIC_RESPONSE_EXIT", "exit");
 define("M_PHOROMATIC_RESPONSE_RUN_TEST", "benchmark");
@@ -38,7 +43,7 @@ define("M_PHOROMATIC_RESPONSE_SETTING_DISABLED", "SETTING_DISABLED");
 class phoromatic extends pts_module_interface
 {
 	const module_name = "Phoromatic Client";
-	const module_version = "0.2.0";
+	const module_version = "0.3.0";
 	const module_description = "The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/";
 	const module_author = "Phoronix Media";
 
@@ -88,7 +93,8 @@ class phoromatic extends pts_module_interface
 			"start" => "user_start",
 			"user_system_return" => "user_system_return",
 			"upload_results" => "upload_unscheduled_results",
-			"clone_results" => "clone_results"
+			"clone_results" => "clone_results",
+			"system_schedule" => "system_schedule"
 			);
 	}
 
@@ -160,6 +166,39 @@ class phoromatic extends pts_module_interface
 				echo "\nAn Error Occurred.\n";
 				break;
 		}
+	}
+	public static function system_schedule()
+	{
+		if(!phoromatic::phoromatic_setup_module())
+		{
+			return false;
+		}
+
+		$server_response = phoromatic::upload_to_remote_server(array(
+			"r" => "system_schedule"
+			));
+
+		$schedule_xml = new tandem_XmlReader($server_response);
+		$schedule_titles = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_TITLE);
+		$schedule_description = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION);
+		$schedule_active_on = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON);
+		$schedule_start_time = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_START);
+
+		if(count($schedule_titles) == 0)
+		{
+			echo "\nNo test schedules for this system were found on Phoromatic.\n";
+		}
+		else
+		{
+			for($i = 0; $i < count($schedule_titles); $i++)
+			{
+				echo "\n" . $schedule_titles[$i] . ":\n";
+				echo "\t" . $schedule_description[$i] . "\n";
+				echo "\tRuns at " . $schedule_start_time[$i] . " on " . pts_parse_week_string($schedule_active_on[$i]) . ".\n";
+			}
+		}
+
+		echo "\n";
 	}
 
 	//

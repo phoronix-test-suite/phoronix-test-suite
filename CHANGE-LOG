@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phoromatic: Add phoromatic.clone-results option for cloning test results from a Phoromatic repository, when the clone option is enabled from the server side
+- phoromatic: Add phoromatic.system-schedule option for seeing the system's test schedule from the Phoromatic server
 - pts: Drop MD5 hashes in the wine-* humus tests
 
 Phoronix Test Suite 2.4.0

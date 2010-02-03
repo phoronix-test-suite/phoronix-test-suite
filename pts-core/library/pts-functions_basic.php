@@ -144,6 +144,27 @@ function pts_trim_spaces($string)
 
 	return trim($string);
 }
+function pts_parse_week_string($week_string, $delimiter = ' ')
+{
+	$return_array = array();
+
+	if($week_string[0] == 1)
+		array_push($return_array, 'S');
+	if($week_string[1] == 1)
+		array_push($return_array, 'M');
+	if($week_string[2] == 1)
+		array_push($return_array, 'T');
+	if($week_string[3] == 1)
+		array_push($return_array, 'W');
+	if($week_string[4] == 1)
+		array_push($return_array, 'TH');
+	if($week_string[5] == 1)
+		array_push($return_array, 'F');
+	if($week_string[6] == 1)
+		array_push($return_array, 'S');
+
+	return implode($delimiter, $return_array);
+}
 function pts_version_comparable($old, $new)
 {
 	// Checks if there's a major version difference between two strings, if so returns false.
