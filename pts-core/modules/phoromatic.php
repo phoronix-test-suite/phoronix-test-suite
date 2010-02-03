@@ -87,7 +87,8 @@ class phoromatic extends pts_module_interface
 		return array(
 			"start" => "user_start",
 			"user_system_return" => "user_system_return",
-			"upload_results" => "upload_unscheduled_results"
+			"upload_results" => "upload_unscheduled_results",
+			"clone_results" => "clone_results"
 			);
 	}
 
@@ -109,7 +110,6 @@ class phoromatic extends pts_module_interface
 
 		phoromatic::user_system_process();
 	}
-
 	public static function upload_unscheduled_results($to_upload)
 	{
 		if(!phoromatic::phoromatic_setup_module())
@@ -124,6 +124,42 @@ class phoromatic extends pts_module_interface
 		}
 
 		phoromatic::upload_unscheduled_test_results($to_upload[0]);
+	}
+	public static function clone_results($to_clone)
+	{
+		if(!phoromatic::phoromatic_setup_module())
+		{
+			return false;
+		}
+
+		if(!isset($to_clone[0]) || empty($to_clone[0]))
+		{
+			echo "\nNo clone string was provided.\n";
+			return false;
+		}
+
+		$server_response = phoromatic::upload_to_remote_server(array(
+			"r" => "clone_test_results",
+			"i" => $to_clone[0]
+			));
+
+		switch(pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE))
+		{
+			case M_PHOROMATIC_RESPONSE_TRUE:
+				$identifier = "phoromatic-clone-" . str_replace(array('_', ':'), null, $to_clone[0]);
+				pts_save_result($identifier . "/composite.xml", $server_response);
+				echo "\nResult Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
+				pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
+				pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
+				break;
+			case M_PHOROMATIC_RESPONSE_SETTING_DISABLED:
+				echo "\nYou need to enable this support from your Phoromatic account web interface.\n";
+				break;
+			default:
+			case M_PHOROMATIC_RESPONSE_ERROR:
+				echo "\nAn Error Occurred.\n";
+				break;
+		}
 	}
 
 	//

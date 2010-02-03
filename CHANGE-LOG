@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: Add phoromatic.clone-results option for cloning test results from a Phoromatic repository, when the clone option is enabled from the server side
+
 Phoronix Test Suite 2.4.0
 February 2, 2010
 
