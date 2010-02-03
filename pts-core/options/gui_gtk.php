@@ -76,7 +76,7 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function startup_tasks()
 	{
-		if(!define("GUI_GTK_STARTUP_TASKS", true))
+		if(defined("GUI_GTK_STARTUP_TASKS") || !define("GUI_GTK_STARTUP_TASKS", true))
 		{
 			return;
 		}

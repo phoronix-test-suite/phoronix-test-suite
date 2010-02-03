@@ -32,10 +32,16 @@ function pts_merge_test_results()
 		$files_to_combine = $files_to_combine[0];
 	}
 
-	$results = new tandem_XmlWriter();
+	$results_xml = new tandem_XmlWriter();
+	pts_merge_test_results_process($results_xml, $files_to_combine);
+
+	return $results_xml->getXML();
+}
+function pts_merge_test_results_process(&$results_xml, &$files_to_combine)
+{
 	$test_result_manager = new pts_result_file_merge_manager();
 
-	$results->setXslBinding("pts-results-viewer.xsl");
+	$results_xml->setXslBinding("pts-results-viewer.xsl");
 	$has_written_suite_info = false;
 	$added_systems_hash = array();
 
@@ -72,20 +78,18 @@ function pts_merge_test_results()
 		{
 			if($has_written_suite_info == false)
 			{
-				pts_result_file_suite_info_to_xml($this_result_file, $results);
+				pts_result_file_suite_info_to_xml($this_result_file, $results_xml);
 				$has_written_suite_info = true;
 			}
 
-			pts_result_file_system_info_to_xml($this_result_file, $results, $added_systems_hash, $result_merge_select);
+			pts_result_file_system_info_to_xml($this_result_file, $results_xml, $added_systems_hash, $result_merge_select);
 		}
 
 		$test_result_manager->add_test_result_set($this_result_file->get_result_objects(), $result_merge_select);
 	}
 
 	// Write the actual test results
-	pts_result_file_results_to_xml($test_result_manager, $results);
-
-	return $results->getXML();
+	pts_result_file_results_to_xml($test_result_manager, $results_xml);
 }
 function pts_generate_analytical_batch_xml($analyze_file)
 {
