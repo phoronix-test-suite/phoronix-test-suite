@@ -94,7 +94,8 @@ class phoromatic extends pts_module_interface
 			"user_system_return" => "user_system_return",
 			"upload_results" => "upload_unscheduled_results",
 			"clone_results" => "clone_results",
-			"system_schedule" => "system_schedule"
+			"system_schedule" => "system_schedule",
+			"system_schedule_today" => "system_schedule_today"
 			);
 	}
 
@@ -192,9 +193,43 @@ class phoromatic extends pts_module_interface
 		{
 			for($i = 0; $i < count($schedule_titles); $i++)
 			{
-				echo "\n" . $schedule_titles[$i] . ":\n";
-				echo "\t" . $schedule_description[$i] . "\n";
-				echo "\tRuns at " . $schedule_start_time[$i] . " on " . pts_parse_week_string($schedule_active_on[$i]) . ".\n";
+				echo self::phoromatic_schedule_entry_string($schedule_titles[$i], $schedule_description[$i], $schedule_start_time[$i], $schedule_active_on[$i]);
+			}
+		}
+
+		echo "\n";
+	}
+	public static function system_schedule_today()
+	{
+		if(!phoromatic::phoromatic_setup_module())
+		{
+			return false;
+		}
+
+		$server_response = phoromatic::upload_to_remote_server(array(
+			"r" => "system_schedule"
+			));
+
+		$schedule_xml = new tandem_XmlReader($server_response);
+		$schedule_titles = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_TITLE);
+		$schedule_description = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION);
+		$schedule_active_on = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON);
+		$schedule_start_time = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_START);
+
+		if(count($schedule_titles) == 0)
+		{
+			echo "\nNo test schedules for this system were found on Phoromatic.\n";
+		}
+		else
+		{
+			for($i = 0; $i < count($schedule_titles); $i++)
+			{
+				if($schedule_active_on[$i][(date('w'))] != 1)
+				{
+					continue;
+				}
+
+				echo self::phoromatic_schedule_entry_string($schedule_titles[$i], $schedule_description[$i], $schedule_start_time[$i], $schedule_active_on[$i]);
 			}
 		}
 
@@ -472,6 +507,12 @@ class phoromatic extends pts_module_interface
 
 		pts_attach_module($phoromatic);
 		return true;
+	}
+	protected static function phoromatic_schedule_entry_string($title, $description, $start_time, $active_on)
+	{
+		echo "\n" . $title . ":\n";
+		echo "\t" . $description . "\n";
+		echo "\tRuns at " . $start_time . " on " . pts_parse_week_string($active_on) . ".\n";
 	}
 
 
