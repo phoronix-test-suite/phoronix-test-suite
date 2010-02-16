@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts_CustomGraph.php: A pass-through extension extending pts_Graph that over-rides attributes with the PTS user configuration options.
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,11 +23,10 @@
 
 class pts_CustomGraph extends pts_Graph
 {
-	function __construct($Title, $SubTitle, $YTitle)
+	function __construct(&$result_object)
 	{
 		$this->setup_custom_values();
-
-		parent::__construct($Title, $SubTitle, $YTitle);
+		parent::__construct($result_object);
 	}
 	private function setup_custom_values()
 	{

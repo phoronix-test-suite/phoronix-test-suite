@@ -23,8 +23,6 @@
 
 function pts_render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_version = PTS_VERSION)
 {
-	$version = $r_o->get_version();
-	$name = $r_o->get_name() . (isset($version[2]) ? " v" . $version : null);
 	$result_format = $r_o->get_format();
 
 	switch($result_format)
@@ -77,7 +75,7 @@ function pts_render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_vers
 	}
 
 	// creation code
-	eval("\$graph = new " . $graph_type . "(\$name, \$r_o->get_attributes(), \$r_o->get_scale_formatted());");
+	eval("\$graph = new " . $graph_type . "(\$r_o);");
 
 	switch($result_format)
 	{

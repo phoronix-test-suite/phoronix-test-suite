@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts_ImageComparisonGraph.php: A graph object for image comparisons
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,10 +23,9 @@
 
 class pts_ImageComparisonGraph extends pts_CustomGraph
 {
-	public function __construct($title, $sub_title, $y_axis_title)
+	public function __construct(&$result_object)
 	{
-		// $y_axis_title is not used with this graph type
-		parent::__construct($title, $sub_title, null);
+		parent::__construct($result_object);
 		$this->graph_type = "IMAGE_COMPARISON";
 		$this->graph_value_type = "ABSTRACT";
 		$this->graph_hide_identifiers = true;

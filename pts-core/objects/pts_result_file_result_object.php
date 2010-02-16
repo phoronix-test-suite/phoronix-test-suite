@@ -62,6 +62,11 @@ class pts_result_file_result_object
 	{
 		return $this->test_result->get_test_profile()->get_test_title();
 	}
+	public function get_name_formatted()
+	{
+		$version = $this->get_version();
+		return $this->get_name() . (isset($version[2]) ? " v" . $version : null);
+	}
 	public function get_version()
 	{
 		return $this->test_result->get_test_profile()->get_version();

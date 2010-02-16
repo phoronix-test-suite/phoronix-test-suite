@@ -26,9 +26,9 @@ class pts_BarGraph extends pts_CustomGraph
 	protected $identifier_width = -1;
 	protected $minimum_identifier_font = 6;
 
-	public function __construct($title, $sub_title, $y_axis_title)
+	public function __construct(&$result_object)
 	{
-		parent::__construct($title, $sub_title, $y_axis_title);
+		parent::__construct($result_object);
 		$this->graph_type = "BAR_GRAPH";
 	}
 	protected function render_graph_pre_init()

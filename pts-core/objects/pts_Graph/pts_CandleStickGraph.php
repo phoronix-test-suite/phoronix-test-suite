@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts_CandleStickGraph.php: Models a Japanese Candlestick chart
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,9 @@
 
 class pts_CandleStickGraph extends pts_BarGraph
 {
-	public function __construct($title, $sub_title, $y_axis_title)
+	public function __construct(&$result_object)
 	{
-		parent::__construct($title, $sub_title, $y_axis_title);
+		parent::__construct($result_object);
 		$this->graph_type = "CANDLE_STICK_GRAPH";
 	}
 	protected function render_graph_candle_sticks()

@@ -28,9 +28,9 @@ class pts_LineGraph extends pts_CustomGraph
 	protected $show_select_identifiers = null;
 	protected $show_select_identifiers_smart_on_change = false; // toggle this manually for now
 
-	public function __construct($title, $sub_title, $y_axis_title)
+	public function __construct(&$result_object)
 	{
-		parent::__construct($title, $sub_title, $y_axis_title);
+		parent::__construct($result_object);
 		$this->graph_type = "LINE_GRAPH";
 		$this->graph_show_key = true;
 		$this->graph_background_lines = true;

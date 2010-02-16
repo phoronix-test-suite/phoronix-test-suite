@@ -89,15 +89,11 @@ abstract class pts_Graph
 
 	// Internal Switches
 
-	public function __construct($title, $sub_title, $y_axis_title)
+	public function __construct(&$result_object)
 	{
-		$this->graph_title = $title;
-		$this->graph_y_title = $y_axis_title;
-
-		if(!empty($sub_title))
-		{
-			$this->addSubTitle($sub_title);
-		}
+		$this->graph_title = $result_object->get_name_formatted();
+		$this->graph_y_title = $result_object->get_scale_formatted();
+		$this->addSubTitle($result_object->get_attributes());
 
 		$this->update_graph_dimensions(-1, -1, true);
 
@@ -191,7 +187,10 @@ abstract class pts_Graph
 
 		foreach($sub_titles as $sub_title)
 		{
-			array_push($this->graph_sub_titles, $sub_title);
+			if(!empty($sub_title))
+			{
+				array_push($this->graph_sub_titles, $sub_title);
+			}
 		}
 	}
 	public function addInternalIdentifier($identifier, $value)

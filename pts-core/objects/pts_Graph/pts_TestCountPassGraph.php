@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts_PassFailGraph.php: An abstract graph object extending pts_Graph for showing results in a pass/fail scenario.
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,10 +23,10 @@
 
 class pts_TestCountPassGraph extends pts_CustomGraph
 {
-	public function __construct($title, $sub_title, $y_axis_title)
+	public function __construct(&$result_object)
 	{
 		$this->graph_y_title_hide = true;
-		parent::__construct($title, $sub_title, $y_axis_title);
+		parent::__construct($result_object);
 		$this->graph_type = "TEST_COUNT_PASS";
 		$this->graph_value_type = "ABSTRACT";
 		$this->graph_hide_identifiers = true;
