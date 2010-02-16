@@ -174,8 +174,13 @@ class bilde_swf_renderer extends bilde_renderer
 
 		$this->image->add($poly);
 	}
-	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0)
+	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0, $default_hide = false)
 	{
+		if($default_hide == true)
+		{
+			return false;
+		}
+
 		if($width > $height)
 		{
 			$base_size = $width;

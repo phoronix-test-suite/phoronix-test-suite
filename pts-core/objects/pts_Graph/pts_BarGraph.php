@@ -102,7 +102,15 @@ class pts_BarGraph extends pts_CustomGraph
 					$value_plot_top = 1;
 				}
 
-				$this->graph_image->draw_rectangle_with_border($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end, $paint_color, $this->graph_color_body_light);
+				$title_tooltip = $this->graph_identifiers[$i_o] . ": " . $this->graph_data[$i_o][$i];
+				$run_std_deviation = pts_standard_deviation(explode(':', $this->graph_data_raw[$i_o][$i]));
+
+				if($run_std_deviation > 0)
+				{
+					$title_tooltip .= " || " . $this->trim_double($run_std_deviation, 1) . " STD.";
+				}
+
+				$this->graph_image->draw_rectangle_with_border($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end, $paint_color, $this->graph_color_body_light, $title_tooltip);
 
 				if(($px_bound_right - $px_bound_left) < 15)
 				{

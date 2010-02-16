@@ -193,7 +193,7 @@ class pts_LineGraph extends pts_CustomGraph
 			{
 				$value = $this->graph_data[$i_o][$i];
 				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start)));
-				$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
+				$px_from_left = round($this->graph_left_start + ($this->identifier_width * ($i + 1)));
 
 				if(($i == ($point_counter - 1)) && $value == 0)
 				{
@@ -242,6 +242,7 @@ class pts_LineGraph extends pts_CustomGraph
 					array_push($poly_points, array($px_from_left, $value_plot_top));
 				}
 
+				//array_push($poly_tips, array($value, $this->graph_identifiers[$i]));
 				array_push($calculations_r[$paint_color], $value);
 			}
 
@@ -249,9 +250,9 @@ class pts_LineGraph extends pts_CustomGraph
 
 			foreach($poly_points as $i => $x_y_pair)
 			{
-				if(!$identifiers_empty && ($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)))
+				if(true || !$identifiers_empty) // TODO: determine whether to kill this check
 				{
-					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $this->graph_color_notches, $paint_color, 1);
+					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $this->graph_color_notches, $paint_color, 1, !($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)));
 				}
 			}
 		}

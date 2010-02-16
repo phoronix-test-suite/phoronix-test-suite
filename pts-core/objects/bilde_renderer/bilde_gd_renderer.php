@@ -165,8 +165,13 @@ abstract class bilde_gd_renderer extends bilde_renderer
 			imagepolygon($this->image, $points, $num_points, $border_color);
 		}
 	}
-	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0)
+	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0, $default_hide = false)
 	{
+		if($default_hide == true)
+		{
+			return false;
+		}
+
 		imagefilledellipse($this->image, $center_x, $center_y, $width, $height, $body_color);
 
 		if($border_width > 0 && !empty($border_color))

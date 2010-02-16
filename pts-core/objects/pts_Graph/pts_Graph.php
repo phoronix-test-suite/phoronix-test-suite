@@ -87,12 +87,15 @@ abstract class pts_Graph
 
 	protected $graph_internal_identifiers = array();
 
-	// Internal Switches
+	// Internal Switches, Etc
+
+	private $test_identifier = null;
 
 	public function __construct(&$result_object)
 	{
 		$this->graph_title = $result_object->get_name_formatted();
 		$this->graph_y_title = $result_object->get_scale_formatted();
+		$this->test_identifier = $result_object->get_test_name();
 		$this->addSubTitle($result_object->get_attributes());
 
 		$this->update_graph_dimensions(-1, -1, true);
@@ -422,7 +425,7 @@ abstract class pts_Graph
 	protected function render_graph_heading($with_version = true)
 	{
 		// Default to NORMAL
-		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3);
+		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3, false, "http://global.phoronix-test-suite.com/?k=category&u=" . $this->test_identifier);
 
 		foreach($this->graph_sub_titles as $i => $sub_title)
 		{
@@ -562,7 +565,7 @@ abstract class pts_Graph
 	{
 		if(!empty($this->graph_watermark_text))
 		{
-			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $this->graph_left_end - 2, $this->graph_top_start + 8, $this->graph_left_end - 2, $this->graph_top_start + 8, false, "http://www.phoronix-test-suite.com/");
+			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $this->graph_left_end - 2, $this->graph_top_start + 8, $this->graph_left_end - 2, $this->graph_top_start + 8, false, "http://www.phoronix-test-suite.com/"); // TODO: add graph-config.xml option for changing URL
 		}
 	}
 	protected function return_graph_image($quality = 85)

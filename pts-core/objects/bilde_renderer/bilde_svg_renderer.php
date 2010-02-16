@@ -25,6 +25,7 @@ class bilde_svg_renderer extends bilde_renderer
 {
 	var $renderer = "SVG";
 	var $svg_style_definitions = "";
+	var $javascript_functions = null;
 
 	public function __construct($width, $height, $embed_identifiers = null)
 	{
@@ -87,6 +88,12 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n";
 		$svg_image .= $this->get_svg_formatted_definitions();
+
+		if($this->javascript_functions != null)
+		{
+			$svg_image .= "<script type=\"text/javascript\">\n<![CDATA[\n" . $this->javascript_functions . "\n// ]]>\n</script>";
+		}
+
 		$svg_image .= $this->image . "</svg>";
 
 		return $output_file != null ? @file_put_contents($output_file, $svg_image) : $svg_image;
@@ -173,7 +180,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "CENTER", $onclick);
 	}
-	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color)
+	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color, $title = null)
 	{
 		$width = $width - $x1;
 		$height = $height - $y1;
@@ -181,7 +188,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$y1 += $height < 0 ? $height : 0;
 
 		$class = $this->add_svg_style_definition("stroke: " . $border_color . "; " . "stroke-width: 1px;");
-		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" class=\"" . $class . "\" width=\"" . abs(round($width)) . "\" height=\"" . abs(round($height)) . "\" fill=\"" . $background_color . "\" />\n";
+		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" class=\"" . $class . "\" width=\"" . abs(round($width)) . "\" height=\"" . abs(round($height)) . "\" fill=\"" . $background_color . "\"" . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . " />\n";
 	}
 	public function draw_rectangle($x1, $y1, $width, $height, $background_color)
 	{
@@ -218,9 +225,21 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$this->image .= "<polygon fill=\"" . $body_color . "\"" . ($border_color != null ? " stroke=\"" . $border_color . "\"" : null) . " stroke-width=\"" . $border_width . "\" points=\"" . implode(" ", $point_pairs) . "\" />\n";
 	}
-	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0)
+	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0, $default_hide = false)
 	{
-		$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" />\n";
+		if($default_hide == true)
+		{
+			return;
+			// TODO: this code is not yet working
+			$uid = $this->request_uid();
+			$this->image .= "<g id=\"" . $uid . "\">";
+			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" visibility=\"hidden\"><set attributeName=\"visibility\" from=\"hidden\" to=\"visible\" begin=\"" . $uid . ".mouseover\" end=\"" . $uid . ".mouseout\" /></ellipse>";
+			$this->image .= "</g>\n";
+		}
+		else
+		{
+			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" />\n";
+		}
 	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
 	{
@@ -236,7 +255,10 @@ class bilde_svg_renderer extends bilde_renderer
 	{
 		foreach($x_y_pair_array as &$x_y)
 		{
-			$x_y = round($x_y[0]) . ',' . round($x_y[1]);
+			$x = round($x_y[0]);
+			$y = round($x_y[1]);
+
+			$x_y = $x . ',' . $y;
 		}
 		$poly_points = implode(' ', $x_y_pair_array);
 
@@ -291,16 +313,18 @@ class bilde_svg_renderer extends bilde_renderer
 
 		if($onclick != null && substr($onclick, 0, 7) == "http://")
 		{
-			$this->image .= "<a xlink:href=\"" . $onclick . "\" target=\"new\">\n";
+			$this->image .= "<a xlink:href=\"" . str_replace("&", "&amp;", $onclick) . "\" target=\"new\">";
 		}
 
 		// Implement $font_type through font-family if desired
-		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\" font-size=\"" . $font_size . "\" class=\"" . $class . "\"" . ($onclick != null && substr($onclick, 0, 7) != "http://" ? " onclick=\"" . $onclick . "\"" : null) . ">" . $string . "</text>\n";
+		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\" font-size=\"" . $font_size . "\" class=\"" . $class . "\"" . ($onclick != null && substr($onclick, 0, 7) != "http://" ? " onclick=\"" . $onclick . "\"" : null) . ">" . $string . "</text>";
 
 		if($onclick != null && substr($onclick, 0, 7) == "http://")
 		{
-			$this->image .= "</a>\n";
+			$this->image .= "</a>";
 		}
+
+		$this->image .= "\n";
 	}
 	private function add_svg_style_definition($attributes)
 	{

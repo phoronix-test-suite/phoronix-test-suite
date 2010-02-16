@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add phoromatic.send-message option to send any bits of information to the Phoromatic Server to list in the system warning area for that system
 - bilde_renderer: Add initial interactivity support for on-click events with some drawing elements
 - toggle_screensaver: Properly stop and start the screensaver using qdbus on KDE4
+- pts_BarGraph: Report standard deviation on test results when hovering over a bar with a supported renderer
 - pts_LineGraph: Add switch with new path for handling many identifiers in different way
 - pts_LineGraph: Add last values to line graph display
 - pts: Drop MD5 hashes in the wine-* humus tests

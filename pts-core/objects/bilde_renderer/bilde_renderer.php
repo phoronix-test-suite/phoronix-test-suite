@@ -23,11 +23,13 @@
 
 abstract class bilde_renderer
 {
+	// TODO: rework the entire bilde_renderer drawing API by PTS3, see michaellarabel for details. Right now it's getting a messy with the additions
 	var $renderer = "bilde_renderer";
 	protected $image;
 	protected $image_width = -1;
 	protected $image_height = -1;
 	protected $embed_identifiers = null;
+	protected $uid_count = 1;
 
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
 
@@ -43,7 +45,7 @@ abstract class bilde_renderer
 	abstract function draw_rectangle($x1, $y1, $width, $height, $background_color);
 	abstract function draw_rectangle_border($x1, $y1, $width, $height, $border_color);
 	abstract function draw_polygon($points, $body_color, $border_color = null, $border_width = 0);
-	abstract function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0);
+	abstract function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0, $default_hide = false);
 	abstract function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1);
 
 	abstract function png_image_to_type($file);
@@ -88,7 +90,11 @@ abstract class bilde_renderer
 			$prev_pair = $x_y;
 		}
 	}
-	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color)
+	public function request_uid()
+	{
+		return 'i_' . $this->uid_count++;
+	}
+	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color, $title = null)
 	{
 		$this->draw_rectangle($x1, $y1, $width, $height, $background_color);
 		$this->draw_rectangle_border($x1, $y1, $width, $height, $border_color);
