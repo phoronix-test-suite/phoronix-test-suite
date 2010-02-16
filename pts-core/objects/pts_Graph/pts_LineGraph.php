@@ -26,6 +26,7 @@ class pts_LineGraph extends pts_CustomGraph
 	protected $identifier_width = -1;
 	protected $minimum_identifier_font = 7;
 	protected $show_select_identifiers = null;
+	protected $show_select_identifiers_smart_on_change = false; // toggle this manually for now
 
 	public function __construct($title, $sub_title, $y_axis_title)
 	{
@@ -52,50 +53,60 @@ class pts_LineGraph extends pts_CustomGraph
 			if(($text_height + 4) > $this->identifier_width && $graph_identifiers_count > 3)
 			{
 				// Showing all the identifiers will be cramped
-				$first_identifier = $this->graph_identifiers[0];
-				$predefined_shows = array(0, $graph_identifiers_count - 1, round($graph_identifiers_count / 2));
-				$showed_on_last = false;
-				$show_every_x_steps = 6;
 
-				if(is_numeric($first_identifier))
+				if($this->show_select_identifiers_smart_on_change == true)
 				{
-					// Assume numerical array
-					$diff_1 = $this->graph_identifiers[1] - $this->graph_identifiers[0];
-					$this->show_select_identifiers = array();
+					// This option will only show the identifiers every few steps or when there is a change
+					$first_identifier = $this->graph_identifiers[0];
+					$predefined_shows = array(0, $graph_identifiers_count - 1, round($graph_identifiers_count / 2));
+					$showed_on_last = false;
+					$show_every_x_steps = 6;
 
-					for($i = 0; $i < $graph_identifiers_count; $i++)
+					if(is_numeric($first_identifier))
 					{
-						if(in_array($i, $predefined_shows) || ($this->graph_identifiers[$i] - $this->graph_identifiers[($i - 1)]) != $diff_1 || ($i % $show_every_x_steps == 0 && $showed_on_last == false && !in_array($i + 1, $predefined_shows)))
+						// Assume numerical array
+						$diff_1 = $this->graph_identifiers[1] - $this->graph_identifiers[0];
+						$this->show_select_identifiers = array();
+
+						for($i = 0; $i < $graph_identifiers_count; $i++)
 						{
-							array_push($this->show_select_identifiers, $i);
-							$showed_on_last = true;
-							continue;
+							if(in_array($i, $predefined_shows) || ($this->graph_identifiers[$i] - $this->graph_identifiers[($i - 1)]) != $diff_1 || ($i % $show_every_x_steps == 0 && $showed_on_last == false && !in_array($i + 1, $predefined_shows)))
+							{
+								array_push($this->show_select_identifiers, $i);
+								$showed_on_last = true;
+								continue;
+							}
+							else
+							{
+								$showed_on_last = false;
+							}
 						}
-						else
+					}
+					else if(is_numeric(str_replace('-', null, $first_identifier)))
+					{
+						// Assume its an array of dates, should add more checks
+						$diff_1 = strtotime($this->graph_identifiers[1]) - strtotime($this->graph_identifiers[0]);
+						$this->show_select_identifiers = array();
+
+						for($i = 0; $i < $graph_identifiers_count; $i++)
 						{
-							$showed_on_last = false;
+							if(in_array($i, $predefined_shows) || (strtotime($this->graph_identifiers[$i]) - strtotime($this->graph_identifiers[($i - 1)])) != $diff_1 || ($i % $show_every_x_steps == 0 && $showed_on_last == false && !in_array($i + 1, $predefined_shows)))
+							{
+								array_push($this->show_select_identifiers, $i);
+								$showed_on_last = true;
+								continue;
+							}
+							else
+							{
+								$showed_on_last = false;
+							}
 						}
 					}
 				}
-				else if(is_numeric(str_replace('-', null, $first_identifier)))
+				else
 				{
-					// Assume its an array of dates, should add more checks
-					$diff_1 = strtotime($this->graph_identifiers[1]) - strtotime($this->graph_identifiers[0]);
-					$this->show_select_identifiers = array();
-
-					for($i = 0; $i < $graph_identifiers_count; $i++)
-					{
-						if(in_array($i, $predefined_shows) || (strtotime($this->graph_identifiers[$i]) - strtotime($this->graph_identifiers[($i - 1)])) != $diff_1 || ($i % $show_every_x_steps == 0 && $showed_on_last == false && !in_array($i + 1, $predefined_shows)))
-						{
-							array_push($this->show_select_identifiers, $i);
-							$showed_on_last = true;
-							continue;
-						}
-						else
-						{
-							$showed_on_last = false;
-						}
-					}
+					// Show the identifiers as frequently as they will fit
+					$this->show_select_identifiers = ceil(($text_height + 4) / $this->identifier_width);
 				}
 			}
 		}
@@ -122,9 +133,24 @@ class pts_LineGraph extends pts_CustomGraph
 
 			$this->graph_image->draw_line($px_from_left, $px_from_top_start, $px_from_left, $px_from_top_end, $this->graph_color_notches);
 
-			if($this->show_select_identifiers != null && !in_array($i, $this->show_select_identifiers))
+			if($this->show_select_identifiers != null)
 			{
-				continue;
+				if($this->show_select_identifiers_smart_on_change == true)
+				{
+					// $show_select_identifiers in this case shows an array of the identifiers to display
+					if(!in_array($i, $this->show_select_identifiers))
+					{
+						continue;
+					}
+				}
+				else
+				{
+					// $show_select_identifiers contains the value of how frequently to display identifiers
+					if(($i % $this->show_select_identifiers) != 0)
+					{
+						continue;
+					}
+				}
 			}
 
 			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
