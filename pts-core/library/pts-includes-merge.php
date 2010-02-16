@@ -264,14 +264,20 @@ function pts_result_file_mto_compact(&$mto)
 	{
 		$identifier = pts_trim_explode(": ", $identifier);
 
-		if(count($identifier) != 2)
+		switch(count($identifier))
 		{
-			// won't work
-			return;
+			case 2:
+				$system = $identifier[0];
+				$date = $identifier[1];
+				break;
+			case 1:
+				$system = 0;
+				$date = $identifier[0];
+				break;
+			default:
+				return;
+				break;
 		}
-
-		$system = $identifier[0];
-		$date = $identifier[1];
 
 		if(!isset($systems[$system]))
 		{

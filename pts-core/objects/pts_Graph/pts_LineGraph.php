@@ -312,9 +312,18 @@ class pts_LineGraph extends pts_CustomGraph
 				array_push($to_display[$color], $low);
 			}
 		}
+		if($point_counter > 9)
+		{
+			array_push($to_display[$this->graph_color_text], "Last:");
+
+			foreach($calculations_r as $color => $values)
+			{
+				array_push($to_display[$color], $this->trim_double(array_pop($values), 1));
+			}
+		}
 
 		// Do the actual rendering of avg / low / med high identifiers
-		$from_left = $this->graph_left_start + 2;
+		$from_left = $this->graph_left_start + 6;
 
 		foreach($to_display as $color_key => &$column)
 		{
