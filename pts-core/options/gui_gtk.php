@@ -1800,14 +1800,14 @@ class gui_gtk implements pts_option_interface
 		$rows = array();
 		foreach(pts_available_modules() as $module)
 		{
-			$module_details = new pts_user_module_details($module);
+			pts_load_module($module);
 
 			$enable_module[$module] = new GtkCheckButton();
 			$enable_module[$module]->set_active(true);
 			//$enable_module[$module]->set_sensitive(false); // Enabling / disabling modules from the GUI is currently not supported
 
 			// $enable_module[$module] should be passed for enabling toggling of the module, but not yet implemented
-			array_push($rows, array(null, $module_details->get_module_name()));
+			array_push($rows, array(null, pts_module_call($module, "module_name")));
 		}
 
 		$modules_table = pts_gtk_table(array(null, "Modules"), $rows, null, "No modules available.", false);

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2004-2008, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	graphics_override.php: Graphics AA/AF image quality setting override module
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 class graphics_override extends pts_module_interface
 {
 	const module_name = "Graphics Override";
-	const module_version = "1.0.4";
+	const module_version = "1.0.5";
 	const module_description = "This module allows you to override some graphics rendering settings for the ATI and NVIDIA drivers while running the Phoronix Test Suite.";
 	const module_author = "Michael Larabel";
 
@@ -63,8 +63,8 @@ class graphics_override extends pts_module_interface
 			return PTS_MODULE_UNLOAD; // Not using a supported driver, quit the module
 		}
 
-		$force_aa = trim(getenv("FORCE_AA"));
-		$force_af = trim(getenv("FORCE_AF"));
+		$force_aa = pts_module_variable("FORCE_AA");
+		$force_af = pts_module_variable("FORCE_AF");
 
 		if($force_aa !== FALSE && in_array($force_aa, self::$supported_aa_levels))
 		{

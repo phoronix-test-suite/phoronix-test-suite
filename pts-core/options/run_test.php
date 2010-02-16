@@ -369,7 +369,7 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
-			if(!pts_is_assignment("TEST_RAN"))
+			if(!pts_is_assignment("TEST_RAN") && !pts_read_assignment("FORCE_SAVE_RESULTS"))
 			{
 				pts_remove(SAVE_RESULTS_DIR . $file_name);
 				return false;
@@ -389,7 +389,7 @@ class run_test implements pts_option_interface
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $file_name);
 			pts_display_web_browser(SAVE_RESULTS_DIR . $file_name . "/index.html");
 
-			if(!pts_read_assignment("BLOCK_GLOBAL_UPLOADS"))
+			if(!pts_read_assignment("BLOCK_GLOBAL_UPLOADS") && !defined("NO_NETWORK_COMMUNICATION"))
 			{
 				if(pts_is_assignment("AUTOMATED_MODE"))
 				{

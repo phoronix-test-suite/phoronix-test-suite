@@ -59,7 +59,7 @@ class system_monitor extends pts_module_interface
 	public static function __pre_run_process()
 	{
 		self::$to_monitor = array();
-		$to_show = explode(",", getenv("MONITOR"));
+		$to_show = explode(",", pts_module_variable("MONITOR"));
 		$monitor_all = in_array("all", $to_show);
 
 		foreach(pts_available_sensors() as $pts_sensor)

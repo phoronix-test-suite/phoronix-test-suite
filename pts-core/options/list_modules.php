@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@ class list_modules implements pts_option_interface
 		echo pts_string_header("Phoronix Test Suite - Modules");
 		foreach(pts_available_modules() as $module)
 		{
-			$module_details = new pts_user_module_details($module);
-			echo sprintf("%-22ls - %-32ls [%s]\n", $module, $module_details->get_module_name() . " v" . $module_details->get_module_version(), $module_details->get_module_author());
+			pts_load_module($module);
+			echo sprintf("%-22ls - %-32ls [%s]\n", $module, pts_module_call($module, "module_name") . " v" . pts_module_call($module, "module_version"), pts_module_call($module, "module_author"));
 		}
 		echo "\n";
 	}

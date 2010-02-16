@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_modules.php: Functions related to PTS module loading/management.
 	Modules are optional add-ons that don't fit the requirements for entrance into pts-core but provide added functionality.
 
@@ -55,6 +55,11 @@ function pts_auto_detect_modules()
 		}
 	}
 }
+function pts_module_variable($var)
+{
+	// For now this is just readung from the real env, but see TODO comment in pts_load_modules
+	return trim(getenv($var));
+}
 function pts_load_modules()
 {
 	// Load the modules list
@@ -70,6 +75,7 @@ function pts_load_modules()
 
 			if(count($module_r) == 2)
 			{
+				// TODO: end up hooking this into pts_module_variable() rather than using the real env
 				pts_set_environment_variable($module_r[0], $module_r[1]);
 			}
 			else
@@ -204,6 +210,11 @@ function pts_module_run_user_command($module, $command, $arguments = null)
 }
 function pts_module_call($module, $process, &$object_pass = null)
 {
+	if(!class_exists($module))
+	{
+		return false;
+	}
+
 	if(method_exists($module, $process))
 	{
 		eval("\$module_val = " . $module . "::" . $process . "(\$object_pass);");
