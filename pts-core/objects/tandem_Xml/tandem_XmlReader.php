@@ -30,7 +30,7 @@ class tandem_XmlReader
 
 	function __construct($read_xml)
 	{
-		if(substr(trim($read_xml), 0, 1) != '<' && is_readable($read_xml) || strpos($read_xml, "://") !== false)
+		if(substr(trim($read_xml), 0, 1) != '<' && (is_readable($read_xml) || (strpos($read_xml, "://") !== false && strpos($read_xml, "://") < strpos($read_xml, "\n"))))
 		{
 			$read_xml = file_get_contents($read_xml);
 		}

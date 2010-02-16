@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_config.php: Functions needed to read/write to the PTS user-configuration files.
 
 	This program is free software; you can redistribute it and/or modify
@@ -99,6 +99,7 @@ function pts_graph_config_init($new_config_values = "")
 	$config->addXmlObjectFromReader(P_GRAPH_RENDERER, 1, $read_config, "PNG");
 	$config->addXmlObjectFromReader(P_GRAPH_MARKCOUNT, 1, $read_config, "6");
 	$config->addXmlObjectFromReader(P_GRAPH_WATERMARK, 1, $read_config, "PHORONIX-TEST-SUITE.COM");
+	$config->addXmlObjectFromReader(P_GRAPH_WATERMARK_URL, 1, $read_config, "http://www.phoronix-test-suite.com/");
 	$config->addXmlObjectFromReader(P_GRAPH_BORDER, 1, $read_config, "FALSE");
 
 	$config->addXmlObjectFromReader(P_GRAPH_COLOR_BACKGROUND, 2, $read_config, "#FFFFFF");

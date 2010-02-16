@@ -58,6 +58,7 @@ abstract class pts_Graph
 	protected $graph_font_size_sub_heading = 12; // Font size of headers
 	protected $graph_font_size_axis_heading = 11; // Font size of axis headers
 	protected $graph_watermark_text = "PHORONIX-TEST-SUITE.COM"; // Text for watermark in upper right hand corner. If null, no watermark will display
+	protected $graph_watermark_url = "http://www.phoronix-test-suite.com/";
 	protected $graph_version = "";
 	protected $graph_proportion = "";
 
@@ -565,7 +566,7 @@ abstract class pts_Graph
 	{
 		if(!empty($this->graph_watermark_text))
 		{
-			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $this->graph_left_end - 2, $this->graph_top_start + 8, $this->graph_left_end - 2, $this->graph_top_start + 8, false, "http://www.phoronix-test-suite.com/"); // TODO: add graph-config.xml option for changing URL
+			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $this->graph_left_end - 2, $this->graph_top_start + 8, $this->graph_left_end - 2, $this->graph_top_start + 8, false, $this->graph_watermark_url);
 		}
 	}
 	protected function return_graph_image($quality = 85)

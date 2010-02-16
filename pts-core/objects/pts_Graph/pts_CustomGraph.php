@@ -58,6 +58,7 @@ class pts_CustomGraph extends pts_Graph
 
 		// Text
 		$this->graph_watermark_text = pts_read_graph_config(P_GRAPH_WATERMARK, null, $read_config); // watermark
+		$this->graph_watermark_url = pts_read_graph_config(P_GRAPH_WATERMARK_URL, null, $read_config); // watermark URL
 		$this->graph_font = pts_read_graph_config(P_GRAPH_FONT_TYPE, null, $read_config);  // TTF file name
 		$this->graph_font_size_heading = pts_read_graph_config(P_GRAPH_FONT_SIZE_HEADERS, null, $read_config); // Font size of headings
 		$this->graph_font_size_bars = pts_read_graph_config(P_GRAPH_FONT_SIZE_TEXT, null, $read_config); // Font size for text on the bars/objects

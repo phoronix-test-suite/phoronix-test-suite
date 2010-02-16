@@ -254,6 +254,7 @@ define("P_GRAPH_SIZE_HEIGHT", "PhoronixTestSuite/Graphs/General/GraphHeight"); /
 define("P_GRAPH_RENDERER", "PhoronixTestSuite/Graphs/General/Renderer"); // Graph renderer
 define("P_GRAPH_MARKCOUNT", "PhoronixTestSuite/Graphs/General/NumberOfMarks"); // Graph number of marks
 define("P_GRAPH_WATERMARK", "PhoronixTestSuite/Graphs/General/Watermark"); // Graph watermark
+define("P_GRAPH_WATERMARK_URL", "PhoronixTestSuite/Graphs/General/WatermarkURL"); // Graph watermark URL
 define("P_GRAPH_BORDER", "PhoronixTestSuite/Graphs/General/Border"); // Render border around graph?
 
 define("P_GRAPH_COLOR_BACKGROUND", "PhoronixTestSuite/Graphs/Colors/Background"); // Graph color background
