@@ -72,12 +72,12 @@ class toggle_screensaver extends pts_module_interface
 		else
 		{
 			// KDE Screensaver?
-			$is_kde_screensaver_enabled = trim(shell_exec("dcop kdesktop KScreensaverIface isEnabled 2>&1"));
+			$is_kde_screensaver_enabled = trim(shell_exec("qdbus org.freedesktop.ScreenSaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive 2>&1"));
 
 			if($is_kde_screensaver_enabled == "true")
 			{
 				// Stop the KDE Screensaver
-				shell_exec("dcop kdesktop KScreensaverIface enable false 2>&1");
+				shell_exec("qdbus org.freedesktop.ScreenSaver  /ScreenSaver SimulateUserActivity 2>&1");
 				self::$kde_screensaver_halted = true;
 			}
 		}
@@ -108,7 +108,7 @@ class toggle_screensaver extends pts_module_interface
 		else if(self::$kde_screensaver_halted == true)
 		{
 			// Restore the KDE Screensaver
-			shell_exec("dcop kdesktop KScreensaverIface enable true 2>&1");
+			shell_exec("qdbus org.freedesktop.ScreenSaver /ScreenSaver org.freedesktop.ScreenSaver.SetActive true 2>&1");
 		}
 	}
 	public static function xdg_screensaver_reset()
