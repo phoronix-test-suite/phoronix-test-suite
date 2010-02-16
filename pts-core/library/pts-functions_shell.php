@@ -301,6 +301,47 @@ function pts_zip_archive_extract($zip_file, $extract_to)
 
 	return $success;
 }
+function pts_zip_archive_create($zip_file, $add_files)
+{
+	if(!class_exists("ZipArchive"))
+	{
+		return false;
+	}
+
+	$zip = new ZipArchive();
+
+	if($zip->open($zip_file, ZIPARCHIVE::CREATE) !== true)
+	{
+		$success = false;
+	}
+	else
+	{
+		foreach(pts_to_array($add_files) as $add_file)
+		{
+			pts_zip_archive_add($zip, $add_file, dirname($add_file));
+		}
+
+		$success = true;
+	}
+
+	return $success;
+}
+function pts_zip_archive_add(&$zip, $add_file, $base_dir = null)
+{
+	if(is_dir($add_file))
+	{
+		$zip->addEmptyDir(substr($add_file, strlen(pts_add_trailing_slash($base_dir))));
+
+		foreach(pts_glob(pts_add_trailing_slash($add_file) . '*') as $new_file)
+		{
+			pts_zip_archive_add($zip, $new_file, $base_dir);
+		}
+	}
+	else if(is_file($add_file))
+	{
+		$zip->addFile($add_file, substr($add_file, strlen(pts_add_trailing_slash($base_dir))));
+	}
+}
 function pts_run_shell_script($file, $arguments = "")
 {
 	if(is_array($arguments))

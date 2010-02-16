@@ -212,6 +212,10 @@ function pts_evaluate_math_expression($expr)
 
 	return $result;
 }
+function pts_new_temporary_file()
+{
+	return tempnam(sys_get_temp_dir(), 'PTS');
+}
 function pts_proximity_match($search, $match_to)
 {
 	// Proximity search in $search string for * against $match_to

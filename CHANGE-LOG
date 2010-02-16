@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add phoromatic.system-schedule option for seeing the system's test schedule from the Phoromatic server
 - phoromatic: Add phoromatic.system-schedule-today option for seeing the system's test schedule for today from the Phoromatic server
 - phoromatic: Add phoromatic.send-message option to send any bits of information to the Phoromatic Server to list in the system warning area for that system
+- phoromatic: Support for uploading test and system logs to Phoromatic server
 - bilde_renderer: Add initial interactivity support for on-click events with some drawing elements
 - toggle_screensaver: Properly stop and start the screensaver using qdbus on KDE4
 - pts_BarGraph: Report standard deviation on test results when hovering over a bar with a supported renderer
