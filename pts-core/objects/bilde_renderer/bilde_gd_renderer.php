@@ -83,7 +83,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 		imagedestroy($this->image);
 	}
 
-	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
+	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
 	{
 		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
@@ -103,7 +103,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 		}
 		imagettftext($this->image, $font_size, $rotation, $text_x, $text_y, $font_color, $font_type, $text_string);
 	}
-	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
+	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
 	{
 		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
@@ -114,7 +114,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 
 		imagettftext($this->image, $font_size, $rotation, $text_x, $text_y, $font_color, $font_type, $text_string);
 	}
-	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
+	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
 	{
 		if($bound_x1 != $bound_x2)
 		{

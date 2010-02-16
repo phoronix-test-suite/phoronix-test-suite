@@ -563,7 +563,7 @@ abstract class pts_Graph
 	{
 		if(!empty($this->graph_watermark_text))
 		{
-			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $this->graph_left_end - 2, $this->graph_top_start + 8, $this->graph_left_end - 2, $this->graph_top_start + 8);
+			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $this->graph_left_end - 2, $this->graph_top_start + 8, $this->graph_left_end - 2, $this->graph_top_start + 8, false, "http://www.phoronix-test-suite.com/");
 		}
 	}
 	protected function return_graph_image($quality = 85)

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	bilde_svg_renderer: The SVG rendering implementation for bilde_renderer
 
 	This program is free software; you can redistribute it and/or modify
@@ -96,7 +96,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$this->image = null;
 	}
 
-	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
+	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
 	{
 		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
@@ -115,9 +115,9 @@ class bilde_svg_renderer extends bilde_renderer
 			$rotation = 90;
 		}
 
-		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "LEFT");
+		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "LEFT", $onclick);
 	}
-	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
+	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
 	{
 		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
@@ -130,9 +130,9 @@ class bilde_svg_renderer extends bilde_renderer
 		$text_x = $bound_x2 - $text_width;
 		$text_y = $bound_y1 + round($text_height / 2);
 
-		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "RIGHT");
+		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "RIGHT", $onclick);
 	}
-	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
+	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
 	{
 		if($bound_x1 != $bound_x2)
 		{
@@ -171,7 +171,7 @@ class bilde_svg_renderer extends bilde_renderer
 			$text_y = (($bound_y2 - $bound_y1) / 2) + $bound_y1 + round($text_width / 2);
 		}
 
-		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "CENTER");
+		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "CENTER", $onclick);
 	}
 	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color)
 	{
@@ -271,7 +271,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 	// Privates
 
-	private function write_svg_text($string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, $orientation = "LEFT")
+	private function write_svg_text($string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, $orientation = "LEFT", $onclick = null)
 	{
 		$font_size += 1.5;
 
@@ -289,8 +289,18 @@ class bilde_svg_renderer extends bilde_renderer
 				break;
 		}
 
+		if($onclick != null && substr($onclick, 0, 7) == "http://")
+		{
+			$this->image .= "<a xlink:href=\"" . $onclick . "\" target=\"new\">\n";
+		}
+
 		// Implement $font_type through font-family if desired
-		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\" font-size=\"" . $font_size . "\" class=\"" . $class . "\">" . $string . "</text>\n";
+		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\" font-size=\"" . $font_size . "\" class=\"" . $class . "\"" . ($onclick != null && substr($onclick, 0, 7) != "http://" ? " onclick=\"" . $onclick . "\"" : null) . ">" . $string . "</text>\n";
+
+		if($onclick != null && substr($onclick, 0, 7) == "http://")
+		{
+			$this->image .= "</a>\n";
+		}
 	}
 	private function add_svg_style_definition($attributes)
 	{
