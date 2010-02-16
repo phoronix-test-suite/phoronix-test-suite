@@ -361,7 +361,7 @@ class run_test implements pts_option_interface
 				echo "\nNotice: The following tests failed to properly run:\n\n";
 				foreach($failed_runs as &$run_request)
 				{
-					echo "\t-" . $run_request->get_identifier() . ($run_request->get_arguments_description() != null ? ": " . $run_request->get_arguments_description() : null) . "\n";
+					echo "\t- " . $run_request->get_identifier() . ($run_request->get_arguments_description() != null ? ": " . $run_request->get_arguments_description() : null) . "\n";
 				}
 				echo "\n";
 			}

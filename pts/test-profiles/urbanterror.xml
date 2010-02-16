@@ -12,6 +12,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.urbanterror.net/</ProjectURL>
 		<SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+		<ExternalDependencies>sdl-development</ExternalDependencies>
 	</TestProfile>
 	<TestInformation>
 		<Title>Urban Terror</Title>

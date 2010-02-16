@@ -5,7 +5,7 @@ mkdir $HOME/lame_
 tar -zxvf lame-398-2.tar.gz
 cd lame-398-2/
 ./configure --prefix=$HOME/lame_
-make -j $NUM_CPU_JOBS
+make
 echo $? > ~/install-exit-status
 make install
 cd ..

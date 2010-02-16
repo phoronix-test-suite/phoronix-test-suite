@@ -328,7 +328,7 @@ class pts_LineGraph extends pts_CustomGraph
 				array_push($to_display[$color], $low);
 			}
 		}
-		if($point_counter > 9)
+		if($point_counter > 9 && !in_array($this->graph_y_title, array("Percent")))
 		{
 			array_push($to_display[$this->graph_color_text], "Last:");
 

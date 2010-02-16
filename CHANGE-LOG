@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - pts_LineGraph: Add last values to line graph display
 - pts: Drop MD5 hashes in the wine-* humus tests
 - pts: Various small fixes
+- pts: Don't use parallel make jobs with encode-mp3 test profile due to Moblin build problems
 
 Phoronix Test Suite 2.4.0
 February 2, 2010
