@@ -199,7 +199,7 @@ class bilde_swf_renderer extends bilde_renderer
 		$added->moveTo($center_x, $center_y);
 		$added->scaleTo(($width / $base_size), ($height / $base_size));
 	}
-	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
+	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $title = null)
 	{
 		$line = new SWFShape();
 		$line->setLine(1, $color[0], $color[1], $color[2]);

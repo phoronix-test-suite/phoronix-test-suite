@@ -197,7 +197,7 @@ function pts_module_run_user_command($module, $command, $arguments = null)
 
 		foreach($all_options as $option)
 		{
-			echo "- " . $module . "." . $option . "\n";
+			echo "- " . $module . "." . str_replace('_', '-', $option) . "\n";
 		}
 		echo "\n";
 	}

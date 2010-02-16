@@ -113,6 +113,7 @@ function pts_graph_config_init($new_config_values = "")
 	$config->addXmlObjectFromReader(P_GRAPH_COLOR_MAINHEADERS, 2, $read_config, "#2b6b29");
 	$config->addXmlObjectFromReader(P_GRAPH_COLOR_TEXT, 2, $read_config, "#000000");
 	$config->addXmlObjectFromReader(P_GRAPH_COLOR_BODYTEXT, 2, $read_config, "#FFFFFF");
+	$config->addXmlObjectFromReader(P_GRAPH_COLOR_ALERT, 2, $read_config, "#C80000");
 
 	$config->addXmlObjectFromReader(P_GRAPH_FONT_TYPE, 3, $read_config, "");
 	$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_HEADERS, 3, $read_config, "18");

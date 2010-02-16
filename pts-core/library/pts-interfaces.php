@@ -267,6 +267,7 @@ define("P_GRAPH_COLOR_TEXT", "PhoronixTestSuite/Graphs/Colors/Text"); // Graph c
 define("P_GRAPH_COLOR_BODYTEXT", "PhoronixTestSuite/Graphs/Colors/BodyText"); // Graph color body text
 define("P_GRAPH_COLOR_HEADERS", "PhoronixTestSuite/Graphs/Colors/Headers"); // Graph color text headers
 define("P_GRAPH_COLOR_MAINHEADERS", "PhoronixTestSuite/Graphs/Colors/MainHeaders"); // Graph color text main headers
+define("P_GRAPH_COLOR_ALERT", "PhoronixTestSuite/Graphs/Colors/Alert"); // Graph color of alerts
 
 define("P_GRAPH_FONT_TYPE", "PhoronixTestSuite/Graphs/Font/FontType"); // Graph font type
 define("P_GRAPH_FONT_SIZE_HEADERS", "PhoronixTestSuite/Graphs/Font/Headers"); // Graph font size for headers

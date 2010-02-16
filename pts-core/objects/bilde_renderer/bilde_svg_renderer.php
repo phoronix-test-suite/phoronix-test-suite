@@ -241,10 +241,10 @@ class bilde_svg_renderer extends bilde_renderer
 			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" />\n";
 		}
 	}
-	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
+	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $title = null)
 	{
 		$class = $this->add_svg_style_definition("stroke: " . $color . "; " . "stroke-width: " . $line_width . "px;");
-		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" class=\"" . $class . "\" />\n";
+		$this->image .= "<line x1=\"" . round($start_x) . "\" y1=\"" . round($start_y) . "\" x2=\"" . round($end_x) . "\" y2=\"" . round($end_y) . "\" class=\"" . $class . "\"" . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . " />\n";
 	}
 	public function draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length)
 	{

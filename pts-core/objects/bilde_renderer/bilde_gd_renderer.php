@@ -180,7 +180,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 			imageellipse($this->image, $center_x, $center_y, $width, $height, $border_color);
 		}
 	}
-	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1)
+	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $title = null)
 	{
 		for($i = 0; $i < $line_width; $i++)
 		{

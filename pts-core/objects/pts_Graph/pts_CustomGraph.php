@@ -53,6 +53,7 @@ class pts_CustomGraph extends pts_Graph
 		$this->graph_color_body = pts_read_graph_config(P_GRAPH_COLOR_BODY, null, $read_config); // Color of graph body
 		$this->graph_color_body_text = pts_read_graph_config(P_GRAPH_COLOR_BODYTEXT, null, $read_config); // Color of graph body text
 		$this->graph_color_body_light = pts_read_graph_config(P_GRAPH_COLOR_ALTERNATE, null, $read_config); // Color of the border around graph bars (if doing a bar graph)
+		$this->graph_color_alert = pts_read_graph_config(P_GRAPH_COLOR_ALERT, null, $read_config); // Color for alerts
 
 		$this->graph_color_paint = explode(", ", pts_read_graph_config(P_GRAPH_COLOR_PAINT, null, $read_config)); // Colors to use for the bars / lines, one color for each key
 

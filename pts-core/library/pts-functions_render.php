@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_render.php: Functions needed for rendering graphs
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_version = PTS_VERSION)
+function pts_render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_version = PTS_VERSION, $extra_attributes = null)
 {
 	$result_format = $r_o->get_format();
 
@@ -76,6 +76,12 @@ function pts_render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_vers
 
 	// creation code
 	eval("\$graph = new " . $graph_type . "(\$r_o);");
+
+
+	if(isset($extra_attributes["regression_marker_threshold"]))
+	{
+		$graph->markResultRegressions($extra_attributes["regression_marker_threshold"]);
+	}
 
 	switch($result_format)
 	{

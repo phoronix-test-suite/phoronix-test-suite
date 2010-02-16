@@ -42,7 +42,7 @@ class pts_result_file_merge_manager
 		$merged = false;
 		for($i = 0; $i < count($this->test_results) && !$merged; $i++)
 		{
-			if($this->test_results[$i]->get_test_name() == $merge_test_object->get_test_name() && trim($this->test_results[$i]->get_arguments()) == trim($merge_test_object->get_arguments()) && $this->test_results[$i]->get_attributes() == $merge_test_object->get_attributes() && $this->test_results[$i]->get_version() == $merge_test_object->get_version())
+			if($this->test_results[$i]->get_test_name() == $merge_test_object->get_test_name() && trim($this->test_results[$i]->get_arguments()) == trim($merge_test_object->get_arguments()) && $this->test_results[$i]->get_attributes() == $merge_test_object->get_attributes() && $this->test_results[$i]->get_version() == $merge_test_object->get_version() && $this->test_results[$i]->get_scale() == $merge_test_object->get_scale())
 			{
 				foreach($merge_test_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 				{
