@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,30 +40,40 @@ class pts_result_file_merge_manager
 		$select_identifiers = $result_merge_select instanceOf pts_result_merge_select ? $result_merge_select->get_selected_identifiers() : null;
 
 		$merged = false;
-		for($i = 0; $i < count($this->test_results) && !$merged; $i++)
+		$mto_test_name = $merge_test_object->get_test_name();
+
+		if(isset($this->test_results[$mto_test_name]))
 		{
-			if($this->test_results[$i]->get_test_name() == $merge_test_object->get_test_name() && trim($this->test_results[$i]->get_arguments()) == trim($merge_test_object->get_arguments()) && $this->test_results[$i]->get_attributes() == $merge_test_object->get_attributes() && $this->test_results[$i]->get_version() == $merge_test_object->get_version() && $this->test_results[$i]->get_scale() == $merge_test_object->get_scale())
+			foreach($this->test_results[$mto_test_name] as &$mto_compare)
 			{
-				foreach($merge_test_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+				if(trim($mto_compare->get_arguments()) == trim($merge_test_object->get_arguments()) && $mto_compare->get_attributes() == $merge_test_object->get_attributes() && $mto_compare->get_version() == $merge_test_object->get_version() && $mto_compare->get_scale() == $merge_test_object->get_scale())
 				{
-					$this_identifier = $buffer_item->get_result_identifier();
-
-					if($select_identifiers == null || in_array($this_identifier, $select_identifiers))
+					foreach($merge_test_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 					{
-						if($result_merge_select != null && ($renamed = $result_merge_select->get_rename_identifier()) != null)
-						{
-							$this_identifier = $renamed;
-						}
+						$this_identifier = $buffer_item->get_result_identifier();
 
-						if(!$this->result_already_contained($i, $buffer_item))
+						if($select_identifiers == null || in_array($this_identifier, $select_identifiers))
 						{
-							$this->test_results[$i]->add_result_to_buffer($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw());
+							if($result_merge_select != null && ($renamed = $result_merge_select->get_rename_identifier()) != null)
+							{
+								$this_identifier = $renamed;
+							}
+
+							if(!$this->result_already_contained($mto_compare, $buffer_item))
+							{
+								$mto_compare->add_result_to_buffer($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw());
+							}
 						}
 					}
-				}
 
-				$merged = true;
+					$merged = true;
+					break;
+				}
 			}
+		}
+		else
+		{
+			$this->test_results[$mto_test_name] = array();
 		}
 
 		if(!$merged)
@@ -99,15 +109,15 @@ class pts_result_file_merge_manager
 			// Add Result
 			if(!$skip_adding)
 			{
-				array_push($this->test_results, $merge_test_object);
+				array_push($this->test_results[$mto_test_name], $merge_test_object);
 			}
 		}
 	}
-	protected function result_already_contained($i, &$buffer_item)
+	protected function result_already_contained(&$mto_compare, &$buffer_item)
 	{
 		$contained = false;
 
-		foreach($this->test_results[$i] as $check_buffer_item)
+		foreach($mto_compare as $check_buffer_item)
 		{
 			if($buffer_item->get_result_identifier() == $check_buffer_item->get_result_identifier() && $buffer_item->get_result_value() == $check_buffer_item->get_result_value())
 			{
@@ -120,7 +130,17 @@ class pts_result_file_merge_manager
 	}
 	public function get_results()
 	{
-		return $this->test_results;
+		$linear_array = array();
+
+		foreach($this->test_results as &$test_name_object_array)
+		{
+			foreach($test_name_object_array as $merge_object)
+			{
+				array_push($linear_array, $merge_object);
+			}
+		}
+
+		return $linear_array;
 	}
 }
 
