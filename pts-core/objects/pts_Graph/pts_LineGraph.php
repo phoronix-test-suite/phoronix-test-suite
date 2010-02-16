@@ -171,6 +171,7 @@ class pts_LineGraph extends pts_CustomGraph
 		$varying_lengths = false;
 		$min_value = $this->graph_data[0][0];
 		$max_value = $this->graph_data[0][0];
+		$prev_value = $this->graph_data[0][0];
 
 		foreach($this->graph_data as &$graph_r)
 		{
@@ -187,6 +188,7 @@ class pts_LineGraph extends pts_CustomGraph
 			$calculations_r[$paint_color] = array();
 
 			$point_counter = count($this->graph_data[$i_o]);
+			$regression_plots = array();
 			$poly_points = array();
 
 			for($i = 0; $i < $point_counter; $i++)
@@ -242,8 +244,16 @@ class pts_LineGraph extends pts_CustomGraph
 					array_push($poly_points, array($px_from_left, $value_plot_top));
 				}
 
+				if($this->regression_marker_threshold > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
+				{
+					$regression_plots[($i - 1)] = $prev_identifier;
+					$regression_plots[$i] = $this->graph_identifiers[$i];
+				}
+
 				//array_push($poly_tips, array($value, $this->graph_identifiers[$i]));
 				array_push($calculations_r[$paint_color], $value);
+				$prev_identifier = $this->graph_identifiers[$i];
+				$prev_value = $value;
 			}
 
 			$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
@@ -252,6 +262,11 @@ class pts_LineGraph extends pts_CustomGraph
 			{
 				if(true || !$identifiers_empty) // TODO: determine whether to kill this check
 				{
+					if(isset($regression_plots[$i]))
+					{
+						$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, $this->graph_color_alert, 4, $regression_plots[$i]);
+					}
+
 					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $this->graph_color_notches, $paint_color, 1, !($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)));
 				}
 			}

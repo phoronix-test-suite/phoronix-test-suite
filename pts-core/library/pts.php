@@ -23,8 +23,8 @@
 
 //error_reporting(E_ERROR | E_STRICT);
 
-define("PTS_VERSION", "2.4.0");
-define("PTS_CORE_VERSION", 2400);
+define("PTS_VERSION", "2.4.1");
+define("PTS_CORE_VERSION", 2410);
 define("PTS_CODENAME", "LENVIK");
 
 function pts_codename($full_string = false)

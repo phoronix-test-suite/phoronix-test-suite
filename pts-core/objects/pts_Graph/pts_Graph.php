@@ -91,6 +91,7 @@ abstract class pts_Graph
 
 	// Internal Switches, Etc
 
+	protected $regression_marker_threshold = 0;
 	private $test_identifier = null;
 
 	public function __construct(&$result_object)
@@ -225,6 +226,10 @@ abstract class pts_Graph
 	public function graphHeight()
 	{
 		return $this->graph_attr_height;
+	}
+	public function markResultRegressions($threshold)
+	{
+		$this->regression_marker_threshold = $threshold;
 	}
 
 	//
@@ -408,6 +413,7 @@ abstract class pts_Graph
 		$this->graph_color_body = $this->graph_image->convert_hex_to_type($this->graph_color_body);
 		$this->graph_color_body_text = $this->graph_image->convert_hex_to_type($this->graph_color_body_text);
 		$this->graph_color_body_light = $this->graph_image->convert_hex_to_type($this->graph_color_body_light);
+		$this->graph_color_alert = $this->graph_image->convert_hex_to_type($this->graph_color_alert);
 
 		foreach($this->graph_color_paint as &$paint_color)
 		{
