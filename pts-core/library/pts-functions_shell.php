@@ -84,67 +84,26 @@ function pts_exec($exec, $extra_vars = null)
 }
 function pts_download($download, $to, &$display_mode = null)
 {
-	if(getenv("PTS_USE_OLD_DOWNLOAD_CODE") == false)
+	pts_display_mode_holder($display_mode);
+
+	if(function_exists("curl_init"))
 	{
-		pts_display_mode_holder($display_mode);
-
-		if(function_exists("curl_init"))
-		{
-			pts_curl_download($download, $to);
-		}
-		else
-		{
-			pts_stream_download($download, $to);
-		}
-
-		//echo "\nPHP CURL must either be installed or you must adjust your PHP settings file to support opening FTP/HTTP streams.\n";
-		//return false;
-
-		$display_mode = pts_display_mode_holder();
-
-		if($display_mode)
-		{
-			$display_mode->test_install_download_completed();
-		}
-
-		return;
-	}
-
-	// TODO: The below code will be dropped with Phoronix Test Suite 2.6
-	// In Phoronix Test Suite 2.4 if you want to use it set PTS_USE_OLD_DOWNLOAD_CODE=1 as an environmental variable
-
-	$to_file = basename($to);
-	$to_dir = pts_add_trailing_slash(dirname($to));
-	$download_output = null;
-	$user_agent = pts_codename(true);
-	$connection_timeout = NETWORK_TIMEOUT;
-
-	if(strpos($to_file, ".") === false)
-	{
-		$to_file = basename($download);
-	}
-
-	else if(($curl = pts_executable_in_path("curl")) != false)
-	{
-		// curl download
-		$download_output = shell_exec("cd " . $to_dir . " && " . $curl . (defined("NETWORK_PROXY") ? " -x " . NETWORK_PROXY : null) . " -L --fail --connect-timeout " . $connection_timeout . " --user-agent \"" . $user_agent . "\" " . $download . " > " . $to_file);
-	}
-	else if(($wget = pts_executable_in_path("wget")) != false)
-	{
-		// wget download
-		$download_output = shell_exec((defined("NETWORK_PROXY") ? "export http_proxy=\"" . NETWORK_PROXY . "\"; export ftp_proxy=\"" . NETWORK_PROXY . "\"; " : null) . "cd " . $to_dir . " && " . $wget . " --timeout=" . $connection_timeout . " --tries=3 --user-agent=\"" . $user_agent . "\" " . $download . " -O " . $to_file);
-	}
-	else if(IS_BSD && ($ftp = pts_executable_in_path("ftp")) != false)
-	{
-		// NetBSD ftp(1) download; also speaks http, but not https
-		$download_output = shell_exec("cd " . $to_dir . " && " . $ftp . " -V " . $download . " -o " . $to_file);
+		pts_curl_download($download, $to);
 	}
 	else
 	{
-		$download_output = "No download application available.";
+		pts_stream_download($download, $to);
 	}
 
-	return $download_output;
+	//echo "\nPHP CURL must either be installed or you must adjust your PHP settings file to support opening FTP/HTTP streams.\n";
+	//return false;
+
+	$display_mode = pts_display_mode_holder();
+
+	if($display_mode)
+	{
+		$display_mode->test_install_download_completed();
+	}
 }
 function pts_executable_in_path($executable)
 {

@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Pass PTS result objects directly to pts_Graph
 - pts-core: Add WatermarkURL option to graph-config.xml
+- pts-core: Drop support for the PTS_USE_OLD_DOWNLOAD_CODE override for using the old networking code
 - phoromatic: Add phoromatic.clone-results option for cloning test results from a Phoromatic repository, when the clone option is enabled from the server side
 - phoromatic: Add phoromatic.system-schedule option for seeing the system's test schedule from the Phoromatic server
 - phoromatic: Add phoromatic.system-schedule-today option for seeing the system's test schedule for today from the Phoromatic server
