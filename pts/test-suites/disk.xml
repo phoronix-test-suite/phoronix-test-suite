@@ -61,7 +61,7 @@
 	</RunTest>
 	<RunTest>
 		<Test>dbench</Test>
-		<Arguments>48</Arguments>
+		<Arguments>128</Arguments>
 		<Description>128 Clients</Description>
 	</RunTest>
 	<RunTest>

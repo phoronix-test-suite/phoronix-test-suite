@@ -7,7 +7,7 @@
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>
-			<PackageName>gtk-devel</PackageName>
+			<PackageName>gtk2-devel</PackageName>
 			<FileCheck>/usr/include/gtk-1.2</FileCheck>
 		</Package>
 		<Package>

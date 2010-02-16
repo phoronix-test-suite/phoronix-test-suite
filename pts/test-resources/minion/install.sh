@@ -13,6 +13,6 @@ rm -rf minion-0.9/build/CMakeFiles/
 
 echo "#!/bin/sh
 cd minion-0.9/
-./build/minion \$@ > \$LOG_FILE 2>&1
+./build/minion-quick \$@ > \$LOG_FILE 2>&1
 echo \$? > ~/test-exit-status" > minion
 chmod +x minion

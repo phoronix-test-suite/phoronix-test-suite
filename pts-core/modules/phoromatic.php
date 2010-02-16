@@ -69,7 +69,7 @@ class phoromatic extends pts_module_interface
 			$options["remote_host"] = pts_add_trailing_slash($options["remote_host"]) . "phoromatic.php";
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "setup", "h" => pts_hw_string(),  "s" => pts_sw_string(),  "o" => phodevi::read_property("system", "hostname")),
+		$server_response = self::upload_to_remote_server(array("r" => "setup", "h" => pts_hw_string(),  "s" => pts_sw_string(),  "o" => phodevi::read_property("system", "hostname")),
 		$options["remote_host"], $options["remote_account"], $options["remote_verifier"]);
 
 		$returned_id = pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE);
@@ -111,16 +111,16 @@ class phoromatic extends pts_module_interface
 			echo pts_string_header("Phoromatic is already running.");
 			return false;
 		}
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
 
-		phoromatic::user_system_process();
+		self::user_system_process();
 	}
 	public static function upload_unscheduled_results($to_upload)
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
@@ -131,11 +131,11 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		phoromatic::upload_unscheduled_test_results($to_upload[0]);
+		self::upload_unscheduled_test_results($to_upload[0]);
 	}
 	public static function clone_results($to_clone)
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
@@ -146,7 +146,7 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			"r" => "clone_test_results",
 			"i" => $to_clone[0]
 			));
@@ -171,12 +171,12 @@ class phoromatic extends pts_module_interface
 	}
 	public static function system_schedule()
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			"r" => "system_schedule"
 			));
 
@@ -202,12 +202,12 @@ class phoromatic extends pts_module_interface
 	}
 	public static function system_schedule_today()
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			"r" => "system_schedule"
 			));
 
@@ -238,7 +238,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function send_message_to_server($msg)
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
@@ -281,14 +281,14 @@ class phoromatic extends pts_module_interface
 
 			if(is_file(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml"))
 			{
-				phoromatic::update_system_status("Uploading Test Results");
-				$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
+				self::update_system_status("Uploading Test Results");
+				$uploaded_test_results = self::upload_test_results($save_identifier);
 
 				if(!$uploaded_test_results)
 				{
 					"\nFailed to upload test results on first attempt. Trying again in 60 seconds...\n";
 					sleep(60);
-					$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
+					$uploaded_test_results = self::upload_test_results($save_identifier);
 
 					if(!$uploaded_test_results)
 					{
@@ -304,9 +304,9 @@ class phoromatic extends pts_module_interface
 			}
 		}
 
-		phoromatic::user_system_process();
+		self::user_system_process();
 	}
-	public static function user_system_process()
+	protected static function user_system_process()
 	{
 		$last_communication_minute = date("i");
 		$communication_attempts = 0;
@@ -316,14 +316,14 @@ class phoromatic extends pts_module_interface
 		if(define("PHOROMATIC_START", true))
 		{
 			echo "\nRegistering Status With Phoromatic Server\n";
-			$update_sd = phoromatic::update_system_details();
+			$update_sd = self::update_system_details();
 
 			if(!$update_sd)
 			{
 				echo "\nConnection to server failed. Trying again in 60 seconds...\n";
 				sleep(60);
 
-				$update_sd = phoromatic::update_system_details();
+				$update_sd = self::update_system_details();
 
 				if(!$update_sd)
 				{
@@ -340,14 +340,14 @@ class phoromatic extends pts_module_interface
 		{
 			echo "\nChecking Status From Phoromatic Server @ " . date("H:i:s");
 
-			if($last_communication_minute == date("i") && $communication_attempts > 2)
+			if($last_communication_minute == date('i') && $communication_attempts > 2)
 			{
 				// Something is wrong, Phoromatic shouldn't be communicating with server more than three times a minute
-				$response = "forced_idle";
+				$response = M_PHOROMATIC_RESPONSE_IDLE;
 			}
 			else
 			{
-				$server_response = phoromatic::upload_to_remote_server(array("r" => "status_check"));
+				$server_response = self::upload_to_remote_server(array("r" => "status_check"));
 
 				$xml_parser = new tandem_XmlReader($server_response);
 				$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
@@ -401,7 +401,7 @@ class phoromatic extends pts_module_interface
 					break;
 				case M_PHOROMATIC_RESPONSE_EXIT:
 					echo "\nPhoromatic received a remote command to exit.\n";
-					phoromatic::update_system_status("Exiting Phoromatic");
+					self::update_system_status("Exiting Phoromatic");
 					pts_release_lock(self::$phoromatic_lock, PTS_USER_DIR . "phoromatic_lock");
 					break;
 				case M_PHOROMATIC_RESPONSE_SERVER_MAINTENANCE:
@@ -411,7 +411,7 @@ class phoromatic extends pts_module_interface
 					break;
 				case M_PHOROMATIC_RESPONSE_IDLE:
 				default:
-					phoromatic::update_system_status("Idling, Waiting For Task");
+					self::update_system_status("Idling, Waiting For Task");
 					sleep((10 - (date("i") % 10)) * 60); // Check with server every 10 minutes
 					break;
 			}
@@ -420,7 +420,7 @@ class phoromatic extends pts_module_interface
 			{
 				// Hardware and/or software has changed while PTS/Phoromatic has been running, update the Phoromatic Server
 				echo "Updating Installed Hardware / Software With Phoromatic Server\n";
-				phoromatic::update_system_details();
+				self::update_system_details();
 				$current_hw = pts_hw_string();
 				$current_sw = pts_sw_string();
 			}
@@ -439,18 +439,18 @@ class phoromatic extends pts_module_interface
 
 		if(time() > ($last_update_time + 600))
 		{
-			phoromatic::update_system_status("Installing Tests");
+			self::update_system_status("Installing Tests");
 			$last_update_time = time();
 		}
 	}
 	public static function __pre_test_run($pts_test_result)
 	{
-		phoromatic::update_system_status("Running " . $pts_test_result->get_test_profile()->get_identifier() . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
+		self::update_system_status("Running " . $pts_test_result->get_test_profile()->get_identifier() . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
 	}
 	public static function __event_user_error($user_error)
 	{
 		// Report PTS user error warnings to Phoromatic server
-		phoromatic::report_warning_to_phoromatic($user_error->get_error_string());
+		self::report_warning_to_phoromatic($user_error->get_error_string());
 	}
 
 	//
@@ -459,26 +459,26 @@ class phoromatic extends pts_module_interface
 
 	protected static function update_system_details()
 	{
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => pts_hw_string(), "s" => pts_sw_string(), "gsid" => PTS_GSID));
+		$server_response = self::upload_to_remote_server(array("r" => "update_system_details", "h" => pts_hw_string(), "s" => pts_sw_string(), "gsid" => PTS_GSID));
 
 		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function update_system_status($current_task)
 	{
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task));
+		$server_response = self::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task));
 
 		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function report_warning_to_phoromatic($warning)
 	{
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "report_pts_warning", "a" => $warning));
+		$server_response = self::upload_to_remote_server(array("r" => "report_pts_warning", "a" => $warning));
 
 		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function upload_test_results($save_identifier)
 	{
 		$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			"r" => "upload_test_results",
 			"c" => $composite_xml,
 			"i" => pts_read_assignment("PHOROMATIC_SCHEDULE_ID"),
@@ -490,7 +490,7 @@ class phoromatic extends pts_module_interface
 	protected static function upload_unscheduled_test_results($save_identifier)
 	{
 		$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			"r" => "upload_test_results_unscheduled",
 			"c" => $composite_xml,
 			"i" => 0,
@@ -581,7 +581,7 @@ class phoromatic extends pts_module_interface
 		else
 		{
 			echo "\nPhoromatic isn't configured. Run: phoronix-test-suite module-setup phoromatic\n\n";
-			return;
+			return false;
 		}
 
 		$to_post["pts"] = PTS_VERSION;
