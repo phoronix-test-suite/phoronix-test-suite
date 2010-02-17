@@ -55,7 +55,7 @@ class rename_identifier_in_result_file implements pts_option_interface
 			array_push($merge_selects, $this_merge_select);
 		}
 
-		foreach(array("benchmark-logs", "system-logs") as $dir_name)
+		foreach(array("benchmark-logs", "system-logs", "installation-logs") as $dir_name)
 		{
 			if(is_dir(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $rename_identifier))
 			{
