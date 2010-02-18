@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.4.1
+February 18, 2010
 
 - pts-core: Pass PTS result objects directly to pts_Graph
 - pts-core: Add WatermarkURL option to graph-config.xml
