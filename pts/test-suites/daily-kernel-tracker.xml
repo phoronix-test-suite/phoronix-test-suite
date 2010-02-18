@@ -190,6 +190,9 @@
 		<Test>gcrypt</Test>
 	</RunTest>
 	<RunTest>
+		<Test>gnupg</Test>
+	</RunTest>
+	<RunTest>
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
