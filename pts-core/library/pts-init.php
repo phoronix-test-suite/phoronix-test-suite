@@ -189,7 +189,18 @@ function pts_user_agreement_check($command)
 			echo pts_string_header("Phoronix Test Suite - Welcome");
 			echo wordwrap($user_agreement, 65);
 			$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
-			$usage_reporting = pts_bool_question("Do you wish to enable anonymous usage / statistics reporting (Y/n)?", true);
+			$usage_reporting = $agree ? pts_bool_question("Do you wish to enable anonymous usage / statistics reporting (Y/n)?", true) : -1;
+		}
+
+		if($agree)
+		{
+			echo "\n";
+			$pso->add_object("user_agreement_cs", $current_md5);
+			$pso->save_to_file(PTS_CORE_STORAGE);
+		}
+		else
+		{
+			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
 		}
 
 		if(!is_bool($usage_reporting) && pts_read_user_config(P_OPTION_USAGE_REPORTING, null) == null)
@@ -207,17 +218,6 @@ function pts_user_agreement_check($command)
 		if(is_bool($usage_reporting))
 		{
 			pts_user_config_init(array(P_OPTION_USAGE_REPORTING => ($usage_reporting ? "TRUE" : "FALSE")));
-		}
-
-		if($agree)
-		{
-			echo "\n";
-			$pso->add_object("user_agreement_cs", $current_md5);
-			$pso->save_to_file(PTS_CORE_STORAGE);
-		}
-		else
-		{
-			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
 		}
 	}
 }
