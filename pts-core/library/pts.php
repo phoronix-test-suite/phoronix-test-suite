@@ -25,7 +25,7 @@
 
 define("PTS_VERSION", "2.6.0a0");
 define("PTS_CORE_VERSION", 2501);
-define("PTS_CODENAME", "LENVIK");
+define("PTS_CODENAME", "LYNGEN");
 
 function pts_codename($full_string = false)
 {

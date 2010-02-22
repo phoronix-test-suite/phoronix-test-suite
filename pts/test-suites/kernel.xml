@@ -44,12 +44,12 @@
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
-		<Arguments>-s 4096M -i0</Arguments>
+		<Arguments>-r 4k -s 4096M -i0</Arguments>
 		<Description>4GB Write Performance</Description>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
-		<Arguments>-s 4096M -i0 -i1</Arguments>
+		<Arguments>-r 4k -s 4096M -i0 -i1</Arguments>
 		<Description>4GB Read Performance</Description>
 	</RunTest>
 	<RunTest>

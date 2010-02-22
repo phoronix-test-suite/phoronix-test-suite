@@ -6,7 +6,7 @@
 			<FileSize>1024933</FileSize>
 		</Package>
 		<Package>
-			<URL>ftp://topaze.jouy.inra.fr/pub/pfam/current/Pfam_ls.gz, ftp://selab.janelia.org/pub/Pfam/Pfam_ls.gz</URL>
+			<URL>ftp://selab.janelia.org/pub/Pfam/Pfam_ls.gz</URL>
 			<MD5>31647337a0e8309fce3914da7e8f4a1c</MD5>
 			<FileSize>111043685</FileSize>
 		</Package>

@@ -110,11 +110,15 @@ class info implements pts_option_interface
 
 				echo "\nTest Installed: Yes\n";
 				echo "Last Run: " . $last_run . "\n";
-				echo "Average Run-Time: " . $avg_time . "\n";
-				echo "Latest Run-Time: " . $latest_time . "\n";
 
 				if($last_run != "Never")
 				{
+					if($installed_test->get_run_count() > 1)
+					{
+						echo "Average Run-Time: " . $avg_time . "\n";
+					}
+
+					echo "Latest Run-Time: " . $latest_time . "\n";
 					echo "Times Run: " . $installed_test->get_run_count() . "\n";
 				}
 			}

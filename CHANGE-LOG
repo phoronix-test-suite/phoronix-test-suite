@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: No longer statically code define statements for XML parsing, move into pts-core/definitions XML statements
 - pts-core: Various fixes and improvements
+- pts: Add adjustable record / block size to iozone test profile
 
 Phoronix Test Suite 2.4.1
 February 18, 2010
