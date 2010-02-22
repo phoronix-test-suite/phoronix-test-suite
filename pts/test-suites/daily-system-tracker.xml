@@ -15,9 +15,6 @@
 		<Test>pgbench</Test>
 	</RunTest>
 	<RunTest>
-		<Test>sqlite</Test>
-	</RunTest>
-	<RunTest>
 		<Test>compress-7zip</Test>
 	</RunTest>
 	<RunTest>
@@ -30,7 +27,10 @@
 		<Test>compress-pbzip2</Test>
 	</RunTest>
 	<RunTest>
-		<Test>bork</Test>
+		<Test>build-apache</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-linux-kernel</Test>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
@@ -46,39 +46,12 @@
 		<Test>postmark</Test>
 	</RunTest>
 	<RunTest>
-		<Test>tiobench</Test>
-		<Arguments>-k3 -k2 -f 64 -t 32</Arguments>
-		<Description>Test: Random Write - Size Per Thread: 64MB - Thread Count: 32</Description>
-	</RunTest>
-	<RunTest>
-		<Test>tiobench</Test>
-		<Arguments>-k2 -k1 -f 64 -t 32</Arguments>
-		<Description>Test: Random Read - Size Per Thread: 64MB - Thread Count: 32</Description>
-	</RunTest>
-	<RunTest>
-		<Test>dbench</Test>
-		<Arguments>1</Arguments>
-		<Description>Client Count: 1</Description>
-	</RunTest>
-	<RunTest>
-		<Test>dbench</Test>
-		<Arguments>6</Arguments>
-		<Description>Client Count: 6</Description>
-	</RunTest>
-	<RunTest>
-		<Test>dbench</Test>
-		<Arguments>12</Arguments>
-		<Description>Client Count: 12</Description>
-	</RunTest>
-	<RunTest>
-		<Test>dbench</Test>
-		<Arguments>48</Arguments>
-		<Description>Client Count: 48</Description>
-	</RunTest>
-	<RunTest>
 		<Test>fs-mark</Test>
 		<Arguments>-s 1048576 -n 1000</Arguments>
 		<Description>1000 Files, 1MB Size</Description>
+	</RunTest>
+	<RunTest>
+		<Test>unpack-linux</Test>
 	</RunTest>
 	<RunTest>
 		<Test>x264</Test>
@@ -97,9 +70,6 @@
 	</RunTest>
 	<RunTest>
 		<Test>mafft</Test>
-	</RunTest>
-	<RunTest>
-		<Test>hmmer</Test>
 	</RunTest>
 	<RunTest>
 		<Test>bullet</Test>
@@ -143,21 +113,6 @@
 		<Test>n-queens</Test>
 	</RunTest>
 	<RunTest>
-		<Test>npb</Test>
-		<Arguments>ft.B</Arguments>
-		<Description>Test / Class: FT.B</Description>
-	</RunTest>
-	<RunTest>
-		<Test>npb</Test>
-		<Arguments>is.C</Arguments>
-		<Description>Test / Class: IS.C</Description>
-	</RunTest>
-	<RunTest>
-		<Test>npb</Test>
-		<Arguments>lu.A</Arguments>
-		<Description>Test / Class: LU.A</Description>
-	</RunTest>
-	<RunTest>
 		<Test>tscp</Test>
 	</RunTest>
 	<RunTest>
@@ -173,6 +128,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>gcrypt</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
