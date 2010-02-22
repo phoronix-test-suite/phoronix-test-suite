@@ -143,14 +143,18 @@ class pts_result_file
 
 			$result_buffers = array();
 
+			$key_identifier = substr(P_RESULTS_RESULTS_GROUP_IDENTIFIER, strlen(P_RESULTS_RESULTS_GROUP) + 1);
+			$key_value = substr(P_RESULTS_RESULTS_GROUP_VALUE, strlen(P_RESULTS_RESULTS_GROUP) + 1);
+			$key_raw = substr(P_RESULTS_RESULTS_GROUP_RAW, strlen(P_RESULTS_RESULTS_GROUP) + 1);
+
 			foreach(array_keys($results_raw) as $results_raw_key)
 			{
 				$result_buffer = new pts_test_result_buffer();
 				$xml_results = new tandem_XmlReader($results_raw[$results_raw_key]);
 
-				$identifiers = $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_IDENTIFIER);
-				$values = $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_VALUE);
-				$raw_values = $xml_results->getXMLArrayValues(S_RESULTS_RESULTS_GROUP_RAW);
+				$identifiers = $xml_results->getXMLArrayValues($key_identifier);
+				$values = $xml_results->getXMLArrayValues($key_value);
+				$raw_values = $xml_results->getXMLArrayValues($key_raw);
 
 				for($i = 0; $i < count($identifiers) && $i < count($values); $i++)
 				{

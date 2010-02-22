@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<Definitions>
+		<Define>
+			<Name>P_DOWNLOADS_PACKAGE_URL</Name>
+			<Value>PhoronixTestSuite/Downloads/Package/URL</Value>
+		</Define>
+		<Define>
+			<Name>P_DOWNLOADS_PACKAGE_MD5</Name>
+			<Value>PhoronixTestSuite/Downloads/Package/MD5</Value>
+		</Define>
+		<Define>
+			<Name>P_DOWNLOADS_PACKAGE_FILENAME</Name>
+			<Value>PhoronixTestSuite/Downloads/Package/FileName</Value>
+		</Define>
+		<Define>
+			<Name>P_DOWNLOADS_PACKAGE_FILESIZE</Name>
+			<Value>PhoronixTestSuite/Downloads/Package/FileSize</Value>
+		</Define>
+		<Define>
+			<Name>P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC</Name>
+			<Value>PhoronixTestSuite/Downloads/Package/PlatformSpecific</Value>
+		</Define>
+		<Define>
+			<Name>P_DOWNLOADS_PACKAGE_ARCHSPECIFIC</Name>
+			<Value>PhoronixTestSuite/Downloads/Package/ArchitectureSpecific</Value>
+		</Define>
+	</Definitions>
+</PhoronixTestSuite>

@@ -603,6 +603,7 @@ function pts_test_download_cache_remote_files()
 {
 	if(!pts_is_assignment("REMOTE_CACHE_FILES"))
 	{
+		pts_loader::load_definitions("download-cache.xml");
 		$remote_download_files = array();
 
 		foreach(pts_test_download_cache_directories() as $dc_directory)

@@ -781,6 +781,8 @@ function pts_objects_test_downloads($test_identifier)
 
 	if(is_file(($download_xml_file = pts_location_test_resources($test_identifier) . "downloads.xml")))
 	{
+		pts_loader::load_definitions("test-profile-downloads.xml");
+
 		$xml_parser = new tandem_XmlReader($download_xml_file);
 		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);

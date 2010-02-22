@@ -416,11 +416,14 @@ function pts_test_options($identifier)
 
 	$test_options = array();
 
+	$key_name = substr(P_TEST_OPTIONS_MENU_GROUP_NAME, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
+	$key_value = substr(P_TEST_OPTIONS_MENU_GROUP_VALUE, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
+
 	foreach(array_keys($settings_name) as $option_count)
 	{
 		$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
-		$option_names = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_NAME);
-		$option_values = $xml_parser->getXMLArrayValues(S_TEST_OPTIONS_MENU_GROUP_VALUE);
+		$option_names = $xml_parser->getXMLArrayValues($key_name);
+		$option_values = $xml_parser->getXMLArrayValues($key_value);
 		pts_auto_process_test_option($identifier, $settings_identifier[$option_count], $option_names, $option_values);
 
 		$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);

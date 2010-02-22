@@ -30,6 +30,8 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 
 	public function __construct($new_values = null)
 	{
+		pts_loader::load_definitions("graph-config.xml");
+
 		$file = null;
 
 		if(PTS_MODE == "CLIENT")

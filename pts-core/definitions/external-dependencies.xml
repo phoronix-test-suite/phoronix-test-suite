@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<Definitions>
+		<Define>
+			<Name>P_EXDEP_INFO_NAME</Name>
+			<Value>PhoronixTestSuite/ExternalDependencies/Information/Name</Value>
+		</Define>
+		<Define>
+			<Name>P_EXDEP_PACKAGE_TITLE</Name>
+			<Value>PhoronixTestSuite/ExternalDependencies/Package/Title</Value>
+		</Define>
+		<Define>
+			<Name>P_EXDEP_PACKAGE_GENERIC</Name>
+			<Value>PhoronixTestSuite/ExternalDependencies/Package/GenericName</Value>
+		</Define>
+		<Define>
+			<Name>P_EXDEP_PACKAGE_SPECIFIC</Name>
+			<Value>PhoronixTestSuite/ExternalDependencies/Package/PackageName</Value>
+		</Define>
+		<Define>
+			<Name>P_EXDEP_PACKAGE_FILECHECK</Name>
+			<Value>PhoronixTestSuite/ExternalDependencies/Package/FileCheck</Value>
+		</Define>
+		<Define>
+			<Name>P_EXDEP_PACKAGE_ARCHSPECIFIC</Name>
+			<Value>PhoronixTestSuite/ExternalDependencies/Package/ArchitectureSpecific</Value>
+		</Define>
+		<Define>
+			<Name>P_EXDEP_PACKAGE_POSSIBLENAMES</Name>
+			<Value>PhoronixTestSuite/ExternalDependencies/Package/PossibleNames</Value>
+		</Define>
+	</Definitions>
+</PhoronixTestSuite>

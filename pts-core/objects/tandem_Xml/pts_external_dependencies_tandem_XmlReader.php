@@ -3,9 +3,9 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
-	pts_installed_test_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite with optimizations for handling installed tests
+	Copyright (C) 2010, Phoronix Media
+	Copyright (C) 2010, Michael Larabel
+	pts_external_dependencies_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite with optimizations for handling external dependencies
 
 	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
 	A work in progress. This was originally designed for just some select needs in the past. No XML validation is done with this parser, etc.
@@ -24,17 +24,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_installed_test_tandem_XmlReader extends tandem_XmlReader
+class pts_external_dependencies_tandem_XmlReader extends tandem_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		pts_loader::load_definitions("test-installation.xml");
-
-		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
-		{
-			$read_xml = TEST_ENV_DIR . $read_xml . "/pts-install.xml";
-		}
-
+		pts_loader::load_definitions("external-dependencies.xml");
 		parent::__construct($read_xml);
 	}
 }

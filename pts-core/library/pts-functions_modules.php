@@ -31,6 +31,7 @@ function pts_module_startup_init()
 	// Process initially called when PTS starts up
 	if(getenv("PTS_IGNORE_MODULES") == false && PTS_MODE == "CLIENT")
 	{
+		pts_loader::load_definitions("module-config.xml");
 		pts_load_modules();
 		pts_module_process("__startup");
 		define("PTS_STARTUP_TASK_PERFORMED", true);

@@ -68,7 +68,7 @@ function pts_external_dependency_generic_title($generic_name)
 	// Get the generic information for a PTS External Dependency generic
 	$generic_title = null;
 
-	$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+	$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
 	$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 	$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 
@@ -87,7 +87,7 @@ function pts_external_dependency_generic_info($missing_dependency_names)
 {
 	// Get the generic information for a PTS External Dependency generic
 	$missing_count = 0;
-	$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+	$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
 	$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 	$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 	$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
@@ -109,7 +109,7 @@ function pts_external_dependency_generic_info($missing_dependency_names)
 }
 function pts_external_dependency_generic_packages()
 {
-	$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+	$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
 	$packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 
 	return $packages;
@@ -161,7 +161,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 
 	if(is_file(STATIC_DIR . "distro-xml/" . $vendor . "-packages.xml"))
 	{
-		$xml_parser = new tandem_XmlReader(STATIC_DIR . "distro-xml/" . $vendor . "-packages.xml");
+		$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/" . $vendor . "-packages.xml");
 		$generic_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$distro_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_SPECIFIC);
 		$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);

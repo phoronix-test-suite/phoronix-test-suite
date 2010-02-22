@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<Definitions>
+		<Define>
+			<Name>P_MODULE_OPTION_NAME</Name>
+			<Value>PhoronixTestSuite/Modules/Option/ModuleName</Value>
+		</Define>
+		<Define>
+			<Name>P_MODULE_OPTION_IDENTIFIER</Name>
+			<Value>PhoronixTestSuite/Modules/Option/Identifier</Value>
+		</Define>
+		<Define>
+			<Name>P_MODULE_OPTION_VALUE</Name>
+			<Value>PhoronixTestSuite/Modules/Option/Value</Value>
+		</Define>
+	</Definitions>
+</PhoronixTestSuite>

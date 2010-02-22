@@ -1011,7 +1011,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 
-			if($driver_version == false && IS_UNKNOWN_GRAPHICS)
+			if($driver_version == false)
 			{
 				// See if the VESA driver is in use
 				$vesa_version = phodevi_parser::read_xorg_module_version("vesa_drv");
