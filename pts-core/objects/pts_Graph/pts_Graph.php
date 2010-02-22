@@ -557,9 +557,8 @@ abstract class pts_Graph
 
 				$component_x = $this->graph_left_start + 14 + (($this->graph_left_end - $this->graph_left_start) / 4) * (($key_counter - 1) % 4);
 
-				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
-
 				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
+				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
 
 				if($key_counter % 4 == 0)
 				{

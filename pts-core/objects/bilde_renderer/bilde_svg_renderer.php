@@ -26,6 +26,7 @@ class bilde_svg_renderer extends bilde_renderer
 	var $renderer = "SVG";
 	var $svg_style_definitions = "";
 	var $javascript_functions = null;
+	static $render_count = 0;
 
 	public function __construct($width, $height, $embed_identifiers = null)
 	{
@@ -96,6 +97,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$svg_image .= $this->image . "</svg>";
 
+		self::$render_count++;
 		return $output_file != null ? @file_put_contents($output_file, $svg_image) : $svg_image;
 	}
 	public function destroy_image()
@@ -334,7 +336,7 @@ class bilde_svg_renderer extends bilde_renderer
 			$key = count($this->svg_style_definitions) - 1;
 		}
 
-		return "b_" . $key;
+		return "b_" . self::$render_count . '_' . $key;
 	}
 	private function get_svg_formatted_definitions()
 	{
@@ -345,7 +347,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 			foreach($this->svg_style_definitions as $key => $attributes)
 			{
-				$svg .= ".b_" . $key . " { " . $attributes . " }\n";
+				$svg .= ".b_" . self::$render_count . '_' . $key . " { " . $attributes . " }\n";
 			}
 
 			$svg .= "]]></style>\n";
