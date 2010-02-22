@@ -1524,7 +1524,7 @@ class gui_gtk implements pts_option_interface
 					$notebook->append_page($vbox_page_{$pages}, new GtkLabel($page_prefix . gui_gtk::caps_to_spaces($previous_heading)));
 				}
 
-				if($previous_heading == "BatchMode")
+				if($previous_heading == "Networking")
 				{
 					$config_type = "graph";
 					$page_prefix = "Graph ";

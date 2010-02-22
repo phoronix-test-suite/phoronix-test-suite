@@ -84,20 +84,16 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 			}
 
 			// Generate logs from system commands to backup
-			$system_log_commands = array("lspci", "sensors", "dmesg", "glxinfo");
-
-			if(IS_MACOSX)
-			{
-				array_push($system_log_commands, "system_profiler");
-			}
+			$system_log_commands = array("lspci", "sensors", "dmesg", "glxinfo", "system_profiler", "dpkg --list");
 
 			foreach($system_log_commands as $command_string)
 			{
-				$command = pts_to_array($command_string);
+				$command = explode(' ', $command_string);
 
 				if(($command_bin = pts_executable_in_path($command[0])))
 				{
-					file_put_contents($system_log_dir . "/" . $command[0], shell_exec("cd " . dirname($command_bin) . " && ./" . $command_string . " 2>&1"));
+					$cmd_output = shell_exec("cd " . dirname($command_bin) . " && ./" . $command_string . " 2>&1");
+					file_put_contents($system_log_dir . "/" . $command[0], $cmd_output);
 				}
 			}
 		}

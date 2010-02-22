@@ -24,7 +24,6 @@
 define("PTS_LIBRARY_PATH", PTS_PATH . "pts-core/library/");
 
 require(PTS_LIBRARY_PATH . "pts.php");
-//require(PTS_LIBRARY_PATH . "pts-interfaces.php");
 require(PTS_LIBRARY_PATH . "pts-functions_loading.php");
 require(PTS_LIBRARY_PATH . "pts-functions_directories.php");
 

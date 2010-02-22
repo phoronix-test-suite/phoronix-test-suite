@@ -32,6 +32,7 @@ class pts_loader
 			return true;
 		}
 
+		$loaded_definition_files[$definition_file] = true;
 		$definition_file = PTS_CORE_PATH . "definitions/" . $definition_file;
 
 		if(!is_file($definition_file))

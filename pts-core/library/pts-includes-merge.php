@@ -32,7 +32,7 @@ function pts_merge_test_results()
 		$files_to_combine = $files_to_combine[0];
 	}
 
-	$results_xml = new tandem_XmlWriter();
+	$results_xml = new pts_results_tandem_XmlWriter();
 	pts_merge_test_results_process($results_xml, $files_to_combine);
 
 	return $results_xml->getXML();
@@ -93,7 +93,7 @@ function pts_merge_test_results_process(&$results_xml, &$files_to_combine)
 }
 function pts_generate_analytical_batch_xml($analyze_file)
 {
-	$results = new tandem_XmlWriter();
+	$results = new pts_results_tandem_XmlWriter();
 	$results->setXslBinding("pts-results-viewer.xsl");
 
 	$test_result_manager = new pts_result_file_analyze_manager();

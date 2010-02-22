@@ -297,10 +297,13 @@ function pts_gtk_selected_items($object)
 	list($model, $rows) = $object->get_selected_rows();
 	$return_items = array();
 
-	foreach($rows as $row)
+	if(is_array($rows))
 	{
-		$iter = $model->get_iter($row);
-		array_push($return_items, $model->get_value($iter, 0));
+		foreach($rows as $row)
+		{
+			$iter = $model->get_iter($row);
+			array_push($return_items, $model->get_value($iter, 0));
+		}
 	}
 
 	return $return_items;

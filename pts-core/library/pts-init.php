@@ -80,6 +80,7 @@ function pts_extended_init()
 	pts_copy(STATIC_DIR . "xsl/pts-test-installation-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-test-installation-viewer.xsl");
 	pts_copy(STATIC_DIR . "xsl/pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
 	pts_copy(STATIC_DIR . "images/pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
+	
 }
 function pts_core_storage_init()
 {
