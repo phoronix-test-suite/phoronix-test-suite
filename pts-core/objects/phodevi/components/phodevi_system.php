@@ -542,6 +542,9 @@ class phodevi_system extends phodevi_device_interface
 				case "UNKNOWN (0x9123683e)":
 					$fs = "Btrfs";
 					break;
+				case "UNKNOWN (0x52345362)":
+					$fs = "Reiser4";
+					break;
 				case "UNKNOWN (0x3434)":
 					$fs = "NILFS2";
 					break;
