@@ -80,7 +80,11 @@ function pts_extended_init()
 	pts_copy(STATIC_DIR . "xsl/pts-test-installation-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-test-installation-viewer.xsl");
 	pts_copy(STATIC_DIR . "xsl/pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
 	pts_copy(STATIC_DIR . "images/pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
-	
+
+	// Load the defintions now since if you run "phoronix-test-suite run TEST It will fail" since test-profile.xml is not
+	// defined when using pts_test_read_xml() the first time
+	pts_loader::load_definitions("test-profile.xml");
+	pts_loader::load_definitions("test-suite.xml");	
 }
 function pts_core_storage_init()
 {

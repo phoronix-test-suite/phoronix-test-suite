@@ -39,10 +39,6 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
-		// Load the defintions now since if you run "phoronix-test-suite run TEST It will fail" since test-profile.xml is not
-		// defined when using pts_test_read_xml() the first time
-		pts_loader::load_definitions("test-profile.xml");
-
 		$test_properties = array();
 
 		// Cleanup tests to run
