@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add support for detecting Reiser4 file-systems via its super magic block
 - phoromatic: Add support for powering off the system if told to do so by the Phoromatic server
 - bilde_renderer: Fix the SVG renderer back-end from battling multiple graph style values contained in a single page
+- pts_Graph: Line graphing improvements for Phoromatic Tracker
 - pts-core: Various fixes and improvements
 - pts: Add adjustable record / block size to iozone test profile
 

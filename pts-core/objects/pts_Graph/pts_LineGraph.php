@@ -190,10 +190,22 @@ class pts_LineGraph extends pts_CustomGraph
 			$point_counter = count($this->graph_data[$i_o]);
 			$regression_plots = array();
 			$poly_points = array();
+			$has_hit_non_zero = false;
 
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
+
+				if($value == 0 && !$has_hit_non_zero)
+				{
+					if(defined("PHOROMATIC_TRACKER"))
+					{
+						continue;
+					}
+
+					$has_hit_non_zero = true;
+				}
+
 				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start)));
 				$px_from_left = round($this->graph_left_start + ($this->identifier_width * ($i + 1)));
 
@@ -258,6 +270,7 @@ class pts_LineGraph extends pts_CustomGraph
 
 			$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
 
+			$poly_points_count = count($poly_points);
 			foreach($poly_points as $i => $x_y_pair)
 			{
 				if(true || !$identifiers_empty) // TODO: determine whether to kill this check
@@ -267,7 +280,7 @@ class pts_LineGraph extends pts_CustomGraph
 						$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, $this->graph_color_alert, 4, $regression_plots[$i]);
 					}
 
-					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $this->graph_color_notches, $paint_color, 1, !($point_counter < 6 || $i == 0 || $i == ($point_counter - 1)));
+					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $this->graph_color_notches, $paint_color, 1, !($point_counter < 6 || $i == 0 || $i == ($poly_points_count  - 1)));
 				}
 			}
 		}
@@ -275,7 +288,7 @@ class pts_LineGraph extends pts_CustomGraph
 		$to_display = array();
 		$to_display[$this->graph_color_text] = array();
 
-		foreach($calculations_r as $color => &$values)
+		foreach(array_keys($calculations_r) as $color)
 		{
 			$to_display[$color] = array();
 		}
@@ -332,9 +345,9 @@ class pts_LineGraph extends pts_CustomGraph
 		{
 			array_push($to_display[$this->graph_color_text], "Last:");
 
-			foreach($calculations_r as $color => $values)
+			foreach($calculations_r as $color => &$values)
 			{
-				array_push($to_display[$color], $this->trim_double(array_pop($values), 1));
+				array_push($to_display[$color], $this->trim_double($values[count($values) - 1], 1));
 			}
 		}
 
