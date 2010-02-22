@@ -103,7 +103,7 @@ function pts_prompt_test_options($identifier)
 				}
 
 				echo "\n" . $o->get_name() . ":\n";
-				$bench_choice = pts_text_select_menu("Enter Your Choice", $option_names, true);
+				$bench_choice = pts_text_select_menu("Enter Your Choice", $option_names, true, true);
 			}
 
 			$bench_choice = $o->parse_selection_choice_input($bench_choice);

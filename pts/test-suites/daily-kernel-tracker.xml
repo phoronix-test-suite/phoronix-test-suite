@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>Daily Kernel Tracker</Title>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<Maintainer>Phoronix Media</Maintainer>
 		<TestType>System</TestType>
 		<Description>These are the tests that are being run daily by the Phoronix Kernel Test Farm.</Description>
@@ -96,10 +96,18 @@
 		<Description>Client Count: 128</Description>
 	</RunTest>
 	<RunTest>
+		<Test>fs-mark</Test>
+		<Arguments>-s 1048576 -n 1000</Arguments>
+		<Description>1000 Files, 1MB Size</Description>
+	</RunTest>
+	<RunTest>
 		<Test>x264</Test>
 	</RunTest>
 	<RunTest>
 		<Test>ffmpeg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>crafty</Test>
 	</RunTest>
 	<RunTest>
 		<Test>encode-flac</Test>
@@ -183,8 +191,7 @@
 	</RunTest>
 	<RunTest>
 		<Test>john-the-ripper</Test>
-		<Arguments>BLOWFISH</Arguments>
-		<Description>Test: Blowfish</Description>
+		<Mode>BATCH</Mode>
 	</RunTest>
 	<RunTest>
 		<Test>gcrypt</Test>
@@ -194,8 +201,5 @@
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
-	</RunTest>
-	<RunTest>
-		<Test>gnupg</Test>
 	</RunTest>
 </PhoronixTestSuite>
