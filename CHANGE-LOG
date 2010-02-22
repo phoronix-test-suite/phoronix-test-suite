@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: No longer statically code define statements for XML parsing, move into pts-core/definitions XML statements
+- phoromatic: Add support for powering off the system if told to do so by the Phoromatic server
 - pts-core: Various fixes and improvements
 - pts: Add adjustable record / block size to iozone test profile
 

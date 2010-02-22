@@ -21,6 +21,7 @@
 */
 
 define("M_PHOROMATIC_GEN_RESPONSE", "PhoronixTestSuite/Phoromatic/General/Response");
+define("M_PHOROMATIC_GEN_VAR_STRING", "PhoronixTestSuite/Phoromatic/General/VariableString");
 define("M_PHOROMATIC_ID", "PhoronixTestSuite/Phoromatic/General/ID");
 define("M_PHOROMATIC_SYS_NAME", "PhoronixTestSuite/Phoromatic/General/SystemName");
 define("M_PHOROMATIC_UPLOAD_TO_GLOBAL", "PhoronixTestSuite/Phoromatic/General/UploadToGlobal");
@@ -41,6 +42,7 @@ define("M_PHOROMATIC_RESPONSE_SERVER_MAINTENANCE", "server_maintenance");
 define("M_PHOROMATIC_RESPONSE_ERROR", "ERROR");
 define("M_PHOROMATIC_RESPONSE_TRUE", "TRUE");
 define("M_PHOROMATIC_RESPONSE_SETTING_DISABLED", "SETTING_DISABLED");
+define("M_PHOROMATIC_RESPONSE_SHUTDOWN", "SHUTDOWN");
 
 class phoromatic extends pts_module_interface
 {
@@ -347,9 +349,10 @@ class phoromatic extends pts_module_interface
 
 		do
 		{
+			$exit_loop = false;
 			echo "\nChecking Status From Phoromatic Server @ " . date("H:i:s");
 
-			if($last_communication_minute == date("i") && $communication_attempts > 2)
+			if($last_communication_minute == date('i') && $communication_attempts > 2)
 			{
 				// Something is wrong, Phoromatic shouldn't be communicating with server more than three times a minute
 				$response = "forced_idle";
@@ -409,16 +412,23 @@ class phoromatic extends pts_module_interface
 
 					pts_run_option_next("run_test", $suite_identifier, $args_to_pass);
 					pts_run_option_next("phoromatic.user_system_return", $suite_identifier, $args_to_pass);
+					$exit_loop = true;
 					break;
 				case M_PHOROMATIC_RESPONSE_EXIT:
 					echo "\nPhoromatic received a remote command to exit.\n";
 					phoromatic::update_system_status("Exiting Phoromatic");
 					pts_release_lock(self::$phoromatic_lock, PTS_USER_DIR . "phoromatic_lock");
+					$exit_loop = true;
 					break;
 				case M_PHOROMATIC_RESPONSE_SERVER_MAINTENANCE:
 					// The Phoromatic server is down for maintenance, so don't bother updating system status and wait longer before checking back
 					echo "\nThe Phoromatic server is currently down for maintenance. Waiting for service to be restored.\n";
 					sleep((15 - (date("i") % 15)) * 60);
+					break;
+				case M_PHOROMATIC_RESPONSE_SHUTDOWN:
+					echo "\nShutting down the system.\n";
+					$exit_loop = true;
+					shell_exec("poweroff"); // Currently assuming root
 					break;
 				case M_PHOROMATIC_RESPONSE_IDLE:
 				default:
@@ -436,7 +446,7 @@ class phoromatic extends pts_module_interface
 				$current_sw = pts_sw_string();
 			}
 		}
-		while(!in_array($response, array(M_PHOROMATIC_RESPONSE_EXIT, M_PHOROMATIC_RESPONSE_RUN_TEST)));
+		while($exit_loop == false);
 	}
 
 	//
