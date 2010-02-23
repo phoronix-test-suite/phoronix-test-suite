@@ -53,18 +53,17 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo $this->tab . $this->tab . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " Needed";
 
-		if(($size = pts_estimated_download_size($identifier, 1048576)) > 0)
+		if(($size = pts_estimated_download_size($identifier, 1048576, false)) > 0)
 		{
-			echo " [" . $size . " MB]";
+			echo " [" . $size . " MB";
 
-			/*
-			// TODO: the below code is currently disabled as this size is taking into account download caches, etc. Need to take that out of there otherwise number is overinflated.
 			if(($avg_speed = pts_read_assignment("DOWNLOAD_AVG_SPEED")) > 0)
 			{
 				$avg_time = ($size * 1048576) / $avg_speed;
 				echo " / " . pts_format_time_string($avg_time, "SECONDS", true, 60);
 			}
-			*/
+
+			echo ']';
 		}
 
 		echo "\n";

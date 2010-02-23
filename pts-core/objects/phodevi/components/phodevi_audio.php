@@ -52,7 +52,7 @@ class phodevi_audio extends phodevi_device_interface
 		}
 		else if(IS_LINUX)
 		{
-			foreach(pts_glob("/sys/class/sound/card0/hwC0D0/vendor_name") as $vendor_name)
+			foreach(pts_glob("/sys/class/sound/card*/hwC0D0/vendor_name") as $vendor_name)
 			{
 				$card_dir = pts_dirname($vendor_name);
 

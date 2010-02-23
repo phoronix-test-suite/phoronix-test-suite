@@ -388,7 +388,7 @@ function pts_suite_identifier_to_name($identifier)
 
 	return $cache[$identifier];
 }
-function pts_estimated_download_size($identifier, $divider = 1048576)
+function pts_estimated_download_size($identifier, $divider = 1048576, $include_extensions = true)
 {
 	// Estimate the size of files to be downloaded
 	static $cache;
@@ -397,7 +397,7 @@ function pts_estimated_download_size($identifier, $divider = 1048576)
 	{
 		$estimated_size = 0;
 
-		foreach(pts_contained_tests($identifier, true) as $test)
+		foreach(pts_contained_tests($identifier, $include_extensions) as $test)
 		{
 			// The work for calculating the download size in 1.4.0+
 			foreach(pts_objects_test_downloads($test) as $download_object)
