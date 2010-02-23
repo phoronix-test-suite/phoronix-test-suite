@@ -119,6 +119,36 @@ class phodevi_disk extends phodevi_device_interface
 
 					$disk_size = round($disk_size * 512 / 1000000000) . "GB";
 
+
+					if(isset($disk_model[4]))
+					{
+						$disk_manufacturer = null;
+						$third_char = substr($disk_model, 2, 1);
+
+						switch(substr($disk_model, 0, 2))
+						{
+							case "WD":
+								$disk_manufacturer = "Western Digital";
+								break;
+							case "ST":
+								if($third_char == 'T')
+								{
+									$disk_manufacturer = "Super Talent";
+								}
+								else
+								{
+									$disk_manufacturer = "Seagate";
+								}
+								break;
+							// "HD" might be some Hitachi disk drives, but that prefix seems too common
+						}
+
+						if($disk_manufacturer != null)
+						{
+							$disk_model = $disk_manufacturer . ' ' . $disk_model;
+						}
+					}
+
 					if(strpos($disk_model, $disk_size . " ") === false && strpos($disk_model, " " . $disk_size) === false && $disk_size != "1GB")
 					{
 						$disk_model = $disk_size . " " . $disk_model;
