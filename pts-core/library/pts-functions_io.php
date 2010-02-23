@@ -166,7 +166,7 @@ function pts_string_header($heading, $char = '=')
 		}
 	}
 
-	if(($terminal_width = pts_terminal_width()) < $header_size)
+	if(($terminal_width = pts_terminal_width()) < $header_size && $terminal_width > 0)
 	{
 		$header_size = $terminal_width;
 	}

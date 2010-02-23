@@ -21,7 +21,7 @@
 */
 
 define("M_PHOROMATIC_GEN_RESPONSE", "PhoronixTestSuite/Phoromatic/General/Response");
-define("M_PHOROMATIC_GEN_VAR_STRING", "PhoronixTestSuite/Phoromatic/General/VariableString");
+define("M_PHOROMATIC_TRIGGER_STRING", "PhoronixTestSuite/Phoromatic/General/TriggerString");
 define("M_PHOROMATIC_ID", "PhoronixTestSuite/Phoromatic/General/ID");
 define("M_PHOROMATIC_SYS_NAME", "PhoronixTestSuite/Phoromatic/General/SystemName");
 define("M_PHOROMATIC_UPLOAD_TO_GLOBAL", "PhoronixTestSuite/Phoromatic/General/UploadToGlobal");
@@ -43,6 +43,7 @@ define("M_PHOROMATIC_RESPONSE_ERROR", "ERROR");
 define("M_PHOROMATIC_RESPONSE_TRUE", "TRUE");
 define("M_PHOROMATIC_RESPONSE_SETTING_DISABLED", "SETTING_DISABLED");
 define("M_PHOROMATIC_RESPONSE_SHUTDOWN", "SHUTDOWN");
+define("M_PHOROMATIC_RESPONSE_RESTART", "RESTART");
 
 class phoromatic extends pts_module_interface
 {
@@ -429,6 +430,11 @@ class phoromatic extends pts_module_interface
 					echo "\nShutting down the system.\n";
 					$exit_loop = true;
 					shell_exec("poweroff"); // Currently assuming root
+					break;
+				case M_PHOROMATIC_RESPONSE_RESTART:
+					echo "\nRestarting the system.\n";
+					$exit_loop = true;
+					shell_exec("restart"); // Currently assuming root
 					break;
 				case M_PHOROMATIC_RESPONSE_IDLE:
 				default:
