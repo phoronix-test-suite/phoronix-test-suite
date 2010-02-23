@@ -43,7 +43,7 @@ define("M_PHOROMATIC_RESPONSE_ERROR", "ERROR");
 define("M_PHOROMATIC_RESPONSE_TRUE", "TRUE");
 define("M_PHOROMATIC_RESPONSE_SETTING_DISABLED", "SETTING_DISABLED");
 define("M_PHOROMATIC_RESPONSE_SHUTDOWN", "SHUTDOWN");
-define("M_PHOROMATIC_RESPONSE_RESTART", "RESTART");
+define("M_PHOROMATIC_RESPONSE_REBOOT", "REBOOT");
 
 class phoromatic extends pts_module_interface
 {
@@ -431,10 +431,10 @@ class phoromatic extends pts_module_interface
 					$exit_loop = true;
 					shell_exec("poweroff"); // Currently assuming root
 					break;
-				case M_PHOROMATIC_RESPONSE_RESTART:
-					echo "\nRestarting the system.\n";
+				case M_PHOROMATIC_RESPONSE_REBOOT:
+					echo "\nRebooting the system.\n";
 					$exit_loop = true;
-					shell_exec("restart"); // Currently assuming root
+					shell_exec("reboot"); // Currently assuming root
 					break;
 				case M_PHOROMATIC_RESPONSE_IDLE:
 				default:

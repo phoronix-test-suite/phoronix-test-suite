@@ -43,6 +43,7 @@ class phodevi
 		"System Memory" => "memory",
 		"Disk" => "disk",
 		"Graphics" => "gpu",
+		"Audio" => "audio",
 		"Monitor" => "monitor"
 		);
 	}

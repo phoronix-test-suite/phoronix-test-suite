@@ -144,7 +144,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			echo $this->tab . $this->tab . "Installation Size: " . $size . " MB\n";
 		}
 
-		echo $this->tab . $this->tab . "Installing Test\n";
+		echo $this->tab . $this->tab . "Installing Test" . " @ " . date("H:i:s") . "\n";
 		return;
 	}
 	public function test_install_output(&$to_output)
