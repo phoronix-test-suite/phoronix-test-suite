@@ -60,6 +60,8 @@ function pts_start_install($to_install, &$display_mode)
 		}
 	}
 
+	echo "\n";
+
 	$tests = array_values($tests);
 
 	if(($install_count = count($tests)) > 1)

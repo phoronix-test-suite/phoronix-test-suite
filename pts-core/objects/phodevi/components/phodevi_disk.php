@@ -130,6 +130,13 @@ class phodevi_disk extends phodevi_device_interface
 							case "WD":
 								$disk_manufacturer = "Western Digital";
 								break;
+							case "MK":
+								$disk_manufacturer = "Toshiba";
+								break;
+							case "HT":
+								// "HD" might be some Hitachi disk drives, but that prefix seems too common
+								$disk_manufacturer = "Hitachi";
+								break;
 							case "ST":
 								if($third_char == 'T')
 								{
@@ -140,10 +147,9 @@ class phodevi_disk extends phodevi_device_interface
 									$disk_manufacturer = "Seagate";
 								}
 								break;
-							// "HD" might be some Hitachi disk drives, but that prefix seems too common
 						}
 
-						if($disk_manufacturer != null)
+						if($disk_manufacturer != null && strpos($disk_model, $disk_manufacturer) === false)
 						{
 							$disk_model = $disk_manufacturer . ' ' . $disk_model;
 						}
