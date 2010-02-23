@@ -55,7 +55,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if(($size = pts_estimated_download_size($identifier, 1048576)) > 0)
 		{
-			echo " / " . $size . " MB";
+			echo " [" . $size . " MB]";
 
 			/*
 			// TODO: the below code is currently disabled as this size is taking into account download caches, etc. Need to take that out of there otherwise number is overinflated.

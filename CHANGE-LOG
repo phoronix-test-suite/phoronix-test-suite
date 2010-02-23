@@ -3,7 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: No longer statically code define statements for XML parsing, move into pts-core/definitions XML statements
-- phodevi: Add support for detecting Reiser4 file-systems via its super magic block
+- phodevi: Add support for detecting Reiser4 file-system via its super magic block
 - phodevi: Report hard drive manufacturer when detected and prepend to the model string
 - phoromatic: Add support for powering off the system if told to do so by the Phoromatic server
 - phoromatic: Add support for restarting the system if told to do so by the Phoromatic server

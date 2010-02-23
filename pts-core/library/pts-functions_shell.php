@@ -158,7 +158,7 @@ function pts_remove($object, $ignore_files = null, $remove_root_directory = fals
 
 	if($remove_root_directory && is_dir($object) && count(pts_glob($object . "/*")) == 0)
 	{
-		rmdir($object);
+		@rmdir($object);
 	}
 }
 function pts_copy($from, $to)
