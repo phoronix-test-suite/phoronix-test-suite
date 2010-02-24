@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add initial audio / sound card detection support
 - phoromatic: Add support for powering off the system if told to do so by the Phoromatic server
 - phoromatic: Add support for restarting the system if told to do so by the Phoromatic server
+- phoromatic: Wait an additional 90 seconds on connectivity problems
 - bilde_renderer: Fix the SVG renderer back-end from battling multiple graph style values contained in a single page
 - pts_Graph: Line graphing improvements for Phoromatic Tracker
 - pts-core: Various fixes and improvements

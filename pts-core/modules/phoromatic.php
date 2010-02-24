@@ -304,8 +304,15 @@ class phoromatic extends pts_module_interface
 
 					if(!$uploaded_test_results)
 					{
-						echo "\nERROR OCCURRED IN UPLOADING RESULTS\n";
-						return false;
+						"\nFailed to upload test results on first attempt. Trying again in 90 seconds...\n";
+						sleep(90);
+						$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
+
+						if(!$uploaded_test_results)
+						{
+							echo "\nERROR OCCURRED IN UPLOADING RESULTS\n";
+							return false;
+						}
 					}
 				}
 
@@ -339,8 +346,16 @@ class phoromatic extends pts_module_interface
 
 				if(!$update_sd)
 				{
-					echo "Server connection still failed. Exiting...\n";
-					return false;
+					echo "\nConnection to server failed. Trying again in 90 seconds...\n";
+					sleep(90);
+
+					$update_sd = phoromatic::update_system_details();
+
+					if(!$update_sd)
+					{
+						echo "Server connection still failed. Exiting...\n";
+						return false;
+					}
 				}
 			}
 

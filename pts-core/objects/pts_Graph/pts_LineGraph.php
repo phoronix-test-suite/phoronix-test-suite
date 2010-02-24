@@ -273,6 +273,12 @@ class pts_LineGraph extends pts_CustomGraph
 			$poly_points_count = count($poly_points);
 			foreach($poly_points as $i => $x_y_pair)
 			{
+				if($x_y_pair[0] < ($this->graph_left_start + 2) || $x_y_pair[0] > ($this->graph_left_end - 2))
+				{
+					// Don't draw anything on the left or right hand edges
+					continue;
+				}
+
 				if(true || !$identifiers_empty) // TODO: determine whether to kill this check
 				{
 					if(isset($regression_plots[$i]))
