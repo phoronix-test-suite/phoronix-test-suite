@@ -182,6 +182,23 @@ class pts_test_run_manager
 	{
 		return count($this->tests_to_run);
 	}
+	public function get_estimated_run_time_remaining($index = 0)
+	{
+		$est_time = 0;
+
+		if(isset($this->tests_to_run[$index]))
+		{
+			for($i = $index; $i < count($this->tests_to_run); $i++)
+			{
+				$test_identifier = $this->tests_to_run[$i]->get_identifier(); // is a test_run_request
+				$test_time = pts_estimated_run_time($test_identifier, true, false);
+
+				$est_time += $test_time;
+			}
+		}
+
+		return $est_time;
+	}
 	public function get_test_to_run($index)
 	{
 		return isset($this->tests_to_run[$index]) ? $this->tests_to_run[$index] : false;

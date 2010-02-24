@@ -418,8 +418,8 @@ class run_test implements pts_option_interface
 					}
 				}
 			}
-			echo "\n";
 		}
+		echo "\n";
 
 		pts_set_assignment_next("PREV_TEST_IDENTIFIER", $test_run_manager->get_tests_to_run_identifiers());
 	}

@@ -85,6 +85,7 @@ function pts_extended_init()
 	// defined when using pts_test_read_xml() the first time
 	pts_loader::load_definitions("test-profile.xml");
 	pts_loader::load_definitions("test-suite.xml");	
+	pts_loader::load_definitions("test-installation.xml");	
 }
 function pts_core_storage_init()
 {
