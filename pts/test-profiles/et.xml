@@ -23,7 +23,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>+exec pts-etconfig +timedemo 1 +set demodone "quit" +set demoloop1 "demo railgun; set nextdemo vstr demodone" +vstr demoloop1</Arguments>
+			<Arguments>+exec pts-etconfig +set ui_r_mode -1 +set r_mode -1 +timedemo 1 +set demodone "quit" +set demoloop1 "demo railgun; set nextdemo vstr demodone" +vstr demoloop1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>

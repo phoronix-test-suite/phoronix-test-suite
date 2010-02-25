@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>Kpos/sec</LineHint>
+		<OutputTemplate>1479113766 pos / 168441 msec = #_RESULT_# Kpos/sec</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

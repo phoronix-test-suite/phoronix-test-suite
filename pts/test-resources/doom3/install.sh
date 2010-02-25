@@ -154,19 +154,19 @@ chmod +x doom3-linux-1.3.1.1304.x86.run
 mv -f doom3-pts.cfg base/doom3-pts.cfg
 
 echo "#!/bin/sh
-./bin/Linux/x86/doom.x86 \$@ > \$LOG_FILE
-cat \$LOG_FILE | grep fps" > doom3
+./bin/Linux/x86/doom.x86 \$@ > \$LOG_FILE" > doom3
 chmod +x doom3
 
 if [ -f doom3-game-files.tar ]
   then
-     tar -k -C $1/base -xvf $1/doom3-game-files.tar
+     tar -k -C $HOME/base -xvf $HOME/doom3-game-files.tar
   else
-     echo "Doom 3 Game Files (*.pk4) Must Be Copied Into $1/base"
+     echo "Doom 3 Game Files (*.pk4) Must Be Copied Into $HOME/base"
 fi
+mkdir -p $HOME/.doom3/base/
 if [ -f doom3-key.tar ]
   then
-     tar -xvf doom3-key.tar
+     tar -k -C $HOME/.doom3/base/ -xvf $HOME/doom3-key.tar
   else
      echo "Copy Your Game Key File To $HOME/.doom3/base/doomkey"
 fi

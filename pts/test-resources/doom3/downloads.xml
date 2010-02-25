@@ -8,10 +8,12 @@
 		<Package>
 			<URL>doom3-game-files.tar</URL>
 			<FileName>doom3-game-files.tar</FileName>
+			<FileSize>1556049920</FileSize>
 		</Package>
 		<Package>
 			<URL>doom3-key.tar</URL>
 			<FileName>doom3-key.tar</FileName>
+			<FileSize>10240</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
