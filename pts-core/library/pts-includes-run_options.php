@@ -99,10 +99,10 @@ function pts_prompt_test_options($identifier)
 
 				if(count($option_names) > 1)
 				{
+					echo "\n" . $o->get_name() . ":\n";
 					array_push($option_names, "Test All Options");
 				}
 
-				echo "\n" . $o->get_name() . ":\n";
 				$bench_choice = pts_text_select_menu("Enter Your Choice", $option_names, true, true);
 			}
 

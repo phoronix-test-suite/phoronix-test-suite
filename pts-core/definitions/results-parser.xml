@@ -5,5 +5,9 @@
 			<Name>P_RESULTS_PARSER_TEMPLATE</Name>
 			<Value>PhoronixTestSuite/ResultsParser/OutputTemplate</Value>
 		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_RESULT_KEY</Name>
+			<Value>PhoronixTestSuite/ResultsParser/ResultKey</Value>
+		</Define>
 	</Definitions>
 </PhoronixTestSuite>
