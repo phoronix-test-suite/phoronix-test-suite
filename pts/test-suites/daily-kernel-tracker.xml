@@ -9,6 +9,16 @@
 		<Description>These are the tests that are being run daily by the Phoronix Kernel Test Farm.</Description>
 	</SuiteInformation>
 	<RunTest>
+		<Test>openarena</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>urbanterror</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
 		<Test>apache</Test>
 	</RunTest>
 	<RunTest>
@@ -182,6 +192,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>dcraw</Test>
+	</RunTest>
+	<RunTest>
+		<Test>povray</Test>
 	</RunTest>
 	<RunTest>
 		<Test>c-ray</Test>

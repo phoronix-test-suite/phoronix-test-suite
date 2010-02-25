@@ -94,7 +94,10 @@ class phodevi_system extends phodevi_device_interface
 				$property = new phodevi_device_property("sw_display_server", PHODEVI_SMART_CACHE);
 				break;
 			case "display-driver":
-				$property = new phodevi_device_property("sw_display_driver", PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property(array("sw_display_driver", false), PHODEVI_STAND_CACHE);
+				break;
+			case "display-driver-string":
+				$property = new phodevi_device_property(array("sw_display_driver", true), PHODEVI_STAND_CACHE);
 				break;
 			case "dri-display-driver":
 				$property = new phodevi_device_property("sw_dri_display_driver", PHODEVI_SMART_CACHE);
@@ -945,45 +948,44 @@ class phodevi_system extends phodevi_device_interface
 
 		return $info;
 	}
-	public static function sw_display_driver()
+	public static function sw_display_driver($with_version = true)
 	{
 		if(IS_WINDOWS)
 		{
 			return null;
 		}
 
-		$ddx_info = "";
-		$xorg_module_driver = phodevi::read_property("system", "dri-display-driver");
+		$display_driver = phodevi::read_property("system", "dri-display-driver");
 
-		if(empty($xorg_module_driver))
+		if(empty($display_driver))
 		{
 			if(IS_ATI_GRAPHICS)
 			{
-				$xorg_module_driver = "fglrx";
+				$display_driver = "fglrx";
 			}
 			else if(IS_NVIDIA_GRAPHICS)
 			{
-				$xorg_module_driver = "nvidia";
+				$display_driver = "nvidia";
 			}
 			else if((IS_MESA_GRAPHICS || IS_BSD) && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
 			{
-				$xorg_module_driver = "nv";
+				$display_driver = "nv";
 			}
 			else
 			{
 				// Fallback to hopefully detect the module, takes the first word off the GPU string and sees if it is the module
 				// This works in at least the case of the Cirrus driver
-				$xorg_module_driver = strtolower(pts_first_string_in_string(phodevi::read_name("gpu")));
+				$display_driver = strtolower(pts_first_string_in_string(phodevi::read_name("gpu")));
 			}
 		}
 
-		if(!empty($xorg_module_driver))
+		if(!empty($display_driver))
 		{
-			$driver_version = phodevi_parser::read_xorg_module_version($xorg_module_driver . "_drv");
+			$driver_version = phodevi_parser::read_xorg_module_version($display_driver . "_drv");
 
 			if($driver_version == false || $driver_version == "1.0.0")
 			{
-				switch($xorg_module_driver)
+				switch($display_driver)
 				{
 					case "radeon":
 						// RadeonHD driver also reports DRI driver as "radeon", so try reading that instead
@@ -991,7 +993,7 @@ class phodevi_system extends phodevi_device_interface
 
 						if($driver_version != false)
 						{
-							$xorg_module_driver = "radeonhd";
+							$display_driver = "radeonhd";
 						}
 						break;
 					case "nvidia":
@@ -1021,18 +1023,18 @@ class phodevi_system extends phodevi_device_interface
 
 				if($vesa_version)
 				{
-					$xorg_module_driver = "vesa";
+					$display_driver = "vesa";
 					$driver_version = $vesa_version;
 				}
 			}
 
-			if(!empty($driver_version))
+			if(!empty($driver_version) && $with_version)
 			{
-				$ddx_info = $xorg_module_driver . " " . $driver_version;
+				$display_driver .= ' ' . $driver_version;
 			}
 		}
 
-		return $ddx_info;
+		return $display_driver;
 	}
 	public static function sw_opengl_driver()
 	{

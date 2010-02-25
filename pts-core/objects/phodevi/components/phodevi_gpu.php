@@ -654,7 +654,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(IS_MESA_GRAPHICS)
 		{
-			switch(phodevi::read_property("system", "dri-display-driver"))
+			switch(phodevi::read_property("system", "display-driver"))
 			{
 				case "radeon":
 					// Sure would be nice if there was a cleaner way of handling this...

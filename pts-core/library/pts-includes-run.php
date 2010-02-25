@@ -240,6 +240,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 	$failed_tests = array();
 	$validated_run_requests = array();
 	$allow_global_uploads = true;
+	$display_driver = phodevi::read_property("system", "display-driver");
 
 	foreach($test_run_manager->get_tests_to_run() as $test_run_request)
 	{
@@ -269,11 +270,20 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 		$test_profile = new pts_test_profile($test_identifier, $test_run_request->get_override_options());
 		$test_type = $test_profile->get_test_hardware_type();
 
-		if($test_type == "Graphics" && getenv("DISPLAY") == false)
+		if($test_type == "Graphics")
 		{
-			$display_mode->test_run_error("No display server was found, cannot run " . $test_identifier);
-			array_push($failed_tests, $test_identifier);
-			continue;
+			if(getenv("DISPLAY") == false)
+			{
+				$display_mode->test_run_error("No display server was found, cannot run " . $test_identifier);
+				array_push($failed_tests, $test_identifier);
+				continue;
+			}
+			else if(in_array($display_driver, array("vesa", "nv", "cirrus")))
+			{
+				$display_mode->test_run_error("A display driver without 3D acceleration was found, cannot run " . $test_identifier);
+				array_push($failed_tests, $test_identifier);
+				continue;
+			}
 		}
 
 		if(getenv("NO_" . strtoupper($test_type) . "_TESTS") || (($e = getenv("SKIP_TESTS")) && in_array($test_identifier, explode(",", $e))))
