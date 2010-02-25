@@ -527,7 +527,7 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function update_system_status($current_task)
 	{
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task));
+		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task, "time" => round(pts_read_assignment("EST_TIME_REMAINING") / 60)));
 
 		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
