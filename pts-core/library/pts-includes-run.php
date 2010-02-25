@@ -65,6 +65,14 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 				$test_passes = false;
 			}
 		}
+		else if(pts_is_suite($lower_identifier))
+		{
+			if(pts_suite_version_supported($lower_identifier) == false)
+			{
+				echo pts_string_header($lower_identifier . " is a suite not supported by this version of the Phoronix Test Suite.");
+				$test_passes = false;
+			}
+		}
 		else if(pts_is_virtual_suite($lower_identifier))
 		{
 			foreach(pts_virtual_suite_tests($lower_identifier) as $virt_test)

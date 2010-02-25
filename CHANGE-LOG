@@ -4,13 +4,14 @@ Phoronix Test Suite (Git)
 
 - pts-core: No longer statically code define statements for XML parsing, move into pts-core/definitions XML statements
 - pts-core: Add EST_TIME_REMAINING variable assignment that has the estimated run-time remaining during testing
+- pts-core: Add RequiresCoreVersion tag to XML test suite specification similar to the test profile implementation
 - phodevi: Add support for detecting Reiser4 file-system via its super magic block
 - phodevi: Report hard drive manufacturer when detected and prepend to the model string
 - phodevi: Add initial audio / sound card detection support
 - phoromatic: Add support for powering off the system if told to do so by the Phoromatic server
 - phoromatic: Add support for restarting the system if told to do so by the Phoromatic server
 - phoromatic: Wait an additional 90 seconds on connectivity problems
-- phoromatic: Report estimated time remainign to test completion to Phoromatic server
+- phoromatic: Report estimated time remaining to test completion to Phoromatic server
 - bilde_renderer: Fix the SVG renderer back-end from battling multiple graph style values contained in a single page
 - pts_Graph: Line graphing improvements for Phoromatic Tracker
 - pts-core: Various fixes and improvements

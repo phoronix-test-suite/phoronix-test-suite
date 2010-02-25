@@ -38,6 +38,10 @@
 			<Value>PhoronixTestSuite/SuiteInformation/ReferenceSystems</Value>
 		</Define>
 		<Define>
+			<Name>P_SUITE_REQUIRES_COREVERSION</Name>
+			<Value>PhoronixTestSuite/SuiteInformation/RequiresCoreVersion</Value>
+		</Define>
+		<Define>
 			<Name>P_SUITE_TEST_NAME</Name>
 			<Value>PhoronixTestSuite/RunTest/Test</Value>
 		</Define>

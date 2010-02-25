@@ -557,19 +557,39 @@ function pts_test_version_supported($identifier)
 
 	if(pts_is_test($identifier))
 	{
-		$requires_core_version = pts_test_read_xml($identifier, P_TEST_SUPPORTS_COREVERSION);
-		$supported = true;
+		$requires_core_version = pts_test_read_xml($identifier, P_TEST_REQUIRES_COREVERSION);
 
 		if(!empty($requires_core_version))
 		{
-			$requires_core_version = pts_trim_explode('-', $requires_core_version);	
-			$support_begins = $requires_core_version[0];
-			$support_ends = isset($requires_core_version[1]) ? $requires_core_version[1] : PTS_CORE_VERSION;
-			$supported = PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
+			$supported = pts_is_supported_core_version($requires_core_version);
 		}
 	}
 
 	return $supported;
+}
+function pts_suite_version_supported($identifier)
+{
+	// Check if the test suite's version is compatible with pts-core
+	$supported = true;
+
+	if(pts_is_suite($identifier))
+	{
+		$requires_core_version = pts_suite_read_xml($identifier, P_SUITE_REQUIRES_COREVERSION);
+
+		if(!empty($requires_core_version))
+		{
+			$supported = pts_is_supported_core_version($requires_core_version);
+		}
+	}
+
+	return $supported;
+}
+function pts_is_supported_core_version($core_check)
+{
+	$core_check = pts_trim_explode('-', $core_check);	
+	$support_begins = $core_check[0];
+	$support_ends = isset($core_check[1]) ? $core_check[1] : PTS_CORE_VERSION;
+	return PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
 }
 function pts_version_newer($version_a, $version_b)
 {

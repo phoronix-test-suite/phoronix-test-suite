@@ -126,7 +126,7 @@
 			<Value>PhoronixTestSuite/TestProfile/ProjectURL</Value>
 		</Define>
 		<Define>
-			<Name>P_TEST_SUPPORTS_COREVERSION</Name>
+			<Name>P_TEST_REQUIRES_COREVERSION</Name>
 			<Value>PhoronixTestSuite/TestProfile/RequiresCoreVersion</Value>
 		</Define>
 		<Define>
