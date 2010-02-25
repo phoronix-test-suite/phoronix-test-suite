@@ -471,6 +471,47 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 
 	return $vars;
 }
+function pts_parse_results(&$result_template, &$result_output, $key)
+{
+	$return_result = false;
+	$start_result_pos = strrpos($result_template, $key);
+	$end_result_pos = $start_result_pos + strlen($key);
+	$result_template_line = substr($result_template, 0, strpos($result_template, "\n", $end_result_pos));
+	$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n") + 1);
+	$result_template_r = explode(' ', pts_trim_spaces($result_template_line));
+	$result_template_r_pos = array_search($key, $result_template_r);
+
+	$search_key = null;
+	foreach($result_template_r as $line_part)
+	{
+		if(strpos($line_part, ':') !== false)
+		{
+			// add some sort of && strrpos($result_template, $line_part)  to make sure there isn't two of the same $search_key
+			$search_key = $line_part;
+			break;
+		}
+	}
+
+	if($search_key != null)
+	{
+		$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
+		$result_line = substr($result_line, strrpos($result_line, "\n") + 1);
+		$result_r = explode(' ', pts_trim_spaces($result_line));
+		$result_r_pos = array_search($key, $result_r);
+
+		if(isset($result_r[$result_template_r_pos]))
+		{
+			if(is_numeric($result_r[$result_template_r_pos]))
+			{
+				$return_result = $result_r[$result_template_r_pos];
+			}
+		}
+
+
+	}
+
+	return $return_result;
+}
 function pts_run_test(&$test_run_request, &$display_mode)
 {
 	$test_identifier = $test_run_request->get_identifier();
@@ -661,7 +702,17 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				$test_results = "";
 			}
 
-			$test_results = pts_call_test_script($test_identifier, "parse-results", null, $test_results, $test_extra_runtime_variables_post);
+			if(is_file($parse_results_xml = pts_location_test_resources($test_identifier) . "parse-results.xml") && is_file($benchmark_log_file))
+			{
+				$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_results_xml);
+				$result_template = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_TEMPLATE);
+				$result_output = file_get_contents($benchmark_log_file);
+				$test_results = pts_parse_results($result_template, $result_output, "#_RESULT_#");
+			}
+			else
+			{
+				$test_results = pts_call_test_script($test_identifier, "parse-results", null, $test_results, $test_extra_runtime_variables_post);
+			}
 
 			if(empty($test_results) && $run_time > 1)
 			{

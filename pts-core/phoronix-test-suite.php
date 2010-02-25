@@ -134,11 +134,6 @@ if(!QUICK_START)
 
 	define("NETWORK_TIMEOUT", pts_read_user_config(P_OPTION_NET_TIMEOUT, 20));
 
-	if(ini_get("file_uploads") == "Off")
-	{
-		echo "\nThe file_uploads option in your PHP configuration must be enabled for network support.\n\n";
-	}
-
 	if(ini_get("allow_url_fopen") == "Off")
 	{
 		echo "\nThe allow_url_fopen option in your PHP configuration must be enabled for network support.\n\n";
@@ -149,9 +144,8 @@ if(!QUICK_START)
 		define("NO_NETWORK_COMMUNICATION", true);
 		echo "\nNetwork Communication Is Disabled For Your User Configuration.\n\n";
 	}
-	else
+	/* else
 	{
-		// TODO: possibly be smarter than to bang PTS server on each run, perhaps each day and use PTS_CORE_STORAGE for remembering
 		$server_response = pts_http_get_contents("http://www.phoronix-test-suite.com/PTS", false, false);
 
 		if($server_response != "PTS")
@@ -159,6 +153,11 @@ if(!QUICK_START)
 			define("NO_NETWORK_COMMUNICATION", true);
 			echo "\nNetwork Communication Failed.\n\n";
 		}
+	}*/
+
+	if(!defined("NO_NETWORK_COMMUNICATION") && ini_get("file_uploads") == "Off")
+	{
+		echo "\nThe file_uploads option in your PHP configuration must be enabled for network support.\n\n";
 	}
 
 	pts_module_startup_init(); // Initialize the PTS module system

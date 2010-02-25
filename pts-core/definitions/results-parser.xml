@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<Definitions>
+		<Define>
+			<Name>P_RESULTS_PARSER_TEMPLATE</Name>
+			<Value>PhoronixTestSuite/ResultsParser/OutputTemplate</Value>
+		</Define>
+	</Definitions>
+</PhoronixTestSuite>

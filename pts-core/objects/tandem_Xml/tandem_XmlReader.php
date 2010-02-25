@@ -35,7 +35,7 @@ class tandem_XmlReader
 			$read_xml = file_get_contents($read_xml);
 		}
 
-		$read_xml = str_replace(array("\n", "\t"), null, $read_xml);
+		//$read_xml = str_replace(array("\n", "\t"), null, $read_xml);
 
 		$this->xml_data = $read_xml;
 	}
