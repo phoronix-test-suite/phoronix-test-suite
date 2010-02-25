@@ -471,7 +471,7 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 
 	return $vars;
 }
-function pts_parse_results(&$result_template, &$result_output, $key)
+function pts_parse_results(&$result_template, &$result_output, $key, $line_hint = null)
 {
 	$return_result = false;
 	$start_result_pos = strrpos($result_template, $key);
@@ -483,23 +483,31 @@ function pts_parse_results(&$result_template, &$result_output, $key)
 	$result_template_r_pos = array_search($key, $result_template_r);
 
 	$search_key = null;
-	foreach($result_template_r as $line_part)
-	{
-		if(strpos($line_part, ':') !== false)
-		{
-			// add some sort of && strrpos($result_template, $line_part)  to make sure there isn't two of the same $search_key
-			$search_key = $line_part;
-			break;
-		}
-	}
 
-	if($search_key == null)
+	if($line_hint != null && strpos($result_template_line, $line_hint) !== false)
 	{
-		// Just try searching for the first part of the string
-		for($i = 0; $i < $result_template_r_pos; $i++)
+		$search_key = $line_hint;
+	}
+	else
+	{
+		foreach($result_template_r as $line_part)
 		{
-			$search_key .= $result_template_r[$i] . ' ';
-		}		
+			if(strpos($line_part, ':') !== false)
+			{
+				// add some sort of && strrpos($result_template, $line_part)  to make sure there isn't two of the same $search_key
+				$search_key = $line_part;
+				break;
+			}
+		}
+
+		if($search_key == null)
+		{
+			// Just try searching for the first part of the string
+			for($i = 0; $i < $result_template_r_pos; $i++)
+			{
+				$search_key .= $result_template_r[$i] . ' ';
+			}		
+		}
 	}
 
 	if($search_key != null)
@@ -707,7 +715,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 			if(is_file($benchmark_log_file))
 			{
-				$test_results = "";
+				$test_results = null;
 			}
 
 			if(is_file($parse_results_xml = pts_location_test_resources($test_identifier) . "parse-results.xml") && is_file($benchmark_log_file))
@@ -715,6 +723,8 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_results_xml);
 				$result_template = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_TEMPLATE);
 				$result_key = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_RESULT_KEY);
+				$result_line_hint = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_LINE_HINT);
+				$result_divide_by = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_DIVIDE_BY);
 
 				if($result_key == null)
 				{
@@ -727,20 +737,35 @@ function pts_run_test(&$test_run_request, &$display_mode)
 						case "PTS_TEST_ARGUMENTS":
 							$result_key = "#_" . str_replace(' ', '', $pts_test_arguments) . "_#";
 							break;
+						case "PTS_USER_SET_ARGUMENTS":
+							$result_key = "#_" . str_replace(' ', '', $extra_arguments) . "_#";
+							break;
 					}
 				}
 
 				$result_output = file_get_contents($benchmark_log_file);
-				$test_results = pts_parse_results($result_template, $result_output, $result_key);
+				$test_results = pts_parse_results($result_template, $result_output, $result_key, $result_line_hint);
+
+				if($test_results != null && $result_divide_by != null)
+				{
+					$test_results = $test_results / $result_divide_by;
+				}
 			}
 			else
 			{
 				$test_results = pts_call_test_script($test_identifier, "parse-results", null, $test_results, $test_extra_runtime_variables_post);
 			}
 
-			if(empty($test_results) && $run_time > 1)
+			if(empty($test_results))
 			{
-				$test_results = $run_time;
+				if($run_time > 1)
+				{
+					$test_results = $run_time;
+				}
+				else if(is_file($benchmark_log_file))
+				{
+					$test_results = pts_file_get_contents($benchmark_log_file);
+				}
 			}
 
 			pts_test_profile_debug_message($display_mode, "Test Result Value: " . $test_results);

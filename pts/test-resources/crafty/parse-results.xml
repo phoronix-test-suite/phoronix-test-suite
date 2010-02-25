@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<OutputTemplate>Total nodes: 110718194
+Raw nodes per second: 3248773
+Total elapsed time: #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

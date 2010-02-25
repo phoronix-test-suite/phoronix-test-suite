@@ -9,5 +9,13 @@
 			<Name>P_RESULTS_PARSER_RESULT_KEY</Name>
 			<Value>PhoronixTestSuite/ResultsParser/ResultKey</Value>
 		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_LINE_HINT</Name>
+			<Value>PhoronixTestSuite/ResultsParser/LineHint</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_DIVIDE_BY</Name>
+			<Value>PhoronixTestSuite/ResultsParser/DivideResultValueBy</Value>
+		</Define>
 	</Definitions>
 </PhoronixTestSuite>
