@@ -94,7 +94,6 @@ class recover_run implements pts_option_interface
 		{
 			if(!($test_run_request instanceOf pts_test_run_request))
 			{
-				// TODO: determine how to handle arrays a pts_weighted_test_run_manager here
 				continue;
 			}
 

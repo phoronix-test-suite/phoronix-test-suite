@@ -89,37 +89,12 @@ class pts_test_run_manager
 		$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
 		$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
 		$override_test_options = $xml_parser->getXMLArrayValues(P_SUITE_TEST_OVERRIDE_OPTIONS);
-		$is_weighted_suite = pts_is_weighted_suite($test_suite);
-
-		if($is_weighted_suite)
-		{
-			echo "\nThe weighted suite option is currently EXPERIMENTAL.\n"; // TODO
-			
-			$weight_expressions = $xml_parser->getXMLArrayValues(P_SUITE_TEST_WEIGHT);
-
-			$weighted_manager = new pts_weighted_test_run_manager();
-			$weighted_manager->set_weight_suite_identifier($test_suite);
-			$weighted_manager->set_weight_test_profile($xml_parser->getXMLValue(P_SUITE_WEIGHTED_BASE_FROM_TEST));
-			$weighted_manager->set_weight_initial_value($xml_parser->getXMLValue(P_SUITE_WEIGHTED_INITIAL_VALUE));
-			$weighted_manager->set_weight_final_expression($xml_parser->getXMLValue(P_SUITE_WEIGHTED_FINAL_WEIGHT_EXPRESSION));
-		}
 
 		for($i = 0; $i < count($tests_in_suite); $i++)
 		{
 			if(pts_is_test($tests_in_suite[$i]))
 			{
 				$override_options = $this->parse_override_test_options($override_test_options[$i]);
-
-				if($is_weighted_suite)
-				{
-					// Currently weighted suites cannot be of BATCH or DEFAULTS sub-mode, but just a traditional test
-					$weighted_run_request = new pts_weighted_test_run_request($tests_in_suite[$i], $sub_arguments[$i], $sub_arguments_description[$i], $override_options);
-					$weighted_run_request->set_weight_expression($weight_expressions[$i]);
-
-					echo "\nWeighted test run manager is temporarily disabled.\n";
-					//array_push($weighted_manager->tests_to_run, $weighted_run_request);
-					continue;
-				}
 
 				switch($sub_modes[$i])
 				{
@@ -138,20 +113,8 @@ class pts_test_run_manager
 			}
 			else if(pts_is_suite($tests_in_suite[$i]))
 			{
-				if($is_weighted_suite)
-				{
-					$weighted_manager->add_suite_run($tests_in_suite[$i]);
-				}
-				else
-				{
-					$this->add_suite_run($tests_in_suite[$i]);
-				}
+				$this->add_suite_run($tests_in_suite[$i]);
 			}
-		}
-
-		if($is_weighted_suite)
-		{
-			array_push($this->tests_to_run, $weighted_manager);
 		}
 	}
 	public function set_tests_to_run($tests_to_run)

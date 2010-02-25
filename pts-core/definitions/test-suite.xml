@@ -61,21 +61,5 @@
 			<Name>P_SUITE_TEST_OVERRIDE_OPTIONS</Name>
 			<Value>PhoronixTestSuite/RunTest/OverrideTestOptions</Value>
 		</Define>
-		<Define>
-			<Name>P_SUITE_TEST_WEIGHT</Name>
-			<Value>PhoronixTestSuite/RunTest/Weight</Value>
-		</Define>
-		<Define>
-			<Name>P_SUITE_WEIGHTED_BASE_FROM_TEST</Name>
-			<Value>PhoronixTestSuite/WeightInformation/BaseFromTestProfile</Value>
-		</Define>
-		<Define>
-			<Name>P_SUITE_WEIGHTED_INITIAL_VALUE</Name>
-			<Value>PhoronixTestSuite/WeightInformation/InitialValue</Value>
-		</Define>
-		<Define>
-			<Name>P_SUITE_WEIGHTED_FINAL_WEIGHT_EXPRESSION</Name>
-			<Value>PhoronixTestSuite/WeightInformation/FinalWeight</Value>
-		</Define>
 	</Definitions>
 </PhoronixTestSuite>

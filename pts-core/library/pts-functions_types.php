@@ -31,17 +31,6 @@ function pts_is_suite($object)
 
 	return $type == "TYPE_TEST_SUITE" || $type == "TYPE_LOCAL_TEST_SUITE";
 }
-function pts_is_weighted_suite($object)
-{
-	$is_weighted_suite = false;
-
-	if(pts_is_suite($object))
-	{
-		$is_weighted_suite = pts_suite_read_xml($object, P_SUITE_WEIGHTED_BASE_FROM_TEST) != false;
-	}
-
-	return $is_weighted_suite;
-}
 function pts_is_virtual_suite($object)
 {
 	return pts_location_virtual_suite($object) != false;

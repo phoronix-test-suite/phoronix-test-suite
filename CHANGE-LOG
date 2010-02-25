@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add EST_TIME_REMAINING variable assignment that has the estimated run-time remaining during testing
 - pts-core: Add RequiresCoreVersion tag to XML test suite specification similar to the test profile implementation
 - pts-core: Don't run graphics tests if the driver configuration is known to not support 3D acceleration at all
+- pts-core: Temporarily drop support for PTS weighted suites until it is rearchitected
 - phodevi: Add support for detecting Reiser4 file-system via its super magic block
 - phodevi: Report hard drive manufacturer when detected and prepend to the model string
 - phodevi: Add initial audio / sound card detection support

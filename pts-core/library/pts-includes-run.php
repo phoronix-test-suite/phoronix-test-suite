@@ -246,7 +246,6 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 	{
 		if(!($test_run_request instanceOf pts_test_run_request))
 		{
-			// TODO: $test_run_request probably a pts_weighted_test_run_manager then, decide how to validate
 			array_push($validated_run_requests, $test_run_request);
 			continue;
 		}
@@ -325,19 +324,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$display_mode, $run_index, $run_position = -1, $run_count = -1)
 {
 	$result = false;
-	$test_run_request = $test_run_manager->get_test_to_run($run_index);
-
-	if($test_run_request instanceOf pts_weighted_test_run_manager)
-	{
-		$test_run_requests = $test_run_request->get_tests_to_run();
-		$weighted_value = $test_run_request->get_weight_initial_value();
-		$is_weighted_run = true;
-	}
-	else
-	{
-		$test_run_requests = array($test_run_request);
-		$is_weighted_run = false;
-	}
+	$test_run_requests = array($test_run_manager->get_test_to_run($run_index));
 
 	if($test_run_manager->get_file_name() != null)
 	{
@@ -351,26 +338,12 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			pts_set_assignment("TEST_RUN_POSITION", $run_position);
 			pts_set_assignment("TEST_RUN_COUNT", $run_count);
 
-			if(($run_position != 1 && count(pts_glob(TEST_ENV_DIR . $test_run_request->get_identifier() . "/cache-share-*.pt2so")) == 0) || $is_weighted_run)
+			if(($run_position != 1 && count(pts_glob(TEST_ENV_DIR . $test_run_request->get_identifier() . "/cache-share-*.pt2so")) == 0))
 			{
 				sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 			}
 
 			$result = pts_run_test($test_run_request, $display_mode);
-
-			if($is_weighted_run)
-			{
-				if($result instanceOf pts_test_result)
-				{
-					$this_result = $result->get_result();
-					$this_weight_expression = $test_run_request->get_weight_expression();
-					$weighted_value = pts_evaluate_math_expression(str_replace("\$RESULT_VALUE", $this_result, str_replace("\$WEIGHTED_VALUE", $weighted_value, $this_weight_expression)));
-				}
-				else
-				{
-					return false;
-				}
-			}
 
 			if(pts_unlink(PTS_USER_DIR . "halt-testing"))
 			{
@@ -383,30 +356,6 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 				continue;
 			}
 		}
-	}
-
-	if($is_weighted_run)
-	{
-		// The below code needs to be reworked to handle the new pts_test_result format
-		/*
-		$ws_xml_parser = new pts_suite_tandem_XmlReader($test_run_request->get_weight_suite_identifier());
-		$bt_xml_parser = new pts_test_tandem_XmlReader($test_run_request->get_weight_test_profile());
-		$result = new pts_test_result();
-
-		if(($final_expression = $test_run_request->get_weight_final_expression()) != null)
-		{
-			$weighted_value = pts_evaluate_math_expression(str_replace("\$WEIGHTED_VALUE", $weighted_value, $final_expression));
-		}
-
-		$result->set_result($weighted_value);
-		$result->set_result_scale($bt_xml_parser->getXMLValue(P_TEST_SCALE));
-		$result->set_result_proportion($bt_xml_parser->getXMLValue(P_TEST_PROPORTION));
-		$result->set_result_format($bt_xml_parser->getXMLValue(P_TEST_RESULTFORMAT));
-		$result->set_used_arguments(null); // TODO: build string as a composite of suite version + all test versions
-		$result->set_test_identifier($test_run_request->get_weight_suite_identifier());
-		$result->set_name($ws_xml_parser->getXMLValue(P_SUITE_TITLE));
-		$result->set_version($ws_xml_parser->getXMLValue(P_SUITE_VERSION));
-		*/
 	}
 
 	if($result instanceof pts_test_result)
