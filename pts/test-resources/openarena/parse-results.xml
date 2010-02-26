@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>fps</LineHint>
+		<OutputTemplate>5850 frames 61.7 seconds #_RESULT_# fps 2.0/10.6/151.0/4.2 ms</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>
