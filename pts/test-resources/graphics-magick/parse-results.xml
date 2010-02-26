@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<OutputTemplate>Results: #_RESULT_# iter 191.44s user 60.12s total 0.582 iter/s (0.183 iter/s cpu)</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

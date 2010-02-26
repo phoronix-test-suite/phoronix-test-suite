@@ -471,7 +471,7 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 
 	return $vars;
 }
-function pts_parse_results(&$result_template, &$result_output, $key, $line_hint = null)
+function pts_parse_results(&$result_template, &$result_output, $key, $line_hint = null, $line_before_hint = null, $strip_from_result = null)
 {
 	$return_result = false;
 	$start_result_pos = strrpos($result_template, $key);
@@ -483,16 +483,21 @@ function pts_parse_results(&$result_template, &$result_output, $key, $line_hint 
 	$result_template_r_pos = array_search($key, $result_template_r);
 
 	$search_key = null;
+	$line_before_key = null;
 
 	if($line_hint != null && strpos($result_template_line, $line_hint) !== false)
 	{
 		$search_key = $line_hint;
 	}
+	else if($line_before_hint != null && strpos($result_template, $line_hint) !== false)
+	{
+		$search_key = null; // doesn't really matter what this value is
+	}
 	else
 	{
 		foreach($result_template_r as $line_part)
 		{
-			if(strpos($line_part, ':') !== false)
+			if(strpos($line_part, ':') !== false && strlen($line_part) > 1)
 			{
 				// add some sort of && strrpos($result_template, $line_part)  to make sure there isn't two of the same $search_key
 				$search_key = $line_part;
@@ -510,10 +515,19 @@ function pts_parse_results(&$result_template, &$result_output, $key, $line_hint 
 		}
 	}
 
-	if($search_key != null)
+	if($search_key != null || $line_before_hint != null)
 	{
-		$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
-		$result_line = substr($result_line, strrpos($result_line, "\n") + 1);
+		if($line_before_hint != null)
+		{
+			$result_line = substr($result_output, strpos($result_output, "\n", strrpos($result_output, $line_before_hint)));
+			$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
+		}
+		else
+		{
+			$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
+			$result_line = substr($result_line, strrpos($result_line, "\n") + 1);
+		}
+
 		$result_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')'), ' ', $result_line)));
 		$result_r_pos = array_search($key, $result_r);
 
@@ -524,6 +538,11 @@ function pts_parse_results(&$result_template, &$result_output, $key, $line_hint 
 				$return_result = $result_r[$result_template_r_pos];
 			}
 		}
+	}
+
+	if($strip_from_result != null)
+	{
+		$return_result = str_replace($strip_from_result, null, $return_result);
 	}
 
 	return $return_result;
@@ -724,7 +743,9 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				$result_template = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_TEMPLATE);
 				$result_key = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_RESULT_KEY);
 				$result_line_hint = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_LINE_HINT);
+				$result_line_before_hint = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_LINE_BEFORE_HINT);
 				$result_divide_by = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_DIVIDE_BY);
+				$strip_from_result = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_STRIP_FROM_RESULT);
 
 				if($result_key == null)
 				{
@@ -744,7 +765,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				}
 
 				$result_output = file_get_contents($benchmark_log_file);
-				$test_results = pts_parse_results($result_template, $result_output, $result_key, $result_line_hint);
+				$test_results = pts_parse_results($result_template, $result_output, $result_key, $result_line_hint, $result_line_before_hint, $strip_from_result);
 
 				if($test_results != null && $result_divide_by != null)
 				{

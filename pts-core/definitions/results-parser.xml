@@ -14,6 +14,14 @@
 			<Value>PhoronixTestSuite/ResultsParser/LineHint</Value>
 		</Define>
 		<Define>
+			<Name>P_RESULTS_PARSER_LINE_BEFORE_HINT</Name>
+			<Value>PhoronixTestSuite/ResultsParser/LineBeforeHint</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_STRIP_FROM_RESULT</Name>
+			<Value>PhoronixTestSuite/ResultsParser/StripFromResult</Value>
+		</Define>
+		<Define>
 			<Name>P_RESULTS_PARSER_DIVIDE_BY</Name>
 			<Value>PhoronixTestSuite/ResultsParser/DivideResultValueBy</Value>
 		</Define>

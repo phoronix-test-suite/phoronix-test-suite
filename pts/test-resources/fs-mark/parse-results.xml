@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineBeforeHint>Files/sec</LineBeforeHint>
+		<OutputTemplate>    42         1000      1048576        #_RESULT_#            10440</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>
