@@ -227,6 +227,10 @@ class pts_test_profile
 	{
 		$this->xml_parser->overrideXMLValue(P_TEST_TITLE, $title);
 	}
+	public function set_test_profile_version($version)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_PTSVERSION, $version);
+	}
 }
 
 ?>

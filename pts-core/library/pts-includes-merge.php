@@ -173,6 +173,7 @@ function pts_result_file_results_to_xml(&$result_manager, &$xml_writer)
 		$use_id = pts_request_new_id();
 		$xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->get_name());
 		$xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->get_version());
+		$xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $use_id, $result_object->get_test_profile_version());
 		$xml_writer->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $use_id, $result_object->get_attributes());
 		$xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $use_id, $result_object->get_scale());
 		$xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $use_id, $result_object->get_proportion());

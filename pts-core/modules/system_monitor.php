@@ -92,6 +92,7 @@ class system_monitor extends pts_module_interface
 				$tandem_id = pts_request_new_id();
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $graph_title);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, null);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, null);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $sub_title);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $pts_sensor->get_sensor_unit());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, null);

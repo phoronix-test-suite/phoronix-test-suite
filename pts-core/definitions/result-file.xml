@@ -83,6 +83,10 @@
 			<Value>PhoronixTestSuite/Benchmark/Version</Value>
 		</Define>
 		<Define>
+			<Name>P_RESULTS_TEST_PROFILE_VERSION</Name>
+			<Value>PhoronixTestSuite/Benchmark/ProfileVersion</Value>
+		</Define>
+		<Define>
 			<Name>P_RESULTS_TEST_ARGUMENTS</Name>
 			<Value>PhoronixTestSuite/Benchmark/TestArguments</Value>
 		</Define>

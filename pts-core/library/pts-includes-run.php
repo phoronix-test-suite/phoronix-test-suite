@@ -370,6 +370,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_test_profile()->get_test_title());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->get_test_profile()->get_version());
+			$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result->get_test_profile()->get_test_profile_version());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_used_arguments_description());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->get_test_profile()->get_result_scale());
 			$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->get_test_profile()->get_result_proportion());

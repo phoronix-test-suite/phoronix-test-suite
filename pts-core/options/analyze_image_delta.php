@@ -127,6 +127,7 @@ class analyze_image_delta implements pts_option_interface
 				$tandem_id = pts_request_new_id();
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result_object->get_name());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result_object->get_version());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result_object->get_test_profile_version());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result_object->get_attributes());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result_object->get_test_name());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result_object->get_arguments());

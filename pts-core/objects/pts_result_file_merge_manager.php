@@ -46,7 +46,7 @@ class pts_result_file_merge_manager
 		{
 			foreach($this->test_results[$mto_test_name] as &$mto_compare)
 			{
-				if(trim($mto_compare->get_arguments()) == trim($merge_test_object->get_arguments()) && $mto_compare->get_attributes() == $merge_test_object->get_attributes() && $mto_compare->get_version() == $merge_test_object->get_version() && $mto_compare->get_scale() == $merge_test_object->get_scale())
+				if(trim($mto_compare->get_arguments()) == trim($merge_test_object->get_arguments()) && $mto_compare->get_attributes() == $merge_test_object->get_attributes() && $mto_compare->get_version() == $merge_test_object->get_version() && $mto_compare->get_scale() == $merge_test_object->get_scale() && pts_version_comparable($mto_compare->get_test_profile_version(), $merge_test_object->get_test_profile_version()))
 				{
 					foreach($merge_test_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 					{

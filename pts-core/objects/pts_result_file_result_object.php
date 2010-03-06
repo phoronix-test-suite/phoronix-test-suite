@@ -27,11 +27,12 @@ class pts_result_file_result_object
 	private $test_result;
 
 	// TODO: In process of transitioning this better to use pts_test_result
-	public function __construct($title, $version, $attributes, $scale, $test_identifier, $arguments, $proportion, $format, $result_buffer)
+	public function __construct($title, $version, $profile_version, $attributes, $scale, $test_identifier, $arguments, $proportion, $format, $result_buffer)
 	{
 		$test_profile = new pts_test_profile($test_identifier);
 		$test_profile->set_test_title($title);
 		$test_profile->set_version($version);
+		$test_profile->set_test_profile_version($profile_version);
 		$test_profile->set_result_scale($scale);
 		$test_profile->set_result_proportion($proportion);
 		$test_profile->set_result_format($format);
@@ -70,6 +71,10 @@ class pts_result_file_result_object
 	public function get_version()
 	{
 		return $this->test_result->get_test_profile()->get_version();
+	}
+	public function get_test_profile_version()
+	{
+		return $this->test_result->get_test_profile()->get_test_profile_version();
 	}
 	public function get_attributes()
 	{

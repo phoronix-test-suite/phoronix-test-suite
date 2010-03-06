@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Don't run graphics tests if the driver configuration is known to not support 3D acceleration at all
 - pts-core: Temporarily drop support for PTS weighted suites until it is rearchitected
 - pts-core: Add new interface (parse-results.xml) for handling results parsing of tests using an XML file with a result template
+- pts-core: Add ProfileVersion tag to XML result file specification
 - phodevi: Add support for detecting Reiser4 file-system via its super magic block
 - phodevi: Report hard drive manufacturer when detected and prepend to the model string
 - phodevi: Add initial audio / sound card detection support

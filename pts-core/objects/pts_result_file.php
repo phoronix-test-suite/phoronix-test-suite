@@ -133,6 +133,7 @@ class pts_result_file
 
 			$results_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 			$results_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_VERSION);
+			$results_profile_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_PROFILE_VERSION);
 			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 			$results_scale = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_SCALE);
 			$results_test_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
@@ -166,7 +167,7 @@ class pts_result_file
 
 			for($i = 0; $i < count($results_name); $i++)
 			{
-				$test_object = new pts_result_file_result_object($results_name[$i], $results_version[$i], $results_attributes[$i], $results_scale[$i], $results_test_name[$i], $results_arguments[$i], $results_proportion[$i], $results_format[$i], $result_buffers[$i]);
+				$test_object = new pts_result_file_result_object($results_name[$i], $results_version[$i], $results_profile_version[$i], $results_attributes[$i], $results_scale[$i], $results_test_name[$i], $results_arguments[$i], $results_proportion[$i], $results_format[$i], $result_buffers[$i]);
 
 				array_push($this->result_objects, $test_object);
 			}
