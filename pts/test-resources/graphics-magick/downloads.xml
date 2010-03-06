@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://internap.dl.sourceforge.net/sourceforge/graphicsmagick/GraphicsMagick-1.3.7.tar.bz2, http://voxel.dl.sourceforge.net/sourceforge/graphicsmagick/GraphicsMagick-1.3.7.tar.bz2, http://heanet.dl.sourceforge.net/sourceforge/graphicsmagick/GraphicsMagick-1.3.7.tar.bz2</URL>
+			<URL>http://distfiles.macports.org/GraphicsMagick/GraphicsMagick-1.3.7.tar.bz2, http://ftp.nl.freebsd.org/os/Linux/distr/zenwalk/source/extra/ap/GraphicsMagick/GraphicsMagick-1.3.7.tar.bz2, http://ftp.oiram.net/pub/UNIX/FreeBSD/ports/distfiles/GraphicsMagick-1.3.7.tar.bz2, </URL>
 			<MD5>42bfd382ddcda399880721170bcbf61b</MD5>
 			<FileSize>6581207</FileSize>
 		</Package>
