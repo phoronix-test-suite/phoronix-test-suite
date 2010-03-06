@@ -27,9 +27,6 @@
 		<Test>apache</Test>
 	</RunTest>
 	<RunTest>
-		<Test>pgbench</Test>
-	</RunTest>
-	<RunTest>
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>

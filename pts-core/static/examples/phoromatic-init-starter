@@ -1,0 +1,21 @@
+#!/bin/sh
+# /etc/init.d/phoromatic-init-starter
+
+case "$1" in
+  start)
+    echo "Starting Phoromatic"
+    rm -f /tmp/phoromatic-output
+    phoronix-test-suite phoromatic.start >> /tmp/phoromatic-output
+    ;;
+  stop)
+    echo "Stopping Phoromatic"
+    touch /root/.phoronix-test-suite/halt-testing
+    ;;
+  *)
+    echo "Usage: /etc/init.d/phoromatic-init-starter {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+

@@ -363,6 +363,9 @@ class phoromatic extends pts_module_interface
 			$current_sw = pts_sw_string();
 		}
 
+		echo "\nIdling 60 seconds for system to settle...\n";
+		sleep(60);
+
 		do
 		{
 			$exit_loop = false;
