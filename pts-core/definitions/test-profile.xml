@@ -1,201 +1,303 @@
 <?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-definitions-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<Definitions>
 		<Define>
 			<Name>P_TEST_TITLE</Name>
 			<Value>PhoronixTestSuite/TestInformation/Title</Value>
+			<Description>The string title of the test, used for display purposes.</Description>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_SUBTITLE</Name>
 			<Value>PhoronixTestSuite/TestInformation/SubTitle</Value>
+			<Description>If a value is supplied, this is a static sub-title when rendering the graph results. Otherwise the test options (if applicable) are displayed.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_VERSION</Name>
 			<Value>PhoronixTestSuite/TestInformation/Version</Value>
+			<Description>The version of the software game/application/program itself. This is not to be confused with the test profile's version.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_DESCRIPTION</Name>
 			<Value>PhoronixTestSuite/TestInformation/Description</Value>
+			<Description>A few sentence description of the test.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_SCALE</Name>
 			<Value>PhoronixTestSuite/TestInformation/ResultScale</Value>
+			<Description>The scale the results are reported in. Examples include Seconds, Average FPS, and Mflops. This value can also be supplied by having the test execution process itself write the value to ~/pts-result-scale during the testing process.</Description>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_QUANTIFIER</Name>
 			<Value>PhoronixTestSuite/TestInformation/ResultQuantifier</Value>
+			<Description>When running a test multiple times, how should the final result be calculated. Examples include AVG (Average), MAX (Maximum), and MIN (Minimum).</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_RESULTFORMAT</Name>
 			<Value>PhoronixTestSuite/TestInformation/ResultFormat</Value>
+			<Description>The type of graph/visual representation to be used when viewing the test results. Supported values include BAR_GRAPH (Bar Graph), LINE_GRAPH (Line Graph), PASS_FAIL (Pass-Fail Graph), MULTI_PASS_FAIL (Multiple Pass-Fail Graph), and IMAGE_COMPARISON (Image Comparison Graph). When no value is supplied, the default BAR_GRAPH is used.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_PROPORTION</Name>
 			<Value>PhoronixTestSuite/TestInformation/Proportion</Value>
+			<Description>The scale for the test, whether lower or higher results yield better 
+performance. Recognized values include LIB (Lower Is Better) and HIB (Higher Is Better).</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_EXECUTABLE</Name>
 			<Value>PhoronixTestSuite/TestInformation/Executable</Value>
+			<Description>When looking for the test to execute in the path directory or the benchmarking environment directory, this is the string of the file-name.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_RUNCOUNT</Name>
 			<Value>PhoronixTestSuite/TestInformation/TimesToRun</Value>
+			<Description>The number of times to run the test.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_IGNORERUNS</Name>
 			<Value>PhoronixTestSuite/TestInformation/IgnoreRuns</Value>
+			<Description>If this tag is present, any integer values passed for the run numbers will be ignored. For example, if the value is <em>1</em>, the results from the first run will be ignored and not recorded. Multiple values can be defined with their values being separated by a comma. A supported number is an integer between one and the value of <em>TimesToRun</em>.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_INSTALLAGREEMENT</Name>
 			<Value>PhoronixTestSuite/TestInformation/InstallationAgreement</Value>
+			<Description>If there is a user license agreement or installation agreement, it should be specified within this tag. The agreement 
+is then displayed prior to the test being installed. Once the text has been shown, the user is asked whether they agree to the terms with a yes / no option. If the user agrees, the test is installed otherwise the test installation is aborted. Instead of supplying the full-text to the agreement in this tag, an HTTP URL to where the agreement can be found in a plain text format can be given, which will then be fetched by the Phoronix Test Suite.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_PREINSTALLMSG</Name>
 			<Value>PhoronixTestSuite/TestInformation/PreInstallMessage</Value>
+			<Description>If the user needs to be alerted about something dealing with this test, this tag can contain a string that will be shown to the user before the test is installed but after the files are downloaded.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_POSTINSTALLMSG</Name>
 			<Value>PhoronixTestSuite/TestInformation/PostInstallMessage</Value>
+			<Description>If the user needs to be alerted about something dealing with this test, this tag can contain a string that will be shown to the user after the test installation script has been executed.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_PRERUNMSG</Name>
 			<Value>PhoronixTestSuite/TestInformation/PreRunMessage</Value>
+			<Description>If the user needs to be alerted about something dealing with this test, this tag can contain a string that will be shown to the user before the test begins.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_POSTRUNMSG</Name>
 			<Value>PhoronixTestSuite/TestInformation/PostRunMessage</Value>
+			<Description>If the user needs to be alerted about something dealing with this test, this tag can contain a string that will be shown to the user after the test ends.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_PTSVERSION</Name>
 			<Value>PhoronixTestSuite/TestProfile/Version</Value>
+			<Description>The version of the test profile itself, not dependent upon the main Phoronix Test Suite version or the version of the software package being tested itself. This string should be formatted as A.B.C where A is a major revision and B is a minor revision, but both will break result merging compatibility with exisiting test results so one or the other should be incremented when there are major changes to the test profile / major version change of the software under the test itself. C is the patch level and incrementing this will allow exisiting test results to still be merged side-by-side.</Description>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_HARDWARE_TYPE</Name>
 			<Value>PhoronixTestSuite/TestProfile/TestType</Value>
+			<Description>The hardware area of the system that this test is designed to test. Example values include System, Processor, Graphics, Disk, Memory, and Motherboard.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_SOFTWARE_TYPE</Name>
 			<Value>PhoronixTestSuite/TestProfile/SoftwareType</Value>
+			<Description>The type of software that this test consists of. Examples could include Game, Utility, Simulator, and Other.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_MAINTAINER</Name>
 			<Value>PhoronixTestSuite/TestProfile/Maintainer</Value>
+			<Description>The maintainer of the test suite whether it be an individual or organization.</Description>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_LICENSE</Name>
 			<Value>PhoronixTestSuite/TestProfile/License</Value>
+			<Description>The license of the software itself. Example values include FREE, NON-FREE, RESTRICTED (Will only work with select hardware/software configurations), or UNKNOWN.</Description>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_STATUS</Name>
 			<Value>PhoronixTestSuite/TestProfile/Status</Value>
+			<Description>The status of the test profile itself. Values include VERIFIED, UNVERIFIED, and BROKEN.</Description>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_SUPPORTEDARCHS</Name>
 			<Value>PhoronixTestSuite/TestProfile/SupportedArchitectures</Value>
+			<Description>If the test software is limited to running on select system architectures, list them in this tag with each architecture delimited by a comma. Examples include x86 and x86_64.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_SUPPORTEDPLATFORMS</Name>
 			<Value>PhoronixTestSuite/TestProfile/SupportedPlatforms</Value>
+			<Description>If the test software is limited to running on select operating systems, list them in this tag with each OS being delimited by a comma. Recognized values include Linux, Solaris, BSD, MacOSX, and Windows.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_EXDEP</Name>
 			<Value>PhoronixTestSuite/TestProfile/ExternalDependencies</Value>
+			<Description>The external dependencies needed for the test. Multiple dependencies can be delimited by a comma. See <em>pts-core/static/distro-xml/generic-packages.xml</em> for a list of currently supported external dependencies.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_CTPEXTENDS</Name>
 			<Value>PhoronixTestSuite/TestProfile/Extends</Value>
+			<Description>If the test relies upon another test within the Phoronix Test Suite, list its name in this tag. This is similar to extends in programming languages in the capabilities that it provides. When running a test that extends another one, it will require all test extensions be built as well as the 
+PATH environment variable will contain each of the test directories below this test. This is part of the Cascading Test Profiles functionality. Any name of another test identifer shipping with the Phoronix Test Suite.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_ROOTNEEDED</Name>
 			<Value>PhoronixTestSuite/TestProfile/RequiresRoot</Value>
+			<Description>If root access is needed by the software encapsulated by this profile, the value of this tag should be set to <em>TRUE</em>. In which case the test profile's execution script will be run with sudo/root access.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_ENVIRONMENTSIZE</Name>
 			<Value>PhoronixTestSuite/TestProfile/EnvironmentSize</Value>
+			<Description>The estimated size that this test takes up in its environment directory when downloaded files have been extracted, etc. The size should be a megabyte value.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_ENVIRONMENT_TESTING_SIZE</Name>
 			<Value>PhoronixTestSuite/TestProfile/EnvironmentTestingSize</Value>
+			<Description>If the test involves creating a significantly large file(s) during the testing process, this tag should be used to ensure that there is sufficient space available. For example, if during the testing process a 2GB file is temporarily created, this tag should be set to 2048. If there is not sufficient room available on the hard drive prior to the test running, the test will not run. This tag does not impact the <em>EnvironmentSize</em> tag nor is it used at the test's install time. Values should be in megabytes.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_ESTIMATEDTIME</Name>
 			<Value>PhoronixTestSuite/TestProfile/EstimatedLength</Value>
+			<Description>The estimated length (in minutes) that it takes this benchmark to run in total.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_PROJECTURL</Name>
 			<Value>PhoronixTestSuite/TestProfile/ProjectURL</Value>
+			<Description>The web-site for the software vendor or project of the software being used for testing. The URL must start with http:// and be a valid address.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_REQUIRES_COREVERSION</Name>
 			<Value>PhoronixTestSuite/TestProfile/RequiresCoreVersion</Value>
+			<Description>If this test profile will only work with specific versions of the Phoronix Test Suite, they should be specified in this tag. Values must be the PTS core version [PTS_CORE_VERSION]. If this test profile requires version 2.4.0 of the Phoronix Test Suite or later, the value would simply be <em>2400</em>. If it requires a version between 2.2.0 and 2.4.0, it must be written as <em>2200 - 2399</em>.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_REFERENCE_SYSTEMS</Name>
 			<Value>PhoronixTestSuite/TestProfile/ReferenceSystems</Value>
+			<Description>To provide reference test results for comparison purposes, supply Phoronix Global IDs to this tag. For optimal comparisons, the reference IDs should be results generated when running in the Phoronix Test Suite batch mode. Values must be valid Phoronix Global IDs. Multiple IDs can be delimited by a comma.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_ALLOW_GLOBAL_UPLOADS</Name>
 			<Value>PhoronixTestSuite/TestProfile/AllowGlobalUploads</Value>
+			<Description>If this test profile emits result formats or data that is not compatible with Phoronix Global or is the test profile is just intended for internal use only, set <em>AllowGlobalUploads</em> to <em>FALSE</em>. If this tag is set to <em>FALSE</em>, the result generated from this test profile will not give the user the ability to upload the results to Phoronix Global after testing has concluded.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_AUTO_SAVE_RESULTS</Name>
 			<Value>PhoronixTestSuite/TestProfile/AutoSaveResults</Value>
+			<Description>If this tag is set to <em>TRUE</em>, the user will automatically be prompted to save the test results and will not be given the option of whether to save the test results. This is useful for test profiles that only produce meaningful results when saved (i.e. an image quality comparison). If this tag is not present, under normal conditions the user will be asked whether or not to save the test results.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_DEFAULTARGUMENTS</Name>
 			<Value>PhoronixTestSuite/TestSettings/Default/Arguments</Value>
+			<Description>Any arguments to supply to the test executable by default each and every time.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_DEFAULT_POST_ARGUMENTS</Name>
 			<Value>PhoronixTestSuite/TestSettings/Default/PostArguments</Value>
+			<Description>Any arguments to supply to the test executable by default each and every time, similar to the <em>Arguments</em> tag but this is appended to the end of the string that is passed to the test file, including after any test options are passed.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_POSSIBLEPATHS</Name>
 			<Value>PhoronixTestSuite/TestSettings/Default/PossiblePaths</Value>
+			<Description>As an alternative to using the testing environment directory, this tag can containe different paths to check for the test executable. Multiple paths need to be separated by a comma.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_ALLOW_CACHE_SHARE</Name>
 			<Value>PhoronixTestSuite/TestSettings/Default/AllowCacheShare</Value>
+			<Description>If this tag is present and is set to <em>TRUE</em>, the result output from the test run will be cached and then submitted to the test profile again later on if it's being run multiple times in the suite or test run. This is used for preventing a test from running multiple times with different settings, but all of the different options are tested in that single run, and the only change in options is what from the result output is returned.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_MIN_LENGTH</Name>
 			<Value>PhoronixTestSuite/TestSettings/Default/MinimumLength</Value>
+			<Description>If a test must run for at least a certain amount of time to produce meaningful results, enter the time (in seconds) into this tag. If the actual test run-time ends up being less than this value, the results will not be considered valid. This is to address the possibility of a test ending prematurely, crashes (segmentation faults, etc), or the process being killed by the user. This tag should only be used if the test will always at least run for the specified amount of time when properly executed.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_MAX_LENGTH</Name>
 			<Value>PhoronixTestSuite/TestSettings/Default/MaximumLength</Value>
+			<Description>This option is similar to the <em>MinimumLength</em> tag, but is to be used for invalidating a test result if the test takes too long to complete. Enter the time (in seconds) into this tag. If the actual test run-time is greater than this value, the results will not be considered valid. This tag should only be used if the test will always be less than the specified amount of time when properly executed.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_OPTIONS_DISPLAYNAME</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/DisplayName</Value>
+			<Description>If the end-user is presented with options for this test, this tag is the full string shown to the user to describe this option.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_OPTIONS_ARGPREFIX</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/ArgumentPrefix</Value>
+			<Description>The argument that will be appended to the Arguments tag and is pre-fixed to the Identifier tag selected by the user.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_OPTIONS_ARGPOSTFIX</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/ArgumentPostfix</Value>
+			<Description>The argument that will be appended to the Arguments tag and is post-fixed to the Identifier tag selected by the user.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_OPTIONS_IDENTIFIER</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/Identifier</Value>
+			<Description>The internal ID for this option.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_OPTIONS_DEFAULTENTRY</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/DefaultEntry</Value>
+			<Description>The integer option (starting from 1) of the menu entry to select for that option when running in defaults mode. For tests that have no menu options or just one, this tag isn't needed. For menus with two entries, both of them are used in the defaults mode. When dealing with more than two entries, use this tag to select the option to use otherwise the last entry will automatically be used.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_OPTIONS_MENU_GROUP</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/Menu</Value>
+			<Description>The group containing the name and value XML tags.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_OPTIONS_MENU_GROUP_NAME</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/Menu/Entry/Name</Value>
+			<Description>The string shown to the user to describe one of the available options within the option.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_OPTIONS_MENU_GROUP_VALUE</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/Menu/Entry/Value</Value>
+			<Description>The string post-fixed to the ArgumentName tag and appended to the end of the Arguments tag, which is then supplied to the executable binary as arguments.</Description>
+			<Required>NO</Required>
 		</Define>
 	</Definitions>
 </PhoronixTestSuite>

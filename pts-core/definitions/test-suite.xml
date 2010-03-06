@@ -1,65 +1,97 @@
 <?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-definitions-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<Definitions>
 		<Define>
 			<Name>P_SUITE_TITLE</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/Title</Value>
+			<Description>The full string title of the suite.</Description>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_VERSION</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/Version</Value>
+			<Description>The version of the test suite. The version string should be formatted as x.x.x.</Description>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_DESCRIPTION</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/Description</Value>
+			<Description>A short description of the test suite.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_MAINTAINER</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/Maintainer</Value>
+			<Description>The maintainer of the test suite whether it be an individual or organization.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TYPE</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/TestType</Value>
+			<Description>The hardware area of the system that this suite is designed to stress. Example values include System, Processor, Graphics, Disk, Memory, and Motherboard.</Description>
+			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_PRERUNMSG</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/PreRunMessage</Value>
+			<Description>If the user needs to be alerted about something dealing with this suite -- and just not to a specific test -- this tag can contain a string that will be shown to the user before the tests in the suite are executed.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_POSTRUNMSG</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/PostRunMessage</Value>
+			<Description>If the user needs to be alerted about something dealing with this suite -- and just not to a specific test -- this tag can contain a string that will be shown to the user after the tests in the suite are executed.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_RUNMODE</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/RunMode</Value>
+			<Description>If the Phoronix Test Suite should be run in a special mode while the suite's tests are being executed. For example, setting this tag to PCQS will run the tests with the Phoronix Certification and Qualification Suite paths.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_REFERENCE_SYSTEMS</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/ReferenceSystems</Value>
+			<Description>To provide reference test results for comparison purposes, supply Phoronix Global IDs to this tag. Values must be valid Phoronix Global IDs and multiple IDs can be delimited by a comma.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_REQUIRES_COREVERSION</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/RequiresCoreVersion</Value>
+			<Description>If the test suite relies upon versions of the Phoronix Test Suite for specific functionality, the beginning (and ending, if applicable) versions should be supplied. The PTS_CORE_VERSION value should be used (e.g. Phoronix Test Suite 2.4.0 had a PTS_CORE_VERSION of 2400). If a test suite is only compatible with Phoronix Test Suite 2.4 to 2.6, inclusive, the string should be written as 2400 - 2600. If only one value is supplied, the Phoronix Test Suite assumes that is the starting version of support and that the suite remains compatible with the latest upstream code.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_NAME</Name>
 			<Value>PhoronixTestSuite/RunTest/Test</Value>
+			<Description>The name (identifier) of the test to run.</Description>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_MODE</Name>
 			<Value>PhoronixTestSuite/RunTest/Mode</Value>
+			<Description>If this tag is set to BATCH, it will run the test mentioned in the <em>Test</em> tag in batch mode. If this tag is set to 
+DEFAULTS, it will run the test mentioned in the <em>Test</em> tag in the defaults mode. The <em>Description</em> and <em>Arguments</em> tags are ignored when setting one of these modes. This tag doesn't affect the mode for other test runs within the specified suite.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_ARGUMENTS</Name>
 			<Value>PhoronixTestSuite/RunTest/Arguments</Value>
+			<Description>Only the default arguments are extracted from the test profile. All other arguments you wish to supply (as the end-user isn't prompted of any options when running a suite) should be supplied as a value in this tag.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_DESCRIPTION</Name>
 			<Value>PhoronixTestSuite/RunTest/Description</Value>
+			<Description>A short description describing this test and its options, which is displayed on the graph in the PTS Results Viewer.</Description>
+			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_OVERRIDE_OPTIONS</Name>
 			<Value>PhoronixTestSuite/RunTest/OverrideTestOptions</Value>
+			<Description>If this tag is used, it can override XML tags within a test profile, such as to change the number of times that test is run, just only for that instance within the suite. Specify either just the tag name or the entire path to that tag and then specify the forced value when it's delimited by an equal sign. Multiple tags can be forced when each forced option is delimited by a semicolon.</Description>
+			<Required>NO</Required>
 		</Define>
 	</Definitions>
 </PhoronixTestSuite>

@@ -1,13 +1,18 @@
 <?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-definitions-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<Definitions>
 		<Define>
 			<Name>P_CACHE_PACKAGE_FILENAME</Name>
 			<Value>PhoronixTestSuite/DownloadCache/Package/FileName</Value>
+			<Required>YES</Required>
+			<Description>This XML path is where the file-name for a given package within a PTS download cache XML is stored.</Description>
 		</Define>
 		<Define>
 			<Name>P_CACHE_PACKAGE_MD5</Name>
 			<Value>PhoronixTestSuite/DownloadCache/Package/MD5</Value>
+			<Required>YES</Required>
+			<Description>This XML path is where the MD5 hash sum for a given package within a PTS download cache XML is stored.</Description>
 		</Define>
 	</Definitions>
 </PhoronixTestSuite>

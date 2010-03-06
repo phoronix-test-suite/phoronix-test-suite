@@ -9,55 +9,8 @@
 <div class="pts_doc_notice"><div style="float: left"><a href="index.html">&lt;&lt; Documentation Home</a></div><div style="float: right;">PTS Downloads Specification</div></div>
 <div class="pts_doc_main">
 <!-- PTS AREA -->
-<h1>Phoronix Test Suite 1.0 Downloads Specification</h1>
-<p>This document describes the XML tags for writing a test downloads.xml file.</p>
-<h2>PhoronixTestSuite/Downloads/Package/</h2>
-<p><strong>Tag:</strong> URL<br>
-<strong>Location:</strong> PhoronixTestSuite/Downloads/Package/<br>
-<strong>Internal Reference:</strong> P_DOWNLOADS_PACKAGE_URL<br>
-<strong>Required:</strong> Yes<br>
-<strong>Description:</strong> The URL(s) to download the package from. If multiple URLs are supplied 
-(delimited by a comma), the Phoronix Test Suite will randomly choose one URL but 
-will fallback to other URLs if one fails.</p>
-<p><strong>Tag:</strong> MD5<br>
-<strong>Location:</strong> PhoronixTestSuite/Downloads/Package/<br>
-<strong>Internal Reference:</strong> P_DOWNLOADS_PACKAGE_MD5<br>
-<strong>Required:</strong> No<br>
-<strong>Description:</strong> The MD5 check-sum for the file to be downloaded. This is done to 
-ensure file integrity.</p>
-<p><strong>Tag:</strong> FileName<br>
-<strong>Location:</strong> PhoronixTestSuite/Downloads/Package/<br>
-<strong>Internal Reference:</strong> P_DOWNLOADS_PACKAGE_FILENAME<br>
-<strong>Required:</strong> No<br>
-<strong>Description:</strong> If this tag is set, once the file is downloaded it will be renamed 
-to this value. If this tag is not set, the remote file-name will be maintained.</p>
-<p><strong>Tag:</strong> FileSize<br>
-<strong>Location:</strong> PhoronixTestSuite/Downloads/Package/<br>
-<strong>Internal Reference:</strong> P_DOWNLOADS_PACKAGE_FILESIZE<br>
-<strong>Required:</strong> Recommended<br>
-<strong>Description:</strong> The size of the file to be downloaded should be the value of this tag. The FileSize 
-should be an integer that is the number of bytes that makes up the file. This tag is used so that the Phoronix Test Suite 
-can determine the total size of files that need to be downloaded for a given operation.</p>
-<p><strong>Tag:</strong> DownloadTo<br>
-<strong>Location:</strong> PhoronixTestSuite/Downloads/Package/<br>
-<strong>Internal Reference:</strong> P_DOWNLOADS_PACKAGE_DESTINATION<br>
-<strong>Required:</strong> No<br>
-<strong>Description:</strong> If this tag is set to PTS_SHARED, the package will be download to 
-the pts-shared/ folder instead of the test's environment folder. <strong>Note:</strong> this option 
-has been dropped in Phoronix Test Suite 1.4. Users wishing to share files should instead use Cascading 
-Test Profiles.</p>
-<p><strong>Tag:</strong> PlatformSpecific<br>
-<strong>Location:</strong> PhoronixTestSuite/Downloads/Package/<br>
-<strong>Internal Reference:</strong> P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC<br>
-<strong>Required:</strong> No<br>
-<strong>Description:</strong> If this package is just needed on select operating systems / platforms, list them inside this tag 
-and multiple platforms can be delimited by a comma.</p>
-<p><strong>Tag:</strong> ArchitectureSpecific<br>
-<strong>Location:</strong> PhoronixTestSuite/Downloads/Package/<br>
-<strong>Internal Reference:</strong> P_DOWNLOADS_PACKAGE_ARCHSPECIFIC<br>
-<strong>Required:</strong> No<br>
-<strong>Description:</strong> If this package is just needed on select system/processor architectures, list them inside this tag 
-and multiple architectures can be delimited by a comma.</p>
+<h1>Phoronix Test Suite Downloads Specification</h1>
+<p>The documentation for the test profile download XML specification for the Phoronix Test Suite has moved to <em>phoronix-test-suite/pts-core/definitions/test-profile-downloads.xml</em>.</p>
 <!-- END OF PTS AREA -->
 </div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 - 2010 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</div></div></div>
 </body>
