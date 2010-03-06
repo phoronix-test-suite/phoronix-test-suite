@@ -294,26 +294,25 @@ class phoromatic extends pts_module_interface
 			if(is_file(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml"))
 			{
 				phoromatic::update_system_status("Uploading Test Results");
-				$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
+
+				$times_tried = 0;
+				do
+				{
+					if($times_tried > 0)
+					{
+						echo "\nConnection to server failed. Trying again in 60 seconds...\n";
+						sleep(60);
+					}
+
+					$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
+					$times_tried++;
+				}
+				while(!$uploaded_test_results && $times_tried < 4);
 
 				if(!$uploaded_test_results)
 				{
-					"\nFailed to upload test results on first attempt. Trying again in 60 seconds...\n";
-					sleep(60);
-					$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
-
-					if(!$uploaded_test_results)
-					{
-						"\nFailed to upload test results on first attempt. Trying again in 90 seconds...\n";
-						sleep(90);
-						$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
-
-						if(!$uploaded_test_results)
-						{
-							echo "\nERROR OCCURRED IN UPLOADING RESULTS\n";
-							return false;
-						}
-					}
+					echo "Server connection failed. Exiting...\n";
+					return false;
 				}
 
 				if(!pts_read_assignment("PHOROMATIC_ARCHIVE_RESULTS"))
@@ -335,36 +334,33 @@ class phoromatic extends pts_module_interface
 		if(define("PHOROMATIC_START", true))
 		{
 			echo "\nRegistering Status With Phoromatic Server\n";
-			$update_sd = phoromatic::update_system_details();
+
+			$times_tried = 0;
+			do
+			{
+				if($times_tried > 0)
+				{
+					echo "\nConnection to server failed. Trying again in 60 seconds...\n";
+					sleep(60);
+				}
+
+				$update_sd = phoromatic::update_system_details();
+				$times_tried++;
+			}
+			while(!$update_sd && $times_tried < 4);
 
 			if(!$update_sd)
 			{
-				echo "\nConnection to server failed. Trying again in 60 seconds...\n";
-				sleep(60);
-
-				$update_sd = phoromatic::update_system_details();
-
-				if(!$update_sd)
-				{
-					echo "\nConnection to server failed. Trying again in 90 seconds...\n";
-					sleep(90);
-
-					$update_sd = phoromatic::update_system_details();
-
-					if(!$update_sd)
-					{
-						echo "Server connection still failed. Exiting...\n";
-						return false;
-					}
-				}
+				echo "Server connection still failed. Exiting...\n";
+				return false;
 			}
 
 			$current_hw = pts_hw_string();
 			$current_sw = pts_sw_string();
-		}
 
-		echo "\nIdling 60 seconds for system to settle...\n";
-		sleep(60);
+			echo "\nIdling 60 seconds for system to settle...\n";
+			sleep(60);
+		}
 
 		do
 		{

@@ -1,5 +1,6 @@
 #!/bin/sh
 # /etc/init.d/phoromatic-init-starter
+# update-rc.d phoromatic-init-starter defaults
 
 case "$1" in
   start)

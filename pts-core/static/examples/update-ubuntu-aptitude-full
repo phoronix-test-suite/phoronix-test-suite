@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Example script for Phoromatic Ubuntu Tracker
+# http://ubuntu-tracker.phoromatic.com/
+# Toss into /etc/cron.hourly/
+
+hour=`date +%k`
+# hour=2
+if [ $hour -ne 2 ] ; then
+        exit
+fi
+
+aptitude update && aptitude -y full-upgrade && aptitude clean && reboot
+
