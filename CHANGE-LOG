@@ -21,6 +21,8 @@ Phoronix Test Suite (Git)
 - pts_Graph: Line graphing improvements for Phoromatic Tracker
 - pts-core: Various fixes and improvements
 - pts: Add adjustable record / block size to iozone test profile
+- pts: Remove dead download links
+- pts: Update openarena test profile against OpenArena 0.8.5 patch
 
 Phoronix Test Suite 2.4.1
 February 18, 2010

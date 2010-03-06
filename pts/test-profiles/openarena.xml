@@ -2,13 +2,13 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.3.1</Version>
+		<Version>1.4.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>329</EnvironmentSize>
+		<EnvironmentSize>360</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>sdl-development</ExternalDependencies>
 		<ProjectURL>http://openarena.ws/</ProjectURL>
@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>OpenArena</Title>
-		<Version>0.8.1</Version>
+		<Version>0.8.5</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
