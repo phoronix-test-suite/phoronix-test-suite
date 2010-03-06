@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add support for restarting the system if told to do so by the Phoromatic server
 - phoromatic: Wait an additional 90 seconds on connectivity problems
 - phoromatic: Report estimated time remaining to test completion to Phoromatic server
+- phoromatic: Add client support for the Phoromatic trigger interface
 - bilde_renderer: Fix the SVG renderer back-end from battling multiple graph style values contained in a single page
 - pts_Graph: Line graphing improvements for Phoromatic Tracker
 - pts-core: Various fixes and improvements

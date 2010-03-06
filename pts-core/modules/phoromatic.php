@@ -21,7 +21,7 @@
 */
 
 define("M_PHOROMATIC_GEN_RESPONSE", "PhoronixTestSuite/Phoromatic/General/Response");
-define("M_PHOROMATIC_TRIGGER_STRING", "PhoronixTestSuite/Phoromatic/General/TriggerString");
+define("M_PHOROMATIC_TRIGGER", "PhoronixTestSuite/Phoromatic/General/Trigger");
 define("M_PHOROMATIC_ID", "PhoronixTestSuite/Phoromatic/General/ID");
 define("M_PHOROMATIC_SYS_NAME", "PhoronixTestSuite/Phoromatic/General/SystemName");
 define("M_PHOROMATIC_UPLOAD_TO_GLOBAL", "PhoronixTestSuite/Phoromatic/General/UploadToGlobal");
@@ -408,6 +408,7 @@ class phoromatic extends pts_module_interface
 					$args_to_pass["AUTO_TEST_RESULTS_IDENTIFIER"] = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
 					$args_to_pass["PHOROMATIC_UPLOAD_TEST_LOGS"] = pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TEST_LOGS));
 					$args_to_pass["PHOROMATIC_UPLOAD_SYSTEM_LOGS"] = pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_SYSTEM_LOGS));
+					$args_to_pass["PHOROMATIC_TRIGGER"] = $xml_parser->getXMLValue(M_PHOROMATIC_TRIGGER);
 
 					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, "FALSE")))
 					{
@@ -569,6 +570,7 @@ class phoromatic extends pts_module_interface
 			"c" => $composite_xml,
 			"i" => pts_read_assignment("PHOROMATIC_SCHEDULE_ID"),
 			"ti" => pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER"),
+			"ts" => pts_read_assignment("PHOROMATIC_TRIGGER"),
 			"sl" => $logs["system-logs"],
 			"tl" => $logs["test-logs"]
 			));
