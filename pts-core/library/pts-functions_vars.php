@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_vars.php: Functions related to variables exposed to tests and/or end-users
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_env_variables()
+function pts_env_variables($search_for = null)
 {
 	// The PTS environmental variables passed during the testing process, etc
 	static $env_variables = null;
@@ -54,6 +54,17 @@ function pts_env_variables()
 		{
 			// This helps some test profiles build correctly if they don't do a cc check internally
 			$env_variables["CC"] = "gcc";
+		}
+	}
+
+	if($search_for != null)
+	{
+		foreach($env_variables as $key => $value)
+		{
+			if($key == $search_for)
+			{
+				return $value;
+			}
 		}
 	}
 
@@ -143,13 +154,16 @@ function pts_swap_variables($user_str, $replace_function)
 	}
 
 	$offset = 0;
-	while($offset < strlen($user_str) && ($s = strpos($user_str, "$", $offset)) !== false)
+	while($offset < strlen($user_str) && ($s = strpos($user_str, '$', $offset)) !== false)
 	{
 		$s++;
-		$var_name = substr($user_str, $s, (($e = strpos($user_str, " ", $s)) == false ? strlen($user_str) : $e) - $s);
-
+		$var_name = substr($user_str, $s, (($e = strpos($user_str, ' ', $s)) == false ? strlen($user_str) : $e) - $s);
 		$var_replacement = call_user_func($replace_function, $var_name);
-		$user_str = str_replace("$" . $var_name, $var_replacement, $user_str);
+
+		if(!is_array($var_replacement) && $var_replacement != null)
+		{
+			$user_str = str_replace("$" . $var_name, $var_replacement, $user_str);
+		}
 
 		$offset = $s + strlen($var_replacement);
 	}

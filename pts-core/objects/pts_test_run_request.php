@@ -52,6 +52,7 @@ class pts_test_run_request
 	}
 	public function __toString()
 	{
+		//return $this->get_identifier() . " " . pts_swap_variables($this->get_arguments(), "pts_env_variables") . " " . pts_swap_variables($this->get_arguments_description(), "pts_env_variables") . " " . $this->get_override_options();
 		return $this->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description() . " " . $this->get_override_options();
 	}
 	public function get_comparison_hash()
