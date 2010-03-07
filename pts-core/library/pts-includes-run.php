@@ -472,7 +472,7 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 
 	return $vars;
 }
-function pts_parse_results(&$result_template, &$result_output, $key, $line_hint = null, $line_before_hint = null, $strip_from_result = null)
+function pts_parse_results(&$result_template, &$result_output, $key, $line_hint = null, $line_before_hint = null, $strip_from_result = null, $strip_result_postfix = null)
 {
 	$return_result = false;
 	$start_result_pos = strrpos($result_template, $key);
@@ -482,6 +482,19 @@ function pts_parse_results(&$result_template, &$result_output, $key, $line_hint 
 	$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n") + 1);
 	$result_template_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', $result_template_line)));
 	$result_template_r_pos = array_search($key, $result_template_r);
+
+	if($result_template_r_pos === false)
+	{
+		// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
+		foreach($result_template_r as $i => $r_check)
+		{
+			if(strpos($check, $key) !== false)
+			{
+				$result_template_r_pos = $i;
+				break;
+			}
+		}
+	}
 
 	$search_key = null;
 	$line_before_key = null;
@@ -541,6 +554,10 @@ function pts_parse_results(&$result_template, &$result_output, $key, $line_hint 
 	if($strip_from_result != null)
 	{
 		$return_result = str_replace($strip_from_result, null, $return_result);
+	}
+	if($strip_result_postfix != null && substr($return_result, 0 - strlen($strip_result_postfix)) == $strip_result_postfix)
+	{
+		$return_result = substr($return_result, 0, 0 - strlen($strip_result_postfix));
 	}
 
 	// Add is_numeric check or whatever is relevant here to ensure parsing was clean
@@ -746,6 +763,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				$result_line_before_hint = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_LINE_BEFORE_HINT);
 				$result_divide_by = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_DIVIDE_BY);
 				$strip_from_result = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_STRIP_FROM_RESULT);
+				$strip_result_postfix = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_STRIP_RESULT_POSTFIX);
 
 				if($result_key == null)
 				{
@@ -765,7 +783,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				}
 
 				$result_output = file_get_contents($benchmark_log_file);
-				$test_results = pts_parse_results($result_template, $result_output, $result_key, $result_line_hint, $result_line_before_hint, $strip_from_result);
+				$test_results = pts_parse_results($result_template, $result_output, $result_key, $result_line_hint, $result_line_before_hint, $strip_from_result, $strip_result_postfix);
 
 				if($test_results != null && $result_divide_by != null)
 				{

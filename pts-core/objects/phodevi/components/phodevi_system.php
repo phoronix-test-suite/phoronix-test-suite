@@ -870,7 +870,7 @@ class phodevi_system extends phodevi_device_interface
 
 			$desktop_environment = $chrome_output;
 		}
-		else if(pts_process_running_bool("lxde-settings"))
+		else if(pts_process_running_bool("lxsession"))
 		{
 			$lx_output = trim(shell_exec("lxpanel --version"));
 			$version = substr($lx_output, strpos(" ", $lx_output) + 1);

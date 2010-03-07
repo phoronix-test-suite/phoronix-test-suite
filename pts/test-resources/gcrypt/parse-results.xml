@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<StripFromResult>ms</StripFromResult>
+		<OutputTemplate>CAMELLIA256   #_RESULT_#  1760ms  1820ms  1850ms  1800ms  1830ms  1810ms  1810ms  2620ms  2620ms          </OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

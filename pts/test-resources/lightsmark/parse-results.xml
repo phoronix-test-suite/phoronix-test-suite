@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>average fps</LineHint>
+		<StripResultPostfix>.</StripResultPostfix>
+		<OutputTemplate>Finished, average fps = #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>
