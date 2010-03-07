@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>Average frame-rate</LineHint>
+		<OutputTemplate>INFO: Elapsed time: 182.465 seconds
+      Average frame-rate: #_RESULT_# frames per second
+      Min / Max frame-rate: 59.6876 / 199.583 frames per second</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

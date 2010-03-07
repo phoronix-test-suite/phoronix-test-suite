@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineBeforeHint>Frames</LineBeforeHint>
+		<OutputTemplate>Frames:	6073
+FPS:	#_RESULT_#
+Unigine~# quit</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

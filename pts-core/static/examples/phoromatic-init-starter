@@ -6,7 +6,7 @@ case "$1" in
   start)
     echo "Starting Phoromatic"
     rm -f /tmp/phoromatic-output
-    phoronix-test-suite phoromatic.start >> /tmp/phoromatic-output
+    DISPLAY=:0 phoronix-test-suite phoromatic.start >> /tmp/phoromatic-output
     ;;
   stop)
     echo "Stopping Phoromatic"

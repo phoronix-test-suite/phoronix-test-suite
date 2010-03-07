@@ -480,7 +480,7 @@ function pts_parse_results(&$result_template, &$result_output, $key, $line_hint 
 	$end_result_line_pos = strpos($result_template, "\n", $end_result_pos);
 	$result_template_line = substr($result_template, 0, ($end_result_line_pos === false ? strlen($result_template) : $end_result_line_pos));
 	$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n") + 1);
-	$result_template_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')'), ' ', $result_template_line)));
+	$result_template_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', $result_template_line)));
 	$result_template_r_pos = array_search($key, $result_template_r);
 
 	$search_key = null;
@@ -529,15 +529,12 @@ function pts_parse_results(&$result_template, &$result_output, $key, $line_hint 
 			$result_line = substr($result_line, strrpos($result_line, "\n") + 1);
 		}
 
-		$result_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')'), ' ', $result_line)));
+		$result_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', $result_line)));
 		$result_r_pos = array_search($key, $result_r);
 
 		if(isset($result_r[$result_template_r_pos]))
 		{
-			if(is_numeric($result_r[$result_template_r_pos]))
-			{
-				$return_result = $result_r[$result_template_r_pos];
-			}
+			$return_result = $result_r[$result_template_r_pos];
 		}
 	}
 
@@ -545,6 +542,8 @@ function pts_parse_results(&$result_template, &$result_output, $key, $line_hint 
 	{
 		$return_result = str_replace($strip_from_result, null, $return_result);
 	}
+
+	// Add is_numeric check or whatever is relevant here to ensure parsing was clean
 
 	return $return_result;
 }
