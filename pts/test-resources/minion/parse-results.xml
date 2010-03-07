@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<OutputTemplate>Total Wall Time: #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

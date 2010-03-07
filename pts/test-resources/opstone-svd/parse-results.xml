@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>64-bit</LineHint>
+		<OutputTemplate>	Performance of this computer	 Mean 	 Peak 
+	----------------------------	======	======
+	       32-bit floating point	 427	 674  (Gflops)
+	       64-bit floating point	 #_RESULT_#	 1275  (Gflops)
+</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

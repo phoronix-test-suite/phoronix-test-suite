@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<StripFromResult>ms</StripFromResult>
+		<OutputTemplate>Totals:                           #_RESULT_#   4094ms</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

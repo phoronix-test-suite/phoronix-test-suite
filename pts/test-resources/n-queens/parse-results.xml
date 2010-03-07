@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineBeforeHint>solutions/sec</LineBeforeHint>
+		<OutputTemplate>elapsed time (sec)    : #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

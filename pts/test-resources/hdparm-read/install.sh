@@ -2,6 +2,6 @@
 
 echo "#!/bin/sh
 
-hdparm \$@" > hdparm-read
+hdparm \$@ > \$LOG_FILE" > hdparm-read
 chmod +x hdparm-read
 

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<OutputTemplate>GMPbench result: #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

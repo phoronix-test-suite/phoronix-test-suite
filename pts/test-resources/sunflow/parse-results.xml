@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<StripFromResult>ms</StripFromResult>
+		<DivideResultValueBy>1000</DivideResultValueBy>
+		<OutputTemplate>BENCH  info  : Benchmark results:
+BENCH  info  :   * Iterations: 10
+BENCH  info  :   * Average:    #_RESULT_#
+BENCH  info  :   * Fastest:    6466ms
+BENCH  info  :   * Longest:    7503ms
+BENCH  info  :   * Deviation:  416ms</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>
