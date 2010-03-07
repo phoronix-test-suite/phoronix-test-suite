@@ -204,6 +204,7 @@ function pts_list_regressions_linear(&$result_file, $threshold = 0.05, $show_onl
 	foreach($result_file->get_result_objects() as $test_index => $result_object)
 	{
 		$prev_buffer_item = null;
+		$prev_identifier = null;
 		$this_test_regressions = array();
 
 		foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
@@ -215,6 +216,22 @@ function pts_list_regressions_linear(&$result_file, $threshold = 0.05, $show_onl
 
 			if($prev_buffer_item != null && abs(1 - ($buffer_item->get_result_value() / $prev_buffer_item->get_result_value())) > $threshold)
 			{
+				if(defined("PHOROMATIC_TRACKER"))
+				{
+					$explode_r = explode(': ', $buffer_item->get_result_identifier());
+
+					if(count($explode_r) == 2 && $explode_r[0] != $prev_identifier)
+					{
+						// This case wards against it looking like a regression between multiple systems on a Phoromatic Tracker
+						// The premise is the format is "SYSTEM NAME: DATE" so match up SYSTEM NAME's
+						$prev_buffer_item = $buffer_item;
+						$prev_identifier = $explode_r[0];
+						continue;
+					}
+
+					$prev_identifier = $explode_r[0];
+				}
+
 				$this_regression_marker = new pts_test_result_regression_marker($result_object, $prev_buffer_item, $buffer_item, $test_index);
 
 				if($show_only_active_regressions)
@@ -225,7 +242,7 @@ function pts_list_regressions_linear(&$result_file, $threshold = 0.05, $show_onl
 						{
 							// 1% tolerance, regression seems to be corrected
 							unset($this_test_regressions[$index]);
-							$this_regression_market = null;
+							$this_regression_marker = null;
 							break;
 						}
 					}

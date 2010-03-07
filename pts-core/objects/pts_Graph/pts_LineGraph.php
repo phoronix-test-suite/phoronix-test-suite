@@ -256,7 +256,7 @@ class pts_LineGraph extends pts_CustomGraph
 					array_push($poly_points, array($px_from_left, $value_plot_top));
 				}
 
-				if($this->regression_marker_threshold > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
+				if($this->regression_marker_threshold > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
 				{
 					$regression_plots[($i - 1)] = $prev_identifier;
 					$regression_plots[$i] = $this->graph_identifiers[$i];
@@ -281,7 +281,7 @@ class pts_LineGraph extends pts_CustomGraph
 
 				if(true || !$identifiers_empty) // TODO: determine whether to kill this check
 				{
-					if(isset($regression_plots[$i]))
+					if(isset($regression_plots[$i]) && $i > 0)
 					{
 						$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, $this->graph_color_alert, 4, $regression_plots[$i]);
 					}
