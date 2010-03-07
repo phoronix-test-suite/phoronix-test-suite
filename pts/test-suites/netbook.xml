@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.4.0</Version>
+		<Version>1.4.1</Version>
 		<TestType>System</TestType>
 		<Title>Netbook Test Suite</Title>
 		<Maintainer>Michael Larabel</Maintainer>
@@ -11,6 +11,11 @@
 	<RunTest>
 		<Test>openarena</Test>
 		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tremulous</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
 	<RunTest>
@@ -35,10 +40,18 @@
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
-		<Test>pgbench</Test>
+		<Test>fs-mark</Test>
+		<Arguments>-s 1048576 -n 1000</Arguments>
+		<Description>1000 Files, 1MB Size</Description>
+	</RunTest>
+	<RunTest>
+		<Test>unpack-linux</Test>
 	</RunTest>
 	<RunTest>
 		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gcrypt</Test>
 	</RunTest>
 	<RunTest>
 		<Test>john-the-ripper</Test>
@@ -48,7 +61,30 @@
 		<Test>crafty</Test>
 	</RunTest>
 	<RunTest>
+		<Test>tscp</Test>
+	</RunTest>
+	<RunTest>
 		<Test>dcraw</Test>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB</Arguments>
+		<Description>Operation: HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-resize 50%</Arguments>
+		<Description>Operation: Resizing</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>1000 stack</Arguments>
+		<Description>Test: 1000 Stack</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>convex-trimesh</Arguments>
+		<Description>Test: Convex Trimesh</Description>
 	</RunTest>
 	<RunTest>
 		<Test>stream</Test>

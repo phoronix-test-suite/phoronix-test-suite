@@ -370,7 +370,7 @@ class phoromatic extends pts_module_interface
 			if($last_communication_minute == date('i') && $communication_attempts > 2)
 			{
 				// Something is wrong, Phoromatic shouldn't be communicating with server more than three times a minute
-				$response = "forced_idle";
+				$response = M_PHOROMATIC_RESPONSE_IDLE;
 			}
 			else
 			{

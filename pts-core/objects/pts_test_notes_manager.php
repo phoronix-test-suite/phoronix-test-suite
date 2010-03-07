@@ -93,11 +93,13 @@ class pts_test_notes_manager
 			}
 		}
 
+		/*
 		// Encrypted file-system?
 		if(IS_LINUX && is_readable("/sys/fs/ecryptfs/version"))
 		{
 			self::add_note("eCryptfs was active.");
 		}
+		*/
 
 		// Power Saving Technologies?
 		self::add_note(phodevi::read_property("cpu", "power-savings-mode"));
