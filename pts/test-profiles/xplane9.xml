@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Simulator</SoftwareType>
 		<License>FREE</License>
@@ -16,15 +16,15 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>X-Plane</Title>
-		<Version>9.00</Version>
+		<Version>9.45</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This is a test of X-Plane, a realistic multi-platform flight simulator designed for personal computers. This is commercial closed-source software, but this X-Plane 9.0 benchmark has been kindly made available for free. X-Plane is the product of Austin Meyer and Laminar Research.</Description>
+		<Description>This is a test of X-Plane, a realistic multi-platform flight simulator designed for personal computers. This is commercial closed-source software, but this X-Plane 9 benchmark has been kindly made available for free. X-Plane is the product of Austin Meyer and Laminar Research.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>--load_smo=Output/movies/test.smo</Arguments>
+			<Arguments>--load_smo=Output/movies/test.smo --no_sound --pref:_set_res=1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Quality Setting</DisplayName>
@@ -48,20 +48,6 @@
 				<Entry>
 					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
 					<Value>--pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT</Value>
-				</Entry>
-			</Menu>
-		</Option>
-		<Option>
-			<DisplayName>Sound</DisplayName>
-			<Identifier>sound</Identifier>
-			<Menu>
-				<Entry>
-					<Name>Enabled</Name>
-					<Value></Value>
-				</Entry>
-				<Entry>
-					<Name>Disabled</Name>
-					<Value>--no_sound</Value>
 				</Entry>
 			</Menu>
 		</Option>

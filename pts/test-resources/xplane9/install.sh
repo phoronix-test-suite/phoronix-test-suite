@@ -1,9 +1,9 @@
 #!/bin/sh
 
-tar -xjf X-Plane_900r3_timedemo.tar.bz2
+tar -xjf xplane_945_timedemo.tar.bz2
 
 echo "#!/bin/sh
-cd X-Plane_900r3_timedemo/
+cd xplane_945_timedemo/
 
 case \$OS_TYPE in
 	\"MacOSX\" )
@@ -14,5 +14,5 @@ case \$OS_TYPE in
 	;;
 esac
 
-grep FRAMERATE Log.txt > \$LOG_FILE" > xplane9
+cp Log.txt \$LOG_FILE" > xplane9
 chmod +x xplane9

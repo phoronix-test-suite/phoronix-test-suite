@@ -258,8 +258,8 @@ class pts_LineGraph extends pts_CustomGraph
 
 				if($this->regression_marker_threshold > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
 				{
-					$regression_plots[($i - 1)] = $prev_identifier;
-					$regression_plots[$i] = $this->graph_identifiers[$i];
+					$regression_plots[($i - 1)] = $prev_identifier . ": " . $prev_value;
+					$regression_plots[$i] = $this->graph_identifiers[$i] . ": " . $value;
 				}
 
 				//array_push($poly_tips, array($value, $this->graph_identifiers[$i]));

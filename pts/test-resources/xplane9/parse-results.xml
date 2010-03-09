@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>FRAMERATE TEST phase 1</LineHint>
+		<OutputTemplate>FRAMERATE TEST phase 1:time=30frames=3174fps=#_RESULT_#</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>
