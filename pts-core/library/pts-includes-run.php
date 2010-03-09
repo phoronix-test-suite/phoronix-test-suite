@@ -64,6 +64,10 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 				echo pts_string_header($lower_identifier . " is not a test.");
 				$test_passes = false;
 			}
+			else
+			{
+				$test_passes = pts_test_support_check($lower_identifier);
+			}
 		}
 		else if(pts_is_suite($lower_identifier))
 		{

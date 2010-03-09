@@ -392,17 +392,9 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 
 	// Install a test
 	$installed = false;
-	if(!pts_test_architecture_supported($identifier))
+	if(!pts_test_support_check($identifier))
 	{
-		echo pts_string_header($identifier . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
-	}
-	else if(!pts_test_platform_supported($identifier))
-	{
-		echo pts_string_header($identifier . " is not supported by this operating system (" . OPERATING_SYSTEM . ").");
-	}
-	else if(!pts_test_version_supported($identifier))
-	{
-		echo pts_string_header($identifier . " is not supported by this version of the Phoronix Test Suite (" . PTS_VERSION . ").");
+		// echo "FAILED";
 	}
 	else if(($e = getenv("SKIP_TESTS")) != false && in_array($identifier, explode(",", $e)))
 	{

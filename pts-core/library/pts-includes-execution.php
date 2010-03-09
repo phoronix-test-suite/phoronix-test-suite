@@ -67,6 +67,28 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 
 	return $result;
 }
+function pts_test_support_check($identifier)
+{
+	$test_supported = true;
+
+	if(!pts_test_architecture_supported($identifier))
+	{
+		echo pts_string_header($identifier . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
+		$test_supported = false;
+	}
+	else if(!pts_test_platform_supported($identifier))
+	{
+		echo pts_string_header($identifier . " is not supported by this operating system (" . OPERATING_SYSTEM . ").");
+		$test_supported = false;
+	}
+	else if(!pts_test_version_supported($identifier))
+	{
+		echo pts_string_header($identifier . " is not supported by this version of the Phoronix Test Suite (" . PTS_VERSION . ").");
+		$test_supported = false;
+	}
+
+	return $test_supported;
+}
 function pts_test_update_install_xml($identifier, $this_duration = 0, $is_install = false)
 {
 	// Refresh/generate an install XML for pts-install.xml
