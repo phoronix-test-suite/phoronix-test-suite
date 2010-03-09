@@ -442,7 +442,7 @@ abstract class pts_Graph
 
 		if($with_version)
 		{
-			$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9);
+			$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9, false, "http://www.phoronix-test-suite.com/");
 		}
 	}
 	protected function render_graph_base()

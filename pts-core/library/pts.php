@@ -23,8 +23,8 @@
 
 error_reporting(E_ERROR | E_STRICT);
 
-define("PTS_VERSION", "2.6.0a0");
-define("PTS_CORE_VERSION", 2501);
+define("PTS_VERSION", "2.6.0a1");
+define("PTS_CORE_VERSION", 2510);
 define("PTS_CODENAME", "LYNGEN");
 
 function pts_codename($full_string = false)

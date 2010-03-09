@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>Daily System Tracker</Title>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<Maintainer>Phoronix Media</Maintainer>
 		<TestType>System</TestType>
 		<Description>These are the tests that are being run daily by the Phoronix Kernel Test Farm.</Description>
@@ -34,6 +34,109 @@
 		<Description>1280 x 1024</Description>
 	</RunTest>
 	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-gl GEARSFANCY</Arguments>
+		<Description>OpenGL + Gears</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-render GEARSFANCY</Arguments>
+		<Description>XRender + Gears</Description>
+	</RunTest>
+	<RunTest>
+		<Test>qgears2</Test>
+		<Arguments>-render TEXT</Arguments>
+		<Description>XRender + Text</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>COMBOBOX</Arguments>
+		<Description>GtkComboBox</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>DRAWING_PIXBUFS</Arguments>
+		<Description>GtkDrawingArea - Pixbufs</Description>
+	</RunTest>
+	<RunTest>
+		<Test>gtkperf</Test>
+		<Arguments>RADIO_BUTTON</Arguments>
+		<Description>GtkRadioButton</Description>
+	</RunTest>
+	<RunTest>
+		<Test>x11perf</Test>
+		<Arguments>-scroll500</Arguments>
+		<Description>Test: Scrolling 500 x 500 px</Description>
+	</RunTest>
+	<RunTest>
+		<Test>x11perf</Test>
+		<Arguments>-aatrapezoid300</Arguments>
+		<Description>Test: Fill 300 x 300px AA Trapezoid</Description>
+	</RunTest>
+	<RunTest>
+		<Test>x11perf</Test>
+		<Arguments>-copywinwin500</Arguments>
+		<Description>Test: 500px Copy From Window To Window</Description>
+	</RunTest>
+	<RunTest>
+		<Test>x11perf</Test>
+		<Arguments>-comppixwin500</Arguments>
+		<Description>Test: 500px Compositing From Pixmap To Window</Description>
+	</RunTest>
+	<RunTest>
+		<Test>x11perf</Test>
+		<Arguments>-copypixpix500</Arguments>
+		<Description>Test: Copy 500x500 From Pixmap To Pixmap</Description>
+	</RunTest>
+	<RunTest>
+		<Test>x11perf</Test>
+		<Arguments>-aa10text</Arguments>
+		<Description>Test: Char in 80-char aa line</Description>
+	</RunTest>
+	<RunTest>
+		<Test>jxrendermark</Test>
+		<Arguments>10 128</Arguments>
+		<Description>Transformed Blit Bilinear - Size: 128x128</Description>
+	</RunTest>
+	<RunTest>
+		<Test>jxrendermark</Test>
+		<Arguments>12 128</Arguments>
+		<Description>Linear Gradient Blend - Size: 128x128</Description>
+	</RunTest>
+	<RunTest>
+		<Test>jxrendermark</Test>
+		<Arguments>16 128</Arguments>
+		<Description>12pt Text LCD - Size: 128x128</Description>
+	</RunTest>
+	<RunTest>
+		<Test>j2dbench</Test>
+		<Arguments>TEST_GRAPHICS</Arguments>
+		<Description>Vector Graphics</Description>
+	</RunTest>
+	<RunTest>
+		<Test>j2dbench</Test>
+		<Arguments>TEST_TEXT</Arguments>
+		<Description>Text Rendering</Description>
+	</RunTest>
+	<RunTest>
+		<Test>java-scimark2</Test>
+		<Arguments>TEST_FFT</Arguments>
+		<Description>FFT Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>java-scimark2</Test>
+		<Arguments>TEST_SOR</Arguments>
+		<Description>SOR Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>java-scimark2</Test>
+		<Arguments>TEST_MONTE</Arguments>
+		<Description>Monte Carlo Performance</Description>
+	</RunTest>
+	<RunTest>
+		<Test>sunflow</Test>
+	</RunTest>
+	<RunTest>
 		<Test>apache</Test>
 	</RunTest>
 	<RunTest>
@@ -50,6 +153,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>build-apache</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
 	</RunTest>
 	<RunTest>
 		<Test>iozone</Test>
@@ -75,6 +181,9 @@
 		<Test>dbench</Test>
 		<Arguments>48</Arguments>
 		<Description>Client Count: 48</Description>
+	</RunTest>
+	<RunTest>
+		<Test>aio-stress</Test>
 	</RunTest>
 	<RunTest>
 		<Test>postmark</Test>
@@ -129,6 +238,21 @@
 		<Description>Test: Raytests</Description>
 	</RunTest>
 	<RunTest>
+		<Test>npb</Test>
+		<Arguments>ft.B</Arguments>
+		<Description>Test / Class: FT.B</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>is.C</Arguments>
+		<Description>Test / Class: IS.C</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>lu.A</Arguments>
+		<Description>Test / Class: LU.A</Description>
+	</RunTest>
+	<RunTest>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>Operation: HWB Color Space</Description>
@@ -156,13 +280,25 @@
 		<Test>tscp</Test>
 	</RunTest>
 	<RunTest>
-		<Test>dcraw</Test>
+		<Test>tachyon</Test>
+	</RunTest>
+	<RunTest>
+		<Test>bwfirt</Test>
 	</RunTest>
 	<RunTest>
 		<Test>c-ray</Test>
 	</RunTest>
 	<RunTest>
 		<Test>povray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>dcraw</Test>
+	</RunTest>
+	<RunTest>
+		<Test>pybench</Test>
+	</RunTest>
+	<RunTest>
+		<Test>sudokut</Test>
 	</RunTest>
 	<RunTest>
 		<Test>john-the-ripper</Test>

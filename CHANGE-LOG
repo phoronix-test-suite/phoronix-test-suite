@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.6 Alpha 1
+March 9, 2010
 
 - pts-core: No longer statically code define statements for XML parsing, move into pts-core/definitions XML statements
 - pts-core: Add EST_TIME_REMAINING variable assignment that has the estimated run-time remaining during testing

@@ -471,6 +471,8 @@ class phoromatic extends pts_module_interface
 			}
 		}
 		while($exit_loop == false);
+
+		phoromatic::update_system_status("Offline");
 	}
 
 	//
@@ -663,7 +665,7 @@ class phoromatic extends pts_module_interface
 
 		if($host != null)
 		{
-			//$host
+			//$host = $host;
 			$to_post["aid"] = $account;
 			$to_post["vid"] = $verifier;
 			$to_post["sid"] = $system;
