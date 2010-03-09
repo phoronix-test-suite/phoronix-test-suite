@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Simulator</SoftwareType>
 		<License>FREE</License>
@@ -24,7 +24,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>--load_smo=Output/movies/test.smo --no_sound --pref:_set_res=1</Arguments>
+			<Arguments>--no_workarounds --no_sound --pref:_prefs_found=0 --pref:_is_full_ALL=1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Quality Setting</DisplayName>
@@ -47,7 +47,7 @@
 			<Menu>
 				<Entry>
 					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>--pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT</Value>
+					<Value>--pref:_x_res_full_ALL=$VIDEO_WIDTH --pref:_y_res_full_ALL=$VIDEO_HEIGHT</Value>
 				</Entry>
 			</Menu>
 		</Option>
