@@ -30,6 +30,8 @@ define("M_PHOROMATIC_UPLOAD_SYSTEM_LOGS", "PhoronixTestSuite/Phoromatic/General/
 define("M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY", "PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally");
 define("M_PHOROMATIC_RUN_INSTALL_COMMAND", "PhoronixTestSuite/Phoromatic/General/RunInstallCommand");
 
+define("M_PHOROMATIC_SERVER_BUILD", "PhoronixTestSuite/Phoromatic/Server/ServerBuild");
+
 define("M_PHOROMATIC_SCHEDULE_TEST_TITLE", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Title");
 define("M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Description");
 define("M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/ActiveOn");
@@ -48,11 +50,12 @@ define("M_PHOROMATIC_RESPONSE_REBOOT", "REBOOT");
 class phoromatic extends pts_module_interface
 {
 	const module_name = "Phoromatic Client";
-	const module_version = "0.4.0";
+	const module_version = "0.5.0";
 	const module_description = "The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/";
 	const module_author = "Phoronix Media";
 
 	static $phoromatic_lock = null;
+	static $phoromatic_server_build = false;
 
 	static $phoromatic_host = null;
 	static $phoromatic_account = null;
@@ -522,6 +525,7 @@ class phoromatic extends pts_module_interface
 	protected static function update_system_details()
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => pts_hw_string(), "s" => pts_sw_string(), "gsid" => PTS_GSID));
+		self::$phoromatic_server_build = pts_xml_read_single_value($server_response, M_PHOROMATIC_SERVER_BUILD);
 
 		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}

@@ -1049,7 +1049,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$info = phodevi_parser::software_glxinfo_version();
 
-			if(($pos = strpos($info, ' ')) != false)
+			if(($pos = strpos($info, ' ')) != false && strpos($info, "Mesa") === false)
 			{
 				$info = substr($info, 0, $pos);
 			}
@@ -1057,10 +1057,6 @@ class phodevi_system extends phodevi_device_interface
 		else if((IS_NVIDIA_LINUX || (IS_BSD && phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%driver"))) && pts_executable_in_path("nvidia-settings"))
 		{
 			$info = phodevi_parser::read_nvidia_extension("OpenGLVersion");
-		}
-		else
-		{
-			$info = null;
 		}
 
 		return $info;
