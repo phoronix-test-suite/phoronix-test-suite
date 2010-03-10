@@ -156,6 +156,11 @@ function pts_attach_module($module)
 function pts_load_module($module)
 {
 	// Load the actual file needed that contains the module
+	if(is_file(PTS_CORE_PATH . "definitions/module-" . $module . ".xml"))
+	{
+		pts_loader::load_definitions("module-" . $module . ".xml");
+	}
+
 	return (is_file(MODULE_DIR . $module . ".php") && include_once(MODULE_DIR . $module . ".php")) || (is_file(MODULE_LOCAL_DIR . $module . ".php") && include_once(MODULE_LOCAL_DIR . $module . ".php"));
 }
 function pts_module_processes()

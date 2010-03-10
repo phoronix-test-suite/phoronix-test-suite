@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add /tmp/phoronix-test-suite.active lock
+- pts-core: Move module define statements out to using the PTS definitions XML
+
 Phoronix Test Suite 2.6 Alpha 1
 March 9, 2010
 
@@ -11,7 +16,6 @@ March 9, 2010
 - pts-core: Add new interface (parse-results.xml) for handling results parsing of tests using an XML file with a result template
 - pts-core: Add ProfileVersion tag to XML result file specification
 - pts-core: Add some of the Phoromatic Tracker helper scripts
-- pts-core: Add /tmp/phoronix-test-suite.active lock
 - phodevi: Add support for detecting Reiser4 file-system via its super magic block
 - phodevi: Report hard drive manufacturer when detected and prepend to the model string
 - phodevi: Add initial audio / sound card detection support

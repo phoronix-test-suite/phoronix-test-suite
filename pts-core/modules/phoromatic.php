@@ -20,37 +20,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("M_PHOROMATIC_GEN_RESPONSE", "PhoronixTestSuite/Phoromatic/General/Response");
-define("M_PHOROMATIC_TRIGGER", "PhoronixTestSuite/Phoromatic/General/Trigger");
-define("M_PHOROMATIC_ID", "PhoronixTestSuite/Phoromatic/General/ID");
-define("M_PHOROMATIC_SYS_NAME", "PhoronixTestSuite/Phoromatic/General/SystemName");
-define("M_PHOROMATIC_UPLOAD_TO_GLOBAL", "PhoronixTestSuite/Phoromatic/General/UploadToGlobal");
-define("M_PHOROMATIC_UPLOAD_TEST_LOGS", "PhoronixTestSuite/Phoromatic/General/UploadTestLogs");
-define("M_PHOROMATIC_UPLOAD_SYSTEM_LOGS", "PhoronixTestSuite/Phoromatic/General/UploadSystemLogs");
-define("M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY", "PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally");
-define("M_PHOROMATIC_RUN_INSTALL_COMMAND", "PhoronixTestSuite/Phoromatic/General/RunInstallCommand");
-
-define("M_PHOROMATIC_SERVER_BUILD", "PhoronixTestSuite/Phoromatic/Server/ServerBuild");
-
-define("M_PHOROMATIC_SCHEDULE_TEST_TITLE", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Title");
-define("M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Description");
-define("M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/ActiveOn");
-define("M_PHOROMATIC_SCHEDULE_TEST_START", "PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/RunAt");
-
-define("M_PHOROMATIC_RESPONSE_IDLE", "idle");
-define("M_PHOROMATIC_RESPONSE_EXIT", "exit");
-define("M_PHOROMATIC_RESPONSE_RUN_TEST", "benchmark");
-define("M_PHOROMATIC_RESPONSE_SERVER_MAINTENANCE", "server_maintenance");
-define("M_PHOROMATIC_RESPONSE_ERROR", "ERROR");
-define("M_PHOROMATIC_RESPONSE_TRUE", "TRUE");
-define("M_PHOROMATIC_RESPONSE_SETTING_DISABLED", "SETTING_DISABLED");
-define("M_PHOROMATIC_RESPONSE_SHUTDOWN", "SHUTDOWN");
-define("M_PHOROMATIC_RESPONSE_REBOOT", "REBOOT");
-
 class phoromatic extends pts_module_interface
 {
 	const module_name = "Phoromatic Client";
-	const module_version = "0.5.0";
+	const module_version = "0.6.0";
 	const module_description = "The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/";
 	const module_author = "Phoronix Media";
 
@@ -81,8 +54,13 @@ class phoromatic extends pts_module_interface
 			$options["remote_host"] = pts_add_trailing_slash($options["remote_host"]) . "phoromatic.php";
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "setup", "h" => pts_hw_string(),  "s" => pts_sw_string(),  "o" => phodevi::read_property("system", "hostname")),
-		$options["remote_host"], $options["remote_account"], $options["remote_verifier"]);
+		$server_response = phoromatic::upload_to_remote_server(array(
+			"r" => "setup",
+			"h" => pts_hw_string(),
+			"s" => pts_sw_string(),
+			"o" => phodevi::read_property("system", "hostname")
+			),
+			$options["remote_host"], $options["remote_account"], $options["remote_verifier"]);
 
 		$returned_id = pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE);
 
@@ -684,6 +662,7 @@ class phoromatic extends pts_module_interface
 		}
 
 		$to_post["pts"] = PTS_VERSION;
+		$to_post["pts_core"] = PTS_CORE_VERSION;
 
 		return pts_http_upload_via_post($host, $to_post);
 	}
