@@ -149,6 +149,7 @@ function pts_exit($string = null, $exit_status = 0)
 function pts_create_lock($lock_file, &$file_pointer)
 {
 	$file_pointer = fopen($lock_file, "w");
+	chmod($lock_file, 0644);
 	return $file_pointer != false && flock($file_pointer, LOCK_EX | LOCK_NB);
 }
 function pts_release_lock(&$file_pointer, $lock_file)

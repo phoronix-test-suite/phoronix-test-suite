@@ -11,6 +11,7 @@ March 9, 2010
 - pts-core: Add new interface (parse-results.xml) for handling results parsing of tests using an XML file with a result template
 - pts-core: Add ProfileVersion tag to XML result file specification
 - pts-core: Add some of the Phoromatic Tracker helper scripts
+- pts-core: Add /tmp/phoronix-test-suite.active lock
 - phodevi: Add support for detecting Reiser4 file-system via its super magic block
 - phodevi: Report hard drive manufacturer when detected and prepend to the model string
 - phodevi: Add initial audio / sound card detection support

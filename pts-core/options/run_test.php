@@ -337,6 +337,11 @@ class run_test implements pts_option_interface
 			unset($pso);
 		}
 
+		// Create a lock
+		$lock_pointer = null;
+		$lock_path = sys_get_temp_dir() . "/phoronix-test-suite.active";
+		$lock_release = pts_create_lock($lock_path, $lock_pointer);
+
 		// Run the actual tests
 		pts_module_process("__pre_run_process", $test_run_manager);
 		pts_set_assignment("PTS_STATS_DYNAMIC_RUN_COUNT", pts_string_bool(pts_read_user_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE")));
@@ -420,6 +425,11 @@ class run_test implements pts_option_interface
 			}
 		}
 		echo "\n";
+
+		if($lock_release)
+		{
+			pts_release_lock($lock_pointer, $lock_path);
+		}
 
 		pts_set_assignment_next("PREV_TEST_IDENTIFIER", $test_run_manager->get_tests_to_run_identifiers());
 	}

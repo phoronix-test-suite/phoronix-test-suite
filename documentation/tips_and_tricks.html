@@ -38,6 +38,7 @@ with very limited disk space.</p>
 <p>- If you wish to stop the current test run prematurely but continue the testing process, in a new terminal window type <em>touch ~/.phoronix-test-suite/skip-test</em>.</p>
 <p>- If you want the specified test(s) to run in a loop for a set period of time, use the <em>TOTAL_LOOP_TIME</em> environmental variable. For instance, running <em>TOTAL_LOOP_TIME=120 phoronix-test-suite benchmark ffmpeg</em> would keep running the ffmpeg test profile for 120 minutes.</p>
 <p>- If you want the specified test(s) to run in a loop for a set number of times, use the <em>TOTAL_LOOP_COUNT</em> environmental variable. For instance, running <em>TOTAL_LOOP_COUNT=3 phoronix-test-suite benchmark ffmpeg</em> would keep running the ffmpeg test profile three times.</p>
+<p>- When any tests are being installed and when tests are being run, a lock is created in the system's temporary directory with the name <em>phoronix-test-suite.active</em> (i.e. <em>/tmp/phoronix-test-suite.active</em>) and is removed upon completion. Thus if you have any system scripts that you wish to run when tests are not running or being installed as to not impact the results, one simple way to handle this is by having the script check for the existence of this lock.</p>
 <h2>Support</h2>
 <p>- The Phoronix Test Suite really appreciates and welcomes independent code 
 contributions, patches, new tests/suites, etc... :)</p>
