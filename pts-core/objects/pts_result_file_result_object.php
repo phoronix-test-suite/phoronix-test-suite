@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,7 +40,6 @@ class pts_result_file_result_object
 		$this->test_result = new pts_test_result($test_profile);
 		$this->test_result->set_used_arguments_description($attributes);
 		$this->test_result->set_used_arguments($arguments);
-
 		$this->result_buffer = $result_buffer;
 	}
 	public function add_result_to_buffer($identifier, $value, $raw_value)

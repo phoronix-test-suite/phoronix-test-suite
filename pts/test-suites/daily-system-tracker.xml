@@ -238,21 +238,6 @@
 		<Description>Test: Raytests</Description>
 	</RunTest>
 	<RunTest>
-		<Test>npb</Test>
-		<Arguments>ft.B</Arguments>
-		<Description>Test / Class: FT.B</Description>
-	</RunTest>
-	<RunTest>
-		<Test>npb</Test>
-		<Arguments>is.C</Arguments>
-		<Description>Test / Class: IS.C</Description>
-	</RunTest>
-	<RunTest>
-		<Test>npb</Test>
-		<Arguments>lu.A</Arguments>
-		<Description>Test / Class: LU.A</Description>
-	</RunTest>
-	<RunTest>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>Operation: HWB Color Space</Description>
