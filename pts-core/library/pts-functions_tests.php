@@ -151,7 +151,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 			pts_tracker::compact_result_file_test_object($result_object);
 		}
 
-		$graph = pts_render_graph($result_object, $save_to, $result_file->get_suite_name(), $pts_version);
+		$graph = pts_render::render_graph($result_object, $save_to, $result_file->get_suite_name(), $pts_version);
 		array_push($generated_graphs, $graph);
 	}
 

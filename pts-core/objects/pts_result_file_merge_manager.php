@@ -107,7 +107,7 @@ class pts_result_file_merge_manager
 			}
 
 			// Add Result
-			if(!$skip_adding)
+			if($skip_adding == false)
 			{
 				array_push($this->test_results[$mto_test_name], $merge_test_object);
 			}
@@ -132,7 +132,7 @@ class pts_result_file_merge_manager
 	{
 		$linear_array = array();
 
-		foreach($this->test_results as &$test_name_object_array)
+		foreach($this->test_results as $test_name => &$test_name_object_array)
 		{
 			foreach($test_name_object_array as $merge_object)
 			{
