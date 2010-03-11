@@ -844,7 +844,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if($i == ($times_to_run - 1) && $test_result->trial_run_count() > 2 && pts_read_assignment("PTS_STATS_DYNAMIC_RUN_COUNT") && $times_to_run < ($defined_times_to_run * 2))
 		{
 			// Determine if results are statistically significant, otherwise up the run count
-			$std_dev = pts_percent_standard_deviation($test_result->get_trial_results());
+			$std_dev = pts_math::percent_standard_deviation($test_result->get_trial_results());
 
 			if(($ex_file = pts_read_assignment("PTS_STATS_EXPORT_TO")) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_DIR . $ex_file)))
 			{

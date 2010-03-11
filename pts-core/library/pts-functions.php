@@ -59,6 +59,5 @@ require(PTS_LIBRARY_PATH . "pts-functions_types.php");
 require(PTS_LIBRARY_PATH . "pts-functions_vars.php");
 require(PTS_LIBRARY_PATH . "pts-functions_modules.php");
 require(PTS_LIBRARY_PATH . "pts-functions_assignments.php");
-require(PTS_LIBRARY_PATH . "pts-functions_stats.php");
 
 ?>

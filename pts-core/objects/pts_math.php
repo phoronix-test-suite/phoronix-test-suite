@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,9 +22,44 @@
 
 class pts_math
 {
-	public static function geometric_mean($numbers_array)
+	public static function geometric_mean($values)
 	{
-		return pow(array_product($numbers_array), (1 / count($numbers_array)));
+		return pow(array_product($values), (1 / count($values)));
+	}
+	public static function standard_deviation($values)
+	{
+		foreach($values as $i => $value)
+		{
+			if(!is_numeric($value))
+			{
+				unset($values[$i]);
+			}
+		}
+
+		$total = array_sum($values);
+		$count = count($values);
+
+		if($count < 2)
+		{
+			return 0;
+		}
+
+		$mean = $total / $count;
+		$standard_sum = 0;
+
+		foreach($values as $value)
+		{
+			$standard_sum += pow(($value - $mean), 2);
+		}
+
+		return sqrt($standard_sum / ($count - 1));
+	}
+	public static function percent_standard_deviation($values)
+	{
+		$standard_deviation = pts_math::standard_deviation($values);
+		$average_value = array_sum($values) / count($values);
+
+		return $average_value != 0 ? ($standard_deviation / $average_value * 100) : 0;
 	}
 }
 
