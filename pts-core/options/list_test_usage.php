@@ -41,7 +41,7 @@ class list_test_usage implements pts_option_interface
 				if($installed_test->get_installed_version() != null)
 				{
 					$avg_time = $installed_test->get_average_run_time();
-					$avg_time = !empty($avg_time) ? pts_format_time_string($avg_time, "SECONDS", false) : "N/A";
+					$avg_time = !empty($avg_time) ? pts_date_time::format_time_string($avg_time, "SECONDS", false) : "N/A";
 
 					$last_run = $installed_test->get_last_run_date();
 					$last_run = $last_run == "0000-00-00" ? "NEVER" : $last_run;

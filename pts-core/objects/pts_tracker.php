@@ -126,7 +126,7 @@ class pts_tracker
 		}
 
 		$mto->set_scale($mto->get_scale() . ' | ' . implode(',', array_keys($days)));
-		$mto->set_format((count($days) < 7 ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
+		$mto->set_format((count($days) < 6 ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
 		$mto->flush_result_buffer();
 
 		$day_keys = array_keys($days);

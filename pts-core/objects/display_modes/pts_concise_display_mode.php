@@ -60,7 +60,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			if(($avg_speed = pts_read_assignment("DOWNLOAD_AVG_SPEED")) > 0)
 			{
 				$avg_time = ($size * 1048576) / $avg_speed;
-				echo " / " . pts_format_time_string($avg_time, "SECONDS", true, 60);
+				echo " / " . pts_date_time::format_time_string($avg_time, "SECONDS", true, 60);
 			}
 
 			echo ']';
@@ -96,10 +96,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				break;
 		}
 
-		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_format_time_string($expected_time, "SECONDS", false, 60) : null;
+		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_date_time::format_time_string($expected_time, "SECONDS", false, 60) : null;
 
 		$default_width = 36;
-		if($offset_length < $default_width && pts_terminal_width() > (2 * strlen($this->tab) + strlen($process_string) + $default_width + 17))
+		if($offset_length < $default_width && pts_client::terminal_width() > (2 * strlen($this->tab) + strlen($process_string) + $default_width + 17))
 		{
 			// Set default length
 			$offset_length = $default_width;
@@ -184,7 +184,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 			if($this->run_process_test_count == $test_run_count && $test_run_position != $test_run_count && ($remaining_length = pts_estimated_run_time($this->run_process_tests_remaining_to_run)) > 1)
 			{
-				echo $this->tab . "Estimated Time Remaining: " . pts_format_time_string($remaining_length, "SECONDS", true, 60) . "\n";
+				echo $this->tab . "Estimated Time Remaining: " . pts_date_time::format_time_string($remaining_length, "SECONDS", true, 60) . "\n";
 			}
 
 			array_shift($this->run_process_tests_remaining_to_run);
@@ -193,7 +193,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$estimated_length = pts_estimated_run_time($test_result->get_test_profile()->get_identifier());
 		if($estimated_length > 1)
 		{
-			echo $this->tab . "Estimated Test Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
+			echo $this->tab . "Estimated Test Run-Time: " . pts_date_time::format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
 		}
 
 		echo $this->tab . "Expected Trial Run Count: " . $test_result->get_test_profile()->get_times_to_run() . "\n";

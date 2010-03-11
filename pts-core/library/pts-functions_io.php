@@ -166,59 +166,12 @@ function pts_string_header($heading, $char = '=')
 		}
 	}
 
-	if(($terminal_width = pts_terminal_width()) < $header_size && $terminal_width > 0)
+	if(($terminal_width = pts_client::terminal_width()) < $header_size && $terminal_width > 0)
 	{
 		$header_size = $terminal_width;
 	}
 
 	return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";
-}
-function pts_format_time_string($time, $format = "SECONDS", $standard_version = true, $round_to = 0)
-{
-	// Format an elapsed time string
-	if($format == "MINUTES")
-	{
-		$time *= 60;
-	}
-	if($round_to > 0)
-	{
-		$time += $round_to - ($time % $round_to);
-	}
-
-	$formatted_time = array();
-
-	if($time > 0)
-	{
-		$time_r[0] = array(floor($time / 3600), "Hour");
-		$time_r[1] = array(floor(($time - ($time_r[0][0] * 3600)) / 60), "Minute");
-		$time_r[2] = array($time % 60, "Second");
-
-		foreach($time_r as $time_segment)
-		{
-			if($time_segment[0] > 0)
-			{
-				$formatted_part = $time_segment[0];
-
-				if($standard_version)
-				{
-					$formatted_part .= " " . $time_segment[1];
-
-					if($time_segment[0] > 1)
-					{
-						$formatted_part .= "s";
-					}
-				}
-				else
-				{
-					$formatted_part .= strtolower(substr($time_segment[1], 0, 1));
-				}
-
-				array_push($formatted_time, $formatted_part);
-			}
-		}
-	}
-
-	return implode(($standard_version ? ", " : ""), $formatted_time);
 }
 
 ?>

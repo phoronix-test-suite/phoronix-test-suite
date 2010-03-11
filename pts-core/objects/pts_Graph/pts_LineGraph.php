@@ -300,7 +300,7 @@ class pts_LineGraph extends pts_CustomGraph
 		}
 
 		// in_array($this->graph_y_title, array("Percent", "Milliwatts", "Megabytes", "Celsius", "MB/s", "Frames Per Second", "Seconds", "Iterations Per Minute"))
-		if(true)
+		if(count($values) > 0)
 		{
 			array_push($to_display[$this->graph_color_text], "Average:");
 

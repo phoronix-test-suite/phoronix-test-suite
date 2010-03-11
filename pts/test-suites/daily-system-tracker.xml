@@ -143,9 +143,6 @@
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
-		<Test>compress-7zip</Test>
-	</RunTest>
-	<RunTest>
 		<Test>compress-lzma</Test>
 	</RunTest>
 	<RunTest>

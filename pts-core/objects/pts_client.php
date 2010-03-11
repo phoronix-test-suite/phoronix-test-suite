@@ -5,7 +5,6 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2010, Phoronix Media
 	Copyright (C) 2008 - 2010, Michael Larabel
-	pts.php: Version information for the Phoronix Test Suite.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,24 +20,29 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(PTS_MODE == "CLIENT")
+class pts_date_time
 {
-	error_reporting(E_ERROR | E_STRICT);
-}
+	public static function terminal_width()
+	{
+		if(!pts_is_assignment("TERMINAL_WIDTH"))
+		{
+			$chars = -1;
 
-define("PTS_VERSION", "2.6.0a1");
-define("PTS_CORE_VERSION", 2510);
-define("PTS_CODENAME", "LYNGEN");
+			if(pts_executable_in_path("tput"))
+			{
+				$terminal_width = trim(shell_exec("tput cols 2>&1"));
 
-function pts_codename($full_string = false)
-{
-	$codename = ucwords(strtolower(PTS_CODENAME));
+				if(is_numeric($terminal_width) && $terminal_width > 1)
+				{
+					$chars = $terminal_width;
+				}
+			}
 
-	return ($full_string ? "PhoronixTestSuite/" : "") . $codename;
-}
-function pts_title($show_both = false)
-{
-	return "Phoronix Test Suite" . (PTS_VERSION != null ? " v" . PTS_VERSION : null) . (PTS_CODENAME != null && (PTS_VERSION == null || $show_both ) ? " (" . ucwords(strtolower(PTS_CODENAME)) . ")" : null);
+			pts_set_assignment("TERMINAL_WIDTH", $chars);
+		}
+
+		return pts_read_assignment("TERMINAL_WIDTH");
+	}
 }
 
 ?>

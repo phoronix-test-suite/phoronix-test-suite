@@ -184,7 +184,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		$total_loop_time_seconds = $total_loop_time_minutes * 60;
 		$loop_end_time = time() + $total_loop_time_seconds;
 
-		echo pts_string_header("Estimated Run-Time: " . pts_format_time_string($total_loop_time_seconds, "SECONDS", true, 60));
+		echo pts_string_header("Estimated Run-Time: " . pts_date_time::format_time_string($total_loop_time_seconds, "SECONDS", true, 60));
 		pts_set_assignment("EST_TIME_REMAINING", $total_loop_time_seconds);
 
 		do
@@ -202,7 +202,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		if(($estimated_length = pts_estimated_run_time($test_run_manager)) > 1)
 		{
 			pts_set_assignment("EST_TIME_REMAINING", ($estimated_length * $total_loop_count));
-			echo pts_string_header("Estimated Run-Time: " . pts_format_time_string(($estimated_length * $total_loop_count), "SECONDS", true, 60));
+			echo pts_string_header("Estimated Run-Time: " . pts_date_time::format_time_string(($estimated_length * $total_loop_count), "SECONDS", true, 60));
 		}
 
 		for($loop = 0; $loop < $total_loop_count && $test_flag; $loop++)
@@ -219,7 +219,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		if(($estimated_length = pts_estimated_run_time($test_run_manager)) > 1)
 		{
 			pts_set_assignment("EST_TIME_REMAINING", $estimated_length);
-			echo pts_string_header("Estimated Run-Time: " . pts_format_time_string($estimated_length, "SECONDS", true, 60));
+			echo pts_string_header("Estimated Run-Time: " . pts_date_time::format_time_string($estimated_length, "SECONDS", true, 60));
 		}
 
 		for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)

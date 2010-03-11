@@ -3,11 +3,26 @@
 <PhoronixTestSuite>
 	<SuiteInformation>
 		<Title>Favorites</Title>
-		<Version>1.0.1</Version>
+		<Version>1.1.0</Version>
 		<Maintainer>Michael Larabel</Maintainer>
 		<TestType>System</TestType>
 		<Description>This is a random collection of tests that are some of the personal favorite tests by Michael Larabel, the founder of Phoronix Media and the Phoronix Test Suite.</Description>
 	</SuiteInformation>
+	<RunTest>
+		<Test>openarena</Test>
+		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>tremulous</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>urbanterror</Test>
+		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
 	<RunTest>
 		<Test>build-php</Test>
 	</RunTest>
@@ -22,6 +37,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>ffmpeg</Test>
+	</RunTest>
+	<RunTest>
+		<Test>x264</Test>
 	</RunTest>
 	<RunTest>
 		<Test>gnupg</Test>
@@ -43,19 +61,33 @@
 		<Description>Local Adaptive Thresholding</Description>
 	</RunTest>
 	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>1000 stack</Arguments>
+		<Description>Test: 1000 Stack</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>convex-trimesh</Arguments>
+		<Description>Test: Convex Trimesh</Description>
+	</RunTest>
+	<RunTest>
+		<Test>john-the-ripper</Test>
+		<Mode>BATCH</Mode>
+	</RunTest>
+	<RunTest>
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>
-		<Test>bwfirt</Test>
+		<Test>pgbench</Test>
+	</RunTest>
+	<RunTest>
+		<Test>apache</Test>
 	</RunTest>
 	<RunTest>
 		<Test>c-ray</Test>
 	</RunTest>
 	<RunTest>
-		<Test>tachyon</Test>
-	</RunTest>
-	<RunTest>
-		<Test>povray</Test>
+		<Test>unpack-linux</Test>
 	</RunTest>
 	<RunTest>
 		<Test>dbench</Test>
