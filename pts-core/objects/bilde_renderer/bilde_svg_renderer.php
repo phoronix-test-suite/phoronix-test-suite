@@ -24,8 +24,8 @@
 class bilde_svg_renderer extends bilde_renderer
 {
 	var $renderer = "SVG";
-	var $svg_style_definitions = "";
 	var $javascript_functions = null;
+	static $svg_style_definitions = null;
 	static $render_count = 0;
 
 	public function __construct($width, $height, $embed_identifiers = null)
@@ -34,7 +34,11 @@ class bilde_svg_renderer extends bilde_renderer
 		$this->image_width = $width;
 		$this->image_height = $height;
 		$this->embed_identifiers = $embed_identifiers;
-		$this->svg_style_definitions = array();
+
+		if(self::$svg_style_definitions == null)
+		{
+			self::$svg_style_definitions = array();
+		}
 	}
 	public static function renderer_supported()
 	{
@@ -88,7 +92,12 @@ class bilde_svg_renderer extends bilde_renderer
 		}
 
 		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n";
-		$svg_image .= $this->get_svg_formatted_definitions();
+
+		if(!defined("BILDE_SVG_COLLECT_DEFINITIONS"))
+		{
+			$svg_image .= $this->get_svg_formatted_definitions();
+			self::$render_count++;
+		}
 
 		if($this->javascript_functions != null)
 		{
@@ -97,7 +106,6 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$svg_image .= $this->image . "</svg>";
 
-		self::$render_count++;
 		return $output_file != null ? @file_put_contents($output_file, $svg_image) : $svg_image;
 	}
 	public function destroy_image()
@@ -330,22 +338,22 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	private function add_svg_style_definition($attributes)
 	{
-		if(($key = array_search($attributes, $this->svg_style_definitions)) === false)
+		if(($key = array_search($attributes, self::$svg_style_definitions)) === false)
 		{
-			array_push($this->svg_style_definitions, $attributes);
-			$key = count($this->svg_style_definitions) - 1;
+			array_push(self::$svg_style_definitions, $attributes);
+			$key = count(self::$svg_style_definitions) - 1;
 		}
 
 		return "b_" . self::$render_count . '_' . $key;
 	}
 	private function get_svg_formatted_definitions()
 	{
-		if(count($this->svg_style_definitions) > 0)
+		if(count(self::$svg_style_definitions) > 0)
 		{
 			$svg = "<defs>\n";
 			$svg .= "<style><![CDATA[\n";
 
-			foreach($this->svg_style_definitions as $key => $attributes)
+			foreach(self::$svg_style_definitions as $key => $attributes)
 			{
 				$svg .= ".b_" . self::$render_count . '_' . $key . " { " . $attributes . " }\n";
 			}
@@ -353,8 +361,14 @@ class bilde_svg_renderer extends bilde_renderer
 			$svg .= "]]></style>\n";
 			$svg .= "</defs>\n";
 
+			self::$svg_style_definitions = array();
+
 			return $svg;
 		}
+	}
+	public static function get_html_svg_defs()
+	{
+		return "<svg>" . self::get_svg_formatted_definitions() . "</svg>";
 	}
 }
 
