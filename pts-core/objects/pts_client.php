@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_date_time
+class pts_client
 {
 	public static function terminal_width()
 	{

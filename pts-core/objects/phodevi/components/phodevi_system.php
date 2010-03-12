@@ -645,10 +645,24 @@ class phodevi_system extends phodevi_device_interface
 		// Returns version of the compiler (if present)
 		$compiler_info = null;
 
-		if(pts_executable_in_path("gcc"))
+		if(pts_executable_in_path("clang"))
 		{
-			// GCC
-			$compiler_info = "GCC " . trim(shell_exec("gcc -dumpversion 2>&1"));
+			// Clang
+			$compiler_info = "Clang " . trim(shell_exec("gcc -dumpversion 2>&1"));
+
+			if(pts_executable_in_path("llvmc"))
+			{
+				// LLVM - Low Level Virtual Machine (llvmc)
+				$info = trim(shell_exec("llvmc -version 2>&1"));
+
+				if(($s = strpos($info, "version")) != false)
+				{
+					$llvm_info = substr($info, $s + 8);
+					$llvm_info = substr($info, 0, strrpos($info, ' '));
+
+					$compiler_info .= " + LLVM " . $info;
+				}
+			}
 		}
 		else if(pts_executable_in_path("suncc"))
 		{
@@ -675,6 +689,11 @@ class phodevi_system extends phodevi_device_interface
 
 				$compiler_info = trim($info);
 			}
+		}
+		else if(pts_executable_in_path("gcc"))
+		{
+			// GCC
+			$compiler_info = "GCC " . trim(shell_exec("gcc -dumpversion 2>&1"));
 		}
 
 		return $compiler_info;
