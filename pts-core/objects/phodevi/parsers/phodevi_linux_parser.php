@@ -484,6 +484,19 @@ class phodevi_linux_parser
 
 		return $cpuinfo_matches;
 	}
+	public static function read_lsb_distributor_id()
+	{
+		$vendor = phodevi_linux_parser::read_lsb("Distributor ID");
+
+		// Quirks for derivative distributions that don't know how to handle themselves properly
+		if($vendor == "MandrivaLinux" && phodevi_linux_parser::read_lsb("Description") == "PCLinuxOS")
+		{
+			// PC Linux OS only stores its info in /etc/pclinuxos-release
+			$vendor = false;
+		}
+
+		return $vendor;
+	}
 	public static function read_lsb($desc)
 	{
 		// Read LSB Release information, Linux Standards Base

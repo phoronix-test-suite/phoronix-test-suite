@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Move module define statements out to using the PTS definitions XML
 - pts-core: Optimizations for Phoromatic Tracker
 - phodevi: Support for Clang compiler
+- phodevi: Quirk handling for PCLinuxOS as it doesn't know how to properly identify itself
 
 Phoronix Test Suite 2.6 Alpha 1
 March 9, 2010

@@ -485,13 +485,13 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_vendor_identifier()
 	{
 		// Returns the vendor identifier used with the External Dependencies and other distro-specific features
-		$vendor = IS_LINUX ? phodevi_linux_parser::read_lsb("Distributor ID") : false;
+		$vendor = IS_LINUX ? phodevi_linux_parser::read_lsb_distributor_id() : false;
 
 		if(!$vendor)
 		{
 			$vendor = phodevi::read_property("system", "operating-system");
 
-			if(($spos = strpos($vendor, " ")) > 1)
+			if(($spos = strpos($vendor, ' ')) > 1)
 			{
 				$vendor = substr($vendor, 0, $spos);
 			}
@@ -658,7 +658,7 @@ class phodevi_system extends phodevi_device_interface
 				if(($s = strpos($info, "version")) != false)
 				{
 					$llvm_info = substr($info, $s + 8);
-					$llvm_info = substr($info, 0, strrpos($info, ' '));
+					$llvm_info = substr($llvm_info, 0, strpos($llvm_info, ' '));
 
 					$compiler_info .= " + LLVM " . $info;
 				}
@@ -754,7 +754,7 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_operating_system()
 	{
 		// Determine the operating system release
-		$vendor = IS_LINUX ? phodevi_linux_parser::read_lsb("Distributor ID") : false;
+		$vendor = IS_LINUX ? phodevi_linux_parser::read_lsb_distributor_id() : false;
 		$version = phodevi::read_property("system", "os-version");
 
 		if(!$vendor || $version == "Unknown")
