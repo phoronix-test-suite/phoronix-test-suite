@@ -34,9 +34,9 @@ class pts_merge
 		// Merge test results
 		// Pass the result file names/paths for each test result file to merge as each as a parameter of the array
 		$files_to_combine = func_get_args();
-		return self::merge_test_results_array($files_to_combine)
+		return self::merge_test_results_array($files_to_combine);
 	}
-	private static function merge_test_results_process(&$results_xml, &$files_to_combine)
+	public static function merge_test_results_process(&$results_xml, &$files_to_combine)
 	{
 		$test_result_manager = new pts_result_file_merge_manager();
 
