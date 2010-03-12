@@ -50,7 +50,6 @@ require(PTS_LIBRARY_PATH . "pts-functions_pcqs.php");
 // Load Main Functions
 require(PTS_LIBRARY_PATH . "pts-functions_io.php");
 require(PTS_LIBRARY_PATH . "pts-functions_shell.php");
-require(PTS_LIBRARY_PATH . "pts-functions_config.php");
 require(PTS_LIBRARY_PATH . "pts-functions_system.php");
 require(PTS_LIBRARY_PATH . "pts-functions_global.php");
 require(PTS_LIBRARY_PATH . "pts-functions_tests.php");

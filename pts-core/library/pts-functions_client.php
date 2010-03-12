@@ -175,7 +175,7 @@ function pts_shutdown()
 	// Generate Phodevi Smart Cache
 	if(getenv("NO_PHODEVI_CACHE") != 1)
 	{
-		if(pts_string_bool(pts_read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
+		if(pts_string_bool(pts_config::read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
 		{
 			pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", phodevi::get_phodevi_cache_object(PTS_USER_DIR, PTS_CORE_VERSION));
 		}
@@ -276,7 +276,7 @@ function pts_user_message($message)
 }
 function pts_get_display_mode_object()
 {
-	switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = getenv("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
+	switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = getenv("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
 	{
 		case "BASIC":
 			$display_mode = new pts_basic_display_mode();
@@ -307,7 +307,7 @@ function pts_display_mode_holder(&$display_mode = null)
 }
 function pts_anonymous_usage_reporting()
 {
-	return pts_string_bool(pts_read_user_config(P_OPTION_USAGE_REPORTING, 0));
+	return pts_string_bool(pts_config::read_user_config(P_OPTION_USAGE_REPORTING, 0));
 }
 function pts_find_home($path)
 {
@@ -347,7 +347,7 @@ function pts_remove_installed_test($identifier)
 function pts_current_user()
 {
 	// Current system user
-	return ($pts_user = pts_read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User")) != "Default User" ? $pts_user : phodevi::read_property("system", "username");
+	return ($pts_user = pts_config::read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User")) != "Default User" ? $pts_user : phodevi::read_property("system", "username");
 }
 function pts_temp_dir()
 {

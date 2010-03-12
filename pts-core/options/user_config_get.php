@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ class user_config_get implements pts_option_interface
 			{
 				if($r[0] == "all" || $r[0] == $c_value || $r[0] == basename($c_value))
 				{
-					echo $c_value . ": " . pts_read_user_config($c_value) . "\n";
+					echo $c_value . ": " . pts_config::read_user_config($c_value) . "\n";
 					$value_found = true;
 				}
 			}

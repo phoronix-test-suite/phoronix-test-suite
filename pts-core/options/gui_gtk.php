@@ -189,12 +189,12 @@ class gui_gtk implements pts_option_interface
 			new pts_gtk_menu_item("System _Information", array("gui_gtk", "show_system_info_interface")),
 			new pts_gtk_menu_item("Software _Dependencies", array("gui_gtk", "show_dependency_info_interface")),
 			null,
-			new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON", null, pts_read_user_config(P_OPTION_UI_SELECT_SUITESORTESTS)),
+			new pts_gtk_menu_item(array("Tests", "Suites"), array("gui_gtk", "radio_test_suite_select"), "RADIO_BUTTON", null, pts_config::read_user_config(P_OPTION_UI_SELECT_SUITESORTESTS)),
 			null,
 			"License" => $license_type,
 			"Subsystem" => $subsystem_type,
-			"Dependencies" => array(new pts_gtk_menu_item(array("Show All", "All Dependencies Installed", "Dependencies Missing"), array("gui_gtk", "radio_test_dependencies_select"), "RADIO_BUTTON", null, pts_read_user_config(P_OPTION_UI_SELECT_DEPENDENCIES))),
-			"File Downloads" => array(new pts_gtk_menu_item(array("Show All", "All Files Available Locally", "Files Need To Be Downloaded"), array("gui_gtk", "radio_test_downloads_select"), "RADIO_BUTTON", null, pts_read_user_config(P_OPTION_UI_SELECT_DOWNLOADS)))
+			"Dependencies" => array(new pts_gtk_menu_item(array("Show All", "All Dependencies Installed", "Dependencies Missing"), array("gui_gtk", "radio_test_dependencies_select"), "RADIO_BUTTON", null, pts_config::read_user_config(P_OPTION_UI_SELECT_DEPENDENCIES))),
+			"File Downloads" => array(new pts_gtk_menu_item(array("Show All", "All Files Available Locally", "Files Need To Be Downloaded"), array("gui_gtk", "radio_test_downloads_select"), "RADIO_BUTTON", null, pts_config::read_user_config(P_OPTION_UI_SELECT_DOWNLOADS)))
 			);
 
 		$main_menu_items = array(
@@ -1156,7 +1156,7 @@ class gui_gtk implements pts_option_interface
 
 				if(pts_http_get_contents("http://www.phoronix-test-suite.com/PTS", $proxy_address, $proxy_port) == "PTS")
 				{					
-					pts_user_config_init(array(P_OPTION_NET_PROXY_ADDRESS => $proxy_address, P_OPTION_NET_PROXY_PORT => $proxy_port));
+					pts_config::user_config_generate(array(P_OPTION_NET_PROXY_ADDRESS => $proxy_address, P_OPTION_NET_PROXY_PORT => $proxy_port));
 					pts_exit("Restarting pts-core...\n", 8);					
 				}
 
@@ -1536,7 +1536,15 @@ class gui_gtk implements pts_option_interface
 			}
 
 			$pref = basename($preference);
-			$current_value = pts_read_user_config($preference, null, ($config_type == "graph" ? $graph_config : $read_config));
+
+			if($config_type == "graph")
+			{
+				$current_value = pts_config::read_graph_config($preference, null);
+			}
+			else
+			{
+				$current_value = pts_config::read_user_config($preference, null);
+			}
 
 			if($current_value == "TRUE" || $current_value == "FALSE")
 			{
@@ -1674,15 +1682,15 @@ class gui_gtk implements pts_option_interface
 				}
 				else if($object instanceOf GtkComboBox)
 				{
-					$preferences_set[$preference] = pts_config_bool_to_string($object->get_active() == 0);
+					$preferences_set[$preference] = pts_config::bool_to_string($object->get_active() == 0);
 				}
 				else if($object instanceOf GtkButton)
 				{
 					$preferences_set[$preference] = $object->get_label();
 				}
 			}
-			pts_user_config_init($preferences_set);
-			pts_graph_config_init($preferences_set);
+			pts_config::user_config_generate($preferences_set);
+			pts_config::graph_config_generate($preferences_set);
 		}
 
 		$window = pts_read_assignment("GTK_OBJ_PREFERENCES_WINDOW");

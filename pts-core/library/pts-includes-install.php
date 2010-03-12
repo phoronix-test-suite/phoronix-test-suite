@@ -183,7 +183,7 @@ function pts_download_test_files($identifier, &$display_mode)
 				{
 					if(pts_validate_md5_download_file($cache_directory . $package_filename, $package_md5))
 					{
-						if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
+						if(pts_string_bool(pts_config::read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
 						{
 							// P_OPTION_CACHE_SYMLINK is disabled by default
 							$display_mode->test_install_download_file($download_package, "LINK_FROM_CACHE", $longest_package_name_length);
@@ -230,7 +230,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 				do
 				{
-					if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE") && pts_string_bool(pts_read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE")) && count($urls) > 1)
+					if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE") && pts_string_bool(pts_config::read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE")) && count($urls) > 1)
 					{
 						// Prompt user to select mirror
 						do
@@ -495,7 +495,7 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 				pts_module_process("__post_test_install", $identifier);
 				$installed = true;
 
-				if(pts_string_bool(pts_read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
+				if(pts_string_bool(pts_config::read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
 				{
 					// Remove original downloaded files
 					pts_remove_local_download_test_files($identifier);
@@ -545,7 +545,7 @@ function pts_test_download_cache_directories()
 
 		// User Defined Directory Checking
 		$dir_string = ($dir = getenv("PTS_DOWNLOAD_CACHE")) != false ? $dir . ':' : null;
-		$dir_string .= pts_read_user_config(P_OPTION_CACHE_DIRECTORY, DEFAULT_DOWNLOAD_CACHE_DIR);
+		$dir_string .= pts_config::read_user_config(P_OPTION_CACHE_DIRECTORY, DEFAULT_DOWNLOAD_CACHE_DIR);
 
 		foreach(pts_trim_explode(':', $dir_string) as $dir_check)
 		{
@@ -575,7 +575,7 @@ function pts_test_download_cache_directories()
 			}
 		}
 
-		if(pts_string_bool(pts_read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
+		if(pts_string_bool(pts_config::read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
 		{
 			$download_cache_dirs = array_merge(
 			pts_glob("/media/*/download-cache/"),

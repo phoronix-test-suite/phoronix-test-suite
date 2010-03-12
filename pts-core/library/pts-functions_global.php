@@ -66,7 +66,7 @@ function pts_global_setup_account($username, $password)
 
 	if(!empty($uploadkey))
 	{
-		pts_user_config_init(array(P_OPTION_GLOBAL_USERNAME => $username, P_OPTION_GLOBAL_UPLOADKEY => $uploadkey));
+		pts_config::user_config_generate(array(P_OPTION_GLOBAL_USERNAME => $username, P_OPTION_GLOBAL_UPLOADKEY => $uploadkey));
 	}
 
 	return !empty($uploadkey);
@@ -122,7 +122,7 @@ function pts_global_upload_result($result_file, $tags = "")
 
 	$ToUpload = base64_encode($test_results);
 	$GlobalUser = pts_current_user();
-	$GlobalKey = pts_read_user_config(P_OPTION_GLOBAL_UPLOADKEY, "");
+	$GlobalKey = pts_config::read_user_config(P_OPTION_GLOBAL_UPLOADKEY, null);
 	$tags = base64_encode($tags);
 	$return_stream = "";
 

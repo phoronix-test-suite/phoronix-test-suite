@@ -108,13 +108,13 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 		switch($question_id)
 		{
 			case "SAVE_RESULTS":
-				$auto_answer = pts_read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE");
+				$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE");
 				break;
 			case "OPEN_BROWSER":
-				$auto_answer = pts_read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE");
+				$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE");
 				break;
 			case "UPLOAD_RESULTS":
-				$auto_answer = pts_read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE");
+				$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE");
 				break;
 			default:
 				$auto_answer = "true";

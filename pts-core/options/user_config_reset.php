@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class user_config_reset implements pts_option_interface
 			copy(PTS_USER_DIR . "user-config.xml", PTS_USER_DIR . "user-config-old.xml");
 			unlink(PTS_USER_DIR . "user-config.xml");
 		}
-		pts_user_config_init();
+		pts_config::user_config_generate();
 	}
 }
 

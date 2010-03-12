@@ -53,7 +53,7 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 
 		if($browser == null)
 		{
-			$config_browser = pts_read_user_config(P_OPTION_DEFAULT_BROWSER, null);
+			$config_browser = pts_config::read_user_config(P_OPTION_DEFAULT_BROWSER, null);
 
 			if($config_browser != null && (is_executable($config_browser) || ($config_browser = pts_executable_in_path($config_browser))))
 			{

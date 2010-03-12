@@ -344,7 +344,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 
 			if(($run_position != 1 && count(pts_glob(TEST_ENV_DIR . $test_run_request->get_identifier() . "/cache-share-*.pt2so")) == 0))
 			{
-				sleep(pts_read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
+				sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 			}
 
 			$result = pts_run_test($test_run_request, $display_mode);
@@ -952,7 +952,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		unset($cache_share);
 	}
 
-	if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_read_user_config(P_OPTION_LOG_INSTALLATION, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
+	if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_config::read_user_config(P_OPTION_LOG_INSTALLATION, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
 	{
 		if(is_file(TEST_ENV_DIR . $test_identifier . "/install.log"))
 		{

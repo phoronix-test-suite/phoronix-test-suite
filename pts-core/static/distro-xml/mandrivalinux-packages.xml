@@ -12,7 +12,7 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>SDL-devel SDL_gfx-devel SDL_image-devel SDL_net-devel SDL_sound-devel SDL_ttf-devel</PackageName>
+			<PackageName>libSDL1.2_0 libSDL_gfx13 libSDL_image1.2_0 libSDL_net1.2_0 libSDL_ttf2.0_0</PackageName>
 			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>

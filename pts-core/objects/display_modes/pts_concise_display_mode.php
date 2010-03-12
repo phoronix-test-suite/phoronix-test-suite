@@ -98,16 +98,23 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_date_time::format_time_string($expected_time, "SECONDS", false, 60) : null;
 
-		$default_width = 36;
-		if($offset_length < $default_width && pts_client::terminal_width() > (2 * strlen($this->tab) + strlen($process_string) + $default_width + 17))
+		// TODO: handle if file-name is too long for terminal width
+		$download_string = $this->tab . $this->tab . $process_string . ": " . $pts_test_file_download->get_filename();
+		$download_size_string = " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]";
+		$offset_length = pts_client::terminal_width() - strlen($download_string) - strlen($download_size_string);
+
+		if($offset_length > 6)
 		{
-			// Set default length
-			$offset_length = $default_width;
+			$offset_length -= 4;
+		}
+		else if($offset_length < 2)
+		{
+			$offset_length = 2;
 		}
 
-		$download_string = $process_string . ": " . $pts_test_file_download->get_filename() . str_repeat(" ", ($offset_length > 0 ? ($offset_length - strlen($pts_test_file_download->get_filename())) : 0));
-		$download_string .= " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]";
-		echo $this->tab . $this->tab . $download_string . "\n";
+		$download_string .= str_repeat(" ", ($offset_length - 2));
+		$download_string .= $download_size_string;
+		echo $download_string . "\n";
 
 		$this->download_estimate = $expected_time != null ? "Estimated Download Time: " . $expected_time : "Downloading";
 		$this->download_last_float = -1;

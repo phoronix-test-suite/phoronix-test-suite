@@ -33,9 +33,9 @@ function pts_client_init()
 	pts_basic_init(); // Initalize common / needed PTS start-up work
 
 	pts_core_storage_init();
-	pts_config_init();
-	define("TEST_ENV_DIR", pts_find_home(pts_read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
-	define("SAVE_RESULTS_DIR", pts_find_home(pts_read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
+	pts_config::init_files();
+	define("TEST_ENV_DIR", pts_find_home(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
+	define("SAVE_RESULTS_DIR", pts_find_home(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
 	pts_extended_init();
 
 	return true;
@@ -101,7 +101,7 @@ function pts_core_storage_init()
 	if($last_core_version == false)
 	{
 		// Compatibility for loading it from PTS 2.0 run and earlier
-		$last_core_version = pts_read_user_config("PhoronixTestSuite/TestCore/LastRun/Version", PTS_VERSION);
+		$last_core_version = pts_config::read_user_config("PhoronixTestSuite/TestCore/LastRun/Version", PTS_VERSION);
 	}
 	// do something here with $last_core_version if you want that information
 
@@ -112,7 +112,7 @@ function pts_core_storage_init()
 	if($last_run == false)
 	{
 		// Compatibility for loading it from PTS 2.0 run and earlier
-		$last_run = pts_read_user_config("PhoronixTestSuite/TestCore/LastRun/Time", date("Y-m-d H:i:s"));
+		$last_run = pts_config::read_user_config("PhoronixTestSuite/TestCore/LastRun/Time", date("Y-m-d H:i:s"));
 	}
 	define("IS_FIRST_RUN_TODAY", (substr($last_run, 0, 10) != date("Y-m-d")));
 
@@ -123,7 +123,7 @@ function pts_core_storage_init()
 	if($global_gsid == false)
 	{
 		// Compatibility for loading it from PTS 2.0 run and earlier
-		$global_gsid = pts_read_user_config("PhoronixTestSuite/GlobalDatabase/GSID", null);
+		$global_gsid = pts_config::read_user_config("PhoronixTestSuite/GlobalDatabase/GSID", null);
 	}
 
 	if(empty($global_gsid) || !pts_global_gsid_valid($global_gsid))
@@ -140,7 +140,7 @@ function pts_core_storage_init()
 	if($agreement_cs == false)
 	{
 		// Compatibility for loading it from PTS 2.0 run and earlier
-		$agreement_cs = pts_read_user_config("PhoronixTestSuite/TestCore/UserInformation/AgreementCheckSum", null);
+		$agreement_cs = pts_config::read_user_config("PhoronixTestSuite/TestCore/UserInformation/AgreementCheckSum", null);
 	}
 
 	$pso->add_object("user_agreement_cs", $agreement_cs); // User agreement check-sum
@@ -163,7 +163,7 @@ function pts_user_agreement_check($command)
 	$config_md5 = $pso->read_object("user_agreement_cs");
 	$current_md5 = md5_file(PTS_PATH . "pts-core/user-agreement.txt");
 
-	if($config_md5 != $current_md5 || pts_read_user_config(P_OPTION_USAGE_REPORTING, "UNKNOWN") == "UNKNOWN")
+	if($config_md5 != $current_md5 || pts_config::read_user_config(P_OPTION_USAGE_REPORTING, "UNKNOWN") == "UNKNOWN")
 	{
 		$prompt_in_method = pts_check_option_for_function($command, "pts_user_agreement_prompt");
 		$user_agreement = file_get_contents(PTS_PATH . "pts-core/user-agreement.txt");
@@ -209,7 +209,7 @@ function pts_user_agreement_check($command)
 			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
 		}
 
-		if(!is_bool($usage_reporting) && pts_read_user_config(P_OPTION_USAGE_REPORTING, null) == null)
+		if(!is_bool($usage_reporting) && pts_config::read_user_config(P_OPTION_USAGE_REPORTING, null) == null)
 		{
 			// Ask user whether to enable anonymous usage reporting, if it wasn't done during the user agreement check
 			// Currently it is done during the user agreement check for at least the CLI and GTK2 GUI
@@ -223,7 +223,7 @@ function pts_user_agreement_check($command)
 
 		if(is_bool($usage_reporting))
 		{
-			pts_user_config_init(array(P_OPTION_USAGE_REPORTING => ($usage_reporting ? "TRUE" : "FALSE")));
+			pts_config::user_config_generate(array(P_OPTION_USAGE_REPORTING => ($usage_reporting ? "TRUE" : "FALSE")));
 		}
 	}
 }

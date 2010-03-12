@@ -119,7 +119,7 @@ if(!QUICK_START)
 
 	register_shutdown_function("pts_shutdown");
 
-	if(($proxy_address = pts_read_user_config(P_OPTION_NET_PROXY_ADDRESS, false)) && ($proxy_port = pts_read_user_config(P_OPTION_NET_PROXY_PORT, false)))
+	if(($proxy_address = pts_config::read_user_config(P_OPTION_NET_PROXY_ADDRESS, false)) && ($proxy_port = pts_config::read_user_config(P_OPTION_NET_PROXY_PORT, false)))
 	{
 		define("NETWORK_PROXY", $proxy_address . ":" . $proxy_port);
 		define("NETWORK_PROXY_ADDRESS", $proxy_address);
@@ -132,14 +132,14 @@ if(!QUICK_START)
 		define("NETWORK_PROXY_PORT", $env_proxy[1]);
 	}
 
-	define("NETWORK_TIMEOUT", pts_read_user_config(P_OPTION_NET_TIMEOUT, 20));
+	define("NETWORK_TIMEOUT", pts_config::read_user_config(P_OPTION_NET_TIMEOUT, 20));
 
 	if(ini_get("allow_url_fopen") == "Off")
 	{
 		echo "\nThe allow_url_fopen option in your PHP configuration must be enabled for network support.\n\n";
 		define("NO_NETWORK_COMMUNICATION", true);
 	}
-	else if(pts_string_bool(pts_read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")))
+	else if(pts_string_bool(pts_config::read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")))
 	{
 		define("NO_NETWORK_COMMUNICATION", true);
 		echo "\nNetwork Communication Is Disabled For Your User Configuration.\n\n";
