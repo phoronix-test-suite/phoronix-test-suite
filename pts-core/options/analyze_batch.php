@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@
 
 class analyze_batch implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("merge");
-	}
 	public static function argument_checks()
 	{
 		return array(
@@ -45,7 +41,7 @@ class analyze_batch implements pts_option_interface
 		$save_to .= "composite.xml";
 
 		// Analyze Results
-		$SAVED_RESULTS = pts_generate_analytical_batch_xml($base_file);
+		$SAVED_RESULTS = pts_merge::generate_analytical_batch_xml($base_file);
 		pts_save_result($save_to, $SAVED_RESULTS);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $save_to);
 		echo "Results Saved To: " . SAVE_RESULTS_DIR . $save_to . "\n\n";

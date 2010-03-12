@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@
 
 class recover_run implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("merge");
-	}
 	public static function argument_checks()
 	{
 		return array(
@@ -68,7 +64,7 @@ class recover_run implements pts_option_interface
 		if(is_file(SAVE_RESULTS_DIR . $r[0] . "/active.xml"))
 		{
 			file_put_contents(SAVE_RESULTS_DIR . $r[0] . "/composite.xml", 
-				pts_merge_test_results(SAVE_RESULTS_DIR . $r[0] . "/active.xml", SAVE_RESULTS_DIR . $r[0] . "/composite.xml"));
+			pts_merge::merge_test_results(SAVE_RESULTS_DIR . $r[0] . "/active.xml", SAVE_RESULTS_DIR . $r[0] . "/composite.xml"));
 		}
 
 		// Result file (composite.xml)

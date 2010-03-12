@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@
 
 class merge_results implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("merge");
-	}
 	public static function run($r)
 	{
 		$r = array_map("pts_find_result_file", $r);
@@ -54,7 +50,7 @@ class merge_results implements pts_option_interface
 		$merge_to_file .= "composite.xml";
 
 		// Merge Results
-		$merged_results = call_user_func_array("pts_merge_test_results", $result_files_to_merge);
+		$merged_results = call_user_func_array(array("pts_merge", "pts_merge_test_results_array"), $result_files_to_merge);
 		pts_save_result($merge_to_file, $merged_results);
 
 		echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $merge_to_file . "\n\n";

@@ -428,7 +428,7 @@ function pts_save_test_file(&$results, $file_name)
 	else
 	{
 		// Merge Results
-		$merged_results = pts_merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $file_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
+		$merged_results = pts_merge::merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $file_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
 		pts_save_result($file_name . "/composite.xml", $merged_results);
 	}
 

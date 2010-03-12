@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ class analyze_image_delta implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("merge", "run", "iqc");
+		return array("run", "iqc");
 	}
 	public static function argument_checks()
 	{
@@ -57,7 +57,7 @@ class analyze_image_delta implements pts_option_interface
 		}
 		while(is_dir(SAVE_RESULTS_DIR . $extract_to));
 
-		$extract_result = pts_merge_test_results($base_select, $compare_select);
+		$extract_result = pts_merge::merge_test_results($base_select, $compare_select);
 		pts_save_result($extract_to . "/composite.xml", $extract_result);
 
 		$compare_file = new pts_result_file($extract_to);

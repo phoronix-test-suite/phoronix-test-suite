@@ -22,10 +22,6 @@
 
 class extract_from_result_file implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("merge");
-	}
 	public static function argument_checks()
 	{
 		return array(
@@ -60,7 +56,7 @@ class extract_from_result_file implements pts_option_interface
 		}
 		while(empty($extract_to) || pts_is_test_result($extract_to));
 
-		$extract_result = call_user_func_array("pts_merge_test_results", $extract_selects);
+		$extract_result = call_user_func_array(array("pts_merge", "pts_merge_test_results_array"), $extract_selects);
 		pts_save_result($extract_to . "/composite.xml", $extract_result);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $extract_to);
 		pts_display_web_browser(SAVE_RESULTS_DIR . $extract_to . "/composite.xml");

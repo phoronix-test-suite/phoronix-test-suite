@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ class reference_comparison implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("merge", "comparisons");
+		return array("comparisons");
 	}
 	public static function argument_checks()
 	{
@@ -74,7 +74,7 @@ class reference_comparison implements pts_option_interface
 		}
 
 		pts_set_assignment("REFERENCE_COMPARISON", true);
-		$merged_results = call_user_func_array("pts_merge_test_results", $merge_args);
+		$merged_results = call_user_func_array(array("pts_merge", "pts_merge_test_results_array"), $merge_args);
 
 		pts_save_result($r[0] . "/composite.xml", $merged_results);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $r[0]);

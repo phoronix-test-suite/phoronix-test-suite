@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@
 
 class reorder_result_file implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("merge");
-	}
 	public static function argument_checks()
 	{
 		return array(
@@ -66,7 +62,7 @@ class reorder_result_file implements pts_option_interface
 		}
 		while(count($result_file_identifiers) > 0);
 
-		$ordered_result = pts_merge_test_results($extract_selects);
+		$ordered_result = pts_merge::merge_test_results_array($extract_selects);
 		pts_save_result($args[0] . "/composite.xml", $ordered_result);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $args[0]);
 		pts_display_web_browser(SAVE_RESULTS_DIR . $args[0] . "/composite.xml");

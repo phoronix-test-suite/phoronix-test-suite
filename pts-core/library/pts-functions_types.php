@@ -21,6 +21,12 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_test_result_contains_result_identifier($test_result, $results_identifier)
+{
+	$result_file = new pts_result_file($test_result);
+
+	return in_array($results_identifier, $result_file->get_system_identifiers());	
+}
 function pts_is_run_object($object)
 {
 	return pts_is_test($object) || pts_is_suite($object);

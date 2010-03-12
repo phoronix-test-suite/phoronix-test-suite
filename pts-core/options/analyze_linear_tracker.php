@@ -22,10 +22,6 @@
 
 class analyze_linear_tracker implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("merge");
-	}
 	public static function argument_checks()
 	{
 		return array(
