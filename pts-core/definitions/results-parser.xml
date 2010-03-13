@@ -5,30 +5,37 @@
 		<Define>
 			<Name>P_RESULTS_PARSER_TEMPLATE</Name>
 			<Value>PhoronixTestSuite/ResultsParser/OutputTemplate</Value>
+			<Description>The section of the test output to look for the result(s) within.</Description>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_PARSER_RESULT_KEY</Name>
 			<Value>PhoronixTestSuite/ResultsParser/ResultKey</Value>
+			<Description>The key to look for when parsing the OutputTemplate to find where the result should be stored. If this tag is not implemented, the default key will be used.</Description>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_PARSER_LINE_HINT</Name>
 			<Value>PhoronixTestSuite/ResultsParser/LineHint</Value>
+			<Description>A unique string to search the test result output for to indicate this is the line that contains the result value.</Description>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_PARSER_LINE_BEFORE_HINT</Name>
 			<Value>PhoronixTestSuite/ResultsParser/LineBeforeHint</Value>
+			<Description>The LineBeforeHint tag is similar to LineHint but is used to indicate the line before where the test results appear, in the event the LineHint tag cannot be used reliably.</Description>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_PARSER_STRIP_FROM_RESULT</Name>
 			<Value>PhoronixTestSuite/ResultsParser/StripFromResult</Value>
+			<Description>Any string that should be searched for and removed from the result value anywhere within the value string.</Description>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_PARSER_STRIP_RESULT_POSTFIX</Name>
 			<Value>PhoronixTestSuite/ResultsParser/StripResultPostfix</Value>
+			<Description>This is similar to the StripFromResult tag but will only look at the end of the value string for this string to be removed. (I.e. if a unit such as 'ms' or 'FPS' is appended to the result by the test without a space.)</Description>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_PARSER_DIVIDE_BY</Name>
 			<Value>PhoronixTestSuite/ResultsParser/DivideResultValueBy</Value>
+			<Description>If the result value should be divided by some constant (to convert the result to a different unit), the value should be supplied in this tag.</Description>
 		</Define>
 	</Definitions>
 </PhoronixTestSuite>

@@ -5,42 +5,52 @@
 		<Define>
 			<Name>P_INSTALL_TEST_NAME</Name>
 			<Value>PhoronixTestSuite/TestInstallation/Environment/Name</Value>
+			<Description>The test identifier of the installed test.</Description>
 		</Define>
 		<Define>
 			<Name>P_INSTALL_TEST_VERSION</Name>
 			<Value>PhoronixTestSuite/TestInstallation/Environment/Version</Value>
+			<Description>The PTS test profile version of the installed test.</Description>
 		</Define>
 		<Define>
 			<Name>P_INSTALL_TEST_CHECKSUM</Name>
 			<Value>PhoronixTestSuite/TestInstallation/Environment/CheckSum</Value>
+			<Description>The MD5 check-sum of the test's main executable script.</Description>
 		</Define>
 		<Define>
 			<Name>P_INSTALL_TEST_SYSIDENTIFY</Name>
 			<Value>PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier</Value>
+			<Description>A hash of the system's hardware/software configuration at the time of the test's installation. This is used to determine at a later time whether the test should be re-installed or not based upon platform differences.</Description>
 		</Define>
 		<Define>
 			<Name>P_INSTALL_TEST_INSTALLTIME</Name>
 			<Value>PhoronixTestSuite/TestInstallation/History/InstallTime</Value>
+			<Description>A time-stamp of when the test was installed.</Description>
 		</Define>
 		<Define>
 			<Name>P_INSTALL_TEST_INSTALLTIME_LENGTH</Name>
 			<Value>PhoronixTestSuite/TestInstallation/History/InstallTimeLength</Value>
+			<Description>How long (in seconds) that it took the test to install.</Description>
 		</Define>
 		<Define>
 			<Name>P_INSTALL_TEST_LASTRUNTIME</Name>
 			<Value>PhoronixTestSuite/TestInstallation/History/LastRunTime</Value>
+			<Description>A time-stamp of when the test was last run by the Phoronix Test Suite.</Description>
 		</Define>
 		<Define>
 			<Name>P_INSTALL_TEST_TIMESRUN</Name>
 			<Value>PhoronixTestSuite/TestInstallation/History/TimesRun</Value>
+			<Description>An integer of the number of times the test has been executed.</Description>
 		</Define>
 		<Define>
 			<Name>P_INSTALL_TEST_AVG_RUNTIME</Name>
 			<Value>PhoronixTestSuite/TestInstallation/History/AverageRunTime</Value>
+			<Description>The average time (in seconds) that it takes to run this test based upon all the times the test has been run on the given system.</Description>
 		</Define>
 		<Define>
 			<Name>P_INSTALL_TEST_LATEST_RUNTIME</Name>
 			<Value>PhoronixTestSuite/TestInstallation/History/LatestRunTime</Value>
+			<Description>The time (in seconds) it took to complete the most recent run of this test.</Description>
 		</Define>
 	</Definitions>
 </PhoronixTestSuite>

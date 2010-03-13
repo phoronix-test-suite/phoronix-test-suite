@@ -5,10 +5,12 @@
 		<Define>
 			<Name>P_MODULE_OPTION_IDENTIFIER</Name>
 			<Value>PhoronixTestSuite/ModuleSettings/Option/Identifier</Value>
+			<Description>The module setting's identifier.</Description>
 		</Define>
 		<Define>
 			<Name>P_MODULE_OPTION_VALUE</Name>
 			<Value>PhoronixTestSuite/ModuleSettings/Option/Value</Value>
+			<Description>The module setting's value.</Description>
 		</Define>
 	</Definitions>
 </PhoronixTestSuite>
