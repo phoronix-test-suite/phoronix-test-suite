@@ -1,0 +1,5 @@
+#!/bin/sh
+# Example script for Phoromatic Ubuntu Tracker
+# Toss into /etc/
+aptitude update && aptitude -y full-upgrade && aptitude clean && reboot
+

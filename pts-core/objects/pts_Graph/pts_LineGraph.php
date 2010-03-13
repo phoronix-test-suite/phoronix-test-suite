@@ -363,13 +363,13 @@ class pts_LineGraph extends pts_CustomGraph
 
 		foreach($to_display as $color_key => &$column)
 		{
-			$from_top = $this->graph_top_start + 6 + ($color_key != $this->graph_color_text || $this->graph_image->get_renderer() == "SVG" ? 1 : 0);
+			$from_top = $this->graph_top_start + 7 + ($color_key != $this->graph_color_text || $this->graph_image->get_renderer() == "SVG" ? 1 : 0);
 			$longest_string_width = 0;
 
 			foreach($column as &$write)
 			{
-				$this->graph_image->write_text_left($write, $this->graph_font, 6, $color_key, $from_left, $from_top, $from_left, $from_top);
-				$string_width = $this->text_string_width($write, $this->graph_font, 6);
+				$this->graph_image->write_text_left($write, $this->graph_font, 6.5, $color_key, $from_left, $from_top, $from_left, $from_top);
+				$string_width = $this->text_string_width($write, $this->graph_font, 6.5);
 
 				if($string_width > $longest_string_width)
 				{

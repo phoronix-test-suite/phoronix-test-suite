@@ -437,7 +437,7 @@ abstract class pts_Graph
 
 		foreach($this->graph_sub_titles as $i => $sub_title)
 		{
-			$this->graph_image->write_text_center($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (31 + ($i * 18)), $this->graph_left_end, (31 + ($i * 18)), false, true);
+			$this->graph_image->write_text_center($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (31 + ($i * 18)), $this->graph_left_end, (31 + ($i * 18)), false);
 		}
 
 		if($with_version)
@@ -523,7 +523,7 @@ abstract class pts_Graph
 			if($i != 0 && $this->graph_background_lines)
 			{
 				$line_width = 6;
-				$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end, $px_from_top, $this->graph_color_body_light, 1, 8, 9);
+				$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end, $px_from_top, $this->graph_color_body_light, 1, 20, 15);
 			}
 
 			$display_value += $this->trim_double($this->graph_maximum_value / $this->graph_attr_marks, 2);

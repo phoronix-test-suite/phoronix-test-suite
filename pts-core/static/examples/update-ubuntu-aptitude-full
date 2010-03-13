@@ -10,5 +10,5 @@ if [ $hour -ne 2 ] ; then
         exit
 fi
 
-aptitude update && aptitude -y full-upgrade > /tmp/aptitude-output && aptitude clean && reboot
+/etc/aptitude-full-upgrade > /tmp/aptitude-output 2>&1
 

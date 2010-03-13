@@ -145,7 +145,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$rotation = ($rotate_text == false ? 0 : 90);
 
 		$text_x = $bound_x2 - $text_width;
-		$text_y = $bound_y1 + round($text_height / 2);
+		$text_y = $bound_y1 + round($text_height / 2) + 1;
 
 		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "RIGHT", $onclick);
 	}

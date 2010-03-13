@@ -366,33 +366,52 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function drag_drop_item($widget, $context, $x, $y, $data, $info, $time, $img)
 	{
-		$file = str_replace("file://", "", trim($data->data));
+		$file = str_replace("file://", null, trim($data->data));
+		$options = array();
 
 		if(substr($file, -4) == ".svg")
 		{
-			$svg_options = pts_parse_svg_options($file);
-
-			if(count($svg_options) > 0)
+			$options = pts_parse_svg_options($file);
+		}
+		else if(strpos($file, "global.phoronix-test-suite.com") !== false)
+		{
+			if(($find_data = strpos($file, "?k=profile&u=")) !== false)
 			{
-				$window = pts_read_assignment("GTK_OBJ_WINDOW");
+				$strip_url = substr($file, $find_data + 13);
 
-				foreach($window->get_children() as $child)
+				if(($cut = strpos($strip_url, '#')) !== false)
 				{
-					$window->remove($child);
+					$strip_url = substr($strip_url, 0, $cut);
 				}
 
-				$vertical = array(null);
-
-				for($i = 0; $i < count($svg_options); $i++)
+				if(pts_is_global_id($strip_url))
 				{
-					array_push($vertical, new pts_gtk_button($svg_options[$i][1], array("gui_gtk", "drag_drop_item_clicked"), $svg_options[$i][0]));
+					$options[0][0] = $strip_url;
+					$options[0][1] = "Run This Phoronix Global Comparison";
 				}
-				array_push($vertical, new pts_gtk_button("Return", array("gui_gtk", "drag_drop_item_clicked"), "return", -1, -1, Gtk::STOCK_QUIT));
-				array_push($vertical, null);
-
-				pts_gtk_array_to_boxes($window, $vertical, 16);
-				gui_gtk::redraw_main_window();
 			}
+		}
+
+		if(count($options) > 0)
+		{
+			$window = pts_read_assignment("GTK_OBJ_WINDOW");
+
+			foreach($window->get_children() as $child)
+			{
+				$window->remove($child);
+			}
+
+			$vertical = array(null);
+
+			for($i = 0; $i < count($options); $i++)
+			{
+				array_push($vertical, new pts_gtk_button($options[$i][1], array("gui_gtk", "drag_drop_item_clicked"), $options[$i][0]));
+			}
+			array_push($vertical, new pts_gtk_button("Return", array("gui_gtk", "drag_drop_item_clicked"), "return", -1, -1, Gtk::STOCK_QUIT));
+			array_push($vertical, null);
+
+			pts_gtk_array_to_boxes($window, $vertical, 16);
+			gui_gtk::redraw_main_window();
 		}
 	}
 	public static function drag_drop_item_clicked($clicked)
