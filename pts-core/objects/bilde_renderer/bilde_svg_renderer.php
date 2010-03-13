@@ -240,11 +240,11 @@ class bilde_svg_renderer extends bilde_renderer
 	{
 		if($default_hide == true)
 		{
-			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke-opacity=\"0\" fill-opacity=\"0\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\"" . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . "><set attributeName=\"stroke-opacity\" from=\"0\" to=\"1\" begin=\"mouseover\" end=\"mouseout\" /><set attributeName=\"fill-opacity\" from=\"0\" to=\"1\" begin=\"mouseover\" end=\"mouseout\" /></ellipse>\n";
+			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke-opacity=\"0\" fill-opacity=\"0\" stroke=\"" . $border_color . "\" fill=\"" . $body_color . "\" stroke-width=\"" . $border_width . "\"" . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . "><set attributeName=\"stroke-opacity\" from=\"0\" to=\"1\" begin=\"mouseover\" end=\"mouseout\" /><set attributeName=\"fill-opacity\" from=\"0\" to=\"1\" begin=\"mouseover\" end=\"mouseout\" /></ellipse>\n";
 		}
 		else
 		{
-			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\"" . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . " />\n";
+			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" fill=\"" . $body_color . "\" stroke-width=\"" . $border_width . "\"" . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . " />\n";
 		}
 	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $title = null)

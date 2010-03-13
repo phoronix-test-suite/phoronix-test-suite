@@ -62,7 +62,7 @@ function pts_extended_init()
 {
 	// Extended Initalization Process
 	$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, XML_SUITE_LOCAL_DIR, 
-	TEST_RESOURCE_LOCAL_DIR, XML_PROFILE_LOCAL_DIR, MODULE_LOCAL_DIR, DEFAULT_DOWNLOAD_CACHE_DIR);
+	TEST_RESOURCE_LOCAL_DIR, XML_PROFILE_LOCAL_DIR, MODULE_LOCAL_DIR, MODULE_DATA_DIR, DEFAULT_DOWNLOAD_CACHE_DIR);
 
 	foreach($directory_check as $dir)
 	{
@@ -98,34 +98,18 @@ function pts_core_storage_init()
 
 	// Last Run Processing
 	$last_core_version = $pso->read_object("last_core_version");
-	if($last_core_version == false)
-	{
-		// Compatibility for loading it from PTS 2.0 run and earlier
-		$last_core_version = pts_config::read_user_config("PhoronixTestSuite/TestCore/LastRun/Version", PTS_VERSION);
-	}
 	// do something here with $last_core_version if you want that information
 
 	$pso->add_object("last_core_version", PTS_VERSION); // PTS version last run
 
 	// Last Run Processing
 	$last_run = $pso->read_object("last_run_time");
-	if($last_run == false)
-	{
-		// Compatibility for loading it from PTS 2.0 run and earlier
-		$last_run = pts_config::read_user_config("PhoronixTestSuite/TestCore/LastRun/Time", date("Y-m-d H:i:s"));
-	}
 	define("IS_FIRST_RUN_TODAY", (substr($last_run, 0, 10) != date("Y-m-d")));
 
 	$pso->add_object("last_run_time", date("Y-m-d H:i:s")); // Time PTS was last run
 
 	// Phoronix Global - GSID
 	$global_gsid = $pso->read_object("global_system_id");
-	if($global_gsid == false)
-	{
-		// Compatibility for loading it from PTS 2.0 run and earlier
-		$global_gsid = pts_config::read_user_config("PhoronixTestSuite/GlobalDatabase/GSID", null);
-	}
-
 	if(empty($global_gsid) || !pts_global_gsid_valid($global_gsid))
 	{
 		// Global System ID for anonymous uploads, etc
@@ -137,11 +121,6 @@ function pts_core_storage_init()
 
 	// User Agreement Checking
 	$agreement_cs = $pso->read_object("user_agreement_cs");
-	if($agreement_cs == false)
-	{
-		// Compatibility for loading it from PTS 2.0 run and earlier
-		$agreement_cs = pts_config::read_user_config("PhoronixTestSuite/TestCore/UserInformation/AgreementCheckSum", null);
-	}
 
 	$pso->add_object("user_agreement_cs", $agreement_cs); // User agreement check-sum
 

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts_module_interface.php: The generic Phoronix Test Suite module object that is extended by the specific modules/plug-ins
 
 	This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,7 @@ class pts_module
 {
 	public static function save_dir()
 	{
-		$prefix_dir = PTS_USER_DIR . "module-files/";
+		$prefix_dir = MODULE_DATA_DIR;
 		pts_mkdir($prefix_dir);
 
 		return $prefix_dir . str_replace("_", "-", self::module_name()) . "/";

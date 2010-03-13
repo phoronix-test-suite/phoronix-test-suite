@@ -181,7 +181,7 @@ class phoromatic extends pts_module_interface
 
 		if(count($schedule_titles) == 0)
 		{
-			echo "\nNo test schedules for this system were found on Phoromatic.\n";
+			echo "\nNo test schedules for this system were found on the Phoromatic Server.\n";
 		}
 		else
 		{
@@ -212,7 +212,7 @@ class phoromatic extends pts_module_interface
 
 		if(count($schedule_titles) == 0)
 		{
-			echo "\nNo test schedules for this system were found on Phoromatic.\n";
+			echo "\nNo test schedules for this system were found on the Phoromatic Server.\n";
 		}
 		else
 		{
