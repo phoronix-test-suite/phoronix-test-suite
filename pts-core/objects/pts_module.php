@@ -41,7 +41,7 @@ class pts_module
 		{
 			if($option instanceOf pts_module_option)
 			{
-				if(pts_module::read_option($option->get_identifier()) == false)
+				if(pts_module::read_option($option->get_identifier()) == false && $option->setup_check_needed())
 				{
 					$is_setup = false;
 					break;

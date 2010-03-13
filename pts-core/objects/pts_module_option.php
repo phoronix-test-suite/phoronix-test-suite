@@ -28,14 +28,20 @@ class pts_module_option
 	private $option_supported_values;
 	private $option_default_value;
 	private $option_function_check;
+	private $option_setup_check;
 
-	public function __construct($identifier, $question_string, $supported_values = null, $default_value = null, $function_to_check = null)
+	public function __construct($identifier, $question_string, $supported_values = null, $default_value = null, $function_to_check = null, $setup_check = true)
 	{
 		$this->option_identifier = $identifier;
 		$this->option_question = $question_string;
 		$this->option_supported_values = $supported_values;
 		$this->option_default_value = $default_value;
 		$this->option_function_check = $function_to_check;
+		$this->option_setup_check = $setup_check;
+	}
+	public function setup_check_needed()
+	{
+		return $this->option_setup_check;
 	}
 	public function get_identifier()
 	{

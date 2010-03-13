@@ -44,7 +44,8 @@ class phoromatic extends pts_module_interface
 		return array(
 		new pts_module_option("remote_host", "Enter the URL to host", "HTTP_URL", "http://www.phoromatic.com/"),
 		new pts_module_option("remote_account", "Enter the account code", "ALPHA_NUMERIC"),
-		new pts_module_option("remote_verifier", "Enter the verification code", "ALPHA_NUMERIC")
+		new pts_module_option("remote_verifier", "Enter the verification code", "ALPHA_NUMERIC"),
+		new pts_module_option("system_description", "Enter a short (optional) description for this system", null, null, null, false)
 		);
 	}
 	public static function module_setup_validate($options)
@@ -58,11 +59,14 @@ class phoromatic extends pts_module_interface
 			"r" => "setup",
 			"h" => pts_hw_string(),
 			"s" => pts_sw_string(),
-			"o" => phodevi::read_property("system", "hostname")
+			"o" => phodevi::read_property("system", "hostname"),
+			"sys_desc" => $options["system_description"]
 			),
 			$options["remote_host"], $options["remote_account"], $options["remote_verifier"]);
 
 		$returned_id = pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE);
+
+		unset($options["system_description"]); // No reason to have this locally just pass it to the server
 
 		if(!empty($returned_id))
 		{
