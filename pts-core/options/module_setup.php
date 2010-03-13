@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -75,13 +75,7 @@ class module_setup implements pts_option_interface
 			}
 
 			$set_options = pts_module_call($module, "module_setup_validate", $set_options);
-
-			$formatted_options = array();
-			foreach($set_options as $option => $value)
-			{
-				$formatted_options[$module . "__" . $option] = $value;
-			}
-			pts_module_config_init($formatted_options);
+			pts_module_config_init($module, $set_options);
 		}
 		echo "\n";
 	}

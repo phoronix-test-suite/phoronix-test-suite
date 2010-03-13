@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add /tmp/phoronix-test-suite.active lock
 - pts-core: Move module define statements out to using the PTS definitions XML
 - pts-core: Optimizations for Phoromatic Tracker
+- pts-core: New module settings configuration store
 - phodevi: Support for Clang compiler
 - phodevi: Quirk handling for PCLinuxOS as it doesn't know how to properly identify itself
 

@@ -31,7 +31,6 @@ function pts_module_startup_init()
 	// Process initially called when PTS starts up
 	if(getenv("PTS_IGNORE_MODULES") == false && PTS_MODE == "CLIENT")
 	{
-		pts_loader::load_definitions("module-config.xml");
 		pts_load_modules();
 		pts_module_process("__startup");
 		define("PTS_STARTUP_TASK_PERFORMED", true);
@@ -288,62 +287,40 @@ function pts_available_modules()
 
 	return $module_names;
 }
-function pts_module_config_init($set_options = null)
+function pts_module_config_init($module_name, $set_options = null)
 {
 	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
+	pts_mkdir(MODULE_DATA_DIR . $module_name);
+	$settings_to_write = array();
 
-	if(is_file(PTS_USER_DIR . "modules-config.xml"))
+	if(is_file(MODULE_DATA_DIR . $module_name . "/module-settings.xml"))
 	{
-		$file = file_get_contents(PTS_USER_DIR . "modules-config.xml");
-	}
-	else
-	{
-		$file = null;
-	}
+		$module_config_parser = new tandem_XmlReader(MODULE_DATA_DIR . $module_name . "/module-settings.xml");
+		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
+		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 
-	$module_config_parser = new tandem_XmlReader($file);
-	$option_module = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_NAME);
-	$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
-	$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
-
-	if(is_array($set_options) && count($set_options) > 0)
-	{
-		foreach($set_options as $this_option_set => $this_option_value)
+		for($i = 0; $i < count($option_identifier); $i++)
 		{
-			$replaced = false;
-			list($this_option_module, $this_option_identifier) = explode("__", $this_option_set);
-
-			for($i = 0; $i < count($option_module) && !$replaced; $i++)
-			{
-				if($option_module[$i] == $this_option_module && $option_identifier[$i] == $this_option_identifier)
-				{
-					$option_value[$i] = $this_option_value;
-					$replaced = true;
-				}
-			}
-
-			if(!$replaced)
-			{
-				array_push($option_module, $this_option_module);
-				array_push($option_identifier, $this_option_identifier);
-				array_push($option_value, $this_option_value);
-			}
+			$settings_to_write[$option_identifier[$i]] = $option_value[$i];
 		}
+	}
+
+	foreach($set_options as $identifier => $value)
+	{
+		$settings_to_write[$identifier] = $value;
 	}
 
 	$config = new tandem_XmlWriter();
+	$i = 0;
 
-	for($i = 0; $i < count($option_module); $i++)
+	foreach($settings_to_write as $identifier => $value)
 	{
-		if(isset($option_module[$i]) && pts_is_module($option_module[$i]))
-		{
-			$config->addXmlObject(P_MODULE_OPTION_NAME, $i, $option_module[$i]);
-			$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $option_identifier[$i]);
-			$config->addXmlObject(P_MODULE_OPTION_VALUE, $i, $option_value[$i]);
-		}
+		$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $identifier);
+		$config->addXmlObject(P_MODULE_OPTION_VALUE, $i, $value);
+		$i++;
 	}
 
-	$config->saveXMLFile(PTS_USER_DIR . "modules-config.xml");
+	$config->saveXMLFile(MODULE_DATA_DIR . $module_name . "/module-settings.xml");
 }
 
 ?>

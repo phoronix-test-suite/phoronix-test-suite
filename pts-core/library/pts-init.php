@@ -85,7 +85,14 @@ function pts_extended_init()
 	// defined when using pts_test_read_xml() the first time
 	pts_loader::load_definitions("test-profile.xml");
 	pts_loader::load_definitions("test-suite.xml");	
-	pts_loader::load_definitions("test-installation.xml");	
+	pts_loader::load_definitions("test-installation.xml");
+	pts_loader::load_definitions("module-settings.xml");
+
+	// Compatibility for importing old module configuration settings from pre PTS 2.6 into new structures
+	if(is_file(PTS_USER_DIR . "modules-config.xml"))
+	{
+		pts_compatibility::pts_convert_pre_pts_26_module_settings();
+	}
 }
 function pts_core_storage_init()
 {
@@ -97,10 +104,13 @@ function pts_core_storage_init()
 	}
 
 	// Last Run Processing
-	$last_core_version = $pso->read_object("last_core_version");
+	//$last_core_version = $pso->read_object("last_core_version");
 	// do something here with $last_core_version if you want that information
+	$pso->add_object("last_core_version", PTS_CORE_VERSION); // PTS version last run
 
-	$pso->add_object("last_core_version", PTS_VERSION); // PTS version last run
+	//$last_pts_version = $pso->read_object("last_pts_version");
+	// do something here with $last_pts_version if you want that information
+	$pso->add_object("last_pts_version", PTS_VERSION); // PTS version last run
 
 	// Last Run Processing
 	$last_run = $pso->read_object("last_run_time");

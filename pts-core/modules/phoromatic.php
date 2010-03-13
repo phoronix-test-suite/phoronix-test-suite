@@ -504,7 +504,7 @@ class phoromatic extends pts_module_interface
 
 	protected static function update_system_details()
 	{
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => pts_hw_string(), "s" => pts_sw_string(), "gsid" => PTS_GSID));
+		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => pts_hw_string(), "s" => pts_sw_string()));
 		self::$phoromatic_server_build = pts_xml_read_single_value($server_response, M_PHOROMATIC_SERVER_BUILD);
 
 		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
@@ -663,6 +663,7 @@ class phoromatic extends pts_module_interface
 
 		$to_post["pts"] = PTS_VERSION;
 		$to_post["pts_core"] = PTS_CORE_VERSION;
+		$to_post["gsid"] = PTS_GSID;
 
 		return pts_http_upload_via_post($host, $to_post);
 	}

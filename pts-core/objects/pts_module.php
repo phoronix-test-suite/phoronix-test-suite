@@ -56,14 +56,13 @@ class pts_module
 		$module_name = self::module_name();
 		$value = false;
 
-		$module_config_parser = new tandem_XmlReader(PTS_USER_DIR . "modules-config.xml");
-		$option_module = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_NAME);
+		$module_config_parser = new tandem_XmlReader(MODULE_DATA_DIR . $module_name . "/module-settings.xml");
 		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
 		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 
-		for($i = 0; $i < count($option_module) && $value == false; $i++)
+		for($i = 0; $i < count($option_identifier) && $value == false; $i++)
 		{
-			if($option_module[$i] == $module_name && $option_identifier[$i] == $identifier)
+			if($option_identifier[$i] == $identifier)
 			{
 				$value = $option_value[$i];
 			}
@@ -87,7 +86,7 @@ class pts_module
 	}
 	public static function set_option($identifier, $value)
 	{
-		pts_module_config_init(array(self::module_name() . "__" . $identifier => $value));
+		pts_module_config_init(self::module_name(), array($identifier => $value));
 	}
 	public static function save_file($file, $contents = null, $append = false)
 	{
