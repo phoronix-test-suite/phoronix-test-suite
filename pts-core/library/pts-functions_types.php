@@ -33,7 +33,7 @@ function pts_is_run_object($object)
 }
 function pts_is_suite($object)
 {
-	$type = pts_testing_type($object);
+	$type = pts_type_handler::pts_identifier_type($object);
 
 	return $type == "TYPE_TEST_SUITE" || $type == "TYPE_LOCAL_TEST_SUITE";
 }
@@ -43,13 +43,13 @@ function pts_is_virtual_suite($object)
 }
 function pts_is_test($object)
 {
-	$type = pts_testing_type($object);
+	$type = pts_type_handler::pts_identifier_type($object);
 
 	return $type == "TYPE_TEST" || $type == "TYPE_LOCAL_TEST" || $type == "TYPE_BASE_TEST";
 }
 function pts_is_base_test($object)
 {
-	$type = pts_testing_type($object);
+	$type = pts_type_handler::pts_identifier_type($object);
 
 	return $type == "TYPE_BASE_TEST";
 }
@@ -119,44 +119,6 @@ function pts_validate_local_test_suite($identifier)
 
 	return $valid;
 }
-function pts_testing_type($identifier, $rewrite_cache = false)
-{
-	// Determine type of test based on identifier
-	static $cache;
-
-	if(!isset($cache[$identifier]) || $rewrite_cache)
-	{
-		$test_type = false;
-
-		if(!empty($identifier))
-		{
-			if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_profile($identifier))
-			{
-				$test_type = "TYPE_LOCAL_TEST";
-			}
-			else if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_suite($identifier))
-			{
-				$test_type = "TYPE_LOCAL_TEST_SUITE";
-			}
-			else if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
-			{
-				$test_type = "TYPE_TEST";
-			}
-			else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
-			{
-				$test_type = "TYPE_TEST_SUITE";
-			}
-			else if(is_file(XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml"))
-			{
-				$test_type = "TYPE_BASE_TEST";
-			}
-		}
-
-		$cache[$identifier] = $test_type;
-	}
-
-	return $cache[$identifier];
-}
 function pts_location_suite($identifier, $rewrite_cache = false)
 {
 	static $cache;
@@ -167,7 +129,7 @@ function pts_location_suite($identifier, $rewrite_cache = false)
 
 		if(pts_is_suite($identifier))
 		{
-			$type = pts_testing_type($identifier);
+			$type = pts_type_handler::pts_identifier_type($identifier);
 
 			switch($type)
 			{
@@ -222,7 +184,7 @@ function pts_location_virtual_suite($identifier)
 					break;
 				default:
 					// Check if object is a subsystem test type
-					foreach(pts_subsystem_test_types() as $type)
+					foreach(pts_types::subsystem_targets() as $type)
 					{
 						if(strtolower($type) == $identifier)
 						{
@@ -239,37 +201,6 @@ function pts_location_virtual_suite($identifier)
 
 	return $cache[$identifier];
 }
-function pts_location_test($identifier, $rewrite_cache = false)
-{
-	static $cache;
-
-	if(!isset($cache[$identifier]) || $rewrite_cache)
-	{
-		$location = false;
-
-		if(pts_is_test($identifier))
-		{
-			$type = pts_testing_type($identifier);
-
-			switch($type)
-			{
-				case "TYPE_TEST":
-					$location = XML_PROFILE_DIR . $identifier . ".xml";
-					break;
-				case "TYPE_LOCAL_TEST":
-					$location = XML_PROFILE_LOCAL_DIR . $identifier . ".xml";
-					break;
-				case "TYPE_BASE_TEST":
-					$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
-					break;
-			}
-		}
-
-		$cache[$identifier] = $location;
-	}
-
-	return $cache[$identifier];
-}
 function pts_location_test_resources($identifier, $rewrite_cache = false)
 {
 	static $cache;
@@ -280,7 +211,7 @@ function pts_location_test_resources($identifier, $rewrite_cache = false)
 
 		if(pts_is_test($identifier))
 		{
-			$type = pts_testing_type($identifier);
+			$type = pts_type_handler::pts_identifier_type($identifier);
 
 			if($type == "TYPE_LOCAL_TEST" && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
 			{
@@ -503,13 +434,13 @@ function pts_find_result_file($file, $check_global = true)
 }
 function pts_rebuild_test_type_cache($identifier)
 {
-	pts_testing_type($identifier, true);
-	pts_location_test($identifier, true);
+	pts_type_handler::pts_identifier_type($identifier, true);
+	pts_tests::test_profile_location($identifier, true);
 	pts_location_test_resources($identifier, true);
 }
 function pts_rebuild_suite_type_cache($identifier)
 {
-	pts_testing_type($identifier, true);
+	pts_type_handler::pts_identifier_type($identifier, true);
 	pts_location_suite($identifier, true);
 }
 

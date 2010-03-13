@@ -174,13 +174,13 @@ class gui_gtk implements pts_option_interface
 		array_push($file_menu, new pts_gtk_menu_item("Quit", array("gui_gtk", "kill_gtk_window"), "STRING", Gtk::STOCK_QUIT));
 
 		$license_type = array();
-		foreach(pts_license_test_types() as $license)
+		foreach(pts_types::software_license_types() as $license)
 		{
 			array_push($license_type, new pts_gtk_menu_item($license, array("gui_gtk", "check_test_license_select"), "CHECK_BUTTON", null, true));
 		}
 
 		$subsystem_type = array();
-		foreach(pts_subsystem_test_types() as $subsystem)
+		foreach(pts_types::subsystem_targets() as $subsystem)
 		{
 			array_push($subsystem_type, new pts_gtk_menu_item($subsystem, array("gui_gtk", "check_test_type_select"), "CHECK_BUTTON", null, true));
 		}

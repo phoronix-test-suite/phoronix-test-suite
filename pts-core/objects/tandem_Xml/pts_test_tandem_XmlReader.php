@@ -32,9 +32,9 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 	{
 		pts_loader::load_definitions("test-profile.xml");
 
-		if(function_exists("pts_location_test") && (!is_file($read_xml) || substr($read_xml, -3) != "xml"))
+		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
 		{
-			$read_xml = pts_location_test($read_xml);
+			$read_xml = pts_tests::test_profile_location($read_xml);
 		}
 
 		$this->override_values = array();
@@ -75,7 +75,7 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 
 		$test_extends = $this->getValue(P_TEST_CTPEXTENDS, null, null, true);
 
-		if(!empty($test_extends) && pts_is_test($test_extends))
+		if(!empty($test_extends)) // For now drop && pts_is_test($test_extends)
 		{
 			$test_below_parser = new pts_test_tandem_XmlReader($test_extends);
 			$test_below_tag = $test_below_parser->getXMLValue($xml_tag);

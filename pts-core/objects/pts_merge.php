@@ -22,10 +22,10 @@
 
 class pts_merge
 {
-	public static function merge_test_results_array(&$files_to_combine)
+	public static function merge_test_results_array(&$files_to_combine, $pass_attributes = null)
 	{
 		$results_xml = new pts_results_tandem_XmlWriter();
-		self::merge_test_results_process($results_xml, $files_to_combine);
+		self::merge_test_results_process($results_xml, $files_to_combine, $pass_attributes);
 
 		return $results_xml->getXML();
 	}
@@ -36,9 +36,9 @@ class pts_merge
 		$files_to_combine = func_get_args();
 		return self::merge_test_results_array($files_to_combine);
 	}
-	public static function merge_test_results_process(&$results_xml, &$files_to_combine)
+	public static function merge_test_results_process(&$results_xml, &$files_to_combine, $pass_attributes = null)
 	{
-		$test_result_manager = new pts_result_file_merge_manager();
+		$test_result_manager = new pts_result_file_merge_manager($pass_attributes);
 
 		$results_xml->setXslBinding("pts-results-viewer.xsl");
 		$has_written_suite_info = false;
@@ -73,7 +73,7 @@ class pts_merge
 				$this_result_file = new pts_result_file($result_merge_select->get_result_file());
 			}
 
-			if(!defined("ONLY_RESULTS_IN_XML"))
+			if(!isset($pass_attributes["only_render_results_xml"]))
 			{
 				if($has_written_suite_info == false)
 				{

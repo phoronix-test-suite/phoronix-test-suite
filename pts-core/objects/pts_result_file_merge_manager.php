@@ -22,11 +22,17 @@
 
 class pts_result_file_merge_manager
 {
-	private $test_results;
+	private $test_results = null;
+	private $skip_subsystems = null;
 
-	public function __construct()
+	public function __construct($pass_attributes = null)
 	{
 		$this->test_results = array();
+
+		if(isset($pass_attributes["subsystem_targets_to_skip"]) && is_array($pass_attributes["subsystem_targets_to_skip"]))
+		{
+			$this->skip_subsystems = $pass_attributes["subsystem_targets_to_skip"];
+		}
 	}
 	public function add_test_result_set($merge_test_objects_array, &$result_merge_select)
 	{
@@ -41,6 +47,17 @@ class pts_result_file_merge_manager
 
 		$merged = false;
 		$mto_test_name = $merge_test_object->get_test_name();
+
+		if($this->skip_subsystems != null)
+		{
+			// Check whether to omit rendering this test if only certain subsystem test types should be merged
+			$test_subsystem = pts_tests::test_hardware_type($mto_test_name);
+
+			if($test_subsystem != null && !in_array($test_subsystem, $this->skip_subsystems))
+			{
+				return false;
+			}
+		}
 
 		if(isset($this->test_results[$mto_test_name]))
 		{

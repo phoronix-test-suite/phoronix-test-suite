@@ -174,14 +174,6 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 
 	return $generated_graphs;
 }
-function pts_subsystem_test_types()
-{
-	return array("System", "Processor", "Disk", "Graphics", "Memory", "Network");
-}
-function pts_license_test_types()
-{
-	return array("Free", "Non-Free", "Retail", "Restricted");
-}
 function pts_get_results_viewer_xsl_formatted()
 {
 	$pts_Graph = pts_read_assignment("LAST_RENDERED_GRAPH");
@@ -900,7 +892,7 @@ function pts_suites_containing_test($test_identifier)
 }
 function pts_remove_test_profile($identifier)
 {
-	$xml_loc = pts_location_test($identifier);
+	$xml_loc = pts_tests::test_profile_location($identifier);
 	$resources_loc = pts_location_test_resources($identifier);
 	$removed = false;
 

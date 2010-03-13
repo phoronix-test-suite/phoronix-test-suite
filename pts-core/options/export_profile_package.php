@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ class export_profile_package implements pts_option_interface
 		$temp_path = pts_temp_dir();
 		$to_export = $args[0];
 
-		copy(pts_location_test($to_export), $temp_path . basename(pts_location_test($to_export)));
+		copy(pts_tests::test_profile_location($to_export), $temp_path . basename(pts_tests::test_profile_location($to_export)));
 		mkdir($temp_path . "test-resources/");
 
 		foreach(pts_glob(pts_location_test_resources($to_export) . "*") as $test_resource_file)
