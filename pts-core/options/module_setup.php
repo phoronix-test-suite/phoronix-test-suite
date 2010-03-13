@@ -52,25 +52,40 @@ class module_setup implements pts_option_interface
 		}
 		else
 		{
+			if(($module_presets = getenv("PTS_MODULE_SETUP")) != false)
+			{
+				$module_presets = pts_client::parse_value_string_double_identifier($module_presets);
+			}
+
 			$set_options = array();
 			foreach($module_setup as $module_option)
 			{
 				if($module_option instanceOf pts_module_option)
 				{
-					do
+					$option_identifier = $module_option->get_identifier();
+
+					if(isset($module_presets[$module][$option_identifier]) && $module_option->is_supported_value($module_presets[$module][$option_identifier]))
 					{
 						echo "\n" . $module_option->get_formatted_question();
-						$input = pts_read_user_input();
+						echo $module_presets[$module][$option_identifier] . "\n";
+						$input = $module_presets[$module][$option_identifier];
 					}
-					while(!$module_option->is_supported_value($input));
+					else
+					{
+						do
+						{
+							echo "\n" . $module_option->get_formatted_question();
+							$input = pts_read_user_input();
+						}
+						while(!$module_option->is_supported_value($input));
+					}
 
 					if(empty($input))
 					{
 						$input = $module_option->get_default_value();
 					}
 
-					$this_input_identifier = $module_option->get_identifier();
-					$set_options[$this_input_identifier] = $input;
+					$set_options[$option_identifier] = $input;
 				}
 			}
 

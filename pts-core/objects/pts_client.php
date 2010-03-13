@@ -43,6 +43,24 @@ class pts_client
 
 		return pts_read_assignment("TERMINAL_WIDTH");
 	}
+	public static function parse_value_string_double_identifier($value_string)
+	{
+		// i.e. with PRESET_OPTIONS="stream.run-type=Add"
+		$values = array();
+
+		foreach(explode(';', $value_string) as $preset)
+		{
+			if(count($preset = pts_trim_explode('=', $preset)) == 2)
+			{
+				if(count($preset[0] = pts_trim_explode('.', $preset[0])) == 2)
+				{
+					$values[$preset[0][0]][$preset[0][1]] = $preset[1];
+				}
+			}
+		}
+
+		return $values;
+	}
 }
 
 ?>

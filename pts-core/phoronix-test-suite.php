@@ -22,7 +22,7 @@
 */
 
 setlocale(LC_NUMERIC, "C");
-define("PTS_PATH", dirname(dirname(__FILE__)) . "/");
+define("PTS_PATH", dirname(dirname(__FILE__)) . '/');
 
 // PTS_MODE types
 // CLIENT = Standard Phoronix Test Suite Client

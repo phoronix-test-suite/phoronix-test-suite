@@ -36,21 +36,7 @@ function pts_prompt_test_options($identifier)
 		// i.e. PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream
 
 		pts_set_assignment("CLI_PRESET_OPTIONS", true);
-		$cli_presets = array();
-
-		foreach(explode(";", $cli_presets_env) as $preset)
-		{
-			if(count($preset = explode("=", $preset)) == 2)
-			{
-				list($prefix, $value) = array_map("trim", $preset);
-
-				if(count($prefix = explode(".", $prefix)) == 2)
-				{
-					list($test_identifier, $option_identifier) = array_map("trim", $prefix);
-					$cli_presets[$test_identifier][$option_identifier] = $value;
-				}
-			}
-		}					
+		$cli_presets = pts_client::parse_value_string_double_identifier($cli_presets_env);
 	}
 
 	foreach(pts_test_options($identifier) as $i => $o)
