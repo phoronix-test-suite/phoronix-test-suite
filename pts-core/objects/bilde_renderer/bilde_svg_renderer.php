@@ -236,20 +236,15 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$this->image .= "<polygon fill=\"" . $body_color . "\"" . ($border_color != null ? " stroke=\"" . $border_color . "\"" : null) . " stroke-width=\"" . $border_width . "\" points=\"" . implode(" ", $point_pairs) . "\" />\n";
 	}
-	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0, $default_hide = false)
+	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0, $default_hide = false, $title = null)
 	{
 		if($default_hide == true)
 		{
-			return;
-			// TODO: this code is not yet working
-			$uid = $this->request_uid();
-			$this->image .= "<g id=\"" . $uid . "\">";
-			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" visibility=\"hidden\"><set attributeName=\"visibility\" from=\"hidden\" to=\"visible\" begin=\"" . $uid . ".mouseover\" end=\"" . $uid . ".mouseout\" /></ellipse>";
-			$this->image .= "</g>\n";
+			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke-opacity=\"0\" fill-opacity=\"0\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\"" . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . "><set attributeName=\"stroke-opacity\" from=\"0\" to=\"1\" begin=\"mouseover\" end=\"mouseout\" /><set attributeName=\"fill-opacity\" from=\"0\" to=\"1\" begin=\"mouseover\" end=\"mouseout\" /></ellipse>\n";
 		}
 		else
 		{
-			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" />\n";
+			$this->image .= "<ellipse cx=\"" . $center_x . "\" cy=\"" . $center_y . "\" rx=\"" . floor($width / 2) . "\" ry=\"" . floor($height / 2) . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\"" . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . " />\n";
 		}
 	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $title = null)

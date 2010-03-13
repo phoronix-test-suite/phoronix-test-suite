@@ -195,6 +195,7 @@ class pts_LineGraph extends pts_CustomGraph
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
+				$data_string = $this->graph_identifiers[$i] . ": " . $value;
 
 				if($value == 0 && !$has_hit_non_zero)
 				{
@@ -236,24 +237,24 @@ class pts_LineGraph extends pts_CustomGraph
 				
 				if($identifiers_empty && $i == 0)
 				{
-					array_push($poly_points, array($this->graph_left_start + 1, $value_plot_top));
+					array_push($poly_points, array($this->graph_left_start + 1, $value_plot_top, $data_string));
 				}
 				else if($identifiers_empty && $i == ($point_counter - 1))
 				{
-					array_push($poly_points, array($px_from_left, $value_plot_top));
+					array_push($poly_points, array($px_from_left, $value_plot_top, $data_string));
 					if($varying_lengths && ($point_counter * 1.1) < $point_count)
 					{
 						// This plotting ended prematurely
-						array_push($poly_points, array($px_from_left, $this->graph_top_end - 1));
+						array_push($poly_points, array($px_from_left, $this->graph_top_end - 1, null));
 					}
 					else
 					{
-						array_push($poly_points, array($this->graph_left_end - 1, $value_plot_top));
+						array_push($poly_points, array($this->graph_left_end - 1, $value_plot_top, null));
 					}
 				}
 				else
 				{
-					array_push($poly_points, array($px_from_left, $value_plot_top));
+					array_push($poly_points, array($px_from_left, $value_plot_top, $data_string));
 				}
 
 				if($this->regression_marker_threshold > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
@@ -286,7 +287,7 @@ class pts_LineGraph extends pts_CustomGraph
 						$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, $this->graph_color_alert, 4, $regression_plots[$i]);
 					}
 
-					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $this->graph_color_notches, $paint_color, 1, !($point_counter < 6 || $i == 0 || $i == ($poly_points_count  - 1)));
+					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $this->graph_color_notches, $paint_color, 1, !($point_counter < 6 || $i == 0 || $i == ($poly_points_count  - 1)), $x_y_pair[2]);
 				}
 			}
 		}
