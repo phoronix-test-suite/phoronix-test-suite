@@ -30,7 +30,9 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 
 	foreach($tests_r as &$this_test)
 	{
-		if(is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".php")) || is_file(($run_file = pts_location_test_resources($this_test) . $script_name . ".sh")))
+		$test_resources_location = pts_tests::test_resources_location($this_test);
+
+		if(is_file(($run_file = $test_resources_location . $script_name . ".php")) || is_file(($run_file = $test_resources_location . $script_name . ".sh")))
 		{
 			$file_extension = substr($run_file, (strrpos($run_file, ".") + 1));
 

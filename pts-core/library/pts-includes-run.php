@@ -762,7 +762,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				$test_results = null;
 			}
 
-			if(is_file($parse_results_xml = pts_location_test_resources($test_identifier) . "parse-results.xml") && is_file($benchmark_log_file))
+			if(is_file($parse_results_xml = pts_tests::test_resources_location($test_identifier) . "parse-results.xml") && is_file($benchmark_log_file))
 			{
 				$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_results_xml);
 				$result_template = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_TEMPLATE);

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,6 +42,36 @@ class pts_tests
 				default:
 					$location = false;
 					break;
+			}
+
+			$cache[$identifier] = $location;
+		}
+
+		return $cache[$identifier];
+	}
+	public static function test_resources_location($identifier, $rewrite_cache = false)
+	{
+		static $cache;
+
+		if(!isset($cache[$identifier]) || $rewrite_cache)
+		{
+			$type = pts_type_handler::pts_identifier_type($identifier);
+
+			if($type == "TYPE_LOCAL_TEST" && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
+			{
+				$location = TEST_RESOURCE_LOCAL_DIR . $identifier . "/";
+			}
+			else if($type == "TYPE_BASE_TEST" && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
+			{
+				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
+			}
+			else if(is_dir(TEST_RESOURCE_DIR . $identifier))
+			{
+				$location = TEST_RESOURCE_DIR . $identifier . "/";
+			}
+			else
+			{
+				$location = false;
 			}
 
 			$cache[$identifier] = $location;

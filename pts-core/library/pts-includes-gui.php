@@ -166,7 +166,7 @@ function pts_test_download_files_locally_available($identifier)
 			}
 		}
 
-		if(count($test_object_downloads) == 0 && !pts_is_base_test($name) && !is_file(pts_location_test_resources($name) . "install.sh") && !is_file(pts_location_test_resources($name) . "install.php"))
+		if(count($test_object_downloads) == 0 && !pts_is_base_test($name) && pts_test_checksum_installer($name) == null)
 		{
 			$xml_parser = new pts_test_tandem_XmlReader($name);
 			$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);

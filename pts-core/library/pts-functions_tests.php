@@ -230,15 +230,19 @@ function pts_test_needs_updated_install($identifier)
 function pts_test_checksum_installer($identifier)
 {
 	// Calculate installed checksum
-	$md5_checksum = null;
+	$test_resources_location = pts_tests::test_resources_location($identifier);
 
-	if(is_file(pts_location_test_resources($identifier) . "install.php"))
+	if(is_file($test_resources_location . "install.php"))
 	{
-		$md5_checksum = md5_file(pts_location_test_resources($identifier) . "install.php");
+		$md5_checksum = md5_file($test_resources_location . "install.php");
 	}
-	else if(is_file(pts_location_test_resources($identifier) . "install.sh"))
+	else if(is_file($test_resources_location . "install.sh"))
 	{
-		$md5_checksum = md5_file(pts_location_test_resources($identifier) . "install.sh");
+		$md5_checksum = md5_file($test_resources_location . "install.sh");
+	}
+	else
+	{
+		$md5_checksum = null;
 	}
 
 	return $md5_checksum;
@@ -787,7 +791,7 @@ function pts_objects_test_downloads($test_identifier)
 {
 	$obj_r = array();
 
-	if(is_file(($download_xml_file = pts_location_test_resources($test_identifier) . "downloads.xml")))
+	if(is_file(($download_xml_file = pts_tests::test_resources_location($test_identifier) . "downloads.xml")))
 	{
 		pts_loader::load_definitions("test-profile-downloads.xml");
 
@@ -893,7 +897,7 @@ function pts_suites_containing_test($test_identifier)
 function pts_remove_test_profile($identifier)
 {
 	$xml_loc = pts_tests::test_profile_location($identifier);
-	$resources_loc = pts_location_test_resources($identifier);
+	$resources_loc = pts_tests::test_resources_location($identifier);
 	$removed = false;
 
 	if(is_writable($xml_loc) && is_writable($resources_loc))

@@ -58,7 +58,7 @@ class make_download_cache implements pts_option_interface
 	
 		foreach(pts_installed_tests_array() as $test)
 		{
-			$downloads_file = pts_location_test_resources($test) . "downloads.xml";
+			$downloads_file = pts_tests::test_resources_location($test) . "downloads.xml";
 
 			if(!is_file($downloads_file))
 			{

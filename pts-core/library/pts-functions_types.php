@@ -201,37 +201,6 @@ function pts_location_virtual_suite($identifier)
 
 	return $cache[$identifier];
 }
-function pts_location_test_resources($identifier, $rewrite_cache = false)
-{
-	static $cache;
-
-	if(!isset($cache[$identifier]) || $rewrite_cache)
-	{
-		$location = false;
-
-		if(pts_is_test($identifier))
-		{
-			$type = pts_type_handler::pts_identifier_type($identifier);
-
-			if($type == "TYPE_LOCAL_TEST" && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
-			{
-				$location = TEST_RESOURCE_LOCAL_DIR . $identifier . "/";
-			}
-			else if($type == "TYPE_BASE_TEST" && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
-			{
-				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
-			}
-			else if(is_dir(TEST_RESOURCE_DIR . $identifier))
-			{
-				$location = TEST_RESOURCE_DIR . $identifier . "/";
-			}
-		}
-
-		$cache[$identifier] = $location;
-	}
-
-	return $cache[$identifier];
-}
 function pts_test_extends_below($object)
 {
 	// Process Extensions / Cascading Test Profiles
@@ -436,7 +405,7 @@ function pts_rebuild_test_type_cache($identifier)
 {
 	pts_type_handler::pts_identifier_type($identifier, true);
 	pts_tests::test_profile_location($identifier, true);
-	pts_location_test_resources($identifier, true);
+	pts_tests::test_resources_location($identifier, true);
 }
 function pts_rebuild_suite_type_cache($identifier)
 {

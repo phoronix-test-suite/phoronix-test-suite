@@ -36,7 +36,7 @@ class export_profile_package implements pts_option_interface
 		copy(pts_tests::test_profile_location($to_export), $temp_path . basename(pts_tests::test_profile_location($to_export)));
 		mkdir($temp_path . "test-resources/");
 
-		foreach(pts_glob(pts_location_test_resources($to_export) . "*") as $test_resource_file)
+		foreach(pts_glob(pts_tests::test_resources_location($to_export) . "*") as $test_resource_file)
 		{
 			copy($test_resource_file, $temp_path . "test-resources/" . basename($test_resource_file));
 		}

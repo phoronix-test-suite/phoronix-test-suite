@@ -427,7 +427,8 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 				return false;
 			}
 
-			if(is_file(pts_location_test_resources($identifier) . "install.sh") || is_file(pts_location_test_resources($identifier) . "install.php"))
+			$test_resources_location = pts_tests::test_resources_location($identifier);
+			if(is_file($test_resources_location . "install.sh") || is_file($test_resources_location . "install.php"))
 			{
 				pts_module_process("__pre_test_install", $identifier);
 				$display_mode->test_install_process($identifier);
