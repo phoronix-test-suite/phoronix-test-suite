@@ -20,9 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// TODO: use
-
-class pts_shell_interpreter
+class pts_phoroscript_interpreter
 {
 	private $script_file;
 	private $environmental_variables;
@@ -43,7 +41,27 @@ class pts_shell_interpreter
 	{
 		return $this->var_current_directory . $path . '/';
 	}
-	public function execute_script()
+	protected function find_file_in_array(&$string_array)
+	{
+		$found_file = false;
+
+		foreach($string_array as $segment)
+		{
+			if(is_file($segment))
+			{
+				$found_file = $segment;
+				break;
+			}
+			else if(is_file($this->var_current_directory . $segment))
+			{
+				$found_file = $this->var_current_directory . $segment;
+				break;
+			}
+		}
+
+		return $found_file;
+	}
+	public function execute_script($pass_arguments = null)
 	{
 		if($this->script_file == null)
 		{
@@ -51,10 +69,19 @@ class pts_shell_interpreter
 		}
 
 		$script_contents = file_get_contents($this->script_file);
+		$prev_exit_status = 0;
 		$script_pointer = -1;
 
 		do
 		{
+			$exit_status = 0;
+
+			if($prev_exit_status != 0)
+			{
+				$exit_status = $prev_exit_status;
+				$prev_exit_status = 0;
+			}
+
 			$script_contents = substr($script_contents, ($script_pointer + 1));
 			$line = $script_contents;
 			$prev_script_pointer = $script_pointer;
@@ -64,7 +91,7 @@ class pts_shell_interpreter
 				$line = substr($line, 0, $script_pointer);
 			}
 
-			$line_r = explode(' ', $line);
+			$line_r = pts_trim_explode(' ', $line);
 
 			switch($line_r[0])
 			{
@@ -112,14 +139,11 @@ class pts_shell_interpreter
 				case 'touch':
 					if(!is_file($this->var_current_directory . $line_r[1]) && is_writable($this->var_current_directory))
 					{
-						file_put_contents($this->var_current_directory . $line_r[1], null);
+						touch($this->var_current_directory . $line_r[1]);
 					}
 					break;
 				case 'mkdir':
-					if(!is_dir($this->var_current_directory . $line_r[1]))
-					{
-						mkdir($this->var_current_directory . $line_r[1]);
-					}
+					pts_mkdir($this->var_current_directory . $line_r[1]);
 					break;
 				case 'rm':
 					for($i = 1; $i < count($line_r); $i++)
@@ -130,21 +154,37 @@ class pts_shell_interpreter
 						}
 						else if(is_dir($this->var_current_directory . $line_r[$i]))
 						{
-							// TODO: implement PTS function for recurse deleting
-							rmdir($this->var_current_directory . $line_r[$i]);
+							pts_remove($this->var_current_directory . $line_r[$i], null, true);
 						}
 					}
 					break;
 				case 'chmod':
-					// TODO: implement, +x
+					$chmod_file = self::find_file_in_array($line_r);
+
+					if($chmod_file)
+					{
+						chmod($chmod_file, 0755);
+					}
 					break;
 				case 'unzip':
-					// TODO: implement
+					$zip_file = self::find_file_in_array($line_r);
+					pts_zip_archive_extract($zip_file, $this->var_current_directory);
 					break;
 				case 'tar':
 					// TODO: implement, i.e. tar -xvf ../../openarena-benchmark-files-4.tar.gz
 					break;
 				case 'echo':
+					if($line == "echo $? > ~/install-exit-status")
+					{
+						file_put_contents($this->var_current_directory . "install-exit-status", $exit_status);
+						break;
+					}
+					else if($line == "echo $? > ~/test-exit-status")
+					{
+						file_put_contents($this->var_current_directory . "test-exit-status", $exit_status);
+						break;
+					}
+
 					$start_echo = strpos($script_contents, "\"") + 1;
 
 					do
@@ -167,12 +207,27 @@ class pts_shell_interpreter
 						}
 
 						// TODO: right now it's expecting the file location pipe to be relative location
+						$echo_contents = str_replace("\\$", "\$", $echo_contents);
 						file_put_contents($this->var_current_directory . $to_file, $echo_contents);
 					}
 					else
 					{
 						echo $echo_contents;
 					}
+					break;
+				case '#!/bin/sh':
+				case '#':
+				case null:
+					// IGNORE
+					break;
+				case 'case':
+					echo "\nUNHANDLED EVENT\n";
+					return false;
+					// TODO: decide how to handle
+					break;
+				default:
+					$exec_output = array();
+					exec("cd " . $this->var_current_directory . "; " . $line . " 2>&1", $exec_output, $prev_exit_status);
 					break;
 			}
 		}

@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_call_test_script($test_identifier, $script_name, $print_string = "", $pass_argument = "", $extra_vars = null, $use_ctp = true)
+function pts_call_test_script($test_identifier, $script_name, $print_string = null, $pass_argument = null, $extra_vars = null, $use_ctp = true)
 {
 	$result = null;
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
@@ -53,7 +53,15 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = ""
 			}
 			else if($file_extension == "sh")
 			{
-				$this_result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
+				if(getenv("USE_PHOROSCRIPT_INTERPRETER") != false)
+				{
+					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
+					$phoroscript->execute_script($pass_argument);
+				}
+				else
+				{
+					$this_result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
+				}
 			}
 			else
 			{
