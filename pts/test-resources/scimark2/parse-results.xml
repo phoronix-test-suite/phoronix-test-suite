@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<MatchToTestArguments>TEST_COMPOSITE</MatchToTestArguments>
+		<LineHint>Composite</LineHint>
+		<OutputTemplate>Composite Score:          #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+	<ResultsParser>
+		<MatchToTestArguments>TEST_FFT</MatchToTestArguments>
+		<LineHint>FFT</LineHint>
+		<OutputTemplate>FFT             Mflops:   #_RESULT_#    (N=1048576)</OutputTemplate>
+	</ResultsParser>
+	<ResultsParser>
+		<MatchToTestArguments>TEST_SOR</MatchToTestArguments>
+		<LineHint>SOR</LineHint>
+		<OutputTemplate>SOR             Mflops:   #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+	<ResultsParser>
+		<MatchToTestArguments>TEST_MONTE</MatchToTestArguments>
+		<LineHint>MonteCarlo</LineHint>
+		<OutputTemplate>MonteCarlo:     Mflops:   #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+	<ResultsParser>
+		<MatchToTestArguments>TEST_SPARSE</MatchToTestArguments>
+		<LineHint>Sparse matmult</LineHint>
+		<OutputTemplate>Sparse matmult  Mflops:  #_RESULT_#    (N=100000, nz=1000000)</OutputTemplate>
+	</ResultsParser>
+	<ResultsParser>
+		<MatchToTestArguments>TEST_DENSE</MatchToTestArguments>
+		<LineHint>LU</LineHint>
+		<OutputTemplate>LU              Mflops:  #_RESULT_#    (M=1000, N=1000)</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

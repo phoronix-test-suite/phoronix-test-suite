@@ -520,7 +520,7 @@ function pts_parse_results(&$display_mode, $parse_results_xml, $log_file, $pts_t
 		$end_result_pos = $start_result_pos + strlen($result_key[$i]);
 		$end_result_line_pos = strpos($result_template[$i], "\n", $end_result_pos);
 		$result_template_line = substr($result_template[$i], 0, ($end_result_line_pos === false ? strlen($result_template[$i]) : $end_result_line_pos));
-		$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n") + 1);
+		$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n"));
 		$result_template_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_template_line))));
 		$result_template_r_pos = array_search($result_key[$i], $result_template_r);
 
