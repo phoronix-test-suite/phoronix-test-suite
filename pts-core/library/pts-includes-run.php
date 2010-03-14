@@ -468,15 +468,75 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 	$vars["SYSTEM_MONITOR_STOP"] = TEST_LIBRARIES_DIR . "system-monitoring-stop.sh";
 	$vars["PHP_BIN"] = PHP_BIN;
 
-	if($result_format == "IMAGE_COMPARISON")
-	{
-		$vars["IQC_IMPORT_IMAGE"] = TEST_LIBRARIES_DIR . "iqc-image-import.sh";
-		$vars["IQC_IMAGE_PNG"] = TEST_ENV_DIR . $test_identifier . "/iqc.png";
-	}
-
 	return $vars;
 }
-function pts_parse_results(&$display_mode, $parse_results_xml, $log_file, $pts_test_arguments, $extra_arguments)
+function pts_parse_results_iqc(&$display_mode, $test_identifier, $parse_results_xml, $log_file, $pts_test_arguments, $extra_arguments)
+{
+	$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_results_xml);
+	$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
+	$result_iqc_source_file = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_SOURCE_IMAGE);
+	$result_iqc_image_x = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_IMAGE_X);
+	$result_iqc_image_y = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_IMAGE_Y);
+	$result_iqc_image_width = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_IMAGE_WIDTH);
+	$result_iqc_image_height = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_IMAGE_HEIGHT);
+
+	$test_result = false;
+
+	if(!extension_loaded("gd"))
+	{
+		// Needs GD library to work
+		return false;
+	}
+
+	for($i = 0; $i < count($result_iqc_source_file); $i++)
+	{
+		if(!empty($result_match_test_arguments[$i]) && strpos($pts_test_arguments, $result_match_test_arguments[$i]) === false)
+		{
+			// This is not the ResultsParser XML section to use as the MatchToTestArguments does not match the PTS test arguments
+			continue;
+		}
+
+		if(is_file(TEST_ENV_DIR . $test_identifier . '/' . $result_iqc_source_file[$i]))
+		{
+			$iqc_source_file = TEST_ENV_DIR . $test_identifier . '/' . $result_iqc_source_file[$i];
+		}
+		else
+		{
+			// No image file found
+			continue;
+		}
+
+		switch(strtolower(pts_last_element_in_array(explode('.', $iqc_source_file))))
+		{
+			case "tga":
+				$img = pts_image::imagecreatefromtga($iqc_source_file);
+				break;
+			case "png":
+				$img = imagecreatefrompng($iqc_source_file);
+				break;
+			case "jpg":
+			case "jpeg":
+				$img = imagecreatefromjpeg($iqc_source_file);
+				break;
+			default:
+				return false;
+				break;
+		}
+
+		$img_sliced = imagecreatetruecolor($result_iqc_image_width[$i], $result_iqc_image_height[$i]);
+		imagecopyresampled($img_sliced, $img, 0, 0, $result_iqc_image_x[$i], $result_iqc_image_y[$i], $result_iqc_image_width[$i], $result_iqc_image_height[$i], $result_iqc_image_width[$i], $result_iqc_image_height[$i]);
+		$test_result = TEST_ENV_DIR . $test_identifier . "/iqc.png";
+		imagepng($img_sliced, $test_result);
+
+		if($test_result != false)
+		{
+			break;
+		}
+	}
+
+	return $test_result;
+}
+function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_results_xml, $log_file, $pts_test_arguments, $extra_arguments)
 {
 	$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_results_xml);
 	$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
@@ -838,7 +898,14 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 			if(is_file($parse_results_xml = pts_tests::test_resources_location($test_identifier) . "parse-results.xml"))
 			{
-				$test_result = pts_parse_results($display_mode, $parse_results_xml, $benchmark_log_file, $pts_test_arguments, $extra_arguments);
+				if($result_format == "IMAGE_COMPARISON")
+				{
+					$test_result = pts_parse_results_iqc($display_mode, $test_identifier, $parse_results_xml, $benchmark_log_file, $pts_test_arguments, $extra_arguments);
+				}
+				else
+				{
+					$test_result = pts_parse_results_numeric($display_mode, $test_identifier, $parse_results_xml, $benchmark_log_file, $pts_test_arguments, $extra_arguments);
+				}
 			}
 			else
 			{
@@ -863,11 +930,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			if(!empty($validate_result) && !pts_string_bool($validate_result))
 			{
 				$test_result = null;
-			}
-
-			if($result_format == "IMAGE_COMPARISON" && is_file($test_extra_runtime_variables["IQC_IMAGE_PNG"]))
-			{
-				$test_result = $test_extra_runtime_variables["IQC_IMAGE_PNG"];
 			}
 
 			if(!empty($test_result))

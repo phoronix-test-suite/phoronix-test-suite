@@ -47,5 +47,30 @@
 			<Value>PhoronixTestSuite/ResultsParser/MultiplyResultValueBy</Value>
 			<Description>If the result value should be multiplied by some constant (to convert the result to a different unit), the value should be supplied in this tag.</Description>
 		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_SOURCE_IMAGE</Name>
+			<Value>PhoronixTestSuite/ResultsParser/SourceImage</Value>
+			<Description>If the test profile is for an image quality comparison, the ImageFile tag should contain the file/path of the source file.</Description>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_IMAGE_X</Name>
+			<Value>PhoronixTestSuite/ResultsParser/ImageX</Value>
+			<Description>If the test profile is for an image quality comparison, the ImageX should be the X coordinate of where to begin cropping the source file.</Description>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_IMAGE_Y</Name>
+			<Value>PhoronixTestSuite/ResultsParser/ImageY</Value>
+			<Description>If the test profile is for an image quality comparison, the ImageX should be the Y coordinate of where to begin cropping the source file.</Description>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_IMAGE_WIDTH</Name>
+			<Value>PhoronixTestSuite/ResultsParser/ImageWidth</Value>
+			<Description>If the test profile is for an image quality comparison, the ImageWidth should be the produced image width.</Description>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_IMAGE_HEIGHT</Name>
+			<Value>PhoronixTestSuite/ResultsParser/ImageHeight</Value>
+			<Description>If the test profile is for an image quality comparison, the ImageHeight should be the produced image height.</Description>
+		</Define>
 	</Definitions>
 </PhoronixTestSuite>
