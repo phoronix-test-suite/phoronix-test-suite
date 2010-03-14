@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts-includes-execution.php: Functions needed for execution during only the test installation and run processes
 
 	This program is free software; you can redistribute it and/or modify
@@ -31,6 +31,12 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = nu
 	foreach($tests_r as &$this_test)
 	{
 		$test_resources_location = pts_tests::test_resources_location($this_test);
+		$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
+
+		if(is_file($test_resources_location . $script_name . $os_postfix . ".php") || is_file($test_resources_location . $script_name . $os_postfix . ".sh"))
+		{
+			$script_name .= $os_postfix;
+		}
 
 		if(is_file(($run_file = $test_resources_location . $script_name . ".php")) || is_file(($run_file = $test_resources_location . $script_name . ".sh")))
 		{

@@ -476,101 +476,175 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 
 	return $vars;
 }
-function pts_parse_results(&$result_template, &$result_output, $key, $line_hint = null, $line_before_hint = null, $strip_from_result = null, $strip_result_postfix = null)
+function pts_parse_results(&$display_mode, $parse_results_xml, $log_file, $pts_test_arguments, $extra_arguments)
 {
-	$return_result = false;
-	$start_result_pos = strrpos($result_template, $key);
-	$end_result_pos = $start_result_pos + strlen($key);
-	$end_result_line_pos = strpos($result_template, "\n", $end_result_pos);
-	$result_template_line = substr($result_template, 0, ($end_result_line_pos === false ? strlen($result_template) : $end_result_line_pos));
-	$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n") + 1);
-	$result_template_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_template_line))));
-	$result_template_r_pos = array_search($key, $result_template_r);
+	$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_results_xml);
+	$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
+	$result_template = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_TEMPLATE);
+	$result_key = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_RESULT_KEY);
+	$result_line_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_HINT);
+	$result_line_before_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_BEFORE_HINT);
+	$result_divide_by = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_DIVIDE_BY);
+	$result_multiply_by = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MULTIPLY_BY);
+	$strip_from_result = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_STRIP_FROM_RESULT);
+	$strip_result_postfix = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_STRIP_RESULT_POSTFIX);
+	$test_result = false;
 
-	if($result_template_r_pos === false)
+	for($i = 0; $i < count($result_template); $i++)
 	{
-		// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
-		foreach($result_template_r as $i => $r_check)
+		if(!empty($result_match_test_arguments[$i]) && strpos($pts_test_arguments, $result_match_test_arguments[$i]) === false)
 		{
-			if(strpos($check, $key) !== false)
-			{
-				$result_template_r_pos = $i;
-				break;
-			}
-		}
-	}
-
-	$search_key = null;
-	$line_before_key = null;
-
-	if($line_hint != null && strpos($result_template_line, $line_hint) !== false)
-	{
-		$search_key = $line_hint;
-	}
-	else if($line_before_hint != null && strpos($result_template, $line_hint) !== false)
-	{
-		$search_key = null; // doesn't really matter what this value is
-	}
-	else
-	{
-		foreach($result_template_r as $line_part)
-		{
-			if(strpos($line_part, ':') !== false && strlen($line_part) > 1)
-			{
-				// add some sort of && strrpos($result_template, $line_part)  to make sure there isn't two of the same $search_key
-				$search_key = $line_part;
-				break;
-			}
+			// This is not the ResultsParser XML section to use as the MatchToTestArguments does not match the PTS test arguments
+			continue;
 		}
 
-		if($search_key == null)
+		if($result_key[$i] == null)
 		{
-			// Just try searching for the first part of the string
-			for($i = 0; $i < $result_template_r_pos; $i++)
-			{
-				$search_key .= $result_template_r[$i] . ' ';
-			}		
-		}
-	}
-
-	if($search_key != null || $line_before_hint != null)
-	{
-		if($line_before_hint != null)
-		{
-			$result_line = substr($result_output, strpos($result_output, "\n", strrpos($result_output, $line_before_hint)));
-			$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
+			$result_key[$i] = "#_RESULT_#";
 		}
 		else
 		{
-			$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
-			$result_line = substr($result_line, strrpos($result_line, "\n") + 1);
+			switch($result_key[$i])
+			{
+				case "PTS_TEST_ARGUMENTS":
+					$result_key[$i] = "#_" . str_replace(' ', '', $pts_test_arguments) . "_#";
+					break;
+				case "PTS_USER_SET_ARGUMENTS":
+					$result_key[$i] = "#_" . str_replace(' ', '', $extra_arguments) . "_#";
+					break;
+			}
 		}
 
-		$result_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
-		$result_r_pos = array_search($key, $result_r);
+		// The actual parsing here
+		$start_result_pos = strrpos($result_template[$i], $result_key[$i]);
+		$end_result_pos = $start_result_pos + strlen($result_key[$i]);
+		$end_result_line_pos = strpos($result_template[$i], "\n", $end_result_pos);
+		$result_template_line = substr($result_template[$i], 0, ($end_result_line_pos === false ? strlen($result_template[$i]) : $end_result_line_pos));
+		$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n") + 1);
+		$result_template_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_template_line))));
+		$result_template_r_pos = array_search($result_key[$i], $result_template_r);
 
-		if(isset($result_r[$result_template_r_pos]))
+		if($result_template_r_pos === false)
 		{
-			$return_result = $result_r[$result_template_r_pos];
+			// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
+			foreach($result_template_r as $i => $r_check)
+			{
+				if(strpos($check, $result_key[$i]) !== false)
+				{
+					$result_template_r_pos = $i;
+					break;
+				}
+			}
+		}
+
+		$search_key = null;
+		$line_before_key = null;
+
+		if($result_line_hint[$i] != null && strpos($result_template_line, $result_line_hint[$i]) !== false)
+		{
+			$search_key = $result_line_hint[$i];
+		}
+		else if($result_line_before_hint[$i] != null && strpos($result_template[$i], $result_line_hint[$i]) !== false)
+		{
+			$search_key = null; // doesn't really matter what this value is
+		}
+		else
+		{
+			foreach($result_template_r as $line_part)
+			{
+				if(strpos($line_part, ':') !== false && strlen($line_part) > 1)
+				{
+					// add some sort of && strrpos($result_template[$i], $line_part)  to make sure there isn't two of the same $search_key
+					$search_key = $line_part;
+					break;
+				}
+			}
+
+			if($search_key == null)
+			{
+				// Just try searching for the first part of the string
+				/*
+				for($i = 0; $i < $result_template_r_pos; $i++)
+				{
+					$search_key .= $result_template_r[$i] . ' ';
+				}
+				*/
+
+				// This way if there are ) or other characters stripped, the below method will work where the above one will not
+				$search_key = substr($result_template_line, 0, strpos($result_template_line, $result_key[$i]));
+			}
+		}
+
+		if(is_file($log_file))
+		{
+			$result_output = file_get_contents($log_file);
+		}
+		else
+		{
+			// Nothing to parse
+			return false;
+		}
+
+		if($search_key != null || $result_line_before_hint[$i] != null)
+		{
+			if($result_line_before_hint[$i] != null)
+			{
+				pts_test_profile_debug_message($display_mode, "Result Parsing Line Before Hint: " . $result_line_before_hint[$i]);
+				$result_line = substr($result_output, strpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
+				$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
+			}
+			else
+			{
+				pts_test_profile_debug_message($display_mode, "Result Parsing Search Key: " . $search_key);
+				$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
+				$result_line = substr($result_line, strrpos($result_line, "\n") + 1);
+			}
+
+			pts_test_profile_debug_message($display_mode, "Result Line: " . $result_line);
+
+			$result_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
+			$result_r_pos = array_search($result_key[$i], $result_r);
+
+			if(isset($result_r[$result_template_r_pos]))
+			{
+				$test_result = $result_r[$result_template_r_pos];
+			}
+		}
+
+		if($strip_from_result[$i] != null)
+		{
+			$test_result = str_replace($strip_from_result[$i], null, $test_result);
+		}
+		if($strip_result_postfix[$i] != null && substr($test_result, 0 - strlen($strip_result_postfix[$i])) == $strip_result_postfix[$i])
+		{
+			$test_result = substr($test_result, 0, 0 - strlen($strip_result_postfix[$i]));
+		}
+
+		// Expand validity checking here
+		if(!is_numeric($test_result))
+		{
+			$test_result = false;
+		}
+
+		if($test_result != false)
+		{
+			if($result_divide_by[$i] != null && is_numeric($result_divide_by[$i]) && $result_divide_by[$i] != 0)
+			{
+				$test_result = $test_result / $result_divide_by[$i];
+			}
+			if($result_multiply_by[$i] != null && is_numeric($result_multiply_by[$i]) && $result_multiply_by[$i] != 0)
+			{
+				$test_result = $test_result * $result_multiply_by[$i];
+			}
+		}
+
+		if($test_result != false)
+		{
+			break;
 		}
 	}
 
-	if($strip_from_result != null)
-	{
-		$return_result = str_replace($strip_from_result, null, $return_result);
-	}
-	if($strip_result_postfix != null && substr($return_result, 0 - strlen($strip_result_postfix)) == $strip_result_postfix)
-	{
-		$return_result = substr($return_result, 0, 0 - strlen($strip_result_postfix));
-	}
-
-	// Expand validity checking here
-	if(!is_numeric($return_result))
-	{
-		$return_result = false;
-	}
-
-	return $return_result;
+	return $test_result;
 }
 function pts_run_test(&$test_run_request, &$display_mode)
 {
@@ -595,7 +669,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$test_profile = new pts_test_profile($test_identifier, $test_run_request->get_override_options());
-	$test_result = new pts_test_result($test_profile);
+	$test_results = new pts_test_result($test_profile);
 	$execute_binary = $test_profile->get_test_executable();
 	$times_to_run = $test_profile->get_times_to_run();
 	$ignore_runs = $test_profile->get_runs_to_ignore();
@@ -637,9 +711,9 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	// Start
 	$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
 	$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
-	$test_result->get_test_profile()->set_times_to_run($times_to_run);
-	$test_result->set_used_arguments_description($arguments_description);
-	pts_module_process("__pre_test_run", $test_result);
+	$test_results->get_test_profile()->set_times_to_run($times_to_run);
+	$test_results->set_used_arguments_description($arguments_description);
+	pts_module_process("__pre_test_run", $test_results);
 
 	$time_test_start = time();
 
@@ -673,11 +747,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$backup_test_log_dir = false;
 	}
 
-	$display_mode->test_run_start($test_result);
+	$display_mode->test_run_start($test_results);
 
 	for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
-		$display_mode->test_run_instance_header($test_result, ($i + 1), $times_to_run);
+		$display_mode->test_run_instance_header($test_results, ($i + 1), $times_to_run);
 		$benchmark_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
 
 		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
@@ -691,7 +765,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 			if($cache_share)
 			{
-				$test_results = $cache_share->read_object("test_results_output_" . $i);
+				$test_result = $cache_share->read_object("test_results_output_" . $i);
 				$test_extra_runtime_variables["LOG_FILE"] = $cache_share->read_object("log_file_location_" . $i);
 				file_put_contents($test_extra_runtime_variables["LOG_FILE"], $cache_share->read_object("log_file_" . $i));
 				$restored_from_cache = true;
@@ -707,17 +781,17 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			pts_test_profile_debug_message($display_mode, "Test Run Command: " . $test_run_command);
 
 			$test_run_time_start = time();
-			$test_results = pts_exec($test_run_command, $test_extra_runtime_variables);
+			$test_result = pts_exec($test_run_command, $test_extra_runtime_variables);
 			$test_run_time = time() - $test_run_time_start;
 		}
 		
 
-		if(!isset($test_results[10240]) || pts_read_assignment("DEBUG_TEST_PROFILE"))
+		if(!isset($test_result[10240]) || pts_read_assignment("DEBUG_TEST_PROFILE"))
 		{
-			$display_mode->test_run_output($test_results);
+			$display_mode->test_run_output($test_result);
 		}
 
-		if(is_file($benchmark_log_file) && trim($test_results) == "" && (filesize($benchmark_log_file) < 10240 || pts_is_assignment("DEBUG_TEST_PROFILE")))
+		if(is_file($benchmark_log_file) && trim($test_result) == null && (filesize($benchmark_log_file) < 10240 || pts_is_assignment("DEBUG_TEST_PROFILE")))
 		{
 			$benchmark_log_file_contents = file_get_contents($benchmark_log_file);
 			$display_mode->test_run_output($benchmark_log_file_contents);
@@ -759,96 +833,64 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 			if(is_file($benchmark_log_file))
 			{
-				$test_results = null;
+				$test_result = null;
 			}
 
-			if(is_file($parse_results_xml = pts_tests::test_resources_location($test_identifier) . "parse-results.xml") && is_file($benchmark_log_file))
+			if(is_file($parse_results_xml = pts_tests::test_resources_location($test_identifier) . "parse-results.xml"))
 			{
-				$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_results_xml);
-				$result_template = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_TEMPLATE);
-				$result_key = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_RESULT_KEY);
-				$result_line_hint = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_LINE_HINT);
-				$result_line_before_hint = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_LINE_BEFORE_HINT);
-				$result_divide_by = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_DIVIDE_BY);
-				$strip_from_result = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_STRIP_FROM_RESULT);
-				$strip_result_postfix = $results_parser_xml->getXmlValue(P_RESULTS_PARSER_STRIP_RESULT_POSTFIX);
-
-				if($result_key == null)
-				{
-					$result_key = "#_RESULT_#";
-				}
-				else
-				{
-					switch($result_key)
-					{
-						case "PTS_TEST_ARGUMENTS":
-							$result_key = "#_" . str_replace(' ', '', $pts_test_arguments) . "_#";
-							break;
-						case "PTS_USER_SET_ARGUMENTS":
-							$result_key = "#_" . str_replace(' ', '', $extra_arguments) . "_#";
-							break;
-					}
-				}
-
-				$result_output = file_get_contents($benchmark_log_file);
-				$test_results = pts_parse_results($result_template, $result_output, $result_key, $result_line_hint, $result_line_before_hint, $strip_from_result, $strip_result_postfix);
-
-				if($test_results != null && $result_divide_by != null)
-				{
-					$test_results = $test_results / $result_divide_by;
-				}
+				$test_result = pts_parse_results($display_mode, $parse_results_xml, $benchmark_log_file, $pts_test_arguments, $extra_arguments);
 			}
 			else
 			{
-				$test_results = pts_call_test_script($test_identifier, "parse-results", null, $test_results, $test_extra_runtime_variables_post);
+				$test_result = pts_call_test_script($test_identifier, "parse-results", null, $test_result, $test_extra_runtime_variables_post);
 			}
 
-			if(empty($test_results))
+			if(empty($test_result))
 			{
 				if($run_time > 1)
 				{
-					$test_results = $run_time;
+					$test_result = $run_time;
 				}
-				else if(is_file($benchmark_log_file))
+				else if($test_result !== false && is_file($benchmark_log_file))
 				{
-					$test_results = pts_file_get_contents($benchmark_log_file);
+					$test_result = pts_file_get_contents($benchmark_log_file);
 				}
 			}
 
-			pts_test_profile_debug_message($display_mode, "Test Result Value: " . $test_results);
-			$validate_result = trim(pts_call_test_script($test_identifier, "validate-result", null, $test_results, $test_extra_runtime_variables_post));
+			pts_test_profile_debug_message($display_mode, "Test Result Value: " . $test_result);
+			$validate_result = trim(pts_call_test_script($test_identifier, "validate-result", null, $test_result, $test_extra_runtime_variables_post));
 
 			if(!empty($validate_result) && !pts_string_bool($validate_result))
 			{
-				$test_results = null;
+				$test_result = null;
 			}
 
 			if($result_format == "IMAGE_COMPARISON" && is_file($test_extra_runtime_variables["IQC_IMAGE_PNG"]))
 			{
-				$test_results = $test_extra_runtime_variables["IQC_IMAGE_PNG"];
+				$test_result = $test_extra_runtime_variables["IQC_IMAGE_PNG"];
 			}
 
-			if(!empty($test_results))
+			if(!empty($test_result))
 			{
-				$test_result->add_trial_run_result($test_results);
+				$test_results->add_trial_run_result($test_result);
 			}
 
 			if($allow_cache_share && !is_file($cache_share_pt2so))
 			{
-				$cache_share->add_object("test_results_output_" . $i, $test_results);
+				$cache_share->add_object("test_results_output_" . $i, $test_result);
 				$cache_share->add_object("log_file_location_" . $i, $test_extra_runtime_variables["LOG_FILE"]);
 				$cache_share->add_object("log_file_" . $i, (is_file($benchmark_log_file) ? file_get_contents($benchmark_log_file) : null));
 			}
 		}
 
-		if($i == ($times_to_run - 1) && $test_result->trial_run_count() > 2 && pts_read_assignment("PTS_STATS_DYNAMIC_RUN_COUNT") && $times_to_run < ($defined_times_to_run * 2))
+		if($i == ($times_to_run - 1) && $test_results->trial_run_count() > 2 && pts_read_assignment("PTS_STATS_DYNAMIC_RUN_COUNT") && $times_to_run < ($defined_times_to_run * 2))
 		{
 			// Determine if results are statistically significant, otherwise up the run count
-			$std_dev = pts_math::percent_standard_deviation($test_result->get_trial_results());
+			$std_dev = pts_math::percent_standard_deviation($test_results->get_trial_results());
 
 			if(($ex_file = pts_read_assignment("PTS_STATS_EXPORT_TO")) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_DIR . $ex_file)))
 			{
-				$exit_status = trim(shell_exec($ex_file . " " . $test_result->get_trial_results_string() . " > /dev/null 2>&1; echo $?"));
+				$exit_status = trim(shell_exec($ex_file . " " . $test_results->get_trial_results_string() . " > /dev/null 2>&1; echo $?"));
 
 				switch($exit_status)
 				{
@@ -876,7 +918,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			if(($request_increase || $std_dev >= pts_read_assignment("PTS_STATS_STD_DEV_THRESHOLD")) && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_ON_LENGTH"))
 			{
 				$times_to_run++;
-				$test_result->get_test_profile()->set_times_to_run($times_to_run);
+				$test_results->get_test_profile()->set_times_to_run($times_to_run);
 			}
 		}
 
@@ -888,7 +930,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				sleep(2); // Rest for a moment between tests
 			}
 
-			pts_module_process("__interim_test_run", $test_result);
+			pts_module_process("__interim_test_run", $test_results);
 		}
 
 		if(is_file($benchmark_log_file))
@@ -996,11 +1038,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			{
 				if($set_function != null)
 				{
-					eval("\$test_result->get_test_profile()->" . $set_function . "->(\$file_contents);");
+					eval("\$test_results->get_test_profile()->" . $set_function . "->(\$file_contents);");
 				}
 				else if($result_set_function != null)
 				{
-					eval("\$test_result->" . $set_function . "->(\$file_contents);");
+					eval("\$test_results->" . $set_function . "->(\$file_contents);");
 				}
 			}
 		}
@@ -1042,26 +1084,26 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	// Result Calculation
-	$test_result->set_used_arguments_description($arguments_description);
-	$test_result->set_used_arguments($extra_arguments);
-	$test_result->calculate_end_result(); // Process results
+	$test_results->set_used_arguments_description($arguments_description);
+	$test_results->set_used_arguments($extra_arguments);
+	$test_results->calculate_end_result(); // Process results
 
-	$display_mode->test_run_end($test_result);
+	$display_mode->test_run_end($test_results);
 
 	pts_user_message($test_profile->get_post_run_message());
-	pts_module_process("__post_test_run", $test_result);
-	$report_elapsed_time = !$cache_share_present && $test_result->get_result() != 0;
+	pts_module_process("__post_test_run", $test_results);
+	$report_elapsed_time = !$cache_share_present && $test_results->get_result() != 0;
 	pts_test_update_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
 
 	if($report_elapsed_time && pts_anonymous_usage_reporting() && $time_test_elapsed >= 60)
 	{
-		pts_global_upload_usage_data("test_complete", array($test_result, $time_test_elapsed));
+		pts_global_upload_usage_data("test_complete", array($test_results, $time_test_elapsed));
 	}
 
 	// Remove lock
 	pts_release_lock($test_fp, $lock_file);
 
-	return $result_format == "NO_RESULT" ? false : $test_result;
+	return $result_format == "NO_RESULT" ? false : $test_results;
 }
 function pts_test_profile_debug_message(&$display_mode, $message)
 {

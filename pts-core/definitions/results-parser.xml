@@ -3,6 +3,11 @@
 <PhoronixTestSuite>
 	<Definitions>
 		<Define>
+			<Name>P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS</Name>
+			<Value>PhoronixTestSuite/ResultsParser/MatchToTestArguments</Value>
+			<Description>If there are multiple ResulsParser sections within the XML file and this tag is set, the Phoronix Test Suite will see if this string appears within the PTS_TEST_ARGUMENTS in determining if this is the ResultsParser section to use for parsing the results.</Description>
+		</Define>
+		<Define>
 			<Name>P_RESULTS_PARSER_TEMPLATE</Name>
 			<Value>PhoronixTestSuite/ResultsParser/OutputTemplate</Value>
 			<Description>The section of the test output to look for the result(s) within.</Description>
@@ -36,6 +41,11 @@
 			<Name>P_RESULTS_PARSER_DIVIDE_BY</Name>
 			<Value>PhoronixTestSuite/ResultsParser/DivideResultValueBy</Value>
 			<Description>If the result value should be divided by some constant (to convert the result to a different unit), the value should be supplied in this tag.</Description>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_MULTIPLY_BY</Name>
+			<Value>PhoronixTestSuite/ResultsParser/MultiplyResultValueBy</Value>
+			<Description>If the result value should be multiplied by some constant (to convert the result to a different unit), the value should be supplied in this tag.</Description>
 		</Define>
 	</Definitions>
 </PhoronixTestSuite>

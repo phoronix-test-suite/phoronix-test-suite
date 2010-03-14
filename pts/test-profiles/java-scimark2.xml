@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -21,6 +21,9 @@
 		<Description>This test runs the Java version of SciMark 2.0, which is a benchmark for scientific and numerical computing developed by programmers at the National Institute of Standards and Technology. This benchmark is made up of Fast Foruier Transform, Jacobi Successive Over-relaxation, Monte Carlo, Sparse Matrix Multiply, and dense LU matrix factorization benchmarks.</Description>
 	</TestInformation>
 	<TestSettings>
+		<Default>
+			<AllowCacheShare>TRUE</AllowCacheShare>
+		</Default>
 		<Option>
 			<DisplayName>Computational Test</DisplayName>
 			<Identifier>compute-test</Identifier>
