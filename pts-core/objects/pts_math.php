@@ -26,6 +26,22 @@ class pts_math
 	{
 		return pow(array_product($values), (1 / count($values)));
 	}
+	public static function harmonic_mean($values)
+	{
+		$b = 0;
+		$c = 0;
+
+		foreach($values as $value)
+		{
+			if($value != 0)
+			{
+				$b += 1 / $value;
+				$c++;
+			}
+		}
+
+		return $b != 0 ? $c / $b : 0;
+	}
 	public static function standard_deviation($values)
 	{
 		foreach($values as $i => $value)

@@ -43,6 +43,10 @@ class pts_tracker
 				$title = "Geometric Mean";
 				$math_call = array("pts_math", "geometric_mean");
 				break;
+			case "HARMONIC_MEAN":
+				$title = "Harmonic Mean";
+				$math_call = array("pts_math", "harmonic_mean");
+				break;
 			case "AGGREGATE_SUM":
 				$title = "Aggregate Sum";
 				$math_call = "array_sum";

@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for passing PTS module setup options via an environmental variable to PTS_MODULE_SETUP
 - pts-core: Expand the capabilities of the parse-results.xml interface
 - pts-core: Add image quality comparison support to the parse-results.xml interface
+- pts-core: Add support for harmonic means for Phoromatic Tracker
 - phoromatic: When setting up the Phoromatic module, allow the system description to be inputted and then sent to the Phoromatic Server
 - phodevi: Support for Clang compiler
 - phodevi: Quirk handling for PCLinuxOS as it doesn't know how to properly identify itself
