@@ -125,26 +125,18 @@ class phodevi
 			}
 			else
 			{
-				$dev_function = $property->get_device_function();
+				$dev_function_r = pts_to_array($property->get_device_function());
+				$dev_function = $dev_function_r[0];
+				$function_pass = array();
 
-				if(is_array($dev_function))
+				for($i = 1; $i < count($dev_function_r); $i++)
 				{
-					if(count($dev_function) > 1)
-					{
-						// TODO: support passing more than one argument
-						$dev_function_pass = $dev_function[1];
-					}
-
-					$dev_function = $dev_function[0];
-				}
-				else
-				{
-					$dev_function_pass = null;
+					array_push($function_pass, $dev_function_r[$i]);
 				}
 
 				if(method_exists("phodevi_" . $device, $dev_function))
 				{
-					$value = call_user_func(array("phodevi_" . $device, $dev_function), $dev_function_pass);
+					$value = call_user_func_array(array("phodevi_" . $device, $dev_function), $function_pass);
 
 					if($cache_code != PHODEVI_AVOID_CACHE)
 					{
