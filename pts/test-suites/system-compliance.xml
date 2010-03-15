@@ -14,7 +14,4 @@
 	<RunTest>
 		<Test>compliance-acpi</Test>
 	</RunTest>
-	<RunTest>
-		<Test>compliance-ogl</Test>
-	</RunTest>
 </PhoronixTestSuite>

@@ -68,7 +68,7 @@ class analyze_result_file implements pts_option_interface
 			}
 		}
 
-		echo "Number of Test Wins\n";
+		echo "\nNumber of Test Wins\n";
 
 		foreach($wins as $system_identifier => $win_count)
 		{
