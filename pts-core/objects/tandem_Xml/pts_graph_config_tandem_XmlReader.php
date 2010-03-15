@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts_graph_config_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite for the graph config
 
 	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
@@ -64,6 +64,28 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 		{
 			return parent::getValue($xml_path, $xml_tag, $xml_match, $is_fallback_call);
 		}
+	}
+	function handleXmlZeroTagFallback($xml_tag)
+	{
+		// Cascading Test Profiles for finding a tag within an XML file being extended by another XML file
+		static $fallback_reader = null;
+		$fallback_value = false;
+
+		if($fallback_reader != null || is_file(STATIC_DIR . "graph-config-defaults.xml"))
+		{
+			if($fallback_reader == null)
+			{
+				$fallback_reader = new tandem_XmlReader(STATIC_DIR . "graph-config-defaults.xml");
+			}
+
+			$fallback_value = $fallback_reader->getXMLValue($xml_tag);
+		}
+		else if(PTS_MODE == "CLIENT")
+		{
+			echo "\nUndefined Graph Config Option: $xml_tag\n";
+		}
+
+		return $fallback_value;
 	}
 }
 ?>

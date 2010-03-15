@@ -72,7 +72,7 @@ class pts_Chart
 		$height = 8 + $top_header[1] + (($left_header[1] + 2) * count($this->left_headers));
 
 		$this->renderer->resize_image($width, $height);
-		$color_black = $this->renderer->convert_hex_to_type("#000000"); // TODO: Integrate with pts_CustomGraph and other graph-config.xml colors
+		$color_black = $this->renderer->convert_hex_to_type("#000000"); // TODO: Integrate with pts_Graph and other graph-config.xml colors
 		$color_white = $this->renderer->convert_hex_to_type("#FFFFFF");
 		$color_alt = $this->renderer->convert_hex_to_type("#2b6b29");
 

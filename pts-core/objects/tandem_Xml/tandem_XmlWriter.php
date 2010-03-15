@@ -47,7 +47,7 @@ class tandem_XmlWriter
 	{
 		$this->xml_checksum = true;
 	}
-	function addXmlObjectFromReader($xml_location, $unique_identifier, &$tandem_xml, $default_value)
+	function addXmlObjectFromReader($xml_location, $unique_identifier, &$tandem_xml, $default_value = null)
 	{
 		$value = $tandem_xml->getXmlValue($xml_location);
 

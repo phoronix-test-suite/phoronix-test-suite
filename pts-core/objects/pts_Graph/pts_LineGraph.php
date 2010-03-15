@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_LineGraph extends pts_CustomGraph
+class pts_LineGraph extends pts_Graph
 {
 	protected $identifier_width = -1;
 	protected $minimum_identifier_font = 7;

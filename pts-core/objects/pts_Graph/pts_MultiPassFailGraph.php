@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_MultiPassFailGraph extends pts_CustomGraph
+class pts_MultiPassFailGraph extends pts_Graph
 {
 	public function __construct(&$result_object)
 	{

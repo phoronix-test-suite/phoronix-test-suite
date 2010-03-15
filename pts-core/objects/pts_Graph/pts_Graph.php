@@ -24,10 +24,10 @@
 abstract class pts_Graph
 {
 	// Defaults
-	protected $graph_attr_marks = 6; // Number of marks to make on vertical axis
-	protected $graph_attr_width = 580; // Graph width
-	protected $graph_attr_height = 300; // Graph height
-	protected $graph_attr_big_border = false; // Border around graph or not
+	protected $graph_attr_marks; // Number of marks to make on vertical axis
+	protected $graph_attr_width; // Graph width
+	protected $graph_attr_height; // Graph height
+	protected $graph_attr_big_border; // Border around graph or not
 
 	protected $graph_left_start = 10; // Distance in px to start graph from left side
 	protected $graph_left_end_opp = 10; // Distance in px to end graph from right side
@@ -35,33 +35,31 @@ abstract class pts_Graph
 	protected $graph_top_end_opp = 22; // Distance in px to end graph from bottom side
 
 	// Colors
-	protected $graph_color_notches = "#000000"; // Color for notches
-	protected $graph_color_text = "#000000"; // Color for text
-	protected $graph_color_border = "#000000"; // Color for border (if used)
-	protected $graph_color_main_headers = "#2b6b29"; // Color of main text headers
-	protected $graph_color_headers = "#2b6b29"; // Color of other headers
-	protected $graph_color_background = "#FFFFFF"; // Color of background
-	protected $graph_color_body = "#8b8f7c"; // Color of graph body
-	protected $graph_color_body_text = "#FFFFFF"; // Color of graph body text
-	protected $graph_color_body_light = "#B0B59E"; // Color of the border around graph bars (if doing a bar graph)
-	protected $graph_color_alert = "#C80000"; // Color of any alerts
-
-	protected $graph_color_paint = array("#3B433A", "#BB2413", "#FF9933", "#006C00", "#5028CA", "#0094B3", 
-	"#A8BC00", "#00F6FF", "#8A00AC", "#790066", "#797766", "#5598b1"); // Colors to use for the bars / lines, one color for each key
+	protected $graph_color_notches; // Color for notches
+	protected $graph_color_text; // Color for text
+	protected $graph_color_border; // Color for border (if used)
+	protected $graph_color_main_headers; // Color of main text headers
+	protected $graph_color_headers; // Color of other headers
+	protected $graph_color_background; // Color of background
+	protected $graph_color_body; // Color of graph body
+	protected $graph_color_body_text; // Color of graph body text
+	protected $graph_color_body_light; // Color of the border around graph bars (if doing a bar graph)
+	protected $graph_color_alert; // Color of any alerts
+	protected $graph_color_paint; // Colors to use for the bars / lines, one color for each key
 
 	// Text
-	protected $graph_font = "Sans.ttf"; // TTF file name
+	protected $graph_font; // TTF file name
 	protected $graph_font_size_tick_mark = 10; // Tick mark size
 	protected $graph_font_size_key = 9; // Size of height for keys
-	protected $graph_font_size_heading = 18; // Font size of headings
-	protected $graph_font_size_bars = 12; // Font size for text on the bars/objects
-	protected $graph_font_size_identifiers = 11; // Font size of identifiers
-	protected $graph_font_size_sub_heading = 12; // Font size of headers
-	protected $graph_font_size_axis_heading = 11; // Font size of axis headers
-	protected $graph_watermark_text = "PHORONIX-TEST-SUITE.COM"; // Text for watermark in upper right hand corner. If null, no watermark will display
-	protected $graph_watermark_url = "http://www.phoronix-test-suite.com/";
-	protected $graph_version = "";
-	protected $graph_proportion = "";
+	protected $graph_font_size_heading; // Font size of headings
+	protected $graph_font_size_bars; // Font size for text on the bars/objects
+	protected $graph_font_size_identifiers; // Font size of identifiers
+	protected $graph_font_size_sub_heading ; // Font size of headers
+	protected $graph_font_size_axis_heading; // Font size of axis headers
+	protected $graph_watermark_text; // Text for watermark in upper right hand corner. If null, no watermark will display
+	protected $graph_watermark_url;
+	protected $graph_version = null;
+	protected $graph_proportion = null;
 
 	// Not user-friendly changes below this line
 	protected $graph_body_image = false;
@@ -96,6 +94,41 @@ abstract class pts_Graph
 
 	public function __construct(&$result_object)
 	{
+		// Setup config values
+		//if(PTS_MODE == "CLIENT" || (defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
+		$graph_config = new pts_graph_config_tandem_XmlReader();
+
+		$this->graph_attr_width = $graph_config->getXmlValue(P_GRAPH_SIZE_WIDTH); // Graph width
+		$this->graph_attr_height = $graph_config->getXmlValue(P_GRAPH_SIZE_HEIGHT); // Graph height
+		$this->graph_attr_big_border = $graph_config->getXmlValue(P_GRAPH_BORDER) == "TRUE"; // Graph border
+
+		// Colors
+		$this->graph_color_notches = $graph_config->getXmlValue(P_GRAPH_COLOR_NOTCHES); // Color for notches
+		$this->graph_color_text = $graph_config->getXmlValue(P_GRAPH_COLOR_TEXT); // Color for text
+		$this->graph_color_border = $graph_config->getXmlValue(P_GRAPH_COLOR_BORDER); // Color for border (if used)
+		$this->graph_color_main_headers = $graph_config->getXmlValue(P_GRAPH_COLOR_MAINHEADERS); // Color of main text headers
+		$this->graph_color_headers = $graph_config->getXmlValue(P_GRAPH_COLOR_HEADERS); // Color of other headers
+		$this->graph_color_background = $graph_config->getXmlValue(P_GRAPH_COLOR_BACKGROUND); // Color of background
+		$this->graph_color_body = $graph_config->getXmlValue(P_GRAPH_COLOR_BODY); // Color of graph body
+		$this->graph_color_body_text = $graph_config->getXmlValue(P_GRAPH_COLOR_BODYTEXT); // Color of graph body text
+		$this->graph_color_body_light = $graph_config->getXmlValue(P_GRAPH_COLOR_ALTERNATE); // Color of the border around graph bars (if doing a bar graph)
+		$this->graph_color_alert = $graph_config->getXmlValue(P_GRAPH_COLOR_ALERT); // Color for alerts
+		$this->graph_color_paint = array_map("trim", explode(',', $graph_config->getXmlValue(P_GRAPH_COLOR_PAINT))); // Colors to use for the bars / lines, one color for each key
+
+		// Text
+		$this->graph_watermark_text = $graph_config->getXmlValue(P_GRAPH_WATERMARK); // watermark
+		$this->graph_watermark_url = $graph_config->getXmlValue(P_GRAPH_WATERMARK_URL); // watermark URL
+		//$this->graph_font = $graph_config->getXmlValue(P_GRAPH_FONT_TYPE);  // TTF file name
+		$this->graph_font_size_heading = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_HEADERS); // Font size of headings
+		$this->graph_font_size_bars = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_TEXT); // Font size for text on the bars/objects
+		$this->graph_font_size_identifiers = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_IDENTIFIERS); // Font size of identifiers
+		$this->graph_font_size_sub_heading = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_SUBHEADERS); // Font size of headers
+		$this->graph_font_size_axis_heading = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_AXIS); // Font size of axis headers
+
+		$this->graph_attr_marks = $graph_config->getXmlValue(P_GRAPH_MARKCOUNT); // Number of marks to make on vertical axis
+		$this->graph_renderer = $graph_config->getXmlValue(P_GRAPH_RENDERER); // Renderer
+
+		// Reset of setup besides config
 		$this->graph_title = $result_object->get_name_formatted();
 		$this->graph_y_title = $result_object->get_scale_formatted();
 		$this->test_identifier = $result_object->get_test_name();
