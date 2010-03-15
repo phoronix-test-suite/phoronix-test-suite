@@ -31,7 +31,7 @@ function pts_run_command($command, $pass_args = null, $preset_assignments = "")
 
 	if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && method_exists($command, "argument_checks"))
 	{
-		eval("\$argument_checks = " . $command . "::" . "argument_checks();");
+		$argument_checks = call_user_func(array($command, "argument_checks"));
 
 		foreach($argument_checks as &$argument_check)
 		{
@@ -87,7 +87,7 @@ function pts_run_command($command, $pass_args = null, $preset_assignments = "")
 
 	if(is_file(COMMAND_OPTIONS_DIR . $command . ".php"))
 	{
-		eval($command . "::run(\$pass_args);");
+		call_user_func(array($command, "run"), $pass_args);
 	}
 	else if(pts_module_valid_user_command($command))
 	{

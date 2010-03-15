@@ -1104,7 +1104,8 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				}
 				else if($result_set_function != null)
 				{
-					eval("\$test_results->" . $set_function . "->(\$file_contents);");
+					call_user_func(array($test_results, $set_function), $file_contents);
+					//eval("\$test_results->" . $set_function . "->(\$file_contents);");
 				}
 			}
 		}

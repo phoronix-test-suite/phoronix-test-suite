@@ -133,7 +133,7 @@ abstract class bilde_renderer
 
 		if(($this_renderer = getenv("BILDE_RENDERER")) != false || defined("BILDE_RENDERER") && ($this_renderer = BILDE_RENDERER))
 		{
-			eval("\$is_supported = bilde_" . strtolower($this_renderer) . "_renderer::renderer_supported();");
+			$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));
 
 			if($is_supported)
 			{
@@ -144,7 +144,7 @@ abstract class bilde_renderer
 
 		foreach($available_renderers as $this_renderer)
 		{
-			eval("\$is_supported = bilde_" . strtolower($this_renderer) . "_renderer::renderer_supported();");
+			$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));
 
 			if($is_supported)
 			{

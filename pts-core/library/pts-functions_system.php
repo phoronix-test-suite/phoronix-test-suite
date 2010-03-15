@@ -59,7 +59,7 @@ function pts_available_sensors()
 	new phodevi_sensor("voltage", "v5", array("system", "v5-voltage"), "Volts", "+5.00V"),
 	new phodevi_sensor("voltage", "v12", array("system", "v12-voltage"), "Volts", "+12.00V"),
 	new phodevi_sensor("freq", "cpu", array("cpu", "current-frequency"), "Megahertz"),
-	new phodevi_sensor("freq", "gpu", array("gpu", "current-frequency"), "Megahertz"),
+	new phodevi_sensor("freq", "gpu", array("gpu", "current-core-frequency"), "Megahertz"),
 	new phodevi_sensor("usage", "cpu", array("cpu", "usage"), "Percent"),
 	new phodevi_sensor("usage", "gpu", array("gpu", "core-usage"), "Percent"),
 	new phodevi_sensor("memory", "system", array("memory", "physical-usage"), "Megabytes"),

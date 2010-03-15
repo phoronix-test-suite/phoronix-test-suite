@@ -33,7 +33,7 @@ class phodevi_gpu extends phodevi_device_interface
 			case "fan-speed":
 				$sensor = "gpu_fan_speed";
 				break;
-			case "current-frequency":
+			case "current-core-frequency":
 				$sensor = array("gpu_current_frequency", false);
 				break;
 			case "core-usage":
@@ -617,7 +617,7 @@ class phodevi_gpu extends phodevi_device_interface
 	}
 	public static function gpu_frequency_string()
 	{
-		$freq = (IS_ATI_GRAPHICS || IS_MESA_GRAPHICS ? phodevi::read_property("gpu", "stock-frequency") : phodevi_gpu::gpu_current_frequency());
+		$freq = phodevi::read_property("gpu", "stock-frequency");
 		$freq_string = null;
 
 		if($freq[0] != 0)

@@ -71,7 +71,7 @@ class pts_module
 		if($default_fallback && empty($value))
 		{
 			// Find the default value
-			eval("\$module_options = " . $module_name . "::module_setup();");
+			$module_options = call_user_func(array($module_name, "module_setup"));
 
 			for($i = 0; $i < count($module_options) && $value == false; $i++)
 			{
@@ -188,7 +188,7 @@ class pts_module
 					$start_id = pts_unique_runtime_identifier();
 					while(!pts_is_assignment("PTS_TESTING_DONE") && ($start_id == pts_unique_runtime_identifier() || $start_id == PTS_INIT_TIME) && is_file(PTS_USER_LOCK) && $loop_continue)
 					{
-						eval(self::module_name() . "::" . $function . "();");
+						call_user_func(array(self::module_name(), $function));
 
 						if($time > 0)
 						{

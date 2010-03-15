@@ -222,7 +222,7 @@ function pts_module_call($module, $process, &$object_pass = null)
 
 	if(method_exists($module, $process))
 	{
-		eval("\$module_val = " . $module . "::" . $process . "(\$object_pass);");
+		$module_val = call_user_func(array($module, $process), $object_pass);
 	}
 	else
 	{

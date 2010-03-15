@@ -159,7 +159,7 @@ function pts_user_agreement_check($command)
 
 		if($prompt_in_method)
 		{
-			eval("\$user_agreement_return = " . $command . "::pts_user_agreement_prompt(\$user_agreement);");
+			$user_agreement_return = call_user_func(array($command, "pts_user_agreement_prompt"), $user_agreement);
 
 			if(is_array($user_agreement_return))
 			{
@@ -206,7 +206,7 @@ function pts_user_agreement_check($command)
 
 			if($prompt_in_method)
 			{
-				eval("\$usage_reporting = " . $command . "::pts_usage_reporting_prompt();");
+				$usage_reporting = call_user_func(array($command, "pts_usage_reporting_prompt"));
 			}
 		}
 

@@ -39,7 +39,7 @@ function pts_load_run_option($option)
 
 		if(method_exists($option, "required_function_sets"))
 		{
-			eval("\$required_function_sets = " . $option . "::" . "required_function_sets();");
+			$required_function_sets = call_user_func(array($option, "required_function_sets"));
 
 			foreach($required_function_sets as $to_load)
 			{

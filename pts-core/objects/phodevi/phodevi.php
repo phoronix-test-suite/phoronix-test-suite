@@ -57,7 +57,7 @@ class phodevi
 
 		if(isset($devices[$device]))
 		{
-			eval("\$notes_r = phodevi_" . $devices[$device] . "::device_notes();");
+			$notes_r = call_user_func(array("phodevi_" . $devices[$device], "device_notes"));
 		}
 		else
 		{
@@ -72,8 +72,7 @@ class phodevi
 
 		if(isset($devices[$device]))
 		{
-
-			eval("\$settings_special = phodevi_" . $devices[$device] . "::special_settings_string();");
+			$settings_special = call_user_func(array("phodevi_" . $devices[$device], "special_settings_string"));
 		}
 		else
 		{
@@ -88,27 +87,18 @@ class phodevi
 
 		if(method_exists("phodevi_" . $device, "read_sensor"))
 		{
-			eval("\$sensor_function = phodevi_" . $device . "::read_sensor(\$read_sensor);");
+			$sensor_function_r = pts_to_array(call_user_func(array("phodevi_" . $device, "read_sensor"), $read_sensor));
+			$sensor_function = $sensor_function_r[0];
+			$sensor_pass = array();
 
-			if(is_array($sensor_function))
+			for($i = 1; $i < count($sensor_function_r); $i++)
 			{
-				if(count($sensor_function) > 1)
-				{
-					// TODO: support passing more than one argument
-					$sensor_function_pass = $sensor_function[1];
-				}
-				$sensor_function = $sensor_function[0];
-			}
-			else
-			{
-				$sensor_function_pass = null;
+				array_push($sensor_pass, $sensor_function_r[$i]);
 			}
 
 			if(method_exists("phodevi_" . $device, $sensor_function))
 			{
-				eval("\$read_value = phodevi_" . $device . "::" . $sensor_function . "(\$sensor_function_pass);");
-
-				$value = $read_value; // possibly add some sort of check here
+				$value = call_user_func_array(array("phodevi_" . $device,  $sensor_function), $sensor_pass);
 			}
 		}
 
@@ -120,7 +110,7 @@ class phodevi
 
 		if(method_exists("phodevi_" . $device, "read_property"))
 		{
-			eval("\$property = phodevi_" . $device . "::read_property(\$read_property);");
+			$property = call_user_func(array("phodevi_" . $device, "read_property"), $read_property);
 
 			if(!($property instanceOf phodevi_device_property))
 			{
@@ -154,10 +144,7 @@ class phodevi
 
 				if(method_exists("phodevi_" . $device, $dev_function))
 				{
-
-					eval("\$read_value = phodevi_" . $device . "::" . $dev_function . "(\$dev_function_pass);");
-
-					$value = $read_value; // possibly add some sort of check here
+					$value = call_user_func(array("phodevi_" . $device, $dev_function), $dev_function_pass);
 
 					if($cache_code != PHODEVI_AVOID_CACHE)
 					{
@@ -181,7 +168,7 @@ class phodevi
 
 		if(method_exists("phodevi_" . $device, "set_property"))
 		{
-			eval("\$return_value = phodevi_" . $device . "::set_property(\$set_property, \$pass_args);");
+			$return_value = call_user_func(array("phodevi_" . $device, "set_property"), $set_property, $pass_args);
 		}
 
 		return $return_value;
