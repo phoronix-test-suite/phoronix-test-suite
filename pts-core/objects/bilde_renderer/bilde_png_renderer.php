@@ -28,6 +28,10 @@ class bilde_png_renderer extends bilde_gd_renderer
 	public function render_image($output_file = null, $quality = 100)
 	{
 		$quality = floor(9 - (($quality / 100) * 9)); // calculate compression level
+		if(defined("PNG_IMAGE_INTERLACING"))
+		{
+			imageinterlace($this->image, BILDE_IMAGE_INTERLACING == "YES");
+		}
 		return imagepng($this->image, $output_file, $quality);
 	}
 }

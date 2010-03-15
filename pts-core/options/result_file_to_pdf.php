@@ -42,7 +42,8 @@ class result_file_to_pdf implements pts_option_interface
 			return;
 		}
 
-		define("BILDE_RENDERER", "JPG"); // Force to JPEG mode
+		define("BILDE_RENDERER", "PNG"); // Force to PNG renderer
+		define("PNG_IMAGE_INTERLACING", "NO"); // Otherwise FPDF will fail
 		pts_generate_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
 		$xml_parser = new pts_results_tandem_XmlReader($r["result_file"]);
@@ -93,10 +94,10 @@ class result_file_to_pdf implements pts_option_interface
 		$placement = 1;
 		for($i = 1; $i <= count($tests); $i++)
 		{
-			if(is_file(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/" . $i . ".jpg"))
+			if(is_file(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/" . $i . ".png"))
 			{
 				$pdf->Ln(100);
-				$pdf->Image(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/" . $i . ".jpg", 20, 40 + (($placement - 1) * 120), 180);
+				$pdf->Image(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/" . $i . ".png", 20, 40 + (($placement - 1) * 120), 178);
 			}
 
 			if($placement == 2)

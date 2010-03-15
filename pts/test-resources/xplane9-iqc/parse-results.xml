@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<MatchToTestArguments>CONTROL_TOWER</MatchToTestArguments>
+		<SourceImage>screenshot_0.png</SourceImage>
+		<ImageX>405</ImageX>
+		<ImageY>94</ImageY>
+		<ImageWidth>420</ImageWidth>
+		<ImageHeight>460</ImageHeight>
+	</ResultsParser>
+	<ResultsParser>
+		<MatchToTestArguments>CITY</MatchToTestArguments>
+		<SourceImage>screenshot_5.png</SourceImage>
+		<ImageX>690</ImageX>
+		<ImageY>290</ImageY>
+		<ImageWidth>340</ImageWidth>
+		<ImageHeight>220</ImageHeight>
+	</ResultsParser>
+	<ResultsParser>
+		<MatchToTestArguments>WATER</MatchToTestArguments>
+		<SourceImage>screenshot_6.png</SourceImage>
+		<ImageX>610</ImageX>
+		<ImageY>322</ImageY>
+		<ImageWidth>340</ImageWidth>
+		<ImageHeight>232</ImageHeight>
+	</ResultsParser>
+</PhoronixTestSuite>
