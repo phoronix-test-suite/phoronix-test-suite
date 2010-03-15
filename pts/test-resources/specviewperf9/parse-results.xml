@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>Weighted Geometric Mean</LineHint>
+		<OutputTemplate>light-08 Weighted Geometric Mean = #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>
