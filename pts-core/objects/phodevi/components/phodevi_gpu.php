@@ -658,16 +658,37 @@ class phodevi_gpu extends phodevi_device_interface
 			switch(phodevi::read_property("system", "display-driver"))
 			{
 				case "radeon":
-					// Sure would be nice if there was a cleaner way of handling this...
-					$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep \" Clock: \"");
+					if(is_file("/sys/kernel/debug/dri/0/radeon_pm_info"))
+					{
+						// radeon_pm_info should be present with Linux 2.6.34+
+						foreach(pts_trim_explode(file_get_contents("/sys/kernel/debug/dri/0/radeon_pm_info")) as $pm_line)
+						{
+							list($descriptor, $value) = pts_trim_explode(':', $pm_line);
 
-					$core_freq = substr($log_parse, strpos($log_parse, "Default Engine Clock: ") + 22);
-					$core_freq = substr($core_freq, 0, strpos($core_freq, "\n"));
-					$core_freq = is_numeric($core_freq) ? $core_freq / 1000 : 0;
+							switch($descriptor)
+							{
+								case "default engine clock":
+									$core_freq = pts_first_element_in_array(explode(' ', $value)) / 1000;
+									break;
+								case "default memory clock":
+									$mem_freq = pts_first_element_in_array(explode(' ', $value)) / 1000;
+									break;
+							}
+						}
+					}
+					else
+					{
+						// Old ugly way of handling the clock information
+						$log_parse = shell_exec("cat /var/log/Xorg.0.log 2>&1 | grep \" Clock: \"");
 
-					$mem_freq = substr($log_parse, strpos($log_parse, "Default Memory Clock: ") + 22);
-					$mem_freq = substr($mem_freq, 0, strpos($mem_freq, "\n"));
-					$mem_freq = is_numeric($mem_freq) ? $mem_freq / 1000 : 0;					
+						$core_freq = substr($log_parse, strpos($log_parse, "Default Engine Clock: ") + 22);
+						$core_freq = substr($core_freq, 0, strpos($core_freq, "\n"));
+						$core_freq = is_numeric($core_freq) ? $core_freq / 1000 : 0;
+
+						$mem_freq = substr($log_parse, strpos($log_parse, "Default Memory Clock: ") + 22);
+						$mem_freq = substr($mem_freq, 0, strpos($mem_freq, "\n"));
+						$mem_freq = is_numeric($mem_freq) ? $mem_freq / 1000 : 0;
+					}				
 					break;
 			}
 		}
@@ -919,6 +940,27 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				$core_freq = array_shift($od_clocks);
 				$mem_freq = array_pop($od_clocks);
+			}
+		}
+		else if(IS_LINUX)
+		{
+			if(is_file("/sys/kernel/debug/dri/0/radeon_pm_info"))
+			{
+				// radeon_pm_info should be present with Linux 2.6.34+
+				foreach(pts_trim_explode(file_get_contents("/sys/kernel/debug/dri/0/radeon_pm_info")) as $pm_line)
+				{
+					list($descriptor, $value) = pts_trim_explode(':', $pm_line);
+
+					switch($descriptor)
+					{
+						case "current engine clock":
+							$core_freq = pts_first_element_in_array(explode(' ', $value)) / 1000;
+							break;
+						case "current memory clock":
+							$mem_freq = pts_first_element_in_array(explode(' ', $value)) / 1000;
+							break;
+					}
+				}
 			}
 		}
 
