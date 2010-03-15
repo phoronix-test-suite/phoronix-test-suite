@@ -30,6 +30,7 @@ abstract class bilde_renderer
 	protected $image_height = -1;
 	protected $embed_identifiers = null;
 	protected $uid_count = 1;
+	protected $special_attributes = null;
 
 	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
 
@@ -124,37 +125,54 @@ abstract class bilde_renderer
 	// Setup Functions
 	//
 
-	public static function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = "")
+	public static function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = null, $special_attributes = null)
 	{
 		bilde_renderer::setup_font_directory();
 		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG");
 		$fallback_renderer = "SVG";
 		$selected_renderer = $fallback_renderer;
+		$use_renderer = false;
 
-		if(($this_renderer = getenv("BILDE_RENDERER")) != false || defined("BILDE_RENDERER") && ($this_renderer = BILDE_RENDERER))
+		if(($this_renderer = getenv("BILDE_RENDERER")) != false || defined("BILDE_RENDERER") && ($this_renderer = BILDE_RENDERER) || ($this_renderer = $requested_renderer) != null)
 		{
 			$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));
 
 			if($is_supported)
 			{
-				eval("\$renderer = new bilde_" . strtolower($this_renderer) . "_renderer(\$width, \$height, \$embed_identifiers);");
-				return $renderer;
+				$use_renderer = $this_renderer;
 			}
 		}
 
-		foreach($available_renderers as $this_renderer)
+		if($use_renderer == false)
 		{
-			$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));
-
-			if($is_supported)
+			foreach($available_renderers as $this_renderer)
 			{
-				$selected_renderer = $this_renderer;
-				break;
+				$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));
+
+				if($is_supported)
+				{
+					$selected_renderer = $this_renderer;
+					break;
+				}
 			}
+		}
+		else
+		{
+			$selected_renderer = $use_renderer;
 		}
 
 		eval("\$renderer = new bilde_" . strtolower($selected_renderer) . "_renderer(\$width, \$height, \$embed_identifiers);");
+
+		if($special_attributes != null)
+		{
+			$renderer->set_special_attributes($special_attributes);
+		}
+
 		return $renderer;
+	}
+	public function set_special_attributes($attributes)
+	{
+		$this->special_attributes = $attributes;
 	}
 	public function render_to_file($output_file = null, $quality = 100)
 	{

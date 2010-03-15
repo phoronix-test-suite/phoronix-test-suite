@@ -92,7 +92,7 @@ abstract class pts_Graph
 	protected $regression_marker_threshold = 0;
 	private $test_identifier = null;
 
-	public function __construct(&$result_object)
+	public function __construct(&$result_object = null)
 	{
 		// Setup config values
 		//if(PTS_MODE == "CLIENT" || (defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
@@ -129,10 +129,13 @@ abstract class pts_Graph
 		$this->graph_renderer = $graph_config->getXmlValue(P_GRAPH_RENDERER); // Renderer
 
 		// Reset of setup besides config
-		$this->graph_title = $result_object->get_name_formatted();
-		$this->graph_y_title = $result_object->get_scale_formatted();
-		$this->test_identifier = $result_object->get_test_name();
-		$this->addSubTitle($result_object->get_attributes());
+		if($result_object != null)
+		{
+			$this->graph_title = $result_object->get_name_formatted();
+			$this->graph_y_title = $result_object->get_scale_formatted();
+			$this->test_identifier = $result_object->get_test_name();
+			$this->addSubTitle($result_object->get_attributes());
+		}
 
 		$this->update_graph_dimensions(-1, -1, true);
 
@@ -222,7 +225,7 @@ abstract class pts_Graph
 	}
 	public function addSubTitle($sub_title)
 	{
-		$sub_titles = array_map("trim", explode("|", $sub_title));
+		$sub_titles = array_map("trim", explode('|', $sub_title));
 
 		foreach($sub_titles as $sub_title)
 		{
@@ -286,20 +289,35 @@ abstract class pts_Graph
 	{
 		$this->graph_color_paint_index = -1;
 	}
-	protected function maximum_graph_value()
+	protected function max_value_in_array($data_r)
 	{
-		$real_maximum = 0;
+		$maximum = 0;
 
-		foreach($this->graph_data as $graph_set)
+		foreach($data_r as $data_point)
 		{
-			foreach($graph_set as $set_item)
+			if(is_array($data_point))
 			{
-				if((is_numeric($set_item) && $set_item > $real_maximum) || (!is_numeric($set_item) && strlen($set_item) > strlen($real_maximum)))
+				$sub_r_max = $this->max_value_in_array($data_point);
+
+				if((is_numeric($sub_r_max) && $sub_r_max > $maximum) || (!is_numeric($sub_r_max) && strlen($sub_r_max) > strlen($maximum)))
 				{
-					$real_maximum = $set_item;
+					$maximum = $sub_r_max;
+				}
+			}
+			else
+			{
+				if((is_numeric($data_point) && $data_point > $maximum) || (!is_numeric($data_point) && strlen($data_point) > strlen($maximum)))
+				{
+					$maximum = $data_point;
 				}
 			}
 		}
+
+		return $maximum;
+	}
+	protected function maximum_graph_value()
+	{
+		$real_maximum = $this->max_value_in_array($this->graph_data);
 
 		if(is_numeric($real_maximum))
 		{
@@ -430,10 +448,10 @@ abstract class pts_Graph
 	{
 		return;
 	}
-	protected function render_graph_init()
+	protected function render_graph_init($bilde_attributes = null)
 	{
 		$this->update_graph_dimensions();
-		$this->graph_image = bilde_renderer::setup_renderer($this->graph_renderer, $this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers);
+		$this->graph_image = bilde_renderer::setup_renderer($this->graph_renderer, $this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers, $bilde_attributes);
 		$this->requestRenderer($this->graph_image->get_renderer());
 
 		// Initalize Colors

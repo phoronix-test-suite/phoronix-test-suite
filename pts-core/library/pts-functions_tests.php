@@ -137,6 +137,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	}
 
 	$generated_graphs = array();
+
 	foreach($result_file->get_result_objects() as $key => $result_object)
 	{
 		$save_to = $save_to_dir;
@@ -163,12 +164,10 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 
 	// Render overview chart
 	// TODO: Get chart working
-	if($save_to_dir && false) // not working right yet
+	if($save_to_dir) // not working right yet
 	{
 		$chart = new pts_Chart();
-		$chart->loadLeftHeaders("", $results_name);
-		$chart->loadTopHeaders($results_identifiers[0]);
-		$chart->loadData($results_values);
+		$chart->loadResultFile($result_file);
 		$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
 	}
 

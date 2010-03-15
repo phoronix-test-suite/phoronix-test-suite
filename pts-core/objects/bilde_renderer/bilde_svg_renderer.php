@@ -302,30 +302,48 @@ class bilde_svg_renderer extends bilde_renderer
 	private function write_svg_text($string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, $orientation = "LEFT", $onclick = null)
 	{
 		$font_size += 1.5;
+		$text_cache = isset($this->special_attributes["cache_font_size"]) ? " font-size: " . $font_size . "px;" : null;
 
 		switch($orientation)
 		{
 			case "CENTER":
-				$class = $this->add_svg_style_definition("text-anchor: middle; dominant-baseline: text-before-edge; fill: $font_color;");
+				$class = $this->add_svg_style_definition("text-anchor: middle; dominant-baseline: text-before-edge; fill: $font_color;" . $text_cache);
 				break;
 			case "RIGHT":
-				$class = $this->add_svg_style_definition("text-anchor: end; dominant-baseline: middle; fill: $font_color;");
+				$class = $this->add_svg_style_definition("text-anchor: end; dominant-baseline: middle; fill: $font_color;" . $text_cache);
 				break;
 			case "LEFT":
 			default:
-				$class = $this->add_svg_style_definition("text-anchor: start; dominant-baseline: middle; fill: $font_color;");
+				$class = $this->add_svg_style_definition("text-anchor: start; dominant-baseline: middle; fill: $font_color;" . $text_cache);
 				break;
 		}
 
-		if($onclick != null && substr($onclick, 0, 7) == "http://")
+		if($onclick != null)
 		{
-			$this->image .= "<a xlink:href=\"" . str_replace("&", "&amp;", $onclick) . "\" target=\"new\">";
+			if(substr($onclick, 0, 7) == "http://")
+			{
+				$this->image .= "<a xlink:href=\"" . str_replace("&", "&amp;", $onclick) . "\" target=\"new\">";
+				$close_link = true;
+			}
+			else if(substr($onclick, 0, 1) == '#')
+			{
+				$this->image .= "<a xlink:href=\"" . str_replace("&", "&amp;", $onclick) . "\">";
+				$close_link = true;
+			}
+			else
+			{
+				$close_link = false;
+			}
+		}
+		else
+		{
+			$close_link = false;
 		}
 
 		// Implement $font_type through font-family if desired
-		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\" font-size=\"" . $font_size . "\" class=\"" . $class . "\"" . ($onclick != null && substr($onclick, 0, 7) != "http://" ? " onclick=\"" . $onclick . "\"" : null) . ">" . $string . "</text>";
+		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\"" . ($text_cache == null ? " font-size=\"" . $font_size . "\"" : null) . " class=\"" . $class . "\"" . ($onclick != null && $close_link == false ? " onclick=\"" . $onclick . "\"" : null) . ">" . $string . "</text>";
 
-		if($onclick != null && substr($onclick, 0, 7) == "http://")
+		if($close_link)
 		{
 			$this->image .= "</a>";
 		}

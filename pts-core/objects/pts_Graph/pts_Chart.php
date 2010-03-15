@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts_Chart.php: A charting object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,115 +21,84 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_Chart
+class pts_Chart extends pts_Graph
 {
-	protected $renderer;
-
-	protected $left_headers_title;
-	protected $top_headers;
-	protected $left_headers;
-	protected $data;
+	protected $result_tests;
+	protected $result_table;
+	protected $result_count;
 
 	public function __construct()
 	{
-		// TODO: better integrate pts_Chart with pts_Graph
+		parent::__construct();
+		$this->graph_attr_big_border = true;
 	}
-	public function loadLeftHeaders($title, $data_r)
+	public function loadResultFile(&$result_file)
 	{
-		$this->left_headers_title = $title;
-		$this->left_headers = $data_r;
+		list($this->result_tests, $this->result_table, $this->result_count) = $result_file->get_result_table();
 	}
-	public function loadTopHeaders($data_r)
+	public function renderChart($file = null)
 	{
-		$this->top_headers = $data_r;
-	}
-	public function loadData($data_r)
-	{
-		$this->data = $data_r;
-	}
-	public function renderChart($file)
-	{
-		if(is_file(PTS_USER_DIR . "graph-config.xml"))
+		$this->graph_maximum_value = $this->max_value_in_array($this->result_table);
+		$system_identifiers = array_keys($this->result_table);
+
+		// where to start the table values
+		$this->graph_left_start = $this->text_string_width($this->max_value_in_array($this->result_tests), $this->graph_font, $this->graph_font_size_identifiers) + 8;
+		$identifier_height = $this->text_string_width($this->max_value_in_array($system_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 5;
+		$table_identifier_width = $this->text_string_height($this->max_value_in_array($system_identifiers), $this->graph_font, $this->graph_font_size_identifiers);
+		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
+		$table_item_width = ($table_max_value_width > $table_identifier_width ? $table_max_value_width : $table_identifier_width) + 4;
+		$table_width = $table_item_width * count($system_identifiers);
+		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 6;
+		$table_line_height_half = ($table_line_height / 2);
+		$table_height = $table_line_height * $this->result_count;
+
+		$this->graph_attr_width = $table_width + $this->graph_left_start;
+		$this->graph_attr_height = $table_height + $identifier_height;
+
+		// Do the actual work
+		$this->requestRenderer("SVG");
+		$this->render_graph_pre_init();
+		$this->render_graph_init(array("cache_font_size" => true));
+
+		// Start drawing
+
+		// Draw the vertical table lines
+		$this->graph_image->draw_dashed_line($this->graph_left_start, ($this->graph_attr_height / 2), $this->graph_attr_width, ($this->graph_attr_height / 2), $this->graph_color_body, ($this->graph_attr_height - 2), $table_item_width, $table_item_width);
+
+		// Background horizontal
+		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), $identifier_height, ($this->graph_attr_width / 2), $this->graph_attr_height, $this->graph_color_body_light, ($this->graph_attr_width - 2), $table_line_height, $table_line_height);
+
+		// Draw the borders
+		$this->graph_image->draw_dashed_line($this->graph_left_start, ($this->graph_attr_height / 2), $this->graph_attr_width, ($this->graph_attr_height / 2), $this->graph_color_border, $this->graph_attr_height, 1, ($table_item_width - 1));
+		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), $identifier_height, ($this->graph_attr_width / 2), $this->graph_attr_height, $this->graph_color_border, $this->graph_attr_width, 1, ($table_line_height - 1));
+
+		// Write the test names
+		foreach($this->result_tests as $i => $test_title)
 		{
-			$f = file_get_contents(PTS_USER_DIR . "graph-config.xml");
-		}
-		else
-		{
-			$f = "";
-		}
-
-		$read_config = new tandem_XmlReader($f);
-
-		$this->renderer = bilde_renderer::setup_renderer("SVG", 100, 100);
-		$font_type = null;
-
-		$left_header = strlen($r = $this->find_longest_string($this->left_headers)) > strlen($this->left_headers_title) ? $r : $this->left_headers_title;
-		$left_header = $this->renderer->soft_text_string_dimensions($left_header, $font_type, 10);
-		$top_header = $this->renderer->soft_text_string_dimensions($this->find_longest_string($this->top_headers), $font_type, 10);
-		$top_header[1] += 2;
-
-		$width = 1 + $left_header[0] + (($top_header[0]) * count($this->top_headers));
-		$height = 8 + $top_header[1] + (($left_header[1] + 2) * count($this->left_headers));
-
-		$this->renderer->resize_image($width, $height);
-		$color_black = $this->renderer->convert_hex_to_type("#000000"); // TODO: Integrate with pts_Graph and other graph-config.xml colors
-		$color_white = $this->renderer->convert_hex_to_type("#FFFFFF");
-		$color_alt = $this->renderer->convert_hex_to_type("#2b6b29");
-
-		$this->renderer->draw_rectangle(0, 0, $width, $height, $color_white);
-
-
-		$this->renderer->draw_rectangle(0, 0, $left_header[0], $height, $color_alt);
-		$this->renderer->draw_rectangle(0, 0, $width, $top_header[1], $color_alt); 
-		$this->renderer->write_text_left($this->left_headers_title, $font_type, 10, $color_white, 2, 5, 2 + $left_header[0], 5 + $left_header[1]);
-
-		for($i = 0; $i < count($this->left_headers); $i++)
-		{
-			$this->renderer->write_text_left($this->left_headers[$i], $font_type, 10, $color_white, 2, (($i + 1) * 20) - 1, 2 + $left_header[0], (($i + 1) * 20) - 1 + $left_header[1]);
-		}
-		for($i = 0; $i < count($this->top_headers); $i++)
-		{
-			$this->renderer->write_text_center($this->top_headers[$i], $font_type, 10, $color_white, $left_header[0] + ($i * $top_header[0]), 2, $left_header[0] + (($i + 1) * $top_header[0]), 2);
+			$this->graph_image->write_text_right($test_title, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($i * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($i * $table_line_height) + $table_line_height_half, false, "#b-" . $i);
 		}
 
-		for($i = 0; $i < count($this->data); $i++)
+		// Write the identifiers
+		$table_identifier_offset = ($table_item_width / 2) + ($table_identifier_width / 2) - 1;
+		foreach($system_identifiers as $i => $system_identifier)
 		{
-			for($j = 0; $j < count($this->data[$i]); $j++)
+			$this->graph_image->write_text_right($system_identifier, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, 90);
+		}
+
+		// Write the values
+		$col = 0;
+		foreach($this->result_table as $sys_identifier => &$sys_values)
+		{
+			foreach($sys_values as $i => &$value)
 			{
-				$this->renderer->write_text_center($this->data[$i][$j], $font_type, 10, $color_black, $left_header[0] + ($j * $top_header[0]), (($i + 1) * 20) - 1, $left_header[0] + (($j + 1) * $top_header[0]), (($i + 1) * 20) - 1 + $left_header[1]);
+				$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($col * $table_item_width), $identifier_height + ($i * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width ), $identifier_height + (($i + 1) * $table_line_height) + $table_line_height_half, false, null);
+
 			}
-			$this->renderer->draw_line($left_header[1], (($i + 1) * 20) - 1 + $left_header[1], $width, (($i + 1) * 20) - 1 + $left_header[1], $color_alt, 1);
+			$col++;
 		}
 
-		for($i = 0; $i <= count($this->data[0]); $i++)
-		{
-			$this->renderer->draw_line($left_header[0] + ($i * $top_header[0]), $top_header[1], $left_header[0] + ($i * $top_header[0]), $height, $color_alt, 1);
-
-		}
-
-		$this->renderer->render_to_file($file);
-	}
-
-	//
-	// Shared Functions
-	//
-
-
-	protected function find_longest_string($string_r)
-	{
-		$longest_string = "";
-		$longest_string_length = 0;
-
-		foreach(pts_to_array($string_r) as $one_string)
-		{
-			if(($new_length = strlen($one_string)) > $longest_string_length)
-			{
-				$longest_string = $one_string;
-				$longest_string_length = $new_length;
-			}
-		}
-
-		return $longest_string;
+		$this->saveGraphToFile($file);
+		return $this->return_graph_image();
 	}
 }
 

@@ -125,6 +125,34 @@ class pts_result_file
 
 		return $object_hashes;
 	}
+	public function get_result_table()
+	{
+		$result_table = array();
+		$result_tests = array();
+		$result_counter = 0;
+
+		foreach($this->get_system_identifiers() as $sys_identifier)
+		{
+			$result_table[$sys_identifier] = array();
+		}
+
+		foreach($this->get_result_objects() as $result_object)
+		{
+			$result_tests[$result_counter] = $result_object->get_name();
+
+			if($result_object->get_format() == "BAR_GRAPH")
+			{
+				foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+				{
+					$result_table[$buffer_item->get_result_identifier()][$result_counter] = $buffer_item->get_result_value();
+				}
+			}
+
+			$result_counter++;
+		}
+
+		return array($result_tests, $result_table, $result_counter);
+	}
 	public function get_result_objects()
 	{
 		if($this->result_objects == null)
