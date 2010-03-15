@@ -92,7 +92,7 @@ class tandem_XmlReader
 		{
 			$xml_match = $this->parseXMLString($xml_step, $xml_match, false);
 
-			if($xml_match == false)
+			if($xml_match === false)
 			{
 				$xml_match = !$is_fallback_call ? $this->handleXmlZeroTagFallback($xml_path) : $this->tag_fallback_value;
 			}

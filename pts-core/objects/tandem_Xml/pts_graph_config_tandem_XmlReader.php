@@ -67,7 +67,6 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 	}
 	function handleXmlZeroTagFallback($xml_tag)
 	{
-		// Cascading Test Profiles for finding a tag within an XML file being extended by another XML file
 		static $fallback_reader = null;
 		$fallback_value = false;
 

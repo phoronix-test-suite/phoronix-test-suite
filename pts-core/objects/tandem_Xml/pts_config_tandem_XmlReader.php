@@ -51,18 +51,24 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 	}
 	function handleXmlZeroTagFallback($xml_tag)
 	{
-		switch($xml_tag)
+		static $fallback_reader = null;
+		$fallback_value = false;
+
+		if($fallback_reader != null || is_file(STATIC_DIR . "user-config-defaults.xml"))
 		{
-			case P_OPTION_LOG_VSYSDETAILS:
-				// SaveSystemDetails changed to SaveSystemLogs in Phoronix Test Suite 2.2
-				$fallback = $this->getXMLValue("PhoronixTestSuite/Options/Testing/SaveSystemDetails");
-				break;
-			default:
-				$fallback = $this->tag_fallback_value;
-				break;
+			if($fallback_reader == null)
+			{
+				$fallback_reader = new tandem_XmlReader(STATIC_DIR . "user-config-defaults.xml");
+			}
+
+			$fallback_value = $fallback_reader->getXMLValue($xml_tag);
+		}
+		else if(PTS_MODE == "CLIENT")
+		{
+			echo "\nUndefined Config Option: $xml_tag\n";
 		}
 
-		return $fallback;
+		return $fallback_value;
 	}
 	function getValue($xml_path, $xml_tag = null, $xml_match = null, $is_fallback_call = false)
 	{
