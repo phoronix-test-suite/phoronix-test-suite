@@ -24,6 +24,8 @@
 function pts_trim_double($double, $accuracy = 2)
 {
 	// Set precision for a variable's points after the decimal spot
+	return round($double, $accuracy);
+/*
 	$return = explode(".", $double);
 
 	if(count($return) == 1)
@@ -51,7 +53,7 @@ function pts_trim_double($double, $accuracy = 2)
 		$return = $return[0];
 	}
 
-	return $return;
+	return $return; */
 }
 function pts_dirname($path)
 {

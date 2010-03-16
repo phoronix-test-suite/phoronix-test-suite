@@ -113,7 +113,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$this->image = null;
 	}
 
-	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
+	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null, $title = null, $bold = false)
 	{
 		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
@@ -132,9 +132,9 @@ class bilde_svg_renderer extends bilde_renderer
 			$rotation = 90;
 		}
 
-		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "LEFT", $onclick);
+		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "LEFT", $onclick, $title, $bold);
 	}
-	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
+	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null, $title = null, $bold = false)
 	{
 		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
@@ -147,19 +147,19 @@ class bilde_svg_renderer extends bilde_renderer
 		$text_x = $bound_x2 - $text_width;
 		$text_y = $bound_y1 + round($text_height / 2) + 1;
 
-		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "RIGHT", $onclick);
+		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "RIGHT", $onclick, $title, $bold);
 	}
-	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
+	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null, $title = null, $bold = false)
 	{
 		if($bound_x1 != $bound_x2)
 		{
 			$font_size += 1.5;
-			list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions($this->trim_double($text_string, 2), $font_type, $font_size);
+			list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions(round($text_string, 2), $font_type, $font_size);
 
 			while($text_width > abs($bound_x2 - $bound_x1 - 2))
 			{
 				$font_size -= 0.5;
-				list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions($this->trim_double($text_string, 2), $font_type, $font_size);
+				list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions(round($text_string, 2), $font_type, $font_size);
 			}
 			$font_size -= 1.5;
 
@@ -188,7 +188,7 @@ class bilde_svg_renderer extends bilde_renderer
 			$text_y = (($bound_y2 - $bound_y1) / 2) + $bound_y1 + round($text_width / 2);
 		}
 
-		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "CENTER", $onclick);
+		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "CENTER", $onclick, $title, $bold);
 	}
 	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color, $title = null)
 	{
@@ -273,15 +273,15 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function png_image_to_type($file)
 	{
-		return false;
+		return $file;
 	}
 	public function jpg_image_to_type($file)
 	{
-		return false;
+		return $file;
 	}
 	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1)
 	{
-		return null;
+		$this->image .= "<image x=\"" . $to_x . "\" y=\"" . $to_y . "\" width=\"" . $width . "\" height=\"" . $height . "\" xlink:href=\"" . $source_image_object . "\"></image>";
 	}
 	public function convert_hex_to_type($hex)
 	{
@@ -299,22 +299,23 @@ class bilde_svg_renderer extends bilde_renderer
 
 	// Privates
 
-	private function write_svg_text($string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, $orientation = "LEFT", $onclick = null)
+	private function write_svg_text($string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, $orientation = "LEFT", $onclick = null, $title = null, $bold = false)
 	{
 		$font_size += 1.5;
 		$text_cache = isset($this->special_attributes["cache_font_size"]) ? " font-size: " . $font_size . "px;" : null;
+		$text_bold = $bold == true ? " font-weight: bold;" : null;
 
 		switch($orientation)
 		{
 			case "CENTER":
-				$class = $this->add_svg_style_definition("text-anchor: middle; dominant-baseline: text-before-edge; fill: $font_color;" . $text_cache);
+				$class = $this->add_svg_style_definition("text-anchor: middle; dominant-baseline: text-before-edge; fill: $font_color;" . $text_cache . $text_bold);
 				break;
 			case "RIGHT":
-				$class = $this->add_svg_style_definition("text-anchor: end; dominant-baseline: middle; fill: $font_color;" . $text_cache);
+				$class = $this->add_svg_style_definition("text-anchor: end; dominant-baseline: middle; fill: $font_color;" . $text_cache . $text_bold);
 				break;
 			case "LEFT":
 			default:
-				$class = $this->add_svg_style_definition("text-anchor: start; dominant-baseline: middle; fill: $font_color;" . $text_cache);
+				$class = $this->add_svg_style_definition("text-anchor: start; dominant-baseline: middle; fill: $font_color;" . $text_cache . $text_bold);
 				break;
 		}
 
@@ -340,8 +341,15 @@ class bilde_svg_renderer extends bilde_renderer
 			$close_link = false;
 		}
 
+		/*
+		if($bold)
+		{
+			$text_y -= 1;
+		}
+		*/
+
 		// Implement $font_type through font-family if desired
-		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\"" . ($text_cache == null ? " font-size=\"" . $font_size . "\"" : null) . " class=\"" . $class . "\"" . ($onclick != null && $close_link == false ? " onclick=\"" . $onclick . "\"" : null) . ">" . $string . "</text>";
+		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\"" . ($text_cache == null ? " font-size=\"" . $font_size . "\"" : null) . " class=\"" . $class . "\"" . ($onclick != null && $close_link == false ? " onclick=\"" . $onclick . "\"" : null) . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . ">" . $string . "</text>";
 
 		if($close_link)
 		{

@@ -130,6 +130,8 @@ class pts_result_file
 		$result_table = array();
 		$result_tests = array();
 		$max_value = 0;
+		$longest_test_title = null;
+		$longest_test_title_length = 0;
 		$result_counter = 0;
 
 		foreach($this->get_system_identifiers() as $sys_identifier)
@@ -139,20 +141,95 @@ class pts_result_file
 
 		foreach($this->get_result_objects() as $result_object)
 		{
-			$result_tests[$result_counter] = $result_object->get_name();
+			$result_tests[$result_counter][0] = $result_object->get_name();
+			$result_tests[$result_counter][1] = $result_object->get_attributes();
+
+			if(($len = strlen($result_tests[$result_counter][0])) > $longest_test_title_length)
+			{
+				$longest_test_title = $result_tests[$result_counter][0];
+				$longest_test_title_length = $len;
+			}
 
 			if($result_object->get_format() == "BAR_GRAPH")
 			{
+				if(!defined("PHOROMATIC_TRACKER"))
+				{
+					switch($result_object->get_proportion())
+					{
+						case "HIB":
+							$best_value = pts_math::array_max($result_object->get_result_buffer()->get_values());
+							break;
+						case "LIB":
+							$best_value = pts_math::array_min($result_object->get_result_buffer()->get_values());
+							break;
+						default:
+							$best_value = 0;
+							break;
+					}
+				}
+
+
+				$prev_value = 0;
+				$prev_identifier_0 = null;
+
 				foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 				{
+					$identifier = $buffer_item->get_result_identifier();
 					$value = $buffer_item->get_result_value();
+					$raw_values = explode(':', $buffer_item->get_result_raw());
+					$percent_std = round(pts_math::percent_standard_deviation($raw_values), 2);
+					$delta = 0;
 
 					if($value > $max_value)
 					{
 						$max_value = $value;
 					}
 
-					$result_table[$buffer_item->get_result_identifier()][$result_counter] = $value;
+					if(defined("PHOROMATIC_TRACKER"))
+					{
+						$identifier_r = explode(':', $identifier);
+
+						if($identifier_r[0] == $prev_identifier_0 && $prev_value != 0)
+						{
+							$delta = round(abs(1 - ($value / $prev_value)), 4);
+
+							if($delta > 0.02 && $delta > pts_math::standard_deviation($raw_values))
+							{
+								switch($result_object->get_proportion())
+								{
+									case "HIB":
+										if($value < $prev_value)
+										{
+											$delta = 0 - $delta;
+										}
+										break;
+									case "LIB":
+										if($value > $prev_value)
+										{
+											$delta = 0 - $delta;
+										}
+										break;
+									default:
+										$delta = 0;
+										break;
+								}
+							}
+							else
+							{
+								$delta = 0;
+							}
+						}
+
+						$prev_identifier_0 = $identifier_r[0];
+						$highlight = false;
+					}
+					else
+					{
+						$highlight = $best_value == $value;
+					}
+
+					$result_table[$identifier][$result_counter] = array($value, $percent_std, $delta, $highlight);
+					$prev_value = $value;
 				}
 			}
 
@@ -196,7 +273,7 @@ class pts_result_file
 			$result_systems = array_keys($result_table);
 		}
 
-		return array($result_tests, $result_systems, $result_table, $result_counter, $max_value);
+		return array($result_tests, $result_systems, $result_table, $result_counter, $max_value, $longest_test_title);
 	}
 	public function get_result_objects()
 	{

@@ -160,6 +160,10 @@ abstract class pts_Graph
 
 		$this->graph_font = $font_type;
 	}
+	public static function read_graph_config($xml_path)
+	{
+
+	}
 	public function requestRenderer($renderer)
 	{
 		$this->graph_renderer = $renderer;

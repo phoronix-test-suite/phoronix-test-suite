@@ -58,12 +58,14 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 	{
 		if($this->override_values != false && isset($this->override_values[$xml_path]))
 		{
-			return $this->override_values[$xml_path];
+			$value = $this->override_values[$xml_path];
 		}
 		else
 		{
-			return parent::getValue($xml_path, $xml_tag, $xml_match, $is_fallback_call);
+			$value = parent::getValue($xml_path, $xml_tag, $xml_match, $is_fallback_call);
 		}
+
+		return $value;
 	}
 	function handleXmlZeroTagFallback($xml_tag)
 	{
