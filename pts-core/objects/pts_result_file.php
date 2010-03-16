@@ -129,6 +129,7 @@ class pts_result_file
 	{
 		$result_table = array();
 		$result_tests = array();
+		$max_value = 0;
 		$result_counter = 0;
 
 		foreach($this->get_system_identifiers() as $sys_identifier)
@@ -144,14 +145,58 @@ class pts_result_file
 			{
 				foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 				{
-					$result_table[$buffer_item->get_result_identifier()][$result_counter] = $buffer_item->get_result_value();
+					$value = $buffer_item->get_result_value();
+
+					if($value > $max_value)
+					{
+						$max_value = $value;
+					}
+
+					$result_table[$buffer_item->get_result_identifier()][$result_counter] = $value;
 				}
 			}
 
 			$result_counter++;
 		}
 
-		return array($result_tests, $result_table, $result_counter);
+		if(defined("PHOROMATIC_TRACKER"))
+		{
+			// Resort the results by SYSTEM, then date
+			$systems_table = array();
+			$sorted_table = array();
+
+			foreach($result_table as $system_identifier => &$identifier_table)
+			{
+				$identifier = array_map("trim", explode(':', $system_identifier));
+
+				if(!isset($systems_table[$identifier[0]]))
+				{
+					$systems_table[$identifier[0]] = array();
+				}
+
+				$systems_table[$identifier[0]][$system_identifier] = $identifier_table;
+			}
+
+			$result_table = array();
+			$result_systems = array();
+
+			foreach($systems_table as &$group)
+			{
+				foreach($group as $identifier => $table)
+				{
+					$result_table[$identifier] = $table;
+
+					$identifier = array_map("trim", explode(':', $identifier));
+					array_push($result_systems, (isset($identifier[1]) ? $identifier[1] : $identifier[0]));
+				}
+			}
+		}
+		else
+		{
+			$result_systems = array_keys($result_table);
+		}
+
+		return array($result_tests, $result_systems, $result_table, $result_counter, $max_value);
 	}
 	public function get_result_objects()
 	{

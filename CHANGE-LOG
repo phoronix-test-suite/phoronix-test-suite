@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for harmonic means for Phoromatic Tracker
 - pts-core: Consolidate pts_Graph configuration setup
 - pts-core: Consolidate user configuration setup
+- pts-core: Rewrite and make working pts_Chart
 - phoromatic: When setting up the Phoromatic module, allow the system description to be inputted and then sent to the Phoromatic Server
 - phodevi: Support for Clang compiler
 - phodevi: Quirk handling for PCLinuxOS as it doesn't know how to properly identify itself
