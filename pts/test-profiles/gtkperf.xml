@@ -17,7 +17,7 @@
 	<TestInformation>
 		<Title>GtkPerf</Title>
 		<Version>0.40</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>This test calculates the average frame-rate from several different GTK operations.</Description>

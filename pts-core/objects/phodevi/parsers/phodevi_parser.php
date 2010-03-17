@@ -100,7 +100,7 @@ class phodevi_parser
 					$unit = substr($info, $end_pos + 2, 1);
 					if($unit == "F")
 					{
-						$temperature = pts_trim_double((($temperature - 32) * 5 / 9));
+						$temperature = round((($temperature - 32) * 5 / 9), 2);
 					}
 
 					$hdd_temperature = $temperature;

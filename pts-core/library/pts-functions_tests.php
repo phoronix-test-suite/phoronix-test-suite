@@ -166,8 +166,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	// TODO: Get chart working
 	if($save_to_dir) // not working right yet
 	{
-		$chart = new pts_Chart();
-		$chart->loadResultFile($result_file);
+		$chart = new pts_Chart($result_file);
 		$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
 	}
 
@@ -401,7 +400,7 @@ function pts_estimated_download_size($identifier, $divider = 1048576, $include_e
 			}
 		}
 
-		$estimated_size = $estimated_size > 0 ? pts_trim_double($estimated_size / $divider) : 0;
+		$estimated_size = $estimated_size > 0 ? round($estimated_size / $divider, 2) : 0;
 
 		if(!$id_is_array)
 		{

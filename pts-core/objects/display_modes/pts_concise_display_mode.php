@@ -100,7 +100,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		// TODO: handle if file-name is too long for terminal width
 		$download_string = $this->tab . $this->tab . $process_string . ": " . $pts_test_file_download->get_filename();
-		$download_size_string = " [" . pts_trim_double($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]";
+		$download_size_string = " [" . round($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]";
 		$offset_length = pts_client::terminal_width() - strlen($download_string) - strlen($download_size_string);
 
 		if($offset_length > 6)

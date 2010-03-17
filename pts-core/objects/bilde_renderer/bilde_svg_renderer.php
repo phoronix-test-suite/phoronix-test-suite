@@ -326,7 +326,7 @@ class bilde_svg_renderer extends bilde_renderer
 				$this->image .= "<a xlink:href=\"" . str_replace("&", "&amp;", $onclick) . "\" target=\"new\">";
 				$close_link = true;
 			}
-			else if(substr($onclick, 0, 1) == '#')
+			else if(substr($onclick, 0, 1) == '#' || substr($onclick, 0, 1) == '?')
 			{
 				$this->image .= "<a xlink:href=\"" . str_replace("&", "&amp;", $onclick) . "\">";
 				$close_link = true;

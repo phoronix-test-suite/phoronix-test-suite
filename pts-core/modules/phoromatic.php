@@ -292,7 +292,7 @@ class phoromatic extends pts_module_interface
 					$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
 					$times_tried++;
 				}
-				while(!$uploaded_test_results && $times_tried < 4);
+				while(!$uploaded_test_results && $times_tried < 5);
 
 				if(!$uploaded_test_results)
 				{
@@ -332,7 +332,7 @@ class phoromatic extends pts_module_interface
 				$update_sd = phoromatic::update_system_details();
 				$times_tried++;
 			}
-			while(!$update_sd && $times_tried < 4);
+			while(!$update_sd && $times_tried < 5);
 
 			if(!$update_sd)
 			{

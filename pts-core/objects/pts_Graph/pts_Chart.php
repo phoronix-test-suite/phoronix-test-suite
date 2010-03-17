@@ -28,15 +28,14 @@ class pts_Chart extends pts_Graph
 	protected $result_count;
 	protected $result_systems;
 	protected $longest_test_title;
+	protected $longest_system_identifier;
 
-	public function __construct()
+	public function __construct(&$result_file, $system_id_keys = null)
 	{
 		parent::__construct();
 		$this->graph_attr_big_border = true;
-	}
-	public function loadResultFile(&$result_file)
-	{
-		list($this->result_tests, $this->result_systems, $this->result_table, $this->result_count, $this->graph_maximum_value, $this->longest_test_title) = $result_file->get_result_table();
+
+		list($this->result_tests, $this->result_systems, $this->result_table, $this->result_count, $this->graph_maximum_value, $this->longest_test_title, $this->longest_system_identifier) = $result_file->get_result_table($system_id_keys);
 	}
 	public function renderChart($file = null)
 	{
@@ -48,7 +47,7 @@ class pts_Chart extends pts_Graph
 			$this->graph_left_start = 170;
 		}
 
-		$identifier_height = $this->text_string_width($this->max_value_in_array($this->result_systems), $this->graph_font, $this->graph_font_size_identifiers) + 12;
+		$identifier_height = $this->text_string_width($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 12;
 
 		if(defined("PHOROMATIC_TRACKER"))
 		{
@@ -63,7 +62,7 @@ class pts_Chart extends pts_Graph
 			$identifier_height = 90;
 		}
 
-		$table_identifier_width = $this->text_string_height($this->max_value_in_array($this->result_systems), $this->graph_font, $this->graph_font_size_identifiers);
+		$table_identifier_width = $this->text_string_height($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers);
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
 		$table_item_width = ($table_max_value_width > $table_identifier_width ? $table_max_value_width : $table_identifier_width) + 10;
 		$table_width = $table_item_width * count($this->result_systems);
@@ -105,7 +104,9 @@ class pts_Chart extends pts_Graph
 		$table_identifier_offset = ($table_item_width / 2) + ($table_identifier_width / 2) - 1;
 		foreach($this->result_systems as $i => $system_identifier)
 		{
-			$this->graph_image->write_text_right($system_identifier, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, 90, null, null, true);
+			$link = $system_identifier[1] != null ? "?k=system_logs&u=" . $system_identifier[1] . "&ts=" . $system_identifier[0] : null;
+
+			$this->graph_image->write_text_right($system_identifier[0], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, 90, $link, null, true);
 		}
 
 		// Write the values
@@ -119,7 +120,7 @@ class pts_Chart extends pts_Graph
 				$text_color = $this->graph_color_text;
 				$bold = false;
 
-				if($value_set[1] > 0)
+				if($value_set[1] != 0)
 				{
 					$hover_title = "STD: " . $value_set[1] . "%";
 				}

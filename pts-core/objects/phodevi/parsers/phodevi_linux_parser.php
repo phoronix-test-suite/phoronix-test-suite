@@ -207,7 +207,7 @@ class phodevi_linux_parser
 			$speed = $delta_seconds != 0 ? $delta_mb / $delta_seconds : 0;
 		}
 
-		return pts_trim_double($speed, 2);
+		return round($speed, 2);
 	}
 	public static function read_sys_dmi($identifier)
 	{

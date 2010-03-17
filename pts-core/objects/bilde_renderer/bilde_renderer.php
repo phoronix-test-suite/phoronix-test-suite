@@ -321,41 +321,6 @@ abstract class bilde_renderer
 		$dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		return $dimensions[1];
 	}
-	protected function trim_double($double, $accuracy = 2)
-	{
-		// Set precision for a variable's points after the decimal spot
-		$return = explode(".", $double);
-
-		if(count($return) == 1)
-		{
-			$return[1] = "00";
-		}
-	
-		if(count($return) == 2 && $accuracy > 0)
-		{
-			$strlen = strlen($return[1]);
-
-			if($strlen > $accuracy)
-			{
-				$return[1] = substr($return[1], 0, $accuracy);
-			}
-			else if($strlen < $accuracy)
-			{
-				for($i = $strlen; $i < $accuracy; $i++)
-				{
-					$return[1] .= '0';
-				}
-			}
-
-			$return = $return[0] . "." . $return[1];
-		}
-		else
-		{
-			$return = $return[0];
-		}
-
-		return $return;
-	}
 }
 
 ?>

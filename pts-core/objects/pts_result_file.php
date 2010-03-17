@@ -125,7 +125,7 @@ class pts_result_file
 
 		return $object_hashes;
 	}
-	public function get_result_table()
+	public function get_result_table($system_id_keys = null)
 	{
 		$result_table = array();
 		$result_tests = array();
@@ -256,6 +256,8 @@ class pts_result_file
 
 			$result_table = array();
 			$result_systems = array();
+			$longest_system_identifier = null;
+			$longest_system_identifier_length = 0;
 
 			foreach($systems_table as &$group)
 			{
@@ -264,16 +266,45 @@ class pts_result_file
 					$result_table[$identifier] = $table;
 
 					$identifier = array_map("trim", explode(':', $identifier));
-					array_push($result_systems, (isset($identifier[1]) ? $identifier[1] : $identifier[0]));
+					$show_id = isset($identifier[1]) ? $identifier[1] : $identifier[0];
+
+					if(($le = strlen($show_id)) > $longest_system_identifier_length)
+					{
+						$longest_system_identifier_length = $le;
+						$longest_system_identifier = $show_id;
+					}
+
+
+					if($system_id_keys != null && ($s = array_search($identifier[0], $system_id_keys)) !== false)
+					{
+						$system_id = $s;
+					}
+					else
+					{
+						$system_id = null;
+					}
+
+					array_push($result_systems, array($show_id, $system_id));
 				}
 			}
 		}
 		else
 		{
 			$result_systems = array_keys($result_table);
+			$longest_system_identifier = null;
+			$longest_system_identifier_length = 0;
+
+			foreach($result_systems as $id)
+			{
+				if(($le = strlen($id)) > $longest_system_identifier_length)
+				{
+					$longest_system_identifier_length = $le;
+					$longest_system_identifier = $id;
+				}
+			}
 		}
 
-		return array($result_tests, $result_systems, $result_table, $result_counter, $max_value, $longest_test_title);
+		return array($result_tests, $result_systems, $result_table, $result_counter, $max_value, $longest_test_title, $longest_system_identifier);
 	}
 	public function get_result_objects()
 	{

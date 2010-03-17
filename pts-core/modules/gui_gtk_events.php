@@ -66,7 +66,7 @@ class gui_gtk_events extends pts_module_interface
 	{
 		self::$test_install_current = pts_test_identifier_to_name($obj[0]);
 		self::$test_download_count = count($obj[1]);
-		self::$progress_window->update_progress_bar(0, "Downloading: " . $obj[1][0]->get_filename() . " (" . pts_trim_double($obj[1][0]->get_filesize() / 1048576, 1) . "MB)", self::$install_overall_percent, "Installing: " . self::$test_install_current);
+		self::$progress_window->update_progress_bar(0, "Downloading: " . $obj[1][0]->get_filename() . " (" . round($obj[1][0]->get_filesize() / 1048576, 1) . "MB)", self::$install_overall_percent, "Installing: " . self::$test_install_current);
 	}
 	public static function __interim_test_download($obj)
 	{
@@ -74,7 +74,7 @@ class gui_gtk_events extends pts_module_interface
 
 		if(isset($obj[1][self::$test_download_pos]))
 		{
-			self::$progress_window->update_progress_bar((self::$test_download_pos / self::$test_download_count) * 50, "Downloading: " . $obj[1][self::$test_download_pos]->get_filename() . " (" . pts_trim_double($obj[1][self::$test_download_pos]->get_filesize() / 1048576, 1) . "MB)", self::$install_overall_percent, "Installing: " . self::$test_install_current);
+			self::$progress_window->update_progress_bar((self::$test_download_pos / self::$test_download_count) * 50, "Downloading: " . $obj[1][self::$test_download_pos]->get_filename() . " (" . round($obj[1][self::$test_download_pos]->get_filesize() / 1048576, 1) . "MB)", self::$install_overall_percent, "Installing: " . self::$test_install_current);
 		}
 	}
 	public static function __pre_test_install($identifier)

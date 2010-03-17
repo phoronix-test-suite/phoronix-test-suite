@@ -197,7 +197,7 @@ class pts_test_result
 							}
 						}
 
-						$END_RESULT = pts_trim_double($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
+						$END_RESULT = round($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
 
 						if(!$is_float)
 						{

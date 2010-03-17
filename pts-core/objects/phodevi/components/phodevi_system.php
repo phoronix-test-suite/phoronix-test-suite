@@ -209,7 +209,7 @@ class phodevi_system extends phodevi_device_interface
 					$raw_temp = $raw_temp / 1000;
 				}
 
-				$temp_c = pts_trim_double($raw_temp, 2);	
+				$temp_c = round($raw_temp, 2);	
 			}
 
 			if($temp_c == -1)
@@ -264,7 +264,7 @@ class phodevi_system extends phodevi_device_interface
 			if($power_now != -1)
 			{
 				// sysfs power_now seems to be displayed in microWatts
-				$rate = pts_trim_double($power_now / 1000, 2);
+				$rate = round($power_now / 1000, 2);
 			}
 
 			if($rate == -1)
@@ -357,7 +357,7 @@ class phodevi_system extends phodevi_device_interface
 
 			$diff_iowait = $end_stat[6] - $start_stat[6];
 
-			$iowait = pts_trim_double(1000 * $diff_iowait / $diff_cpu_total / 10, 2);	
+			$iowait = round(1000 * $diff_iowait / $diff_cpu_total / 10, 2);	
 		}
 
 		return $iowait;

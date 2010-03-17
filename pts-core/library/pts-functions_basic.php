@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	pts-functions_basic.php: Basic functions for the Phoronix Test Suite
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,40 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_trim_double($double, $accuracy = 2)
-{
-	// Set precision for a variable's points after the decimal spot
-	return round($double, $accuracy);
-/*
-	$return = explode(".", $double);
-
-	if(count($return) == 1)
-	{
-		$return[1] = "00";
-	}
-	
-	if(count($return) == 2 && $accuracy > 0)
-	{
-		$strlen = strlen($return[1]);
-
-		if($strlen > $accuracy)
-		{
-			$return[1] = substr($return[1], 0, $accuracy);
-		}
-		else if($strlen < $accuracy)
-		{
-			$return[1] .= str_repeat('0', ($accuracy - $strlen));
-		}
-
-		$return = $return[0] . "." . $return[1];
-	}
-	else
-	{
-		$return = $return[0];
-	}
-
-	return $return; */
-}
 function pts_dirname($path)
 {
 	return pts_add_trailing_slash(dirname($path));

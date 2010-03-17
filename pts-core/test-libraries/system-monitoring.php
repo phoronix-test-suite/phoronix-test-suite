@@ -54,7 +54,7 @@ $end_result = null;
 switch($run_type)
 {
 	case "average":
-		$end_result = pts_trim_double(array_sum($results) / count($results), 2);
+		$end_result = round(array_sum($results) / count($results), 2);
 		break;
 	case "minimum":
 		$min = $results[0];
@@ -79,7 +79,7 @@ switch($run_type)
 		$end_result = $max;
 		break;
 	case "delta":
-		$end_result = pts_trim_double(abs($results[0] - $results[(count($results) - 1)]), 2);
+		$end_result = round(abs($results[0] - $results[(count($results) - 1)]), 2);
 		break;
 	case "all":
 	case "all-comma":

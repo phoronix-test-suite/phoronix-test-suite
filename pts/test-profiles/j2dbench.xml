@@ -15,7 +15,7 @@
 	<TestInformation>
 		<Title>Java 2D Microbenchmark</Title>
 		<Version>1.0</Version>
-		<TimesToRun>3</TimesToRun>
+		<TimesToRun>4</TimesToRun>
 		<ResultScale>Units Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test runs a series of microbenchmarks to check the performance of the OpenGL-based Java 2D pipeline and the underlying OpenGL drivers.</Description>

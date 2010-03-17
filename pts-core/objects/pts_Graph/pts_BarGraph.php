@@ -90,7 +90,7 @@ class pts_BarGraph extends pts_Graph
 
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
-				$value = $this->trim_double($this->graph_data[$i_o][$i], 2);
+				$value = round($this->graph_data[$i_o][$i], 2);
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
 				$value_plot_top = $this->graph_top_end + 1 - $graph_size;
 
@@ -107,7 +107,7 @@ class pts_BarGraph extends pts_Graph
 
 				if($run_std_deviation > 0)
 				{
-					$title_tooltip .= " || " . $this->trim_double($run_std_deviation, 1) . " STD.";
+					$title_tooltip .= " || " . round($run_std_deviation, 1) . " STD.";
 				}
 
 				$this->graph_image->draw_rectangle_with_border($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end, $paint_color, $this->graph_color_body_light, $title_tooltip);

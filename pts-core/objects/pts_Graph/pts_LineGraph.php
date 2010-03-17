@@ -307,7 +307,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($calculations_r as $color => &$values)
 			{
-				$avg = $this->trim_double(array_sum($values) / count($values), 1);
+				$avg = round(array_sum($values) / count($values), 1);
 				array_push($to_display[$color], $avg);
 			}
 		}
@@ -326,7 +326,7 @@ class pts_LineGraph extends pts_Graph
 						$high = $value_check;
 					}
 				}
-				$high = $this->trim_double($high, 1);
+				$high = round($high, 1);
 				array_push($to_display[$color], $high);
 			}
 		}
@@ -344,7 +344,7 @@ class pts_LineGraph extends pts_Graph
 						$low = $value_check;
 					}
 				}
-				$low = $this->trim_double($low, 1);
+				$low = round($low, 1);
 				array_push($to_display[$color], $low);
 			}
 		}
@@ -354,7 +354,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($calculations_r as $color => &$values)
 			{
-				array_push($to_display[$color], $this->trim_double($values[count($values) - 1], 1));
+				array_push($to_display[$color], round($values[count($values) - 1], 1));
 			}
 		}
 

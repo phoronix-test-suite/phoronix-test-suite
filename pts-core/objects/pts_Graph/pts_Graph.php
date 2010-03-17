@@ -203,7 +203,7 @@ abstract class pts_Graph
 		{
 			if(is_float($data_item))
 			{
-				$data_item = $this->trim_double($data_item, 2);
+				$data_item = round($data_item, 2);
 			}
 		}
 
@@ -581,7 +581,7 @@ abstract class pts_Graph
 				$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end, $px_from_top, $this->graph_color_body_light, 1, 20, 15);
 			}
 
-			$display_value += $this->trim_double($this->graph_maximum_value / $this->graph_attr_marks, 2);
+			$display_value += round($this->graph_maximum_value / $this->graph_attr_marks, 2);
 		}
 	}
 	protected function render_graph_identifiers()
@@ -637,40 +637,6 @@ abstract class pts_Graph
 
 		return $return_object;
 	}
-	protected function trim_double($double, $accuracy = 2)
-	{
-		// Should be same as pts_trim_double()
-		// Set precision for a variable's points after the decimal spot
-		$return = explode(".", $double);
-
-		if(count($return) == 1)
-		{
-			$return[1] = "00";
-		}
-	
-		if(count($return) == 2 && $accuracy > 0)
-		{
-			$strlen = strlen($return[1]);
-
-			if($strlen > $accuracy)
-			{
-				$return[1] = substr($return[1], 0, $accuracy);
-			}
-			else if($strlen < $accuracy)
-			{
-				$return[1] .= str_repeat('0', ($accuracy - $strlen));
-			}
-
-			$return = $return[0] . "." . $return[1];
-		}
-		else
-		{
-			$return = $return[0];
-		}
-
-		return $return;
-	}
-
 
 	//
 	// Renderer-specific Functions
