@@ -16,7 +16,7 @@
 	<TestInformation>
 		<Title>Dbench</Title>
 		<Version>4.0</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>Dbench is a benchmark designed by the Samba project as a free alternative to netbench, but dbench contains only file-system calls for testing the disk performance.</Description>

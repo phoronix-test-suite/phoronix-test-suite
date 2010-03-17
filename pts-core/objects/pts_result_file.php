@@ -290,17 +290,19 @@ class pts_result_file
 		}
 		else
 		{
-			$result_systems = array_keys($result_table);
+			$result_systems = array();
 			$longest_system_identifier = null;
 			$longest_system_identifier_length = 0;
 
-			foreach($result_systems as $id)
+			foreach(array_keys($result_table) as $id)
 			{
 				if(($le = strlen($id)) > $longest_system_identifier_length)
 				{
 					$longest_system_identifier_length = $le;
 					$longest_system_identifier = $id;
 				}
+
+				array_push($result_systems, array($id, null));
 			}
 		}
 

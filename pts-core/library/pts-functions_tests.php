@@ -84,7 +84,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 			}
 
 			// Generate logs from system commands to backup
-			$system_log_commands = array("lspci", "sensors", "dmesg", "glxinfo", "system_profiler", "dpkg --list");
+			$system_log_commands = array("lspci -vvnn", "sensors", "dmesg", "glxinfo", "system_profiler", "dpkg --list");
 
 			foreach($system_log_commands as $command_string)
 			{
