@@ -275,7 +275,7 @@ function pts_is_module($name)
 }
 function pts_available_modules()
 {
-	$modules = pts_array_merge(pts_glob(MODULE_DIR . "*.php"), pts_glob(MODULE_LOCAL_DIR . "*.php"));
+	$modules = array_merge(pts_glob(MODULE_DIR . "*.php"), pts_glob(MODULE_LOCAL_DIR . "*.php"));
 	$module_names = array();
 
 	foreach($modules as $module)

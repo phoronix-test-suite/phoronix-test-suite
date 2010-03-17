@@ -48,25 +48,19 @@ class pts_BarGraph extends pts_Graph
 	}
 	protected function render_graph_identifiers()
 	{
-		$px_from_top_start = $this->graph_top_end - 5;
 		$px_from_top_end = $this->graph_top_end + 5;
+
+		$this->graph_image->draw_dashed_line($this->graph_left_start + $this->identifier_width, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 10, 1, $this->identifier_width - 1);
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
 			$px_bound_left = $this->graph_left_start + ($this->identifier_width * $i);
 			$px_bound_right = $px_bound_left + $this->identifier_width;
 
-			if($i == 0)
-			{
-				$this->graph_image->draw_line($px_bound_left, $px_from_top_start, $px_bound_left, $px_from_top_end, $this->graph_color_notches);
-			}
-
 			if($i == (count($this->graph_identifiers) - 1) && $px_bound_right != $this->graph_left_end)
 			{
 				$px_bound_right = $this->graph_left_end;
 			}
-
-			$this->graph_image->draw_line($px_bound_right, $px_from_top_start, $px_bound_right, $px_from_top_end, $this->graph_color_notches);
 
 			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 			{

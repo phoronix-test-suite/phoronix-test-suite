@@ -98,35 +98,35 @@ abstract class pts_Graph
 		//if(PTS_MODE == "CLIENT" || (defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
 		$graph_config = new pts_graph_config_tandem_XmlReader();
 
-		$this->graph_attr_width = $graph_config->getXmlValue(P_GRAPH_SIZE_WIDTH); // Graph width
-		$this->graph_attr_height = $graph_config->getXmlValue(P_GRAPH_SIZE_HEIGHT); // Graph height
-		$this->graph_attr_big_border = $graph_config->getXmlValue(P_GRAPH_BORDER) == "TRUE"; // Graph border
+		$this->graph_attr_width = $this->read_graph_config($graph_config, P_GRAPH_SIZE_WIDTH); // Graph width
+		$this->graph_attr_height = $this->read_graph_config($graph_config, P_GRAPH_SIZE_HEIGHT); // Graph height
+		$this->graph_attr_big_border = $this->read_graph_config($graph_config, P_GRAPH_BORDER) == "TRUE"; // Graph border
 
 		// Colors
-		$this->graph_color_notches = $graph_config->getXmlValue(P_GRAPH_COLOR_NOTCHES); // Color for notches
-		$this->graph_color_text = $graph_config->getXmlValue(P_GRAPH_COLOR_TEXT); // Color for text
-		$this->graph_color_border = $graph_config->getXmlValue(P_GRAPH_COLOR_BORDER); // Color for border (if used)
-		$this->graph_color_main_headers = $graph_config->getXmlValue(P_GRAPH_COLOR_MAINHEADERS); // Color of main text headers
-		$this->graph_color_headers = $graph_config->getXmlValue(P_GRAPH_COLOR_HEADERS); // Color of other headers
-		$this->graph_color_background = $graph_config->getXmlValue(P_GRAPH_COLOR_BACKGROUND); // Color of background
-		$this->graph_color_body = $graph_config->getXmlValue(P_GRAPH_COLOR_BODY); // Color of graph body
-		$this->graph_color_body_text = $graph_config->getXmlValue(P_GRAPH_COLOR_BODYTEXT); // Color of graph body text
-		$this->graph_color_body_light = $graph_config->getXmlValue(P_GRAPH_COLOR_ALTERNATE); // Color of the border around graph bars (if doing a bar graph)
-		$this->graph_color_alert = $graph_config->getXmlValue(P_GRAPH_COLOR_ALERT); // Color for alerts
-		$this->graph_color_paint = array_map("trim", explode(',', $graph_config->getXmlValue(P_GRAPH_COLOR_PAINT))); // Colors to use for the bars / lines, one color for each key
+		$this->graph_color_notches = $this->read_graph_config($graph_config, P_GRAPH_COLOR_NOTCHES); // Color for notches
+		$this->graph_color_text = $this->read_graph_config($graph_config, P_GRAPH_COLOR_TEXT); // Color for text
+		$this->graph_color_border = $this->read_graph_config($graph_config, P_GRAPH_COLOR_BORDER); // Color for border (if used)
+		$this->graph_color_main_headers = $this->read_graph_config($graph_config, P_GRAPH_COLOR_MAINHEADERS); // Color of main text headers
+		$this->graph_color_headers = $this->read_graph_config($graph_config, P_GRAPH_COLOR_HEADERS); // Color of other headers
+		$this->graph_color_background = $this->read_graph_config($graph_config, P_GRAPH_COLOR_BACKGROUND); // Color of background
+		$this->graph_color_body = $this->read_graph_config($graph_config, P_GRAPH_COLOR_BODY); // Color of graph body
+		$this->graph_color_body_text = $this->read_graph_config($graph_config, P_GRAPH_COLOR_BODYTEXT); // Color of graph body text
+		$this->graph_color_body_light = $this->read_graph_config($graph_config, P_GRAPH_COLOR_ALTERNATE); // Color of the border around graph bars (if doing a bar graph)
+		$this->graph_color_alert = $this->read_graph_config($graph_config, P_GRAPH_COLOR_ALERT); // Color for alerts
+		$this->graph_color_paint = array_map("trim", explode(',', $this->read_graph_config($graph_config, P_GRAPH_COLOR_PAINT))); // Colors to use for the bars / lines, one color for each key
 
 		// Text
-		$this->graph_watermark_text = $graph_config->getXmlValue(P_GRAPH_WATERMARK); // watermark
-		$this->graph_watermark_url = $graph_config->getXmlValue(P_GRAPH_WATERMARK_URL); // watermark URL
-		//$this->graph_font = $graph_config->getXmlValue(P_GRAPH_FONT_TYPE);  // TTF file name
-		$this->graph_font_size_heading = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_HEADERS); // Font size of headings
-		$this->graph_font_size_bars = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_TEXT); // Font size for text on the bars/objects
-		$this->graph_font_size_identifiers = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_IDENTIFIERS); // Font size of identifiers
-		$this->graph_font_size_sub_heading = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_SUBHEADERS); // Font size of headers
-		$this->graph_font_size_axis_heading = $graph_config->getXmlValue(P_GRAPH_FONT_SIZE_AXIS); // Font size of axis headers
+		$this->graph_watermark_text = $this->read_graph_config($graph_config, P_GRAPH_WATERMARK); // watermark
+		$this->graph_watermark_url = $this->read_graph_config($graph_config, P_GRAPH_WATERMARK_URL); // watermark URL
+		//$this->graph_font = $this->read_graph_config($graph_config, P_GRAPH_FONT_TYPE);  // TTF file name
+		$this->graph_font_size_heading = $this->read_graph_config($graph_config, P_GRAPH_FONT_SIZE_HEADERS); // Font size of headings
+		$this->graph_font_size_bars = $this->read_graph_config($graph_config, P_GRAPH_FONT_SIZE_TEXT); // Font size for text on the bars/objects
+		$this->graph_font_size_identifiers = $this->read_graph_config($graph_config, P_GRAPH_FONT_SIZE_IDENTIFIERS); // Font size of identifiers
+		$this->graph_font_size_sub_heading = $this->read_graph_config($graph_config, P_GRAPH_FONT_SIZE_SUBHEADERS); // Font size of headers
+		$this->graph_font_size_axis_heading = $this->read_graph_config($graph_config, P_GRAPH_FONT_SIZE_AXIS); // Font size of axis headers
 
-		$this->graph_attr_marks = $graph_config->getXmlValue(P_GRAPH_MARKCOUNT); // Number of marks to make on vertical axis
-		$this->graph_renderer = $graph_config->getXmlValue(P_GRAPH_RENDERER); // Renderer
+		$this->graph_attr_marks = $this->read_graph_config($graph_config, P_GRAPH_MARKCOUNT); // Number of marks to make on vertical axis
+		$this->graph_renderer = $this->read_graph_config($graph_config, P_GRAPH_RENDERER); // Renderer
 
 		// Reset of setup besides config
 		if($result_object != null)
@@ -160,9 +160,16 @@ abstract class pts_Graph
 
 		$this->graph_font = $font_type;
 	}
-	public static function read_graph_config($xml_path)
+	public function read_graph_config(&$graph_config, $xml_path)
 	{
+		static $config_store = null;
 
+		if(!isset($config_store[$xml_path]))
+		{
+			$config_store[$xml_path] = $graph_config->getXmlValue($xml_path);
+		}
+
+		return $config_store[$xml_path];
 	}
 	public function requestRenderer($renderer)
 	{
@@ -293,11 +300,11 @@ abstract class pts_Graph
 	{
 		$this->graph_color_paint_index = -1;
 	}
-	protected function max_value_in_array($data_r)
+	protected function max_value_in_array(&$data_r)
 	{
 		$maximum = 0;
 
-		foreach($data_r as $data_point)
+		foreach($data_r as &$data_point)
 		{
 			if(is_array($data_point))
 			{
@@ -369,7 +376,7 @@ abstract class pts_Graph
 	}
 	protected function find_longest_string($string_r)
 	{
-		$longest_string = "";
+		$longest_string = null;
 		$longest_string_length = 0;
 
 		if(!is_array($string_r))
@@ -454,6 +461,11 @@ abstract class pts_Graph
 	}
 	protected function render_graph_init($bilde_attributes = null)
 	{
+		if(defined("PHOROMATIC_TRACKER"))
+		{
+			$bilde_attributes["cache_font_size"] = true;
+		}
+
 		$this->update_graph_dimensions();
 		$this->graph_image = bilde_renderer::setup_renderer($this->graph_renderer, $this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers, $bilde_attributes);
 		$this->requestRenderer($this->graph_image->get_renderer());
@@ -564,11 +576,13 @@ abstract class pts_Graph
 
 		$display_value = 0;
 
+		$this->graph_image->draw_dashed_line($this->graph_left_start, $this->graph_top_start + $tick_width, $this->graph_left_start, $this->graph_top_end, $this->graph_color_notches, 10, 1, $tick_width);
+
 		for($i = 0; $i < $this->graph_attr_marks; $i++)
 		{
 			$px_from_top = $this->graph_top_end - ($tick_width * $i);
 
-			$this->graph_image->draw_line($px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
+			//$this->graph_image->draw_line($px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
 
 			if($display_value != 0)
 			{

@@ -56,11 +56,7 @@ function pts_last_element_in_array($array)
 function pts_string_bool($string)
 {
 	// Used for evaluating if the user inputted a string that evaluates to true
-	return in_array(strtolower($string), array("true", "1", "on"));
-}
-function pts_array_merge($array1, $array2)
-{
-	return is_array($array1) && is_array($array2) ? array_merge($array1, $array2) : $array1;
+	return in_array(strtolower($string), array("true", "1"));
 }
 function pts_mkdir($dir, $mode = 0777, $recursive = false)
 {
@@ -70,20 +66,6 @@ function pts_glob($pattern, $flags = 0)
 {
 	$r = glob($pattern, $flags);
 	return is_array($r) ? $r : array();
-}
-function pts_multi_glob()
-{
-	$multi = array();
-
-	foreach(func_get_args() as $arg_glob)
-	{
-		foreach(pts_glob($arg_glob) as $arg_select)
-		{
-			array_push($multi, $arg_select);
-		}
-	}
-
-	return $multi;
 }
 function pts_rmdir($dir)
 {

@@ -1099,6 +1099,10 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$info = "NVIDIA";
 		}
+		else if(is_readable("/sys/module/fglrx/initstate") && pts_file_get_contents("/sys/module/fglrx/initstate") == "live")
+		{
+			$info = "ATI";
+		}
 		else if(is_readable("/dev/dri/card0"))
 		{
 			$info = "Mesa";

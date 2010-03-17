@@ -113,13 +113,14 @@ class pts_LineGraph extends pts_Graph
 	}
 	protected function render_graph_identifiers()
 	{
-		$px_from_top_start = $this->graph_top_end - 5;
 		$px_from_top_end = $this->graph_top_end + 5;
 
 		if(!is_array($this->graph_identifiers))
 		{
 			return;
 		}
+
+		$this->graph_image->draw_dashed_line($this->graph_left_start + $this->identifier_width, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 10, 1, $this->identifier_width - 1);
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
@@ -130,8 +131,6 @@ class pts_LineGraph extends pts_Graph
 			}
 
 			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
-
-			$this->graph_image->draw_line($px_from_left, $px_from_top_start, $px_from_left, $px_from_top_end, $this->graph_color_notches);
 
 			if($this->show_select_identifiers != null)
 			{

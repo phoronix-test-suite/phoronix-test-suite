@@ -40,7 +40,7 @@ class phodevi
 		"Processor" => "cpu",
 		"Motherboard" => "motherboard",
 		"Chipset" => "chipset",
-		"System Memory" => "memory",
+		"Memory" => "memory",
 		"Disk" => "disk",
 		"Graphics" => "gpu",
 		"Audio" => "audio",

@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Consolidate user configuration setup
 - pts-core: Rewrite and make working pts_Chart
 - pts-core: Add more files/commands to log for the system logs
+- pts-core: Faster, more efficient rendering of graphs
 - phoromatic: When setting up the Phoromatic module, allow the system description to be inputted and then sent to the Phoromatic Server
 - phodevi: Support for Clang compiler
 - phodevi: Quirk handling for PCLinuxOS as it doesn't know how to properly identify itself
