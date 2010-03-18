@@ -391,7 +391,7 @@ class phodevi_gpu extends phodevi_device_interface
 		$current_resolution = phodevi::read_property("gpu", "screen-resolution");
 		$current_pixel_count = $current_resolution[0] * $current_resolution[1];
 		$available_modes = array();
-		$supported_ratios = array(1.60, 1.25, 1.33, 1.70, 1.77);
+		$supported_ratios = array(1.60, 1.25, 1.33, 1.70, 1.78);
 		$ignore_modes = array(
 			array(640, 400),
 			array(720, 480), array(832, 624),

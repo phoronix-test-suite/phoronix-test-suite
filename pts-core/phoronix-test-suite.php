@@ -113,7 +113,7 @@ if(!QUICK_START)
 {
 	if(!pts_create_lock(PTS_USER_LOCK, $pts_fp))
 	{
-		echo pts_string_header("WARNING: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
+		echo pts_string_header("NOTICE: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
 		$release_lock = false;
 	}
 

@@ -234,8 +234,9 @@ class phodevi_memory extends phodevi_device_interface
 		{
 			$mem = explode("\n", shell_exec("free -t -m 2>&1"));
 			$grab_line = null;
+			$buffers_and_cache = 0;
 
-			for($i = 0; $i < count($mem) && empty($grab_line); $i++)
+			for($i = 0; $i < count($mem); $i++)
 			{
 				$line_parts = explode(":", $mem[$i]);
 
@@ -255,6 +256,10 @@ class phodevi_memory extends phodevi_device_interface
 					{
 						$grab_line = $line_parts[1];
 					}
+					else if($line_type == "-/+ buffers/cache" && $TYPE != "SWAP")
+					{
+						$buffers_and_cache = pts_first_element_in_array(explode(' ', pts_trim_spaces($line_parts[1])));						
+					}
 				}
 			}
 
@@ -267,7 +272,7 @@ class phodevi_memory extends phodevi_device_interface
 				{
 					if(count($mem_parts) >= 2 && is_numeric($mem_parts[1]))
 					{
-						$mem_usage = $mem_parts[1];
+						$mem_usage = $mem_parts[1] - $buffers_and_cache;
 					}
 				}
 				else if($READ == "TOTAL")

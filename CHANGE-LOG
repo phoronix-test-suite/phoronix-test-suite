@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support for Clang compiler
 - phodevi: Quirk handling for PCLinuxOS as it doesn't know how to properly identify itself
 - phodevi: Support for reading the default and current GPU/memory frequencies with ATI Radeon KMS power management on Linux
+- phodevi: Update system memory sensor
 - pts: Add xplane9-iqc test profile for image quality comparison tests on X-Plane 9
 - pts: Drop compliance-ogl test profile
 
