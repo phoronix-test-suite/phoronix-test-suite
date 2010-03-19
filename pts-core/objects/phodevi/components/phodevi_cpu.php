@@ -414,7 +414,7 @@ class phodevi_cpu extends phodevi_device_interface
 			if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"))
 			{
 				$info = pts_file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq");
-				$info = round(intval($info) / 1000, 2);
+				$info = intval($info) / 1000;
 			}
 			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
 			{
@@ -423,7 +423,7 @@ class phodevi_cpu extends phodevi_device_interface
 				if(isset($cpu_speeds[0]))
 				{
 					$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
-					$info = round(intval($cpu_speeds[$cpu_core]), 2);
+					$info = intval($cpu_speeds[$cpu_core]);
 				}
 			}
 		}
@@ -432,12 +432,12 @@ class phodevi_cpu extends phodevi_device_interface
 			$info = shell_exec("psrinfo -v | grep MHz");
 			$info = substr($info, strrpos($info, "at") + 3);
 			$info = trim(substr($info, 0, strpos($info, "MHz")));
-			$info = round($info, 2);
+			$info = $info;
 		}
 		else if(IS_BSD)
 		{
 			$info = phodevi_bsd_parser::read_sysctl("dev.cpu.0.freq");
-			$info = round($info, 2);
+			$info = $info;
 		}
 		else if(IS_MACOSX)
 		{
@@ -448,10 +448,10 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = substr($info, 0, $cut_point);
 			}
 
-			$info = round($info, 2);
+			$info = $info;
 		}
 
-		return $info;
+		return round($info, 2);
 	}
 	public static function cpu_load_array($read_core = -1)
 	{
