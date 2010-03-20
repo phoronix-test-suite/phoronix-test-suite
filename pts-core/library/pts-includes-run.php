@@ -783,7 +783,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	pts_user_message($test_profile->get_pre_run_message());
-	$runtime_identifier = pts_unique_runtime_identifier();
+	$runtime_identifier = pts_read_assignment("START_TIME");
 	$execute_binary_prepend = "";
 
 	if(!$cache_share_present && $test_profile->is_root_required())

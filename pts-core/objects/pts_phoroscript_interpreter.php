@@ -225,8 +225,31 @@ class pts_phoroscript_interpreter
 					return false;
 					// TODO: decide how to handle
 					break;
+
+				case '$TIMER_START':
+					$timer_start = microtime(true);
+					break;
+				case '$TIMER_STOP':
+					if(isset($timer_start))
+					{
+						$time_diff = microtime(true) - $timer_start;
+
+						if($time_diff < 3)
+						{
+							$time_diff = 0;
+						}
+
+						file_put_contents($this->environmental_variables["HOME"] . "/pts-timer", $time_diff);
+					}
+					break;
 				default:
 					$exec_output = array();
+
+					if(IS_WINDOWS && substr($line, 0, 2) == "./")
+					{
+						$line = substr($line, 2);
+					}
+
 					exec("cd " . $this->var_current_directory . "; " . $line . " 2>&1", $exec_output, $prev_exit_status);
 					break;
 			}

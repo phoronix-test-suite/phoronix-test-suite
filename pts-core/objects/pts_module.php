@@ -167,7 +167,7 @@ class pts_module
 	}
 	public static function pts_timed_function($time, $function)
 	{
-		if($time < 3 || $time > 300)
+		if(($time < 3 && $time != -1) || $time > 300)
 		{
 			return;
 		}
@@ -185,8 +185,12 @@ class pts_module
 				else
 				{
 					$loop_continue = true;
+					/*
+					ML: I think this below check can be safely removed
 					$start_id = pts_unique_runtime_identifier();
-					while(!pts_is_assignment("PTS_TESTING_DONE") && ($start_id == pts_unique_runtime_identifier() || $start_id == PTS_INIT_TIME) && is_file(PTS_USER_LOCK) && $loop_continue)
+					 && ($start_id == pts_unique_runtime_identifier() || $start_id == PTS_INIT_TIME)
+					*/
+					while(!pts_is_assignment("PTS_TESTING_DONE") && is_file(PTS_USER_LOCK) && $loop_continue)
 					{
 						call_user_func(array(self::module_name(), $function));
 

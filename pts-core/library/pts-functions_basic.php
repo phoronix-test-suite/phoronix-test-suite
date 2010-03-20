@@ -102,20 +102,13 @@ function pts_parse_week_string($week_string, $delimiter = ' ')
 {
 	$return_array = array();
 
-	if($week_string[0] == 1)
-		array_push($return_array, 'S');
-	if($week_string[1] == 1)
-		array_push($return_array, 'M');
-	if($week_string[2] == 1)
-		array_push($return_array, 'T');
-	if($week_string[3] == 1)
-		array_push($return_array, 'W');
-	if($week_string[4] == 1)
-		array_push($return_array, 'TH');
-	if($week_string[5] == 1)
-		array_push($return_array, 'F');
-	if($week_string[6] == 1)
-		array_push($return_array, 'S');
+	foreach(array('S', 'M', 'T', 'W', 'TH', 'F', 'S') as $day_int => $day_char)
+	{
+		if($week_string[$day_int] == 1)
+		{
+			array_push($return_array, $day_char);
+		}
+	}
 
 	return implode($delimiter, $return_array);
 }
@@ -156,7 +149,7 @@ function pts_extract_identifier_from_path($path)
 function pts_remove_chars($string, $keep_numeric = true, $keep_decimal = true, $keep_alpha = true, $keep_dash = false, $keep_underscore = false, $keep_colon = false)
 {
 	$string_r = str_split($string);
-	$new_string = "";
+	$new_string = null;
 
 	foreach($string_r as $char)
 	{

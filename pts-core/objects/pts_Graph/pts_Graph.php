@@ -592,7 +592,7 @@ abstract class pts_Graph
 			if($i != 0 && $this->graph_background_lines)
 			{
 				$line_width = 6;
-				$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end, $px_from_top, $this->graph_color_body_light, 1, 20, 15);
+				$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end - 6, $px_from_top, $this->graph_color_body_light, 1, 20, 15);
 			}
 
 			$display_value += round($this->graph_maximum_value / $this->graph_attr_marks, 2);

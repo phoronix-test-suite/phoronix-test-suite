@@ -52,14 +52,6 @@ function pts_set_assignment_next($assignment, $value)
 {
 	pts_command_run_manager::add_assignment_to_next_command($assignment, $value);
 }
-function pts_unique_runtime_identifier()
-{
-	return ($id = pts_read_assignment("THIS_OPTION_IDENTIFIER")) != false ? $id : PTS_INIT_TIME;
-}
-function pts_time_elapsed()
-{
-	return time() - (($time = pts_read_assignment("START_TIME")) != false ? $time : PTS_INIT_TIME);
-}
 
 /*
 function pts_assignment_bool_check()

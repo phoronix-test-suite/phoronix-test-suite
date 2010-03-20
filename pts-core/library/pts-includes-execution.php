@@ -59,7 +59,7 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = nu
 			}
 			else if($file_extension == "sh")
 			{
-				if(getenv("USE_PHOROSCRIPT_INTERPRETER") != false)
+				if(IS_WINDOWS || getenv("USE_PHOROSCRIPT_INTERPRETER") != false)
 				{
 					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
 					$phoroscript->execute_script($pass_argument);

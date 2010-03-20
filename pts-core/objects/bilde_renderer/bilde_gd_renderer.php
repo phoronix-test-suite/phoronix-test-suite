@@ -114,6 +114,18 @@ abstract class bilde_gd_renderer extends bilde_renderer
 
 		imagettftext($this->image, $font_size, $rotation, $text_x, $text_y, $font_color, $font_type, $text_string);
 	}
+	public function draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length)
+	{
+		// TODO: dirty, temporary hack
+		if($line_width != 1)
+		{
+			parent::draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length);
+		}
+		else
+		{
+			imagedashedline($this->image, $start_x, $start_y, $end_x, $end_y, $color);
+		}
+	}
 	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
 	{
 		if($bound_x1 != $bound_x2)
