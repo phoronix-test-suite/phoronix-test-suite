@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.6 Alpha 2
+March 20, 2010
 
 - pts-core: Add /tmp/phoronix-test-suite.active lock
 - pts-core: Move module define statements out to using the PTS definitions XML
