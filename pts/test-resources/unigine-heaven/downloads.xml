@@ -1,14 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>Unigine_Heaven.run</URL>
-			<MD5></MD5>
-			<FileSize>131412254</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/unigine-heaven-cfg-1.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/unigine-heaven-cfg-1.tar.bz2</URL>
-			<MD5>4471be23094b06627a9ddefa81c6851c</MD5>
-			<FileSize>6948</FileSize>
+			<URL>http://www.unigine.com/download/files/Unigine_Heaven-2.0.run</URL>
+			<MD5>27dfa3680652e55b9a27f15651b11a96</MD5>
+			<FileSize>244013793</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

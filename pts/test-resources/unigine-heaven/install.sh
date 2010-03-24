@@ -1,14 +1,17 @@
 #!/bin/sh
 
-chmod +x Unigine_Heaven.run
-./Unigine_Heaven.run
-
-tar -jxf unigine-heaven-cfg-1.tar.bz2
-mv -f *.cfg heaven/data/
+chmod +x Unigine_Heaven-2.0.run
+./Unigine_Heaven-2.0.run
 
 echo "#!/bin/sh
-cd heaven/
+cd Unigine_Heaven/
 export LD_LIBRARY_PATH=bin/:\$LD_LIBRARY_PATH
-./bin/Heaven \$@ > \$LOG_FILE 2>&1" > unigine-heaven
+
+if [ \$OS_ARCH = \"x86_64\" ]
+then
+	./bin/Heaven_x64 \$@ > \$LOG_FILE 2>&1
+else
+	./bin/Heaven_x86 \$@ > \$LOG_FILE 2>&1
+fi" > unigine-heaven
 chmod +x unigine-heaven
 

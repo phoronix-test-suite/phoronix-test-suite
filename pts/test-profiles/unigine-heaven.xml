@@ -2,20 +2,20 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>138</EnvironmentSize>
+		<EnvironmentSize>260</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.unigine.com/</ProjectURL>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Unigine Heaven</Title>
-		<Version>1.1</Version>
+		<Version>2.0</Version>
 		<ResultScale>Frames Per Second</ResultScale>
 		<TimesToRun>3</TimesToRun>
 		<Proportion>HIB</Proportion>
@@ -23,24 +23,8 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>-video_app opengl -data_path ../ -sound_app null -system_script heaven/unigine.cpp</Arguments>
-			<PostArguments>-video_mode -1 -video_fullscreen 1 -video_multisample 0 -extern_define PHORONIX</PostArguments>
+			<Arguments>-video_app opengl -data_path ../ -sound_app null -engine_config ../data/heaven_2.0.cfg -system_script heaven/unigine.cpp -video_mode -1 -video_fullscreen 1 -extern_define PHORONIX</Arguments>
 		</Default>
-		<Option>
-			<DisplayName>Tessellator</DisplayName>
-			<Identifier>tessellator</Identifier>
-			<ArgumentPrefix>-engine_config </ArgumentPrefix>
-			<Menu>
-				<Entry>
-					<Name>Enabled</Name>
-					<Value>heaven_pts_tessellated.cfg</Value>
-				</Entry>
-				<Entry>
-					<Name>Disabled</Name>
-					<Value>heaven_pts_no_tessellated.cfg</Value>
-				</Entry>
-			</Menu>
-		</Option>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>auto-resolution</Identifier>
