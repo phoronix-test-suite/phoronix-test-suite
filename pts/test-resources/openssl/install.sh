@@ -1,16 +1,16 @@
 #!/bin/sh
 
-tar -zxvf openssl-0.9.8k.tar.gz
+tar -zxvf openssl-1.0.0.tar.gz
 
 mkdir openssl_/
 
-cd openssl-0.9.8k/
+cd openssl-1.0.0/
 ./config --prefix=$HOME/openssl_/ no-zlib
 make
 echo \$? > ~/test-exit-status
 make install
 cd ..
-rm -rf openssl-0.9.8k/
+rm -rf 1.0.0/
 rm -rf openssl_/lib/
 
 echo "#!/bin/sh
