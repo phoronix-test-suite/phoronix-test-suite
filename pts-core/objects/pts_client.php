@@ -61,6 +61,10 @@ class pts_client
 
 		return $values;
 	}
+	public static function create_temporary_file()
+	{
+		return tempnam(sys_get_temp_dir(), 'PTS');
+	}
 }
 
 ?>

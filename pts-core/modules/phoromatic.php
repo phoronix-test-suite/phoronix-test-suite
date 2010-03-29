@@ -531,7 +531,7 @@ class phoromatic extends pts_module_interface
 
 		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/system-logs/") && pts_read_assignment("PHOROMATIC_UPLOAD_SYSTEM_LOGS"))
 		{
-			$system_logs_zip = pts_new_temporary_file();
+			$system_logs_zip = pts_client::create_temporary_file();
 			pts_zip_archive_create($system_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/system-logs/");
 			$data["system-logs"] = base64_encode(file_get_contents($system_logs_zip));
 			unlink($system_logs_zip);
@@ -539,7 +539,7 @@ class phoromatic extends pts_module_interface
 
 		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/test-logs/") && pts_read_assignment("PHOROMATIC_UPLOAD_TEST_LOGS"))
 		{
-			$test_logs_zip = pts_new_temporary_file();
+			$test_logs_zip = pts_client::create_temporary_file();
 			pts_zip_archive_create($test_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/test-logs/");
 			$data["test-logs"] = base64_encode(file_get_contents($test_logs_zip));
 			unlink($test_logs_zip);

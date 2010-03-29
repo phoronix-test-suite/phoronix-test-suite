@@ -1073,7 +1073,7 @@ class phodevi_system extends phodevi_device_interface
 				$info = substr($info, 0, $pos);
 			}
 		}
-		else if(!is_readable("/dev/dri/card0") && (IS_NVIDIA_GRAPHICS || (IS_BSD && phodevi_bsd_parser::read_sysctl("dev.nvidia.0.%driver"))) && pts_executable_in_path("nvidia-settings"))
+		else if(pts_executable_in_path("nvidia-settings"))
 		{
 			$info = phodevi_parser::read_nvidia_extension("OpenGLVersion");
 		}
