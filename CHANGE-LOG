@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix length of download text progress indicator
+- phodevi: Fix causing a segmentation fault on some Mesa systems
 - pts: Update unigine-heaven test profile against Unigine Heaven 2.0
 - pts: Update openssl test profile against OpenSSL 1.0.0 upstream
 

@@ -986,7 +986,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$display_driver = "nvidia";
 			}
-			else if((IS_MESA_GRAPHICS || IS_BSD) && stripos(phodevi::read_name("gpu"), "NVIDIA") !== false)
+			else if((IS_MESA_GRAPHICS || IS_BSD) && stripos(phodevi::read_property("gpu", "model"), "NVIDIA") !== false)
 			{
 				$display_driver = "nv";
 			}
@@ -994,7 +994,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				// Fallback to hopefully detect the module, takes the first word off the GPU string and sees if it is the module
 				// This works in at least the case of the Cirrus driver
-				$display_driver = strtolower(pts_first_string_in_string(phodevi::read_name("gpu")));
+				$display_driver = strtolower(pts_first_string_in_string(phodevi::read_property("gpu", "model")));
 			}
 		}
 
