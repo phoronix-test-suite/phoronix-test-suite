@@ -31,7 +31,10 @@ then
 fi
 
 # Determine PHP binary location
-if [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ] || [ -x /usr/pkg/bin/php5 ]
+if [ ! "X$PHP_BIN" = "X" ] && [ -x $PHP_BIN ]
+then
+	export PHP_BIN=$PHP_BIN
+elif [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ] || [ -x /usr/pkg/bin/php5 ]
 then
 	export PHP_BIN="php5"
 elif [ -x /usr/bin/php ] || [ -x /usr/local/bin/php ] || [ -x /usr/pkg/bin/php ]
@@ -46,9 +49,6 @@ then
 elif [ -x /opt/bin/php ]
 then
 	export PHP_BIN="/opt/bin/php"
-elif [ ! "X$PHP_BIN" = "X" ] && [ -x $PHP_BIN ]
-then
-	export PHP_BIN=$PHP_BIN
 else
 	export PHP_BIN=""
 fi

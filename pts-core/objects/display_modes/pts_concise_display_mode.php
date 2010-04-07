@@ -124,8 +124,9 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		if($this->download_last_float == -1)
 		{
-			echo $this->tab . $this->tab . $this->download_estimate . ' ';
-			$this->progress_char_count = $this->download_string_length - strlen($this->download_estimate) - 1;
+			$download_prefix = $this->tab . $this->tab . $this->download_estimate . ' ';
+			echo $download_prefix;
+			$this->progress_char_count = $this->download_string_length - strlen($download_prefix);
 			$this->progress_char_pos = 0;
 		}
 
