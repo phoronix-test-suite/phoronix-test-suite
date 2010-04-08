@@ -318,7 +318,7 @@ class phoromatic extends pts_module_interface
 
 		if(define("PHOROMATIC_START", true))
 		{
-			echo "\nRegistering Status With Phoromatic Server @ " .  . date("H:i:s") . "\n";
+			echo "\nRegistering Status With Phoromatic Server @ " . date("H:i:s") . "\n";
 
 			$times_tried = 0;
 			do

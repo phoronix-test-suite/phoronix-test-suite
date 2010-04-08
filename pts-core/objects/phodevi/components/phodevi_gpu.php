@@ -784,8 +784,6 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				$info = substr($info, 0, $cut);
 			}
-
-			$info = $info;
 		}
 		else if(IS_BSD)
 		{

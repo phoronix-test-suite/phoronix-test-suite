@@ -432,12 +432,10 @@ class phodevi_cpu extends phodevi_device_interface
 			$info = shell_exec("psrinfo -v | grep MHz");
 			$info = substr($info, strrpos($info, "at") + 3);
 			$info = trim(substr($info, 0, strpos($info, "MHz")));
-			$info = $info;
 		}
 		else if(IS_BSD)
 		{
 			$info = phodevi_bsd_parser::read_sysctl("dev.cpu.0.freq");
-			$info = $info;
 		}
 		else if(IS_MACOSX)
 		{
@@ -447,8 +445,6 @@ class phodevi_cpu extends phodevi_device_interface
 			{
 				$info = substr($info, 0, $cut_point);
 			}
-
-			$info = $info;
 		}
 
 		return round($info, 2);
