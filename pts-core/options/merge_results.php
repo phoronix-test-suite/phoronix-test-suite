@@ -50,7 +50,7 @@ class merge_results implements pts_option_interface
 		$merge_to_file .= "composite.xml";
 
 		// Merge Results
-		$merged_results = call_user_func_array(array("pts_merge", "pts_merge_test_results_array"), $result_files_to_merge);
+		$merged_results = call_user_func(array("pts_merge", "merge_test_results_array"), $result_files_to_merge);
 		pts_save_result($merge_to_file, $merged_results);
 
 		echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $merge_to_file . "\n\n";

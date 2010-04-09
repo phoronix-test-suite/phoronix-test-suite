@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: If the NO_MD5_CHECKS environmental variable is set, don't perform MD5 file checks on test installation
 - pts-core: Don't install the linux-32bit-libraries external dependency by default on 64-bit Linux systems
 - pts-core: Fix length of download text progress indicator
+- pts-core: Fix regression that caused the merge-results option not to work
 - phodevi: Fix causing a segmentation fault on some Mesa systems
 - pts: Update unigine-heaven test profile against Unigine Heaven 2.0
 - pts: Update openssl test profile against OpenSSL 1.0.0 upstream

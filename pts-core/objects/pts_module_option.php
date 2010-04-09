@@ -128,6 +128,21 @@ class pts_module_option
 					{
 						$supported = true;
 					}
+				case "INSTALLED_TEST_OR_SUITE":
+					if(in_array($input, pts_installed_tests_array()) || in_array($input, pts_installed_suites_array()))
+					{
+						$supported = true;
+					}
+				case "INSTALLED_SUITE":
+					if(in_array($input, pts_installed_suites_array()))
+					{
+						$supported = true;
+					}
+				case "VALID_SAVE_NAME":
+					if(!empty($input) && !pts_is_run_object($input))
+					{
+						$supported = true;
+					}
 				case "NOT_EMPTY":
 					if(!empty($input))
 					{
