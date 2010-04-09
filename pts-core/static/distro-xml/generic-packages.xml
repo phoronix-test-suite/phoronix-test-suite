@@ -3,8 +3,9 @@
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Package>
-			<GenericName>linux-32bit-libraries</GenericName>
-			<Title>32-bit Libraries For Linux</Title>
+			<GenericName>32bit-compatibility</GenericName>
+			<Title>32-bit Libraries / Compatibility For Linux</Title>
+			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
 			<PossibleNames>ia32-libs</PossibleNames>
 			<FileCheck>/usr/lib32/</FileCheck>
 		</Package>

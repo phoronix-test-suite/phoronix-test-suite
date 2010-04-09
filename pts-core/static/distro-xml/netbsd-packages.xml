@@ -6,7 +6,7 @@
 			<Name>NetBSD</Name>
 		</Information>
 		<Package>
-			<GenericName>linux-32bit-libraries</GenericName>
+			<GenericName>32bit-compatibility</GenericName>
 			<PackageName>suse_base suse32_base</PackageName>
 			<FileCheck>/usr/pkg/emul/linux/bin/bash</FileCheck>
 		</Package>

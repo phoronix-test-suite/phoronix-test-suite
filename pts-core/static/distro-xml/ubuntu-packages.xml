@@ -6,8 +6,9 @@
 			<Name>Ubuntu</Name>
 		</Information>
 		<Package>
-			<GenericName>linux-32bit-libraries</GenericName>
+			<GenericName>32bit-compatibility</GenericName>
 			<PackageName>ia32-libs</PackageName>
+			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
 			<FileCheck>/usr/share/doc/ia32-libs</FileCheck>
 		</Package>
 		<Package>

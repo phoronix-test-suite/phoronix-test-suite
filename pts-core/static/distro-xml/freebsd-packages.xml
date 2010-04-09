@@ -6,7 +6,7 @@
 			<Name>FreeBSD</Name>
 		</Information>
 		<Package>
-			<GenericName>linux-32bit-libraries</GenericName>
+			<GenericName>32bit-compatibility</GenericName>
 			<PackageName>linux_base</PackageName>
 			<FileCheck>/usr/local/bin/bash</FileCheck>
 		</Package>
