@@ -319,7 +319,11 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 
 	if(is_file($filename))
 	{
-		if(!empty($verified_md5))
+		if(getenv("NO_MD5_CHECKS") != false)
+		{
+			$valid = true;
+		}
+		else if(!empty($verified_md5))
 		{
 			$real_md5 = md5_file($filename);
 
