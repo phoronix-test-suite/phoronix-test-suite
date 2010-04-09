@@ -125,10 +125,12 @@ function pts_install_external_dependencies_list($identifier, &$install_objects)
 
 		if(!pts_is_assignment("PTS_EXDEP_FIRST_RUN"))
 		{
+			/*
 			if(IS_LINUX && phodevi::read_property("system", "kernel-architecture") == "x86_64")
 			{
 				array_push($dependencies, "linux-32bit-libraries");
 			}
+			*/
 
 			pts_set_assignment("PTS_EXDEP_FIRST_RUN", 1);
 		}
