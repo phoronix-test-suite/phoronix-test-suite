@@ -244,7 +244,8 @@ class pts_LineGraph extends pts_Graph
 					if($varying_lengths && ($point_counter * 1.1) < $point_count)
 					{
 						// This plotting ended prematurely
-						array_push($poly_points, array($px_from_left, $this->graph_top_end - 1, null));
+					//	array_push($poly_points, array($px_from_left, $this->graph_top_end - 1, null));
+						$this->graph_image->draw_poly_line(array(array($px_from_left, $value_plot_top, $data_string), array($px_from_left, $this->graph_top_end - 1, null)), $paint_color, 2);
 					}
 					else
 					{
@@ -306,7 +307,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($calculations_r as $color => &$values)
 			{
-				$avg = round(array_sum($values) / count($values), 1);
+				$avg = pts_math::set_precision(array_sum($values) / count($values), 1);
 				array_push($to_display[$color], $avg);
 			}
 		}
@@ -325,8 +326,8 @@ class pts_LineGraph extends pts_Graph
 						$high = $value_check;
 					}
 				}
-				$high = round($high, 1);
-				array_push($to_display[$color], $high);
+
+				array_push($to_display[$color], pts_math::set_precision($high, 1));
 			}
 		}
 		if($min_value > 0 && $max_value != $min_value)
@@ -343,8 +344,8 @@ class pts_LineGraph extends pts_Graph
 						$low = $value_check;
 					}
 				}
-				$low = round($low, 1);
-				array_push($to_display[$color], $low);
+
+				array_push($to_display[$color], pts_math::set_precision($low, 1));
 			}
 		}
 		if($point_counter > 9 && !in_array($this->graph_y_title, array("Percent")))
@@ -353,7 +354,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($calculations_r as $color => &$values)
 			{
-				array_push($to_display[$color], round($values[count($values) - 1], 1));
+				array_push($to_display[$color], pts_math::set_precision($values[count($values) - 1], 1));
 			}
 		}
 

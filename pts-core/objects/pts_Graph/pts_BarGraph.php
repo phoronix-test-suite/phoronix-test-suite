@@ -84,7 +84,7 @@ class pts_BarGraph extends pts_Graph
 
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
-				$value = round($this->graph_data[$i_o][$i], 2);
+				$value = pts_math::set_precision($this->graph_data[$i_o][$i], 2);
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
 				$value_plot_top = $this->graph_top_end + 1 - $graph_size;
 
@@ -96,7 +96,7 @@ class pts_BarGraph extends pts_Graph
 					$value_plot_top = 1;
 				}
 
-				$title_tooltip = $this->graph_identifiers[$i] . ": " . $this->graph_data[$i_o][$i];
+				$title_tooltip = $this->graph_identifiers[$i] . ": " . $value;
 				$run_std_deviation = pts_math::standard_deviation(explode(':', $this->graph_data_raw[$i_o][$i]));
 
 				if($run_std_deviation > 0)
@@ -114,11 +114,11 @@ class pts_BarGraph extends pts_Graph
 
 				if($graph_size > 18)
 				{
-					$this->graph_image->write_text_center($this->graph_data[$i_o][$i], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left + 1, $value_plot_top + 2, $px_bound_right - 1, $value_plot_top + 2);
+					$this->graph_image->write_text_center($value, $this->graph_font, $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left + 1, $value_plot_top + 2, $px_bound_right - 1, $value_plot_top + 2);
 				}
 				else if($graph_size > 10)
 				{
-					$this->graph_image->write_text_center($this->graph_data[$i_o][$i], $this->graph_font, ceil($this->graph_font_size_bars * 0.6), $this->graph_color_body_text, $px_bound_left, $value_plot_top  + 1, $px_bound_right, $value_plot_top + 1);
+					$this->graph_image->write_text_center($value, $this->graph_font, ceil($this->graph_font_size_bars * 0.6), $this->graph_color_body_text, $px_bound_left, $value_plot_top  + 1, $px_bound_right, $value_plot_top + 1);
 				}
 			}
 		}

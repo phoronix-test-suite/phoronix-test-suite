@@ -105,6 +105,10 @@ class pts_math
 
 		return $max;
 	}
+	public static function set_precision($number, $precision = 2)
+	{
+		return number_format($number, $precision, '.', '');
+	}
 }
 
 ?>

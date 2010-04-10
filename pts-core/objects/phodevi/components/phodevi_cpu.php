@@ -158,7 +158,7 @@ class phodevi_cpu extends phodevi_device_interface
 			}
 		}
 
-		return number_format($info, 2, '.', '');
+		return pts_math::set_precision($info, 2);
 	}
 	public static function cpu_power_savings_mode()
 	{
