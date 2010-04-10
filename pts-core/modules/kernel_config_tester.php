@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class bisect extends pts_module_interface
+class kernel_config_tester extends pts_module_interface
 {
 	const module_name = "Kernel Configuration Tester";
 	const module_version = "0.1.0";
@@ -134,7 +134,7 @@ class bisect extends pts_module_interface
 			CONFIG_DEFAULT_IOSCHED="noop"
 		*/
 
-		$kernel_config_ini = parse_ini_file($options["kernel_config_changes"], true, INI_SCANNER_RAW);
+		$kernel_config_ini = parse_ini_file($options["kernel_config_ini"], true, INI_SCANNER_RAW);
 
 		foreach($kernel_config_ini as $test_title => $test_changes_r)
 		{
@@ -147,6 +147,7 @@ class bisect extends pts_module_interface
 			return false;
 		}
 
+		pts_mkdir(pts_module::save_dir());
 		$storage_object = new pts_storage_object();
 		$storage_object->add_object("kernel_config_options", $kernel_config_test_options);
 		$storage_object->add_object("config_pos", -1);
