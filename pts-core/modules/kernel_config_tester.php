@@ -49,7 +49,7 @@ class bisect extends pts_module_interface
 	}
 	public static function module_setup_validate($options)
 	{
-		if(pts_package_vendor_identifier() != "ubuntu")
+		if(phodevi::read_property("system", "vendor-identifier") != "ubuntu")
 		{
 			echo "\nThis module is only supported on Ubuntu currently.\n";
 			return array();
@@ -158,7 +158,7 @@ Encoding=UTF-8
 Name=Phoronix Test Suite - Kernel Config Tester
 Comment=Phoronix Test Suite - Kernel Config Tester
 Icon=phoronix-test-suite
-Exec=gnome-terminal -e 'phoronix-test-suite kernel-config-tester.recover'
+Exec=gnome-terminal -e 'sudo phoronix-test-suite kernel-config-tester.recover'
 Terminal=false
 Type=Application
 Name[en_US]=pts-kernel-config-tester.desktop");
@@ -194,6 +194,7 @@ Name[en_US]=pts-kernel-config-tester.desktop");
 
 		file_put_contents($options["kernel_source_dir"] . ".config", $kernel_config);
 
+		echo "\nBuilding New Kernel...\n";
 		echo shell_exec("cd " . $options["kernel_source_dir"] . " && make-kpkg clean && make oldconfig && CONCURRENCY_LEVEL=" . (phodevi::read_property("cpu", "core-count") * 2) . " fakeroot make-kpkg --initrd --append-to-version=-ptskct kernel-image kernel-headers && dpkg -i ../linux-*.deb && reboot");
 	}
 	public static function recover_process()
@@ -204,6 +205,7 @@ Name[en_US]=pts-kernel-config-tester.desktop");
 		$current_pos = $storage_object->read_object("config_pos");
 		$config_options = $storage_object->read_object("kernel_config_options");
 
+		echo "\nRunning Test\n";
 		pts_run_option_next("run_test", $options["test_suite"], array("AUTOMATED_MODE" => true, "AUTO_SAVE_NAME" => $options["test_save"], "AUTO_TEST_RESULTS_IDENTIFIER" => ($current_pos == -1 ? "Base" : $config_options[$current_pos][0]), "KCT_POS" => $current_pos, "KCT_COUNT" => count($config_options)));
 		pts_run_option_next("kernel-config-tester.next");
 	}
@@ -213,6 +215,7 @@ Name[en_US]=pts-kernel-config-tester.desktop");
 
 		if((pts_read_assignment("KCT_POS") + 1) < pts_read_assignment("KCT_COUNT"))
 		{
+			echo "\nNext Process\n";
 			pts_storage_object::set_in_file(pts_module::save_dir() . "data.pt2so", "config_pos", pts_read_assignment("KCT_POS") + 1);
 			self::setup_new_kernel();
 		}
