@@ -77,36 +77,9 @@ class pts_math
 
 		return $average_value != 0 ? ($standard_deviation / $average_value * 100) : 0;
 	}
-	public static function array_min($values)
-	{
-		$min = pts_first_element_in_array($values);
-
-		foreach($values as $value)
-		{
-			if($value < $min)
-			{
-				$min = $value;
-			}
-		}
-
-		return $min;
-	}
-	public static function array_max($values)
-	{
-		$max = pts_first_element_in_array($values);
-
-		foreach($values as $value)
-		{
-			if($value > $max)
-			{
-				$max = $value;
-			}
-		}
-
-		return $max;
-	}
 	public static function set_precision($number, $precision = 2)
 	{
+		// This is better than using round() with precision because of the $precision is > than the current value, 0s will not be appended
 		return number_format($number, $precision, '.', '');
 	}
 }

@@ -157,10 +157,10 @@ class pts_result_file
 					switch($result_object->get_proportion())
 					{
 						case "HIB":
-							$best_value = pts_math::array_max($result_object->get_result_buffer()->get_values());
+							$best_value = max($result_object->get_result_buffer()->get_values());
 							break;
 						case "LIB":
-							$best_value = pts_math::array_min($result_object->get_result_buffer()->get_values());
+							$best_value = min($result_object->get_result_buffer()->get_values());
 							break;
 						default:
 							$best_value = 0;

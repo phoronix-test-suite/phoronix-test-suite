@@ -153,27 +153,10 @@ class pts_test_result
 				switch($this->get_test_profile()->get_result_quantifier())
 				{
 					case "MAX":
-						$max_value = $this->trial_results[0];
-						foreach($this->trial_results as $result)
-						{
-							if($result > $max_value)
-							{
-								$max_value = $result;
-							}
-
-						}
-						$END_RESULT = $max_value;
+						$END_RESULT = max($this->trial_results);
 						break;
 					case "MIN":
-						$min_value = $this->trial_results[0];
-						foreach($this->trial_results as $result)
-						{
-							if($result < $min_value)
-							{
-								$min_value = $result;
-							}
-						}
-						$END_RESULT = $min_value;
+						$END_RESULT = min($this->trial_results);
 						break;
 					default:
 						// assume AVG (average)

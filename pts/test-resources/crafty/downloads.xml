@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.cis.uab.edu/pub/hyatt/source/crafty-23.0.zip, ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/crafty/crafty-23.0.zip, ftp://ftp.tu-ilmenau.de/Mirrors/gentoo/distfiles/crafty-23.0.zip</URL>
+			<URL>http://ftp2.kr.freebsd.org/FreeBSD/ports/distfiles/crafty/crafty-23.0.zip, ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/crafty/crafty-23.0.zip, ftp://ftp.tu-ilmenau.de/Mirrors/gentoo/distfiles/crafty-23.0.zip</URL>
 			<MD5>c0fe0ad318f313a1bf6ac4cb7427ec73</MD5>
 			<FileSize>419362</FileSize>
 		</Package>
