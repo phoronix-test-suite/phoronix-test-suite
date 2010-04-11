@@ -271,8 +271,17 @@ function pts_download_test_files($identifier, &$display_mode)
 					else
 					{
 						// Download failed
-						$display_mode->test_install_error("The MD5 check-sum of the downloaded file is incorrect.");
-						$display_mode->test_install_error("Failed URL: " . $url);
+						if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
+						{
+							$display_mode->test_install_error("MD5 Failed: " . $url);
+							$md5_failed = true;
+						}
+						else
+						{
+							$display_mode->test_install_error("Download Failed: " . $url);
+							$md5_failed = false;
+						}
+
 						pts_unlink($download_destination_temp);
 						$fail_count++;
 
@@ -289,7 +298,14 @@ function pts_download_test_files($identifier, &$display_mode)
 							}
 							else
 							{
-								$try_again = pts_read_assignment("IS_BATCH_MODE") || pts_read_assignment("AUTOMATED_MODE") ? false : pts_bool_question("Would you like to try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN");
+								if(pts_read_assignment("IS_BATCH_MODE") || pts_read_assignment("AUTOMATED_MODE"))
+								{
+									$try_again = false;
+								}
+								else if($md5_failed)
+								{
+									$try_again = pts_bool_question("Try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN", $display_mode);
+								}
 
 								if($try_again)
 								{
@@ -300,7 +316,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 						if(!$try_again)
 						{
-							$display_mode->test_install_error("Download of Needed Test Dependencies Failed!");
+							//$display_mode->test_install_error("Download of Needed Test Dependencies Failed!");
 							return false;
 						}
 					}
@@ -396,22 +412,23 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 	}
 
 	// Install a test
+	$display_mode->test_install_start($identifier);
 	$installed = false;
 	if(!pts_test_support_check($identifier))
 	{
-		// echo "FAILED";
+		$display_mode->test_install_error("This test is not supported by this system.");
 	}
 	else if(($e = getenv("SKIP_TESTS")) != false && in_array($identifier, explode(",", $e)))
 	{
-		echo pts_string_header($identifier . " is being skipped from the installation process.");
+		$display_mode->test_install_error("This test is being skipped from the installation process.");
 	}
 	else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_download_size($identifier) + 64))
 	{
-		echo pts_string_header("There is not enough space at " . TEST_ENV_DIR . " for the test files.");
+		$display_mode->test_install_error("There is not enough space at " . TEST_ENV_DIR . " for the test files.");
 	}
 	else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_environment_size($identifier) + 64))
 	{
-		echo pts_string_header("There is not enough space at " . TEST_ENV_DIR . " for this test.");
+		$display_mode->test_install_error("There is not enough space at " . TEST_ENV_DIR . " for this test.");
 	}
 	else
 	{
@@ -420,14 +437,13 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 		if(pts_test_needs_updated_install($identifier))
 		{
 			pts_setup_install_test_directory($identifier, true);
-			$display_mode->test_install_start($identifier);
 
 			// Download test files
 			$download_test_files = pts_download_test_files($identifier, $display_mode);
 
 			if($download_test_files == false)
 			{
-				echo "\nInstallation of " . $identifier . " test failed.\n";
+				$display_mode->test_install_error("Downloading of needed test files failed.");
 				array_push($failed_installs, $identifier);
 				return false;
 			}
@@ -451,7 +467,7 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 
 						if(empty($install_agreement))
 						{
-							echo "\nThe user agreement could not be found. Test installation aborted.\n";
+							$display_mode->test_install_error("The user agreement could not be found. Test installation aborted.");
 							return false;
 						}
 					}
@@ -461,7 +477,7 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 
 					if(!$user_agrees)
 					{
-						echo "\n" . $identifier . " will not be installed.\n";
+						$display_mode->test_install_error("This test will not be installed.");
 						return false;
 					}
 				}
@@ -492,7 +508,8 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 						pts_copy(TEST_ENV_DIR . $identifier . "/install.log", TEST_ENV_DIR . $identifier . "/install-failed.log");
 						pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
 
-						echo "\nThe " . $identifier . " installer exited with a non-zero exit status.\nInstallation Log: " . TEST_ENV_DIR . $identifier . "/install-failed.log\nInstallation failed.\n";
+						$display_mode->test_install_error("The installer exited with a non-zero exit status.");
+						$display_mode->test_install_error("Installation Log: " . TEST_ENV_DIR . $identifier . "/install-failed.log");
 						array_push($failed_installs, $identifier);
 						return false;
 					}
@@ -511,7 +528,7 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 			{
 				if(!pts_is_base_test($identifier))
 				{
-					echo "No installation script found for " . $identifier . "\n";
+					$display_mode->test_install_error("No installation script found.");
 				}
 				$installed = true;
 			}

@@ -91,6 +91,10 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo "\n" . $error_string . "\n";
 	}
+	public function test_install_prompt($prompt_string)
+	{
+		echo "\n" . $prompt_string;
+	}
 	public function test_run_process_start(&$test_run_manager)
 	{
 		return;

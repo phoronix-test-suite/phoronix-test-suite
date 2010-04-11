@@ -100,7 +100,7 @@ function pts_text_list($list_items, $line_start = "- ")
 
 	return $list;
 }
-function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
+function pts_bool_question($question, $default = true, $question_id = "UNKNOWN", &$display_mode = null)
 {
 	// Prompt user for yes/no question
 	if(pts_read_assignment("IS_BATCH_MODE"))
@@ -127,7 +127,15 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN")
 	{
 		do
 		{
-			echo $question . " ";
+			if($display_mode != null)
+			{
+				$display_mode->test_install_prompt($question . " ");
+			}
+			else
+			{
+				echo $question . " ";
+			}
+
 			$input = strtolower(pts_read_user_input());
 		}
 		while($input != "y" && $input != "n" && $input != "");
