@@ -42,6 +42,12 @@ class suite_to_pdf implements pts_option_interface
 			return;
 		}
 
+		if(isset($r[1]))
+		{
+			// TODO: Simple hack for now
+			pts_set_assignment("SHOW_NODE", $r[1]);
+		}
+
 		$suite = new pts_test_suite($r[0]);
 		$test_layout = pts_test_suite::pts_format_tests_to_array($r[0]);
 		$pdf = new pts_pdf_template($suite->get_name(), $suite->get_name());
@@ -80,6 +86,8 @@ class suite_to_pdf implements pts_option_interface
 	}
 	protected static function layout_to_pdf($test_layout, &$pdf)
 	{
+		$show_node = pts_read_assignment("SHOW_NODE");
+
 		foreach($test_layout as $key => $item)
 		{
 			if(is_array($item))
@@ -98,6 +106,12 @@ class suite_to_pdf implements pts_option_interface
 				$test = new pts_test_profile($item);
 
 				$pdf->WriteText($test->get_test_title() . ":  " . $test->get_description());
+
+				if($show_node)
+				{
+					$test_xml = new pts_test_tandem_XmlReader($item);
+					$pdf->WriteText($test_xml->getXMLValue($show_node));
+				}
 			}
 		}
 	}
