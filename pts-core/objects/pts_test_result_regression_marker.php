@@ -36,7 +36,7 @@ class pts_test_result_regression_marker
 		$this->base_buffer_item = $base_buffer_item;
 		$this->regressed_buffer_item = $regressed_buffer_item;
 		$this->result_file_index = $result_file_index;
-		$this->change = round(abs(1 - ($regressed_buffer_item->get_result_value() / $base_buffer_item->get_result_value())), 4);
+		$this->change = pts_math::set_precision(abs(1 - ($regressed_buffer_item->get_result_value() / $base_buffer_item->get_result_value())), 4);
 	}
 	public function get_test_identifier()
 	{
@@ -79,7 +79,7 @@ class pts_test_result_regression_marker
 			$direction = "+";
 		}
 
-		return $direction . round($this->get_change() * 100, 2);
+		return $direction . pts_math::set_precision($this->get_change() * 100, 2);
 	}
 }
 

@@ -58,7 +58,7 @@ class pts_LineGraph extends pts_Graph
 				{
 					// This option will only show the identifiers every few steps or when there is a change
 					$first_identifier = $this->graph_identifiers[0];
-					$predefined_shows = array(0, $graph_identifiers_count - 1, round($graph_identifiers_count / 2));
+					$predefined_shows = array(0, $graph_identifiers_count - 1, pts_math::set_precision($graph_identifiers_count / 2));
 					$showed_on_last = false;
 					$show_every_x_steps = 6;
 

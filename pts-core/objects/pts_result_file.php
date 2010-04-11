@@ -177,7 +177,7 @@ class pts_result_file
 					$identifier = $buffer_item->get_result_identifier();
 					$value = $buffer_item->get_result_value();
 					$raw_values = explode(':', $buffer_item->get_result_raw());
-					$percent_std = round(pts_math::percent_standard_deviation($raw_values), 2);
+					$percent_std = pts_math::set_precision(pts_math::percent_standard_deviation($raw_values), 2);
 					$delta = 0;
 
 					if($value > $max_value)
@@ -191,7 +191,7 @@ class pts_result_file
 
 						if($identifier_r[0] == $prev_identifier_0 && $prev_value != 0)
 						{
-							$delta = round(abs(1 - ($value / $prev_value)), 4);
+							$delta = pts_math::set_precision(abs(1 - ($value / $prev_value)), 4);
 
 							if($delta > 0.02 && $delta > pts_math::standard_deviation($raw_values))
 							{

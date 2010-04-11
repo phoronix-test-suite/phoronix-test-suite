@@ -137,7 +137,7 @@ class pts_Chart extends pts_Graph
 						$text_color = $this->graph_color_headers;
 					}
 
-					$hover_title .= " Change: " . round(100 * $value_set[2], 2) . "%";
+					$hover_title .= " Change: " . pts_math::set_precision(100 * $value_set[2], 2) . "%";
 				}
 				else if($value_set[3] == true)
 				{

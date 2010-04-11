@@ -125,7 +125,7 @@ class phodevi_cpu extends phodevi_device_interface
 			if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"))
 			{
 				$info = pts_file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq");
-				$info = round(intval($info) / 1000000, 2);
+				$info = intval($info) / 1000000;
 			}
 			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
 			{
@@ -365,7 +365,7 @@ class phodevi_cpu extends phodevi_device_interface
 					$raw_temp = $raw_temp / 1000;
 				}
 
-				$temp_c = round($raw_temp, 2);	
+				$temp_c = pts_math::set_precision($raw_temp, 2);	
 			}
 
 			if($temp_c == -1)
@@ -447,7 +447,7 @@ class phodevi_cpu extends phodevi_device_interface
 			}
 		}
 
-		return round($info, 2);
+		return pts_math::set_precision($info, 2);
 	}
 	public static function cpu_load_array($read_core = -1)
 	{
@@ -522,7 +522,7 @@ class phodevi_cpu extends phodevi_device_interface
 			$percent = -1;
 		}
 
-		return round($percent, 2);
+		return pts_math::set_precision($percent, 2);
 	}
 }
 
