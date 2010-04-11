@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix length of download text progress indicator
 - pts-core: Fix regression that caused the merge-results option not to work
 - pts-core: Graphing tweaks
+- pts-core: Add suite-to-pdf option
 - phodevi: Fix causing a segmentation fault on some Mesa systems
 - pts: Update unigine-heaven test profile against Unigine Heaven 2.0
 - pts: Update openssl test profile against OpenSSL 1.0.0 upstream
