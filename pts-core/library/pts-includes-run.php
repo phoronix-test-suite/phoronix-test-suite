@@ -24,7 +24,7 @@
 require_once(PTS_LIBRARY_PATH . "pts-includes-run_setup.php");
 require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 
-function pts_cleanup_tests_to_run(&$to_run_identifiers)
+function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 {
 	$skip_tests = ($e = getenv("SKIP_TESTS")) ? explode(',', $e) : false;
 	$tests_missing = array();
@@ -52,7 +52,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 
 		if($skip_tests && in_array($lower_identifier, $skip_tests))
 		{
-			echo pts_string_header("Skipping test: " . $lower_identifier);
+			echo "Skipping Test: " . $lower_identifier . "\n";
 			$test_passes = false;
 		}
 		else if(pts_is_test($lower_identifier))
@@ -61,7 +61,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 
 			if(empty($test_title))
 			{
-				echo pts_string_header($lower_identifier . " is not a test.");
+				echo "Not A Test: " . $lower_identifier . "\n";
 				$test_passes = false;
 			}
 			else
@@ -73,7 +73,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 		{
 			if(pts_suite_version_supported($lower_identifier) == false)
 			{
-				echo pts_string_header($lower_identifier . " is a suite not supported by this version of the Phoronix Test Suite.");
+				echo $lower_identifier . " is a suite not supported by this version of the Phoronix Test Suite.\n";
 				$test_passes = false;
 			}
 		}
@@ -87,7 +87,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 		}
 		else if(!pts_is_run_object($lower_identifier) && !pts_global_valid_id_string($lower_identifier) && !pts_is_test_result($lower_identifier))
 		{
-			echo pts_string_header($lower_identifier . " is not recognized.");
+			echo "Not Recognized: " . $lower_identifier . "\n";
 		}
 
 		if($test_passes && pts_verify_test_installation($lower_identifier, $tests_missing) == false)
@@ -776,10 +776,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	pts_module_process("__pre_test_run", $test_results);
 
 	$time_test_start = time();
+	$display_mode->test_run_start($test_results);
 
 	if(!$cache_share_present)
 	{
-		echo pts_call_test_script($test_identifier, "pre", "\nRunning Pre-Test Scripts...\n", $test_directory, $extra_runtime_variables);
+		pts_call_test_script($test_identifier, "pre", "Running Pre-Test Script", $test_directory, $extra_runtime_variables, true, $display_mode);
 	}
 
 	pts_user_message($test_profile->get_pre_run_message());
@@ -806,8 +807,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	{
 		$backup_test_log_dir = false;
 	}
-
-	$display_mode->test_run_start($test_results);
 
 	for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
@@ -988,7 +987,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			if(!$cache_share_present)
 			{
-				echo pts_call_test_script($test_identifier, "interim", null, $test_directory, $extra_runtime_variables);
+				pts_call_test_script($test_identifier, "interim", "Running Interim-Test Script", $test_directory, $extra_runtime_variables, true, $display_mode);
 				sleep(2); // Rest for a moment between tests
 			}
 
@@ -1019,7 +1018,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if(!$cache_share_present)
 	{
-		echo pts_call_test_script($test_identifier, "post", null, $test_directory, $extra_runtime_variables);
+		pts_call_test_script($test_identifier, "post", "Running Post-Test Script", $test_directory, $extra_runtime_variables, true, $display_mode);
 	}
 
 	if($abort_testing)

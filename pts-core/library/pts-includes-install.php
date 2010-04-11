@@ -89,10 +89,7 @@ function pts_start_install($to_install, &$display_mode)
 	if(!pts_is_assignment("SILENCE_MESSAGES") && count($failed_installs) > 0 && count($tests) > 1)
 	{
 		echo "\nThe following tests failed to install:\n\n";
-		foreach($failed_installs as $fail)
-		{
-			echo "\t- " . $fail . "\n";
-		}
+		echo pts_text_list($failed_installs, "\t- ");
 		echo "\n";
 	}
 
@@ -305,6 +302,10 @@ function pts_download_test_files($identifier, &$display_mode)
 								else if($md5_failed)
 								{
 									$try_again = pts_bool_question("Try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN", $display_mode);
+								}
+								else
+								{
+									$try_again = false;
 								}
 
 								if($try_again)

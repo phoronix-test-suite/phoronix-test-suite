@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_call_test_script($test_identifier, $script_name, $print_string = null, $pass_argument = null, $extra_vars = null, $use_ctp = true)
+function pts_call_test_script($test_identifier, $script_name, $print_string = null, $pass_argument = null, $extra_vars = null, $use_ctp = true, &$display_mode = null)
 {
 	$result = null;
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
@@ -44,7 +44,14 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = nu
 
 			if(!empty($print_string))
 			{
-				echo $print_string;
+				if($display_mode == null)
+				{
+					echo $print_string;
+				}
+				else
+				{
+					$display_mode->test_run_message($print_string);
+				}
 			}
 
 			if($file_extension == "php")

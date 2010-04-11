@@ -99,6 +99,10 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		return;
 	}
+	public function test_run_message($message_string)
+	{
+		echo "\n" . $message_string . "\n";
+	}
 	public function test_run_start(&$test_result)
 	{
 		return;

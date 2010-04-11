@@ -39,10 +39,11 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
+		$display_mode = pts_get_display_mode_object();
 		$test_properties = array();
 
 		// Cleanup tests to run
-		if(pts_cleanup_tests_to_run($to_run_identifiers) == false)
+		if(pts_cleanup_tests_to_run($to_run_identifiers, $display_mode) == false)
 		{
 			return false;
 		}
@@ -274,7 +275,6 @@ class run_test implements pts_option_interface
 		}
 
 		// Run the test process
-		$display_mode = pts_get_display_mode_object();
 		pts_validate_test_installations_to_run($test_run_manager, $display_mode);
 
 		if($test_run_manager->get_tests_to_run_count() == 0)

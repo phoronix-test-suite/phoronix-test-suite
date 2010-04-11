@@ -210,6 +210,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		echo $this->tab . "Expected Trial Run Count: " . $test_result->get_test_profile()->get_times_to_run() . "\n";
 	}
+	public function test_run_message($message_string)
+	{
+		echo $this->tab . $this->tab . $message_string . " @ " . date("H:i:s") . "\n";
+	}
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count)
 	{
 		echo $this->tab . $this->tab . "Started Run " . $current_run . " @ " . date("H:i:s") . "\n";

@@ -35,6 +35,7 @@ interface pts_display_mode_interface
 	public function test_install_error($error_string);
 	public function test_install_prompt($prompt_string);
 	public function test_run_start(&$test_result);
+	public function test_run_message($message_string);
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count);
 	public function test_run_output(&$to_output);
 	public function test_run_end(&$test_result);
