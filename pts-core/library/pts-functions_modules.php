@@ -29,7 +29,7 @@ define("PTS_QUIT", "PTS_QUIT");
 function pts_module_startup_init()
 {
 	// Process initially called when PTS starts up
-	if(getenv("PTS_IGNORE_MODULES") == false && PTS_MODE == "CLIENT")
+	if(pts_client::read_env("PTS_IGNORE_MODULES") == false && PTS_MODE == "CLIENT")
 	{
 		pts_load_modules();
 		pts_module_process("__startup");
@@ -48,7 +48,7 @@ function pts_auto_detect_modules()
 		{
 			list($env_var, $module) = $module_var;
 
-			if(!pts_module_manager::is_module_attached($module) && ($e = getenv($env_var)) != false && !empty($e))
+			if(!pts_module_manager::is_module_attached($module) && ($e = pts_client::read_env($env_var)) != false && !empty($e))
 			{
 				pts_attach_module($module);
 			}
@@ -86,7 +86,7 @@ function pts_load_modules()
 	}
 
 	// Check for modules to load manually in PTS_MODULES
-	if(($load_modules = getenv("PTS_MODULES")) !== false)
+	if(($load_modules = pts_client::read_env("PTS_MODULES")) !== false)
 	{
 		foreach(pts_trim_explode(",", $load_modules) as $module)
 		{
@@ -127,7 +127,7 @@ function pts_load_modules()
 	// Should any of the module options be saved to the results?
 	foreach($module_store_list as $var)
 	{
-		$var_value = getenv($var);
+		$var_value = pts_client::read_env($var);
 
 		if(!empty($var_value))
 		{

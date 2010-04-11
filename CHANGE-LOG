@@ -10,6 +10,8 @@ Phoronix Test Suite (Git)
 - pts-core: Add suite-to-pdf option
 - pts-core: Restore compatibility for the Phoronix Test Suite on PHP 5.1 and early PHP 5.2 versions
 - pts-core: Installation error string improvements
+- pts-core: Run-time string improvements
+- pts-core: Rework environmental variables handling
 - pts-core: Various fixes
 - phodevi: Fix causing a segmentation fault on some Mesa systems
 - pts: Update unigine-heaven test profile against Unigine Heaven 2.0

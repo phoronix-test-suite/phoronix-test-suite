@@ -213,7 +213,7 @@ class run_test implements pts_option_interface
 			{
 				$save_results = false;
 			}
-			else if(pts_read_assignment("TEST_PROFILE_REQUESTS_SAVE") || pts_is_assignment("AUTO_SAVE_NAME") || pts_read_assignment("FORCE_SAVE_RESULTS") || getenv("TEST_RESULTS_NAME"))
+			else if(pts_read_assignment("TEST_PROFILE_REQUESTS_SAVE") || pts_is_assignment("AUTO_SAVE_NAME") || pts_read_assignment("FORCE_SAVE_RESULTS") || pts_client::read_env("TEST_RESULTS_NAME"))
 			{
 				$save_results = true;
 			}

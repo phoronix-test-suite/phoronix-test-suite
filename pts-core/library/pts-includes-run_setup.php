@@ -71,7 +71,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 		$times_tried = 0;
 		do
 		{
-			if($times_tried == 0 && (($env_identifier = getenv("TEST_RESULTS_IDENTIFIER")) || 
+			if($times_tried == 0 && (($env_identifier = pts_client::read_env("TEST_RESULTS_IDENTIFIER")) || 
 			($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")) || pts_read_assignment("AUTOMATED_MODE")))
 			{
 				$results_identifier = isset($env_identifier) ? $env_identifier : null;
@@ -111,7 +111,7 @@ function pts_prompt_save_file_name(&$test_run_manager, $check_env = true)
 
 	if($check_env)
 	{
-		if((!empty($check_env) && $check_env !== true) || ($check_env = getenv("TEST_RESULTS_NAME")))
+		if((!empty($check_env) && $check_env !== true) || ($check_env = pts_client::read_env("TEST_RESULTS_NAME")))
 		{
 			$custom_title = $check_env;
 			$proposed_name = pts_input_string_to_identifier($check_env);

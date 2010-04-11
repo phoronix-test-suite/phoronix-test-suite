@@ -45,7 +45,7 @@ class list_suites implements pts_option_interface
 
 				if(!$suite_info->not_supported())
 				{
-					if(getenv("PTS_DEBUG"))
+					if(pts_client::read_env("PTS_DEBUG"))
 					{
 						echo sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $suite_info->get_identifier_prefix() . " " . $identifier, $suite_info->get_name(), $suite_info->get_version(), $suite_info->get_suite_type());
 					}

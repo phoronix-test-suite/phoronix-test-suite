@@ -45,7 +45,7 @@ function pts_basic_init()
 	// Initialize The Phoronix Test Suite
 
 	// PTS Defines
-	define("PHP_BIN", getenv("PHP_BIN"));
+	define("PHP_BIN", pts_client::read_env("PHP_BIN"));
 	define("PTS_INIT_TIME", time());
 
 	if(!defined("PHP_VERSION_ID"))
@@ -144,7 +144,7 @@ function pts_core_storage_init()
 	// Phodevi Cache Handling
 	$phodevi_cache = $pso->read_object("phodevi_smart_cache");
 
-	if($phodevi_cache instanceOf phodevi_cache && getenv("NO_PHODEVI_CACHE") != 1)
+	if($phodevi_cache instanceOf phodevi_cache && pts_client::read_env("NO_PHODEVI_CACHE") != 1)
 	{
 		$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_DIR, PTS_CORE_VERSION);
 		phodevi::set_device_cache($phodevi_cache);

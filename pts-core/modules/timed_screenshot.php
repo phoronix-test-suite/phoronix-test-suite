@@ -34,7 +34,7 @@ class timed_screenshot extends pts_module_interface
 	public static function __startup()
 	{
 		pts_module::remove_file("is_running");
-		$PATH = getenv("PATH");
+		$PATH = pts_client::read_env("PATH");
 		$found = false;
 
 		foreach(explode(":", $PATH) as $single_path)

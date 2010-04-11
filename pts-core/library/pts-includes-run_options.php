@@ -30,7 +30,7 @@ function pts_prompt_test_options($identifier)
 	{
 		$preset_selections = pts_read_assignment("AUTO_TEST_OPTION_SELECTIONS");
 	}
-	else if(($cli_presets_env = getenv("PRESET_OPTIONS")) != false)
+	else if(($cli_presets_env = pts_client::read_env("PRESET_OPTIONS")) != false)
 	{
 		// To specify test options externally from an environment variable
 		// i.e. PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream

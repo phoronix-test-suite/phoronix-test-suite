@@ -337,7 +337,7 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 
 	if(is_file($filename))
 	{
-		if(getenv("NO_MD5_CHECKS") != false)
+		if(pts_client::read_env("NO_MD5_CHECKS") != false)
 		{
 			$valid = true;
 		}
@@ -419,7 +419,7 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 	{
 		$display_mode->test_install_error("This test is not supported by this system.");
 	}
-	else if(($e = getenv("SKIP_TESTS")) != false && in_array($identifier, explode(",", $e)))
+	else if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($identifier, explode(",", $e)))
 	{
 		$display_mode->test_install_error("This test is being skipped from the installation process.");
 	}
@@ -568,7 +568,7 @@ function pts_test_download_cache_directories()
 		$cache_directories = array();
 
 		// User Defined Directory Checking
-		$dir_string = ($dir = getenv("PTS_DOWNLOAD_CACHE")) != false ? $dir . ':' : null;
+		$dir_string = ($dir = pts_client::read_env("PTS_DOWNLOAD_CACHE")) != false ? $dir . ':' : null;
 		$dir_string .= pts_config::read_user_config(P_OPTION_CACHE_DIRECTORY, DEFAULT_DOWNLOAD_CACHE_DIR);
 
 		foreach(pts_trim_explode(':', $dir_string) as $dir_check)

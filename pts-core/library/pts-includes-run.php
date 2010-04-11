@@ -26,7 +26,7 @@ require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 
 function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 {
-	$skip_tests = ($e = getenv("SKIP_TESTS")) ? explode(',', $e) : false;
+	$skip_tests = ($e = pts_client::read_env("SKIP_TESTS")) ? explode(',', $e) : false;
 	$tests_missing = array();
 
 	foreach($to_run_identifiers as $index => &$test_identifier)
@@ -179,7 +179,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 	$tests_to_run_count = $test_run_manager->get_test_count();
 	$display_mode->test_run_process_start($test_run_manager);
 
-	if(($total_loop_time_minutes = getenv("TOTAL_LOOP_TIME")) && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
+	if(($total_loop_time_minutes = pts_client::read_env("TOTAL_LOOP_TIME")) && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
 	{
 		$total_loop_time_seconds = $total_loop_time_minutes * 60;
 		$loop_end_time = time() + $total_loop_time_seconds;
@@ -197,7 +197,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		}
 		while(time() < $loop_end_time && $test_flag);
 	}
-	else if(($total_loop_count = getenv("TOTAL_LOOP_COUNT")) && is_numeric($total_loop_count))
+	else if(($total_loop_count = pts_client::read_env("TOTAL_LOOP_COUNT")) && is_numeric($total_loop_count))
 	{
 		if(($estimated_length = pts_estimated_run_time($test_run_manager)) > 1)
 		{
@@ -275,7 +275,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 
 		if($test_type == "Graphics")
 		{
-			if(getenv("DISPLAY") == false)
+			if(pts_client::read_env("DISPLAY") == false)
 			{
 				$display_mode->test_run_error("No display server was found, cannot run " . $test_identifier);
 				array_push($failed_tests, $test_identifier);
@@ -289,7 +289,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 			}
 		}
 
-		if(getenv("NO_" . strtoupper($test_type) . "_TESTS") || (($e = getenv("SKIP_TESTS")) && in_array($test_identifier, explode(",", $e))))
+		if(pts_client::read_env("NO_" . strtoupper($test_type) . "_TESTS") || (($e = pts_client::read_env("SKIP_TESTS")) && in_array($test_identifier, explode(",", $e))))
 		{
 			array_push($failed_tests, $test_identifier);
 			continue;
@@ -747,7 +747,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		return false;
 	}
 
-	if(($force_runs = getenv("FORCE_TIMES_TO_RUN")) && is_numeric($force_runs))
+	if(($force_runs = pts_client::read_env("FORCE_TIMES_TO_RUN")) && is_numeric($force_runs))
 	{
 		$times_to_run = $force_runs;
 	}

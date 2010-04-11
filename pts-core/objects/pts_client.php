@@ -78,6 +78,17 @@ class pts_client
 
 		return $dir;
 	}
+	public static function read_env($var)
+	{
+		static $vars = null;
+
+		if(!isset($vars[$var]))
+		{
+			$vars[$var] = getenv($var);
+		}
+
+		return $vars[$var];
+	}
 }
 
 ?>

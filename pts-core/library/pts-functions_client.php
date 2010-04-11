@@ -171,7 +171,7 @@ function pts_shutdown()
 	define("PTS_END_TIME", time());
 
 	// Generate Phodevi Smart Cache
-	if(getenv("NO_PHODEVI_CACHE") != 1)
+	if(pts_client::read_env("NO_PHODEVI_CACHE") != 1)
 	{
 		if(pts_string_bool(pts_config::read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
 		{
@@ -270,7 +270,7 @@ function pts_user_message($message)
 }
 function pts_get_display_mode_object()
 {
-	switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = getenv("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
+	switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = pts_client::read_env("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
 	{
 		case "BASIC":
 			$display_mode = new pts_basic_display_mode();
@@ -322,7 +322,7 @@ function pts_user_home()
 		$userinfo = posix_getpwuid(posix_getuid());
 		$userhome = $userinfo["dir"];
 	}
-	else if(($home = getenv("HOME")) || ($home = getenv("HOMEPATH")))
+	else if(($home = pts_client::read_env("HOME")) || ($home = pts_client::read_env("HOMEPATH")))
 	{
 		$userhome = $home;
 	}

@@ -51,7 +51,7 @@ class graphics_override extends pts_module_interface
 		// Sets a value for AMD's PCSDB, Persistent Configuration Store Database
 		if(IS_ATI_GRAPHICS && IS_LINUX && !empty($value))
 		{
-			$DISPLAY = substr(getenv("DISPLAY"), 1, 1);
+			$DISPLAY = substr(pts_client::read_env("DISPLAY"), 1, 1);
 			$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
 		}
 	}

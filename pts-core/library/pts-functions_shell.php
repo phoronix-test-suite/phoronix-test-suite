@@ -23,7 +23,7 @@
 
 function pts_display_web_browser($URL, $alt_text = null, $default_open = false, $auto_open = false)
 {
-	if(pts_read_assignment("AUTOMATED_MODE") || getenv("DISPLAY") == false)
+	if(pts_read_assignment("AUTOMATED_MODE") || pts_client::read_env("DISPLAY") == false)
 	{
 		return;
 	}
@@ -111,7 +111,7 @@ function pts_executable_in_path($executable)
 
 	if(!isset($cache[$executable]))
 	{
-		$paths = explode(":", (($path = getenv("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
+		$paths = explode(":", (($path = pts_client::read_env("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
 		$executable_path = false;
 
 		foreach($paths as $path)
