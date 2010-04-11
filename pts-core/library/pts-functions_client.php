@@ -345,7 +345,7 @@ function pts_current_user()
 }
 function pts_temp_dir()
 {
-	$temp_dir = sys_get_temp_dir();
+	$temp_dir = pts_client::temporary_directory();
 
 	do
 	{

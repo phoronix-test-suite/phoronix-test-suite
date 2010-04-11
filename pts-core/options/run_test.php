@@ -339,7 +339,7 @@ class run_test implements pts_option_interface
 
 		// Create a lock
 		$lock_pointer = null;
-		$lock_path = sys_get_temp_dir() . "/phoronix-test-suite.active";
+		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";
 		$lock_release = pts_create_lock($lock_path, $lock_pointer);
 
 		// Run the actual tests

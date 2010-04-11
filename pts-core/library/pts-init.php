@@ -48,6 +48,13 @@ function pts_basic_init()
 	define("PHP_BIN", getenv("PHP_BIN"));
 	define("PTS_INIT_TIME", time());
 
+	if(!defined("PHP_VERSION_ID"))
+	{
+		// PHP_VERSION_ID is only available in PHP 5.2.6 and later
+		$php_version = explode('.', PHP_VERSION);
+		define("PHP_VERSION_ID", ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
+	}
+
 	$dir_init = array(PTS_USER_DIR);
 	foreach($dir_init as $dir)
 	{

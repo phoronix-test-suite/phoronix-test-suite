@@ -63,7 +63,20 @@ class pts_client
 	}
 	public static function create_temporary_file()
 	{
-		return tempnam(sys_get_temp_dir(), 'PTS');
+		return tempnam(pts_client::temporary_directory(), 'PTS');
+	}
+	public static function temporary_directory()
+	{
+		if(PHP_VERSION_ID >= 50210)
+		{
+			$dir = sys_get_temp_dir();
+		}
+		else
+		{
+			$dir = "/tmp"; // Assume /tmp
+		}
+
+		return $dir;
 	}
 }
 
