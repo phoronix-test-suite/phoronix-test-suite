@@ -160,7 +160,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_error($error_string)
 	{
-		echo "\n" . $error_string . "\n";
+		echo $this->tab . $this->tab . $error_string . "\n";
 	}
 	public function test_run_process_start(&$test_run_manager)
 	{

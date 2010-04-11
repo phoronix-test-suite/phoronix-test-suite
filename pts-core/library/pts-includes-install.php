@@ -271,7 +271,8 @@ function pts_download_test_files($identifier, &$display_mode)
 					else
 					{
 						// Download failed
-						$display_mode->test_install_error("The MD5 check-sum of the downloaded file is incorrect.\nFailed URL: " . $url);
+						$display_mode->test_install_error("The MD5 check-sum of the downloaded file is incorrect.");
+						$display_mode->test_install_error("Failed URL: " . $url);
 						pts_unlink($download_destination_temp);
 						$fail_count++;
 

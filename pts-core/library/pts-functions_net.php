@@ -80,7 +80,7 @@ function pts_stream_download($download, $download_to, $stream_context_parameters
 	$stream_context = pts_stream_context_create($stream_context_parameters);
 	stream_context_set_params($stream_context, array("notification" => "pts_stream_status_callback"));
 
-	$file_pointer = fopen($download, 'r', false, $stream_context);
+	$file_pointer = @fopen($download, 'r', false, $stream_context);
 
 	if(is_resource($file_pointer) && file_put_contents($download_to, $file_pointer))
 	{
@@ -98,7 +98,7 @@ function pts_curl_download($download, $download_to)
 
 	// with curl_multi_init we could do multiple downloads at once...
 	$cr = curl_init();
-	$fh = fopen($download_to, 'w');
+	$fh = @fopen($download_to, 'w');
 
 	curl_setopt($cr, CURLOPT_FILE, $fh);
 	curl_setopt($cr, CURLOPT_URL, $download);

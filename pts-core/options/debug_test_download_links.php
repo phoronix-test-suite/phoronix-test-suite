@@ -40,7 +40,7 @@ class debug_test_download_links implements pts_option_interface
 				{
 					$stream_context = pts_stream_context_create();
 					stream_context_set_params($stream_context, array("notification" => "pts_stream_status_callback"));
-					$file_pointer = fopen($url, 'r', false, $stream_context);
+					$file_pointer = @fopen($url, 'r', false, $stream_context);
 					//fread($file_pointer, 1024);
 
 					if($file_pointer == false)
