@@ -586,32 +586,17 @@ function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_resu
 		$result_template_line = substr($result_template[$i], 0, ($end_result_line_pos === false ? strlen($result_template[$i]) : $end_result_line_pos));
 		$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n"));
 		$result_template_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_template_line))));
+		$result_template_r_pos = array_search($result_key[$i], $result_template_r);
 
-		if(!empty($result_before_string[$i]))
+		if($result_template_r_pos === false)
 		{
-			// Using ResultBeforeString tag
-			$result_template_r_pos = array_search($result_before_string[$i], $result_template_r);
-
-			if($result_template_r_pos !== false)
+			// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
+			foreach($result_template_r as $i => $r_check)
 			{
-				$result_template_r_pos--;
-			}
-		}
-		else
-		{
-			// Standard path
-			$result_template_r_pos = array_search($result_key[$i], $result_template_r);
-
-			if($result_template_r_pos === false)
-			{
-				// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
-				foreach($result_template_r as $i => $r_check)
+				if(strpos($check, $result_key[$i]) !== false)
 				{
-					if(strpos($check, $result_key[$i]) !== false)
-					{
-						$result_template_r_pos = $i;
-						break;
-					}
+					$result_template_r_pos = $i;
+					break;
 				}
 			}
 		}
@@ -684,7 +669,17 @@ function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_resu
 			$result_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
 			$result_r_pos = array_search($result_key[$i], $result_r);
 
-			if(isset($result_r[$result_template_r_pos]))
+			if(!empty($result_before_string[$i]))
+			{
+				// Using ResultBeforeString tag
+				$result_before_this = array_search($result_before_string[$i], $result_r);
+
+				if($result_before_this !== false)
+				{
+					$test_result = $result_r[($result_before_this - 1)];
+				}
+			}
+			else if(isset($result_r[$result_template_r_pos]))
 			{
 				$test_result = $result_r[$result_template_r_pos];
 			}
