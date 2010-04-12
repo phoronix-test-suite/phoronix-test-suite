@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.6 Alpha 3
+April 12, 2010
 
 - pts-core: If the NO_MD5_CHECKS environmental variable is set, don't perform MD5 file checks on test installation
 - pts-core: Don't install the linux-32bit-libraries external dependency by default on 64-bit Linux systems
