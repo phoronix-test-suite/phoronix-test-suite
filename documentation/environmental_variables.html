@@ -10,26 +10,39 @@
 <div class="pts_doc_main">
 <!-- PTS AREA -->
 <h1>Environmental Variables</h1>
-<p><pre>PTS_MODULE_SETUP
-PTS_DEBUG
-TEST_RESULTS_NAME
-TEST_RESULTS_IDENTIFIER
-PTS_MODULES
-NO_PHODEVI_CACHE
-PTS_DISPLAY_MODE
-TOTAL_LOOP_TIME
-TOTAL_LOOP_COUNT
-SKIP_TESTS
-NO_<NAME>_TESTS
-FORCE_TIMES_TO_RUN
-PRESET_OPTIONS
-NO_MD5_CHECKS
-PTS_DOWNLOAD_CACHE
+<p><strong>TEST_RESULTS_NAME</strong></p>
+<p>When this variable is set, the value will be used as the name for automatically saving the test results.</p>
+<p><strong>TEST_RESULTS_IDENTIFIER</strong></p>
+<p>When this variable is set, the value will be used as the test identifier when automatically saving the test results.</p>
+<p><strong>PRESET_OPTIONS</strong></p>
+<p>For setting any test option(s) from an environmental variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS=&quot;stream.run-type=Add&quot; ./phoronix-test-suite benchmark stream</em></p>
+<p><strong>SKIP_TESTS</strong></p>
+<p>If there are any test(s) to exempt from the testing process, specify them in this variable. Multiple tests can be waived by delimiting each test identifier by a comma. A test hardware type (i.e. Graphics) can also be supplied for skipping a range of tests.</p>
+<p><strong>PTS_DEBUG</strong></p>
+<p>When this variable is set, some additional debugging information will be printed when running some Phoronix Test Suite commands.</p>
+<p><strong>PTS_MODULE_SETUP</strong></p>
+<p>This variable can be used to load Phoronix Test Suite module settings automatically when using the <em>module-setup</em> option. An example would be: <em>PTS_MODULE_SETUP=&quot;phoromatic.remote_host=http://www.phoromatic.com/; phoromatic.remote_account=123456; phoromatic.remote_verifier=ABCD&quot; phoronix-test-suite module-setup phoromatic</em>.</p>
+<p><strong>PTS_MODULES</strong></p>
+<p>If there are any Phoronix Test Suite modules to additionally load, they can be specified here. Multiple modules can be supplied by delimiting them with a comma. The more appropriate way of loading Phoronix Test Suite modules for longer periods of time is by using the <em>~/.phoronix-test-suite/user-config.xml</em> configuration.</p>
+<p><strong>NO_PHODEVI_CACHE</strong></p>
+<p>This is a debugging option to disable the Phodevi cache from being loaded of cached software/hardware information. Instead, all software/hardware will be polled from the Phodevi library without caching.</p>
+<p><strong>PTS_DISPLAY_MODE</strong></p>
+<p>If you wish to load a non-default display mode for a single instance, specify the mode in this variable.</p>
+<p><strong>TOTAL_LOOP_TIME</strong></p>
+<p>When running any test(s), if you would like the test(s) to continue running as a loop until a certain time has been reached, this variable can be used. The value should be the number of minutes to run the testing process before the loop is ended.</p>
+<p><strong>TOTAL_LOOP_COUNT</strong></p>
+<p>When running any test(s), if you would like the test(s) to continue running for a number of times, this variable can be used. The value should be the number of times to loop the testing process before ending.</p>
+<p><strong>FORCE_TIMES_TO_RUN</strong></p>
+<p>If you wish to override the number of times to run each test -- rather than the Phoronix Test Suite using the number of times specified in each test profile -- this variable can be used.</p>
+<p><strong>NO_MD5_CHECKS</strong></p>
+<p>To disable MD5 check-sums from being used when downloading test files, set this variable to 1.</p>
+<p><strong>PTS_DOWNLOAD_CACHE</strong></p>
+<p>While non-standard Phoronix Test Suite download caches can be specified within the <em>user-config.xml</em> file, an additional directory to look for potential Phoronix Test Suite download files can be specified by this variable.</p>
+<p><strong>VIDEO_MEMORY</strong></p>
+<p>If Phodevi fails to detect the system's video memory capacity or is incorrectly detected, the video memory capacity (in MB) can be specified by this variable.</p>
+<p><strong>OVERRIDE_VIDEO_MODES</strong></p>
+<p>If Phodevi fails to detect all of the system's monitor video modes or a separate set of modes would be preferred, the modes can be specified in this variable. Example: <em>OVERRIDE_MODES=800x600,1024x768,1280x1024 phoronix-test-suite benchmark nexuiz</em>.</p>
 
-Phodevi:
-
-VIDEO_MEMORY
-OVERRIDE_VIDEO_MODES</pre></p>
 <!-- END OF PTS AREA -->
 </div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 - 2010 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</div></div></div>
 </body>

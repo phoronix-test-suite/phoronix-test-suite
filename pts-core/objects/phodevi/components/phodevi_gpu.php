@@ -406,7 +406,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if($override_check = (($override_modes = getenv("OVERRIDE_VIDEO_MODES")) != false))
 		{
-			$override_modes = explode(',', $override_modes);
+			$override_modes = pts_trim_explode(',', $override_modes);
 
 			for($i = 0; $i < count($override_modes); $i++)
 			{

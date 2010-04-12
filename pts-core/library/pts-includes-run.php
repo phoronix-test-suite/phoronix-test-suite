@@ -289,7 +289,8 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 			}
 		}
 
-		if(pts_client::read_env("NO_" . strtoupper($test_type) . "_TESTS") || (($e = pts_client::read_env("SKIP_TESTS")) && in_array($test_identifier, explode(",", $e))))
+		$skip_tests = pts_client::read_env("SKIP_TESTS");
+		if(pts_client::read_env("NO_" . strtoupper($test_type) . "_TESTS") || ($skip_tests && in_array($test_identifier, explode(',', $skip_tests))) || ($skip_tests && in_array($test_type, explode(',', $skip_tests))))
 		{
 			array_push($failed_tests, $test_identifier);
 			continue;
