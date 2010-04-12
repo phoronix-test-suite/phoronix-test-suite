@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <PhoronixTestSuite>
 	<ResultsParser>
+		<LineHint>random write on aio-test-file</LineHint>
 		<OutputTemplate>adding stage random write
 dropping thread count to the number of contexts 1
 starting with random write

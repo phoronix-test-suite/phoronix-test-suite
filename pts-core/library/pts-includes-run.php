@@ -329,39 +329,39 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$display_mode, $run_index, $run_position = -1, $run_count = -1)
 {
 	$result = false;
-	$test_run_requests = array($test_run_manager->get_test_to_run($run_index));
 
 	if($test_run_manager->get_file_name() != null)
 	{
 		$tandem_xml->saveXMLFile(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/active.xml");
 	}
 
-	foreach($test_run_requests as &$test_run_request)
+	$test_run_request = $test_run_manager->get_test_to_run($run_index);
+
+	if(pts_is_test($test_run_request->get_identifier()))
 	{
-		if(pts_is_test($test_run_request->get_identifier()))
+		pts_set_assignment("TEST_RUN_POSITION", $run_position);
+		pts_set_assignment("TEST_RUN_COUNT", $run_count);
+
+		if(($run_position != 1 && count(pts_glob(TEST_ENV_DIR . $test_run_request->get_identifier() . "/cache-share-*.pt2so")) == 0))
 		{
-			pts_set_assignment("TEST_RUN_POSITION", $run_position);
-			pts_set_assignment("TEST_RUN_COUNT", $run_count);
+			sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
+		}
 
-			if(($run_position != 1 && count(pts_glob(TEST_ENV_DIR . $test_run_request->get_identifier() . "/cache-share-*.pt2so")) == 0))
-			{
-				sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
-			}
+		$result = pts_run_test($test_run_request, $display_mode);
 
-			$result = pts_run_test($test_run_request, $display_mode);
-
-			if(pts_unlink(PTS_USER_DIR . "halt-testing"))
-			{
-				// Stop the testing process entirely
-				return false;
-			}
-			else if(pts_unlink(PTS_USER_DIR . "skip-test"))
-			{
-				// Just skip the current test and do not save the results, but continue testing
-				continue;
-			}
+		if(pts_unlink(PTS_USER_DIR . "halt-testing"))
+		{
+			// Stop the testing process entirely
+			return false;
+		}
+		else if(pts_unlink(PTS_USER_DIR . "skip-test"))
+		{
+			// Just skip the current test and do not save the results, but continue testing
+			continue;
 		}
 	}
+
+	$test_successful = false;
 
 	if($result instanceof pts_test_result)
 	{
@@ -395,16 +395,18 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 				rename(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/" . $test_run_manager->get_results_identifier() . "/");
 			}
 			$xml_write_pos++;
-		}
-		else
-		{
-			$test_run_manager->add_failed_test_run_request($test_run_request);
-
-			// For now delete the failed test log files, but it may be a good idea to keep them
-			pts_remove(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", null, true);
+			$test_successful = true;
 		}
 
 		pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/");
+	}
+
+	if($test_successful == false)
+	{
+		$test_run_manager->add_failed_test_run_request($test_run_request);
+
+		// For now delete the failed test log files, but it may be a good idea to keep them
+		pts_remove(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", null, true);
 	}
 
 	return true;
