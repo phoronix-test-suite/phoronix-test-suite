@@ -10,7 +10,6 @@ echo "#!/bin/sh
 cd fio/
 \$TIMER_START
 ./fio \$@ 2>&1
-echo \$? > ~/test-exit-status
 \$TIMER_STOP
 rm -f iometer.1.0" > fio-run
 chmod +x fio-run

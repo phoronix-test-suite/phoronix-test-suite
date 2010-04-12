@@ -547,6 +547,7 @@ function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_resu
 	$result_key = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_RESULT_KEY);
 	$result_line_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_HINT);
 	$result_line_before_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_BEFORE_HINT);
+	$result_before_string = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_RESULT_BEFORE_STRING);
 	$result_divide_by = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_DIVIDE_BY);
 	$result_multiply_by = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MULTIPLY_BY);
 	$strip_from_result = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_STRIP_FROM_RESULT);
@@ -585,17 +586,32 @@ function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_resu
 		$result_template_line = substr($result_template[$i], 0, ($end_result_line_pos === false ? strlen($result_template[$i]) : $end_result_line_pos));
 		$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n"));
 		$result_template_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_template_line))));
-		$result_template_r_pos = array_search($result_key[$i], $result_template_r);
 
-		if($result_template_r_pos === false)
+		if(!empty($result_before_string[$i]))
 		{
-			// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
-			foreach($result_template_r as $i => $r_check)
+			// Using ResultBeforeString tag
+			$result_template_r_pos = array_search($result_before_string[$i], $result_template_r);
+
+			if($result_template_r_pos !== false)
 			{
-				if(strpos($check, $result_key[$i]) !== false)
+				$result_template_r_pos--;
+			}
+		}
+		else
+		{
+			// Standard path
+			$result_template_r_pos = array_search($result_key[$i], $result_template_r);
+
+			if($result_template_r_pos === false)
+			{
+				// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
+				foreach($result_template_r as $i => $r_check)
 				{
-					$result_template_r_pos = $i;
-					break;
+					if(strpos($check, $result_key[$i]) !== false)
+					{
+						$result_template_r_pos = $i;
+						break;
+					}
 				}
 			}
 		}

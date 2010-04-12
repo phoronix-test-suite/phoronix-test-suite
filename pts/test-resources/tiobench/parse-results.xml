@@ -2,6 +2,7 @@
 <PhoronixTestSuite>
 	<ResultsParser>
 		<LineHint>MBs</LineHint>
+		<ResultBeforeString>MB/s</ResultBeforeString>
 		<OutputTemplate>,----------------------------------------------------------------------.
 | Item                  | Time     | Rate         | Usr CPU  | Sys CPU |
 +-----------------------+----------+--------------+----------+---------+

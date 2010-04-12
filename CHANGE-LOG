@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add ResultBeforeString tag to parse-results.xml interface
+
 Phoronix Test Suite 2.6 Alpha 3
 April 12, 2010
 
