@@ -50,6 +50,10 @@ class pts_test_file_download
 	{
 		return $this->md5;
 	}
+	public function set_filesize($size)
+	{
+		$this->filesize = is_numeric($size) ? $size : 0;
+	}
 }
 
 ?>

@@ -100,7 +100,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		// TODO: handle if file-name is too long for terminal width
 		$download_string = $this->tab . $this->tab . $process_string . ": " . $pts_test_file_download->get_filename();
-		$download_size_string = " [" . pts_math::set_precision($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]";
+		$download_size_string = $pts_test_file_download->get_filesize() > 0 ? " [" . pts_math::set_precision($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]" : null;
 		$offset_length = pts_client::terminal_width() - strlen($download_string) - strlen($download_size_string);
 
 		if($offset_length > 6)
@@ -260,7 +260,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_error($error_string)
 	{
-		echo $this->tab . $error_string . "\n\n";
+		echo $this->tab . $this->tab . $error_string . "\n";
 	}
 }
 

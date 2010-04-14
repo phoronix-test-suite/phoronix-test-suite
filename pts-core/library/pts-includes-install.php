@@ -120,16 +120,19 @@ function pts_download_test_files($identifier, &$display_mode)
 		$found_packages = array();
 		foreach($download_packages as $i => &$download_package)
 		{
-			if(!is_file(TEST_ENV_DIR . $identifier . "/" . $download_package->get_filename()))
+			// Compute the longest package name length so that the UI can know it if it wishes to align text correctly
+			if(($l = strlen($download_package->get_filename())) > $longest_package_name_length)
 			{
-				// Compute the longest package name length so that the UI can know it if it wishes to align text correctly
-				if(($l = strlen($download_package->get_filename())) > $longest_package_name_length)
-				{
-					$longest_package_name_length = $l;
-				}
+				$longest_package_name_length = $l;
 			}
-			else
+
+			if(is_file(TEST_ENV_DIR . $identifier . '/' . $download_package->get_filename()))
 			{
+				if($download_package->get_filesize() == 0)
+				{
+					$download_package->set_filesize(filesize(TEST_ENV_DIR . $identifier . '/' . $download_package->get_filename()));
+				}
+
 				// The file is there so nothing is to be downloaded
 				array_push($found_packages, $download_packages[$i]);
 				unset($download_packages[$i]);
@@ -180,6 +183,11 @@ function pts_download_test_files($identifier, &$display_mode)
 				{
 					if(pts_validate_md5_download_file($cache_directory . $package_filename, $package_md5))
 					{
+						if($download_package->get_filesize() == 0)
+						{
+							$download_package->set_filesize(filesize($cache_directory . $package_filename));
+						}
+
 						if(pts_string_bool(pts_config::read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
 						{
 							// P_OPTION_CACHE_SYMLINK is disabled by default
@@ -380,7 +388,7 @@ function pts_remove_local_download_test_files($identifier)
 	// Remove locally downloaded files for a given test
 	foreach(pts_objects_test_downloads($identifier) as $test_file)
 	{
-		pts_unlink(TEST_ENV_DIR . $identifier . "/" . $test_file->get_filename());
+		pts_unlink(TEST_ENV_DIR . $identifier . '/' . $test_file->get_filename());
 	}
 }
 function pts_setup_install_test_directory($identifier, $remove_old_files = false)
@@ -485,7 +493,7 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 
 				pts_user_message($pre_install_message);
 				$install_time_length_start = time();
-				$install_log = pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
+				$install_log = pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . '/', pts_run_additional_vars($identifier), false);
 				$install_time_length = time() - $install_time_length_start;
 				pts_user_message($post_install_message);
 
@@ -535,7 +543,7 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 			}
 
 			// Additional validation checks?
-			$custom_validated_output = pts_call_test_script($identifier, "validate-install", "\nValidating Installation...\n", TEST_ENV_DIR . $identifier . "/", pts_run_additional_vars($identifier), false);
+			$custom_validated_output = pts_call_test_script($identifier, "validate-install", "\nValidating Installation...\n", TEST_ENV_DIR . $identifier . '/', pts_run_additional_vars($identifier), false);
 			if(!empty($custom_validated_output) && !pts_string_bool($custom_validated_output))
 			{
 				$installed = false;
