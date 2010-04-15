@@ -152,7 +152,7 @@ class pts_result_file
 
 			if($result_object->get_format() == "BAR_GRAPH")
 			{
-				if(!defined("PHOROMATIC_TRACKER"))
+				if(!defined("PHOROMATIC_TRACKER") && count($result_object->get_result_buffer()->get_values()) > 1)
 				{
 					switch($result_object->get_proportion())
 					{
