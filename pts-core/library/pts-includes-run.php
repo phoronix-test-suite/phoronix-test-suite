@@ -401,7 +401,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 		pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/");
 	}
 
-	if($test_successful == false)
+	if($test_successful == false && $test_run_request->get_identifier() != null)
 	{
 		$test_run_manager->add_failed_test_run_request($test_run_request);
 
