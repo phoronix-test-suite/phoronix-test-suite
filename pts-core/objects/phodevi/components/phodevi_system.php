@@ -652,7 +652,7 @@ class phodevi_system extends phodevi_device_interface
 		if(pts_executable_in_path("clang"))
 		{
 			// Clang
-			$compiler_info = "Clang " . trim(shell_exec("gcc -dumpversion 2>&1"));
+			$compiler_info = "Clang " . trim(shell_exec("clang -dumpversion 2>&1"));
 
 			if(pts_executable_in_path("llvmc"))
 			{
@@ -664,9 +664,11 @@ class phodevi_system extends phodevi_device_interface
 					$llvm_info = substr($info, $s + 8);
 					$llvm_info = substr($llvm_info, 0, strpos($llvm_info, ' '));
 
-					$compiler_info .= " + LLVM " . $info;
+					$compiler_info .= " + LLVM " . $llvm_info;
 				}
 			}
+
+			$compiler_info = trim($compiler_info);
 		}
 		else if(pts_executable_in_path("suncc"))
 		{
