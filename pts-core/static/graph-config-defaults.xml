@@ -12,24 +12,24 @@
 		</General>
 		<Colors>
 			<Background>#FFFFFF</Background>
-			<GraphBody>#8B8F7C</GraphBody>
-			<Notches>#000000</Notches>
-			<Border>#FFFFFF</Border>
-			<Alternate>#B0B59E</Alternate>
-			<ObjectPaint>#3B433A, #BB2413, #FF9933, #006C00, #5028CA, #0094B3, #A8BC00, #00F6FF, #8A00AC, #790066, #797766, #5598b1</ObjectPaint>
-			<Headers>#2b6b29</Headers>
-			<MainHeaders>#2b6b29</MainHeaders>
-			<Text>#000000</Text>
+			<GraphBody>#BABABA</GraphBody>
+			<Notches>#454545</Notches>
+			<Border>#454545</Border>
+			<Alternate>#949494</Alternate>
+			<ObjectPaint>#2B6B29, #001594, #940015, #95B846, #FFFFFF, #B30000, #E00022, #3A9137, #00F6FF, #8A00AC, #949200, #797766, #5598b1</ObjectPaint>
+			<Headers>#2B6B29</Headers>
+			<MainHeaders>#2B6B29</MainHeaders>
+			<Text>#454545</Text>
 			<BodyText>#FFFFFF</BodyText>
 			<Alert>#C80000</Alert>
 		</Colors>
 		<Font>
 			<FontType></FontType>
-			<Headers>18</Headers>
-			<SubHeaders>12</SubHeaders>
-			<ObjectText>12</ObjectText>
-			<Identifiers>11</Identifiers>
-			<Axis>11</Axis>
+			<Headers>17</Headers>
+			<SubHeaders>11</SubHeaders>
+			<ObjectText>11</ObjectText>
+			<Identifiers>10</Identifiers>
+			<Axis>10</Axis>
 		</Font>
 	</Graphs>
 </PhoronixTestSuite>
