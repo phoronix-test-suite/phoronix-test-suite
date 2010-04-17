@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add ResultBeforeString tag to parse-results.xml interface
 - pts-core: When a filesize is not supplied by downloads.xml, try to calculate it using filesize() if applicable
 - pts-core: Don't bold the pts_Chart results "winners" when there is only one test run
+- phodevi: Improve system thermal monitoring sysfs nodes on Linux
 
 Phoronix Test Suite 2.6 Alpha 3
 April 12, 2010

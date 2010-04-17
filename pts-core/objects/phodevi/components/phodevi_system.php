@@ -189,8 +189,12 @@ class phodevi_system extends phodevi_device_interface
 
 		if(IS_LINUX)
 		{
-			// Assuming the first thermal sensor is for the system, see TODO in phodevi_cpu
-			$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/thermal/thermal_zone*/temp", "POSITIVE_NUMERIC");
+			$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/temp3_input", "POSITIVE_NUMERIC", array("name" => "!coretemp"));
+
+			if($raw_temp == -1)
+			{
+				$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/temp2_input", "POSITIVE_NUMERIC", array("name" => "!coretemp"));
+			}
 
 			if($raw_temp == -1)
 			{
