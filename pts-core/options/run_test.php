@@ -357,7 +357,7 @@ class run_test implements pts_option_interface
 			pts_user_message($post_run_message);
 		}
 
-		if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("DEBUG_TEST_PROFILE"))
+		if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("DEBUG_TEST_PROFILE") || $test_run_manager->get_tests_to_run_count() > 3)
 		{
 			$failed_runs = $test_run_manager->get_failed_test_run_requests();
 

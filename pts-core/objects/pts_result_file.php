@@ -152,6 +152,8 @@ class pts_result_file
 
 			if($result_object->get_format() == "BAR_GRAPH")
 			{
+				$best_value = 0;
+
 				if(!defined("PHOROMATIC_TRACKER") && count($result_object->get_result_buffer()->get_values()) > 1)
 				{
 					switch($result_object->get_proportion())
@@ -161,9 +163,6 @@ class pts_result_file
 							break;
 						case "LIB":
 							$best_value = min($result_object->get_result_buffer()->get_values());
-							break;
-						default:
-							$best_value = 0;
 							break;
 					}
 				}
