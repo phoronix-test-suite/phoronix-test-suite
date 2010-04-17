@@ -557,9 +557,10 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 		if($installed)
 		{
 			pts_test_update_install_xml($identifier, $install_time_length, true);
-			echo "\n";
 		}
 	}
+
+	echo "\n";
 
 	return $installed;
 }

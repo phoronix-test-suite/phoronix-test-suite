@@ -3,55 +3,67 @@ body
 	text-align: center;
 	margin: 0;
 	padding: 0;
-	font-family: arial, helvetica, sans-serif;
+	font-family: "Liberation Sans", "Bitstream Vera Sans", sans-serif;
 	font-size: 13px;
 	background-color: #F9F9F9;
 	color: #000;
 }
 a
 {
-	color: #3B433A;
+	color: inherit;
+	text-decoration: none;
+}
+a:hover
+{
+	text-decoration: underline;
 }
 div#pts_header_top
 {
 	width: 100%;
 	margin: 0;
 	color: #FFF;
-	background-color: #2b6b29;
-	border: solid #000;
+	background-color: #454545;
+	border: solid #333;
 	border-width: 0 0 1px;
 }
-div#pts_header_top_center
+div.pts_header_center
 {
-	width: 1030px;
+	width: 920px;
 	margin: 0 auto;
 	overflow: hidden;
 }
+div#pts_header_top_logo
+{
+	position: relative;
+	float: left;
+	background-image: url(pts-106x55.png);
+	margin: 5px 0;
+	width: 106px;
+	height: 55px;
+}
 div#pts_header_top_title
 {
-	font-size: 42px;
-	font-weight: bold;
+	font-size: 40px;
+	margin: 10px 0 0 15px;
 	float: left;
 }
-div#pts_header_top_link_group
+div.pts_header_links
 {
-	padding: 14px 0 0;
+	margin: 4px 0 0;
+	text-align: right;
+	font-size: 11px;
 	float: right;
 }
-div#pts_header_top_link_group a
+div.pts_header_links_left
 {
-	margin: auto 6px;
-	text-decoration: none;
-	font-weight: bold;
-	font-size: 18px;
-	color: #FFF;
-	padding: 4px 8px;
-	border: solid #EEE 1px;
+	margin: 4px 0 0;
+	text-align: left;
+	font-size: 11px;
+	float: left;
 }
-div#pts_header_top_link_group a:hover
+div.pts_header_links a, div.pts_header_links_left a
 {
-	color: #000;
-	background-color: #FFF;
+	font-weight: bold;
 }
 div#pts_container
 {
@@ -59,17 +71,9 @@ div#pts_container
 	width: 920px;
 	margin: 0 auto;
 	overflow: hidden;
-	border: solid #EEE;
+	border: solid #919191;
 	border-width: 0 1px;
-	min-height: 700px;
 	background-color: #FFF;
-}
-div.pts_box
-{
-	text-align: left;
-	border: solid #969696 1px;
-	margin: 10px 10px 20px;
-	padding: 1px 10px 15px;
 }
 div#pts_header_bottom a
 {
@@ -80,15 +84,16 @@ div#pts_header_bottom
 	width: 100%;
 	margin: 0;
 	color: #FFF;
-	background-color: #2b6b29;
-	border: solid #000;
+	background-color: #454545;
+	border: solid #333;
 	border-width: 1px 0 0;
+	padding-bottom: 5px;
 }
 div#pts_header_bottom_center
 {
 	margin: 2px auto;
 	padding: 6px 0 10px;
-	width: 970px;
+	width: 920px;
 	overflow: hidden;
 	font-size: 12px;
 	text-align: center;
@@ -97,7 +102,7 @@ div.pts_column_head
 {	
 	font-size: 13px;
 	color: #FFF;
-	background-color: #2b6b29;
+	background-color: #454545;
 	font-weight: bold;
 	display: table-row;
 }
@@ -113,16 +118,21 @@ div.pts_column_body_text
 }
 h1
 {
+	margin-left: 10px;
 	margin-top: 10px;
 	font-size: 21px;
-	color: #2b6b29;
+	color: #454545;
 	font-weight: bold;
+}
+p
+{
+	margin-left: 10px;
 }
 div.pts_results_table_box
 {
 	text-align: center;
 	background-color: #F8F8F8;
-	border: solid #2b6b29 1px;
+	border: solid #949494 1px;
 	margin: 20px auto;
 	display: table;
 }
@@ -133,7 +143,7 @@ div.pts_results_table_box div.pts_table_col
 div.pts_table_col div.pts_table_cell
 {
 	height: 17px;
-	border: solid #2b6b29;
+	border: solid #949494;
 	border-width: 1px 0 0 1px;
 	padding: 0 4px;
 }
@@ -159,14 +169,14 @@ div.pts_table_box
 {
 	text-align: center;
 	background-color: #F8F8F8;
-	border: solid #2b6b29;
+	border: solid #949494;
 	border-width: 0 0 1px 1px;
-	margin: 6px auto;
+	margin: 6px 10px;
 	display: table;
 }
 div.pts_table_box_col
 {
-	border: solid #2b6b29;
+	border: solid #949494;
 	border-width: 0 1px 0 0;
 	display: table-cell;
 }
@@ -188,17 +198,17 @@ div.pts_chart_box a:hover
 div#pts_benchmark_area
 {
 	background-color: #FFF;
-	width: 95%;
 	margin: 10px auto;
 	color: #000;
 	overflow: hidden;
 }
 div.pts_benchmark_bar
 {
-	background-color: #2b6b29;
+	background-color: #454545;
 	color: #FFF;
 	padding: 4px;
-	border: solid #000 1px;
+	border: solid #6B6B6B 1px;
+	margin: 0 10px;
 	clear: both;
 }
 span.pts_benchmark_bar_header
@@ -214,9 +224,10 @@ span.pts_benchmark_bar_version
 }
 div.pts_benchmark_text
 {
-	padding: 50px 15px 15px;
+	padding: 30px 15px 15px;
 	float: left;
 	overflow: hidden;
+	color: #333;
 }
 div.pts_benchmark_img_area
 {
@@ -225,4 +236,15 @@ div.pts_benchmark_img_area
 	overflow: hidden;
 	height: 100%;
 	vertical-align: middle;
+	margin-right: 10px;
+}
+div#pts_copyright_area
+{
+	background-color: #BABABA;
+	text-align: center;
+	padding: 0 -10px -15px;
+	border: solid #919191;
+	border-width: 1px 0 0;
+	padding: 1px 0;
+	color: #454545;
 }

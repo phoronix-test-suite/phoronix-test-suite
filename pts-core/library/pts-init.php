@@ -80,7 +80,7 @@ function pts_extended_init()
 	pts_mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
 	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
 	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
-	pts_copy(STATIC_DIR . "images/pts-158x82.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-logo.png");
+	pts_copy(STATIC_DIR . "images/pts-106x55.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-106x55.png");
 
 	// Setup ~/.phoronix-test-suite/xsl/
 	pts_mkdir(PTS_USER_DIR . "xsl/");
