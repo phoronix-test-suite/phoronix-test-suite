@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Title>Compiler</Title>
+		<Version>1.0.0</Version>
+		<Maintainer>Michael Larabel</Maintainer>
+		<TestType>Processor</TestType>
+		<Description>This is a collection of compiler benchmarks.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>build-apache</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-imagemagick</Test>
+	</RunTest>
+	<RunTest>
+		<Test>compress-7zip</Test>
+	</RunTest>
+	<RunTest>
+		<Test>encode-mp3</Test>
+	</RunTest>
+	<RunTest>
+		<Test>x264</Test>
+	</RunTest>
+	<RunTest>
+		<Test>gcrypt</Test>
+	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-colorspace HWB</Arguments>
+		<Description>Operation: HWB Color Space</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-resize 50%</Arguments>
+		<Description>Operation: Resizing</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-sharpen 0x1.0</Arguments>
+		<Description>Operation: Sharpen</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>3000 fall</Arguments>
+		<Description>Test: 3000 Fall</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>1000 stack</Arguments>
+		<Description>Test: 1000 Stack</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>1000 convex</Arguments>
+		<Description>Test: 1000 Convex</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>convex-trimesh</Arguments>
+		<Description>Test: Convex Trimesh</Description>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>raytests</Arguments>
+		<Description>Test: Raytests</Description>
+	</RunTest>
+	<RunTest>
+		<Test>john-the-ripper</Test>
+		<Arguments>BLOWFISH</Arguments>
+		<Description>Test: Blowfish</Description>
+	</RunTest>
+	<RunTest>
+		<Test>hmmer</Test>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>lu.A</Arguments>
+		<Description>Test / Class: LU.A</Description>
+	</RunTest>
+</PhoronixTestSuite>

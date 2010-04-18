@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: New PTS Results Viewer interface
 - phodevi: Improve system thermal monitoring sysfs nodes on Linux
 - phodevi: Improve Clang/LLVM compiler detection
+- pts: Add compiler suite
 
 Phoronix Test Suite 2.6 Alpha 3
 April 12, 2010
