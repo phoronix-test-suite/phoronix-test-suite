@@ -96,6 +96,8 @@ class suite_to_pdf implements pts_option_interface
 				{
 					// TODO: work around bug with array keys showing
 					$pdf->WriteHeader($key);
+					$suite = new pts_test_suite($key);
+					$pdf->WriteText($suite->get_description());
 				}
 				self::layout_to_pdf($item, &$pdf);
 			}

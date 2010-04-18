@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 	<head>
 		<title>Phoronix Test Suite - <xsl:value-of select="PhoronixTestSuite/Suite/Title" /> - Results</title>
 		<link href="../pts-results-viewer/pts-viewer.css" rel="stylesheet" type="text/css" />
+		<link rel="shortcut icon" href="../pts-results-viewer/favicon.ico" />
 		<script src="../pts-results-viewer/pts.js" type="text/javascript"></script>
 	</head>
 	<body>
