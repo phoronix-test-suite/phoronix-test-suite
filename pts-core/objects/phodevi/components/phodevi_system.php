@@ -713,7 +713,8 @@ class phodevi_system extends phodevi_device_interface
 		// Find out the kernel archiecture
 		if(IS_WINDOWS)
 		{
-			$kernel_arch = strpos($_SERVER["PROCESSOR_ARCHIECTURE"], 64) || strpos($_SERVER["PROCESSOR_ARCHITEW6432"], 64) ? "x86_64" : "i686";
+			//$kernel_arch = strpos($_SERVER["PROCESSOR_ARCHITECTURE"], 64) !== false || strpos($_SERVER["PROCESSOR_ARCHITEW6432"], 64 != false) ? "x86_64" : "i686";
+			$kernel_arch = $_SERVER["PROCESSOR_ARCHITEW6432"] == "AMD64" ? "x86_64" : "i686";
 		}
 		else
 		{

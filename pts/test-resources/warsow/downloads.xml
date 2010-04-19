@@ -4,7 +4,7 @@
 			<URL>http://www.derchris.eu/warsow/warsow_0.5_unified.zip, http://static.warsow.net/release/warsow_0.5_unified.zip, http://weseo.de/downloads/warsow_0.5_unified.zip</URL>
 			<MD5>d0cb961256bbc1b93bf240b8bcf8eff5</MD5>
 			<FileSize>256768515</FileSize>
-			<PlatformSpecific>Linux</PlatformSpecific>
+			<PlatformSpecific>Linux, Windows</PlatformSpecific>
 		</Package>
 		<Package>
 			<URL>http://warsow.hangy.de/warsow_0.5_mac_intel.zip, http://static.warsow.net/release/warsow_0.5_mac_intel.zip</URL>
