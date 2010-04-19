@@ -101,16 +101,12 @@ class pts_phoroscript_interpreter
 					$line_r[2] = $this->get_real_path($line_r[2]);
 					$line_r[1] = $this->get_real_path($line_r[1]);
 
-					if(is_file($line_r[2]))
-					{
-						unlink($line_r[2]);
-					}
-
+					pts_unlink($line_r[2]);
 					copy($line_r[1], $line_r[2]);
 
 					if($line_r[0] == 'mv')
 					{
-						unlink($line_r[1]);
+						pts_unlink($line_r[1]);
 					}
 					break;
 				case 'cd':
@@ -249,6 +245,8 @@ class pts_phoroscript_interpreter
 					{
 						$line = substr($line, 2);
 					}
+
+					$line = str_replace("$@", $pass_arguments, $line);
 
 					exec("cd " . $this->var_current_directory . "; " . $line . " 2>&1", $exec_output, $prev_exit_status);
 					break;
