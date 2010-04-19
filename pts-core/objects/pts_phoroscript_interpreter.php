@@ -43,8 +43,10 @@ class pts_phoroscript_interpreter
 		{
 			$path = $this->environmental_variables["HOME"] . substr($path, 1);
 		}
-
-		$path = str_replace("\$LOG_FILE", $this->environmental_variables["LOG_FILE"]);
+		else if($path == "\$LOG_FILE")
+		{
+			return $this->environmental_variables["LOG_FILE"];
+		}
 
 		if(is_file($this->var_current_directory . $path))
 		{
@@ -52,7 +54,7 @@ class pts_phoroscript_interpreter
 		}
 		else
 		{
-			return $this->var_current_directory . $path . '/';
+			return pts_add_trailing_slash($this->var_current_directory . $path);
 		}
 	}
 	protected function find_file_in_array(&$string_array)
