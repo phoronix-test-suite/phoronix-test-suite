@@ -28,6 +28,12 @@ function pts_install_package_on_distribution(&$display_mode, &$identifiers, &$te
 	$install_objects = array();
 	$install_objects_count = 0;
 
+	if(IS_WINDOWS)
+	{
+		// TODO: Windows currently doesn't use any external dependencies
+		return true;
+	}
+
 	foreach(pts_to_array($identifiers) as $identifier)
 	{
 		foreach(pts_contained_tests($identifier, true) as $test)

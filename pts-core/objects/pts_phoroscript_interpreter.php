@@ -39,7 +39,21 @@ class pts_phoroscript_interpreter
 	}
 	protected function get_real_path($path)
 	{
-		return $this->var_current_directory . $path . '/';
+		if(substr($path, 0, 1) == '~')
+		{
+			$path = $this->environmental_variables["HOME"] . substr($path, 1);
+		}
+
+		$path = str_replace("\$LOG_FILE", $this->environmental_variables["LOG_FILE"]);
+
+		if(is_file($this->var_current_directory . $path))
+		{
+			return $this->var_current_directory . $path;
+		}
+		else
+		{
+			return $this->var_current_directory . $path . '/';
+		}
 	}
 	protected function find_file_in_array(&$string_array)
 	{
@@ -106,8 +120,7 @@ class pts_phoroscript_interpreter
 					$line_r[1] = $this->get_real_path($line_r[1]);
 					$line_r[2] = $this->get_real_path($line_r[2]);
 
-					pts_unlink($line_r[2]);
-					copy($line_r[1], $line_r[2]);
+					copy($line_r[1], $line_r[2] . (is_dir($line_r[2]) ? basename($line_r[1]) : null));
 					break;
 				case 'cd':
 					if($line_r[1] == '..')
