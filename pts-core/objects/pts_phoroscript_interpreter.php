@@ -96,18 +96,18 @@ class pts_phoroscript_interpreter
 			switch($line_r[0])
 			{
 				case 'mv':
+					// TODO: implement folder support better and glob support
+					$line_r[1] = $this->get_real_path($line_r[1]);
+					$line_r[2] = $this->get_real_path($line_r[2]);
+					rename($line_r[1], $line_r[2]);
+					break;
 				case 'cp':
 					// TODO: implement folder support better and glob support
-					$line_r[2] = $this->get_real_path($line_r[2]);
 					$line_r[1] = $this->get_real_path($line_r[1]);
+					$line_r[2] = $this->get_real_path($line_r[2]);
 
 					pts_unlink($line_r[2]);
 					copy($line_r[1], $line_r[2]);
-
-					if($line_r[0] == 'mv')
-					{
-						pts_unlink($line_r[1]);
-					}
 					break;
 				case 'cd':
 					if($line_r[1] == '..')
@@ -247,6 +247,11 @@ class pts_phoroscript_interpreter
 					}
 
 					$line = str_replace("$@", $pass_arguments, $line);
+
+					foreach($this->environmental_variables as $var => $value)
+					{
+						$line = str_replace('$' . $var, $value, $line);
+					}
 
 					exec("cd " . $this->var_current_directory . "; " . $line . " 2>&1", $exec_output, $prev_exit_status);
 					break;

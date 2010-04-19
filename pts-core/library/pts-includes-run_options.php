@@ -219,11 +219,9 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 			// Base options off available screen resolutions
 			if(count($option_names) == 1 && count($option_values) == 1)
 			{
-				if(PTS_MODE == "CLIENT")
-				{
-					$available_video_modes = phodevi::read_property("gpu", "available-modes");
-				}
-				else
+				$available_video_modes = PTS_MODE == "CLIENT" ? phodevi::read_property("gpu", "available-modes") : array();
+
+				if(empty($available_video_modes))
 				{
 					// Use hard-coded defaults
 					$available_video_modes = array(array(800, 600), array(1024, 768), array(1280, 1024), array(1280, 960), 
