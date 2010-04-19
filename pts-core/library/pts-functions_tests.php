@@ -230,10 +230,11 @@ function pts_test_checksum_installer($identifier)
 {
 	// Calculate installed checksum
 	$test_resources_location = pts_tests::test_resources_location($identifier);
+	$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
 
-	if(is_file($test_resources_location . "install.php"))
+	if(is_file($test_resources_location . "install" . $os_postfix . ".sh"))
 	{
-		$md5_checksum = md5_file($test_resources_location . "install.php");
+		$md5_checksum = md5_file($test_resources_location . "install" . $os_postfix . ".sh");
 	}
 	else if(is_file($test_resources_location . "install.sh"))
 	{

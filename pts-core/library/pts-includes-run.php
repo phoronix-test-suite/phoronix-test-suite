@@ -275,7 +275,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 
 		if($test_type == "Graphics")
 		{
-			if(pts_client::read_env("DISPLAY") == false)
+			if(pts_client::read_env("DISPLAY") == false && !IS_WINDOWS)
 			{
 				$display_mode->test_run_error("No display server was found, cannot run " . $test_identifier);
 				array_push($failed_tests, $test_identifier);
@@ -445,7 +445,7 @@ function pts_find_test_executable($test_identifier, &$test_profile)
 
 	foreach($possible_paths as $possible_dir)
 	{
-		if(is_executable($possible_dir . $execute_binary))
+		if(is_executable($possible_dir . $execute_binary) || (IS_WINDOWS && is_file($possible_dir . $execute_binary)))
 		{
 			$to_execute = $possible_dir;
 			break;
@@ -854,7 +854,18 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			pts_test_profile_debug_message($display_mode, "Test Run Command: " . $test_run_command);
 
 			$test_run_time_start = time();
-			$test_result = pts_exec($test_run_command, $test_extra_runtime_variables);
+
+			if(IS_WINDOWS || pts_client::read_env("USE_PHOROSCRIPT_INTERPRETER") != false)
+			{
+				$phoroscript = new pts_phoroscript_interpreter($to_execute . '/' . $execute_binary, $test_extra_runtime_variables, $to_execute);
+				$phoroscript->execute_script($pts_test_arguments);
+				$test_result = null;
+			}
+			else
+			{
+				$test_result = pts_exec($test_run_command, $test_extra_runtime_variables);
+			}
+
 			$test_run_time = time() - $test_run_time_start;
 		}
 		

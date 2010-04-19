@@ -11,7 +11,7 @@
 		<EnvironmentSize>715</EnvironmentSize>
 		<ProjectURL>http://www.nexuiz.com/</ProjectURL>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+		<SupportedPlatforms>Linux, MacOSX, Windows</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Nexuiz</Title>
