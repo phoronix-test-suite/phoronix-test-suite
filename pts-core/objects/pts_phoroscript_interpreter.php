@@ -204,7 +204,7 @@ class pts_phoroscript_interpreter
 
 						// TODO: right now it's expecting the file location pipe to be relative location
 						$echo_contents = str_replace("\\$", "\$", $echo_contents);
-						file_put_contents($this->var_current_directory . $to_file . "\n", $echo_contents);
+						file_put_contents($this->var_current_directory . $to_file, $echo_contents . "\n");
 					}
 					else
 					{
@@ -246,7 +246,7 @@ class pts_phoroscript_interpreter
 						$line = substr($line, 2);
 					}
 
-					$line = str_replace("$@", $pass_arguments, $line);
+					$line = str_replace("$@", $pass_arguments, $line) . ' ';
 
 					foreach($this->environmental_variables as $var => $value)
 					{

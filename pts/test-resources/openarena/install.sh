@@ -3,10 +3,6 @@
 unzip -o oa081.zip
 unzip -o oa085p.zip
 
-cd openarena-0.8.1/baseoa
-tar -zxvf ../../openarena-benchmark-files-5.tar.gz
-cd ../..
-
 echo "#!/bin/sh
 cd openarena-0.8.1/
 
@@ -25,3 +21,7 @@ case \$OS_TYPE in
 	;;
 esac" > openarena
 chmod +x openarena
+
+cp openarena-benchmark-files-6.zip openarena-0.8.1/baseoa
+cd openarena-0.8.1/baseoa
+unzip -o openarena-benchmark-files-6.zip

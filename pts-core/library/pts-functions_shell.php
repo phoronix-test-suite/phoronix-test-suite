@@ -23,7 +23,7 @@
 
 function pts_display_web_browser($URL, $alt_text = null, $default_open = false, $auto_open = false)
 {
-	if(pts_read_assignment("AUTOMATED_MODE") || pts_client::read_env("DISPLAY") == false)
+	if(pts_read_assignment("AUTOMATED_MODE") || (pts_client::read_env("DISPLAY") == false && !IS_WINDOWS))
 	{
 		return;
 	}
@@ -59,6 +59,22 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 			{
 				$browser = $config_browser;
 			}
+			else if(IS_WINDOWS)
+			{
+				$windows_browsers = array(
+					"C:\Program Files (x86)\Mozilla Firefox\firefox.exe",
+					"C:\Program Files\Internet Explorer\iexplorer.exe"
+					);
+
+				foreach($windows_browsers as $browser_test)
+				{
+					if(is_executable($browser_test))
+					{
+						$browser = $browser_test;
+						break;
+					}
+				}
+			}
 			else
 			{
 				$possible_browsers = array("xdg-open", "epiphany", "firefox", "mozilla", "x-www-browser", "open");
@@ -74,7 +90,14 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 			}
 		}
 
-		shell_exec($browser . " \"" . $URL . "\" &");
+		if($browser != null)
+		{
+			shell_exec($browser . " \"" . $URL . "\" &");
+		}
+		else
+		{
+			echo "\nNo Web Browser Was Found.\n";
+		}
 	}
 }
 function pts_exec($exec, $extra_vars = null)

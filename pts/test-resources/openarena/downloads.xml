@@ -11,9 +11,9 @@
 			<FileSize>42528474</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/openarena-benchmark-files-5.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/openarena-benchmark-files-5.tar.gz</URL>
-			<MD5>a9991b738c89efe5c6539672f6be99f4</MD5>
-			<FileSize>767933</FileSize>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/openarena-benchmark-files-6.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/openarena-benchmark-files-6.zip</URL>
+			<MD5>8d9d7e02b56abbb4decc70d15b8379d4</MD5>
+			<FileSize>762229</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
