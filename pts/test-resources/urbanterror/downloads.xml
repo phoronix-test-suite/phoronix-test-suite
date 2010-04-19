@@ -6,9 +6,9 @@
 			<FileSize>754307397</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/urbanterror-q3ut4-2.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/urbanterror-q3ut4-2.tar.gz</URL>
-			<MD5>66d2e85c49fb2a693ec072699f10a695</MD5>
-			<FileSize>1447268</FileSize>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/urbanterror-q3ut4-3.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/urbanterror-q3ut4-3.zip</URL>
+			<MD5>ae0c9f01edc6133b47aad2cba31458d7</MD5>
+			<FileSize>1433711</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

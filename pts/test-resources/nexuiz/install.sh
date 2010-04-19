@@ -12,8 +12,7 @@ then
 	./Nexuiz.app/Contents/MacOS/nexuiz-osx-agl +exec effects-high.cfg \$@ > \$LOG_FILE 2>&1
 else
 	./nexuiz-linux-glx.sh +exec effects-high.cfg \$@ > \$LOG_FILE 2>&1
-fi
-cat \$LOG_FILE | grep fps" > nexuiz
+fi" > nexuiz
 chmod +x nexuiz
 
 cd Nexuiz_/

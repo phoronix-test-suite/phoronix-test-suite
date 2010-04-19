@@ -62,17 +62,22 @@ function pts_display_web_browser($URL, $alt_text = null, $default_open = false, 
 			else if(IS_WINDOWS)
 			{
 				$windows_browsers = array(
-					"C:\Program Files (x86)\Mozilla Firefox\firefox.exe",
-					"C:\Program Files\Internet Explorer\iexplorer.exe"
+					'C:\Program Files (x86)\Mozilla Firefox\firefox.exe',
+					'C:\Program Files\Internet Explorer\iexplore.exe'
 					);
 
 				foreach($windows_browsers as $browser_test)
 				{
 					if(is_executable($browser_test))
 					{
-						$browser = $browser_test;
+						$browser = "\"$browser_test\"";
 						break;
 					}
+				}
+
+				if(substr($URL, 0, 1) == "\\")
+				{
+					$URL = "file:///C:" . str_replace('/', '\\', $URL);
 				}
 			}
 			else

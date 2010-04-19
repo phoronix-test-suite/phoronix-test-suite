@@ -1,7 +1,5 @@
 #!/bin/sh
 
-rm -rf UrbanTerror UrbanTerror_
-
 unzip -o UrbanTerror_41_FULL.zip
 
 mv UrbanTerror UrbanTerror_
@@ -11,9 +9,10 @@ chmod +x ioUrbanTerror.x86_64
 chmod +x ioUrbanTerror.app/Contents/MacOS/ioUrbanTerror.ub
 cd ..
 
-tar -zxvf urbanterror-q3ut4-2.tar.gz
-mv -f autoexec.cfg UrbanTerror_/q3ut4/
-mv -f pts1.dm_68 UrbanTerror_/q3ut4/demos/
+unzip -o urbanterror-q3ut4-3.zip
+rm -f UrbanTerror_/q3ut4/autoexec.cfg
+mv autoexec.cfg UrbanTerror_/q3ut4/
+mv pts1.dm_68 UrbanTerror_/q3ut4/demos/
 
 echo "#!/bin/sh
 cd UrbanTerror_/
@@ -31,6 +30,5 @@ else
 			./ioUrbanTerror.i386 \$@ > \$LOG_FILE 2>&1
 			;;
 	esac
-fi
-cat \$LOG_FILE | grep fps" > urbanterror
+fi" > urbanterror
 chmod +x urbanterror
