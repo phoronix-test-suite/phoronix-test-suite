@@ -115,6 +115,7 @@ class pts_phoroscript_interpreter
 					// TODO: implement folder support better and glob support
 					$line_r[1] = $this->get_real_path($line_r[1]);
 					$line_r[2] = $this->get_real_path($line_r[2]);
+					pts_remove($line_r[2], null, true);
 					rename($line_r[1], $line_r[2]);
 					break;
 				case 'cp':

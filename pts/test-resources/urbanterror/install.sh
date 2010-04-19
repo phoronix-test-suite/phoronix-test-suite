@@ -9,7 +9,7 @@ chmod +x ioUrbanTerror.x86_64
 chmod +x ioUrbanTerror.app/Contents/MacOS/ioUrbanTerror.ub
 cd ..
 
-unzip -o urbanterror-q3ut4-3.zip
+unzip -o urbanterror-q3ut4-4.zip
 rm -f UrbanTerror_/q3ut4/autoexec.cfg
 mv autoexec.cfg UrbanTerror_/q3ut4/
 mv pts1.dm_68 UrbanTerror_/q3ut4/demos/
