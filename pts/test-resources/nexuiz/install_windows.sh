@@ -5,5 +5,5 @@ mv Nexuiz Nexuiz_
 
 echo "#!/bin/sh
 cd Nexuiz_
-nexuiz.exe +exec effects-high.cfg \$@ > \$LOG_FILE 2>&1" > nexuiz
+nexuiz.exe +exec effects-high.cfg \$@ > \$LOG_FILE" > nexuiz
 

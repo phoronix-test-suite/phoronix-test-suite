@@ -204,7 +204,7 @@ class pts_phoroscript_interpreter
 
 						// TODO: right now it's expecting the file location pipe to be relative location
 						$echo_contents = str_replace("\\$", "\$", $echo_contents);
-						file_put_contents($this->var_current_directory . $to_file, $echo_contents);
+						file_put_contents($this->var_current_directory . $to_file . "\n", $echo_contents);
 					}
 					else
 					{
@@ -250,10 +250,22 @@ class pts_phoroscript_interpreter
 
 					foreach($this->environmental_variables as $var => $value)
 					{
-						$line = str_replace('$' . $var, $value, $line);
+						if($var == "LOG_FILE" && IS_WINDOWS)
+						{
+							$value = str_replace('/', '\\', $value);
+						}
+
+						$line = str_replace('$' . $var . ' ', $value, $line);
 					}
 
-					exec("cd " . $this->var_current_directory . "; " . $line . " 2>&1", $exec_output, $prev_exit_status);
+					$cd_dir = $this->var_current_directory;
+
+					if(IS_WINDOWS)
+					{
+						$cd_dir = str_replace('/', '\\', $cd_dir);
+					}
+
+					exec("cd " . $cd_dir . " && " . $line . " 2>&1", $exec_output, $prev_exit_status);
 					break;
 			}
 		}
