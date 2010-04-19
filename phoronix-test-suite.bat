@@ -1,7 +1,7 @@
 ::	Phoronix Test Suite
 ::	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-::	Copyright (C) 2008 - 2009, Phoronix Media
-::	Copyright (C) 2008 - 2009, Michael Larabel
+::	Copyright (C) 2008 - 2010, Phoronix Media
+::	Copyright (C) 2008 - 2010, Michael Larabel
 ::	phoronix-test-suite: The Phoronix Test Suite is an extensible open-source testing / benchmarking platform
 ::
 ::	This program is free software; you can redistribute it and/or modify
@@ -22,11 +22,11 @@
 set PTS_DIR=%pwd%
 set PTS_MODE=CLIENT
 
-:: TODO: Lots of other work to bring this up to sync with the *NIX phoronix-test-suite launcher
+:: TODO: Other work to bring this up to sync with the *NIX phoronix-test-suite launcher
 
-:: set PHP_BIN=C:\php-gtk2\php
-set PHP_BIN="C:\Program Files (x86)\PHP"\php
+If exist "C:\Program Files (x86)\PHP"\php set PHP_BIN="C:\Program Files (x86)\PHP"\php
+If exist C:\php-gtk2\php set PHP_BIN=C:\php-gtk2\php
 
-cls
+If not defined PHP_BIN echo "\nPHP could not be found.\n" else cls
 %PHP_BIN% pts-core/phoronix-test-suite.php %*
 
