@@ -711,18 +711,25 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_kernel_architecture()
 	{
 		// Find out the kernel archiecture
-		$kernel_arch = php_uname('m');
-
-		switch($kernel_arch)
+		if(IS_WINDOWS)
 		{
-			case "X86-64":
-			case "amd64":
-				$kernel_arch = "x86_64";
-				break;
-			case "i86pc":
-			case "i586":
-				$kernel_arch = "i686";
-				break;
+			$kernel_arch = strpos($_SERVER["PROCESSOR_ARCHIECTURE"], 64) || strpos($_SERVER["PROCESSOR_ARCHITEW6432"], 64) ? "x86_64" : "i686";
+		}
+		else
+		{
+			$kernel_arch = php_uname('m');
+
+			switch($kernel_arch)
+			{
+				case "X86-64":
+				case "amd64":
+					$kernel_arch = "x86_64";
+					break;
+				case "i86pc":
+				case "i586":
+					$kernel_arch = "i686";
+					break;
+			}
 		}
 
 		return $kernel_arch;

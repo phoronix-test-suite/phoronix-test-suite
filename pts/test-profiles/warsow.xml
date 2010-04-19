@@ -12,7 +12,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>curl</ExternalDependencies>
 		<ProjectURL>http://www.warsow.net/</ProjectURL>
-		<SupportedPlatforms>MacOSX, Linux</SupportedPlatforms>
+		<SupportedPlatforms>MacOSX, Linux, Windows</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Warsow</Title>

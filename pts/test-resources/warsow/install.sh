@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -zxvf pts-warsow-2.tar.gz
+unzip -o pts-warsow-3.zip
 
 case $OS_TYPE in
 	"MacOSX")
