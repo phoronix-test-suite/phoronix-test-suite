@@ -3,6 +3,14 @@
 <PhoronixTestSuite>
 	<Definitions>
 		<Define>
+			<Name>P_RESULTS_GENERATED_TIMESTAMP</Name>
+			<Value>PhoronixTestSuite/Generated/TimeStamp</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_GENERATED_VERSION</Name>
+			<Value>PhoronixTestSuite/Generated/Version</Value>
+		</Define>
+		<Define>
 			<Name>P_RESULTS_SYSTEM_HARDWARE</Name>
 			<Value>PhoronixTestSuite/System/Hardware</Value>
 		</Define>

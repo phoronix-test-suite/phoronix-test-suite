@@ -30,6 +30,12 @@ class pts_results_tandem_XmlWriter extends tandem_XmlWriter
 	{
 		pts_loader::load_definitions("result-file.xml");
 		parent::__construct($nice_formatting);
+
+		if(PTS_MODE == "CLIENT")
+		{
+			$this->addXmlObject(P_RESULTS_GENERATED_TIMESTAMP, -2, date("Y-m-d H:i:s"));
+			$this->addXmlObject(P_RESULTS_GENERATED_VERSION, -2, pts_title(true));
+		}
 	}
 }
 ?>

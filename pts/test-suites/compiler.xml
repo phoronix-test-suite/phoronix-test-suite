@@ -18,6 +18,9 @@
 		<Test>build-imagemagick</Test>
 	</RunTest>
 	<RunTest>
+		<Test>apache</Test>
+	</RunTest>
+	<RunTest>
 		<Test>compress-7zip</Test>
 	</RunTest>
 	<RunTest>

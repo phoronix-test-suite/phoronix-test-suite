@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: When a filesize is not supplied by downloads.xml, try to calculate it using filesize() if applicable
 - pts-core: Don't bold the pts_Chart results "winners" when there is only one test run
 - pts-core: New PTS Results Viewer interface
+- pts-core: Add generated section to PTS result file XML
 - phodevi: Improve system thermal monitoring sysfs nodes on Linux
 - phodevi: Improve Clang/LLVM compiler detection
 - pts: Add compiler suite

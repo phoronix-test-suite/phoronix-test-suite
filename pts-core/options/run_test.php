@@ -306,7 +306,7 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, 0, pts_hw_string());
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, 0, pts_sw_string());
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, 0, pts_current_user());
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, 0, date("F j, Y h:i A"));
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, 0, date("Y-m-d H:i:s"));
 				//$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type));
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, 0, PTS_VERSION);
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, 0, $test_run_manager->get_results_identifier());

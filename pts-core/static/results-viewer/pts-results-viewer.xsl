@@ -34,7 +34,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			<div class="pts_header_center">
 				<div id="pts_header_top_logo"></div>
 				<div id="pts_header_top_title">Phoronix Test Suite</div>
-				<div class="pts_header_links"><a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a><br /><a href="http://global.phoronix.com/">Phoronix Global</a><br /><a href="http://www.phoromatic.com/">Phoromatic</a><br /><a href="http://commercial.phoronix-test-suite.com/">PTS Commercial</a></div>
+				<div class="pts_header_links"><em><strong><xsl:value-of select="PhoronixTestSuite/Generated/Version" /></strong><br /><xsl:if test="PhoronixTestSuite/Generated/TimeStamp != ''"><strong>Generated:</strong>&#160;<xsl:value-of select="PhoronixTestSuite/Generated/TimeStamp" /><br /></xsl:if></em></div>
 			</div>
 		</div>
 		<div id="pts_container">
