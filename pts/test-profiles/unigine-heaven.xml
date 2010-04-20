@@ -11,7 +11,7 @@
 		<EnvironmentSize>260</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.unigine.com/</ProjectURL>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
+		<SupportedPlatforms>Linux, Windows</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Unigine Heaven</Title>
@@ -22,9 +22,6 @@
 		<Description>This test calculates the average frame-rate within the Heaven demo for the Unigine engine. This engine is extremely demanding on the system's graphics card.</Description>
 	</TestInformation>
 	<TestSettings>
-		<Default>
-			<Arguments>-video_app opengl -data_path ../ -sound_app null -engine_config ../data/heaven_2.0.cfg -system_script heaven/unigine.cpp -video_mode -1 -video_fullscreen 1 -extern_define PHORONIX</Arguments>
-		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>auto-resolution</Identifier>

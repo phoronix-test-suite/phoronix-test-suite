@@ -41,14 +41,18 @@ class pts_phoroscript_interpreter
 	{
 		if(substr($path, 0, 1) == '~')
 		{
-			$path = $this->environmental_variables["HOME"] . substr($path, 1);
+			$path = $this->environmental_variables["HOME"] . substr($path, 2);
 		}
 		else if($path == "\$LOG_FILE")
 		{
 			return $this->environmental_variables["LOG_FILE"];
 		}
 
-		if(is_file($this->var_current_directory . $path))
+		if(is_file($path))
+		{
+			return $path;
+		}
+		else if(is_file($this->var_current_directory . $path))
 		{
 			return $this->var_current_directory . $path;
 		}

@@ -4,6 +4,13 @@
 			<URL>http://www.unigine.com/download/files/Unigine_Heaven-2.0.run</URL>
 			<MD5>27dfa3680652e55b9a27f15651b11a96</MD5>
 			<FileSize>244013793</FileSize>
+			<PlatformSpecific>Linux</PlatformSpecific>
+		</Package>
+		<Package>
+			<URL>http://www.unigine.com/download/files/Unigine_Heaven-2.0.msi</URL>
+			<MD5>e003f3a2747df3f4ce43d147cc9c7e0e</MD5>
+			<FileSize>241367040</FileSize>
+			<PlatformSpecific>Windows</PlatformSpecific>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
