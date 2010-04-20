@@ -4,6 +4,13 @@
 			<URL>http://www.unigine.com/download/files/Unigine_Sanctuary-2.2.run</URL>
 			<MD5>50e09d1ca86f76f9b73a793bfe4c0b4d</MD5>
 			<FileSize>28623234</FileSize>
+			<PlatformSpecific>Linux</PlatformSpecific>
+		</Package>
+		<Package>
+			<URL>http://www.unigine.com/download/files/Unigine_Sanctuary-2.2.msi</URL>
+			<MD5>ba411f15cd2aad4c91b43f862ba19856</MD5>
+			<FileSize>30576640</FileSize>
+			<PlatformSpecific>Windows</PlatformSpecific>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
