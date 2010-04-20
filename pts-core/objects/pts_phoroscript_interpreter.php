@@ -143,6 +143,11 @@ class pts_phoroscript_interpreter
 					{
 						$this->var_current_directory = $this->environmental_variables["HOME"];
 					}
+					else if(substr($line_r[1], 0, 1) == '"')
+					{
+						array_shift($line_r);
+						$this->var_current_directory = implode(' ', $line_r);
+					}
 					else if(is_readable($line_r[1]))
 					{
 						$this->var_current_directory = $line_r[1];
@@ -202,10 +207,11 @@ class pts_phoroscript_interpreter
 					}
 
 					$start_echo = strpos($script_contents, "\"") + 1;
+					$end_echo = $start_echo - 1;
 
 					do
 					{
-						$end_echo = strpos($script_contents, "\"", $start_echo);
+						$end_echo = strpos($script_contents, "\"", $end_echo + 1);
 					}
 					while($script_contents[($end_echo - 1)] == "\\");
 
@@ -224,6 +230,7 @@ class pts_phoroscript_interpreter
 
 						// TODO: right now it's expecting the file location pipe to be relative location
 						$echo_contents = str_replace("\\$", "\$", $echo_contents);
+						$echo_contents = str_replace("\\\"", "\"", $echo_contents);
 						file_put_contents($this->var_current_directory . $to_file, $echo_contents . "\n");
 					}
 					else
