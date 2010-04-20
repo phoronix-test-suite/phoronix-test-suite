@@ -9,5 +9,5 @@ mv demos/ tremulous_/tremulous/base/
 
 echo "#!/bin/sh
 cd tremulous_/tremulous/
-./tremulous.x86 \$@ > \$LOG_FILE 2>&1" > tremulous
+tremulous.exe \$@ > \$LOG_FILE" > tremulous
 chmod +x tremulous
