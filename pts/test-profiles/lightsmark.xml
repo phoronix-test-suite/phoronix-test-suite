@@ -12,7 +12,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>glut, glew, freeimage</ExternalDependencies>
 		<ProjectURL>http://www.dee.cz/lightsmark/</ProjectURL>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
+		<SupportedPlatforms>Linux, Windows</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Lightsmark</Title>

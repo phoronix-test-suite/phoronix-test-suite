@@ -4,10 +4,11 @@ unzip -o tremulous-1.1.0.zip
 mv tremulous tremulous_
 unzip -o tremulous-benchmark-2.zip
 
-mv tremulous-benchmark.cfg tremulous_/tremulous/base/
-mv demos/ tremulous_/tremulous/base/
+cp tremulous-benchmark.cfg tremulous_/base/
+mkdir tremulous_/base/demos
+cp demos/pts-demo.dm_69 tremulous_/base/demos/
 
 echo "#!/bin/sh
-cd tremulous_/tremulous/
+cd tremulous_/
 tremulous.exe \$@ > \$LOG_FILE" > tremulous
 chmod +x tremulous
