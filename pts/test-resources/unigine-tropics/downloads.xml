@@ -4,6 +4,13 @@
 			<URL>http://www.unigine.com/download/files/Unigine_Tropics-1.2.run</URL>
 			<MD5>55139b63b298aa06bbf6286dfb9a9f81</MD5>
 			<FileSize>58771057</FileSize>
+			<PlatformSpecific>Linux</PlatformSpecific>
+		</Package>
+		<Package>
+			<URL>http://unigine.com/download/files/Unigine_Tropics-1.2.msi</URL>
+			<MD5>35d35e38f6eaf897f70a2f69033c18a2</MD5>
+			<FileSize>60948480</FileSize>
+			<PlatformSpecific>Windows</PlatformSpecific>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

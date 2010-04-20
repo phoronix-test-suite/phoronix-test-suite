@@ -145,6 +145,7 @@ class pts_phoroscript_interpreter
 					}
 					else if(substr($line_r[1], 0, 1) == '"')
 					{
+						// On Windows some directories are encased in quotes for spaces in the directory names
 						array_shift($line_r);
 						$this->var_current_directory = implode(' ', $line_r);
 					}

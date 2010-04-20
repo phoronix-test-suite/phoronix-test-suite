@@ -7,9 +7,11 @@ Phoronix Test Suite (Git)
 - pts-core: Don't bold the pts_Chart results "winners" when there is only one test run
 - pts-core: New PTS Results Viewer interface
 - pts-core: Add generated section to PTS result file XML
+- pts-core: Many PhoroScript interpreter improvements
 - phodevi: Improve system thermal monitoring sysfs nodes on Linux
 - phodevi: Improve Clang/LLVM compiler detection
 - pts: Add compiler suite
+- pts: Start porting over numerous test profiles to offer Windows 7 x64 compatibility
 
 Phoronix Test Suite 2.6 Alpha 3
 April 12, 2010
