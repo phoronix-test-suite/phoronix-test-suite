@@ -81,6 +81,60 @@ class pts_phoroscript_interpreter
 
 		return $found_file;
 	}
+	protected function parse_variables_in_string(&$to_parse, &$pass_arguments)
+	{
+		$pass_arguments_r = pts_trim_explode(' ', $pass_arguments);
+		$offset = -1;
+
+		while(($offset = strpos($to_parse, '$', ($offset + 1))) !== false)
+		{
+			if($to_parse[($offset - 1)] == "\\")
+			{
+				continue;
+			}
+
+			$var = substr($to_parse, $offset + 1);
+
+			foreach(array("\n", ' ', '-', '.', "\"", '\\') as $token)
+			{
+				$this_str = strtok($var, $token);
+
+				if($this_str !== false)
+				{
+					$var = $this_str;
+				}
+			}
+
+			if($var == null)
+			{
+				continue;
+			}
+
+			$before_var = substr($to_parse, 0, $offset);
+			$after_var = substr($to_parse, $offset + 1 + strlen($var));
+			$var_value = null;
+
+			if($var == '@')
+			{
+				$var_value = $pass_arguments;
+			}
+			if(isset($this->environmental_variables[$var]))
+			{
+				$var_value = $this->environmental_variables[$var];
+			}
+			else if(is_numeric($value) && isset($pass_arguments_r[$var]))
+			{
+				$var_value = $pass_arguments_r[$var];
+			}
+
+			if(IS_WINDOWS && $var == "LOG_FILE")
+			{
+				$value = str_replace('/', '\\', $value);
+			}
+
+			$to_parse = $before_var . $var_value . $after_var;
+		}
+	}
 	public function execute_script($pass_arguments = null)
 	{
 		if($this->script_file == null)
@@ -220,6 +274,11 @@ class pts_phoroscript_interpreter
 					$line_remainder = substr($script_contents, ($end_echo + 1), ($script_pointer - $end_echo - 1));
 					$echo_contents = substr($script_contents, $start_echo, ($end_echo - $start_echo));
 
+					$this->parse_variables_in_string($echo_contents, $pass_arguments);
+
+					$echo_contents = str_replace("\\$", "\$", $echo_contents);
+					$echo_contents = str_replace("\\\"", "\"", $echo_contents);
+
 					if(($to_file = strpos($line_remainder, ' > ')) !== false)
 					{
 						$to_file = trim(substr($line_remainder, $to_file + 3));
@@ -230,8 +289,6 @@ class pts_phoroscript_interpreter
 						}
 
 						// TODO: right now it's expecting the file location pipe to be relative location
-						$echo_contents = str_replace("\\$", "\$", $echo_contents);
-						$echo_contents = str_replace("\\\"", "\"", $echo_contents);
 						file_put_contents($this->var_current_directory . $to_file, $echo_contents . "\n");
 					}
 					else
@@ -274,18 +331,7 @@ class pts_phoroscript_interpreter
 						$line = substr($line, 2);
 					}
 
-					$line = str_replace("$@", $pass_arguments, $line) . ' ';
-
-					foreach($this->environmental_variables as $var => $value)
-					{
-						if($var == "LOG_FILE" && IS_WINDOWS)
-						{
-							$value = str_replace('/', '\\', $value);
-						}
-
-						$line = str_replace('$' . $var . ' ', $value, $line);
-					}
-
+					$this->parse_variables_in_string($line, $pass_arguments);
 					$cd_dir = $this->var_current_directory;
 
 					if(IS_WINDOWS)

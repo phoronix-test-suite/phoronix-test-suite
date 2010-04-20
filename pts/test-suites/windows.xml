@@ -28,6 +28,14 @@
 		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
 	</RunTest>
+	<RunTest>
+		<Test>lightsmark</Test>
+		<Arguments>$VIDEO_WIDTH'x'$VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+	</RunTest>
+	<RunTest>
+		<Test>unigine</Test>
+	</RunTest>
 
 
 
