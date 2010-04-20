@@ -8,7 +8,7 @@ cd \"C:\Program Files\SPECopc\SPECViewperf\viewperf\viewperf10.0-x64\"
 echo \"screenHeight  \$2
 screenWidth  \$1\" > viewperf.config
 
-./Run_\$3.csh
+Run_\$3.bat
 cat results/\$3-*/*result.txt > \$LOG_FILE" > specviewperf10
 chmod +x specviewperf10
 

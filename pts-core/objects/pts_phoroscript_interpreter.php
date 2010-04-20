@@ -37,8 +37,10 @@ class pts_phoroscript_interpreter
 		$this->script_file = is_file($script) ? $script : null;
 		$this->var_current_directory = $set_current_path;
 	}
-	protected function get_real_path($path)
+	protected function get_real_path($path, $pass_arguments = null)
 	{
+		$this->parse_variables_in_string($path, $pass_arguments);
+
 		if(substr($path, 0, 1) == '~')
 		{
 			$path = $this->environmental_variables["HOME"] . substr($path, 2);
@@ -48,7 +50,13 @@ class pts_phoroscript_interpreter
 			return $this->environmental_variables["LOG_FILE"];
 		}
 
-		if(is_file($path))
+		if(strpos($path, '*') !== false)
+		{
+			$glob = pts_glob($this->var_current_directory . $path);
+
+			return count($glob) > 0 ? array_shift($glob) : $this->var_current_directory;
+		}
+		else if(is_file($path))
 		{
 			return $path;
 		}
@@ -95,7 +103,7 @@ class pts_phoroscript_interpreter
 
 			$var = substr($to_parse, $offset + 1);
 
-			foreach(array("\n", ' ', '-', '.', "\"", '\\') as $token)
+			foreach(array("\n", ' ', '-', '.', "\"", '\\', "'") as $token)
 			{
 				$this_str = strtok($var, $token);
 
@@ -170,18 +178,25 @@ class pts_phoroscript_interpreter
 			switch($line_r[0])
 			{
 				case 'mv':
-					// TODO: implement folder support better and glob support
+					// TODO: implement folder support better
 					$line_r[1] = $this->get_real_path($line_r[1]);
 					$line_r[2] = $this->get_real_path($line_r[2]);
 					pts_remove($line_r[2], null, true);
 					rename($line_r[1], $line_r[2]);
 					break;
 				case 'cp':
-					// TODO: implement folder support better and glob support
+					// TODO: implement folder support better
 					$line_r[1] = $this->get_real_path($line_r[1]);
 					$line_r[2] = $this->get_real_path($line_r[2]);
 
 					copy($line_r[1], $line_r[2] . (is_dir($line_r[2]) ? basename($line_r[1]) : null));
+					break;
+				case 'cat':
+					// TODO: implement folder support better
+					$line_r[1] = $this->get_real_path($line_r[1]);
+					$line_r[3] = $this->get_real_path($line_r[3]);
+
+					copy($line_r[1], $line_r[3]);
 					break;
 				case 'cd':
 					if($line_r[1] == '..')
