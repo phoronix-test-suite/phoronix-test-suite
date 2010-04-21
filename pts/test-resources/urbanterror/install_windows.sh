@@ -12,5 +12,5 @@ cp pts1.dm_68 UrbanTerror_/q3ut4/demos/
 echo "#!/bin/sh
 cd UrbanTerror_/
 ioUrbanTerror.exe \$@
-cp q3ut4/qconsole.log \$LOG_FILE" > urbanterror
+mv q3ut4/qconsole.log \$LOG_FILE" > urbanterror
 chmod +x urbanterror

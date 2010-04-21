@@ -6,4 +6,4 @@ echo "#!/bin/sh
 cd xplane_945_timedemo/
 
 X-Plane.exe \$@
-cp Log.txt \$LOG_FILE" > xplane9
+mv Log.txt \$LOG_FILE" > xplane9

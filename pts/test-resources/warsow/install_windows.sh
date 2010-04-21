@@ -9,5 +9,5 @@ cp pts-warsow.cfg basewsw/
 
 echo "#!/bin/sh
 warsow_x64.exe \$@ +set fs_usehomedir 0
-cp basewsw/pts-log.log \$LOG_FILE" > warsow
+mv basewsw/pts-log.log \$LOG_FILE" > warsow
 chmod +x warsow

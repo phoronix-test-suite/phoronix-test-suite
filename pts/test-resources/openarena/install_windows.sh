@@ -6,7 +6,7 @@ unzip -o oa085p.zip
 echo "#!/bin/sh
 cd openarena-0.8.1/
 openarena.exe \$@
-cp stderr.txt \$LOG_FILE" > openarena
+mv stderr.txt \$LOG_FILE" > openarena
 chmod +x openarena
 
 cp openarena-benchmark-files-6.zip openarena-0.8.1/baseoa
