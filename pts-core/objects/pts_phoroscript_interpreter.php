@@ -39,20 +39,21 @@ class pts_phoroscript_interpreter
 	}
 	protected function get_real_path($path, &$pass_arguments = null)
 	{
+		if($path == "\$LOG_FILE")
+		{
+			return $this->environmental_variables["LOG_FILE"];
+		}
 		$this->parse_variables_in_string($path, $pass_arguments);
 
 		if(substr($path, 0, 1) == '~')
 		{
 			$path = $this->environmental_variables["HOME"] . substr($path, 2);
 		}
-		else if($path == "\$LOG_FILE")
-		{
-			return $this->environmental_variables["LOG_FILE"];
-		}
 
 		if(strpos($path, '*') !== false)
 		{
-			$glob = pts_glob($this->var_current_directory . $path);
+			$grep_dir = pts_add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
+			$glob = pts_glob($grep_dir . $path);
 
 			return count($glob) > 0 ? array_shift($glob) : $this->var_current_directory;
 		}
