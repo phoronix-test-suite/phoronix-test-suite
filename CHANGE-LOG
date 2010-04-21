@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Many PhoroScript interpreter improvements
 - phodevi: Improve system thermal monitoring sysfs nodes on Linux
 - phodevi: Improve Clang/LLVM compiler detection
+- phodevi: Add DEFAULT_VIDEO_MODE environmental variable
 - pts: Add compiler suite
 - pts: Start porting over numerous test profiles to offer Windows 7 x64 compatibility
 

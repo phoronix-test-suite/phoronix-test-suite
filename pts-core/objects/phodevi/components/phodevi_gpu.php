@@ -295,6 +295,16 @@ class phodevi_gpu extends phodevi_device_interface
 	{
 		$resolution = false;
 
+		if((($default_mode = getenv("DEFAULT_VIDEO_MODE")) != false))
+		{
+			$default_mode = explode('x', $default_mode);
+
+			if(count($default_mode) == 2 && is_numeric($default_mode[0]) && is_numeric($default_mode[1]))
+			{
+				return $default_mode;
+			}
+		}
+
 		if(IS_MACOSX)
 		{
 			$info = pts_trim_explode(' ', phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution"));
