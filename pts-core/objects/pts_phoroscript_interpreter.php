@@ -33,17 +33,17 @@ class pts_phoroscript_interpreter
 			$env_vars["HOME"] = $set_current_path;
 		}
 
-		$this->environmental_variables = $env_vars;
+		$this->environmental_variables = ($env_vars == null ? pts_env_variables() : array_merge(pts_env_variables(), $env_vars));
 		$this->script_file = is_file($script) ? $script : null;
 		$this->var_current_directory = $set_current_path;
 	}
-	protected function get_real_path($path, &$pass_arguments = null, &$extra_variables = null)
+	protected function get_real_path($path, &$pass_arguments = null)
 	{
 		if($path == "\$LOG_FILE")
 		{
 			return $this->environmental_variables["LOG_FILE"];
 		}
-		$this->parse_variables_in_string($path, $pass_arguments, $extra_variables);
+		$this->parse_variables_in_string($path, $pass_arguments);
 
 		if(substr($path, 0, 1) == '~')
 		{
@@ -90,7 +90,7 @@ class pts_phoroscript_interpreter
 
 		return $found_file;
 	}
-	protected function parse_variables_in_string(&$to_parse, &$pass_arguments, &$extra_variables)
+	protected function parse_variables_in_string(&$to_parse, &$pass_arguments)
 	{
 		$pass_arguments_r = pts_trim_explode(' ', $pass_arguments);
 		$offset = -1;
@@ -127,13 +127,9 @@ class pts_phoroscript_interpreter
 			{
 				$var_value = $pass_arguments;
 			}
-			else if(isset($this->environmental_variables[$var]))
+			if(isset($this->environmental_variables[$var]))
 			{
 				$var_value = $this->environmental_variables[$var];
-			}
-			else if(isset($extra_variables[$var]))
-			{
-				$var_value = $extra_variables[$var];
 			}
 			else if(is_numeric($var) && isset($pass_arguments_r[($var - 1)]))
 			{
@@ -148,7 +144,7 @@ class pts_phoroscript_interpreter
 			$to_parse = $before_var . $var_value . $after_var;
 		}
 	}
-	public function execute_script($pass_arguments = null, &$extra_variables = null)
+	public function execute_script($pass_arguments = null)
 	{
 		if($this->script_file == null)
 		{
@@ -184,22 +180,22 @@ class pts_phoroscript_interpreter
 			{
 				case 'mv':
 					// TODO: implement folder support better
-					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments, $extra_variables);
-					$line_r[2] = $this->get_real_path($line_r[2], $pass_arguments, $extra_variables);
+					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments);
+					$line_r[2] = $this->get_real_path($line_r[2], $pass_arguments);
 					pts_remove($line_r[2], null, true);
 					rename($line_r[1], $line_r[2]);
 					break;
 				case 'cp':
 					// TODO: implement folder support better
-					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments, $extra_variables);
-					$line_r[2] = $this->get_real_path($line_r[2], $pass_arguments, $extra_variables);
+					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments);
+					$line_r[2] = $this->get_real_path($line_r[2], $pass_arguments);
 
 					copy($line_r[1], $line_r[2] . (is_dir($line_r[2]) ? basename($line_r[1]) : null));
 					break;
 				case 'cat':
 					// TODO: implement folder support better
-					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments, $extra_variables);
-					$line_r[3] = $this->get_real_path($line_r[3], $pass_arguments, $extra_variables);
+					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments);
+					$line_r[3] = $this->get_real_path($line_r[3], $pass_arguments);
 
 					copy($line_r[1], $line_r[3]);
 					break;
@@ -227,9 +223,9 @@ class pts_phoroscript_interpreter
 					{
 						$this->var_current_directory = $line_r[1];
 					}
-					else if(is_readable($this->get_real_path($line_r[1], $pass_arguments, $extra_variables)))
+					else if(is_readable($this->get_real_path($line_r[1], $pass_arguments)))
 					{
-						$this->var_current_directory = $this->get_real_path($line_r[1], $pass_arguments, $extra_variables);
+						$this->var_current_directory = $this->get_real_path($line_r[1], $pass_arguments);
 					}
 					break;
 				case 'touch':
@@ -294,7 +290,7 @@ class pts_phoroscript_interpreter
 					$line_remainder = substr($script_contents, ($end_echo + 1), ($script_pointer - $end_echo - 1));
 					$echo_contents = substr($script_contents, $start_echo, ($end_echo - $start_echo));
 
-					$this->parse_variables_in_string($echo_contents, $pass_arguments, $extra_variables);
+					$this->parse_variables_in_string($echo_contents, $pass_arguments);
 
 					$echo_contents = str_replace("\\$", "\$", $echo_contents);
 					$echo_contents = str_replace("\\\"", "\"", $echo_contents);
@@ -352,7 +348,7 @@ class pts_phoroscript_interpreter
 						$line = substr($line, 2);
 					}
 
-					$this->parse_variables_in_string($line, $pass_arguments, $extra_variables);
+					$this->parse_variables_in_string($line, $pass_arguments);
 					$cd_dir = $this->var_current_directory;
 
 					if(IS_WINDOWS)
