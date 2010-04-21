@@ -374,7 +374,7 @@ class bilde_svg_renderer extends bilde_renderer
 		{
 			$svg = "<defs>\n";
 			$svg .= "<style><![CDATA[\n";
-
+			//$svg .= "@font-face { font-family: \"Liberation Sans\", \"Bitstream Vera Sans\", sans-serif; }\n";
 			foreach(self::$svg_style_definitions as $key => $attributes)
 			{
 				$svg .= ".b_" . self::$render_count . '_' . $key . " { " . $attributes . " }\n";

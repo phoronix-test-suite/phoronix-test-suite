@@ -36,17 +36,19 @@
 	<RunTest>
 		<Test>unigine</Test>
 	</RunTest>
-
-
-
 	<RunTest>
-		<Test>tremulous</Test>
-		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+		<Test>xplane9</Test>
+		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT</Arguments>
+		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>
 	</RunTest>
 	<RunTest>
-		<Test>padman</Test>
-		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+		<Test>specviewperf10</Test>
+		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT maya</Arguments>
+		<Description>Maya</Description>
+	</RunTest>
+	<RunTest>
+		<Test>specviewperf10</Test>
+		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT ugnx</Arguments>
+		<Description>UGNX</Description>
 	</RunTest>
 </PhoronixTestSuite>

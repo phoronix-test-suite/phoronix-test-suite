@@ -12,7 +12,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.x-plane.com/</ProjectURL>
 		<ExternalDependencies>openal-development</ExternalDependencies>
-		<SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+		<SupportedPlatforms>Linux, MacOSX, Windows</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>X-Plane</Title>
