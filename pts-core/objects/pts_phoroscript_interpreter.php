@@ -37,7 +37,7 @@ class pts_phoroscript_interpreter
 		$this->script_file = is_file($script) ? $script : null;
 		$this->var_current_directory = $set_current_path;
 	}
-	protected function get_real_path($path, $pass_arguments = null)
+	protected function get_real_path($path, &$pass_arguments = null)
 	{
 		$this->parse_variables_in_string($path, $pass_arguments);
 
@@ -130,9 +130,9 @@ class pts_phoroscript_interpreter
 			{
 				$var_value = $this->environmental_variables[$var];
 			}
-			else if(is_numeric($value) && isset($pass_arguments_r[$var]))
+			else if(is_numeric($var) && isset($pass_arguments_r[($var - 1)]))
 			{
-				$var_value = $pass_arguments_r[$var];
+				$var_value = $pass_arguments_r[($var - 1)];
 			}
 
 			if(IS_WINDOWS && $var == "LOG_FILE")
@@ -179,22 +179,22 @@ class pts_phoroscript_interpreter
 			{
 				case 'mv':
 					// TODO: implement folder support better
-					$line_r[1] = $this->get_real_path($line_r[1]);
-					$line_r[2] = $this->get_real_path($line_r[2]);
+					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments);
+					$line_r[2] = $this->get_real_path($line_r[2], $pass_arguments);
 					pts_remove($line_r[2], null, true);
 					rename($line_r[1], $line_r[2]);
 					break;
 				case 'cp':
 					// TODO: implement folder support better
-					$line_r[1] = $this->get_real_path($line_r[1]);
-					$line_r[2] = $this->get_real_path($line_r[2]);
+					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments);
+					$line_r[2] = $this->get_real_path($line_r[2], $pass_arguments);
 
 					copy($line_r[1], $line_r[2] . (is_dir($line_r[2]) ? basename($line_r[1]) : null));
 					break;
 				case 'cat':
 					// TODO: implement folder support better
-					$line_r[1] = $this->get_real_path($line_r[1]);
-					$line_r[3] = $this->get_real_path($line_r[3]);
+					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments);
+					$line_r[3] = $this->get_real_path($line_r[3], $pass_arguments);
 
 					copy($line_r[1], $line_r[3]);
 					break;
@@ -222,9 +222,9 @@ class pts_phoroscript_interpreter
 					{
 						$this->var_current_directory = $line_r[1];
 					}
-					else if(is_readable($this->get_real_path($line_r[1])))
+					else if(is_readable($this->get_real_path($line_r[1], $pass_arguments)))
 					{
-						$this->var_current_directory = $this->get_real_path($line_r[1]);
+						$this->var_current_directory = $this->get_real_path($line_r[1], $pass_arguments);
 					}
 					break;
 				case 'touch':
@@ -262,7 +262,7 @@ class pts_phoroscript_interpreter
 					pts_zip_archive_extract($zip_file, $this->var_current_directory);
 					break;
 				case 'tar':
-					// TODO: implement, i.e. tar -xvf ../../openarena-benchmark-files-4.tar.gz
+					// TODO: implement
 					break;
 				case 'echo':
 					if($line == "echo $? > ~/install-exit-status")
@@ -304,7 +304,8 @@ class pts_phoroscript_interpreter
 						}
 
 						// TODO: right now it's expecting the file location pipe to be relative location
-						file_put_contents($this->var_current_directory . $to_file, $echo_contents . "\n");
+						$echo_dir = pts_add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
+						file_put_contents($echo_dir . $to_file, $echo_contents . "\n");
 					}
 					else
 					{
