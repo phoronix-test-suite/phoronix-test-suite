@@ -858,7 +858,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			if(IS_WINDOWS || pts_client::read_env("USE_PHOROSCRIPT_INTERPRETER") != false)
 			{
 				$phoroscript = new pts_phoroscript_interpreter($to_execute . '/' . $execute_binary, $test_extra_runtime_variables, $to_execute);
-				$phoroscript->execute_script($pts_test_arguments);
+				$phoroscript->execute_script($pts_test_arguments, $test_extra_runtime_variables);
 				$test_result = null;
 			}
 			else
