@@ -824,7 +824,14 @@ class phodevi_system extends phodevi_device_interface
 
 			if($os == null)
 			{
-				$os = php_uname("s");
+				if(IS_WINDOWS)
+				{
+					$os = trim(exec("ver"));
+				}
+				else
+				{
+					$os = php_uname("s");
+				}
 			}
 		}
 		else

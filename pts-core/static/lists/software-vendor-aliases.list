@@ -12,6 +12,7 @@ goobuntu = ubuntu
 gnukfreebsd = ubuntu
 dragonfly = netbsd
 moblin = fedora
+redhatenterprise = fedora
 centos = fedora
 palm = optware
 suselinux = opensuse
