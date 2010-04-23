@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add generated section to PTS result file XML
 - pts-core: Many PhoroScript interpreter improvements
 - pts-core: Add run-tests-in-suite option for running tests in a suite, but using user-defined settings
+- pts-core: Remove install-all and force-install-all options as they have been deprecated since PTS 1.6, use the "all" virtual suite instead
 - phodevi: Improve system thermal monitoring sysfs nodes on Linux
 - phodevi: Improve Clang/LLVM compiler detection
 - phodevi: Add DEFAULT_VIDEO_MODE environmental variable

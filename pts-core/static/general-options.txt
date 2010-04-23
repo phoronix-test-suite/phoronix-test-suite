@@ -8,7 +8,6 @@ Phoronix Test Suite
 Installation Options:
     install <suite / test>: Install or update the specified suite/test(s)
     install-dependencies <suite / test>: Install the distribution dependencies
-    install-all: Install or update all available tests
     list-installed-tests: List all tests that are installed
 
 Testing Options:
