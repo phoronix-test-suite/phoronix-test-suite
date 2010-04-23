@@ -85,7 +85,14 @@ function pts_run_command($command, $pass_args = null, $preset_assignments = "")
 
 	if(is_file(COMMAND_OPTIONS_DIR . $command . ".php"))
 	{
-		call_user_func(array($command, "run"), $pass_args);
+		if(method_exists($command, "run"))
+		{
+			call_user_func(array($command, "run"), $pass_args);
+		}
+		else
+		{
+			echo "\nThere is an error in the requested command: " . $command . "\n\n";
+		}
 	}
 	else if(pts_module_valid_user_command($command))
 	{

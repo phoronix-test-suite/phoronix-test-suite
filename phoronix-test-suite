@@ -59,8 +59,7 @@ then
 	cat <<'EOT'
 
 PHP 5.x CLI Must Be Installed To Run The Phoronix Test Suite.
-Only PHP For The Command Line Is Needed, Not A Complete PHP Web Server Installation.
-The PHP CLI package is generally called php-cli or php5-cli.
+The PHP CLI package is generally called php-cli, php5-cli, or php.
 For more information visit: http://www.phoronix-test-suite.com/
 
 EOT
