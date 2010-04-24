@@ -10,5 +10,5 @@ if [ $hour -ne 7 ] ; then
         exit
 fi
 
-/etc/update-kernel-process > /tmp/update-kernel-log 2>&1
+/etc/phoromatic-tracker-update-kernel > /tmp/update-kernel-log 2>&1
 
