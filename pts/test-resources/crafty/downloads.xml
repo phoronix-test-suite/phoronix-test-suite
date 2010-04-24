@@ -1,9 +1,15 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://ftp2.kr.freebsd.org/FreeBSD/ports/distfiles/crafty/crafty-23.0.zip, ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/crafty/crafty-23.0.zip, ftp://ftp.tu-ilmenau.de/Mirrors/gentoo/distfiles/crafty-23.0.zip</URL>
-			<MD5>c0fe0ad318f313a1bf6ac4cb7427ec73</MD5>
-			<FileSize>419362</FileSize>
+			<URL>http://www.craftychess.com/crafty-23.2.zip, http://www.sfr-fresh.com/unix/privat/crafty-23.2.zip, http://ftp.riken.go.jp/pub/FreeBSD/ports/distfiles/crafty/crafty-23.2.zip, http://www.mirrorservice.org/sites/www.ibiblio.org/gentoo/distfiles/crafty-23.2.zip</URL>
+			<MD5>522bb6b4ad1f04c198e6f9b2a0b1503d</MD5>
+			<FileSize>424434</FileSize>
+		</Package>
+		<Package>
+			<URL>http://www.webkikr.com/files/crafty-23.2-win64.exe.zip</URL>
+			<PlatformSpecific>Windows</PlatformSpecific>
+			<MD5>f69b499c8deee807fdd127f736d0cb9a</MD5>
+			<FileSize>272086</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

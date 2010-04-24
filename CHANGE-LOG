@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - phodevi: Improve Clang/LLVM compiler detection
 - phodevi: Add DEFAULT_VIDEO_MODE environmental variable
 - pts: Add compiler suite
+- pts: Update crafty test profile against Crafty 23.2
 - pts: Start porting over numerous test profiles to offer Windows 7 x64 compatibility
 
 Phoronix Test Suite 2.6 Alpha 3
