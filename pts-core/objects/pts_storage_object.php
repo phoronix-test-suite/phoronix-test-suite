@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	pts_storage_object.php: An object for storing other PTS objects on the disk
 
 	This program is free software; you can redistribute it and/or modify
@@ -114,6 +114,19 @@ class pts_storage_object
 		if($storage != false)
 		{
 			$storage->add_object($identifier, $object);
+			$storage->save_to_file($storage_file);
+		}
+	}
+	public static function add_in_file($storage_file, $identifier, $add)
+	{
+		$storage = self::recover_from_file($storage_file);
+
+		if($storage != false)
+		{
+			$current_value = $storage->read_object($identifier);
+			$current_value = is_numeric($current_value) ? $current_value : 0;
+
+			$storage->add_object($identifier, $current_value + $add);
 			$storage->save_to_file($storage_file);
 		}
 	}

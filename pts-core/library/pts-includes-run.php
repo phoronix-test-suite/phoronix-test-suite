@@ -1199,6 +1199,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	pts_module_process("__post_test_run", $test_results);
 	$report_elapsed_time = !$cache_share_present && $test_results->get_result() != 0;
 	pts_test_update_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
+	pts_storage_object::add_in_file(PTS_CORE_STORAGE, "total_testing_time", ($time_test_elapsed / 60));
 
 	if($report_elapsed_time && pts_anonymous_usage_reporting() && $time_test_elapsed >= 60)
 	{

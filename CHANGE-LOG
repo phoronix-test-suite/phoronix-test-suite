@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Remove install-all and force-install-all options as they have been deprecated since PTS 1.6, use the "all" virtual suite instead
 - pts-core: Fix when running the same test identifier for a result file multiple times and its test log dir has rename problem
 - pts-core: Add GRAPH_HIGHLIGHT environmental variable for highlighting specific test results when rendering a graph (initially for bar graphs)
+- pts-core: Add total_testing_time to the core storage that keeps track of how much time the given system spends benchmarking forever
 - phodevi: Improve system thermal monitoring sysfs nodes on Linux
 - phodevi: Improve Clang/LLVM compiler detection
 - phodevi: Add DEFAULT_VIDEO_MODE environmental variable
