@@ -33,11 +33,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<div id="pts_header_top">
 			<div class="pts_header_center">
 				<div id="pts_header_top_logo"></div>
-				<div id="pts_header_top_title">Phoronix Test Suite</div>
 				<div class="pts_header_links"><em><strong><xsl:value-of select="PhoronixTestSuite/Generated/Version" /></strong><br /><xsl:if test="PhoronixTestSuite/Generated/TimeStamp != ''"><strong>Generated:</strong>&#160;<xsl:value-of select="PhoronixTestSuite/Generated/TimeStamp" /><br /></xsl:if></em></div>
 			</div>
 		</div>
 		<div id="pts_container">
+		<div id="pts_banner_nav"><a href="#result-overview">Results Table</a> <a href="#test-results">Test Results</a> <a href="installation-logs/">Installation Logs</a> <a href="system-logs/">System Logs</a> <a href="test-logs/">Test Logs</a></div>
+
 		<h1><xsl:value-of select="PhoronixTestSuite/Suite/Title" /></h1>
 		<p><em><strong>Test:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Name" /><br /><em><strong>Test Version:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Version" /><br /><em><strong>Test Type:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Type" /></p>
 		<p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p>
@@ -57,10 +58,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><strong>Administrator:</strong> <xsl:value-of select="Author" /><br /><strong>Date:</strong> <xsl:value-of select="TestDate" /><br /><strong>PTS Version:</strong> <xsl:value-of select="Version" /><br /><strong>Test Notes:</strong><br /><xsl:value-of select="TestNotes" /></div></div></div></xsl:for-each>
 		</div>
 
-		<h1>Results Overview</h1>
+		<a name="result-overview"></a><h1>Results Overview</h1>
 		<p align="center"><div align="center" style="width: 100%; overflow: auto;"><!-- OVERVIEW TAG --><object type="image/svg+xml" data="result-graphs/overview.svg"></object></div></p>
 
-		<h1>Test Results</h1>
+		<a name="test-results"></a><h1>Test Results</h1>
 		<div id="pts_benchmark_area">
 			<xsl:for-each select="PhoronixTestSuite/Benchmark">
 				<xsl:variable name="this_test_pos" select="position()" />

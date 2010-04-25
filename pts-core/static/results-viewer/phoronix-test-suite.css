@@ -34,10 +34,10 @@ div#pts_header_top_logo
 {
 	position: relative;
 	float: left;
-	background-image: url(pts-106x55.png);
+	background-image: url(pts-header.png);
 	margin: 5px 0;
-	width: 106px;
-	height: 55px;
+	width: 510px;
+	height: 60px;
 }
 div#pts_header_top_title
 {
@@ -243,4 +243,33 @@ div#pts_copyright_area
 	border-width: 1px 0 0;
 	padding: 1px 0;
 	color: #454545;
+}
+div#pts_banner_nav
+{
+	height: 36px;
+	width: 100%;
+	background: #266c29 url(horizontal-nav-bg.png) repeat-x;
+	border: solid #949494;
+	border-width: 0 0 1px;
+	text-align: center;
+	color: #FFF;
+	font-weight: bold;
+	font-size: 16px;
+	padding-right: 1px;
+}
+div#pts_banner_nav a
+{
+	width: 20%;
+	height: 36px;
+	display: block;
+	float: left;
+	line-height: 36px;
+	margin-right: -1px;
+	border: solid #333;
+	border-width: 0 1px 0 0;
+}
+div#pts_banner_nav a:hover
+{
+	text-decoration: none;
+	background: #266c29 url(horizontal-nav-bg-hover.png) repeat-x;
 }
