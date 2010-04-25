@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>Phoronix Test Suite - <xsl:value-of select="PhoronixTestSuite/Suite/Title" /> - Results</title>
-		<link href="../pts-results-viewer/pts-viewer.css" rel="stylesheet" type="text/css" />
+		<link href="../pts-results-viewer/phoronix-test-suite.css" rel="stylesheet" type="text/css" />
 		<link rel="shortcut icon" href="../pts-results-viewer/favicon.ico" />
 		<script src="../pts-results-viewer/pts.js" type="text/javascript"></script>
 	</head>
@@ -38,9 +38,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			</div>
 		</div>
 		<div id="pts_container">
-
 		<h1><xsl:value-of select="PhoronixTestSuite/Suite/Title" /></h1>
-		<p><strong><xsl:value-of select="PhoronixTestSuite/Suite/Name" /> v<xsl:value-of select="PhoronixTestSuite/Suite/Version" /> (<xsl:value-of select="PhoronixTestSuite/Suite/Type" />)</strong></p>
+		<p><em><strong>Test:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Name" /><br /><em><strong>Test Version:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Version" /><br /><em><strong>Test Type:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Type" /></p>
 		<p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p>
 
 		<h1>System Hardware</h1>

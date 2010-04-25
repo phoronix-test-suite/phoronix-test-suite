@@ -1,11 +1,9 @@
 body
 {
-	text-align: center;
 	margin: 0;
 	padding: 0;
-	font-family: "Liberation Sans", "Bitstream Vera Sans", sans-serif;
-	font-size: 13px;
-	background-color: #BABABA;
+	font: 13px "Liberation Sans", "Bitstream Vera Sans", sans-serif;
+	background: #BABABA url(background-pattern.png) repeat;
 	color: #000;
 }
 a
@@ -28,7 +26,7 @@ div#pts_header_top
 }
 div.pts_header_center
 {
-	width: 920px;
+	width: 940px;
 	margin: 0 auto;
 	overflow: hidden;
 }
@@ -68,7 +66,7 @@ div.pts_header_links a, div.pts_header_links_left a
 div#pts_container
 {
 	text-align: left;
-	width: 920px;
+	width: 940px;
 	margin: 0 auto;
 	overflow: hidden;
 	border: solid #919191;
@@ -93,7 +91,7 @@ div#pts_header_bottom_center
 {
 	margin: 2px auto;
 	padding: 6px 0 10px;
-	width: 920px;
+	width: 940px;
 	overflow: hidden;
 	font-size: 12px;
 	text-align: center;
@@ -179,6 +177,7 @@ div.pts_table_box_col
 	border: solid #949494;
 	border-width: 0 1px 0 0;
 	display: table-cell;
+	width: auto;
 }
 div.pts_chart_box
 {

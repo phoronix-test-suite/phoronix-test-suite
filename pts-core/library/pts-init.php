@@ -78,9 +78,12 @@ function pts_extended_init()
 
 	// Setup PTS Results Viewer
 	pts_mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
-	pts_copy(RESULTS_VIEWER_DIR . "pts.js", SAVE_RESULTS_DIR . "pts-results-viewer/pts.js");
-	pts_copy(RESULTS_VIEWER_DIR . "pts-viewer.css", SAVE_RESULTS_DIR . "pts-results-viewer/pts-viewer.css");
-	pts_copy(RESULTS_VIEWER_DIR . "favicon.ico", SAVE_RESULTS_DIR . "pts-results-viewer/favicon.ico");
+
+	foreach(pts_glob(RESULTS_VIEWER_DIR . "*.*") as $result_viewer_file)
+	{
+		pts_copy($result_viewer_file, SAVE_RESULTS_DIR . "pts-results-viewer/" . basename($result_viewer_file));
+	}
+
 	pts_copy(STATIC_DIR . "images/pts-106x55.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-106x55.png");
 
 	// Setup ~/.phoronix-test-suite/xsl/
