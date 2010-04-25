@@ -59,10 +59,6 @@ div.pts_header_links_left
 	font-size: 11px;
 	float: left;
 }
-div.pts_header_links a, div.pts_header_links_left a
-{
-	font-weight: bold;
-}
 div#pts_container
 {
 	text-align: left;
@@ -239,6 +235,7 @@ div.pts_benchmark_img_area
 }
 div#pts_copyright_area
 {
+	clear: both;
 	background-color: #BABABA;
 	text-align: center;
 	padding: 0 -10px -15px;
