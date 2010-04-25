@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add DEFAULT_VIDEO_MODE environmental variable
 - pts: Add compiler suite
 - pts: Update crafty test profile against Crafty 23.2
+- pts: Update smokin-guns test profile against Smokin' Guns 1.1 Beta 4
 - pts: Start porting over numerous test profiles to offer Windows 7 x64 compatibility
 
 Phoronix Test Suite 2.6 Alpha 3

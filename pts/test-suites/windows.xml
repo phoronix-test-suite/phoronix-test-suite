@@ -51,4 +51,7 @@
 		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT ugnx</Arguments>
 		<Description>UGNX</Description>
 	</RunTest>
+	<RunTest>
+		<Test>crafty</Test>
+	</RunTest>
 </PhoronixTestSuite>

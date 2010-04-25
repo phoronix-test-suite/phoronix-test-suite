@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.3</Version>
+		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
@@ -16,16 +16,13 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Smokin Guns</Title>
-		<Version>1.0</Version>
+		<Version>1.1b4</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>Smokin Guns is an open-source game based on the Quake 3 engine that is a western-themed first person shooter.</Description>
 	</TestInformation>
 	<TestSettings>
-		<Default>
-			<Arguments>+timedemo 1 +set demodone "quit" +set demoloop1 "demo pts; set nextdemo vstr demodone" +vstr demoloop1</Arguments>
-		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>
 			<Identifier>auto-resolution</Identifier>

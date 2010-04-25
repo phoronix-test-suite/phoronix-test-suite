@@ -1,22 +1,17 @@
 #!/bin/sh
 
 unzip -o Smokin_Guns_1.0.zip
+mv SmokinGuns-1.1b4-update.zip Smokin\'\ Guns/
 cd Smokin\'\ Guns/
-chmod +x smokinguns.x86
+unzip -o SmokinGuns-1.1b4-update.zip
 cd ..
-
 
 tar -zxvf smokinguns-benchmark-2.tar.gz
 mkdir -p ~/.smokinguns/smokinguns/
-mv -f q3config.cfg ~/.smokinguns/smokinguns/
-mv -f demos/ ~/.smokinguns/smokinguns/
+mv -f q3config.cfg Smokin\'\ Guns/smokinguns/
+mv -f demos/ Smokin\'\ Guns/smokinguns/
 
 echo "#!/bin/sh
 cd Smokin\'\ Guns/
-rm -f libopenal.so.0
-rm -f libGL.so
-[ -r /usr/lib/libGL.so.1 -a ! -r /usr/lib/libGL.so ] && ln -fs /usr/lib/libGL.so.1 libGL.so
-[ -r /usr/lib/libopenal.so.1 -a ! -r /usr/lib/libopenal.so.0 ] && ln -fs /usr/lib/libopenal.so.1 libopenal.so.0
-LD_LIBRARY_PATH=. ./smokinguns.x86 \$@ > \$LOG_FILE 2>&1
-cat \$LOG_FILE | grep fps" > smokin-guns
+./smokinguns.i386 +timedemo 1 +set demodone \"quit\" +set demoloop1 \"demo pts; set nextdemo vstr demodone\" +vstr demoloop1 \$@ > \$LOG_FILE 2>&1" > smokin-guns
 chmod +x smokin-guns
