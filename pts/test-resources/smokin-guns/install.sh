@@ -7,7 +7,6 @@ unzip -o SmokinGuns-1.1b4-update.zip
 cd ..
 
 tar -zxvf smokinguns-benchmark-2.tar.gz
-mkdir -p ~/.smokinguns/smokinguns/
 mv -f q3config.cfg Smokin\'\ Guns/smokinguns/
 mv -f demos/ Smokin\'\ Guns/smokinguns/
 

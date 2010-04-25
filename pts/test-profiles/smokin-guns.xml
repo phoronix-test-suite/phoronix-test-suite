@@ -12,7 +12,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.smokin-guns.net/</ProjectURL>
 		<ExternalDependencies>openal-development</ExternalDependencies>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
+		<SupportedPlatforms>Linux, Windows</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>Smokin Guns</Title>
