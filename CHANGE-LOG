@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.6 Beta 1
+April 26, 2010
 
 - pts-core: Add ResultBeforeString tag to parse-results.xml interface
 - pts-core: When a filesize is not supplied by downloads.xml, try to calculate it using filesize() if applicable
