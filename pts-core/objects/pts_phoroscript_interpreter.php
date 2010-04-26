@@ -321,7 +321,7 @@ class pts_phoroscript_interpreter
 					// IGNORE
 					break;
 				case 'case':
-					echo "\nUNHANDLED EVENT\n";
+					//echo "\nUNHANDLED EVENT\n";
 					return false;
 					// TODO: decide how to handle
 					break;

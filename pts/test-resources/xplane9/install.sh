@@ -14,5 +14,5 @@ case \$OS_TYPE in
 	;;
 esac
 
-cp Log.txt \$LOG_FILE" > xplane9
+mv Log.txt \$LOG_FILE" > xplane9
 chmod +x xplane9

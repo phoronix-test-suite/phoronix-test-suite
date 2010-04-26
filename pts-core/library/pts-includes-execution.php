@@ -90,23 +90,23 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = nu
 
 	return $result;
 }
-function pts_test_support_check($identifier)
+function pts_test_support_check($identifier, &$display_mode)
 {
 	$test_supported = true;
 
 	if(!pts_test_architecture_supported($identifier))
 	{
-		echo pts_string_header($identifier . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
+		$display_mode->test_run_error($identifier . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
 		$test_supported = false;
 	}
 	else if(!pts_test_platform_supported($identifier))
 	{
-		echo pts_string_header($identifier . " is not supported by this operating system (" . OPERATING_SYSTEM . ").");
+		$display_mode->test_run_error($identifier . " is not supported by this operating system: " . OPERATING_SYSTEM);
 		$test_supported = false;
 	}
 	else if(!pts_test_version_supported($identifier))
 	{
-		echo pts_string_header($identifier . " is not supported by this version of the Phoronix Test Suite (" . PTS_VERSION . ").");
+		$display_mode->test_run_error($identifier . " is not supported by this version of the Phoronix Test Suite: " . PTS_VERSION);
 		$test_supported = false;
 	}
 

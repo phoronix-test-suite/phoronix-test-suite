@@ -230,7 +230,10 @@ function pts_install_packages_on_distribution_process($install_objects, &$displa
 		}
 		else
 		{
-			echo "Distribution install script not found!";
+			if(!IS_MACOSX)
+			{
+				echo "Distribution install script not found!";
+			}
 		}
 	}
 	else if(pts_read_assignment("COMMAND") == "install_dependencies")

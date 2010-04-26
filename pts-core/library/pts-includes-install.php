@@ -423,9 +423,9 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 	// Install a test
 	$display_mode->test_install_start($identifier);
 	$installed = false;
-	if(!pts_test_support_check($identifier))
+	if(!pts_test_support_check($identifier, $display_mode))
 	{
-		$display_mode->test_install_error("This test is not supported by this system.");
+		//$display_mode->test_install_error("This test is not supported by this system.");
 	}
 	else if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($identifier, explode(",", $e)))
 	{

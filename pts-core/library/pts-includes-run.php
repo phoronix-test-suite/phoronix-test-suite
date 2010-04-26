@@ -66,7 +66,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 			}
 			else
 			{
-				$test_passes = pts_test_support_check($lower_identifier);
+				$test_passes = pts_test_support_check($lower_identifier, $display_mode);
 			}
 		}
 		else if(pts_is_suite($lower_identifier))
