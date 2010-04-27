@@ -300,35 +300,24 @@ abstract class pts_Graph
 	{
 		$this->graph_color_paint_index = -1;
 	}
-	protected function max_value_in_array(&$data_r)
-	{
-		$maximum = 0;
-
-		foreach($data_r as &$data_point)
-		{
-			if(is_array($data_point))
-			{
-				$sub_r_max = $this->max_value_in_array($data_point);
-
-				if((is_numeric($sub_r_max) && $sub_r_max > $maximum) || (!is_numeric($sub_r_max) && strlen($sub_r_max) > strlen($maximum)))
-				{
-					$maximum = $sub_r_max;
-				}
-			}
-			else
-			{
-				if((is_numeric($data_point) && $data_point > $maximum) || (!is_numeric($data_point) && strlen($data_point) > strlen($maximum)))
-				{
-					$maximum = $data_point;
-				}
-			}
-		}
-
-		return $maximum;
-	}
 	protected function maximum_graph_value()
 	{
-		$real_maximum = $this->max_value_in_array($this->graph_data);
+		$real_maximum = 0;
+
+		foreach($this->graph_data as &$data_r)
+		{
+			$data_max = max($data_r);
+
+			if(!is_numeric($data_max))
+			{
+				$data_max = str_repeat(9, strlen($data_max));
+			}
+
+			if($data_max > $real_maximum)
+			{
+				$real_maximum = $data_max;
+			}
+		}
 
 		if(is_numeric($real_maximum))
 		{
