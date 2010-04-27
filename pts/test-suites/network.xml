@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<SuiteInformation>
+		<Version>1.0.0</Version>
+		<TestType>Network</TestType>
+		<Title>Networking Test Suite</Title>
+		<Maintainer>Michael Larabel</Maintainer>
+		<Description>The network test suite consists of tests designed to test the computer's networking performance.</Description>
+	</SuiteInformation>
+	<RunTest>
+		<Test>network-loopback</Test>
+	</RunTest>
+</PhoronixTestSuite>

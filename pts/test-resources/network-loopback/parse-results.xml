@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<OutputTemplate>Rendering took: 86 seconds (#_RESULT_# milliseconds)</OutputTemplate>
+		<DivideResultValueBy>1000</DivideResultValueBy>
+	</ResultsParser>
+</PhoronixTestSuite>

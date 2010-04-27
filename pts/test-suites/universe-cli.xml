@@ -47,4 +47,7 @@
 	<RunTest>
 		<Test>povray</Test>
 	</RunTest>
+	<RunTest>
+		<Test>network</Test>
+	</RunTest>
 </PhoronixTestSuite>
