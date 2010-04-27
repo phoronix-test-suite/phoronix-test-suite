@@ -26,7 +26,6 @@ class pts_LineGraph extends pts_Graph
 	protected $identifier_width = -1;
 	protected $minimum_identifier_font = 7;
 	protected $show_select_identifiers = null;
-	protected $show_select_identifiers_smart_on_change = false; // toggle this manually for now
 
 	public function __construct(&$result_object)
 	{
@@ -52,62 +51,8 @@ class pts_LineGraph extends pts_Graph
 
 			if(($text_height + 4) > $this->identifier_width && $graph_identifiers_count > 3)
 			{
-				// Showing all the identifiers will be cramped
-
-				if($this->show_select_identifiers_smart_on_change == true)
-				{
-					// This option will only show the identifiers every few steps or when there is a change
-					$first_identifier = $this->graph_identifiers[0];
-					$predefined_shows = array(0, $graph_identifiers_count - 1, pts_math::set_precision($graph_identifiers_count / 2));
-					$showed_on_last = false;
-					$show_every_x_steps = 6;
-
-					if(is_numeric($first_identifier))
-					{
-						// Assume numerical array
-						$diff_1 = $this->graph_identifiers[1] - $this->graph_identifiers[0];
-						$this->show_select_identifiers = array();
-
-						for($i = 0; $i < $graph_identifiers_count; $i++)
-						{
-							if(in_array($i, $predefined_shows) || ($this->graph_identifiers[$i] - $this->graph_identifiers[($i - 1)]) != $diff_1 || ($i % $show_every_x_steps == 0 && $showed_on_last == false && !in_array($i + 1, $predefined_shows)))
-							{
-								array_push($this->show_select_identifiers, $i);
-								$showed_on_last = true;
-								continue;
-							}
-							else
-							{
-								$showed_on_last = false;
-							}
-						}
-					}
-					else if(is_numeric(str_replace('-', null, $first_identifier)))
-					{
-						// Assume its an array of dates, should add more checks
-						$diff_1 = strtotime($this->graph_identifiers[1]) - strtotime($this->graph_identifiers[0]);
-						$this->show_select_identifiers = array();
-
-						for($i = 0; $i < $graph_identifiers_count; $i++)
-						{
-							if(in_array($i, $predefined_shows) || (strtotime($this->graph_identifiers[$i]) - strtotime($this->graph_identifiers[($i - 1)])) != $diff_1 || ($i % $show_every_x_steps == 0 && $showed_on_last == false && !in_array($i + 1, $predefined_shows)))
-							{
-								array_push($this->show_select_identifiers, $i);
-								$showed_on_last = true;
-								continue;
-							}
-							else
-							{
-								$showed_on_last = false;
-							}
-						}
-					}
-				}
-				else
-				{
-					// Show the identifiers as frequently as they will fit
-					$this->show_select_identifiers = ceil(($text_height + 4) / $this->identifier_width);
-				}
+				// Show the identifiers as frequently as they will fit
+				$this->show_select_identifiers = ceil(($text_height + 4) / $this->identifier_width);
 			}
 		}
 	}
@@ -124,33 +69,20 @@ class pts_LineGraph extends pts_Graph
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			if(is_array($this->graph_identifiers[$i]) || $this->graph_identifiers[$i] == "Array")
+			if(is_array($this->graph_identifiers[$i]))
 			{
+				// || $this->graph_identifiers[$i] == "Array"
 				// TODO: Why is "Array" text getting sent with some line graphs?
 				break;
 			}
 
-			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
-
-			if($this->show_select_identifiers != null)
+			if($this->show_select_identifiers != null && ($i % $this->show_select_identifiers) != 0)
 			{
-				if($this->show_select_identifiers_smart_on_change == true)
-				{
-					// $show_select_identifiers in this case shows an array of the identifiers to display
-					if(!in_array($i, $this->show_select_identifiers))
-					{
-						continue;
-					}
-				}
-				else
-				{
-					// $show_select_identifiers contains the value of how frequently to display identifiers
-					if(($i % $this->show_select_identifiers) != 0)
-					{
-						continue;
-					}
-				}
+				// $show_select_identifiers contains the value of how frequently to display identifiers
+				continue;
 			}
+
+			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
 
 			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 			{
@@ -318,16 +250,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($calculations_r as $color => &$values)
 			{
-				$high = $values[0];
-				foreach($values as &$value_check)
-				{
-					if($value_check > $high)
-					{
-						$high = $value_check;
-					}
-				}
-
-				array_push($to_display[$color], pts_math::set_precision($high, 1));
+				array_push($to_display[$color], pts_math::set_precision(max($values), 1));
 			}
 		}
 		if($min_value > 0 && $max_value != $min_value)
@@ -336,16 +259,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($calculations_r as $color => &$values)
 			{
-				$low = $values[0];
-				foreach($values as &$value_check)
-				{
-					if($value_check < $low)
-					{
-						$low = $value_check;
-					}
-				}
-
-				array_push($to_display[$color], pts_math::set_precision($low, 1));
+				array_push($to_display[$color], pts_math::set_precision(min($values), 1));
 			}
 		}
 		if($point_counter > 9 && !in_array($this->graph_y_title, array("Percent")))
