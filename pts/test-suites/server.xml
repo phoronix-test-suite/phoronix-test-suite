@@ -39,6 +39,9 @@
 		<Test>gcrypt</Test>
 	</RunTest>
 	<RunTest>
+		<Test>phpbench</Test>
+	</RunTest>
+	<RunTest>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>Operation: HWB Color Space</Description>

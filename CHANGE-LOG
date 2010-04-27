@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts: Add network-loopback test profile
+- pts: Add phpbench test profile
 
 Phoronix Test Suite 2.6 Beta 1
 April 26, 2010
