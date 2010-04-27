@@ -57,6 +57,26 @@ class pts_image
 	   
 		return $img;
 	}
+	public static function image_file_to_gd($img_file)
+	{
+		$img = false;
+
+		switch(strtolower(pts_last_element_in_array(explode('.', $img_file))))
+		{
+			case "tga":
+				$img = pts_image::imagecreatefromtga($img_file);
+				break;
+			case "png":
+				$img = imagecreatefrompng($img_file);
+				break;
+			case "jpg":
+			case "jpeg":
+				$img = imagecreatefromjpeg($img_file);
+				break;
+		}
+
+		return $img;
+	}
 }
 
 ?>

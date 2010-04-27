@@ -67,6 +67,14 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 			else
 			{
 				$test_passes = pts_test_support_check($lower_identifier, $display_mode);
+
+				if($test_passes != false)
+				{
+					if(pts_test_needs_updated_install($lower_identifier))
+					{
+						$display_mode->test_run_error("The test installation of " . $lower_identifier . " is out of date.");
+					}
+				}
 			}
 		}
 		else if(pts_is_suite($lower_identifier))
@@ -527,21 +535,10 @@ function pts_parse_results_iqc(&$display_mode, $test_identifier, $parse_results_
 			continue;
 		}
 
-		switch(strtolower(pts_last_element_in_array(explode('.', $iqc_source_file))))
+		$img = pts_image::image_file_to_gd($iqc_source_file);
+		if($img == false)
 		{
-			case "tga":
-				$img = pts_image::imagecreatefromtga($iqc_source_file);
-				break;
-			case "png":
-				$img = imagecreatefrompng($iqc_source_file);
-				break;
-			case "jpg":
-			case "jpeg":
-				$img = imagecreatefromjpeg($iqc_source_file);
-				break;
-			default:
-				return false;
-				break;
+			return;
 		}
 
 		$img_sliced = imagecreatetruecolor($result_iqc_image_width[$i], $result_iqc_image_height[$i]);
@@ -791,11 +788,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$to_execute = pts_find_test_executable($test_identifier, $test_profile);
-
-	if(pts_test_needs_updated_install($test_identifier))
-	{
-		echo pts_string_header("NOTE: This test installation is out of date.\nIt is recommended that " . $test_identifier . " be re-installed.");
-	}
 
 	$pts_test_arguments = trim($test_profile->get_default_arguments() . " " . str_replace($test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_profile->get_default_post_arguments());
 	$extra_runtime_variables = pts_extra_run_time_vars($test_identifier, $pts_test_arguments, $result_format);
