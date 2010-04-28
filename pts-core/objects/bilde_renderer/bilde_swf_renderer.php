@@ -226,6 +226,10 @@ class bilde_swf_renderer extends bilde_renderer
 	{
 		return array(hexdec(substr($hex, 1, 2)), hexdec(substr($hex, 3, 2)), hexdec(substr($hex, 5, 2)));
 	}
+	public function convert_type_to_hex($type)
+	{
+		return '#' . dexhec($type[0]) . dexhec($type[1]) . dexhec($type[2]);
+	}
 	public function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false)
 	{
 		return array(0, 0);

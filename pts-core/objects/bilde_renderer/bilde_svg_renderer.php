@@ -292,6 +292,15 @@ class bilde_svg_renderer extends bilde_renderer
 
 		return $hex;
 	}
+	public function convert_type_to_hex($type)
+	{
+		if(strlen($type) == 4)
+		{
+			$type .= substr($type, 1);
+		}
+
+		return $type;
+	}
 	public function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false)
 	{
 		return array(0, 0); // TODO: implement, though seems to do fine without it for the SVG renderer

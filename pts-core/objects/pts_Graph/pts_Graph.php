@@ -296,6 +296,62 @@ abstract class pts_Graph
 
 		return $this->graph_color_paint[$this->graph_color_paint_index];
 	}
+	protected function shade_color($hex_color)
+	{
+		$stepping = 80;
+		$hex[] = hexdec(substr($hex_color, 1, 2));
+		$hex[] = hexdec(substr($hex_color, 3, 2));
+		$hex[] = hexdec(substr($hex_color, 5, 2));
+
+		foreach($hex as &$component)
+		{
+			if($component == 0)
+			{
+				continue;
+			}
+
+			if($component < $stepping)
+			{
+				$component = 255;
+			}
+
+			$component -= $stepping;
+		}
+		return '#' . str_pad(dechex($hex[0]), 2, 0) . str_pad(dechex($hex[1]), 2, 0) . str_pad(dechex($hex[2]), 2, 0);
+	}
+	protected function get_paint_color($identifier)
+	{
+		static $used_paint_colors;
+
+		if(!isset($used_paint_colors[$identifier]))
+		{
+			if(PTS_MODE == "CLIENT" && pts_client::read_env("GRAPH_COLOR_GROUP_SIMILAR"))
+			{
+				static $groups;
+
+				$group = trim(pts_last_element_in_array(explode(':', $identifier)));
+
+				if(!isset($groups[$group]))
+				{
+					$groups[$group] = $this->next_paint_color();
+				}
+				else
+				{
+					$color = $this->graph_image->convert_type_to_hex($groups[$group]);
+					$color = $this->shade_color($color);
+					$groups[$group] = $this->graph_image->convert_hex_to_type($color);
+				}
+
+				$used_paint_colors[$identifier] = $groups[$group];
+			}
+			else
+			{
+				$used_paint_colors[$identifier] = $this->next_paint_color();
+			}
+		}
+
+		return $used_paint_colors[$identifier];
+	}
 	protected function reset_paint_index()
 	{
 		$this->graph_color_paint_index = -1;
@@ -610,7 +666,7 @@ abstract class pts_Graph
 		{
 			if(!empty($this->graph_data_title[$i]))
 			{
-				$this_color = $this->next_paint_color();
+				$this_color = $this->get_paint_color($this->graph_data_title[$i]);
 				$key_counter += 1;
 
 				$component_x = $this->graph_left_start + 14 + (($this->graph_left_end - $this->graph_left_start) / 4) * (($key_counter - 1) % 4);
@@ -624,7 +680,6 @@ abstract class pts_Graph
 				}
 			}
 		}
-		$this->reset_paint_index();
 	}
 	protected function render_graph_watermark()
 	{

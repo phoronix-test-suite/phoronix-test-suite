@@ -81,7 +81,7 @@ class pts_BarGraph extends pts_Graph
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
-			$paint_color = $this->next_paint_color();
+			$paint_color = $this->get_paint_color($this->graph_data_title[$i_o]);
 
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{

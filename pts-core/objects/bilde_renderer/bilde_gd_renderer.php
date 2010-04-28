@@ -232,6 +232,10 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	{
 		return imagecolorallocate($this->image, hexdec(substr($hex, 1, 2)), hexdec(substr($hex, 3, 2)), hexdec(substr($hex, 5, 2)));
 	}
+	public function convert_type_to_hex($type)
+	{
+		return '#' . str_pad(base_convert($type, 10, 16), 6, 0, STR_PAD_LEFT);
+	}
 	public function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false)
 	{
 		return $this->soft_text_string_dimensions($string, $font_type, $font_size, $predefined_string);

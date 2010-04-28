@@ -170,7 +170,7 @@ class pts_Chart extends pts_Graph
 						continue;
 					}
 
-					$paint_color = $this->next_paint_color();
+					$paint_color = $this->get_paint_color($identifier);
 
 					$this->graph_image->draw_rectangle_with_border(($this->graph_left_start + ($last_changed_col * $table_item_width)), 0, ($this->graph_left_start + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col)), $extra_heading_height, $paint_color, $this->graph_color_border);
 
