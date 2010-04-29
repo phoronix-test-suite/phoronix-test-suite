@@ -22,7 +22,7 @@
 
 class pts_merge
 {
-	public static function merge_test_results_array(&$files_to_combine, $pass_attributes = null)
+	public static function merge_test_results_array($files_to_combine, $pass_attributes = null)
 	{
 		$results_xml = new pts_results_tandem_XmlWriter();
 		self::merge_test_results_process($results_xml, $files_to_combine, $pass_attributes);
