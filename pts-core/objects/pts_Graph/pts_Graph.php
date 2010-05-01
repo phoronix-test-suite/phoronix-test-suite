@@ -325,7 +325,7 @@ abstract class pts_Graph
 
 		if(!isset($used_paint_colors[$identifier]))
 		{
-			if(PTS_MODE == "CLIENT" && pts_client::read_env("GRAPH_COLOR_GROUP_SIMILAR"))
+			if(PTS_MODE == "CLIENT" && pts_client::read_env("GRAPH_GROUP_SIMILAR"))
 			{
 				static $groups;
 
@@ -388,7 +388,7 @@ abstract class pts_Graph
 			}
 			else
 			{
-				$maximum = (floor(round($real_maximum * 1.35) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+				$maximum = (floor(round($real_maximum * 1.16) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
 
 				if($real_maximum > 100)
 				{

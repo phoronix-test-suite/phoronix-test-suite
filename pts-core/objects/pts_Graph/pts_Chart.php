@@ -30,19 +30,19 @@ class pts_Chart extends pts_Graph
 	protected $longest_test_title;
 	protected $longest_system_identifier;
 
-	public function __construct(&$result_file, $system_id_keys = null)
+	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
 	{
 		parent::__construct();
 		$this->graph_attr_big_border = true;
 
-		list($this->result_tests, $this->result_systems, $this->result_table, $this->result_count, $this->graph_maximum_value, $this->longest_test_title, $this->longest_system_identifier) = $result_file->get_result_table($system_id_keys);
+		list($this->result_tests, $this->result_systems, $this->result_table, $this->result_count, $this->graph_maximum_value, $this->longest_test_title, $this->longest_system_identifier) = $result_file->get_result_table($system_id_keys, $result_object_index);
 	}
 	public function renderChart($file = null)
 	{
 		// where to start the table values
-		$this->graph_left_start = $this->text_string_width($this->longest_test_title, $this->graph_font, $this->graph_font_size_identifiers);
+		$this->graph_left_start = $this->text_string_width($this->longest_test_title, $this->graph_font, $this->graph_font_size_identifiers) + 10;
 
-		if($this->graph_left_start < 170)
+		if($this->graph_left_start < 170 && defined("PHOROMATIC_TRACKER"))
 		{
 			$this->graph_left_start = 170;
 		}
@@ -64,14 +64,15 @@ class pts_Chart extends pts_Graph
 
 		$table_identifier_width = $this->text_string_height($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers);
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
-		$table_item_width = ($table_max_value_width > $table_identifier_width ? $table_max_value_width : $table_identifier_width) + 10;
+		$table_item_width = ($table_max_value_width > $table_identifier_width ? $table_max_value_width : $table_identifier_width) + 4;
 		$table_width = $table_item_width * count($this->result_systems);
-		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 8;
+		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 6;
 		$table_line_height_half = ($table_line_height / 2);
 		$table_height = $table_line_height * $this->result_count;
+		$table_proper_height = $table_height + $identifier_height;
 
 		$this->graph_attr_width = $table_width + $this->graph_left_start;
-		$this->graph_attr_height = $table_height + $identifier_height;
+		$this->graph_attr_height = $table_proper_height + $table_line_height;
 
 		// Do the actual work
 		$this->requestRenderer("SVG");
@@ -85,14 +86,18 @@ class pts_Chart extends pts_Graph
 		}
 
 		// Draw the vertical table lines
-		$this->graph_image->draw_dashed_line($this->graph_left_start, ($this->graph_attr_height / 2), $this->graph_attr_width, ($this->graph_attr_height / 2), $this->graph_color_body, $this->graph_attr_height, $table_item_width, $table_item_width);
+		$this->graph_image->draw_dashed_line($this->graph_left_start, ($table_proper_height / 2), $this->graph_attr_width, ($table_proper_height / 2), $this->graph_color_body, $table_proper_height, $table_item_width, $table_item_width);
 
 		// Background horizontal
-		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), $identifier_height, ($this->graph_attr_width / 2), $this->graph_attr_height, $this->graph_color_body_light, $this->graph_attr_width, $table_line_height, $table_line_height);
+		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), $identifier_height, ($this->graph_attr_width / 2), $table_proper_height, $this->graph_color_body_light, $this->graph_attr_width, $table_line_height, $table_line_height);
 
 		// Draw the borders
-		$this->graph_image->draw_dashed_line($this->graph_left_start, ($this->graph_attr_height / 2), $this->graph_attr_width, ($this->graph_attr_height / 2), $this->graph_color_border, $this->graph_attr_height, 1, ($table_item_width - 1));
+		$this->graph_image->draw_dashed_line($this->graph_left_start, ($table_proper_height / 2), $this->graph_attr_width, ($table_proper_height / 2), $this->graph_color_border, $table_proper_height, 1, ($table_item_width - 1));
 		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), $identifier_height, ($this->graph_attr_width / 2), $this->graph_attr_height, $this->graph_color_border, $this->graph_attr_width, 1, ($table_line_height - 1));
+
+		$this->graph_image->draw_rectangle(0, $table_proper_height, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_headers);
+		$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, false, $this->graph_watermark_url);
+		$this->graph_image->write_text_left($this->graph_version, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half, false, "http://www.phoronix-test-suite.com/");
 
 		// Write the test names
 		foreach($this->result_tests as $i => $test)

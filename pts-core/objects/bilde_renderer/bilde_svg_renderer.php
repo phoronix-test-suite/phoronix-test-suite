@@ -208,8 +208,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$y1 += $height < 0 ? $height : 0;
 
 		// could add a add_svg_style_definition here if it could be smart
-		$class = $this->add_svg_style_definition("width: " . abs(round($width)) . "px; height: " . abs(round($height)) . "px; fill: " . $background_color . ";");
-		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" class=\"" . $class . "\" />\n";
+		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . abs(round($width)) . "\" height=\"" . abs(round($height)) . "\" fill=\"" . $background_color . "\" />\n";
 	}
 	public function draw_rectangle_border($x1, $y1, $width, $height, $border_color)
 	{

@@ -126,7 +126,7 @@ class pts_LineGraph extends pts_Graph
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
-				$data_string = $this->graph_identifiers[$i] . ": " . $value;
+				$data_string = $this->graph_data_title[$i_o] . ' @ ' . $this->graph_identifiers[$i] . ": " . $value;
 
 				if($value == 0 && !$has_hit_non_zero)
 				{

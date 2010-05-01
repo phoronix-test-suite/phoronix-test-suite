@@ -146,6 +146,32 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 		if($save_to_dir && is_dir($save_to_dir))
 		{
 			$save_to .= "/result-graphs/" . ($key + 1) . ".BILDE_EXTENSION";
+
+
+			if(PTS_MODE == "CLIENT")
+			{
+				if(pts_client::read_env("GRAPH_GROUP_SIMILAR"))
+				{
+					$table_keys = array();
+					$titles = $result_file->get_test_titles();
+
+					foreach($titles as $this_title_index => $this_title)
+					{
+						if($this_title == $titles[$key])
+						{
+							array_push($table_keys, $this_title_index);
+						}
+					}
+				}
+				else
+				{
+					$table_keys = $key;
+				}
+
+				$chart = new pts_Chart($result_file, null, $table_keys);
+				$chart->loadGraphVersion("Phoronix Test Suite " . $pts_version);
+				$chart->renderChart($save_to_dir . "/result-graphs/" . ($key + 1) . "_table.BILDE_EXTENSION");
+			}
 		}
 
 		if(pts_read_assignment("LINEAR_TRACKER_COMPACT"))

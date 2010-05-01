@@ -95,9 +95,13 @@ class pts_result_file
 	{
 		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
 	}
+	public function get_test_titles()
+	{
+		return $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
+	}
 	public function get_unique_test_titles()
 	{
-		return array_unique($this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE));
+		return array_unique($this->get_test_titles());
 	}
 	public function get_result_object_hashes()
 	{
@@ -125,7 +129,7 @@ class pts_result_file
 
 		return $object_hashes;
 	}
-	public function get_result_table($system_id_keys = null)
+	public function get_result_table($system_id_keys = null, $result_object_index = -1)
 	{
 		$result_table = array();
 		$result_tests = array();
@@ -139,10 +143,15 @@ class pts_result_file
 			$result_table[$sys_identifier] = array();
 		}
 
-		foreach($this->get_result_objects() as $result_object)
+		foreach($this->get_result_objects($result_object_index) as $result_object)
 		{
 			$result_tests[$result_counter][0] = $result_object->get_name();
 			$result_tests[$result_counter][1] = $result_object->get_attributes();
+
+			if($result_object_index != -1)
+			{
+				$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
+			}
 
 			if(($len = strlen($result_tests[$result_counter][0])) > $longest_test_title_length)
 			{
@@ -307,7 +316,7 @@ class pts_result_file
 
 		return array($result_tests, $result_systems, $result_table, $result_counter, $max_value, $longest_test_title, $longest_system_identifier);
 	}
-	public function get_result_objects()
+	public function get_result_objects($select_indexes = -1)
 	{
 		if($this->result_objects == null)
 		{
@@ -353,6 +362,21 @@ class pts_result_file
 
 				array_push($this->result_objects, $test_object);
 			}
+		}
+
+		if($select_indexes != -1)
+		{
+			$objects = array();
+
+			foreach(pts_to_array($select_indexes) as $index)
+			{
+				if(isset($this->result_objects[$index]))
+				{
+					array_push($objects, $this->result_objects[$index]);
+				}
+			}
+
+			return $objects;
 		}
 
 		return $this->result_objects;
