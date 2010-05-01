@@ -21,13 +21,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_dirname($path)
-{
-	return pts_add_trailing_slash(dirname($path));
-}
 function pts_add_trailing_slash($path)
 {
-	return $path . (substr($path, -1) == "/" ? null : "/"); 
+	return $path . (substr($path, -1) == '/' ? null : '/'); 
 }
 function pts_first_string_in_string($string, $delimited_by = " ")
 {

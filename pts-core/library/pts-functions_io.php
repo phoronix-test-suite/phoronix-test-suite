@@ -21,13 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-function p_str($str_o)
-{
-	// TODO: implement here for internationalization support
-	//  $_ENV["LANG"]
-	return $str_o;
-}
 function pts_read_user_input()
 {
 	return trim(fgets(STDIN));

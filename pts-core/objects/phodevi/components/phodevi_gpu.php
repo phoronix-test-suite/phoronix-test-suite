@@ -319,7 +319,7 @@ class phodevi_gpu extends phodevi_device_interface
 				// Before calling xrandr first try to get the resolution through KMS path
 				foreach(pts_glob("/sys/class/drm/card*/*/modes") as $connector_path)
 				{
-					$connector_path = pts_dirname($connector_path);
+					$connector_path = dirname($connector_path) . '/';
 
 					if(is_file($connector_path . "enabled") && pts_file_get_contents($connector_path . "enabled") == "enabled")
 					{

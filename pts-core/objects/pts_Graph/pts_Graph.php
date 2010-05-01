@@ -298,7 +298,7 @@ abstract class pts_Graph
 	}
 	protected function shade_color($hex_color)
 	{
-		$stepping = 80;
+		$stepping = 54;
 		$hex[] = hexdec(substr($hex_color, 1, 2));
 		$hex[] = hexdec(substr($hex_color, 3, 2));
 		$hex[] = hexdec(substr($hex_color, 5, 2));
@@ -477,6 +477,11 @@ abstract class pts_Graph
 		if($this->graph_hide_identifiers)
 		{
 			$this->graph_top_end += $this->graph_top_end_opp / 2;
+		}
+
+		if(($key_count = count($this->graph_data_title)) > 8)
+		{
+			$this->update_graph_dimensions(-1, $this->graph_attr_height + (floor(($key_count - 8) / 4) * 14), true);
 		}
 
 		// Do the actual work
@@ -658,11 +663,12 @@ abstract class pts_Graph
 			return;
 		}
 
+		$key_count = count($this->graph_data_title);
 		$key_counter = 0;
 		$component_y = $this->graph_top_start - 19;
 		$this->reset_paint_index();
 
-		for($i = 0; $i < count($this->graph_data_title); $i++)
+		for($i = 0; $i < $key_count; $i++)
 		{
 			if(!empty($this->graph_data_title[$i]))
 			{
