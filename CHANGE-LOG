@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts: Add phpbench test profile
 - pts_Graph: Support for a universal color table
 - pts_Graph: Add GRAPH_COLOR_GROUP_SIMILAR
+- pts_Graph: Chart improvements
 
 Phoronix Test Suite 2.6 Beta 1
 April 26, 2010

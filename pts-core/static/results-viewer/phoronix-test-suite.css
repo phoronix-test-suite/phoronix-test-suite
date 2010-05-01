@@ -159,6 +159,10 @@ div.pts_table_col div.pts_table_cell_header
 	padding: 0 4px;
 	font-weight: bold;
 }
+div.pts_table_box_out
+{
+	overflow: auto;
+}
 div.pts_table_box
 {
 	text-align: center;

@@ -150,7 +150,8 @@ class pts_result_file
 
 			if($result_object_index != -1)
 			{
-				$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
+				$result_tests[$result_counter][0] = $result_tests[$result_counter][1];
+				//$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
 			}
 
 			if(($len = strlen($result_tests[$result_counter][0])) > $longest_test_title_length)
@@ -178,9 +179,10 @@ class pts_result_file
 
 
 				$prev_value = 0;
+				$prev_identifier = null;
 				$prev_identifier_0 = null;
 
-				foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+				foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)
 				{
 					$identifier = $buffer_item->get_result_identifier();
 					$value = $buffer_item->get_result_value();
@@ -233,10 +235,47 @@ class pts_result_file
 					}
 					else
 					{
-						$highlight = $best_value == $value;
+						if(PTS_MODE == "CLIENT" && pts_client::read_env("GRAPH_GROUP_SIMILAR"))
+						{
+							$highlight = false;
+
+							if($index % 2 == 1 && $prev_value != 0)
+							{
+								switch($result_object->get_proportion())
+								{
+									case "HIB":
+										if($value > $prev_value)
+										{
+											$highlight = true;
+										}
+										else
+										{
+											$result_table[$prev_identifier][$result_counter][3] = true;
+											$result_table[$prev_identifier][$result_counter][2] = -1;
+										}
+										break;
+									case "LIB":
+										if($value < $prev_value)
+										{
+											$highlight = true;
+										}
+										else
+										{
+											$result_table[$prev_identifier][$result_counter][3] = true;
+											$result_table[$prev_identifier][$result_counter][2] = -1;
+										}
+										break;
+								}
+							}
+						}
+						else
+						{
+							$highlight = $best_value == $value;
+						}
 					}
 
 					$result_table[$identifier][$result_counter] = array($value, $percent_std, $delta, $highlight);
+					$prev_identifier = $identifier;
 					$prev_value = $value;
 				}
 			}
