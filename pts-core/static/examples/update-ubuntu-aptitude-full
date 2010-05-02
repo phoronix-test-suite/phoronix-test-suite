@@ -10,5 +10,5 @@ if [ $hour -ne 2 ] ; then
         exit
 fi
 
-/etc/aptitude-full-upgrade > /tmp/aptitude-output 2>&1
+/etc/apt-full-upgrade > /tmp/aptitude-output 2>&1
 

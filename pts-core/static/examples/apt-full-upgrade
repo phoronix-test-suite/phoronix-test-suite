@@ -1,0 +1,5 @@
+#!/bin/sh
+# Example script for Phoromatic Ubuntu Tracker
+# Toss into /etc/
+DEBIAN_FRONTEND=noninteractive apt-get update && sudo apt-get -y --ignore-missing --force-confnew dist-upgrade && reboot
+
