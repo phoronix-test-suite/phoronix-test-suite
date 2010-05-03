@@ -8,13 +8,14 @@ if [ `whoami` != "root" ]; then
 		ROOT="/usr/bin/sudo"
 	fi
 else
-	ROOT="su -c"
+	su -c "aptitude -y install $*"
+	exit
 fi
 
 if [ -x /usr/bin/aptitude ]; then
 	# aptitude is nice since it doesn't fail if a non-existant package is hit
 	# See: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=503215
-	$ROOT "aptitude -y install $*"
+	$ROOT -- "aptitude -y install $*"
 else
-	$ROOT "apt-get -y --ignore-missing install $*"
+	$ROOT -- "apt-get -y --ignore-missing install $*"
 fi
