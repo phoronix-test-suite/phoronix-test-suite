@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.6.0</Version>
+		<Version>1.7.0</Version>
 		<TestType>Disk</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -11,11 +11,11 @@
 		<EnvironmentSize>2.3</EnvironmentSize>
 		<ProjectURL>http://www.iozone.org/</ProjectURL>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
+		<SupportedPlatforms>Linux, Windows</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>IOzone</Title>
-		<Version>3.338</Version>
+		<Version>3.347</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
