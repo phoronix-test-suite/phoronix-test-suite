@@ -157,7 +157,8 @@ class pts_LineGraph extends pts_Graph
 
 				if($px_from_left > $this->graph_left_end)
 				{
-					$px_from_left = $this->graph_left_end - 1;
+					//$px_from_left = $this->graph_left_end - 1;
+					break;
 				}
 
 				if($value_plot_top >= $this->graph_top_end)

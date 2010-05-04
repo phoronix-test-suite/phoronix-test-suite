@@ -147,7 +147,6 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 		{
 			$save_to .= "/result-graphs/" . ($key + 1) . ".BILDE_EXTENSION";
 
-
 			if(PTS_MODE == "CLIENT")
 			{
 				if(pts_client::read_env("GRAPH_GROUP_SIMILAR"))
