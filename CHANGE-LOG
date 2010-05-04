@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Don't report a test run as failing if you don't save the test results
 - pts: Add network-loopback test profile
 - pts: Add phpbench test profile
 - pts_Graph: Support for a universal color table
