@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -267,14 +267,17 @@ class pts_result_file
 							$highlight = $best_value == $value;
 						}
 
-						switch($result_object->get_proportion())
+						if($min_value_in_buffer != $max_value_in_buffer)
 						{
-							case "HIB":
-								$delta = pts_math::set_precision($value / $min_value_in_buffer, 2);
-								break;
-							case "LIB":
-								$delta = pts_math::set_precision(1 - ($value / $max_value_in_buffer) + 1, 2);
-								break;
+							switch($result_object->get_proportion())
+							{
+								case "HIB":
+									$delta = pts_math::set_precision($value / $min_value_in_buffer, 2);
+									break;
+								case "LIB":
+									$delta = pts_math::set_precision(1 - ($value / $max_value_in_buffer) + 1, 2);
+									break;
+							}
 						}
 					}
 

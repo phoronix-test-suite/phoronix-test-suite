@@ -75,7 +75,7 @@ class pts_Chart extends pts_Graph
 
 		$table_identifier_width = $this->text_string_height($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers);
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
-		$table_item_width = ($table_max_value_width > $table_identifier_width ? $table_max_value_width : $table_identifier_width) + 4;
+		$table_item_width = ($table_max_value_width > $table_identifier_width ? $table_max_value_width : $table_identifier_width) + 6;
 		$table_width = $table_item_width * count($this->result_systems);
 		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 6;
 		$table_line_height_half = ($table_line_height / 2);
@@ -108,12 +108,18 @@ class pts_Chart extends pts_Graph
 
 		$this->graph_image->draw_rectangle(0, $table_proper_height, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_headers);
 		$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, false, $this->graph_watermark_url);
-		$this->graph_image->write_text_left($this->graph_version, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half, false, "http://www.phoronix-test-suite.com/");
+
+		if($this->graph_attr_width > 300)
+		{
+			$this->graph_image->write_text_left($this->graph_version, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half, false, "http://www.phoronix-test-suite.com/");
+		}
 
 		// Write the test names
+		$row = 0;
 		foreach($this->result_tests as $i => $test)
 		{
-			$this->graph_image->write_text_right($test[0], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($i * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($i * $table_line_height) + $table_line_height_half, false, "#b-" . $i, $test[1], true);
+			$this->graph_image->write_text_right($test[0], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, false, "#b-" . $row, $test[1], true);
+			$row++;
 		}
 
 		// Write the identifiers
@@ -130,6 +136,8 @@ class pts_Chart extends pts_Graph
 
 		foreach($this->result_table as $sys_identifier => &$sys_values)
 		{
+			$row = 0;
+
 			foreach($sys_values as $i => &$value_set)
 			{
 				$hover_title = null;
@@ -161,7 +169,8 @@ class pts_Chart extends pts_Graph
 					$bold = true;
 				}
 
-				$this->graph_image->write_text_right($value_set[0], $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width), $identifier_height + ($i * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width ), $identifier_height + (($i + 1) * $table_line_height) + $table_line_height_half, false, null, $hover_title, $bold);
+				$this->graph_image->write_text_right($value_set[0], $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width), $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width ), $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, $hover_title, $bold);
+				$row++;
 
 			}
 			$col++;

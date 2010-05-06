@@ -203,6 +203,7 @@ div#pts_benchmark_area
 }
 div.pts_benchmark_bar
 {
+	overflow: hidden;
 	background-color: #454545;
 	color: #FFF;
 	padding: 4px;

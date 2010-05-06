@@ -65,13 +65,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<div id="pts_benchmark_area">
 			<xsl:for-each select="PhoronixTestSuite/Benchmark">
 				<xsl:variable name="this_test_pos" select="position()" />
-				<div class="pts_benchmark_bar"><a><xsl:attribute name="name">test-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><a><xsl:attribute name="name">b-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><span class="pts_benchmark_bar_header"><xsl:value-of select="Name"/></span> <span class="pts_benchmark_bar_version"><xsl:value-of select="Version"/></span><br /><strong><xsl:value-of select="Attributes"/></strong></div>
+				<div class="pts_benchmark_bar"><div style="float: left;"><a><xsl:attribute name="name">test-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><a><xsl:attribute name="name">b-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><span class="pts_benchmark_bar_header"><xsl:value-of select="Name"/></span> <span class="pts_benchmark_bar_version"><xsl:value-of select="Version"/></span><br /><strong><xsl:value-of select="Attributes"/></strong></div><div style="float: right;"><a style="text-decoration: none;"><xsl:attribute name="href">test-logs/<xsl:value-of select="$this_test_pos" />/</xsl:attribute>View Test Logs</a></div></div>
 				<div class="pts_benchmark_text">
 					<xsl:if test="not(contains(ResultFormat,'MULTI_'))">
 						<xsl:for-each select="Results/Group">
 							<div style="padding: 5px 0;">
 								<xsl:for-each select="Entry">
-									<strong><a style="text-decoration: none;"><xsl:attribute name="href">test-logs/<xsl:value-of select="$this_test_pos" />/<xsl:value-of select="Identifier" />/</xsl:attribute><xsl:value-of select="Identifier" /></a>:</strong><span style="padding-left: 5px;"><xsl:choose><xsl:when test="string-length(Value)&lt;20"><xsl:value-of select="Value"/></xsl:when></xsl:choose></span><br />
+									<strong><xsl:value-of select="Identifier" />:</strong><span style="padding-left: 5px;"><xsl:choose><xsl:when test="string-length(Value)&lt;20"><xsl:value-of select="Value"/></xsl:when></xsl:choose></span><br />
 									</xsl:for-each>
 							</div>
 						</xsl:for-each>
