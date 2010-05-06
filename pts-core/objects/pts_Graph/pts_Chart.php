@@ -31,7 +31,7 @@ class pts_Chart extends pts_Graph
 	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
 	{
 		parent::__construct();
-		$this->graph_attr_big_border = true;
+		$this->graph_attr_big_border = false;
 
 		list($this->result_tests, $this->result_systems, $this->result_table, $this->graph_maximum_value, $this->longest_system_identifier) = $result_file->get_result_table($system_id_keys, $result_object_index);
 	}
@@ -77,7 +77,7 @@ class pts_Chart extends pts_Graph
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
 		$table_item_width = ($table_max_value_width > $table_identifier_width ? $table_max_value_width : $table_identifier_width) + 6;
 		$table_width = $table_item_width * count($this->result_systems);
-		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 6;
+		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 8;
 		$table_line_height_half = ($table_line_height / 2);
 		$table_height = $table_line_height * count($this->result_tests);
 		$table_proper_height = $table_height + $identifier_height;
@@ -195,7 +195,7 @@ class pts_Chart extends pts_Graph
 						continue;
 					}
 
-					$paint_color = $this->get_paint_color($identifier);
+					$paint_color = $this->get_paint_color($identifier[0]);
 
 					$this->graph_image->draw_rectangle_with_border(($this->graph_left_start + ($last_changed_col * $table_item_width)), 0, ($this->graph_left_start + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col)), $extra_heading_height, $paint_color, $this->graph_color_border);
 

@@ -319,7 +319,7 @@ abstract class pts_Graph
 		}
 		return '#' . str_pad(dechex($hex[0]), 2, 0) . str_pad(dechex($hex[1]), 2, 0) . str_pad(dechex($hex[2]), 2, 0);
 	}
-	protected function get_paint_color($identifier)
+	protected function get_paint_color($identifier = 0)
 	{
 		static $used_paint_colors;
 

@@ -148,7 +148,14 @@ class pts_result_file
 
 			if($result_object_index != -1)
 			{
-				$result_tests[$result_counter][0] = $result_tests[$result_counter][1];
+				if(is_array($result_object_index))
+				{
+					$result_tests[$result_counter][0] = $result_tests[$result_counter][1];
+				}
+				else
+				{
+					$result_tests[$result_counter][0] = "Results";
+				}
 				//$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
 			}
 
