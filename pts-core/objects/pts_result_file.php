@@ -134,8 +134,6 @@ class pts_result_file
 		$result_table = array();
 		$result_tests = array();
 		$max_value = 0;
-		$longest_test_title = null;
-		$longest_test_title_length = 0;
 		$result_counter = 0;
 
 		foreach($this->get_system_identifiers() as $sys_identifier)
@@ -152,12 +150,6 @@ class pts_result_file
 			{
 				$result_tests[$result_counter][0] = $result_tests[$result_counter][1];
 				//$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
-			}
-
-			if(($len = strlen($result_tests[$result_counter][0])) > $longest_test_title_length)
-			{
-				$longest_test_title = $result_tests[$result_counter][0];
-				$longest_test_title_length = $len;
 			}
 
 			if($result_object->get_format() == "BAR_GRAPH")
@@ -353,7 +345,7 @@ class pts_result_file
 			}
 		}
 
-		return array($result_tests, $result_systems, $result_table, $result_counter, $max_value, $longest_test_title, $longest_system_identifier);
+		return array($result_tests, $result_systems, $result_table, $max_value, $longest_system_identifier);
 	}
 	public function get_result_objects($select_indexes = -1)
 	{

@@ -25,9 +25,7 @@ class pts_Chart extends pts_Graph
 {
 	protected $result_tests;
 	protected $result_table;
-	protected $result_count;
 	protected $result_systems;
-	protected $longest_test_title;
 	protected $longest_system_identifier;
 
 	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
@@ -35,12 +33,25 @@ class pts_Chart extends pts_Graph
 		parent::__construct();
 		$this->graph_attr_big_border = true;
 
-		list($this->result_tests, $this->result_systems, $this->result_table, $this->result_count, $this->graph_maximum_value, $this->longest_test_title, $this->longest_system_identifier) = $result_file->get_result_table($system_id_keys, $result_object_index);
+		list($this->result_tests, $this->result_systems, $this->result_table, $this->graph_maximum_value, $this->longest_system_identifier) = $result_file->get_result_table($system_id_keys, $result_object_index);
 	}
 	public function renderChart($file = null)
 	{
 		// where to start the table values
-		$this->graph_left_start = $this->text_string_width($this->longest_test_title, $this->graph_font, $this->graph_font_size_identifiers) + 10;
+		$longest_test_title_length = 0;
+		$longest_test_title = null;
+
+		foreach($this->result_tests as $result_test)
+		{
+			if(($len = strlen($result_test[0])) > $longest_test_title_length)
+			{
+				$longest_test_title = $result_test[0];
+				$longest_test_title_length = $len;
+			}
+		}
+
+		$this->graph_left_start = $this->text_string_width($longest_test_title, $this->graph_font, $this->graph_font_size_identifiers) + 10;
+		unset($longest_test_title, $longest_test_title_length);
 
 		if($this->graph_left_start < 170 && defined("PHOROMATIC_TRACKER"))
 		{
@@ -68,7 +79,7 @@ class pts_Chart extends pts_Graph
 		$table_width = $table_item_width * count($this->result_systems);
 		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 6;
 		$table_line_height_half = ($table_line_height / 2);
-		$table_height = $table_line_height * $this->result_count;
+		$table_height = $table_line_height * count($this->result_tests);
 		$table_proper_height = $table_height + $identifier_height;
 
 		$this->graph_attr_width = $table_width + $this->graph_left_start;
