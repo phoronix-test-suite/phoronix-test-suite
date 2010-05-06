@@ -26,8 +26,8 @@ if(PTS_MODE == "CLIENT")
 	//error_reporting(E_ERROR | E_STRICT);
 }
 
-define("PTS_VERSION", "2.6.0b1");
-define("PTS_CORE_VERSION", 2540);
+define("PTS_VERSION", "2.6.0b2");
+define("PTS_CORE_VERSION", 2550);
 define("PTS_CODENAME", "LYNGEN");
 
 function pts_codename($full_string = false)

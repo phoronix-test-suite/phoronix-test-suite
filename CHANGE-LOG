@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.6 Beta 2
+May 6, 2010
 
 - pts-core: Don't report a test run as failing if you don't save the test results
 - pts-core: Show the individualized results table within the web results viewer
