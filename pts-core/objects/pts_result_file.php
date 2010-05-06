@@ -174,6 +174,11 @@ class pts_result_file
 				$prev_identifier = null;
 				$prev_identifier_0 = null;
 
+				$values_in_buffer = $result_object->get_result_buffer()->get_values();
+				sort($values_in_buffer);
+				$min_value_in_buffer =$values_in_buffer[0];
+				$max_value_in_buffer =$values_in_buffer[(count($values_in_buffer) - 1)];
+
 				foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)
 				{
 					$identifier = $buffer_item->get_result_identifier();
@@ -210,9 +215,6 @@ class pts_result_file
 										{
 											$delta = 0 - $delta;
 										}
-										break;
-									default:
-										$delta = 0;
 										break;
 								}
 							}
@@ -264,6 +266,16 @@ class pts_result_file
 						{
 							$highlight = $best_value == $value;
 						}
+
+						switch($result_object->get_proportion())
+						{
+							case "HIB":
+								$delta = pts_math::set_precision($value / $min_value_in_buffer, 2);
+								break;
+							case "LIB":
+								$delta = pts_math::set_precision(1 - ($value / $max_value_in_buffer) + 1, 2);
+								break;
+						}
 					}
 
 					$result_table[$identifier][$result_counter] = array($value, $percent_std, $delta, $highlight);
@@ -273,6 +285,48 @@ class pts_result_file
 			}
 
 			$result_counter++;
+		}
+
+		if($result_counter == 1)
+		{
+			// This should provide some additional information under normal modes
+			$has_written_std = false;
+			$has_written_diff = false;
+
+			foreach($result_table as $identifier => $info)
+			{
+				if(!isset($info[($result_counter - 1)]))
+				{
+					continue;
+				}
+
+				$std_percent = $info[($result_counter - 1)][1];
+				$delta = $info[($result_counter - 1)][2];
+
+				if($delta != 0)
+				{
+					$result_table[$identifier][$result_counter] = array($delta . 'x', 0, 0, false);
+					$has_written_diff = true;
+				}
+				if($std_percent != 0)
+				{
+					$result_table[$identifier][($result_counter + 1)] = array($std_percent . "%", 0, 0, false);
+					$has_written_std = true;
+				}
+			}
+
+			if($has_written_diff)
+			{
+				$result_tests[$result_counter][0] = "Difference";
+				$result_tests[$result_counter][1] = null;
+			}
+			if($has_written_std)
+			{
+				$result_tests[($result_counter + 1)][0] = "Standard Deviation";
+				$result_tests[($result_counter + 1)][1] = null;
+			}
+
+			$max_value += 100; // to make room for % sign in display
 		}
 
 		if(defined("PHOROMATIC_TRACKER"))

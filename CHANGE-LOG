@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Don't report a test run as failing if you don't save the test results
 - pts-core: Show the individualized results table within the web results viewer
+- pts-core: Report the difference and standardized deviation to individualized result tables
 - pts_Graph: Support for a universal color table
 - pts_Graph: Add GRAPH_COLOR_GROUP_SIMILAR
 - pts_Graph: Chart improvements

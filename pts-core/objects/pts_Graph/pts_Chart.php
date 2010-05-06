@@ -141,7 +141,7 @@ class pts_Chart extends pts_Graph
 					$hover_title = "STD: " . $value_set[1] . "%";
 				}
 
-				if($value_set[2] != 0)
+				if(defined("PHOROMATIC_TRACKER") && $value_set[2] != 0)
 				{
 					$bold = true;
 					if($value_set[2] < 0)
