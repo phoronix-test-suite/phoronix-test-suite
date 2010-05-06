@@ -78,7 +78,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 					</xsl:if>
 				</div>
 
-				<div class="pts_benchmark_img_area"><!-- GRAPH TAGS --></div>
+				<div class="pts_benchmark_img_area"><!-- GRAPH TAG --></div>
+				<div class="pts_benchmark_img_table_area"><!-- GRAPH TABLE TAG --></div>
 			</xsl:for-each>
 		</div>
 

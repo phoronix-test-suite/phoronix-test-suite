@@ -50,7 +50,7 @@ class pts_BarGraph extends pts_Graph
 	{
 		$px_from_top_end = $this->graph_top_end + 5;
 
-		$this->graph_image->draw_dashed_line($this->graph_left_start + $this->identifier_width, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 10, 1, $this->identifier_width - 1);
+		$this->graph_image->draw_dashed_line($this->graph_left_start + $this->identifier_width, $this->graph_top_end, $this->graph_left_end - ($this->graph_attr_width % $this->identifier_width), $this->graph_top_end, $this->graph_color_notches, 10, 1, $this->identifier_width - 1);
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{

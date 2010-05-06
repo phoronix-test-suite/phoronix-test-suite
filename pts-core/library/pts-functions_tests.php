@@ -138,6 +138,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	}
 
 	$generated_graphs = array();
+	$generated_graph_tables = false;
 
 	foreach($result_file->get_result_objects() as $key => $result_object)
 	{
@@ -170,6 +171,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 				$chart = new pts_Chart($result_file, null, $table_keys);
 				$chart->loadGraphVersion("Phoronix Test Suite " . $pts_version);
 				$chart->renderChart($save_to_dir . "/result-graphs/" . ($key + 1) . "_table.BILDE_EXTENSION");
+				$generated_graph_tables = true;
 			}
 		}
 
@@ -185,7 +187,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	// Save XSL
 	if(count($generated_graphs) > 0 && $save_to_dir)
 	{
-		file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted());
+		file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($generated_graph_tables));
 	}
 
 	// Render overview chart
@@ -197,19 +199,13 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 
 	return $generated_graphs;
 }
-function pts_get_results_viewer_xsl_formatted()
+function pts_get_results_viewer_xsl_formatted($matching_graph_tables = false)
 {
-	$pts_Graph = pts_read_assignment("LAST_RENDERED_GRAPH");
+	$graph_object = pts_render::last_graph_object();
+	$width = $graph_object->graphWidth();
+	$height = $graph_object->graphHeight();
 
-	if(!($pts_Graph instanceOf pts_Graph))
-	{
-		return;
-	}
-
-	$width = $pts_Graph->graphWidth();
-	$height = $pts_Graph->graphHeight();
-
-	if($pts_Graph->getRenderer() == "SVG")
+	if($graph_object->getRenderer() == "SVG")
 	{
 		// Hackish way to try to get all browsers to show the entire SVG graph when the graphs may be different size, etc
 		$height += 50;
@@ -218,10 +214,15 @@ function pts_get_results_viewer_xsl_formatted()
 	}
 
 	$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
-	$graph_string = $pts_Graph->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
+	$graph_string = $graph_object->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
 
-	$raw_xsl = str_replace("<!-- GRAPH TAGS -->", $graph_string, $raw_xsl);
-	//$raw_xsl = str_replace("<!-- OVERVIEW TAG -->", $overview_string, $raw_xsl);
+	$raw_xsl = str_replace("<!-- GRAPH TAG -->", $graph_string, $raw_xsl);
+
+	if($matching_graph_tables)
+	{
+		$table_string = bilde_svg_renderer::html_embed_code("result-graphs/<xsl:number value=\"position()\" />_table.BILDE_EXTENSION", array("width" => "auto", "height" => "auto"), true);
+		$raw_xsl = str_replace("<!-- GRAPH TABLE TAG -->", $table_string, $raw_xsl);
+	}
 
 	return $raw_xsl;
 }

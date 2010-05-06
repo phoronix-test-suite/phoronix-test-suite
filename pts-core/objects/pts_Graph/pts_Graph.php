@@ -388,7 +388,7 @@ abstract class pts_Graph
 			}
 			else
 			{
-				$maximum = (floor(round($real_maximum * 1.16) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+				$maximum = (floor(round($real_maximum * 1.2) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
 
 				if($real_maximum > 100)
 				{

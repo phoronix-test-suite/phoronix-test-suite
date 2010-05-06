@@ -22,6 +22,8 @@
 
 class pts_render
 {
+	static $last_graph_object = null;
+
 	public static function render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_version = PTS_VERSION, $extra_attributes = null)
 	{
 		$result_format = $r_o->get_format();
@@ -135,12 +137,16 @@ class pts_render
 			$graph->saveGraphToFile($save_as);
 		}
 
-		if(function_exists("pts_set_assignment"))
+		if(PTS_MODE == "CLIENT")
 		{
-			pts_set_assignment("LAST_RENDERED_GRAPH", $graph);
+			self::$last_graph_object = $graph;
 		}
 
 		return $graph->renderGraph();
+	}
+	public static function last_graph_object()
+	{
+		return self::$last_graph_object;
 	}
 }
 

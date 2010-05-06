@@ -230,12 +230,19 @@ div.pts_benchmark_text
 }
 div.pts_benchmark_img_area
 {
-	padding: 15px 0 15px 35px;
+	padding: 15px 0 0 0;
 	float: right;
 	overflow: hidden;
 	height: 100%;
-	vertical-align: middle;
-	margin-right: 10px;
+	text-align: right;
+}
+div.pts_benchmark_img_table_area
+{
+	padding: 0 30px 15px 0;
+	float: right;
+	overflow: hidden;
+	height: 100%;
+	text-align: right;
 }
 div#pts_copyright_area
 {
