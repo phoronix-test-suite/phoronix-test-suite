@@ -43,20 +43,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<p><em><strong>Test:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Name" /><br /><em><strong>Test Version:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Version" /><br /><em><strong>Test Type:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Type" /></p>
 		<p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p>
 
-		<h1>System Hardware</h1>
-		<div class="pts_table_box_out"><div class="pts_table_box">
-		<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><xsl:value-of select="Hardware" /></div></div></div></xsl:for-each>
-		</div></div>
-
-		<h1>System Software</h1>
-		<div class="pts_table_box_out"><div class="pts_table_box">
-		<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><xsl:value-of select="Software" /></div></div></div></xsl:for-each>
-		</div></div>
-
-		<h1>Additional Details</h1>
-		<div class="pts_table_box_out"><div class="pts_table_box">
-		<xsl:for-each select="PhoronixTestSuite/System"><div class="pts_table_box_col"><div class="pts_column_head"><xsl:value-of select="AssociatedIdentifiers" /></div><div class="pts_column_body"><div class="pts_column_body_text"><strong>Administrator:</strong> <xsl:value-of select="Author" /><br /><strong>Date:</strong> <xsl:value-of select="TestDate" /><br /><strong>PTS Version:</strong> <xsl:value-of select="Version" /><br /><strong>Test Notes:</strong><br /><xsl:value-of select="TestNotes" /></div></div></div></xsl:for-each>
-		</div></div>
+		<h1>System Information</h1>
+		<div class="pts_table_box_out"><table border="0">
+		<tr class="pts_column_head"> 
+		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="AssociatedIdentifiers" /></td></xsl:for-each>
+		</tr>
+		<tr> 
+		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Hardware" /></td></xsl:for-each>
+		</tr>
+		<tr class="pts_column_head"> 
+		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="AssociatedIdentifiers" /></td></xsl:for-each>
+		</tr>
+		<tr> 
+		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Software" /></td></xsl:for-each>
+		</tr>
+		<tr class="pts_column_head"> 
+		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="AssociatedIdentifiers" /></td></xsl:for-each>
+		</tr>
+		<tr>
+		<xsl:for-each select="PhoronixTestSuite/System"><td><strong>Administrator:</strong>&#160;<xsl:value-of select="Author" /><br /><strong>Date:</strong>&#160;<xsl:value-of select="TestDate" /><br /><strong>PTS Version:</strong>&#160;<xsl:value-of select="Version" /><br /><strong>Test Notes:</strong>&#160;<xsl:value-of select="TestNotes" /></td></xsl:for-each>
+		</tr>
+		</table></div>
 
 		<a name="result-overview"></a><h1>Results Overview</h1>
 		<p align="center"><div align="center" style="width: 100%; overflow: auto;"><!-- OVERVIEW TAG --><object type="image/svg+xml" data="result-graphs/overview.svg"></object></div></p>

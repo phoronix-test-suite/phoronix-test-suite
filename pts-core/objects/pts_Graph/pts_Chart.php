@@ -53,24 +53,24 @@ class pts_Chart extends pts_Graph
 		$this->graph_left_start = $this->text_string_width($longest_test_title, $this->graph_font, $this->graph_font_size_identifiers) + 10;
 		unset($longest_test_title, $longest_test_title_length);
 
-		if($this->graph_left_start < 170 && defined("PHOROMATIC_TRACKER"))
-		{
-			$this->graph_left_start = 170;
-		}
-
 		$identifier_height = $this->text_string_width($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 12;
 
 		if(defined("PHOROMATIC_TRACKER"))
 		{
+			// Make room for the PTS logo on Phoromatic
+			if($this->graph_left_start < 170)
+			{
+				$this->graph_left_start = 170;
+			}
+
 			// $this->graph_maximum_value isn't actually correct to use, but it works
 			$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 2;
 			$identifier_height += $extra_heading_height;
 
-		}
-
-		if($identifier_height < 90)
-		{
-			$identifier_height = 90;
+			if($identifier_height < 90)
+			{
+				$identifier_height = 90;
+			}
 		}
 
 		$table_identifier_width = $this->text_string_height($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers);
