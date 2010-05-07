@@ -344,7 +344,7 @@ function pts_test_name_to_identifier($name)
 	{
 		$cache = array();
 
-		foreach(pts_available_tests_array() as $identifier)
+		foreach(pts_tests::available_tests() as $identifier)
 		{
 			$title = pts_test_read_xml($identifier, P_TEST_TITLE);
 			$cache[$title] = $identifier;
@@ -362,7 +362,7 @@ function pts_suite_name_to_identifier($name)
 	{
 		$cache = array();
 
-		foreach(pts_available_suites_array() as $identifier)
+		foreach(pts_suites::available_suites() as $identifier)
 		{
 			$title = pts_suite_read_xml($identifier, P_SUITE_TITLE);
 			$cache[$title] = $identifier;
@@ -654,25 +654,6 @@ function pts_test_supported($identifier)
 {
 	return pts_test_architecture_supported($identifier) && pts_test_platform_supported($identifier) && pts_test_version_supported($identifier);
 }
-function pts_available_tests_array()
-{
-	static $cache = null;
-
-	if($cache == null)
-	{
-		$tests = array_unique(array_merge(pts_glob(XML_PROFILE_DIR . "*.xml"), pts_glob(XML_PROFILE_LOCAL_DIR . "*.xml")));
-		asort($tests);
-
-		foreach($tests as &$test)
-		{
-			$test = basename($test, ".xml");
-		}
-
-		$cache = $tests;
-	}
-
-	return $cache;
-}
 function pts_available_base_tests_array()
 {
 	static $cache = null;
@@ -700,7 +681,7 @@ function pts_supported_tests_array()
 	{
 		$supported_tests = array();
 
-		foreach(pts_available_tests_array() as $identifier)
+		foreach(pts_tests::available_tests() as $identifier)
 		{
 			if(pts_test_supported($identifier))
 			{
@@ -734,32 +715,13 @@ function pts_installed_tests_array()
 
 	return pts_read_assignment("CACHE_INSTALLED_TESTS");
 }
-function pts_available_suites_array()
-{
-	static $cache = null;
-
-	if($cache == null)
-	{
-		$suites = array_unique(array_merge(pts_glob(XML_SUITE_DIR . "*.xml"), pts_glob(XML_SUITE_LOCAL_DIR . "*.xml")));
-		asort($suites);
-
-		foreach($suites as &$suite)
-		{
-			$suite = basename($suite, ".xml");
-		}
-
-		$cache = $suites;
-	}
-
-	return $cache;
-}
 function pts_installed_suites_array()
 {
 	if(!pts_is_assignment("CACHE_INSTALLED_SUITES"))
 	{
 		$installed_suites = array();
 
-		foreach(pts_available_suites_array() as $suite)
+		foreach(pts_suites::available_suites() as $suite)
 		{
 			if(!pts_suite_needs_updated_install($suite))
 			{
@@ -780,7 +742,7 @@ function pts_supported_suites_array()
 	{
 		$supported_suites = array();
 
-		foreach(pts_available_suites_array() as $identifier)
+		foreach(pts_suites::available_suites() as $identifier)
 		{
 			$suite = new pts_test_suite($identifier);
 
@@ -909,7 +871,7 @@ function pts_suites_containing_test($test_identifier)
 {
 	$associated_suites = array();
 
-	foreach(pts_available_suites_array() as $identifier)
+	foreach(pts_suites::available_suites() as $identifier)
 	{
 		if(in_array($test_identifier, pts_contained_tests($identifier)))
 		{

@@ -26,7 +26,7 @@ class list_tests implements pts_option_interface
 	{
 		echo pts_string_header("Phoronix Test Suite - Tests");
 		$tests_to_display = array();
-		foreach(pts_available_tests_array() as $identifier)
+		foreach(pts_tests::available_tests() as $identifier)
 		{
 			if((pts_is_assignment("LIST_UNSUPPORTED") xor pts_test_supported($identifier)) || pts_is_assignment("LIST_ALL_TESTS"))
 			{

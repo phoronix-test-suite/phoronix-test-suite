@@ -25,7 +25,7 @@ class list_suites implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite - Suites");
-		$available_suites = pts_available_suites_array();
+		$available_suites = pts_suites::available_suites();
 
 		if(count($available_suites) == 0)
 		{

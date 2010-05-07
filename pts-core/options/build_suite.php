@@ -35,9 +35,9 @@ class build_suite implements pts_option_interface
 		$suite_maintainer = pts_text_input("Enter suite maintainer name");
 		$suite_description = pts_text_input("Enter suite description");
 
-		$possible_suites = pts_available_suites_array();
+		$possible_suites = pts_suites::available_suites();
 		$possible_tests = array();
-		foreach(pts_available_tests_array() as $identifier)
+		foreach(pts_tests::available_tests() as $identifier)
 		{
 			if(pts_test_supported($identifier))
 			{

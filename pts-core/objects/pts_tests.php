@@ -22,6 +22,40 @@
 
 class pts_tests
 {
+	public static function available_tests()
+	{
+		static $cache = null;
+
+		if($cache == null)
+		{
+			$tests = glob(XML_PROFILE_DIR . "*.xml");
+			$tests_local = glob(XML_PROFILE_LOCAL_DIR . "*.xml");
+
+			if($tests != false && $tests_local != false)
+			{
+				$tests = array_unique(array_merge($tests, $tests_local));
+			}
+			else if($tests_local != false)
+			{
+				$tests = $tests_local;
+			}
+			else if($tests == false)
+			{
+				$tests = array();
+			}
+
+			asort($tests);
+
+			foreach($tests as &$test)
+			{
+				$test = basename($test, ".xml");
+			}
+
+			$cache = $tests;
+		}
+
+		return $cache;
+	}
 	public static function test_profile_location($identifier, $rewrite_cache = false)
 	{
 		static $cache;
