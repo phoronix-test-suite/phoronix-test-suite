@@ -208,140 +208,159 @@ class pts_result_file
 				//$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
 			}
 
-			if($result_object->get_format() == "BAR_GRAPH")
+			switch($result_object->get_format())
 			{
-				$best_value = 0;
+				case "BAR_GRAPH":
+					$best_value = 0;
 
-				if(!defined("PHOROMATIC_TRACKER") && count($result_object->get_result_buffer()->get_values()) > 1)
-				{
-					switch($result_object->get_proportion())
+					if(!defined("PHOROMATIC_TRACKER") && count($result_object->get_result_buffer()->get_values()) > 1)
 					{
-						case "HIB":
-							$best_value = max($result_object->get_result_buffer()->get_values());
-							break;
-						case "LIB":
-							$best_value = min($result_object->get_result_buffer()->get_values());
-							break;
-					}
-				}
-
-
-				$prev_value = 0;
-				$prev_identifier = null;
-				$prev_identifier_0 = null;
-
-				$values_in_buffer = $result_object->get_result_buffer()->get_values();
-				sort($values_in_buffer);
-				$min_value_in_buffer = $values_in_buffer[0];
-				$max_value_in_buffer = $values_in_buffer[(count($values_in_buffer) - 1)];
-
-				foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)
-				{
-					$identifier = $buffer_item->get_result_identifier();
-					$value = $buffer_item->get_result_value();
-					$raw_values = explode(':', $buffer_item->get_result_raw());
-					$percent_std = pts_math::set_precision(pts_math::percent_standard_deviation($raw_values), 2);
-					$delta = 0;
-
-					if($value > $max_value)
-					{
-						$max_value = $value;
-					}
-
-					if(defined("PHOROMATIC_TRACKER"))
-					{
-						$identifier_r = explode(':', $identifier);
-
-						if($identifier_r[0] == $prev_identifier_0 && $prev_value != 0)
+						switch($result_object->get_proportion())
 						{
-							$delta = pts_math::set_precision(abs(1 - ($value / $prev_value)), 4);
+							case "HIB":
+								$best_value = max($result_object->get_result_buffer()->get_values());
+								break;
+							case "LIB":
+								$best_value = min($result_object->get_result_buffer()->get_values());
+								break;
+						}
+					}
 
-							if($delta > 0.02 && $delta > pts_math::standard_deviation($raw_values))
+					$prev_value = 0;
+					$prev_identifier = null;
+					$prev_identifier_0 = null;
+
+					$values_in_buffer = $result_object->get_result_buffer()->get_values();
+					sort($values_in_buffer);
+					$min_value_in_buffer = $values_in_buffer[0];
+					$max_value_in_buffer = $values_in_buffer[(count($values_in_buffer) - 1)];
+
+					foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)
+					{
+						$identifier = $buffer_item->get_result_identifier();
+						$value = $buffer_item->get_result_value();
+						$raw_values = explode(':', $buffer_item->get_result_raw());
+						$percent_std = pts_math::set_precision(pts_math::percent_standard_deviation($raw_values), 2);
+						$delta = 0;
+
+						if($value > $max_value)
+						{
+							$max_value = $value;
+						}
+
+						if(defined("PHOROMATIC_TRACKER"))
+						{
+							$identifier_r = explode(':', $identifier);
+
+							if($identifier_r[0] == $prev_identifier_0 && $prev_value != 0)
 							{
-								switch($result_object->get_proportion())
+								$delta = pts_math::set_precision(abs(1 - ($value / $prev_value)), 4);
+
+								if($delta > 0.02 && $delta > pts_math::standard_deviation($raw_values))
 								{
-									case "HIB":
-										if($value < $prev_value)
-										{
-											$delta = 0 - $delta;
-										}
-										break;
-									case "LIB":
-										if($value > $prev_value)
-										{
-											$delta = 0 - $delta;
-										}
-										break;
+									switch($result_object->get_proportion())
+									{
+										case "HIB":
+											if($value < $prev_value)
+											{
+												$delta = 0 - $delta;
+											}
+											break;
+										case "LIB":
+											if($value > $prev_value)
+											{
+												$delta = 0 - $delta;
+											}
+											break;
+									}
+								}
+								else
+								{
+									$delta = 0;
+								}
+							}
+
+							$prev_identifier_0 = $identifier_r[0];
+							$highlight = false;
+						}
+						else
+						{
+							if(false && PTS_MODE == "CLIENT" && $this->is_multi_way_comparison())
+							{
+								// TODO: make it work better for highlighting multiple winners in multi-way comparisons
+								$highlight = false;
+
+								if($index % 2 == 1 && $prev_value != 0)
+								{
+									switch($result_object->get_proportion())
+									{
+										case "HIB":
+											if($value > $prev_value)
+											{
+												$highlight = true;
+											}
+											else
+											{
+												$result_table[$prev_identifier][$result_counter][3] = true;
+												$result_table[$prev_identifier][$result_counter][2] = -1;
+											}
+											break;
+										case "LIB":
+											if($value < $prev_value)
+											{
+												$highlight = true;
+											}
+											else
+											{
+												$result_table[$prev_identifier][$result_counter][3] = true;
+												$result_table[$prev_identifier][$result_counter][2] = -1;
+											}
+											break;
+									}
 								}
 							}
 							else
 							{
-								$delta = 0;
+								$highlight = $best_value == $value;
 							}
-						}
 
-						$prev_identifier_0 = $identifier_r[0];
-						$highlight = false;
-					}
-					else
-					{
-						if(false && PTS_MODE == "CLIENT" && $this->is_multi_way_comparison())
-						{
-							// TODO: make it work better for highlighting multiple winners in multi-way comparisons
-							$highlight = false;
-
-							if($index % 2 == 1 && $prev_value != 0)
+							if($min_value_in_buffer != $max_value_in_buffer)
 							{
 								switch($result_object->get_proportion())
 								{
 									case "HIB":
-										if($value > $prev_value)
-										{
-											$highlight = true;
-										}
-										else
-										{
-											$result_table[$prev_identifier][$result_counter][3] = true;
-											$result_table[$prev_identifier][$result_counter][2] = -1;
-										}
+										$delta = pts_math::set_precision($value / $min_value_in_buffer, 2);
 										break;
 									case "LIB":
-										if($value < $prev_value)
-										{
-											$highlight = true;
-										}
-										else
-										{
-											$result_table[$prev_identifier][$result_counter][3] = true;
-											$result_table[$prev_identifier][$result_counter][2] = -1;
-										}
+										$delta = pts_math::set_precision(1 - ($value / $max_value_in_buffer) + 1, 2);
 										break;
 								}
 							}
 						}
-						else
-						{
-							$highlight = $best_value == $value;
-						}
 
-						if($min_value_in_buffer != $max_value_in_buffer)
-						{
-							switch($result_object->get_proportion())
-							{
-								case "HIB":
-									$delta = pts_math::set_precision($value / $min_value_in_buffer, 2);
-									break;
-								case "LIB":
-									$delta = pts_math::set_precision(1 - ($value / $max_value_in_buffer) + 1, 2);
-									break;
-							}
-						}
+						$result_table[$identifier][$result_counter] = array($value, $percent_std, $delta, $highlight);
+						$prev_identifier = $identifier;
+						$prev_value = $value;
 					}
+					break;
+				case "LINE_GRAPH":
+					$result_tests[$result_counter][0] = $result_object->get_name() . " (Avg)";
+					$result_tests[$result_counter][1] = null;
 
-					$result_table[$identifier][$result_counter] = array($value, $percent_std, $delta, $highlight);
-					$prev_identifier = $identifier;
-					$prev_value = $value;
-				}
+					foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)
+					{
+						$identifier = $buffer_item->get_result_identifier();
+						$values = explode(',', $buffer_item->get_result_value());
+						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
+
+						if($avg_value > $max_value)
+						{
+							$max_value = $avg_value;
+						}
+
+						$result_table[$identifier][$result_counter] = array($avg_value, 0, 0, false);
+					}
+					break;
 			}
 
 			$result_counter++;

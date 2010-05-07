@@ -245,7 +245,7 @@ class pts_LineGraph extends pts_Graph
 			}
 		}
 		// in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "MB/s", "Frames Per Second", "Seconds", "Iterations Per Minute"))
-		if($this->graph_y_title != "Percent" || $max_value < 100 && $max_value != $min_value)
+		if(($this->graph_y_title != "Percent" || $max_value < 100) && $max_value != $min_value)
 		{
 			array_push($to_display[$this->graph_color_text], "Peak:");
 
