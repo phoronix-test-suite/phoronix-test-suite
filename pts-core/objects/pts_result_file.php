@@ -129,6 +129,55 @@ class pts_result_file
 
 		return $object_hashes;
 	}
+	public function is_multi_way_comparison()
+	{
+		static $is_multi_way = -1;
+
+		if($is_multi_way == -1)
+		{
+			$systems = array();
+			$targets = array();
+			$is_multi_way = true;
+			$prev_system = null;
+
+			foreach($this->get_system_identifiers() as $identifier)
+			{
+				if(strpos($identifier, ": ") == false)
+				{
+					$is_multi_way = false;
+					break;
+				}
+
+				$identifier_r = pts_trim_explode(': ', $identifier);
+
+				if(count($identifier_r) != 2)
+				{
+					$is_multi_way = false;
+					break;
+				}
+
+				if($prev_system != null && $prev_system != $identifier_r[0] && isset($systems[$identifier_r[0]]))
+				{
+					// The results aren't ordered
+					$is_multi_way = false;
+					break;
+				}
+				$prev_system = $identifier_r[0];
+
+				$systems[$identifier_r[0]] = !isset($systems[$identifier_r[0]]) ? 1 : $systems[$identifier_r[0]] + 1;
+				$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
+			}
+
+			if($is_multi_way && count($targets) < count($systems))
+			{
+				$is_multi_way = false;
+			}
+
+			// TODO: figure out what else is needed to reasonably determine if the result file is a multi-way comparison
+		}
+
+		return $is_multi_way;
+	}
 	public function get_result_table($system_id_keys = null, $result_object_index = -1)
 	{
 		$result_table = array();
@@ -236,8 +285,9 @@ class pts_result_file
 					}
 					else
 					{
-						if(PTS_MODE == "CLIENT" && pts_client::read_env("GRAPH_GROUP_SIMILAR"))
+						if(false && PTS_MODE == "CLIENT" && $this->is_multi_way_comparison())
 						{
+							// TODO: make it work better for highlighting multiple winners in multi-way comparisons
 							$highlight = false;
 
 							if($index % 2 == 1 && $prev_value != 0)

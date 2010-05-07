@@ -150,7 +150,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 
 			if(PTS_MODE == "CLIENT")
 			{
-				if(pts_client::read_env("GRAPH_GROUP_SIMILAR"))
+				if($result_file->is_multi_way_comparison() || pts_client::read_env("GRAPH_GROUP_SIMILAR"))
 				{
 					$table_keys = array();
 					$titles = $result_file->get_test_titles();
