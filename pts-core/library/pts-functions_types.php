@@ -317,7 +317,7 @@ function pts_virtual_suite_tests($object)
 	switch($virtual_suite_type)
 	{
 		case "TYPE_VIRT_SUITE_SUBSYSTEM":
-			foreach(pts_supported_tests_array() as $test)
+			foreach(pts_tests::supported_tests() as $test)
 			{
 				$type = pts_test_read_xml($test, P_TEST_HARDWARE_TYPE);
 
@@ -328,7 +328,7 @@ function pts_virtual_suite_tests($object)
 			}
 			break;
 		case "TYPE_VIRT_SUITE_ALL":
-			foreach(pts_supported_tests_array() as $test)
+			foreach(pts_tests::supported_tests() as $test)
 			{
 				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
 				$test_license = pts_test_read_xml($test, P_TEST_LICENSE);
@@ -352,7 +352,7 @@ function pts_virtual_suite_tests($object)
 			}
 			break;
 		case "TYPE_VIRT_SUITE_FREE":
-			foreach(pts_supported_tests_array() as $test)
+			foreach(pts_tests::supported_tests() as $test)
 			{
 				$test_license = pts_test_read_xml($test, P_TEST_LICENSE);
 

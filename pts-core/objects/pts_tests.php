@@ -56,6 +56,27 @@ class pts_tests
 
 		return $cache;
 	}
+	public static function supported_tests()
+	{
+		static $cache = null;
+
+		if($cache == null)
+		{
+			$supported_tests = array();
+
+			foreach(pts_tests::available_tests() as $identifier)
+			{
+				if(pts_test_supported($identifier))
+				{
+					array_push($supported_tests, $identifier);
+				}
+			}
+
+			$cache = $supported_tests;
+		}
+
+		return $cache;
+	}
 	public static function test_profile_location($identifier, $rewrite_cache = false)
 	{
 		static $cache;

@@ -130,7 +130,7 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 }
 function pts_gui_available_tests($to_show_types, $license_types, $dependency_limit = null, $downloads_limit = null)
 {
-	$test_names = pts_supported_tests_array();
+	$test_names = pts_tests::supported_tests();
 	$to_show_names = array();
 
 	foreach($test_names as &$name)

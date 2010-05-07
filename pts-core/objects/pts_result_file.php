@@ -183,8 +183,8 @@ class pts_result_file
 
 				$values_in_buffer = $result_object->get_result_buffer()->get_values();
 				sort($values_in_buffer);
-				$min_value_in_buffer =$values_in_buffer[0];
-				$max_value_in_buffer =$values_in_buffer[(count($values_in_buffer) - 1)];
+				$min_value_in_buffer = $values_in_buffer[0];
+				$max_value_in_buffer = $values_in_buffer[(count($values_in_buffer) - 1)];
 
 				foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)
 				{

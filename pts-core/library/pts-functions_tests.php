@@ -673,27 +673,6 @@ function pts_available_base_tests_array()
 
 	return $cache;
 }
-function pts_supported_tests_array()
-{
-	static $cache = null;
-
-	if($cache == null)
-	{
-		$supported_tests = array();
-
-		foreach(pts_tests::available_tests() as $identifier)
-		{
-			if(pts_test_supported($identifier))
-			{
-				array_push($supported_tests, $identifier);
-			}
-		}
-
-		$cache = $supported_tests;
-	}
-
-	return $cache;
-}
 function pts_installed_tests_array()
 {
 	if(!pts_is_assignment("CACHE_INSTALLED_TESTS"))

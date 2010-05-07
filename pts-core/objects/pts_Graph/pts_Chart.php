@@ -27,11 +27,13 @@ class pts_Chart extends pts_Graph
 	protected $result_table;
 	protected $result_systems;
 	protected $longest_system_identifier;
+	protected $result_object_index;
 
 	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
 	{
 		parent::__construct();
 		$this->graph_attr_big_border = false;
+		$this->result_object_index = $result_object_index;
 
 		list($this->result_tests, $this->result_systems, $this->result_table, $this->graph_maximum_value, $this->longest_system_identifier) = $result_file->get_result_table($system_id_keys, $result_object_index);
 	}
@@ -171,9 +173,16 @@ class pts_Chart extends pts_Graph
 
 				$this->graph_image->write_text_right($value_set[0], $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width), $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width ), $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, $hover_title, $bold);
 				$row++;
-
 			}
 			$col++;
+		}
+
+		if($row == 0 && $this->result_object_index != -1 && !is_array($this->result_object_index))
+		{
+			// No results were to be reported, so don't report the individualized graphs
+			$this->graph_image->destroy_image();
+			$this->saveGraphToFile($file);
+			return $this->return_graph_image();
 		}
 
 		if(defined("PHOROMATIC_TRACKER"))

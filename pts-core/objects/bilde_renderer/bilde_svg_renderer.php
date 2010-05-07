@@ -93,15 +93,18 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n";
 
-		if(!defined("BILDE_SVG_COLLECT_DEFINITIONS"))
+		if($this->image != null)
 		{
-			$svg_image .= $this->get_svg_formatted_definitions();
-			self::$render_count++;
-		}
+			if(!defined("BILDE_SVG_COLLECT_DEFINITIONS"))
+			{
+				$svg_image .= $this->get_svg_formatted_definitions();
+				self::$render_count++;
+			}
 
-		if($this->javascript_functions != null)
-		{
-			$svg_image .= "<script type=\"text/javascript\">\n<![CDATA[\n" . $this->javascript_functions . "\n// ]]>\n</script>";
+			if($this->javascript_functions != null)
+			{
+				$svg_image .= "<script type=\"text/javascript\">\n<![CDATA[\n" . $this->javascript_functions . "\n// ]]>\n</script>";
+			}
 		}
 
 		$svg_image .= $this->image . "</svg>";
@@ -110,6 +113,7 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function destroy_image()
 	{
+		$this->resize_image(0, 0);
 		$this->image = null;
 	}
 

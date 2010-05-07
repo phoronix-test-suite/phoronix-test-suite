@@ -29,7 +29,7 @@ function pts_cache_suite_calls()
 }
 function pts_cache_test_calls()
 {
-	pts_supported_tests_array();
+	pts_tests::supported_tests();
 	pts_test_name_to_identifier(-1);
 }
 function pts_cache_hardware_calls()
