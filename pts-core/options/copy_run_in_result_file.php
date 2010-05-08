@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class rename_identifier_in_result_file implements pts_option_interface
+class copy_run_in_result_file implements pts_option_interface
 {
 	public static function argument_checks()
 	{
@@ -35,27 +35,19 @@ class rename_identifier_in_result_file implements pts_option_interface
 		$result_file = new pts_result_file($result);
 		$result_file_identifiers = $result_file->get_system_identifiers();
 
-		$rename_identifier = pts_text_select_menu("Select the test run to rename", $result_file_identifiers);
-		$rename_identifier_new = pts_text_input("Enter the new identifier");
+		$copy_identifier = pts_text_select_menu("Select the test run to copy", $result_file_identifiers);
+		$copy_identifier_new = pts_text_input("Enter the new identifier of the copied run");
 		$merge_selects = array();
 
 		foreach($result_file_identifiers as $identifier)
 		{
 			$this_merge_select = new pts_result_merge_select($result, $identifier);
-
-			if($identifier == $rename_identifier && $rename_identifier != $rename_identifier_new)
-			{
-				$this_merge_select->rename_identifier($rename_identifier_new);
-			}
-
 			array_push($merge_selects, $this_merge_select);
-		}
 
-		foreach(array("benchmark-logs", "system-logs", "installation-logs") as $dir_name)
-		{
-			if(is_dir(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $rename_identifier))
+			if($identifier == $copy_identifier)
 			{
-				rename(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $rename_identifier, SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $rename_identifier_new);
+				$this_merge_select->rename_identifier($copy_identifier_new);
+				array_push($merge_selects, $this_merge_select);
 			}
 		}
 
