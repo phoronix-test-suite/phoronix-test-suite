@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: More PTS Results Viewer improvements
 - pts-core: Support line graphs in charts
+- pts-core: Smarter rendering layout of the pts_Graph keys
 
 Phoronix Test Suite 2.6 Beta 2
 May 6, 2010

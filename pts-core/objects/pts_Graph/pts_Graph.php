@@ -493,6 +493,7 @@ abstract class pts_Graph
 		// Do the actual work
 		$this->render_graph_pre_init();
 		$this->render_graph_init();
+		$this->render_graph_key();
 		$this->render_graph_base();
 		$this->render_graph_heading();
 
@@ -506,7 +507,6 @@ abstract class pts_Graph
 			$this->render_graph_value_ticks();
 		}
 
-		$this->render_graph_key();
 		$this->render_graph_result();
 		$this->render_graph_watermark();
 		return $this->return_graph_image();
@@ -552,6 +552,11 @@ abstract class pts_Graph
 		{
 			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background);
 		}
+
+		if(($sub_title_count = count($this->graph_sub_titles)) > 1)
+		{
+			$this->graph_top_start += (($sub_title_count - 1) * ($this->graph_font_size_sub_heading + 4));
+		}
 	}
 	protected function render_graph_heading($with_version = true)
 	{
@@ -570,16 +575,6 @@ abstract class pts_Graph
 	}
 	protected function render_graph_base()
 	{
-		if(count($this->graph_data_title) > 1 || $this->graph_show_key)
-		{
-			$this->graph_top_start += 8 + (ceil(count($this->graph_data_title) / 4) * 12);
-		}
-
-		if(($sub_title_count = count($this->graph_sub_titles)) > 1)
-		{
-			$this->graph_top_start += (($sub_title_count - 1) * 14);
-		}
-
 		$this->graph_image->draw_rectangle_with_border($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body, $this->graph_color_notches);
 
 		if($this->graph_body_image != false)
@@ -671,8 +666,10 @@ abstract class pts_Graph
 
 		$key_count = count($this->graph_data_title);
 		$key_pos = 0;
-		$keys_per_line = 4;
+		$key_item_width = 18 + $this->text_string_width($this->find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
+		$keys_per_line = floor(($this->graph_left_end - $this->graph_left_start - 14) / $key_item_width);
 		$key_line_height = 14;
+		$this->graph_top_start += 10;
 		$component_y = $this->graph_top_start - $key_line_height - 5;
 		$this->reset_paint_index();
 
@@ -686,22 +683,24 @@ abstract class pts_Graph
 				if($i != 0 && $key_pos % $keys_per_line == 1)
 				{
 					$key_pos = 1;
-					$component_y -= $key_line_height;
+					$component_y += $key_line_height;
+					$this->graph_top_start += $key_line_height;
 				}
-				else if(false && $this->is_multi_way_comparison)
+				else if($this->is_multi_way_comparison)
 				{
 					$this_key_way = substr($this->graph_data_title[$i], 0, strpos($this->graph_data_title[$i], ": "));
 
 					if($i != 0 && $this_key_way != $prev_key_way)
 					{
 						$key_pos = 1;
-						$component_y -= $key_line_height;
+						$component_y += $key_line_height;
+						$this->graph_top_start += $key_line_height;
 					}
 
 					$prev_key_way = $this_key_way;
 				}
 
-				$component_x = $this->graph_left_start + 14 + (($this->graph_left_end - $this->graph_left_start) / $keys_per_line) * (($key_pos - 1) % $keys_per_line);
+				$component_x = $this->graph_left_start + 16 + ($key_item_width * ($key_pos - 1 % $keys_per_line));
 
 				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
