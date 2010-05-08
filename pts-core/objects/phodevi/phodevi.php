@@ -60,8 +60,8 @@ class phodevi
 				include($sensor_obj_file);
 			}
 
-			$type = $sensor_obj_name::get_type();
-			$sensor = $sensor_obj_name::get_sensor();
+			$type = call_user_func(array($sensor_obj_name, "get_type"));
+			$sensor = call_user_func(array($sensor_obj_name, "get_sensor"));
 
 			if($type != null && $sensor != null)
 			{
@@ -133,24 +133,18 @@ class phodevi
 
 		if(isset(self::$sensors[$sensor[0]][$sensor[1]]))
 		{
-			$sensor_obj = self::$sensors[$sensor[0]][$sensor[1]];
-			$value = $sensor_obj::read_sensor();
+			$value = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "read_sensor"));
 		}
 
 		return $value;
 	}
 	public static function read_sensor_unit($sensor)
 	{
-		$value = false;
-		$sensor_obj = self::$sensors[$sensor[0]][$sensor[1]];
-		$value = $sensor_obj::get_unit();
-
-		return $value;
+		return call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "get_unit"));
 	}
 	public static function sensor_supported($sensor)
 	{
-		$sensor_obj = self::$sensors[$sensor[0]][$sensor[1]];
-		return isset(self::$sensors[$sensor[0]][$sensor[1]]) && $sensor_obj::support_check();
+		return isset(self::$sensors[$sensor[0]][$sensor[1]]) && call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "support_check"));
 	}
 	public static function sensor_identifier($sensor)
 	{
@@ -158,9 +152,8 @@ class phodevi
 	}
 	public static function sensor_name($sensor)
 	{
-		$sensor_obj = self::$sensors[$sensor[0]][$sensor[1]];
-		$type = $sensor_obj::get_type();
-		$sensor = $sensor_obj::get_sensor();
+		$type = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "get_type"));
+		$sensor = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "get_sensor"));
 
 		if(strlen($type) < 4)
 		{
