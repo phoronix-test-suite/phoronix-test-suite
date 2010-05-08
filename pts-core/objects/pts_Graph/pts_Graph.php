@@ -384,17 +384,13 @@ abstract class pts_Graph
 		if(is_numeric($real_maximum))
 		{
 			// disable forcing 100 top when display Percent
-			if(false && $real_maximum <= 100 && $this->graph_y_title == "Percent")
-			{
-				$maximum = (ceil(100 / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
-			}
-			else if($real_maximum < $this->graph_attr_marks)
+			if($real_maximum < $this->graph_attr_marks)
 			{
 				$maximum = $real_maximum * 1.35;
 			}
 			else
 			{
-				$maximum = (floor(round($real_maximum * 1.2) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+				$maximum = (floor(round($real_maximum * 1.24) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
 
 				if($real_maximum > 100)
 				{

@@ -1144,9 +1144,23 @@ class phodevi_system extends phodevi_device_interface
 			$driver_info = file_get_contents("/proc/dri/0/name");
 			$dri_driver = substr($driver_info, 0, strpos($driver_info, " "));
 
-			if($dri_driver == "i915")
+			if(in_array($dri_driver, array("i915", "i965")))
 			{
 				$dri_driver = "intel";
+			}
+		}
+		else if(is_file("/sys/class/drm/card0/device/vendor"))
+		{
+			$vendor_id = file_get_contents("/sys/class/drm/card0/device/vendor");
+
+			switch($vendor_id)
+			{
+				case 0x1002:
+					$dri_driver = "radeon";
+					break;
+				case 0x8086:
+					$dri_driver = "intel";
+					break;
 			}
 		}
 
