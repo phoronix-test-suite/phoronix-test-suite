@@ -48,14 +48,8 @@ class phodevi_sensor
 			case "memory":
 				$this->sensor_string = "Memory Usage";
 				break;
-			case "fan-speed":
-				$this->sensor_string = "Fan Speed";
-				break;
-			case "disk-speed":
-				$this->sensor_string = "Disk Speed";
-				break;
 			default:
-				$this->sensor_string = ucwords($sensor_type);
+				$this->sensor_string = ucwords(str_replace('-', ' ', $sensor_type));
 				break;
 		}
 	}
