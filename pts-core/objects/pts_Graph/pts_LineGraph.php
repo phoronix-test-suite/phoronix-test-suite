@@ -240,8 +240,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($calculations_r as $color => &$values)
 			{
-				$avg = pts_math::set_precision(array_sum($values) / count($values), 1);
-				array_push($to_display[$color], $avg);
+				array_push($to_display[$color], array_sum($values) / count($values));
 			}
 		}
 		// in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "MB/s", "Frames Per Second", "Seconds", "Iterations Per Minute"))
@@ -251,7 +250,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($calculations_r as $color => &$values)
 			{
-				array_push($to_display[$color], pts_math::set_precision(max($values), 1));
+				array_push($to_display[$color], max($values));
 			}
 		}
 		if($min_value > 0 && $max_value != $min_value)
@@ -260,18 +259,18 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($calculations_r as $color => &$values)
 			{
-				array_push($to_display[$color], pts_math::set_precision(min($values), 1));
+				array_push($to_display[$color], min($values));
 			}
 		}
-		if($point_counter > 9 && !in_array($this->graph_y_title, array("Percent")))
+		/*if($point_counter > 9 && !in_array($this->graph_y_title, array("Percent")))
 		{
 			array_push($to_display[$this->graph_color_text], "Last:");
 
 			foreach($calculations_r as $color => &$values)
 			{
-				array_push($to_display[$color], pts_math::set_precision($values[count($values) - 1], 1));
+				array_push($to_display[$color], $values[count($values) - 1]);
 			}
-		}
+		}*/
 
 		// Do the actual rendering of avg / low / med high identifiers
 		$from_left = $this->graph_left_start + 6;
@@ -283,6 +282,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($column as &$write)
 			{
+				$write = pts_math::set_precision($write, 1);
 				$this->graph_image->write_text_left($write, $this->graph_font, 6.5, $color_key, $from_left, $from_top, $from_left, $from_top);
 				$string_width = $this->text_string_width($write, $this->graph_font, 6.5);
 
