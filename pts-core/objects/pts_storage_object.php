@@ -90,7 +90,7 @@ class pts_storage_object
 				{
 					if(!$restore->get_span_reboots())
 					{
-						$continue_loading = $restore->get_creation_time() > (time() - phodevi::read_sensor("system", "uptime"));
+						$continue_loading = $restore->get_creation_time() > (time() - phodevi::system_uptime());
 					}
 					else
 					{

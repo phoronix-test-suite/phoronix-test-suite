@@ -20,13 +20,51 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-abstract class phodevi_sensor
+class hdd_write_speed extends phodevi_sensor
 {
-	abstract static function get_type();
-	abstract static function get_sensor();
-	abstract static function get_unit();
-	abstract static function support_check();
-	abstract static function read_sensor();
+	public static function get_type()
+	{
+		return "hdd";
+	}
+	public static function get_sensor()
+	{
+		return "write-speed";
+	}
+	public static function get_unit()
+	{
+		return "MB/s";
+	}
+	public static function support_check()
+	{
+		$test = self::read_sensor();
+		return is_numeric($test) && $test != -1;
+	}
+	public static function read_sensor()
+	{
+		// speed in MB/s
+		$speed = -1;
+
+		if(IS_LINUX)
+		{
+			static $sys_disk = null;
+
+			if($sys_disk == null)
+			{
+				foreach(pts_glob("/sys/class/block/sd*/stat") as $check_disk)
+				{
+					if(pts_file_get_contents($check_disk) != null)
+					{
+						$sys_disk = $check_disk;
+						break;
+					}
+				}
+			}
+
+			$speed = phodevi_linux_parser::read_sys_disk_speed($sys_disk, "WRITE");
+		}
+
+		return $speed;
+	}
 }
 
 ?>

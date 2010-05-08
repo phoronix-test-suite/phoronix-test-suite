@@ -665,7 +665,7 @@ abstract class pts_Graph
 		$key_item_width = 18 + $this->text_string_width($this->find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
 		$keys_per_line = floor(($this->graph_left_end - $this->graph_left_start - 14) / $key_item_width);
 		$key_line_height = 14;
-		$this->graph_top_start += 10;
+		$this->graph_top_start += 12;
 		$component_y = $this->graph_top_start - $key_line_height - 5;
 		$this->reset_paint_index();
 

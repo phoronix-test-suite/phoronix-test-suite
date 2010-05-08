@@ -282,7 +282,11 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($column as &$write)
 			{
-				$write = pts_math::set_precision($write, 1);
+				if(is_numeric($write))
+				{
+					$write = pts_math::set_precision($write, 1);
+				}
+
 				$this->graph_image->write_text_left($write, $this->graph_font, 6.5, $color_key, $from_left, $from_top, $from_left, $from_top);
 				$string_width = $this->text_string_width($write, $this->graph_font, 6.5);
 

@@ -23,26 +23,6 @@
 
 class phodevi_memory extends phodevi_device_interface
 {
-	public static function read_sensor($identifier)
-	{
-		switch($identifier)
-		{
-			case "physical-usage":
-				$sensor = array("memory_usage", "MEMORY");
-				break;
-			case "swap-usage":
-				$sensor = array("memory_usage", "SWAP");
-				break;
-			case "total-usage":
-				$sensor = array("memory_usage", "TOTAL");
-				break;
-			default:
-				$sensor = false;
-				break;
-		}
-
-		return $sensor;
-	}
 	public static function read_property($identifier)
 	{
 		switch($identifier)
@@ -224,75 +204,6 @@ class phodevi_memory extends phodevi_device_interface
 		}
 
 		return $info;
-	}
-	public static function memory_usage($TYPE = "TOTAL", $READ = "USED")
-	{
-		// Reads system memory usage
-		$mem_usage = -1;
-
-		if(pts_executable_in_path("free") != false)
-		{
-			$mem = explode("\n", shell_exec("free -t -m 2>&1"));
-			$grab_line = null;
-			$buffers_and_cache = 0;
-
-			for($i = 0; $i < count($mem); $i++)
-			{
-				$line_parts = explode(":", $mem[$i]);
-
-				if(count($line_parts) == 2)
-				{
-					$line_type = trim($line_parts[0]);
-
-					if($TYPE == "MEMORY" && $line_type == "Mem")
-					{
-						$grab_line = $line_parts[1];
-					}
-					else if($TYPE == "SWAP" && $line_type == "Swap")
-					{
-						$grab_line = $line_parts[1];
-					}
-					else if($TYPE == "TOTAL" && $line_type == "Total")
-					{
-						$grab_line = $line_parts[1];
-					}
-					else if($line_type == "-/+ buffers/cache" && $TYPE != "SWAP")
-					{
-						$buffers_and_cache = pts_first_element_in_array(explode(' ', pts_trim_spaces($line_parts[1])));						
-					}
-				}
-			}
-
-			if(!empty($grab_line))
-			{
-				$grab_line = pts_trim_spaces($grab_line);
-				$mem_parts = explode(" ", $grab_line);
-
-				if($READ == "USED")
-				{
-					if(count($mem_parts) >= 2 && is_numeric($mem_parts[1]))
-					{
-						$mem_usage = $mem_parts[1] - $buffers_and_cache;
-					}
-				}
-				else if($READ == "TOTAL")
-				{
-					if(count($mem_parts) >= 1 && is_numeric($mem_parts[0]))
-					{
-						$mem_usage = $mem_parts[0];
-					}
-				}
-				else if($READ == "FREE")
-				{
-					if(count($mem_parts) >= 3 && is_numeric($mem_parts[2]))
-					{
-						$mem_usage = $mem_parts[2];
-					}
-				}
-			}
-		}
-
-		return $mem_usage;
 	}
 }
 

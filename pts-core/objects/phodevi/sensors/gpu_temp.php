@@ -20,13 +20,41 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-abstract class phodevi_sensor
+class gpu_temp extends phodevi_sensor
 {
-	abstract static function get_type();
-	abstract static function get_sensor();
-	abstract static function get_unit();
-	abstract static function support_check();
-	abstract static function read_sensor();
+	public static function get_type()
+	{
+		return "gpu";
+	}
+	public static function get_sensor()
+	{
+		return "temp";
+	}
+	public static function get_unit()
+	{
+		return "Celsius";
+	}
+	public static function support_check()
+	{
+		$test = self::read_sensor();
+		return is_numeric($test) && $test != -1;
+	}
+	public static function read_sensor()
+	{
+		// Report graphics processor temperature
+		$temp_c = -1;
+
+		if(IS_NVIDIA_GRAPHICS)
+		{
+			$temp_c = phodevi_parser::read_nvidia_extension("GPUCoreTemp");
+		}
+		else if(IS_ATI_GRAPHICS && IS_LINUX)
+		{
+			$temp_c = phodevi_linux_parser::read_ati_overdrive("Temperature");
+		}
+
+		return $temp_c;
+	}
 }
 
 ?>

@@ -44,7 +44,7 @@ class phodevi_cache
 
 		if($this->storage_dir == $storage_dir && $this->client_version == $client_version)
 		{
-			if($this->phodevi_time > (time() - phodevi::read_sensor("system", "uptime")))
+			if($this->phodevi_time > (time() - phodevi::system_uptime()))
 			{
 				if(md5(serialize($this->phodevi_cache)) == $this->phodevi_cs)
 				{

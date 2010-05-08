@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,19 +25,16 @@ class dump_system_sensors implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header("Phoronix Test Suite Sensors");
-
-		foreach(pts_sys_sensors_string(false) as $sensor => $value)
+		foreach(phodevi::supported_sensors() as $sensor)
 		{
-			echo $sensor . ": " . $value . "\n";
+			echo phodevi::sensor_name($sensor) . ": " . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . "\n";
 		}
 
 		echo "\nUnsupported Sensors:\n\n";
-
-		foreach(array_diff(pts_available_sensors(), pts_supported_sensors()) as $sensor)
+		foreach(phodevi::unsupported_sensors() as $sensor)
 		{
-			echo "- " . $sensor->get_formatted_hardware_type() . " " . $sensor->get_sensor_string() . "\n";
+			echo "- " . phodevi::sensor_name($sensor) . "\n";
 		}
-
 		echo "\n";
 	}
 }

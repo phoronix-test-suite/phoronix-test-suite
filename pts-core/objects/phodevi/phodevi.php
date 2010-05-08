@@ -24,11 +24,13 @@
 define("PHODEVI_AVOID_CACHE", 0); // No caching
 define("PHODEVI_STAND_CACHE", 1); // Standard caching
 define("PHODEVI_SMART_CACHE", 2); // Smart caching
+define("PHODEVI_PATH", dirname(__FILE__) . '/');
 
 class phodevi
 {
 	private static $device_cache = null;
 	private static $smart_cache = null;
+	private static $sensors = null;
 
 	public static function read_name($device)
 	{
@@ -46,6 +48,148 @@ class phodevi
 		"Audio" => "audio",
 		"Monitor" => "monitor"
 		);
+	}
+	public static function load_sensors()
+	{
+		foreach(glob(PHODEVI_PATH . "sensors/*") as $sensor_obj_file)
+		{
+			$sensor_obj_name = basename($sensor_obj_file, ".php");
+
+			if(!class_exists($sensor_obj_name, false))
+			{
+				include($sensor_obj_file);
+			}
+
+			$type = $sensor_obj_name::get_type();
+			$sensor = $sensor_obj_name::get_sensor();
+
+			if($type != null && $sensor != null)
+			{
+				self::$sensors[$type][$sensor] = $sensor_obj_name;
+			}
+		}
+	}
+	public static function available_sensors()
+	{
+		static $available_sensors = null;
+
+		if($available_sensors == null)
+		{
+			$available_sensors = array();
+
+			foreach(self::$sensors as $sensor_type => &$sensor)
+			{
+				foreach(array_keys($sensor) as $sensor_senses)
+				{
+					array_push($available_sensors, array($sensor_type, $sensor_senses));
+				}
+			}
+		}
+
+		return $available_sensors;
+	}
+	public static function supported_sensors()
+	{
+		static $supported_sensors = null;
+
+		if($supported_sensors == null)
+		{
+			$supported_sensors = array();
+
+			foreach(self::available_sensors() as $sensor)
+			{
+				if(self::sensor_supported($sensor))
+				{
+					array_push($supported_sensors, $sensor);
+				}
+			}
+		}
+
+		return $supported_sensors;
+	}
+	public static function unsupported_sensors()
+	{
+		static $unsupported_sensors = null;
+
+		if($unsupported_sensors == null)
+		{
+			$unsupported_sensors = array();
+			$supported_sensors = self::supported_sensors();
+
+			foreach(self::available_sensors() as $sensor)
+			{
+				if(!in_array($sensor, $supported_sensors))
+				{
+					array_push($unsupported_sensors, $sensor);
+				}
+			}
+		}
+
+		return $unsupported_sensors;
+	}
+	public static function read_sensor($sensor)
+	{
+		$value = false;
+
+		if(isset(self::$sensors[$sensor[0]][$sensor[1]]))
+		{
+			$sensor_obj = self::$sensors[$sensor[0]][$sensor[1]];
+			$value = $sensor_obj::read_sensor();
+		}
+
+		return $value;
+	}
+	public static function read_sensor_unit($sensor)
+	{
+		$value = false;
+		$sensor_obj = self::$sensors[$sensor[0]][$sensor[1]];
+		$value = $sensor_obj::get_unit();
+
+		return $value;
+	}
+	public static function sensor_supported($sensor)
+	{
+		$sensor_obj = self::$sensors[$sensor[0]][$sensor[1]];
+		return isset(self::$sensors[$sensor[0]][$sensor[1]]) && $sensor_obj::support_check();
+	}
+	public static function sensor_identifier($sensor)
+	{
+		return $sensor[0] . '.' . $sensor[1];
+	}
+	public static function sensor_name($sensor)
+	{
+		$sensor_obj = self::$sensors[$sensor[0]][$sensor[1]];
+		$type = $sensor_obj::get_type();
+		$sensor = $sensor_obj::get_sensor();
+
+		if(strlen($type) < 4)
+		{
+			$formatted = strtoupper($type);
+		}
+		else
+		{
+			$formatted = ucwords($type);
+		}
+
+		$formatted .= ' ';
+
+		switch($sensor)
+		{
+			case "temp":
+				$formatted .= "Temperature";
+				break;
+			case "freq":
+				$formatted .= "Frequency";
+				break;
+			case "memory":
+				$formatted .= "Memory Usage";
+				break;
+			default:
+				$formatted .= ucwords(str_replace('-', ' ', $sensor));
+				break;
+		}
+
+		return $formatted;
 	}
 	public static function system_hardware($return_as_string = true)
 	{
@@ -80,29 +224,6 @@ class phodevi
 		}
 
 		return $settings_special;
-	}
-	public static function read_sensor($device, $read_sensor)
-	{
-		$value = false;
-
-		if(method_exists("phodevi_" . $device, "read_sensor"))
-		{
-			$sensor_function_r = pts_to_array(call_user_func(array("phodevi_" . $device, "read_sensor"), $read_sensor));
-			$sensor_function = $sensor_function_r[0];
-			$sensor_pass = array();
-
-			for($i = 1; $i < count($sensor_function_r); $i++)
-			{
-				array_push($sensor_pass, $sensor_function_r[$i]);
-			}
-
-			if(method_exists("phodevi_" . $device, $sensor_function))
-			{
-				$value = call_user_func_array(array("phodevi_" . $device,  $sensor_function), $sensor_pass);
-			}
-		}
-
-		return $value;
 	}
 	public static function read_property($device, $read_property)
 	{
@@ -249,6 +370,7 @@ class phodevi
 		}
 
 		define("IS_UNKNOWN_GRAPHICS", ($found_gpu_match == false));
+		self::load_sensors();
 	}
 	public static function set_device_cache($cache_array)
 	{
@@ -294,6 +416,70 @@ class phodevi
 		}
 
 		return $info;
+	}
+	public static function system_uptime()
+	{
+		// Returns the system's uptime in seconds
+		$uptime = 1;
+
+		if(is_file("/proc/uptime"))
+		{
+			$uptime = pts_first_string_in_string(pts_file_get_contents("/proc/uptime"));
+		}
+		else if(($uptime_cmd = pts_executable_in_path("uptime")) != false)
+		{
+			$uptime_counter = 0;
+			$uptime_output = shell_exec($uptime_cmd . " 2>&1");
+			$uptime_output = substr($uptime_output, strpos($uptime_output, " up") + 3);
+			$uptime_output = substr($uptime_output, 0, strpos($uptime_output, " user"));
+			$uptime_output = substr($uptime_output, 0, strrpos($uptime_output, ",")) . " ";
+
+			if(($day_end_pos = strpos($uptime_output, " day")) !== false)
+			{
+				$day_output = substr($uptime_output, 0, $day_end_pos);
+				$day_output = substr($day_output, strrpos($day_output, " ") + 1);
+
+				if(is_numeric($day_output))
+				{
+					$uptime_counter += $day_output * 86400;
+				}
+			}
+
+			if(($mins_end_pos = strpos($uptime_output, " mins")) !== false)
+			{
+				$mins_output = substr($uptime_output, 0, $day_end_pos);
+				$mins_output = substr($mins_output, strrpos($mins_output, " ") + 1);
+
+				if(is_numeric($mins_output))
+				{
+					$uptime_counter += $mins_output * 60;
+				}
+			}
+
+			if(($time_split_pos = strpos($uptime_output, ":")) !== false)
+			{
+				$hours_output = substr($uptime_output, 0, $time_split_pos);
+				$hours_output = substr($hours_output, strrpos($hours_output, " ") + 1);
+				$mins_output = substr($uptime_output, $time_split_pos + 1);
+				$mins_output = substr($mins_output, 0, strpos($mins_output, " "));
+
+				if(is_numeric($hours_output))
+				{
+					$uptime_counter += $hours_output * 3600;
+				}
+				if(is_numeric($mins_output))
+				{
+					$uptime_counter += $mins_output * 60;
+				}
+			}
+
+			if(is_numeric($uptime_counter) && $uptime_counter > 0)
+			{
+				$uptime = $uptime_counter;
+			}
+		}
+
+		return intval($uptime);
 	}
 }
 

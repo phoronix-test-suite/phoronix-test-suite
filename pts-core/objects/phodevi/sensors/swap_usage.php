@@ -3,9 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
-	pts-includes-unit_caching.php: Functions that simply call pts-core functions for building their caches
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,26 +20,29 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_cache_suite_calls()
+class swap_usage extends phodevi_sensor
 {
-	pts_supported_suites_array();
-	// pts_available_suites_array(); // This is already called within pts_supported_suites_array()
-	pts_suite_name_to_identifier(-1);
-}
-function pts_cache_test_calls()
-{
-	pts_tests::supported_tests();
-	pts_test_name_to_identifier(-1);
-}
-function pts_cache_hardware_calls()
-{
-	pts_hw_string();
-	phodevi::supported_sensors();
-	phodevi::unsupported_sensors();
-}
-function pts_cache_software_calls()
-{
-	pts_sw_string();
+	public static function get_type()
+	{
+		return "swap";
+	}
+	public static function get_sensor()
+	{
+		return "usage";
+	}
+	public static function get_unit()
+	{
+		return "Megabytes";
+	}
+	public static function support_check()
+	{
+		$test = self::read_sensor();
+		return is_numeric($test) && $test != -1;
+	}
+	public static function read_sensor()
+	{
+		return memory_usage::mem_usage("SWAP", "USED");		
+	}
 }
 
 ?>

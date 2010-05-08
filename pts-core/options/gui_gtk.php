@@ -1859,12 +1859,10 @@ class gui_gtk implements pts_option_interface
 		$sw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)), null, "No system information available.", false);
 		pts_gtk_add_notebook_tab($notebook, $sw, "Software");
 
-		$sensors = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)), null, "No system information available.", false);
-		pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors");
+		//$sensors = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)), null, "No system information available.", false);
+		//pts_gtk_add_notebook_tab($notebook, $sensors, "Sensors");
 
-		$copy_button = new pts_gtk_button("Copy To Clipboard", array("gui_gtk", "system_info_copy_to_clipboard"), null);
-
-		pts_gtk_array_to_boxes($window, array($notebook, $copy_button), 3);
+		pts_gtk_array_to_boxes($window, array($notebook), 3);
 
 		$window->show_all();
 		Gtk::main();
@@ -1885,9 +1883,6 @@ class gui_gtk implements pts_option_interface
 				break;
 			case "Software":
 				$to_copy = pts_sw_string();
-				break;
-			case "Sensors":
-				$to_copy = pts_sys_sensors_string();
 				break;
 		}
 

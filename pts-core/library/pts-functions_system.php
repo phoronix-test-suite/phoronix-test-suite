@@ -45,66 +45,6 @@ function pts_sw_string($return_string = true)
 
 	return pts_process_string_array($return_string, $sw);
 }
-function pts_available_sensors()
-{
-	return array(
-	new phodevi_sensor("temp", "gpu", array("gpu", "temperature"), "Celsius"),
-	new phodevi_sensor("temp", "cpu", array("cpu", "temperature"), "Celsius"),
-	new phodevi_sensor("temp", "hdd", array("disk", "temperature"), "Celsius"),
-	new phodevi_sensor("temp", "sys", array("system", "temperature"), "Celsius", "System"),
-	new phodevi_sensor("battery", "power", array("system", "power-consumption"), "Milliwatts"),
-	new phodevi_sensor("battery", "current", array("system", "power-current"), "microAmps"),
-	new phodevi_sensor("voltage", "cpu", array("system", "cpu-voltage"), "Volts"),
-	new phodevi_sensor("voltage", "v3", array("system", "v3-voltage"), "Volts", "+3.33V"),
-	new phodevi_sensor("voltage", "v5", array("system", "v5-voltage"), "Volts", "+5.00V"),
-	new phodevi_sensor("voltage", "v12", array("system", "v12-voltage"), "Volts", "+12.00V"),
-	new phodevi_sensor("freq", "cpu", array("cpu", "current-frequency"), "Megahertz"),
-	new phodevi_sensor("freq", "gpu", array("gpu", "current-core-frequency"), "Megahertz"),
-	new phodevi_sensor("usage", "cpu", array("cpu", "usage"), "Percent"),
-	new phodevi_sensor("usage", "gpu", array("gpu", "core-usage"), "Percent"),
-	new phodevi_sensor("memory", "system", array("memory", "physical-usage"), "Megabytes"),
-	new phodevi_sensor("memory", "swap", array("memory", "swap-usage"), "Megabytes"),
-	new phodevi_sensor("memory", "total", array("memory", "total-usage"), "Megabytes"),
-	new phodevi_sensor("fan-speed", "gpu", array("gpu", "fan-speed"), "Percent"),
-	new phodevi_sensor("fan-speed", "cpu", array("cpu", "fan-speed"), "RPM"),
-	new phodevi_sensor("fan-speed", "sys", array("system", "fan-speed"), "RPM", "System"),
-	new phodevi_sensor("system", "iowait", array("system", "iowait"), "Percent"),
-	new phodevi_sensor("disk-speed", "read", array("disk", "read-speed"), "MB/s"),
-	new phodevi_sensor("disk-speed", "write", array("disk", "write-speed"), "MB/s"),
-	new phodevi_sensor("fence-speed", "gpu", array("gpu", "fence-speed"), "Fences/s")
-	);
-}
-
-function pts_sys_sensors_string($return_string = true)
-{
-	$sensors = array();
-
-	foreach(pts_supported_sensors() as $s)
-	{
-		$sensors[$s->get_formatted_hardware_type() . " " . $s->get_sensor_string()] = $s->read_sensor() . " " . $s->get_sensor_unit();
-	}
-
-	return pts_process_string_array($return_string, $sensors);
-}
-function pts_supported_sensors()
-{
-	static $supported_sensors = null;
-
-	if($supported_sensors == null)
-	{
-		$supported_sensors = array();
-
-		foreach(pts_available_sensors() as $pts_sensor)
-		{
-			if($pts_sensor->read_sensor() != -1)
-			{
-				array_push($supported_sensors, $pts_sensor);
-			}
-		}
-	}
-
-	return $supported_sensors;
-}
 function pts_remove_unsupported_entries($array)
 {
 	$clean_elements = array();

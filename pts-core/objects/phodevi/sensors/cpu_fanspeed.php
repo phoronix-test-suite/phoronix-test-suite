@@ -20,13 +20,46 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-abstract class phodevi_sensor
+class cpu_fanspeed extends phodevi_sensor
 {
-	abstract static function get_type();
-	abstract static function get_sensor();
-	abstract static function get_unit();
-	abstract static function support_check();
-	abstract static function read_sensor();
+	public static function get_type()
+	{
+		return "cpu";
+	}
+	public static function get_sensor()
+	{
+		return "fan-speed";
+	}
+	public static function get_unit()
+	{
+		return "RPM";
+	}
+	public static function support_check()
+	{
+		$test = self::read_sensor();
+		return is_numeric($test) && $test != -1;
+	}
+	public static function read_sensor()
+	{
+		$fan_speed = -1;
+
+		if(IS_LINUX)
+		{
+			$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/fan1_input", "POSITIVE_NUMERIC");
+
+			if($raw_fan == -1)
+			{
+				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/fan1_input", "POSITIVE_NUMERIC");
+			}
+
+			if($raw_fan != -1)
+			{
+				$fan_speed = $raw_fan;
+			}
+		}
+
+		return $fan_speed;
+	}
 }
 
 ?>
