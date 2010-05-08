@@ -24,9 +24,9 @@ class pts_render
 {
 	static $last_graph_object = null;
 
-	public static function render_graph(&$r_o, $save_as = false, $suite_name = null, $pts_version = PTS_VERSION, $extra_attributes = null)
+	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $pts_version = PTS_VERSION, $extra_attributes = null)
 	{
-		$result_format = $r_o->get_format();
+		$result_format = $result_object->get_format();
 
 		switch($result_format)
 		{
@@ -78,7 +78,7 @@ class pts_render
 		}
 
 		// creation code
-		eval("\$graph = new " . $graph_type . "(\$r_o);");
+		eval("\$graph = new " . $graph_type . "(\$result_object, \$result_file);");
 
 
 		if(isset($extra_attributes["regression_marker_threshold"]))
@@ -91,12 +91,12 @@ class pts_render
 			case "LINE_GRAPH":
 			case "BAR_ANALYZE_GRAPH":
 				//$graph->hideGraphIdentifiers();
-				foreach($r_o->get_result_buffer()->get_buffer_items() as $buffer_item)
+				foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 				{
 					$graph->loadGraphValues(explode(',', $buffer_item->get_result_value()), $buffer_item->get_result_identifier());
 				}
 
-				$scale_special = $r_o->get_scale_special();
+				$scale_special = $result_object->get_scale_special();
 				if(!empty($scale_special) && count(($ss = explode(',', $scale_special))) > 0)
 				{
 					$graph->loadGraphIdentifiers($ss);
@@ -108,7 +108,7 @@ class pts_render
 				$values = array();
 				$raw_values = array();
 
-				foreach($r_o->get_result_buffer()->get_buffer_items() as $buffer_item)
+				foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 				{
 					array_push($identifiers, $buffer_item->get_result_identifier());
 					array_push($values, $buffer_item->get_result_value());
@@ -121,11 +121,11 @@ class pts_render
 				break;
 		}
 
-		$graph->loadGraphProportion($r_o->get_proportion());
+		$graph->loadGraphProportion($result_object->get_proportion());
 		$graph->loadGraphVersion("Phoronix Test Suite " . $pts_version);
 
-		$graph->addInternalIdentifier("Test", $r_o->get_test_name());
-		$graph->addInternalIdentifier("Identifier", $suite_name);
+		$graph->addInternalIdentifier("Test", $result_object->get_test_name());
+		$graph->addInternalIdentifier("Identifier", ($result_file instanceOf pts_result_file ? $result_file->get_suite_name() : null));
 
 		if(function_exists("pts_current_user"))
 		{

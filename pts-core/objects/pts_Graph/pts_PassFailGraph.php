@@ -23,9 +23,9 @@
 
 class pts_PassFailGraph extends pts_Graph
 {
-	public function __construct(&$result_object)
+	public function __construct(&$result_object, &$result_file = null)
 	{
-		parent::__construct($result_object);
+		parent::__construct($result_object, $result_file);
 		$this->graph_type = "PASS_FAIL";
 		$this->graph_value_type = "ABSTRACT";
 		$this->graph_hide_identifiers = true;

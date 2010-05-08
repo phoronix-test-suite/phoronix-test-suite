@@ -90,9 +90,10 @@ abstract class pts_Graph
 	// Internal Switches, Etc
 
 	protected $regression_marker_threshold = 0;
+	protected $is_multi_way_comparison = false;
 	private $test_identifier = null;
 
-	public function __construct(&$result_object = null)
+	public function __construct(&$result_object = null, &$result_file = null)
 	{
 		// Setup config values
 		//if(PTS_MODE == "CLIENT" || (defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
@@ -156,6 +157,11 @@ abstract class pts_Graph
 				define("CUSTOM_FONT_DIR", $font_path);
 				bilde_renderer::setup_font_directory();
 			}
+		}
+
+		if($result_file != null && $result_file instanceOf pts_result_file)
+		{
+			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
 		}
 
 		$this->graph_font = $font_type;
@@ -664,8 +670,10 @@ abstract class pts_Graph
 		}
 
 		$key_count = count($this->graph_data_title);
-		$key_counter = 0;
-		$component_y = $this->graph_top_start - 19;
+		$key_pos = 0;
+		$keys_per_line = 4;
+		$key_line_height = 14;
+		$component_y = $this->graph_top_start - $key_line_height - 5;
 		$this->reset_paint_index();
 
 		for($i = 0; $i < $key_count; $i++)
@@ -673,17 +681,30 @@ abstract class pts_Graph
 			if(!empty($this->graph_data_title[$i]))
 			{
 				$this_color = $this->get_paint_color($this->graph_data_title[$i]);
-				$key_counter += 1;
+				$key_pos++;
 
-				$component_x = $this->graph_left_start + 14 + (($this->graph_left_end - $this->graph_left_start) / 4) * (($key_counter - 1) % 4);
+				if($i != 0 && $key_pos % $keys_per_line == 1)
+				{
+					$key_pos = 1;
+					$component_y -= $key_line_height;
+				}
+				else if(false && $this->is_multi_way_comparison)
+				{
+					$this_key_way = substr($this->graph_data_title[$i], 0, strpos($this->graph_data_title[$i], ": "));
+
+					if($i != 0 && $this_key_way != $prev_key_way)
+					{
+						$key_pos = 1;
+						$component_y -= $key_line_height;
+					}
+
+					$prev_key_way = $this_key_way;
+				}
+
+				$component_x = $this->graph_left_start + 14 + (($this->graph_left_end - $this->graph_left_start) / $keys_per_line) * (($key_pos - 1) % $keys_per_line);
 
 				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
-
-				if($key_counter % 4 == 0)
-				{
-					$component_y -= 14;
-				}
 			}
 		}
 	}

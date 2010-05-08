@@ -27,9 +27,9 @@ class pts_LineGraph extends pts_Graph
 	protected $minimum_identifier_font = 7;
 	protected $show_select_identifiers = null;
 
-	public function __construct(&$result_object)
+	public function __construct(&$result_object, &$result_file = null)
 	{
-		parent::__construct($result_object);
+		parent::__construct($result_object, $result_file);
 		$this->graph_type = "LINE_GRAPH";
 		$this->graph_show_key = true;
 		$this->graph_background_lines = true;
