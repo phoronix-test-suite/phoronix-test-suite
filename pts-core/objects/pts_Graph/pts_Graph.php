@@ -700,7 +700,7 @@ abstract class pts_Graph
 					$prev_key_way = $this_key_way;
 				}
 
-				$component_x = $this->graph_left_start + 16 + ($key_item_width * ($key_pos - 1 % $keys_per_line));
+				$component_x = $this->graph_left_start + 13 + ($key_item_width * ($key_pos - 1 % $keys_per_line));
 
 				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);

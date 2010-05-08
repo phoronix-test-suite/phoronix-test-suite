@@ -70,7 +70,8 @@ function pts_available_sensors()
 	new phodevi_sensor("fan-speed", "sys", array("system", "fan-speed"), "RPM", "System"),
 	new phodevi_sensor("system", "iowait", array("system", "iowait"), "Percent"),
 	new phodevi_sensor("disk-speed", "read", array("disk", "read-speed"), "MB/s"),
-	new phodevi_sensor("disk-speed", "write", array("disk", "write-speed"), "MB/s")
+	new phodevi_sensor("disk-speed", "write", array("disk", "write-speed"), "MB/s"),
+	new phodevi_sensor("fence-speed", "gpu", array("gpu", "fence-speed"), "Fences/s")
 	);
 }
 

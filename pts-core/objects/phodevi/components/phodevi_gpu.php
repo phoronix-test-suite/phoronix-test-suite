@@ -39,6 +39,9 @@ class phodevi_gpu extends phodevi_device_interface
 			case "core-usage":
 				$sensor = "gpu_core_usage";
 				break;
+			case "fence-speed":
+				$sensor = "gpu_fence_speed";
+				break;
 			default:
 				$sensor = false;
 				break;
@@ -1000,6 +1003,35 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 
 		return $gpu_usage;
+	}
+	public static function gpu_fence_speed()
+	{
+		// Determine GPU usage
+		$fence_speed = -1;
+
+		if(IS_MESA_GRAPHICS && is_readable("/sys/kernel/debug/dri/0/radeon_fence_info"))
+		{
+			/*
+				Last signaled fence 0x00AF9AF1
+				Last emited fence ffff8800ac0e2080 with 0x00AF9AF1
+			*/
+
+			$fence_info = file_get_contents("/sys/kernel/debug/dri/0/radeon_fence_info");
+			$start_signaled_fence = substr($fence_info, strpos("Last signaled fence", $fence_info));
+			$start_signaled_fence = substr($start_signaled_fence, 0, strpos($start_signaled_fence, "\n"));
+			$start_signaled_fence = substr($start_signaled_fence, strrpos($start_signaled_fence, ' '));
+
+			sleep(1);
+
+			$fence_info = file_get_contents("/sys/kernel/debug/dri/0/radeon_fence_info");
+			$end_signaled_fence = substr($fence_info, strpos("Last signaled fence", $fence_info));
+			$end_signaled_fence = substr($end_signaled_fence, 0, strpos($end_signaled_fence, "\n"));
+			$end_signaled_fence = substr($end_signaled_fence, strrpos($end_signaled_fence, ' '));
+
+			$fence_speed = hexdec($end_signaled_fence) - hexdec($start_signaled_fence);
+		}
+
+		return $fence_speed;
 	}
 }
 
