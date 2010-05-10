@@ -46,6 +46,7 @@ class copy_run_in_result_file implements pts_option_interface
 
 			if($identifier == $copy_identifier)
 			{
+				$this_merge_select = new pts_result_merge_select($result, $identifier);
 				$this_merge_select->rename_identifier($copy_identifier_new);
 				array_push($merge_selects, $this_merge_select);
 			}

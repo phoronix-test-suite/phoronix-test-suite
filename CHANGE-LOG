@@ -6,6 +6,8 @@ Phoronix Test Suite (Git)
 - pts-core: Support line graphs in charts
 - pts-core: Smarter rendering layout of the pts_Graph keys
 - pts-core: Add copy-run-in-result-file option
+- pts-core: Client tracker improvements
+- pts-core: Auto detection of result identifiers to determine if tracker-type testing and apply optimizations if so
 - phodevi: Rework entire Phodevi sensor API/architecture
 - phodevi: Add support for monitoring the GPU fence count
 

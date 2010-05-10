@@ -140,6 +140,13 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	$generated_graphs = array();
 	$generated_graph_tables = false;
 
+	// Render overview chart
+	if($save_to_dir) // not working right yet
+	{
+		$chart = new pts_Chart($result_file);
+		$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
+	}
+
 	foreach($result_file->get_result_objects() as $key => $result_object)
 	{
 		$save_to = $save_to_dir;
@@ -188,13 +195,6 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	if(count($generated_graphs) > 0 && $save_to_dir)
 	{
 		file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_get_results_viewer_xsl_formatted($generated_graph_tables));
-	}
-
-	// Render overview chart
-	if($save_to_dir) // not working right yet
-	{
-		$chart = new pts_Chart($result_file);
-		$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
 	}
 
 	return $generated_graphs;

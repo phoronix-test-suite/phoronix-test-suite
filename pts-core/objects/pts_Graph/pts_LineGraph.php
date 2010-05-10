@@ -115,7 +115,7 @@ class pts_LineGraph extends pts_Graph
 
 		foreach(array_keys($this->graph_data) as $i_o)
 		{
-			$paint_color = $this->get_paint_color($this->graph_data_title[$i_o]);
+			$paint_color = $this->get_paint_color((isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] : null));
 			$calculations_r[$paint_color] = array();
 
 			$point_counter = count($this->graph_data[$i_o]);
@@ -126,7 +126,7 @@ class pts_LineGraph extends pts_Graph
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
-				$data_string = $this->graph_data_title[$i_o] . ' @ ' . $this->graph_identifiers[$i] . ": " . $value;
+				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ' @ ' . $this->graph_identifiers[$i] . ": " . $value : null;
 
 				if($value == 0 && !$has_hit_non_zero)
 				{

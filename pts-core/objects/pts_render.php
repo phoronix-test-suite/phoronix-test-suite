@@ -26,15 +26,12 @@ class pts_render
 
 	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $pts_version = PTS_VERSION, $extra_attributes = null)
 	{
-		$result_format = $result_object->get_format();
-
-		/*
 		if($result_file->is_multi_way_comparison())
 		{
-			pts_set_assignment("GRAPH_RENDER_TYPE", "LINE_GRAPH");
 			pts_tracker::compact_result_file_test_object($result_object);
 		}
-		*/
+
+		$result_format = $result_object->get_format();
 
 		switch($result_format)
 		{

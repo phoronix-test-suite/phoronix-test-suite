@@ -82,6 +82,8 @@ class pts_tracker
 		$scale_special = array();
 		$days = array();
 		$systems = array();
+		$prev_date = null;
+		$is_tracking = true;
 
 		foreach($mto->get_result_buffer()->get_buffer_items() as $buffer_item)
 		{
@@ -110,6 +112,18 @@ class pts_tracker
 			{
 				$days[$date] = null;
 			}
+
+			if($is_tracking)
+			{
+				$date = str_replace(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), null, $date);
+
+				if($prev_date != null && $date != $prev_date)
+				{
+					$is_tracking = false;
+				}
+
+				$prev_date = $date;
+			}
 		}
 
 		foreach(array_keys($days) as $day_key)
@@ -130,7 +144,7 @@ class pts_tracker
 		}
 
 		$mto->set_scale($mto->get_scale() . ' | ' . implode(',', array_keys($days)));
-		$mto->set_format((count($days) < 6 ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
+		$mto->set_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
 		$mto->flush_result_buffer();
 
 		$day_keys = array_keys($days);
