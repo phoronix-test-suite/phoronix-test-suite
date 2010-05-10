@@ -127,8 +127,8 @@
 		</Package>
 		<Package>
 			<GenericName>jam</GenericName>
-			<PackageName>boost-jam</PackageName>
-			<FileCheck>/usr/bin/jam</FileCheck>
+			<PackageName>boost-jam asio-devel</PackageName>
+			<FileCheck>/usr/bin/jam, /usr/include/asio/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>

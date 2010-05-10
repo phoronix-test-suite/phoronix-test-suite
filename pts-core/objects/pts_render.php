@@ -28,6 +28,14 @@ class pts_render
 	{
 		$result_format = $result_object->get_format();
 
+		/*
+		if($result_file->is_multi_way_comparison())
+		{
+			pts_set_assignment("GRAPH_RENDER_TYPE", "LINE_GRAPH");
+			pts_tracker::compact_result_file_test_object($result_object);
+		}
+		*/
+
 		switch($result_format)
 		{
 			case "LINE_GRAPH":

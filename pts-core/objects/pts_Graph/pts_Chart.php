@@ -221,7 +221,7 @@ class pts_Chart extends pts_Graph
 			}
 		}
 
-		$this->graph_image->draw_rectangle_border(1, 1, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_border);
+		$this->graph_image->draw_rectangle_border(0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_border);
 
 		$this->saveGraphToFile($file);
 		return $this->return_graph_image();

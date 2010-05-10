@@ -2,14 +2,14 @@
 
 mkdir $HOME/ape_
 
-tar -zxvf mac-3.99-u4-b5-s4.tar.gz
-cd mac-3.99-u4-b5-s4/
+tar -zxvf mac-3.99-u4-b5-s6.tar.gz
+cd mac-3.99-u4-b5-s6/
 CXXFLAGS="-DSHNTOOL" ./configure --prefix=$HOME/ape_
 make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 make install
 cd ..
-rm -rf mac-3.99-u4-b5-s4/
+rm -rf mac-3.99-u4-b5-s6/
 
 echo "#!/bin/sh
 \$TIMER_START
