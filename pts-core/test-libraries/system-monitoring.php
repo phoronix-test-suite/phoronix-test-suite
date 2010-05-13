@@ -9,16 +9,14 @@ phodevi::initial_setup();
 switch($argv[1])
 {
 	case "cpu.usage":
-		$call_function = "phodevi::read_sensor(\"cpu\", \"usage\")";
+		$call = array("cpu", "usage");
 		break;
 	case "mem.usage":
-		$call_function = "phodevi::read_sensor(\"memory\", \"physical-usage\")";
+		$call = array("memory", "usage");
 		break;
 	case "system.current":
-		$call_function = "phodevi::read_sensor(\"system\", \"power-current\")";
-		break;
 	case "system.battery-discharge-rate":
-		$call_function = "phodevi::read_sensor(\"system\", \"battery-discharge-rate\")";
+		$call = array("sys", "power");
 		break;
 	default:
 		exit();
@@ -35,6 +33,7 @@ $timer = is_numeric($argv[3]) && $argv[3] > 0 ? $argv[3] : 5;
 
 do
 {
+	$value = call_user_func(array("phodevi", "read_sensor"), $call);
 	eval("\$value = " . $call_function . ";");
 
 	if($value != -1 && !empty($value))

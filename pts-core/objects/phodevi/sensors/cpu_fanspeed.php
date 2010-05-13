@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class cpu_fanspeed extends phodevi_sensor
+class cpu_fanspeed implements phodevi_sensor
 {
 	public static function get_type()
 	{

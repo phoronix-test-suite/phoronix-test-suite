@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class gpu_usage extends phodevi_sensor
+class gpu_usage implements phodevi_sensor
 {
 	static $probe_ati_overdrive = false;
 	static $probe_radeon_fences = false;

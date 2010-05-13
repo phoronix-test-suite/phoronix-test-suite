@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class sys_power extends phodevi_sensor
+class sys_power implements phodevi_sensor
 {
 	private static $battery_sys = false;
 	private static $battery_cur = false;

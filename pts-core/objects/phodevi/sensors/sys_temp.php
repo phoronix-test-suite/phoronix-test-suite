@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class sys_temp extends phodevi_sensor
+class sys_temp implements phodevi_sensor
 {
 	public static function get_type()
 	{

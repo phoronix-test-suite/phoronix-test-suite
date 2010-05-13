@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class swap_usage extends phodevi_sensor
+class swap_usage implements phodevi_sensor
 {
 	public static function get_type()
 	{

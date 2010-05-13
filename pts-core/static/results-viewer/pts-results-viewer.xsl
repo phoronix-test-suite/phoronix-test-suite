@@ -66,7 +66,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		</table></div>
 
 		<a name="result-overview"></a><h1>Results Overview</h1>
-		<p align="center"><div align="center" style="width: 100%; overflow: auto;"><!-- OVERVIEW TAG --><object type="image/svg+xml" data="result-graphs/overview.svg"></object></div></p>
+		<div align="center" style="width: 100%; overflow: auto;"><!-- OVERVIEW TAG --><object type="image/svg+xml" data="result-graphs/overview.svg"></object></div>
 
 		<a name="test-results"></a><h1>Test Results</h1>
 		<div id="pts_benchmark_area">

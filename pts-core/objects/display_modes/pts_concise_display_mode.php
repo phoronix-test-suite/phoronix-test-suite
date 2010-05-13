@@ -25,7 +25,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 {
 	private $run_process_tests_remaining_to_run;
 	private $run_process_test_count;
-	private $tab = "     ";
+	private $tab = "    ";
 
 	// Download bits
 	private $download_estimate = null;

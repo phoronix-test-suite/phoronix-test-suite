@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class cpu_freq extends phodevi_sensor
+class cpu_freq implements phodevi_sensor
 {
 	public static function get_type()
 	{
