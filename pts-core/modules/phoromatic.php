@@ -378,7 +378,7 @@ class phoromatic extends pts_module_interface
 			switch($response)
 			{
 				case M_PHOROMATIC_RESPONSE_RUN_TEST:
-					$args_to_pass = array("AUTOMATED_MODE" => true);
+					$test_args = array("AUTOMATED_MODE" => true);
 
 					do
 					{
@@ -386,22 +386,22 @@ class phoromatic extends pts_module_interface
 					}
 					while(is_file(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml"));
 
-					$args_to_pass["AUTO_SAVE_NAME"] = date("Y-m-d H:i:s");
-					$args_to_pass["PHOROMATIC_TITLE"] = $xml_parser->getXMLValue(P_SUITE_TITLE);
-					$args_to_pass["PHOROMATIC_SCHEDULE_ID"] = $xml_parser->getXMLValue(M_PHOROMATIC_ID);
-					$args_to_pass["AUTO_TEST_RESULTS_IDENTIFIER"] = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
-					$args_to_pass["PHOROMATIC_UPLOAD_TEST_LOGS"] = pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TEST_LOGS));
-					$args_to_pass["PHOROMATIC_UPLOAD_SYSTEM_LOGS"] = pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_SYSTEM_LOGS));
-					$args_to_pass["PHOROMATIC_TRIGGER"] = $xml_parser->getXMLValue(M_PHOROMATIC_TRIGGER);
+					$test_args["AUTO_SAVE_NAME"] = date("Y-m-d H:i:s");
+					$test_args["PHOROMATIC_TITLE"] = $xml_parser->getXMLValue(P_SUITE_TITLE);
+					$test_args["PHOROMATIC_SCHEDULE_ID"] = $xml_parser->getXMLValue(M_PHOROMATIC_ID);
+					$test_args["AUTO_TEST_RESULTS_IDENTIFIER"] = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
+					$test_args["PHOROMATIC_UPLOAD_TEST_LOGS"] = pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TEST_LOGS));
+					$test_args["PHOROMATIC_UPLOAD_SYSTEM_LOGS"] = pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_SYSTEM_LOGS));
+					$test_args["PHOROMATIC_TRIGGER"] = $xml_parser->getXMLValue(M_PHOROMATIC_TRIGGER);
 
 					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, "FALSE")))
 					{
-						$args_to_pass["AUTO_UPLOAD_TO_GLOBAL"] = true;
+						$test_args["AUTO_UPLOAD_TO_GLOBAL"] = true;
 					}
 
 					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY, M_PHOROMATIC_RESPONSE_TRUE)))
 					{
-						$args_to_pass["PHOROMATIC_ARCHIVE_RESULTS"] = true;
+						$test_args["PHOROMATIC_ARCHIVE_RESULTS"] = true;
 					}
 
 					file_put_contents(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml", $server_response);
@@ -411,8 +411,8 @@ class phoromatic extends pts_module_interface
 						pts_run_option_next("install_test", $suite_identifier, array("AUTOMATED_MODE" => true));
 					}
 
-					pts_run_option_next("run_test", $suite_identifier, $args_to_pass);
-					pts_run_option_next("phoromatic.user_system_return", $suite_identifier, $args_to_pass);
+					pts_run_option_next("run_test", $suite_identifier, $test_args);
+					pts_run_option_next("phoromatic.user_system_return", $suite_identifier, $test_args);
 					$exit_loop = true;
 					break;
 				case M_PHOROMATIC_RESPONSE_EXIT:
