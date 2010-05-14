@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: When using the finish-run command and finishing the run doesn't complete any new tests, don't delete all the results
+
 Phoronix Test Suite 2.6 Beta 3
 May 13, 2010
 
