@@ -13,6 +13,16 @@
 			<Description>The Trigger is an ID such as the date of the test run (if time based) or the event triggered that's causing the test run (i.e. the revision/commit number).</Description>
 		</Define>
 		<Define>
+			<Name>M_PHOROMATIC_SET_CONTEXT_PRE_INSTALL</Name>
+			<Value>PhoronixTestSuite/Phoromatic/General/SetContextPreInstall</Value>
+			<Description>The location of a locally stored script that should be executed pre-installation of any Phoromatic-called test installations to set the context of the system or address any other setup needs.</Description>
+		</Define>
+		<Define>
+			<Name>M_PHOROMATIC_SET_CONTEXT_PRE_RUN</Name>
+			<Value>PhoronixTestSuite/Phoromatic/General/SetContextPreRun</Value>
+			<Description>The location of a locally stored script that should be executed prior to running any Phoromatic-called tests to set the context of the system or address any other setup needs.</Description>
+		</Define>
+		<Define>
 			<Name>M_PHOROMATIC_ID</Name>
 			<Value>PhoronixTestSuite/Phoromatic/General/ID</Value>
 			<Description>The Phoromatic schedule ID</Description>

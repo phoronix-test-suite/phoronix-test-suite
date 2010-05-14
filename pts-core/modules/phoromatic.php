@@ -408,9 +408,11 @@ class phoromatic extends pts_module_interface
 
 					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_RUN_INSTALL_COMMAND, M_PHOROMATIC_RESPONSE_TRUE)))
 					{
+						phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_INSTALL), $test_args["PHOROMATIC_TRIGGER"], $test_args["PHOROMATIC_SCHEDULE_ID"], "INSTALL");
 						pts_run_option_next("install_test", $suite_identifier, array("AUTOMATED_MODE" => true));
 					}
 
+					phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_RUN), $test_args["PHOROMATIC_TRIGGER"], $test_args["PHOROMATIC_SCHEDULE_ID"], "INSTALL");
 					pts_run_option_next("run_test", $suite_identifier, $test_args);
 					pts_run_option_next("phoromatic.user_system_return", $suite_identifier, $test_args);
 					$exit_loop = true;
@@ -506,6 +508,46 @@ class phoromatic extends pts_module_interface
 	// Other Functions
 	//
 
+	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
+	{
+		if(!empty($context_script))
+		{
+			if(!is_executable($context_script))
+			{
+				if(($context_script = pts_executable_in_path($context_script)) == false || !is_executable($context_script))
+				{
+					return false;
+				}
+			}
+
+			$storage_path = pts_module::save_dir() . "memory.pt2so";
+			$storage_object = pts_storage_object::recover_from_file($storage_path);
+
+			// We check to see if the context was already set but the system rebooted or something in that script
+			if($storage_object == false)
+			{
+				$storage_object = new pts_storage_object(true, true);
+			}
+			else if($storage_object->read_object("last_set_context_trigger") == $trigger && $storage_object->read_object("last_set_context_schedule") == $schedule_id && $storage_object->read_object("last_set_context_process") == $process)
+			{
+				// If the script already ran once for this trigger, don't run it again
+				return false;
+			}
+
+			$storage_object->add_object("last_set_context_trigger", $trigger);
+			$storage_object->add_object("last_set_context_schedule", $schedule_id);
+			$storage_object->add_object("last_set_context_process", $process);
+			$storage_object->save_to_file($storage_path);
+
+			// Run the set context script
+			exec($context_script . ' ' . $trigger);
+
+			// Just simply return true for now, perhaps check exit code status and do something
+			return true;
+		}
+
+		return false;
+	}
 	protected static function update_system_details()
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => pts_hw_string(), "s" => pts_sw_string()));
