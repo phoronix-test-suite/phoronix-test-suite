@@ -77,7 +77,7 @@ class pts_BarGraph extends pts_Graph
 		$bar_count = count($this->graph_data);
 		$separator_width = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$bar_width = floor(($this->identifier_width - $separator_width - ($bar_count * $separator_width)) / $bar_count);
-		$highlight_bar = PTS_MODE == "CLIENT" ? pts_client::read_env("GRAPH_HIGHLIGHT") : false;
+		$highlight_bar = PTS_MODE == "CLIENT" ? pts_trim_explode(',', pts_client::read_env("GRAPH_HIGHLIGHT")) : false;
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -105,7 +105,7 @@ class pts_BarGraph extends pts_Graph
 					$title_tooltip .= " || " . pts_math::set_precision($run_std_deviation, 1) . " STD.";
 				}
 
-				$this->graph_image->draw_rectangle_with_border($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end, $highlight_bar == $this->graph_identifiers[$i] ? $this->graph_color_alert : $paint_color, $this->graph_color_body_light, $title_tooltip);
+				$this->graph_image->draw_rectangle_with_border($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end, in_array($this->graph_identifiers[$i], $highlight_bar) ? $this->graph_color_alert : $paint_color, $this->graph_color_body_light, $title_tooltip);
 
 				if(($px_bound_right - $px_bound_left) < 15)
 				{

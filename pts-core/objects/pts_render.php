@@ -26,7 +26,7 @@ class pts_render
 
 	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $pts_version = PTS_VERSION, $extra_attributes = null)
 	{
-		if($result_file->is_multi_way_comparison())
+		if($result_file != null && $result_file->is_multi_way_comparison())
 		{
 			pts_tracker::compact_result_file_test_object($result_object);
 		}

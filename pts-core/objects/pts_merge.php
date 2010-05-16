@@ -73,6 +73,12 @@ class pts_merge
 				$this_result_file = new pts_result_file($result_merge_select->get_result_file());
 			}
 
+			if($this_result_file->get_test_count() == 0)
+			{
+				// Why print the system information if there are no contained results?
+				continue;
+			}
+
 			if(!isset($pass_attributes["only_render_results_xml"]))
 			{
 				if($has_written_suite_info == false)

@@ -374,7 +374,7 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
-			if(!pts_is_assignment("TEST_RAN") && !pts_read_assignment("FORCE_SAVE_RESULTS") && !pts_read_assignment("FINISH_INCOMPLETE_RUN"))
+			if(!pts_is_assignment("TEST_RAN") && !pts_read_assignment("FORCE_SAVE_RESULTS") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
 			{
 				pts_remove(SAVE_RESULTS_DIR . $file_name);
 				return false;

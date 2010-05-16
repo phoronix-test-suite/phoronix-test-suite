@@ -103,6 +103,10 @@ class pts_result_file
 	{
 		return array_unique($this->get_test_titles());
 	}
+	public function get_test_count()
+	{
+		return count($this->get_test_titles());
+	}
 	public function get_result_object_hashes()
 	{
 		$object_hashes = array();
