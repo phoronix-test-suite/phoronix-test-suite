@@ -9,6 +9,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>4500</EnvironmentSize>
+		<ExternalDependencies>32bit-compatibility</ExternalDependencies>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ProjectURL>http://www.enemyterritory.com/</ProjectURL>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
