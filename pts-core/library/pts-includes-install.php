@@ -79,7 +79,12 @@ function pts_start_install($to_install, &$display_mode)
 	foreach($tests as $i => $test)
 	{
 		pts_set_assignment("TEST_INSTALL_POSITION", ($i + 1));
-		pts_install_test($test, $display_mode, $failed_installs);
+		$installed = pts_install_test($test, $display_mode);
+
+		if($installed == false)
+		{
+			array_push($failed_installs, $test);
+		}
 	}
 	pts_module_process("__post_install_process", $tests);
 
@@ -413,7 +418,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 		pts_symlink($xauth_file, TEST_ENV_DIR . $identifier . "/.Xauthority");
 	}
 }
-function pts_install_test($identifier, &$display_mode, &$failed_installs)
+function pts_install_test($identifier, &$display_mode)
 {
 	if(!pts_is_test($identifier))
 	{
@@ -453,7 +458,6 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 			if($download_test_files == false)
 			{
 				$display_mode->test_install_error("Downloading of needed test files failed.");
-				array_push($failed_installs, $identifier);
 				return false;
 			}
 
@@ -519,7 +523,6 @@ function pts_install_test($identifier, &$display_mode, &$failed_installs)
 
 						$display_mode->test_install_error("The installer exited with a non-zero exit status.");
 						$display_mode->test_install_error("Installation Log: " . TEST_ENV_DIR . $identifier . "/install-failed.log");
-						array_push($failed_installs, $identifier);
 						return false;
 					}
 				}
