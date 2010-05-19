@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>15.0</EnvironmentSize>
+		<SupportedPlatforms>Linux, MacOSX, BSD, Solaris</SupportedPlatforms>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ProjectURL>http://users.softlab.ntua.gr/~ttsiod/renderer.html</ProjectURL>
+	</TestProfile>
+	<TestInformation>
+		<Title>TTSIOD 3D Renderer</Title>
+		<Version>2.1s</Version>
+		<SubTitle>Phong Rendering With Soft-Shadow Mapping</SubTitle>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>FPS</ResultScale>
+		<Proportion>HIB</Proportion>
+		<Description>A portable GPL 3D software renderer that supports OpenMP and Intel Threading Building Blocks with many different rendering modes. This version does not use OpenGL but is entirely CPU/software based.</Description>
+	</TestInformation>
+	<TestSettings>
+		<Default>
+			<Arguments>-b -n 5000 statue.ply</Arguments>
+		</Default>
+	</TestSettings>
+</PhoronixTestSuite>

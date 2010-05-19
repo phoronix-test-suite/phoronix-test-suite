@@ -49,6 +49,9 @@
 		<Description>Blowfish</Description>
 	</RunTest>
 	<RunTest>
+		<Test>ttsiod-renderer</Test>
+	</RunTest>
+	<RunTest>
 		<Test>compress-pbzip2</Test>
 	</RunTest>
 	<RunTest>

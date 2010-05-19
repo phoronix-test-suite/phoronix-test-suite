@@ -33,6 +33,9 @@
 		<Test>ffmpeg</Test>
 	</RunTest>
 	<RunTest>
+		<Test>ttsiod-renderer</Test>
+	</RunTest>
+	<RunTest>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>HWB Color Space</Description>

@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow multiple identifiers to be specified with the GRAPH_HIGHLIGHT environmental variable
 - pts-core: Report failed test installations for conditions beyond files missing and non-zero exit statuses
 - phoromatic: Allow the Phoromatic client to run a set-context script when told to do so by Phoromatic server
+- pts: Add ttsiod-renderer as an OpenMP, entirely CPU/software driven 3D renderer
 
 Phoronix Test Suite 2.6 Beta 3
 May 13, 2010
