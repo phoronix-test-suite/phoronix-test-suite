@@ -25,6 +25,7 @@ class pts_result_file
 	private $result_objects = null;
 	private $xml_parser = null;
 	private $extra_attributes = null;
+	private $is_multi_way_inverted = false;
 
 	public function __construct($result_file)
 	{
@@ -172,15 +173,22 @@ class pts_result_file
 				$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
 			}
 
-			if($is_multi_way && count($targets) < count($systems))
+			if($is_multi_way)
 			{
-				$is_multi_way = false;
+				if(count($targets) < count($systems))
+				{
+					$this->is_multi_way_inverted = true;
+				}
 			}
 
 			// TODO: figure out what else is needed to reasonably determine if the result file is a multi-way comparison
 		}
 
 		return $is_multi_way;
+	}
+	public function is_multi_way_inverted()
+	{
+		return $this->is_multi_way_inverted;
 	}
 	public function get_result_table($system_id_keys = null, $result_object_index = -1)
 	{

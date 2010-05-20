@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tar -jxvf renderer-2.x.latest.tar.bz2
+tar -jxvf renderer-2.1s.tar.bz2
 
 cd renderer-2.1s/
 ./configure

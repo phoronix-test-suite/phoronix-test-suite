@@ -70,7 +70,7 @@ class pts_tracker
 
 		return new pts_result_file_result_object("Results Overview", null, null, "Phoromatic Tracker: " . $title, $title . " | " . implode(',', $days_keys), null, null, null, "LINE_GRAPH", $result_buffer);
 	}
-	public static function compact_result_file_test_object(&$mto, &$result_table = false)
+	public static function compact_result_file_test_object(&$mto, &$result_table = false, $identifiers_inverted = false)
 	{
 		// TODO: this may need to be cleaned up, its logic is rather messy
 		if(count($mto->get_scale_special()) > 0)
@@ -85,6 +85,17 @@ class pts_tracker
 		$prev_date = null;
 		$is_tracking = true;
 
+		if($identifiers_inverted)
+		{
+			$system_index = 1;
+			$date_index = 0;
+		}
+		else
+		{
+			$system_index = 0;
+			$date_index = 1;
+		}
+
 		foreach($mto->get_result_buffer()->get_buffer_items() as $buffer_item)
 		{
 			$identifier = pts_trim_explode(": ", $buffer_item->get_result_identifier());
@@ -92,8 +103,8 @@ class pts_tracker
 			switch(count($identifier))
 			{
 				case 2:
-					$system = $identifier[0];
-					$date = $identifier[1];
+					$system = $identifier[$system_index];
+					$date = $identifier[$date_index];
 					break;
 				case 1:
 					$system = 0;
@@ -133,7 +144,9 @@ class pts_tracker
 
 		foreach($mto->get_result_buffer()->get_buffer_items() as $buffer_item)
 		{
-			list($system, $date) = pts_trim_explode(": ", $buffer_item->get_result_identifier());
+			$identifier = pts_trim_explode(": ", $buffer_item->get_result_identifier());
+			$system = $identifier[$system_index];
+			$date = $identifier[$date_index];
 
 			$days[$date][$system] = $buffer_item->get_result_value();
 

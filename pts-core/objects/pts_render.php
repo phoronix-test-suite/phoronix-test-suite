@@ -28,7 +28,8 @@ class pts_render
 	{
 		if($result_file != null && $result_file->is_multi_way_comparison())
 		{
-			pts_tracker::compact_result_file_test_object($result_object);
+			$result_table = false;
+			pts_tracker::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
 		}
 
 		$result_format = $result_object->get_format();
