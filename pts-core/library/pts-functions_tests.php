@@ -220,7 +220,8 @@ function pts_get_results_viewer_xsl_formatted($matching_graph_tables = false)
 
 	if($matching_graph_tables)
 	{
-		$table_string = bilde_svg_renderer::html_embed_code("result-graphs/<xsl:number value=\"position()\" />_table.BILDE_EXTENSION", array("width" => "auto", "height" => "auto"), true);
+		$bilde_svg = new bilde_svg_renderer(1, 1);
+		$table_string = $bilde_svg->html_embed_code("result-graphs/<xsl:number value=\"position()\" />_table.BILDE_EXTENSION", array("width" => "auto", "height" => "auto"), true);
 		$raw_xsl = str_replace("<!-- GRAPH TABLE TAG -->", $table_string, $raw_xsl);
 	}
 
