@@ -130,7 +130,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	{
 		if($bound_x1 != $bound_x2)
 		{
-			while($this->text_string_width(round($text_string, 2), $font_type, $font_size) > abs($bound_x2 - $bound_x1 - 2))
+			while($this->text_string_width($text_string, $font_type, $font_size) > abs($bound_x2 - $bound_x1 - 2))
 			{
 				$font_size -= 0.5;
 			}

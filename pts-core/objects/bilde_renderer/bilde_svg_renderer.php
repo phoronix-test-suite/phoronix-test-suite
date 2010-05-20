@@ -158,12 +158,12 @@ class bilde_svg_renderer extends bilde_renderer
 		if($bound_x1 != $bound_x2)
 		{
 			$font_size += 1.5;
-			list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions(round($text_string, 2), $font_type, $font_size);
+			list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions($text_string, $font_type, $font_size);
 
 			while($text_width > abs($bound_x2 - $bound_x1 - 2))
 			{
 				$font_size -= 0.5;
-				list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions(round($text_string, 2), $font_type, $font_size);
+				list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions($text_string, $font_type, $font_size);
 			}
 			$font_size -= 1.5;
 
