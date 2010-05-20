@@ -6,7 +6,7 @@
 			<FileSize>250250</FileSize>
 		</Package>
 		<Package>
-			<URL>http://kent.dl.sourceforge.net/sourceforge/espeak/espeak-1.40.02-source.zip, http://internode.dl.sourceforge.net/sourceforge/espeak/espeak-1.40.02-source.zip, http://softlayer.dl.sourceforge.net/sourceforge/espeak/espeak-1.40.02-source.zip, http://voxel.dl.sourceforge.net/sourceforge/espeak/espeak-1.40.02-source.zip</URL>
+			<URL>http://kent.dl.sourceforge.net/sourceforge/espeak/espeak-1.40.02-source.zip, http://internode.dl.sourceforge.net/sourceforge/espeak/espeak-1.40.02-source.zip, http://voxel.dl.sourceforge.net/sourceforge/espeak/espeak-1.40.02-source.zip</URL>
 			<MD5>708954b44c526e8174df8b88a6382738</MD5>
 			<FileSize>1400971</FileSize>
 		</Package>
