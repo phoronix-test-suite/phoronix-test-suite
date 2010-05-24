@@ -29,7 +29,7 @@ function pts_is_global_id($global_id)
 function pts_global_download_xml($global_id)
 {
 	// Download a saved test result from Phoronix Global
-	return pts_http_get_contents(pts_global_download_base_url() . $global_id);
+	return pts_http_get_contents((strpos($global_id, pts_global_download_base_url()) === 0 ? null : pts_global_download_base_url()) . $global_id);
 }
 function pts_global_download_base_url()
 {

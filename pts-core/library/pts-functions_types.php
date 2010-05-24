@@ -392,7 +392,8 @@ function pts_find_result_file($file, $check_global = true)
 	}
 	else if($check_global && pts_is_global_id($file))
 	{
-		$USE_FILE = pts_global_download_base_url() . $file;
+		pts_clone_from_global($file, false);
+		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
 	}
 	else
 	{

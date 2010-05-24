@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Fix for running merge-results command with un-cloned Phoronix Global IDs
+
 Phoronix Test Suite 2.6 "Lyngen"
 May 24, 2010
 
