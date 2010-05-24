@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>TTSIOD 3D Renderer</Title>
-		<Version>2.1u</Version>
+		<Version>2.1v</Version>
 		<SubTitle>Phong Rendering With Soft-Shadow Mapping</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>FPS</ResultScale>

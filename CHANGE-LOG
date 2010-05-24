@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.6 "Lyngen"
+May 24, 2010
 
 - pts-core: When using the finish-run command and finishing the run doesn't complete any new tests, don't delete the results
 - pts-core: Allow multiple identifiers to be specified with the GRAPH_HIGHLIGHT environmental variable
