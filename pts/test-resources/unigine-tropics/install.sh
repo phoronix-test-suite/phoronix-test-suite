@@ -1,7 +1,7 @@
 #!/bin/sh
 
-chmod +x Unigine_Tropics-1.2.run
-./Unigine_Tropics-1.2.run
+chmod +x Unigine_Tropics-1.3.run
+./Unigine_Tropics-1.3.run
 
 echo "#!/bin/sh
 cd tropics/

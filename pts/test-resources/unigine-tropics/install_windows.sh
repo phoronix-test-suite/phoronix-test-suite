@@ -6,5 +6,5 @@ Tropics.exe -video_app opengl -data_path ./ -sound_app null -engine_config data/
 
 # This assumes you will install to the default location
 # C:\Program Files (x86)\Unigine\Tropics
-Unigine_Tropics-1.2.msi
+Unigine_Tropics-1.3.msi
 
