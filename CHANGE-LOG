@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix for running merge-results command with un-cloned Phoronix Global IDs
+- pts: Update unigine-heaven test profile to Unigine Heaven 2.1
 
 Phoronix Test Suite 2.6 "Lyngen"
 May 24, 2010

@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>NON-FREE</License>
@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Unigine Heaven</Title>
-		<Version>2.0</Version>
+		<Version>2.1</Version>
 		<ResultScale>Frames Per Second</ResultScale>
 		<TimesToRun>3</TimesToRun>
 		<Proportion>HIB</Proportion>
