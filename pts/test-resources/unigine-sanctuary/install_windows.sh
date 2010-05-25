@@ -6,5 +6,5 @@ Sanctuary.exe -video_app opengl -data_path ./ -sound_app null -engine_config dat
 
 # This assumes you will install to the default location
 # C:\Program Files (x86)\Unigine\Sanctuary
-Unigine_Sanctuary-2.2.msi
+Unigine_Sanctuary-2.3.msi
 

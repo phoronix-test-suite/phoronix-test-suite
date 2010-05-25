@@ -1,15 +1,15 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.unigine.com/download/files/Unigine_Sanctuary-2.2.run</URL>
-			<MD5>50e09d1ca86f76f9b73a793bfe4c0b4d</MD5>
-			<FileSize>28623234</FileSize>
+			<URL>http://www.unigine.com/download/files/Unigine_Sanctuary-2.3.run</URL>
+			<MD5>1b09cc3ec2273a011b84dba390befb9c</MD5>
+			<FileSize>29468416</FileSize>
 			<PlatformSpecific>Linux</PlatformSpecific>
 		</Package>
 		<Package>
-			<URL>http://www.unigine.com/download/files/Unigine_Sanctuary-2.2.msi</URL>
-			<MD5>ba411f15cd2aad4c91b43f862ba19856</MD5>
-			<FileSize>30576640</FileSize>
+			<URL>http://www.unigine.com/download/files/Unigine_Sanctuary-2.3.msi</URL>
+			<MD5>210ace2670a368b9ece78153ac435fb9</MD5>
+			<FileSize>30514688</FileSize>
 			<PlatformSpecific>Windows</PlatformSpecific>
 		</Package>
 	</Downloads>

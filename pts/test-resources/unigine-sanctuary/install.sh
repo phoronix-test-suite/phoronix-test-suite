@@ -1,7 +1,7 @@
 #!/bin/sh
 
-chmod +x Unigine_Sanctuary-2.2.run
-./Unigine_Sanctuary-2.2.run
+chmod +x Unigine_Sanctuary-2.3.run
+./Unigine_Sanctuary-2.3.run
 
 echo "#!/bin/sh
 cd sanctuary/
