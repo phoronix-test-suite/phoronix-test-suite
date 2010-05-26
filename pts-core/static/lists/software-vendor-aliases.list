@@ -16,3 +16,4 @@ redhatenterprise = fedora
 centos = fedora
 palm = optware
 suselinux = opensuse
+meego = fedora
