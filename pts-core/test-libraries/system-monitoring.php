@@ -2,7 +2,7 @@
 
 define("PTS_MODE", "SILENT");
 define("PTS_AUTO_LOAD_OBJECTS", true);
-require(getenv("PTS_DIR") . "pts-core/phoronix-test-suite.php");
+require(getenv("PTS_DIR") . "/pts-core/phoronix-test-suite.php");
 
 phodevi::initial_setup();
 
@@ -33,8 +33,7 @@ $timer = is_numeric($argv[3]) && $argv[3] > 0 ? $argv[3] : 5;
 
 do
 {
-	$value = call_user_func(array("phodevi", "read_sensor"), $call);
-	eval("\$value = " . $call_function . ";");
+	$value = phodevi::read_sensor($call);
 
 	if($value != -1 && !empty($value))
 	{
