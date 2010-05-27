@@ -5,6 +5,7 @@ define("PTS_AUTO_LOAD_OBJECTS", true);
 require(getenv("PTS_DIR") . "/pts-core/phoronix-test-suite.php");
 
 phodevi::initial_setup();
+phodevi::supported_sensors();
 
 switch($argv[1])
 {

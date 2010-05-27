@@ -490,6 +490,8 @@ class pts_result_file
 			}
 		}
 
+		$max_value += 0.01;
+
 		return array($result_tests, $result_systems, $result_table, $max_value, $longest_system_identifier);
 	}
 	public function get_result_objects($select_indexes = -1)
