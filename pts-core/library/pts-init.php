@@ -199,7 +199,7 @@ function pts_user_agreement_check($command)
 			echo wordwrap($user_agreement, 65);
 			$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
 			$usage_reporting = $agree ? pts_bool_question("Enable anonymous usage / statistics reporting (Y/n)?", true) : -1;
-			$hwsw_reporting = $agree ? pts_bool_question("Enable anonymous reporting of installed software/hardware (Y/n)?", true) : -1;
+			$hwsw_reporting = $agree ? pts_bool_question("Enable anonymous statistical reporting of installed software / hardware (Y/n)?", true) : -1;
 		}
 
 		if($agree)

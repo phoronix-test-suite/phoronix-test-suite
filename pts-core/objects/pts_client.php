@@ -43,6 +43,67 @@ class pts_client
 
 		return pts_read_assignment("TERMINAL_WIDTH");
 	}
+	public static function user_hardware_software_reporting()
+	{
+		$hw_reporting = pts_string_bool(pts_config::read_user_config(P_OPTION_HARDWARE_REPORTING, 0));
+		$sw_reporting = pts_string_bool(pts_config::read_user_config(P_OPTION_SOFTWARE_REPORTING, 0));
+
+		if($hw_reporting == false && $sw_reporting == false)
+		{
+			return;
+		}
+
+		$hw = array();
+		$sw = array();
+		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
+
+		if($hw_reporting)
+		{
+			$hw = array(
+			"cpu" => phodevi::read_property("cpu", "model"),
+			"cpu_count" => phodevi::read_property("cpu", "core-count"),
+			"cpu_speed" => phodevi::read_property("cpu", "default-frequency") * 1000,
+			"chipset" => phodevi::read_name("chipset"),
+			"motherboard" => phodevi::read_name("motherboard"),
+			"gpu" => phodevi::read_property("gpu", "model")
+			);
+			$hw_prev = $pso->read_object("global_reported_hw");
+			$pso->add_object("global_reported_hw", $hw); 
+
+			if(is_array($hw_prev))
+			{
+				$hw = array_diff_assoc($hw, $hw_prev);
+			}
+		}
+		if($sw_reporting)
+		{
+			$sw = array(
+			"os" => phodevi::read_property("system", "operating-system"),
+			"os_architecture" => phodevi::read_property("system", "kernel-architecture"),
+			"display_server" => phodevi::read_property("system", "display-server"),
+			"display_driver" => pts_first_string_in_string(phodevi::read_property("system", "display-driver-string")),
+			"desktop" => pts_first_string_in_string(phodevi::read_property("system", "desktop-environment")),
+			"compiler" => phodevi::read_property("system", "compiler"),
+			"file_system" => phodevi::read_property("system", "filesystem"),
+			"screen_resolution" => phodevi::read_property("gpu", "screen-resolution-string")
+			);
+			$sw_prev = $pso->read_object("global_reported_hw");
+			$pso->add_object("global_reported_sw", $sw); 
+
+			if(is_array($sw_prev))
+			{
+				$sw = array_diff_assoc($sw, $sw_prev);
+			}
+		}
+
+		$to_report = array_merge($hw, $sw);
+		$pso->save_to_file(PTS_CORE_STORAGE);
+
+		if(!empty($to_report))
+		{
+			pts_global_upload_hwsw_data($to_report);
+		}				
+	}
 	public static function parse_value_string_double_identifier($value_string)
 	{
 		// i.e. with PRESET_OPTIONS="stream.run-type=Add"

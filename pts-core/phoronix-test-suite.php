@@ -173,6 +173,7 @@ for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 if(!QUICK_START)
 {
 	pts_user_agreement_check($sent_command);
+	pts_client::user_hardware_software_reporting();
 }
 
 pts_run_option_next($sent_command, $pass_args);

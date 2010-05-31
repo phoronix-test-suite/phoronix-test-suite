@@ -103,6 +103,16 @@ function pts_global_upload_usage_data($task, $data)
 			break;
 	}
 }
+function pts_global_upload_hwsw_data($to_report)
+{
+	foreach($to_report as $component => &$value)
+	{
+		$value = $component . '=' . $value;
+	}
+
+	$upload_data = array("report_hwsw" => implode(';', $to_report), "gsid" => PTS_GSID);
+	pts_http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/installed-hardware-software.php", $upload_data);
+}
 function pts_global_upload_result($result_file, $tags = "")
 {
 	if(!pts_global_allow_upload($result_file))

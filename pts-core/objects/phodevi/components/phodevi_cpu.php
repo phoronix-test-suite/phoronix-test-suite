@@ -53,11 +53,6 @@ class phodevi_cpu extends phodevi_device_interface
 		// Append the processor frequency to string
 		if(($freq = phodevi::read_property("cpu", "default-frequency")) > 0)
 		{
-			if(($strip_point = strpos($model, "@")) > 0)
-			{
-				$model = trim(substr($model, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
-			}
-
 			$model .= " @ " . $freq . "GHz";
 		}
 
@@ -281,6 +276,11 @@ class phodevi_cpu extends phodevi_device_interface
 		else
 		{
 			$info = "Unknown";
+		}
+
+		if(($strip_point = strpos($info, '@')) > 0)
+		{
+			$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
 		}
 
 		return $info;
