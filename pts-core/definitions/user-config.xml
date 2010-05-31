@@ -15,6 +15,14 @@
 			<Value>PhoronixTestSuite/Options/General/AnonymousUsageReporting</Value>
 		</Define>
 		<Define>
+			<Name>P_OPTION_SOFTWARE_REPORTING</Name>
+			<Value>PhoronixTestSuite/Options/General/AnonymousSoftwareReporting</Value>
+		</Define>
+		<Define>
+			<Name>P_OPTION_HARDWARE_REPORTING</Name>
+			<Value>PhoronixTestSuite/Options/General/AnonymousHardwareReporting</Value>
+		</Define>
+		<Define>
 			<Name>P_OPTION_DEFAULT_BROWSER</Name>
 			<Value>PhoronixTestSuite/Options/General/DefaultBrowser</Value>
 		</Define>

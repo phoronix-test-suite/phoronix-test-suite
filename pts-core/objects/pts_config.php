@@ -42,6 +42,9 @@ class pts_config
 		$config->addXmlObjectFromReader(P_OPTION_GLOBAL_UPLOADKEY, 0, $read_config);
 
 		$config->addXmlObjectFromReader(P_OPTION_USAGE_REPORTING, 1, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_SOFTWARE_REPORTING, 1, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_HARDWARE_REPORTING, 1, $read_config);
+
 		$config->addXmlObjectFromReader(P_OPTION_DEFAULT_BROWSER, 1, $read_config);
 		$config->addXmlObjectFromReader(P_OPTION_PHODEVI_CACHE, 1, $read_config);
 		$config->addXmlObjectFromReader(P_OPTION_DISPLAY_MODE, 1, $read_config);

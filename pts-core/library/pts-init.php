@@ -174,28 +174,32 @@ function pts_user_agreement_check($command)
 
 			if(is_array($user_agreement_return))
 			{
-				if(count($user_agreement_return) == 2)
+				if(count($user_agreement_return) == 3)
 				{
-					list($agree, $usage_reporting) = $user_agreement_return;
+					list($agree, $usage_reporting, $hwsw_reporting) = $user_agreement_return;
 				}
 				else
 				{
 					$agree = array_shift($user_agreement_return);
 					$usage_reporting = -1;
+					$hwsw_reporting = -1;
 				}
 			}
 			else
 			{
 				$agree = $user_agreement_return;
 				$usage_reporting = -1;
+				$hwsw_reporting = -1;
 			}
 		}
-		else
+
+		if($prompt_in_method == false || $usage_reporting == -1 || $hwsw_reporting == -1)
 		{
 			echo pts_string_header("Phoronix Test Suite - Welcome");
 			echo wordwrap($user_agreement, 65);
 			$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
-			$usage_reporting = $agree ? pts_bool_question("Do you wish to enable anonymous usage / statistics reporting (Y/n)?", true) : -1;
+			$usage_reporting = $agree ? pts_bool_question("Enable anonymous usage / statistics reporting (Y/n)?", true) : -1;
+			$hwsw_reporting = $agree ? pts_bool_question("Enable anonymous reporting of installed software/hardware (Y/n)?", true) : -1;
 		}
 
 		if($agree)
@@ -209,22 +213,11 @@ function pts_user_agreement_check($command)
 			pts_exit(pts_string_header("In order to run the Phoronix Test Suite, you must agree to the listed terms."));
 		}
 
-		if(!is_bool($usage_reporting) && pts_config::read_user_config(P_OPTION_USAGE_REPORTING, null) == null)
-		{
-			// Ask user whether to enable anonymous usage reporting, if it wasn't done during the user agreement check
-			// Currently it is done during the user agreement check for at least the CLI and GTK2 GUI
-			$prompt_in_method = pts_check_option_for_function($command, "pts_usage_reporting_prompt");
-
-			if($prompt_in_method)
-			{
-				$usage_reporting = call_user_func(array($command, "pts_usage_reporting_prompt"));
-			}
-		}
-
-		if(is_bool($usage_reporting))
-		{
-			pts_config::user_config_generate(array(P_OPTION_USAGE_REPORTING => ($usage_reporting ? "TRUE" : "FALSE")));
-		}
+		pts_config::user_config_generate(array(
+			P_OPTION_USAGE_REPORTING => pts_config::bool_to_string($usage_reporting),
+			P_OPTION_HARDWARE_REPORTING => pts_config::bool_to_string($hwsw_reporting),
+			P_OPTION_SOFTWARE_REPORTING => pts_config::bool_to_string($hwsw_reporting)
+			));
 	}
 }
 

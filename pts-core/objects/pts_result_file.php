@@ -490,7 +490,10 @@ class pts_result_file
 			}
 		}
 
-		$max_value += 0.01;
+		if(is_numeric($max_value))
+		{
+			$max_value += 0.01;
+		}
 
 		return array($result_tests, $result_systems, $result_table, $max_value, $longest_system_identifier);
 	}

@@ -1496,7 +1496,7 @@ class gui_gtk implements pts_option_interface
 	{
 		$editable_preferences = array(
 		// User Settings
-		P_OPTION_USAGE_REPORTING, P_OPTION_DEFAULT_BROWSER, P_OPTION_PHODEVI_CACHE, P_OPTION_DISPLAY_MODE, P_OPTION_EXTRA_REFERENCE_SYSTEMS, 
+		P_OPTION_USAGE_REPORTING, P_OPTION_HARDWARE_REPORTING, P_OPTION_SOFTWARE_REPORTING, P_OPTION_DEFAULT_BROWSER, P_OPTION_PHODEVI_CACHE, P_OPTION_DISPLAY_MODE, P_OPTION_EXTRA_REFERENCE_SYSTEMS, 
 		P_OPTION_LOAD_MODULES,
 		P_OPTION_TEST_REMOVEDOWNLOADS, P_OPTION_CACHE_SEARCHMEDIA, P_OPTION_CACHE_SYMLINK,
 		P_OPTION_PROMPT_DOWNLOADLOC, P_OPTION_TEST_ENVIRONMENT, P_OPTION_CACHE_DIRECTORY,
@@ -1901,20 +1901,23 @@ class gui_gtk implements pts_option_interface
 		$window = new pts_gtk_window("Phoronix Test Suite - User Agreement");
 		$window->set_position(Gtk::WIN_POS_CENTER_ALWAYS);
 
-		$textview_agreement = new pts_gtk_text_area(trim($user_agreement), 540, 250);
+		$textview_agreement = new pts_gtk_text_area(trim($user_agreement), 540, 280);
 		$return_button = new pts_gtk_button("Quit", array("gui_gtk", "process_user_agreement_prompt"), "quit", -1, -1, Gtk::STOCK_CANCEL);
 		$continue_button = new pts_gtk_button("Accept Terms", array("gui_gtk", "process_user_agreement_prompt"), "yes", -1, -1, Gtk::STOCK_APPLY);
 
 		$usage_reporting_button = new GtkCheckButton("Enable anonymous usage / statistics reporting.");
 		$usage_reporting_button->set_active(true);
 
-		pts_gtk_array_to_boxes($window, array($textview_agreement, new GtkLabel("Do you agree to the user terms listed above?"), $usage_reporting_button, array($return_button, $continue_button)), 1);
+		$hwsw_reporting_button = new GtkCheckButton("Enable anonymous hardware / software reporting.");
+		$hwsw_reporting_button->set_active(true);
+
+		pts_gtk_array_to_boxes($window, array($textview_agreement, new GtkLabel("Do you agree to the user terms listed above?"), $usage_reporting_button, $hwsw_reporting_button, array($return_button, $continue_button)), 1);
 
 		pts_set_assignment("GTK_USER_AGREEMENT_WINDOW", $window);
 		$window->show_all();
 		Gtk::main();
 
-		return array(pts_read_assignment("AGREED_TO_TERMS"), $usage_reporting_button->get_active());
+		return array(pts_read_assignment("AGREED_TO_TERMS"), $usage_reporting_button->get_active(), $hwsw_reporting_button->get_active());
 	}
 	public static function redraw_main_window()
 	{
