@@ -87,7 +87,7 @@ class pts_client
 			"file_system" => phodevi::read_property("system", "filesystem"),
 			"screen_resolution" => phodevi::read_property("gpu", "screen-resolution-string")
 			);
-			$sw_prev = $pso->read_object("global_reported_hw");
+			$sw_prev = $pso->read_object("global_reported_sw");
 			$pso->add_object("global_reported_sw", $sw); 
 
 			if(is_array($sw_prev))
