@@ -139,10 +139,11 @@ class pts_Chart extends pts_Graph
 
 		foreach($this->result_table as $sys_identifier => &$sys_values)
 		{
-			$row = 0;
+			//$row = 0;
 
 			foreach($sys_values as $i => &$value_set)
 			{
+				$row = $i; // if using $row, the alignment may be off sometimes
 				$hover_title = null;
 				$text_color = $this->graph_color_text;
 				$bold = false;
@@ -173,7 +174,7 @@ class pts_Chart extends pts_Graph
 				}
 
 				$this->graph_image->write_text_right($value_set[0], $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width), $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width ), $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, $hover_title, $bold);
-				$row++;
+				//$row++;
 			}
 			$col++;
 		}

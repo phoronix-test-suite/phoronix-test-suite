@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for the system monitoring test library to reflect recent Phodevi sensor API changes
 - pts-core: Fix for crammed values under certain scenarios in pts_Graph
 - pts-core: Support for reporting installed software / hardware statistics
+- pts-core: Fix misaligning some pts_Chart result values when test results are missing for a run
 - pts: Update unigine-heaven test profile to Unigine Heaven 2.1
 - pts: Update unigine-sanctuary test profile to Unigine Sanctuary 2.3
 - pts: Update unigine-tropics test profile to Unigine Tropics 1.3

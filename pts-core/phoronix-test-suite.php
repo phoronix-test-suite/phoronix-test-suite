@@ -37,7 +37,7 @@ if(PTS_MODE == "CLIENT" && ($open_basedir = ini_get("open_basedir")))
 {
 	$is_in_allowed_dir = false;
 
-	foreach(explode((IS_WINDOWS ? ';' : ':'), $open_basedir) as $allowed_dir)
+	foreach(explode(':', $open_basedir) as $allowed_dir)
 	{
 		if(strpos(PTS_PATH, $allowed_dir) === 0)
 		{
