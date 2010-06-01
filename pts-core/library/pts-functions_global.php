@@ -107,6 +107,12 @@ function pts_global_upload_hwsw_data($to_report)
 {
 	foreach($to_report as $component => &$value)
 	{
+		if(empty($value))
+		{
+			unset($to_report[$component]);
+			continue;
+		}
+
 		$value = $component . '=' . $value;
 	}
 
