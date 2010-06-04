@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Start work on pts_PieChart for generating pie charts
+
 Phoronix Test Suite 2.6.1
 June 3, 2010
 

@@ -51,6 +51,9 @@ class pts_render
 			case "TEST_COUNT_PASS":
 				$graph_type = "pts_TestCountPassGraph";
 				break;
+			case "PIE_CHART":
+				$graph_type = "pts_PieChart";
+				break;
 			case "IMAGE_COMPARISON":
 				$graph_type = "pts_ImageComparisonGraph";
 				break;
