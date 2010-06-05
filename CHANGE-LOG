@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: When installing/running a test, make sure the TEST_ENV_DIR is writable
 - pts-core: Add MultiMatch support to the parse-results.xml interface
 - pts-core: Don't add empty tests to the test execution queue
+- pts-core: Don't delete old test results when running a saved test result identifier and it fails
 - pts: Drop fgl-glxgears, fract test profiles
 
 Phoronix Test Suite 2.6.1

@@ -151,6 +151,7 @@ class run_test implements pts_option_interface
 				$test_args_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 				$test_override_options = array();
 
+				pts_set_assignment("IS_TEST_RESULT", true);
 				pts_set_assignment("AUTO_SAVE_NAME", $to_run);
 
 				foreach(explode(";", $test_previous_properties) as $test_prop)
@@ -385,7 +386,7 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
-			if(!pts_is_assignment("TEST_RAN") && !pts_read_assignment("FORCE_SAVE_RESULTS") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
+			if(!pts_is_assignment("TEST_RAN") && !pts_read_assignment("FORCE_SAVE_RESULTS") && !pts_read_assignment("IS_TEST_RESULT") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
 			{
 				pts_remove(SAVE_RESULTS_DIR . $file_name);
 				return false;
