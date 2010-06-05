@@ -73,6 +73,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			<xsl:for-each select="PhoronixTestSuite/Benchmark">
 				<xsl:variable name="this_test_pos" select="position()" />
 				<div class="pts_benchmark_bar"><div style="float: left;"><a><xsl:attribute name="name">test-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><a><xsl:attribute name="name">b-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><span class="pts_benchmark_bar_header"><xsl:value-of select="Name"/></span> <span class="pts_benchmark_bar_version"><xsl:value-of select="Version"/></span><br /><strong><xsl:value-of select="Attributes"/></strong></div><div style="float: right;"><a style="text-decoration: none;"><xsl:attribute name="href">test-logs/<xsl:value-of select="$this_test_pos" />/</xsl:attribute>View Test Logs</a></div></div>
+				<!--
 				<div class="pts_benchmark_text">
 					<xsl:if test="not(contains(ResultFormat,'MULTI_'))">
 						<xsl:for-each select="Results/Group">
@@ -84,7 +85,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 						</xsl:for-each>
 					</xsl:if>
 				</div>
-
+				-->
 				<div class="pts_benchmark_img_area"><!-- GRAPH TAG --></div>
 				<div class="pts_benchmark_img_table_area"><!-- GRAPH TABLE TAG --></div>
 			</xsl:for-each>

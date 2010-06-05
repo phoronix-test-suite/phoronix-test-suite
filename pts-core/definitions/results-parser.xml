@@ -43,6 +43,11 @@
 			<Description>This is similar to the StripFromResult tag but will only look at the end of the value string for this string to be removed. (I.e. if a unit such as 'ms' or 'FPS' is appended to the result by the test without a space.)</Description>
 		</Define>
 		<Define>
+			<Name>P_RESULTS_PARSER_MULTI_MATCH</Name>
+			<Value>PhoronixTestSuite/ResultsParser/MultiMatch</Value>
+			<Description>If the result value should be found multiple times within the result file and then some mathematical operation carried out, it should be set using this tag. Setting the value to AVERAGE will find all matches and then calculate the average value based upon matches. While not required, setting the value to NONE will use the default code-path of only looking for one result value.</Description>
+		</Define>
+		<Define>
 			<Name>P_RESULTS_PARSER_DIVIDE_BY</Name>
 			<Value>PhoronixTestSuite/ResultsParser/DivideResultValueBy</Value>
 			<Description>If the result value should be divided by some constant (to convert the result to a different unit), the value should be supplied in this tag.</Description>

@@ -571,6 +571,7 @@ function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_resu
 	$result_multiply_by = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MULTIPLY_BY);
 	$strip_from_result = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_STRIP_FROM_RESULT);
 	$strip_result_postfix = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_STRIP_RESULT_POSTFIX);
+	$multi_match = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MULTI_MATCH);
 	$test_result = false;
 
 	for($i = 0; $i < count($result_template); $i++)
@@ -670,57 +671,70 @@ function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_resu
 
 		if($search_key != null || $result_line_before_hint[$i] != null)
 		{
-			if($result_line_before_hint[$i] != null)
+			$is_multi_match = !empty($multi_match[$i]) && $multi_match[$i] != "NONE";
+			$test_results = array();
+
+			do
 			{
-				pts_test_profile_debug_message($display_mode, "Result Parsing Line Before Hint: " . $result_line_before_hint[$i]);
-				$result_line = substr($result_output, strpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
-				$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
-			}
-			else
-			{
-				pts_test_profile_debug_message($display_mode, "Result Parsing Search Key: " . $search_key);
-				$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
-				$result_line = substr($result_line, strrpos($result_line, "\n") + 1);
-			}
+				$result_count = count($test_results);
 
-			pts_test_profile_debug_message($display_mode, "Result Line: " . $result_line);
-
-			$result_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
-			$result_r_pos = array_search($result_key[$i], $result_r);
-
-			if(!empty($result_before_string[$i]))
-			{
-				// Using ResultBeforeString tag
-				$result_before_this = array_search($result_before_string[$i], $result_r);
-
-				if($result_before_this !== false)
+				if($result_line_before_hint[$i] != null)
 				{
-					$test_result = $result_r[($result_before_this - 1)];
+					pts_test_profile_debug_message($display_mode, "Result Parsing Line Before Hint: " . $result_line_before_hint[$i]);
+					$result_line = substr($result_output, strpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
+					$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
+					$result_output = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i]))) . "\n";
+				}
+				else
+				{
+					pts_test_profile_debug_message($display_mode, "Result Parsing Search Key: " . $search_key);
+					$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
+					$start_of_line = strrpos($result_line, "\n");
+					$result_output = substr($result_line, 0, $start_of_line) . "\n";
+					$result_line = substr($result_line, $start_of_line + 1);
+				}
+
+				pts_test_profile_debug_message($display_mode, "Result Line: " . $result_line);
+
+				$result_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
+				$result_r_pos = array_search($result_key[$i], $result_r);
+
+				if(!empty($result_before_string[$i]))
+				{
+					// Using ResultBeforeString tag
+					$result_before_this = array_search($result_before_string[$i], $result_r);
+
+					if($result_before_this !== false)
+					{
+						array_push($test_results, $result_r[($result_before_this - 1)]);
+					}
+				}
+				else if(isset($result_r[$result_template_r_pos]))
+				{
+					array_push($test_results, $result_r[$result_template_r_pos]);
 				}
 			}
-			else if(isset($result_r[$result_template_r_pos]))
+			while($is_multi_match && count($test_results) != $result_count && !empty($result_output));
+		}
+
+		foreach($test_results as $i => &$test_result)
+		{
+			if($strip_from_result[$i] != null)
 			{
-				$test_result = $result_r[$result_template_r_pos];
+				$test_result = str_replace($strip_from_result[$i], null, $test_result);
 			}
-		}
+			if($strip_result_postfix[$i] != null && substr($test_result, 0 - strlen($strip_result_postfix[$i])) == $strip_result_postfix[$i])
+			{
+				$test_result = substr($test_result, 0, 0 - strlen($strip_result_postfix[$i]));
+			}
 
-		if($strip_from_result[$i] != null)
-		{
-			$test_result = str_replace($strip_from_result[$i], null, $test_result);
-		}
-		if($strip_result_postfix[$i] != null && substr($test_result, 0 - strlen($strip_result_postfix[$i])) == $strip_result_postfix[$i])
-		{
-			$test_result = substr($test_result, 0, 0 - strlen($strip_result_postfix[$i]));
-		}
+			// Expand validity checking here
+			if(!is_numeric($test_result))
+			{
+				unset($test_results[$i]);
+				continue;
+			}
 
-		// Expand validity checking here
-		if(!is_numeric($test_result))
-		{
-			$test_result = false;
-		}
-
-		if($test_result != false)
-		{
 			if($result_divide_by[$i] != null && is_numeric($result_divide_by[$i]) && $result_divide_by[$i] != 0)
 			{
 				$test_result = $test_result / $result_divide_by[$i];
@@ -729,6 +743,19 @@ function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_resu
 			{
 				$test_result = $test_result * $result_multiply_by[$i];
 			}
+		}
+
+		if(empty($test_results))
+		{
+			continue;
+		}
+
+		switch($multi_match[$i])
+		{
+			case "AVERAGE":
+			default:
+				$test_result = array_sum($test_results) / count($test_results);
+				break;
 		}
 
 		if($test_result != false)
