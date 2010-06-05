@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>FPS</LineHint>
+		<OutputTemplate>100 frames in 429 ms = #_RESULT_# FPS</OutputTemplate>
+		<MultiMatch>AVERAGE</MultiMatch>
+	</ResultsParser>
+</PhoronixTestSuite>

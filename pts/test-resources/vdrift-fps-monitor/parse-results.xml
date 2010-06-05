@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>Current FPS</LineHint>
+		<OutputTemplate>Current FPS: #_RESULT_#</OutputTemplate>
+		<MultiMatch>REPORT_ALL</MultiMatch>
+	</ResultsParser>
+</PhoronixTestSuite>

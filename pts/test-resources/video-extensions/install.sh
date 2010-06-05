@@ -25,7 +25,7 @@ foreach($extensions_to_check as $extension)
 		echo "\n$extension Playback PASSED!\n";
 		array_push($extensions_results, "PASS");
 	}
-	echo "\nFinal Results: " . implode(",", $extensions_results) . ".\n";
+	echo "\nFinal Results: " . implode(",", $extensions_results) . "\n";
 }
 
 ?>

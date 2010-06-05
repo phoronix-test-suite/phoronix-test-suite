@@ -752,6 +752,9 @@ function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_resu
 
 		switch($multi_match[$i])
 		{
+			case "REPORT_ALL":
+				$test_result = implode(',', $test_results);
+				break;
 			case "AVERAGE":
 			default:
 				$test_result = array_sum($test_results) / count($test_results);
@@ -969,11 +972,13 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				}
 				else
 				{
+					// TODO: Add check for $result_format == MULTI_PASS_FAIL OR PASS_FAIL and then remove numeric checks in the below function
 					$test_result = pts_parse_results_numeric($display_mode, $test_identifier, $parse_results_xml, $benchmark_log_file, $pts_test_arguments, $extra_arguments);
 				}
 			}
 			else
 			{
+				// TODO: else pull contents of $benchmark_log_file
 				$test_result = pts_call_test_script($test_identifier, "parse-results", null, $test_result, $test_extra_runtime_variables_post);
 			}
 
