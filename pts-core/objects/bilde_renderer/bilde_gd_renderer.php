@@ -114,7 +114,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 
 		imagettftext($this->image, $font_size, $rotation, $text_x, $text_y, $font_color, $font_type, $text_string);
 	}
-	public function draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1)
+	public function draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
 	{
 		return false; // TODO: implement
 	}

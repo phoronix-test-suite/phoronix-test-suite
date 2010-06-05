@@ -493,7 +493,7 @@ abstract class pts_Graph
 		$this->render_graph_base();
 		$this->render_graph_heading();
 
-		if(!$this->graph_hide_identifiers)
+		if($this->graph_hide_identifiers == false)
 		{
 			$this->render_graph_identifiers();
 		}

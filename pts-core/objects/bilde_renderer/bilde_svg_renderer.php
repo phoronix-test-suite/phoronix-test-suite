@@ -220,7 +220,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . round($width - $x1) . "\" height=\"" . round($height - $y1) . "\" class=\"" . $class . "\" />\n";
 	}
-	public function draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1)
+	public function draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
 	{
 		$deg = ($percent * 360);
 		$offset_deg = ($offset_percent * 360);
@@ -231,7 +231,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$p2_x = round(cos(deg2rad($offset_deg + $deg)) * $radius) + $center_x;
 		$p2_y = round(sin(deg2rad($offset_deg + $deg)) * $radius) + $center_y;
 
-		$this->image .= "<path d=\"M" . $center_x . ',' . $center_y . " L" . $p1_x . ',' . $p1_y . " A" . $radius . ',' . $radius . " 0 " . $arc . ",1 " . $p2_x . ',' . $p2_y . " Z\" fill=\"" . $body_color . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" stroke-linejoin=\"round\" />\n";
+		$this->image .= "<path d=\"M" . $center_x . ',' . $center_y . " L" . $p1_x . ',' . $p1_y . " A" . $radius . ',' . $radius . " 0 " . $arc . ",1 " . $p2_x . ',' . $p2_y . " Z\" fill=\"" . $body_color . "\" stroke=\"" . $border_color . "\" stroke-width=\"" . $border_width . "\" stroke-linejoin=\"round\"" . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . " />\n";
 	}
 	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0)
 	{

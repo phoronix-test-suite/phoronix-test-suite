@@ -23,62 +23,82 @@
 
 class pts_PieChart extends pts_Graph
 {
+	private $pie_sum = 0;
+
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
 		$this->graph_type = "PIE_CHART";
 		$this->graph_value_type = "ABSTRACT";
-		$this->graph_hide_identifiers = true;
-		//$this->graph_data_title = array("PASSED", "FAILED");
+		$this->graph_hide_identifiers = false;
+		$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + 100);
 	}
 	protected function render_graph_pre_init()
 	{
-		// Do some common work to this object
-		$draw_count = count($this->graph_identifiers);
+		$pie_slices = count($this->graph_identifiers);
+		$this->pie_sum = 0;
 
-		$this->graph_attr_width += 100;
-		$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height);
+		for($i = 0; $i < $pie_slices; $i++)
+		{
+			$this->pie_sum += $this->graph_data[0][$i];
+		}
+
+	}
+	protected function render_graph_identifiers()
+	{
+		$key_strings = array();
+
+		foreach(array_keys($this->graph_identifiers) as $i)
+		{
+			$percent = pts_math::set_precision($this->graph_data[0][$i] / $this->pie_sum * 100, 2);
+			array_push($key_strings, '[' . $this->graph_data[0][$i] . ' / ' . $percent . "%]");
+		}
+
+		$key_count = count($key_strings);
+		$key_item_width = 18 + $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_key);
+		$key_item_width_value = 12 + $this->text_string_width($this->find_longest_string($key_strings), $this->graph_font, $this->graph_font_size_key);
+		$keys_per_line = floor(($this->graph_left_end - $this->graph_left_start - 14) / ($key_item_width + $key_item_width_value));
+		$key_line_height = 14;
+		$this->graph_top_start += 12;
+		$component_y = $this->graph_top_start - $key_line_height - 5;
+		$this->reset_paint_index();
+
+		for($i = 0; $i < $key_count; $i++)
+		{
+			$this_color = $this->get_paint_color($i);
+
+			if($i != 0 && $i % $keys_per_line == 1)
+			{
+				$component_y += $key_line_height;
+				$this->graph_top_start += $key_line_height;
+			}
+
+			$component_x = $this->graph_left_start + 13 + (($key_item_width + $key_item_width_value) * ($i % $keys_per_line));
+			$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
+			$this->graph_image->write_text_left($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
+			$this->graph_image->write_text_left($key_strings[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x + $key_item_width_value, $component_y, $component_x + $key_item_width_value, $component_y);
+		}
 	}
 	public function renderGraph()
 	{
 
 		$this->render_graph_pre_init();
 		$this->render_graph_init();
+		$this->render_graph_identifiers();
 		$this->render_graph_heading(false);
 
 		$pie_slices = count($this->graph_identifiers);
-		$pie_total = 0;
-
-		for($i = 0; $i < $pie_slices; $i++)
-		{
-			$pie_total += $this->graph_data[0][$i];
-		}
-
-
+		$radius = min(($this->graph_attr_height - $this->graph_top_start - $this->graph_top_end_opp), ($this->graph_attr_width - $this->graph_left_start - $this->graph_left_end_opp)) / 2;
 		$center_x = ($this->graph_attr_width / 2);
-		$center_y = ($this->graph_attr_height / 2);
-		$radius = $this->graph_attr_width / 8;
+		$center_y = $this->graph_top_start + (($this->graph_attr_height - $this->graph_top_start - $this->graph_top_end_opp) / 2);
 		$offset_percent = 0;
 
 		for($i = 0; $i < $pie_slices; $i++)
 		{
-			$percent = pts_math::set_precision($this->graph_data[0][$i] / $pie_total, 3);
-			$this->graph_image->draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $this->get_paint_color($i), $this->graph_color_border, 2);
+			$percent = pts_math::set_precision($this->graph_data[0][$i] / $this->pie_sum, 3);
+			$this->graph_image->draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $this->get_paint_color($i), $this->graph_color_border, 2, $this->graph_identifiers[$i] . ": " . $this->graph_data[0][$i]);
 			$offset_percent += $percent;
 		}
-
-		/*$draw_count = count($this->graph_identifiers);
-
-		for($i_o = 0; $i_o < $draw_count; $i_o++)
-		{
-			$from_left = ($this->graph_attr_width / 2) - ($img_width / 2);
-			$from_top = 60 + ($i_o * ($img_height + 22));
-
-			$this->graph_image->draw_rectangle_border($from_left - 1, $from_top - 1, $from_left + $img_width, $from_top + $img_height, $this->graph_color_body_light);
-			$this->graph_image->image_copy_merge(imagecreatefromstring(base64_decode($this->graph_data[0][$i_o])), $from_left, $from_top, 0, 0, $img_width, $img_height);
-
-			$this->graph_image->write_text_center($this->graph_identifiers[$i_o], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_main_headers, 0, $from_top + $img_height + 3, $this->graph_attr_width, $from_top + $img_height + 3);
-		}*/
 
 		if(!empty($this->graph_watermark_text))
 		{
