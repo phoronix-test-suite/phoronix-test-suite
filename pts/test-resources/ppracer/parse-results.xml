@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<OutputTemplate>Average FPS: #_RESULT_#</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

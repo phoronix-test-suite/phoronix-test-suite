@@ -18,7 +18,6 @@ cd ..
 echo "#/bin/sh
 export PYTHONPATH=`pwd`/lib
 python transpose.py \$PTS_TEST_ARGUMENTS | tail -n 1 > \$LOG_FILE 2>&1
-cat \$LOG_FILE
 " > pyopencl
 
 chmod +x pyopencl

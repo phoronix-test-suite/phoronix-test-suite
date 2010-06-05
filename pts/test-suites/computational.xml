@@ -9,11 +9,6 @@
 		<Description>This test suite contains tests that deal with measuring the system's computational / arithmetic performance. Some of the included tests are of synthetic nature while others have real-world meanings.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>super-pi</Test>
-		<Arguments>20</Arguments>
-		<Description>1 Million Digits</Description>
-	</RunTest>
-	<RunTest>
 		<Test>byte</Test>
 		<Arguments>TEST_DHRY2</Arguments>
 		<Description>Dhrystone 2</Description>

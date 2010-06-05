@@ -9,9 +9,6 @@
 		<Description>The computational biology test suite runs a series of tests relevant to the field of computational biology. This test suite may take many minutes to complete.</Description>
 	</SuiteInformation>
 	<RunTest>
-		<Test>molecular-dynamics</Test>
-	</RunTest>
-	<RunTest>
 		<Test>hmmer</Test>
 	</RunTest>
 	<RunTest>

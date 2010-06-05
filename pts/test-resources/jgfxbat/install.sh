@@ -8,9 +8,8 @@ echo "#!/bin/sh
 export JAVA_HOME=/usr
 sh ./runbat.sh > \$THIS_RUN_TIME.result
 if [ \$? -eq 0 ]; then
-   echo 'PASS'
+   echo 'PASS' > \$LOG_FILE
 else
-   echo 'FAIL'
-fi
-" > jgfxbat
+   echo 'FAIL' > \$LOG_FILE
+fi" > jgfxbat
 chmod +x jgfxbat

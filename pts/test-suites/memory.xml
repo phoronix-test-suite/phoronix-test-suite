@@ -44,11 +44,6 @@
 		<Description>Scale</Description>
 	</RunTest>
 	<RunTest>
-		<Test>memory-bandwidth</Test>
-		<Arguments>TEST_READ</Arguments>
-		<Description>RAM Sequential Read</Description>
-	</RunTest>
-	<RunTest>
 		<Test>cachebench</Test>
 		<Arguments>-r</Arguments>
 		<Description>Read Cache</Description>

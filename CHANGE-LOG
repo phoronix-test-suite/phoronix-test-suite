@@ -8,7 +8,8 @@ Phoronix Test Suite (Git)
 - pts-core: Don't add empty tests to the test execution queue
 - pts-core: Don't delete old test results when running a saved test result identifier and it fails
 - pts-core: Don't report test profiles with a NO_RESULT ResultFormat as having failed to run
-- pts: Drop fgl-glxgears, fract test profiles
+- pts-core: Drop support for parse-results.php/parse-results.sh, now mandate the parse-results.xml interface as its superior
+- pts: Drop fgl-glxgears, fract, md-gromacs, memory-bandwidth, super-pi test profiles
 
 Phoronix Test Suite 2.6.1
 June 3, 2010

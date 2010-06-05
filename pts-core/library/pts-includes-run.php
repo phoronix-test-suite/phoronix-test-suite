@@ -699,36 +699,34 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(!in_array(($i + 1), $ignore_runs) && $exit_status_pass)
 		{
-			$test_extra_runtime_variables_post = $test_extra_runtime_variables;
-
 			if(is_file(TEST_ENV_DIR . $test_identifier . "/pts-timer"))
 			{
 				$run_time = pts_file_get_contents(TEST_ENV_DIR . $test_identifier . "/pts-timer");
 				unlink(TEST_ENV_DIR . $test_identifier . "/pts-timer");
 
-				if(is_numeric($run_time))
-				{
-					$test_extra_runtime_variables_post["TIMER_RESULT"] = $run_time;
-				}
 			}
 			else
 			{
 				$run_time = 0;
 			}
 
-			if(is_file($test_log_file))
-			{
-				$test_result = null;
-			}
-
 			if(is_file($parse_results_xml_file = pts_tests::test_resources_location($test_identifier) . "parse-results.xml"))
 			{
 				$test_result = pts_result_parser::parse_result($display_mode, $test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
 			}
+			else if(is_file($test_log_file))
+			{
+				// TODO: improve this path
+				$test_result = file_get_contents($test_log_file);
+
+				if(strpos($test_result, ' ') !== false)
+				{
+					$test_result = null;
+				}
+			}
 			else
 			{
-				// TODO: else pull contents of $test_log_file
-				$test_result = pts_call_test_script($test_identifier, "parse-results", null, $test_result, $test_extra_runtime_variables_post);
+				$test_result = null;
 			}
 
 			if(empty($test_result))
@@ -744,12 +742,6 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			}
 
 			pts_test_profile_debug_message($display_mode, "Test Result Value: " . $test_result);
-			$validate_result = trim(pts_call_test_script($test_identifier, "validate-result", null, $test_result, $test_extra_runtime_variables_post));
-
-			if(!empty($validate_result) && !pts_string_bool($validate_result))
-			{
-				$test_result = null;
-			}
 
 			if(!empty($test_result))
 			{

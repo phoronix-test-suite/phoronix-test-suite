@@ -1,9 +1,0 @@
-<PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://icl.cs.utk.edu/projectsfiles/hpcc/download/hpcc-1.3.1.tar.gz, ftp://ftp.sdsc.edu/pub/outgoing/majumdar/hpcc-1.3.1.tar.gz</URL>
-			<MD5>3c15d905853365ef1167da680586b17d</MD5>
-			<FileSize>642706</FileSize>
-		</Package>
-	</Downloads>
-</PhoronixTestSuite>

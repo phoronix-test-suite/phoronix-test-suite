@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<OutputTemplate>Overall Geekbench Score: #_RESULT_# ||</OutputTemplate>
+		<StripFromResult>.</StripFromResult>
+	</ResultsParser>
+</PhoronixTestSuite>
