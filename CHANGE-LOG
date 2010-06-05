@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Start work on pts_PieChart for generating pie charts
+- pts-core: When installing/running a test, make sure the TEST_ENV_DIR is writable
 
 Phoronix Test Suite 2.6.1
 June 3, 2010

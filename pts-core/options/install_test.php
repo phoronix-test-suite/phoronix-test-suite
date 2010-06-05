@@ -63,6 +63,12 @@ class install_test implements pts_option_interface
 		}
 
 		// Install tests
+		if(!is_writable(TEST_ENV_DIR))
+		{
+			echo "\nERROR: The test installation directory is not writable.\nLocation: " . TEST_ENV_DIR . "\n";
+			return false;
+		}
+
 		pts_start_install($items_to_install, $display_mode);
 
 		if($items_to_install = array("prev-test-identifier"))
