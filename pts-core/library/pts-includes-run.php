@@ -769,6 +769,25 @@ function pts_parse_results_numeric(&$display_mode, $test_identifier, $parse_resu
 
 	return $test_result;
 }
+function pts_clear_empty_tests(&$tests, &$test_args, &$test_args_desc)
+{
+	$all_test_runs = $tests;
+	$all_test_args = $test_args;
+	$all_test_args_description = $test_args_desc;
+	$tests = array();
+	$test_args = array();
+	$test_args_desc = array();
+
+	foreach(array_keys($all_test_runs) as $i)
+	{
+		if(!empty($all_test_runs[$i]))
+		{
+			array_push($tests, $all_test_runs[$i]);
+			array_push($test_args, $all_test_args[$i]);
+			array_push($test_args_desc, $all_test_args_description[$i]);
+		}
+	}
+}
 function pts_run_test(&$test_run_request, &$display_mode)
 {
 	$test_identifier = $test_run_request->get_identifier();
