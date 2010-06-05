@@ -430,6 +430,10 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 
 		pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/");
 	}
+	else if($result === true)
+	{
+		$test_successful = true;
+	}
 
 	if($test_successful == false && $test_run_request->get_identifier() != null)
 	{
@@ -1256,7 +1260,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	// Remove lock
 	pts_release_lock($test_fp, $lock_file);
 
-	return $result_format == "NO_RESULT" ? false : $test_results;
+	return $result_format == "NO_RESULT" ? true : $test_results;
 }
 function pts_test_profile_debug_message(&$display_mode, $message)
 {

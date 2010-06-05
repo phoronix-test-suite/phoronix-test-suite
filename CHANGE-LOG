@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add MultiMatch support to the parse-results.xml interface
 - pts-core: Don't add empty tests to the test execution queue
 - pts-core: Don't delete old test results when running a saved test result identifier and it fails
+- pts-core: Don't report test profiles with a NO_RESULT ResultFormat as having failed to run
 - pts: Drop fgl-glxgears, fract test profiles
 
 Phoronix Test Suite 2.6.1
