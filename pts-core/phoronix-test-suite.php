@@ -46,7 +46,7 @@ if(PTS_MODE == "CLIENT" && ($open_basedir = ini_get("open_basedir")))
 		}
 	}
 
-	if(!$is_in_allowed_dir)
+	if($is_in_allowed_dir == false)
 	{
 		echo "\nERROR: Your php.ini configuration's open_basedir setting is preventing " . PTS_PATH . " from loading.\n\n";
 		return false;
@@ -71,6 +71,7 @@ $quick_start_options = array("dump_possible_options", "task_cache_reference_comp
 define("QUICK_START", in_array($sent_command, $quick_start_options));
 
 pts_client_init(); // Initalize the Phoronix Test Suite (pts-core) client
+//stream_wrapper_register("phoronix", "pts_phoronix_stream") or die("Failed To Initialize The Phoronix Stream");
 
 if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 {

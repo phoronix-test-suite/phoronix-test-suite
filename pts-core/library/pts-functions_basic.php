@@ -21,6 +21,24 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_contents($path)
+{
+	$contents = array();
+
+	if(is_dir($path))
+	{
+		if($dh = opendir($path))
+		{
+			while(($file = readdir($dh)) !== false)
+			{
+				array_push($contents, $file);
+			}
+		}
+	}
+
+	return $contents;
+}
+
 function pts_add_trailing_slash($path)
 {
 	return $path . (substr($path, -1) == '/' ? null : '/'); 

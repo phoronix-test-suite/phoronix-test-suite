@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<LineHint>excluding connections establishing</LineHint>
+		<OutputTemplate>tps = #_RESULT_# (excluding connections establishing) TPS</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>
