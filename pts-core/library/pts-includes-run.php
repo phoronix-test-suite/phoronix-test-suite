@@ -572,6 +572,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		$times_to_run = $force_runs;
 	}
 
+	if(($force_runs = pts_client::read_env("FORCE_MIN_TIMES_TO_RUN")) && is_numeric($force_runs) && $force_runs > $times_to_run)
+	{
+		$times_to_run = $force_runs;
+	}
+
 	if($times_to_run < 1 || (strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_" || substr($result_format, 0, 6) == "IMAGE_"))
 	{
 		// Currently tests that output multiple results in one run can only be run once
