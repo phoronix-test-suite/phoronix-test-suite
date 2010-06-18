@@ -1,19 +1,30 @@
 #!/bin/sh
 
-tar -xjf mplayer-2009-11-28.tar.bz2
+tar -xjf mplayer-vaapi-20100602-FULL.tar.bz2
 
 mkdir $HOME/mplayer_
 
-cd mplayer-2009-11-28/
+cd mplayer-vaapi-20100602/mplayer-vaapi
+patch -p1 < ../patches/mplayer-vaapi.patch
+patch -p1 < ../patches/mplayer-vaapi-gma500-workaround.patch
+patch -p1 < ../patches/mplayer-vaapi-0.29.patch
+patch -p1 < ../patches/mplayer-vdpau.patch
 
 if [ -f "/usr/include/vdpau/vdpau.h" ]
 then
 	VDPAU_STATUS="--enable-vdpau"
 else
-	VDPAU_STATUS=""
+	VDPAU_STATUS="--disable-vdpau"
 fi
 
-./configure --enable-xv --enable-xvmc $VDPAU_STATUS --disable-ivtv --prefix=$HOME/mplayer_ > /dev/null
+if [ -f "/usr/include/va/va.h" ]
+then
+	VAAPI_STATUS="--enable-vaapi"
+else
+	VAAPI_STATUS="--disable-vaapi"
+fi
+
+./configure --enable-xv --enable-xvmc $VAAPI_STATUS $VDPAU_STATUS --disable-ivtv --prefix=$HOME/mplayer_
 
 case $OS_TYPE in
 	BSD|Solaris)
@@ -26,9 +37,9 @@ case $OS_TYPE in
 	;;
 esac
 
-cd ..
+cd ~
 
-rm -rf mplayer-2009-11-28/
+rm -rf mplayer-vaapi-20100602/
 rm -rf mplayer_/share/
 
 ln -s mplayer_/bin/mplayer mplayer
