@@ -138,7 +138,7 @@ class pts_result_file
 	{
 		static $is_multi_way = -1;
 
-		if($is_multi_way == -1)
+		if($is_multi_way === -1)
 		{
 			$systems = array();
 			$targets = array();
@@ -175,9 +175,23 @@ class pts_result_file
 
 			if($is_multi_way)
 			{
-				if(count($targets) < count($systems))
+				$targets_count = count($targets);
+				$systems_count = count($systems);
+
+				if($targets_count < $systems_count)
 				{
 					$this->is_multi_way_inverted = true;
+				}
+				else
+				{
+					$hardware = array_unique($this->get_system_hardware());
+					//$software = array_unique($this->get_system_software());
+
+					if($targets_count != $systems_count && count($hardware) == $systems_count)
+					{
+						$this->is_multi_way_inverted = true;
+					}
+
 				}
 			}
 
