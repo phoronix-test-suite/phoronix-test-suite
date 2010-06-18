@@ -2,27 +2,28 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>1.0</EnvironmentSize>
+		<EnvironmentSize>692</EnvironmentSize>
 		<Extends>mplayer-base</Extends>
+		<AutoSaveResults>TRUE</AutoSaveResults>
 	</TestProfile>
 	<TestInformation>
 		<Title>1080p H.264 Video Playback</Title>
 		<SubTitle>CPU Usage</SubTitle>
 		<ResultScale>Percent</ResultScale>
 		<TimesToRun>1</TimesToRun>
-		<Description>This is a test profile that will record the CPU usage while a short 1080p H.264 video sample is played back three times using MPlayer. Before and after the three videos play, there is five seconds of sleep time.</Description>
+		<Description>This is a test profile that will record the CPU usage while a 1080p H.264 video sample of Big Buck Bunny is played back for several minutes using MPlayer.</Description>
 		<ResultFormat>LINE_GRAPH</ResultFormat>
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>-nosound -fs</Arguments>
-			<MinimumLength>30</MinimumLength>
+			<Arguments>-frames 9000 -fs</Arguments>
+			<MinimumLength>600</MinimumLength>
 		</Default>
 		<Option>
 			<DisplayName>Video Decoding</DisplayName>
@@ -43,6 +44,10 @@
 				<Entry>
 					<Name>VDPAU</Name>
 					<Value>-vo vdpau -vc ffh264vdpau</Value>
+				</Entry>
+				<Entry>
+					<Name>VA-API</Name>
+					<Value>-vo vaapi</Value>
 				</Entry>
 				<Entry>
 					<Name>OS X CoreVideo</Name>
