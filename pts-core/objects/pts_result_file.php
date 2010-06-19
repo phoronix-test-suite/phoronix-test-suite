@@ -175,6 +175,14 @@ class pts_result_file
 
 			if($is_multi_way)
 			{
+				if(count($systems) < 3 && count($systems) != count($targets))
+				{
+					$is_multi_way = false;
+				}
+			}
+
+			if($is_multi_way)
+			{
 				$targets_count = count($targets);
 				$systems_count = count($systems);
 

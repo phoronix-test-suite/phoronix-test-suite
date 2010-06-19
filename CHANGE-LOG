@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Drop support for parse-results.php/parse-results.sh, now mandate the parse-results.xml interface as its superior
 - pts-core: Add FORCE_MIN_TIMES_TO_RUN environmental variable support
 - pts-core: Attempt to better determine inverted multi-way comparisons
+- pts-core: Validate test installations to run prior to save prompt
 - pts: Drop fgl-glxgears, fract, md-gromacs, memory-bandwidth, super-pi test profiles
 - pts: Update mplayer-base with newer MPlayer snapshot and add VA-API support
 - pts: Update video-cpu-usage test profile to use Big Buck Bunny 1080p H.264 sample

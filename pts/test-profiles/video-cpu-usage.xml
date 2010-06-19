@@ -23,7 +23,7 @@
 	<TestSettings>
 		<Default>
 			<Arguments>-frames 9000 -fs</Arguments>
-			<MinimumLength>600</MinimumLength>
+			<MinimumLength>60</MinimumLength>
 		</Default>
 		<Option>
 			<DisplayName>Video Decoding</DisplayName>
@@ -43,11 +43,11 @@
 				</Entry>
 				<Entry>
 					<Name>VDPAU</Name>
-					<Value>-vo vdpau -vc ffh264vdpau</Value>
+					<Value>-vo vdpau -va vdpau</Value>
 				</Entry>
 				<Entry>
 					<Name>VA-API</Name>
-					<Value>-vo vaapi</Value>
+					<Value>-vo vaapi -va vaapi</Value>
 				</Entry>
 				<Entry>
 					<Name>OS X CoreVideo</Name>

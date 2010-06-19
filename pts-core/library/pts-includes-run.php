@@ -840,6 +840,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if($abort_testing)
 	{
+		$display_mode->test_run_error("This test execution has been abandoned.");
 		return false;
 	}
 
@@ -853,6 +854,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if($min_length > $time_test_elapsed_actual)
 		{
 			// The test ended too quickly, results are not valid
+			$display_mode->test_run_error("This test ended prematurely.");
 			return false;
 		}
 	}
@@ -862,6 +864,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if($max_length < $time_test_elapsed_actual)
 		{
 			// The test took too much time, results are not valid
+			$display_mode->test_run_error("This test run was exhausted.");
 			return false;
 		}
 	}

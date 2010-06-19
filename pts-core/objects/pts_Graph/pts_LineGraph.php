@@ -180,7 +180,7 @@ class pts_LineGraph extends pts_Graph
 					//	array_push($poly_points, array($px_from_left, $this->graph_top_end - 1, null));
 						$this->graph_image->draw_poly_line(array(array($px_from_left, $value_plot_top, $data_string), array($px_from_left, $this->graph_top_end - 1, null)), $paint_color, 2);
 					}
-					else
+					else if($value > 0)
 					{
 						array_push($poly_points, array($this->graph_left_end - 1, $value_plot_top, null));
 					}
