@@ -151,41 +151,6 @@ function pts_prompt_save_file_name(&$test_run_manager, $check_env = true)
 
 	return array($proposed_name, $custom_title);
 }
-function pts_prompt_svg_result_options($svg_file)
-{
-	// Image graph result driven test selection
-	$run_options = pts_parse_svg_options($svg_file);
-	$test_to_run = null;
-
-	if(($run_option_count = count($run_options)) > 0)
-	{
-		if($run_option_count > 0)
-		{
-			if($run_option_count == 1)
-			{
-				$test_to_run = $run_options[0][0];
-			}
-			else
-			{
-				do
-				{
-					echo "\n";
-					for($i = 0; $i < $run_option_count; $i++)
-					{
-						echo ($i + 1) . ": " . $run_options[$i][1] . "\n";
-					}
-					echo "\nEnter Your Choice: ";
-
-					$run_choice = pts_read_user_input();
-				}
-				while($run_choice < 1 || $run_choice > $run_option_count);
-				$test_to_run = $run_options[($run_choice - 1)][0];
-			}
-		}
-	}
-
-	return $test_to_run;
-}
 function pts_prompt_user_tags($default_tags = null)
 {
 	$tags_input = null;
@@ -213,28 +178,6 @@ function pts_prompt_user_tags($default_tags = null)
 	}
 
 	return $tags_input;
-}
-function pts_parse_svg_options($svg_file)
-{
-	$svg_parser = new tandem_XmlReader($svg_file);
-	$svg_test = array_pop($svg_parser->getStatement("Test"));
-	$svg_identifier = array_pop($svg_parser->getStatement("Identifier"));
-
-	$run_options = array();
-	if(pts_is_test($svg_test))
-	{
-		array_push($run_options, array($svg_test, "Run this test (" . $svg_test . ")"));
-	}
-	if(pts_is_suite($svg_identifier))
-	{
-		array_push($run_options, array($svg_identifier, "Run this suite (" . $svg_identifier . ")"));
-	}
-	else if(pts_is_global_id($svg_identifier))
-	{
-		array_push($run_options, array($svg_identifier, "Run this Phoronix Global comparison (" . $svg_identifier . ")"));
-	}
-
-	return $run_options;
 }
 function pts_input_string_to_identifier($input)
 {

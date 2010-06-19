@@ -83,7 +83,6 @@ class system_monitor extends pts_module_interface
 			if(count($sensor_results) > 2)
 			{
 				$graph_title = phodevi::sensor_name($sensor) . " Monitor";
-				//$sub_title = implode(" ", pts_read_assignment("TO_RUN_IDENTIFIERS"));
 				$sub_title = "System Monitor Module";
 
 				$tandem_id = pts_request_new_id();

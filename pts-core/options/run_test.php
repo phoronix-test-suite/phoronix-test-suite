@@ -38,7 +38,7 @@ class run_test implements pts_option_interface
 		}
 		if(count($to_run_identifiers) == 0 || empty($to_run_identifiers[0]))
 		{
-			echo pts_string_header("The test, suite, or saved identifier must be supplied.");
+			echo pts_string_header("A test, suite, or saved identifier must be supplied.");
 			return false;
 		}
 		if(!is_writable(TEST_ENV_DIR))
@@ -65,7 +65,6 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
-		pts_set_assignment("TO_RUN_IDENTIFIERS", $to_run_identifiers);
 		$unique_test_count = count(array_unique($to_run_identifiers));
 		$test_run_manager = new pts_test_run_manager();
 
@@ -329,7 +328,7 @@ class run_test implements pts_option_interface
 
 				$id = pts_request_new_id();
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $file_name_title);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? pts_first_element_in_array(pts_read_assignment("TO_RUN_IDENTIFIERS")) : "custom"));
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? pts_first_element_in_array($to_run_identifiers) : "custom"));
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 1, $test_version);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_description);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, 1, $test_type);

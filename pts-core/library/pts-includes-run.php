@@ -27,33 +27,18 @@ require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 {
 	$skip_tests = ($e = pts_client::read_env("SKIP_TESTS")) ? explode(',', $e) : false;
+
+	$tests_verified = array();
 	$tests_missing = array();
 
-	foreach($to_run_identifiers as $index => &$test_identifier)
+	foreach($to_run_identifiers as &$test_identifier)
 	{
-		$test_passes = true;
-
-		if(is_file($test_identifier) && substr(basename($test_identifier), -4) == ".svg")
-		{
-			// One of the arguments was an SVG results file, do prompts
-			$test_extracted = pts_prompt_svg_result_options($test_identifier);
-
-			if(!empty($test_extracted))
-			{
-				$test_identifier = $test_extracted;
-			}
-			else
-			{
-				$test_passes = false;
-			}
-		}
-
 		$lower_identifier = strtolower($test_identifier);
 
 		if($skip_tests && in_array($lower_identifier, $skip_tests))
 		{
 			echo "Skipping Test: " . $lower_identifier . "\n";
-			$test_passes = false;
+			continue;
 		}
 		else if(pts_is_test($lower_identifier))
 		{
@@ -62,13 +47,15 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 			if(empty($test_title))
 			{
 				echo "Not A Test: " . $lower_identifier . "\n";
-				$test_passes = false;
+				continue;
 			}
 			else
 			{
-				$test_passes = pts_test_support_check($lower_identifier, $display_mode);
-
-				if($test_passes != false)
+				if(pts_test_support_check($lower_identifier, $display_mode) == false)
+				{
+					continue;
+				}
+				else
 				{
 					if(pts_test_needs_updated_install($lower_identifier))
 					{
@@ -82,12 +69,10 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 			if(pts_suite_version_supported($lower_identifier) == false)
 			{
 				echo $lower_identifier . " is a suite not supported by this version of the Phoronix Test Suite.\n";
-				$test_passes = false;
+				continue;
 			}
 			else if(pts_read_assignment("CONFIGURE_TESTS_IN_SUITE"))
 			{
-				$test_passes = false;
-
 				foreach(pts_contained_tests($lower_identifier) as $test)
 				{
 					if(!in_array($test, $to_run_identifiers))
@@ -95,6 +80,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 						array_push($to_run_identifiers, $test);
 					}
 				}
+				continue;
 			}
 		}
 		else if(pts_is_virtual_suite($lower_identifier))
@@ -103,24 +89,24 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 			{
 				array_push($to_run_identifiers, $virt_test);
 			}
-			$test_passes = false;
+			continue;
 		}
 		else if(!pts_is_run_object($lower_identifier) && !pts_global_valid_id_string($lower_identifier) && !pts_is_test_result($lower_identifier))
 		{
 			echo "Not Recognized: " . $lower_identifier . "\n";
+			continue;
 		}
 
-		if($test_passes && pts_verify_test_installation($lower_identifier, $tests_missing) == false)
+		if(pts_verify_test_installation($lower_identifier, $tests_missing) == false)
 		{
 			// Eliminate this test, it's not properly installed
-			$test_passes = false;
+			continue;
 		}
 
-		if($test_passes == false)
-		{
-			unset($to_run_identifiers[$index]);
-		}
+		array_push($tests_verified, $test_identifier);
 	}
+
+	$to_run_identifiers = $tests_verified;
 
 	if(count($tests_missing) > 0)
 	{

@@ -369,11 +369,7 @@ class gui_gtk implements pts_option_interface
 		$file = str_replace("file://", null, trim($data->data));
 		$options = array();
 
-		if(substr($file, -4) == ".svg")
-		{
-			$options = pts_parse_svg_options($file);
-		}
-		else if(strpos($file, "global.phoronix-test-suite.com") !== false)
+		if(strpos($file, "global.phoronix-test-suite.com") !== false)
 		{
 			if(($find_data = strpos($file, "?k=profile&u=")) !== false)
 			{
