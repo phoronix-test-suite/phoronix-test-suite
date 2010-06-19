@@ -235,7 +235,7 @@ function pts_suite_needs_updated_install($identifier)
 
 		foreach(pts_contained_tests($identifier, true, true, true) as $test)
 		{
-			if(pts_test_needs_updated_install($test))
+			if(!pts_test_installed($test) || pts_test_installed_system_identifier($test) != pts_system_identifier_string() || pts_is_assignment("PTS_FORCE_INSTALL"))
 			{
 				$needs_update = true;
 				break;

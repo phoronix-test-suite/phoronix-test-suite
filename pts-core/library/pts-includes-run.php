@@ -55,13 +55,6 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 				{
 					continue;
 				}
-				else
-				{
-					if(pts_test_needs_updated_install($lower_identifier))
-					{
-						$display_mode->test_run_error("The test installation of " . $lower_identifier . " is out of date.");
-					}
-				}
 			}
 		}
 		else if(pts_is_suite($lower_identifier))
