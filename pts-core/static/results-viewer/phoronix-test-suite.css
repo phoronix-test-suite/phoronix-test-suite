@@ -26,7 +26,8 @@ div#pts_header_top
 }
 div.pts_header_center
 {
-	width: 940px;
+	min-width: 940px;
+	width: 60%;
 	margin: 0 auto;
 	overflow: hidden;
 }
@@ -62,7 +63,8 @@ div.pts_header_links_left
 div#pts_container
 {
 	text-align: left;
-	width: 940px;
+	min-width: 940px;
+	width: 60%;
 	margin: 0 auto;
 	overflow: hidden;
 	border: solid #919191;
@@ -88,6 +90,7 @@ div#pts_header_bottom_center
 	margin: 2px auto;
 	padding: 6px 0 10px;
 	width: 940px;
+	width: 60%;
 	overflow: hidden;
 	font-size: 12px;
 	text-align: center;
@@ -190,20 +193,19 @@ div.pts_benchmark_text
 }
 div.pts_benchmark_img_area
 {
-	padding: 15px 5px 0 0;
+	padding: 20px 10px;
 	float: left;
 	overflow: hidden;
 	height: 100%;
-	text-align: left;
+	text-align: center;
 }
 div.pts_benchmark_img_table_area
 {
-	padding: 0 15px 15px 0;
+	padding: 20px 10px;
 	float: right;
 	overflow: auto;
 	height: 100%;
-	width: 100%;
-	text-align: right;
+	text-align: center;
 }
 div#pts_copyright_area
 {

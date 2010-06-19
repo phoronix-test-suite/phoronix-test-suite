@@ -94,9 +94,11 @@ class pts_Chart extends pts_Graph
 		$this->render_graph_init(array("cache_font_size" => true));
 
 		// Start drawing
-		if(defined("PHOROMATIC_TRACKER"))
+		if($identifier_height >= 60 && $this->graph_left_start >= 100)
 		{
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("css/pts-small.png"), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41), 0, 0, 160, 83);
+			$logo_img_width = $this->graph_left_start >= 170 ? 160 : ($this->graph_left_start - 10);
+			$logo_img_height = $logo_img_width * 0.51875;
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-160x83.png"), ($this->graph_left_start / 2 - ($logo_img_width / 2)), ($identifier_height / 2 - ($logo_img_height / 2)), 0, 0, $logo_img_width, $logo_img_height);
 		}
 
 		// Draw the vertical table lines
