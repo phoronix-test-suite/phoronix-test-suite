@@ -522,7 +522,7 @@ function pts_install_test($identifier, &$display_mode)
 						pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
 
 						$display_mode->test_install_error("The installer exited with a non-zero exit status.");
-						$display_mode->test_install_error("Installation Log: " . TEST_ENV_DIR . $identifier . "/install-failed.log");
+						$display_mode->test_install_error("Installation Log: " . TEST_ENV_DIR . $identifier . "/install-failed.log\n");
 						return false;
 					}
 				}

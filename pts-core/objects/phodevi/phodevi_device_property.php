@@ -23,8 +23,8 @@
 
 class phodevi_device_property
 {
-	var $object_function;
-	var $cache_code;
+	private $object_function;
+	private $cache_code;
 
 	public function __construct($function, $cache_code = false)
 	{

@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Attempt to better determine inverted multi-way comparisons
 - pts-core: Validate test installations to run prior to save prompt
 - pts-core: Further tweaking of the PTS Results Viewer
+- pts-core: Drop analyze-linear-tracker command as we now auto-determine whether the result file is a tracker-type test
 - pts: Drop fgl-glxgears, fract, md-gromacs, memory-bandwidth, super-pi test profiles
 - pts: Update mplayer-base with newer MPlayer snapshot and add VA-API support
 - pts: Update video-cpu-usage test profile to use Big Buck Bunny 1080p H.264 sample

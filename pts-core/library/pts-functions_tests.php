@@ -182,11 +182,6 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 			}
 		}
 
-		if(pts_read_assignment("LINEAR_TRACKER_COMPACT"))
-		{
-			pts_tracker::compact_result_file_test_object($result_object);
-		}
-
 		$graph = pts_render::render_graph($result_object, $result_file, $save_to, $pts_version);
 		array_push($generated_graphs, $graph);
 	}
