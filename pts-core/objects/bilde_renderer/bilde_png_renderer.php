@@ -23,7 +23,7 @@
 
 class bilde_png_renderer extends bilde_gd_renderer
 {
-	var $renderer = "PNG";
+	public $renderer = "PNG";
 
 	public function render_image($output_file = null, $quality = 100)
 	{

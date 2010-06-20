@@ -23,8 +23,8 @@
 
 class bilde_swf_renderer extends bilde_renderer
 {
-	var $swf_font = null;
-	var $renderer = "SWF";
+	private $swf_font = null;
+	public $renderer = "SWF";
 
 	public function __construct($width, $height, $embed_identifiers = "")
 	{

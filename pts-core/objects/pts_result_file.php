@@ -136,17 +136,24 @@ class pts_result_file
 	}
 	public function is_results_tracker()
 	{
-		// If there are more than five results and the only changes in the system identifier names are numeric changes, assume it's a tracker
-		// i.e. different dates or different versions of a package being tested
+		static $is_tracker = -1;
 
-		$identifiers = $this->get_system_identifiers();
-
-		foreach($identifiers as &$identifier)
+		if($is_tracker === -1)
 		{
-			$identifier = pts_remove_chars($identifier, false, true, true, true, true, true);
+			// If there are more than five results and the only changes in the system identifier names are numeric changes, assume it's a tracker
+			// i.e. different dates or different versions of a package being tested
+
+			$identifiers = $this->get_system_identifiers();
+
+			foreach($identifiers as &$identifier)
+			{
+				$identifier = pts_remove_chars($identifier, false, true, true, true, true, true);
+			}
+
+			$is_tracker = count($identifiers) > 5 && count(array_unique($identifiers)) == 1;
 		}
 
-		return count($identifiers) > 5 && count(array_unique($identifiers)) == 1;
+		return $is_tracker;
 	}
 	public function is_multi_way_comparison()
 	{

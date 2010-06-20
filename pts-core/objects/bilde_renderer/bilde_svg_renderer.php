@@ -23,8 +23,8 @@
 
 class bilde_svg_renderer extends bilde_renderer
 {
-	var $renderer = "SVG";
-	var $javascript_functions = null;
+	public $renderer = "SVG";
+	private $javascript_functions = null;
 	static $svg_style_definitions = null;
 	static $render_count = 0;
 
