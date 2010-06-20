@@ -23,12 +23,11 @@
 
 class phodevi_cache
 {
-	var $phodevi_cache;
-	var $phodevi_cs;
-	var $phodevi_time;
-	var $storage_dir;
-	var $client_version;
-
+	private $phodevi_cache;
+	private $phodevi_cs;
+	private $phodevi_time;
+	private $storage_dir;
+	private $client_version;
 
 	public function __construct($phodevi_cache, $storage_dir = null, $client_version = null)
 	{
