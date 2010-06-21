@@ -114,7 +114,7 @@ class phodevi_motherboard extends phodevi_device_interface
 				$info = strpos($name, $vendor . " ") === false ? $vendor . " " : null;
 				$info .= $name;
 
-				if($version != false && strpos($info, $version) === false && strlen(pts_remove_chars($version, false, false, true, true, true, true)) == 0)
+				if($version != false && strpos($info, $version) === false && strlen(pts_strings::remove_from_string($version, TYPE_CHAR_NUMERIC | TYPE_CHAR_DECIMAL)) == 0)
 				{
 					$info .= (substr($version, 0, 1) == "v" ? " " : " v") . $version;
 				}

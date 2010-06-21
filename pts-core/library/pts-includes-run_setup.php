@@ -159,15 +159,7 @@ function pts_prompt_user_tags($default_tags = null)
 	{
 		$tags_input .= pts_text_input("Tags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas)", true);
 
-		if(function_exists("preg_replace"))
-		{
-			$tags_input = preg_replace("/[^a-zA-Z0-9s, -]/", "", $tags_input);
-		}
-		else
-		{
-			$tags_input = pts_remove_chars($tags_input, true, true, true);
-		}
-
+		$tags_input = pts_string::keep_in_string($tags_input, TYPE_CHAR_LETTER | TYPE_CHAR_NUMERIC | TYPE_CHAR_DECIMAL | TYPE_CHAR_DASH | TYPE_CHAR_UNDERSCORE | TYPE_CHAR_COLON | TYPE_CHAR_SPACE | TYPE_CHAR_COMMA);
 		$tags_input = trim($tags_input);
 	}
 

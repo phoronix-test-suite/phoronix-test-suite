@@ -126,7 +126,8 @@ class pts_tracker
 
 			if($is_tracking)
 			{
-				$date = str_replace(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), null, $date);
+				// Check to see if only numeric changes are being made
+				$date = pts_strings::remove_from_string($date, TYPE_CHAR_NUMERIC);
 
 				if($prev_date != null && $date != $prev_date)
 				{
@@ -145,8 +146,21 @@ class pts_tracker
 		foreach($mto->get_result_buffer()->get_buffer_items() as $buffer_item)
 		{
 			$identifier = pts_trim_explode(": ", $buffer_item->get_result_identifier());
-			$system = $identifier[$system_index];
-			$date = $identifier[$date_index];
+
+			switch(count($identifier))
+			{
+				case 2:
+					$system = $identifier[$system_index];
+					$date = $identifier[$date_index];
+					break;
+				case 1:
+					$system = 0;
+					$date = $identifier[0];
+					break;
+				default:
+					return;
+					break;
+			}
 
 			$days[$date][$system] = $buffer_item->get_result_value();
 

@@ -94,13 +94,13 @@ class pts_module_option
 					}
 					break;
 				case "NUMERIC_DASH":
-					if(!empty($input) && strlen(pts_remove_chars($input, true, false, false, true)) == strlen($input))
+					if(!empty($input) && strlen(pts_strings::keep_in_string($identifier, TYPE_CHAR_NUMERIC | TYPE_CHAR_DASH)) == strlen($input))
 					{
 						$supported = true;
 					}
 					break;
 				case "ALPHA_NUMERIC":
-					if(!empty($input) && strlen(pts_remove_chars($input, true, false, true)) == strlen($input))
+					if(!empty($input) && strlen(pts_strings::keep_in_string($identifier, TYPE_CHAR_NUMERIC | TYPE_CHAR_LETTER)) == strlen($input))
 					{
 						$supported = true;
 					}

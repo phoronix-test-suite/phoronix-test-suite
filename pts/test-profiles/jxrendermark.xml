@@ -17,7 +17,7 @@
 	<TestInformation>
 		<Title>JXRenderMark</Title>
 		<Version>1.0.1</Version>
-		<TimesToRun>4</TimesToRun>
+		<TimesToRun>6</TimesToRun>
 		<Executable>jxrender-run</Executable>
 		<ResultScale>Operations Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

@@ -83,8 +83,8 @@ function pts_global_gsid_valid($gsid)
 
 	if(strlen($gsid) == 9)
 	{
-		if(strlen(pts_remove_chars(substr($gsid, 0, 6), false, false, true, false, false, false)) == 6 &&
-		strlen(pts_remove_chars(substr($gsid, 6, 3), true, false, false, false, false, false)) == 3)
+		if(strlen(pts_strings::keep_in_string(substr($gsid, 0, 6), TYPE_CHAR_LETTER)) == 6 &&
+		strlen(pts_strings::keep_in_string(substr($gsid, 6, 3), TYPE_CHAR_NUMERIC)) == 3)
 		{
 			$gsid_valid = true;
 		}

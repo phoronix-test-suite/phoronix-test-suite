@@ -108,7 +108,7 @@ class phodevi_memory extends phodevi_device_interface
 					$mem_type = substr($mem_type, 0, $cut);
 				}
 
-				if(pts_remove_chars($mem_type, true, false, true) == $mem_type || IS_WINDOWS)
+				if(pts_strings::keep_in_string($mem_type, TYPE_CHAR_NUMERIC | TYPE_CHAR_LETTER) == $mem_type || IS_WINDOWS)
 				{
 					$mem_prefix = $mem_type;
 				}

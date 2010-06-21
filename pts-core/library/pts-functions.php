@@ -58,4 +58,15 @@ require(PTS_LIBRARY_PATH . "pts-functions_vars.php");
 require(PTS_LIBRARY_PATH . "pts-functions_modules.php");
 require(PTS_LIBRARY_PATH . "pts-functions_assignments.php");
 
+// Temporarily throw these defines here
+
+define("TYPE_CHAR_LETTER", (1 << 1));
+define("TYPE_CHAR_NUMERIC", (1 << 2));
+define("TYPE_CHAR_DECIMAL", (1 << 3));
+define("TYPE_CHAR_SPACE", (1 << 4));
+define("TYPE_CHAR_DASH", (1 << 5));
+define("TYPE_CHAR_UNDERSCORE", (1 << 6));
+define("TYPE_CHAR_COLON", (1 << 7));
+define("TYPE_CHAR_COMMA", (1 << 8));
+
 ?>

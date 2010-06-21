@@ -16,7 +16,7 @@
 	<TestInformation>
 		<Title>FS-Mark</Title>
 		<Version>3.3</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Files/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>FS_Mark is designed to test a system's file-system performance.</Description>

@@ -136,18 +136,18 @@ class pts_result_file
 	}
 	public function is_results_tracker()
 	{
+		// If there are more than five results and the only changes in the system identifier names are numeric changes, assume it's a tracker
+		// i.e. different dates or different versions of a package being tested
+
 		static $is_tracker = -1;
 
 		if($is_tracker === -1)
 		{
-			// If there are more than five results and the only changes in the system identifier names are numeric changes, assume it's a tracker
-			// i.e. different dates or different versions of a package being tested
-
 			$identifiers = $this->get_system_identifiers();
 
 			foreach($identifiers as &$identifier)
 			{
-				$identifier = pts_remove_chars($identifier, false, true, true, true, true, true);
+				$identifier = pts_strings::remove_from_string($identifier, TYPE_CHAR_NUMERIC);
 			}
 
 			$is_tracker = count($identifiers) > 5 && count(array_unique($identifiers)) == 1;
