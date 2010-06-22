@@ -21,41 +21,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_contents($path)
-{
-	$contents = array();
-
-	if(is_dir($path))
-	{
-		if($dh = opendir($path))
-		{
-			while(($file = readdir($dh)) !== false)
-			{
-				array_push($contents, $file);
-			}
-		}
-	}
-
-	return $contents;
-}
-
 function pts_add_trailing_slash($path)
 {
 	return $path . (substr($path, -1) == '/' ? null : '/'); 
-}
-function pts_first_string_in_string($string, $delimited_by = " ")
-{
-	// This function returns the first word/phrase/string on the end of a string that's separated by a space or something else
-	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
-	$string = explode($delimited_by, $string);
-	return array_shift($string);
-}
-function pts_last_string_in_string($string, $delimited_by = " ")
-{
-	// This function returns the last word/phrase/string on the end of a string that's separated by a space or something else
-	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
-	$string = explode($delimited_by, $string);
-	return array_pop($string);
 }
 function pts_first_element_in_array($array)
 {
@@ -180,11 +148,6 @@ function pts_request_new_id()
 	$id++;
 
 	return $id;
-}
-function pts_is_file_or_url($path)
-{
-	// Basic check if $path is a file or possibly a download URL
-	return strpos($path, "://") != false || is_file($path) ? $path : false;
 }
 
 ?>

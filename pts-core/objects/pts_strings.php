@@ -22,6 +22,20 @@
 
 class pts_strings
 {
+	public static function first_in_string($string, $delimited_by = ' ')
+	{
+		// This function returns the first word/phrase/string on the end of a string that's separated by a space or something else
+		// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
+		$string = explode($delimited_by, $string);
+		return array_shift($string);
+	}
+	public static function last_in_string($string, $delimited_by = " ")
+	{
+		// This function returns the last word/phrase/string on the end of a string that's separated by a space or something else
+		// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
+		$string = explode($delimited_by, $string);
+		return array_pop($string);
+	}
 	public static function char_is_of_type($char, $attributes)
 	{
 		$i = ord($char);

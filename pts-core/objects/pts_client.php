@@ -81,8 +81,8 @@ class pts_client
 			"os" => phodevi::read_property("system", "operating-system"),
 			"os_architecture" => phodevi::read_property("system", "kernel-architecture"),
 			"display_server" => phodevi::read_property("system", "display-server"),
-			"display_driver" => pts_first_string_in_string(phodevi::read_property("system", "display-driver-string")),
-			"desktop" => pts_first_string_in_string(phodevi::read_property("system", "desktop-environment")),
+			"display_driver" => pts_strings::first_in_string(phodevi::read_property("system", "display-driver-string")),
+			"desktop" => pts_strings::first_in_string(phodevi::read_property("system", "desktop-environment")),
 			"compiler" => phodevi::read_property("system", "compiler"),
 			"file_system" => phodevi::read_property("system", "filesystem"),
 			"screen_resolution" => phodevi::read_property("gpu", "screen-resolution-string")

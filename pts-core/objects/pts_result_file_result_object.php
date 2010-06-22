@@ -85,7 +85,7 @@ class pts_result_file_result_object
 	}
 	public function get_scale_formatted()
 	{
-		return trim(pts_first_string_in_string($this->get_scale(), '|'));
+		return trim(pts_strings::first_in_string($this->get_scale(), '|'));
 	}
 	public function get_scale_special()
 	{

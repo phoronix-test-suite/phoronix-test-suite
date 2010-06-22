@@ -506,7 +506,7 @@ class phodevi_system extends phodevi_device_interface
 
 			if(pts_executable_in_path("gnome-about"))
 			{
-				$desktop_version = pts_last_string_in_string(trim(shell_exec("gnome-about --version 2> /dev/null")));
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec("gnome-about --version 2> /dev/null")));
 			}
 		}
 		else if(($kde4 = pts_process_running_bool("kded4")) || pts_process_running_bool("kded"))
@@ -650,7 +650,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				// Fallback to hopefully detect the module, takes the first word off the GPU string and sees if it is the module
 				// This works in at least the case of the Cirrus driver
-				$display_driver = strtolower(pts_first_string_in_string(phodevi::read_property("gpu", "model")));
+				$display_driver = strtolower(pts_strings::first_in_string(phodevi::read_property("gpu", "model")));
 			}
 		}
 
