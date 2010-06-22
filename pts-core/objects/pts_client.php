@@ -104,6 +104,33 @@ class pts_client
 			pts_global_upload_hwsw_data($to_report);
 		}				
 	}
+	public static function is_process_running($process)
+	{
+		if(IS_LINUX)
+		{
+			// Checks if process is running on the system
+			$running = shell_exec("ps -C " . strtolower($process) . " 2>&1");
+			$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
+		}
+		else if(IS_SOLARIS)
+		{
+			// Checks if process is running on the system
+			$ps = shell_exec("ps -ef 2>&1");
+			$running = strpos($ps, " " . strtolower($process)) != false ? "TRUE" : null;
+		}
+		else if(pts_client::executable_in_path("ps") != false)
+		{
+			// Checks if process is running on the system
+			$ps = shell_exec("ps -ax 2>&1");
+			$running = strpos($ps, " " . strtolower($process)) != false ? "TRUE" : null;
+		}
+		else
+		{
+			$running = null;
+		}
+
+		return !empty($running);
+	}
 	public static function parse_value_string_double_identifier($value_string)
 	{
 		// i.e. with PRESET_OPTIONS="stream.run-type=Add"
@@ -149,6 +176,11 @@ class pts_client
 		}
 
 		return $vars[$var];
+	}
+	public static function pts_set_environmental_variable($name, $value)
+	{
+		// Sets an environmental variable
+		return getenv($name) == false && putenv($name . "=" . $value);
 	}
 	public static function executable_in_path($executable)
 	{

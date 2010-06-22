@@ -140,7 +140,7 @@ class pts_test_notes_manager
 
 			foreach($p_process as $process)
 			{
-				if(pts_process_running_bool($process))
+				if(pts_client::is_process_running($process))
 				{
 					array_push($p, $p_name);
 				}

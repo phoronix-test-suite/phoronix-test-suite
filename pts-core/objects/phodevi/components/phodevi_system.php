@@ -499,7 +499,7 @@ class phodevi_system extends phodevi_device_interface
 		$desktop_environment = null;
 		$desktop_version = null;
 
-		if(pts_process_running_bool("gnome-panel"))
+		if(pts_client::is_process_running("gnome-panel"))
 		{
 			// GNOME
 			$desktop_environment = "GNOME";
@@ -509,7 +509,7 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec("gnome-about --version 2> /dev/null")));
 			}
 		}
-		else if(($kde4 = pts_process_running_bool("kded4")) || pts_process_running_bool("kded"))
+		else if(($kde4 = pts_client::is_process_running("kded4")) || pts_client::is_process_running("kded"))
 		{
 			// KDE 4.x
 			$desktop_environment = "KDE";
@@ -533,7 +533,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
-		else if(pts_process_running_bool("chromeos-wm"))
+		else if(pts_client::is_process_running("chromeos-wm"))
 		{
 			$chrome_output = trim(shell_exec("chromeos-wm -version"));
 
@@ -545,7 +545,7 @@ class phodevi_system extends phodevi_device_interface
 
 			$desktop_environment = $chrome_output;
 		}
-		else if(pts_process_running_bool("lxsession"))
+		else if(pts_client::is_process_running("lxsession"))
 		{
 			$lx_output = trim(shell_exec("lxpanel --version"));
 			$version = substr($lx_output, strpos(" ", $lx_output) + 1);
@@ -557,7 +557,7 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = $version;
 			}
 		}
-		else if(pts_process_running_bool("xfce4-session") || pts_process_running_bool("xfce-mcs-manager"))
+		else if(pts_client::is_process_running("xfce4-session") || pts_client::is_process_running("xfce-mcs-manager"))
 		{
 			// Xfce 4.x
 			$desktop_environment = "Xfce";

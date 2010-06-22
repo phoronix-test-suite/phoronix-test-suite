@@ -76,7 +76,7 @@ function pts_load_modules()
 			if(count($module_r) == 2)
 			{
 				// TODO: end up hooking this into pts_module_variable() rather than using the real env
-				pts_set_environment_variable($module_r[0], $module_r[1]);
+				pts_client::set_environmental_variable($module_r[0], $module_r[1]);
 			}
 			else
 			{
@@ -262,7 +262,7 @@ function pts_module_process_extensions($extensions)
 		foreach(explode(";", $extensions) as $ev)
 		{
 			list($var, $value) = pts_strings::trim_explode("=", $ev);
-			pts_set_environment_variable($var, $value);
+			pts_client::set_environmental_variable($var, $value);
 			pts_module_maanager::var_store_add($var, $value);
 		}
 

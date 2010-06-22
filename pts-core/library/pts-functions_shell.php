@@ -77,46 +77,5 @@ function pts_move($from, $to)
 {
 	return rename($from, $to);
 }
-function pts_run_shell_script($file, $arguments = "")
-{
-	if(is_array($arguments))
-	{
-		$arguments = implode(" ", $arguments);
-	}
-
-	return shell_exec("sh " . $file . " ". $arguments . " 2>&1");
-}
-function pts_process_running_bool($process)
-{
-	if(IS_LINUX)
-	{
-		// Checks if process is running on the system
-		$running = shell_exec("ps -C " . strtolower($process) . " 2>&1");
-		$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
-	}
-	else if(IS_SOLARIS)
-	{
-		// Checks if process is running on the system
-		$ps = shell_exec("ps -ef 2>&1");
-		$running = strpos($ps, " " . strtolower($process)) != false ? "TRUE" : null;
-	}
-	else if(pts_client::executable_in_path("ps") != false)
-	{
-		// Checks if process is running on the system
-		$ps = shell_exec("ps -ax 2>&1");
-		$running = strpos($ps, " " . strtolower($process)) != false ? "TRUE" : null;
-	}
-	else
-	{
-		$running = null;
-	}
-
-	return !empty($running);
-}
-function pts_set_environment_variable($name, $value)
-{
-	// Sets an environmental variable
-	return getenv($name) == false && putenv($name . "=" . $value);
-}
 
 ?>
