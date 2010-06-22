@@ -24,12 +24,12 @@
 function pts_is_global_id($global_id)
 {
 	// Checks if a string is a valid Phoronix Global ID
-	return pts_global_valid_id_string($global_id) && pts_http_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id) == "REMOTE_FILE";
+	return pts_global_valid_id_string($global_id) && pts_network::http_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id) == "REMOTE_FILE";
 }
 function pts_global_download_xml($global_id)
 {
 	// Download a saved test result from Phoronix Global
-	return pts_http_get_contents((strpos($global_id, pts_global_download_base_url()) === 0 ? null : pts_global_download_base_url()) . $global_id);
+	return pts_network::http_get_contents((strpos($global_id, pts_global_download_base_url()) === 0 ? null : pts_global_download_base_url()) . $global_id);
 }
 function pts_global_download_base_url()
 {
@@ -62,7 +62,7 @@ function pts_global_valid_id_string($global_id)
 }
 function pts_global_setup_account($username, $password)
 {
-	$uploadkey = pts_http_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=" . $username . "&user_md5_pass=" . $password);
+	$uploadkey = pts_network::http_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=" . $username . "&user_md5_pass=" . $password);
 
 	if(!empty($uploadkey))
 	{
@@ -73,7 +73,7 @@ function pts_global_setup_account($username, $password)
 }
 function pts_global_request_gsid()
 {
-	$gsid = pts_http_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION . "&os=" . phodevi::read_property("system", "vendor-identifier"));
+	$gsid = pts_network::http_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION . "&os=" . phodevi::read_property("system", "vendor-identifier"));
 
 	return pts_global_gsid_valid($gsid) ? $gsid : false;
 }
@@ -99,7 +99,7 @@ function pts_global_upload_usage_data($task, $data)
 		case "test_complete":
 			list($test_result, $time_elapsed) = $data;
 			$upload_data = array("test_identifier" => $test_result->get_test_profile()->get_identifier(), "test_version" => $test_result->get_test_profile()->get_version(), "elapsed_time" => $time_elapsed);
-			pts_http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/test-completion.php", $upload_data);
+			pts_network::http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/test-completion.php", $upload_data);
 			break;
 	}
 }
@@ -117,7 +117,7 @@ function pts_global_upload_hwsw_data($to_report)
 	}
 
 	$upload_data = array("report_hwsw" => implode(';', $to_report), "gsid" => PTS_GSID);
-	pts_http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/installed-hardware-software.php", $upload_data);
+	pts_network::http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/installed-hardware-software.php", $upload_data);
 }
 function pts_global_upload_result($result_file, $tags = "")
 {
@@ -144,7 +144,7 @@ function pts_global_upload_result($result_file, $tags = "")
 
 	$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags);
 
-	return pts_http_upload_via_post("http://www.phoronix-test-suite.com/global/user-upload.php", $upload_data);
+	return pts_network::http_upload_via_post("http://www.phoronix-test-suite.com/global/user-upload.php", $upload_data);
 }
 function pts_global_allow_upload($result_file)
 {

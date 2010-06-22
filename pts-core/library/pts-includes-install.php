@@ -168,7 +168,7 @@ function pts_download_test_files($identifier, &$display_mode)
 			if(isset($remote_download_files[$package_md5]) && $remote_download_files[$package_md5]->get_filename() == $package_filename && $remote_download_files[$package_md5]->get_md5() == $package_md5)
 			{
 				$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE", $longest_package_name_length);
-				pts_download(pts_first_element_in_array($remote_download_files[$package_md5]->get_download_url_array()), $download_destination_temp, $display_mode);
+				pts_network::download_file(pts_first_element_in_array($remote_download_files[$package_md5]->get_download_url_array()), $download_destination_temp, $display_mode);
 				echo "\n";
 
 				if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
@@ -262,7 +262,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 					$display_mode->test_install_download_file($download_package, "DOWNLOAD", $longest_package_name_length);
 					$download_start = time();
-					pts_download($url, $download_destination_temp, $display_mode);
+					pts_network::download_file($url, $download_destination_temp, $display_mode);
 					$download_end = time();
 
 					if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
@@ -360,7 +360,7 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 
 			if(substr($verified_md5, 0, 7) == "http://")
 			{
-				foreach(pts_strings::trim_explode("\n", pts_http_get_contents($verified_md5)) as $md5_line)
+				foreach(pts_strings::trim_explode("\n", pts_network::http_get_contents($verified_md5)) as $md5_line)
 				{
 					list($md5, $file) = explode(" ", $md5_line);
 
@@ -476,7 +476,7 @@ function pts_install_test($identifier, &$display_mode)
 				{
 					if(substr($install_agreement, 0, 7) == "http://")
 					{
-						$install_agreement = pts_http_get_contents($install_agreement);
+						$install_agreement = pts_network::http_get_contents($install_agreement);
 
 						if(empty($install_agreement))
 						{
@@ -638,7 +638,7 @@ function pts_test_download_cache_remote_files()
 
 		foreach(pts_test_download_cache_directories() as $dc_directory)
 		{
-			if(strpos($dc_directory, "://") > 0 && ($xml_dc_file = pts_http_get_contents($dc_directory . "pts-download-cache.xml")) != false)
+			if(strpos($dc_directory, "://") > 0 && ($xml_dc_file = pts_network::http_get_contents($dc_directory . "pts-download-cache.xml")) != false)
 			{
 				$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
 				$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);

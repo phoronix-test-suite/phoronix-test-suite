@@ -1169,7 +1169,7 @@ class gui_gtk implements pts_option_interface
 				$proxy_port = trim($proxy_port->get_text());
 
 
-				if(pts_http_get_contents("http://www.phoronix-test-suite.com/PTS", $proxy_address, $proxy_port) == "PTS")
+				if(pts_network::http_get_contents("http://www.phoronix-test-suite.com/PTS", $proxy_address, $proxy_port) == "PTS")
 				{					
 					pts_config::user_config_generate(array(P_OPTION_NET_PROXY_ADDRESS => $proxy_address, P_OPTION_NET_PROXY_PORT => $proxy_port));
 					pts_exit("Restarting pts-core...\n", 8);					

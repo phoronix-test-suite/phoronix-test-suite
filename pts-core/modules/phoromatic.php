@@ -711,7 +711,7 @@ class phoromatic extends pts_module_interface
 		$to_post["pts_core"] = PTS_CORE_VERSION;
 		$to_post["gsid"] = PTS_GSID;
 
-		return pts_http_upload_via_post($host, $to_post);
+		return pts_network::http_upload_via_post($host, $to_post);
 	}
 }
 

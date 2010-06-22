@@ -110,29 +110,6 @@ function pts_exec($exec, $extra_vars = null)
 	// Same as shell_exec() but with the PTS env variables added in
 	return shell_exec(pts_variables_export_string($extra_vars) . $exec);
 }
-function pts_download($download, $to, &$display_mode = null)
-{
-	pts_display_mode_holder($display_mode);
-
-	if(function_exists("curl_init"))
-	{
-		pts_curl_download($download, $to);
-	}
-	else
-	{
-		pts_stream_download($download, $to);
-	}
-
-	//echo "\nPHP CURL must either be installed or you must adjust your PHP settings file to support opening FTP/HTTP streams.\n";
-	//return false;
-
-	$display_mode = pts_display_mode_holder();
-
-	if($display_mode)
-	{
-		$display_mode->test_install_download_completed();
-	}
-}
 function pts_executable_in_path($executable)
 {
 	static $cache = null;

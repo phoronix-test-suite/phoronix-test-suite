@@ -132,11 +132,6 @@ function pts_to_array($var)
 {
 	return !is_array($var) ? array($var) : $var;
 }
-function pts_is_file(&$file_check)
-{
-	// $file_check could contain the XML markup already, so first check for < as the start of an open tag from say <?xml version
-	return !isset($file_check[1024]) && substr($file_check, 0, 1) != "<" && is_file($file_check);
-}
 function pts_request_new_id()
 {
 	// Request a new ID for a counter

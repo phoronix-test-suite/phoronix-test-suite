@@ -147,7 +147,7 @@ if(!QUICK_START)
 	}
 	/* else
 	{
-		$server_response = pts_http_get_contents("http://www.phoronix-test-suite.com/PTS", false, false);
+		$server_response = pts_network::http_get_contents("http://www.phoronix-test-suite.com/PTS", false, false);
 
 		if($server_response != "PTS")
 		{
