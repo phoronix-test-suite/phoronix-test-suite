@@ -42,7 +42,7 @@ function pts_auto_detect_modules()
 	// Auto detect modules to load
 	foreach(explode("\n", pts_file_get_contents(STATIC_DIR . "lists/module-variables.list")) as $module_var)
 	{
-		$module_var = pts_trim_explode("=", $module_var);
+		$module_var = pts_strings::trim_explode("=", $module_var);
 
 		if(count($module_var) == 2)
 		{
@@ -71,7 +71,7 @@ function pts_load_modules()
 	{
 		foreach(explode(",", $load_modules) as $module)
 		{
-			$module_r = pts_trim_explode("=", $module);
+			$module_r = pts_strings::trim_explode("=", $module);
 
 			if(count($module_r) == 2)
 			{
@@ -88,7 +88,7 @@ function pts_load_modules()
 	// Check for modules to load manually in PTS_MODULES
 	if(($load_modules = pts_client::read_env("PTS_MODULES")) !== false)
 	{
-		foreach(pts_trim_explode(",", $load_modules) as $module)
+		foreach(pts_strings::trim_explode(",", $load_modules) as $module)
 		{
 			if(!pts_module_manager::is_module_attached($module))
 			{
@@ -261,7 +261,7 @@ function pts_module_process_extensions($extensions)
 	{
 		foreach(explode(";", $extensions) as $ev)
 		{
-			list($var, $value) = pts_trim_explode("=", $ev);
+			list($var, $value) = pts_strings::trim_explode("=", $ev);
 			pts_set_environment_variable($var, $value);
 			pts_module_maanager::var_store_add($var, $value);
 		}

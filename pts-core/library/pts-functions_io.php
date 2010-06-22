@@ -56,7 +56,7 @@ function pts_text_select_menu($user_string, $options_r, $allow_multi_select = fa
 		$select_choice = pts_read_user_input();
 
 		// Validate possible multi-select
-		$multi_choice = pts_trim_explode(",", $select_choice);
+		$multi_choice = pts_strings::trim_explode(",", $select_choice);
 		$multi_select_pass = false;
 
 		if($allow_multi_select && count($multi_choice) > 1)

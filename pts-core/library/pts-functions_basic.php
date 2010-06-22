@@ -132,10 +132,6 @@ function pts_to_array($var)
 {
 	return !is_array($var) ? array($var) : $var;
 }
-function pts_trim_explode($delimiter, $to_explode)
-{
-	return array_map("trim", explode($delimiter, $to_explode));
-}
 function pts_is_file(&$file_check)
 {
 	// $file_check could contain the XML markup already, so first check for < as the start of an open tag from say <?xml version

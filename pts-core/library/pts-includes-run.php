@@ -453,7 +453,7 @@ function pts_save_test_file(&$results, $file_name)
 function pts_find_test_executable($test_identifier, &$test_profile)
 {
 	$to_execute = null;
-	$possible_paths = array_merge(array(TEST_ENV_DIR . $test_identifier . "/"), pts_trim_explode(",", $test_profile->get_test_executable_paths()));
+	$possible_paths = array_merge(array(TEST_ENV_DIR . $test_identifier . "/"), pts_strings::trim_explode(",", $test_profile->get_test_executable_paths()));
 	$execute_binary = $test_profile->get_test_executable();
 
 	foreach($possible_paths as $possible_dir)

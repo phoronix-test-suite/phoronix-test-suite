@@ -47,7 +47,7 @@ class pts_result_file_analyze_manager
 
 		for($i = 0; $i < count($attributes); $i++)
 		{
-			$temp = pts_trim_explode(":", $attributes[$i]);
+			$temp = pts_strings::trim_explode(":", $attributes[$i]);
 			$attributes_clean[$temp[0]] = $temp[1];
 		}
 

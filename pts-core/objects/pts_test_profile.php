@@ -89,7 +89,7 @@ class pts_test_profile
 	}
 	public function get_dependencies()
 	{
-		return pts_trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_EXDEP));
+		return pts_strings::trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_EXDEP));
 	}
 	public function is_verified_state()
 	{
@@ -140,7 +140,7 @@ class pts_test_profile
 	}
 	public function get_runs_to_ignore()
 	{
-		return pts_trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_IGNORERUNS));
+		return pts_strings::trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_IGNORERUNS));
 	}
 	public function get_pre_run_message()
 	{

@@ -120,17 +120,17 @@ function pts_clean_information_string($str)
 	if($remove_phrases == null)
 	{
 		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-remove.list");
-		$remove_phrases = pts_trim_explode("\n", $word_file);
+		$remove_phrases = pts_strings::trim_explode("\n", $word_file);
 	}
 	if($change_phrases == null)
 	{
 		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-replace.list");
-		$phrases_r = pts_trim_explode("\n", $word_file);
+		$phrases_r = pts_strings::trim_explode("\n", $word_file);
 		$change_phrases = array();
 
 		foreach($phrases_r as &$phrase)
 		{
-			list($replace, $replace_with) = pts_trim_explode("=", $phrase);
+			list($replace, $replace_with) = pts_strings::trim_explode("=", $phrase);
 			$change_phrases[$replace_with] = $replace;
 		}
 	}

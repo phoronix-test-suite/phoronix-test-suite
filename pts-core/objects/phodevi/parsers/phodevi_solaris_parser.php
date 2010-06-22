@@ -61,7 +61,7 @@ class phodevi_solaris_parser
 
 				foreach($lines as $line)
 				{
-					$line = pts_trim_explode(":", $line);
+					$line = pts_strings::trim_explode(":", $line);
 					$line_object = str_replace(" ", "", $line[0]);
 					$this_value = (count($line) > 1 ? $line[1] : "");
 

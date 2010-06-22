@@ -47,7 +47,7 @@ function pts_result_file_reference_tests($result)
 		}
 	}
 
-	$specific_reference_ids = pts_trim_explode(",", $ref_systems_xml_strings[$result_test]);
+	$specific_reference_ids = pts_strings::trim_explode(",", $ref_systems_xml_strings[$result_test]);
 
 	pts_process_reference_comparison_hashes($specific_reference_ids, $result_identifiers, $test_result_hashes, $reference_tests);
 	pts_process_reference_comparison_hashes(pts_generic_reference_system_comparison_ids(), $result_identifiers, $test_result_hashes, $reference_tests, true);

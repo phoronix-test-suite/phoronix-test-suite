@@ -284,7 +284,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if(IS_MACOSX)
 		{
-			$info = pts_trim_explode(' ', phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution"));
+			$info = pts_strings::trim_explode(' ', phodevi_osx_parser::read_osx_system_profiler("SPDisplaysDataType", "Resolution"));
 			$resolution = array();
 			$resolution[0] = $info[0];
 			$resolution[1] = $info[2];
@@ -301,7 +301,7 @@ class phodevi_gpu extends phodevi_device_interface
 					if(is_file($connector_path . "enabled") && pts_file_get_contents($connector_path . "enabled") == "enabled")
 					{
 						$mode = pts_first_element_in_array(explode("\n", pts_file_get_contents($connector_path . "modes")));
-						$info = pts_trim_explode('x', $mode);
+						$info = pts_strings::trim_explode('x', $mode);
 
 						if(count($info) == 2)
 						{
@@ -328,7 +328,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 				if(strpos($info, "*") !== false)
 				{
-					$res = pts_trim_explode("x", $info);
+					$res = pts_strings::trim_explode("x", $info);
 					$res[0] = substr($res[0], strrpos($res[0], " "));
 					$res[1] = substr($res[1], 0, strpos($res[1], " "));
 					$res = array_map("trim", $res);
@@ -393,7 +393,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if($override_check = (($override_modes = getenv("OVERRIDE_VIDEO_MODES")) != false))
 		{
-			$override_modes = pts_trim_explode(',', $override_modes);
+			$override_modes = pts_strings::trim_explode(',', $override_modes);
 
 			for($i = 0; $i < count($override_modes); $i++)
 			{
@@ -413,7 +413,7 @@ class phodevi_gpu extends phodevi_device_interface
 					$xrandr_mode = substr($xrandr_mode, 0, $cut_point);
 				}
 
-				$res = pts_trim_explode('x', $xrandr_mode);
+				$res = pts_strings::trim_explode('x', $xrandr_mode);
 
 				if(count($res) == 2)
 				{
@@ -648,9 +648,9 @@ class phodevi_gpu extends phodevi_device_interface
 					if(is_file("/sys/kernel/debug/dri/0/radeon_pm_info"))
 					{
 						// radeon_pm_info should be present with Linux 2.6.34+
-						foreach(pts_trim_explode("\n", pts_file_get_contents("/sys/kernel/debug/dri/0/radeon_pm_info")) as $pm_line)
+						foreach(pts_strings::trim_explode("\n", pts_file_get_contents("/sys/kernel/debug/dri/0/radeon_pm_info")) as $pm_line)
 						{
-							list($descriptor, $value) = pts_trim_explode(':', $pm_line);
+							list($descriptor, $value) = pts_strings::trim_explode(':', $pm_line);
 
 							switch($descriptor)
 							{

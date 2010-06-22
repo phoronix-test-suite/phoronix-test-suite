@@ -92,7 +92,7 @@ class pts_phoroscript_interpreter
 	}
 	protected function parse_variables_in_string(&$to_parse, &$pass_arguments)
 	{
-		$pass_arguments_r = pts_trim_explode(' ', $pass_arguments);
+		$pass_arguments_r = pts_strings::trim_explode(' ', $pass_arguments);
 		$offset = -1;
 
 		while(($offset = strpos($to_parse, '$', ($offset + 1))) !== false)
@@ -174,7 +174,7 @@ class pts_phoroscript_interpreter
 				$line = substr($line, 0, $script_pointer);
 			}
 
-			$line_r = pts_trim_explode(' ', $line);
+			$line_r = pts_strings::trim_explode(' ', $line);
 
 			switch($line_r[0])
 			{

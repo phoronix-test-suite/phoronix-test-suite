@@ -127,7 +127,7 @@ function pts_install_external_dependencies_list($identifier, &$install_objects)
 
 	if(!empty($dependencies))
 	{
-		$dependencies = pts_trim_explode(',', $dependencies);
+		$dependencies = pts_strings::trim_explode(',', $dependencies);
 
 		if(!pts_package_generic_to_distro_name($install_objects, $dependencies))
 		{
@@ -171,7 +171,7 @@ function pts_package_generic_to_distro_name(&$package_install_array, $generic_na
 				if(!in_array($distro_package[$i], $package_install_array))
 				{
 					$add_dependency = empty($file_check[$i]) || pts_file_missing_check($file_check[$i]);
-					$arch_compliant = empty($arch_specific[$i]) || in_array($kernel_architecture, pts_trim_explode(',', $arch_specific[$i]));
+					$arch_compliant = empty($arch_specific[$i]) || in_array($kernel_architecture, pts_strings::trim_explode(',', $arch_specific[$i]));
 
 					if($add_dependency && $arch_compliant)
 					{
@@ -281,7 +281,7 @@ function pts_package_vendor_identifier()
 
 		foreach($vendors_r as &$vendor)
 		{
-			$vendor_r = pts_trim_explode("=", $vendor);
+			$vendor_r = pts_strings::trim_explode("=", $vendor);
 
 			if(count($vendor_r) == 2)
 			{

@@ -170,7 +170,7 @@ function pts_test_download_files_locally_available($identifier)
 		{
 			$xml_parser = new pts_test_tandem_XmlReader($name);
 			$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
-			$execute_path = pts_trim_explode(",", $xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS));
+			$execute_path = pts_strings::trim_explode(",", $xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS));
 			array_push($execute_path, TEST_ENV_DIR . $name . "/");
 
 			if(empty($execute_binary))

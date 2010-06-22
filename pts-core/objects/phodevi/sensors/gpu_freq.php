@@ -69,9 +69,9 @@ class gpu_freq implements phodevi_sensor
 			if(is_file("/sys/kernel/debug/dri/0/radeon_pm_info"))
 			{
 				// radeon_pm_info should be present with Linux 2.6.34+
-				foreach(pts_trim_explode("\n", pts_file_get_contents("/sys/kernel/debug/dri/0/radeon_pm_info")) as $pm_line)
+				foreach(pts_strings::trim_explode("\n", pts_file_get_contents("/sys/kernel/debug/dri/0/radeon_pm_info")) as $pm_line)
 				{
-					list($descriptor, $value) = pts_trim_explode(':', $pm_line);
+					list($descriptor, $value) = pts_strings::trim_explode(':', $pm_line);
 
 					switch($descriptor)
 					{

@@ -145,7 +145,7 @@ class phodevi_linux_parser
 					$found_in_section = false;
 					for($i = 0; $i < count($dmidecode_elements) && $found_in_section == false; $i++)
 					{
-						$dmidecode_r = pts_trim_explode(":", $dmidecode_elements[$i]);
+						$dmidecode_r = pts_strings::trim_explode(":", $dmidecode_elements[$i]);
 
 						if($dmidecode_r[0] == $object && isset($dmidecode_r[1]) && !in_array($dmidecode_r[1], $ignore))
 						{
@@ -465,7 +465,7 @@ class phodevi_linux_parser
 
 				foreach($cpuinfo_lines as $line)
 				{
-					$line = pts_trim_explode(": ", $line);
+					$line = pts_strings::trim_explode(": ", $line);
 					$this_attribute = $line[0];
 					$this_value = (count($line) > 1 ? $line[1] : "");
 
@@ -575,7 +575,7 @@ class phodevi_linux_parser
 
 				for($i = 0; $i < count($acpi_lines) && $value == false; $i++)
 				{
-					$line = pts_trim_explode(": ", $acpi_lines[$i]);
+					$line = pts_strings::trim_explode(": ", $acpi_lines[$i]);
 					$this_attribute = $line[0];
 					$this_value = (count($line) > 1 ? $line[1] : null);
 
@@ -674,7 +674,7 @@ class phodevi_linux_parser
 				$attribute = $attributes[$j];
 				for($i = 0; $i < count($sensors_lines) && $value == false; $i++)
 				{
-					$line = pts_trim_explode(": ", $sensors_lines[$i]);
+					$line = pts_strings::trim_explode(": ", $sensors_lines[$i]);
 					$this_attribute = $line[0];
 
 					if($this_attribute == $attribute)

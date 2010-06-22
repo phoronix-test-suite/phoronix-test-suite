@@ -111,9 +111,9 @@ class pts_client
 
 		foreach(explode(';', $value_string) as $preset)
 		{
-			if(count($preset = pts_trim_explode('=', $preset)) == 2)
+			if(count($preset = pts_strings::trim_explode('=', $preset)) == 2)
 			{
-				if(count($preset[0] = pts_trim_explode('.', $preset[0])) == 2)
+				if(count($preset[0] = pts_strings::trim_explode('.', $preset[0])) == 2)
 				{
 					$values[$preset[0][0]][$preset[0][1]] = $preset[1];
 				}

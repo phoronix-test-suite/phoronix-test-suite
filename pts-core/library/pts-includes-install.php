@@ -360,7 +360,7 @@ function pts_validate_md5_download_file($filename, $verified_md5)
 
 			if(substr($verified_md5, 0, 7) == "http://")
 			{
-				foreach(pts_trim_explode("\n", pts_http_get_contents($verified_md5)) as $md5_line)
+				foreach(pts_strings::trim_explode("\n", pts_http_get_contents($verified_md5)) as $md5_line)
 				{
 					list($md5, $file) = explode(" ", $md5_line);
 
@@ -583,7 +583,7 @@ function pts_test_download_cache_directories()
 		$dir_string = ($dir = pts_client::read_env("PTS_DOWNLOAD_CACHE")) != false ? $dir . ':' : null;
 		$dir_string .= pts_config::read_user_config(P_OPTION_CACHE_DIRECTORY, DEFAULT_DOWNLOAD_CACHE_DIR);
 
-		foreach(pts_trim_explode(':', $dir_string) as $dir_check)
+		foreach(pts_strings::trim_explode(':', $dir_string) as $dir_check)
 		{
 			if($dir_check == null)
 			{

@@ -174,7 +174,7 @@ class pts_result_file
 					break;
 				}
 
-				$identifier_r = pts_trim_explode(': ', $identifier);
+				$identifier_r = pts_strings::trim_explode(': ', $identifier);
 
 				if(count($identifier_r) != 2)
 				{

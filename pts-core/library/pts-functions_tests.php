@@ -529,7 +529,7 @@ function pts_test_architecture_supported($identifier)
 
 		if(!empty($archs))
 		{
-			$archs = pts_trim_explode(",", $archs);
+			$archs = pts_strings::trim_explode(",", $archs);
 			$supported = pts_cpu_arch_compatible($archs);
 		}
 	}
@@ -547,7 +547,7 @@ function pts_test_platform_supported($identifier)
 
 		if(!empty($platforms))
 		{
-			$platforms = pts_trim_explode(",", $platforms);
+			$platforms = pts_strings::trim_explode(",", $platforms);
 
 			if(!in_array(OPERATING_SYSTEM, $platforms))
 			{
@@ -603,7 +603,7 @@ function pts_suite_version_supported($identifier)
 }
 function pts_is_supported_core_version($core_check)
 {
-	$core_check = pts_trim_explode('-', $core_check);	
+	$core_check = pts_strings::trim_explode('-', $core_check);	
 	$support_begins = $core_check[0];
 	$support_ends = isset($core_check[1]) ? $core_check[1] : PTS_CORE_VERSION;
 	return PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
@@ -769,7 +769,7 @@ function pts_objects_test_downloads($test_identifier)
 		{
 			if(!empty($package_platform[$i]))
 			{
-				$platforms = pts_trim_explode(',', $package_platform[$i]);
+				$platforms = pts_strings::trim_explode(',', $package_platform[$i]);
 
 				if(!in_array(OPERATING_SYSTEM, $platforms) && !(IS_BSD && BSD_LINUX_COMPATIBLE && in_array("Linux", $platforms)))
 				{
@@ -780,7 +780,7 @@ function pts_objects_test_downloads($test_identifier)
 
 			if(!empty($package_architecture[$i]))
 			{
-				$architectures = pts_trim_explode(',', $package_architecture[$i]);
+				$architectures = pts_strings::trim_explode(',', $package_architecture[$i]);
 
 				if(!pts_cpu_arch_compatible($architectures))
 				{
@@ -818,7 +818,7 @@ function pts_generic_reference_system_comparison_ids()
 
 	if($comparison_ids == null)
 	{
-		$comparison_ids = pts_trim_explode("\n", pts_file_get_contents(STATIC_DIR . "lists/reference-system-comparisons.list"));
+		$comparison_ids = pts_strings::trim_explode("\n", pts_file_get_contents(STATIC_DIR . "lists/reference-system-comparisons.list"));
 
 		foreach(explode(' ', pts_config::read_user_config(P_OPTION_EXTRA_REFERENCE_SYSTEMS, null)) as $reference_check)
 		{
