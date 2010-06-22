@@ -87,7 +87,7 @@ class reference_comparison implements pts_option_interface
 
 		pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $title . (strpos($title, "Comparison") === false ? " Comparison" : null));
 
-		pts_display_web_browser(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
+		pts_client::display_web_page(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
 	}
 }
 

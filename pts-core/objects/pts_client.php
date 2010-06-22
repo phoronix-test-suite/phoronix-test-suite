@@ -28,7 +28,7 @@ class pts_client
 		{
 			$chars = -1;
 
-			if(pts_executable_in_path("tput"))
+			if(pts_client::executable_in_path("tput"))
 			{
 				$terminal_width = trim(shell_exec("tput cols 2>&1"));
 
@@ -149,6 +149,115 @@ class pts_client
 		}
 
 		return $vars[$var];
+	}
+	public static function executable_in_path($executable)
+	{
+		static $cache = null;
+
+		if(!isset($cache[$executable]))
+		{
+			$paths = explode(":", (($path = pts_client::read_env("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
+			$executable_path = false;
+
+			foreach($paths as $path)
+			{
+				$path = pts_add_trailing_slash($path);
+
+				if(is_executable($path . $executable))
+				{
+					$executable_path = $path . $executable;
+					break;
+				}
+			}
+
+			$cache[$executable] = $executable_path;
+		}
+
+		return $cache[$executable];
+	}
+	public static function display_web_page($URL, $alt_text = null, $default_open = false, $auto_open = false)
+	{
+		if(pts_read_assignment("AUTOMATED_MODE") || (pts_client::read_env("DISPLAY") == false && !IS_WINDOWS))
+		{
+			return;
+		}
+
+		// Launch the web browser
+		$text = $alt_text == null ? "Do you want to view the results in your web browser" : $alt_text;
+
+		if($auto_open == false)
+		{
+			if(!$default_open)
+			{
+				$view_results = pts_bool_question($text . " (y/N)?", false, "OPEN_BROWSER");
+			}
+			else
+			{
+				$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
+			}
+		}
+		else
+		{
+			$view_results = true;
+		}
+
+		if($view_results)
+		{
+			static $browser = null;
+
+			if($browser == null)
+			{
+				$config_browser = pts_config::read_user_config(P_OPTION_DEFAULT_BROWSER, null);
+
+				if($config_browser != null && (is_executable($config_browser) || ($config_browser = pts_client::executable_in_path($config_browser))))
+				{
+					$browser = $config_browser;
+				}
+				else if(IS_WINDOWS)
+				{
+					$windows_browsers = array(
+						'C:\Program Files (x86)\Mozilla Firefox\firefox.exe',
+						'C:\Program Files\Internet Explorer\iexplore.exe'
+						);
+
+					foreach($windows_browsers as $browser_test)
+					{
+						if(is_executable($browser_test))
+						{
+							$browser = "\"$browser_test\"";
+							break;
+						}
+					}
+
+					if(substr($URL, 0, 1) == "\\")
+					{
+						$URL = "file:///C:" . str_replace('/', '\\', $URL);
+					}
+				}
+				else
+				{
+					$possible_browsers = array("xdg-open", "epiphany", "firefox", "mozilla", "x-www-browser", "open");
+
+					foreach($possible_browsers as &$b)
+					{
+						if(($b = pts_client::executable_in_path($b)))
+						{
+							$browser = $b;
+							break;
+						}
+					}
+				}
+			}
+
+			if($browser != null)
+			{
+				shell_exec($browser . " \"" . $URL . "\" &");
+			}
+			else
+			{
+				echo "\nNo Web Browser Was Found.\n";
+			}
+		}
 	}
 }
 

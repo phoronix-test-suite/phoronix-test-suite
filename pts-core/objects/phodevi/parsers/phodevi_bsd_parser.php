@@ -28,7 +28,7 @@ class phodevi_bsd_parser
 		// Read sysctl, used by *BSDs
 		$info = false;
 
-		if(pts_executable_in_path("sysctl"))
+		if(pts_client::executable_in_path("sysctl"))
 		{
 			$desc = pts_to_array($desc);
 
@@ -49,7 +49,7 @@ class phodevi_bsd_parser
 	{
 		$info = false;
 
-		if(pts_executable_in_path("acpiconf"))
+		if(pts_client::executable_in_path("acpiconf"))
 		{
 			$output = shell_exec("acpiconf -i0");
 

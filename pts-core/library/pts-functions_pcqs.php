@@ -32,7 +32,7 @@ function pts_pcqs_user_license()
 function pts_pcqs_install_package()
 {
 	pts_network::download_file("http://www.phoronix-test-suite.com/pcqs/download-pcqs.php", XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
-	pts_extract(XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
+	pts_compression::archive_extract(XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
 	pts_remove(XML_SUITE_LOCAL_DIR . "pcqs-suite.tar");
 	echo pts_string_header("The Phoronix Certification & Qualification Suite is now installed.");
 }

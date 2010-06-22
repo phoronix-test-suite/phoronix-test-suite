@@ -21,119 +21,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_display_web_browser($URL, $alt_text = null, $default_open = false, $auto_open = false)
-{
-	if(pts_read_assignment("AUTOMATED_MODE") || (pts_client::read_env("DISPLAY") == false && !IS_WINDOWS))
-	{
-		return;
-	}
-
-	// Launch the web browser
-	$text = ($alt_text == null ? "Do you want to view the results in your web browser" : $alt_text);
-
-	if($auto_open == false)
-	{
-		if(!$default_open)
-		{
-			$view_results = pts_bool_question($text . " (y/N)?", false, "OPEN_BROWSER");
-		}
-		else
-		{
-			$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
-		}
-	}
-	else
-	{
-		$view_results = true;
-	}
-
-	if($view_results)
-	{
-		static $browser = null;
-
-		if($browser == null)
-		{
-			$config_browser = pts_config::read_user_config(P_OPTION_DEFAULT_BROWSER, null);
-
-			if($config_browser != null && (is_executable($config_browser) || ($config_browser = pts_executable_in_path($config_browser))))
-			{
-				$browser = $config_browser;
-			}
-			else if(IS_WINDOWS)
-			{
-				$windows_browsers = array(
-					'C:\Program Files (x86)\Mozilla Firefox\firefox.exe',
-					'C:\Program Files\Internet Explorer\iexplore.exe'
-					);
-
-				foreach($windows_browsers as $browser_test)
-				{
-					if(is_executable($browser_test))
-					{
-						$browser = "\"$browser_test\"";
-						break;
-					}
-				}
-
-				if(substr($URL, 0, 1) == "\\")
-				{
-					$URL = "file:///C:" . str_replace('/', '\\', $URL);
-				}
-			}
-			else
-			{
-				$possible_browsers = array("xdg-open", "epiphany", "firefox", "mozilla", "x-www-browser", "open");
-
-				foreach($possible_browsers as &$b)
-				{
-					if(($b = pts_executable_in_path($b)))
-					{
-						$browser = $b;
-						break;
-					}
-				}
-			}
-		}
-
-		if($browser != null)
-		{
-			shell_exec($browser . " \"" . $URL . "\" &");
-		}
-		else
-		{
-			echo "\nNo Web Browser Was Found.\n";
-		}
-	}
-}
 function pts_exec($exec, $extra_vars = null)
 {
 	// Same as shell_exec() but with the PTS env variables added in
 	return shell_exec(pts_variables_export_string($extra_vars) . $exec);
-}
-function pts_executable_in_path($executable)
-{
-	static $cache = null;
-
-	if(!isset($cache[$executable]))
-	{
-		$paths = explode(":", (($path = pts_client::read_env("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
-		$executable_path = false;
-
-		foreach($paths as $path)
-		{
-			$path = pts_add_trailing_slash($path);
-
-			if(is_executable($path . $executable))
-			{
-				$executable_path = $path . $executable;
-				break;
-			}
-		}
-
-		$cache[$executable] = $executable_path;
-	}
-
-	return $cache[$executable];
 }
 function pts_remove($object, $ignore_files = null, $remove_root_directory = false)
 {
@@ -186,126 +77,6 @@ function pts_move($from, $to)
 {
 	return rename($from, $to);
 }
-function pts_extract($file)
-{
-	$file_name = basename($file);
-	$file_path = dirname($file);
-
-	switch(substr($file_name, strpos($file_name, ".") + 1))
-	{
-		case "tar":
-			$extract_cmd = "tar -xf";
-			break;
-		case "tar.gz":
-			$extract_cmd = "tar -zxf";
-			break;
-		case "tar.bz2":
-			$extract_cmd = "tar -jxf";
-			break;
-		case "zip":
-			$extract_cmd = "unzip -o";
-			break;
-		default:
-			$extract_cmd = "";
-			break;
-	}
-
-	shell_exec("cd " . $file_path . " && " . $extract_cmd . " " . $file_name . " 2>&1");
-}
-function pts_compress($to_compress, $compress_to)
-{
-	$compress_to_file = basename($compress_to);
-	$compress_base_dir = dirname($to_compress);
-	$compress_base_name = basename($to_compress);
-
-	switch(substr($compress_to_file, strpos($compress_to_file, ".") + 1))
-	{
-		case "tar":
-			$extract_cmd = "tar -cf " . $compress_to . " " . $compress_base_name;
-			break;
-		case "tar.gz":
-			$extract_cmd = "tar -czf " . $compress_to . " " . $compress_base_name;
-			break;
-		case "tar.bz2":
-			$extract_cmd = "tar -cjf " . $compress_to . " " . $compress_base_name;
-			break;
-		case "zip":
-			$extract_cmd = "zip -r " . $compress_to . " " . $compress_base_name;
-			break;
-		default:
-			$extract_cmd = null;
-			break;
-	}
-
-	if($extract_cmd != null)
-	{
-		shell_exec("cd " . $compress_base_dir . " && " . $extract_cmd . " 2>&1");
-	}
-}
-function pts_zip_archive_extract($zip_file, $extract_to)
-{
-	if(!class_exists("ZipArchive") || !is_readable($zip_file))
-	{
-		return false;
-	}
-
-	$zip = new ZipArchive();
-	$res = $zip->open($zip_file);
-
-	if($res === TRUE && is_writable($extract_to))
-	{
-		$zip->extractTo($extract_to);
-		$zip->close();
-		$success = true;
-	}
-	else
-	{
-		$success = false;
-	}
-
-	return $success;
-}
-function pts_zip_archive_create($zip_file, $add_files)
-{
-	if(!class_exists("ZipArchive"))
-	{
-		return false;
-	}
-
-	$zip = new ZipArchive();
-
-	if($zip->open($zip_file, ZIPARCHIVE::CREATE) !== true)
-	{
-		$success = false;
-	}
-	else
-	{
-		foreach(pts_to_array($add_files) as $add_file)
-		{
-			pts_zip_archive_add($zip, $add_file, dirname($add_file));
-		}
-
-		$success = true;
-	}
-
-	return $success;
-}
-function pts_zip_archive_add(&$zip, $add_file, $base_dir = null)
-{
-	if(is_dir($add_file))
-	{
-		$zip->addEmptyDir(substr($add_file, strlen(pts_add_trailing_slash($base_dir))));
-
-		foreach(pts_glob(pts_add_trailing_slash($add_file) . '*') as $new_file)
-		{
-			pts_zip_archive_add($zip, $new_file, $base_dir);
-		}
-	}
-	else if(is_file($add_file))
-	{
-		$zip->addFile($add_file, substr($add_file, strlen(pts_add_trailing_slash($base_dir))));
-	}
-}
 function pts_run_shell_script($file, $arguments = "")
 {
 	if(is_array($arguments))
@@ -329,7 +100,7 @@ function pts_process_running_bool($process)
 		$ps = shell_exec("ps -ef 2>&1");
 		$running = strpos($ps, " " . strtolower($process)) != false ? "TRUE" : null;
 	}
-	else if(pts_executable_in_path("ps") != false)
+	else if(pts_client::executable_in_path("ps") != false)
 	{
 		// Checks if process is running on the system
 		$ps = shell_exec("ps -ax 2>&1");

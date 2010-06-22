@@ -27,7 +27,7 @@ class phodevi_osx_parser
 	{
 		$value = ($multiple_objects ? array() : false);
 
-		if(pts_executable_in_path("system_profiler"))
+		if(pts_client::executable_in_path("system_profiler"))
 		{
 			$info = trim(shell_exec("system_profiler " . $data_type . " 2>&1"));
 			$lines = explode("\n", $info);

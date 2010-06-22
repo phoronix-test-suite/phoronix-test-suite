@@ -407,7 +407,7 @@ class run_test implements pts_option_interface
 			pts_module_process("__event_results_saved", $file_name);
 			echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $file_name . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $file_name);
-			pts_display_web_browser(SAVE_RESULTS_DIR . $file_name . "/index.html");
+			pts_client::display_web_page(SAVE_RESULTS_DIR . $file_name . "/index.html");
 
 			if(!pts_read_assignment("BLOCK_GLOBAL_UPLOADS") && !defined("NO_NETWORK_COMMUNICATION"))
 			{
@@ -430,7 +430,7 @@ class run_test implements pts_option_interface
 						echo "\nResults Uploaded To: " . $upload_url . "\n";
 						pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
 						pts_module_process("__event_global_upload", $upload_url);
-						pts_display_web_browser($upload_url, "Do you want to launch Phoronix Global", true);
+						pts_client::display_web_page($upload_url, "Do you want to launch Phoronix Global", true);
 					}
 					else
 					{

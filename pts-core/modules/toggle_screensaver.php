@@ -44,7 +44,7 @@ class toggle_screensaver extends pts_module_interface
 		}
 
 		// GNOME Screensaver?
-		if(($gt = pts_executable_in_path("gconftool")) != false || ($gt = pts_executable_in_path("gconftool-2")) != false)
+		if(($gt = pts_client::executable_in_path("gconftool")) != false || ($gt = pts_client::executable_in_path("gconftool-2")) != false)
 		{
 			self::$gnome_gconftool = $gt;
 		}
@@ -87,7 +87,7 @@ class toggle_screensaver extends pts_module_interface
 			self::$screensaver_halted = true;
 		}
 
-		if(($xdg = pts_executable_in_path("xdg-screensaver")) == false)
+		if(($xdg = pts_client::executable_in_path("xdg-screensaver")) == false)
 		{
 			self::$xdg_screensaver_available = $xdg;
 		}

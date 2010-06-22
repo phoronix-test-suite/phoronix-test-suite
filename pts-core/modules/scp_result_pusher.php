@@ -51,7 +51,7 @@ class scp_result_pusher extends pts_module_interface
 		$scp_host = pts_module::read_option("scp_host");
 		$scp_remote_dir = pts_module::read_option("scp_remote_dir");
 
-		if(is_dir(SAVE_RESULTS_DIR . $results_identifier) && pts_executable_in_path("scp"))
+		if(is_dir(SAVE_RESULTS_DIR . $results_identifier) && pts_client::executable_in_path("scp"))
 		{
 			echo shell_exec("scp -r " . SAVE_RESULTS_DIR . $results_identifier . " " . $scp_user . "@" . $scp_host . ":" . $scp_remote_dir);
 		}

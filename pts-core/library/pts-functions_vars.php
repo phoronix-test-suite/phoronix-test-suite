@@ -50,7 +50,7 @@ function pts_env_variables($search_for = null)
 		"DEBUG_REAL_HOME" => pts_user_home()
 		);
 
-		if(!pts_executable_in_path("cc") && pts_executable_in_path("gcc"))
+		if(!pts_client::executable_in_path("cc") && pts_client::executable_in_path("gcc"))
 		{
 			// This helps some test profiles build correctly if they don't do a cc check internally
 			$env_variables["CC"] = "gcc";

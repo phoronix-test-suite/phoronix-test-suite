@@ -107,7 +107,7 @@ class phodevi_system extends phodevi_device_interface
 	{
 		$hostname = "Unknown";
 
-		if(($bin = pts_executable_in_path("hostname")))
+		if(($bin = pts_client::executable_in_path("hostname")))
 		{
 			$hostname = trim(shell_exec($bin . " 2>&1"));
 		}
@@ -146,7 +146,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else if(IS_BSD)
 		{
-			if(pts_executable_in_path("mount"))
+			if(pts_client::executable_in_path("mount"))
 			{
 				$mount = shell_exec("mount 2>&1");
 				
@@ -284,12 +284,12 @@ class phodevi_system extends phodevi_device_interface
 		// Returns version of the compiler (if present)
 		$compiler_info = null;
 
-		if(pts_executable_in_path("clang"))
+		if(pts_client::executable_in_path("clang"))
 		{
 			// Clang
 			$compiler_info = "Clang " . trim(shell_exec("clang -dumpversion 2>&1"));
 
-			if(pts_executable_in_path("llvmc"))
+			if(pts_client::executable_in_path("llvmc"))
 			{
 				// LLVM - Low Level Virtual Machine (llvmc)
 				$info = trim(shell_exec("llvmc -version 2>&1"));
@@ -305,7 +305,7 @@ class phodevi_system extends phodevi_device_interface
 
 			$compiler_info = trim($compiler_info);
 		}
-		else if(pts_executable_in_path("suncc"))
+		else if(pts_client::executable_in_path("suncc"))
 		{
 			// Sun Studio / SunCC
 			$info = trim(shell_exec("suncc -V 2>&1"));
@@ -318,7 +318,7 @@ class phodevi_system extends phodevi_device_interface
 				$compiler_info = $info;
 			}
 		}
-		else if(pts_executable_in_path("llvmc"))
+		else if(pts_client::executable_in_path("llvmc"))
 		{
 			// LLVM - Low Level Virtual Machine (llvmc)
 			$info = trim(shell_exec("llvmc -version 2>&1"));
@@ -331,7 +331,7 @@ class phodevi_system extends phodevi_device_interface
 				$compiler_info = trim($info);
 			}
 		}
-		else if(pts_executable_in_path("gcc"))
+		else if(pts_client::executable_in_path("gcc"))
 		{
 			// GCC
 			$compiler_info = "GCC " . trim(shell_exec("gcc -dumpversion 2>&1"));
@@ -504,7 +504,7 @@ class phodevi_system extends phodevi_device_interface
 			// GNOME
 			$desktop_environment = "GNOME";
 
-			if(pts_executable_in_path("gnome-about"))
+			if(pts_client::executable_in_path("gnome-about"))
 			{
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec("gnome-about --version 2> /dev/null")));
 			}
@@ -592,7 +592,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else
 		{
-			if(!(($x_bin = pts_executable_in_path("Xorg")) || ($x_bin = pts_executable_in_path("X"))))
+			if(!(($x_bin = pts_client::executable_in_path("Xorg")) || ($x_bin = pts_client::executable_in_path("X"))))
 			{
 				return false;
 			}
@@ -720,7 +720,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$info = null; // TODO: Windows support
 		}
-		else if(pts_executable_in_path("glxinfo"))
+		else if(pts_client::executable_in_path("glxinfo"))
 		{
 			$info = phodevi_parser::software_glxinfo_version();
 
@@ -729,7 +729,7 @@ class phodevi_system extends phodevi_device_interface
 				$info = substr($info, 0, $pos);
 			}
 		}
-		else if(pts_executable_in_path("nvidia-settings"))
+		else if(pts_client::executable_in_path("nvidia-settings"))
 		{
 			$info = phodevi_parser::read_nvidia_extension("OpenGLVersion");
 		}
@@ -741,7 +741,7 @@ class phodevi_system extends phodevi_device_interface
 		// OpenGL version
 		$info = null;
 
-		if(pts_executable_in_path("glxinfo"))
+		if(pts_client::executable_in_path("glxinfo"))
 		{
 			$info = shell_exec("glxinfo 2>&1 | grep vendor");
 
@@ -831,7 +831,7 @@ class phodevi_system extends phodevi_device_interface
 	{
 		$python_version = null;
 
-		if(pts_executable_in_path("python") != false)
+		if(pts_client::executable_in_path("python") != false)
 		{
 			$python_version = trim(shell_exec("python -V 2>&1"));
 		}

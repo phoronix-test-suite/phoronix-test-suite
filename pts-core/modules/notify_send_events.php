@@ -32,7 +32,7 @@ class notify_send_events extends pts_module_interface
 
 	public static function __startup()
 	{
-		self::$notify_send_cmd = pts_executable_in_path("notify-send");
+		self::$notify_send_cmd = pts_client::executable_in_path("notify-send");
 
 		if(self::$notify_send_cmd == false)
 		{

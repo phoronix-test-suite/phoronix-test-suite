@@ -155,7 +155,7 @@ class phoromatic extends pts_module_interface
 				pts_save_result($identifier . "/composite.xml", $server_response); // TODO: regenerate the XML so that the Phoromatic response bits are not included
 				echo "\nResult Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
 				pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
-				pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html");
+				pts_client::display_web_page(SAVE_RESULTS_DIR . $identifier . "/index.html");
 				break;
 			case M_PHOROMATIC_RESPONSE_SETTING_DISABLED:
 				echo "\nYou need to enable this support from your Phoromatic account web interface.\n";
@@ -514,7 +514,7 @@ class phoromatic extends pts_module_interface
 		{
 			if(!is_executable($context_script))
 			{
-				if(($context_script = pts_executable_in_path($context_script)) == false || !is_executable($context_script))
+				if(($context_script = pts_client::executable_in_path($context_script)) == false || !is_executable($context_script))
 				{
 					return false;
 				}
@@ -574,7 +574,7 @@ class phoromatic extends pts_module_interface
 		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/system-logs/") && pts_read_assignment("PHOROMATIC_UPLOAD_SYSTEM_LOGS"))
 		{
 			$system_logs_zip = pts_client::create_temporary_file();
-			pts_zip_archive_create($system_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/system-logs/");
+			pts_compression::zip_archive_create($system_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/system-logs/");
 			$data["system-logs"] = base64_encode(file_get_contents($system_logs_zip));
 			unlink($system_logs_zip);
 		}
@@ -582,7 +582,7 @@ class phoromatic extends pts_module_interface
 		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/test-logs/") && pts_read_assignment("PHOROMATIC_UPLOAD_TEST_LOGS"))
 		{
 			$test_logs_zip = pts_client::create_temporary_file();
-			pts_zip_archive_create($test_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/test-logs/");
+			pts_compression::zip_archive_create($test_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/test-logs/");
 			$data["test-logs"] = base64_encode(file_get_contents($test_logs_zip));
 			unlink($test_logs_zip);
 		}

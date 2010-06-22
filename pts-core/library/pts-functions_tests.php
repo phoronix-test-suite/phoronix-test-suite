@@ -91,7 +91,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 			{
 				$command = explode(' ', $command_string);
 
-				if(($command_bin = pts_executable_in_path($command[0])))
+				if(($command_bin = pts_client::executable_in_path($command[0])))
 				{
 					$cmd_output = shell_exec("cd " . dirname($command_bin) . " && ./" . $command_string . " 2>&1");
 					file_put_contents($system_log_dir . "/" . $command[0], $cmd_output);
@@ -112,7 +112,7 @@ function pts_quick_generate_graphs($result_file_identifier, $full_process_string
 	{
 		echo "\n" . $full_process_string . "\n";
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $result_file_identifier);
-		pts_display_web_browser(SAVE_RESULTS_DIR . $result_file_identifier . "/index.html");
+		pts_client::display_web_page(SAVE_RESULTS_DIR . $result_file_identifier . "/index.html");
 	}
 
 	return $generated;

@@ -59,7 +59,7 @@ class extract_from_result_file implements pts_option_interface
 		$extract_result = call_user_func_array(array("pts_merge", "merge_test_results"), $extract_selects);
 		pts_save_result($extract_to . "/composite.xml", $extract_result);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $extract_to);
-		pts_display_web_browser(SAVE_RESULTS_DIR . $extract_to . "/composite.xml");
+		pts_client::display_web_page(SAVE_RESULTS_DIR . $extract_to . "/composite.xml");
 	}
 }
 

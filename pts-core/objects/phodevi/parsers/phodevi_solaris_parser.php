@@ -84,7 +84,7 @@ class phodevi_solaris_parser
 	{
 		$value = false;
 
-		if(pts_executable_in_path("hal-get-property"))
+		if(pts_client::executable_in_path("hal-get-property"))
 		{
 
 			foreach(pts_to_array($udi) as $udi_check)

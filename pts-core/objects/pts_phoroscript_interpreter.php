@@ -262,7 +262,7 @@ class pts_phoroscript_interpreter
 					break;
 				case 'unzip':
 					$zip_file = self::find_file_in_array($line_r);
-					pts_zip_archive_extract($zip_file, $this->var_current_directory);
+					pts_compression::zip_archive_extract($zip_file, $this->var_current_directory);
 					break;
 				case 'tar':
 					// TODO: implement

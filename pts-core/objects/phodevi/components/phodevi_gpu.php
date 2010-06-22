@@ -321,7 +321,7 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 
-			if($resolution == false && pts_executable_in_path("xrandr"))
+			if($resolution == false && pts_client::executable_in_path("xrandr"))
 			{
 				// Read resolution from xrandr
 				$info = shell_exec("xrandr 2>&1 | grep \"*\"");
@@ -402,7 +402,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 
 		// Attempt reading available modes from xrandr
-		if(pts_executable_in_path("xrandr") && !IS_MACOSX) // MacOSX has xrandr but currently on at least my setup will emit a Bus Error when called
+		if(pts_client::executable_in_path("xrandr") && !IS_MACOSX) // MacOSX has xrandr but currently on at least my setup will emit a Bus Error when called
 		{
 			$xrandr_lines = array_reverse(explode("\n", shell_exec("xrandr 2>&1")));
 
@@ -694,7 +694,7 @@ class phodevi_gpu extends phodevi_device_interface
 	public static function gpu_model()
 	{
 		// Report graphics processor string
-		$info = pts_executable_in_path("glxinfo") != false ? shell_exec("glxinfo 2>&1 | grep renderer") : null;
+		$info = pts_client::executable_in_path("glxinfo") != false ? shell_exec("glxinfo 2>&1 | grep renderer") : null;
 		$video_ram = phodevi::read_property("gpu", "memory-capacity");
 
 		if(($pos = strpos($info, "renderer string:")) > 0)

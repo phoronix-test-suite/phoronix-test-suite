@@ -37,7 +37,7 @@ class show_result implements pts_option_interface
 			pts_generate_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 		}
 
-		pts_display_web_browser($URL, null, false, true);
+		pts_client::display_web_page($URL, null, false, true);
 	}
 }
 

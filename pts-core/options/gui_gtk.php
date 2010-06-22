@@ -34,7 +34,7 @@ class gui_gtk implements pts_option_interface
 
 			if(pts_client::read_env("TERM") == null && pts_client::read_env("DISPLAY") != null)
 			{
-				pts_display_web_browser(STATIC_DIR . "error-gui.html", null, true, true);
+				pts_client::display_web_page(STATIC_DIR . "error-gui.html", null, true, true);
 			}
 
 			return false;
@@ -1256,7 +1256,7 @@ class gui_gtk implements pts_option_interface
 			$url = "http://www.phoronix-test-suite.com/";
 		}
 
-		pts_display_web_browser($url, null, true, true);
+		pts_client::display_web_page($url, null, true, true);
 	}
 	public static function details_button_clicked()
 	{
@@ -1269,7 +1269,7 @@ class gui_gtk implements pts_option_interface
 				pts_generate_graphs($identifier, SAVE_RESULTS_DIR . $identifier . "/");
 			}
 
-			pts_display_web_browser(SAVE_RESULTS_DIR . $identifier . "/index.html", null, true, true);
+			pts_client::display_web_page(SAVE_RESULTS_DIR . $identifier . "/index.html", null, true, true);
 		}
 		else
 		{

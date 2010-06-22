@@ -124,7 +124,7 @@ class phodevi_linux_parser
 		// Read Linux dmidecode
 		$value = array();
 
-		if(is_readable("/dev/mem") && pts_executable_in_path("dmidecode"))
+		if(is_readable("/dev/mem") && pts_client::executable_in_path("dmidecode"))
 		{
 			$ignore = pts_to_array($ignore);
 
@@ -240,7 +240,7 @@ class phodevi_linux_parser
 		// OverDrive supported in fglrx 8.52+ drivers
 		$value = false;
 
-		if(pts_executable_in_path("aticonfig"))
+		if(pts_client::executable_in_path("aticonfig"))
 		{
 			if($attribute == "Temperature")
 			{
@@ -307,7 +307,7 @@ class phodevi_linux_parser
 
 		if($try_aticonfig)
 		{
-			if(pts_executable_in_path("aticonfig"))
+			if(pts_client::executable_in_path("aticonfig"))
 			{
 				$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
 
@@ -437,7 +437,7 @@ class phodevi_linux_parser
 		// Read ATI/AMD graphics hardware using aticonfig
 		$adapters = array();
 
-		if(pts_executable_in_path("aticonfig"))
+		if(pts_client::executable_in_path("aticonfig"))
 		{
 			$info = trim(shell_exec("aticonfig --list-adapters 2>&1"));
 
@@ -502,7 +502,7 @@ class phodevi_linux_parser
 		// Read LSB Release information, Linux Standards Base
 		$info = false;
 
-		if(pts_executable_in_path("lsb_release"))
+		if(pts_client::executable_in_path("lsb_release"))
 		{
 			static $output = null;
 
@@ -525,7 +525,7 @@ class phodevi_linux_parser
 		// Read HAL - Hardware Abstraction Layer
 		$info = false;
 
-		if(pts_executable_in_path("lshal"))
+		if(pts_client::executable_in_path("lshal"))
 		{
 			$name = pts_to_array($name);
 			$remove_words = phodevi_parser::hardware_values_to_remove();
@@ -602,7 +602,7 @@ class phodevi_linux_parser
 			{
 				$lspci_cmd = "/sbin/lspci";
 			}
-			else if(($lspci = pts_executable_in_path("lspci")))
+			else if(($lspci = pts_client::executable_in_path("lspci")))
 			{
 				$lspci_cmd = $lspci;
 			}
@@ -663,7 +663,7 @@ class phodevi_linux_parser
 		// Read LM_Sensors
 		$value = false;
 
-		if(pts_executable_in_path("sensors"))
+		if(pts_client::executable_in_path("sensors"))
 		{
 			$sensors = shell_exec("sensors 2>&1");
 			$sensors_lines = explode("\n", $sensors);

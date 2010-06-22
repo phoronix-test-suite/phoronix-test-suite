@@ -100,7 +100,7 @@ class bisect extends pts_module_interface
 			echo "\nYou first must run:\n\nphoronix-test-suite module-setup git-bisect\n\n";
 			return false;
 		}
-		if(!($git_bin = pts_executable_in_path("git")))
+		if(!($git_bin = pts_client::executable_in_path("git")))
 		{
 			echo "\nGit must first be installed\n\n";
 			return false;

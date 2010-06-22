@@ -45,7 +45,7 @@ class analyze_batch implements pts_option_interface
 		pts_save_result($save_to, $SAVED_RESULTS);
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $save_to);
 		echo "Results Saved To: " . SAVE_RESULTS_DIR . $save_to . "\n\n";
-		pts_display_web_browser(SAVE_RESULTS_DIR . dirname($save_to) . "/index.html");
+		pts_client::display_web_page(SAVE_RESULTS_DIR . dirname($save_to) . "/index.html");
 	}
 }
 

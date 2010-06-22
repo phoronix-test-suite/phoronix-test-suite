@@ -28,7 +28,7 @@ class phodevi_parser
 		// Read NVIDIA's NV Extension
 		$nv_info = false;
 
-		if(pts_executable_in_path("nvidia-settings"))
+		if(pts_client::executable_in_path("nvidia-settings"))
 		{
 			$info = shell_exec("nvidia-settings --query " . $attribute . " 2>&1");
 
@@ -55,7 +55,7 @@ class phodevi_parser
 		{
 			$monitor_info = array();
 
-			if(pts_executable_in_path("xdpyinfo"))
+			if(pts_client::executable_in_path("xdpyinfo"))
 			{
 				$info = trim(shell_exec("xdpyinfo -ext XINERAMA 2>&1 | grep head"));
 
@@ -76,7 +76,7 @@ class phodevi_parser
 		// Read hard drive temperature using hddtemp
 		$hdd_temperature = -1;
 
-		if(pts_executable_in_path("hddtemp"))
+		if(pts_client::executable_in_path("hddtemp"))
 		{
 			if(empty($disk))
 			{

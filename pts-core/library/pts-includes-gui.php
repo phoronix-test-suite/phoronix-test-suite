@@ -242,7 +242,7 @@ function pts_archive_result_directory($identifier, $save_to = null)
 
 	if(is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml"))
 	{
-		pts_compress(SAVE_RESULTS_DIR . $identifier . "/", $save_to);
+		pts_compression::compress_to_archive(SAVE_RESULTS_DIR . $identifier . "/", $save_to);
 	}
 }
 

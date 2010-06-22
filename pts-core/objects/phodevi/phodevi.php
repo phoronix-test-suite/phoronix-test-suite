@@ -326,7 +326,7 @@ class phodevi
 		switch(OPERATING_SYSTEM)
 		{
 			case "BSD":
-				define("BSD_LINUX_COMPATIBLE", pts_executable_in_path("kldstat") && strpos(shell_exec("kldstat -n linux 2>&1"), "linux.ko") != false);
+				define("BSD_LINUX_COMPATIBLE", pts_client::executable_in_path("kldstat") && strpos(shell_exec("kldstat -n linux 2>&1"), "linux.ko") != false);
 				break;
 		}
 
@@ -419,7 +419,7 @@ class phodevi
 		{
 			$uptime = pts_strings::first_in_string(pts_file_get_contents("/proc/uptime"));
 		}
-		else if(($uptime_cmd = pts_executable_in_path("uptime")) != false)
+		else if(($uptime_cmd = pts_client::executable_in_path("uptime")) != false)
 		{
 			$uptime_counter = 0;
 			$uptime_output = shell_exec($uptime_cmd . " 2>&1");
