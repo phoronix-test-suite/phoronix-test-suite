@@ -161,7 +161,7 @@ abstract class pts_Graph
 
 		if($result_file != null && $result_file instanceOf pts_result_file)
 		{
-			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
+			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison() && $this->graph_type == "BAR_GRAPH";
 		}
 
 		$this->graph_font = $font_type;
@@ -352,7 +352,17 @@ abstract class pts_Graph
 			}
 			else
 			{
-				$used_paint_colors[$identifier] = $this->next_paint_color();
+				// Use a counter to prevent possible infinite loop when running out of unique paint colors
+				$i = 0;
+
+				do
+				{
+					$i++;
+					$next_color = $this->next_paint_color();
+				}
+				while(in_array($next_color, $used_paint_colors) == true && $i < 10);
+
+				$used_paint_colors[$identifier] = $next_color;
 			}
 		}
 
