@@ -114,7 +114,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN",
 				break;
 		}
 
-		$answer = pts_string_bool($auto_answer);
+		$answer = pts_strings::string_bool($auto_answer);
 	}
 	else
 	{

@@ -22,6 +22,11 @@
 
 class pts_strings
 {
+	public static function string_bool($string)
+	{
+		// Used for evaluating if the user inputted a string that evaluates to true
+		return in_array(strtolower($string), array("true", "1"));
+	}
 	public static function trim_explode($delimiter, $to_explode)
 	{
 		return array_map("trim", explode($delimiter, $to_explode));

@@ -1567,7 +1567,7 @@ class gui_gtk implements pts_option_interface
 				$hb[$i]->pack_start(($radio_true[$i] = new GtkRadioButton(null, "TRUE", true)));
 				$hb[$i]->pack_start(($radio_false[$i] = new GtkRadioButton($radio_true[$i], "FALSE", false)));
 
-				if(pts_string_bool($current_value))
+				if(pts_strings::string_bool($current_value))
 				{
 					$radio_true[$i]->set_active(true);
 				}

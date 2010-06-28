@@ -85,7 +85,7 @@ class system_monitor extends pts_module_interface
 				$graph_title = phodevi::sensor_name($sensor) . " Monitor";
 				$sub_title = "System Monitor Module";
 
-				$tandem_id = pts_request_new_id();
+				$tandem_id = $tandem_xml->request_unique_id();
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $graph_title);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, null);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, null);

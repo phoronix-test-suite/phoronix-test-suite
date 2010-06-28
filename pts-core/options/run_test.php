@@ -326,7 +326,7 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, 0, $test_run_manager->get_results_identifier());
 				$wrote_system_xml = true;
 
-				$id = pts_request_new_id();
+				$id = $xml_results_writer->request_unique_id();
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $file_name_title);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? pts_first_element_in_array($to_run_identifiers) : "custom"));
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 1, $test_version);
@@ -358,7 +358,7 @@ class run_test implements pts_option_interface
 
 		// Run the actual tests
 		pts_module_process("__pre_run_process", $test_run_manager);
-		pts_set_assignment("PTS_STATS_DYNAMIC_RUN_COUNT", pts_string_bool(pts_config::read_user_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE")));
+		pts_set_assignment("PTS_STATS_DYNAMIC_RUN_COUNT", pts_strings::string_bool(pts_config::read_user_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE")));
 		pts_set_assignment("PTS_STATS_NO_ON_LENGTH", pts_config::read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, "20"));
 		pts_set_assignment("PTS_STATS_STD_DEV_THRESHOLD", pts_config::read_user_config(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, "3.50"));
 		pts_set_assignment("PTS_STATS_EXPORT_TO", pts_config::read_user_config(P_OPTION_STATS_EXPORT_RESULTS_TO, null));

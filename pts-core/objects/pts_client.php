@@ -45,8 +45,8 @@ class pts_client
 	}
 	public static function user_hardware_software_reporting()
 	{
-		$hw_reporting = pts_string_bool(pts_config::read_user_config(P_OPTION_HARDWARE_REPORTING, 0));
-		$sw_reporting = pts_string_bool(pts_config::read_user_config(P_OPTION_SOFTWARE_REPORTING, 0));
+		$hw_reporting = pts_strings::string_bool(pts_config::read_user_config(P_OPTION_HARDWARE_REPORTING, 0));
+		$sw_reporting = pts_strings::string_bool(pts_config::read_user_config(P_OPTION_SOFTWARE_REPORTING, 0));
 
 		if($hw_reporting == false && $sw_reporting == false)
 		{

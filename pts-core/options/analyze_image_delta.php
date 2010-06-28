@@ -124,7 +124,7 @@ class analyze_image_delta implements pts_option_interface
 
 			if($img_changed)
 			{
-				$tandem_id = pts_request_new_id();
+				$tandem_id = $tandem_xml->request_unique_id();
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result_object->get_name());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result_object->get_version());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result_object->get_test_profile_version());

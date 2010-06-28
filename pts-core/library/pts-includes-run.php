@@ -373,7 +373,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 
 			if(!empty($test_identifier))
 			{
-				$tandem_id = pts_request_new_id();
+				$tandem_id = $tandem_xml->request_unique_id();
 				pts_set_assignment("TEST_RAN", true);
 
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->get_test_profile()->get_test_title());
@@ -854,7 +854,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		unset($cache_share);
 	}
 
-	if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_config::read_user_config(P_OPTION_LOG_INSTALLATION, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
+	if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_strings::string_bool(pts_config::read_user_config(P_OPTION_LOG_INSTALLATION, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
 	{
 		if(is_file(TEST_ENV_DIR . $test_identifier . "/install.log"))
 		{

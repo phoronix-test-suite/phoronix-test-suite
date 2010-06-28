@@ -180,7 +180,7 @@ function pts_shutdown()
 	// Generate Phodevi Smart Cache
 	if(pts_client::read_env("NO_PHODEVI_CACHE") != 1)
 	{
-		if(pts_string_bool(pts_config::read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
+		if(pts_strings::string_bool(pts_config::read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
 		{
 			pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", phodevi::get_phodevi_cache_object(PTS_USER_DIR, PTS_CORE_VERSION));
 		}
@@ -301,7 +301,7 @@ function pts_display_mode_holder(&$display_mode = null)
 }
 function pts_anonymous_usage_reporting()
 {
-	return pts_string_bool(pts_config::read_user_config(P_OPTION_USAGE_REPORTING, 0));
+	return pts_strings::string_bool(pts_config::read_user_config(P_OPTION_USAGE_REPORTING, 0));
 }
 function pts_find_home($path)
 {

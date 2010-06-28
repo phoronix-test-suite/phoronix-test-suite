@@ -35,11 +35,6 @@ function pts_last_element_in_array($array)
 	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
 	return end($array);
 }
-function pts_string_bool($string)
-{
-	// Used for evaluating if the user inputted a string that evaluates to true
-	return in_array(strtolower($string), array("true", "1"));
-}
 function pts_mkdir($dir, $mode = 0777, $recursive = false)
 {
 	return !is_dir($dir) && mkdir($dir, $mode, $recursive);
@@ -131,14 +126,6 @@ function pts_extract_identifier_from_path($path)
 function pts_to_array($var)
 {
 	return !is_array($var) ? array($var) : $var;
-}
-function pts_request_new_id()
-{
-	// Request a new ID for a counter
-	static $id = 1;
-	$id++;
-
-	return $id;
 }
 
 ?>

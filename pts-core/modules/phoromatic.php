@@ -390,23 +390,23 @@ class phoromatic extends pts_module_interface
 					$test_args["PHOROMATIC_TITLE"] = $xml_parser->getXMLValue(P_SUITE_TITLE);
 					$test_args["PHOROMATIC_SCHEDULE_ID"] = $xml_parser->getXMLValue(M_PHOROMATIC_ID);
 					$test_args["AUTO_TEST_RESULTS_IDENTIFIER"] = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
-					$test_args["PHOROMATIC_UPLOAD_TEST_LOGS"] = pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TEST_LOGS));
-					$test_args["PHOROMATIC_UPLOAD_SYSTEM_LOGS"] = pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_SYSTEM_LOGS));
+					$test_args["PHOROMATIC_UPLOAD_TEST_LOGS"] = pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TEST_LOGS));
+					$test_args["PHOROMATIC_UPLOAD_SYSTEM_LOGS"] = pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_SYSTEM_LOGS));
 					$test_args["PHOROMATIC_TRIGGER"] = $xml_parser->getXMLValue(M_PHOROMATIC_TRIGGER);
 
-					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, "FALSE")))
+					if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, "FALSE")))
 					{
 						$test_args["AUTO_UPLOAD_TO_GLOBAL"] = true;
 					}
 
-					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY, M_PHOROMATIC_RESPONSE_TRUE)))
+					if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY, M_PHOROMATIC_RESPONSE_TRUE)))
 					{
 						$test_args["PHOROMATIC_ARCHIVE_RESULTS"] = true;
 					}
 
 					file_put_contents(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml", $server_response);
 
-					if(pts_string_bool($xml_parser->getXMLValue(M_PHOROMATIC_RUN_INSTALL_COMMAND, M_PHOROMATIC_RESPONSE_TRUE)))
+					if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_RUN_INSTALL_COMMAND, M_PHOROMATIC_RESPONSE_TRUE)))
 					{
 						phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_INSTALL), $test_args["PHOROMATIC_TRIGGER"], $test_args["PHOROMATIC_SCHEDULE_ID"], "INSTALL");
 						pts_run_option_next("install_test", $suite_identifier, array("AUTOMATED_MODE" => true));

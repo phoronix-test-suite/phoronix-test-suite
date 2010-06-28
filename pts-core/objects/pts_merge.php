@@ -149,7 +149,7 @@ class pts_merge
 						$associated_identifiers[$i] = $renamed;
 					}
 
-					$use_id = pts_request_new_id();
+					$use_id = $xml_writer->request_unique_id();
 					$xml_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $use_id, $system_hardware[$i]);
 					$xml_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $use_id, $system_software[$i]);
 					$xml_writer->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, $use_id, $system_author[$i]);
@@ -175,7 +175,7 @@ class pts_merge
 				continue;
 			}
 
-			$use_id = pts_request_new_id();
+			$use_id = $xml_writer->request_unique_id();
 			$xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->get_name());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->get_version());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $use_id, $result_object->get_test_profile_version());

@@ -64,7 +64,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-		if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_string_bool(pts_config::read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("PHOROMATIC_TITLE")))
+		if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_strings::string_bool(pts_config::read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("PHOROMATIC_TITLE")))
 		{
 			$test_results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER");
 

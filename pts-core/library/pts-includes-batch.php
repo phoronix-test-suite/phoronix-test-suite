@@ -23,23 +23,23 @@
 
 function pts_batch_mode_configured()
 {
-	return pts_string_bool(pts_config::read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE"));
+	return pts_strings::string_bool(pts_config::read_user_config(P_OPTION_BATCH_CONFIGURED, "FALSE"));
 }
 function pts_batch_prompt_test_identifier()
 {
-	return pts_string_bool(pts_config::read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE"));
+	return pts_strings::string_bool(pts_config::read_user_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE"));
 }
 function pts_batch_prompt_test_description()
 {
-	return pts_string_bool(pts_config::read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE"));
+	return pts_strings::string_bool(pts_config::read_user_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE"));
 }
 function pts_batch_prompt_save_name()
 {
-	return pts_string_bool(pts_config::read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"));
+	return pts_strings::string_bool(pts_config::read_user_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"));
 }
 function pts_batch_run_all_test_options()
 {
-	return pts_string_bool(pts_config::read_user_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"));
+	return pts_strings::string_bool(pts_config::read_user_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"));
 }
 
 ?>
