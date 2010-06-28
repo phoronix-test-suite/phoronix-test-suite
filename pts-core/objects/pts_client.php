@@ -52,6 +52,25 @@ class pts_client
 		pts_unlink(self::$lock_pointers[self::$command_execution_count][$lock_file]);
 		unset(self::$lock_pointers[self::$command_execution_count][$lock_file]);
 	}
+	public static function check_command_for_function($option, $check_function)
+	{
+		$in_option = false;
+
+		if(is_file(COMMAND_OPTIONS_DIR . $option . ".php"))
+		{
+			if(!class_exists($option, false))
+			{
+				pts_load_run_option($option);
+			}
+
+			if(method_exists($option, $check_function))
+			{
+				$in_option = true;
+			}
+		}
+
+		return $in_option;
+	}
 	public static function execute_command($command, $pass_args = null, $preset_assignments = "")
 	{
 		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && !class_exists($command, false))

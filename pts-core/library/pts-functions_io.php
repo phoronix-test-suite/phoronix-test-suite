@@ -36,6 +36,19 @@ function pts_text_input($question, $allow_null = false)
 
 	return $answer;
 }
+function pts_user_message($message)
+{
+	if(!empty($message))
+	{
+		echo $message . "\n";
+
+		if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
+		{
+			echo "\nHit Any Key To Continue...\n";
+			pts_read_user_input();
+		}
+	}
+}
 function pts_text_select_menu($user_string, $options_r, $allow_multi_select = false, $return_index = false)
 {
 	$option_count = count($options_r);

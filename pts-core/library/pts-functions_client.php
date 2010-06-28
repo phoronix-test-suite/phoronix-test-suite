@@ -57,27 +57,6 @@ function pts_shutdown()
 		}
 	}
 }
-function pts_evaluate_script_type($script)
-{
-	$script = explode("\n", trim($script));
-	$script_eval = trim($script[0]);
-	$script_type = false;
-
-	if(strpos($script_eval, "<?php") !== false)
-	{
-		$script_type = "PHP";
-	}
-	else if(strpos($script_eval, "#!/bin/sh") !== false)
-	{
-		$script_type = "SH";
-	}
-	else if(strpos($script_eval, "<") !== false && strpos($script_eval, ">") !== false)
-	{
-		$script_type = "XML";
-	}
-
-	return $script_type;
-}
 function pts_proximity_match($search, $match_to)
 {
 	// Proximity search in $search string for * against $match_to
@@ -102,38 +81,6 @@ function pts_proximity_match($search, $match_to)
 	}
 
 	return $is_match;
-}
-function pts_check_option_for_function($option, $check_function)
-{
-	$in_option = false;
-
-	if(is_file(COMMAND_OPTIONS_DIR . $option . ".php"))
-	{
-		if(!class_exists($option, false))
-		{
-			pts_load_run_option($option);
-		}
-
-		if(method_exists($option, $check_function))
-		{
-			$in_option = true;
-		}
-	}
-
-	return $in_option;
-}
-function pts_user_message($message)
-{
-	if(!empty($message))
-	{
-		echo $message . "\n";
-
-		if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
-		{
-			echo "\nHit Any Key To Continue...\n";
-			pts_read_user_input();
-		}
-	}
 }
 function pts_get_display_mode_object()
 {
@@ -210,16 +157,5 @@ function pts_current_user()
 	// Current system user
 	return ($pts_user = pts_config::read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User")) != "Default User" ? $pts_user : phodevi::read_property("system", "username");
 }
-function pts_temp_dir()
-{
-	$temp_dir = pts_client::temporary_directory();
 
-	do
-	{
-		$temp_folder_name = "/pts-" . rand(1000, 9999) . "/";
-	}
-	while(!pts_mkdir(($temp_path = $temp_dir . $temp_folder_name)));
-
-	return $temp_path;
-}
 ?>

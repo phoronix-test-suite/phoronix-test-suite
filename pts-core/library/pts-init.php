@@ -165,7 +165,7 @@ function pts_user_agreement_check($command)
 
 	if($config_md5 != $current_md5 || pts_config::read_user_config(P_OPTION_USAGE_REPORTING, "UNKNOWN") == "UNKNOWN")
 	{
-		$prompt_in_method = pts_check_option_for_function($command, "pts_user_agreement_prompt");
+		$prompt_in_method = pts_client::check_command_for_function($command, "pts_user_agreement_prompt");
 		$user_agreement = file_get_contents(PTS_PATH . "pts-core/user-agreement.txt");
 
 		if($prompt_in_method)

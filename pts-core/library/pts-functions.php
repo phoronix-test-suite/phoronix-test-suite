@@ -54,7 +54,6 @@ if(PTS_MODE == "LIB")
 require(PTS_LIBRARY_PATH . "pts-init.php");
 require(PTS_LIBRARY_PATH . "pts-functions_basic.php");
 require(PTS_LIBRARY_PATH . "pts-functions_client.php");
-require(PTS_LIBRARY_PATH . "pts-functions_pcqs.php");
 
 // Load Main Functions
 require(PTS_LIBRARY_PATH . "pts-functions_io.php");
