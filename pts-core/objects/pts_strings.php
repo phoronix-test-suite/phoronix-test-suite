@@ -88,6 +88,31 @@ class pts_strings
 
 		return $is_of_type;
 	}
+	public static function trim_spaces($string)
+	{
+		do
+		{
+			$string_copy = $string;
+			$string = str_replace("  ", " ", $string);
+		}
+		while($string_copy != $string);
+
+		return trim($string);
+	}
+	public static function parse_week_string($week_string, $delimiter = ' ')
+	{
+		$return_array = array();
+
+		foreach(array('S', 'M', 'T', 'W', 'TH', 'F', 'S') as $day_int => $day_char)
+		{
+			if($week_string[$day_int] == 1)
+			{
+				array_push($return_array, $day_char);
+			}
+		}
+
+		return implode($delimiter, $return_array);
+	}
 	public static function remove_from_string($string, $attributes)
 	{
 		$string_r = str_split($string);

@@ -22,6 +22,121 @@
 
 class pts_client
 {
+	static $command_execution_count = 0;
+	static $lock_pointers = null;
+
+	public static function create_lock($lock_file)
+	{
+		if(isset(self::$lock_pointers[self::$command_execution_count][$lock_file]))
+		{
+			return false;
+		}
+
+		self::$lock_pointers[self::$command_execution_count][$lock_file] = fopen($lock_file, "w");
+		chmod($lock_file, 0644);
+		return self::$lock_pointers[self::$command_execution_count][$lock_file] != false && flock(self::$lock_pointers[self::$command_execution_count][$lock_file], LOCK_EX | LOCK_NB);
+	}
+	public static function release_lock($lock_file)
+	{
+		// Remove lock
+		if(isset(self::$lock_pointers[self::$command_execution_count][$lock_file]) == false)
+		{
+			return false;
+		}
+
+		if(is_resource(self::$lock_pointers[self::$command_execution_count][$lock_file]))
+		{
+			fclose(self::$lock_pointers[self::$command_execution_count][$lock_file]);
+		}
+
+		pts_unlink(self::$lock_pointers[self::$command_execution_count][$lock_file]);
+		unset(self::$lock_pointers[self::$command_execution_count][$lock_file]);
+	}
+	public static function execute_command($command, $pass_args = null, $preset_assignments = "")
+	{
+		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && !class_exists($command, false))
+		{
+			pts_load_run_option($command);
+		}
+
+		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && method_exists($command, "argument_checks"))
+		{
+			$argument_checks = call_user_func(array($command, "argument_checks"));
+
+			foreach($argument_checks as &$argument_check)
+			{
+				$function_check = $argument_check->get_function_check();
+
+				if(substr($function_check, 0, 1) == '!')
+				{
+					$function_check = substr($function_check, 1);
+					$return_fails_on = true;
+				}
+				else
+				{
+					$return_fails_on = false;
+				}
+
+				if(!function_exists($function_check))
+				{
+					continue;
+				}
+
+				$return_value = call_user_func_array($function_check, array((isset($pass_args[$argument_check->get_argument_index()]) ? $pass_args[$argument_check->get_argument_index()] : null)));
+
+				if($return_value == $return_fails_on)
+				{
+					echo pts_string_header($argument_check->get_error_string());
+					return false;
+				}
+				else
+				{
+					if($argument_check->get_function_return_key() != null && !isset($pass_args[$argument_check->get_function_return_key()]))
+					{
+						$pass_args[$argument_check->get_function_return_key()] = $return_value;
+					}
+				}
+			}
+		}
+
+		pts_assignment_manager::clear_all();
+		self::$command_execution_count += 1;
+		pts_set_assignment("COMMAND", $command);
+
+		if(is_array($preset_assignments))
+		{
+			foreach(array_keys($preset_assignments) as $key)
+			{
+				pts_set_assignment_once($key, $preset_assignments[$key]);
+			}
+		}
+
+		pts_module_process("__pre_option_process", $command);
+
+		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php"))
+		{
+			if(method_exists($command, "run"))
+			{
+				call_user_func(array($command, "run"), $pass_args);
+			}
+			else
+			{
+				echo "\nThere is an error in the requested command: " . $command . "\n\n";
+			}
+		}
+		else if(pts_module_valid_user_command($command))
+		{
+			list($module, $module_command) = explode(".", $command);
+
+			pts_module_manager::set_current_module($module);
+			pts_module_run_user_command($module, $module_command, $pass_args);
+			pts_module_manager::set_current_module(null);
+		}
+
+		pts_module_process("__post_option_process", $command);
+		pts_set_assignment_next("PREV_COMMAND", $command);
+		pts_assignment_manager::clear_all();
+	}
 	public static function terminal_width()
 	{
 		if(!pts_is_assignment("TERMINAL_WIDTH"))

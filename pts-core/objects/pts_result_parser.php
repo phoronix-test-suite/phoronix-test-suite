@@ -153,7 +153,7 @@ class pts_result_parser
 			$end_result_line_pos = strpos($result_template[$i], "\n", $end_result_pos);
 			$result_template_line = substr($result_template[$i], 0, ($end_result_line_pos === false ? strlen($result_template[$i]) : $end_result_line_pos));
 			$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n"));
-			$result_template_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_template_line))));
+			$result_template_r = explode(' ', pts_strings::trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_template_line))));
 			$result_template_r_pos = array_search($result_key[$i], $result_template_r);
 
 			if($result_template_r_pos === false)
@@ -244,7 +244,7 @@ class pts_result_parser
 
 					pts_test_profile_debug_message($display_mode, "Result Line: " . $result_line);
 
-					$result_r = explode(' ', pts_trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
+					$result_r = explode(' ', pts_strings::trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
 					$result_r_pos = array_search($result_key[$i], $result_r);
 
 					if(!empty($result_before_string[$i]))

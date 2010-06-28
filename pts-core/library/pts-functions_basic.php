@@ -64,31 +64,6 @@ function pts_file_get_contents($filename, $flags = 0, $context = null)
 {
 	return trim(file_get_contents($filename, $flags, $context));
 }
-function pts_trim_spaces($string)
-{
-	do
-	{
-		$string_copy = $string;
-		$string = str_replace("  ", " ", $string);
-	}
-	while($string_copy != $string);
-
-	return trim($string);
-}
-function pts_parse_week_string($week_string, $delimiter = ' ')
-{
-	$return_array = array();
-
-	foreach(array('S', 'M', 'T', 'W', 'TH', 'F', 'S') as $day_int => $day_char)
-	{
-		if($week_string[$day_int] == 1)
-		{
-			array_push($return_array, $day_char);
-		}
-	}
-
-	return implode($delimiter, $return_array);
-}
 function pts_version_comparable($old, $new)
 {
 	// Checks if there's a major version difference between two strings, if so returns false.

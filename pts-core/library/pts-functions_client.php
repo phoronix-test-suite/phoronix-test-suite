@@ -22,127 +22,10 @@
 */
 
 // Phoronix Test Suite - Functions
-function pts_run_command($command, $pass_args = null, $preset_assignments = "")
-{
-	if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && !class_exists($command, false))
-	{
-		pts_load_run_option($command);
-	}
 
-	if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && method_exists($command, "argument_checks"))
-	{
-		$argument_checks = call_user_func(array($command, "argument_checks"));
-
-		foreach($argument_checks as &$argument_check)
-		{
-			$function_check = $argument_check->get_function_check();
-
-			if(substr($function_check, 0, 1) == "!")
-			{
-				$function_check = substr($function_check, 1);
-				$return_fails_on = true;
-			}
-			else
-			{
-				$return_fails_on = false;
-			}
-
-			if(!function_exists($function_check))
-			{
-				continue;
-			}
-
-			$return_value = call_user_func_array($function_check, array((isset($pass_args[$argument_check->get_argument_index()]) ? $pass_args[$argument_check->get_argument_index()] : null)));
-
-			if($return_value == $return_fails_on)
-			{
-				echo pts_string_header($argument_check->get_error_string());
-				return false;
-			}
-			else
-			{
-				if($argument_check->get_function_return_key() != null && !isset($pass_args[$argument_check->get_function_return_key()]))
-				{
-					$pass_args[$argument_check->get_function_return_key()] = $return_value;
-				}
-			}
-		}
-	}
-
-	pts_assignment_manager::clear_all();
-	pts_set_assignment("START_TIME", time());
-	pts_set_assignment("COMMAND", $command);
-
-	if(is_array($preset_assignments))
-	{
-		foreach(array_keys($preset_assignments) as $key)
-		{
-			pts_set_assignment_once($key, $preset_assignments[$key]);
-		}
-	}
-
-	pts_module_process("__pre_option_process", $command);
-
-	if(is_file(COMMAND_OPTIONS_DIR . $command . ".php"))
-	{
-		if(method_exists($command, "run"))
-		{
-			call_user_func(array($command, "run"), $pass_args);
-		}
-		else
-		{
-			echo "\nThere is an error in the requested command: " . $command . "\n\n";
-		}
-	}
-	else if(pts_module_valid_user_command($command))
-	{
-		list($module, $module_command) = explode(".", $command);
-
-		pts_module_manager::set_current_module($module);
-		pts_module_run_user_command($module, $module_command, $pass_args);
-		pts_module_manager::set_current_module(null);
-	}
-
-	pts_module_process("__post_option_process", $command);
-	pts_set_assignment_next("PREV_COMMAND", $command);
-	pts_assignment_manager::clear_all();
-}
 function pts_run_option_next($command, $pass_args = null, $set_assignments = "")
 {
-	return pts_command_run_manager::add_run_command($command, $pass_args, $set_assignments);
-}
-function pts_clean_information_string($str)
-{
-	// Clean a string containing hardware information of some common things to change/strip out
-	static $remove_phrases = null;
-	static $change_phrases = null;
-
-	if($remove_phrases == null)
-	{
-		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-remove.list");
-		$remove_phrases = pts_strings::trim_explode("\n", $word_file);
-	}
-	if($change_phrases == null)
-	{
-		$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-replace.list");
-		$phrases_r = pts_strings::trim_explode("\n", $word_file);
-		$change_phrases = array();
-
-		foreach($phrases_r as &$phrase)
-		{
-			list($replace, $replace_with) = pts_strings::trim_explode("=", $phrase);
-			$change_phrases[$replace_with] = $replace;
-		}
-	}
-
-	$str = str_ireplace($remove_phrases, " ", $str);
-
-	foreach($change_phrases as $new_phrase => $original_phrase)
-	{
-		$str = str_ireplace($original_phrase, $new_phrase, $str);
-	}
-
-	return pts_trim_spaces($str);
+	return pts_command_execution_manager::add_to_queue($command, $pass_args, $set_assignments);
 }
 function pts_exit($string = null, $exit_status = 0)
 {
@@ -150,22 +33,6 @@ function pts_exit($string = null, $exit_status = 0)
 	define("PTS_EXIT", 1);
 	echo $string;
 	exit($exit_status);
-}
-function pts_create_lock($lock_file, &$file_pointer)
-{
-	$file_pointer = fopen($lock_file, "w");
-	chmod($lock_file, 0644);
-	return $file_pointer != false && flock($file_pointer, LOCK_EX | LOCK_NB);
-}
-function pts_release_lock(&$file_pointer, $lock_file)
-{
-	// Remove lock
-	if(is_resource($file_pointer))
-	{
-		fclose($file_pointer);
-	}
-
-	pts_unlink($lock_file);
 }
 function pts_xml_read_single_value($file, $xml_option)
 {

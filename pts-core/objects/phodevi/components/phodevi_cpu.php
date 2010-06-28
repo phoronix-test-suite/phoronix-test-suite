@@ -271,7 +271,7 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(!empty($info))
 		{
-			$info = pts_clean_information_string($info);
+			$info = phodevi::clean_info_string($info);
 		}
 		else
 		{

@@ -864,7 +864,7 @@ class phodevi_gpu extends phodevi_device_interface
 	
 		$clean_phrases = array("OpenGL Engine");
 		$info = str_replace($clean_phrases, "", $info);
-		$info = pts_clean_information_string($info);
+		$info = phodevi::clean_info_string($info);
 
 		return $info;
 	}

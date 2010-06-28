@@ -23,11 +23,10 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = "Phoromatic Client";
-	const module_version = "0.6.0";
+	const module_version = "0.6.1";
 	const module_description = "The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/";
 	const module_author = "Phoronix Media";
 
-	static $phoromatic_lock = null;
 	static $phoromatic_server_build = false;
 
 	static $phoromatic_host = null;
@@ -100,7 +99,7 @@ class phoromatic extends pts_module_interface
 
 	public static function user_start()
 	{
-		if(!pts_create_lock(PTS_USER_DIR . "phoromatic_lock", self::$phoromatic_lock))
+		if(pts_client::create_lock(PTS_USER_DIR . "phoromatic_lock") == false)
 		{
 			echo pts_string_header("Phoromatic is already running.");
 			return false;
@@ -420,7 +419,7 @@ class phoromatic extends pts_module_interface
 				case M_PHOROMATIC_RESPONSE_EXIT:
 					echo "\nPhoromatic received a remote command to exit.\n";
 					phoromatic::update_system_status("Exiting Phoromatic");
-					pts_release_lock(self::$phoromatic_lock, PTS_USER_DIR . "phoromatic_lock");
+					pts_client::release_lock(PTS_USER_DIR . "phoromatic_lock");
 					$exit_loop = true;
 					break;
 				case M_PHOROMATIC_RESPONSE_SERVER_MAINTENANCE:
@@ -658,7 +657,7 @@ class phoromatic extends pts_module_interface
 	{
 		echo "\n" . $title . ":\n";
 		echo "\t" . $description . "\n";
-		echo "\tRuns at " . $start_time . " on " . pts_parse_week_string($active_on) . ".\n";
+		echo "\tRuns at " . $start_time . " on " . pts_strings::parse_week_string($active_on) . ".\n";
 	}
 
 

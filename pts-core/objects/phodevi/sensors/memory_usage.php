@@ -76,14 +76,14 @@ class memory_usage implements phodevi_sensor
 					}
 					else if($line_type == "-/+ buffers/cache" && $TYPE != "SWAP")
 					{
-						$buffers_and_cache = pts_first_element_in_array(explode(' ', pts_trim_spaces($line_parts[1])));						
+						$buffers_and_cache = pts_first_element_in_array(explode(' ', pts_strings::trim_spaces($line_parts[1])));						
 					}
 				}
 			}
 
 			if(!empty($grab_line))
 			{
-				$grab_line = pts_trim_spaces($grab_line);
+				$grab_line = pts_strings::trim_spaces($grab_line);
 				$mem_parts = explode(" ", $grab_line);
 
 				if($READ == "USED")

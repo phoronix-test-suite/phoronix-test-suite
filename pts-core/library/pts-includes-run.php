@@ -520,8 +520,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	$lock_file = $test_directory . "run_lock";
-	$test_fp = null;
-	if(!pts_create_lock($lock_file, $test_fp))
+	if(pts_client::create_lock($lock_file) == false)
 	{
 		$display_mode->test_run_error("The " . $test_identifier . " test is already running.");
 		return false;
@@ -542,7 +541,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	{
 		// Ensure enough space is available on disk during testing process
 		$display_mode->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run.");
-		pts_release_lock($test_fp, $lock_file);
+		pts_client::release_lock($lock_file);
 		return false;
 	}
 
@@ -583,7 +582,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	pts_user_message($test_profile->get_pre_run_message());
-	$runtime_identifier = pts_read_assignment("START_TIME");
+	$runtime_identifier = time();
 	$execute_binary_prepend = "";
 
 	if(!$cache_share_present && $test_profile->is_root_required())
@@ -805,7 +804,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(is_file(PTS_USER_DIR . "halt-testing") || is_file(PTS_USER_DIR . "skip-test"))
 		{
-			pts_release_lock($test_fp, $lock_file);
+			pts_client::release_lock($lock_file);
 			return false;
 		}
 	}
@@ -963,7 +962,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	}
 
 	// Remove lock
-	pts_release_lock($test_fp, $lock_file);
+	pts_client::release_lock($lock_file);
 
 	return $result_format == "NO_RESULT" ? true : $test_results;
 }

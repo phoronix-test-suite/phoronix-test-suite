@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,19 +20,19 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_command_run_manager
+class pts_command_execution_manager
 {
 	private static $to_run = array();
 
-	public static function add_run_command($command, $pass_args = null, $set_assignments = "")
+	public static function add_to_queue($command, $pass_args = null, $set_assignments = "")
 	{
 		return array_push(self::$to_run, new pts_command_run($command, $pass_args, $set_assignments));
 	}
-	public static function pull_next_run_command()
+	public static function pull_next_in_queue()
 	{
 		return array_shift(self::$to_run);
 	}
-	public static function add_assignment_to_next_command($assignment, $value)
+	public static function add_assignment_to_next_in_queue($assignment, $value)
 	{
 		if(($next_option = array_shift(self::$to_run)) != null)
 		{

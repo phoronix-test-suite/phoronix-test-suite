@@ -39,9 +39,8 @@ class install_test implements pts_option_interface
 		$display_mode = pts_get_display_mode_object();
 
 		// Create a lock
-		$lock_pointer = null;
 		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";
-		$lock_release = pts_create_lock($lock_path, $lock_pointer);
+		pts_client::create_lock($lock_path);
 
 		// Any external dependencies?
 		$satisfied_tests = array(); // Tests with no dependencies or with all dependencies installed
@@ -76,11 +75,7 @@ class install_test implements pts_option_interface
 			$items_to_install = pts_virtual_suite_tests("prev-test-identifier");
 		}
 
-		if($lock_release)
-		{
-			pts_release_lock($lock_pointer, $lock_path);
-		}
-
+		pts_client::release_lock($lock_path);
 		pts_set_assignment_next("PREV_TEST_IDENTIFIER", $items_to_install);
 	}
 }

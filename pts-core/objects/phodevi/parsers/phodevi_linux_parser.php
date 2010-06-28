@@ -190,9 +190,9 @@ class phodevi_linux_parser
 					break;
 			}
 
-			$start_stat = pts_trim_spaces(file_get_contents($path));
+			$start_stat = pts_strings::trim_spaces(file_get_contents($path));
 			usleep(500000);
-			$end_stat = pts_trim_spaces(file_get_contents($path));
+			$end_stat = pts_strings::trim_spaces(file_get_contents($path));
 
 			$start_stat = explode(" ", $start_stat);
 			$end_stat = explode(" ", $end_stat);
@@ -284,7 +284,7 @@ class phodevi_linux_parser
 
 							if($od_option == $attribute)
 							{
-								$od_value = pts_trim_spaces($line_r[1]);
+								$od_value = pts_strings::trim_spaces($line_r[1]);
 								$od_value = str_replace(array("%"), "", $od_value);
 								$od_value_r = explode(" ", $od_value);
 
@@ -651,7 +651,7 @@ class phodevi_linux_parser
 
 				if(($strlen = strlen($sub_pci_info)) >= 6 && $strlen < 96)
 				{
-					$info = pts_clean_information_string($sub_pci_info);
+					$info = phodevi::clean_info_string($sub_pci_info);
 				}
 			}
 		}

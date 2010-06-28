@@ -352,9 +352,8 @@ class run_test implements pts_option_interface
 		}
 
 		// Create a lock
-		$lock_pointer = null;
 		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";
-		$lock_release = pts_create_lock($lock_path, $lock_pointer);
+		pts_client::create_lock($lock_path);
 
 		// Run the actual tests
 		pts_module_process("__pre_run_process", $test_run_manager);
@@ -441,11 +440,7 @@ class run_test implements pts_option_interface
 		}
 		echo "\n";
 
-		if($lock_release)
-		{
-			pts_release_lock($lock_pointer, $lock_path);
-		}
-
+		pts_client::release_lock($lock_path);
 		pts_set_assignment_next("PREV_TEST_IDENTIFIER", $test_run_manager->get_tests_to_run_identifiers());
 	}
 }
