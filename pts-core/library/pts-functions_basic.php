@@ -103,4 +103,61 @@ function pts_to_array($var)
 	return !is_array($var) ? array($var) : $var;
 }
 
+function pts_exec($exec, $extra_vars = null)
+{
+	// Same as shell_exec() but with the PTS env variables added in
+	return shell_exec(pts_variables_export_string($extra_vars) . $exec);
+}
+function pts_remove($object, $ignore_files = null, $remove_root_directory = false)
+{
+	if(is_dir($object))
+	{
+		$object = pts_add_trailing_slash($object);
+	}
+
+	foreach(pts_glob($object . "*") as $to_remove)
+	{
+		if(is_file($to_remove))
+		{
+			if(is_array($ignore_files) && in_array(basename($to_remove), $ignore_files))
+			{
+				continue; // Don't remove the file
+			}
+			else
+			{
+				@unlink($to_remove);
+			}
+		}
+		else if(is_dir($to_remove))
+		{
+			pts_remove($to_remove, $ignore_files, true);
+		}
+	}
+
+	if($remove_root_directory && is_dir($object) && count(pts_glob($object . "/*")) == 0)
+	{
+		@rmdir($object);
+	}
+}
+function pts_copy($from, $to)
+{
+	// Copies a file
+	if(!is_file($to) || md5_file($from) != md5_file($to))
+	{
+		copy($from, $to);
+	}
+}
+function pts_rename($from, $to)
+{
+	return rename($from, $to);
+}
+function pts_symlink($from, $to)
+{
+	return @symlink($from, $to);
+}
+function pts_move($from, $to)
+{
+	return rename($from, $to);
+}
+
 ?>

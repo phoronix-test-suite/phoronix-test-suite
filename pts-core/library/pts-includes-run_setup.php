@@ -59,7 +59,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 		$current_software = array();
 	}
 
-	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_identifier())
+	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE"))
 	{
 		if(count($current_identifiers) > 0)
 		{
@@ -119,7 +119,7 @@ function pts_prompt_save_file_name(&$test_run_manager, $check_env = true)
 		}
 	}
 
-	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_save_name())
+	if(pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"))
 	{
 		while(($is_reserved_word = pts_is_run_object($proposed_name)) || empty($proposed_name))
 		{

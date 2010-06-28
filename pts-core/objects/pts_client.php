@@ -425,6 +425,26 @@ class pts_client
 			}
 		}
 	}
+	public static function cache_suite_calls()
+	{
+		pts_supported_suites_array();
+		pts_suite_name_to_identifier(-1);
+	}
+	public static function cache_test_calls()
+	{
+		pts_tests::supported_tests();
+		pts_test_name_to_identifier(-1);
+	}
+	public static function cache_hardware_calls()
+	{
+		pts_hw_string();
+		phodevi::supported_sensors();
+		phodevi::unsupported_sensors();
+	}
+	public static function cache_software_calls()
+	{
+		pts_sw_string();
+	}
 }
 
 ?>

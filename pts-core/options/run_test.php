@@ -24,13 +24,13 @@ class run_test implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("run", "batch", "execution");
+		return array("run", "execution");
 	}
 	public static function run($to_run_identifiers)
 	{
 		if(pts_read_assignment("IS_BATCH_MODE"))
 		{
-			if(!pts_batch_mode_configured() && !pts_is_assignment("AUTOMATED_MODE"))
+			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == false && !pts_is_assignment("AUTOMATED_MODE"))
 			{
 				echo pts_string_header("The batch mode must first be configured.\nRun: phoronix-test-suite batch-setup");
 				return false;
@@ -91,7 +91,7 @@ class run_test implements pts_option_interface
 					}
 				}
 
-				if(pts_read_assignment("IS_BATCH_MODE") && pts_batch_run_all_test_options())
+				if(pts_read_assignment("IS_BATCH_MODE") && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
 				{
 					list($test_arguments, $test_arguments_description) = pts_generate_batch_run_options($to_run);
 				}
@@ -266,7 +266,7 @@ class run_test implements pts_option_interface
 				}
 
 				// Prompt Description
-				if(!pts_is_assignment("AUTOMATED_MODE") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_batch_prompt_test_description()))
+				if(!pts_is_assignment("AUTOMATED_MODE") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
 				{
 					if(empty($test_description))
 					{

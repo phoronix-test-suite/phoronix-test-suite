@@ -150,6 +150,11 @@ class pts_config
 
 		return !empty($read_value) ? $read_value : $predefined_value;
 	}
+	public static function read_bool_config($xml_pointer, $predefined_value = false, &$tandem_xml = null)
+	{
+		$value = read_user_config($xml_pointer, $predefined_value, $tandem_xml);
+		return pts_strings::string_bool($value);
+	}
 	public static function read_graph_config($xml_pointer, $predefined_value = false, &$tandem_xml = null)
 	{
 		// Generic call for reading a config file

@@ -24,7 +24,7 @@ class gui_gtk implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("gui", "run", "gtk", "install", "install_dependencies", "comparisons", "unit_caching");
+		return array("gui", "run", "gtk", "install", "install_dependencies", "comparisons");
 	}
 	public static function run($r)
 	{
@@ -82,21 +82,21 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$startup_tasks = array(
-		array("pts_cache_hardware_calls", "Building Hardware Information"),
-		array("pts_cache_software_calls", "Building Software Information"),
-		array("pts_cache_suite_calls", "Caching Suite Information"),
-		array("pts_cache_test_calls", "Caching Test Information"),
-		array("pts_download_all_generic_reference_system_comparison_results", "Downloading Reference Comparison Results"),
-		array("pts_generic_reference_system_build_cache", "Building Reference Comparison Cache")
+		array("Building Hardware Information", array("pts_client", "cache_hardware_calls")),
+		array("Building Software Information", array("pts_client", "cache_software_calls")),
+		array("Caching Suite Information", array("pts_client", "cache_suite_calls")),
+		array("Caching Test Information", array("pts_client", "cache_test_calls")),
+		array("Downloading Reference Comparison Results", "pts_download_all_generic_reference_system_comparison_results"),
+		array("Building Reference Comparison Cache", "pts_generic_reference_system_build_cache")
 		);
 
 		$progress_window = new pts_gtk_simple_progress_window();
 
 		$tasks_completed = 0;
 		$task_count = count($startup_tasks);
-		foreach($startup_tasks as $function => $task)
+		foreach($startup_tasks as &$task)
 		{
-			list($task_call, $task_string) = $task;
+			list($task_string, $task_call) = $task;
 			$progress_window->update_progress_bar(($tasks_completed / $task_count) * 100, $task_string);
 			call_user_func($task_call);
 			$tasks_completed++;

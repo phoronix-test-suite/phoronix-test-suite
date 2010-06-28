@@ -24,7 +24,7 @@ class analyze_image_delta implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("run", "iqc");
+		return array("run");
 	}
 	public static function argument_checks()
 	{
@@ -106,14 +106,14 @@ class analyze_image_delta implements pts_option_interface
 			{
 				for($y = 0; $y < $img_height; $y++)
 				{
-					$base_image_color = pts_rgb_gd_color_at($base_img, $x, $y);
-					$compare_image_color = pts_rgb_gd_color_at($compare_img, $x, $y);
+					$base_image_color = pts_image::rgb_gd_color_at($base_img, $x, $y);
+					$compare_image_color = pts_image::rgb_gd_color_at($compare_img, $x, $y);
 
-					if($base_image_color == $compare_image_color || pts_rgb_int_diff($base_image_color, $compare_image_color) < 9)
+					if($base_image_color == $compare_image_color || pts_image::rgb_int_diff($base_image_color, $compare_image_color) < 9)
 					{
-						if(($cords = pts_color_pixel_delta($base_img, $compare_img, $x, $y)))
+						if(($cords = pts_image::color_pixel_delta($base_img, $compare_img, $x, $y)))
 						{
-							$pixel_rgb = pts_rgb_gd_color_at($delta_img, $cords[0], $cords[1]);
+							$pixel_rgb = pts_image::rgb_gd_color_at($delta_img, $cords[0], $cords[1]);
 							$color_invert = imagecolorresolve($delta_img, 255 - $pixel_rgb[0], 255 - $pixel_rgb[1], 255 - $pixel_rgb[2]);
 							imagesetpixel($delta_img, $x, $y, $color_invert);
 							$img_changed = true;
