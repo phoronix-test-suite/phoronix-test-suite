@@ -23,7 +23,7 @@
 interface pts_option_interface
 {
 	// If a class implementing this interface has a public static function required_function_sets()
-	// that returns an array, it will automatically load those array elements using pts_load_function_set()
+	// that returns an array, it will automatically load those array elements
 
 	// If a class implementing this interface has a public static function argument_checks()
 	// that returns an array of pts_argument_check options, pts-core will automatically perform the argument checks prior to running the function

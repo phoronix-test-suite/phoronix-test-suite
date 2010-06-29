@@ -23,6 +23,33 @@
 
 class pts_loader
 {
+	public static function load_run_option($option)
+	{
+		if(is_file(COMMAND_OPTIONS_DIR . $option . ".php"))
+		{
+			if(!class_exists($option, false))
+			{
+				include(COMMAND_OPTIONS_DIR . $option . ".php");
+			}
+
+			if(method_exists($option, "required_function_sets"))
+			{
+				$required_function_sets = call_user_func(array($option, "required_function_sets"));
+
+				foreach($required_function_sets as $to_load)
+				{
+					pts_loader::load_function_set($to_load);
+				}
+			}
+		}
+	}
+	public static function load_function_set($title)
+	{
+		$includes_file = PTS_LIBRARY_PATH . "pts-includes-" . $title . ".php";
+		$functions_file = PTS_LIBRARY_PATH . "pts-functions_" . $title . ".php";
+
+		return (is_file($includes_file) && include_once($includes_file)) || (is_file($functions_file) && include_once($functions_file));
+	}
 	public static function load_definitions($definition_file)
 	{
 		static $loaded_definition_files = null;

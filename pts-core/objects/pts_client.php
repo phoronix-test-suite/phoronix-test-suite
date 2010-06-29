@@ -60,7 +60,7 @@ class pts_client
 		{
 			if(!class_exists($option, false))
 			{
-				pts_load_run_option($option);
+				pts_loader::load_run_option($option);
 			}
 
 			if(method_exists($option, $check_function))
@@ -75,7 +75,7 @@ class pts_client
 	{
 		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && !class_exists($command, false))
 		{
-			pts_load_run_option($command);
+			pts_loader::load_run_option($command);
 		}
 
 		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && method_exists($command, "argument_checks"))

@@ -34,14 +34,65 @@ define("TYPE_CHAR_COLON", (1 << 7));
 define("TYPE_CHAR_COMMA", (1 << 8));
 
 require(PTS_LIBRARY_PATH . "pts.php");
-require(PTS_LIBRARY_PATH . "pts-functions_loading.php");
-require(PTS_LIBRARY_PATH . "pts-functions_directories.php");
+
+function pts_define_directories()
+{
+	// User's home directory for storing results, module files, test installations, etc.
+	define("PTS_CORE_PATH", PTS_PATH . "pts-core/");
+
+	if(function_exists("pts_user_home"))
+	{
+		define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
+		define("PTS_CORE_STORAGE", PTS_USER_DIR . "core.pt2so");
+	}
+
+	// Misc Locations
+	define("MODULE_DIR", PTS_CORE_PATH . "modules/");
+	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
+	define("MODULE_DATA_DIR", PTS_USER_DIR . "modules-data/");
+	define("DEFAULT_DOWNLOAD_CACHE_DIR", PTS_USER_DIR . "download-cache/");
+	define("TEST_LIBRARIES_DIR", PTS_CORE_PATH . "test-libraries/");
+	define("STATIC_DIR", PTS_CORE_PATH . "static/");
+	define("COMMAND_OPTIONS_DIR", PTS_CORE_PATH . "options/");
+	define("RESULTS_VIEWER_DIR", STATIC_DIR . "results-viewer/");
+
+	// Test & Suite Locations
+	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");
+	define("XML_PROFILE_CTP_BASE_DIR", PTS_PATH . "pts/base-test-profiles/");
+	define("XML_SUITE_DIR", PTS_PATH . "pts/test-suites/");
+	define("TEST_RESOURCE_DIR", PTS_PATH . "pts/test-resources/");
+	define("TEST_RESOURCE_CTP_BASE_DIR", PTS_PATH . "pts/base-test-resources/");
+	define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
+	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
+	define("TEST_RESOURCE_LOCAL_DIR", PTS_USER_DIR . "test-resources/");
+}
 
 if(PTS_MODE == "CLIENT" || defined("PTS_AUTO_LOAD_OBJECTS"))
 {
 	function __autoload($to_load)
 	{
-		pts_load_object($to_load);
+		static $sub_objects = null;
+
+		if($sub_objects == null)
+		{
+			$sub_objects = array();
+
+			foreach(array_merge(glob(PTS_PATH . "pts-core/objects/*/*.php"), glob(PTS_PATH . "pts-core/objects/*/*/*.php")) as $file)
+			{
+				$object_name = basename($file, ".php");
+				$sub_objects[$object_name] = $file;
+			}
+		}
+
+		if(is_file(PTS_PATH . "pts-core/objects/" . $to_load . ".php"))
+		{
+			include(PTS_PATH . "pts-core/objects/" . $to_load . ".php");
+		}
+		else if(isset($sub_objects[$to_load]))
+		{
+			include($sub_objects[$to_load]);
+			unset($sub_objects[$to_load]);
+		}
 	}
 }
 if(PTS_MODE == "LIB")
