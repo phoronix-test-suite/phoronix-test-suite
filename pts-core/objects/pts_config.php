@@ -152,7 +152,7 @@ class pts_config
 	}
 	public static function read_bool_config($xml_pointer, $predefined_value = false, &$tandem_xml = null)
 	{
-		$value = read_user_config($xml_pointer, $predefined_value, $tandem_xml);
+		$value = self::read_user_config($xml_pointer, $predefined_value, $tandem_xml);
 		return pts_strings::string_bool($value);
 	}
 	public static function read_graph_config($xml_pointer, $predefined_value = false, &$tandem_xml = null)

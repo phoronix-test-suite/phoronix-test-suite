@@ -456,9 +456,9 @@ class phodevi_gpu extends phodevi_device_interface
 				// Using override modes and this mode is not present
 				unset($available_modes[$mode_index]);
 			}
-			else if($current_pixel_count > 614400 && ($mode[0] * $mode[1]) < 480000)
+			else if($current_pixel_count > 614400 && ($mode[0] * $mode[1]) < 480000 && stripos(phodevi::read_name("gpu"), "llvmpipe") === false)
 			{
-				// For displays larger than 1024 x 600, drop modes below 800 x 600
+				// For displays larger than 1024 x 600, drop modes below 800 x 600 unless llvmpipe is being used
 				unset($available_modes[$mode_index]);
 			}
 			else if($current_pixel_count > 480000 && !in_array($this_ratio, $supported_ratios))
