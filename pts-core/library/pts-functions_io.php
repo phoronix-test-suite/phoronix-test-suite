@@ -21,21 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_read_user_input()
-{
-	return trim(fgets(STDIN));
-}
-function pts_text_input($question, $allow_null = false)
-{
-	do
-	{
-		echo "\n" . $question . ": ";
-		$answer = pts_read_user_input();
-	}
-	while(!$allow_null && empty($answer));
-
-	return $answer;
-}
 function pts_user_message($message)
 {
 	if(!empty($message))
@@ -45,7 +30,7 @@ function pts_user_message($message)
 		if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
 		{
 			echo "\nHit Any Key To Continue...\n";
-			pts_read_user_input();
+			pts_user_io::read_user_input();
 		}
 	}
 }
@@ -66,7 +51,7 @@ function pts_text_select_menu($user_string, $options_r, $allow_multi_select = fa
 			echo ($i + 1) . ": " . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$i] . "\n";
 		}
 		echo "\n" . $user_string . ": ";
-		$select_choice = pts_read_user_input();
+		$select_choice = pts_user_io::read_user_input();
 
 		// Validate possible multi-select
 		$multi_choice = pts_strings::trim_explode(",", $select_choice);
@@ -142,7 +127,7 @@ function pts_bool_question($question, $default = true, $question_id = "UNKNOWN",
 				echo $question . " ";
 			}
 
-			$input = strtolower(pts_read_user_input());
+			$input = strtolower(pts_user_io::read_user_input());
 		}
 		while($input != "y" && $input != "n" && $input != "");
 

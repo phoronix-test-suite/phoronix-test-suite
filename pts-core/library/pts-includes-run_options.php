@@ -62,7 +62,7 @@ function pts_prompt_test_options($identifier)
 			else
 			{
 				echo "\n" . $o->get_name() . "\n";
-				$value = pts_text_input("Enter Value");
+				$value = pts_user_io::prompt_user_input("Enter Value");
 			}
 
 			array_push($text_args, array($o->format_option_display_from_input($value)));

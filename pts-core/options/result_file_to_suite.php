@@ -38,13 +38,13 @@ class result_file_to_suite implements pts_option_interface
 
 		while(($result_file = pts_find_result_file($result_file)) == false)
 		{
-			$result_file = pts_text_input("Enter name of result file");
+			$result_file = pts_user_io::prompt_user_input("Enter name of result file");
 		}
 
-		$suite_name = pts_text_input("Enter name of suite");
+		$suite_name = pts_user_io::prompt_user_input("Enter name of suite");
 		$suite_test_type = pts_text_select_menu("Select test type", pts_types::subsystem_targets());
-		$suite_maintainer = pts_text_input("Enter suite maintainer name");
-		$suite_description = pts_text_input("Enter suite description");
+		$suite_maintainer = pts_user_io::prompt_user_input("Enter suite maintainer name");
+		$suite_description = pts_user_io::prompt_user_input("Enter suite description");
 
 		$xml_writer = new tandem_XmlWriter();
 		$xml_writer->addXmlObject(P_SUITE_TITLE, 0, $suite_name);

@@ -75,7 +75,7 @@ class module_setup implements pts_option_interface
 						do
 						{
 							echo "\n" . $module_option->get_formatted_question();
-							$input = pts_read_user_input();
+							$input = pts_user_io::read_user_input();
 						}
 						while(!$module_option->is_supported_value($input));
 					}

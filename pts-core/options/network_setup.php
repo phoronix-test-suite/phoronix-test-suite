@@ -31,8 +31,8 @@ class network_setup implements pts_option_interface
 			return false;
 		}
 
-		$proxy_address = pts_text_input("Enter IP address / server name of proxy");
-		$proxy_port = pts_text_input("Enter TCP port for proxy server");
+		$proxy_address = pts_user_io::prompt_user_input("Enter IP address / server name of proxy");
+		$proxy_port = pts_user_io::prompt_user_input("Enter TCP port for proxy server");
 
 		echo "\nTesting Proxy Server (" . $proxy_address . ":" . $proxy_port . ")\n";
 

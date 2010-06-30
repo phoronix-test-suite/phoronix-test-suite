@@ -80,7 +80,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 			else
 			{
 				echo "Enter a unique name for this test run: ";
-				$results_identifier = trim(str_replace(array('/'), "", pts_read_user_input()));
+				$results_identifier = trim(str_replace(array('/'), "", pts_user_io::read_user_input()));
 			}
 			$times_tried++;
 
@@ -130,7 +130,7 @@ function pts_prompt_save_file_name(&$test_run_manager, $check_env = true)
 			}
 
 			echo "Enter a name to save these results: ";
-			$proposed_name = pts_read_user_input();
+			$proposed_name = pts_user_io::read_user_input();
 			$custom_title = $proposed_name;
 			$proposed_name = pts_input_string_to_identifier($proposed_name);
 		}
@@ -157,7 +157,7 @@ function pts_prompt_user_tags($default_tags = null)
 
 	if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
 	{
-		$tags_input .= pts_text_input("Tags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas)", true);
+		$tags_input .= pts_user_io::prompt_user_input("Tags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas)", true);
 
 		$tags_input = pts_strings::keep_in_string($tags_input, TYPE_CHAR_LETTER | TYPE_CHAR_NUMERIC | TYPE_CHAR_DECIMAL | TYPE_CHAR_DASH | TYPE_CHAR_UNDERSCORE | TYPE_CHAR_COLON | TYPE_CHAR_SPACE | TYPE_CHAR_COMMA);
 		$tags_input = trim($tags_input);

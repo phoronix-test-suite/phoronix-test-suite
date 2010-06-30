@@ -36,7 +36,7 @@ class copy_run_in_result_file implements pts_option_interface
 		$result_file_identifiers = $result_file->get_system_identifiers();
 
 		$copy_identifier = pts_text_select_menu("Select the test run to copy", $result_file_identifiers);
-		$copy_identifier_new = pts_text_input("Enter the new identifier of the copied run");
+		$copy_identifier_new = pts_user_io::prompt_user_input("Enter the new identifier of the copied run");
 		$merge_selects = array();
 
 		foreach($result_file_identifiers as $identifier)

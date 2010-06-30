@@ -58,7 +58,7 @@ class bisect extends pts_module_interface
 		{
 			do
 			{
-				$selected_index = pts_text_input("Enter the index of the test that you wish to run");
+				$selected_index = pts_user_io::prompt_user_input("Enter the index of the test that you wish to run");
 			}
 			while(!isset($result_objects[($selected_index--)]));
 		}

@@ -30,10 +30,10 @@ class build_suite implements pts_option_interface
 	{
 		echo pts_string_header("Test Suite Creation Utility");
 
-		$suite_name = pts_text_input("Enter name of suite");
+		$suite_name = pts_user_io::prompt_user_input("Enter name of suite");
 		$suite_test_type = pts_text_select_menu("Select test type", pts_types::subsystem_targets());
-		$suite_maintainer = pts_text_input("Enter suite maintainer name");
-		$suite_description = pts_text_input("Enter suite description");
+		$suite_maintainer = pts_user_io::prompt_user_input("Enter suite maintainer name");
+		$suite_description = pts_user_io::prompt_user_input("Enter suite description");
 
 		$possible_suites = pts_suites::available_suites();
 		$possible_tests = array();

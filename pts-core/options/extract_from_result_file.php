@@ -52,7 +52,7 @@ class extract_from_result_file implements pts_option_interface
 		do
 		{
 			echo "\nEnter new result file to extract to: ";
-			$extract_to = pts_read_user_input();
+			$extract_to = pts_user_io::read_user_input();
 		}
 		while(empty($extract_to) || pts_is_test_result($extract_to));
 

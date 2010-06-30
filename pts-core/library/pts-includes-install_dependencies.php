@@ -142,7 +142,7 @@ function pts_install_external_dependencies_list($identifier, &$install_objects)
 
 					if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE"))
 					{		
-						pts_read_user_input();
+						pts_user_io::read_user_input();
 					}
 				}
 			}

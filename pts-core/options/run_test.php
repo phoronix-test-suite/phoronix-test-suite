@@ -275,7 +275,7 @@ class run_test implements pts_option_interface
 
 					echo pts_string_header("If you wish, enter a new description below.\nPress ENTER to proceed without changes.", "#");
 					echo "Current Description: " . $test_description . "\n\nNew Description: ";
-					$new_test_description = pts_read_user_input();
+					$new_test_description = pts_user_io::read_user_input();
 
 					if(!empty($new_test_description))
 					{
