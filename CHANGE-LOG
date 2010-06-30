@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.8 Alpha 1
+June 30, 2010
 
 - pts-core: Start work on pts_PieChart for generating pie charts
 - pts-core: When installing/running a test, make sure the TEST_ENV_DIR is writable
@@ -15,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Further tweaking of the PTS Results Viewer
 - pts-core: Drop analyze-linear-tracker command as we now auto-determine whether the result file is a tracker-type test
 - pts-core: Ensure unique color indexes where possible on rendered graph keys
+- pts-core: Lots of internal code changes for PTS3 plans
 - phodevi: When LLVMpipe is being used, support modes below 800 x 600
 - pts: Drop fgl-glxgears, fract, md-gromacs, memory-bandwidth, super-pi test profiles
 - pts: Update mplayer-base with newer MPlayer snapshot and add VA-API support
