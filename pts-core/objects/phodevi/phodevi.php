@@ -49,6 +49,20 @@ class phodevi
 		"Monitor" => "monitor"
 		);
 	}
+	public static function available_software_components()
+	{
+		return array(
+		"OS" => array("system", "operating-system"),
+		"Kernel" => array("system", "kernel-string"),
+		"Desktop" => array("system", "desktop-environment"),
+		"Display Server" => array("system", "display-server"),
+		"Display Driver" => array("system", "display-driver-string"),
+		"OpenGL" => array("system", "opengl-driver"),
+		"Compiler" => array("system", "compiler"),
+		"File-System" => array("system", "filesystem"),
+		"Screen Resolution" => array("gpu", "screen-resolution-string")
+		);
+	}
 	public static function load_sensors()
 	{
 		foreach(glob(PHODEVI_PATH . "sensors/*") as $sensor_obj_file)
@@ -187,6 +201,15 @@ class phodevi
 	public static function system_hardware($return_as_string = true)
 	{
 		return self::system_information_parse(self::available_hardware_devices(), $return_as_string);
+	}
+	public static function system_software($return_as_string = true)
+	{
+		return self::system_information_parse(self::available_software_components(), $return_as_string);
+	}
+	public static function system_id_string()
+	{
+		$components = array(phodevi::read_property("cpu", "model"), phodevi::read_name("motherboard"), phodevi::read_property("system", "operating-system"), phodevi::read_property("system", "compiler"));
+		return base64_encode(implode("__", $components));
 	}
 	public static function read_device_notes($device)
 	{
@@ -384,7 +407,14 @@ class phodevi
 
 		foreach($component_array as $string => $id)
 		{
-			$value = self::read_name($id);
+			if(is_array($id) && count($id) == 2)
+			{
+				$value = self::read_property($id[0], $id[1]);
+			}
+			else
+			{
+				$value = self::read_name($id);
+			}
 
 			if($value != -1 && !empty($value))
 			{

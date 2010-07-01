@@ -33,7 +33,7 @@ class list_possible_dependencies implements pts_option_interface
 		$dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependency_generic_packages());
 		sort($dependencies);
 
-		echo pts_text_list($dependencies);
+		echo pts_user_io::display_text_list($dependencies);
 		echo "\n";
 	}
 }

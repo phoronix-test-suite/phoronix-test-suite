@@ -81,6 +81,9 @@ class phodevi_system extends phodevi_device_interface
 			case "kernel-architecture":
 				$property = new phodevi_device_property("sw_kernel_architecture", PHODEVI_SMART_CACHE);
 				break;
+			case "kernel-string":
+				$property = new phodevi_device_property("sw_kernel_string", PHODEVI_SMART_CACHE);
+				break;
 			case "compiler":
 				$property = new phodevi_device_property("sw_compiler", PHODEVI_STAND_CACHE);
 				break;
@@ -338,6 +341,10 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $compiler_info;
+	}
+	public static function sw_kernel_string()
+	{
+		return phodevi::read_property("system", "kernel") . " (" . phodevi::read_property("system", "kernel-architecture") . ")";
 	}
 	public static function sw_kernel()
 	{

@@ -25,8 +25,8 @@ class system_info implements pts_option_interface
 	public static function run($r)
 	{
 		echo pts_string_header(pts_title(true) . "\nSystem Information");
-		echo "Hardware:\n" . pts_hw_string() . "\n\n";
-		echo "Software:\n" . pts_sw_string() . "\n\n";
+		echo "Hardware:\n" . phodevi::system_hardware(true) . "\n\n";
+		echo "Software:\n" . phodevi::system_hardware(true) . "\n\n";
 	}
 }
 

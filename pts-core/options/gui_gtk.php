@@ -1849,10 +1849,10 @@ class gui_gtk implements pts_option_interface
 		$notebook->set_size_request(540, 250);
 
 		pts_set_assignment("GTK_SYSTEM_INFO_NOTEBOOK", "Hardware");
-		$hw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_hw_string(false)), null, "No system information available.", false);
+		$hw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(phodevi::system_hardware(false)), null, "No system information available.", false);
 		pts_gtk_add_notebook_tab($notebook, $hw, "Hardware");
 
-		$sw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sw_string(false)), null, "No system information available.", false);
+		$sw = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(phodevi::system_software(false)), null, "No system information available.", false);
 		pts_gtk_add_notebook_tab($notebook, $sw, "Software");
 
 		//$sensors = pts_gtk_table(array("", ""), pts_array_with_key_to_2d(pts_sys_sensors_string(false)), null, "No system information available.", false);
@@ -1875,10 +1875,10 @@ class gui_gtk implements pts_option_interface
 		switch(pts_read_assignment("GTK_SYSTEM_INFO_NOTEBOOK"))
 		{
 			case "Hardware":
-				$to_copy = pts_hw_string();
+				$to_copy = phodevi::system_hardware(true);
 				break;
 			case "Software":
-				$to_copy = pts_sw_string();
+				$to_copy = phodevi::system_software(true);
 				break;
 		}
 

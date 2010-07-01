@@ -21,19 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_user_message($message)
-{
-	if(!empty($message))
-	{
-		echo $message . "\n";
-
-		if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
-		{
-			echo "\nHit Any Key To Continue...\n";
-			pts_user_io::read_user_input();
-		}
-	}
-}
 function pts_text_select_menu($user_string, $options_r, $allow_multi_select = false, $return_index = false)
 {
 	$option_count = count($options_r);
@@ -79,17 +66,6 @@ function pts_text_select_menu($user_string, $options_r, $allow_multi_select = fa
 	while(!$multi_select_pass && !(in_array($select_choice, $options_r) || isset($options_r[($select_choice - 1)]) && ($return_index || $select_choice = $options_r[($select_choice - 1)]) != null));
 
 	return $select_choice;
-}
-function pts_text_list($list_items, $line_start = "- ")
-{
-	$list = null;
-
-	foreach($list_items as &$item)
-	{
-		$list .= $line_start . $item . "\n";
-	}
-
-	return $list;
 }
 function pts_bool_question($question, $default = true, $question_id = "UNKNOWN", &$display_mode = null)
 {

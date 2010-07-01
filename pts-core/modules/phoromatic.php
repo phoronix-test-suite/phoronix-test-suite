@@ -56,8 +56,8 @@ class phoromatic extends pts_module_interface
 
 		$server_response = phoromatic::upload_to_remote_server(array(
 			"r" => "setup",
-			"h" => pts_hw_string(),
-			"s" => pts_sw_string(),
+			"h" => phodevi::system_hardware(true),
+			"s" => phodevi::system_software(true),
 			"o" => phodevi::read_property("system", "hostname"),
 			"sys_desc" => $options["system_description"]
 			),
@@ -339,8 +339,8 @@ class phoromatic extends pts_module_interface
 				return false;
 			}
 
-			$current_hw = pts_hw_string();
-			$current_sw = pts_sw_string();
+			$current_hw = phodevi::system_hardware(true);
+			$current_sw = phodevi::system_software(true);
 
 			echo "\nIdling 30 seconds for system to settle...\n";
 			sleep(30);
@@ -444,13 +444,13 @@ class phoromatic extends pts_module_interface
 					break;
 			}
 
-			if(pts_hw_string() != $current_hw || pts_sw_string() != $current_sw)
+			if(phodevi::system_hardware(true) != $current_hw || phodevi::system_software(true) != $current_sw)
 			{
 				// Hardware and/or software has changed while PTS/Phoromatic has been running, update the Phoromatic Server
 				echo "Updating Installed Hardware / Software With Phoromatic Server\n";
 				phoromatic::update_system_details();
-				$current_hw = pts_hw_string();
-				$current_sw = pts_sw_string();
+				$current_hw = phodevi::system_hardware(true);
+				$current_sw = phodevi::system_software(true);
 			}
 		}
 		while($exit_loop == false);
@@ -549,7 +549,7 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function update_system_details()
 	{
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => pts_hw_string(), "s" => pts_sw_string()));
+		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => phodevi::system_hardware(true), "s" => phodevi::system_software(true)));
 		self::$phoromatic_server_build = pts_xml_read_single_value($server_response, M_PHOROMATIC_SERVER_BUILD);
 
 		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;

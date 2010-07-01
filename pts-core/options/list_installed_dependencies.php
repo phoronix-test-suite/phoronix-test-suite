@@ -39,7 +39,7 @@ class list_installed_dependencies implements pts_option_interface
 		}
 		else
 		{
-			echo pts_text_list($dependencies);
+			echo pts_user_io::display_text_list($dependencies);
 			echo "\n";
 		}
 	}

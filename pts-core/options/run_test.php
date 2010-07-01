@@ -298,7 +298,7 @@ class run_test implements pts_option_interface
 
 		if(isset($pre_run_message))
 		{
-			pts_user_message($pre_run_message);
+			pts_user_io::display_interrupt_message($pre_run_message);
 		}
 
 		if($save_results)
@@ -317,8 +317,8 @@ class run_test implements pts_option_interface
 			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($file_name) || !pts_test_result_contains_result_identifier($file_name, $test_run_manager->get_results_identifier())))
 			{
 				$xml_results_writer->setXslBinding("pts-results-viewer.xsl");
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, 0, pts_hw_string());
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, 0, pts_sw_string());
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, 0, phodevi::system_hardware(true));
+				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, 0, phodevi::system_software(true));
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, 0, pts_current_user());
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, 0, date("Y-m-d H:i:s"));
 				//$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type));
@@ -343,8 +343,8 @@ class run_test implements pts_option_interface
 			$pso = new pts_storage_object(true, false);
 			$pso->add_object("test_run_manager", $test_run_manager);
 			$pso->add_object("batch_mode", pts_read_assignment("IS_BATCH_MODE"));
-			$pso->add_object("system_hardware", pts_hw_string(false));
-			$pso->add_object("system_software", pts_sw_string(false));
+			$pso->add_object("system_hardware", phodevi::system_hardware(false));
+			$pso->add_object("system_software", phodevi::system_software(true));
 
 			$pt2so_location = $results_directory . "objects.pt2so";
 			$pso->save_to_file($pt2so_location);
@@ -367,7 +367,7 @@ class run_test implements pts_option_interface
 
 		if(isset($post_run_message))
 		{
-			pts_user_message($post_run_message);
+			pts_user_io::display_interrupt_message($post_run_message);
 		}
 
 		if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("DEBUG_TEST_PROFILE") || $test_run_manager->get_tests_to_run_count() > 3)

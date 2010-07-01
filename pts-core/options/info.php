@@ -61,7 +61,7 @@ class info implements pts_option_interface
 			}
 
 			echo "\nContained Tests:\n\n";
-			echo pts_text_list(pts_virtual_suite_tests($to_info));
+			echo pts_user_io::display_text_list(pts_virtual_suite_tests($to_info));
 			echo "\n";
 		}
 		else if(pts_is_test($to_info))
@@ -131,7 +131,7 @@ class info implements pts_option_interface
 			if(!empty($dependencies) && !empty($dependencies[0]))
 			{
 				echo "\nSoftware Dependencies:\n";
-				echo pts_text_list($test->get_dependency_names());
+				echo pts_user_io::display_text_list($test->get_dependency_names());
 			}
 
 			$associated_suites = pts_suites_containing_test($to_info);
@@ -139,7 +139,7 @@ class info implements pts_option_interface
 			{
 				asort($associated_suites);
 				echo "\nSuites Using This Test:\n";
-				echo pts_text_list($associated_suites);
+				echo pts_user_io::display_text_list($associated_suites);
 			}
 			echo "\n";
 		}
@@ -149,12 +149,12 @@ class info implements pts_option_interface
 
 			echo "Title: " . $result_file->get_title() . "\nIdentifier: " . $to_info . "\nTest: " . $result_file->get_suite_name() . "\n";
 			echo "\nTest Result Identifiers:\n";
-			echo pts_text_list($result_file->get_system_identifiers());
+			echo pts_user_io::display_text_list($result_file->get_system_identifiers());
 
 			if(count(($tests = $result_file->get_unique_test_titles())) > 1)
 			{
 				echo "\nContained Tests:\n";
-				echo pts_text_list($tests);
+				echo pts_user_io::display_text_list($tests);
 			}
 			echo "\n";
 		}

@@ -64,7 +64,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 		if(count($current_identifiers) > 0)
 		{
 			echo "\nCurrent Test Identifiers:\n";
-			echo pts_text_list($current_identifiers);
+			echo pts_user_io::display_text_list($current_identifiers);
 			echo "\n";
 		}
 
@@ -86,7 +86,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 
 			$identifier_pos = (($p = array_search($results_identifier, $current_identifiers)) !== false ? $p : -1);
 		}
-		while((!$no_repeated_tests && $identifier_pos != -1 && !pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN")) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != pts_hw_string()) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != pts_sw_string()));
+		while((!$no_repeated_tests && $identifier_pos != -1 && !pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN")) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
 	}
 
 	if(empty($results_identifier))

@@ -50,12 +50,12 @@ class recover_run implements pts_option_interface
 			echo "\nThere is a compatibility problem with the test run to be recovered.\n";
 			return false;
 		}
-		if($pt2so_objects->read_object("system_hardware") != pts_hw_string(false))
+		if($pt2so_objects->read_object("system_hardware") != phodevi::system_hardware(false))
 		{
 			echo "\nThe system hardware does not match that of the recovered test run.\n";
 			return false;
 		}
-		if($pt2so_objects->read_object("system_software") != pts_sw_string(false))
+		if($pt2so_objects->read_object("system_software") != phodevi::system_software(false))
 		{
 			echo "\nThe system software does not match that of the recovered test run.\n";
 			return false;

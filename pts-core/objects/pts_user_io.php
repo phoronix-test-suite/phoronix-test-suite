@@ -37,6 +37,30 @@ class pts_user_io
 
 		return $answer;
 	}
+	public static function display_interrupt_message($message)
+	{
+		if(!empty($message))
+		{
+			echo $message . "\n";
+
+			if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
+			{
+				echo "\nHit Any Key To Continue...\n";
+				pts_user_io::read_user_input();
+			}
+		}
+	}
+	public static function display_text_list($list_items, $line_start = "- ")
+	{
+		$list = null;
+
+		foreach($list_items as &$item)
+		{
+			$list .= $line_start . $item . "\n";
+		}
+
+		return $list;
+	}
 }
 
 ?>

@@ -94,7 +94,7 @@ function pts_start_install($to_install, &$display_mode)
 	if(!pts_is_assignment("SILENCE_MESSAGES") && count($failed_installs) > 0 && count($tests) > 1)
 	{
 		echo "\nThe following tests failed to install:\n\n";
-		echo pts_text_list($failed_installs, "\t- ");
+		echo pts_user_io::display_text_list($failed_installs, "\t- ");
 		echo "\n";
 	}
 
@@ -495,11 +495,11 @@ function pts_install_test($identifier, &$display_mode)
 					}
 				}
 
-				pts_user_message($pre_install_message);
+				pts_user_io::display_interrupt_message($pre_install_message);
 				$install_time_length_start = time();
 				$install_log = pts_call_test_script($identifier, "install", null, TEST_ENV_DIR . $identifier . '/', pts_run_additional_vars($identifier), false);
 				$install_time_length = time() - $install_time_length_start;
-				pts_user_message($post_install_message);
+				pts_user_io::display_interrupt_message($post_install_message);
 
 				if(!empty($install_log))
 				{

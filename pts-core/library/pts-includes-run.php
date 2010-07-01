@@ -110,7 +110,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 		else
 		{
 			$message = "\n\nMultiple tests are not installed:\n\n";
-			$message .= pts_text_list($tests_missing);
+			$message .= pts_user_io::display_text_list($tests_missing);
 			$message .= "\nTo install, run: phoronix-test-suite install " . implode(' ', $tests_missing) . "\n\n";
 			echo $message;
 		}
@@ -581,7 +581,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		pts_call_test_script($test_identifier, "pre", "Running Pre-Test Script", $test_directory, $extra_runtime_variables, true, $display_mode);
 	}
 
-	pts_user_message($test_profile->get_pre_run_message());
+	pts_user_io::display_interrupt_message($test_profile->get_pre_run_message());
 	$runtime_identifier = time();
 	$execute_binary_prepend = "";
 
@@ -950,7 +950,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	$display_mode->test_run_end($test_results);
 
-	pts_user_message($test_profile->get_post_run_message());
+	pts_user_io::display_interrupt_message($test_profile->get_post_run_message());
 	pts_module_process("__post_test_run", $test_results);
 	$report_elapsed_time = !$cache_share_present && $test_results->get_result() != 0;
 	pts_test_update_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));

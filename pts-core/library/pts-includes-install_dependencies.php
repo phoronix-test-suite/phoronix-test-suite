@@ -223,7 +223,7 @@ function pts_install_packages_on_distribution_process($install_objects, &$displa
 		{
 			// hook into $display_mode here if it's desired
 			echo "\nThe following dependencies are needed and will be installed: \n\n";
-			echo pts_text_list(explode(' ', $install_objects));
+			echo pts_user_io::display_text_list(explode(' ', $install_objects));
 			echo "\nThis process may take several minutes.\n";
 
 			echo shell_exec("cd " . STATIC_DIR . "distro-scripts/ && sh install-" . $distribution . "-packages.sh " . $install_objects);

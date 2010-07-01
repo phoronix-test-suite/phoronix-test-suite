@@ -437,13 +437,13 @@ class pts_client
 	}
 	public static function cache_hardware_calls()
 	{
-		pts_hw_string();
+		phodevi::system_hardware(true);
 		phodevi::supported_sensors();
 		phodevi::unsupported_sensors();
 	}
 	public static function cache_software_calls()
 	{
-		pts_sw_string();
+		phodevi::system_software(true);
 	}
 }
 
