@@ -28,6 +28,9 @@
 		<Test>x264</Test>
 	</RunTest>
 	<RunTest>
+		<Test>ttsiod-renderer</Test>
+	</RunTest>
+	<RunTest>
 		<Test>compress-7zip</Test>
 	</RunTest>
 	<RunTest>
@@ -67,6 +70,9 @@
 		<Test>dcraw</Test>
 	</RunTest>
 	<RunTest>
+		<Test>network-loopback</Test>
+	</RunTest>
+	<RunTest>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>Operation: HWB Color Space</Description>
@@ -85,16 +91,6 @@
 		<Test>bullet</Test>
 		<Arguments>convex-trimesh</Arguments>
 		<Description>Test: Convex Trimesh</Description>
-	</RunTest>
-	<RunTest>
-		<Test>stream</Test>
-		<Arguments>Add</Arguments>
-		<Description>Add</Description>
-	</RunTest>
-	<RunTest>
-		<Test>stream</Test>
-		<Arguments>Copy</Arguments>
-		<Description>Copy</Description>
 	</RunTest>
 	<RunTest>
 		<Test>gui-toolkits</Test>
