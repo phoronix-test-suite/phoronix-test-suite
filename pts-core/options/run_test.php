@@ -344,7 +344,7 @@ class run_test implements pts_option_interface
 			$pso->add_object("test_run_manager", $test_run_manager);
 			$pso->add_object("batch_mode", pts_read_assignment("IS_BATCH_MODE"));
 			$pso->add_object("system_hardware", phodevi::system_hardware(false));
-			$pso->add_object("system_software", phodevi::system_software(true));
+			$pso->add_object("system_software", phodevi::system_software(false));
 
 			$pt2so_location = $results_directory . "objects.pt2so";
 			$pso->save_to_file($pt2so_location);
