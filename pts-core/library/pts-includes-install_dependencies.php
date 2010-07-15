@@ -28,9 +28,9 @@ function pts_install_package_on_distribution(&$display_mode, &$identifiers, &$te
 	$install_objects = array();
 	$install_objects_count = 0;
 
-	if(IS_WINDOWS)
+	if(IS_WINDOWS || pts_client::read_env("SKIP_EXTERNAL_DEPENDENCIES_CHECK"))
 	{
-		// TODO: Windows currently doesn't use any external dependencies
+		// Windows doesn't use any external dependencies
 		return true;
 	}
 
