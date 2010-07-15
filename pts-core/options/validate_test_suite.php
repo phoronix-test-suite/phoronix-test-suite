@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@
 
 class validate_test_suite implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("validation");
-	}
 	public static function run($r)
 	{
 		if(pts_is_suite($r[0]))
@@ -51,8 +47,8 @@ class validate_test_suite implements pts_option_interface
 		 	$suite_parser = new pts_suite_tandem_XmlReader($suite_identifier);
 
 			// Checks for missing tag errors and warnings
-			pts_validation_check_xml_tags($suite_parser, $error_empty_tags, $validation_errors);
-			pts_validation_check_xml_tags($suite_parser, $warning_empty_tags, $validation_warnings);
+			pts_validation::check_xml_tags($suite_parser, $error_empty_tags, $validation_errors);
+			pts_validation::check_xml_tags($suite_parser, $warning_empty_tags, $validation_warnings);
 
 			// Other checks
 			$contained_tests = $suite_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
@@ -79,8 +75,8 @@ class validate_test_suite implements pts_option_interface
 			}
 			else
 			{
-				pts_validation_print_problem("ERROR", $validation_errors);
-				pts_validation_print_problem("WARNING", $validation_warnings);
+				pts_validation::print_issue("ERROR", $validation_errors);
+				pts_validation::print_issue("WARNING", $validation_warnings);
 				echo "\n";
 			}
 		}

@@ -22,10 +22,6 @@
 
 class reference_comparison implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("comparisons");
-	}
 	public static function argument_checks()
 	{
 		return array(
@@ -36,7 +32,7 @@ class reference_comparison implements pts_option_interface
 	{
 		$result = $r["result"];
 
-		$reference_test_globals = pts_result_file_reference_tests($result);
+		$reference_test_globals = pts_result_comparisons::reference_tests_for_result($result);
 
 		if(count($reference_test_globals) == 0)
 		{

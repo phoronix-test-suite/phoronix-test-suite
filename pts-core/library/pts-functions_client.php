@@ -27,35 +27,10 @@ function pts_run_option_next($command, $pass_args = null, $set_assignments = "")
 {
 	return pts_command_execution_manager::add_to_queue($command, $pass_args, $set_assignments);
 }
-function pts_exit($string = null, $exit_status = 0)
-{
-	// Have PTS exit abruptly
-	define("PTS_EXIT", 1);
-	echo $string;
-	exit($exit_status);
-}
 function pts_xml_read_single_value($file, $xml_option)
 {
  	$xml_parser = new tandem_XmlReader($file);
 	return $xml_parser->getXMLValue($xml_option);
-}
-function pts_shutdown()
-{
-	// Shutdown process for PTS
-	define("PTS_END_TIME", time());
-
-	// Generate Phodevi Smart Cache
-	if(pts_client::read_env("NO_PHODEVI_CACHE") != 1)
-	{
-		if(pts_strings::string_bool(pts_config::read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
-		{
-			pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", phodevi::get_phodevi_cache_object(PTS_USER_DIR, PTS_CORE_VERSION));
-		}
-		else
-		{
-			pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", null);
-		}
-	}
 }
 function pts_proximity_match($search, $match_to)
 {
@@ -112,10 +87,6 @@ function pts_display_mode_holder(&$display_mode = null)
 	{
 		$current_mode = $display_mode;
 	}
-}
-function pts_anonymous_usage_reporting()
-{
-	return pts_strings::string_bool(pts_config::read_user_config(P_OPTION_USAGE_REPORTING, 0));
 }
 function pts_find_home($path)
 {

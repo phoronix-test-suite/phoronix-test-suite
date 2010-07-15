@@ -24,7 +24,7 @@ class gui_gtk implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("gui", "run", "gtk", "install", "install_dependencies", "comparisons");
+		return array("gui", "run", "gtk", "install", "install_dependencies");
 	}
 	public static function run($r)
 	{
@@ -86,8 +86,8 @@ class gui_gtk implements pts_option_interface
 		array("Building Software Information", array("pts_client", "cache_software_calls")),
 		array("Caching Suite Information", array("pts_client", "cache_suite_calls")),
 		array("Caching Test Information", array("pts_client", "cache_test_calls")),
-		array("Downloading Reference Comparison Results", "pts_download_all_generic_reference_system_comparison_results"),
-		array("Building Reference Comparison Cache", "pts_generic_reference_system_build_cache")
+		array("Downloading Reference Comparison Results", array("pts_client", "cache_generic_reference_systems_results")),
+		array("Building Reference Comparison Cache", array("pts_client", "cache_generic_reference_systems"))
 		);
 
 		$progress_window = new pts_gtk_simple_progress_window();
@@ -249,7 +249,7 @@ class gui_gtk implements pts_option_interface
 		$reference_comparison_objects = array();
 		if(($prev_identifier = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")))
 		{
-			$reference_tests = pts_result_file_reference_tests($prev_identifier);
+			$reference_tests = pts_result_comparisons::reference_tests_for_result($prev_identifier);
 			if(count($reference_tests) > 0)
 			{
 				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($prev_identifier, $reference_tests, $reference_comparison_objects);
@@ -474,7 +474,7 @@ class gui_gtk implements pts_option_interface
 			$info_r["Test"] = $result_file->get_suite_name();
 			$info_r["null2"] = null;
 
-			$reference_tests = pts_result_file_reference_tests($identifier);
+			$reference_tests = pts_result_comparisons::reference_tests_for_result($identifier);
 			if(count($reference_tests) > 0)
 			{
 				$objs = gui_gtk::pts_gtk_reference_system_comparison_objects($identifier, $reference_tests, $append_elements);
@@ -1172,7 +1172,7 @@ class gui_gtk implements pts_option_interface
 				if(pts_network::http_get_contents("http://www.phoronix-test-suite.com/PTS", $proxy_address, $proxy_port) == "PTS")
 				{					
 					pts_config::user_config_generate(array(P_OPTION_NET_PROXY_ADDRESS => $proxy_address, P_OPTION_NET_PROXY_PORT => $proxy_port));
-					pts_exit("Restarting pts-core...\n", 8);					
+					pts_client::exit_client("Restarting pts-core...", 8);					
 				}
 
 				$setup_success = pts_global_setup_account($username, $password);

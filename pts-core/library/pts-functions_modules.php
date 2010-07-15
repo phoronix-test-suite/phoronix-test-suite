@@ -248,7 +248,7 @@ function pts_module_process($process, &$object_pass = null, $select_modules = fa
 				break;
 			case PTS_QUIT:
 				// Stop the Phoronix Test Suite immediately
-				pts_exit();
+				pts_client::exit_client();
 				break;
 		}
 	}

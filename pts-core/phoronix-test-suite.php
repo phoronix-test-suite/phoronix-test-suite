@@ -70,7 +70,7 @@ $sent_command = strtolower(str_replace("-", "_", (isset($argv[1]) ? $argv[1] : n
 $quick_start_options = array("dump_possible_options", "task_cache_reference_comparison_xml");
 define("QUICK_START", in_array($sent_command, $quick_start_options));
 
-pts_client_init(); // Initalize the Phoronix Test Suite (pts-core) client
+pts_client::init(); // Initalize the Phoronix Test Suite (pts-core) client
 //stream_wrapper_register("phoronix", "pts_phoronix_stream") or die("Failed To Initialize The Phoronix Stream");
 
 if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
@@ -115,7 +115,7 @@ if(!QUICK_START)
 		echo pts_string_header("NOTICE: It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
 	}
 
-	register_shutdown_function("pts_shutdown");
+	register_shutdown_function(array("pts_client", "process_shutdown_tasks"));
 
 	if(($proxy_address = pts_config::read_user_config(P_OPTION_NET_PROXY_ADDRESS, false)) && ($proxy_port = pts_config::read_user_config(P_OPTION_NET_PROXY_PORT, false)))
 	{
@@ -170,7 +170,7 @@ for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 
 if(!QUICK_START)
 {
-	pts_user_agreement_check($sent_command);
+	pts_client::user_agreement_check($sent_command);
 	pts_client::user_hardware_software_reporting();
 }
 

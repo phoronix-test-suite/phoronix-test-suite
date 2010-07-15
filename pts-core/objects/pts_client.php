@@ -36,6 +36,236 @@ class pts_client
 		chmod($lock_file, 0644);
 		return self::$lock_pointers[self::$command_execution_count][$lock_file] != false && flock(self::$lock_pointers[self::$command_execution_count][$lock_file], LOCK_EX | LOCK_NB);
 	}
+	public static function init()
+	{
+		pts_define_directories(); // Define directories
+
+		if(QUICK_START)
+		{
+			return true;
+		}
+
+		self::basic_init_process(); // Initalize common / needed PTS start-up work
+
+		self::core_storage_init_process();
+		pts_config::init_files();
+		define("TEST_ENV_DIR", pts_find_home(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
+		define("SAVE_RESULTS_DIR", pts_find_home(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
+		self::extended_init_process();
+
+		return true;
+	}
+	private static function basic_init_process()
+	{
+		// Initialize The Phoronix Test Suite
+
+		// PTS Defines
+		define("PHP_BIN", pts_client::read_env("PHP_BIN"));
+		define("PTS_INIT_TIME", time());
+
+		if(!defined("PHP_VERSION_ID"))
+		{
+			// PHP_VERSION_ID is only available in PHP 5.2.6 and later
+			$php_version = explode('.', PHP_VERSION);
+			define("PHP_VERSION_ID", ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
+		}
+
+		$dir_init = array(PTS_USER_DIR);
+		foreach($dir_init as $dir)
+		{
+			pts_mkdir($dir);
+		}
+
+		phodevi::initial_setup();
+
+		//define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
+	}
+	private static function extended_init_process()
+	{
+		// Extended Initalization Process
+		$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, XML_SUITE_LOCAL_DIR, 
+		TEST_RESOURCE_LOCAL_DIR, XML_PROFILE_LOCAL_DIR, MODULE_LOCAL_DIR, MODULE_DATA_DIR, DEFAULT_DOWNLOAD_CACHE_DIR);
+
+		foreach($directory_check as $dir)
+		{
+			pts_mkdir($dir);
+		}
+
+		// Setup PTS Results Viewer
+		pts_mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
+
+		foreach(pts_glob(RESULTS_VIEWER_DIR . "*.*") as $result_viewer_file)
+		{
+			pts_copy($result_viewer_file, SAVE_RESULTS_DIR . "pts-results-viewer/" . basename($result_viewer_file));
+		}
+
+		pts_copy(STATIC_DIR . "images/pts-106x55.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-106x55.png");
+
+		// Setup ~/.phoronix-test-suite/xsl/
+		pts_mkdir(PTS_USER_DIR . "xsl/");
+		pts_copy(STATIC_DIR . "xsl/pts-test-installation-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-test-installation-viewer.xsl");
+		pts_copy(STATIC_DIR . "xsl/pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
+		pts_copy(STATIC_DIR . "images/pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
+
+		// Load the defintions now since if you run "phoronix-test-suite run TEST It will fail" since test-profile.xml is not
+		// defined when using pts_test_read_xml() the first time
+		pts_loader::load_definitions("test-profile.xml");
+		pts_loader::load_definitions("test-suite.xml");	
+		pts_loader::load_definitions("test-installation.xml");
+		pts_loader::load_definitions("module-settings.xml");
+
+		// Compatibility for importing old module configuration settings from pre PTS 2.6 into new structures
+		if(is_file(PTS_USER_DIR . "modules-config.xml"))
+		{
+			pts_compatibility::pts_convert_pre_pts_26_module_settings();
+		}
+	}
+	private static function core_storage_init_process()
+	{
+		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
+
+		if($pso == false)
+		{
+			$pso = new pts_storage_object(true, true);
+		}
+
+		// Last Run Processing
+		//$last_core_version = $pso->read_object("last_core_version");
+		// do something here with $last_core_version if you want that information
+		$pso->add_object("last_core_version", PTS_CORE_VERSION); // PTS version last run
+
+		//$last_pts_version = $pso->read_object("last_pts_version");
+		// do something here with $last_pts_version if you want that information
+		$pso->add_object("last_pts_version", PTS_VERSION); // PTS version last run
+
+		// Last Run Processing
+		$last_run = $pso->read_object("last_run_time");
+		define("IS_FIRST_RUN_TODAY", (substr($last_run, 0, 10) != date("Y-m-d")));
+
+		$pso->add_object("last_run_time", date("Y-m-d H:i:s")); // Time PTS was last run
+
+		// Phoronix Global - GSID
+		$global_gsid = $pso->read_object("global_system_id");
+		if(empty($global_gsid) || !pts_global_gsid_valid($global_gsid))
+		{
+			// Global System ID for anonymous uploads, etc
+			$global_gsid = pts_global_request_gsid();
+		}
+
+		define("PTS_GSID", $global_gsid);
+		$pso->add_object("global_system_id", $global_gsid); // GSID
+
+		// User Agreement Checking
+		$agreement_cs = $pso->read_object("user_agreement_cs");
+
+		$pso->add_object("user_agreement_cs", $agreement_cs); // User agreement check-sum
+
+		// Phodevi Cache Handling
+		$phodevi_cache = $pso->read_object("phodevi_smart_cache");
+
+		if($phodevi_cache instanceOf phodevi_cache && pts_client::read_env("NO_PHODEVI_CACHE") != 1)
+		{
+			$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_DIR, PTS_CORE_VERSION);
+			phodevi::set_device_cache($phodevi_cache);
+		}
+
+		// Archive to disk
+		$pso->save_to_file(PTS_CORE_STORAGE);
+	}
+	public static function user_agreement_check($command)
+	{
+		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
+		$config_md5 = $pso->read_object("user_agreement_cs");
+		$current_md5 = md5_file(PTS_PATH . "pts-core/user-agreement.txt");
+
+		if($config_md5 != $current_md5 || pts_config::read_user_config(P_OPTION_USAGE_REPORTING, "UNKNOWN") == "UNKNOWN")
+		{
+			$prompt_in_method = pts_client::check_command_for_function($command, "pts_user_agreement_prompt");
+			$user_agreement = file_get_contents(PTS_PATH . "pts-core/user-agreement.txt");
+
+			if($prompt_in_method)
+			{
+				$user_agreement_return = call_user_func(array($command, "pts_user_agreement_prompt"), $user_agreement);
+
+				if(is_array($user_agreement_return))
+				{
+					if(count($user_agreement_return) == 3)
+					{
+						list($agree, $usage_reporting, $hwsw_reporting) = $user_agreement_return;
+					}
+					else
+					{
+						$agree = array_shift($user_agreement_return);
+						$usage_reporting = -1;
+						$hwsw_reporting = -1;
+					}
+				}
+				else
+				{
+					$agree = $user_agreement_return;
+					$usage_reporting = -1;
+					$hwsw_reporting = -1;
+				}
+			}
+
+			if($prompt_in_method == false || $usage_reporting == -1 || $hwsw_reporting == -1)
+			{
+				echo pts_string_header("Phoronix Test Suite - Welcome");
+				echo wordwrap($user_agreement, 65);
+				$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
+				$usage_reporting = $agree ? pts_bool_question("Enable anonymous usage / statistics reporting (Y/n)?", true) : -1;
+				$hwsw_reporting = $agree ? pts_bool_question("Enable anonymous statistical reporting of installed software / hardware (Y/n)?", true) : -1;
+			}
+
+			if($agree)
+			{
+				echo "\n";
+				$pso->add_object("user_agreement_cs", $current_md5);
+				$pso->save_to_file(PTS_CORE_STORAGE);
+			}
+			else
+			{
+				pts_client::exit_client("In order to run the Phoronix Test Suite, you must agree to the listed terms.");
+			}
+
+			pts_config::user_config_generate(array(
+				P_OPTION_USAGE_REPORTING => pts_config::bool_to_string($usage_reporting),
+				P_OPTION_HARDWARE_REPORTING => pts_config::bool_to_string($hwsw_reporting),
+				P_OPTION_SOFTWARE_REPORTING => pts_config::bool_to_string($hwsw_reporting)
+				));
+		}
+	}
+	public static function exit_client($string = null, $exit_status = 0)
+	{
+		// Exit the Phoronix Test Suite client
+		define("PTS_EXIT", 1);
+
+		if($string != null)
+		{
+			echo "\n" . $string . "\n";
+		}
+
+		exit($exit_status);
+	}
+	public static function process_shutdown_tasks()
+	{
+		// Generate Phodevi Smart Cache
+		if(pts_client::read_env("NO_PHODEVI_CACHE") != 1)
+		{
+			if(pts_strings::string_bool(pts_config::read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
+			{
+				pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", phodevi::get_phodevi_cache_object(PTS_USER_DIR, PTS_CORE_VERSION));
+			}
+			else
+			{
+				pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", null);
+			}
+		}
+	}
+	public static function do_anonymous_usage_reporting()
+	{
+		return pts_strings::string_bool(pts_config::read_user_config(P_OPTION_USAGE_REPORTING, 0));
+	}
 	public static function release_lock($lock_file)
 	{
 		// Remove lock
@@ -444,6 +674,33 @@ class pts_client
 	public static function cache_software_calls()
 	{
 		phodevi::system_software(true);
+	}
+	public static function cache_generic_reference_systems()
+	{
+		$original_test_hashes = array();
+		$reference_tests = array();
+		pts_result_comparisons::process_reference_comparison_hashes(pts_generic_reference_system_comparison_ids(), array(), $original_test_hashes, $reference_tests, true);
+	}
+	public static function cache_generic_reference_systems_results()
+	{
+		$reference_cache_dir = is_dir("/var/cache/phoronix-test-suite/reference-comparisons/") ? "/var/cache/phoronix-test-suite/reference-comparisons/" : false;
+
+		foreach(pts_generic_reference_system_comparison_ids() as $comparison_id)
+		{
+			if(!pts_is_test_result($comparison_id))
+			{
+				if($reference_cache_dir && is_readable($reference_cache_dir . $comparison_id . ".xml"))
+				{
+					// A cache is already available locally (likely from a PTS Live OS)
+					pts_save_result($comparison_id . "/composite.xml", file_get_contents($reference_cache_dir . $comparison_id . ".xml"), false);
+				}
+				else
+				{
+					// Fetch from Phoronix Global
+					pts_clone_from_global($comparison_id, false);
+				}
+			}
+		}
 	}
 }
 

@@ -102,7 +102,6 @@ if(PTS_MODE == "LIB")
 }
 
 // Client Work
-require(PTS_LIBRARY_PATH . "pts-init.php");
 require(PTS_LIBRARY_PATH . "pts-functions_basic.php");
 require(PTS_LIBRARY_PATH . "pts-functions_client.php");
 
