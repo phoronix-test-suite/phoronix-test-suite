@@ -171,7 +171,7 @@ class pts_network
 			case STREAM_NOTIFY_PROGRESS:
 				$downloaded_float = $filesize == 0 ? 0 : $downloaded / $filesize;
 
-				if(abs($downloaded_float - $last_float) < 0.05)
+				if(abs($downloaded_float - $last_float) < 0.01)
 				{
 					return;
 				}
@@ -193,7 +193,7 @@ class pts_network
 		static $last_float = -1;
 		$downloaded_float = $download_size == 0 ? 0 : $downloaded / $download_size;
 
-		if(abs($downloaded_float - $last_float) < 0.05)
+		if(abs($downloaded_float - $last_float) < 0.01)
 		{
 			return;
 		}
