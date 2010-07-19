@@ -24,7 +24,7 @@ class list_unsupported_tests implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("list_tests", $r, array("LIST_UNSUPPORTED" => true));
+		pts_client::run_next("list_tests", $r, array("LIST_UNSUPPORTED" => true));
 	}
 }
 

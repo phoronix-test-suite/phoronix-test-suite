@@ -207,8 +207,8 @@ Name[en_US]=pts-kernel-config-tester.desktop");
 		$config_options = $storage_object->read_object("kernel_config_options");
 
 		echo "\nRunning Test\n";
-		pts_run_option_next("run_test", $options["test_suite"], array("AUTOMATED_MODE" => true, "AUTO_SAVE_NAME" => $options["test_save"], "AUTO_TEST_RESULTS_IDENTIFIER" => ($current_pos == -1 ? "Base" : $config_options[$current_pos][0]), "KCT_POS" => $current_pos, "KCT_COUNT" => count($config_options)));
-		pts_run_option_next("kernel-config-tester.next");
+		pts_client::run_next("run_test", $options["test_suite"], array("AUTOMATED_MODE" => true, "AUTO_SAVE_NAME" => $options["test_save"], "AUTO_TEST_RESULTS_IDENTIFIER" => ($current_pos == -1 ? "Base" : $config_options[$current_pos][0]), "KCT_POS" => $current_pos, "KCT_COUNT" => count($config_options)));
+		pts_client::run_next("kernel-config-tester.next");
 	}
 	public static function next_process()
 	{

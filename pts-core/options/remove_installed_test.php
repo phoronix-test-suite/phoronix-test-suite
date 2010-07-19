@@ -41,7 +41,7 @@ class remove_installed_test implements pts_option_interface
 
 			foreach(pts_to_array($identifier) as $install_identifier)
 			{
-				pts_remove_installed_test($install_identifier);
+				pts_client::remove_installed_test($install_identifier);
 				echo "\nThe " . $install_identifier . " test has been removed.\n\n";
 			}
 		}

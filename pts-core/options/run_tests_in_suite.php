@@ -24,7 +24,7 @@ class run_tests_in_suite implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("run_test", $r, array("CONFIGURE_TESTS_IN_SUITE" => true));
+		pts_client::run_next("run_test", $r, array("CONFIGURE_TESTS_IN_SUITE" => true));
 	}
 }
 

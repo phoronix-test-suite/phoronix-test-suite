@@ -24,7 +24,7 @@ class debug_install implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("install_test", $r, array("DEBUG_TEST_PROFILE" => true, "DISPLAY_MODE" => "BASIC", "PTS_FORCE_INSTALL" => true));
+		pts_client::run_next("install_test", $r, array("DEBUG_TEST_PROFILE" => true, "DISPLAY_MODE" => "BASIC", "PTS_FORCE_INSTALL" => true));
 	}
 }
 

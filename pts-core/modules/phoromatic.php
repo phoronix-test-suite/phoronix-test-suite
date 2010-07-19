@@ -63,7 +63,7 @@ class phoromatic extends pts_module_interface
 			),
 			$options["remote_host"], $options["remote_account"], $options["remote_verifier"]);
 
-		$returned_id = pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE);
+		$returned_id = self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE);
 
 		unset($options["system_description"]); // No reason to have this locally just pass it to the server
 
@@ -147,7 +147,7 @@ class phoromatic extends pts_module_interface
 			"i" => $to_clone[0]
 			));
 
-		switch(pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE))
+		switch(self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE))
 		{
 			case M_PHOROMATIC_RESPONSE_TRUE:
 				$identifier = "phoromatic-clone-" . str_replace(array('_', ':'), null, $to_clone[0]);
@@ -408,12 +408,12 @@ class phoromatic extends pts_module_interface
 					if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_RUN_INSTALL_COMMAND, M_PHOROMATIC_RESPONSE_TRUE)))
 					{
 						phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_INSTALL), $test_args["PHOROMATIC_TRIGGER"], $test_args["PHOROMATIC_SCHEDULE_ID"], "INSTALL");
-						pts_run_option_next("install_test", $suite_identifier, array("AUTOMATED_MODE" => true));
+						pts_client::run_next("install_test", $suite_identifier, array("AUTOMATED_MODE" => true));
 					}
 
 					phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_RUN), $test_args["PHOROMATIC_TRIGGER"], $test_args["PHOROMATIC_SCHEDULE_ID"], "INSTALL");
-					pts_run_option_next("run_test", $suite_identifier, $test_args);
-					pts_run_option_next("phoromatic.user_system_return", $suite_identifier, $test_args);
+					pts_client::run_next("run_test", $suite_identifier, $test_args);
+					pts_client::run_next("phoromatic.user_system_return", $suite_identifier, $test_args);
 					$exit_loop = true;
 					break;
 				case M_PHOROMATIC_RESPONSE_EXIT:
@@ -507,6 +507,11 @@ class phoromatic extends pts_module_interface
 	// Other Functions
 	//
 
+	protected static function read_xml_value($file, $xml_option)
+	{
+	 	$xml_parser = new tandem_XmlReader($file);
+		return $xml_parser->getXMLValue($xml_option);
+	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
 		if(!empty($context_script))
@@ -550,21 +555,21 @@ class phoromatic extends pts_module_interface
 	protected static function update_system_details()
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_details", "h" => phodevi::system_hardware(true), "s" => phodevi::system_software(true)));
-		self::$phoromatic_server_build = pts_xml_read_single_value($server_response, M_PHOROMATIC_SERVER_BUILD);
+		self::$phoromatic_server_build = self::read_xml_value($server_response, M_PHOROMATIC_SERVER_BUILD);
 
-		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function update_system_status($current_task)
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task, "time" => round(pts_read_assignment("EST_TIME_REMAINING") / 60)));
 
-		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function report_warning_to_phoromatic($warning)
 	{
 		$server_response = phoromatic::upload_to_remote_server(array("r" => "report_pts_warning", "a" => $warning));
 
-		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	private static function capture_test_logs($save_identifier)
 	{
@@ -603,7 +608,7 @@ class phoromatic extends pts_module_interface
 			"tl" => $logs["test-logs"]
 			));
 
-		return pts_xml_read_single_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
 	protected static function upload_unscheduled_test_results($save_identifier)
 	{

@@ -42,16 +42,16 @@ class edit_result_file implements pts_option_interface
 		switch($input_option)
 		{
 			case "Extract From Results":
-				pts_run_option_next("extract_from_result_file", $args);
+				pts_client::run_next("extract_from_result_file", $args);
 				break;
 			case "Remove From Results":
-				pts_run_option_next("remove_from_result_file", $args);
+				pts_client::run_next("remove_from_result_file", $args);
 				break;
 			case "Reorder Result Identifiers":
-				pts_run_option_next("reorder_result_file", $args);
+				pts_client::run_next("reorder_result_file", $args);
 				break;
 			case "Rename Identifier":
-				pts_run_option_next("rename_identifier_in_result_file", $args);
+				pts_client::run_next("rename_identifier_in_result_file", $args);
 				break;
 		}
 	}

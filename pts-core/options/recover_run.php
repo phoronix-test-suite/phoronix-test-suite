@@ -137,7 +137,7 @@ class recover_run implements pts_option_interface
 			return false;
 		}
 
-		pts_run_option_next("run_test", $r, array("RECOVER_RUN" => true, "RECOVER_RUN_REQUESTS" => $tests_to_run, "AUTO_TEST_RESULTS_IDENTIFIER" => $recovered_identifier, "BATCH_MODE" => $is_batch_mode));
+		pts_client::run_next("run_test", $r, array("RECOVER_RUN" => true, "RECOVER_RUN_REQUESTS" => $tests_to_run, "AUTO_TEST_RESULTS_IDENTIFIER" => $recovered_identifier, "BATCH_MODE" => $is_batch_mode));
 	}
 }
 

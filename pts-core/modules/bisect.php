@@ -134,8 +134,8 @@ class bisect extends pts_module_interface
 		{
 			pts_module::set_option("current_status", "PROCESS_GOOD_TEST");
 			pts_module::set_option("current_result", -1);
-			pts_run_option_next("run_test", "bisect-test", array("AUTOMATED_MODE" => true, "DO_NOT_SAVE_RESULTS" => true));
-			pts_run_option_next("bisect.start");
+			pts_client::run_next("run_test", "bisect-test", array("AUTOMATED_MODE" => true, "DO_NOT_SAVE_RESULTS" => true));
+			pts_client::run_next("bisect.start");
 			return true;
 		}
 
@@ -183,8 +183,8 @@ class bisect extends pts_module_interface
 		{
 			pts_module::set_option("current_status", "PROCESS_TEST");
 			pts_module::set_option("current_result", -1);
-			pts_run_option_next("run_test", "bisect-test", array("AUTOMATED_MODE" => true, "DO_NOT_SAVE_RESULTS" => true));
-			pts_run_option_next("bisect.start");
+			pts_client::run_next("run_test", "bisect-test", array("AUTOMATED_MODE" => true, "DO_NOT_SAVE_RESULTS" => true));
+			pts_client::run_next("bisect.start");
 			return true;
 		}
 

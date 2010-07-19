@@ -590,7 +590,7 @@ function pts_test_download_cache_directories()
 				continue;
 			}
 
-			$dir_check = pts_find_home($dir_check);
+			$dir_check = pts_client::parse_home_directory($dir_check);
 
 			if(strpos($dir_check, "://") === false && !is_dir($dir_check))
 			{

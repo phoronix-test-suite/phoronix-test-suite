@@ -121,8 +121,8 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 
 			if($stop_and_install)
 			{
-				pts_run_option_next("install_test", $tests_missing, pts_assignment_manager::get_all_assignments());
-				pts_run_option_next("run_test", $tests_missing, pts_assignment_manager::get_all_assignments(array("NO_PROMPT_IN_RUN_ON_MISSING_TESTS" => true)));
+				pts_client::run_next("install_test", $tests_missing, pts_assignment_manager::get_all_assignments());
+				pts_client::run_next("run_test", $tests_missing, pts_assignment_manager::get_all_assignments(array("NO_PROMPT_IN_RUN_ON_MISSING_TESTS" => true)));
 				return false;
 			}
 			else

@@ -419,10 +419,10 @@ class gui_gtk implements pts_option_interface
 		{
 			case "return":
 				// TODO: refresh main window instead of having to redo it all
-				pts_run_option_next("gui_gtk");
+				pts_client::run_next("gui_gtk");
 				break;
 			default:
-				pts_run_option_next("install_test", $clicked, array("SILENCE_MESSAGES" => true, "AUTOMATED_MODE" => true));
+				pts_client::run_next("install_test", $clicked, array("SILENCE_MESSAGES" => true, "AUTOMATED_MODE" => true));
 				gui_gtk::show_run_confirmation_interface($clicked);
 				break;
 		}
@@ -630,8 +630,8 @@ class gui_gtk implements pts_option_interface
 		}
 
 		$pass_args = array("AUTOMATED_MODE" => true, "REFERENCE_COMPARISONS" => $reference_comparisons, "PREV_SAVE_NAME_TITLE" => $comparison_title);
-		pts_run_option_next("reference_comparison", $identifier, $pass_args);
-		pts_run_option_next("gui_gtk");
+		pts_client::run_next("reference_comparison", $identifier, $pass_args);
+		pts_client::run_next("gui_gtk");
 
 		$window = pts_read_assignment("GTK_OBJ_WINDOW");
 
@@ -789,14 +789,14 @@ class gui_gtk implements pts_option_interface
 				gui_gtk::show_main_interface();
 				break;
 			case "install":
-				pts_run_option_next("install_test", $identifiers, array("SILENCE_MESSAGES" => true, "AUTOMATED_MODE" => true));
-				pts_run_option_next("gui_gtk");
+				pts_client::run_next("install_test", $identifiers, array("SILENCE_MESSAGES" => true, "AUTOMATED_MODE" => true));
+				pts_client::run_next("gui_gtk");
 				break;
 			case "BENCHMARK":
 			case "RUN":
 				if($button_call == "BENCHMARK")
 				{
-					pts_run_option_next("install_test", $identifiers, array("SILENCE_MESSAGES" => true, "AUTOMATED_MODE" => true));
+					pts_client::run_next("install_test", $identifiers, array("SILENCE_MESSAGES" => true, "AUTOMATED_MODE" => true));
 				}
 
 				$args_to_pass = array("IS_BATCH_MODE" => pts_read_assignment("GTK_BATCH_MODE"), 
@@ -847,8 +847,8 @@ class gui_gtk implements pts_option_interface
 					$args_to_pass["AUTO_TEST_OPTION_SELECTIONS"] = $preset_test_options;
 				}
 
-				pts_run_option_next("run_test", $identifiers, $args_to_pass);
-				pts_run_option_next("gui_gtk");
+				pts_client::run_next("run_test", $identifiers, $args_to_pass);
+				pts_client::run_next("gui_gtk");
 				break;
 		}
 
@@ -1209,11 +1209,11 @@ class gui_gtk implements pts_option_interface
 		{
 			case "view_results":
 				gui_gtk::launch_web_browser(pts_global_public_url($global_id));
-				pts_run_option_next("gui_gtk");
+				pts_client::run_next("gui_gtk");
 				break;
 			case "clone_results":
-				pts_run_option_next("clone_global_result", $global_id, array("AUTOMATED_MODE" => true));
-				pts_run_option_next("gui_gtk");
+				pts_client::run_next("clone_global_result", $global_id, array("AUTOMATED_MODE" => true));
+				pts_client::run_next("gui_gtk");
 				//Gtk::main_quit();
 				break;
 			case "run_comparison":
@@ -1227,7 +1227,7 @@ class gui_gtk implements pts_option_interface
 				$password = md5(trim($password->get_text()));
 
 				$setup_success = pts_global_setup_account($username, $password);
-				pts_run_option_next("gui_gtk", null, array("PREV_GLOBAL_ACCT_SETUP" => "Phoronix Global Setup " . ($setup_success ? "Was Successful" : "Failed") . "."));
+				pts_client::run_next("gui_gtk", null, array("PREV_GLOBAL_ACCT_SETUP" => "Phoronix Global Setup " . ($setup_success ? "Was Successful" : "Failed") . "."));
 				break;
 		}
 	}
@@ -1730,8 +1730,8 @@ class gui_gtk implements pts_option_interface
 		$main_window->destroy();
 
 		$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
-		pts_run_option_next("upload_result", $identifier, array("AUTOMATED_MODE" => true));
-		pts_run_option_next("gui_gtk");
+		pts_client::run_next("upload_result", $identifier, array("AUTOMATED_MODE" => true));
+		pts_client::run_next("gui_gtk");
 	}
 	public static function show_generate_pdf_interface()
 	{
@@ -1758,8 +1758,8 @@ class gui_gtk implements pts_option_interface
 			$main_window->destroy();
 
 			$identifier = pts_read_assignment("GTK_LAST_SELECTED_ITEM");
-			pts_run_option_next("result_file_to_" . strtolower($type), $identifier, array("SAVE_TO" => $save_file));
-			pts_run_option_next("gui_gtk");
+			pts_client::run_next("result_file_to_" . strtolower($type), $identifier, array("SAVE_TO" => $save_file));
+			pts_client::run_next("gui_gtk");
 		}
 		$dialog->destroy();
 	}
@@ -1786,11 +1786,11 @@ class gui_gtk implements pts_option_interface
 		switch($operation)
 		{
 			default:
-				pts_run_option_next($operation, $identifier, array("AUTOMATED_MODE" => true));
+				pts_client::run_next($operation, $identifier, array("AUTOMATED_MODE" => true));
 				break;
 		}
 
-		pts_run_option_next("gui_gtk");
+		pts_client::run_next("gui_gtk");
 	}
 	public static function show_dependency_info_interface()
 	{

@@ -36,6 +36,10 @@ class pts_client
 		chmod($lock_file, 0644);
 		return self::$lock_pointers[self::$command_execution_count][$lock_file] != false && flock(self::$lock_pointers[self::$command_execution_count][$lock_file], LOCK_EX | LOCK_NB);
 	}
+	public static function run_next($command, $pass_args = null, $set_assignments = "")
+	{
+		return pts_command_execution_manager::add_to_queue($command, $pass_args, $set_assignments);
+	}
 	public static function init()
 	{
 		pts_define_directories(); // Define directories
@@ -49,8 +53,8 @@ class pts_client
 
 		self::core_storage_init_process();
 		pts_config::init_files();
-		define("TEST_ENV_DIR", pts_find_home(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
-		define("SAVE_RESULTS_DIR", pts_find_home(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
+		define("TEST_ENV_DIR", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
+		define("SAVE_RESULTS_DIR", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
 		self::extended_init_process();
 
 		return true;
@@ -254,6 +258,10 @@ class pts_client
 				));
 		}
 	}
+	public static function remove_installed_test($identifier)
+	{
+		pts_remove(TEST_ENV_DIR . $identifier, null, true);
+	}
 	public static function exit_client($string = null, $exit_status = 0)
 	{
 		// Exit the Phoronix Test Suite client
@@ -297,6 +305,16 @@ class pts_client
 		}
 
 		return $userhome;
+	}
+	function parse_home_directory($path)
+	{
+		// Find home directory if needed
+		if(strpos($path, "~/") !== false)
+		{
+			$path = str_replace("~/", pts_client::user_home_directory(), $path);
+		}
+
+		return pts_add_trailing_slash($path);
 	}
 	public static function process_shutdown_tasks()
 	{

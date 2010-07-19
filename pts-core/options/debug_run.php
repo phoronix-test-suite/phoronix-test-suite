@@ -24,7 +24,7 @@ class debug_run implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_run_option_next("run_test", $r, array("DEBUG_TEST_PROFILE" => true, "DISPLAY_MODE" => "BASIC"));
+		pts_client::run_next("run_test", $r, array("DEBUG_TEST_PROFILE" => true, "DISPLAY_MODE" => "BASIC"));
 	}
 }
 
