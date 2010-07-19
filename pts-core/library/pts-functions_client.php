@@ -32,62 +32,6 @@ function pts_xml_read_single_value($file, $xml_option)
  	$xml_parser = new tandem_XmlReader($file);
 	return $xml_parser->getXMLValue($xml_option);
 }
-function pts_proximity_match($search, $match_to)
-{
-	// Proximity search in $search string for * against $match_to
-	$search = explode("*", $search);
-	$is_match = true;
-
-	if(count($search) == 1)
-	{
-		$is_match = false;
-	}
-
-	for($i = 0; $i < count($search) && $is_match && !empty($search[$i]); $i++)
-	{
-		if(($match_point = strpos($match_to, $search[$i])) !== false && ($i > 0 || $match_point == 0))
-		{
-			$match_to = substr($match_to, ($match_point + strlen($search[$i])));
-		}
-		else
-		{
-			$is_match = false;
-		}
-	}
-
-	return $is_match;
-}
-function pts_get_display_mode_object()
-{
-	switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = pts_client::read_env("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
-	{
-		case "BASIC":
-			$display_mode = new pts_basic_display_mode();
-			break;
-		case "BATCH":
-		case "CONCISE":
-			$display_mode = new pts_concise_display_mode();
-			break;
-		default:
-			$display_mode = new pts_concise_display_mode();
-			break;
-	}
-
-	return $display_mode;
-}
-function pts_display_mode_holder(&$display_mode = null)
-{
-	static $current_mode = false;
-
-	if($display_mode == null)
-	{
-		return $current_mode;
-	}
-	else
-	{
-		$current_mode = $display_mode;
-	}
-}
 function pts_find_home($path)
 {
 	// Find home directory if needed

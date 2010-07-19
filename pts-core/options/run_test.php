@@ -47,7 +47,7 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
-		$display_mode = pts_get_display_mode_object();
+		$display_mode = pts_client::obtain_display_mode();
 		$test_properties = array();
 
 		// Cleanup tests to run

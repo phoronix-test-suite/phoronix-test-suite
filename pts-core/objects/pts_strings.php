@@ -143,6 +143,31 @@ class pts_strings
 
 		return $new_string;
 	}
+	public static function proximity_match($search, $match_to)
+	{
+		// Proximity search in $search string for * against $match_to
+		$search = explode('*', $search);
+		$is_match = true;
+
+		if(count($search) == 1)
+		{
+			$is_match = false;
+		}
+
+		for($i = 0; $i < count($search) && $is_match && !empty($search[$i]); $i++)
+		{
+			if(($match_point = strpos($match_to, $search[$i])) !== false && ($i > 0 || $match_point == 0))
+			{
+				$match_to = substr($match_to, ($match_point + strlen($search[$i])));
+			}
+			else
+			{
+				$is_match = false;
+			}
+		}
+
+		return $is_match;
+	}
 }
 
 ?>

@@ -372,7 +372,7 @@ class phodevi_linux_parser
 
 					for($i = 0; $i < count($attribute_prefix) && $i < count($header) && $prefix_matches; $i++)
 					{
-						if($attribute_prefix[$i] != $header[$i] && !pts_proximity_match($attribute_prefix[$i], $header[$i]))
+						if($attribute_prefix[$i] != $header[$i] && pts_strings::proximity_match($attribute_prefix[$i], $header[$i]) == false)
 						{
 							$prefix_matches = false;
 						}

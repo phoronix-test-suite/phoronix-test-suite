@@ -70,7 +70,7 @@ class phodevi_solaris_parser
 						$this_section = $line_object;
 					}
 
-					if($line_object == $object && ($this_section == $section || pts_proximity_match($section, $this_section)) && !empty($this_value) && $this_value != "Unknown")
+					if($line_object == $object && ($this_section == $section || pts_strings::proximity_match($section, $this_section)) && !empty($this_value) && $this_value != "Unknown")
 					{
 						array_push($values, $this_value);
 					}

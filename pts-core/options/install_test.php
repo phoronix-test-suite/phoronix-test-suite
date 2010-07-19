@@ -36,7 +36,7 @@ class install_test implements pts_option_interface
 	{
 		$items_to_install = array_unique(array_map("strtolower", $items_to_install));
 		echo "\n";
-		$display_mode = pts_get_display_mode_object();
+		$display_mode = pts_client::obtain_display_mode();
 
 		// Create a lock
 		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";

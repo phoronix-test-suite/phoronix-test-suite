@@ -80,6 +80,25 @@ class pts_client
 
 		//define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
 	}
+	public static function obtain_display_mode()
+	{
+		switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = pts_client::read_env("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
+		{
+			case "BASIC":
+				$display_mode = new pts_basic_display_mode();
+				break;
+			case "BATCH":
+			case "CONCISE":
+				$display_mode = new pts_concise_display_mode();
+				break;
+			case "DEFAULT":
+			default:
+				$display_mode = new pts_concise_display_mode();
+				break;
+		}
+
+		return $display_mode;
+	}
 	private static function extended_init_process()
 	{
 		// Extended Initalization Process
