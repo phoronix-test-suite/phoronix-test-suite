@@ -136,11 +136,6 @@ class pts_render
 		$graph->addInternalIdentifier("Test", $result_object->get_test_name());
 		$graph->addInternalIdentifier("Identifier", ($result_file instanceOf pts_result_file ? $result_file->get_suite_name() : null));
 
-		if(function_exists("pts_current_user"))
-		{
-			$graph->addInternalIdentifier("User", pts_current_user());
-		}
-
 		if($save_as)
 		{
 			$graph->saveGraphToFile($save_as);

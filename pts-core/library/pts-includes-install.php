@@ -413,9 +413,9 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 		pts_remove(TEST_ENV_DIR . $identifier, $ignore_files);
 	}
 
-	if(is_file(($xauth_file = pts_user_home() . ".Xauthority")))
+	if(is_file(pts_client::user_home_directory() . ".Xauthority")
 	{
-		pts_symlink($xauth_file, TEST_ENV_DIR . $identifier . "/.Xauthority");
+		pts_symlink(pts_client::user_home_directory() . ".Xauthority", TEST_ENV_DIR . $identifier . "/.Xauthority");
 	}
 }
 function pts_install_test($identifier, &$display_mode)

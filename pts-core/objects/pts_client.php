@@ -266,6 +266,38 @@ class pts_client
 
 		exit($exit_status);
 	}
+	public static function current_user()
+	{
+		// Current system user
+		return ($pts_user = pts_global_user_name()) != "Default User" && !empty($pts_user) ? $pts_user : phodevi::read_property("system", "username");
+	}
+	public static function user_home_directory()
+	{
+		// Gets the system user's home directory
+		static $userhome = null;
+
+		if($userhome == null)
+		{
+			if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
+			{
+				$userinfo = posix_getpwuid(posix_getuid());
+				$userhome = $userinfo["dir"];
+			}
+			else if(($home = pts_client::read_env("HOME")) || ($home = pts_client::read_env("HOMEPATH")))
+			{
+				$userhome = $home;
+			}
+			else
+			{
+				echo "\nERROR: Can't find home directory!\n";
+				$userhome = null;
+			}
+
+			$userhome = pts_add_trailing_slash($userhome);
+		}
+
+		return $userhome;
+	}
 	public static function process_shutdown_tasks()
 	{
 		// Generate Phodevi Smart Cache

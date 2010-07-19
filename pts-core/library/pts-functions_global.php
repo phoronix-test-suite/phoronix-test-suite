@@ -137,7 +137,7 @@ function pts_global_upload_result($result_file, $tags = "")
 	}
 
 	$ToUpload = base64_encode($test_results);
-	$GlobalUser = pts_current_user();
+	$GlobalUser = pts_global_user_name();
 	$GlobalKey = pts_config::read_user_config(P_OPTION_GLOBAL_UPLOADKEY, null);
 	$tags = base64_encode($tags);
 	$return_stream = "";
@@ -145,6 +145,10 @@ function pts_global_upload_result($result_file, $tags = "")
 	$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags);
 
 	return pts_network::http_upload_via_post("http://www.phoronix-test-suite.com/global/user-upload.php", $upload_data);
+}
+function pts_global_user_name()
+{
+	return pts_config::read_user_config(P_OPTION_GLOBAL_USERNAME, null);
 }
 function pts_global_allow_upload($result_file)
 {

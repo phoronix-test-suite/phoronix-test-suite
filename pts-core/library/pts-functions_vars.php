@@ -47,7 +47,7 @@ function pts_env_variables($search_for = null)
 		"OS_ARCH" => phodevi::read_property("system", "kernel-architecture"),
 		"OS_TYPE" => OPERATING_SYSTEM,
 		"THIS_RUN_TIME" => PTS_INIT_TIME,
-		"DEBUG_REAL_HOME" => pts_user_home()
+		"DEBUG_REAL_HOME" => pts_client::user_home_directory()
 		);
 
 		if(!pts_client::executable_in_path("cc") && pts_client::executable_in_path("gcc"))

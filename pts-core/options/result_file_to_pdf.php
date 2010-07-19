@@ -123,7 +123,7 @@ class result_file_to_pdf implements pts_option_interface
 		}
 		else
 		{
-			$pdf_file = pts_user_home() . $r[0] . ".pdf";
+			$pdf_file = pts_client::user_home_directory() . $r[0] . ".pdf";
 		}
 
 		$pdf->Output($pdf_file);

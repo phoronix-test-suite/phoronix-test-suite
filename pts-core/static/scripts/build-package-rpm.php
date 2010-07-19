@@ -72,12 +72,12 @@ $spec_file .= "* Fri Jun 06 2008 Andrew Schofield <andrew_s@fahmon.net>\n";
 $spec_file .= "- Initial release.";
 
 file_put_contents("/tmp/pts-rpm-builder/SPECS/pts.spec", $spec_file);
-shell_exec("mv -f " . pts_user_home() . ".rpmmacros /tmp/pts-rpm-builder");
-file_put_contents(pts_user_home() .".rpmmacros", "%_topdir /tmp/pts-rpm-builder");
+shell_exec("mv -f " . pts_client::user_home_directory() . ".rpmmacros /tmp/pts-rpm-builder");
+file_put_contents(pts_client::user_home_directory() .".rpmmacros", "%_topdir /tmp/pts-rpm-builder");
 shell_exec("rpmbuild -ba --verbose /tmp/pts-rpm-builder/SPECS/pts.spec");
 shell_exec("cp /tmp/pts-rpm-builder/RPMS/noarch/phoronix-test-suite-" . PTS_VERSION . "-1.noarch.rpm ./");
-shell_exec("rm -f " . pts_user_home() . "/.rpmmacros");
-shell_exec("mv -f /tmp/pts-rpm-builder/.rpmmacros " . pts_user_home());
+shell_exec("rm -f " . pts_client::user_home_directory() . "/.rpmmacros");
+shell_exec("mv -f /tmp/pts-rpm-builder/.rpmmacros " . pts_client::user_home_directory());
 shell_exec("rm -rf /tmp/pts-rpm-builder");
 
 ?>

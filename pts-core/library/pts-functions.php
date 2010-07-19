@@ -40,9 +40,9 @@ function pts_define_directories()
 	// User's home directory for storing results, module files, test installations, etc.
 	define("PTS_CORE_PATH", PTS_PATH . "pts-core/");
 
-	if(function_exists("pts_user_home"))
+	if(PTS_MODE == "CLIENT")
 	{
-		define("PTS_USER_DIR", pts_user_home() . ".phoronix-test-suite/");
+		define("PTS_USER_DIR", pts_client::user_home_directory() . ".phoronix-test-suite/");
 		define("PTS_CORE_STORAGE", PTS_USER_DIR . "core.pt2so");
 	}
 

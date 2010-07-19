@@ -37,40 +37,15 @@ function pts_find_home($path)
 	// Find home directory if needed
 	if(strpos($path, "~/") !== false)
 	{
-		$home_path = pts_user_home();
+		$home_path = pts_client::user_home_directory();
 		$path = str_replace("~/", $home_path, $path);
 	}
 
 	return pts_add_trailing_slash($path);
 }
-function pts_user_home()
-{
-	// Gets the system user's home directory
-	if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
-	{
-		$userinfo = posix_getpwuid(posix_getuid());
-		$userhome = $userinfo["dir"];
-	}
-	else if(($home = pts_client::read_env("HOME")) || ($home = pts_client::read_env("HOMEPATH")))
-	{
-		$userhome = $home;
-	}
-	else
-	{
-		echo "\nERROR: Can't find home directory!\n";
-		$userhome = null;
-	}
-
-	return $userhome . "/";
-}
 function pts_remove_installed_test($identifier)
 {
 	pts_remove(TEST_ENV_DIR . $identifier, null, true);
-}
-function pts_current_user()
-{
-	// Current system user
-	return ($pts_user = pts_config::read_user_config(P_OPTION_GLOBAL_USERNAME, "Default User")) != "Default User" ? $pts_user : phodevi::read_property("system", "username");
 }
 
 ?>
