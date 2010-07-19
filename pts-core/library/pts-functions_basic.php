@@ -139,25 +139,5 @@ function pts_remove($object, $ignore_files = null, $remove_root_directory = fals
 		@rmdir($object);
 	}
 }
-function pts_copy($from, $to)
-{
-	// Copies a file
-	if(!is_file($to) || md5_file($from) != md5_file($to))
-	{
-		copy($from, $to);
-	}
-}
-function pts_rename($from, $to)
-{
-	return rename($from, $to);
-}
-function pts_symlink($from, $to)
-{
-	return @symlink($from, $to);
-}
-function pts_move($from, $to)
-{
-	return rename($from, $to);
-}
 
 ?>

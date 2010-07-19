@@ -173,7 +173,7 @@ function pts_download_test_files($identifier, &$display_mode)
 
 				if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
 				{
-					pts_move($download_destination_temp, $download_destination);
+					rename($download_destination_temp, $download_destination);
 				}
 				else
 				{
@@ -197,7 +197,7 @@ function pts_download_test_files($identifier, &$display_mode)
 						{
 							// P_OPTION_CACHE_SYMLINK is disabled by default
 							$display_mode->test_install_download_file($download_package, "LINK_FROM_CACHE", $longest_package_name_length);
-							pts_symlink($cache_directory . $package_filename, $download_destination);
+							symlink($cache_directory . $package_filename, $download_destination);
 						}
 						else
 						{
@@ -212,7 +212,7 @@ function pts_download_test_files($identifier, &$display_mode)
 								// Verify that the file was copied fine
 								if(pts_validate_md5_download_file($download_destination_temp, $package_md5))
 								{
-									pts_move($download_destination_temp, $download_destination);
+									rename($download_destination_temp, $download_destination);
 									break;
 								}
 								else
@@ -270,7 +270,7 @@ function pts_download_test_files($identifier, &$display_mode)
 						// Download worked
 						if(is_file($download_destination_temp))
 						{
-							pts_move($download_destination_temp, $download_destination);
+							rename($download_destination_temp, $download_destination);
 						}
 
 						if($download_package->get_filesize() > 0 && $download_end != $download_start)
@@ -415,7 +415,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 
 	if(is_file(pts_client::user_home_directory() . ".Xauthority")
 	{
-		pts_symlink(pts_client::user_home_directory() . ".Xauthority", TEST_ENV_DIR . $identifier . "/.Xauthority");
+		symlink(pts_client::user_home_directory() . ".Xauthority", TEST_ENV_DIR . $identifier . "/.Xauthority");
 	}
 }
 function pts_install_test($identifier, &$display_mode)
@@ -518,7 +518,7 @@ function pts_install_test($identifier, &$display_mode)
 					{
 						// TODO: perhaps better way to handle this than to remove pts-install.xml
 						pts_unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
-						pts_copy(TEST_ENV_DIR . $identifier . "/install.log", TEST_ENV_DIR . $identifier . "/install-failed.log");
+						copy(TEST_ENV_DIR . $identifier . "/install.log", TEST_ENV_DIR . $identifier . "/install-failed.log");
 						pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
 
 						$display_mode->test_install_error("The installer exited with a non-zero exit status.");

@@ -78,7 +78,7 @@ function pts_validate_local_test_profile($identifier)
 				$valid = false;
 
 				// Rename test profile since it's out of date
-				pts_rename($lp, XML_PROFILE_LOCAL_DIR . $identifier . ".xml.old");
+				rename($lp, XML_PROFILE_LOCAL_DIR . $identifier . ".xml.old");
 			}
 			
 		}
@@ -107,7 +107,7 @@ function pts_validate_local_test_suite($identifier)
 				$valid = false;
 
 				// Rename test suite since it's out of date
-				pts_rename($ls, XML_SUITE_LOCAL_DIR . $identifier . ".xml.old");
+				rename($ls, XML_SUITE_LOCAL_DIR . $identifier . ".xml.old");
 			}
 			
 		}
