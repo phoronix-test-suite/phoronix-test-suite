@@ -2,13 +2,13 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.1</Version>
+		<Version>1.2.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>554</EnvironmentSize>
+		<EnvironmentSize>1100</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>sdl-development, build-utilities, glew, glut, jam, scons, vorbis-development, autoconf, libtool, boost-development</ExternalDependencies>
 		<ProjectURL>http://www.vdrift.net/</ProjectURL>
@@ -17,7 +17,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>VDrift</Title>
-		<Version>2009-06-15</Version>
+		<Version>2010-06-30</Version>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

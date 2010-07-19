@@ -1,15 +1,10 @@
 #!/bin/sh
 
-tar -xjf vdrift-2009-06-15-src.tar.bz2
-tar -xjf vdrift-benchmark-2.tar.bz2
-tar -xjf vdrift-20090615-patches-1.tar.bz2
+tar -xjf vdrift-2010-06-30.tar.bz2
+tar -xjf vdrift-benchmark-3.tar.bz2
 
-patch -p0 < add-dumpfps-option.patch
-patch -p0 < add-recurring-screenshot-option.patch
-
-cd vdrift-2009-06-15/
+cd vdrift-2010-06-30/
 scons release=1
-
 cd ..
 
 mkdir -p ~/.vdrift/replays/
@@ -21,7 +16,7 @@ echo \"[ control ]
 autoclutch = true
 autotrans = true
 button_ramp = 0.000000
-mousegrab = false
+mousegrab = true
 speed_sens_steering = 1.000000
 
 [ display ]
@@ -31,14 +26,16 @@ FOV = 45.000000
 anisotropic = 0
 antialiasing = 0
 bloom = true
-camerabounce = 0.000000
+camerabounce = 1.000000
+contrast = 1.000000
 depth = 16
 fullscreen = true
-input_graph = false
-lighting = 0
+input_graph = true
+lighting = 2
 mph = true
+normalmaps = false
 racingline = false
-reflections = 1
+reflections = 2
 shaders = true
 shadow_distance = 2
 shadow_quality = 2
@@ -51,6 +48,6 @@ trackmap = true
 view_distance = 2500.000000
 zdepth = 24\" > ~/.vdrift/VDrift.config
 
-cd vdrift-2009-06-15/
-./build/vdrift -multithreaded -nosound -benchmark \$@ > \$LOG_FILE 2>&1" > vdrift
+cd vdrift-2010-06-30/
+./build/vdrift -nosound -benchmark \$@ > \$LOG_FILE 2>&1" > vdrift
 chmod +x vdrift

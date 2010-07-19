@@ -1,19 +1,14 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://voxel.dl.sourceforge.net/sourceforge/vdrift/vdrift-2009-06-15-src.tar.bz2, http://internap.dl.sourceforge.net/sourceforge/vdrift/vdrift-2009-06-15-src.tar.bz2, http://internode.dl.sourceforge.net/sourceforge/vdrift/vdrift-2009-06-15-src.tar.bz2, http://garr.dl.sourceforge.net/sourceforge/vdrift/vdrift-2009-06-15-src.tar.bz2</URL>
-			<MD5>c4530bc22136dc5dc2aa50dc9302456e</MD5>
-			<FileSize>502507126</FileSize>
+			<URL>http://voxel.dl.sourceforge.net/sourceforge/vdrift/vdrift-2010-06-30.tar.bz2, http://internap.dl.sourceforge.net/sourceforge/vdrift/vdrift-2010-06-30.tar.bz2, http://internode.dl.sourceforge.net/sourceforge/vdrift/vdrift-2010-06-30.tar.bz2, http://garr.dl.sourceforge.net/sourceforge/vdrift/vdrift-2010-06-30.tar.bz2</URL>
+			<MD5>ddcaf90bb25f9ce9cc084d7f467d7b56</MD5>
+			<FileSize>549124037</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/vdrift-benchmark-2.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/vdrift-benchmark-2.tar.bz2</URL>
-			<MD5>58cf51b2c0c143dfddb84be550eda5cd</MD5>
-			<FileSize>174420</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/vdrift-20090615-patches-1.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/vdrift-20090615-patches-1.tar.bz2</URL>
-			<MD5>474599a9718bbedad90652845623904c</MD5>
-			<FileSize>1596</FileSize>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/vdrift-benchmark-3.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/vdrift-benchmark-3.tar.bz2</URL>
+			<MD5>cbfe2b30e6cd1396a29e36cc7e326bb0</MD5>
+			<FileSize>60188</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
