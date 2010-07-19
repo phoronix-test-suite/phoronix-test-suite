@@ -60,7 +60,7 @@ function pts_install_package_on_distribution(&$display_mode, &$identifiers, &$te
 
 	$install_objects = array_unique($install_objects);
 
-	if(pts_is_assignment("AUTOMATED_MODE") && pts_current_user() != "root")
+	if(pts_is_assignment("AUTOMATED_MODE") && phodevi::read_property("system", "username") != "root")
 	{
 		return count($install_objects) == 0;
 	}
