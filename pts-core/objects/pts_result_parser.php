@@ -265,7 +265,7 @@ class pts_result_parser
 				while($is_multi_match && count($test_results) != $result_count && !empty($result_output));
 			}
 
-			foreach($test_results as $i => &$test_result)
+			foreach($test_results as $x => &$test_result)
 			{
 				if($strip_from_result[$i] != null)
 				{
@@ -279,7 +279,7 @@ class pts_result_parser
 				// Expand validity checking here
 				if($is_numeric_check == true && is_numeric($test_result) == false)
 				{
-					unset($test_results[$i]);
+					unset($test_results[$x]);
 					continue;
 				}
 
