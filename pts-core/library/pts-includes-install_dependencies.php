@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_install_package_on_distribution(&$display_mode, &$identifiers, &$tests_with_satisfied_dependencies)
+function pts_install_package_on_distribution(&$identifiers, &$tests_with_satisfied_dependencies)
 {
 	// PTS External Dependencies install on distribution
 	$tests_checked = array();
@@ -65,7 +65,7 @@ function pts_install_package_on_distribution(&$display_mode, &$identifiers, &$te
 		return count($install_objects) == 0;
 	}
 
-	pts_install_packages_on_distribution_process($install_objects, $display_mode);
+	pts_install_packages_on_distribution_process($install_objects);
 
 	return true;
 }
@@ -207,7 +207,7 @@ function pts_external_dependencies_missing()
 
 	return $missing_dependencies;	
 }
-function pts_install_packages_on_distribution_process($install_objects, &$display_mode)
+function pts_install_packages_on_distribution_process($install_objects)
 {
 	// Do the actual installing process of packages using the distribution's package management system
 	if(!empty($install_objects))
@@ -221,7 +221,7 @@ function pts_install_packages_on_distribution_process($install_objects, &$displa
 
 		if(is_file(STATIC_DIR . "distro-scripts/install-" . $distribution . "-packages.sh"))
 		{
-			// hook into $display_mode here if it's desired
+			// hook into pts_client::$display here if it's desired
 			echo "\nThe following dependencies are needed and will be installed: \n\n";
 			echo pts_user_io::display_text_list(explode(' ', $install_objects));
 			echo "\nThis process may take several minutes.\n";

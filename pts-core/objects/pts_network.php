@@ -22,8 +22,6 @@
 
 class pts_network
 {
-	private static $display_mode_holder = null;
-
 	public static function http_get_contents($url, $override_proxy = false, $override_proxy_port = false)
 	{
 		if(defined("NO_NETWORK_COMMUNICATION"))
@@ -51,10 +49,8 @@ class pts_network
 
 		return $response;
 	}
-	public static function download_file($download, $to, &$display_mode = null)
+	public static function download_file($download, $to)
 	{
-		self::$display_mode_holder = $display_mode;
-
 		if(function_exists("curl_init"))
 		{
 			$return_state = pts_network::curl_download($download, $to);
@@ -69,10 +65,7 @@ class pts_network
 
 		if($return_state == true)
 		{
-			if(self::$display_mode_holder)
-			{
-				self::$display_mode_holder->test_install_download_completed();
-			}
+			pts_client::$display->test_install_download_completed();
 		}
 	}
 	private static function curl_download($download, $download_to)
@@ -176,11 +169,7 @@ class pts_network
 					return;
 				}
 
-				if(self::$display_mode_holder)
-				{
-					self::$display_mode_holder->test_install_download_status_update($downloaded_float);
-				}
-
+				pts_client::$display->test_install_download_status_update($downloaded_float);
 				$last_float = $downloaded_float;
 				break;
 		}
@@ -195,11 +184,7 @@ class pts_network
 			return;
 		}
 
-		if(self::$display_mode_holder)
-		{
-			self::$display_mode_holder->test_install_download_status_update($downloaded_float);
-		}
-
+		pts_client::$display->test_install_download_status_update($downloaded_float);
 		$last_float = $downloaded_float;
 	}
 }

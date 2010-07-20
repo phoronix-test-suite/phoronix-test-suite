@@ -47,11 +47,10 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
-		$display_mode = pts_client::obtain_display_mode();
 		$test_properties = array();
 
 		// Cleanup tests to run
-		if(pts_cleanup_tests_to_run($to_run_identifiers, $display_mode) == false)
+		if(pts_cleanup_tests_to_run($to_run_identifiers) == false)
 		{
 			return false;
 		}
@@ -212,7 +211,7 @@ class run_test implements pts_option_interface
 		}
 
 		// Run the test process
-		pts_validate_test_installations_to_run($test_run_manager, $display_mode);
+		pts_validate_test_installations_to_run($test_run_manager);
 
 		if($test_run_manager->get_test_count() == 0)
 		{
@@ -361,7 +360,7 @@ class run_test implements pts_option_interface
 		pts_set_assignment("PTS_STATS_NO_ON_LENGTH", pts_config::read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, "20"));
 		pts_set_assignment("PTS_STATS_STD_DEV_THRESHOLD", pts_config::read_user_config(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, "3.50"));
 		pts_set_assignment("PTS_STATS_EXPORT_TO", pts_config::read_user_config(P_OPTION_STATS_EXPORT_RESULTS_TO, null));
-		pts_call_test_runs($test_run_manager, $display_mode, $xml_results_writer);
+		pts_call_test_runs($test_run_manager, $xml_results_writer);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_process("__post_run_process", $test_run_manager);
 

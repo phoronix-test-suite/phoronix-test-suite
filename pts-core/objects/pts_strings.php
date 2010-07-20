@@ -172,7 +172,7 @@ class pts_strings
 
 		return $is_match;
 	}
-	function pts_version_comparable($old, $new)
+	public static function version_strings_comparable($old, $new)
 	{
 		// Checks if there's a major version difference between two strings, if so returns false.
 		// If the same or only a minor difference, returns true.

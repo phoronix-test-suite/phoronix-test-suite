@@ -22,8 +22,9 @@
 
 class pts_client
 {
-	static $command_execution_count = 0;
-	static $lock_pointers = null;
+	public static $display;
+	protected static $command_execution_count = 0;
+	protected static $lock_pointers = null;
 
 	public static function create_lock($lock_file)
 	{
@@ -50,8 +51,8 @@ class pts_client
 		}
 
 		self::basic_init_process(); // Initalize common / needed PTS start-up work
-
 		self::core_storage_init_process();
+
 		pts_config::init_files();
 		define("TEST_ENV_DIR", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
 		define("SAVE_RESULTS_DIR", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
@@ -84,24 +85,22 @@ class pts_client
 
 		//define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
 	}
-	public static function obtain_display_mode()
+	public static function init_display_mode()
 	{
 		switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = pts_client::read_env("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
 		{
 			case "BASIC":
-				$display_mode = new pts_basic_display_mode();
+				self::$display = new pts_basic_display_mode();
 				break;
 			case "BATCH":
 			case "CONCISE":
-				$display_mode = new pts_concise_display_mode();
+				self::$display = new pts_concise_display_mode();
 				break;
 			case "DEFAULT":
 			default:
-				$display_mode = new pts_concise_display_mode();
+				self::$display = new pts_concise_display_mode();
 				break;
 		}
-
-		return $display_mode;
 	}
 	private static function extended_init_process()
 	{
@@ -142,6 +141,8 @@ class pts_client
 		{
 			pts_compatibility::pts_convert_pre_pts_26_module_settings();
 		}
+
+		pts_client::init_display_mode();
 	}
 	private static function core_storage_init_process()
 	{
@@ -348,7 +349,7 @@ class pts_client
 			fclose(self::$lock_pointers[self::$command_execution_count][$lock_file]);
 		}
 
-		pts_file_io::unlink(self::$lock_pointers[self::$command_execution_count][$lock_file]);
+		pts_file_io::unlink($lock_file);
 		unset(self::$lock_pointers[self::$command_execution_count][$lock_file]);
 	}
 	public static function check_command_for_function($option, $check_function)

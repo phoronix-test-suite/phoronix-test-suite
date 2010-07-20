@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_call_test_script($test_identifier, $script_name, $print_string = null, $pass_argument = null, $extra_vars = null, $use_ctp = true, &$display_mode = null)
+function pts_call_test_script($test_identifier, $script_name, $print_string = null, $pass_argument = null, $extra_vars = null, $use_ctp = true)
 {
 	$result = null;
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
@@ -44,14 +44,7 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = nu
 
 			if(!empty($print_string))
 			{
-				if($display_mode == null)
-				{
-					echo $print_string;
-				}
-				else
-				{
-					$display_mode->test_run_message($print_string);
-				}
+				pts_client::$display->test_run_message($print_string);
 			}
 
 			if($file_extension == "php")
@@ -84,23 +77,23 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = nu
 
 	return $result;
 }
-function pts_test_support_check($identifier, &$display_mode)
+function pts_test_support_check($identifier)
 {
 	$test_supported = true;
 
 	if(!pts_test_architecture_supported($identifier))
 	{
-		$display_mode->test_run_error($identifier . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
+		pts_client::$display->test_run_error($identifier . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
 		$test_supported = false;
 	}
 	else if(!pts_test_platform_supported($identifier))
 	{
-		$display_mode->test_run_error($identifier . " is not supported by this operating system: " . OPERATING_SYSTEM);
+		pts_client::$display->test_run_error($identifier . " is not supported by this operating system: " . OPERATING_SYSTEM);
 		$test_supported = false;
 	}
 	else if(!pts_test_version_supported($identifier))
 	{
-		$display_mode->test_run_error($identifier . " is not supported by this version of the Phoronix Test Suite: " . PTS_VERSION);
+		pts_client::$display->test_run_error($identifier . " is not supported by this version of the Phoronix Test Suite: " . PTS_VERSION);
 		$test_supported = false;
 	}
 

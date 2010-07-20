@@ -36,7 +36,6 @@ class install_test implements pts_option_interface
 	{
 		$items_to_install = array_unique(array_map("strtolower", $items_to_install));
 		echo "\n";
-		$display_mode = pts_client::obtain_display_mode();
 
 		// Create a lock
 		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";
@@ -44,7 +43,7 @@ class install_test implements pts_option_interface
 
 		// Any external dependencies?
 		$satisfied_tests = array(); // Tests with no dependencies or with all dependencies installed
-		if(!pts_install_package_on_distribution($display_mode, $items_to_install, $satisfied_tests))
+		if(!pts_install_package_on_distribution($items_to_install, $satisfied_tests))
 		{
 			echo "\nInstallation of needed test dependencies failed.\n\n";
 			$user_error = new pts_user_error("Installation of test dependencies for " . implode(", ", array_diff($items_to_install, $satisfied_tests)) . " failed.");
@@ -68,7 +67,7 @@ class install_test implements pts_option_interface
 			return false;
 		}
 
-		pts_start_install($items_to_install, $display_mode);
+		pts_start_install($items_to_install);
 
 		if($items_to_install = array("prev-test-identifier"))
 		{

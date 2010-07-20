@@ -24,7 +24,7 @@
 require_once(PTS_LIBRARY_PATH . "pts-includes-run_setup.php");
 require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
 
-function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
+function pts_cleanup_tests_to_run(&$to_run_identifiers)
 {
 	$skip_tests = ($e = pts_client::read_env("SKIP_TESTS")) ? explode(',', $e) : false;
 
@@ -51,7 +51,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 			}
 			else
 			{
-				if(pts_test_support_check($lower_identifier, $display_mode) == false)
+				if(pts_test_support_check($lower_identifier) == false)
 				{
 					continue;
 				}
@@ -169,14 +169,14 @@ function pts_verify_test_installation($identifiers, &$tests_missing)
 
 	return count($tests_installed) > 0 && (count($current_tests_missing) == 0 || $contains_a_suite);
 }
-function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = null)
+function pts_call_test_runs(&$test_run_manager, &$tandem_xml = null)
 {
 	pts_file_io::unlink(PTS_USER_DIR . "halt-testing");
 	pts_file_io::unlink(PTS_USER_DIR . "skip-test");
 
 	$test_flag = true;
 	$tests_to_run_count = $test_run_manager->get_test_count();
-	$display_mode->test_run_process_start($test_run_manager);
+	pts_client::$display->test_run_process_start($test_run_manager);
 
 	if(($total_loop_time_minutes = pts_client::read_env("TOTAL_LOOP_TIME")) && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
 	{
@@ -190,7 +190,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 			{
-				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i);
+				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $i);
 				pts_set_assignment("EST_TIME_REMAINING", ($loop_end_time - time()));
 			}
 		}
@@ -208,7 +208,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
-				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
+				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
 				pts_set_assignment("EST_TIME_REMAINING", ($test_run_manager->get_estimated_run_time_remaining($i + 1) + ($estimated_length * ($total_loop_count - $loop - 1))));
 			}
 		}
@@ -223,7 +223,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 
 		for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 		{
-			$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $display_mode, $i, ($i + 1), $tests_to_run_count);
+			$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $i, ($i + 1), $tests_to_run_count);
 			pts_set_assignment("EST_TIME_REMAINING", $test_run_manager->get_estimated_run_time_remaining($i + 1));
 		}
 	}
@@ -238,7 +238,7 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		unlink($cache_share_file);
 	}
 }
-function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mode)
+function pts_validate_test_installations_to_run(&$test_run_manager)
 {
 	$failed_tests = array();
 	$validated_run_requests = array();
@@ -276,13 +276,13 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 		{
 			if(pts_client::read_env("DISPLAY") == false && !IS_WINDOWS)
 			{
-				$display_mode->test_run_error("No display server was found, cannot run " . $test_identifier);
+				pts_client::$display->test_run_error("No display server was found, cannot run " . $test_identifier);
 				array_push($failed_tests, $test_identifier);
 				continue;
 			}
 			else if(in_array($display_driver, array("vesa", "nv", "cirrus")))
 			{
-				$display_mode->test_run_error("A display driver without 3D acceleration was found, cannot run " . $test_identifier);
+				pts_client::$display->test_run_error("A display driver without 3D acceleration was found, cannot run " . $test_identifier);
 				array_push($failed_tests, $test_identifier);
 				continue;
 			}
@@ -297,14 +297,14 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 
 		if($test_profile->is_root_required() && pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
 		{
-			$display_mode->test_run_error("Cannot run " . $test_identifier . " in batch mode as root access is required.");
+			pts_client::$display->test_run_error("Cannot run " . $test_identifier . " in batch mode as root access is required.");
 			array_push($failed_tests, $test_identifier);
 			continue;
 		}
 
 		if(pts_find_test_executable($test_identifier, $test_profile) == null)
 		{
-			$display_mode->test_run_error("The test executable for " . $test_identifier . " could not be found.");
+			pts_client::$display->test_run_error("The test executable for " . $test_identifier . " could not be found.");
 			array_push($failed_tests, $test_identifier);
 			continue;
 		}
@@ -325,7 +325,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager, &$display_mo
 
 	$test_run_manager->set_tests_to_run($validated_run_requests);
 }
-function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$display_mode, $run_index, $run_position = -1, $run_count = -1)
+function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_index, $run_position = -1, $run_count = -1)
 {
 	$result = false;
 
@@ -346,7 +346,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 		}
 
-		$result = pts_run_test($test_run_request, $display_mode);
+		$result = pts_run_test($test_run_request);
 
 		if(pts_file_io::unlink(PTS_USER_DIR . "halt-testing"))
 		{
@@ -505,7 +505,7 @@ function pts_clear_empty_tests(&$tests, &$test_args, &$test_args_desc)
 		}
 	}
 }
-function pts_run_test(&$test_run_request, &$display_mode)
+function pts_run_test(&$test_run_request)
 {
 	$test_identifier = $test_run_request->get_identifier();
 	$extra_arguments = $test_run_request->get_arguments();
@@ -522,7 +522,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$lock_file = $test_directory . "run_lock";
 	if(pts_client::create_lock($lock_file) == false)
 	{
-		$display_mode->test_run_error("The " . $test_identifier . " test is already running.");
+		pts_client::$display->test_run_error("The " . $test_identifier . " test is already running.");
 		return false;
 	}
 
@@ -540,7 +540,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	if($test_profile->get_environment_testing_size() != -1 && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $test_profile->get_environment_testing_size())
 	{
 		// Ensure enough space is available on disk during testing process
-		$display_mode->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run.");
+		pts_client::$display->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run.");
 		pts_client::release_lock($lock_file);
 		return false;
 	}
@@ -574,11 +574,11 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	pts_module_process("__pre_test_run", $test_results);
 
 	$time_test_start = time();
-	$display_mode->test_run_start($test_results);
+	pts_client::$display->test_run_start($test_results);
 
 	if(!$cache_share_present)
 	{
-		pts_call_test_script($test_identifier, "pre", "Running Pre-Test Script", $test_directory, $extra_runtime_variables, true, $display_mode);
+		pts_call_test_script($test_identifier, "pre", "Running Pre-Test Script", $test_directory, $extra_runtime_variables, true);
 	}
 
 	pts_user_io::display_interrupt_message($test_profile->get_pre_run_message());
@@ -608,7 +608,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
-		$display_mode->test_run_instance_header($test_results, ($i + 1), $times_to_run);
+		pts_client::$display->test_run_instance_header($test_results, ($i + 1), $times_to_run);
 		$test_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
 
 		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
@@ -635,7 +635,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			$test_run_command = "cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1";
 
-			pts_test_profile_debug_message($display_mode, "Test Run Command: " . $test_run_command);
+			pts_test_profile_debug_message("Test Run Command: " . $test_run_command);
 
 			$test_run_time_start = time();
 
@@ -656,13 +656,13 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(!isset($test_result[10240]) || pts_read_assignment("DEBUG_TEST_PROFILE"))
 		{
-			$display_mode->test_run_output($test_result);
+			pts_client::$display->test_run_output($test_result);
 		}
 
 		if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || pts_is_assignment("DEBUG_TEST_PROFILE")))
 		{
 			$test_log_file_contents = file_get_contents($test_log_file);
-			$display_mode->test_run_output($test_log_file_contents);
+			pts_client::$display->test_run_output($test_log_file_contents);
 			unset($test_log_file_contents);
 		}
 
@@ -675,7 +675,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 			if($exit_status != 0 && !IS_BSD)
 			{
-				$display_mode->test_run_error("The test exited with a non-zero exit status. Test run failed.");
+				pts_client::$display->test_run_error("The test exited with a non-zero exit status. Test run failed.");
 				$exit_status_pass = false;
 			}
 		}
@@ -695,7 +695,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 			if(is_file($parse_results_xml_file = pts_tests::test_resources_location($test_identifier) . "parse-results.xml"))
 			{
-				$test_result = pts_result_parser::parse_result($display_mode, $test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
+				$test_result = pts_result_parser::parse_result($test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
 			}
 			else if(is_file($test_log_file))
 			{
@@ -724,7 +724,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				}
 			}
 
-			pts_test_profile_debug_message($display_mode, "Test Result Value: " . $test_result);
+			pts_test_profile_debug_message("Test Result Value: " . $test_result);
 
 			if(!empty($test_result))
 			{
@@ -782,7 +782,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			if(!$cache_share_present)
 			{
-				pts_call_test_script($test_identifier, "interim", "Running Interim-Test Script", $test_directory, $extra_runtime_variables, true, $display_mode);
+				pts_call_test_script($test_identifier, "interim", "Running Interim-Test Script", $test_directory, $extra_runtime_variables, true);
 				sleep(2); // Rest for a moment between tests
 			}
 
@@ -796,7 +796,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				copy($test_log_file, $backup_test_log_dir . $test_identifier . "-" . ($i + 1) . ".log");
 			}
 
-			if(!pts_test_profile_debug_message($display_mode, "Log File At: " . $test_log_file))
+			if(!pts_test_profile_debug_message("Log File At: " . $test_log_file))
 			{
 				unlink($test_log_file);
 			}
@@ -813,12 +813,12 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if(!$cache_share_present)
 	{
-		pts_call_test_script($test_identifier, "post", "Running Post-Test Script", $test_directory, $extra_runtime_variables, true, $display_mode);
+		pts_call_test_script($test_identifier, "post", "Running Post-Test Script", $test_directory, $extra_runtime_variables, true);
 	}
 
 	if($abort_testing)
 	{
-		$display_mode->test_run_error("This test execution has been abandoned.");
+		pts_client::$display->test_run_error("This test execution has been abandoned.");
 		return false;
 	}
 
@@ -832,7 +832,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if($min_length > $time_test_elapsed_actual)
 		{
 			// The test ended too quickly, results are not valid
-			$display_mode->test_run_error("This test ended prematurely.");
+			pts_client::$display->test_run_error("This test ended prematurely.");
 			return false;
 		}
 	}
@@ -842,7 +842,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if($max_length < $time_test_elapsed_actual)
 		{
 			// The test took too much time, results are not valid
-			$display_mode->test_run_error("This test run was exhausted.");
+			pts_client::$display->test_run_error("This test run was exhausted.");
 			return false;
 		}
 	}
@@ -948,7 +948,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	$test_results->set_used_arguments($extra_arguments);
 	$test_results->calculate_end_result(); // Process results
 
-	$display_mode->test_run_end($test_results);
+	pts_client::$display->test_run_end($test_results);
 
 	pts_user_io::display_interrupt_message($test_profile->get_post_run_message());
 	pts_module_process("__post_test_run", $test_results);
@@ -966,13 +966,13 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	return $result_format == "NO_RESULT" ? true : $test_results;
 }
-function pts_test_profile_debug_message(&$display_mode, $message)
+function pts_test_profile_debug_message($message)
 {
 	$reported = false;
 
 	if(pts_is_assignment("DEBUG_TEST_PROFILE"))
 	{
-		$display_mode->test_run_error($message);
+		pts_client::$display->test_run_error($message);
 		$reported = true;
 	}
 

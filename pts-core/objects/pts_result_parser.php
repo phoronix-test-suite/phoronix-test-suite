@@ -22,7 +22,7 @@
 
 class pts_result_parser
 {
-	public static function parse_result(&$display_mode, &$test_profile, &$test_run_request, $parse_xml_file, $test_log_file)
+	public static function parse_result(&$test_profile, &$test_run_request, $parse_xml_file, $test_log_file)
 	{
 		$test_identifier = $test_run_request->get_identifier();
 		$extra_arguments = $test_run_request->get_arguments();
@@ -30,20 +30,20 @@ class pts_result_parser
 		switch($test_profile->get_result_format())
 		{
 			case "IMAGE_COMPARISON":
-				$test_result = pts_result_parser::parse_iqc_result($display_mode, $test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_result = pts_result_parser::parse_iqc_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case "PASS_FAIL":
 			case "MULTI_PASS_FAIL":
-				$test_result = pts_result_parser::parse_generic_result($display_mode, $test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_result = pts_result_parser::parse_generic_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			default:
-				$test_result = pts_result_parser::parse_numeric_result($display_mode, $test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_result = pts_result_parser::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 		}
 
 		return $test_result;
 	}
-	protected static function parse_iqc_result(&$display_mode, $test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
+	protected static function parse_iqc_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{
 		$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
@@ -98,15 +98,15 @@ class pts_result_parser
 
 		return $test_result;
 	}
-	protected static function parse_numeric_result(&$display_mode, $test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
+	protected static function parse_numeric_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{
-		return self::parse_result_process($display_mode, $test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, true);
+		return self::parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, true);
 	}
-	protected static function parse_generic_result(&$display_mode, $test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
+	protected static function parse_generic_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{
-		return self::parse_result_process($display_mode, $test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, false);
+		return self::parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, false);
 	}
-	protected static function parse_result_process(&$display_mode, $test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true)
+	protected static function parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true)
 	{
 		$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
@@ -228,21 +228,21 @@ class pts_result_parser
 
 					if($result_line_before_hint[$i] != null)
 					{
-						pts_test_profile_debug_message($display_mode, "Result Parsing Line Before Hint: " . $result_line_before_hint[$i]);
+						pts_test_profile_debug_message("Result Parsing Line Before Hint: " . $result_line_before_hint[$i]);
 						$result_line = substr($result_output, strpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
 						$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
 						$result_output = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i]))) . "\n";
 					}
 					else
 					{
-						pts_test_profile_debug_message($display_mode, "Result Parsing Search Key: " . $search_key);
+						pts_test_profile_debug_message("Result Parsing Search Key: " . $search_key);
 						$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
 						$start_of_line = strrpos($result_line, "\n");
 						$result_output = substr($result_line, 0, $start_of_line) . "\n";
 						$result_line = substr($result_line, $start_of_line + 1);
 					}
 
-					pts_test_profile_debug_message($display_mode, "Result Line: " . $result_line);
+					pts_test_profile_debug_message("Result Line: " . $result_line);
 
 					$result_r = explode(' ', pts_strings::trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
 					$result_r_pos = array_search($result_key[$i], $result_r);

@@ -61,7 +61,7 @@ class pts_user_io
 
 		return $list;
 	}
-	public static function prompt_bool_input($question, $default = true, $question_id = "UNKNOWN", &$display_mode = null)
+	public static function prompt_bool_input($question, $default = true, $question_id = "UNKNOWN")
 	{
 		// Prompt user for yes/no question
 		if(pts_read_assignment("IS_BATCH_MODE"))
@@ -90,15 +90,7 @@ class pts_user_io
 
 			do
 			{
-				if($display_mode != null)
-				{
-					$display_mode->test_install_prompt($question);
-				}
-				else
-				{
-					echo $question;
-				}
-
+				pts_client::$display->test_install_prompt($question);
 				$input = strtolower(pts_user_io::read_user_input());
 			}
 			while($input != "y" && $input != "n" && $input != "");

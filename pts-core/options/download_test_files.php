@@ -46,9 +46,8 @@ class download_test_files implements pts_option_interface
 			{
 				// Download Test Files
 				echo "\n" . $this_test . ":\n";
-				$display_mode = pts_client::obtain_display_mode();
 				pts_setup_install_test_directory($this_test, false);
-				pts_download_test_files($this_test, $display_mode);
+				pts_download_test_files($this_test);
 			}
 		}
 	}

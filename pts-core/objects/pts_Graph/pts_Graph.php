@@ -360,7 +360,7 @@ abstract class pts_Graph
 					$i++;
 					$next_color = $this->next_paint_color();
 				}
-				while(in_array($next_color, $used_paint_colors) == true && $i < 10);
+				while(is_array($used_paint_colors) && in_array($next_color, $used_paint_colors) == true && $i < 10);
 
 				$used_paint_colors[$identifier] = $next_color;
 			}
