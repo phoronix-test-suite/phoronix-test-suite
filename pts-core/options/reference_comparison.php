@@ -64,7 +64,7 @@ class reference_comparison implements pts_option_interface
 			}
 
 			echo pts_string_header("Reference Comparison");
-			$merge_index = pts_text_select_menu("Select a reference system", $comparable, false, true);
+			$merge_index = pts_user_io::prompt_text_menu("Select a reference system", $comparable, false, true);
 
 			array_push($merge_args, $reference_test_globals[$merge_index]);
 		}

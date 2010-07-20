@@ -42,7 +42,7 @@ class result_file_to_suite implements pts_option_interface
 		}
 
 		$suite_name = pts_user_io::prompt_user_input("Enter name of suite");
-		$suite_test_type = pts_text_select_menu("Select test type", pts_types::subsystem_targets());
+		$suite_test_type = pts_user_io::prompt_text_menu("Select test type", pts_types::subsystem_targets());
 		$suite_maintainer = pts_user_io::prompt_user_input("Enter suite maintainer name");
 		$suite_description = pts_user_io::prompt_user_input("Enter suite description");
 

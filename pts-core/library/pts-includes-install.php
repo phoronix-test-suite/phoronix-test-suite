@@ -246,7 +246,7 @@ function pts_download_test_files($identifier, &$display_mode)
 						do
 						{
 							echo "\nAvailable Download Mirrors:\n\n";
-							$url = pts_text_select_menu("Select Your Preferred Mirror", $urls, false);
+							$url = pts_user_io::prompt_text_menu("Select Your Preferred Mirror", $urls, false);
 						}
 						while(!pts_is_valid_download_url($url));
 					}
@@ -314,7 +314,7 @@ function pts_download_test_files($identifier, &$display_mode)
 								}
 								else if($md5_failed)
 								{
-									$try_again = pts_bool_question("Try downloading the file again (Y/n)?", true, "TRY_DOWNLOAD_AGAIN", $display_mode);
+									$try_again = pts_user_io::prompt_bool_input("Try downloading the file again", true, "TRY_DOWNLOAD_AGAIN", $display_mode);
 								}
 								else
 								{
@@ -486,7 +486,7 @@ function pts_install_test($identifier, &$display_mode)
 					}
 
 					echo $install_agreement . "\n";
-					$user_agrees = pts_bool_question("Do you agree to these terms (y/N)?", false, "INSTALL_AGREEMENT");
+					$user_agrees = pts_user_io::prompt_bool_input("Do you agree to these terms", false, "INSTALL_AGREEMENT");
 
 					if(!$user_agrees)
 					{

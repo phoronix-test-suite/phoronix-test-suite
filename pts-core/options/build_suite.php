@@ -31,7 +31,7 @@ class build_suite implements pts_option_interface
 		echo pts_string_header("Test Suite Creation Utility");
 
 		$suite_name = pts_user_io::prompt_user_input("Enter name of suite");
-		$suite_test_type = pts_text_select_menu("Select test type", pts_types::subsystem_targets());
+		$suite_test_type = pts_user_io::prompt_text_menu("Select test type", pts_types::subsystem_targets());
 		$suite_maintainer = pts_user_io::prompt_user_input("Enter suite maintainer name");
 		$suite_description = pts_user_io::prompt_user_input("Enter suite description");
 
@@ -79,7 +79,7 @@ class build_suite implements pts_option_interface
 			switch($input_option)
 			{
 				case "Add Test":
-					$test_to_add = pts_text_select_menu("Enter test name", $possible_tests);
+					$test_to_add = pts_user_io::prompt_text_menu("Enter test name", $possible_tests);
 
 					list($args, $description) = pts_prompt_test_options($test_to_add);
 
@@ -92,14 +92,14 @@ class build_suite implements pts_option_interface
 					}
 					break;
 				case "Add Sub-Suite":
-					$suite_to_add = pts_text_select_menu("Enter test suite", $possible_suites);
+					$suite_to_add = pts_user_io::prompt_text_menu("Enter test suite", $possible_suites);
 
 					$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $suite_to_add);
 					$write_position++;
 					break;
 			}
 			echo "\nAvailable Options:\n";
-			$input_option = pts_text_select_menu("Select next operation", array("Add Test", "Add Sub-Suite", "Save & Exit"));
+			$input_option = pts_user_io::prompt_text_menu("Select next operation", array("Add Test", "Add Sub-Suite", "Save & Exit"));
 		}
 		while($input_option != "Save & Exit");
 

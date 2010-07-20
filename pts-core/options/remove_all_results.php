@@ -24,7 +24,7 @@ class remove_all_results implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$remove_all = pts_bool_question("Are you sure you wish to remove all saved results (Y/n)?", true);
+		$remove_all = pts_user_io::prompt_bool_input("Are you sure you wish to remove all saved results", true);
 
 		if($remove_all)
 		{

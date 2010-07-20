@@ -235,9 +235,9 @@ class pts_client
 			{
 				echo pts_string_header("Phoronix Test Suite - Welcome");
 				echo wordwrap($user_agreement, 65);
-				$agree = pts_bool_question("Do you agree to these terms and wish to proceed (Y/n)?", true);
-				$usage_reporting = $agree ? pts_bool_question("Enable anonymous usage / statistics reporting (Y/n)?", true) : -1;
-				$hwsw_reporting = $agree ? pts_bool_question("Enable anonymous statistical reporting of installed software / hardware (Y/n)?", true) : -1;
+				$agree = pts_user_io::prompt_bool_input("Do you agree to these terms and wish to proceed", true);
+				$usage_reporting = $agree ? pts_user_io::prompt_bool_input("Enable anonymous usage / statistics reporting", true) : -1;
+				$hwsw_reporting = $agree ? pts_user_io::prompt_bool_input("Enable anonymous statistical reporting of installed software / hardware", true) : -1;
 			}
 
 			if($agree)
@@ -657,14 +657,7 @@ class pts_client
 
 		if($auto_open == false)
 		{
-			if(!$default_open)
-			{
-				$view_results = pts_bool_question($text . " (y/N)?", false, "OPEN_BROWSER");
-			}
-			else
-			{
-				$view_results = pts_bool_question($text . " (Y/n)?", true, "OPEN_BROWSER");
-			}
+			$view_results = pts_user_io::prompt_bool_input($text, $default_open, "OPEN_BROWSER");
 		}
 		else
 		{

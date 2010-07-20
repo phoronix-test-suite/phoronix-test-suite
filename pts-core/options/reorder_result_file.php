@@ -46,7 +46,7 @@ class reorder_result_file implements pts_option_interface
 
 		do
 		{
-			$extract_identifier = pts_text_select_menu("Select the test run to be showed next", $result_file_identifiers);
+			$extract_identifier = pts_user_io::prompt_text_menu("Select the test run to be showed next", $result_file_identifiers);
 			array_push($extract_selects, new pts_result_merge_select($result, $extract_identifier));
 
 			$old_identifiers = $result_file_identifiers;

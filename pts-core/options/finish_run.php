@@ -64,7 +64,7 @@ class finish_run implements pts_option_interface
 			return false;
 		}
 
-		$selected = pts_text_select_menu("Select which incomplete test run you would like to finish", $incomplete_identifiers);
+		$selected = pts_user_io::prompt_text_menu("Select which incomplete test run you would like to finish", $incomplete_identifiers);
 
 		pts_client::run_next("run_test", $args, array("FINISH_INCOMPLETE_RUN" => true, "TESTS_TO_COMPLETE" => $test_positions[$selected], "AUTO_TEST_RESULTS_IDENTIFIER" => $selected));
 	}

@@ -117,7 +117,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 
 		if(!pts_read_assignment("AUTOMATED_MODE") && !pts_read_assignment("IS_BATCH_MODE") && !pts_read_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS"))
 		{
-			$stop_and_install = pts_bool_question("Would you like to install these tests now (Y/n)?", true);
+			$stop_and_install = pts_user_io::prompt_bool_input("Would you like to install these tests now", true);
 
 			if($stop_and_install)
 			{

@@ -236,7 +236,7 @@ class run_test implements pts_option_interface
 			}
 			else
 			{
-				$save_results = pts_bool_question("Would you like to save these test results (Y/n)?", true, "SAVE_RESULTS");
+				$save_results = pts_user_io::prompt_bool_input("Would you like to save these test results", true, "SAVE_RESULTS");
 			}
 
 			if($save_results)
@@ -416,7 +416,7 @@ class run_test implements pts_option_interface
 				}
 				else
 				{
-					$upload_results = pts_bool_question("Would you like to upload these results to Phoronix Global (Y/n)?", true, "UPLOAD_RESULTS");
+					$upload_results = pts_user_io::prompt_bool_input("Would you like to upload these results to Phoronix Global", true, "UPLOAD_RESULTS");
 				}
 
 				if($upload_results)

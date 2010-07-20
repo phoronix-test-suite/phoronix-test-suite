@@ -26,7 +26,7 @@ class network_setup implements pts_option_interface
 	{
 		echo pts_string_header("Network Setup");
 
-		if(!pts_bool_question("Configure the Phoronix Test Suite to use a HTTP proxy (y/N)?", false))
+		if(!pts_user_io::prompt_bool_input("Configure the Phoronix Test Suite to use a HTTP proxy", false))
 		{
 			return false;
 		}

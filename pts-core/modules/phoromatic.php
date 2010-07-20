@@ -124,8 +124,8 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		pts_set_assignment("PHOROMATIC_UPLOAD_TEST_LOGS", pts_bool_question("Would you like to upload the test logs (y/N)?", false));
-		pts_set_assignment("PHOROMATIC_UPLOAD_SYSTEM_LOGS", pts_bool_question("Would you like to upload the system logs (y/N)?", false));
+		pts_set_assignment("PHOROMATIC_UPLOAD_TEST_LOGS", pts_user_io::prompt_bool_input("Would you like to upload the test logs", false));
+		pts_set_assignment("PHOROMATIC_UPLOAD_SYSTEM_LOGS", pts_user_io::prompt_bool_input("Would you like to upload the system logs", false));
 
 		phoromatic::upload_unscheduled_test_results($to_upload[0]);
 	}

@@ -32,7 +32,7 @@ class remove_installed_test implements pts_option_interface
 	{
 		$identifier = $r[0];
 
-		if(pts_bool_question("Are you sure you wish to remove the test " . $identifier . " (y/N)?", false))
+		if(pts_user_io::prompt_bool_input("Are you sure you wish to remove the test " . $identifier, false))
 		{
 			if($identifier == "all")
 			{

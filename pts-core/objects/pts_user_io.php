@@ -61,6 +61,110 @@ class pts_user_io
 
 		return $list;
 	}
+	public static function prompt_bool_input($question, $default = true, $question_id = "UNKNOWN", &$display_mode = null)
+	{
+		// Prompt user for yes/no question
+		if(pts_read_assignment("IS_BATCH_MODE"))
+		{
+			switch($question_id)
+			{
+				case "SAVE_RESULTS":
+					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE");
+					break;
+				case "OPEN_BROWSER":
+					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE");
+					break;
+				case "UPLOAD_RESULTS":
+					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE");
+					break;
+				default:
+					$auto_answer = "true";
+					break;
+			}
+
+			$answer = pts_strings::string_bool($auto_answer);
+		}
+		else
+		{
+			$question .= " (" . ($default == true ? "Y/n" : "y/N") . "): ";
+
+			do
+			{
+				if($display_mode != null)
+				{
+					$display_mode->test_install_prompt($question);
+				}
+				else
+				{
+					echo $question;
+				}
+
+				$input = strtolower(pts_user_io::read_user_input());
+			}
+			while($input != "y" && $input != "n" && $input != "");
+
+			switch($input)
+			{
+				case "y":
+					$answer = true;
+					break;
+				case "n":
+					$answer = false;
+					break;
+				default:
+					$answer = $default;
+					break;
+			}
+		}
+
+		return $answer;
+	}
+	public static function prompt_text_menu($user_string, $options_r, $allow_multi_select = false, $return_index = false)
+	{
+		$option_count = count($options_r);
+
+		if($option_count == 1)
+		{
+			return $return_index ? 0 : array_pop($options_r);
+		}
+
+		do
+		{
+			echo "\n";
+			for($i = 0; $i < $option_count; $i++)
+			{
+				echo ($i + 1) . ": " . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$i] . "\n";
+			}
+			echo "\n" . $user_string . ": ";
+			$select_choice = pts_user_io::read_user_input();
+
+			// Validate possible multi-select
+			$multi_choice = pts_strings::trim_explode(",", $select_choice);
+			$multi_select_pass = false;
+
+			if($allow_multi_select && count($multi_choice) > 1)
+			{
+				$multi_select = array();
+				foreach($multi_choice as $choice)
+				{
+					if(in_array($choice, $options_r) || isset($options_r[($choice - 1)]) && ($return_index || $choice = $options_r[($choice - 1)]) != null)
+					{
+						array_push($multi_select, $choice);
+					}
+				}
+
+				if(count($multi_select) > 0)
+				{
+					$multi_select_pass = true;
+					$select_choice = implode(",", $multi_select);
+				
+				}
+			}
+		}
+		while(!$multi_select_pass && !(in_array($select_choice, $options_r) || isset($options_r[($select_choice - 1)]) && ($return_index || $select_choice = $options_r[($select_choice - 1)]) != null));
+
+		return $select_choice;
+	}
 }
 
 ?>

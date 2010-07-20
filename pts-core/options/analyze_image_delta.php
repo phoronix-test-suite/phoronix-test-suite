@@ -45,10 +45,10 @@ class analyze_image_delta implements pts_option_interface
 			return false;
 		}
 
-		$base_identifier = pts_text_select_menu("Select the base test run", $result_file_identifiers);
+		$base_identifier = pts_user_io::prompt_text_menu("Select the base test run", $result_file_identifiers);
 		$base_select = new pts_result_merge_select($result, $base_identifier);
 
-		$compare_identifier = pts_text_select_menu("Select the test run to compare", $result_file_identifiers);
+		$compare_identifier = pts_user_io::prompt_text_menu("Select the test run to compare", $result_file_identifiers);
 		$compare_select = new pts_result_merge_select($result, $compare_identifier);
 
 		do

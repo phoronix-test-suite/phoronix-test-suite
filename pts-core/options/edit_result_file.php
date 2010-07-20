@@ -37,7 +37,7 @@ class edit_result_file implements pts_option_interface
 		"Rename Identifier"
 		);
 
-		$input_option = pts_text_select_menu("Select edit operation", $edit_options);
+		$input_option = pts_user_io::prompt_text_menu("Select edit operation", $edit_options);
 
 		switch($input_option)
 		{

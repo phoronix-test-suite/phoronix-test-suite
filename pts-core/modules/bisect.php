@@ -68,8 +68,8 @@ class bisect extends pts_module_interface
 
 		$proportion = $result_objects[$selected_index]->get_proportion();
 
-		$bad_run = pts_text_select_menu("Select test run that regressed", $system_identifiers);
-		$good_run = pts_text_select_menu("Select test run that is good", $system_identifiers);
+		$bad_run = pts_user_io::prompt_text_menu("Select test run that regressed", $system_identifiers);
+		$good_run = pts_user_io::prompt_text_menu("Select test run that is good", $system_identifiers);
 
 		$bad_run_index = array_search($bad_run, $system_identifiers);
 		$good_run_index = array_search($good_run, $system_identifiers);

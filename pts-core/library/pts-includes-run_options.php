@@ -89,7 +89,7 @@ function pts_prompt_test_options($identifier)
 					array_push($option_names, "Test All Options");
 				}
 
-				$bench_choice = pts_text_select_menu("Enter Your Choice", $option_names, true, true);
+				$bench_choice = pts_user_io::prompt_text_menu("Enter Your Choice", $option_names, true, true);
 			}
 
 			$bench_choice = $o->parse_selection_choice_input($bench_choice);

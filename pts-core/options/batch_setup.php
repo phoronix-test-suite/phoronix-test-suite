@@ -26,15 +26,15 @@ class batch_setup implements pts_option_interface
 	{
 		echo "\nThese are the default configuration options for when running the Phoronix Test Suite in a batch mode (i.e. running phoronix-test-suite batch-benchmark universe). Running in a batch mode is designed to be as autonomous as possible, except for where you'd like any end-user interaction.\n\n";
 		$batch_options = array();
-		$batch_options[P_OPTION_BATCH_SAVERESULTS] = pts_config::bool_to_string(pts_bool_question("Save test results when in batch mode (Y/n)?", true));
+		$batch_options[P_OPTION_BATCH_SAVERESULTS] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Save test results when in batch mode", true));
 
 		if($batch_options[P_OPTION_BATCH_SAVERESULTS] == "TRUE")
 		{
-			$batch_options[P_OPTION_BATCH_LAUNCHBROWSER] = pts_config::bool_to_string(pts_bool_question("Open the web browser automatically when in batch mode (y/N)?", false));
-			$batch_options[P_OPTION_BATCH_UPLOADRESULTS] = pts_config::bool_to_string(pts_bool_question("Auto upload the results to Phoronix Global (Y/n)?", true));
-			$batch_options[P_OPTION_BATCH_PROMPTIDENTIFIER] = pts_config::bool_to_string(pts_bool_question("Prompt for test identifier (Y/n)?", true));
-			$batch_options[P_OPTION_BATCH_PROMPTDESCRIPTION] = pts_config::bool_to_string(pts_bool_question("Prompt for test description (Y/n)?", true));
-			$batch_options[P_OPTION_BATCH_PROMPTSAVENAME] = pts_config::bool_to_string(pts_bool_question("Prompt for saved results file-name (Y/n)?", true));
+			$batch_options[P_OPTION_BATCH_LAUNCHBROWSER] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Open the web browser automatically when in batch mode", false));
+			$batch_options[P_OPTION_BATCH_UPLOADRESULTS] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Auto upload the results to Phoronix Global", true));
+			$batch_options[P_OPTION_BATCH_PROMPTIDENTIFIER] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Prompt for test identifier", true));
+			$batch_options[P_OPTION_BATCH_PROMPTDESCRIPTION] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Prompt for test description", true));
+			$batch_options[P_OPTION_BATCH_PROMPTSAVENAME] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Prompt for saved results file-name", true));
 		}
 		else
 		{
@@ -45,7 +45,7 @@ class batch_setup implements pts_option_interface
 			$batch_options[P_OPTION_BATCH_PROMPTSAVENAME] = "FALSE";
 		}
 
-		$batch_options[P_OPTION_BATCH_TESTALLOPTIONS] = pts_config::bool_to_string(pts_bool_question("Run all test options (Y/n)?", true));
+		$batch_options[P_OPTION_BATCH_TESTALLOPTIONS] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Run all test options", true));
 		$batch_options[P_OPTION_BATCH_CONFIGURED] = "TRUE";
 
 		pts_config::user_config_generate($batch_options);

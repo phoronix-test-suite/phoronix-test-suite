@@ -41,7 +41,7 @@ class remove_from_result_file implements pts_option_interface
 			return false;
 		}
 
-		$remove_identifier = pts_text_select_menu("Select the test run to remove", $result_file_identifiers);
+		$remove_identifier = pts_user_io::prompt_text_menu("Select the test run to remove", $result_file_identifiers);
 		$keep_identifiers = array();
 
 		foreach($result_file_identifiers as $identifier)
