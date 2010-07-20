@@ -130,17 +130,46 @@ class pts_compression
 	{
 		if(is_dir($add_file))
 		{
-			$zip->addEmptyDir(substr($add_file, strlen(pts_add_trailing_slash($base_dir))));
+			$zip->addEmptyDir(substr($add_file, strlen(pts_strings::add_trailing_slash($base_dir))));
 
-			foreach(pts_glob(pts_add_trailing_slash($add_file) . '*') as $new_file)
+			foreach(pts_glob(pts_strings::add_trailing_slash($add_file) . '*') as $new_file)
 			{
 				self::zip_archive_add($zip, $new_file, $base_dir);
 			}
 		}
 		else if(is_file($add_file))
 		{
-			$zip->addFile($add_file, substr($add_file, strlen(pts_add_trailing_slash($base_dir))));
+			$zip->addFile($add_file, substr($add_file, strlen(pts_strings::add_trailing_slash($base_dir))));
 		}
+	}
+	public static function zip_archive_read_all_files($zip_file)
+	{
+		if(!class_exists("ZipArchive") || !is_readable($zip_file))
+		{
+			return false;
+		}
+
+		$zip = new ZipArchive();
+		$res = $zip->open($zip_file);
+
+		if($res === TRUE)
+		{
+			$files = array();
+
+			for($i = 0; $i < $zip->numFiles; $i++)
+			{
+				$filename = $zip->getNameIndex($i);
+				$files[$filename] = $zip->getFromName($filename);
+			}
+
+			$zip->close();
+		}
+		else
+		{
+			$files = false;
+		}
+
+		return $files;
 	}
 }
 

@@ -865,8 +865,7 @@ function pts_remove_test_profile($identifier)
 	if(is_writable($xml_loc) && is_writable($resources_loc))
 	{
 		pts_unlink($xml_loc);
-		pts_remove($resources_loc);
-		pts_rmdir($resources_loc);
+		pts_remove($resources_loc, null, true);
 		$removed = true;
 	}
 
@@ -874,8 +873,7 @@ function pts_remove_test_profile($identifier)
 }
 function pts_remove_test_result_dir($identifier)
 {
-	pts_remove(SAVE_RESULTS_DIR . $identifier);
-	pts_rmdir(SAVE_RESULTS_DIR . $identifier);
+	pts_remove(SAVE_RESULTS_DIR . $identifier, null, true);
 }
 function pts_test_result_format_to_string($result_format)
 {

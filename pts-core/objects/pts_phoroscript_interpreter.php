@@ -52,7 +52,7 @@ class pts_phoroscript_interpreter
 
 		if(strpos($path, '*') !== false)
 		{
-			$grep_dir = pts_add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
+			$grep_dir = pts_strings::add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
 			$glob = pts_glob($grep_dir . $path);
 
 			return count($glob) > 0 ? array_shift($glob) : $this->var_current_directory;
@@ -67,7 +67,7 @@ class pts_phoroscript_interpreter
 		}
 		else
 		{
-			return pts_add_trailing_slash($this->var_current_directory . $path);
+			return pts_strings::add_trailing_slash($this->var_current_directory . $path);
 		}
 	}
 	protected function find_file_in_array(&$string_array)
@@ -307,7 +307,7 @@ class pts_phoroscript_interpreter
 						}
 
 						// TODO: right now it's expecting the file location pipe to be relative location
-						$echo_dir = pts_add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
+						$echo_dir = pts_strings::add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
 						file_put_contents($echo_dir . $to_file, $echo_contents . "\n");
 					}
 					else

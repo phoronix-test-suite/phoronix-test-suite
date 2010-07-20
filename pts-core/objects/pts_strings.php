@@ -27,6 +27,10 @@ class pts_strings
 		// Used for evaluating if the user inputted a string that evaluates to true
 		return in_array(strtolower($string), array("true", "1"));
 	}
+	public static function add_trailing_slash($path)
+	{
+		return $path . (substr($path, -1) == '/' ? null : '/'); 
+	}
 	public static function trim_explode($delimiter, $to_explode)
 	{
 		return array_map("trim", explode($delimiter, $to_explode));

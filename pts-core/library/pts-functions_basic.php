@@ -21,10 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_add_trailing_slash($path)
-{
-	return $path . (substr($path, -1) == '/' ? null : '/'); 
-}
 function pts_first_element_in_array($array)
 {
 	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
@@ -43,10 +39,6 @@ function pts_glob($pattern, $flags = 0)
 {
 	$r = glob($pattern, $flags);
 	return is_array($r) ? $r : array();
-}
-function pts_rmdir($dir)
-{
-	return is_dir($dir) && rmdir($dir);
 }
 function pts_unlink($file)
 {
@@ -112,7 +104,7 @@ function pts_remove($object, $ignore_files = null, $remove_root_directory = fals
 {
 	if(is_dir($object))
 	{
-		$object = pts_add_trailing_slash($object);
+		$object = pts_strings::add_trailing_slash($object);
 	}
 
 	foreach(pts_glob($object . "*") as $to_remove)

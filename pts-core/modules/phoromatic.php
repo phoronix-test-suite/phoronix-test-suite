@@ -51,7 +51,7 @@ class phoromatic extends pts_module_interface
 	{
 		if(substr($options["remote_host"], -14) != "phoromatic.php")
 		{
-			$options["remote_host"] = pts_add_trailing_slash($options["remote_host"]) . "phoromatic.php";
+			$options["remote_host"] = pts_strings::add_trailing_slash($options["remote_host"]) . "phoromatic.php";
 		}
 
 		$server_response = phoromatic::upload_to_remote_server(array(

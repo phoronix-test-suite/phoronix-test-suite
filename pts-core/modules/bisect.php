@@ -39,7 +39,7 @@ class bisect extends pts_module_interface
 	}
 	public static function module_setup_validate($options)
 	{
-		$options["repo_dir"] = pts_add_trailing_slash($options["repo_dir"]);
+		$options["repo_dir"] = pts_strings::add_trailing_slash($options["repo_dir"]);
 
 		if(!is_dir($options["repo_dir"] . ".git"))
 		{

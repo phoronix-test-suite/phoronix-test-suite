@@ -55,7 +55,7 @@ class kernel_config_tester extends pts_module_interface
 			return array();
 		}
 
-		$options["kernel_source_dir"] = pts_add_trailing_slash($options["kernel_source_dir"]);
+		$options["kernel_source_dir"] = pts_strings::add_trailing_slash($options["kernel_source_dir"]);
 
 		if(!is_file($options["kernel_source_dir"] . "Kbuild"))
 		{

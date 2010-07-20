@@ -597,7 +597,7 @@ function pts_test_download_cache_directories()
 				continue;
 			}
 
-			array_push($cache_directories, pts_add_trailing_slash($dir_check));
+			array_push($cache_directories, pts_strings::add_trailing_slash($dir_check));
 		}
 
 		// Other Possible Directories

@@ -301,7 +301,7 @@ class pts_client
 				$userhome = null;
 			}
 
-			$userhome = pts_add_trailing_slash($userhome);
+			$userhome = pts_strings::add_trailing_slash($userhome);
 		}
 
 		return $userhome;
@@ -314,7 +314,7 @@ class pts_client
 			$path = str_replace("~/", pts_client::user_home_directory(), $path);
 		}
 
-		return pts_add_trailing_slash($path);
+		return pts_strings::add_trailing_slash($path);
 	}
 	public static function process_shutdown_tasks()
 	{
@@ -626,7 +626,7 @@ class pts_client
 
 			foreach($paths as $path)
 			{
-				$path = pts_add_trailing_slash($path);
+				$path = pts_strings::add_trailing_slash($path);
 
 				if(is_executable($path . $executable))
 				{
