@@ -300,7 +300,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 					if(is_file($connector_path . "enabled") && pts_file_get_contents($connector_path . "enabled") == "enabled")
 					{
-						$mode = pts_first_element_in_array(explode("\n", pts_file_get_contents($connector_path . "modes")));
+						$mode = pts_arrays::first_element(explode("\n", pts_file_get_contents($connector_path . "modes")));
 						$info = pts_strings::trim_explode('x', $mode);
 
 						if(count($info) == 2)
@@ -655,10 +655,10 @@ class phodevi_gpu extends phodevi_device_interface
 							switch($descriptor)
 							{
 								case "default engine clock":
-									$core_freq = pts_first_element_in_array(explode(' ', $value)) / 1000;
+									$core_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
 									break;
 								case "default memory clock":
-									$mem_freq = pts_first_element_in_array(explode(' ', $value)) / 1000;
+									$mem_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
 									break;
 							}
 						}
@@ -710,7 +710,7 @@ class phodevi_gpu extends phodevi_device_interface
 		if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
 			$crossfire_status = phodevi_linux_parser::read_amd_pcsdb("SYSTEM/Crossfire/chain/*,Enable");
-			$crossfire_status = pts_to_array($crossfire_status);
+			$crossfire_status = pts_arrays::to_array($crossfire_status);
 			$crossfire_card_count = 0;
 
 			for($i = 0; $i < count($crossfire_status); $i++)

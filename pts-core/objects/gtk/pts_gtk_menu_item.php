@@ -44,7 +44,7 @@ class pts_gtk_menu_item
 
 		if($type == "RADIO_BUTTON")
 		{
-			$title = pts_to_array($title);
+			$title = pts_arrays::to_array($title);
 		}
 
 		if($set_active_default != false && !is_numeric($set_active_default) && is_array($title) && ($pos = array_search($set_active_default, $title)) !== false)

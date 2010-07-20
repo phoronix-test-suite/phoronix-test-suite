@@ -76,7 +76,7 @@ class memory_usage implements phodevi_sensor
 					}
 					else if($line_type == "-/+ buffers/cache" && $TYPE != "SWAP")
 					{
-						$buffers_and_cache = pts_first_element_in_array(explode(' ', pts_strings::trim_spaces($line_parts[1])));						
+						$buffers_and_cache = pts_arrays::first_element(explode(' ', pts_strings::trim_spaces($line_parts[1])));						
 					}
 				}
 			}

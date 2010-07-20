@@ -116,7 +116,7 @@ class pts_compression
 		}
 		else
 		{
-			foreach(pts_to_array($add_files) as $add_file)
+			foreach(pts_arrays::to_array($add_files) as $add_file)
 			{
 				self::zip_archive_add($zip, $add_file, dirname($add_file));
 			}

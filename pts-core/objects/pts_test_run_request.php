@@ -32,7 +32,7 @@ class pts_test_run_request
 		$this->test_identifier = $test_identifier;
 		$this->test_arguments = $test_arguments;
 		$this->test_arguments_description = $test_arguments_description;
-		$this->override_options = pts_to_array($override_test_options);
+		$this->override_options = pts_arrays::to_array($override_test_options);
 	}
 	public function get_identifier()
 	{

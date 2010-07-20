@@ -54,7 +54,7 @@ function pts_gtk_add_menu($vbox, $menu)
 
 		pts_set_assignment("GTK_OBJ_MENU_" . $this_menu_identifier, $menu);
 
-		$sub_menu = pts_to_array($sub_menu);
+		$sub_menu = pts_arrays::to_array($sub_menu);
 		foreach(array_keys($sub_menu) as $key)
 		{
 			if($sub_menu[$key] == null)
@@ -197,7 +197,7 @@ function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null, $a
 	{
 		$values = array();
 
-		$data[$r] = pts_to_array($data[$r]);
+		$data[$r] = pts_arrays::to_array($data[$r]);
 		foreach(array_keys($data[$r]) as $c)
 		{
 			array_push($values, $data[$r][$c]);
@@ -354,7 +354,7 @@ function pts_gtk_fill_notebook_tab($vbox, $list_label, $list_function, $list_on_
 {
 	if(!pts_is_assignment("GTK_DYNAMIC_TAB_" . strtoupper($list_function)))
 	{
-		$list_label = pts_to_array($list_label);
+		$list_label = pts_arrays::to_array($list_label);
 		$tab_gtk_label = pts_gtk_table($list_label, call_user_func($list_function), $list_on_click, $on_empty_list);
 
 		foreach($vbox->get_children() as $child)

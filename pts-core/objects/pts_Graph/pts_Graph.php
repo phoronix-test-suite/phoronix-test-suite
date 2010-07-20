@@ -335,7 +335,7 @@ abstract class pts_Graph
 			{
 				static $groups;
 
-				$group = trim(pts_last_element_in_array(explode(':', $identifier)));
+				$group = trim(pts_arrays::last_element(explode(':', $identifier)));
 
 				if(!isset($groups[$group]))
 				{

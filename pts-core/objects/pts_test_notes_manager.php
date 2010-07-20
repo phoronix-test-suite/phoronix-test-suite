@@ -132,11 +132,11 @@ class pts_test_notes_manager
 		$p = array();
 		$p_string = "";
 
-		$process_arr = pts_to_array($process_arr);
+		$process_arr = pts_arrays::to_array($process_arr);
 
 		foreach($process_arr as $p_name => $p_process)
 		{
-			$p_process = pts_to_array($p_process);
+			$p_process = pts_arrays::to_array($p_process);
 
 			foreach($p_process as $process)
 			{

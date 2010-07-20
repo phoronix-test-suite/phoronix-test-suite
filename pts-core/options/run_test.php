@@ -158,7 +158,7 @@ class run_test implements pts_option_interface
 
 				foreach(explode(";", $test_previous_properties) as $test_prop)
 				{
-					pts_array_push($test_properties, $test_prop);
+					pts_arrays::unique_push($test_properties, $test_prop);
 				}
 
 				pts_module_process_extensions($test_extensions);
@@ -307,11 +307,11 @@ class run_test implements pts_option_interface
 
 			if(pts_read_assignment("IS_BATCH_MODE"))
 			{
-				pts_array_push($test_properties, "PTS_BATCH_MODE");
+				pts_arrays::unique_push($test_properties, "PTS_BATCH_MODE");
 			}
 			else if(pts_read_assignment("IS_DEFAULTS_MODE"))
 			{
-				pts_array_push($test_properties, "PTS_DEFAULTS_MODE");
+				pts_arrays::unique_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
 			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($file_name) || !pts_test_result_contains_result_identifier($file_name, $test_run_manager->get_results_identifier())))
@@ -328,7 +328,7 @@ class run_test implements pts_option_interface
 
 				$id = $xml_results_writer->request_unique_id();
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $file_name_title);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? pts_first_element_in_array($to_run_identifiers) : "custom"));
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? pts_arrays::first_element($to_run_identifiers) : "custom"));
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 1, $test_version);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_description);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, 1, $test_type);

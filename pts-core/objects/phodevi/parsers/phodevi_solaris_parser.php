@@ -42,7 +42,7 @@ class phodevi_solaris_parser
 			$info = shell_exec($dmi_info . " " . $args . " 2>&1");
 			$lines = explode("\n", $info);
 
-			$find_objects = pts_to_array($find_objects);
+			$find_objects = pts_arrays::to_array($find_objects);
 			for($i = 0; $i < count($find_objects) && count($values) == 0; $i++)
 			{
 				$objects = explode(",", $find_objects[$i]);
@@ -87,7 +87,7 @@ class phodevi_solaris_parser
 		if(pts_client::executable_in_path("hal-get-property"))
 		{
 
-			foreach(pts_to_array($udi) as $udi_check)
+			foreach(pts_arrays::to_array($udi) as $udi_check)
 			{
 				$value = trim(shell_exec("hal-get-property --udi " . $udi_check . " --key " . $key . " 2> /dev/null"));
 

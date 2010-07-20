@@ -36,7 +36,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	public function html_embed_code($file_name, $attributes = null, $is_xsl = false)
 	{
 		$file_name = str_replace("BILDE_EXTENSION", strtolower($this->get_renderer()), $file_name);
-		$attributes = pts_to_array($attributes);
+		$attributes = pts_arrays::to_array($attributes);
 		$attributes["src"] = $file_name;
 
 		if($is_xsl)

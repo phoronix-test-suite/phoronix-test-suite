@@ -83,7 +83,7 @@ class pts_module_manager
 			$all_attached = $attached;
 			$attached = array();
 
-			foreach(pts_to_array($select_modules) as $check_module)
+			foreach(pts_arrays::to_array($select_modules) as $check_module)
 			{
 				if(in_array($check_module, $all_attached))
 				{

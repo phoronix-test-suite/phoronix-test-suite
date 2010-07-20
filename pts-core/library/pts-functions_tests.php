@@ -131,7 +131,7 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	}
 
 	$result_file = new pts_result_file($test_results_identifier);
-	$pts_version = pts_last_element_in_array($result_file->get_system_pts_version());
+	$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
 	if(empty($pts_version))
 	{
 		$pts_version = PTS_VERSION;
@@ -736,7 +736,7 @@ function pts_cpu_arch_compatible($check_against)
 {
 	$compatible = true;
 	$this_arch = phodevi::read_property("system", "kernel-architecture");
-	$check_against = pts_to_array($check_against);
+	$check_against = pts_arrays::to_array($check_against);
 
 	if(isset($this_arch[2]) && substr($this_arch, -2) == "86")
 	{

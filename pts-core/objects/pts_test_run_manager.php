@@ -38,12 +38,12 @@ class pts_test_run_manager
 	{
 		$this_run_request = new pts_test_run_request($test_identifier, $arguments, $descriptions, $override_test_options);
 
-		pts_array_push($this->tests_to_run, $this_run_request);
+		pts_arrays::unique_push($this->tests_to_run, $this_run_request);
 	}
 	public function add_single_test_run($test_identifier, $arguments, $descriptions, $override_test_options = null)
 	{
-		$arguments = pts_to_array($arguments);
-		$descriptions = pts_to_array($descriptions);
+		$arguments = pts_arrays::to_array($arguments);
+		$descriptions = pts_arrays::to_array($descriptions);
 
 		for($i = 0; $i < count($arguments); $i++)
 		{
@@ -52,10 +52,10 @@ class pts_test_run_manager
 	}
 	public function add_multi_test_run($test_identifier, $arguments, $descriptions, $override_test_options = null)
 	{
-		$test_identifier = pts_to_array($test_identifier);
-		$arguments = pts_to_array($arguments);
-		$descriptions = pts_to_array($descriptions);
-		$override_test_options = pts_to_array($override_test_options);
+		$test_identifier = pts_arrays::to_array($test_identifier);
+		$arguments = pts_arrays::to_array($arguments);
+		$descriptions = pts_arrays::to_array($descriptions);
+		$override_test_options = pts_arrays::to_array($override_test_options);
 
 		for($i = 0; $i < count($test_identifier); $i++)
 		{

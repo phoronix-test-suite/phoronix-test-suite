@@ -30,7 +30,7 @@ class phodevi_bsd_parser
 
 		if(pts_client::executable_in_path("sysctl"))
 		{
-			$desc = pts_to_array($desc);
+			$desc = pts_arrays::to_array($desc);
 
 			for($i = 0; $i < count($desc) && empty($info); $i++)
 			{

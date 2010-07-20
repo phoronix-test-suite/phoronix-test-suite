@@ -432,7 +432,7 @@ class gui_gtk implements pts_option_interface
 		$previous_select = (is_array($p = pts_read_assignment("GTK_SELECTED_ITEM_PREV")) ? $p : array());
 		$identifiers = pts_gtk_selected_items($object);
 		pts_set_assignment("GTK_MULTIPLE_SELECT_ITEMS", ($multiple_selected = count($identifiers) > 1));
-		pts_set_assignment("GTK_LAST_SELECTED_ITEM", ($identifier = pts_last_element_in_array(array_diff($identifiers, $previous_select))));
+		pts_set_assignment("GTK_LAST_SELECTED_ITEM", ($identifier = pts_arrays::last_element(array_diff($identifiers, $previous_select))));
 		pts_set_assignment("GTK_SELECTED_ITEMS", $identifiers);
 		pts_set_assignment_once("GTK_HAS_TOUCHED_SELECT_MENU", true);
 
@@ -552,7 +552,7 @@ class gui_gtk implements pts_option_interface
 	public static function update_details_frame_for_install($to_install)
 	{
 		$gtk_obj_main_frame = pts_read_assignment("GTK_OBJ_MAIN_FRAME");
-		$gtk_obj_main_frame->set_label(array_pop(pts_to_array($to_install)));
+		$gtk_obj_main_frame->set_label(array_pop(pts_arrays::to_array($to_install)));
 
 		if(pts_is_assignment("GTK_OBJ_MAIN_FRAME_BOX"))
 		{
@@ -594,7 +594,7 @@ class gui_gtk implements pts_option_interface
 		{
 			if(count($merge_select_object->get_selected_identifiers()) != 0)
 			{
-				$ref_check_button = new GtkCheckButton(pts_last_element_in_array($merge_select_object->get_selected_identifiers()));
+				$ref_check_button = new GtkCheckButton(pts_arrays::last_element($merge_select_object->get_selected_identifiers()));
 				$ref_check_button->set_active(false);
 				$ref_check_button->connect("toggled", array("gui_gtk", "toggle_reference_systems"), $merge_select_object, $compare_results);
 
@@ -909,7 +909,7 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function show_run_confirmation_interface($identifiers, $task = "RUN")
 	{
-		$identifiers = pts_to_array($identifiers);
+		$identifiers = pts_arrays::to_array($identifiers);
 		if(empty($identifiers))
 		{
 			echo "DEBUG: Null identifier in gtk_gui::show_run_confirmation_interface()\n";

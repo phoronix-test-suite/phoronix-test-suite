@@ -98,7 +98,7 @@ class phodevi_monitor extends phodevi_device_interface
 			else if(IS_ATI_GRAPHICS && IS_LINUX)
 			{
 				$amdpcsdb_enabled_monitors = phodevi_linux_parser::read_amd_pcsdb("SYSTEM/BUSID-*/DDX,EnableMonitor");
-				$amdpcsdb_enabled_monitors = pts_to_array($amdpcsdb_enabled_monitors);
+				$amdpcsdb_enabled_monitors = pts_arrays::to_array($amdpcsdb_enabled_monitors);
 
 				foreach($amdpcsdb_enabled_monitors as $enabled_monitor)
 				{
@@ -152,7 +152,7 @@ class phodevi_monitor extends phodevi_device_interface
 				if(IS_ATI_GRAPHICS && IS_LINUX)
 				{
 					$amdpcsdb_monitor_layout = phodevi_linux_parser::read_amd_pcsdb("SYSTEM/BUSID-*/DDX,DesktopSetup");
-					$amdpcsdb_monitor_layout = pts_to_array($amdpcsdb_monitor_layout);
+					$amdpcsdb_monitor_layout = pts_arrays::to_array($amdpcsdb_monitor_layout);
 
 					foreach($amdpcsdb_monitor_layout as $card_monitor_configuration)
 					{

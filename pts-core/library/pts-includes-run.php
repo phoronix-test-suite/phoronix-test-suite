@@ -137,7 +137,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers, &$display_mode)
 function pts_verify_test_installation($identifiers, &$tests_missing)
 {
 	// Verify a test is installed
-	$identifiers = pts_to_array($identifiers);
+	$identifiers = pts_arrays::to_array($identifiers);
 	$contains_a_suite = false;
 	$tests_installed = array();
 	$current_tests_missing = array();
@@ -153,13 +153,13 @@ function pts_verify_test_installation($identifiers, &$tests_missing)
 		{
 			if(pts_test_installed($test))
 			{
-				pts_array_push($tests_installed, $test);
+				pts_arrays::unique_push($tests_installed, $test);
 			}
 			else
 			{
 				if(pts_test_supported($test))
 				{
-					pts_array_push($current_tests_missing, $test);
+					pts_arrays::unique_push($current_tests_missing, $test);
 				}
 			}
 		}

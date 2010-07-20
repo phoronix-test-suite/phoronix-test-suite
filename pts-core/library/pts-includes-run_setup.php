@@ -165,7 +165,7 @@ function pts_prompt_user_tags($default_tags = null)
 
 	if($tags_input == null)
 	{
-		$default_tags = pts_to_array($default_tags);
+		$default_tags = pts_arrays::to_array($default_tags);
 		$tags_input = pts_global_auto_tags($default_tags);
 	}
 

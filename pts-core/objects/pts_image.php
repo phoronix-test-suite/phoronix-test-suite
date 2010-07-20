@@ -61,7 +61,7 @@ class pts_image
 	{
 		$img = false;
 
-		switch(strtolower(pts_last_element_in_array(explode('.', $img_file))))
+		switch(strtolower(pts_arrays::last_element(explode('.', $img_file))))
 		{
 			case "tga":
 				$img = pts_image::imagecreatefromtga($img_file);

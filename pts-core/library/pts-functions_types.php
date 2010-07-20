@@ -238,7 +238,7 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 {
 	// Provide an array containing the location(s) of all test(s) for the supplied object name
 	$tests = array();
-	$objects = pts_to_array($objects);
+	$objects = pts_arrays::to_array($objects);
 
 	foreach($objects as &$object)
 	{
@@ -363,13 +363,13 @@ function pts_virtual_suite_tests($object)
 			}
 			break;
 		case "TYPE_VIRT_PREV_TEST_IDENTIFIER":
-			foreach(pts_to_array(pts_read_assignment("PREV_TEST_IDENTIFIER")) as $test)
+			foreach(pts_arrays::to_array(pts_read_assignment("PREV_TEST_IDENTIFIER")) as $test)
 			{
 				array_push($contained_tests, $test);
 			}
 			break;
 		case "TYPE_VIRT_PREV_SAVE_IDENTIFIER":
-			foreach(pts_to_array(pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) as $test)
+			foreach(pts_arrays::to_array(pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) as $test)
 			{
 				array_push($contained_tests, $test);
 			}

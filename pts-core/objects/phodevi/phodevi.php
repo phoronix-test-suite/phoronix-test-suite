@@ -262,7 +262,7 @@ class phodevi
 			}
 			else
 			{
-				$dev_function_r = pts_to_array($property->get_device_function());
+				$dev_function_r = pts_arrays::to_array($property->get_device_function());
 				$dev_function = $dev_function_r[0];
 				$function_pass = array();
 

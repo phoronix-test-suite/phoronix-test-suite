@@ -25,7 +25,7 @@ require_once(PTS_LIBRARY_PATH . "pts-includes-install_dependencies.php");
 
 function pts_start_install($to_install, &$display_mode)
 {
-	$to_install = pts_to_array($to_install);
+	$to_install = pts_arrays::to_array($to_install);
 
 	$tests = array();
 
@@ -33,7 +33,7 @@ function pts_start_install($to_install, &$display_mode)
 	{
 		foreach(pts_contained_tests($to_install_test, true) as $test)
 		{
-			pts_array_push($tests, $test);
+			pts_arrays::unique_push($tests, $test);
 		}
 	}
 
@@ -168,7 +168,7 @@ function pts_download_test_files($identifier, &$display_mode)
 			if(isset($remote_download_files[$package_md5]) && $remote_download_files[$package_md5]->get_filename() == $package_filename && $remote_download_files[$package_md5]->get_md5() == $package_md5)
 			{
 				$display_mode->test_install_download_file($download_package, "DOWNLOAD_FROM_CACHE", $longest_package_name_length);
-				pts_network::download_file(pts_first_element_in_array($remote_download_files[$package_md5]->get_download_url_array()), $download_destination_temp, $display_mode);
+				pts_network::download_file(pts_arrays::first_element($remote_download_files[$package_md5]->get_download_url_array()), $download_destination_temp, $display_mode);
 				echo "\n";
 
 				if(pts_validate_md5_download_file($download_destination_temp, $package_md5))

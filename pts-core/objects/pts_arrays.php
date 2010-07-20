@@ -20,35 +20,26 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class remove_installed_test implements pts_option_interface
+class pts_arrays
 {
-	public static function argument_checks()
+	public static function first_element($array)
 	{
-		return array(
-		new pts_argument_check(0, "pts_test_installed", null, "No installed test found.")
-		);
+		// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
+		return reset($array);
 	}
-	public static function run($r)
+	public static function last_element($array)
 	{
-		$identifier = $r[0];
-
-		if(pts_bool_question("Are you sure you wish to remove the test " . $identifier . " (y/N)?", false))
-		{
-			if($identifier == "all")
-			{
-				$identifier = pts_installed_tests_array();
-			}
-
-			foreach(pts_arrays::to_array($identifier) as $install_identifier)
-			{
-				pts_client::remove_installed_test($install_identifier);
-				echo "\nThe " . $install_identifier . " test has been removed.\n\n";
-			}
-		}
-		else
-		{
-			echo "\n";
-		}
+		// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
+		return end($array);
+	}
+	public static function unique_push(&$array, $to_push)
+	{
+		// Only push to the array if it's a unique value
+		return !in_array($to_push, $array) && array_push($array, $to_push);
+	}
+	public static function to_array($var)
+	{
+		return !is_array($var) ? array($var) : $var;
 	}
 }
 

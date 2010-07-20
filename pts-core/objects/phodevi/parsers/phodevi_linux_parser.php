@@ -126,7 +126,7 @@ class phodevi_linux_parser
 
 		if(is_readable("/dev/mem") && pts_client::executable_in_path("dmidecode"))
 		{
-			$ignore = pts_to_array($ignore);
+			$ignore = pts_arrays::to_array($ignore);
 
 			$dmidecode = shell_exec("dmidecode --type " . $type . " 2>&1");
 			$sub_type = "\n" . $sub_type . "\n";
@@ -217,7 +217,7 @@ class phodevi_linux_parser
 		{
 			$ignore_words = phodevi_parser::hardware_values_to_remove();
 
-			foreach(pts_to_array($identifier) as $id)
+			foreach(pts_arrays::to_array($identifier) as $id)
 			{
 				if(is_readable("/sys/class/dmi/id/" . $id))
 				{
@@ -457,7 +457,7 @@ class phodevi_linux_parser
 		// Read CPU information
 		$cpuinfo_matches = array();
 
-		foreach(pts_to_array($attribute) as $attribute_check)
+		foreach(pts_arrays::to_array($attribute) as $attribute_check)
 		{
 			if(is_file("/proc/cpuinfo"))
 			{
@@ -527,7 +527,7 @@ class phodevi_linux_parser
 
 		if(pts_client::executable_in_path("lshal"))
 		{
-			$name = pts_to_array($name);
+			$name = pts_arrays::to_array($name);
 			$remove_words = phodevi_parser::hardware_values_to_remove();
 
 			for($i = 0; $i < count($name) && empty($info); $i++)
@@ -565,7 +565,7 @@ class phodevi_linux_parser
 	{
 		// Read ACPI - Advanced Configuration and Power Interface
 		$value = false;
-		$point = pts_to_array($point);
+		$point = pts_arrays::to_array($point);
 
 		for($i = 0; $i < count($point) && empty($value); $i++)
 		{
@@ -594,7 +594,7 @@ class phodevi_linux_parser
 		// Read PCI bus information
 		static $pci_info = null;
 		$info = false;
-		$desc = pts_to_array($desc);
+		$desc = pts_arrays::to_array($desc);
 
 		if($pci_info == null)
 		{
@@ -667,7 +667,7 @@ class phodevi_linux_parser
 		{
 			$sensors = shell_exec("sensors 2>&1");
 			$sensors_lines = explode("\n", $sensors);
-			$attributes = pts_to_array($attributes);
+			$attributes = pts_arrays::to_array($attributes);
 
 			for($j = 0; $j < count($attributes) && empty($value); $j++)
 			{

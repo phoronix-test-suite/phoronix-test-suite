@@ -76,10 +76,10 @@ class gpu_freq implements phodevi_sensor
 					switch($descriptor)
 					{
 						case "current engine clock":
-							$core_freq = pts_first_element_in_array(explode(' ', $value)) / 1000;
+							$core_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
 							break;
 						case "current memory clock":
-							$mem_freq = pts_first_element_in_array(explode(' ', $value)) / 1000;
+							$mem_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
 							break;
 					}
 				}

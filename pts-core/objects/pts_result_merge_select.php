@@ -29,7 +29,7 @@ class pts_result_merge_select
 	public function __construct($result_file, $selected_identifiers = null)
 	{
 		$this->result_file = $result_file;
-		$this->selected_identifiers = ($selected_identifiers != null ? pts_to_array($selected_identifiers) : null);
+		$this->selected_identifiers = ($selected_identifiers != null ? pts_arrays::to_array($selected_identifiers) : null);
 		$this->rename_identifier = null;
 	}
 	public function get_result_file()

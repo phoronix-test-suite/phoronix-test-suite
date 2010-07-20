@@ -21,16 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_first_element_in_array($array)
-{
-	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
-	return reset($array);
-}
-function pts_last_element_in_array($array)
-{
-	// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
-	return end($array);
-}
 function pts_mkdir($dir, $mode = 0777, $recursive = false)
 {
 	return !is_dir($dir) && mkdir($dir, $mode, $recursive);
@@ -43,10 +33,6 @@ function pts_glob($pattern, $flags = 0)
 function pts_unlink($file)
 {
 	return is_file($file) && unlink($file);
-}
-function pts_array_push(&$array, $to_push)
-{
-	return !in_array($to_push, $array) && array_push($array, $to_push);
 }
 function pts_empty($var)
 {
@@ -81,10 +67,6 @@ function pts_extract_identifier_from_path($path)
 	// so once the new architecture is committed, any methods using this function should be re-worked.
 
 	return substr(($d = dirname($path)), strrpos($d, "/") + 1);
-}
-function pts_to_array($var)
-{
-	return !is_array($var) ? array($var) : $var;
 }
 function pts_remove($object, $ignore_files = null, $remove_root_directory = false)
 {

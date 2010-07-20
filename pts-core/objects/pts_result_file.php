@@ -592,7 +592,7 @@ class pts_result_file
 		{
 			$objects = array();
 
-			foreach(pts_to_array($select_indexes) as $index)
+			foreach(pts_arrays::to_array($select_indexes) as $index)
 			{
 				if(isset($this->result_objects[$index]))
 				{

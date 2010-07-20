@@ -68,7 +68,7 @@ class phodevi_memory extends phodevi_device_interface
 
 			foreach($mem_size as $key => &$individual_size)
 			{
-				$individual_size = pts_first_element_in_array(explode(' ', $individual_size));
+				$individual_size = pts_arrays::first_element(explode(' ', $individual_size));
 
 				if(!is_numeric($individual_size))
 				{

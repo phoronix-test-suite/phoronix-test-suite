@@ -34,7 +34,7 @@ function pts_install_package_on_distribution(&$display_mode, &$identifiers, &$te
 		return true;
 	}
 
-	foreach(pts_to_array($identifiers) as $identifier)
+	foreach(pts_arrays::to_array($identifiers) as $identifier)
 	{
 		foreach(pts_contained_tests($identifier, true) as $test)
 		{
