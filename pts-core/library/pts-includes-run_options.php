@@ -255,7 +255,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 				return;
 			}
 
-			$all_devices = array_merge(pts_glob("/dev/hd*"), pts_glob("/dev/sd*"));
+			$all_devices = array_merge(pts_file_io::glob("/dev/hd*"), pts_file_io::glob("/dev/sd*"));
 
 			foreach($all_devices as &$device)
 			{
@@ -309,7 +309,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 				return;
 			}
 
-			$all_devices = array_merge(pts_glob("/dev/hd*"), pts_glob("/dev/sd*"));
+			$all_devices = array_merge(pts_file_io::glob("/dev/hd*"), pts_file_io::glob("/dev/sd*"));
 
 			foreach($all_devices as &$device)
 			{
@@ -335,7 +335,7 @@ function pts_auto_process_test_option($test_identifier, $option_identifier, &$op
 				return;
 			}
 
-			foreach(array_merge(pts_glob("/media/*/"), pts_glob("/Volumes/*/")) as $media_check)
+			foreach(array_merge(pts_file_io::glob("/media/*/"), pts_file_io::glob("/Volumes/*/")) as $media_check)
 			{
 				if(is_dir($media_check) && is_writable($media_check)) // add more checks later on
 				{

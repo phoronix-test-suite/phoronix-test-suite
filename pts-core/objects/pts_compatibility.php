@@ -54,7 +54,7 @@ class pts_compatibility
 			pts_module_config_init($module_name, $module_option_group);
 		}
 
-		pts_unlink(PTS_USER_DIR . "modules-config.xml");
+		pts_file_io::unlink(PTS_USER_DIR . "modules-config.xml");
 	}
 }
 

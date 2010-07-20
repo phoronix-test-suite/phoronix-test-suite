@@ -32,7 +32,7 @@ class phodevi_linux_parser
 		{
 			$find_count = 0;
 
-			foreach(pts_glob($search) as $sysfs_file)
+			foreach(pts_file_io::glob($search) as $sysfs_file)
 			{
 				if(is_array($node_dir_check))
 				{

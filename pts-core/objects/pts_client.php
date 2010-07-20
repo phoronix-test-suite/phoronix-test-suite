@@ -77,7 +77,7 @@ class pts_client
 		$dir_init = array(PTS_USER_DIR);
 		foreach($dir_init as $dir)
 		{
-			pts_mkdir($dir);
+			pts_file_io::mkdir($dir);
 		}
 
 		phodevi::initial_setup();
@@ -111,13 +111,13 @@ class pts_client
 
 		foreach($directory_check as $dir)
 		{
-			pts_mkdir($dir);
+			pts_file_io::mkdir($dir);
 		}
 
 		// Setup PTS Results Viewer
-		pts_mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
+		pts_file_io::mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
 
-		foreach(pts_glob(RESULTS_VIEWER_DIR . "*.*") as $result_viewer_file)
+		foreach(pts_file_io::glob(RESULTS_VIEWER_DIR . "*.*") as $result_viewer_file)
 		{
 			copy($result_viewer_file, SAVE_RESULTS_DIR . "pts-results-viewer/" . basename($result_viewer_file));
 		}
@@ -125,7 +125,7 @@ class pts_client
 		copy(STATIC_DIR . "images/pts-106x55.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-106x55.png");
 
 		// Setup ~/.phoronix-test-suite/xsl/
-		pts_mkdir(PTS_USER_DIR . "xsl/");
+		pts_file_io::mkdir(PTS_USER_DIR . "xsl/");
 		copy(STATIC_DIR . "xsl/pts-test-installation-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-test-installation-viewer.xsl");
 		copy(STATIC_DIR . "xsl/pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
 		copy(STATIC_DIR . "images/pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
@@ -348,7 +348,7 @@ class pts_client
 			fclose(self::$lock_pointers[self::$command_execution_count][$lock_file]);
 		}
 
-		pts_unlink(self::$lock_pointers[self::$command_execution_count][$lock_file]);
+		pts_file_io::unlink(self::$lock_pointers[self::$command_execution_count][$lock_file]);
 		unset(self::$lock_pointers[self::$command_execution_count][$lock_file]);
 	}
 	public static function check_command_for_function($option, $check_function)

@@ -136,7 +136,7 @@ class analyze_image_delta implements pts_option_interface
 
 				imagepng($delta_img, SAVE_RESULTS_DIR . $extract_to . "/scratch.png");
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, base64_encode(file_get_contents(SAVE_RESULTS_DIR . $extract_to . "/scratch.png", FILE_BINARY)), 5);
-				pts_unlink(SAVE_RESULTS_DIR . $extract_to . "/scratch.png");
+				pts_file_io::unlink(SAVE_RESULTS_DIR . $extract_to . "/scratch.png");
 			}
 		}
 

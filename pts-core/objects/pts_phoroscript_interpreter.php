@@ -53,7 +53,7 @@ class pts_phoroscript_interpreter
 		if(strpos($path, '*') !== false)
 		{
 			$grep_dir = pts_strings::add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
-			$glob = pts_glob($grep_dir . $path);
+			$glob = pts_file_io::glob($grep_dir . $path);
 
 			return count($glob) > 0 ? array_shift($glob) : $this->var_current_directory;
 		}
@@ -237,7 +237,7 @@ class pts_phoroscript_interpreter
 					}
 					break;
 				case 'mkdir':
-					pts_mkdir($this->var_current_directory . $line_r[1]);
+					pts_file_io::mkdir($this->var_current_directory . $line_r[1]);
 					break;
 				case 'rm':
 					for($i = 1; $i < count($line_r); $i++)

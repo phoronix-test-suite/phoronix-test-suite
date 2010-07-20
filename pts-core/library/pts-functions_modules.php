@@ -275,7 +275,7 @@ function pts_is_module($name)
 }
 function pts_available_modules()
 {
-	$modules = array_merge(pts_glob(MODULE_DIR . "*.php"), pts_glob(MODULE_LOCAL_DIR . "*.php"));
+	$modules = array_merge(pts_file_io::glob(MODULE_DIR . "*.php"), pts_file_io::glob(MODULE_LOCAL_DIR . "*.php"));
 	$module_names = array();
 
 	foreach($modules as $module)
@@ -290,7 +290,7 @@ function pts_available_modules()
 function pts_module_config_init($module_name, $set_options = null)
 {
 	// Validate the config files, update them (or write them) if needed, and other configuration file tasks
-	pts_mkdir(MODULE_DATA_DIR . $module_name);
+	pts_file_io::mkdir(MODULE_DATA_DIR . $module_name);
 	$settings_to_write = array();
 
 	if(is_file(MODULE_DATA_DIR . $module_name . "/module-settings.xml"))

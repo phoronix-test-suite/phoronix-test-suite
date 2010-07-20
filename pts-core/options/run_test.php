@@ -393,7 +393,7 @@ class run_test implements pts_option_interface
 				return false;
 			}
 
-			pts_unlink($pt2so_location);
+			pts_file_io::unlink($pt2so_location);
 			pts_remove(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/", null, true);
 
 			if($wrote_system_xml)

@@ -21,19 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_mkdir($dir, $mode = 0777, $recursive = false)
-{
-	return !is_dir($dir) && mkdir($dir, $mode, $recursive);
-}
-function pts_glob($pattern, $flags = 0)
-{
-	$r = glob($pattern, $flags);
-	return is_array($r) ? $r : array();
-}
-function pts_unlink($file)
-{
-	return is_file($file) && unlink($file);
-}
 function pts_empty($var)
 {
 	return trim($var) == null;
@@ -75,7 +62,7 @@ function pts_remove($object, $ignore_files = null, $remove_root_directory = fals
 		$object = pts_strings::add_trailing_slash($object);
 	}
 
-	foreach(pts_glob($object . "*") as $to_remove)
+	foreach(pts_file_io::glob($object . "*") as $to_remove)
 	{
 		if(is_file($to_remove))
 		{
@@ -94,7 +81,7 @@ function pts_remove($object, $ignore_files = null, $remove_root_directory = fals
 		}
 	}
 
-	if($remove_root_directory && is_dir($object) && count(pts_glob($object . "/*")) == 0)
+	if($remove_root_directory && is_dir($object) && count(pts_file_io::glob($object . "/*")) == 0)
 	{
 		@rmdir($object);
 	}

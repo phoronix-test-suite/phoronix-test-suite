@@ -132,7 +132,7 @@ class pts_compression
 		{
 			$zip->addEmptyDir(substr($add_file, strlen(pts_strings::add_trailing_slash($base_dir))));
 
-			foreach(pts_glob(pts_strings::add_trailing_slash($add_file) . '*') as $new_file)
+			foreach(pts_file_io::glob(pts_strings::add_trailing_slash($add_file) . '*') as $new_file)
 			{
 				self::zip_archive_add($zip, $new_file, $base_dir);
 			}

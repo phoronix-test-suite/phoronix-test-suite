@@ -40,7 +40,7 @@ class make_download_cache implements pts_option_interface
 			if(is_writable($dc_directory))
 			{
 				$dc_write_directory = $dc_directory;
-				pts_mkdir($dc_write_directory);
+				pts_file_io::mkdir($dc_write_directory);
 				break;
 			}
 		}

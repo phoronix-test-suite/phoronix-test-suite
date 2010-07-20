@@ -171,8 +171,8 @@ function pts_verify_test_installation($identifiers, &$tests_missing)
 }
 function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = null)
 {
-	pts_unlink(PTS_USER_DIR . "halt-testing");
-	pts_unlink(PTS_USER_DIR . "skip-test");
+	pts_file_io::unlink(PTS_USER_DIR . "halt-testing");
+	pts_file_io::unlink(PTS_USER_DIR . "skip-test");
 
 	$test_flag = true;
 	$tests_to_run_count = $test_run_manager->get_test_count();
@@ -228,9 +228,9 @@ function pts_call_test_runs(&$test_run_manager, &$display_mode, &$tandem_xml = n
 		}
 	}
 
-	pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/active.xml");
+	pts_file_io::unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/active.xml");
 
-	foreach(pts_glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
+	foreach(pts_file_io::glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
 	{
 		// Process post-cache-share scripts
 		$test_identifier = pts_extract_identifier_from_path($cache_share_file);
@@ -341,19 +341,19 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 		pts_set_assignment("TEST_RUN_POSITION", $run_position);
 		pts_set_assignment("TEST_RUN_COUNT", $run_count);
 
-		if(($run_position != 1 && count(pts_glob(TEST_ENV_DIR . $test_run_request->get_identifier() . "/cache-share-*.pt2so")) == 0))
+		if(($run_position != 1 && count(pts_file_io::glob(TEST_ENV_DIR . $test_run_request->get_identifier() . "/cache-share-*.pt2so")) == 0))
 		{
 			sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 		}
 
 		$result = pts_run_test($test_run_request, $display_mode);
 
-		if(pts_unlink(PTS_USER_DIR . "halt-testing"))
+		if(pts_file_io::unlink(PTS_USER_DIR . "halt-testing"))
 		{
 			// Stop the testing process entirely
 			return false;
 		}
-		else if(pts_unlink(PTS_USER_DIR . "skip-test"))
+		else if(pts_file_io::unlink(PTS_USER_DIR . "skip-test"))
 		{
 			// Just skip the current test and do not save the results, but continue testing
 			continue;
@@ -390,7 +390,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
 
 				static $xml_write_pos = 1;
-				pts_mkdir(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
+				pts_file_io::mkdir(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
 
 				if(is_dir(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier()))
 				{
@@ -407,7 +407,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 			}
 		}
 
-		pts_unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/");
+		pts_file_io::unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/");
 	}
 	else if($result === true)
 	{
@@ -599,7 +599,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	{
 		$backup_test_log_dir = SAVE_RESULTS_DIR . $save_name . "/test-logs/active/" . $results_identifier . "/";
 		pts_remove($backup_test_log_dir);
-		pts_mkdir($backup_test_log_dir, 0777, true);
+		pts_file_io::mkdir($backup_test_log_dir, 0777, true);
 	}
 	else
 	{
@@ -858,7 +858,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if(is_file(TEST_ENV_DIR . $test_identifier . "/install.log"))
 		{
 			$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/installation-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
-			pts_mkdir($backup_log_dir, 0777, true);
+			pts_file_io::mkdir($backup_log_dir, 0777, true);
 			copy(TEST_ENV_DIR . $test_identifier . "/install.log", $backup_log_dir . $test_identifier . ".log");
 		}
 	}

@@ -49,7 +49,7 @@ class phodevi_motherboard extends phodevi_device_interface
 		{
 			$sysfs_checked = false;
 
-			foreach(pts_glob("/sys/class/power_supply/AC*/online") as $online)
+			foreach(pts_file_io::glob("/sys/class/power_supply/AC*/online") as $online)
 			{
 				if(pts_file_get_contents($online) == '0')
 				{

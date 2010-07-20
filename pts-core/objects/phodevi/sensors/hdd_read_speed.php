@@ -51,7 +51,7 @@ class hdd_read_speed implements phodevi_sensor
 			if($sys_disk == null)
 			{
 				
-				foreach(pts_glob("/sys/class/block/sd*/stat") as $check_disk)
+				foreach(pts_file_io::glob("/sys/class/block/sd*/stat") as $check_disk)
 				{
 					if(pts_file_get_contents($check_disk) != null)
 					{

@@ -147,7 +147,7 @@ class kernel_config_tester extends pts_module_interface
 			return false;
 		}
 
-		pts_mkdir(pts_module::save_dir());
+		pts_file_io::mkdir(pts_module::save_dir());
 		$storage_object = new pts_storage_object();
 		$storage_object->add_object("kernel_config_options", $kernel_config_test_options);
 		$storage_object->add_object("config_pos", -1);
@@ -223,7 +223,7 @@ Name[en_US]=pts-kernel-config-tester.desktop");
 		else
 		{
 			// Done testing
-			pts_unlink("/etc/xdg/autostart/pts-kernel-config-tester.desktop");
+			pts_file_io::unlink("/etc/xdg/autostart/pts-kernel-config-tester.desktop");
 			// Process results
 		}
 	}

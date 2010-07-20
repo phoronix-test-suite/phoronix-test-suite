@@ -25,7 +25,7 @@ require_once(PTS_LIBRARY_PATH . "pts-includes-install_dependencies.php");
 
 function pts_start_install($to_install, &$display_mode)
 {
-	$to_install = pts_arrays::to_array($to_install);
+	$to_install = pts_to_array($to_install);
 
 	$tests = array();
 
@@ -177,7 +177,7 @@ function pts_download_test_files($identifier, &$display_mode)
 				}
 				else
 				{
-					pts_unlink($download_destination_temp);
+					pts_file_io::unlink($download_destination_temp);
 				}
 			}
 
@@ -217,7 +217,7 @@ function pts_download_test_files($identifier, &$display_mode)
 								}
 								else
 								{
-									pts_unlink($download_destination_temp);
+									pts_file_io::unlink($download_destination_temp);
 								}
 								$attempted_copies++;
 							}
@@ -292,7 +292,7 @@ function pts_download_test_files($identifier, &$display_mode)
 							$md5_failed = false;
 						}
 
-						pts_unlink($download_destination_temp);
+						pts_file_io::unlink($download_destination_temp);
 						$fail_count++;
 
 						if($fail_count > 3)
@@ -393,13 +393,13 @@ function pts_remove_local_download_test_files($identifier)
 	// Remove locally downloaded files for a given test
 	foreach(pts_objects_test_downloads($identifier) as $test_file)
 	{
-		pts_unlink(TEST_ENV_DIR . $identifier . '/' . $test_file->get_filename());
+		pts_file_io::unlink(TEST_ENV_DIR . $identifier . '/' . $test_file->get_filename());
 	}
 }
 function pts_setup_install_test_directory($identifier, $remove_old_files = false)
 {
-	pts_mkdir(TEST_ENV_DIR);
-	pts_mkdir(TEST_ENV_DIR . $identifier);
+	pts_file_io::mkdir(TEST_ENV_DIR);
+	pts_file_io::mkdir(TEST_ENV_DIR . $identifier);
 
 	if($remove_old_files)
 	{
@@ -504,7 +504,7 @@ function pts_install_test($identifier, &$display_mode)
 				if(!empty($install_log))
 				{
 					file_put_contents(TEST_ENV_DIR . $identifier . "/install.log", $install_log);
-					pts_unlink(TEST_ENV_DIR . $identifier . "/install-failed.log");
+					pts_file_io::unlink(TEST_ENV_DIR . $identifier . "/install-failed.log");
 					$display_mode->test_install_output($install_log);
 				}
 
@@ -517,7 +517,7 @@ function pts_install_test($identifier, &$display_mode)
 					if($install_exit_status != 0 && !IS_BSD && !IS_WINDOWS)
 					{
 						// TODO: perhaps better way to handle this than to remove pts-install.xml
-						pts_unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
+						pts_file_io::unlink(TEST_ENV_DIR . $identifier . "/pts-install.xml");
 						copy(TEST_ENV_DIR . $identifier . "/install.log", TEST_ENV_DIR . $identifier . "/install-failed.log");
 						pts_setup_install_test_directory($identifier, true); // Remove installed files from the bunked installation
 
@@ -614,8 +614,8 @@ function pts_test_download_cache_directories()
 		if(pts_strings::string_bool(pts_config::read_user_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE")))
 		{
 			$download_cache_dirs = array_merge(
-			pts_glob("/media/*/download-cache/"),
-			pts_glob("/Volumes/*/download-cache/")
+			pts_file_io::glob("/media/*/download-cache/"),
+			pts_file_io::glob("/Volumes/*/download-cache/")
 			);
 
 			foreach($download_cache_dirs as $dir)

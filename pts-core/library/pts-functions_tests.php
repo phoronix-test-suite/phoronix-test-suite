@@ -32,7 +32,7 @@ function pts_setup_result_directory($save_to)
 
 	if($save_to_dir != ".")
 	{
-		pts_mkdir($save_to_dir);
+		pts_file_io::mkdir($save_to_dir);
 	}
 
 	file_put_contents($save_to_dir . "/index.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=composite.xml\"></HEAD><BODY></BODY></HTML>");
@@ -69,7 +69,7 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 			$test_results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER");
 
 			// Save verbose system information here
-			pts_mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $test_results_identifier), 0777, true);
+			pts_file_io::mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $test_results_identifier), 0777, true);
 
 			// Backup system files
 			// TODO: move out these files/commands to log out to respective Phodevi components so only what's relevant will be logged
@@ -121,9 +121,10 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 {
 	if($save_to_dir)
 	{
-		if(!pts_mkdir($save_to_dir . "/result-graphs", 0777, true))
+		if(pts_file_io::mkdir($save_to_dir . "/result-graphs", 0777, true) == false)
 		{
-			foreach(pts_glob($save_to_dir . "/result-graphs/*") as $old_file)
+			// Directory must exist, so remove any old graph files first
+			foreach(pts_file_io::glob($save_to_dir . "/result-graphs/*") as $old_file)
 			{
 				unlink($old_file);
 			}
@@ -656,7 +657,7 @@ function pts_available_base_tests_array()
 
 	if($cache == null)
 	{
-		$base_tests = pts_glob(XML_PROFILE_CTP_BASE_DIR . "*.xml");
+		$base_tests = pts_file_io::glob(XML_PROFILE_CTP_BASE_DIR . "*.xml");
 		asort($base_tests);
 
 		foreach($base_tests as &$base_test)
@@ -675,7 +676,7 @@ function pts_installed_tests_array()
 	{
 		$cleaned_tests = array();
 
-		foreach(pts_glob(TEST_ENV_DIR . "*/pts-install.xml") as $test)
+		foreach(pts_file_io::glob(TEST_ENV_DIR . "*/pts-install.xml") as $test)
 		{
 			$test = pts_extract_identifier_from_path($test);
 
@@ -800,7 +801,7 @@ function pts_saved_test_results_identifiers()
 	$results = array();
 	$ignore_ids = pts_generic_reference_system_comparison_ids();
 
-	foreach(pts_glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
+	foreach(pts_file_io::glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
 	{
 		$identifier = pts_extract_identifier_from_path($result_file);
 
@@ -864,7 +865,7 @@ function pts_remove_test_profile($identifier)
 
 	if(is_writable($xml_loc) && is_writable($resources_loc))
 	{
-		pts_unlink($xml_loc);
+		pts_file_io::unlink($xml_loc);
 		pts_remove($resources_loc, null, true);
 		$removed = true;
 	}
