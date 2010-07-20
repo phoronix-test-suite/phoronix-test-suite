@@ -1530,7 +1530,9 @@ class gui_gtk implements pts_option_interface
 
 		foreach($editable_preferences as $preference)
 		{
-			if(($h = pts_extract_identifier_from_path($preference)) != $previous_heading)
+			$heading = substr(($d = dirname($preference)), strrpos($d, '/') + 1);
+
+			if($heading != $previous_heading)
 			{
 				if($pages > 0)
 				{
@@ -1545,7 +1547,7 @@ class gui_gtk implements pts_option_interface
 					$page_prefix = "Graph ";
 				}
 
-				$previous_heading = $h;
+				$previous_heading = $heading;
 				$pages++;
 				$page_items = array();
 			}

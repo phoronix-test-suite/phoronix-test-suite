@@ -21,6 +21,17 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function pts_array_with_key_to_2d($array)
+{
+	$array_2d = array();
+
+	foreach($array as $key => $value)
+	{
+		array_push($array_2d, array($key, $value));
+	}
+
+	return $array_2d;
+}
 function pts_gtk_add_menu($vbox, $menu)
 {
 	if($vbox instanceOf GtkBox)

@@ -647,7 +647,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 			}
 			else
 			{
-				$test_result = pts_exec($test_run_command, $test_extra_runtime_variables);
+				$test_result = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
 			}
 
 			$test_run_time = time() - $test_run_time_start;

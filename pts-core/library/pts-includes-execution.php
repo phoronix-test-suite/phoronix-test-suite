@@ -56,7 +56,7 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = nu
 
 			if($file_extension == "php")
 			{
-				$this_result = pts_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
+				$this_result = pts_client::shell_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
 			}
 			else if($file_extension == "sh")
 			{
@@ -67,7 +67,7 @@ function pts_call_test_script($test_identifier, $script_name, $print_string = nu
 				}
 				else
 				{
-					$this_result = pts_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
+					$this_result = pts_client::shell_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
 				}
 			}
 			else

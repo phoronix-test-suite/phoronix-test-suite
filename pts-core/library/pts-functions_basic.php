@@ -75,30 +75,16 @@ function pts_version_comparable($old, $new)
 
 	return $compare;	
 }
-function pts_array_with_key_to_2d($array)
-{
-	$array_2d = array();
-
-	foreach($array as $key => $value)
-	{
-		array_push($array_2d, array($key, $value));
-	}
-
-	return $array_2d;
-}
 function pts_extract_identifier_from_path($path)
 {
+	// TODO: this by its usage of trying to extract an identifier one-level from the tip will probably not work in PTS3 design
+	// so once the new architecture is committed, any methods using this function should be re-worked.
+
 	return substr(($d = dirname($path)), strrpos($d, "/") + 1);
 }
 function pts_to_array($var)
 {
 	return !is_array($var) ? array($var) : $var;
-}
-
-function pts_exec($exec, $extra_vars = null)
-{
-	// Same as shell_exec() but with the PTS env variables added in
-	return shell_exec(pts_variables_export_string($extra_vars) . $exec);
 }
 function pts_remove($object, $ignore_files = null, $remove_root_directory = false)
 {

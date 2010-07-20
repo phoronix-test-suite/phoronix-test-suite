@@ -306,7 +306,7 @@ class pts_client
 
 		return $userhome;
 	}
-	function parse_home_directory($path)
+	public static function parse_home_directory($path)
 	{
 		// Find home directory if needed
 		if(strpos($path, "~/") !== false)
@@ -614,6 +614,11 @@ class pts_client
 	{
 		// Sets an environmental variable
 		return getenv($name) == false && putenv($name . "=" . $value);
+	}
+	public static function shell_exec($exec, $extra_vars = null)
+	{
+		// Same as shell_exec() but with the PTS env variables added in
+		return shell_exec(pts_variables_export_string($extra_vars) . $exec);
 	}
 	public static function executable_in_path($executable)
 	{
