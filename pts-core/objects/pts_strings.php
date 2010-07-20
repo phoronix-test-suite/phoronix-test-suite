@@ -172,6 +172,25 @@ class pts_strings
 
 		return $is_match;
 	}
+	function pts_version_comparable($old, $new)
+	{
+		// Checks if there's a major version difference between two strings, if so returns false.
+		// If the same or only a minor difference, returns true.
+
+		$old = explode('.', pts_strings::keep_in_string($old, TYPE_CHAR_NUMERIC | TYPE_CHAR_DECIMAL));
+		$new = explode('.', pts_strings::keep_in_string($new, TYPE_CHAR_NUMERIC | TYPE_CHAR_DECIMAL));
+		$compare = true;
+
+		if(count($old) >= 2 && count($new) >= 2)
+		{
+			if($old[0] != $new[0] || $old[1] != $new[1])
+			{
+				$compare = false;
+			}
+		}
+
+		return $compare;	
+	}
 }
 
 ?>

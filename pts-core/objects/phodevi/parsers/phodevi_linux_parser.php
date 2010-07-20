@@ -48,7 +48,7 @@ class phodevi_linux_parser
 						}
 						else if($value_check !== true)
 						{
-							$value_check_value = pts_file_get_contents($sysfs_dir . $node_check);
+							$value_check_value = pts_file_io::file_get_contents($sysfs_dir . $node_check);
 
 							if(isset($value_check[0]) && $value_check[0] == '!')
 							{
@@ -72,7 +72,7 @@ class phodevi_linux_parser
 					}
 				}
 
-				$sysfs_value = pts_file_get_contents($sysfs_file);
+				$sysfs_value = pts_file_io::file_get_contents($sysfs_file);
 
 				switch($type)
 				{
@@ -117,7 +117,7 @@ class phodevi_linux_parser
 			}
 		}
 
-		return $sysfs_file_cache[$arg_hash] == false ? -1 : pts_file_get_contents($sysfs_file_cache[$arg_hash]);
+		return $sysfs_file_cache[$arg_hash] == false ? -1 : pts_file_io::file_get_contents($sysfs_file_cache[$arg_hash]);
 	}
 	public static function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore = null)
 	{
@@ -221,7 +221,7 @@ class phodevi_linux_parser
 			{
 				if(is_readable("/sys/class/dmi/id/" . $id))
 				{
-					$dmi_file = pts_file_get_contents("/sys/class/dmi/id/" . $id);
+					$dmi_file = pts_file_io::file_get_contents("/sys/class/dmi/id/" . $id);
 
 					if(!empty($dmi_file) && !in_array(strtolower($dmi_file), $ignore_words))
 					{

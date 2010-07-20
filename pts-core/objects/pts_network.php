@@ -32,7 +32,7 @@ class pts_network
 		}
 
 		$stream_context = pts_network::stream_context_create(null, $override_proxy, $override_proxy_port);
-		$contents = @pts_file_get_contents($url, 0, $stream_context);
+		$contents = @pts_file_io::file_get_contents($url, 0, $stream_context);
 
 		return $contents;
 	}

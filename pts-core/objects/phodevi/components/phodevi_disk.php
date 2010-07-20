@@ -94,8 +94,8 @@ class phodevi_disk extends phodevi_device_interface
 			{
 				if(is_file($sdx . "/device/model") && is_file($sdx . "/size"))
 				{
-					$disk_size = pts_file_get_contents($sdx . "/size");
-					$disk_model = pts_file_get_contents($sdx . "/device/model");
+					$disk_size = pts_file_io::file_get_contents($sdx . "/size");
+					$disk_model = pts_file_io::file_get_contents($sdx . "/device/model");
 
 					$disk_size = round($disk_size * 512 / 1000000000) . "GB";
 
@@ -200,7 +200,7 @@ class phodevi_disk extends phodevi_device_interface
 
 		if(is_readable("/sys/block/sda/queue/scheduler"))
 		{
-			$scheduler = pts_file_get_contents("/sys/block/sda/queue/scheduler");
+			$scheduler = pts_file_io::file_get_contents("/sys/block/sda/queue/scheduler");
 
 			if(($s = strpos($scheduler, "[")) !== false && ($e = strpos($scheduler, "]", $s)) !== false)
 			{

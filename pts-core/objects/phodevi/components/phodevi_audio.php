@@ -62,8 +62,8 @@ class phodevi_audio extends phodevi_device_interface
 				}
 
 
-				$vendor_name = pts_file_get_contents($vendor_name);
-				$chip_name = pts_file_get_contents($card_dir . "chip_name");
+				$vendor_name = pts_file_io::file_get_contents($vendor_name);
+				$chip_name = pts_file_io::file_get_contents($card_dir . "chip_name");
 
 				$audio = $vendor_name . ' '. $chip_name;
 				break;

@@ -398,7 +398,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 
 					if(is_dir($test_log_write_dir))
 					{
-						pts_remove($test_log_write_dir, null, true);
+						pts_file_io::delete($test_log_write_dir, null, true);
 					}
 
 					rename(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . '/', $test_log_write_dir);
@@ -419,7 +419,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, &$displa
 		$test_run_manager->add_failed_test_run_request($test_run_request);
 
 		// For now delete the failed test log files, but it may be a good idea to keep them
-		pts_remove(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", null, true);
+		pts_file_io::delete(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . "/", null, true);
 	}
 
 	return true;
@@ -598,7 +598,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 	if(($results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER")) && ($save_name = pts_read_assignment("SAVE_FILE_NAME")))
 	{
 		$backup_test_log_dir = SAVE_RESULTS_DIR . $save_name . "/test-logs/active/" . $results_identifier . "/";
-		pts_remove($backup_test_log_dir);
+		pts_file_io::delete($backup_test_log_dir);
 		pts_file_io::mkdir($backup_test_log_dir, 0777, true);
 	}
 	else
@@ -670,7 +670,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		if(is_file(TEST_ENV_DIR . $test_identifier . "/test-exit-status"))
 		{
 			// If the test script writes its exit status to ~/test-exit-status, if it's non-zero the test run failed
-			$exit_status = pts_file_get_contents(TEST_ENV_DIR . $test_identifier . "/test-exit-status");
+			$exit_status = pts_file_io::file_get_contents(TEST_ENV_DIR . $test_identifier . "/test-exit-status");
 			unlink(TEST_ENV_DIR . $test_identifier . "/test-exit-status");
 
 			if($exit_status != 0 && !IS_BSD)
@@ -684,7 +684,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 		{
 			if(is_file(TEST_ENV_DIR . $test_identifier . "/pts-timer"))
 			{
-				$run_time = pts_file_get_contents(TEST_ENV_DIR . $test_identifier . "/pts-timer");
+				$run_time = pts_file_io::file_get_contents(TEST_ENV_DIR . $test_identifier . "/pts-timer");
 				unlink(TEST_ENV_DIR . $test_identifier . "/pts-timer");
 
 			}
@@ -720,7 +720,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 				}
 				else if($test_result !== false && is_file($test_log_file))
 				{
-					$test_result = pts_file_get_contents($test_log_file);
+					$test_result = pts_file_io::file_get_contents($test_log_file);
 				}
 			}
 
@@ -865,7 +865,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 	if(is_file($test_directory . "/pts-test-note"))
 	{
-		pts_test_notes_manager::add_note(pts_file_get_contents($test_directory . "/pts-test-note"));
+		pts_test_notes_manager::add_note(pts_file_io::file_get_contents($test_directory . "/pts-test-note"));
 		unlink($test_directory . "pts-test-note");
 	}
 
@@ -890,7 +890,7 @@ function pts_run_test(&$test_run_request, &$display_mode)
 
 		if(is_file($test_directory . $file))
 		{
-			$file_contents = pts_file_get_contents($test_directory . $file);
+			$file_contents = pts_file_io::file_get_contents($test_directory . $file);
 			unlink($test_directory . $file);
 
 			if(!empty($file_contents))

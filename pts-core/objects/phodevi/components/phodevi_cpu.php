@@ -96,7 +96,7 @@ class phodevi_cpu extends phodevi_device_interface
 			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
 			if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"))
 			{
-				$info = pts_file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq");
+				$info = pts_file_io::file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq");
 				$info = intval($info) / 1000000;
 			}
 			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
@@ -140,8 +140,8 @@ class phodevi_cpu extends phodevi_device_interface
 		if(IS_LINUX && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq") && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"))
 		{
 			// if EIST / CnQ is disabled, the cpufreq folder shoudln't be present, but double check by comparing the min and max frequencies
-			$min = pts_file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");
-			$max = pts_file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
+			$min = pts_file_io::file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");
+			$max = pts_file_io::file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
 
 			if($min < $max)
 			{

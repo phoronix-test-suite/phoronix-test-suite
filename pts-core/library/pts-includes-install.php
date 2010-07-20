@@ -410,7 +410,7 @@ function pts_setup_install_test_directory($identifier, $remove_old_files = false
 			array_push($ignore_files, $download_object->get_filename());
 		}
 
-		pts_remove(TEST_ENV_DIR . $identifier, $ignore_files);
+		pts_file_io::delete(TEST_ENV_DIR . $identifier, $ignore_files);
 	}
 
 	if(is_file(pts_client::user_home_directory() . ".Xauthority")
@@ -511,7 +511,7 @@ function pts_install_test($identifier, &$display_mode)
 				if(is_file(TEST_ENV_DIR . $identifier . "/install-exit-status"))
 				{
 					// If the installer writes its exit status to ~/install-exit-status, if it's non-zero the install failed
-					$install_exit_status = pts_file_get_contents(TEST_ENV_DIR . $identifier . "/install-exit-status");
+					$install_exit_status = pts_file_io::file_get_contents(TEST_ENV_DIR . $identifier . "/install-exit-status");
 					unlink(TEST_ENV_DIR . $identifier . "/install-exit-status");
 
 					if($install_exit_status != 0 && !IS_BSD && !IS_WINDOWS)

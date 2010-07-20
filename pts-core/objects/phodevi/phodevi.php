@@ -448,12 +448,12 @@ class phodevi
 
 		if($remove_phrases == null)
 		{
-			$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-remove.list");
+			$word_file = pts_file_io::file_get_contents(STATIC_DIR . "lists/info-strings-remove.list");
 			$remove_phrases = pts_strings::trim_explode("\n", $word_file);
 		}
 		if($change_phrases == null)
 		{
-			$word_file = pts_file_get_contents(STATIC_DIR . "lists/info-strings-replace.list");
+			$word_file = pts_file_io::file_get_contents(STATIC_DIR . "lists/info-strings-replace.list");
 			$phrases_r = pts_strings::trim_explode("\n", $word_file);
 			$change_phrases = array();
 
@@ -480,7 +480,7 @@ class phodevi
 
 		if(is_file("/proc/uptime"))
 		{
-			$uptime = pts_strings::first_in_string(pts_file_get_contents("/proc/uptime"));
+			$uptime = pts_strings::first_in_string(pts_file_io::file_get_contents("/proc/uptime"));
 		}
 		else if(($uptime_cmd = pts_client::executable_in_path("uptime")) != false)
 		{

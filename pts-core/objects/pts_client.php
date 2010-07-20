@@ -260,7 +260,7 @@ class pts_client
 	}
 	public static function remove_installed_test($identifier)
 	{
-		pts_remove(TEST_ENV_DIR . $identifier, null, true);
+		pts_file_io::delete(TEST_ENV_DIR . $identifier, null, true);
 	}
 	public static function exit_client($string = null, $exit_status = 0)
 	{

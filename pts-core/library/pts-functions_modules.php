@@ -40,7 +40,7 @@ function pts_module_startup_init()
 function pts_auto_detect_modules()
 {
 	// Auto detect modules to load
-	foreach(explode("\n", pts_file_get_contents(STATIC_DIR . "lists/module-variables.list")) as $module_var)
+	foreach(explode("\n", pts_file_io::file_get_contents(STATIC_DIR . "lists/module-variables.list")) as $module_var)
 	{
 		$module_var = pts_strings::trim_explode("=", $module_var);
 

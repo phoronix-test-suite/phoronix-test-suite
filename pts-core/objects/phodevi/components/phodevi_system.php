@@ -262,7 +262,7 @@ class phodevi_system extends phodevi_device_interface
 		$virtualized = null;
 		$gpu = phodevi::read_name("gpu");
 
-		if(strpos(phodevi::read_property("cpu", "model"), "QEMU") !== false || (is_readable("/sys/class/dmi/id/bios_vendor") && pts_file_get_contents("/sys/class/dmi/id/bios_vendor") == "QEMU"))
+		if(strpos(phodevi::read_property("cpu", "model"), "QEMU") !== false || (is_readable("/sys/class/dmi/id/bios_vendor") && pts_file_io::file_get_contents("/sys/class/dmi/id/bios_vendor") == "QEMU"))
 		{
 			$virtualized = "QEMU";
 		}
@@ -762,7 +762,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$info = "NVIDIA";
 		}
-		else if(is_readable("/sys/module/fglrx/initstate") && pts_file_get_contents("/sys/module/fglrx/initstate") == "live")
+		else if(is_readable("/sys/module/fglrx/initstate") && pts_file_io::file_get_contents("/sys/module/fglrx/initstate") == "live")
 		{
 			$info = "ATI";
 		}

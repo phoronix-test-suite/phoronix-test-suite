@@ -25,7 +25,7 @@ class estimate_run_time implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "!pts_empty", null, "The name of a test, suite, or result file must be entered.")
+		new pts_argument_check(0, "!empty", null, "The name of a test, suite, or result file must be entered.")
 		);
 	}
 	public static function run($r)

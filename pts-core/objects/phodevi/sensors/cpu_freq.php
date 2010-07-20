@@ -50,7 +50,7 @@ class cpu_freq implements phodevi_sensor
 			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
 			if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"))
 			{
-				$info = pts_file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq");
+				$info = pts_file_io::file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq");
 				$info = intval($info) / 1000;
 			}
 			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq

@@ -246,7 +246,7 @@ function pts_suite_needs_updated_install($identifier)
 function pts_test_needs_updated_install($identifier)
 {
 	// Checks if test needs updating
-	return !pts_test_installed($identifier) || !pts_version_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL");
+	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL");
 }
 function pts_test_checksum_installer($identifier)
 {
@@ -819,7 +819,7 @@ function pts_generic_reference_system_comparison_ids()
 
 	if($comparison_ids == null)
 	{
-		$comparison_ids = pts_strings::trim_explode("\n", pts_file_get_contents(STATIC_DIR . "lists/reference-system-comparisons.list"));
+		$comparison_ids = pts_strings::trim_explode("\n", pts_file_io::file_get_contents(STATIC_DIR . "lists/reference-system-comparisons.list"));
 
 		foreach(explode(' ', pts_config::read_user_config(P_OPTION_EXTRA_REFERENCE_SYSTEMS, null)) as $reference_check)
 		{
@@ -866,7 +866,7 @@ function pts_remove_test_profile($identifier)
 	if(is_writable($xml_loc) && is_writable($resources_loc))
 	{
 		pts_file_io::unlink($xml_loc);
-		pts_remove($resources_loc, null, true);
+		pts_file_io::delete($resources_loc, null, true);
 		$removed = true;
 	}
 
@@ -874,7 +874,7 @@ function pts_remove_test_profile($identifier)
 }
 function pts_remove_test_result_dir($identifier)
 {
-	pts_remove(SAVE_RESULTS_DIR . $identifier, null, true);
+	pts_file_io::delete(SAVE_RESULTS_DIR . $identifier, null, true);
 }
 function pts_test_result_format_to_string($result_format)
 {

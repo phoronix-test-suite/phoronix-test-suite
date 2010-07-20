@@ -38,6 +38,44 @@ class pts_file_io
 		$r = glob($pattern, $flags);
 		return is_array($r) ? $r : array();
 	}
+	public static function file_get_contents($filename, $flags = 0, $context = null)
+	{
+		// Compared to the normal PHP file_get_contents, trim the file as a string when acquired
+		return trim(file_get_contents($filename, $flags, $context));
+	}
+	public static function delete($object, $ignore_files = null, $remove_root_directory = false)
+	{
+		// Delete files and/or directories
+
+		if(is_dir($object))
+		{
+			$object = pts_strings::add_trailing_slash($object);
+		}
+
+		foreach(pts_file_io::glob($object . "*") as $to_remove)
+		{
+			if(is_file($to_remove))
+			{
+				if(is_array($ignore_files) && in_array(basename($to_remove), $ignore_files))
+				{
+					continue; // Don't remove the file
+				}
+				else
+				{
+					@unlink($to_remove);
+				}
+			}
+			else if(is_dir($to_remove))
+			{
+				self::delete($to_remove, $ignore_files, true);
+			}
+		}
+
+		if($remove_root_directory && is_dir($object) && count(pts_file_io::glob($object . "/*")) == 0)
+		{
+			@rmdir($object);
+		}
+	}
 }
 
 ?>

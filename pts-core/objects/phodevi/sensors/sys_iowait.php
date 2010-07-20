@@ -44,9 +44,9 @@ class sys_iowait implements phodevi_sensor
 
 		if(IS_LINUX && is_file("/proc/stat"))
 		{
-			$start_stat = pts_file_get_contents("/proc/stat");
+			$start_stat = pts_file_io::file_get_contents("/proc/stat");
 			sleep(1);
-			$end_stat = pts_file_get_contents("/proc/stat");
+			$end_stat = pts_file_io::file_get_contents("/proc/stat");
 
 			$start_stat = explode(" ", substr($start_stat, 0, strpos($start_stat, "\n")));
 			$end_stat = explode(" ", substr($end_stat, 0, strpos($end_stat, "\n")));

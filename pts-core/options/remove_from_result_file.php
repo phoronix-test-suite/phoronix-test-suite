@@ -56,7 +56,7 @@ class remove_from_result_file implements pts_option_interface
 		{
 			if(is_dir(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $remove_identifier))
 			{
-				pts_remove(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $remove_identifier, null, true);
+				pts_file_io::delete(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $remove_identifier, null, true);
 			}
 		}
 

@@ -276,7 +276,7 @@ function pts_package_vendor_identifier()
 
 	if(!is_file(STATIC_DIR . "distro-xml/" . $os_vendor . "-packages.xml") && !is_file(STATIC_DIR . "distro-scripts/install-" . $os_vendor . "-packages.sh"))
 	{
-		$vendors_alias_file = pts_file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.list");
+		$vendors_alias_file = pts_file_io::file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.list");
 		$vendors_r = explode("\n", $vendors_alias_file);
 
 		foreach($vendors_r as &$vendor)

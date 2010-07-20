@@ -136,7 +136,7 @@ class phodevi_parser
 	{
 		$return_value = false;
 
-		foreach(explode("\n", pts_file_get_contents($file)) as $build_line)
+		foreach(explode("\n", pts_file_io::file_get_contents($file)) as $build_line)
 		{
 			list($descriptor, $value) = pts_strings::trim_explode("=", $build_line);
 
@@ -155,7 +155,7 @@ class phodevi_parser
 
 		if($remove_words == null && is_file(STATIC_DIR . "lists/hal-values-remove.list"))
 		{
-			$word_file = pts_file_get_contents(STATIC_DIR . "lists/hal-values-remove.list");
+			$word_file = pts_file_io::file_get_contents(STATIC_DIR . "lists/hal-values-remove.list");
 			$remove_words = pts_strings::trim_explode("\n", $word_file);
 		}
 

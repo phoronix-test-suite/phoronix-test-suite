@@ -53,7 +53,7 @@ class pts_test_notes_manager
 
 		if(empty($check_processes))
 		{
-			$word_file = pts_file_get_contents(STATIC_DIR . "lists/process-reporting-checks.list");
+			$word_file = pts_file_io::file_get_contents(STATIC_DIR . "lists/process-reporting-checks.list");
 			$processes_r = pts_strings::trim_explode("\n", $word_file);
 			$check_processes = array();
 

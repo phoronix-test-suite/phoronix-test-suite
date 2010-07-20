@@ -83,7 +83,7 @@ if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 	}
 	else
 	{
-		$alias_file = pts_file_get_contents(STATIC_DIR . "lists/option-command-aliases.list");
+		$alias_file = pts_file_io::file_get_contents(STATIC_DIR . "lists/option-command-aliases.list");
 
 		foreach(pts_strings::trim_explode("\n", $alias_file) as $alias_line)
 		{

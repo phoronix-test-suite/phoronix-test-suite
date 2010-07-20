@@ -183,9 +183,9 @@ class pts_phoroscript_interpreter
 					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments);
 					$line_r[2] = $this->get_real_path($line_r[2], $pass_arguments);
 
-					pts_remove($line_r[2], null, true);
+					pts_file_io::delete($line_r[2], null, true);
 					copy($line_r[1], $line_r[2] . (is_dir($line_r[2]) ? basename($line_r[1]) : null));
-					pts_remove($line_r[1], null, true);
+					pts_file_io::delete($line_r[1], null, true);
 					break;
 				case 'cp':
 					// TODO: implement folder support better
@@ -248,7 +248,7 @@ class pts_phoroscript_interpreter
 						}
 						else if(is_dir($this->var_current_directory . $line_r[$i]))
 						{
-							pts_remove($this->var_current_directory . $line_r[$i], null, true);
+							pts_file_io::delete($this->var_current_directory . $line_r[$i], null, true);
 						}
 					}
 					break;
