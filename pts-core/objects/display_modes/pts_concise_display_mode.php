@@ -262,11 +262,15 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo $this->tab . $this->tab . $error_string . "\n";
 	}
-	public function generic_heading($string)
+	public function generic_prompt($prompt_string)
+	{
+		echo $this->tab . $prompt_string;
+	}
+	public function generic_heading($string, $ending_line_break = true)
 	{
 		static $shown_pts = false;
 
-		if($shown_pts == false && pts_client::get_command_exection_count() == 1)
+		if($shown_pts == false && pts_client::get_command_exection_count() <= 2)
 		{
 			$string = pts_title() . "\n" . $string;
 			$shown_pts = true;
@@ -280,7 +284,24 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				// ($line_count > 0 ? $this->tab : null) . 
 				echo $line_string . "\n";
 			}
-			echo "\n";
+
+			if($ending_line_break)
+			{
+				echo "\n";
+			}
+		}
+	}
+	public function generic_sub_heading($string)
+	{
+		if(!empty($string))
+		{
+			// To generate the "Phoronix Test Suite" heading string if not already done so
+			pts_client::$display->generic_heading(null, false);
+
+			foreach(pts_strings::trim_explode("\n", $string) as $line_string)
+			{
+				echo $this->tab . $line_string . "\n";
+			}
 		}
 	}
 	public function generic_error($string)

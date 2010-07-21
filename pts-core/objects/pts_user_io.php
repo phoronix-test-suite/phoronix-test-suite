@@ -90,7 +90,7 @@ class pts_user_io
 
 			do
 			{
-				pts_client::$display->test_install_prompt($question);
+				pts_client::$display->generic_prompt($question);
 				$input = strtolower(pts_user_io::read_user_input());
 			}
 			while($input != "y" && $input != "n" && $input != "");

@@ -79,7 +79,7 @@ function pts_prompt_results_identifier(&$test_run_manager)
 			}
 			else
 			{
-				echo "Enter a unique name for this test run: ";
+				pts_client::$display->generic_prompt("Enter a unique name for this test run: ");
 				$results_identifier = trim(str_replace(array('/'), "", pts_user_io::read_user_input()));
 			}
 			$times_tried++;
@@ -129,7 +129,7 @@ function pts_prompt_save_file_name(&$test_run_manager, $check_env = true)
 				$is_reserved_word = false;
 			}
 
-			echo "Enter a name to save these results: ";
+			pts_client::$display->generic_prompt("Enter a name to save these results: ");
 			$proposed_name = pts_user_io::read_user_input();
 			$custom_title = $proposed_name;
 			$proposed_name = pts_input_string_to_identifier($proposed_name);

@@ -35,7 +35,6 @@ class install_test implements pts_option_interface
 	public static function run($items_to_install)
 	{
 		$items_to_install = array_unique(array_map("strtolower", $items_to_install));
-		echo "\n";
 
 		// Create a lock
 		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";

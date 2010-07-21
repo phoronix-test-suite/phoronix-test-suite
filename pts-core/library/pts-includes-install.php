@@ -39,11 +39,7 @@ function pts_start_install($to_install)
 
 	if(count($tests) == 0)
 	{
-		if(!pts_is_assignment("SILENCE_MESSAGES"))
-		{
-			pts_client::$display->generic_error("Not Recognized: " . $to_install[0]);
-		}
-
+		pts_client::$display->generic_error("Not Recognized: " . $to_install[0]);
 		return false;
 	}
 
@@ -51,11 +47,7 @@ function pts_start_install($to_install)
 	{
 		if(!pts_test_needs_updated_install($test))
 		{
-			if(!pts_is_assignment("SILENCE_MESSAGES"))
-			{
-				echo "Already Installed: " . $test . "\n";
-			}
-
+			pts_client::$display->generic_sub_heading("Installed: " . $test . " [v" . pts_test_installed_profile_version($test) . "]");
 			unset($tests[$key]);
 		}
 	}
@@ -91,7 +83,7 @@ function pts_start_install($to_install)
 	pts_storage_object::set_in_file(PTS_CORE_STORAGE, "download_average_count", pts_read_and_clear_assignment("DOWNLOAD_AVG_COUNT"));
 	pts_storage_object::set_in_file(PTS_CORE_STORAGE, "download_average_speed", pts_read_and_clear_assignment("DOWNLOAD_AVG_SPEED"));
 
-	if(!pts_is_assignment("SILENCE_MESSAGES") && count($failed_installs) > 0 && count($tests) > 1)
+	if(count($failed_installs) > 0 && count($tests) > 1)
 	{
 		echo "\nThe following tests failed to install:\n\n";
 		echo pts_user_io::display_text_list($failed_installs, "\t- ");

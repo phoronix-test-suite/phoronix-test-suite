@@ -422,7 +422,7 @@ class gui_gtk implements pts_option_interface
 				pts_client::run_next("gui_gtk");
 				break;
 			default:
-				pts_client::run_next("install_test", $clicked, array("SILENCE_MESSAGES" => true, "AUTOMATED_MODE" => true));
+				pts_client::run_next("install_test", $clicked, array("AUTOMATED_MODE" => true));
 				gui_gtk::show_run_confirmation_interface($clicked);
 				break;
 		}
@@ -789,14 +789,14 @@ class gui_gtk implements pts_option_interface
 				gui_gtk::show_main_interface();
 				break;
 			case "install":
-				pts_client::run_next("install_test", $identifiers, array("SILENCE_MESSAGES" => true, "AUTOMATED_MODE" => true));
+				pts_client::run_next("install_test", $identifiers, array("AUTOMATED_MODE" => true));
 				pts_client::run_next("gui_gtk");
 				break;
 			case "BENCHMARK":
 			case "RUN":
 				if($button_call == "BENCHMARK")
 				{
-					pts_client::run_next("install_test", $identifiers, array("SILENCE_MESSAGES" => true, "AUTOMATED_MODE" => true));
+					pts_client::run_next("install_test", $identifiers, array("AUTOMATED_MODE" => true));
 				}
 
 				$args_to_pass = array("IS_BATCH_MODE" => pts_read_assignment("GTK_BATCH_MODE"), 

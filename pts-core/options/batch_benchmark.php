@@ -24,7 +24,7 @@ class batch_benchmark implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_client::run_next("install_test", $r, array("IS_BATCH_MODE" => true, "SILENCE_MESSAGES" => true));
+		pts_client::run_next("install_test", $r, array("IS_BATCH_MODE" => true));
 		pts_client::run_next("run_test", $r, array("IS_BATCH_MODE" => true));
 	}
 }

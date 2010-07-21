@@ -144,6 +144,10 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo "\n" . $error_string . "\n\n";
 	}
+	public function generic_prompt($prompt_string)
+	{
+		echo "\n" . $prompt_string;
+	}
 	public function generic_heading($string)
 	{
 		static $shown_pts = false;
@@ -154,6 +158,10 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		}
 
 		echo self::string_header($string, '=');
+	}
+	public function generic_sub_heading($string)
+	{
+		echo $string . "\n";
 	}
 	public function generic_error($string)
 	{

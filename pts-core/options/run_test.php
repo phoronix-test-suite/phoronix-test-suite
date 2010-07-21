@@ -218,7 +218,6 @@ class run_test implements pts_option_interface
 
 		$xml_results_writer = new pts_results_tandem_XmlWriter();
 
-		echo "\n";
 		$file_name = false;
 		$save_results = false;
 		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1 || pts_read_assignment("FORCE_SAVE_RESULTS"))
@@ -401,7 +400,7 @@ class run_test implements pts_option_interface
 			pts_module_process("__event_results_process", $xml_results_writer);
 			pts_save_test_file($xml_results_writer, $file_name);
 			pts_module_process("__event_results_saved", $file_name);
-			echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $file_name . "/composite.xml\n";
+			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $file_name . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $file_name);
 			pts_client::display_web_page(SAVE_RESULTS_DIR . $file_name . "/index.html");
 
