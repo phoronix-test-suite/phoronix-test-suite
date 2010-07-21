@@ -33,7 +33,7 @@ class result_file_to_text implements pts_option_interface
 		$result_file = new pts_result_file($r["result_file"]);
 		$result_output = null;
 
-		$result_output .= pts_string_header($result_file->get_title() . "\n" . $result_file->get_suite_name() . " - " . $result_file->get_suite_version(), "#");
+		$result_output .= $result_file->get_title() . "\n" . $result_file->get_suite_name() . " - " . $result_file->get_suite_version();
 		$result_output .= $result_file->get_suite_description() . "\n\n\n";
 
 		$system_identifiers = $result_file->get_system_identifiers();
@@ -48,7 +48,7 @@ class result_file_to_text implements pts_option_interface
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$result_output .= pts_string_header(trim($result_object->get_name() . " " . $result_object->get_version() . "\n" . $result_object->get_attributes()));
+			$result_output .= trim($result_object->get_name() . " " . $result_object->get_version() . "\n" . $result_object->get_attributes());
 
 			foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 			{

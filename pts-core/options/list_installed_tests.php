@@ -24,14 +24,10 @@ class list_installed_tests implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Installed Tests");
 		$installed_tests = pts_installed_tests_array();
+		pts_client::$display->generic_heading(count($installed_tests) . " Tests Installed");
 
-		if(count($installed_tests) == 0)
-		{
-			echo "\nNo tests are currently installed.\n\n";
-		}
-		else
+		if(count($installed_tests) > 0)
 		{
 			foreach(pts_installed_tests_array() as $identifier)
 			{

@@ -101,7 +101,7 @@ class phoromatic extends pts_module_interface
 	{
 		if(pts_client::create_lock(PTS_USER_DIR . "phoromatic_lock") == false)
 		{
-			echo pts_string_header("Phoromatic is already running.");
+			pts_client::$display->generic_error("Phoromatic is already running.");
 			return false;
 		}
 		if(!phoromatic::phoromatic_setup_module())

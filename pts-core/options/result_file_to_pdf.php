@@ -30,8 +30,6 @@ class result_file_to_pdf implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		echo pts_string_header("Result File To PDF Converter");
-
 		if(is_file("/usr/share/php/fpdf/fpdf.php"))
 		{
 			include_once("/usr/share/php/fpdf/fpdf.php");

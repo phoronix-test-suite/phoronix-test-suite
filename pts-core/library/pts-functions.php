@@ -109,7 +109,6 @@ if(PTS_MODE == "LIB")
 }
 
 // Load Main Functions
-require(PTS_LIBRARY_PATH . "pts-functions_io.php");
 require(PTS_LIBRARY_PATH . "pts-functions_global.php");
 require(PTS_LIBRARY_PATH . "pts-functions_tests.php");
 require(PTS_LIBRARY_PATH . "pts-functions_types.php");

@@ -30,8 +30,6 @@ class suite_to_pdf implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		echo pts_string_header("Suite To PDF Report Creator");
-
 		if(is_file("/usr/share/php/fpdf/fpdf.php"))
 		{
 			include_once("/usr/share/php/fpdf/fpdf.php");

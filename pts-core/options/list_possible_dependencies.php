@@ -28,8 +28,7 @@ class list_possible_dependencies implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Possible External Dependencies");
-
+		pts_client::$display->generic_heading(count(pts_external_dependency_generic_packages()) . " External Dependencies Available");
 		$dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependency_generic_packages());
 		sort($dependencies);
 

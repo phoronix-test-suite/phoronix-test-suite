@@ -43,7 +43,7 @@ function pts_prompt_test_options($identifier)
 	{
 		if($i == 0)
 		{
-			echo pts_string_header("Test Configuration: " . pts_test_identifier_to_name($identifier));
+			pts_client::$display->generic_heading(pts_test_identifier_to_name($identifier) . " Test Configuration");
 		}
 
 		$option_identifier = $o->get_identifier();

@@ -40,6 +40,9 @@ interface pts_display_mode_interface
 	public function test_run_output(&$to_output);
 	public function test_run_end(&$test_result);
 	public function test_run_error($error_string);
+	public function generic_heading($string);
+	public function generic_error($string);
+	public function generic_warning($string);
 }
 
 ?>

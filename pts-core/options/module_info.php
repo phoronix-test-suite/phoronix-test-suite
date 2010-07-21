@@ -32,7 +32,7 @@ class module_info implements pts_option_interface
 	{
 		$module = $args[0];
 		pts_load_module($module);
-		echo pts_string_header(pts_module_call($module, "module_name") . " Module");
+		pts_client::$display->generic_heading(pts_module_call($module, "module_name") . " Module");
 
 		if(in_array($args[0], pts_module_manager::attached_modules()))
 		{

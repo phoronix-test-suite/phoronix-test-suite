@@ -28,8 +28,6 @@ class make_download_cache implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Generating Download Cache");
-
 		// Generates a PTS Download Cache
 		$dc_write_directory = null;
 		pts_loader::load_definitions("test-profile-downloads.xml");

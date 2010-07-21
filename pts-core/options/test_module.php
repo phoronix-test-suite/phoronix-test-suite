@@ -34,8 +34,6 @@ class test_module implements pts_option_interface
 		pts_load_module($module);
 		pts_attach_module($module);
 
-		echo pts_string_header("Starting Module Test Process");
-
 		foreach(pts_module_processes() as $process)
 		{
 			if(pts_is_assignment("DEBUG_MODULE"))

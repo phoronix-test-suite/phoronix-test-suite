@@ -105,7 +105,7 @@ function pts_external_dependency_generic_info($missing_dependency_names)
 		{
 			if(pts_file_missing_check($file_check[$i]))
 			{
-				echo pts_string_header($title[$i] . "\nPossible Package Names: " . $possible_packages[$i]);
+				pts_client::$display->generic_heading($title[$i] . "\nPossible Package Names: " . $possible_packages[$i]);
 				$missing_count++;
 			}
 		}

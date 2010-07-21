@@ -41,13 +41,13 @@ class update_checker extends pts_module_interface
 			if($latest_reported_version != PTS_VERSION && $latest_e[0] >= $current_e[0] && ($latest_e[1] > $current_e[1] || ($latest_e[1] == $current_e[1] && $latest_e[2] >= $current_e[2])))
 			{
 				// New version of PTS is available
-				echo pts_string_header("An outdated version of the Phoronix Test Suite is installed.\nThe version in use is v" . PTS_VERSION . ", but the latest is v" . $latest_reported_version . ".\nVisit http://www.phoronix-test-suite.com/ to update this software.");
+				pts_client::$display->generic_heading("An outdated version of the Phoronix Test Suite is installed.\nThe version in use is v" . PTS_VERSION . ", but the latest is v" . $latest_reported_version . ".\nVisit http://www.phoronix-test-suite.com/ to update this software.");
 
 				if(pts_read_assignment("COMMAND") == "gui_gtk")
 				{
-						pts_set_assignment("REPORT_STRING", "Phoronix Test Suite v" . $latest_reported_version . " Available");
-						pts_set_assignment("BROWSER_BUTTON_STRING", "Download Update");
-						pts_set_assignment("BROWSER_BUTTON_URL", "http://www.phoronix-test-suite.com/index.php?k=downloads");
+					pts_set_assignment("REPORT_STRING", "Phoronix Test Suite v" . $latest_reported_version . " Available");
+					pts_set_assignment("BROWSER_BUTTON_STRING", "Download Update");
+					pts_set_assignment("BROWSER_BUTTON_URL", "http://www.phoronix-test-suite.com/index.php?k=downloads");
 				}
 			}
 		}

@@ -32,18 +32,18 @@ class run_test implements pts_option_interface
 		{
 			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == false && !pts_is_assignment("AUTOMATED_MODE"))
 			{
-				echo pts_string_header("The batch mode must first be configured.\nRun: phoronix-test-suite batch-setup");
+				pts_client::$display->generic_error("The batch mode must first be configured.\nTo configure, run phoronix-test-suite batch-setup");
 				return false;
 			}
 		}
-		if(count($to_run_identifiers) == 0 || empty($to_run_identifiers[0]))
+		/*if(count($to_run_identifiers) == 0 || empty($to_run_identifiers[0]))
 		{
-			echo pts_string_header("A test, suite, or saved identifier must be supplied.");
+			pts_client::$display->generic_error("A test, suite, or saved identifier must be supplied.");
 			return false;
-		}
+		}*/
 		if(!is_writable(TEST_ENV_DIR))
 		{
-			echo "\nERROR: The test installation directory is not writable.\nLocation: " . TEST_ENV_DIR . "\n";
+			pts_client::$display->generic_error("The test installation directory is not writable.\nLocation: " . TEST_ENV_DIR);
 			return false;
 		}
 
@@ -58,7 +58,7 @@ class run_test implements pts_option_interface
 		{
 			if(!pts_read_assignment("USER_REJECTED_TEST_INSTALL_NOTICE"))
 			{
-				echo pts_string_header("You must enter at least one test, suite, or result identifier to run.");
+				pts_client::$display->generic_error("You must enter at least one test, suite, or result identifier to run.");
 			}
 
 			return false;
@@ -115,8 +115,7 @@ class run_test implements pts_option_interface
 			}
 			else if(pts_is_suite($to_run))
 			{
-				echo pts_string_header("Test Suite: " . $to_run);
-
+				// Print the $to_run ?
 				$xml_parser = new pts_suite_tandem_XmlReader($to_run);
 
 				if($unique_test_count == 1)
@@ -139,8 +138,7 @@ class run_test implements pts_option_interface
 			}
 			else if(pts_is_test_result($to_run))
 			{
-				echo pts_string_header("Comparison: " . $to_run);
-
+				// Print the $to_run ?
 				$xml_parser = new pts_results_tandem_XmlReader($to_run);
 				$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
 				$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
@@ -205,7 +203,7 @@ class run_test implements pts_option_interface
 			}
 			else
 			{
-				echo pts_string_header("Not Recognized: " . $to_run);
+				pts_client::$display->generic_error($to_run . " is not recognized.");
 				continue;
 			}
 		}
@@ -272,7 +270,7 @@ class run_test implements pts_option_interface
 						$test_description = "N/A";
 					}
 
-					echo pts_string_header("If you wish, enter a new description below.\nPress ENTER to proceed without changes.", "#");
+					pts_client::$display->generic_heading("If you wish, enter a new description below.\nPress ENTER to proceed without changes.");
 					echo "Current Description: " . $test_description . "\n\nNew Description: ";
 					$new_test_description = pts_user_io::read_user_input();
 

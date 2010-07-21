@@ -28,7 +28,7 @@ class validate_test_suite implements pts_option_interface
 		{
 			$suite_identifier = $r[0];
 
-			echo pts_string_header($suite_identifier);
+			pts_client::$display->generic_heading($suite_identifier);
 			$validation_errors = array();
 			$validation_warnings = array();
 

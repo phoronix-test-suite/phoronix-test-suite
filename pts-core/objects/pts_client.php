@@ -37,6 +37,10 @@ class pts_client
 		chmod($lock_file, 0644);
 		return self::$lock_pointers[self::$command_execution_count][$lock_file] != false && flock(self::$lock_pointers[self::$command_execution_count][$lock_file], LOCK_EX | LOCK_NB);
 	}
+	public static function get_command_exection_count()
+	{
+		return self::$command_execution_count;
+	}
 	public static function run_next($command, $pass_args = null, $set_assignments = "")
 	{
 		return pts_command_execution_manager::add_to_queue($command, $pass_args, $set_assignments);
@@ -234,7 +238,7 @@ class pts_client
 
 			if($prompt_in_method == false || $usage_reporting == -1 || $hwsw_reporting == -1)
 			{
-				echo pts_string_header("Phoronix Test Suite - Welcome");
+				pts_client::$display->generic_heading("User Agreement");
 				echo wordwrap($user_agreement, 65);
 				$agree = pts_user_io::prompt_bool_input("Do you agree to these terms and wish to proceed", true);
 				$usage_reporting = $agree ? pts_user_io::prompt_bool_input("Enable anonymous usage / statistics reporting", true) : -1;
@@ -405,7 +409,7 @@ class pts_client
 
 				if($return_value == $return_fails_on)
 				{
-					echo pts_string_header($argument_check->get_error_string());
+					pts_client::$display->generic_error($argument_check->get_error_string());
 					return false;
 				}
 				else

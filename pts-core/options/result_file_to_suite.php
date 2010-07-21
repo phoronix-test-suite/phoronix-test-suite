@@ -28,8 +28,6 @@ class result_file_to_suite implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		echo pts_string_header("Test Suite Creation Utility");
-
 		$result_file = false;
 		if(count($r) != 0)
 		{

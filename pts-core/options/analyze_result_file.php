@@ -32,8 +32,7 @@ class analyze_result_file implements pts_option_interface
 	{
 		// TODO: add more stats output of information to analyze-result-file
 		$result_file = new pts_result_file($args["base_file"]);
-
-		echo pts_string_header($result_file->get_title());
+		pts_client::$display->generic_heading($result_file->get_title());
 
 		foreach($result_file->get_system_identifiers() as $system_identifier)
 		{

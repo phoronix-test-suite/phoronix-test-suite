@@ -24,7 +24,6 @@ class list_tests implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Tests");
 		$tests_to_display = array();
 		foreach(pts_tests::available_tests() as $identifier)
 		{
@@ -34,11 +33,9 @@ class list_tests implements pts_option_interface
 			}
 		}
 
-		if(count($tests_to_display) == 0)
-		{
-			echo "\nNo tests found.\n\n";
-		}
-		else
+		pts_client::$display->generic_heading(count($tests_to_display) . " Tests");
+
+		if(count($tests_to_display) > 0)
 		{
 			foreach($tests_to_display as $identifier)
 			{

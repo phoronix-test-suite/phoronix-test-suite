@@ -43,7 +43,7 @@ class module_setup implements pts_option_interface
 		$module_description = pts_module_call($module, "module_description");
 		$module_setup = pts_module_call($module, "module_setup");
 
-		echo pts_string_header("Module: " . $module_name);
+		pts_client::$display->generic_heading($module_name . " Module Configuration");
 		echo $module_description . "\n";
 
 		if(count($module_setup) == 0)

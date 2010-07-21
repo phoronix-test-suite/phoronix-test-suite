@@ -28,7 +28,7 @@ class build_suite implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		echo pts_string_header("Test Suite Creation Utility");
+		pts_client::$display->generic_heading("Test Suite Creation");
 
 		$suite_name = pts_user_io::prompt_user_input("Enter name of suite");
 		$suite_test_type = pts_user_io::prompt_text_menu("Select test type", pts_types::subsystem_targets());

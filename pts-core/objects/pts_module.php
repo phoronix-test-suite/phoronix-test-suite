@@ -225,7 +225,7 @@ class pts_module
 		}
 		else
 		{
-			echo pts_string_header("NOTICE: php-pcntl must be installed for the " . self::module_name() . " module.");
+			pts_client::$display->generic_error("php-pcntl must be installed for the " . self::module_name() . " module.");
 		}
 	}
 	private static function module_name()

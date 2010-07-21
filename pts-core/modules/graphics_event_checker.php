@@ -84,7 +84,7 @@ class graphics_event_checker extends pts_module_interface
 			foreach(self::$error_analysis as $test => $error_count)
 				$error_breakdown .= "\n" . $test . ": " . $error_count;
 
-			echo pts_string_header("GPU Errors: " . $error_count . $error_breakdown);
+			echo "\nGPU Errors: " . $error_count . $error_breakdown . "\n";
 		}
 	}
 

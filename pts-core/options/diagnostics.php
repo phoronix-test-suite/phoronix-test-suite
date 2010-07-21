@@ -24,7 +24,6 @@ class diagnostics implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header(pts_title() . "\n" . "Diagnostics Output");
 		$pts_defined_constants = get_defined_constants(true);
 		$show_all_constants = isset($r[0]) && $r[0] == "full";
 		foreach($pts_defined_constants["user"] as $constant => $constant_value)

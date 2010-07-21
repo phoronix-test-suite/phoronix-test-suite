@@ -24,14 +24,10 @@ class list_saved_results implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Saved Results");
 		$saved_results = pts_saved_test_results_identifiers();
+		pts_client::$display->generic_heading(count($saved_results) . " Saved Results");
 
-		if(count($saved_results) == 0)
-		{
-			echo "\nNo results have been saved.\n\n";
-		}
-		else
+		if(count($saved_results) > 0)
 		{
 			foreach($saved_results as $saved_results_identifier)
 			{

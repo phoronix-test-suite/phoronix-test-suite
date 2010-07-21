@@ -38,7 +38,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		{
 			$download_append = "\nEstimated Download Size: " . $size . " MB";
 		}
-		echo pts_string_header("Downloading Files: " . $identifier . $download_append);
+		echo self::string_header("Downloading Files: " . $identifier . $download_append);
 	}
 	public function test_install_download_file(&$pts_test_file_download, $process, $offset_length = -1)
 	{
@@ -77,7 +77,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 			$install_header .= "\nEstimated Install Size: " . $size . " MB";
 		}
 
-		echo pts_string_header($install_header);
+		echo self::string_header($install_header);
 	}
 	public function test_install_output(&$to_output)
 	{
@@ -109,7 +109,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count)
 	{
-		echo pts_string_header($test_result->get_test_profile()->get_test_title() . " (Run " . $current_run . " of " . $total_run_count . ")");
+		echo self::string_header($test_result->get_test_profile()->get_test_title() . " (Run " . $current_run . " of " . $total_run_count . ")");
 	}
 	public function test_run_output(&$to_output)
 	{
@@ -138,11 +138,55 @@ class pts_basic_display_mode implements pts_display_mode_interface
 			$end_print .= "\n" . pts_test_result_format_to_string($test_result->get_test_profile()->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->get_test_profile()->get_result_scale();
 		}
 
-		echo pts_string_header($end_print, "#");
+		echo self::string_header($end_print, "#");
 	}
 	public function test_run_error($error_string)
 	{
 		echo "\n" . $error_string . "\n\n";
+	}
+	public function generic_heading($string)
+	{
+		static $shown_pts = false;
+
+		if($shown_pts == false && pts_client::get_command_exection_count() == 0)
+		{
+			$string = pts_title() . "\n" . $string;
+		}
+
+		echo self::string_header($string, '=');
+	}
+	public function generic_error($string)
+	{
+		echo self::string_header($string, '=');
+	}
+	public function generic_warning($string)
+	{
+		echo self::string_header($string, '=');
+	}
+	protected static function string_header($heading, $char = '=')
+	{
+		// Return a string header
+		if(!isset($heading[1]))
+		{
+			return null;
+		}
+
+		$header_size = 40;
+
+		foreach(explode("\n", $heading) as $line)
+		{
+			if(isset($line[($header_size + 1)])) // Line to write is longer than header size
+			{
+				$header_size = strlen($line);
+			}
+		}
+
+		if(($terminal_width = pts_client::terminal_width()) < $header_size && $terminal_width > 0)
+		{
+			$header_size = $terminal_width;
+		}
+
+		return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";
 	}
 }
 

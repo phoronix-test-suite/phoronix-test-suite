@@ -30,7 +30,7 @@ class info implements pts_option_interface
 		if(pts_is_suite($to_info))
 		{
 			$suite = new pts_test_suite($to_info);
-			echo pts_string_header($suite->get_name());
+			pts_client::$display->generic_heading($suite->get_name());
 			echo "Suite Version: " . $suite->get_version() . "\n";
 			echo "Maintainer: " . $suite->get_maintainer() . "\n";
 			echo "Suite Type: " . $suite->get_suite_type() . "\n";
@@ -42,7 +42,7 @@ class info implements pts_option_interface
 		}
 		else if(pts_is_virtual_suite($to_info))
 		{
-			echo pts_string_header("Virtual Suite: " . $to_info);
+			pts_client::$display->generic_heading($to_info . " Virtual Suite");
 
 			switch(pts_location_virtual_suite($to_info))
 			{
@@ -73,7 +73,8 @@ class info implements pts_option_interface
 			{
 				$test_title .= " " . $test_version;
 			}
-			echo pts_string_header($test_title);
+
+			pts_client::$display->generic_heading($test_title);
 
 			echo "Profile Version: " . $test->get_test_profile_version() . "\n";
 			echo "Maintainer: " . $test->get_maintainer() . "\n";

@@ -41,7 +41,7 @@ function pts_start_install($to_install)
 	{
 		if(!pts_is_assignment("SILENCE_MESSAGES"))
 		{
-			echo pts_string_header("Not Recognized: " . $to_install[0]);
+			pts_client::$display->generic_error("Not Recognized: " . $to_install[0]);
 		}
 
 		return false;
@@ -66,7 +66,7 @@ function pts_start_install($to_install)
 
 	if(($install_count = count($tests)) > 1)
 	{
-		echo pts_string_header($install_count . " Tests To Be Installed" . 
+		pts_client::$display->generic_heading($install_count . " Tests To Be Installed" . 
 		"\nEstimated Download Size: " . pts_estimated_download_size($tests) . " MB" .
 		"\nEstimated Install Size: " . pts_estimated_environment_size($tests) . " MB");
 	}

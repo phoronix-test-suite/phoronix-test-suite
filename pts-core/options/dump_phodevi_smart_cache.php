@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@ class dump_phodevi_smart_cache implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phodevi Smart Cache");
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
 		$phodevi_sc = $pso->read_object("phodevi_smart_cache");
 
@@ -37,9 +36,7 @@ class dump_phodevi_smart_cache implements pts_option_interface
 		}
 
 		echo "\n";
-
 		print_r($phodevi_sc->read_cache());
-
 		echo "\n";
 	}
 }

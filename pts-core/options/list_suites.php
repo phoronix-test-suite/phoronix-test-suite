@@ -24,14 +24,10 @@ class list_suites implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Suites");
 		$available_suites = pts_suites::available_suites();
+		pts_client::$display->generic_heading(count($available_suites) . " Suites");
 
-		if(count($available_suites) == 0)
-		{
-			echo "\nNo suites are available.\n\n";
-		}
-		else
+		if(count($available_suites) > 0)
 		{
 			$has_partially_supported_suite = false;
 			foreach($available_suites as $identifier)

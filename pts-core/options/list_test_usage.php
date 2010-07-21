@@ -24,14 +24,10 @@ class list_test_usage implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Test Usage");
 		$installed_tests = pts_installed_tests_array();
+		pts_client::$display->generic_heading(count($installed_tests) . " Tests Installed");
 
-		if(count($installed_tests) == 0)
-		{
-			echo "\nNo tests are currently installed.\n\n";
-		}
-		else
+		if(count($installed_tests) > 0)
 		{
 			printf("%-18ls   %-8ls %-13ls %-11ls %-13ls %-10ls\n", "TEST", "VERSION", "INSTALL DATE", "LAST RUN", "AVG RUN-TIME", "TIMES RUN");
 			foreach($installed_tests as $identifier)

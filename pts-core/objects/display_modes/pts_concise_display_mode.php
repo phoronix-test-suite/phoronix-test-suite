@@ -262,6 +262,49 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo $this->tab . $this->tab . $error_string . "\n";
 	}
+	public function generic_heading($string)
+	{
+		static $shown_pts = false;
+
+		if($shown_pts == false && pts_client::get_command_exection_count() == 1)
+		{
+			$string = pts_title() . "\n" . $string;
+			$shown_pts = true;
+		}
+
+		if(!empty($string))
+		{
+			echo "\n";
+			foreach(pts_strings::trim_explode("\n", $string) as $line_count => $line_string)
+			{
+				// ($line_count > 0 ? $this->tab : null) . 
+				echo $line_string . "\n";
+			}
+			echo "\n";
+		}
+	}
+	public function generic_error($string)
+	{
+		echo "\n";
+		echo "ERROR: ";
+		foreach(pts_strings::trim_explode("\n", $string) as $line_count => $line_string)
+		{
+			// ($line_count > 0 ? $this->tab : null) . 
+			echo ($line_count > 0 ? "       " : null) . $line_string . "\n";
+		}
+		echo "\n";
+	}
+	public function generic_warning($string)
+	{
+		echo "\n";
+		echo "WARNING: ";
+		foreach(pts_strings::trim_explode("\n", $string) as $line_count => $line_string)
+		{
+			// ($line_count > 0 ? $this->tab : null) . 
+			echo ($line_count > 0 ? "         " : null) . $line_string . "\n";
+		}
+		echo "\n";
+	}
 }
 
 ?>

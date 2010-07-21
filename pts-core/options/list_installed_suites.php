@@ -24,16 +24,12 @@ class list_installed_suites implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Installed Suites");
 		$installed_suites = pts_installed_suites_array();
+		pts_client::$display->generic_heading(count($installed_suites) . " Suites Installed");
 
-		if(count($installed_suites) == 0)
+		if(count($installed_suites) > 0)
 		{
-			echo "\nNo suites are currently installed.\n\n";
-		}
-		else
-		{
-			foreach($installed_tests as $identifier)
+			foreach($installed_suites as $identifier)
 			{
 			 	echo "- " . pts_suite_identifier_to_name($identifier) . "\n";
 			}

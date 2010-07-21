@@ -24,13 +24,13 @@ class dump_system_sensors implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite Sensors");
+		pts_client::$display->generic_heading("Supported Sensors");
 		foreach(phodevi::supported_sensors() as $sensor)
 		{
 			echo phodevi::sensor_name($sensor) . ": " . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . "\n";
 		}
 
-		echo "\nUnsupported Sensors:\n\n";
+		pts_client::$display->generic_heading("Unsupported Sensors");
 		foreach(phodevi::unsupported_sensors() as $sensor)
 		{
 			echo "- " . phodevi::sensor_name($sensor) . "\n";

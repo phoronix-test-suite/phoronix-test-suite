@@ -24,7 +24,8 @@ class list_modules implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite - Modules");
+		pts_client::$display->generic_heading(count(pts_available_modules()) . " Modules");
+
 		foreach(pts_available_modules() as $module)
 		{
 			pts_load_module($module);

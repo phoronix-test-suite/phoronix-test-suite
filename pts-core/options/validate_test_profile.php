@@ -26,7 +26,7 @@ class validate_test_profile implements pts_option_interface
 	{
 		foreach(pts_contained_tests($r, true, true, true) as $test_identifier)
 		{
-			echo pts_string_header($test_identifier);
+			pts_client::$display->generic_heading($test_identifier);
 			$validation_errors = array();
 			$validation_warnings = array();
 

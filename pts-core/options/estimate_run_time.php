@@ -34,12 +34,6 @@ class estimate_run_time implements pts_option_interface
 		$accurate = true;
 		$run_times = pts_estimated_run_time($r, false);
 
-		if(count($run_times) == 0)
-		{
-			echo pts_string_header("No test, suite, or result file was found.");
-			return false;
-		}
-
 		foreach($run_times as $test => $time)
 		{
 			echo pts_test_identifier_to_name($test) . ": ";

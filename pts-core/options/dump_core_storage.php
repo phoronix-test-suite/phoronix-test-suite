@@ -24,7 +24,7 @@ class dump_core_storage implements pts_option_interface
 {
 	public static function run($r)
 	{
-		echo pts_string_header("Phoronix Test Suite Core Storage");
+		pts_client::$display->generic_heading("Core Storage");
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
 
 		foreach($pso->get_objects() as $pso_index => $pso_object)
@@ -39,7 +39,6 @@ class dump_core_storage implements pts_option_interface
 					{
 						echo "\n\t" . $key . ": " . $element;
 					}
-					echo "\n";
 				}
 				else
 				{
