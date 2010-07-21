@@ -174,10 +174,10 @@ class pts_client
 
 		// Phoronix Global - GSID
 		$global_gsid = $pso->read_object("global_system_id");
-		if(empty($global_gsid) || !pts_global_gsid_valid($global_gsid))
+		if(empty($global_gsid) || pts_global::is_valid_gsid_format($global_gsid) == false)
 		{
 			// Global System ID for anonymous uploads, etc
-			$global_gsid = pts_global_request_gsid();
+			$global_gsid = pts_global::request_gsid();
 		}
 
 		define("PTS_GSID", $global_gsid);
@@ -282,7 +282,7 @@ class pts_client
 	public static function current_user()
 	{
 		// Current system user
-		return ($pts_user = pts_global_user_name()) != "Default User" && !empty($pts_user) ? $pts_user : phodevi::read_property("system", "username");
+		return ($pts_user = pts_global::account_user_name()) != "Default User" && !empty($pts_user) ? $pts_user : phodevi::read_property("system", "username");
 	}
 	public static function user_home_directory()
 	{
@@ -389,6 +389,13 @@ class pts_client
 			foreach($argument_checks as &$argument_check)
 			{
 				$function_check = $argument_check->get_function_check();
+				$method_check = false;
+
+				if(is_array($function_check) && count($function_check) == 2)
+				{
+					$method_check = $function_check[0];
+					$function_check = $function_check[1];
+				}
 
 				if(substr($function_check, 0, 1) == '!')
 				{
@@ -400,7 +407,18 @@ class pts_client
 					$return_fails_on = false;
 				}
 
-				if(!function_exists($function_check))
+				
+				if($method_check != false)
+				{
+					if(!method_exists($method_check, $function_check))
+					{
+						echo "\nMethod check fails.\n";
+						continue;
+					}
+
+					$function_check = array($method_check, $function_check);
+				}
+				else if(!function_exists($function_check))
 				{
 					continue;
 				}
@@ -539,7 +557,7 @@ class pts_client
 
 		if(!empty($to_report))
 		{
-			pts_global_upload_hwsw_data($to_report);
+			pts_global::upload_hwsw_data($to_report);
 		}				
 	}
 	public static function is_process_running($process)
@@ -769,7 +787,7 @@ class pts_client
 				else
 				{
 					// Fetch from Phoronix Global
-					pts_clone_from_global($comparison_id, false);
+					pts_global::clone_global_result($comparison_id, false);
 				}
 			}
 		}

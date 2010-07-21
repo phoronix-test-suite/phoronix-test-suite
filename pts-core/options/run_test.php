@@ -71,9 +71,9 @@ class run_test implements pts_option_interface
 		{
 			$to_run = strtolower($to_run);
 
-			if(!pts_is_test_result($to_run) && pts_is_global_id($to_run))
+			if(!pts_is_test_result($to_run) && pts_global::is_global_id($to_run))
 			{
-				pts_clone_from_global($to_run);
+				pts_global::clone_global_result($to_run);
 			}
 
 			if(pts_is_test($to_run))
@@ -419,7 +419,7 @@ class run_test implements pts_option_interface
 				if($upload_results)
 				{
 					$tags_input = pts_prompt_user_tags($to_run_identifiers);
-					$upload_url = pts_global_upload_result(SAVE_RESULTS_DIR . $file_name . "/composite.xml", $tags_input);
+					$upload_url = pts_global::upload_test_result(SAVE_RESULTS_DIR . $file_name . "/composite.xml", $tags_input);
 
 					if(!empty($upload_url))
 					{

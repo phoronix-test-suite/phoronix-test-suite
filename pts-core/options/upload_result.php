@@ -36,7 +36,7 @@ class upload_result implements pts_option_interface
 	{
 		$use_file = $r["result_file"];
 
-		if(!pts_global_allow_upload($use_file))
+		if(pts_global::result_upload_supported($use_file) == false)
 		{
 			return false;
 		}
@@ -47,7 +47,7 @@ class upload_result implements pts_option_interface
 			echo "\n";
 		}
 
-		$upload_url = pts_global_upload_result($use_file, $tags_input);
+		$upload_url = pts_global::upload_test_result($use_file, $tags_input);
 
 		if(!empty($upload_url))
 		{

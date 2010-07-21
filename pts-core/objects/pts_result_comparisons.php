@@ -61,11 +61,11 @@ class pts_result_comparisons
 
 		foreach($reference_ids_to_process as $global_id)
 		{
-			if(pts_global_valid_id_string($global_id))
+			if(pts_global::is_global_id($global_id))
 			{
 				if(!pts_is_test_result($global_id))
 				{
-					pts_clone_from_global($global_id, false);
+					pts_global::clone_global_result($global_id, false);
 				}
 
 				if($handle_cache && isset($hash_cache[$global_id]))

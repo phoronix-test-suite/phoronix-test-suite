@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,13 +26,13 @@ class clone_global_result implements pts_option_interface
 	{
 		return array(
 		new pts_argument_check(0, "!pts_is_test_result", null, "A saved result already exists with the same name."),
-		new pts_argument_check(0, "pts_is_global_id", null, "No Phoronix Global result file found.")
+		new pts_argument_check(0, array("pts_global", "is_global_id"), null, "No Phoronix Global result found.")
 		);
 	}
 	public static function run($args)
 	{
 		$identifier = $args[0];
-		pts_save_result($identifier . "/composite.xml", pts_global_download_xml($identifier));
+		pts_global::clone_global_result($identifier);
 		echo "\nResult Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
 		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
 		//pts_client::display_web_page(SAVE_RESULTS_DIR . $ARG_1 . "/index.html");

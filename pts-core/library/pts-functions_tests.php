@@ -823,7 +823,7 @@ function pts_generic_reference_system_comparison_ids()
 
 		foreach(explode(' ', pts_config::read_user_config(P_OPTION_EXTRA_REFERENCE_SYSTEMS, null)) as $reference_check)
 		{
-			if(pts_global_valid_id_string($reference_check))
+			if(pts_global::is_global_id($reference_check))
 			{
 				array_push($comparison_ids, $reference_check);
 			}

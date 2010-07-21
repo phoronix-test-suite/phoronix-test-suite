@@ -278,9 +278,9 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 				}
 			}
 		}
-		else if(pts_is_global_id($object)) // Object is a Phoronix Global file
+		else if(pts_global::is_global_id($object)) // Object is a Phoronix Global file
 		{
-			$xml_parser = new pts_results_tandem_XmlReader(pts_global_download_xml($object));
+			$xml_parser = new pts_results_tandem_XmlReader(pts_global::download_result_xml($object));
 
 			foreach($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME) as $test)
 			{
@@ -390,9 +390,9 @@ function pts_find_result_file($file, $check_global = true)
 	{
 		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
 	}
-	else if($check_global && pts_is_global_id($file))
+	else if($check_global && pts_global::is_global_id($file))
 	{
-		pts_clone_from_global($file, false);
+		pts_global::clone_global_result($file, false);
 		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
 	}
 	else

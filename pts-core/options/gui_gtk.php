@@ -380,7 +380,7 @@ class gui_gtk implements pts_option_interface
 					$strip_url = substr($strip_url, 0, $cut);
 				}
 
-				if(pts_is_global_id($strip_url))
+				if(pts_global::is_global_id($strip_url))
 				{
 					$options[0][0] = $strip_url;
 					$options[0][1] = "Run This Phoronix Global Comparison";
@@ -1014,7 +1014,7 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_OBJ_SAVE_NAME", $save_name);
 		array_push($menu_items, array(new GtkLabel("Save Name"), $save_name));
 
-		if(count($identifiers) == 1 && (pts_is_test_result($identifiers[0]) || pts_is_global_id($identifiers[0])))
+		if(count($identifiers) == 1 && (pts_is_test_result($identifiers[0]) || pts_global::is_global_id($identifiers[0])))
 		{
 			$save_name->set_text($identifiers[0]);
 			$save_name->set_sensitive(false);
@@ -1175,7 +1175,7 @@ class gui_gtk implements pts_option_interface
 					pts_client::exit_client("Restarting pts-core...", 8);					
 				}
 
-				$setup_success = pts_global_setup_account($username, $password);
+				$setup_success = pts_global::create_account($username, $password);
 				break;
 		}
 	}
@@ -1183,7 +1183,7 @@ class gui_gtk implements pts_option_interface
 	{
 		$id_entry = pts_read_assignment("GTK_OBJ_GLOBAL_ID");
 		$global_id = $id_entry->get_text();
-		$is_valid = $force || pts_global_valid_id_string($global_id);
+		$is_valid = $force || pts_global::is_valid_global_id_format($global_id);
 
 		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_RESULTS", $is_valid);
 		pts_gtk_object_set_sensitive("GTK_OBJ_GLOBAL_CLONE", $is_valid);
@@ -1195,7 +1195,7 @@ class gui_gtk implements pts_option_interface
 		$global_id = ($id_entry ? trim($id_entry->get_text()) : false);
 
 		/*
-		if(!pts_is_global_id($global_id))
+		if(!pts_global::is_global_id($global_id))
 		{
 			gui_gtk::phoronix_global_id_entry_changed(true);
 			return;
@@ -1208,7 +1208,7 @@ class gui_gtk implements pts_option_interface
 		switch($action)
 		{
 			case "view_results":
-				gui_gtk::launch_web_browser(pts_global_public_url($global_id));
+				gui_gtk::launch_web_browser(pts_global::get_public_result_url($global_id));
 				pts_client::run_next("gui_gtk");
 				break;
 			case "clone_results":
@@ -1226,7 +1226,7 @@ class gui_gtk implements pts_option_interface
 				$username = trim($username->get_text());
 				$password = md5(trim($password->get_text()));
 
-				$setup_success = pts_global_setup_account($username, $password);
+				$setup_success = pts_global::create_account($username, $password);
 				pts_client::run_next("gui_gtk", null, array("PREV_GLOBAL_ACCT_SETUP" => "Phoronix Global Setup " . ($setup_success ? "Was Successful" : "Failed") . "."));
 				break;
 		}

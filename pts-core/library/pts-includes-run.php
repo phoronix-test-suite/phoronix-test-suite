@@ -84,7 +84,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 			}
 			continue;
 		}
-		else if(!pts_is_run_object($lower_identifier) && !pts_global_valid_id_string($lower_identifier) && !pts_is_test_result($lower_identifier))
+		else if(!pts_is_run_object($lower_identifier) && !pts_global::is_valid_global_id_format($lower_identifier) && !pts_is_test_result($lower_identifier))
 		{
 			echo "Not Recognized: " . $lower_identifier . "\n";
 			continue;
@@ -958,7 +958,7 @@ function pts_run_test(&$test_run_request)
 
 	if($report_elapsed_time && pts_client::do_anonymous_usage_reporting() && $time_test_elapsed >= 60)
 	{
-		pts_global_upload_usage_data("test_complete", array($test_results, $time_test_elapsed));
+		pts_global::upload_usage_data("test_complete", array($test_results, $time_test_elapsed));
 	}
 
 	// Remove lock

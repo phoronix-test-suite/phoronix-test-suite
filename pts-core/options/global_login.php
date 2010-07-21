@@ -29,7 +29,7 @@ class global_login implements pts_option_interface
 		$username = pts_user_io::read_user_input();
 		echo "Password: ";
 		$password = md5(pts_user_io::read_user_input());
-		$global_success = pts_global_setup_account($username, $password);
+		$global_success = pts_global::create_account($username, $password);
 
 		if($global_success)
 		{
