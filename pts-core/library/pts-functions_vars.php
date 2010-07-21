@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_env_variables($search_for = null)
+function pts_env_variables()
 {
 	// The PTS environmental variables passed during the testing process, etc
 	static $env_variables = null;
@@ -57,20 +57,9 @@ function pts_env_variables($search_for = null)
 		}
 	}
 
-	if($search_for != null)
-	{
-		foreach($env_variables as $key => $value)
-		{
-			if($key == $search_for)
-			{
-				return $value;
-			}
-		}
-	}
-
 	return $env_variables;
 }
-function pts_user_runtime_variables($search_for = null)
+function pts_user_runtime_variables()
 {
 	static $runtime_variables = null;
 
@@ -88,17 +77,6 @@ function pts_user_runtime_variables($search_for = null)
 		"COMPILER" => phodevi::read_property("system", "compiler"),
 		"HOSTNAME" => phodevi::read_property("system", "hostname")
 		);
-	}
-
-	if($search_for != null)
-	{
-		foreach($runtime_variables as $key => $value)
-		{
-			if($key == $search_for)
-			{
-				return $value;
-			}
-		}
 	}
 
 	return $runtime_variables;
@@ -145,24 +123,45 @@ function pts_run_additional_vars($identifier)
 
 	return $extra_vars;
 }
-function pts_swap_variables($user_str, $replace_function)
+function pts_swap_variables($user_str, $replace_call)
 {
 	// TODO: possibly optimize this function
-	if(!function_exists($replace_function))
+	if(is_array($replace_call))
 	{
+		if(count($replace_call) != 2 || method_exists($replace_call[0], $replace_call[1]) == false)
+		{
+			echo "\nVar Swap With Method Failed.\n";
+			return $user_str;
+		}
+	}
+	else if(!function_exists($replace_call))
+	{
+		echo "\nVar Swap With Function Failed.\n";
 		return $user_str;
 	}
 
 	$offset = 0;
+	$replace_call_return = false;
+
 	while($offset < strlen($user_str) && ($s = strpos($user_str, '$', $offset)) !== false)
 	{
 		$s++;
 		$var_name = substr($user_str, $s, (($e = strpos($user_str, ' ', $s)) == false ? strlen($user_str) : $e) - $s);
-		$var_replacement = call_user_func($replace_function, $var_name);
 
-		if(!is_array($var_replacement) && $var_replacement != null)
+		if($replace_call_return === false)
+		{
+			$replace_call_return = call_user_func($replace_call);
+		}
+
+		$var_replacement = isset($replace_call_return[$var_name]) ? $replace_call_return[$var_name] : null;
+
+		if($var_replacement != null)
 		{
 			$user_str = str_replace("$" . $var_name, $var_replacement, $user_str);
+		}
+		else
+		{
+			// echo "\nVariable Swap For $var_name Failed.\n";
 		}
 
 		$offset = $s + strlen($var_replacement);
