@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.8 Alpha 2
+July 22, 2010
 
 - pts-core: Fix recover-run command always reporting the system software has changed, regression from first alpha
 - pts-core: More underlying PTS3 changes
