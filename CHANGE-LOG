@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix parse-results.xml MultiMatch not working from a regression in 2.8a1
 - pts-core: When installing test dependencies, don't confuse the root user if the user is connected to a Phoronix Global account
 - pts-core: No longer rely on passing around $display_mode but utilize pts_client::$display for displaying user I/O
+- phodevi: Nouveau detection improvements for when the X Server isn't running
 - pts: Update vdrift and vdrift-fps-monitor test profiles against VDrift 2010-06-30
 
 Phoronix Test Suite 2.8 Alpha 1

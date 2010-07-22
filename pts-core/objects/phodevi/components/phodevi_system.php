@@ -651,7 +651,16 @@ class phodevi_system extends phodevi_device_interface
 			}
 			else if((IS_MESA_GRAPHICS || IS_BSD) && stripos(phodevi::read_property("gpu", "model"), "NVIDIA") !== false)
 			{
-				$display_driver = "nv";
+				if(is_file("/sys/class/drm/version"))
+				{
+					// If there's DRM loaded and NVIDIA, it should be Nouveau
+					$display_driver = "nouveau";
+				}
+				else
+				{
+					// The dead xf86-video-nv doesn't use any DRM
+					$display_driver = "nv";
+				}
 			}
 			else
 			{
@@ -802,6 +811,10 @@ class phodevi_system extends phodevi_device_interface
 					break;
 				case 0x8086:
 					$dri_driver = "intel";
+					break;
+				case 0x10de:
+					// NVIDIA
+					$dri_driver = "nouveau";
 					break;
 			}
 		}
