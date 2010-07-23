@@ -123,6 +123,9 @@
 		<Description>Add</Description>
 	</RunTest>
 	<RunTest>
+		<Test>postmark</Test>
+	</RunTest>
+	<RunTest>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k2 -k1 -f 64 -t 4</Arguments>
 		<Description>64MB Write - 4 Threads</Description>

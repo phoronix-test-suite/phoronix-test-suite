@@ -111,7 +111,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo self::string_header($test_result->get_test_profile()->get_test_title() . " (Run " . $current_run . " of " . $total_run_count . ")");
 	}
-	public function test_run_output(&$to_output)
+	public function test_run_instance_output(&$to_output)
 	{
 		echo $to_output;
 	}

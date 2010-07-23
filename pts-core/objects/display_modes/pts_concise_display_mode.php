@@ -208,7 +208,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			echo $this->tab . "Estimated Test Run-Time: " . pts_date_time::format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
 		}
 
-		echo $this->tab . "Expected Trial Run Count: " . $test_result->get_test_profile()->get_times_to_run() . "\n";
+		echo $this->tab . "Expected Trial Run Count: " . $test_result->get_test_profile()->get_times_to_run();
 	}
 	public function test_run_message($message_string)
 	{
@@ -216,9 +216,9 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count)
 	{
-		echo $this->tab . $this->tab . "Started Run " . $current_run . " @ " . date("H:i:s") . "\n";
+		echo "\n" . $this->tab . $this->tab . "Started Run " . $current_run . " @ " . date("H:i:s");
 	}
-	public function test_run_output(&$to_output)
+	public function test_run_instance_output(&$to_output)
 	{
 		if(pts_is_assignment("DEBUG_TEST_PROFILE"))
 		{
@@ -227,8 +227,14 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		return;
 	}
+	public function test_run_instance_error($error_string)
+	{
+		echo "\n" . $this->tab . $this->tab . $error_string;
+	}
 	public function test_run_end(&$test_result)
 	{
+		echo "\n";
+
 		if(in_array($test_result->get_test_profile()->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
 		{
 			return;

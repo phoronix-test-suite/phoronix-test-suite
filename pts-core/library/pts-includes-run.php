@@ -656,13 +656,13 @@ function pts_run_test(&$test_run_request)
 
 		if(!isset($test_result[10240]) || pts_read_assignment("DEBUG_TEST_PROFILE"))
 		{
-			pts_client::$display->test_run_output($test_result);
+			pts_client::$display->test_run_instance_output($test_result);
 		}
 
 		if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || pts_is_assignment("DEBUG_TEST_PROFILE")))
 		{
 			$test_log_file_contents = file_get_contents($test_log_file);
-			pts_client::$display->test_run_output($test_log_file_contents);
+			pts_client::$display->test_run_instance_output($test_log_file_contents);
 			unset($test_log_file_contents);
 		}
 
@@ -675,7 +675,7 @@ function pts_run_test(&$test_run_request)
 
 			if($exit_status != 0 && !IS_BSD)
 			{
-				pts_client::$display->test_run_error("The test exited with a non-zero exit status. Test run failed.");
+				pts_client::$display->test_run_instance_error("The test exited with a non-zero exit status. Test run failed.", true);
 				$exit_status_pass = false;
 			}
 		}
