@@ -34,6 +34,9 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	private $progress_char_count = 0;
 	private $progress_char_pos = 0;
 
+	// Run bits
+	private $expected_trial_run_count = 0;
+
 	public function __construct()
 	{
 
@@ -208,7 +211,8 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			echo $this->tab . "Estimated Test Run-Time: " . pts_date_time::format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
 		}
 
-		echo $this->tab . "Expected Trial Run Count: " . $test_result->get_test_profile()->get_times_to_run();
+		$this->expected_trial_run_count = $test_result->get_test_profile()->get_times_to_run();
+		echo $this->tab . "Expected Trial Run Count: " . $this->expected_trial_run_count;
 	}
 	public function test_run_message($message_string)
 	{
@@ -217,6 +221,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count)
 	{
 		echo "\n" . $this->tab . $this->tab . "Started Run " . $current_run . " @ " . date("H:i:s");
+	}
+	public function test_run_instance_error($error_string)
+	{
+		echo "\n" . $this->tab . $this->tab . $error_string;
 	}
 	public function test_run_instance_output(&$to_output)
 	{
@@ -227,9 +235,13 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		return;
 	}
-	public function test_run_instance_error($error_string)
+	public function test_run_instance_complete(&$test_result)
 	{
-		echo "\n" . $this->tab . $this->tab . $error_string;
+		if($test_result->get_test_profile()->get_times_to_run() > $this->expected_trial_run_count)
+		{
+			// The run count must have been dynamically increased, so show the standard deviation
+			echo " [Std. Dev: " . pts_math::set_precision(pts_math::percent_standard_deviation($test_result->get_trial_results()), 2) . "%]";
+		}
 	}
 	public function test_run_end(&$test_result)
 	{

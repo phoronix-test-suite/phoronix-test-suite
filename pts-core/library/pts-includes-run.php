@@ -675,7 +675,7 @@ function pts_run_test(&$test_run_request)
 
 			if($exit_status != 0 && !IS_BSD)
 			{
-				pts_client::$display->test_run_instance_error("The test exited with a non-zero exit status. Test run failed.", true);
+				pts_client::$display->test_run_instance_error("The test exited with a non-zero exit status.");
 				$exit_status_pass = false;
 			}
 		}
@@ -729,6 +729,10 @@ function pts_run_test(&$test_run_request)
 			if(!empty($test_result))
 			{
 				$test_results->add_trial_run_result($test_result);
+			}
+			else
+			{
+				pts_client::$display->test_run_instance_error("The test did not produce a result.");
 			}
 
 			if($allow_cache_share && !is_file($cache_share_pt2so))
@@ -807,6 +811,8 @@ function pts_run_test(&$test_run_request)
 			pts_client::release_lock($lock_file);
 			return false;
 		}
+
+		pts_client::$display->test_run_instance_complete($test_results);
 	}
 
 	$time_test_end_actual = time();

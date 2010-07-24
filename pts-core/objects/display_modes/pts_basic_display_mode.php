@@ -115,6 +115,10 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo $to_output;
 	}
+	public function test_run_instance_complete(&$test_result)
+	{
+		// Do nothing here
+	}
 	public function test_run_end(&$test_result)
 	{
 		$end_print = $test_result->get_test_profile()->get_test_title() . ":\n" . $test_result->get_used_arguments_description();
