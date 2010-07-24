@@ -28,6 +28,9 @@ class run_test implements pts_option_interface
 	}
 	public static function run($to_run_identifiers)
 	{
+		// Refresh the pts_client::$display in case we need to run in debug mode
+		pts_client::init_display_mode();
+
 		if(pts_read_assignment("IS_BATCH_MODE"))
 		{
 			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == false && !pts_is_assignment("AUTOMATED_MODE"))

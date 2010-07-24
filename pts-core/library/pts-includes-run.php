@@ -978,7 +978,7 @@ function pts_test_profile_debug_message($message)
 
 	if(pts_is_assignment("DEBUG_TEST_PROFILE"))
 	{
-		pts_client::$display->test_run_error($message);
+		pts_client::$display->test_run_instance_error($message);
 		$reported = true;
 	}
 

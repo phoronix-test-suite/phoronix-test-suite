@@ -148,6 +148,10 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo "\n" . $error_string . "\n\n";
 	}
+	public function test_run_instance_error($error_string)
+	{
+		echo "\n" . $error_string . "\n\n";
+	}
 	public function generic_prompt($prompt_string)
 	{
 		echo "\n" . $prompt_string;
