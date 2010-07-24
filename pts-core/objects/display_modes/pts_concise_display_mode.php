@@ -212,7 +212,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_message($message_string)
 	{
-		echo $this->tab . $this->tab . $message_string . " @ " . date("H:i:s") . "\n";
+		echo "\n" . $this->tab . $this->tab . $message_string . " @ " . date("H:i:s");
 	}
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count)
 	{
