@@ -296,6 +296,7 @@ class pts_result_file
 						$value = $buffer_item->get_result_value();
 						$raw_values = explode(':', $buffer_item->get_result_raw());
 						$percent_std = pts_math::set_precision(pts_math::percent_standard_deviation($raw_values), 2);
+						$std_error = pts_math::set_precision(pts_math::standard_error($raw_values), 2);
 						$delta = 0;
 
 						if($value > $max_value)
@@ -356,8 +357,8 @@ class pts_result_file
 											}
 											else
 											{
-												$result_table[$prev_identifier][$result_counter][3] = true;
-												$result_table[$prev_identifier][$result_counter][2] = -1;
+												$result_table[$prev_identifier][$result_counter][4] = true;
+												$result_table[$prev_identifier][$result_counter][3] = -1;
 											}
 											break;
 										case "LIB":
@@ -367,8 +368,8 @@ class pts_result_file
 											}
 											else
 											{
-												$result_table[$prev_identifier][$result_counter][3] = true;
-												$result_table[$prev_identifier][$result_counter][2] = -1;
+												$result_table[$prev_identifier][$result_counter][4] = true;
+												$result_table[$prev_identifier][$result_counter][3] = -1;
 											}
 											break;
 									}
@@ -393,7 +394,7 @@ class pts_result_file
 							}
 						}
 
-						$result_table[$identifier][$result_counter] = array($value, $percent_std, $delta, $highlight);
+						$result_table[$identifier][$result_counter] = array($value, $percent_std, $std_error, $delta, $highlight);
 						$prev_identifier = $identifier;
 						$prev_value = $value;
 					}
@@ -413,7 +414,7 @@ class pts_result_file
 							$max_value = $avg_value;
 						}
 
-						$result_table[$identifier][$result_counter] = array($avg_value, 0, 0, false);
+						$result_table[$identifier][$result_counter] = array($avg_value, 0, 0, 0, false);
 					}
 					break;
 			}
@@ -435,17 +436,23 @@ class pts_result_file
 				}
 
 				$std_percent = $info[($result_counter - 1)][1];
-				$delta = $info[($result_counter - 1)][2];
+				$std_error = $info[($result_counter - 1)][1];
+				$delta = $info[($result_counter - 1)][3];
 
 				if($delta != 0)
 				{
-					$result_table[$identifier][$result_counter] = array($delta . 'x', 0, 0, false);
+					$result_table[$identifier][$result_counter] = array($delta . 'x', 0, 0, 0, false);
 					$has_written_diff = true;
 				}
 				if($std_percent != 0)
 				{
-					$result_table[$identifier][($result_counter + 1)] = array($std_percent . "%", 0, 0, false);
+					$result_table[$identifier][($result_counter + 1)] = array($std_percent . "%", 0, 0, 0, false);
 					$has_written_std = true;
+				}
+				if($std_error != 0)
+				{
+					$result_table[$identifier][($result_counter + 2)] = array($std_error, 0, 0, 0, false);
+					$has_written_error = true;
 				}
 			}
 
@@ -458,6 +465,11 @@ class pts_result_file
 			{
 				$result_tests[($result_counter + 1)][0] = "Standard Deviation";
 				$result_tests[($result_counter + 1)][1] = null;
+			}
+			if($has_written_error)
+			{
+				$result_tests[($result_counter + 2)][0] = "Standard Error";
+				$result_tests[($result_counter + 2)][1] = null;
 			}
 
 			$max_value += 100; // to make room for % sign in display

@@ -143,6 +143,9 @@ class pts_Chart extends pts_Graph
 		{
 			//$row = 0;
 
+			// Formatting for $result_table / $value_set below
+			// array($value, $percent_std, $std_error, $delta, $highlight);
+
 			foreach($sys_values as $i => &$value_set)
 			{
 				$row = $i; // if using $row, the alignment may be off sometimes
@@ -152,13 +155,17 @@ class pts_Chart extends pts_Graph
 
 				if($value_set[1] != 0)
 				{
-					$hover_title = "STD: " . $value_set[1] . "%";
+					$hover_title = "STD Dev: " . $value_set[1] . "%";
+				}
+				if($value_set[2] != 0)
+				{
+					$hover_title .= " STD Error: " . $value_set[2];
 				}
 
-				if(defined("PHOROMATIC_TRACKER") && $value_set[2] != 0)
+				if(defined("PHOROMATIC_TRACKER") && $value_set[3] != 0)
 				{
 					$bold = true;
-					if($value_set[2] < 0)
+					if($value_set[3] < 0)
 					{
 						$text_color = $this->graph_color_alert;
 					}
@@ -167,15 +174,15 @@ class pts_Chart extends pts_Graph
 						$text_color = $this->graph_color_headers;
 					}
 
-					$hover_title .= " Change: " . pts_math::set_precision(100 * $value_set[2], 2) . "%";
+					$hover_title .= " Change: " . pts_math::set_precision(100 * $value_set[3], 2) . "%";
 				}
-				else if($value_set[3] == true)
+				else if($value_set[4] == true)
 				{
 					$text_color = $this->graph_color_headers;
 					$bold = true;
 				}
 
-				$this->graph_image->write_text_right($value_set[0], $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width), $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width ), $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, $hover_title, $bold);
+				$this->graph_image->write_text_right($value_set[0], $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width), $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width ), $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, trim($hover_title), $bold);
 				//$row++;
 			}
 			$col++;

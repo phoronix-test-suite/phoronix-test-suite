@@ -10,6 +10,9 @@
 		<RunMode>PCQS</RunMode>
 	</SuiteInformation>
 	<RunTest>
+		<Test>compress-gzip</Test>
+	</RunTest>
+	<RunTest>
 		<Test>sqlite</Test>
 	</RunTest>
 	<RunTest>

@@ -42,17 +42,15 @@ class pts_math
 
 		return $b != 0 ? $c / $b : 0;
 	}
+	public static function standard_error($values)
+	{
+		self::clean_numeric_array($values);
+
+		return empty($values) ? 0 : self::standard_deviation($values) / sqrt(count($values));
+	}
 	public static function standard_deviation($values)
 	{
-		foreach($values as $i => $value)
-		{
-			if(!is_numeric($value))
-			{
-				unset($values[$i]);
-			}
-		}
-
-		$total = array_sum($values);
+		self::clean_numeric_array($values);
 		$count = count($values);
 
 		if($count < 2)
@@ -60,6 +58,7 @@ class pts_math
 			return 0;
 		}
 
+		$total = array_sum($values);
 		$mean = $total / $count;
 		$standard_sum = 0;
 
@@ -81,6 +80,16 @@ class pts_math
 	{
 		// This is better than using round() with precision because of the $precision is > than the current value, 0s will not be appended
 		return number_format($number, $precision, '.', '');
+	}
+	protected static function clean_numeric_array(&$values)
+	{
+		foreach($values as $i => $value)
+		{
+			if(!is_numeric($value))
+			{
+				unset($values[$i]);
+			}
+		}
 	}
 }
 
