@@ -242,7 +242,7 @@ class pts_result_file
 
 		foreach($this->get_system_identifiers() as $sys_identifier)
 		{
-			$result_table[$sys_identifier] = array();
+			$result_table[$sys_identifier] = null;
 		}
 
 		foreach($this->get_result_objects($result_object_index) as $result_object)
@@ -357,8 +357,8 @@ class pts_result_file
 											}
 											else
 											{
-												$result_table[$prev_identifier][$result_counter][4] = true;
-												$result_table[$prev_identifier][$result_counter][3] = -1;
+												$result_table[$prev_identifier][$result_counter]->set_highlight(true);
+												$result_table[$prev_identifier][$result_counter]->set_delta(-1);
 											}
 											break;
 										case "LIB":
@@ -368,8 +368,8 @@ class pts_result_file
 											}
 											else
 											{
-												$result_table[$prev_identifier][$result_counter][4] = true;
-												$result_table[$prev_identifier][$result_counter][3] = -1;
+												$result_table[$prev_identifier][$result_counter]->set_highlight(true);
+												$result_table[$prev_identifier][$result_counter]->set_delta(-1);
 											}
 											break;
 									}
@@ -394,7 +394,7 @@ class pts_result_file
 							}
 						}
 
-						$result_table[$identifier][$result_counter] = array($value, $percent_std, $std_error, $delta, $highlight);
+						$result_table[$identifier][$result_counter] = new pts_result_table_value($value, $percent_std, $std_error, $delta, $highlight);
 						$prev_identifier = $identifier;
 						$prev_value = $value;
 					}
@@ -414,7 +414,7 @@ class pts_result_file
 							$max_value = $avg_value;
 						}
 
-						$result_table[$identifier][$result_counter] = array($avg_value, 0, 0, 0, false);
+						$result_table[$identifier][$result_counter] = new pts_result_table_value($avg_value);
 					}
 					break;
 			}
@@ -427,6 +427,7 @@ class pts_result_file
 			// This should provide some additional information under normal modes
 			$has_written_std = false;
 			$has_written_diff = false;
+			$has_written_error = false;
 
 			foreach($result_table as $identifier => $info)
 			{
@@ -435,41 +436,38 @@ class pts_result_file
 					continue;
 				}
 
-				$std_percent = $info[($result_counter - 1)][1];
-				$std_error = $info[($result_counter - 1)][1];
-				$delta = $info[($result_counter - 1)][3];
+				$std_percent = $info[($result_counter - 1)]->get_standard_deviation_percent();
+				$std_error = $info[($result_counter - 1)]->get_standard_error();
+				$delta = $info[($result_counter - 1)]->get_delta();
 
 				if($delta != 0)
 				{
-					$result_table[$identifier][$result_counter] = array($delta . 'x', 0, 0, 0, false);
+					array_push($result_table[$identifier], new pts_result_table_value($delta . 'x'));
 					$has_written_diff = true;
-				}
-				if($std_percent != 0)
-				{
-					$result_table[$identifier][($result_counter + 1)] = array($std_percent . "%", 0, 0, 0, false);
-					$has_written_std = true;
 				}
 				if($std_error != 0)
 				{
-					$result_table[$identifier][($result_counter + 2)] = array($std_error, 0, 0, 0, false);
+					array_push($result_table[$identifier], new pts_result_table_value($std_error));
 					$has_written_error = true;
+				}
+				if($std_percent != 0)
+				{
+					array_push($result_table[$identifier], new pts_result_table_value($std_percent . "%"));
+					$has_written_std = true;
 				}
 			}
 
 			if($has_written_diff)
 			{
-				$result_tests[$result_counter][0] = "Difference";
-				$result_tests[$result_counter][1] = null;
-			}
-			if($has_written_std)
-			{
-				$result_tests[($result_counter + 1)][0] = "Standard Deviation";
-				$result_tests[($result_counter + 1)][1] = null;
+				array_push($result_tests, array("Difference", null));
 			}
 			if($has_written_error)
 			{
-				$result_tests[($result_counter + 2)][0] = "Standard Error";
-				$result_tests[($result_counter + 2)][1] = null;
+				array_push($result_tests, array("Standard Error", null));
+			}
+			if($has_written_std)
+			{
+				array_push($result_tests, array("Standard Deviation", null));
 			}
 
 			$max_value += 100; // to make room for % sign in display
