@@ -7,12 +7,12 @@
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>
-			<PackageName>>=x11-libs/gtk+-2</PackageName>
+			<PackageName>x11-libs/gtk+</PackageName>
 			<FileCheck>/usr/include/gtk-2.0</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>>=media-libs/libsdl-1.2 >=media-libs/sdl-net-1.2 >=media-libs/sdl-image-1.2</PackageName>
+			<PackageName>media-libs/libsdl media-libs/sdl-net media-libs/sdl-image</PackageName>
 			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
@@ -27,7 +27,7 @@
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
-			<PackageName>>=media-libs/libpng-1.2</PackageName>
+			<PackageName>media-libs/libpng</PackageName>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
@@ -57,7 +57,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>>=virtual/jre-1.5</PackageName>
+			<PackageName>virtual/jre</PackageName>
 			<FileCheck>/usr/bin/java</FileCheck>
 		</Package>
 		<Package>
@@ -112,7 +112,7 @@
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
-			<PackageName>=virtual/libstdc++-3.3</PackageName>
+			<PackageName>virtual/libstdc++-3.3</PackageName>
 			<FileCheck>/usr/lib/libstdc++.so.5 OR /usr/lib/libstdc++-v3/libstdc++.so.5 OR /usr/lib64/libstdc++-v3/libstdc++.so.5</FileCheck>
 		</Package>
 		<Package>
@@ -132,7 +132,7 @@
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>
-			<PackageName>>=x11-libs/qt-core-4.4.2</PackageName>
+			<PackageName>x11-libs/qt-core</PackageName>
 			<FileCheck>/usr/bin/qmake</FileCheck>
 		</Package>
 		<Package>

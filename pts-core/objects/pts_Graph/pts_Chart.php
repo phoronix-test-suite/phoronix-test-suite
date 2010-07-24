@@ -57,22 +57,19 @@ class pts_Chart extends pts_Graph
 
 		$identifier_height = $this->text_string_width($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 12;
 
-		if(defined("PHOROMATIC_TRACKER"))
+		// Make room for the PTS logo on Phoromatic
+		if($this->graph_left_start < 170)
 		{
-			// Make room for the PTS logo on Phoromatic
-			if($this->graph_left_start < 170)
-			{
-				$this->graph_left_start = 170;
-			}
+			$this->graph_left_start = 170;
+		}
 
-			// $this->graph_maximum_value isn't actually correct to use, but it works
-			$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 2;
-			$identifier_height += $extra_heading_height;
+		// $this->graph_maximum_value isn't actually correct to use, but it works
+		$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 2;
+		$identifier_height += $extra_heading_height;
 
-			if($identifier_height < 90)
-			{
-				$identifier_height = 90;
-			}
+		if($identifier_height < 90)
+		{
+			$identifier_height = 90;
 		}
 
 		$table_identifier_width = $this->text_string_height($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers);
@@ -94,12 +91,7 @@ class pts_Chart extends pts_Graph
 		$this->render_graph_init(array("cache_font_size" => true));
 
 		// Start drawing
-		if($identifier_height >= 60 && $this->graph_left_start >= 100)
-		{
-			$logo_img_width = $this->graph_left_start >= 170 ? 160 : ($this->graph_left_start - 10);
-			$logo_img_height = $logo_img_width * 0.51875;
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-160x83.png"), ($this->graph_left_start / 2 - ($logo_img_width / 2)), ($identifier_height / 2 - ($logo_img_height / 2)), 0, 0, $logo_img_width, $logo_img_height);
-		}
+		$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-160x83.png"), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41.5), 0, 0, 160, 83);
 
 		// Draw the vertical table lines
 		$this->graph_image->draw_dashed_line($this->graph_left_start, ($table_proper_height / 2), $this->graph_attr_width, ($table_proper_height / 2), $this->graph_color_body, $table_proper_height, $table_item_width, $table_item_width);
