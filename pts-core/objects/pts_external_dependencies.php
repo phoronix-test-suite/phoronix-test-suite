@@ -68,7 +68,10 @@ class pts_external_dependencies
 		}
 
 		// Do the actual dependency install process
-		self::install_packages_on_system($dependencies_to_install);
+		if(count($dependencies_to_install) > 0)
+		{
+			self::install_packages_on_system($dependencies_to_install);
+		}
 
 		// There were some dependencies not supported on this OS or are missing from the distro's XML file
 		if(count($required_test_dependencies) > 0)
