@@ -216,7 +216,7 @@ function pts_test_download_file_local($test_identifier, $download_name)
 }
 function pts_test_external_dependencies_satisfied($identifier)
 {
-	$missing_dependencies = pts_external_dependencies_missing();
+	$missing_dependencies = pts_external_dependencies::missing_dependency_names();
 
 	foreach(pts_contained_tests($identifier, true, true, false) as $name)
 	{

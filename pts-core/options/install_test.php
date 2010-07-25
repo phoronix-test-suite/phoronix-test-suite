@@ -45,7 +45,10 @@ class install_test implements pts_option_interface
 
 		// Any external dependencies?
 		$satisfied_tests = array(); // Tests with no dependencies or with all dependencies installed
-		if(!pts_install_package_on_distribution($items_to_install, $satisfied_tests))
+		$install_passed = pts_external_dependencies::install_dependencies($items_to_install, $satisfied_tests);
+
+		/*
+		if($install_passed == false)
 		{
 			echo "\nInstallation of needed test dependencies failed.\n\n";
 			$user_error = new pts_user_error("Installation of test dependencies for " . implode(", ", array_diff($items_to_install, $satisfied_tests)) . " failed.");
@@ -61,6 +64,7 @@ class install_test implements pts_option_interface
 				return false;
 			}
 		}
+		*/
 
 		// Install tests
 		if(!is_writable(TEST_ENV_DIR))

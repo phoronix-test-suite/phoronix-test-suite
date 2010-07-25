@@ -24,7 +24,7 @@ class gui_gtk implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("gui", "run", "gtk", "install", "install_dependencies");
+		return array("gui", "run", "gtk", "install");
 	}
 	public static function run($r)
 	{
@@ -1802,12 +1802,12 @@ class gui_gtk implements pts_option_interface
 		$notebook = new GtkNotebook();
 		$notebook->set_size_request(540, 250);
 
-		$installed_dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependencies_installed());
+		$installed_dependencies = pts_external_dependencies::installed_dependency_titles();
 		sort($installed_dependencies);
 		$installed = pts_gtk_table(array(""), $installed_dependencies, null, "No software dependencies are installed.", false);
 		pts_gtk_add_notebook_tab($notebook, $installed, "Installed Dependencies");
 
-		$missing_dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependencies_missing());
+		$missing_dependencies = pts_external_dependencies::missing_dependency_titles();
 		sort($missing_dependencies);
 		$missing = pts_gtk_table(array(""), $missing_dependencies, null, "No software dependencies are missing.", false);
 		pts_gtk_add_notebook_tab($notebook, $missing, "Missing Dependencies");

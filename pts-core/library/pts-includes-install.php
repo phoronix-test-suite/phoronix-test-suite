@@ -21,8 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(PTS_LIBRARY_PATH . "pts-includes-install_dependencies.php");
-
 function pts_start_install($to_install)
 {
 	$to_install = pts_arrays::to_array($to_install);

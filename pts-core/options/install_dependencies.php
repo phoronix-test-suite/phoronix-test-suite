@@ -35,8 +35,7 @@ class install_dependencies implements pts_option_interface
 	public static function run($r)
 	{
 		$r = array_map("strtolower", $r);
-		$passed_tests = array();
-		pts_install_package_on_distribution($r, $passed_tests);
+		pts_external_dependencies::install_dependencies($r);
 	}
 }
 

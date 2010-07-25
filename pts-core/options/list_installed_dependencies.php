@@ -22,17 +22,11 @@
 
 class list_installed_dependencies implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("install_dependencies");
-	}
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading(count(pts_external_dependencies_installed()) . " of " . count(pts_external_dependency_generic_packages()) . " External Dependencies Installed");
-		$dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependencies_installed());
-		sort($dependencies);
-
-		echo pts_user_io::display_text_list($dependencies);
+		$installed_titles = pts_external_dependencies::installed_dependency_titles();
+		pts_client::$display->generic_heading(count($installed_titles) . " of " . count(pts_external_dependencies::all_dependency_names()) . " External Dependencies Installed");
+		echo pts_user_io::display_text_list($installed_titles);
 		echo "\n";
 	}
 }

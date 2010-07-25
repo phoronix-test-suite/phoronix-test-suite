@@ -22,17 +22,11 @@
 
 class list_missing_dependencies implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("install_dependencies");
-	}
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading(count(pts_external_dependencies_missing()) . " of " . count(pts_external_dependency_generic_packages()) . " External Dependencies Missing");
-		$dependencies = array_map("pts_external_dependency_generic_title", pts_external_dependencies_missing());
-		sort($dependencies);
-
-		echo pts_user_io::display_text_list($dependencies);
+		$missing_titles = pts_external_dependencies::missing_dependency_titles();
+		pts_client::$display->generic_heading(count($missing_titles) . " of " . count(pts_external_dependencies::all_dependency_names()) . " External Dependencies Missing");
+		echo pts_user_io::display_text_list($missing_titles);
 		echo "\n";
 	}
 }
