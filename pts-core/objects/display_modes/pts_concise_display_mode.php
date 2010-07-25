@@ -27,12 +27,17 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	private $run_process_test_count;
 	private $tab = "    ";
 
-	// Download bits
-	private $download_estimate = null;
-	private $download_last_float = -1;
-	private $download_string_length = 0;
+	// Download / progress bits
+	private $progress_tab_count = 1;
+	private $progress_line_prefix = null;
 	private $progress_char_count = 0;
 	private $progress_char_pos = 0;
+	private $progress_string_length = 0;
+	private $progress_last_float = -1;
+
+	// Test install bits
+	private $test_install_pos = 0;
+	private $test_install_count = 0;
 
 	// Run bits
 	private $expected_trial_run_count = 0;
@@ -41,18 +46,82 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 
 	}
+	public function test_install_process($test_install_manager)
+	{
+		$this->test_install_pos = 0;
+		$this->test_install_count = $test_install_manager->tests_to_install_count();
+
+		echo "\n";
+		echo $this->tab . $this->test_install_count . " Test" . ($this->test_install_count > 1 ? 's' : null) . " To Install\n";
+
+
+		$download_size = 0;
+		$download_total = 0;
+		$cache_total = 0;
+		$cache_size = 0;
+		$install_size = 0;
+
+		foreach($test_install_manager->get_test_run_requests() as $test_run_request)
+		{
+			$install_size += pts_estimated_environment_size($test_run_request->get_test_identifier());
+
+			foreach($test_run_request->get_download_objects() as $test_file_download)
+			{
+				switch($test_file_download->get_download_location_type())
+				{
+					case "IN_DESTINATION_DIR":
+						// We don't really care about these files here since they are good to go
+						break;
+					case "LOCAL_DOWNLOAD_CACHE":
+					case "REMOTE_DOWNLOAD_CACHE":
+						$cache_size += $test_file_download->get_filesize();
+						$cache_total++;
+						break;
+					default:
+						$download_size += $test_file_download->get_filesize();
+						$download_total++;
+						break;
+				}			
+			}
+		}
+
+
+		if($download_total > 0)
+		{
+			echo $this->tab . $this->tab . $download_total . " File" . ($download_total > 1 ? 's' : null) . " To Download";
+
+			if($download_size > 0)
+			{
+				echo " [" . pts_math::set_precision($download_size / 1048576, 2) . "MB]";
+			}
+			echo "\n";
+		}
+
+		if($cache_total > 0)
+		{
+			echo $this->tab . $this->tab . $cache_total . " File" . ($cache_total > 1 ? 's' : null) . " In Cache";
+
+			if($cache_size > 0)
+			{
+				echo " [" . pts_math::set_precision($cache_size / 1048576, 2) . "MB]";
+			}
+			echo "\n";
+		}
+
+		if($install_size > 0)
+		{
+			echo $this->tab . $this->tab . ceil($install_size) . "MB Of Disk Space Is Needed\n";
+		}
+
+		echo "\n";
+	}
 	public function test_install_start($identifier)
 	{
+		$this->test_install_pos++;
 		echo $this->tab . $identifier . ":\n";
-
-		$test_install_position = pts_read_assignment("TEST_INSTALL_POSITION");
-		$test_install_count = pts_read_assignment("TEST_INSTALL_COUNT");
-		if($test_install_count > 1 && $test_install_position <= $test_install_count)
-		{
-			echo $this->tab . $this->tab . "Test Installation " . $test_install_position . " of " . $test_install_count . "\n";
-		}
+		echo $this->tab . $this->tab . "Test Installation " . $this->test_install_pos . " of " . $this->test_install_count . "\n";
 	}
-	public function test_install_downloads($identifier, &$download_packages)
+	public function test_install_downloads($identifier, $download_packages)
 	{
 		echo $this->tab . $this->tab . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " Needed";
 
@@ -60,7 +129,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		{
 			echo " [" . $size . " MB";
 
-			if(($avg_speed = pts_read_assignment("DOWNLOAD_AVG_SPEED")) > 0)
+			if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0)
 			{
 				$avg_time = ($size * 1048576) / $avg_speed;
 				echo " / " . pts_date_time::format_time_string($avg_time, "SECONDS", true, 60);
@@ -71,20 +140,23 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		echo "\n";
 	}
-	public function test_install_download_file(&$pts_test_file_download, $process, $offset_length = -1)
+	public function test_install_download_file($process, &$pts_test_file_download)
 	{
 		$expected_time = 0;
+		$progress_prefix = null;
 
 		switch($process)
 		{
 			case "DOWNLOAD_FROM_CACHE":
 				$process_string = "Downloading From Cache";
+				$progress_prefix = "Downloading";
 				break;
 			case "LINK_FROM_CACHE":
 				$process_string = "Linking From Cache";
 				break;
 			case "COPY_FROM_CACHE":
 				$process_string = "Copying From Cache";
+				$progress_prefix = "Copying";
 				break;
 			case "FILE_FOUND":
 				$process_string = "File Found";
@@ -92,7 +164,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			case "DOWNLOAD":
 				$process_string = "Downloading";
 
-				if(($avg_speed = pts_read_assignment("DOWNLOAD_AVG_SPEED")) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
+				if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
 				{
 					$expected_time = $this_size / $avg_speed;
 				}
@@ -104,13 +176,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		// TODO: handle if file-name is too long for terminal width
 		$download_string = $this->tab . $this->tab . $process_string . ": " . $pts_test_file_download->get_filename();
 		$download_size_string = $pts_test_file_download->get_filesize() > 0 ? " [" . pts_math::set_precision($pts_test_file_download->get_filesize() / 1048576, 2) . "MB]" : null;
-		$offset_length = pts_client::terminal_width() - strlen($download_string) - strlen($download_size_string);
+		$offset_length = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : pts_test_file_download::$longest_file_name_length;
+		$offset_length = $offset_length - strlen($download_string) - strlen($download_size_string) - 2;
 
-		if($offset_length > 6)
-		{
-			$offset_length -= 4;
-		}
-		else if($offset_length < 2)
+		if($offset_length < 2)
 		{
 			$offset_length = 2;
 		}
@@ -119,21 +188,30 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$download_string .= $download_size_string;
 		echo $download_string . "\n";
 
-		$this->download_estimate = $expected_time != null ? "Estimated Download Time: " . $expected_time : "Downloading";
-		$this->download_last_float = -1;
-		$this->download_string_length = strlen($download_string);
+		$this->progress_line_prefix = $expected_time != null ? "Estimated Download Time: " . $expected_time : $progress_prefix;
+		$this->progress_last_float = -1;
+		$this->progress_tab_count = 2;
+		$this->progress_string_length = strlen($download_string);
 	}
-	public function test_install_download_status_update($download_float)
+	public function test_install_progress_start($process)
 	{
-		if($this->download_last_float == -1)
+		$this->progress_line_prefix = $process;
+		$this->progress_last_float = -1;
+		$this->progress_tab_count = 1;
+		$this->progress_string_length = pts_client::terminal_width() > 1 ? pts_client::terminal_width() - 4 : 20;
+		return;
+	}
+	public function test_install_progress_update($progress_float)
+	{
+		if($this->progress_last_float == -1)
 		{
-			$download_prefix = $this->tab . $this->tab . $this->download_estimate . ' ';
-			echo $download_prefix;
-			$this->progress_char_count = $this->download_string_length - strlen($download_prefix);
+			$progress_prefix = str_repeat($this->tab, $this->progress_tab_count) . $this->progress_line_prefix . ' ';
+			echo $progress_prefix;
+			$this->progress_char_count = $this->progress_string_length - strlen($progress_prefix);
 			$this->progress_char_pos = 0;
 		}
 
-		$char_current = floor($download_float * $this->progress_char_count);
+		$char_current = floor($progress_float * $this->progress_char_count);
 
 		if($char_current > $this->progress_char_pos && $char_current <= $this->progress_char_count)
 		{
@@ -141,13 +219,14 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			$this->progress_char_pos = $char_current;
 		}
 
-		$this->download_last_float = $download_float;		
+		$this->progress_last_float = $progress_float;		
 	}
-	public function test_install_download_completed()
+	public function test_install_progress_completed()
 	{
-		echo $this->download_last_float != -1 ? str_repeat('.', $this->progress_char_count - $this->progress_char_pos) . "\n" : null;
+		echo $this->progress_last_float != -1 ? str_repeat('.', $this->progress_char_count - $this->progress_char_pos) . "\n" : null;
+		$this->progress_last_float == -1;
 	}
-	public function test_install_process($identifier)
+	public function test_install_begin($identifier)
 	{
 		if(($size = pts_estimated_environment_size($identifier)) > 0)
 		{

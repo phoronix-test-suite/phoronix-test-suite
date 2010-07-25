@@ -22,10 +22,6 @@
 
 class make_download_cache implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("install");
-	}
 	public static function run($r)
 	{
 		// Generates a PTS Download Cache
@@ -33,7 +29,7 @@ class make_download_cache implements pts_option_interface
 		pts_loader::load_definitions("test-profile-downloads.xml");
 		pts_loader::load_definitions("download-cache.xml");
 
-		foreach(pts_test_download_cache_directories() as $dc_directory)
+		foreach(pts_test_install_manager::download_cache_locations() as $dc_directory)
 		{
 			if(is_writable($dc_directory))
 			{

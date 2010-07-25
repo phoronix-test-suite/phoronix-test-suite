@@ -22,10 +22,16 @@
 
 class pts_test_file_download
 {
+	static $longest_file_name = null;
+	static $longest_file_name_length = 0;
+
 	private $url;
 	private $filename;
 	private $filesize;
 	private $md5;
+
+	private $download_location_type;
+	private $download_location_path;
 
 	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null)
 	{
@@ -33,6 +39,16 @@ class pts_test_file_download
 		$this->url = ($this->filename == $url ? null : $url);
 		$this->filesize = (!is_numeric($filesize) ? 0 : $filesize);
 		$this->md5 = $md5;
+		$this->location_type = null;
+		$this->location_path = array();
+
+		// Check for longest file name length as the text UI takes advantage of it
+
+		if(strlen($this->filename) > self::$longest_file_name_length)
+		{
+			self::$longest_file_name = $this->filename;
+			self::$longest_file_name_length = strlen($this->filename);
+		}
 	}
 	public function get_download_url_array()
 	{
@@ -53,6 +69,23 @@ class pts_test_file_download
 	public function set_filesize($size)
 	{
 		$this->filesize = is_numeric($size) ? $size : 0;
+	}
+	public function set_download_location($location_type, $location_path = array())
+	{
+		// IN_DESTINATION_DIR == already good, in the destination directory already, was previously downloaded
+		// LOCAL_DOWNLOAD_CACHE == In a local download cache, can be copied, etc
+		// REMOTE_DOWNLOAD_CACHE == In a remote download cache for download
+
+		$this->download_location_type = $location_type;
+		$this->download_location_path = $location_path;
+	}
+	public function get_download_location_type()
+	{
+		return $this->download_location_type;
+	}
+	public function get_download_location_path()
+	{
+		return $this->download_location_path;
 	}
 }
 

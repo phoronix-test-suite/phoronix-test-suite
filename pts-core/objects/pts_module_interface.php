@@ -87,7 +87,7 @@ class pts_module_interface
 
 	public static function __pre_install_process($obj = null)
 	{
-		// Passed is an array of the test identifiers for all tests about to be installed
+		// Passed is the pts_test_install_manager
 		return;
 	}
 	public static function __pre_test_download($obj = null)
@@ -119,7 +119,7 @@ class pts_module_interface
 	}
 	public static function __post_install_process($obj = null)
 	{
-		// Passed is an array of the test identifiers for all tests that were supposed to be just installed
+		// Passed is the pts_test_install_manager
 		return;
 	}
 

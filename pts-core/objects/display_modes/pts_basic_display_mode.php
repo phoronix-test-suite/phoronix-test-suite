@@ -27,11 +27,15 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 
 	}
-	public function test_install_start($identifier)
+	public function test_install_process($test_install_manager)
 	{
 		return;
 	}
-	public function test_install_downloads($identifier, &$download_packages)
+	public function test_install_begin($identifier)
+	{
+		return;
+	}
+	public function test_install_downloads($identifier, $download_packages)
 	{
 		$download_append = "";
 		if(($size = pts_estimated_download_size($identifier)) > 0)
@@ -40,7 +44,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		}
 		echo self::string_header("Downloading Files: " . $identifier . $download_append);
 	}
-	public function test_install_download_file(&$pts_test_file_download, $process, $offset_length = -1)
+	public function test_install_download_file($process, &$pts_test_file_download)
 	{
 		switch($process)
 		{
@@ -60,11 +64,15 @@ class pts_basic_display_mode implements pts_display_mode_interface
 				break;
 		}
 	}
-	public function test_install_download_status_update($download_float)
+	public function test_install_progress_start($process)
 	{
 		return;
 	}
-	public function test_install_download_completed()
+	public function test_install_progress_update($download_float)
+	{
+		return;
+	}
+	public function test_install_progress_completed()
 	{
 		return;
 	}

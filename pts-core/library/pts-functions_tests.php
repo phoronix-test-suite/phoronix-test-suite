@@ -752,6 +752,8 @@ function pts_cpu_arch_compatible($check_against)
 }
 function pts_objects_test_downloads($test_identifier)
 {
+	// TODO: this is replicated within pts_test_install_request thus this function is deprecated and should be removed
+	// pts_test_install_request->generate_download_object_list()
 	$obj_r = array();
 
 	if(is_file(($download_xml_file = pts_tests::test_resources_location($test_identifier) . "downloads.xml")))
@@ -766,7 +768,7 @@ function pts_objects_test_downloads($test_identifier)
 		$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
 		$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
 
-		foreach(array_keys($package_url) as $i)
+		foreach(array_keys($package_filename) as $i)
 		{
 			if(!empty($package_platform[$i]))
 			{

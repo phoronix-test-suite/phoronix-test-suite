@@ -22,6 +22,12 @@
 
 class pts_strings
 {
+	public static function is_url($string)
+	{
+		$components = parse_url($string);
+
+		return $components != false && isset($components["scheme"]) && isset($components["host"]);
+	}
 	public static function string_bool($string)
 	{
 		// Used for evaluating if the user inputted a string that evaluates to true

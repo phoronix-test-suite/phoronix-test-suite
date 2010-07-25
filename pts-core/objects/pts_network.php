@@ -65,7 +65,7 @@ class pts_network
 
 		if($return_state == true)
 		{
-			pts_client::$display->test_install_download_completed();
+			pts_client::$display->test_install_progress_completed();
 		}
 	}
 	private static function curl_download($download, $download_to)
@@ -169,7 +169,7 @@ class pts_network
 					return;
 				}
 
-				pts_client::$display->test_install_download_status_update($downloaded_float);
+				pts_client::$display->test_install_progress_update($downloaded_float);
 				$last_float = $downloaded_float;
 				break;
 		}
@@ -184,7 +184,7 @@ class pts_network
 			return;
 		}
 
-		pts_client::$display->test_install_download_status_update($downloaded_float);
+		pts_client::$display->test_install_progress_update($downloaded_float);
 		$last_float = $downloaded_float;
 	}
 }

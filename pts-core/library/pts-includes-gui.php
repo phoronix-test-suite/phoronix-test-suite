@@ -202,7 +202,7 @@ function pts_test_download_file_local($test_identifier, $download_name)
 	}
 	else
 	{
-		foreach(pts_test_download_cache_directories() as $download_cache)
+		foreach(pts_test_install_manager::download_cache_locations() as $download_cache)
 		{
 			if(is_file($download_cache . $download_name))
 			{

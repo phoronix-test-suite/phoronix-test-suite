@@ -24,7 +24,7 @@ class install_test implements pts_option_interface
 {
 	public static function required_function_sets()
 	{
-		return array("install", "execution");
+		return array("execution");
 	}
 	public static function argument_checks()
 	{
@@ -73,7 +73,7 @@ class install_test implements pts_option_interface
 			return false;
 		}
 
-		pts_start_install($items_to_install);
+		pts_test_installer::start_install($items_to_install);
 
 		if($items_to_install = array("prev-test-identifier"))
 		{
