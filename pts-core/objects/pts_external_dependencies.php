@@ -51,7 +51,7 @@ class pts_external_dependencies
 		{
 			foreach(self::required_test_dependencies($identifier) as $test_dependency)
 			{
-				if(!in_array($test_dependency, $required_test_dependencies))
+				if(!in_array($test_dependency, $required_test_dependencies) && !empty($test_dependency))
 				{
 					array_push($required_test_dependencies, $test_dependency);
 				}
@@ -236,7 +236,7 @@ class pts_external_dependencies
 			echo pts_user_io::display_text_list($os_packages_to_install);
 			echo "\nThis process may take several minutes.\n";
 
-			echo shell_exec("cd " . $vendor_install_file . ' ' . implode(' ', $os_packages_to_install));
+			echo shell_exec("sh " . $vendor_install_file . ' ' . implode(' ', $os_packages_to_install));
 		}
 		else
 		{
