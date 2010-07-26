@@ -326,7 +326,7 @@ class pts_client
 		// Generate Phodevi Smart Cache
 		if(pts_client::read_env("NO_PHODEVI_CACHE") != 1)
 		{
-			if(pts_strings::string_bool(pts_config::read_user_config(P_OPTION_PHODEVI_CACHE, "TRUE")))
+			if(pts_config::read_bool_config(P_OPTION_PHODEVI_CACHE, "TRUE"))
 			{
 				pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", phodevi::get_phodevi_cache_object(PTS_USER_DIR, PTS_CORE_VERSION));
 			}
@@ -338,7 +338,7 @@ class pts_client
 	}
 	public static function do_anonymous_usage_reporting()
 	{
-		return pts_strings::string_bool(pts_config::read_user_config(P_OPTION_USAGE_REPORTING, 0));
+		return pts_config::read_bool_config(P_OPTION_USAGE_REPORTING, 0);
 	}
 	public static function release_lock($lock_file)
 	{
@@ -501,8 +501,8 @@ class pts_client
 	}
 	public static function user_hardware_software_reporting()
 	{
-		$hw_reporting = pts_strings::string_bool(pts_config::read_user_config(P_OPTION_HARDWARE_REPORTING, 0));
-		$sw_reporting = pts_strings::string_bool(pts_config::read_user_config(P_OPTION_SOFTWARE_REPORTING, 0));
+		$hw_reporting = pts_config::read_bool_config(P_OPTION_HARDWARE_REPORTING, "FALSE");
+		$sw_reporting = pts_config::read_bool_config(P_OPTION_SOFTWARE_REPORTING, "FALSE");
 
 		if($hw_reporting == false && $sw_reporting == false)
 		{

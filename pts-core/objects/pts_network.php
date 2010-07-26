@@ -151,7 +151,7 @@ class pts_network
 	// Callback Functions
 	//
 
-	private static function stream_status_callback($notification_code, $arg1, $message, $message_code, $downloaded, $download_size)
+	public static function stream_status_callback($notification_code, $arg1, $message, $message_code, $downloaded, $download_size)
 	{
 		static $filesize = 0;
 		static $last_float = -1;

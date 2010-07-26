@@ -833,7 +833,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 		unset($cache_share);
 	}
 
-	if($test_run_manager->get_results_identifier() != null && (pts_strings::string_bool(pts_config::read_user_config(P_OPTION_LOG_INSTALLATION, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
+	if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config(P_OPTION_LOG_INSTALLATION, "FALSE") || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
 	{
 		if(is_file(TEST_ENV_DIR . $test_identifier . "/install.log"))
 		{

@@ -137,7 +137,7 @@ if(!QUICK_START)
 		echo "\nThe allow_url_fopen option in your PHP configuration must be enabled for network support.\n\n";
 		define("NO_NETWORK_COMMUNICATION", true);
 	}
-	else if(pts_strings::string_bool(pts_config::read_user_config(P_OPTION_NET_NO_NETWORK, "FALSE")))
+	else if(pts_config::read_bool_config(P_OPTION_NET_NO_NETWORK, "FALSE"))
 	{
 		define("NO_NETWORK_COMMUNICATION", true);
 		echo "\nNetwork Communication Is Disabled For Your User Configuration.\n\n";

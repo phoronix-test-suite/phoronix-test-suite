@@ -232,6 +232,9 @@ class pts_external_dependencies
 		// Do the actual installing process of packages using the distribution's package management system
 		$vendor_install_file = STATIC_DIR . "distro-scripts/install-" . self::vendor_identifier() . "-packages.sh";
 
+		// Rebuild the array index since some OS package XML tags provide multiple package names in a single string
+		$os_packages_to_install = explode(' ', implode(' ', $os_packages_to_install));
+
 		if(is_file($vendor_install_file))
 		{
 			// hook into pts_client::$display here if it's desired

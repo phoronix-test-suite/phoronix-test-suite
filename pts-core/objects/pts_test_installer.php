@@ -142,7 +142,7 @@ class pts_test_installer
 
 					if(is_file($download_cache_file))
 					{
-						if(pts_strings::string_bool(pts_config::read_user_config(P_OPTION_CACHE_SYMLINK, "FALSE")))
+						if(pts_config::read_bool_config(P_OPTION_CACHE_SYMLINK, "FALSE"))
 						{
 							// P_OPTION_CACHE_SYMLINK is disabled by default
 							pts_client::$display->test_install_download_file("LINK_FROM_CACHE", $download_package);
@@ -194,7 +194,7 @@ class pts_test_installer
 
 						do
 						{
-							if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE") && pts_strings::string_bool(pts_config::read_user_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE")) && count($package_urls) > 1)
+							if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE") && pts_config::read_bool_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE") && count($package_urls) > 1)
 							{
 								// Prompt user to select mirror
 								do
@@ -397,7 +397,7 @@ class pts_test_installer
 				pts_module_process("__post_test_install", $identifier);
 				$installed = true;
 
-				if(pts_strings::string_bool(pts_config::read_user_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE")))
+				if(pts_config::read_bool_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE"))
 				{
 					// Remove original downloaded files
 					foreach($test_install_request->get_download_objects() as $download_object)
