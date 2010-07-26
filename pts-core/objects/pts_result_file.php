@@ -207,7 +207,7 @@ class pts_result_file
 				$targets_count = count($targets);
 				$systems_count = count($systems);
 
-				if($targets_count < $systems_count)
+				if($targets_count > $systems_count)
 				{
 					$this->is_multi_way_inverted = true;
 				}

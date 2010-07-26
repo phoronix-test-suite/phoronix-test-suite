@@ -205,7 +205,7 @@ class pts_test_run_manager
 		$proposed_name = null;
 		$custom_title = null;
 
-		if(pts_is_assignment("AUTOMATED_MODE") && ($asn = pts_read_assignment("AUTO_SAVE_NAME")))
+		if(($asn = pts_read_assignment("AUTO_SAVE_NAME")))
 		{
 			$custom_title = $asn;
 			$proposed_name = self::clean_save_name_string($asn);
