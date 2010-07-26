@@ -228,12 +228,6 @@ PATH environment variable will contain each of the test directories below this t
 			<Required>NO</Required>
 		</Define>
 		<Define>
-			<Name>P_TEST_POSSIBLEPATHS</Name>
-			<Value>PhoronixTestSuite/TestSettings/Default/PossiblePaths</Value>
-			<Description>As an alternative to using the testing environment directory, this tag can containe different paths to check for the test executable. Multiple paths need to be separated by a comma.</Description>
-			<Required>NO</Required>
-		</Define>
-		<Define>
 			<Name>P_TEST_ALLOW_CACHE_SHARE</Name>
 			<Value>PhoronixTestSuite/TestSettings/Default/AllowCacheShare</Value>
 			<Description>If this tag is present and is set to <em>TRUE</em>, the result output from the test run will be cached and then submitted to the test profile again later on if it's being run multiple times in the suite or test run. This is used for preventing a test from running multiple times with different settings, but all of the different options are tested in that single run, and the only change in options is what from the result output is returned.</Description>

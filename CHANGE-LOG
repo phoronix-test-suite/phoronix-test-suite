@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Drop install-all-dependencies option as running "install-dependencies all" has been the recommended way
 - pts-core: Rewritten PTS External Dependency implementation
 - pts-core: Rewritten PTS test installation code
+- pts-core: Drop PossiblePaths XML tag for test profiles as it is no longer used by any upstream test profiles
 
 Phoronix Test Suite 2.8 Alpha 2
 July 22, 2010

@@ -299,7 +299,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager)
 			continue;
 		}
 
-		if(pts_find_test_executable($test_identifier, $test_profile) == null)
+		if(pts_find_test_executable_dir($test_identifier, $test_profile) == null)
 		{
 			pts_client::$display->test_run_error("The test executable for " . $test_identifier . " could not be found.");
 			array_push($failed_tests, $test_identifier);
@@ -447,19 +447,15 @@ function pts_save_test_file(&$results, $file_name)
 
 	return $real_name;
 }
-function pts_find_test_executable($test_identifier, &$test_profile)
+function pts_find_test_executable_dir($test_identifier, &$test_profile)
 {
 	$to_execute = null;
-	$possible_paths = array_merge(array(TEST_ENV_DIR . $test_identifier . "/"), pts_strings::trim_explode(",", $test_profile->get_test_executable_paths()));
+	$test_dir = TEST_ENV_DIR . $test_identifier . '/';
 	$execute_binary = $test_profile->get_test_executable();
 
-	foreach($possible_paths as $possible_dir)
+	if(is_executable($test_dir . $execute_binary) || (IS_WINDOWS && is_file($test_dir . $execute_binary)))
 	{
-		if(is_executable($possible_dir . $execute_binary) || (IS_WINDOWS && is_file($possible_dir . $execute_binary)))
-		{
-			$to_execute = $possible_dir;
-			break;
-		}
+		$to_execute = $test_dir;
 	}
 
 	return $to_execute;
@@ -539,7 +535,7 @@ function pts_run_test(&$test_run_request)
 		$times_to_run = 1;
 	}
 
-	$to_execute = pts_find_test_executable($test_identifier, $test_profile);
+	$to_execute = pts_find_test_executable_dir($test_identifier, $test_profile);
 
 	$pts_test_arguments = trim($test_profile->get_default_arguments() . " " . str_replace($test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_profile->get_default_post_arguments());
 	$extra_runtime_variables = pts_extra_run_time_vars($test_identifier, $pts_test_arguments, $result_format);
