@@ -36,9 +36,7 @@ class pts_test_run_manager
 	}
 	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "", $override_test_options = null)
 	{
-		$this_run_request = new pts_test_run_request($test_identifier, $arguments, $descriptions, $override_test_options);
-
-		pts_arrays::unique_push($this->tests_to_run, $this_run_request);
+		pts_arrays::unique_push($this->tests_to_run, new pts_test_run_request($test_identifier, $arguments, $descriptions, $override_test_options));
 	}
 	public function add_single_test_run($test_identifier, $arguments, $descriptions, $override_test_options = null)
 	{
@@ -99,11 +97,11 @@ class pts_test_run_manager
 				switch($sub_modes[$i])
 				{
 					case "BATCH":
-						$option_output = pts_generate_batch_run_options($tests_in_suite[$i]);
+						$option_output = pts_test_run_options::batch_user_options($tests_in_suite[$i]);
 						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1], $override_options);
 						break;
 					case "DEFAULTS":
-						$option_output = pts_defaults_test_options($tests_in_suite[$i]);
+						$option_output = pts_test_run_options::default_user_options($tests_in_suite[$i]);
 						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1], $override_options);
 						break;
 					default:
@@ -141,10 +139,6 @@ class pts_test_run_manager
 
 		return $identifiers;
 	}
-	public function get_tests_to_run_count()
-	{
-		return count($this->tests_to_run);
-	}
 	public function get_estimated_run_time_remaining($index = 0)
 	{
 		$est_time = 0;
@@ -168,15 +162,7 @@ class pts_test_run_manager
 	}
 	public function get_test_count()
 	{
-		return count($this->get_tests_to_run());
-	}
-	public function set_file_name($file_name)
-	{
-		$this->file_name = $file_name;
-	}
-	public function set_results_identifier($results_identifier)
-	{
-		$this->results_identifier = $results_identifier;
+		return count($this->tests_to_run);
 	}
 	public function get_file_name()
 	{
@@ -196,6 +182,145 @@ class pts_test_run_manager
 	public function get_failed_test_run_requests()
 	{
 		return $this->failed_tests_to_run;
+	}
+	public static function clean_save_name_string($input)
+	{
+		$input = pts_swap_variables($input, "pts_user_runtime_variables");
+		$input = trim(str_replace(array(' ', '/', '&', '?', ':', '~', '\''), null, strtolower($input)));
+
+		return $input;
+	}
+	public function prompt_save_name()
+	{
+		// Prompt to save a file when running a test
+		$proposed_name = null;
+		$custom_title = null;
+
+		if(pts_is_assignment("AUTOMATED_MODE") && ($asn = pts_read_assignment("AUTO_SAVE_NAME")))
+		{
+			$custom_title = $asn;
+			$proposed_name = self::clean_save_name_string($asn);
+			//echo "Saving Results To: " . $proposed_name . "\n";
+		}
+		else if(($env = pts_client::read_env("TEST_RESULTS_NAME"))
+		{
+			$custom_title = $enc;
+			$proposed_name = self::clean_save_name_string($env);
+			//echo "Saving Results To: " . $proposed_name . "\n";
+		}
+
+		if(pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"))
+		{
+			while(empty($proposed_name) || ($is_reserved_word = pts_is_run_object($proposed_name)))
+			{
+				if($is_reserved_word)
+				{
+					echo "\n\nThe name of the saved file cannot be the same as a test/suite: " . $proposed_name . "\n";
+					$is_reserved_word = false;
+				}
+
+				pts_client::$display->generic_prompt("Enter a name to save these results: ");
+				$proposed_name = pts_user_io::read_user_input();
+				$custom_title = $proposed_name;
+				$proposed_name = self::clean_save_name_string($proposed_name);
+			}
+		}
+
+		if(empty($proposed_name))
+		{
+			$proposed_name = date("Y-m-d-Hi");
+		}
+		if(empty($custom_title))
+		{
+			$custom_title = $proposed_name;
+		}
+
+		pts_set_assignment_once("SAVE_FILE_NAME", $proposed_name);
+		pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $custom_title);
+		$this->file_name = $proposed_name;
+
+		return array($proposed_name, $custom_title);
+	}
+	public function prompt_results_identifier()
+	{
+		// Prompt for a results identifier
+		$results_identifier = null;
+		$show_identifiers = array();
+		$no_repeated_tests = true;
+
+		if(pts_is_test_result($this->file_name))
+		{
+			$result_file = new pts_result_file($this->file_name);
+			$current_identifiers = $result_file->get_system_identifiers();
+			$current_hardware = $result_file->get_system_hardware();
+			$current_software = $result_file->get_system_software();
+
+			$result_objects = $result_file->get_result_objects();
+
+			foreach(array_keys($result_objects) as $result_key)
+			{
+				$result_objects[$result_key] = $result_objects[$result_key]->get_comparison_hash(false);
+			}
+
+			foreach($this->tests_to_run as &$run_request)
+			{
+				if($run_request instanceOf pts_test_run_request && in_array($run_request->get_comparison_hash(), $result_objects))
+				{
+					$no_repeated_tests = false;
+					break;
+				}
+			}
+		}
+		else
+		{
+			$current_identifiers = array();
+			$current_hardware = array();
+			$current_software = array();
+		}
+
+		if(pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE"))
+		{
+			if(count($current_identifiers) > 0)
+			{
+				echo "\nCurrent Test Identifiers:\n";
+				echo pts_user_io::display_text_list($current_identifiers);
+				echo "\n";
+			}
+
+			$times_tried = 0;
+			do
+			{
+				if($times_tried == 0 && (($env_identifier = pts_client::read_env("TEST_RESULTS_IDENTIFIER")) || 
+				($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")) || pts_read_assignment("AUTOMATED_MODE")))
+				{
+					$results_identifier = isset($env_identifier) ? $env_identifier : null;
+					echo "Test Identifier: " . $results_identifier . "\n";
+				}
+				else
+				{
+					pts_client::$display->generic_prompt("Enter a unique name for this test run: ");
+					$results_identifier = trim(str_replace(array('/'), "", pts_user_io::read_user_input()));
+				}
+				$times_tried++;
+
+				$identifier_pos = (($p = array_search($results_identifier, $current_identifiers)) !== false ? $p : -1);
+			}
+			while((!$no_repeated_tests && $identifier_pos != -1 && !pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN")) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
+		}
+
+		if(empty($results_identifier))
+		{
+			$results_identifier = date("Y-m-d H:i");
+		}
+		else
+		{
+			$results_identifier = pts_swap_variables($results_identifier, "pts_user_runtime_variables");
+		}
+
+		pts_set_assignment_once("TEST_RESULTS_IDENTIFIER", $results_identifier);
+		$this->results_identifier = $results_identifier;
+
+		return $results_identifier;
 	}
 }
 

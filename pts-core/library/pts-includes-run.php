@@ -21,9 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(PTS_LIBRARY_PATH . "pts-includes-run_setup.php");
-require_once(PTS_LIBRARY_PATH . "pts-includes-run_options.php");
-
 function pts_cleanup_tests_to_run(&$to_run_identifiers)
 {
 	$skip_tests = ($e = pts_client::read_env("SKIP_TESTS")) ? explode(',', $e) : false;

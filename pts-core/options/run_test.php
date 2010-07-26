@@ -95,15 +95,15 @@ class run_test implements pts_option_interface
 
 				if(pts_read_assignment("IS_BATCH_MODE") && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
 				{
-					list($test_arguments, $test_arguments_description) = pts_generate_batch_run_options($to_run);
+					list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($to_run);
 				}
 				else if(pts_read_assignment("IS_DEFAULTS_MODE"))
 				{
-					list($test_arguments, $test_arguments_description) = pts_defaults_test_options($to_run);
+					list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($to_run);
 				}
 				else
 				{
-					list($test_arguments, $test_arguments_description) = pts_prompt_test_options($to_run);
+					list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($to_run);
 				}
 
 				$test_run_manager->add_single_test_run($to_run, $test_arguments, $test_arguments_description);
@@ -240,20 +240,11 @@ class run_test implements pts_option_interface
 
 			if($save_results)
 			{
-				if(($unique_test_count == 1 || pts_is_assignment("AUTOMATED_MODE")) && ($asn = pts_read_assignment("AUTO_SAVE_NAME")))
-				{
-					$auto_name = $asn;
-				}
-				else
-				{
-					$auto_name = true;
-				}
-
 				// Prompt Save File Name
-				list($file_name, $file_name_title) = pts_prompt_save_file_name($test_run_manager, $auto_name);
+				list($file_name, $file_name_title) = $test_run_manager->prompt_save_name();
 
 				// Prompt Identifier
-				pts_prompt_results_identifier($test_run_manager);
+				$test_run_manager->prompt_results_identifier();
 
 				if($unique_test_count > 1 || !isset($test_description))
 				{
@@ -290,7 +281,7 @@ class run_test implements pts_option_interface
 			}
 		}
 
-		if($test_run_manager->get_tests_to_run_count() == 0)
+		if($test_run_manager->get_test_count() == 0)
 		{
 			return false;
 		}
@@ -369,7 +360,7 @@ class run_test implements pts_option_interface
 			pts_user_io::display_interrupt_message($post_run_message);
 		}
 
-		if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("DEBUG_TEST_PROFILE") || $test_run_manager->get_tests_to_run_count() > 3)
+		if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("DEBUG_TEST_PROFILE") || $test_run_manager->get_test_count() > 3)
 		{
 			$failed_runs = $test_run_manager->get_failed_test_run_requests();
 
@@ -420,7 +411,7 @@ class run_test implements pts_option_interface
 
 				if($upload_results)
 				{
-					$tags_input = pts_prompt_user_tags($to_run_identifiers);
+					$tags_input = pts_global::prompt_user_result_tags($to_run_identifiers);
 					$upload_url = pts_global::upload_test_result(SAVE_RESULTS_DIR . $file_name . "/composite.xml", $tags_input);
 
 					if(!empty($upload_url))

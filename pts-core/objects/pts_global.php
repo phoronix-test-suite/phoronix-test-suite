@@ -25,7 +25,6 @@ class pts_global
 	private static $result_xml_download_base_url = "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=";
 	private static $result_xml_public_base_url = "http://global.phoronix-test-suite.com/index.php?k=profile&u=";
 
-
 	public static function is_global_id($global_id)
 	{
 		// Checks if a string is a valid Phoronix Global ID
@@ -167,6 +166,85 @@ class pts_global
 
 		$upload_data = array("report_hwsw" => implode(';', $to_report), "gsid" => PTS_GSID);
 		pts_network::http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/installed-hardware-software.php", $upload_data);
+	}
+	public static function prompt_user_result_tags($default_tags = null)
+	{
+		$tags_input = null;
+
+		if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
+		{
+			$tags_input .= pts_user_io::prompt_user_input("Tags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas)", true);
+
+			$tags_input = pts_strings::keep_in_string($tags_input, TYPE_CHAR_LETTER | TYPE_CHAR_NUMERIC | TYPE_CHAR_DECIMAL | TYPE_CHAR_DASH | TYPE_CHAR_UNDERSCORE | TYPE_CHAR_COLON | TYPE_CHAR_SPACE | TYPE_CHAR_COMMA);
+			$tags_input = trim($tags_input);
+		}
+
+		if($tags_input == null)
+		{
+			$tags_array = array_merge(pts_arrays::to_array($default_tags), self::auto_generate_user_result_tags());
+			$tags_input = implode(", ", $tags_array);
+		}
+
+		return $tags_input;
+	}
+	private static function auto_generate_user_result_tags()
+	{
+		// Generate automatic tags for the system, used for Phoronix Global
+		$tags_array = array();
+
+		switch(phodevi::read_property("cpu", "core-count"))
+		{
+			case 1:
+				array_push($tags_array, "Single Core");
+				break;
+			case 2:
+				array_push($tags_array, "Dual Core");
+				break;
+			case 3:
+				array_push($tags_array, "Triple Core");
+				break;
+			case 4:
+				array_push($tags_array, "Quad Core");
+				break;
+			case 8:
+				array_push($tags_array, "Octal Core");
+				break;
+			default:
+				array_push($tags_array, phodevi::read_property("cpu", "core-count") . " Core");
+				break;
+		}
+
+		$cpu_type = phodevi::read_property("cpu", "model");
+		if(strpos($cpu_type, "Intel") !== false)
+		{
+			array_push($tags_array, "Intel");
+		}
+		else if(strpos($cpu_type, "AMD") !== false)
+		{
+			array_push($tags_array, "AMD");
+		}
+		else if(strpos($cpu_type, "VIA") !== false)
+		{
+			array_push($tags_array, "VIA");
+		}
+
+		if(IS_ATI_GRAPHICS)
+		{
+			array_push($tags_array, "ATI");
+		}
+		else if(IS_NVIDIA_GRAPHICS)
+		{
+			array_push($tags_array, "NVIDIA");
+		}
+
+		if(phodevi::read_property("system", "kernel-architecture") == "x86_64")
+		{
+			array_push($tags_array, "64-bit");
+		}
+
+		array_push($tags_array, phodevi::read_property("system", "operating-system"));
+
+		return $tags_array
 	}
 }
 

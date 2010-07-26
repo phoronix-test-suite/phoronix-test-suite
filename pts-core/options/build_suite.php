@@ -22,10 +22,6 @@
 
 class build_suite implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("run");
-	}
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading("Test Suite Creation");
@@ -57,7 +53,7 @@ class build_suite implements pts_option_interface
 		{
 			if(pts_is_test($test_object))
 			{
-				list($args, $description) = pts_prompt_test_options($test_object);
+				list($args, $description) = pts_test_run_options::prompt_user_options($test_object);
 
 				for($i = 0; $i < count($args); $i++)
 				{
@@ -81,7 +77,7 @@ class build_suite implements pts_option_interface
 				case "Add Test":
 					$test_to_add = pts_user_io::prompt_text_menu("Enter test name", $possible_tests);
 
-					list($args, $description) = pts_prompt_test_options($test_to_add);
+					list($args, $description) = pts_test_run_options::prompt_user_options($test_to_add);
 
 					for($i = 0; $i < count($args); $i++)
 					{
@@ -103,7 +99,7 @@ class build_suite implements pts_option_interface
 		}
 		while($input_option != "Save & Exit");
 
-		$suite_identifier = pts_input_string_to_identifier(str_replace(" ", "-", strtolower($suite_name)));
+		$suite_identifier = pts_test_run_manager::clean_save_name_string(str_replace(" ", "-", strtolower($suite_name)));
 
 		if(is_file(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml"))
 		{

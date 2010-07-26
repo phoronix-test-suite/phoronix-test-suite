@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@
 
 class result_file_to_suite implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("run");
-	}
 	public static function run($r)
 	{
 		$result_file = false;
@@ -71,7 +67,7 @@ class result_file_to_suite implements pts_option_interface
 		}
 
 		// Finish it off
-		$suite_identifier = pts_input_string_to_identifier(str_replace(" ", "-", strtolower($suite_name)));
+		$suite_identifier = pts_test_run_manager::clean_save_name_string(str_replace(" ", "-", strtolower($suite_name)));
 
 		if(is_file(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml"))
 		{

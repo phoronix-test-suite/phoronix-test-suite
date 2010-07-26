@@ -937,7 +937,7 @@ class gui_gtk implements pts_option_interface
 
 			foreach($identifiers as $identifier)
 			{
-				$test_options = pts_test_options($identifier);
+				$test_options = pts_test_run_options::test_option_objects($identifier);
 
 				if(count($test_options) == 0)
 				{
