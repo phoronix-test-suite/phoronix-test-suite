@@ -244,7 +244,7 @@ class pts_global
 
 		array_push($tags_array, phodevi::read_property("system", "operating-system"));
 
-		return $tags_array
+		return $tags_array;
 	}
 }
 

@@ -483,25 +483,6 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 
 	return $vars;
 }
-function pts_clear_empty_tests(&$tests, &$test_args, &$test_args_desc)
-{
-	$all_test_runs = $tests;
-	$all_test_args = $test_args;
-	$all_test_args_description = $test_args_desc;
-	$tests = array();
-	$test_args = array();
-	$test_args_desc = array();
-
-	foreach(array_keys($all_test_runs) as $i)
-	{
-		if(!empty($all_test_runs[$i]))
-		{
-			array_push($tests, $all_test_runs[$i]);
-			array_push($test_args, $all_test_args[$i]);
-			array_push($test_args_desc, $all_test_args_description[$i]);
-		}
-	}
-}
 function pts_run_test(&$test_run_request)
 {
 	$test_identifier = $test_run_request->get_identifier();

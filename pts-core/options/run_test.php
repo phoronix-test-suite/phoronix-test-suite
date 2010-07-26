@@ -176,12 +176,13 @@ class run_test implements pts_option_interface
 
 					foreach($tests_to_complete as $test_pos)
 					{
-						array_push($test_run, $all_test_runs[$test_pos]);
-						array_push($test_args, $all_test_args[$test_pos]);
-						array_push($test_args_description, $all_test_args_description[$test_pos]);
+						if(!empty($all_test_runs[$test_pos]))
+						{
+							array_push($test_run, $all_test_runs[$test_pos]);
+							array_push($test_args, $all_test_args[$test_pos]);
+							array_push($test_args_description, $all_test_args_description[$test_pos]);
+						}
 					}
-
-					pts_clear_empty_tests($test_run, $test_args, $test_args_description);
 				}
 				else if(pts_is_assignment("RECOVER_RUN"))
 				{
@@ -196,10 +197,6 @@ class run_test implements pts_option_interface
 						array_push($test_args_description, $test_run_request->get_arguments_description());
 						array_push($test_override_options, $test_run_request->get_override_options());
 					}
-				}
-				else
-				{
-					pts_clear_empty_tests($test_run, $test_args, $test_args_description);
 				}
 
 				$test_run_manager->add_multi_test_run($test_run, $test_args, $test_args_description, $test_override_options);

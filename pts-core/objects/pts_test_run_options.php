@@ -177,7 +177,7 @@ class pts_test_run_options
 
 		return array($test_args, $test_args_description);
 	}
-	public function function test_option_objects($identifier)
+	public static function test_option_objects($identifier)
 	{
 		$xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);

@@ -57,7 +57,10 @@ class pts_test_run_manager
 
 		for($i = 0; $i < count($test_identifier); $i++)
 		{
-			$this->add_individual_test_run($test_identifier[$i], $arguments[$i], $descriptions[$i], (isset($override_test_options[$i]) ? $override_test_options[$i] : null));
+			if(!empty($test_identifier[$i]))
+			{
+				$this->add_individual_test_run($test_identifier[$i], $arguments[$i], $descriptions[$i], (isset($override_test_options[$i]) ? $override_test_options[$i] : null));
+			}
 		}
 	}
 	protected function parse_override_test_options($override_test_options_string)
@@ -202,7 +205,7 @@ class pts_test_run_manager
 			$proposed_name = self::clean_save_name_string($asn);
 			//echo "Saving Results To: " . $proposed_name . "\n";
 		}
-		else if(($env = pts_client::read_env("TEST_RESULTS_NAME"))
+		else if(($env = pts_client::read_env("TEST_RESULTS_NAME")))
 		{
 			$custom_title = $enc;
 			$proposed_name = self::clean_save_name_string($env);
@@ -211,6 +214,8 @@ class pts_test_run_manager
 
 		if(pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"))
 		{
+			$is_reserved_word = false;
+
 			while(empty($proposed_name) || ($is_reserved_word = pts_is_run_object($proposed_name)))
 			{
 				if($is_reserved_word)
