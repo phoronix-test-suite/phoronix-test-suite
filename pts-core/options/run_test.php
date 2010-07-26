@@ -39,11 +39,7 @@ class run_test implements pts_option_interface
 				return false;
 			}
 		}
-		/*if(count($to_run_identifiers) == 0 || empty($to_run_identifiers[0]))
-		{
-			pts_client::$display->generic_error("A test, suite, or saved identifier must be supplied.");
-			return false;
-		}*/
+
 		if(!is_writable(TEST_ENV_DIR))
 		{
 			pts_client::$display->generic_error("The test installation directory is not writable.\nLocation: " . TEST_ENV_DIR);
@@ -153,7 +149,6 @@ class run_test implements pts_option_interface
 				$test_args_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
 				$test_override_options = array();
 
-				pts_set_assignment("IS_TEST_RESULT", true);
 				pts_set_assignment("AUTO_SAVE_NAME", $to_run);
 
 				foreach(explode(";", $test_previous_properties) as $test_prop)
@@ -218,7 +213,6 @@ class run_test implements pts_option_interface
 
 		$xml_results_writer = new pts_results_tandem_XmlWriter();
 
-		$file_name = false;
 		$save_results = false;
 		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1 || pts_read_assignment("FORCE_SAVE_RESULTS"))
 		{
@@ -238,7 +232,7 @@ class run_test implements pts_option_interface
 			if($save_results)
 			{
 				// Prompt Save File Name
-				list($file_name, $file_name_title) = $test_run_manager->prompt_save_name();
+				$test_run_manager->prompt_save_name();
 
 				// Prompt Identifier
 				$test_run_manager->prompt_results_identifier();
@@ -290,7 +284,7 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
-			$results_directory = pts_setup_result_directory($file_name) . "/";
+			$results_directory = pts_setup_result_directory($test_run_manager->get_file_name()) . "/";
 
 			if(pts_read_assignment("IS_BATCH_MODE"))
 			{
@@ -301,7 +295,7 @@ class run_test implements pts_option_interface
 				pts_arrays::unique_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
-			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($file_name) || !pts_test_result_contains_result_identifier($file_name, $test_run_manager->get_results_identifier())))
+			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($test_run_manager->get_file_name()) || !pts_test_result_contains_result_identifier($test_run_manager->get_file_name(), $test_run_manager->get_results_identifier())))
 			{
 				$xml_results_writer->setXslBinding("pts-results-viewer.xsl");
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, 0, phodevi::system_hardware(true));
@@ -314,7 +308,7 @@ class run_test implements pts_option_interface
 				$wrote_system_xml = true;
 
 				$id = $xml_results_writer->request_unique_id();
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $file_name_title);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $test_run_manager->get_file_name_title());
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? pts_arrays::first_element($to_run_identifiers) : "custom"));
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 1, $test_version);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_description);
@@ -374,9 +368,9 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
-			if(!pts_is_assignment("TEST_RAN") && !pts_read_assignment("FORCE_SAVE_RESULTS") && !pts_read_assignment("IS_TEST_RESULT") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
+			if(!pts_is_assignment("TEST_RAN") && !pts_read_assignment("FORCE_SAVE_RESULTS") && !pts_is_test_result($test_run_manager->get_file_name()) && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
 			{
-				pts_file_io::delete(SAVE_RESULTS_DIR . $file_name);
+				pts_file_io::delete(SAVE_RESULTS_DIR . $test_run_manager->get_file_name());
 				return false;
 			}
 
@@ -389,11 +383,11 @@ class run_test implements pts_option_interface
 			}
 
 			pts_module_process("__event_results_process", $xml_results_writer);
-			pts_save_test_file($xml_results_writer, $file_name);
-			pts_module_process("__event_results_saved", $file_name);
-			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $file_name . "/composite.xml\n";
-			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $file_name);
-			pts_client::display_web_page(SAVE_RESULTS_DIR . $file_name . "/index.html");
+			pts_save_test_file($xml_results_writer, $test_run_manager->get_file_name(), $test_run_manager->get_results_identifier());
+			pts_module_process("__event_results_saved", $test_run_manager->get_file_name());
+			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/composite.xml\n";
+			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $test_run_manager->get_file_name());
+			pts_client::display_web_page(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/index.html");
 
 			if(!pts_read_assignment("BLOCK_GLOBAL_UPLOADS") && !defined("NO_NETWORK_COMMUNICATION"))
 			{
@@ -409,7 +403,7 @@ class run_test implements pts_option_interface
 				if($upload_results)
 				{
 					$tags_input = pts_global::prompt_user_result_tags($to_run_identifiers);
-					$upload_url = pts_global::upload_test_result(SAVE_RESULTS_DIR . $file_name . "/composite.xml", $tags_input);
+					$upload_url = pts_global::upload_test_result(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/composite.xml", $tags_input);
 
 					if(!empty($upload_url))
 					{

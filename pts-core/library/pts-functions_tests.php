@@ -39,7 +39,7 @@ function pts_setup_result_directory($save_to)
 
 	return $save_to_dir;
 }
-function pts_save_result($save_to = null, $save_results = null, $render_graphs = true)
+function pts_save_result($save_to = null, $save_results = null, $render_graphs = true, $result_identifier = null)
 {
 	// Saves PTS result file
 	if(substr($save_to, -4) != ".xml")
@@ -64,12 +64,10 @@ function pts_save_result($save_to = null, $save_results = null, $render_graphs =
 
 		$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-		if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_strings::string_bool(pts_config::read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("PHOROMATIC_TITLE")))
+		if($result_identifier != null && (pts_strings::string_bool(pts_config::read_user_config(P_OPTION_LOG_VSYSDETAILS, "TRUE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("PHOROMATIC_TITLE")))
 		{
-			$test_results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER");
-
 			// Save verbose system information here
-			pts_file_io::mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $test_results_identifier), 0777, true);
+			pts_file_io::mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $result_identifier), 0777, true);
 
 			// Backup system files
 			// TODO: move out these files/commands to log out to respective Phodevi components so only what's relevant will be logged

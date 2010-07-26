@@ -343,7 +343,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 			sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 		}
 
-		$result = pts_run_test($test_run_request);
+		$result = pts_run_test($test_run_manager, $test_run_request);
 
 		if(pts_file_io::unlink(PTS_USER_DIR . "halt-testing"))
 		{
@@ -421,7 +421,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 
 	return true;
 }
-function pts_save_test_file(&$results, $file_name)
+function pts_save_test_file(&$results, $file_name, $result_identifier = null)
 {
 	// Save the test file
 	$j = 1;
@@ -436,13 +436,13 @@ function pts_save_test_file(&$results, $file_name)
 
 	if(!is_file(SAVE_RESULTS_DIR . $file_name . "/composite.xml"))
 	{
-		pts_save_result($file_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name));
+		pts_save_result($file_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name), true, $result_identifier);
 	}
 	else
 	{
 		// Merge Results
 		$merged_results = pts_merge::merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $file_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
-		pts_save_result($file_name . "/composite.xml", $merged_results);
+		pts_save_result($file_name . "/composite.xml", $merged_results, true, $result_identifier);
 	}
 
 	return $real_name;
@@ -479,7 +479,7 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 
 	return $vars;
 }
-function pts_run_test(&$test_run_request)
+function pts_run_test(&$test_run_manager, &$test_run_request)
 {
 	$test_identifier = $test_run_request->get_identifier();
 	$extra_arguments = $test_run_request->get_arguments();
@@ -569,9 +569,9 @@ function pts_run_test(&$test_run_request)
 		$cache_share = new pts_storage_object(false, false);
 	}
 
-	if(($results_identifier = pts_read_assignment("TEST_RESULTS_IDENTIFIER")) && ($save_name = pts_read_assignment("SAVE_FILE_NAME")))
+	if($test_run_manager->get_results_identifier() != null && $test_run_manager->get_file_name() != null)
 	{
-		$backup_test_log_dir = SAVE_RESULTS_DIR . $save_name . "/test-logs/active/" . $results_identifier . "/";
+		$backup_test_log_dir = SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . '/';
 		pts_file_io::delete($backup_test_log_dir);
 		pts_file_io::mkdir($backup_test_log_dir, 0777, true);
 	}
@@ -833,11 +833,11 @@ function pts_run_test(&$test_run_request)
 		unset($cache_share);
 	}
 
-	if(pts_is_assignment("TEST_RESULTS_IDENTIFIER") && (pts_strings::string_bool(pts_config::read_user_config(P_OPTION_LOG_INSTALLATION, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
+	if($test_run_manager->get_results_identifier() != null && (pts_strings::string_bool(pts_config::read_user_config(P_OPTION_LOG_INSTALLATION, "FALSE")) || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
 	{
 		if(is_file(TEST_ENV_DIR . $test_identifier . "/install.log"))
 		{
-			$backup_log_dir = SAVE_RESULTS_DIR . pts_read_assignment("SAVE_FILE_NAME") . "/installation-logs/" . pts_read_assignment("TEST_RESULTS_IDENTIFIER") . "/";
+			$backup_log_dir = SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/installation-logs/" . $test_run_manager->get_results_identifier() . "/";
 			pts_file_io::mkdir($backup_log_dir, 0777, true);
 			copy(TEST_ENV_DIR . $test_identifier . "/install.log", $backup_log_dir . $test_identifier . ".log");
 		}

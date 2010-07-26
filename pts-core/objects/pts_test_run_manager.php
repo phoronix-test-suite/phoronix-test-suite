@@ -24,6 +24,7 @@ class pts_test_run_manager
 {
 	private $tests_to_run;
 	private $file_name;
+	private $file_name_title;
 	private $results_identifier;
 	private $failed_tests_to_run;
 
@@ -32,6 +33,7 @@ class pts_test_run_manager
 		$this->tests_to_run = array();
 		$this->failed_tests_to_run = array();
 		$this->file_name = null;
+		$this->file_name_title = null;
 		$this->results_identifier = null;
 	}
 	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "", $override_test_options = null)
@@ -171,6 +173,10 @@ class pts_test_run_manager
 	{
 		return $this->file_name;
 	}
+	public function get_file_name_title()
+	{
+		return $this->file_name_title;
+	}
 	public function get_results_identifier()
 	{
 		return $this->results_identifier;
@@ -240,11 +246,10 @@ class pts_test_run_manager
 			$custom_title = $proposed_name;
 		}
 
-		pts_set_assignment_once("SAVE_FILE_NAME", $proposed_name);
 		pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $custom_title);
-		$this->file_name = $proposed_name;
 
-		return array($proposed_name, $custom_title);
+		$this->file_name = $proposed_name;
+		$this->file_name_title = $custom_title;
 	}
 	public function prompt_results_identifier()
 	{
@@ -322,10 +327,7 @@ class pts_test_run_manager
 			$results_identifier = pts_swap_variables($results_identifier, "pts_user_runtime_variables");
 		}
 
-		pts_set_assignment_once("TEST_RESULTS_IDENTIFIER", $results_identifier);
 		$this->results_identifier = $results_identifier;
-
-		return $results_identifier;
 	}
 }
 

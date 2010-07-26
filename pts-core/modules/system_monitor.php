@@ -28,6 +28,7 @@ class system_monitor extends pts_module_interface
 	const module_description = "This module contains sensor monitoring support.";
 	const module_author = "Michael Larabel";
 
+	static $result_identifier = null;
 	static $to_monitor = array();
 
 	public static function module_info()
@@ -57,8 +58,9 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
-	public static function __pre_run_process()
+	public static function __pre_run_process(&$test_run_manager)
 	{
+		self::$result_identifier = $test_run_manager->get_results_identifier();
 		self::$to_monitor = array();
 		$to_show = explode(",", pts_module_variable("MONITOR"));
 		$monitor_all = in_array("all", $to_show);
@@ -96,7 +98,7 @@ class system_monitor extends pts_module_interface
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, phodevi::sensor_name($sensor));
 
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, pts_read_assignment("TEST_RESULTS_IDENTIFIER"), 5, "sys-monitor-" . $id_point);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, self::$result_identifier, 5, "sys-monitor-" . $id_point);
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
 			}
