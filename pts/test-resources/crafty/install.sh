@@ -1,8 +1,8 @@
 #!/bin/sh
 
-unzip -o crafty-23.2.zip
+unzip -o crafty-23.3.zip
 
-cd crafty-23.2/
+cd crafty-23.3/
 
 if [ $OS_TYPE = "MacOSX" ]
 then
@@ -22,7 +22,7 @@ echo $? > ~/install-exit-status
 cd ..
 
 echo "#!/bin/sh
-cd crafty-23.2/
+cd crafty-23.3/
 ./crafty \$@ > \$LOG_FILE 2>&1
 echo \$? > ~/test-exit-status" > crafty
 chmod +x crafty

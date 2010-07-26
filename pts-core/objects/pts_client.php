@@ -493,10 +493,10 @@ class pts_client
 					$chars = $terminal_width;
 				}
 			}
-			else if(pts_client::read_env("COLS"))
+			else if(IS_WINDOWS)
 			{
-				// Windows command prompt uses COLS or stty columns or COLUMNS
-				$chars = pts_client::read_env("COLS");
+				// Need a better way to handle this
+				$chars = 80;
 			}
 
 			pts_set_assignment("TERMINAL_WIDTH", $chars);
