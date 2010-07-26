@@ -130,10 +130,6 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_EXECUTABLE, $this->identifier);
 	}
-	public function get_test_executable_paths()
-	{
-		return $this->xml_parser->getXMLValue(P_TEST_POSSIBLEPATHS);
-	}
 	public function get_times_to_run()
 	{
 		return intval($this->xml_parser->getXMLValue(P_TEST_RUNCOUNT, 3));
