@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>SPECViewPerf 9</Title>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Weighted Geometric Mean</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test runs SPECViewPerf 9.0, which is made up of real-world OpenGL workstation tests such as 3DS Max, CATIA, Maya, Pro/Engineer, and SolidWorks.</Description>

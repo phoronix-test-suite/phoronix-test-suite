@@ -1,7 +1,7 @@
 #!/bin/sh
 
 tar -xjf vdrift-2010-06-30.tar.bz2
-tar -xjf vdrift-benchmark-3.tar.bz2
+unzip -o vdrift-benchmark-4.zip
 
 cd vdrift-2010-06-30/
 scons release=1

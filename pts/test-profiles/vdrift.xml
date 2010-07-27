@@ -12,7 +12,7 @@
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
 		<ExternalDependencies>sdl-development, build-utilities, glew, glut, jam, scons, vorbis-development, autoconf, libtool, boost-development</ExternalDependencies>
 		<ProjectURL>http://www.vdrift.net/</ProjectURL>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
+		<SupportedPlatforms>Linux, Windows</SupportedPlatforms>
 		<EstimatedLength>6</EstimatedLength>
 	</TestProfile>
 	<TestInformation>

@@ -1,14 +1,21 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://voxel.dl.sourceforge.net/sourceforge/vdrift/vdrift-2010-06-30.tar.bz2, http://internap.dl.sourceforge.net/sourceforge/vdrift/vdrift-2010-06-30.tar.bz2, http://internode.dl.sourceforge.net/sourceforge/vdrift/vdrift-2010-06-30.tar.bz2, http://garr.dl.sourceforge.net/sourceforge/vdrift/vdrift-2010-06-30.tar.bz2</URL>
+			<URL>http://internode.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30.tar.bz2, http://voxel.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-2010-06-30.tar.bz2, http://internap.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-2010-06-30.tar.bz2, http://garr.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-2010-06-30.tar.bz2</URL>
 			<MD5>ddcaf90bb25f9ce9cc084d7f467d7b56</MD5>
+			<PlatformSpecific>Linux</PlatformSpecific>
 			<FileSize>549124037</FileSize>
 		</Package>
 		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/vdrift-benchmark-3.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/vdrift-benchmark-3.tar.bz2</URL>
-			<MD5>cbfe2b30e6cd1396a29e36cc7e326bb0</MD5>
-			<FileSize>60188</FileSize>
+			<URL>http://internode.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-setup-2010-06-30.exe, http://voxel.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-setup-2010-06-30.exe, http://internap.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-setup-2010-06-30.exe, http://garr.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-setup-2010-06-30.exe</URL>
+			<MD5>78adb25530f0a8c3cca1f6c008ca19c9</MD5>
+			<PlatformSpecific>Windows</PlatformSpecific>
+			<FileSize>486546603</FileSize>
+		</Package>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/vdrift-benchmark-4.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/vdrift-benchmark-4.zip</URL>
+			<MD5>90fb69a24dd467186153035935bd5fe4</MD5>
+			<FileSize>63895</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

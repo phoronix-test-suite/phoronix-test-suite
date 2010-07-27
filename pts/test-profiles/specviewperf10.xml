@@ -11,11 +11,11 @@
 		<EnvironmentSize>1600</EnvironmentSize>
 		<ProjectURL>http://www.spec.org/</ProjectURL>
 		<ExternalDependencies>build-utilities, glut, csh, libpng-development</ExternalDependencies>
-		<SupportedPlatforms>Linux, Solaris, Windows</SupportedPlatforms>
+		<SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>SPECViewPerf 10</Title>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Weighted Geometric Mean</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>This test runs SPECViewPerf 10.0, which is made up of real-world OpenGL workstation tests such as 3DS Max, CATIA, Maya, Pro/Engineer, and SolidWorks. SPECViewPerf 10.0 features full-scene anti-aliasing and multi-threading support over SPECViewPerf 9.0.</Description>

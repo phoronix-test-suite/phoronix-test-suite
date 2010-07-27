@@ -163,7 +163,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				break;
 			case "DOWNLOAD":
 				$process_string = "Downloading";
-
+				$progress_prefix = "Downloading";
 				if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
 				{
 					$expected_time = $this_size / $avg_speed;

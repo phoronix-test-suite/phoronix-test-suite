@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.4.0</Version>
+		<Version>1.5.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -15,7 +15,7 @@
 	<TestInformation>
 		<Title>OpenSSL</Title>
 		<SubTitle>RSA 4096-bit Performance</SubTitle>
-		<Version>1.0.0</Version>
+		<Version>1.0.0a</Version>
 		<TimesToRun>4</TimesToRun>
 		<ResultScale>Signs Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

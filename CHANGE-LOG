@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rewritten PTS test installation code
 - pts-core: Drop PossiblePaths XML tag for test profiles as it is no longer used by any upstream test profiles
 - pts: Update crafty test profile against Crafty 23.3
+- pts: Update openssl test profile against OpenSSL 1.0.0a and add Windows support
 
 Phoronix Test Suite 2.8 Alpha 2
 July 22, 2010
