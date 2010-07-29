@@ -11,7 +11,7 @@
 		<EnvironmentSize>1600</EnvironmentSize>
 		<ProjectURL>http://www.spec.org/</ProjectURL>
 		<ExternalDependencies>build-utilities, glut, csh, libpng-development</ExternalDependencies>
-		<SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
+		<SupportedPlatforms>Linux, Solaris, Windows</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
 		<Title>SPECViewPerf 10</Title>

@@ -64,4 +64,7 @@
 	<RunTest>
 		<Test>crafty</Test>
 	</RunTest>
+	<RunTest>
+		<Test>openssl</Test>
+	</RunTest>
 </PhoronixTestSuite>
