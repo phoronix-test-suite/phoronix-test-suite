@@ -151,7 +151,7 @@ class phoromatic extends pts_module_interface
 		{
 			case M_PHOROMATIC_RESPONSE_TRUE:
 				$identifier = "phoromatic-clone-" . str_replace(array('_', ':'), null, $to_clone[0]);
-				pts_save_result($identifier . "/composite.xml", $server_response); // TODO: regenerate the XML so that the Phoromatic response bits are not included
+				pts_client::save_test_result($identifier . "/composite.xml", $server_response); // TODO: regenerate the XML so that the Phoromatic response bits are not included
 				echo "\nResult Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
 				pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
 				pts_client::display_web_page(SAVE_RESULTS_DIR . $identifier . "/index.html");

@@ -375,6 +375,82 @@ class pts_client
 
 		return $in_option;
 	}
+	public static function save_test_result($save_to = null, $save_results = null, $render_graphs = true, $result_identifier = null)
+	{
+		// Saves PTS result file
+		if(substr($save_to, -4) != ".xml")
+		{
+			$save_to .= ".xml";
+		}
+
+		$save_to_dir = pts_setup_result_directory($save_to);
+	
+		if($save_to == null || $save_results == null)
+		{
+			$bool = false;
+		}
+		else
+		{
+			$save_name = basename($save_to, ".xml");
+
+			if($save_name == "composite" && $render_graphs)
+			{
+				pts_render::generate_result_file_graphs($save_results, $save_to_dir);
+			}
+
+			$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
+
+			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, "TRUE") || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("PHOROMATIC_TITLE")))
+			{
+				// Save verbose system information here
+				pts_file_io::mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $result_identifier), 0777, true);
+
+				// Backup system files
+				// TODO: move out these files/commands to log out to respective Phodevi components so only what's relevant will be logged
+				$system_log_files = array("/var/log/Xorg.0.log", "/proc/cpuinfo", "/proc/modules", "/etc/X11/xorg.conf");
+
+				foreach($system_log_files as $file)
+				{
+					if(is_file($file))
+					{
+						// copy() can't be used in this case since it will result in a blank file for /proc/ file-system
+						file_put_contents($system_log_dir . "/" . basename($file), file_get_contents($file));
+					}
+				}
+
+				// Generate logs from system commands to backup
+				$system_log_commands = array("lspci -vvnn", "sensors", "dmesg", "glxinfo", "system_profiler", "dpkg --list");
+
+				foreach($system_log_commands as $command_string)
+				{
+					$command = explode(' ', $command_string);
+
+					if(($command_bin = pts_client::executable_in_path($command[0])))
+					{
+						$cmd_output = shell_exec("cd " . dirname($command_bin) . " && ./" . $command_string . " 2>&1");
+						file_put_contents($system_log_dir . "/" . $command[0], $cmd_output);
+					}
+				}
+			}
+		}
+
+		return $bool;
+	}
+	public static function regenerate_graphs($result_file_identifier, $full_process_string = false)
+	{
+		$save_to_dir = pts_setup_result_directory($result_file_identifier);
+		$generated_graphs = pts_render::generate_result_file_graphs($result_file_identifier, $save_to_dir);
+		$generated = count($generated_graphs) > 0;
+
+		if($generated && $full_process_string)
+		{
+			echo "\n" . $full_process_string . "\n";
+			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $result_file_identifier);
+			pts_client::display_web_page(SAVE_RESULTS_DIR . $result_file_identifier . "/index.html");
+		}
+
+		return $generated;
+	}
 	public static function execute_command($command, $pass_args = null, $preset_assignments = "")
 	{
 		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && !class_exists($command, false))
@@ -787,7 +863,7 @@ class pts_client
 				if($reference_cache_dir && is_readable($reference_cache_dir . $comparison_id . ".xml"))
 				{
 					// A cache is already available locally (likely from a PTS Live OS)
-					pts_save_result($comparison_id . "/composite.xml", file_get_contents($reference_cache_dir . $comparison_id . ".xml"), false);
+					pts_client::save_test_result($comparison_id . "/composite.xml", file_get_contents($reference_cache_dir . $comparison_id . ".xml"), false);
 				}
 				else
 				{

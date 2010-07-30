@@ -22,7 +22,7 @@
 
 class pts_render
 {
-	static $last_graph_object = null;
+	static $previous_graph_object = null;
 
 	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
@@ -137,14 +137,114 @@ class pts_render
 
 		if(PTS_MODE == "CLIENT")
 		{
-			self::$last_graph_object = $graph;
+			self::$previous_graph_object = $graph;
 		}
 
 		return $graph->renderGraph();
 	}
-	public static function last_graph_object()
+	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false)
 	{
-		return self::$last_graph_object;
+		if($save_to_dir)
+		{
+			if(pts_file_io::mkdir($save_to_dir . "/result-graphs", 0777, true) == false)
+			{
+				// Directory must exist, so remove any old graph files first
+				foreach(pts_file_io::glob($save_to_dir . "/result-graphs/*") as $old_file)
+				{
+					unlink($old_file);
+				}
+			}
+		}
+
+		$result_file = new pts_result_file($test_results_identifier);
+
+		$generated_graphs = array();
+		$generated_graph_tables = false;
+
+		// Render overview chart
+		if($save_to_dir) // not working right yet
+		{
+			$chart = new pts_Chart($result_file);
+			$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
+		}
+
+		foreach($result_file->get_result_objects() as $key => $result_object)
+		{
+			$save_to = $save_to_dir;
+
+			if($save_to_dir && is_dir($save_to_dir))
+			{
+				$save_to .= "/result-graphs/" . ($key + 1) . ".BILDE_EXTENSION";
+
+				if(PTS_MODE == "CLIENT")
+				{
+					if($result_file->is_multi_way_comparison() || pts_client::read_env("GRAPH_GROUP_SIMILAR"))
+					{
+						$table_keys = array();
+						$titles = $result_file->get_test_titles();
+
+						foreach($titles as $this_title_index => $this_title)
+						{
+							if($this_title == $titles[$key])
+							{
+								array_push($table_keys, $this_title_index);
+							}
+						}
+					}
+					else
+					{
+						$table_keys = $key;
+					}
+
+					$chart = new pts_Chart($result_file, null, $table_keys);
+					$chart->renderChart($save_to_dir . "/result-graphs/" . ($key + 1) . "_table.BILDE_EXTENSION");
+					$generated_graph_tables = true;
+				}
+			}
+
+			$graph = pts_render::render_graph($result_object, $result_file, $save_to);
+			array_push($generated_graphs, $graph);
+		}
+
+		// Save XSL
+		if(count($generated_graphs) > 0 && $save_to_dir)
+		{
+			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_render::xsl_esults_viewer_graph_template($generated_graph_tables));
+		}
+
+		return $generated_graphs;
+	}
+	public static function previous_graph_object()
+	{
+		return self::$previous_graph_object;
+	}
+	public static function xsl_esults_viewer_graph_template($matching_graph_tables = false)
+	{
+		$graph_object = pts_render::previous_graph_object();
+		$width = $graph_object->graphWidth();
+		$height = $graph_object->graphHeight();
+
+		if($graph_object->getRenderer() == "SVG")
+		{
+			// Hackish way to try to get all browsers to show the entire SVG graph when the graphs may be different size, etc
+			$height += 50;
+			$width = 600 > $width ? 600 : $width;
+			$height = 400 > $height ? 400 : $height;
+		}
+
+		$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
+		$graph_string = $graph_object->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
+
+		$raw_xsl = str_replace("<!-- GRAPH TAG -->", $graph_string, $raw_xsl);
+
+		if($matching_graph_tables)
+		{
+			$bilde_svg = new bilde_svg_renderer(1, 1);
+			$table_string = $bilde_svg->html_embed_code("result-graphs/<xsl:number value=\"position()\" />_table.BILDE_EXTENSION", array("width" => "auto", "height" => "auto"), true);
+			$raw_xsl = str_replace("<!-- GRAPH TABLE TAG -->", $table_string, $raw_xsl);
+		}
+
+		return $raw_xsl;
 	}
 }
 

@@ -1266,7 +1266,7 @@ class gui_gtk implements pts_option_interface
 		{
 			if(!is_dir(SAVE_RESULTS_DIR . $identifier . "/result-graphs/"))
 			{
-				pts_generate_graphs($identifier, SAVE_RESULTS_DIR . $identifier . "/");
+				pts_render::generate_result_file_graphs($identifier, SAVE_RESULTS_DIR . $identifier . "/");
 			}
 
 			pts_client::display_web_page(SAVE_RESULTS_DIR . $identifier . "/index.html", null, true, true);

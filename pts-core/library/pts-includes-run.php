@@ -432,17 +432,17 @@ function pts_save_test_file(&$results, $file_name, $result_identifier = null)
 
 	$real_name = $file_name . "/test-" . $j . ".xml";
 
-	pts_save_result($real_name, $results->getXML());
+	pts_client::save_test_result($real_name, $results->getXML());
 
 	if(!is_file(SAVE_RESULTS_DIR . $file_name . "/composite.xml"))
 	{
-		pts_save_result($file_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name), true, $result_identifier);
+		pts_client::save_test_result($file_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name), true, $result_identifier);
 	}
 	else
 	{
 		// Merge Results
 		$merged_results = pts_merge::merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $file_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
-		pts_save_result($file_name . "/composite.xml", $merged_results, true, $result_identifier);
+		pts_client::save_test_result($file_name . "/composite.xml", $merged_results, true, $result_identifier);
 	}
 
 	return $real_name;

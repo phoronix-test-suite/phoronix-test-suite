@@ -51,7 +51,7 @@ class merge_results implements pts_option_interface
 
 		// Merge Results
 		$merged_results = call_user_func(array("pts_merge", "merge_test_results_array"), $result_files_to_merge);
-		pts_save_result($merge_to_file, $merged_results);
+		pts_client::save_test_result($merge_to_file, $merged_results);
 
 		echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $merge_to_file . "\n\n";
 		pts_client::display_web_page(SAVE_RESULTS_DIR . dirname($merge_to_file) . "/index.html");

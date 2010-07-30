@@ -197,6 +197,27 @@ class pts_strings
 
 		return $compare;	
 	}
+	public static function result_format_to_string($result_format)
+	{
+		switch($result_format)
+		{
+			case "MAX":
+				$return_str = "Maximum";
+				break;
+			case "MIN":
+				$return_str = "Minimum";
+				break;
+			case "NULL":
+				$return_str = null;
+				break;
+			case "AVG":
+			default:
+				$return_str = "Average";
+				break;
+		}
+
+		return $return_str;
+	}
 }
 
 ?>

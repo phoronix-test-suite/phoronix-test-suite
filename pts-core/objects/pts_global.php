@@ -69,7 +69,7 @@ class pts_global
 	}
 	public static function clone_global_result($global_id, $render_graphs = true)
 	{
-		return pts_save_result($global_id . "/composite.xml", pts_global::download_result_xml($global_id), $render_graphs);
+		return pts_client::save_test_result($global_id . "/composite.xml", pts_global::download_result_xml($global_id), $render_graphs);
 	}
 	public static function get_public_result_url($global_id)
 	{

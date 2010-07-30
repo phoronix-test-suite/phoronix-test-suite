@@ -31,7 +31,7 @@ class refresh_graphs implements pts_option_interface
 	public static function run($r)
 	{
 		$identifier = $r[0];
-		pts_quick_generate_graphs($identifier, "The " . $identifier . " result file graphs have been refreshed.");
+		pts_client::regenerate_graphs($identifier, "The " . $identifier . " result file graphs have been refreshed.");
 	}
 }
 

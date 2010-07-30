@@ -58,7 +58,7 @@ class analyze_image_delta implements pts_option_interface
 		while(is_dir(SAVE_RESULTS_DIR . $extract_to));
 
 		$extract_result = pts_merge::merge_test_results($base_select, $compare_select);
-		pts_save_result($extract_to . "/composite.xml", $extract_result);
+		pts_client::save_test_result($extract_to . "/composite.xml", $extract_result);
 
 		$compare_file = new pts_result_file($extract_to);
 		$tandem_xml = new tandem_XmlWriter();

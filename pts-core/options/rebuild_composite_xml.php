@@ -39,8 +39,8 @@ class rebuild_composite_xml implements pts_option_interface
 			return false;
 		}
 
-		pts_save_result($identifier . "/composite.xml", pts_merge::merge_test_results_array($test_xml_files));
-		pts_quick_generate_graphs($identifier, "The " . $identifier . " result file XML has been rebuilt.");
+		pts_client::save_test_result($identifier . "/composite.xml", pts_merge::merge_test_results_array($test_xml_files));
+		pts_client::regenerate_graphs($identifier, "The " . $identifier . " result file XML has been rebuilt.");
 	}
 }
 

@@ -343,7 +343,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$end_print .= $this->tab . $this->tab . $result . "\n";
 			}
 
-			$end_print .= "\n" . $this->tab . pts_test_result_format_to_string($test_result->get_test_profile()->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->get_test_profile()->get_result_scale();
+			$end_print .= "\n" . $this->tab . pts_strings::result_format_to_string($test_result->get_test_profile()->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->get_test_profile()->get_result_scale();
 
 			if($test_result->get_result() == 0)
 			{
