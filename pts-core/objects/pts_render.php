@@ -206,23 +206,23 @@ class pts_render
 			array_push($generated_graphs, $graph);
 		}
 
-		// Save XSL
-		if(count($generated_graphs) > 0 && $save_to_dir)
-		{
-			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_render::xsl_results_viewer_graph_template($generated_graph_tables));
-		}
-
-
-		if($save_to_dir && false)
+		// Generate mini / overview graphs
+		if($save_to_dir)
 		{
 			$graph = new pts_OverviewGraph($result_file);
 
 			if($graph->skip_graph == false)
 			{
-				$graph->saveGraphToFile($save_to_dir . "/result-graphs/test.BILDE_EXTENSION");
+				$graph->saveGraphToFile($save_to_dir . "/result-graphs/visualize.BILDE_EXTENSION");
 				$graph->renderGraph();
 			}
 			unset($graph);
+		}
+
+		// Save XSL
+		if(count($generated_graphs) > 0 && $save_to_dir)
+		{
+			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_render::xsl_results_viewer_graph_template($generated_graph_tables));
 		}
 
 		return $generated_graphs;
