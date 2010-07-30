@@ -3,9 +3,9 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
-	pts_Chart.php: A charting object for pts_Graph
+	Copyright (C) 2010, Phoronix Media
+	Copyright (C) 2010, Michael Larabel
+	pts_OverviewGraph.php: A graping object to create an "overview" / mini graphs of a pts_result_file for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ class pts_OverviewGraph extends pts_Graph
 		list($longest_title_width, $longest_title_height) = $this->text_string_dimensions($this->find_longest_string($this->test_titles), $this->graph_font, $this->graph_font_size_identifiers);
 
 		$this->graph_left_start += 20;
-		$this->graphs_per_row = floor(($width - $this->graph_left_start - $this->graph_left_end_opp) / ($longest_title_width + 30));
+		$this->graphs_per_row = floor(($width - $this->graph_left_start - $this->graph_left_end_opp) / ($longest_title_width + 10));
 		$this->graph_item_width = floor(($width - $this->graph_left_start - $this->graph_left_end_opp) / $this->graphs_per_row);
 		$this->graph_row_count = ceil(count($this->test_titles) / $this->graphs_per_row);
 
@@ -106,8 +106,8 @@ class pts_OverviewGraph extends pts_Graph
 		$col = 0;
 
 		$bar_count = count($this->system_identifiers);
-		$separator_width = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
-		$bar_width = floor(($this->graph_item_width - $separator_width - ($bar_count * $separator_width)) / $bar_count);
+		$inter_width = $this->graph_item_width * 0.1;
+		$bar_width = floor(($this->graph_item_width - ($inter_width * 2)) / $bar_count);
 
 		foreach($this->result_file->get_result_objects() as $i => $result_object)
 		{
@@ -149,10 +149,10 @@ class pts_OverviewGraph extends pts_Graph
 					$graph_size = round(($value / $this->graph_maximum_value) * ($top_end - $top_start));
 					$value_plot_top = $top_end + 1 - $graph_size;
 
-					$px_left = $px_bound_left + ($bar_width * $x) + ($separator_width * ($x + 1));
+					$px_left = $px_bound_left + $inter_width + ($bar_width * $x);
 					$px_right = $px_left + $bar_width;
 
-					$this->graph_image->draw_rectangle_with_border($px_left + 1, $value_plot_top, $px_right - 1, $top_end, $paint_color, $this->graph_color_body_light, null);
+					$this->graph_image->draw_rectangle_with_border($px_left, $value_plot_top, $px_right, $top_end, $paint_color, $this->graph_color_body_light, null);
 				}
 			}
 
