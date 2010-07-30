@@ -77,7 +77,7 @@ class pts_test_installer
 
 			if($installed == false)
 			{
-				array_push($failed_installs, $test);
+				array_push($failed_installs, $test_install_request->get_test_identifier());
 			}
 		}
 		pts_module_process("__post_install_process", $test_install_manager);

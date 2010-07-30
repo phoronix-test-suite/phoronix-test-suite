@@ -162,7 +162,7 @@ class pts_render
 		$generated_graph_tables = false;
 
 		// Render overview chart
-		if($save_to_dir) // not working right yet
+		if($save_to_dir)
 		{
 			$chart = new pts_Chart($result_file);
 			$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
@@ -209,7 +209,20 @@ class pts_render
 		// Save XSL
 		if(count($generated_graphs) > 0 && $save_to_dir)
 		{
-			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_render::xsl_esults_viewer_graph_template($generated_graph_tables));
+			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_render::xsl_results_viewer_graph_template($generated_graph_tables));
+		}
+
+
+		if($save_to_dir && false)
+		{
+			$graph = new pts_OverviewGraph($result_file);
+
+			if($graph->skip_graph == false)
+			{
+				$graph->saveGraphToFile($save_to_dir . "/result-graphs/test.BILDE_EXTENSION");
+				$graph->renderGraph();
+			}
+			unset($graph);
 		}
 
 		return $generated_graphs;
@@ -218,7 +231,7 @@ class pts_render
 	{
 		return self::$previous_graph_object;
 	}
-	public static function xsl_esults_viewer_graph_template($matching_graph_tables = false)
+	public static function xsl_results_viewer_graph_template($matching_graph_tables = false)
 	{
 		$graph_object = pts_render::previous_graph_object();
 		$width = $graph_object->graphWidth();

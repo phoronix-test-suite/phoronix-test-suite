@@ -502,7 +502,7 @@ abstract class pts_Graph
 		$this->render_graph_pre_init();
 		$this->render_graph_init();
 		$this->render_graph_key();
-		$this->render_graph_base();
+		$this->render_graph_base($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
 		$this->render_graph_heading();
 
 		if($this->graph_hide_identifiers == false)
@@ -512,11 +512,10 @@ abstract class pts_Graph
 
 		if($this->graph_value_type == "NUMERICAL")
 		{
-			$this->render_graph_value_ticks();
+			$this->render_graph_value_ticks($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
 		}
 
 		$this->render_graph_result();
-		$this->render_graph_watermark();
 		return $this->return_graph_image();
 	}
 	protected function render_graph_pre_init()
@@ -581,13 +580,13 @@ abstract class pts_Graph
 			$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9, false, "http://www.phoronix-test-suite.com/");
 		}
 	}
-	protected function render_graph_base()
+	protected function render_graph_base($left_start, $top_start, $left_end, $top_end)
 	{
-		$this->graph_image->draw_rectangle_with_border($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end, $this->graph_color_body, $this->graph_color_notches);
+		$this->graph_image->draw_rectangle_with_border($left_start, $top_start, $left_end, $top_end, $this->graph_color_body, $this->graph_color_notches);
 
 		if($this->graph_body_image != false)
 		{
-			$this->graph_image->image_copy_merge($this->graph_body_image, $this->graph_left_start + (($this->graph_left_end - $this->graph_left_start) / 2) - imagesx($this->graph_body_image) / 2, $this->graph_top_start + (($this->graph_top_end - $this->graph_top_start) / 2) - imagesy($this->graph_body_image) / 2);
+			$this->graph_image->image_copy_merge($this->graph_body_image, $left_start + (($left_end - $left_start) / 2) - imagesx($this->graph_body_image) / 2, $top_start + (($top_end - $top_start) / 2) - imagesy($this->graph_body_image) / 2);
 		}
 
 		if(!empty($this->graph_y_title) && !$this->graph_y_title_hide)
@@ -604,12 +603,12 @@ abstract class pts_Graph
 					case "LIB":
 						$proportion = "Fewer Are Better";
 						$offset += 12;
-						$this->graph_image->draw_arrow($this->graph_left_start + 5, $this->graph_top_start - 4, $this->graph_left_start + 5, $this->graph_top_start - 11, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+						$this->graph_image->draw_arrow($left_start + 5, $top_start - 4, $left_start + 5, $top_start - 11, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
 						break;
 					case "HIB":
 						//$proportion = "Higher Is Better";
 						$offset += 12;
-						$this->graph_image->draw_arrow($this->graph_left_start + 5, $this->graph_top_start - 11, $this->graph_left_start + 5, $this->graph_top_start - 4, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+						$this->graph_image->draw_arrow($left_start + 5, $top_start - 11, $left_start + 5, $top_start - 4, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
 						break;
 				}
 
@@ -624,22 +623,29 @@ abstract class pts_Graph
 				}
 			}
 
-			$this->graph_image->write_text_left($str, $this->graph_font, 7, $this->graph_color_main_headers, $this->graph_left_start + $offset, $this->graph_top_start - 7, $this->graph_left_start + $offset, $this->graph_top_start - 7);
+			$this->graph_image->write_text_left($str, $this->graph_font, 7, $this->graph_color_main_headers, $left_start + $offset, $top_start - 7, $left_start + $offset, $top_start - 7);
+		}
+
+		
+
+		if(!empty($this->graph_watermark_text))
+		{
+			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $left_end - 2, $top_start + 8, $left_end - 2, $top_start + 8, false, $this->graph_watermark_url);
 		}
 	}
-	protected function render_graph_value_ticks()
+	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end)
 	{
-		$tick_width = ($this->graph_top_end - $this->graph_top_start) / $this->graph_attr_marks;
-		$px_from_left_start = $this->graph_left_start - 5;
-		$px_from_left_end = $this->graph_left_start + 5;
+		$tick_width = ($top_end - $top_start) / $this->graph_attr_marks;
+		$px_from_left_start = $left_start - 5;
+		$px_from_left_end = $left_start + 5;
 
 		$display_value = 0;
 
-		$this->graph_image->draw_dashed_line($this->graph_left_start, $this->graph_top_start + $tick_width, $this->graph_left_start, $this->graph_top_end, $this->graph_color_notches, 10, 1, $tick_width);
+		$this->graph_image->draw_dashed_line($left_start, $top_start + $tick_width, $left_start, ($top_end - 1), $this->graph_color_notches, 10, 1, $tick_width);
 
 		for($i = 0; $i < $this->graph_attr_marks; $i++)
 		{
-			$px_from_top = $this->graph_top_end - ($tick_width * $i);
+			$px_from_top = $top_end - ($tick_width * $i);
 
 			//$this->graph_image->draw_line($px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
 
@@ -713,13 +719,6 @@ abstract class pts_Graph
 				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
 			}
-		}
-	}
-	protected function render_graph_watermark()
-	{
-		if(!empty($this->graph_watermark_text))
-		{
-			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $this->graph_left_end - 2, $this->graph_top_start + 8, $this->graph_left_end - 2, $this->graph_top_start + 8, false, $this->graph_watermark_url);
 		}
 	}
 	protected function return_graph_image($quality = 85)
