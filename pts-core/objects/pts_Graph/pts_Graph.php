@@ -135,7 +135,9 @@ abstract class pts_Graph
 			$this->graph_title = $result_object->get_name_formatted();
 			$this->graph_y_title = $result_object->get_scale_formatted();
 			$this->test_identifier = $result_object->get_test_name();
+			$this->graph_proportion = $result_object->get_proportion();
 			$this->addSubTitle($result_object->get_attributes());
+			$this->addInternalIdentifier("Test", $result_object->get_test_name());
 		}
 
 		$this->update_graph_dimensions(-1, -1, true);
@@ -162,6 +164,15 @@ abstract class pts_Graph
 		if($result_file != null && $result_file instanceOf pts_result_file)
 		{
 			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison() && $this->graph_type == "BAR_GRAPH";
+			$this->addInternalIdentifier("Identifier", $result_file->get_suite_name());
+
+			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
+			if(empty($pts_version))
+			{
+				$pts_version = PTS_VERSION;
+			}
+
+			$this->graph_version = "Phoronix Test Suite " . $pts_version;
 		}
 
 		$this->graph_font = $font_type;
@@ -197,14 +208,6 @@ abstract class pts_Graph
 	public function hideGraphIdentifiers()
 	{
 		$this->graph_hide_identifiers = true;
-	}
-	public function loadGraphVersion($data)
-	{
-		$this->graph_version = $data;
-	}
-	public function loadGraphProportion($data)
-	{
-		$this->graph_proportion = $data;
 	}
 	public function loadGraphData($data_array)
 	{
@@ -393,7 +396,6 @@ abstract class pts_Graph
 
 		if(is_numeric($real_maximum))
 		{
-			// disable forcing 100 top when display Percent
 			if($real_maximum < $this->graph_attr_marks)
 			{
 				$maximum = $real_maximum * 1.35;

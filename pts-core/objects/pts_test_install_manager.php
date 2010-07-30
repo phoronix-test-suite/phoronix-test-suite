@@ -34,7 +34,7 @@ class pts_test_install_manager
 
 		if(!pts_test_support_check($identifier))
 		{
-			pts_client::$display->test_install_error($identifier . " is not supported by this system.");
+			//pts_client::$display->test_install_error($identifier . " is not supported by this system.");
 		}
 		else if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($identifier, explode(",", $e)))
 		{

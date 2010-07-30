@@ -24,7 +24,7 @@ class pts_render
 {
 	static $last_graph_object = null;
 
-	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $pts_version = PTS_VERSION, $extra_attributes = null)
+	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
 		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
 		{
@@ -129,12 +129,6 @@ class pts_render
 				$graph->loadGraphRawValues($raw_values);
 				break;
 		}
-
-		$graph->loadGraphProportion($result_object->get_proportion());
-		$graph->loadGraphVersion("Phoronix Test Suite " . $pts_version);
-
-		$graph->addInternalIdentifier("Test", $result_object->get_test_name());
-		$graph->addInternalIdentifier("Identifier", ($result_file instanceOf pts_result_file ? $result_file->get_suite_name() : null));
 
 		if($save_as)
 		{

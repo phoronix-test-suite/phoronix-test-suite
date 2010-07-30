@@ -130,11 +130,6 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 	}
 
 	$result_file = new pts_result_file($test_results_identifier);
-	$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
-	if(empty($pts_version))
-	{
-		$pts_version = PTS_VERSION;
-	}
 
 	$generated_graphs = array();
 	$generated_graph_tables = false;
@@ -175,13 +170,12 @@ function pts_generate_graphs($test_results_identifier, $save_to_dir = false)
 				}
 
 				$chart = new pts_Chart($result_file, null, $table_keys);
-				$chart->loadGraphVersion("Phoronix Test Suite " . $pts_version);
 				$chart->renderChart($save_to_dir . "/result-graphs/" . ($key + 1) . "_table.BILDE_EXTENSION");
 				$generated_graph_tables = true;
 			}
 		}
 
-		$graph = pts_render::render_graph($result_object, $result_file, $save_to, $pts_version);
+		$graph = pts_render::render_graph($result_object, $result_file, $save_to);
 		array_push($generated_graphs, $graph);
 	}
 

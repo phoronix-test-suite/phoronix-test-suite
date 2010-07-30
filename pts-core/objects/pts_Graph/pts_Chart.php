@@ -31,7 +31,8 @@ class pts_Chart extends pts_Graph
 
 	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
 	{
-		parent::__construct();
+		$result_object = null;
+		parent::__construct($result_object, $result_file);
 		$this->graph_attr_big_border = false;
 		$this->result_object_index = $result_object_index;
 
