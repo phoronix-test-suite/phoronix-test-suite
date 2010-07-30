@@ -39,9 +39,9 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 		}
 		else if(pts_is_test($lower_identifier))
 		{
-			$test_title = pts_test_read_xml($lower_identifier, P_TEST_TITLE);
+			$test_profile = new pts_test_profile($lower_identifier);
 
-			if(empty($test_title))
+			if($test_profile->get_test_title() == null)
 			{
 				echo "Not A Test: " . $lower_identifier . "\n";
 				continue;

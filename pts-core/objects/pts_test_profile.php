@@ -117,7 +117,10 @@ class pts_test_profile
 
 		return $dependency_names;
 	}
-
+	public function get_reference_systems()
+	{
+		return pts_strings::trim_explode(',', $this->xml_parser->getXMLValue(P_TEST_REFERENCE_SYSTEMS));
+	}
 	public function get_default_arguments()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
@@ -157,6 +160,10 @@ class pts_test_profile
 	public function get_result_format()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_RESULTFORMAT, "BAR_GRAPH");
+	}
+	public function do_auto_save_results()
+	{
+		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_AUTO_SAVE_RESULTS, "FALSE"));
 	}
 	public function get_result_quantifier()
 	{

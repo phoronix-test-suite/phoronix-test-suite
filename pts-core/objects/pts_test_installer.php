@@ -318,7 +318,7 @@ class pts_test_installer
 		else
 		{
 			$install_time_length = 0;
-			pts_test_installer::setup_test_install_directory($identifier, true);
+			pts_test_installer::setup_test_install_directory($test_install_request, true);
 
 			// Download test files
 			$download_test_files = pts_test_installer::download_test_files($test_install_request);
@@ -387,7 +387,7 @@ class pts_test_installer
 						// TODO: perhaps better way to handle this than to remove pts-install.xml
 						pts_file_io::unlink($test_install_directory . "pts-install.xml");
 						copy($test_install_directory . "install.log", $test_install_directory . "install-failed.log");
-						pts_test_installer::setup_test_install_directory($identifier, true); // Remove installed files from the bunked installation
+						pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation
 						pts_client::$display->test_install_error("The installer exited with a non-zero exit status.");
 						pts_client::$display->test_install_error("Installation Log: " . $test_install_directory . "install-failed.log\n");
 						return false;
@@ -476,15 +476,16 @@ class pts_test_installer
 
 		return $valid;
 	}
-	protected static function setup_test_install_directory($identifier, $remove_old_files = false)
+	protected static function setup_test_install_directory(&$test_install_request, $remove_old_files = false)
 	{
+		$identifier = $test_install_request->get_test_identifier();
 		pts_file_io::mkdir(TEST_ENV_DIR . $identifier);
 
 		if($remove_old_files)
 		{
 			// Remove any (old) files that were installed
 			$ignore_files = array("pts-install.xml", "install-failed.log");
-			foreach(pts_objects_test_downloads($identifier) as $download_object)
+			foreach($test_install_request->get_download_objects() as $download_object)
 			{
 				array_push($ignore_files, $download_object->get_filename());
 			}

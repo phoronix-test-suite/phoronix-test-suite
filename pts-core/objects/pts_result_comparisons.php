@@ -36,19 +36,19 @@ class pts_result_comparisons
 		{
 			if(pts_is_suite($result_test))
 			{
-				$ref_systems_xml_strings[$result_test] = pts_suite_read_xml($result_test, P_SUITE_REFERENCE_SYSTEMS);
+				$test_suite = new pts_test_suite($result_test);
+				$ref_systems_xml_strings[$result_test] = $test_suite->get_reference_systems();
 			}
 			else if(pts_is_test($result_test))
 			{
-				$ref_systems_xml_strings[$result_test] = pts_test_read_xml($result_test, P_TEST_REFERENCE_SYSTEMS);
+				$test_profile = new pts_test_profile($result_test);
+				$ref_systems_xml_strings[$result_test] = $test_profile->get_reference_systems();
 			}
 			else
 			{
-				$ref_systems_xml_strings[$result_test] = null;
+				$ref_systems_xml_strings[$result_test] = array();
 			}
 		}
-
-		$specific_reference_ids = pts_strings::trim_explode(',', $ref_systems_xml_strings[$result_test]);
 
 		pts_result_comparisons::process_reference_comparison_hashes($specific_reference_ids, $result_identifiers, $test_result_hashes, $reference_tests);
 		pts_result_comparisons::process_reference_comparison_hashes(pts_generic_reference_system_comparison_ids(), $result_identifiers, $test_result_hashes, $reference_tests, true);

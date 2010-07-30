@@ -37,7 +37,7 @@ class validate_test_profile implements pts_option_interface
 			pts_validation::check_xml_tags($test_parser, pts_validation::recommended_test_tags(), $validation_warnings);
 
 			// Check for other test profile problems
-			foreach(pts_objects_test_downloads($test_identifier) as $package_download)
+			foreach(pts_test_install_request::read_download_object_list($test_identifier) as $package_download)
 			{
 				$download_urls = $package_download->get_download_url_array();
 

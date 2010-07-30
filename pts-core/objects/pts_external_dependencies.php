@@ -154,9 +154,9 @@ class pts_external_dependencies
 	{
 		// Install from a list of external dependencies
 		$dependencies_needed = false;
-		$dependencies = pts_test_read_xml($identifier, P_TEST_EXDEP);
+		$test_profile = new pts_test_profile($identifier);
 
-		return pts_strings::trim_explode(',', $dependencies);
+		return $test_profile->get_dependencies();
 	}
 	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false)
 	{

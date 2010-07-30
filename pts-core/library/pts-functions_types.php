@@ -383,6 +383,10 @@ function pts_virtual_suite_tests($object)
 
 	return $contained_tests;
 }
+function pts_test_installed($identifier)
+{
+	return is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml");
+}
 function pts_find_result_file($file, $check_global = true)
 {
 	// PTS Find A Saved File

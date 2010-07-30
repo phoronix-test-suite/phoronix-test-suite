@@ -263,6 +263,24 @@ class pts_client
 				));
 		}
 	}
+	public static function setup_test_result_directory($save_to)
+	{
+		$save_to_dir = SAVE_RESULTS_DIR . $save_to;
+
+		if(strpos(basename($save_to_dir), '.'))
+		{
+			$save_to_dir = dirname($save_to_dir);
+		}
+
+		if($save_to_dir != ".")
+		{
+			pts_file_io::mkdir($save_to_dir);
+		}
+
+		file_put_contents($save_to_dir . "/index.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=composite.xml\"></HEAD><BODY></BODY></HTML>");
+
+		return $save_to_dir;
+	}
 	public static function remove_installed_test($identifier)
 	{
 		pts_file_io::delete(TEST_ENV_DIR . $identifier, null, true);
@@ -383,7 +401,7 @@ class pts_client
 			$save_to .= ".xml";
 		}
 
-		$save_to_dir = pts_setup_result_directory($save_to);
+		$save_to_dir = pts_client::setup_test_result_directory($save_to);
 	
 		if($save_to == null || $save_results == null)
 		{
@@ -438,7 +456,7 @@ class pts_client
 	}
 	public static function regenerate_graphs($result_file_identifier, $full_process_string = false)
 	{
-		$save_to_dir = pts_setup_result_directory($result_file_identifier);
+		$save_to_dir = pts_client::setup_test_result_directory($result_file_identifier);
 		$generated_graphs = pts_render::generate_result_file_graphs($result_file_identifier, $save_to_dir);
 		$generated = count($generated_graphs) > 0;
 

@@ -156,7 +156,7 @@ function pts_test_download_files_locally_available($identifier)
 {
 	foreach(pts_contained_tests($identifier, true, true, false) as $name)
 	{
-		$test_object_downloads = pts_objects_test_downloads($name);
+		$test_object_downloads = pts_test_install_request::read_download_object_list($name);
 
 		foreach($test_object_downloads as &$download_package)
 		{

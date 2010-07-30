@@ -79,11 +79,13 @@ class run_test implements pts_option_interface
 			{
 				if(!pts_is_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE"))
 				{
-					if(pts_test_read_xml($to_run, P_TEST_RESULTFORMAT) == "NO_RESULT")
+					$test_profile = new pts_test_profile($to_run);
+
+					if($test_profile->get_result_format() == "NO_RESULT")
 					{
 						pts_set_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE", true);
 					}
-					if(pts_test_read_xml($to_run, P_TEST_AUTO_SAVE_RESULTS) == "TRUE")
+					if($test_profile->do_auto_save_results())
 					{
 						pts_set_assignment("TEST_PROFILE_REQUESTS_SAVE", true);
 					}
@@ -284,7 +286,7 @@ class run_test implements pts_option_interface
 
 		if($save_results)
 		{
-			$results_directory = pts_setup_result_directory($test_run_manager->get_file_name()) . "/";
+			$results_directory = pts_client::setup_test_result_directory($test_run_manager->get_file_name()) . '/';
 
 			if(pts_read_assignment("IS_BATCH_MODE"))
 			{

@@ -21,24 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_setup_result_directory($save_to)
-{
-	$save_to_dir = SAVE_RESULTS_DIR . $save_to;
-
-	if(strpos(basename($save_to_dir), '.'))
-	{
-		$save_to_dir = dirname($save_to_dir);
-	}
-
-	if($save_to_dir != ".")
-	{
-		pts_file_io::mkdir($save_to_dir);
-	}
-
-	file_put_contents($save_to_dir . "/index.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=composite.xml\"></HEAD><BODY></BODY></HTML>");
-
-	return $save_to_dir;
-}
 function pts_suite_needs_updated_install($identifier)
 {
 	if(!pts_is_assignment("CACHE_SUITE_INSTALLED_" . strtoupper($identifier)))
@@ -129,11 +111,6 @@ function pts_test_read_xml($identifier, $xml_option)
  	$xml_parser = new pts_test_tandem_XmlReader($identifier);
 	return $xml_parser->getXMLValue($xml_option);
 }
-function pts_test_read_xml_array($identifier, $xml_option)
-{
- 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-	return $xml_parser->getXMLArrayValues($xml_option);
-}
 function pts_suite_read_xml($identifier, $xml_option)
 {
  	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
@@ -143,10 +120,6 @@ function pts_suite_read_xml_array($identifier, $xml_option)
 {
  	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
 	return $xml_parser->getXMLArrayValues($xml_option);
-}
-function pts_test_installed($identifier)
-{
-	return is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml");
 }
 function pts_test_name_to_identifier($name)
 {
@@ -234,7 +207,7 @@ function pts_estimated_download_size($identifier, $divider = 1048576, $include_e
 		foreach(pts_contained_tests($identifier, $include_extensions) as $test)
 		{
 			// The work for calculating the download size in 1.4.0+
-			foreach(pts_objects_test_downloads($test) as $download_object)
+			foreach(pts_test_install_request::read_download_object_list($test) as $download_object)
 			{
 				$estimated_size += $download_object->get_filesize();
 			}
@@ -565,54 +538,6 @@ function pts_cpu_arch_compatible($check_against)
 	}
 
 	return $compatible;
-}
-function pts_objects_test_downloads($test_identifier)
-{
-	// TODO: this is replicated within pts_test_install_request thus this function is deprecated and should be removed
-	// pts_test_install_request->generate_download_object_list()
-	$obj_r = array();
-
-	if(is_file(($download_xml_file = pts_tests::test_resources_location($test_identifier) . "downloads.xml")))
-	{
-		pts_loader::load_definitions("test-profile-downloads.xml");
-
-		$xml_parser = new tandem_XmlReader($download_xml_file);
-		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
-		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
-		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
-		$package_filesize = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILESIZE);
-		$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
-		$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
-
-		foreach(array_keys($package_filename) as $i)
-		{
-			if(!empty($package_platform[$i]))
-			{
-				$platforms = pts_strings::trim_explode(',', $package_platform[$i]);
-
-				if(!in_array(OPERATING_SYSTEM, $platforms) && !(IS_BSD && BSD_LINUX_COMPATIBLE && in_array("Linux", $platforms)))
-				{
-					// This download does not match the operating system
-					continue;
-				}
-			}
-
-			if(!empty($package_architecture[$i]))
-			{
-				$architectures = pts_strings::trim_explode(',', $package_architecture[$i]);
-
-				if(!pts_cpu_arch_compatible($architectures))
-				{
-					// This download does not match the CPU architecture
-					continue;
-				}
-			}
-
-			array_push($obj_r, new pts_test_file_download($package_url[$i], $package_filename[$i], $package_filesize[$i], $package_md5[$i]));
-		}
-	}
-
-	return $obj_r;
 }
 function pts_saved_test_results_identifiers()
 {

@@ -30,6 +30,14 @@ class pts_test_install_request
 		$this->test_identifier = $test_identifier;
 		$this->test_files = array();
 	}
+	public static function read_download_object_list($test_identifier)
+	{
+		// A way to get just the download object list if needed
+		$test_install_request = new pts_test_install_request($test_identifier);
+		$test_install_request->generate_download_object_list();
+
+		return $test_install_request->get_download_objects();
+	}
 	public function get_test_identifier()
 	{
 		return $this->test_identifier;

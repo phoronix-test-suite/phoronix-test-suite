@@ -56,6 +56,10 @@ class pts_test_suite
 	{
 		return $this->only_partially_supported;
 	}
+	public function get_reference_systems()
+	{
+		return pts_strings::trim_explode(',', $this->xml_parser->getXMLValue(P_SUITE_REFERENCE_SYSTEMS));
+	}
 	public function not_supported()
 	{
 		return $this->not_supported;

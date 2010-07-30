@@ -114,6 +114,9 @@
 		<Test>sudokut</Test>
 	</RunTest>
 	<RunTest>
+		<Test>unpack-linux</Test>
+	</RunTest>
+	<RunTest>
 		<Test>java</Test>
 	</RunTest>
 </PhoronixTestSuite>
