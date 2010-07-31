@@ -48,7 +48,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 			}
 			else
 			{
-				if(pts_test_support_check($lower_identifier) == false)
+				if(pts_client::test_support_check($lower_identifier) == false)
 				{
 					continue;
 				}
@@ -154,7 +154,9 @@ function pts_verify_test_installation($identifiers, &$tests_missing)
 			}
 			else
 			{
-				if(pts_test_supported($test))
+				$test_profile = new pts_test_profile($test);
+
+				if($test_profile->is_supported())
 				{
 					pts_arrays::unique_push($current_tests_missing, $test);
 				}

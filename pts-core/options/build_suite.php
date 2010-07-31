@@ -35,7 +35,9 @@ class build_suite implements pts_option_interface
 		$possible_tests = array();
 		foreach(pts_tests::available_tests() as $identifier)
 		{
-			if(pts_test_supported($identifier))
+			$test_profile = new pts_test_profile($identifier);
+
+			if($test_profile->is_supported())
 			{
 				array_push($possible_tests, $identifier);
 			}

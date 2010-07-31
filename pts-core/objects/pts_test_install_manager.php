@@ -32,7 +32,7 @@ class pts_test_install_manager
 	{
 		$added = false;
 
-		if(!pts_test_support_check($identifier))
+		if(pts_client::test_support_check($identifier) == false)
 		{
 			//pts_client::$display->test_install_error($identifier . " is not supported by this system.");
 		}

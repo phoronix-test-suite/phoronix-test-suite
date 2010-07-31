@@ -386,7 +386,7 @@ class run_test implements pts_option_interface
 
 			pts_module_process("__event_results_process", $xml_results_writer);
 			pts_save_test_file($xml_results_writer, $test_run_manager->get_file_name(), $test_run_manager->get_results_identifier());
-			pts_module_process("__event_results_saved", $test_run_manager->get_file_name());
+			pts_module_process("__event_results_saved", $test_run_manager);
 			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $test_run_manager->get_file_name());
 			pts_client::display_web_page(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/index.html");

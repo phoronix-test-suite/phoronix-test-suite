@@ -39,7 +39,7 @@ class pts_strings
 	}
 	public static function trim_explode($delimiter, $to_explode)
 	{
-		return array_map("trim", explode($delimiter, $to_explode));
+		return empty($to_explode) ? array() : array_map("trim", explode($delimiter, $to_explode));
 	}
 	public static function first_in_string($string, $delimited_by = ' ')
 	{

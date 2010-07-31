@@ -202,6 +202,69 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_SUBTITLE);
 	}
+	public function get_supported_platforms()
+	{
+		return pts_strings::trim_explode(',', $this->xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS));
+	}
+	public function get_supported_architectures()
+	{
+		return pts_strings::trim_explode(',', $this->xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS));
+	}
+	public function is_supported()
+	{
+		return $this->is_test_architecture_supported() && $this->is_test_platform_supported() && $this->is_core_version_supported();
+	}
+	public function is_test_architecture_supported()
+	{
+		// Check if the system's architecture is supported by a test
+		$supported = true;
+		$archs = $this->get_supported_architectures();
+
+		if(!empty($archs))
+		{
+			$supported = pts_cpu_arch_compatible($archs);
+		}
+
+		return $supported;
+	}
+	public function is_core_version_supported()
+	{
+		// Check if the test profile's version is compatible with pts-core
+		$supported = true;
+		$requires_core_version = $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION);
+
+		if(!empty($requires_core_version))
+		{
+			$core_check = pts_strings::trim_explode('-', $requires_core_version);	
+			$support_begins = $core_check[0];
+			$support_ends = isset($core_check[1]) ? $core_check[1] : PTS_CORE_VERSION;
+			$supported = PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
+		}
+
+		return $supported;
+	}
+	public function is_test_platform_supported()
+	{
+		// Check if the system's OS is supported by a test
+		$supported = true;
+
+		$platforms = $this->get_supported_platforms();
+
+		if(!empty($platforms) && !in_array(OPERATING_SYSTEM, $platforms))
+		{
+			if(IS_BSD && BSD_LINUX_COMPATIBLE && in_array("Linux", $platforms))
+			{
+				// The OS is BSD but there is Linux API/ABI compatibility support loaded
+				$supported = true;
+			}
+			else
+			{
+				$supported = false;
+			}
+		}
+
+		return $supported;
+	}
 
 	//
 	// Set Functions

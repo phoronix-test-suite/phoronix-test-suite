@@ -309,9 +309,9 @@ function pts_virtual_suite_tests($object)
 		case "TYPE_VIRT_SUITE_SUBSYSTEM":
 			foreach(pts_tests::supported_tests() as $test)
 			{
-				$type = pts_test_read_xml($test, P_TEST_HARDWARE_TYPE);
+				$test_profile = new pts_test_profile($test);
 
-				if(strtolower($type) == $object && pts_test_supported($test))
+				if(strtolower($test_profile->get_test_hardware_type()) == $object && $test_profile->is_supported())
 				{
 					array_push($contained_tests, $test);
 				}
@@ -634,72 +634,6 @@ function pts_estimated_run_time($identifier, $return_total_time = true, $return_
 
 	return $return_total_time ? $estimated_total : $estimated_lengths;
 }
-function pts_test_architecture_supported($identifier)
-{
-	// Check if the system's architecture is supported by a test
-	$supported = true;
-
-	if(pts_is_test($identifier))
-	{
-		$archs = pts_test_read_xml($identifier, P_TEST_SUPPORTEDARCHS);
-
-		if(!empty($archs))
-		{
-			$archs = pts_strings::trim_explode(",", $archs);
-			$supported = pts_cpu_arch_compatible($archs);
-		}
-	}
-
-	return $supported;
-}
-function pts_test_platform_supported($identifier)
-{
-	// Check if the system's OS is supported by a test
-	$supported = true;
-
-	if(pts_is_test($identifier))
-	{
-		$platforms = pts_test_read_xml($identifier, P_TEST_SUPPORTEDPLATFORMS);
-
-		if(!empty($platforms))
-		{
-			$platforms = pts_strings::trim_explode(",", $platforms);
-
-			if(!in_array(OPERATING_SYSTEM, $platforms))
-			{
-				if(IS_BSD && BSD_LINUX_COMPATIBLE && in_array("Linux", $platforms))
-				{
-					// The OS is BSD but there is Linux API/ABI compatibility support loaded
-					$supported = true;
-
-				}
-				else
-				{
-					$supported = false;
-				}
-			}
-		}
-	}
-
-	return $supported;
-}
-function pts_test_version_supported($identifier)
-{
-	// Check if the test profile's version is compatible with pts-core
-	$supported = true;
-
-	if(pts_is_test($identifier))
-	{
-		$requires_core_version = pts_test_read_xml($identifier, P_TEST_REQUIRES_COREVERSION);
-
-		if(!empty($requires_core_version))
-		{
-			$supported = pts_is_supported_core_version($requires_core_version);
-		}
-	}
-
-	return $supported;
-}
 function pts_suite_version_supported($identifier)
 {
 	// Check if the test suite's version is compatible with pts-core
@@ -711,18 +645,14 @@ function pts_suite_version_supported($identifier)
 
 		if(!empty($requires_core_version))
 		{
-			$supported = pts_is_supported_core_version($requires_core_version);
+			$core_check = pts_strings::trim_explode('-', $requires_core_version);	
+			$support_begins = $core_check[0];
+			$support_ends = isset($core_check[1]) ? $core_check[1] : PTS_CORE_VERSION;
+			$supported = PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
 		}
 	}
 
 	return $supported;
-}
-function pts_is_supported_core_version($core_check)
-{
-	$core_check = pts_strings::trim_explode('-', $core_check);	
-	$support_begins = $core_check[0];
-	$support_ends = isset($core_check[1]) ? $core_check[1] : PTS_CORE_VERSION;
-	return PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
 }
 function pts_version_newer($version_a, $version_b)
 {
@@ -741,7 +671,9 @@ function pts_suite_supported($identifier)
 
 	foreach($tests as &$test)
 	{
-		if(!pts_test_supported($test))
+		$test_profile = new pts_test_profile($test);
+
+		if($test_profile->is_supported())
 		{
 			$supported_size--;
 		}
@@ -761,10 +693,6 @@ function pts_suite_supported($identifier)
 	}
 
 	return $return_code;
-}
-function pts_test_supported($identifier)
-{
-	return pts_test_architecture_supported($identifier) && pts_test_platform_supported($identifier) && pts_test_version_supported($identifier);
 }
 function pts_available_base_tests_array()
 {
@@ -925,21 +853,6 @@ function pts_suites_containing_test($test_identifier)
 	}
 
 	return $associated_suites;
-}
-function pts_remove_test_profile($identifier)
-{
-	$xml_loc = pts_tests::test_profile_location($identifier);
-	$resources_loc = pts_tests::test_resources_location($identifier);
-	$removed = false;
-
-	if(is_writable($xml_loc) && is_writable($resources_loc))
-	{
-		pts_file_io::unlink($xml_loc);
-		pts_file_io::delete($resources_loc, null, true);
-		$removed = true;
-	}
-
-	return $removed;
 }
 function pts_remove_test_result_dir($identifier)
 {

@@ -27,7 +27,9 @@ class list_tests implements pts_option_interface
 		$tests_to_display = array();
 		foreach(pts_tests::available_tests() as $identifier)
 		{
-			if((pts_is_assignment("LIST_UNSUPPORTED") xor pts_test_supported($identifier)) || pts_is_assignment("LIST_ALL_TESTS"))
+			$test_profile = new pts_test_profile($identifier);
+
+			if((pts_is_assignment("LIST_UNSUPPORTED") xor $test_profile->is_supported()) || pts_is_assignment("LIST_ALL_TESTS"))
 			{
 				array_push($tests_to_display, $identifier);
 			}

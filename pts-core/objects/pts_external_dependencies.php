@@ -38,7 +38,9 @@ class pts_external_dependencies
 		{
 			foreach(pts_contained_tests($identifier, true) as $test)
 			{
-				if(!in_array($test, $tests_to_check) && pts_test_supported($test))
+				$test_profile = new pts_test_profile($test);
+
+				if(!in_array($test, $tests_to_check) && $test_profile->is_supported())
 				{
 					array_push($tests_to_check, $test);
 				}

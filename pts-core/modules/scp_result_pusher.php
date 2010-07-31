@@ -40,7 +40,7 @@ class scp_result_pusher extends pts_module_interface
 	// PTS Module API Hooks
 	//
 	
-	public static function __event_results_saved($results_identifier)
+	public static function __event_results_saved($test_run_manager)
 	{
 		if(!pts_module::is_module_setup())
 		{
@@ -53,7 +53,7 @@ class scp_result_pusher extends pts_module_interface
 
 		if(is_dir(SAVE_RESULTS_DIR . $results_identifier) && pts_client::executable_in_path("scp"))
 		{
-			echo shell_exec("scp -r " . SAVE_RESULTS_DIR . $results_identifier . " " . $scp_user . "@" . $scp_host . ":" . $scp_remote_dir);
+			echo shell_exec("scp -r " . SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . " " . $scp_user . "@" . $scp_host . ":" . $scp_remote_dir);
 		}
 	}
 }

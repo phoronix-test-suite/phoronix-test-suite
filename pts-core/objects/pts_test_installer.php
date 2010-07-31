@@ -53,7 +53,8 @@ class pts_test_installer
 			}
 			else
 			{
-				pts_client::$display->generic_sub_heading("Installed: " . $test . " [v" . pts_test_installed_profile_version($test) . "]");
+				$installed_test = new pts_installed_test($test);
+				pts_client::$display->generic_sub_heading("Installed: " . $test . " [v" . $installed_test->get_installed_version() . "]");
 			}
 		}
 

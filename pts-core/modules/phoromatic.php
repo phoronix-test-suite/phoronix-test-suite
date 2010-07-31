@@ -492,14 +492,14 @@ class phoromatic extends pts_module_interface
 		// Report PTS user error warnings to Phoromatic server
 		phoromatic::report_warning_to_phoromatic($user_error->get_error_string());
 	}
-	public static function __event_results_saved($result_identifier)
+	public static function __event_results_saved($test_run_manager)
 	{
 		if(pts_module_variable("AUTO_UPLOAD_RESULTS_TO_PHOROMATIC") && !pts_read_assignment("PHOROMATIC_TITLE") && pts_module::is_module_setup())
 		{
 			pts_set_assignment("PHOROMATIC_UPLOAD_TEST_LOGS", true);
 			pts_set_assignment("PHOROMATIC_UPLOAD_SYSTEM_LOGS", true);
 
-			phoromatic::upload_unscheduled_test_results($result_identifier);
+			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
 		}
 	}
 

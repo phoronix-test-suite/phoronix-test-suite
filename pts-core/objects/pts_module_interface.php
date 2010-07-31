@@ -169,7 +169,7 @@ class pts_module_interface
 	}
 	public static function __event_results_saved($obj = null)
 	{
-		// Passed is a string of the results identifier that was saved
+		// Passed is a copy of the pts_test_run_manager
 		return;
 	}
 	public static function __event_user_error($obj = null)
