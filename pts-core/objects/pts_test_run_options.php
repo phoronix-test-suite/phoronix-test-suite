@@ -40,9 +40,11 @@ class pts_test_run_options
 
 		foreach(pts_test_run_options::test_option_objects($identifier) as $i => $o)
 		{
+			$test_profile = new pts_test_profile($identifier);
+
 			if($i == 0)
 			{
-				pts_client::$display->generic_heading(pts_test_identifier_to_name($identifier) . " Test Configuration");
+				pts_client::$display->generic_heading($test_profile->get_name() . " Test Configuration");
 			}
 
 			$option_identifier = $o->get_identifier();

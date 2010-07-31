@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -59,6 +59,14 @@ class pts_installed_test
 	public function get_run_count()
 	{
 		return ($times_run = $this->xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN)) != false ? $times_run : 0;
+	}
+	public function get_installed_checksum()
+	{
+		return $this->xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
+	}
+	public function get_installed_system_identifier()
+	{
+		return $this->xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
 	}
 }
 

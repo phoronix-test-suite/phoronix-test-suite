@@ -23,7 +23,14 @@
 
 function pts_gui_installed_suites()
 {
-	$installed_suites = array_map("pts_suite_identifier_to_name", pts_installed_suites_array());
+	$installed_suites = array();
+
+	foreach(pts_installed_suites_array() as $suite)
+	{
+		$test_suite = new pts_test_suite($suite);
+		array_push($installed_suites, $test_suite->get_name());
+	}
+
 	sort($installed_suites);
 
 	return $installed_suites;
@@ -95,15 +102,14 @@ function pts_gui_available_suites($to_show_types, $license_types = null, $depend
 		{
 			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit, $license_types))
 			{
-				array_push($to_show_names, $name);
+				array_push($to_show_names, $ts->get_name());
 			}
 		}
 	}
 
-	$test_suites = array_map("pts_suite_identifier_to_name", $to_show_names);
-	sort($test_suites);
+	sort($to_show_names);
 
-	return $test_suites;
+	return $to_show_names;
 }
 function pts_gui_installed_tests($to_show_types, $license_types)
 {
@@ -119,11 +125,10 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 
 		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->get_test_title() != "")
 		{
-			array_push($installed_tests, $test);
+			array_push($installed_tests, $tp->get_name());
 		}
 	}
 
-	$installed_tests = array_map("pts_test_identifier_to_name", $installed_tests);
 	sort($installed_tests);
 
 	return $installed_tests;
@@ -131,7 +136,7 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 function pts_gui_available_tests($to_show_types, $license_types, $dependency_limit = null, $downloads_limit = null)
 {
 	$test_names = pts_tests::supported_tests();
-	$to_show_names = array();
+	$test_names = array();
 
 	foreach($test_names as &$name)
 	{
@@ -142,12 +147,11 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 		{
 			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit, $license_types))
 			{
-				array_push($to_show_names, $name);
+				array_push($test_names, $tp->get_name());
 			}
 		}
 	}
 
-	$test_names = array_map("pts_test_identifier_to_name", $to_show_names);
 	sort($test_names);
 
 	return $test_names;

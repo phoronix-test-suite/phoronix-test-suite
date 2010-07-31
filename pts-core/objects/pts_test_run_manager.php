@@ -199,6 +199,12 @@ class pts_test_run_manager
 
 		return $input;
 	}
+	public function result_already_contains_identifier()
+	{
+		$result_file = new pts_result_file($this->file_name);
+
+		return in_array($this->results_identifier, $result_file->get_system_identifiers());
+	}
 	public function prompt_save_name()
 	{
 		// Prompt to save a file when running a test

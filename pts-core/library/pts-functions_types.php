@@ -21,12 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_test_result_contains_result_identifier($test_result, $results_identifier)
-{
-	$result_file = new pts_result_file($test_result);
-
-	return in_array($results_identifier, $result_file->get_system_identifiers());	
-}
 function pts_is_run_object($object)
 {
 	return pts_is_test($object) || pts_is_suite($object);
@@ -56,10 +50,6 @@ function pts_is_base_test($object)
 function pts_is_test_result($identifier)
 {
 	return is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
-}
-function pts_is_test_result_directory($identifier)
-{
-	return is_dir(SAVE_RESULTS_DIR . $identifier);
 }
 function pts_validate_local_test_profile($identifier)
 {
@@ -417,7 +407,6 @@ function pts_rebuild_suite_type_cache($identifier)
 	pts_type_handler::pts_identifier_type($identifier, true);
 	pts_location_suite($identifier, true);
 }
-
 function pts_suite_needs_updated_install($identifier)
 {
 	if(!pts_is_assignment("CACHE_SUITE_INSTALLED_" . strtoupper($identifier)))
@@ -426,7 +415,9 @@ function pts_suite_needs_updated_install($identifier)
 
 		foreach(pts_contained_tests($identifier, true, true, true) as $test)
 		{
-			if(!pts_test_installed($test) || pts_test_installed_system_identifier($test) != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL"))
+			$installed_test = new pts_installed_test($test);
+
+			if(!pts_test_installed($test) || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL"))
 			{
 				$needs_update = true;
 				break;
@@ -440,8 +431,10 @@ function pts_suite_needs_updated_install($identifier)
 }
 function pts_test_needs_updated_install($identifier)
 {
+	$installed_test = new pts_installed_test($identifier);
+
 	// Checks if test needs updating
-	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable(pts_test_profile_version($identifier), pts_test_installed_profile_version($identifier)) || pts_test_checksum_installer($identifier) != pts_test_installed_checksum_installer($identifier) || pts_test_installed_system_identifier($identifier) != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL");
+	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable(pts_test_profile_version($identifier), $installed_test->get_installed_version()) || pts_test_checksum_installer($identifier) != $installed_test->get_installed_checksum() || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL");
 }
 function pts_test_checksum_installer($identifier)
 {
@@ -464,21 +457,6 @@ function pts_test_checksum_installer($identifier)
 
 	return $md5_checksum;
 }
-function pts_test_installed_checksum_installer($identifier)
-{
-	// Read installer checksum of installed tests
-	return pts_installed_test_read_xml($identifier, P_INSTALL_TEST_CHECKSUM);
-}
-function pts_test_installed_system_identifier($identifier)
-{
-	// Read installer checksum of installed tests
-	return pts_installed_test_read_xml($identifier, P_INSTALL_TEST_SYSIDENTIFY);
-}
-function pts_test_installed_profile_version($identifier)
-{
-	// Checks installed version
-	return pts_installed_test_read_xml($identifier, P_INSTALL_TEST_VERSION);
-}
 function pts_test_profile_version($identifier)
 {
 	// Checks PTS profile version
@@ -490,18 +468,6 @@ function pts_test_profile_version($identifier)
 	}
 
 	return $version;
-}
-function pts_installed_test_read_xml($identifier, $xml_option)
-{
-	$read = null;
-
-	if(pts_test_installed($identifier))
-	{
-	 	$xml_parser = new pts_installed_test_tandem_XmlReader($identifier, false);
-		$read = $xml_parser->getXMLValue($xml_option);
-	}
-
-	return $read;
 }
 function pts_test_read_xml($identifier, $xml_option)
 {
@@ -553,44 +519,6 @@ function pts_suite_name_to_identifier($name)
 	}
 
 	return isset($cache[$name]) ? $cache[$name] : false;
-}
-function pts_test_identifier_to_name($identifier)
-{
-	// Convert identifier to test name
-	static $cache;
-
-	if(!isset($cache[$identifier]))
-	{
-		$name = false;
-
-		if(!empty($identifier) && pts_is_test($identifier))
-		{
-			$name = pts_test_read_xml($identifier, P_TEST_TITLE);
-		}
-
-		$cache[$identifier] = $name;
-	}
-
-	return $cache[$identifier];
-}
-function pts_suite_identifier_to_name($identifier)
-{
-	// Convert identifier to test name
-	static $cache;
-
-	if(!isset($cache[$identifier]))
-	{
-		$name = false;
-
-		if(!empty($identifier) && pts_is_suite($identifier))
-		{
-			$name = pts_suite_read_xml($identifier, P_SUITE_TITLE);
-		}
-
-		$cache[$identifier] = $name;
-	}
-
-	return $cache[$identifier];
 }
 function pts_estimated_download_size($identifier, $divider = 1048576, $include_extensions = true)
 {
@@ -676,7 +604,8 @@ function pts_estimated_run_time($identifier, $return_total_time = true, $return_
 	{
 		if(pts_test_installed($test))
 		{
-			$this_length = pts_installed_test_read_xml($test, P_INSTALL_TEST_AVG_RUNTIME);
+			$installed_test = new pts_installed_test($test);
+			$this_length = $installed_test->get_average_run_time();
 			$estimated_length = 0;
 
 			if(is_numeric($this_length) && $this_length > 0)

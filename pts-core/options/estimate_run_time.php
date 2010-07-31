@@ -36,7 +36,9 @@ class estimate_run_time implements pts_option_interface
 
 		foreach($run_times as $test => $time)
 		{
-			echo pts_test_identifier_to_name($test) . ": ";
+			$test_profile = new pts_test_profile($test);
+
+			echo $test_profile->get_name() . ": ";
 
 			if($time < 1)
 			{

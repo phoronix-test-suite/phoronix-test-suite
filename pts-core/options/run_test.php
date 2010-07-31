@@ -297,7 +297,7 @@ class run_test implements pts_option_interface
 				pts_arrays::unique_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
-			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($test_run_manager->get_file_name()) || !pts_test_result_contains_result_identifier($test_run_manager->get_file_name(), $test_run_manager->get_results_identifier())))
+			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($test_run_manager->get_file_name()) || $test_run_manager->result_already_contains_identifier() == false))
 			{
 				$xml_results_writer->setXslBinding("pts-results-viewer.xsl");
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, 0, phodevi::system_hardware(true));

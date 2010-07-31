@@ -331,7 +331,8 @@ class gui_gtk implements pts_option_interface
 		}
 		if(($p = pts_read_assignment("PREV_TEST_INSTALLED")))
 		{
-			$button_box->add(new pts_gtk_label("<b>Installed " . pts_test_identifier_to_name($p) . "</b> "));
+			$test_profile = new pts_test_profile($p);
+			$button_box->add(new pts_gtk_label("<b>Installed " . $test_profile->get_name() . "</b> "));
 
 			$ti_button = new GtkButton("Run Test");
 			$ti_button->connect_simple("clicked", array("gui_gtk", "show_run_confirmation_interface"), $p);
@@ -1330,7 +1331,8 @@ class gui_gtk implements pts_option_interface
 						$str .= ", ";
 					}
 
-					$str .= pts_suite_identifier_to_name($suite);
+					$test_suite = new pts_test_suite($suite);
+					$str .= $test_suite->get_name();
 					$i++;
 				}
 				if($i == 0)

@@ -31,7 +31,8 @@ class list_installed_suites implements pts_option_interface
 		{
 			foreach($installed_suites as $identifier)
 			{
-			 	echo "- " . pts_suite_identifier_to_name($identifier) . "\n";
+				$test_suite = new pts_test_suite($identifier);
+			 	echo "- " . $test_suite->get_name() . "\n";
 			}
 			echo "\n";
 		}

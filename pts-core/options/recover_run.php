@@ -25,8 +25,12 @@ class recover_run implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "pts_is_test_result_directory", null, "No test result was found found.")
+		new pts_argument_check(0, array("recover_run", "is_test_result_directory"), null, "No test result was found found.")
 		);
+	}
+	public static function is_test_result_directory($identifier)
+	{
+		return is_dir(SAVE_RESULTS_DIR . $identifier);
 	}
 	public static function run($r)
 	{

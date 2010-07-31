@@ -64,7 +64,8 @@ class gui_gtk_events extends pts_module_interface
 	}
 	public static function __pre_test_download($obj)
 	{
-		self::$test_install_current = pts_test_identifier_to_name($obj[0]);
+		$test_profile = new pts_test_profile($obj[0]);
+		self::$test_install_current = $test_profile->get_name();
 		self::$test_download_count = count($obj[1]);
 		self::$progress_window->update_progress_bar(0, "Downloading: " . $obj[1][0]->get_filename() . " (" . round($obj[1][0]->get_filesize() / 1048576, 1) . "MB)", self::$install_overall_percent, "Installing: " . self::$test_install_current);
 	}
