@@ -86,7 +86,4 @@
 	<RunTest>
 		<Test>unpack-linux</Test>
 	</RunTest>
-	<RunTest>
-		<Test>tar-linux</Test>
-	</RunTest>
 </PhoronixTestSuite>
