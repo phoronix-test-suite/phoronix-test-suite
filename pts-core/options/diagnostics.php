@@ -34,13 +34,13 @@ class diagnostics implements pts_option_interface
 			}
 		}
 
-		echo "\nEnd-User Run-Time Variables:\n";
-		foreach(pts_user_runtime_variables() as $var => $var_value)
+		echo "\nVariables That Can Be Used As Result Identifiers / File Names:\n";
+		foreach(pts_client::user_run_save_variables() as $var => $var_value)
 		{
 			echo $var . " = " . $var_value . "\n";
 		}
 		echo "\nEnvironmental Variables (accessible via test scripts):\n";
-		foreach(pts_env_variables() as $var => $var_value)
+		foreach(pts_client::environmental_variables() as $var => $var_value)
 		{
 			echo $var . " = " . $var_value . "\n";
 		}

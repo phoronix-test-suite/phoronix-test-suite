@@ -150,6 +150,34 @@ class pts_tests
 
 		return $cache[$test_identifier];
 	}
+	public static function process_extra_test_variables($identifier)
+	{
+		$extra_vars = array();
+		$extra_vars["HOME"] = TEST_ENV_DIR . $identifier . "/";
+
+		$ctp_extension_string = "";
+		$extends = pts_test_extends_below($identifier);
+		foreach(array_merge(array($identifier), $extends) as $extended_test)
+		{
+			if(is_dir(TEST_ENV_DIR . $extended_test . "/"))
+			{
+				$ctp_extension_string .= TEST_ENV_DIR . $extended_test . ":";
+				$extra_vars["TEST_" . strtoupper(str_replace("-", "_", $extended_test))] = TEST_ENV_DIR . $extended_test;
+			}
+		}
+
+		if(!empty($ctp_extension_string))
+		{
+			$extra_vars["PATH"] = $ctp_extension_string . "\$PATH";
+		}
+
+		if(isset($extends[0]))
+		{
+			$extra_vars["TEST_EXTENDS"] = TEST_ENV_DIR . $extends[0];
+		}
+
+		return $extra_vars;
+	}
 }
 
 ?>

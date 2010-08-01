@@ -235,7 +235,7 @@ function pts_call_test_runs(&$test_run_manager, &$tandem_xml = null)
 	{
 		// Process post-cache-share scripts
 		$test_identifier = pts_extract_identifier_from_path($cache_share_file);
-		echo pts_call_test_script($test_identifier, "post-cache-share", null, null, pts_run_additional_vars($test_identifier));
+		echo pts_call_test_script($test_identifier, "post-cache-share", null, null, pts_tests::process_extra_test_variables($test_identifier));
 		unlink($cache_share_file);
 	}
 }
@@ -466,7 +466,7 @@ function pts_find_test_executable_dir($test_identifier, &$test_profile)
 }
 function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $result_format = null)
 {
-	$vars = pts_run_additional_vars($test_identifier);
+	$vars = pts_tests::process_extra_test_variables($test_identifier);
 	$vars["LC_ALL"] = "";
 	$vars["LC_NUMERIC"] = "";
 	$vars["LC_CTYPE"] = "";
@@ -897,7 +897,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 		$arguments_description = "Phoronix Test Suite v" . PTS_VERSION;
 	}
 
-	foreach(pts_env_variables() as $key => $value)
+	foreach(pts_client::environmental_variables() as $key => $value)
 	{
 		$arguments_description = str_replace("$" . $key, $value, $arguments_description);
 

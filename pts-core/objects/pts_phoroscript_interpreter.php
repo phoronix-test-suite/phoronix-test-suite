@@ -33,7 +33,7 @@ class pts_phoroscript_interpreter
 			$env_vars["HOME"] = $set_current_path;
 		}
 
-		$this->environmental_variables = ($env_vars == null ? pts_env_variables() : array_merge(pts_env_variables(), $env_vars));
+		$this->environmental_variables = ($env_vars == null ? pts_client::environmental_variables() : array_merge(pts_client::environmental_variables(), $env_vars));
 		$this->script_file = is_file($script) ? $script : null;
 		$this->var_current_directory = $set_current_path;
 	}

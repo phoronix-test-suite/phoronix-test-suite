@@ -143,6 +143,66 @@ class pts_client
 		define("PTS_STARTUP_TASK_PERFORMED", true);
 		register_shutdown_function(array("pts_module_manager", "module_process"), "__shutdown");
 	}
+	public static function environmental_variables()
+	{
+		// The PTS environmental variables passed during the testing process, etc
+		static $env_variables = null;
+
+		if($env_variables == null)
+		{
+			$env_variables = array(
+			"PTS_VERSION" => PTS_VERSION,
+			"PTS_CODENAME" => PTS_CODENAME,
+			"PTS_DIR" => PTS_PATH,
+			"PHP_BIN" => PHP_BIN,
+			"NUM_CPU_CORES" => phodevi::read_property("cpu", "core-count"),
+			"NUM_CPU_JOBS" => (phodevi::read_property("cpu", "core-count") * 2),
+			"SYS_MEMORY" => phodevi::read_property("memory", "capacity"),
+			"VIDEO_MEMORY" => phodevi::read_property("gpu", "memory-capacity"),
+			"VIDEO_WIDTH" => pts_arrays::first_element(phodevi::read_property("gpu", "screen-resolution")),
+			"VIDEO_HEIGHT" => pts_arrays::last_element(phodevi::read_property("gpu", "screen-resolution")),
+			"VIDEO_MONITOR_COUNT" => phodevi::read_property("monitor", "count"),
+			"VIDEO_MONITOR_LAYOUT" => phodevi::read_property("monitor", "layout"),
+			"VIDEO_MONITOR_SIZES" => phodevi::read_property("monitor", "modes"),
+			"OPERATING_SYSTEM" => phodevi::read_property("system", "vendor-identifier"),
+			"OS_VERSION" => phodevi::read_property("system", "os-version"),
+			"OS_ARCH" => phodevi::read_property("system", "kernel-architecture"),
+			"OS_TYPE" => OPERATING_SYSTEM,
+			"THIS_RUN_TIME" => PTS_INIT_TIME,
+			"DEBUG_REAL_HOME" => pts_client::user_home_directory()
+			);
+
+			if(!pts_client::executable_in_path("cc") && pts_client::executable_in_path("gcc"))
+			{
+				// This helps some test profiles build correctly if they don't do a cc check internally
+				$env_variables["CC"] = "gcc";
+			}
+		}
+
+		return $env_variables;
+	}
+	public static function user_run_save_variables()
+	{
+		static $runtime_variables = null;
+
+		if($runtime_variables == null)
+		{
+			$runtime_variables = array(
+			"VIDEO_RESOLUTION" => phodevi::read_property("gpu", "screen-resolution-string"),
+			"VIDEO_CARD" => phodevi::read_name("gpu"),
+			"VIDEO_DRIVER" => phodevi::read_property("system", "display-driver-string"),
+			"OPERATING_SYSTEM" => phodevi::read_property("system", "operating-system"),
+			"PROCESSOR" => phodevi::read_name("cpu"),
+			"MOTHERBOARD" => phodevi::read_name("motherboard"),
+			"CHIPSET" => phodevi::read_name("chipset"),
+			"KERNEL_VERSION" => phodevi::read_property("system", "kernel"),
+			"COMPILER" => phodevi::read_property("system", "compiler"),
+			"HOSTNAME" => phodevi::read_property("system", "hostname")
+			);
+		}
+
+		return $runtime_variables;
+	}
 	private static function basic_init_process()
 	{
 		// Initialize The Phoronix Test Suite
@@ -842,7 +902,18 @@ class pts_client
 	public static function shell_exec($exec, $extra_vars = null)
 	{
 		// Same as shell_exec() but with the PTS env variables added in
-		return shell_exec(pts_variables_export_string($extra_vars) . $exec);
+		// Convert pts_client::environmental_variables() into shell export variable syntax
+		$var_string = "";
+		$extra_vars = ($extra_vars == null ? pts_client::environmental_variables() : array_merge(pts_client::environmental_variables(), $extra_vars));
+
+		foreach(array_keys($extra_vars) as $key)
+		{
+			$var_string .= "export " . $key . "=" . $extra_vars[$key] . ";";
+		}
+
+		$var_string .= " ";
+
+		return shell_exec($var_string . $exec);
 	}
 	public static function executable_in_path($executable)
 	{

@@ -194,7 +194,7 @@ class pts_test_run_manager
 	}
 	public static function clean_save_name_string($input)
 	{
-		$input = pts_swap_variables($input, "pts_user_runtime_variables");
+		$input = pts_strings::swap_variables($input, array("pts_client", "user_run_save_variables"));
 		$input = trim(str_replace(array(' ', '/', '&', '?', ':', '~', '\''), null, strtolower($input)));
 
 		return $input;
@@ -330,7 +330,7 @@ class pts_test_run_manager
 		}
 		else
 		{
-			$results_identifier = pts_swap_variables($results_identifier, "pts_user_runtime_variables");
+			$results_identifier = pts_strings::swap_variables($results_identifier, array("pts_client", "user_run_save_variables"));
 		}
 
 		$this->results_identifier = $results_identifier;
