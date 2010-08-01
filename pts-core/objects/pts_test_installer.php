@@ -367,7 +367,7 @@ class pts_test_installer
 
 				pts_user_io::display_interrupt_message($pre_install_message);
 				$install_time_length_start = time();
-				$install_log = pts_call_test_script($identifier, "install", null, $test_install_directory, pts_tests::process_extra_test_variables($identifier), false);
+				$install_log = pts_tests::call_test_script($identifier, "install", null, $test_install_directory, pts_tests::process_extra_test_variables($identifier), false);
 				$install_time_length = time() - $install_time_length_start;
 				pts_user_io::display_interrupt_message($post_install_message);
 
@@ -418,7 +418,7 @@ class pts_test_installer
 			}
 
 			// Additional validation checks?
-			$custom_validated_output = pts_call_test_script($identifier, "validate-install", "\nValidating Installation...\n", $test_install_directory, pts_tests::process_extra_test_variables($identifier), false);
+			$custom_validated_output = pts_tests::call_test_script($identifier, "validate-install", "\nValidating Installation...\n", $test_install_directory, pts_tests::process_extra_test_variables($identifier), false);
 			if(!empty($custom_validated_output) && !pts_strings::string_bool($custom_validated_output))
 			{
 				$installed = false;
@@ -426,7 +426,7 @@ class pts_test_installer
 
 			if($installed)
 			{
-				pts_test_update_install_xml($identifier, $install_time_length, true);
+				pts_tests::update_test_install_xml($identifier, $install_time_length, true);
 			}
 		}
 

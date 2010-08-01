@@ -235,7 +235,7 @@ function pts_call_test_runs(&$test_run_manager, &$tandem_xml = null)
 	{
 		// Process post-cache-share scripts
 		$test_identifier = pts_extract_identifier_from_path($cache_share_file);
-		echo pts_call_test_script($test_identifier, "post-cache-share", null, null, pts_tests::process_extra_test_variables($test_identifier));
+		echo pts_tests::call_test_script($test_identifier, "post-cache-share", null, null, pts_tests::process_extra_test_variables($test_identifier));
 		unlink($cache_share_file);
 	}
 }
@@ -556,7 +556,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 	if(!$cache_share_present)
 	{
-		pts_call_test_script($test_identifier, "pre", "Running Pre-Test Script", $test_directory, $extra_runtime_variables, true);
+		pts_tests::call_test_script($test_identifier, "pre", "Running Pre-Test Script", $test_directory, $extra_runtime_variables, true);
 	}
 
 	pts_user_io::display_interrupt_message($test_profile->get_pre_run_message());
@@ -764,7 +764,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 		{
 			if(!$cache_share_present)
 			{
-				pts_call_test_script($test_identifier, "interim", "Running Interim-Test Script", $test_directory, $extra_runtime_variables, true);
+				pts_tests::call_test_script($test_identifier, "interim", "Running Interim-Test Script", $test_directory, $extra_runtime_variables, true);
 				sleep(2); // Rest for a moment between tests
 			}
 
@@ -797,7 +797,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 	if(!$cache_share_present)
 	{
-		pts_call_test_script($test_identifier, "post", "Running Post-Test Script", $test_directory, $extra_runtime_variables, true);
+		pts_tests::call_test_script($test_identifier, "post", "Running Post-Test Script", $test_directory, $extra_runtime_variables, true);
 	}
 
 	if($abort_testing)
@@ -937,7 +937,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 	pts_user_io::display_interrupt_message($test_profile->get_post_run_message());
 	pts_module_manager::module_process("__post_test_run", $test_results);
 	$report_elapsed_time = !$cache_share_present && $test_results->get_result() != 0;
-	pts_test_update_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
+	pts_tests::update_test_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
 	pts_storage_object::add_in_file(PTS_CORE_STORAGE, "total_testing_time", ($time_test_elapsed / 60));
 
 	if($report_elapsed_time && pts_client::do_anonymous_usage_reporting() && $time_test_elapsed >= 60)
