@@ -721,39 +721,15 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			}
 		}
 
-		if($i == ($times_to_run - 1) && $test_results->trial_run_count() > 2 && pts_read_assignment("PTS_STATS_DYNAMIC_RUN_COUNT") && $times_to_run < ($defined_times_to_run * 2))
+		if($i == ($times_to_run - 1) && $test_results->trial_run_count() > 2 && $test_run_manager->do_dynamic_run_count() && $times_to_run < ($defined_times_to_run * 2))
 		{
-			// Determine if results are statistically significant, otherwise up the run count
-			$std_dev = pts_math::percent_standard_deviation($test_results->get_trial_results());
+			$do_increase_run_count = $test_run_manager->increase_run_count($test_results, $test_run_time);
 
-			if(($ex_file = pts_read_assignment("PTS_STATS_EXPORT_TO")) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_DIR . $ex_file)))
+			if($do_increase_run_count === -1)
 			{
-				$exit_status = trim(shell_exec($ex_file . " " . $test_results->get_trial_results_string() . " > /dev/null 2>&1; echo $?"));
-
-				switch($exit_status)
-				{
-					case 1:
-						// Run the test again
-						$request_increase = true;
-						break;
-					case 2:
-						// Results are bad, abandon testing and do not record results
-						$request_increase = false;
-						$abort_testing = true;
-						break;
-					default:
-						// Return was 0, results are valid, or was some other exit status
-						$request_increase = false;
-						break;
-
-				}
+				$abort_testing = true;
 			}
-			else
-			{
-				$request_increase = false;
-			}
-
-			if(($request_increase || $std_dev >= pts_read_assignment("PTS_STATS_STD_DEV_THRESHOLD")) && floor($test_run_time / 60) < pts_read_assignment("PTS_STATS_NO_ON_LENGTH"))
+			else if($do_increase_run_count)
 			{
 				$times_to_run++;
 				$test_results->get_test_profile()->set_times_to_run($times_to_run);

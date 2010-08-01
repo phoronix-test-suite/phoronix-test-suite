@@ -28,6 +28,11 @@ class pts_test_run_manager
 	private $results_identifier;
 	private $failed_tests_to_run;
 
+	private $do_dynamic_run_count = false;
+	private $dynamic_roun_count_on_length_or_less;
+	private $dynamic_run_count_std_deviation_threshold;
+	private $dynamic_run_count_export_script;
+
 	public function __construct()
 	{
 		$this->tests_to_run = array();
@@ -35,6 +40,46 @@ class pts_test_run_manager
 		$this->file_name = null;
 		$this->file_name_title = null;
 		$this->results_identifier = null;
+
+		$this->do_dynamic_run_count = pts_config::read_bool_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE");
+		$this->dynamic_roun_count_on_length_or_less = pts_config::read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, 20);
+		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 3.50);
+		$this->dynamic_run_count_export_script = pts_config::read_user_config(P_OPTION_STATS_EXPORT_RESULTS_TO, null);
+	}
+	public function do_dynamic_run_count()
+	{
+		return $this->do_dynamic_run_count;
+	}
+	public function increase_run_count(&$test_results, $test_run_time)
+	{
+		// Determine if results are statistically significant, otherwise up the run count
+		$std_dev = pts_math::percent_standard_deviation($test_results->get_trial_results());
+
+		if(($ex_file = $this->dynamic_run_count_export_script) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_DIR . $this->dynamic_run_count_export_script)))
+		{
+			$exit_status = trim(shell_exec($ex_file . " " . $test_results->get_trial_results_string() . " > /dev/null 2>&1; echo $?"));
+
+			switch($exit_status)
+			{
+				case 1:
+					// Run the test again
+					$request_increase = true;
+					break;
+				case 2:
+					// Results are bad, abandon testing and do not record results
+					return -1;
+				default:
+					// Return was 0, results are valid, or was some other exit status
+					$request_increase = false;
+					break;
+			}
+		}
+		else
+		{
+			$request_increase = false;
+		}
+
+		return $request_increase || $std_dev >= $this->dynamic_run_count_std_deviation_threshold && floor($test_run_time / 60) < $this->dynamic_roun_count_on_length_or_less;
 	}
 	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "", $override_test_options = null)
 	{
