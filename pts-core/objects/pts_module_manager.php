@@ -31,12 +31,103 @@ class pts_module_manager
 	// Module Handling
 	//
 
-	public static function attach_module($module)
+	public static function load_module($module)
 	{
-		if(in_array($module, self::$modules))
+		// Load the actual file needed that contains the module
+		if(is_file(PTS_CORE_PATH . "definitions/module-" . $module . ".xml"))
+		{
+			pts_loader::load_definitions("module-" . $module . ".xml");
+		}
+
+		return (is_file(MODULE_DIR . $module . ".php") && include_once(MODULE_DIR . $module . ".php")) || (is_file(MODULE_LOCAL_DIR . $module . ".php") && include_once(MODULE_LOCAL_DIR . $module . ".php"));
+	}
+	public static function module_call($module, $process, &$object_pass = null)
+	{
+		if(!class_exists($module))
 		{
 			return false;
 		}
+
+		if(method_exists($module, $process))
+		{
+			$module_val = call_user_func(array($module, $process), $object_pass);
+		}
+		else
+		{
+			eval("\$module_val = " . $module . "::" . $process . ";");
+		}
+
+		return $module_val;
+	}
+	public static function module_process($process, &$object_pass = null, $select_modules = false)
+	{
+		// Run a module process on all registered modules
+		foreach(pts_module_manager::attached_modules($process, $select_modules) as $module)
+		{
+			pts_module_manager::set_current_module($module);
+
+			$module_response = pts_module_manager::module_call($module, $process, $object_pass);
+
+			switch($module_response)
+			{
+				case pts_module::MODULE_UNLOAD:
+					// Unload the PTS module
+					pts_module_manager::detach_module($module);
+					break;
+				case pts_module::QUIT_PTS_CLIENT:
+					// Stop the Phoronix Test Suite immediately
+					pts_client::exit_client();
+					break;
+			}
+		}
+		pts_module_manager::set_current_module(null);
+	}
+	public static function process_extensions_string($extensions)
+	{
+		// Process extensions for modules
+		if(!empty($extensions))
+		{
+			foreach(explode(';', $extensions) as $ev)
+			{
+				list($var, $value) = pts_strings::trim_explode('=', $ev);
+				pts_client::set_environmental_variable($var, $value);
+				pts_module_maanager::var_store_add($var, $value);
+			}
+
+			pts_module_manager::detect_modules_to_load();
+		}
+	}
+	public static function run_command($module, $command, $arguments = null)
+	{
+		$all_options = pts_module_manager::module_call($module, "user_commands");
+	
+		if(isset($all_options[$command]) && method_exists($module, $all_options[$command]))
+		{
+			pts_module_manager::module_call($module, $all_options[$command], $arguments);
+		}
+		else
+		{
+			// Not a valid command, list available options for the module 
+			// or help or list_options was called
+			$all_options = pts_module_manager::module_call($module, "user_commands");
+
+			echo "\nUser commands for the " . $module . " module:\n\n";
+
+			foreach($all_options as $option)
+			{
+				echo "- " . $module . "." . str_replace('_', '-', $option) . "\n";
+			}
+			echo "\n";
+		}
+	}
+	public static function attach_module($module)
+	{
+		if(pts_module::is_module($module) == false || in_array($module, self::$modules))
+		{
+			return false;
+		}
+
+		pts_module_manager::load_module($module);
 
 		array_push(self::$modules, $module);
 
@@ -54,6 +145,12 @@ class pts_module_manager
 					array_push(self::$module_process[$module_method], $module);
 				}
 			}
+		}
+
+		if(defined("PTS_STARTUP_TASK_PERFORMED"))
+		{
+			$pass_by_ref_null = null;
+			pts_module_manager::module_process("__startup", $pass_by_ref_null, $module);
 		}
 	}
 	public static function detach_module($module)
@@ -98,15 +195,48 @@ class pts_module_manager
 	{
 		return isset(self::$modules[$module]);
 	}
+	public static function available_modules()
+	{
+		$modules = array_merge(pts_file_io::glob(MODULE_DIR . "*.php"), pts_file_io::glob(MODULE_LOCAL_DIR . "*.php"));
+		$module_names = array();
+
+		foreach($modules as $module)
+		{
+			array_push($module_names, basename($module, ".php"));
+		}
+
+		asort($module_names);
+
+		return $module_names;
+	}
 	public static function clean_module_list()
 	{
 		array_unique(self::$modules);
 
 		foreach(self::$modules as $i => $module)
 		{
-			if(!pts_is_module($module))
+			if(pts_module::is_module($module) == false)
 			{
 				unset(self::$modules[$i]);
+			}
+		}
+	}
+
+	public static function detect_modules_to_load()
+	{
+		// Auto detect modules to load
+		foreach(explode("\n", pts_file_io::file_get_contents(STATIC_DIR . "lists/module-variables.list")) as $module_var)
+		{
+			$module_var = pts_strings::trim_explode("=", $module_var);
+
+			if(count($module_var) == 2)
+			{
+				list($env_var, $module) = $module_var;
+
+				if(!pts_module_manager::is_module_attached($module) && ($e = pts_client::read_env($env_var)) != false && !empty($e))
+				{
+					pts_module_manager::attach_module($module);
+				}
 			}
 		}
 	}

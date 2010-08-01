@@ -105,7 +105,7 @@ class gui_gtk implements pts_option_interface
 
 		$progress_window->completed();
 
-		pts_attach_module("gui_gtk_events");
+		pts_module_manager::attach_module("gui_gtk_events");
 	}
 	public static function system_tray_activate()
 	{
@@ -313,7 +313,7 @@ class gui_gtk implements pts_option_interface
 		pts_set_assignment("GTK_GUI_INIT", false);
 		gui_gtk::update_main_notebook();
 
-		// pts_attach_module("notify_send_events");
+		// pts_module_manager::attach_module("notify_send_events");
 
 		$window->show_all();
 		Gtk::main();
@@ -1825,16 +1825,16 @@ class gui_gtk implements pts_option_interface
 		$window->set_size_request(540, 250);
 
 		$rows = array();
-		foreach(pts_available_modules() as $module)
+		foreach(pts_module_manager::available_modules() as $module)
 		{
-			pts_load_module($module);
+			pts_module_manager::load_module($module);
 
 			$enable_module[$module] = new GtkCheckButton();
 			$enable_module[$module]->set_active(true);
 			//$enable_module[$module]->set_sensitive(false); // Enabling / disabling modules from the GUI is currently not supported
 
 			// $enable_module[$module] should be passed for enabling toggling of the module, but not yet implemented
-			array_push($rows, array(null, pts_module_call($module, "module_name")));
+			array_push($rows, array(null, pts_module_manager::module_call($module, "module_name")));
 		}
 
 		$modules_table = pts_gtk_table(array(null, "Modules"), $rows, null, "No modules available.", false);

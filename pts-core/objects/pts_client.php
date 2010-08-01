@@ -64,6 +64,85 @@ class pts_client
 
 		return true;
 	}
+	public static function module_framework_init()
+	{
+		// Process initially called when PTS starts up
+
+		// Check for modules to auto-load from the configuration file
+		$load_modules = pts_config::read_user_config(P_OPTION_LOAD_MODULES, null);
+
+		if(!empty($load_modules))
+		{
+			foreach(explode(',', $load_modules) as $module)
+			{
+				$module_r = pts_strings::trim_explode('=', $module);
+
+				if(count($module_r) == 2)
+				{
+					// TODO: end up hooking this into pts_module::read_variable() rather than using the real env
+					pts_client::set_environmental_variable($module_r[0], $module_r[1]);
+				}
+				else
+				{
+					pts_module_manager::attach_module($module);
+				}
+			}
+		}
+
+		// Check for modules to load manually in PTS_MODULES
+		if(($load_modules = pts_client::read_env("PTS_MODULES")) !== false)
+		{
+			foreach(pts_strings::trim_explode(',', $load_modules) as $module)
+			{
+				if(!pts_module_manager::is_module_attached($module))
+				{
+					pts_module_manager::attach_module($module);
+				}
+			}
+		}
+
+		// Detect modules to load automatically
+		pts_module_manager::detect_modules_to_load();
+
+		// Clean-up modules list
+		pts_module_manager::clean_module_list();
+
+		// Reset counter
+		pts_module_manager::set_current_module(null);
+
+		// Load the modules
+		$module_store_list = array();
+		foreach(pts_module_manager::attached_modules() as $module)
+		{
+			eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
+
+			if(is_array($module_store_vars))
+			{
+				foreach($module_store_vars as $store_var)
+				{
+					if(!in_array($store_var, $module_store_list))
+					{
+						array_push($module_store_list, $store_var);
+					}
+				}
+			}
+		}
+
+		// Should any of the module options be saved to the results?
+		foreach($module_store_list as $var)
+		{
+			$var_value = pts_client::read_env($var);
+
+			if(!empty($var_value))
+			{
+				pts_module_manager::var_store_add($var, $var_value);
+			}
+		}
+
+		pts_module_manager::module_process("__startup");
+		define("PTS_STARTUP_TASK_PERFORMED", true);
+		register_shutdown_function(array("pts_module_manager", "module_process"), "__shutdown");
+	}
 	private static function basic_init_process()
 	{
 		// Initialize The Phoronix Test Suite
@@ -569,7 +648,7 @@ class pts_client
 			}
 		}
 
-		pts_module_process("__pre_option_process", $command);
+		pts_module_manager::module_process("__pre_option_process", $command);
 
 		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php"))
 		{
@@ -582,16 +661,16 @@ class pts_client
 				echo "\nThere is an error in the requested command: " . $command . "\n\n";
 			}
 		}
-		else if(pts_module_valid_user_command($command))
+		else if(pts_module::valid_run_command($command))
 		{
 			list($module, $module_command) = explode(".", $command);
 
 			pts_module_manager::set_current_module($module);
-			pts_module_run_user_command($module, $module_command, $pass_args);
+			pts_module_manager::run_command($module, $module_command, $pass_args);
 			pts_module_manager::set_current_module(null);
 		}
 
-		pts_module_process("__post_option_process", $command);
+		pts_module_manager::module_process("__post_option_process", $command);
 		pts_set_assignment_next("PREV_COMMAND", $command);
 		pts_assignment_manager::clear_all();
 	}

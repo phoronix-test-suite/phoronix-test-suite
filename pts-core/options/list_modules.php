@@ -24,12 +24,12 @@ class list_modules implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading(count(pts_available_modules()) . " Modules");
+		pts_client::$display->generic_heading(count(pts_module_manager::available_modules()) . " Modules");
 
-		foreach(pts_available_modules() as $module)
+		foreach(pts_module_manager::available_modules() as $module)
 		{
-			pts_load_module($module);
-			echo sprintf("%-22ls - %-32ls [%s]\n", $module, pts_module_call($module, "module_name") . " v" . pts_module_call($module, "module_version"), pts_module_call($module, "module_author"));
+			pts_module_manager::load_module($module);
+			echo sprintf("%-22ls - %-32ls [%s]\n", $module, pts_module_manager::module_call($module, "module_name") . " v" . pts_module_manager::module_call($module, "module_version"), pts_module_manager::module_call($module, "module_author"));
 		}
 		echo "\n";
 	}

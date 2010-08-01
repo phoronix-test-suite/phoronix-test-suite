@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,23 +25,24 @@ class test_module implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "pts_is_module", null, "No module found.")
+		new pts_argument_check(0, array("pts_module", "is_module"), null, "No module found.")
 		);
 	}
 	public static function run($r)
 	{
 		$module = strtolower($r[0]);
-		pts_load_module($module);
-		pts_attach_module($module);
+		pts_module_manager::attach_module($module);
 
-		foreach(pts_module_processes() as $process)
+		$processes = array("__startup", "__pre_option_process", "__pre_install_process", "__pre_test_download", "__interim_test_download", "__post_test_download", "__pre_test_install", "__post_test_install", "__post_install_process", "__pre_run_process", "__pre_test_run", "__interim_test_run", "__post_test_run", "__post_run_process", "__post_option_process", "__shutdown");
+
+		foreach($processes as $process)
 		{
 			if(pts_is_assignment("DEBUG_MODULE"))
 			{
 				echo "Calling: " . $process . "()\n";
 			}
 
-			pts_module_process($process);
+			pts_module_manager::module_process($process);
 			sleep(1);
 		}
 		echo "\n";

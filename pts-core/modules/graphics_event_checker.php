@@ -41,7 +41,7 @@ class graphics_event_checker extends pts_module_interface
 		if(count(phodevi_parser::read_xdpy_monitor_info()) > 1)
 		{
 			echo "\nThe graphics_event_checker currently does not support multiple monitors.\n";
-			return PTS_MODULE_UNLOAD;
+			return pts_module::MODULE_UNLOAD;
 		}
 
 		// Store the video resolution

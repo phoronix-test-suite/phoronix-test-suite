@@ -77,7 +77,7 @@ if(!is_file(PTS_PATH . "pts-core/options/" . $sent_command . ".php"))
 {
 	$replaced = false;
 
-	if(pts_module_valid_user_command($sent_command))
+	if(pts_module::valid_run_command($sent_command))
 	{
 		$replaced = true;
 	}
@@ -158,7 +158,10 @@ if(!QUICK_START)
 		echo "\nThe file_uploads option in your PHP configuration must be enabled for network support.\n\n";
 	}
 
-	pts_module_startup_init(); // Initialize the PTS module system
+	if(pts_client::read_env("PTS_IGNORE_MODULES") == false)
+	{
+		pts_client::module_framework_init(); // Initialize the PTS module system
+	}
 }
 
 // Read passed arguments

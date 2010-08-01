@@ -494,7 +494,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function __event_results_saved($test_run_manager)
 	{
-		if(pts_module_variable("AUTO_UPLOAD_RESULTS_TO_PHOROMATIC") && !pts_read_assignment("PHOROMATIC_TITLE") && pts_module::is_module_setup())
+		if(pts_module::read_variable("AUTO_UPLOAD_RESULTS_TO_PHOROMATIC") && !pts_read_assignment("PHOROMATIC_TITLE") && pts_module::is_module_setup())
 		{
 			pts_set_assignment("PHOROMATIC_UPLOAD_TEST_LOGS", true);
 			pts_set_assignment("PHOROMATIC_UPLOAD_SYSTEM_LOGS", true);
@@ -653,9 +653,9 @@ class phoromatic extends pts_module_interface
 		self::$phoromatic_account = pts_module::read_option("remote_account");
 		self::$phoromatic_verifier = pts_module::read_option("remote_verifier");
 		self::$phoromatic_system = pts_module::read_option("remote_system");
-		$phoromatic = "phoromatic";
 
-		pts_attach_module($phoromatic);
+		$phoromatic = "phoromatic";
+		pts_module_manager::attach_module($phoromatic);
 		return true;
 	}
 	protected static function phoromatic_schedule_entry_string($title, $description, $start_time, $active_on)

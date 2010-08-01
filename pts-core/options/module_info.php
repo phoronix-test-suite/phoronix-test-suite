@@ -25,24 +25,24 @@ class module_info implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "pts_is_module", null, "No module found.")
+		new pts_argument_check(0, array("pts_module", "is_module"), null, "No module found.")
 		);
 	}
 	public static function run($args)
 	{
 		$module = $args[0];
-		pts_load_module($module);
-		pts_client::$display->generic_heading(pts_module_call($module, "module_name") . " Module");
+		pts_module_manager::load_module($module);
+		pts_client::$display->generic_heading(pts_module_manager::module_call($module, "module_name") . " Module");
 
 		if(in_array($args[0], pts_module_manager::attached_modules()))
 		{
 			echo "** This module is currently loaded. **\n";
 		}
 
-		echo "Version: " . pts_module_call($module, "module_version") . "\n";
-		echo "Author: " . pts_module_call($module, "module_author") . "\n";
-		echo "Description: " . pts_module_call($module, "module_description") . "\n";
-		echo "\n" . pts_module_call($module, "module_info") . "\n";
+		echo "Version: " . pts_module_manager::module_call($module, "module_version") . "\n";
+		echo "Author: " . pts_module_manager::module_call($module, "module_author") . "\n";
+		echo "Description: " . pts_module_manager::module_call($module, "module_description") . "\n";
+		echo "\n" . pts_module_manager::module_call($module, "module_info") . "\n";
 		echo "\n";
 	}
 }

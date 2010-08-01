@@ -52,7 +52,7 @@ class update_checker extends pts_module_interface
 			}
 		}
 
-		return PTS_MODULE_UNLOAD; // This module doesn't have anything else to do
+		return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
 	}
 }
 

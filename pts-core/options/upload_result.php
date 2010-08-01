@@ -49,7 +49,7 @@ class upload_result implements pts_option_interface
 		{
 			echo "\nResults Uploaded To: " . $upload_url . "\n\n";
 			pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
-			pts_module_process("__event_global_upload", $upload_url);
+			pts_module_manager::module_process("__event_global_upload", $upload_url);
 		}
 		else
 		{

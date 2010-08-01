@@ -23,6 +23,9 @@
 
 class pts_module
 {
+	const MODULE_UNLOAD = "MODULE_UNLOAD";
+	const QUIT_PTS_CLIENT = "QUIT_PTS_CLIENT";
+
 	public static function save_dir()
 	{
 		$prefix_dir = MODULE_DATA_DIR;
@@ -30,12 +33,51 @@ class pts_module
 
 		return $prefix_dir . str_replace("_", "-", self::module_name()) . "/";
 	}
+	public static function is_module($name)
+	{
+		return is_file(MODULE_LOCAL_DIR . $name . ".php") || is_file(MODULE_DIR . $name . ".php");
+	}
+	public static function module_config_save($module_name, $set_options = null)
+	{
+		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
+		pts_file_io::mkdir(MODULE_DATA_DIR . $module_name);
+		$settings_to_write = array();
+
+		if(is_file(MODULE_DATA_DIR . $module_name . "/module-settings.xml"))
+		{
+			$module_config_parser = new tandem_XmlReader(MODULE_DATA_DIR . $module_name . "/module-settings.xml");
+			$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
+			$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
+
+			for($i = 0; $i < count($option_identifier); $i++)
+			{
+				$settings_to_write[$option_identifier[$i]] = $option_value[$i];
+			}
+		}
+
+		foreach($set_options as $identifier => $value)
+		{
+			$settings_to_write[$identifier] = $value;
+		}
+
+		$config = new tandem_XmlWriter();
+		$i = 0;
+
+		foreach($settings_to_write as $identifier => $value)
+		{
+			$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $identifier);
+			$config->addXmlObject(P_MODULE_OPTION_VALUE, $i, $value);
+			$i++;
+		}
+
+		$config->saveXMLFile(MODULE_DATA_DIR . $module_name . "/module-settings.xml");
+	}
 	public static function is_module_setup()
 	{
 		$module_name = self::module_name();
 		$is_setup = true;
 
-		$module_setup_options = pts_module_call($module_name, "module_setup");
+		$module_setup_options = pts_module_manager::module_call($module_name, "module_setup");
 
 		foreach($module_setup_options as $option)
 		{
@@ -50,6 +92,31 @@ class pts_module
 		}
 
 		return $is_setup;
+	}
+	public static function read_variable($var)
+	{
+		// For now this is just readung from the real env
+		return trim(getenv($var));
+	}
+	public static function valid_run_command($module, $command = null)
+	{
+		$valid = false;
+
+		if($command == null && strpos($module, '.') != false)
+		{
+			list($module, $command) = explode('.', $module);
+
+			if(!pts_module_manager::is_module_attached($module))
+			{
+				pts_module_manager::attach_module($module);
+			}
+
+			$all_options = pts_module_manager::module_call($module, "user_commands");
+
+			$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || in_array($command, array("help")));
+		}
+
+		return $valid;
 	}
 	public static function read_option($identifier, $default_fallback = false)
 	{
@@ -102,7 +169,7 @@ class pts_module
 	}
 	public static function set_option($identifier, $value)
 	{
-		pts_module_config_init(self::module_name(), array($identifier => $value));
+		pts_module::module_config_save(self::module_name(), array($identifier => $value));
 	}
 	public static function save_file($file, $contents = null, $append = false)
 	{

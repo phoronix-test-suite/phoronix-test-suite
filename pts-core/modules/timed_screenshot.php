@@ -44,10 +44,10 @@ class timed_screenshot extends pts_module_interface
 		if(!$found)
 		{
 			echo "\nImageMagick must first be installed onto this system!\n";
-			return PTS_MODULE_UNLOAD;
+			return pts_module::MODULE_UNLOAD;
 		}
 
-		if(($interval = pts_module_variable("SCREENSHOT_INTERVAL")) > 0 && is_numeric($interval))
+		if(($interval = pts_module::read_variable("SCREENSHOT_INTERVAL")) > 0 && is_numeric($interval))
 			self::$screenshot_interval = $interval;
 	}
 	public static function __shutdown()

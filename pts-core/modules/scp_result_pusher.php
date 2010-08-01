@@ -44,7 +44,7 @@ class scp_result_pusher extends pts_module_interface
 	{
 		if(!pts_module::is_module_setup())
 		{
-			return PTS_MODULE_UNLOAD;
+			return pts_module::MODULE_UNLOAD;
 		}
 
 		$scp_user = pts_module::read_option("scp_user");

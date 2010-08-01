@@ -37,7 +37,7 @@ class notify_send_events extends pts_module_interface
 		if(self::$notify_send_cmd == false)
 		{
 			// notify-send is not available, nothing to do
-			return PTS_MODULE_UNLOAD;
+			return pts_module::MODULE_UNLOAD;
 		}
 	}
 	public static function notify_send_message($text_string)

@@ -158,7 +158,7 @@ class run_test implements pts_option_interface
 					pts_arrays::unique_push($test_properties, $test_prop);
 				}
 
-				pts_module_process_extensions($test_extensions);
+				pts_module_manager::process_extensions_string($test_extensions);
 
 				if(pts_is_assignment("FINISH_INCOMPLETE_RUN"))
 				{
@@ -339,14 +339,14 @@ class run_test implements pts_option_interface
 		pts_client::create_lock($lock_path);
 
 		// Run the actual tests
-		pts_module_process("__pre_run_process", $test_run_manager);
+		pts_module_manager::module_process("__pre_run_process", $test_run_manager);
 		pts_set_assignment("PTS_STATS_DYNAMIC_RUN_COUNT", pts_config::read_bool_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE"));
 		pts_set_assignment("PTS_STATS_NO_ON_LENGTH", pts_config::read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, "20"));
 		pts_set_assignment("PTS_STATS_STD_DEV_THRESHOLD", pts_config::read_user_config(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, "3.50"));
 		pts_set_assignment("PTS_STATS_EXPORT_TO", pts_config::read_user_config(P_OPTION_STATS_EXPORT_RESULTS_TO, null));
 		pts_call_test_runs($test_run_manager, $xml_results_writer);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
-		pts_module_process("__post_run_process", $test_run_manager);
+		pts_module_manager::module_process("__post_run_process", $test_run_manager);
 
 		if(isset($post_run_message))
 		{
@@ -384,9 +384,9 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type), 0);
 			}
 
-			pts_module_process("__event_results_process", $xml_results_writer);
+			pts_module_manager::module_process("__event_results_process", $xml_results_writer);
 			pts_save_test_file($xml_results_writer, $test_run_manager->get_file_name(), $test_run_manager->get_results_identifier());
-			pts_module_process("__event_results_saved", $test_run_manager);
+			pts_module_manager::module_process("__event_results_saved", $test_run_manager);
 			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $test_run_manager->get_file_name());
 			pts_client::display_web_page(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/index.html");
@@ -411,7 +411,7 @@ class run_test implements pts_option_interface
 					{
 						echo "\nResults Uploaded To: " . $upload_url . "\n";
 						pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
-						pts_module_process("__event_global_upload", $upload_url);
+						pts_module_manager::module_process("__event_global_upload", $upload_url);
 						pts_client::display_web_page($upload_url, "Do you want to launch Phoronix Global", true);
 					}
 					else

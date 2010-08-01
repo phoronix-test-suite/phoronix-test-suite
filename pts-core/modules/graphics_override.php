@@ -60,11 +60,11 @@ class graphics_override extends pts_module_interface
 		if(!(IS_NVIDIA_GRAPHICS || (IS_ATI_GRAPHICS && IS_LINUX)))
 		{
 			echo "\nNo supported driver found for graphics_override module!\n";
-			return PTS_MODULE_UNLOAD; // Not using a supported driver, quit the module
+			return pts_module::MODULE_UNLOAD; // Not using a supported driver, quit the module
 		}
 
-		$force_aa = pts_module_variable("FORCE_AA");
-		$force_af = pts_module_variable("FORCE_AF");
+		$force_aa = pts_module::read_variable("FORCE_AA");
+		$force_af = pts_module::read_variable("FORCE_AF");
 
 		if($force_aa !== FALSE && in_array($force_aa, self::$supported_aa_levels))
 		{

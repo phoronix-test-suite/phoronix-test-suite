@@ -549,7 +549,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 	$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
 	$test_results->get_test_profile()->set_times_to_run($times_to_run);
 	$test_results->set_used_arguments_description($arguments_description);
-	pts_module_process("__pre_test_run", $test_results);
+	pts_module_manager::module_process("__pre_test_run", $test_results);
 
 	$time_test_start = time();
 	pts_client::$display->test_run_start($test_results);
@@ -768,7 +768,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 				sleep(2); // Rest for a moment between tests
 			}
 
-			pts_module_process("__interim_test_run", $test_results);
+			pts_module_manager::module_process("__interim_test_run", $test_results);
 		}
 
 		if(is_file($test_log_file))
@@ -935,7 +935,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 	pts_client::$display->test_run_end($test_results);
 
 	pts_user_io::display_interrupt_message($test_profile->get_post_run_message());
-	pts_module_process("__post_test_run", $test_results);
+	pts_module_manager::module_process("__post_test_run", $test_results);
 	$report_elapsed_time = !$cache_share_present && $test_results->get_result() != 0;
 	pts_test_update_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
 	pts_storage_object::add_in_file(PTS_CORE_STORAGE, "total_testing_time", ($time_test_elapsed / 60));

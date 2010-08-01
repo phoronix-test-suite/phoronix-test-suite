@@ -62,7 +62,7 @@ class system_monitor extends pts_module_interface
 	{
 		self::$result_identifier = $test_run_manager->get_results_identifier();
 		self::$to_monitor = array();
-		$to_show = explode(",", pts_module_variable("MONITOR"));
+		$to_show = explode(",", pts_module::read_variable("MONITOR"));
 		$monitor_all = in_array("all", $to_show);
 
 		foreach(phodevi::supported_sensors() as $sensor)

@@ -37,10 +37,10 @@ class toggle_screensaver extends pts_module_interface
 
 	public static function __startup()
 	{
-		$halt_screensaver = pts_module_variable("HALT_SCREENSAVER");
+		$halt_screensaver = pts_module::read_variable("HALT_SCREENSAVER");
 		if(!empty($halt_screensaver) && !pts_strings::string_bool($halt_screensaver))
 		{
-			return PTS_MODULE_UNLOAD;
+			return pts_module::MODULE_UNLOAD;
 		}
 
 		// GNOME Screensaver?

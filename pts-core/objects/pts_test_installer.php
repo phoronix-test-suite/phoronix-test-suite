@@ -70,7 +70,7 @@ class pts_test_installer
 		pts_client::$display->test_install_process($test_install_manager);
 
 		// Begin the install process
-		pts_module_process("__pre_install_process", $test_install_manager);
+		pts_module_manager::module_process("__pre_install_process", $test_install_manager);
 		$failed_installs = array();
 		while(($test_install_request = $test_install_manager->next_in_install_queue()) != false)
 		{
@@ -82,7 +82,7 @@ class pts_test_installer
 				array_push($failed_installs, $test_install_request->get_test_identifier());
 			}
 		}
-		pts_module_process("__post_install_process", $test_install_manager);
+		pts_module_manager::module_process("__post_install_process", $test_install_manager);
 		pts_download_speed_manager::save_data();
 
 		if(count($failed_installs) > 0 && count($tests) > 1)
@@ -108,7 +108,7 @@ class pts_test_installer
 		pts_client::$display->test_install_downloads($identifier, $test_install_request->get_download_objects());
 
 		$module_pass = array($identifier, $test_install_request->get_download_objects());
-		pts_module_process("__pre_test_download", $module_pass);
+		pts_module_manager::module_process("__pre_test_download", $module_pass);
 
 		foreach($test_install_request->get_download_objects() as $download_package)
 		{
@@ -294,11 +294,11 @@ class pts_test_installer
 						}
 						while(!is_file($download_destination));
 				}
-				pts_module_process("__interim_test_download", $module_pass);
+				pts_module_manager::module_process("__interim_test_download", $module_pass);
 			}
 		}
 
-		pts_module_process("__post_test_download", $identifier);
+		pts_module_manager::module_process("__post_test_download", $identifier);
 
 		return true;
 	}
@@ -334,7 +334,7 @@ class pts_test_installer
 			$test_resources_location = pts_tests::test_resources_location($identifier);
 			if(is_file($test_resources_location . "install.sh") || is_file($test_resources_location . "install.php"))
 			{
-				pts_module_process("__pre_test_install", $identifier);
+				pts_module_manager::module_process("__pre_test_install", $identifier);
 				pts_client::$display->test_install_begin($identifier);
 
 				$xml_parser = new pts_test_tandem_XmlReader($identifier);
@@ -396,7 +396,7 @@ class pts_test_installer
 					}
 				}
 
-				pts_module_process("__post_test_install", $identifier);
+				pts_module_manager::module_process("__post_test_install", $identifier);
 				$installed = true;
 
 				if(pts_config::read_bool_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE"))

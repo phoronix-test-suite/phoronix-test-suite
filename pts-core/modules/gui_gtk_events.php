@@ -47,7 +47,7 @@ class gui_gtk_events extends pts_module_interface
 		if(!class_exists("gui_gtk"))
 		{
 			// The GTK interface isn't being used
-			return PTS_MODULE_UNLOAD;
+			return pts_module::MODULE_UNLOAD;
 		}
 	}
 

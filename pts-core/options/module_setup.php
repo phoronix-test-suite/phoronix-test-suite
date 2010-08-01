@@ -25,7 +25,7 @@ class module_setup implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "pts_is_module", null, "No module found.")
+		new pts_argument_check(0, array("pts_module", "is_module"), null, "No module found.")
 		);
 	}
 	public static function run($r)
@@ -36,12 +36,12 @@ class module_setup implements pts_option_interface
 
 		if(!class_exists($module))
 		{
-			pts_load_module($module);
+			pts_module_manager::load_module($module);
 		}
 
-		$module_name = pts_module_call($module, "module_name");
-		$module_description = pts_module_call($module, "module_description");
-		$module_setup = pts_module_call($module, "module_setup");
+		$module_name = pts_module_manager::module_call($module, "module_name");
+		$module_description = pts_module_manager::module_call($module, "module_description");
+		$module_setup = pts_module_manager::module_call($module, "module_setup");
 
 		pts_client::$display->generic_heading($module_name . " Module Configuration");
 		echo $module_description . "\n";
@@ -89,8 +89,8 @@ class module_setup implements pts_option_interface
 				}
 			}
 
-			$set_options = pts_module_call($module, "module_setup_validate", $set_options);
-			pts_module_config_init($module, $set_options);
+			$set_options = pts_module_manager::module_call($module, "module_setup_validate", $set_options);
+			pts_module::module_config_save($module, $set_options);
 		}
 		echo "\n";
 	}

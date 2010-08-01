@@ -51,7 +51,7 @@ class pts_compatibility
 
 		foreach($module_settings as $module_name => &$module_option_group)
 		{
-			pts_module_config_init($module_name, $module_option_group);
+			pts_module::module_config_save($module_name, $module_option_group);
 		}
 
 		pts_file_io::unlink(PTS_USER_DIR . "modules-config.xml");
