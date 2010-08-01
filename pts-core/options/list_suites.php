@@ -33,21 +33,24 @@ class list_suites implements pts_option_interface
 			foreach($available_suites as $identifier)
 			{
 				$suite_info = new pts_test_suite($identifier);
+				$partially_supported = $suite_info->is_supported() == 1;
 
-				if(!$has_partially_supported_suite && $suite_info->partially_supported())
+				if(!$has_partially_supported_suite && $partially_supported)
 				{
 					$has_partially_supported_suite = true;
 				}
 
-				if(!$suite_info->not_supported())
+				if($suite_info->is_supported())
 				{
+					$identifier_prefix = $partially_supported ? '*' : ' ';
+
 					if(pts_client::read_env("PTS_DEBUG"))
 					{
-						echo sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $suite_info->get_identifier_prefix() . " " . $identifier, $suite_info->get_name(), $suite_info->get_version(), $suite_info->get_suite_type());
+						echo sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $identifier_prefix . " " . $identifier, $suite_info->get_name(), $suite_info->get_version(), $suite_info->get_suite_type());
 					}
 					else if($suite_info->get_name() != null)
 					{
-						echo sprintf("%-24ls - %-32ls [Type: %s]\n", $suite_info->get_identifier_prefix() . " " . $identifier, $suite_info->get_name(), $suite_info->get_suite_type());
+						echo sprintf("%-24ls - %-32ls [Type: %s]\n", $identifier_prefix . " " . $identifier, $suite_info->get_name(), $suite_info->get_suite_type());
 					}
 				}
 			}

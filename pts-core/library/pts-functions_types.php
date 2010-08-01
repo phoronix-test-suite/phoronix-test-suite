@@ -432,9 +432,10 @@ function pts_suite_needs_updated_install($identifier)
 function pts_test_needs_updated_install($identifier)
 {
 	$installed_test = new pts_installed_test($identifier);
+	$test_profile = new pts_test_profile($identifier);
 
 	// Checks if test needs updating
-	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable(pts_test_profile_version($identifier), $installed_test->get_installed_version()) || pts_test_checksum_installer($identifier) != $installed_test->get_installed_checksum() || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL");
+	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable($test_profile->get_test_profile_version(), $installed_test->get_installed_version()) || pts_test_checksum_installer($identifier) != $installed_test->get_installed_checksum() || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL");
 }
 function pts_test_checksum_installer($identifier)
 {
@@ -456,18 +457,6 @@ function pts_test_checksum_installer($identifier)
 	}
 
 	return $md5_checksum;
-}
-function pts_test_profile_version($identifier)
-{
-	// Checks PTS profile version
-	$version = null;
-
-	if(pts_is_test($identifier))
-	{
-		$version = pts_test_read_xml($identifier, P_TEST_PTSVERSION);		
-	}
-
-	return $version;
 }
 function pts_test_read_xml($identifier, $xml_option)
 {
@@ -634,26 +623,6 @@ function pts_estimated_run_time($identifier, $return_total_time = true, $return_
 
 	return $return_total_time ? $estimated_total : $estimated_lengths;
 }
-function pts_suite_version_supported($identifier)
-{
-	// Check if the test suite's version is compatible with pts-core
-	$supported = true;
-
-	if(pts_is_suite($identifier))
-	{
-		$requires_core_version = pts_suite_read_xml($identifier, P_SUITE_REQUIRES_COREVERSION);
-
-		if(!empty($requires_core_version))
-		{
-			$core_check = pts_strings::trim_explode('-', $requires_core_version);	
-			$support_begins = $core_check[0];
-			$support_ends = isset($core_check[1]) ? $core_check[1] : PTS_CORE_VERSION;
-			$supported = PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
-		}
-	}
-
-	return $supported;
-}
 function pts_version_newer($version_a, $version_b)
 {
 	$r_a = explode(".", $version_a);
@@ -663,36 +632,6 @@ function pts_version_newer($version_a, $version_b)
 	$r_b = ($r_b[0] * 1000) + ($r_b[1] * 100) + $r_b[2];
 
 	return $r_a > $r_b ? $version_a : $version_b;
-}
-function pts_suite_supported($identifier)
-{
-	$tests = pts_contained_tests($identifier, false, false, true);
-	$supported_size = $original_size = count($tests);
-
-	foreach($tests as &$test)
-	{
-		$test_profile = new pts_test_profile($test);
-
-		if($test_profile->is_supported())
-		{
-			$supported_size--;
-		}
-	}
-
-	if($supported_size == 0)
-	{
-		$return_code = 0;
-	}
-	else if($supported_size != $original_size)
-	{
-		$return_code = 1;
-	}
-	else
-	{
-		$return_code = 2;
-	}
-
-	return $return_code;
 }
 function pts_available_base_tests_array()
 {
@@ -765,7 +704,7 @@ function pts_supported_suites_array()
 		{
 			$suite = new pts_test_suite($identifier);
 
-			if(!$suite->not_supported())
+			if($suite->is_supported())
 			{
 				array_push($supported_suites, $identifier);
 			}

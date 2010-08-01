@@ -94,7 +94,9 @@ function pts_test_update_install_xml($identifier, $this_duration = 0, $is_instal
 		$test_duration = ceil((($test_duration * $xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN)) + $this_duration) / ($xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN) + 1));
 	}
 
-	$test_version = $is_install ? pts_test_profile_version($identifier) : $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
+	$test_profile = new pts_test_profile($identifier);
+
+	$test_version = $is_install ? $test_profile->get_test_profile_version() : $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
 	$test_checksum = $is_install ? pts_test_checksum_installer($identifier) : $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
 	$sys_identifier = $is_install ? phodevi::system_id_string() : $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
 	$install_time = $is_install ? date("Y-m-d H:i:s") : $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);

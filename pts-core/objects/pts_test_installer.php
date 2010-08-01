@@ -48,7 +48,8 @@ class pts_test_installer
 			{
 				if($test_install_manager->add_test($test))
 				{
-					pts_client::$display->generic_sub_heading("To Install: " . $test . " [v" . pts_test_profile_version($test) . "]");
+					$test_profile = new pts_test_profile($test);
+					pts_client::$display->generic_sub_heading("To Install: " . $test . " [v" . $test_profile->get_test_profile_version() . "]");
 				}
 			}
 			else

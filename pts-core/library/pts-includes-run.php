@@ -56,7 +56,9 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 		}
 		else if(pts_is_suite($lower_identifier))
 		{
-			if(pts_suite_version_supported($lower_identifier) == false)
+			$test_suite = new pts_test_suite($lower_identifier);
+
+			if($test_suite->is_core_version_supported() == false)
 			{
 				echo $lower_identifier . " is a suite not supported by this version of the Phoronix Test Suite.\n";
 				continue;

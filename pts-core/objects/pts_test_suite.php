@@ -24,45 +24,45 @@ class pts_test_suite
 {
 	private $identifier;
 	private $xml_parser;
-	private $not_supported = false;
-	private $only_partially_supported = false;
-	private $identifier_show_prefix = null;
 
 	public function __construct($identifier)
 	{
 		$this->xml_parser = new pts_suite_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
+	}
+	public function is_supported()
+	{
+		$tests = pts_contained_tests($identifier, false, false, true);
+		$supported_size = $original_size = count($tests);
 
-		$suite_support_code = pts_suite_supported($identifier);
-
-		$this->identifier_show_prefix = " ";
-
-		switch($suite_support_code)
+		foreach($tests as &$test)
 		{
-			case 0:
-				$this->not_supported = true;
-				break;
-			case 1:
-				$this->identifier_show_prefix = "*";
-				$this->only_partially_supported = true;
-				break;
+			$test_profile = new pts_test_profile($test);
+
+			if($test_profile->is_supported())
+			{
+				$supported_size--;
+			}
 		}
-	}
-	public function get_identifier_prefix()
-	{
-		return $this->identifier_show_prefix;
-	}
-	public function partially_supported()
-	{
-		return $this->only_partially_supported;
+
+		if($supported_size == 0)
+		{
+			$return_code = 0;
+		}
+		else if($supported_size != $original_size)
+		{
+			$return_code = 1;
+		}
+		else
+		{
+			$return_code = 2;
+		}
+
+		return $return_code;
 	}
 	public function get_reference_systems()
 	{
 		return pts_strings::trim_explode(',', $this->xml_parser->getXMLValue(P_SUITE_REFERENCE_SYSTEMS));
-	}
-	public function not_supported()
-	{
-		return $this->not_supported;
 	}
 	public function get_description()
 	{
@@ -94,6 +94,23 @@ class pts_test_suite
 		$this->pts_print_format_tests($this->identifier, $str);
 
 		return $str;
+	}
+	public function is_core_version_supported()
+	{
+		// Check if the test suite's version is compatible with pts-core
+		$supported = true;
+
+		$requires_core_version = $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION);
+
+		if(!empty($requires_core_version))
+		{
+			$core_check = pts_strings::trim_explode('-', $requires_core_version);	
+			$support_begins = $core_check[0];
+			$support_ends = isset($core_check[1]) ? $core_check[1] : PTS_CORE_VERSION;
+			$supported = PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
+		}
+
+		return $supported;
 	}
 	public function pts_print_format_tests($object, &$write_buffer, $steps = -1)
 	{
