@@ -17,7 +17,7 @@
 		<Title>Flexible IO Tester</Title>
 		<Version>1.21</Version>
 		<Executable>fio-run</Executable>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds (Run Time)</ResultScale>
 		<Proportion>LIB</Proportion>
 		<Description>fio is an advanced disk benchmark that depends upon the kernel's AIO access library.</Description>
