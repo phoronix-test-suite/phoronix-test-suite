@@ -28,6 +28,11 @@
 			<Description>The LineBeforeHint tag is similar to LineHint but is used to indicate the line before where the test results appear, in the event the LineHint tag cannot be used reliably.</Description>
 		</Define>
 		<Define>
+			<Name>P_RESULTS_PARSER_LINE_AFTER_HINT</Name>
+			<Value>PhoronixTestSuite/ResultsParser/LineAfterHint</Value>
+			<Description>The LineAfterHint tag is similar to LineBeforeHint but is used to indicate the line after where the test results appear, in the event the LineHint or LineBeforeHint tags cannot be used reliably.</Description>
+		</Define>
+		<Define>
 			<Name>P_RESULTS_PARSER_RESULT_BEFORE_STRING</Name>
 			<Value>PhoronixTestSuite/ResultsParser/ResultBeforeString</Value>
 			<Description>The ResultBeforeString tag is optional and can be used if there is a consistient string following the reporting of the result, in the event the result's location is not static within the line string.</Description>

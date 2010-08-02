@@ -114,6 +114,7 @@ class pts_result_parser
 		$result_key = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_RESULT_KEY);
 		$result_line_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_HINT);
 		$result_line_before_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_BEFORE_HINT);
+		$result_line_after_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_AFTER_HINT);
 		$result_before_string = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_RESULT_BEFORE_STRING);
 		$result_divide_by = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_DIVIDE_BY);
 		$result_multiply_by = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MULTIPLY_BY);
@@ -180,6 +181,10 @@ class pts_result_parser
 			{
 				$search_key = null; // doesn't really matter what this value is
 			}
+			else if($result_line_after_hint[$i] != null && strpos($result_template[$i], $result_line_hint[$i]) !== false)
+			{
+				$search_key = null; // doesn't really matter what this value is
+			}
 			else
 			{
 				foreach($result_template_r as $line_part)
@@ -217,7 +222,7 @@ class pts_result_parser
 				return false;
 			}
 
-			if($search_key != null || $result_line_before_hint[$i] != null)
+			if($search_key != null || $result_line_before_hint[$i] != null || $result_line_after_hint[$i] != null)
 			{
 				$is_multi_match = !empty($multi_match[$i]) && $multi_match[$i] != "NONE";
 				$test_results = array();
@@ -232,6 +237,13 @@ class pts_result_parser
 						$result_line = substr($result_output, strpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
 						$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
 						$result_output = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i]))) . "\n";
+					}
+					if($result_line_after_hint[$i] != null)
+					{
+						pts_test_profile_debug_message("Result Parsing Line After Hint: " . $result_line_after_hint[$i]);
+						$result_line = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
+						$result_line = substr($result_line, strrpos($result_line, "\n", 1) + 1);
+						$result_output = null;
 					}
 					else
 					{
