@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add Message tag to test profile XML specification for pairing it with a <Entry> of a menu option for providing additional information to user
 - pts: Update crafty test profile against Crafty 23.3
 - pts: Update openssl test profile against OpenSSL 1.0.0a and add Windows support
+- pts: Add systester test profile as a new CPU test
 
 Phoronix Test Suite 2.8 Alpha 2
 July 22, 2010

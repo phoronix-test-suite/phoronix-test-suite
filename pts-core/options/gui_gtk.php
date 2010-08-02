@@ -968,12 +968,12 @@ class gui_gtk implements pts_option_interface
 						else
 						{
 							$combobox = GtkComboBox::new_text();
-							foreach($o->get_all_option_names() as $option_name)
+							foreach($o->get_all_option_names_with_messages() as $option_name)
 							{
 								$combobox->append_text($option_name);
 							}
 
-							if(count($o->get_all_option_names()) > 1)
+							if(count($o->get_all_option_names_with_messages()) > 1)
 							{
 								$combobox->append_text("Test All Options");
 							}
