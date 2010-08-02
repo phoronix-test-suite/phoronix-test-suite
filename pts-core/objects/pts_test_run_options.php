@@ -74,7 +74,7 @@ class pts_test_run_options
 				}
 				else
 				{
-					$option_names = $o->get_all_option_names();
+					$option_names = $o->get_all_option_names_with_messages();
 
 					if(count($option_names) > 1)
 					{
@@ -192,14 +192,16 @@ class pts_test_run_options
 		$test_options = array();
 
 		$key_name = substr(P_TEST_OPTIONS_MENU_GROUP_NAME, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
+		$key_message = substr(P_TEST_OPTIONS_MENU_GROUP_MESSAGE, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
 		$key_value = substr(P_TEST_OPTIONS_MENU_GROUP_VALUE, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
 
 		foreach(array_keys($settings_name) as $option_count)
 		{
 			$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
 			$option_names = $xml_parser->getXMLArrayValues($key_name);
+			$option_messages = $xml_parser->getXMLArrayValues($key_message);
 			$option_values = $xml_parser->getXMLArrayValues($key_value);
-			self::auto_process_test_option($identifier, $settings_identifier[$option_count], $option_names, $option_values);
+			self::auto_process_test_option($identifier, $settings_identifier[$option_count], $option_names, $option_values, $option_messages);
 
 			$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
 			$user_option->set_option_prefix($settings_argument_prefix[$option_count]);
@@ -207,7 +209,7 @@ class pts_test_run_options
 
 			foreach(array_keys($option_names) as $i)
 			{
-				$user_option->add_option($option_names[$i], $option_values[$i]);
+				$user_option->add_option($option_names[$i], $option_values[$i], $option_messages[$i]);
 			}
 
 			$user_option->set_option_default($settings_default[$option_count]);
@@ -241,7 +243,7 @@ class pts_test_run_options
 			}
 		}
 	}
-	private static function auto_process_test_option($test_identifier, $option_identifier, &$option_names, &$option_values)
+	private static function auto_process_test_option($test_identifier, $option_identifier, &$option_names, &$option_values, &$option_messages)
 	{
 		// Some test items have options that are dynamically built
 		switch($option_identifier)

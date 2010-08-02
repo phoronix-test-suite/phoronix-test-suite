@@ -23,10 +23,10 @@
 
 class pts_test_option
 {
-	private $identifier = "";
-	private $option_name = "";
-	private $prefix = "";
-	private $postfix = "";
+	private $identifier = null;
+	private $option_name = null;
+	private $prefix = null;
+	private $postfix = null;
 	private $default_entry = -1;
 	private $options = array();
 
@@ -71,9 +71,9 @@ class pts_test_option
 	{		
 		return $this->default_entry == -1 ? $this->option_count() - 1 : $this->default_entry;
 	}
-	public function add_option($name, $value)
+	public function add_option($name, $value, $message)
 	{
-		array_push($this->options, array($name, $value));
+		array_push($this->options, array($name, $value, $message));
 	}
 	public function get_all_option_names()
 	{
@@ -86,6 +86,19 @@ class pts_test_option
 
 		return $names;
 	}
+	public function get_all_option_names_with_messages()
+	{
+		$names = array();
+
+		for($i = 0; $i < $this->option_count(); $i++)
+		{
+			$user_msg = $this->get_option_message($i);
+
+			array_push($names, $this->get_option_name($i) . (!empty($user_msg) ? " [" . $user_msg . ']' : null));
+		}
+
+		return $names;
+	}
 	public function get_option_name($index)
 	{
 		return isset($this->options[$index][0]) ? $this->options[$index][0] : null;
@@ -93,6 +106,10 @@ class pts_test_option
 	public function get_option_value($index)
 	{
 		return isset($this->options[$index][1]) ? $this->options[$index][1] : null;
+	}
+	public function get_option_message($index)
+	{
+		return isset($this->options[$index][2]) ? $this->options[$index][2] : null;
 	}
 	public function option_count()
 	{
@@ -153,7 +170,7 @@ class pts_test_option
 	{
 		$return_keys = array();
 
-		foreach(pts_strings::trim_explode(",", $input) as $input_choice)
+		foreach(pts_strings::trim_explode(',', $input) as $input_choice)
 		{
 			if($input_choice == ($this->option_count() + 1) || $input_choice == "Test All Options")
 			{

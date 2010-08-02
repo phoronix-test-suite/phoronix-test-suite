@@ -288,6 +288,12 @@ PATH environment variable will contain each of the test directories below this t
 			<Required>NO</Required>
 		</Define>
 		<Define>
+			<Name>P_TEST_OPTIONS_MENU_GROUP_MESSAGE</Name>
+			<Value>PhoronixTestSuite/TestSettings/Option/Menu/Entry/Message</Value>
+			<Description>The string shown to the user to after presenting the name within the option. This can be used to provide a warning to the user if this option will cause the test to run abnormally long or any other information the user should know if choosing this option.</Description>
+			<Required>NO</Required>
+		</Define>
+		<Define>
 			<Name>P_TEST_OPTIONS_MENU_GROUP_VALUE</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/Menu/Entry/Value</Value>
 			<Description>The string post-fixed to the ArgumentName tag and appended to the end of the Arguments tag, which is then supplied to the executable binary as arguments.</Description>
