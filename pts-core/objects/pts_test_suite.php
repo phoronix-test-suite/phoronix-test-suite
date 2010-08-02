@@ -32,14 +32,14 @@ class pts_test_suite
 	}
 	public function is_supported()
 	{
-		$tests = pts_contained_tests($identifier, false, false, true);
+		$tests = pts_contained_tests($this->identifier, false, false, true);
 		$supported_size = $original_size = count($tests);
 
 		foreach($tests as &$test)
 		{
 			$test_profile = new pts_test_profile($test);
 
-			if($test_profile->is_supported())
+			if($test_profile->is_supported() == false)
 			{
 				$supported_size--;
 			}
