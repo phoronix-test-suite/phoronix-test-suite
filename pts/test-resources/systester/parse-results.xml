@@ -5,4 +5,10 @@
 		<OutputTemplate>22     4M  N/A   #_RESULT_#</OutputTemplate>
 		<StripResultPostfix>s</StripResultPostfix>
 	</ResultsParser>
+	<ResultsParser>
+		<LineBeforeHint>Checksum validation...</LineBeforeHint>
+		<OutputTemplate>21     4M  N/A   #_RESULT_#</OutputTemplate>
+		<StripResultPostfix>s</StripResultPostfix>
+	</ResultsParser>	
 </PhoronixTestSuite>
+
