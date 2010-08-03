@@ -41,6 +41,13 @@ class pts_OverviewGraph extends pts_Graph
 		parent::__construct($result_object, $result_file);
 
 		// System Identifiers
+		if($result_file->is_multi_way_comparison())
+		{
+			// Multi way comparisons currently render the overview graph as blank
+			$this->skip_graph = true;
+			return;
+		}
+
 		$this->system_identifiers = $result_file->get_system_identifiers();
 		if(count($this->system_identifiers) < 2)
 		{

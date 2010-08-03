@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.8 Beta 1
+August 3, 2010
 
 - pts-core: Report the standard error of test results within the result table
 - pts-core: When the run count is dynamically increased (likely due to std dev being too high), report the std dev to the concise display mode
