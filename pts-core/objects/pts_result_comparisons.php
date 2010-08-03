@@ -55,7 +55,7 @@ class pts_result_comparisons
 
 		return $reference_tests;
 	}
-	protected static function process_reference_comparison_hashes($reference_ids_to_process, $original_test_result_identifiers, &$original_test_hashes, &$reference_tests, $handle_cache = false)
+	public static function process_reference_comparison_hashes($reference_ids_to_process, $original_test_result_identifiers, &$original_test_hashes, &$reference_tests, $handle_cache = false)
 	{
 		static $hash_cache = null;
 

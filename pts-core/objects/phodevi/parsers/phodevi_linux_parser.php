@@ -466,6 +466,12 @@ class phodevi_linux_parser
 				foreach($cpuinfo_lines as $line)
 				{
 					$line = pts_strings::trim_explode(": ", $line);
+
+					if(!isset($line[0]))
+					{
+						continue;
+					}
+
 					$this_attribute = $line[0];
 					$this_value = (count($line) > 1 ? $line[1] : "");
 
