@@ -19,6 +19,7 @@
 ::
 
 :: Full path to root directory of the actual Phoronix Test Suite code
+@echo off
 set PTS_DIR=%pwd%
 set PTS_MODE=CLIENT
 
