@@ -101,8 +101,7 @@ class pts_result_file_analyze_manager
 							{
 								if($diff_index == null)
 								{
-									$diff_keys = array_keys($diff);
-									$diff_index = end($diff_keys);
+									$this_index = pts_arrays::last_element(array_keys($diff));
 									//$this_index_value = $diff[$this_index];
 									$index_id = implode(",", array($test_name, $test_version, $this_index));
 
