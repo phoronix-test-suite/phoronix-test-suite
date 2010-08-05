@@ -681,6 +681,12 @@ class phodevi_linux_parser
 				for($i = 0; $i < count($sensors_lines) && $value == false; $i++)
 				{
 					$line = pts_strings::trim_explode(": ", $sensors_lines[$i]);
+
+					if(!isset($line[0]))
+					{
+						continue;
+					}
+
 					$this_attribute = $line[0];
 
 					if($this_attribute == $attribute)

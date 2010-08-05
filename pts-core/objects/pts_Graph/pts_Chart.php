@@ -135,6 +135,12 @@ class pts_Chart extends pts_Graph
 		foreach($this->result_table as $sys_identifier => &$sys_values)
 		{
 			//$row = 0;
+			if(!is_array($sys_values))
+			{
+				// TODO: determine why sometimes $sys_values is empty or not an array
+				continue;
+			}
+
 
 			foreach($sys_values as $i => &$result_table_value)
 			{
