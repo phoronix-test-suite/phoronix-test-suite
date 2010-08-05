@@ -1,4 +1,4 @@
 #!/bin/sh
 
-rm -rf ImageMagick-6.5.0-6/
+rm -rf ImageMagick-6.6.3-2/
 

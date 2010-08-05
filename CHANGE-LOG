@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts: Update build-imagemagick test profile due to old download links that failed, now at ImageMagick 6.6.3
+
 Phoronix Test Suite 2.8 Beta 1
 August 3, 2010
 

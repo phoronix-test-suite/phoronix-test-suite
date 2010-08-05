@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://ftp.sunet.se/pub/multimedia/graphics/ImageMagick/ImageMagick-6.5.5-3.tar.bz2, http://se.aminet.net/pub/multimedia/graphics/ImageMagick/ImageMagick-6.5.5-3.tar.bz2</URL>
-			<MD5>2435951dac6e658e927a8f076d64b1d7</MD5>
-			<FileSize>8823928</FileSize>
+			<URL>http://ftp.sunet.se/pub/multimedia/graphics/ImageMagick/ImageMagick-6.6.3-2.tar.bz2, http://se.aminet.net/pub/multimedia/graphics/ImageMagick/ImageMagick-6.6.3-2.tar.bz2</URL>
+			<MD5>8327600f7caae5a4fa438aba50a41e0d</MD5>
+			<FileSize>8853567</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
