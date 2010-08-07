@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<TestProfile>
+		<Version>1.0.0</Version>
+		<TestType>Processor</TestType>
+		<SoftwareType>Utility</SoftwareType>
+		<License>FREE</License>
+		<Status>VERIFIED</Status>
+		<Maintainer>Michael Larabel</Maintainer>
+		<EnvironmentSize>0.1</EnvironmentSize>
+		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ProjectURL>http://kevinbeason.com/smallpt/</ProjectURL>
+	</TestProfile>
+	<TestInformation>
+		<Title>Smallpt</Title>
+		<Version>1.0</Version>
+		<SubTitle>Global Illumination Renderer; 100 Samples</SubTitle>
+		<TimesToRun>3</TimesToRun>
+		<ResultScale>Seconds</ResultScale>
+		<Proportion>LIB</Proportion>
+		<Description>Smallpt is a C++ global illumination renderer written in less than 100 lines of code. Global illumination is done via unbiased Monte Carlo path tracing and there is multi-threading support via the OpenMP library.</Description>
+	</TestInformation>
+</PhoronixTestSuite>

@@ -36,6 +36,9 @@
 		<Test>ttsiod-renderer</Test>
 	</RunTest>
 	<RunTest>
+		<Test>smallpt</Test>
+	</RunTest>
+	<RunTest>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>HWB Color Space</Description>
