@@ -159,7 +159,7 @@ function pts_gtk_table($headers, $data, $connect_to = null, $on_empty = null, $a
 
 	if(count($headers) == 2)
 	{
-		if($headers[0] == null && is_object($data[0][$i]))
+		if($headers[0] == null && is_object($data[0][1]))
 		{
 			$model = new GtkListStore(GObject::TYPE_OBJECT, GObject::TYPE_STRING);
 		}

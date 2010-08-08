@@ -135,10 +135,9 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 }
 function pts_gui_available_tests($to_show_types, $license_types, $dependency_limit = null, $downloads_limit = null)
 {
-	$test_names = pts_tests::supported_tests();
 	$test_names = array();
 
-	foreach($test_names as &$name)
+	foreach(pts_tests::supported_tests() as $name)
 	{
 		$tp = new pts_test_profile($name);
 		$hw_type = $tp->get_test_hardware_type();

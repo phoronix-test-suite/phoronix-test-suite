@@ -307,7 +307,8 @@ class gui_gtk implements pts_option_interface
 		// Setup System Tray
 		if(class_exists("GtkStatusIcon"))
 		{
-			gui_gtk::system_tray_monitor();
+			// Using the system tray icon seems to cause PHP5-GTK on Ubuntu Lucid to hang
+			//gui_gtk::system_tray_monitor();
 		}
 
 		pts_set_assignment("GTK_GUI_INIT", false);

@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix regression in analyze-batch that led to producing unexpected results
+- pts-core: GTK2 GUI regression fixes
 - pts: Update build-imagemagick test profile due to old download links that failed, now at ImageMagick 6.6.3
 - pts: Add smallpt test profile as a lightweight, multi-threaded path tracing benchmark
 
