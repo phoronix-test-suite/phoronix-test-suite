@@ -209,7 +209,7 @@ class pts_test_run_options
 
 			foreach(array_keys($option_names) as $i)
 			{
-				$user_option->add_option($option_names[$i], $option_values[$i], $option_messages[$i]);
+				$user_option->add_option($option_names[$i], $option_values[$i], (isset($option_messages[$i]) ? $option_messages[$i] : null));
 			}
 
 			$user_option->set_option_default($settings_default[$option_count]);
