@@ -1,9 +1,9 @@
 #!/bin/sh
 
 echo "#!/bin/sh
-rm -rf ImageMagick-6.6.3-2/
-tar -xjf ImageMagick-6.6.3-2.tar.bz2
-cd ImageMagick-6.6.3-2/
+rm -rf ImageMagick-6.6.3-4/
+tar -xjf ImageMagick-6.6.3-4.tar.bz2
+cd ImageMagick-6.6.3-4/
 ./configure > /dev/null
 sleep 3
 \$TIMER_START

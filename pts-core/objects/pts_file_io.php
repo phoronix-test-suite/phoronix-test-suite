@@ -27,6 +27,11 @@ class pts_file_io
 		// Compared to the normal PHP mkdir, don't emit a warning/notice when the directory already exists
 		return !is_dir($dir) && mkdir($dir, $mode, $recursive);
 	}
+	public static function symlink($target, $link)
+	{
+		// Compared to the normal PHP symlink, don't emit a warning when the symlink already exists
+		return is_file($target) && !is_file($link) ? symlink($target, $link) : false;
+	}
 	public static function unlink($file)
 	{
 		// Compared to the normal PHP mkdir, don't emit a warning/notice when the file doesn't exist

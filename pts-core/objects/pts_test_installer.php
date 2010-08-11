@@ -495,10 +495,7 @@ class pts_test_installer
 			pts_file_io::delete(TEST_ENV_DIR . $identifier, $ignore_files);
 		}
 
-		if(is_file(pts_client::user_home_directory() . ".Xauthority"))
-		{
-			symlink(pts_client::user_home_directory() . ".Xauthority", TEST_ENV_DIR . $identifier . "/.Xauthority");
-		}
+		pts_file_io::symlink(pts_client::user_home_directory() . ".Xauthority", TEST_ENV_DIR . $identifier . "/.Xauthority");
 	}
 }
 
