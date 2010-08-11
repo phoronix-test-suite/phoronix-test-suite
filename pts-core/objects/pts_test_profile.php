@@ -96,6 +96,18 @@ class pts_test_profile
 	{
 		return pts_strings::trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_EXDEP));
 	}
+	public function get_pre_install_message()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_PREINSTALLMSG);
+	}
+	public function get_post_install_message()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_POSTINSTALLMSG);
+	}
+	public function get_installation_agreement_message()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_INSTALLAGREEMENT);
+	}
 	public function is_verified_state()
 	{
 		return !in_array($this->get_status(), array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED"));
@@ -264,6 +276,45 @@ class pts_test_profile
 		}
 
 		return $supported;
+	}
+	public function get_test_option_objects()
+	{
+		$settings_name = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
+		$settings_argument_prefix = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPREFIX);
+		$settings_argument_postfix = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPOSTFIX);
+		$settings_identifier = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
+		$settings_default = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DEFAULTENTRY);
+		$settings_menu = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
+
+		$test_options = array();
+
+		$key_name = substr(P_TEST_OPTIONS_MENU_GROUP_NAME, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
+		$key_message = substr(P_TEST_OPTIONS_MENU_GROUP_MESSAGE, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
+		$key_value = substr(P_TEST_OPTIONS_MENU_GROUP_VALUE, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
+
+		foreach(array_keys($settings_name) as $option_count)
+		{
+			$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
+			$option_names = $xml_parser->getXMLArrayValues($key_name);
+			$option_messages = $xml_parser->getXMLArrayValues($key_message);
+			$option_values = $xml_parser->getXMLArrayValues($key_value);
+			pts_test_run_options::auto_process_test_option($this->identifier, $settings_identifier[$option_count], $option_names, $option_values, $option_messages);
+
+			$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
+			$user_option->set_option_prefix($settings_argument_prefix[$option_count]);
+			$user_option->set_option_postfix($settings_argument_postfix[$option_count]);
+
+			foreach(array_keys($option_names) as $i)
+			{
+				$user_option->add_option($option_names[$i], $option_values[$i], (isset($option_messages[$i]) ? $option_messages[$i] : null));
+			}
+
+			$user_option->set_option_default($settings_default[$option_count]);
+
+			array_push($test_options, $user_option);
+		}
+
+		return $test_options;
 	}
 
 	//

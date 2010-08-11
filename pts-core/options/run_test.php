@@ -108,10 +108,10 @@ class run_test implements pts_option_interface
 
 				if($unique_test_count == 1)
 				{
-					$xml_parser = new pts_test_tandem_XmlReader($to_run);
-					$test_description = $xml_parser->getXMLValue(P_TEST_DESCRIPTION);
-					$test_version = $xml_parser->getXMLValue(P_TEST_PTSVERSION);
-					$test_type = $xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
+					$test_profile = new pts_test_profile($to_run);
+					$test_description = $test_profile->get_description();
+					$test_version = $test_profile->get_test_profile_version();
+					$test_type = $test_profile->get_test_hardware_type();
 				}
 			}
 			else if(pts_is_suite($to_run))

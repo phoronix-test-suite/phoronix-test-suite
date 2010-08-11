@@ -38,7 +38,9 @@ class pts_test_run_options
 			$preset_selections = pts_client::parse_value_string_double_identifier($cli_presets_env);
 		}
 
-		foreach(pts_test_run_options::test_option_objects($identifier) as $i => $o)
+		$test_profile = new pts_test_profile($identifier);
+
+		foreach($test_profile->get_test_option_objects() as $i => $o)
 		{
 			$test_profile = new pts_test_profile($identifier);
 
@@ -115,8 +117,9 @@ class pts_test_run_options
 		// Defaults mode for single test
 		$all_args_real = array();
 		$all_args_description = array();
+		$test_profile = new pts_test_profile($identifier);
 
-		foreach(pts_test_run_options::test_option_objects($identifier) as $o)
+		foreach($test_profile->get_test_option_objects() as $o)
 		{
 			$option_args = array();
 			$option_args_description = array();
@@ -154,8 +157,9 @@ class pts_test_run_options
 		// Batch mode for single test
 		$batch_all_args_real = array();
 		$batch_all_args_description = array();
+		$test_profile = new pts_test_profile($identifier);
 
-		foreach(pts_test_run_options::test_option_objects($identifier) as $o)
+		foreach($test_profile->get_test_option_objects() as $o)
 		{
 			$option_args = array();
 			$option_args_description = array();
@@ -178,46 +182,6 @@ class pts_test_run_options
 		self::compute_all_combinations($test_args_description, "", $batch_all_args_description, 0, " - ");
 
 		return array($test_args, $test_args_description);
-	}
-	public static function test_option_objects($identifier)
-	{
-		$xml_parser = new pts_test_tandem_XmlReader($identifier);
-		$settings_name = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
-		$settings_argument_prefix = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPREFIX);
-		$settings_argument_postfix = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPOSTFIX);
-		$settings_identifier = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
-		$settings_default = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DEFAULTENTRY);
-		$settings_menu = $xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
-
-		$test_options = array();
-
-		$key_name = substr(P_TEST_OPTIONS_MENU_GROUP_NAME, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
-		$key_message = substr(P_TEST_OPTIONS_MENU_GROUP_MESSAGE, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
-		$key_value = substr(P_TEST_OPTIONS_MENU_GROUP_VALUE, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
-
-		foreach(array_keys($settings_name) as $option_count)
-		{
-			$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
-			$option_names = $xml_parser->getXMLArrayValues($key_name);
-			$option_messages = $xml_parser->getXMLArrayValues($key_message);
-			$option_values = $xml_parser->getXMLArrayValues($key_value);
-			self::auto_process_test_option($identifier, $settings_identifier[$option_count], $option_names, $option_values, $option_messages);
-
-			$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
-			$user_option->set_option_prefix($settings_argument_prefix[$option_count]);
-			$user_option->set_option_postfix($settings_argument_postfix[$option_count]);
-
-			foreach(array_keys($option_names) as $i)
-			{
-				$user_option->add_option($option_names[$i], $option_values[$i], (isset($option_messages[$i]) ? $option_messages[$i] : null));
-			}
-
-			$user_option->set_option_default($settings_default[$option_count]);
-
-			array_push($test_options, $user_option);
-		}
-
-		return $test_options;
 	}
 	protected static function compute_all_combinations(&$return_arr, $current_string, $options, $counter, $delimiter = " ")
 	{

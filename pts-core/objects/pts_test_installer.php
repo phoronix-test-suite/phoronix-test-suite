@@ -337,10 +337,10 @@ class pts_test_installer
 				pts_module_manager::module_process("__pre_test_install", $identifier);
 				pts_client::$display->test_install_begin($identifier);
 
-				$xml_parser = new pts_test_tandem_XmlReader($identifier);
-				$pre_install_message = $xml_parser->getXMLValue(P_TEST_PREINSTALLMSG);
-				$post_install_message = $xml_parser->getXMLValue(P_TEST_POSTINSTALLMSG);
-				$install_agreement = $xml_parser->getXMLValue(P_TEST_INSTALLAGREEMENT);
+				$test_profile = new pts_test_profile($identifier);
+				$pre_install_message = $test_profile->get_pre_install_message();
+				$post_install_message = $test_profile->get_post_install_message();
+				$install_agreement = $test_profile->get_installation_agreement_message();
 
 				if(!empty($install_agreement))
 				{
