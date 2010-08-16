@@ -185,23 +185,20 @@ function pts_call_test_runs(&$test_run_manager, &$tandem_xml = null)
 		$loop_end_time = time() + $total_loop_time_seconds;
 
 		pts_client::$display->generic_heading("Estimated Run-Time: " . pts_date_time::format_time_string($total_loop_time_seconds, "SECONDS", true, 60));
-		pts_set_assignment("EST_TIME_REMAINING", $total_loop_time_seconds);
 
 		do
 		{
 			for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 			{
 				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $i);
-				pts_set_assignment("EST_TIME_REMAINING", ($loop_end_time - time()));
 			}
 		}
 		while(time() < $loop_end_time && $test_flag);
 	}
 	else if(($total_loop_count = pts_client::read_env("TOTAL_LOOP_COUNT")) && is_numeric($total_loop_count))
 	{
-		if(($estimated_length = pts_estimated_run_time($test_run_manager)) > 1)
+		if(($estimated_length = $test_run_manager->get_estimated_run_time()) > 1)
 		{
-			pts_set_assignment("EST_TIME_REMAINING", ($estimated_length * $total_loop_count));
 			pts_client::$display->generic_heading("Estimated Run-Time: " . pts_date_time::format_time_string(($estimated_length * $total_loop_count), "SECONDS", true, 60));
 		}
 
@@ -210,22 +207,19 @@ function pts_call_test_runs(&$test_run_manager, &$tandem_xml = null)
 			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
 				$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
-				pts_set_assignment("EST_TIME_REMAINING", ($test_run_manager->get_estimated_run_time_remaining($i + 1) + ($estimated_length * ($total_loop_count - $loop - 1))));
 			}
 		}
 	}
 	else
 	{
-		if(($estimated_length = pts_estimated_run_time($test_run_manager)) > 1)
+		if(($estimated_length = $test_run_manager->get_estimated_run_time()) > 1)
 		{
-			pts_set_assignment("EST_TIME_REMAINING", $estimated_length);
 			pts_client::$display->generic_heading("Estimated Run-Time: " . pts_date_time::format_time_string($estimated_length, "SECONDS", true, 60));
 		}
 
 		for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 		{
 			$test_flag = pts_process_test_run_request($test_run_manager, $tandem_xml, $i, ($i + 1), $tests_to_run_count);
-			pts_set_assignment("EST_TIME_REMAINING", $test_run_manager->get_estimated_run_time_remaining($i + 1));
 		}
 	}
 

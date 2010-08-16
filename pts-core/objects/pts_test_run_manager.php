@@ -189,22 +189,26 @@ class pts_test_run_manager
 
 		return $identifiers;
 	}
+	public function get_estimated_run_time()
+	{
+		return $this->get_estimated_run_time_remaining(0);
+	}
 	public function get_estimated_run_time_remaining($index = 0)
 	{
-		$est_time = 0;
+		$estimated_time = 0;
 
 		if(isset($this->tests_to_run[$index]))
 		{
 			for($i = $index; $i < count($this->tests_to_run); $i++)
 			{
-				$test_identifier = $this->tests_to_run[$i]->get_identifier(); // is a test_run_request
-				$test_time = pts_estimated_run_time($test_identifier, true, false);
+				$identifier = $this->tests_to_run[$i]->get_identifier(); // is a test_run_request
 
-				$est_time += $test_time;
+				$test_profile = new pts_test_profile($identifier);
+				$estimated_time += $test_profile->get_estimated_run_time();
 			}
 		}
 
-		return $est_time;
+		return $estimated_time;
 	}
 	public function get_test_to_run($index)
 	{

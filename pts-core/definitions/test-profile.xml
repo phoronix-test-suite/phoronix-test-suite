@@ -182,7 +182,7 @@ PATH environment variable will contain each of the test directories below this t
 		<Define>
 			<Name>P_TEST_ESTIMATEDTIME</Name>
 			<Value>PhoronixTestSuite/TestProfile/EstimatedLength</Value>
-			<Description>The estimated length (in minutes) that it takes this benchmark to run in total.</Description>
+			<Description>The estimated length (in seconds) that it takes this benchmark to run in total.</Description>
 			<Required>NO</Required>
 		</Define>
 		<Define>

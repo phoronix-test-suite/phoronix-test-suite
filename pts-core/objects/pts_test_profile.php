@@ -206,6 +206,24 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_MAX_LENGTH);
 	}
+	public function get_estimated_run_time()
+	{
+		// get estimated run-time (in seconds)
+
+		$installed_test = new pts_installed_test($this->identifier);
+		$this_length = $installed_test->get_average_run_time();
+
+		if(is_numeric($this_length) && $this_length > 0)
+		{
+			$estimated_time = $this_length;
+		}
+		else
+		{
+			$estimated_time = $this->xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
+		}
+
+		return $estimated_time;
+	}
 	public function get_environment_testing_size()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE, -1);
@@ -276,6 +294,27 @@ class pts_test_profile
 		}
 
 		return $supported;
+	}
+	public function get_installer_checksum()
+	{
+		// Calculate installed checksum
+		$test_resources_location = pts_tests::test_resources_location($this->identifier);
+		$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
+
+		if(is_file($test_resources_location . "install" . $os_postfix . ".sh"))
+		{
+			$md5_checksum = md5_file($test_resources_location . "install" . $os_postfix . ".sh");
+		}
+		else if(is_file($test_resources_location . "install.sh"))
+		{
+			$md5_checksum = md5_file($test_resources_location . "install.sh");
+		}
+		else
+		{
+			$md5_checksum = null;
+		}
+
+		return $md5_checksum;
 	}
 	public function suites_containing_test()
 	{

@@ -160,6 +160,7 @@ function pts_test_download_files_locally_available($identifier)
 	foreach(pts_contained_tests($identifier, true, true, false) as $name)
 	{
 		$test_object_downloads = pts_test_install_request::read_download_object_list($name);
+		$test_profile = new pts_test_profile($name);
 
 		foreach($test_object_downloads as &$download_package)
 		{
@@ -169,7 +170,7 @@ function pts_test_download_files_locally_available($identifier)
 			}
 		}
 
-		if(count($test_object_downloads) == 0 && !pts_is_base_test($name) && pts_test_checksum_installer($name) == null)
+		if(count($test_object_downloads) == 0 && !pts_is_base_test($name) && $test_profile->get_installer_checksum() == null)
 		{
 			$xml_parser = new pts_test_tandem_XmlReader($name);
 			$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);

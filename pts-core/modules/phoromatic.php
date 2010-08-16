@@ -485,6 +485,8 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
+		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
+
 		phoromatic::update_system_status("Running " . $pts_test_result->get_test_profile()->get_identifier() . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
 	}
 	public static function __event_user_error($user_error)
@@ -559,9 +561,9 @@ class phoromatic extends pts_module_interface
 
 		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}
-	protected static function update_system_status($current_task)
+	protected static function update_system_status($current_task, $estimated_time_remaining = 0)
 	{
-		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task, "time" => round(pts_read_assignment("EST_TIME_REMAINING") / 60)));
+		$server_response = phoromatic::upload_to_remote_server(array("r" => "update_system_status", "a" => $current_task, "time" => $estimated_time_remaining));
 
 		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
 	}

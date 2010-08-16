@@ -275,7 +275,7 @@ class pts_tests
 		$test_profile = new pts_test_profile($identifier);
 
 		$test_version = $is_install ? $test_profile->get_test_profile_version() : $xml_parser->getXMLValue(P_INSTALL_TEST_VERSION);
-		$test_checksum = $is_install ? pts_test_checksum_installer($identifier) : $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
+		$test_checksum = $is_install ? $test_profile->get_installer_checksum() : $xml_parser->getXMLValue(P_INSTALL_TEST_CHECKSUM);
 		$sys_identifier = $is_install ? phodevi::system_id_string() : $xml_parser->getXMLValue(P_INSTALL_TEST_SYSIDENTIFY);
 		$install_time = $is_install ? date("Y-m-d H:i:s") : $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME);
 		$install_time_length = $is_install ? $this_duration : $xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME_LENGTH);

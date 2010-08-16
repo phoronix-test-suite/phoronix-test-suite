@@ -435,28 +435,7 @@ function pts_test_needs_updated_install($identifier)
 	$test_profile = new pts_test_profile($identifier);
 
 	// Checks if test needs updating
-	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable($test_profile->get_test_profile_version(), $installed_test->get_installed_version()) || pts_test_checksum_installer($identifier) != $installed_test->get_installed_checksum() || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL");
-}
-function pts_test_checksum_installer($identifier)
-{
-	// Calculate installed checksum
-	$test_resources_location = pts_tests::test_resources_location($identifier);
-	$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
-
-	if(is_file($test_resources_location . "install" . $os_postfix . ".sh"))
-	{
-		$md5_checksum = md5_file($test_resources_location . "install" . $os_postfix . ".sh");
-	}
-	else if(is_file($test_resources_location . "install.sh"))
-	{
-		$md5_checksum = md5_file($test_resources_location . "install.sh");
-	}
-	else
-	{
-		$md5_checksum = null;
-	}
-
-	return $md5_checksum;
+	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable($test_profile->get_test_profile_version(), $installed_test->get_installed_version()) || $test_profile->get_installer_checksum() != $installed_test->get_installed_checksum() || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL");
 }
 function pts_test_read_xml($identifier, $xml_option)
 {
@@ -556,6 +535,7 @@ function pts_estimated_environment_size($identifier)
 }
 function pts_estimated_run_time($identifier, $return_total_time = true, $return_on_missing = true)
 {
+	// TODO: to replace with pts_test_run_manager->get_estimated_run_time() or pts_test_profile->get_estimated_run_time()
 	// Estimate the time it takes (in seconds) to complete the given test
 	$estimated_lengths = array();
 	$estimated_total = 0;

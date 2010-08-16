@@ -284,7 +284,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			array_shift($this->run_process_tests_remaining_to_run);
 		}
 
-		$estimated_length = pts_estimated_run_time($test_result->get_test_profile()->get_identifier());
+		$estimated_length = $test_result->get_test_profile()->get_estimated_run_time();
 		if($estimated_length > 1)
 		{
 			echo $this->tab . "Estimated Test Run-Time: " . pts_date_time::format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
