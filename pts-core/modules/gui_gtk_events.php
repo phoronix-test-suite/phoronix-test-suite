@@ -58,7 +58,7 @@ class gui_gtk_events extends pts_module_interface
 	public static function __pre_install_process(&$test_install_manager)
 	{
 		self::$test_install_pos = 0;
-		self::$test_install_count = $test_install_manager->get_install_count();
+		self::$test_install_count = $test_install_manager->tests_to_install_count();
 		self::$progress_window = new pts_gtk_advanced_progress_window("Phoronix Test Suite: Test Installation");
 		self::$progress_window->update_progress_bar(0, " ", 0, "Preparing Install Process");
 	}

@@ -164,6 +164,11 @@ class pts_result_file_analyze_manager
 								}
 							}
 
+							if($do_line_graph && count($results) < 3)
+							{
+								$do_line_graph = false;
+							}
+
 							$mto->set_format(($do_line_graph ? "LINE_GRAPH" : "BAR_ANALYZE_GRAPH"));
 							$mto->set_attributes($diff_index . " Analysis");
 							$mto->set_scale($mto->get_scale() . " | " . implode(",", $similar_ids_names));
