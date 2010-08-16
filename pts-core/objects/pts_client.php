@@ -1019,7 +1019,7 @@ class pts_client
 	}
 	public static function cache_suite_calls()
 	{
-		pts_supported_suites_array();
+		pts_suites::supported_suites();
 		pts_suite_name_to_identifier(-1);
 	}
 	public static function cache_test_calls()
@@ -1041,13 +1041,13 @@ class pts_client
 	{
 		$original_test_hashes = array();
 		$reference_tests = array();
-		pts_result_comparisons::process_reference_comparison_hashes(pts_generic_reference_system_comparison_ids(), array(), $original_test_hashes, $reference_tests, true);
+		pts_result_comparisons::process_reference_comparison_hashes(pts_client::generic_reference_system_comparison_ids(), array(), $original_test_hashes, $reference_tests, true);
 	}
 	public static function cache_generic_reference_systems_results()
 	{
 		$reference_cache_dir = is_dir("/var/cache/phoronix-test-suite/reference-comparisons/") ? "/var/cache/phoronix-test-suite/reference-comparisons/" : false;
 
-		foreach(pts_generic_reference_system_comparison_ids() as $comparison_id)
+		foreach(pts_client::generic_reference_system_comparison_ids() as $comparison_id)
 		{
 			if(!pts_is_test_result($comparison_id))
 			{
@@ -1063,6 +1063,46 @@ class pts_client
 				}
 			}
 		}
+	}
+	public static function remove_saved_result_file($identifier)
+	{
+		pts_file_io::delete(SAVE_RESULTS_DIR . $identifier, null, true);
+	}
+	public static function saved_test_results()
+	{
+		$results = array();
+		$ignore_ids = pts_client::generic_reference_system_comparison_ids();
+
+		foreach(pts_file_io::glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
+		{
+			$identifier = pts_extract_identifier_from_path($result_file);
+
+			if(!in_array($identifier, $ignore_ids))
+			{
+				array_push($results, $identifier);
+			}
+		}
+
+		return $results;
+	}
+	public static function generic_reference_system_comparison_ids()
+	{
+		static $comparison_ids = null;
+
+		if($comparison_ids == null)
+		{
+			$comparison_ids = pts_strings::trim_explode("\n", pts_file_io::file_get_contents(STATIC_DIR . "lists/reference-system-comparisons.list"));
+
+			foreach(explode(' ', pts_config::read_user_config(P_OPTION_EXTRA_REFERENCE_SYSTEMS, null)) as $reference_check)
+			{
+				if(pts_global::is_global_id($reference_check))
+				{
+					array_push($comparison_ids, $reference_check);
+				}
+			}
+		}
+
+		return $comparison_ids;
 	}
 }
 

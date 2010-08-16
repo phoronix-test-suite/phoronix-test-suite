@@ -301,7 +301,7 @@ class phoromatic extends pts_module_interface
 
 				if(!pts_read_assignment("PHOROMATIC_ARCHIVE_RESULTS"))
 				{
-					pts_remove_test_result_dir($save_identifier);
+					pts_client::remove_saved_result_file($save_identifier);
 				}
 			}
 		}

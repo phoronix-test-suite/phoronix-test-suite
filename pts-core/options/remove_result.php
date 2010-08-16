@@ -30,7 +30,7 @@ class remove_result implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		pts_remove_test_result_dir($r[0]);
+		pts_client::remove_saved_result_file($r[0]);
 		echo "\n" . $r[0] . " was removed.\n";
 	}
 }

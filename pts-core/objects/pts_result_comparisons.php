@@ -51,7 +51,7 @@ class pts_result_comparisons
 		}
 
 		pts_result_comparisons::process_reference_comparison_hashes($ref_systems_xml_strings[$result_test], $result_identifiers, $test_result_hashes, $reference_tests);
-		pts_result_comparisons::process_reference_comparison_hashes(pts_generic_reference_system_comparison_ids(), $result_identifiers, $test_result_hashes, $reference_tests, true);
+		pts_result_comparisons::process_reference_comparison_hashes(pts_client::generic_reference_system_comparison_ids(), $result_identifiers, $test_result_hashes, $reference_tests, true);
 
 		return $reference_tests;
 	}

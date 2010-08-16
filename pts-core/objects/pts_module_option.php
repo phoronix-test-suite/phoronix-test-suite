@@ -135,12 +135,12 @@ class pts_module_option
 						$supported = true;
 					}
 				case "INSTALLED_TEST_OR_SUITE":
-					if(in_array($input, pts_installed_tests_array()) || in_array($input, pts_installed_suites_array()))
+					if(in_array($input, pts_tests::installed_tests()) || in_array($input, pts_suites::installed_suites()))
 					{
 						$supported = true;
 					}
 				case "INSTALLED_SUITE":
-					if(in_array($input, pts_installed_suites_array()))
+					if(in_array($input, pts_suites::installed_suites()))
 					{
 						$supported = true;
 					}

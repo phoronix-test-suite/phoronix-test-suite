@@ -36,7 +36,7 @@ class remove_installed_test implements pts_option_interface
 		{
 			if($identifier == "all")
 			{
-				$identifier = pts_installed_tests_array();
+				$identifier = pts_tests::installed_tests();
 			}
 
 			foreach(pts_arrays::to_array($identifier) as $install_identifier)

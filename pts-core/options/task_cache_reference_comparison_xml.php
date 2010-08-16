@@ -31,7 +31,7 @@ class task_cache_reference_comparison_xml implements pts_option_interface
 			pts_file_io::mkdir("/var/cache/phoronix-test-suite/reference-comparisons/", 0777, true);
 		}
 
-		foreach(pts_generic_reference_system_comparison_ids() as $reference_id)
+		foreach(pts_client::generic_reference_system_comparison_ids() as $reference_id)
 		{
 			$reference_xml = pts_global::download_result_xml($reference_id);
 

@@ -25,7 +25,7 @@ function pts_gui_installed_suites()
 {
 	$installed_suites = array();
 
-	foreach(pts_installed_suites_array() as $suite)
+	foreach(pts_suites::installed_suites() as $suite)
 	{
 		$test_suite = new pts_test_suite($suite);
 		array_push($installed_suites, $test_suite->get_name());
@@ -90,7 +90,7 @@ function pts_gui_process_show_test($identifier, $dependency_limit, $downloads_li
 }
 function pts_gui_available_suites($to_show_types, $license_types = null, $dependency_limit = null, $downloads_limit = null)
 {
-	$test_suites = pts_supported_suites_array();
+	$test_suites = pts_suites::supported_suites();
 	$to_show_names = array();
 
 	foreach($test_suites as &$name)
@@ -114,7 +114,7 @@ function pts_gui_available_suites($to_show_types, $license_types = null, $depend
 function pts_gui_installed_tests($to_show_types, $license_types)
 {
 	$installed_tests = array();
-	$installed = pts_installed_tests_array();
+	$installed = pts_tests::installed_tests();
 	$license_types = array_map("strtoupper", $license_types);
 
 	foreach($installed as &$test)

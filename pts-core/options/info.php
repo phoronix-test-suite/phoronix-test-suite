@@ -135,7 +135,7 @@ class info implements pts_option_interface
 				echo pts_user_io::display_text_list($test->get_dependency_names());
 			}
 
-			$associated_suites = pts_suites_containing_test($to_info);
+			$associated_suites = $test->suites_containing_test();
 			if(count($associated_suites) > 0)
 			{
 				asort($associated_suites);

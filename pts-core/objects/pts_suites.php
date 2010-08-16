@@ -56,6 +56,48 @@ class pts_suites
 
 		return $cache;
 	}
+	public static function supported_suites()
+	{
+		static $cache = null;
+
+		if($cache == null)
+		{
+			$supported_suites = array();
+
+			foreach(pts_suites::available_suites() as $identifier)
+			{
+				$suite = new pts_test_suite($identifier);
+
+				if($suite->is_supported())
+				{
+					array_push($supported_suites, $identifier);
+				}
+			}
+
+			$cache = $supported_suites;
+		}
+
+		return $cache;
+	}
+	public static function installed_suites()
+	{
+		if(!pts_is_assignment("CACHE_INSTALLED_SUITES"))
+		{
+			$installed_suites = array();
+
+			foreach(pts_suites::available_suites() as $suite)
+			{
+				if(pts_suite_needs_updated_install($suite) == false)
+				{
+					array_push($installed_suites, $suite);
+				}
+			}
+
+			pts_set_assignment("CACHE_INSTALLED_SUITES", $installed_suites);
+		}
+
+		return pts_read_assignment("CACHE_INSTALLED_SUITES");
+	}
 }
 
 ?>

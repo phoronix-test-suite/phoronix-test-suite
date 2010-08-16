@@ -537,6 +537,23 @@ class phodevi
 
 		return intval($uptime);
 	}
+	public static function cpu_arch_compatible($check_against)
+	{
+		$compatible = true;
+		$this_arch = phodevi::read_property("system", "kernel-architecture");
+		$check_against = pts_arrays::to_array($check_against);
+
+		if(isset($this_arch[2]) && substr($this_arch, -2) == "86")
+		{
+			$this_arch = "x86";
+		}
+		if(!in_array($this_arch, $check_against))
+		{
+			$compatible = false;
+		}
+
+		return $compatible;
+	}
 }
 
 ?>

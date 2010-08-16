@@ -56,7 +56,7 @@ class pts_result_file_result_object
 	}
 	public function get_comparison_hash($show_version_and_attributes = true)
 	{
-		return $show_version_and_attributes ? pts_test_comparison_hash($this->get_test_name(), $this->get_arguments(), $this->get_attributes(), $this->get_version()) : pts_test_comparison_hash($this->get_test_name(), $this->get_arguments());
+		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->get_test_name(), $this->get_arguments(), $this->get_attributes(), $this->get_version()) : pts_test_profile::generate_comparison_hash($this->get_test_name(), $this->get_arguments());
 	}
 	public function get_name()
 	{

@@ -56,6 +56,27 @@ class pts_tests
 
 		return $cache;
 	}
+	public static function installed_tests()
+	{
+		if(!pts_is_assignment("CACHE_INSTALLED_TESTS"))
+		{
+			$cleaned_tests = array();
+
+			foreach(pts_file_io::glob(TEST_ENV_DIR . "*/pts-install.xml") as $test)
+			{
+				$test = pts_extract_identifier_from_path($test);
+
+				if(pts_is_test($test))
+				{
+					array_push($cleaned_tests, $test);
+				}
+			}
+
+			pts_set_assignment("CACHE_INSTALLED_TESTS", $cleaned_tests);
+		}
+
+		return pts_read_assignment("CACHE_INSTALLED_TESTS");
+	}
 	public static function supported_tests()
 	{
 		static $cache = null;

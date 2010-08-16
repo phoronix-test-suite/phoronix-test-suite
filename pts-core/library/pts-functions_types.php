@@ -330,7 +330,7 @@ function pts_virtual_suite_tests($object)
 			}
 			break;
 		case "TYPE_VIRT_SUITE_INSTALLED_TESTS":
-			foreach(pts_installed_tests_array() as $test)
+			foreach(pts_tests::installed_tests() as $test)
 			{
 				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
 				$test_title = pts_test_read_xml($test, P_TEST_TITLE);
@@ -554,30 +554,6 @@ function pts_estimated_environment_size($identifier)
 
 	return $estimated_size;
 }
-function pts_tests_within_run_manager($test_run_manager)
-{
-	$identifiers = array();
-
-	if($test_run_manager instanceOf pts_test_run_manager && is_array(($trq_r = $test_run_manager->get_tests_to_run())))
-	{
-		foreach($trq_r as &$test_run_request)
-		{
-			if($test_run_request instanceOf pts_test_run_request)
-			{
-				array_push($identifiers, $test_run_request->get_identifier());
-			}
-			else
-			{
-				foreach(pts_tests_within_run_manager($run_request) as $to_add)
-				{
-					array_push($identifiers, $to_add);
-				}
-			}
-		}
-	}
-
-	return $identifiers;
-}
 function pts_estimated_run_time($identifier, $return_total_time = true, $return_on_missing = true)
 {
 	// Estimate the time it takes (in seconds) to complete the given test
@@ -586,7 +562,7 @@ function pts_estimated_run_time($identifier, $return_total_time = true, $return_
 
 	if($identifier instanceOf pts_test_run_manager)
 	{
-		$identifier = pts_tests_within_run_manager($identifier);
+		$identifier = $identifier->get_tests_to_run_identifiers();
 	}
 
 	foreach(pts_contained_tests($identifier, false, true, false) as $test)
@@ -633,6 +609,9 @@ function pts_version_newer($version_a, $version_b)
 
 	return $r_a > $r_b ? $version_a : $version_b;
 }
+
+
+/*
 function pts_available_base_tests_array()
 {
 	static $cache = null;
@@ -652,150 +631,6 @@ function pts_available_base_tests_array()
 
 	return $cache;
 }
-function pts_installed_tests_array()
-{
-	if(!pts_is_assignment("CACHE_INSTALLED_TESTS"))
-	{
-		$cleaned_tests = array();
-
-		foreach(pts_file_io::glob(TEST_ENV_DIR . "*/pts-install.xml") as $test)
-		{
-			$test = pts_extract_identifier_from_path($test);
-
-			if(pts_is_test($test))
-			{
-				array_push($cleaned_tests, $test);
-			}
-		}
-
-		pts_set_assignment("CACHE_INSTALLED_TESTS", $cleaned_tests);
-	}
-
-	return pts_read_assignment("CACHE_INSTALLED_TESTS");
-}
-function pts_installed_suites_array()
-{
-	if(!pts_is_assignment("CACHE_INSTALLED_SUITES"))
-	{
-		$installed_suites = array();
-
-		foreach(pts_suites::available_suites() as $suite)
-		{
-			if(!pts_suite_needs_updated_install($suite))
-			{
-				array_push($installed_suites, $suite);
-			}
-		}
-
-		pts_set_assignment("CACHE_INSTALLED_SUITES", $installed_suites);
-	}
-
-	return pts_read_assignment("CACHE_INSTALLED_SUITES");
-}
-function pts_supported_suites_array()
-{
-	static $cache = null;
-
-	if($cache == null)
-	{
-		$supported_suites = array();
-
-		foreach(pts_suites::available_suites() as $identifier)
-		{
-			$suite = new pts_test_suite($identifier);
-
-			if($suite->is_supported())
-			{
-				array_push($supported_suites, $identifier);
-			}
-		}
-
-		$cache = $supported_suites;
-	}
-
-	return $cache;
-}
-function pts_cpu_arch_compatible($check_against)
-{
-	$compatible = true;
-	$this_arch = phodevi::read_property("system", "kernel-architecture");
-	$check_against = pts_arrays::to_array($check_against);
-
-	if(isset($this_arch[2]) && substr($this_arch, -2) == "86")
-	{
-		$this_arch = "x86";
-	}
-	if(!in_array($this_arch, $check_against))
-	{
-		$compatible = false;
-	}
-
-	return $compatible;
-}
-function pts_saved_test_results_identifiers()
-{
-	$results = array();
-	$ignore_ids = pts_generic_reference_system_comparison_ids();
-
-	foreach(pts_file_io::glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
-	{
-		$identifier = pts_extract_identifier_from_path($result_file);
-
-		if(!in_array($identifier, $ignore_ids))
-		{
-			array_push($results, $identifier);
-		}
-	}
-
-	return $results;
-}
-function pts_generic_reference_system_comparison_ids()
-{
-	static $comparison_ids = null;
-
-	if($comparison_ids == null)
-	{
-		$comparison_ids = pts_strings::trim_explode("\n", pts_file_io::file_get_contents(STATIC_DIR . "lists/reference-system-comparisons.list"));
-
-		foreach(explode(' ', pts_config::read_user_config(P_OPTION_EXTRA_REFERENCE_SYSTEMS, null)) as $reference_check)
-		{
-			if(pts_global::is_global_id($reference_check))
-			{
-				array_push($comparison_ids, $reference_check);
-			}
-		}
-	}
-
-	return $comparison_ids;
-}
-function pts_test_comparison_hash($test_identifier, $arguments, $attributes = null, $version = null)
-{
-	$hash_table = array(
-	$test_identifier,
-	trim($arguments),
-	trim($attributes),
-	$version
-	);
-
-	return base64_encode(implode(",", $hash_table));
-}
-function pts_suites_containing_test($test_identifier)
-{
-	$associated_suites = array();
-
-	foreach(pts_suites::available_suites() as $identifier)
-	{
-		if(in_array($test_identifier, pts_contained_tests($identifier)))
-		{
-			array_push($associated_suites, pts_suite_read_xml($identifier, P_SUITE_TITLE));
-		}
-	}
-
-	return $associated_suites;
-}
-function pts_remove_test_result_dir($identifier)
-{
-	pts_file_io::delete(SAVE_RESULTS_DIR . $identifier, null, true);
-}
+*/
 
 ?>

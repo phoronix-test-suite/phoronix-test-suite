@@ -24,7 +24,7 @@ class list_installed_suites implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$installed_suites = pts_installed_suites_array();
+		$installed_suites = pts_suites::installed_suites();
 		pts_client::$display->generic_heading(count($installed_suites) . " Suites Installed");
 
 		if(count($installed_suites) > 0)

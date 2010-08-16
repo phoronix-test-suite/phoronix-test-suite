@@ -35,7 +35,7 @@ class pts_CandleStickGraph extends pts_BarGraph
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
-			$paint_color = $this->get_paint_color($this->graph_data_title[$i_o]);
+			$paint_color = $this->get_paint_color((isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] : null));
 
 			for($i = 0; $i < count($this->graph_data_raw[$i_o]); $i++)
 			{

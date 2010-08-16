@@ -128,7 +128,7 @@ class pts_result_file
 
 			for($i = 0; $i < count($results_name); $i++)
 			{
-				array_push($object_hashes, pts_test_comparison_hash($results_name[$i], $results_arguments[$i], $results_attributes[$i], $results_version[$i]));
+				array_push($object_hashes, pts_test_profile::generate_comparison_hash($results_name[$i], $results_arguments[$i], $results_attributes[$i], $results_version[$i]));
 			}
 		}
 

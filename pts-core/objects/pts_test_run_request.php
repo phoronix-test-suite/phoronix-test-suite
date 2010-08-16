@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO: this can possibly be consolidated with pts_result_file_result_object? 
+
 class pts_test_run_request
 {
 	private $test_identifier;
@@ -56,7 +58,7 @@ class pts_test_run_request
 	}
 	public function get_comparison_hash()
 	{
-		return pts_test_comparison_hash($this->get_identifier(), $this->get_arguments());
+		return pts_test_profile::generate_comparison_hash($this->get_identifier(), $this->get_arguments());
 	}
 }
 

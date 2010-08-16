@@ -234,7 +234,7 @@ class pts_test_profile
 
 		if(!empty($archs))
 		{
-			$supported = pts_cpu_arch_compatible($archs);
+			$supported = phodevi::cpu_arch_compatible($archs);
 		}
 
 		return $supported;
@@ -276,6 +276,31 @@ class pts_test_profile
 		}
 
 		return $supported;
+	}
+	public function suites_containing_test()
+	{
+		$associated_suites = array();
+
+		foreach(pts_suites::available_suites() as $identifier)
+		{
+			if(in_array($this->identifier, pts_contained_tests($identifier)))
+			{
+				array_push($associated_suites, $identifier);
+			}
+		}
+
+		return $associated_suites;
+	}
+	public static function generate_comparison_hash($test_identifier, $arguments, $attributes = null, $version = null)
+	{
+		$hash_table = array(
+		$test_identifier,
+		trim($arguments),
+		trim($attributes),
+		$version
+		);
+
+		return base64_encode(implode(',', $hash_table));
 	}
 	public function get_test_option_objects()
 	{

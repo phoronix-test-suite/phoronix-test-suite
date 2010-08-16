@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,9 +28,9 @@ class remove_all_results implements pts_option_interface
 
 		if($remove_all)
 		{
-			foreach(pts_saved_test_results_identifiers() as $saved_results_identifier)
+			foreach(pts_client::saved_test_results() as $saved_results_identifier)
 			{
-				pts_remove_test_result_dir($saved_results_identifier);
+				pts_client::remove_saved_result_file($saved_results_identifier);
 			}
 			echo "\n";
 		}

@@ -24,7 +24,7 @@ class list_test_usage implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$installed_tests = pts_installed_tests_array();
+		$installed_tests = pts_tests::installed_tests();
 		pts_client::$display->generic_heading(count($installed_tests) . " Tests Installed");
 
 		if(count($installed_tests) > 0)

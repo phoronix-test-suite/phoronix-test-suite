@@ -85,7 +85,7 @@ class pts_test_install_request
 				{
 					$architectures = pts_strings::trim_explode(',', $package_architecture[$i]);
 
-					if(!pts_cpu_arch_compatible($architectures))
+					if(phodevi::cpu_arch_compatible($architectures) == false)
 					{
 						// This download does not match the CPU architecture
 						continue;

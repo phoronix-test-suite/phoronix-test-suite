@@ -27,7 +27,7 @@ if(PTS_MODE == "CLIENT")
 }
 
 define("PTS_VERSION", "2.8.0b1");
-define("PTS_CORE_VERSION", 2752);
+define("PTS_CORE_VERSION", 2755);
 define("PTS_CODENAME", "TORSKEN");
 
 function pts_codename($full_string = false)
