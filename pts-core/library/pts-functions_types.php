@@ -488,52 +488,6 @@ function pts_suite_name_to_identifier($name)
 
 	return isset($cache[$name]) ? $cache[$name] : false;
 }
-function pts_estimated_run_time($identifier, $return_total_time = true, $return_on_missing = true)
-{
-	// TODO: to replace with pts_test_run_manager->get_estimated_run_time() or pts_test_profile->get_estimated_run_time()
-	// Estimate the time it takes (in seconds) to complete the given test
-	$estimated_lengths = array();
-	$estimated_total = 0;
-
-	if($identifier instanceOf pts_test_run_manager)
-	{
-		$identifier = $identifier->get_tests_to_run_identifiers();
-	}
-
-	foreach(pts_contained_tests($identifier, false, true, false) as $test)
-	{
-		if(pts_test_installed($test))
-		{
-			$installed_test = new pts_installed_test($test);
-			$this_length = $installed_test->get_average_run_time();
-			$estimated_length = 0;
-
-			if(is_numeric($this_length) && $this_length > 0)
-			{
-				$estimated_length = $this_length;
-			}
-			else
-			{
-				$el = pts_test_read_xml($test, P_TEST_ESTIMATEDTIME);
-
-				if(is_numeric($el) && $el > 0)
-				{
-					$estimated_length = ($el * 60);
-				}
-				else if($return_total_time && $return_on_missing)
-				{
-					// No accurate calculation available
-					return -1;
-				}
-			}
-
-			$estimated_lengths[$test] = $estimated_length;
-			$estimated_total += $estimated_length;
-		}
-	}
-
-	return $return_total_time ? $estimated_total : $estimated_lengths;
-}
 function pts_version_newer($version_a, $version_b)
 {
 	$r_a = explode(".", $version_a);
