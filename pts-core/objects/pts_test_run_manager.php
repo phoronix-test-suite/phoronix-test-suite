@@ -27,6 +27,7 @@ class pts_test_run_manager
 	private $file_name_title;
 	private $results_identifier;
 	private $failed_tests_to_run;
+	private $last_test_run_index = 0;
 
 	private $do_dynamic_run_count = false;
 	private $dynamic_roun_count_on_length_or_less;
@@ -191,9 +192,13 @@ class pts_test_run_manager
 	}
 	public function get_estimated_run_time()
 	{
-		return $this->get_estimated_run_time_remaining(0);
+		return $this->calculate_estimated_run_time(0);
 	}
-	public function get_estimated_run_time_remaining($index = 0)
+	public function get_estimated_run_time_remaining()
+	{
+		return $this->calculate_estimated_run_time($this->last_test_run_index);
+	}
+	private function calculate_estimated_run_time($index = 0)
 	{
 		$estimated_time = 0;
 
@@ -212,6 +217,7 @@ class pts_test_run_manager
 	}
 	public function get_test_to_run($index)
 	{
+		$this->last_test_run_index = $index;
 		return isset($this->tests_to_run[$index]) ? $this->tests_to_run[$index] : false;
 	}
 	public function get_test_count()

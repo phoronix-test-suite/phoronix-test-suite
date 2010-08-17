@@ -566,10 +566,10 @@ class gui_gtk implements pts_option_interface
 		$append_elements = array();
 
 		// PTS Test
-		$info_r["Estimated Download Size"] = pts_estimated_download_size($to_install) . " MB";
-		$info_r["null1"] = null;
-		$info_r["Estimated Install Size"] = pts_estimated_environment_size($to_install) . " MB";
-		$info_r["null2"] = null;
+		//$info_r["Estimated Download Size"] = pts_estimated_download_size($to_install) . " MB";
+		//$info_r["null1"] = null;
+		//$info_r["Estimated Install Size"] = pts_estimated_environment_size($to_install) . " MB";
+		//$info_r["null2"] = null;
 
 		$titles = array();
 		$values = array();

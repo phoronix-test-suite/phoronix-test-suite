@@ -42,7 +42,13 @@ class pts_test_install_manager
 		}
 		else
 		{
-			$added = pts_arrays::unique_push($this->tests_to_install, new pts_test_install_request($identifier));
+			$test_install_request = new pts_test_install_request($identifier);
+			$added = pts_arrays::unique_push($this->tests_to_install, $test_install_request);
+
+			if($added)
+			{
+				$added = $test_install_request;
+			}
 		}
 
 		return $added;

@@ -23,8 +23,6 @@
 
 class pts_concise_display_mode implements pts_display_mode_interface
 {
-	private $run_process_tests_remaining_to_run;
-	private $run_process_test_count;
 	private $tab = "    ";
 
 	// Download / progress bits
@@ -63,7 +61,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		foreach($test_install_manager->get_test_run_requests() as $test_run_request)
 		{
-			$install_size += pts_estimated_environment_size($test_run_request->get_test_identifier());
+			$install_size += $test_run_request->get_test_profile()->get_environment_size();
 
 			foreach($test_run_request->get_download_objects() as $test_file_download)
 			{
@@ -121,11 +119,14 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		echo $this->tab . $identifier . ":\n";
 		echo $this->tab . $this->tab . "Test Installation " . $this->test_install_pos . " of " . $this->test_install_count . "\n";
 	}
-	public function test_install_downloads($identifier, $download_packages)
+	public function test_install_downloads($test_install_request)
 	{
+		$identifier = $test_install_request->get_test_identifier();
+		$download_packages = $test_install_request->get_download_objects();
+
 		echo $this->tab . $this->tab . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " Needed";
 
-		if(($size = pts_estimated_download_size($identifier, 1048576, false)) > 0)
+		if(($size = $test_install_request->get_test_profile()->get_download_size(false, 1048576)) > 0)
 		{
 			echo " [" . $size . " MB";
 
@@ -226,9 +227,9 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		echo $this->progress_last_float != -1 ? str_repeat('.', $this->progress_char_count - $this->progress_char_pos) . "\n" : null;
 		$this->progress_last_float == -1;
 	}
-	public function test_install_begin($identifier)
+	public function test_install_begin($test_install_request)
 	{
-		if(($size = pts_estimated_environment_size($identifier)) > 0)
+		if(($size = $test_install_request->get_test_profile()->get_environment_size(false)) > 0)
 		{
 			echo $this->tab . $this->tab . "Installation Size: " . $size . " MB\n";
 		}
@@ -250,16 +251,9 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_process_start(&$test_run_manager)
 	{
-		$this->run_process_tests_remaining_to_run = array();
-
-		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
-		{
-			array_push($this->run_process_tests_remaining_to_run, $test_run_request->get_identifier());
-		}
-
-		$this->run_process_test_count = count($this->run_process_tests_remaining_to_run);
+		return;
 	}
-	public function test_run_start(&$test_result)
+	public function test_run_start(&$test_run_manager, &$test_result)
 	{
 		echo "\n\n" . $test_result->get_test_profile()->get_test_title() . ":\n" . $this->tab . $test_result->get_test_profile()->get_identifier();
 
@@ -276,16 +270,14 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		{
 			echo $this->tab . "Test Run " . $test_run_position . " of " . $test_run_count . "\n";
 
-			if($this->run_process_test_count == $test_run_count && $test_run_position != $test_run_count && ($remaining_length = pts_estimated_run_time($this->run_process_tests_remaining_to_run)) > 1)
+			if(($remaining_length = $test_run_manager->get_estimated_run_time_remaining()) > 1)
 			{
 				echo $this->tab . "Estimated Time Remaining: " . pts_date_time::format_time_string($remaining_length, "SECONDS", true, 60) . "\n";
 			}
-
-			array_shift($this->run_process_tests_remaining_to_run);
 		}
 
 		$estimated_length = $test_result->get_test_profile()->get_estimated_run_time();
-		if($estimated_length > 1)
+		if($estimated_length > 1 && $estimated_length != $remaining_length)
 		{
 			echo $this->tab . "Estimated Test Run-Time: " . pts_date_time::format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
 		}

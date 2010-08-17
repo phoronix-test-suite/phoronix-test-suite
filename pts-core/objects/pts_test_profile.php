@@ -71,13 +71,50 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_PROJECTURL);
 	}
-	public function get_download_size()
+	public function get_test_extension()
 	{
-		return ($s = pts_estimated_download_size($this->identifier)) > 10 ? round($s) : $s;
+		return $this->xml_parser->getXMLValue(P_TEST_CTPEXTENDS);
 	}
-	public function get_environment_size()
+	public function get_download_size($include_extensions = true, $divider = 1048576)
 	{
-		return ($s = pts_estimated_environment_size($this->identifier)) > 10 ? round($s) : $s;
+		$estimated_size = 0;
+
+		foreach(pts_test_install_request::read_download_object_list($this->identifier) as $download_object)
+		{
+			$estimated_size += $download_object->get_filesize();
+		}
+
+		if($include_extensions)
+		{
+			$extends = $this->get_test_extension();
+
+			if(!empty($extends))
+			{
+				$test_profile = new pts_test_profile($extends);
+				$estimated_size += $test_profile->get_download_size(true, 1);
+			}
+		}
+
+		$estimated_size = $estimated_size > 0 && $divider > 1 ? round($estimated_size / $divider, 2) : 0;
+
+		return $estimated_size;
+	}
+	public function get_environment_size($include_extensions = true)
+	{
+		$estimated_size = $this->xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
+
+		if($include_extensions)
+		{
+			$extends = $this->get_test_extension();
+
+			if(!empty($extends))
+			{
+				$test_profile = new pts_test_profile($extends);
+				$estimated_size += $test_profile->get_environment_size(true);
+			}
+		}
+
+		return $estimated_size;
 	}
 	public function get_description()
 	{

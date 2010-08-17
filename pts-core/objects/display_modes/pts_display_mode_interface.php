@@ -25,8 +25,8 @@ interface pts_display_mode_interface
 {
 	public function __construct();
 	public function test_install_process($test_install_manager);
-	public function test_install_begin($identifier);
-	public function test_install_downloads($identifier, $download_packages);
+	public function test_install_begin($test_install_request);
+	public function test_install_downloads($test_install_request);
 	public function test_install_download_file($process, &$pts_test_file_download);
 	public function test_install_progress_start($process);
 	public function test_install_progress_update($progress_float);
@@ -36,7 +36,7 @@ interface pts_display_mode_interface
 	public function test_install_output(&$to_output);
 	public function test_install_error($error_string);
 	public function test_install_prompt($prompt_string);
-	public function test_run_start(&$test_result);
+	public function test_run_start(&$test_run_manager, &$test_result);
 	public function test_run_message($message_string);
 	public function test_run_instance_header(&$test_result, $current_run, $total_run_count);
 	public function test_run_instance_error($error_string);

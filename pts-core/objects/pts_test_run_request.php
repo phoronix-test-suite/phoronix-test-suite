@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,21 +24,25 @@
 
 class pts_test_run_request
 {
-	private $test_identifier;
+	private $test_profile;
 	private $test_arguments;
 	private $test_arguments_description;
 	private $override_options;
 
 	public function __construct($test_identifier, $test_arguments = "", $test_arguments_description, $override_test_options = null)
 	{
-		$this->test_identifier = $test_identifier;
+		$this->test_profile = new pts_test_profile($test_identifier);
 		$this->test_arguments = $test_arguments;
 		$this->test_arguments_description = $test_arguments_description;
 		$this->override_options = pts_arrays::to_array($override_test_options);
 	}
+	public function get_test_profile()
+	{
+		return $this->test_profile;
+	}
 	public function get_identifier()
 	{
-		return $this->test_identifier;
+		return $this->test_profile->get_identifier();
 	}
 	public function get_arguments()
 	{

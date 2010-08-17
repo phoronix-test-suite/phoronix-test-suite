@@ -546,7 +546,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 	pts_module_manager::module_process("__pre_test_run", $test_results);
 
 	$time_test_start = time();
-	pts_client::$display->test_run_start($test_results);
+	pts_client::$display->test_run_start($test_run_manager, $test_results);
 
 	if(!$cache_share_present)
 	{

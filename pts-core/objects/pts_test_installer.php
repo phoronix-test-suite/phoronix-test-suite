@@ -46,10 +46,9 @@ class pts_test_installer
 		{
 			if(pts_test_needs_updated_install($test))
 			{
-				if($test_install_manager->add_test($test))
+				if(($test_install_request = $test_install_manager->add_test($test)) != false)
 				{
-					$test_profile = new pts_test_profile($test);
-					pts_client::$display->generic_sub_heading("To Install: " . $test . " [v" . $test_profile->get_test_profile_version() . "]");
+					pts_client::$display->generic_sub_heading("To Install: " . $test . " [v" . $test_install_request->get_test_profile()->get_test_profile_version() . "]");
 				}
 			}
 			else
@@ -105,7 +104,7 @@ class pts_test_installer
 
 		$identifier = $test_install_request->get_test_identifier();
 		$download_location = TEST_ENV_DIR . $identifier . '/';
-		pts_client::$display->test_install_downloads($identifier, $test_install_request->get_download_objects());
+		pts_client::$display->test_install_downloads($test_install_request);
 
 		$module_pass = array($identifier, $test_install_request->get_download_objects());
 		pts_module_manager::module_process("__pre_test_download", $module_pass);
@@ -309,11 +308,11 @@ class pts_test_installer
 		$test_install_directory = TEST_ENV_DIR . $identifier . '/';
 		$installed = false;
 
-		if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_download_size($identifier) + 64))
+		if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($test_install_request->get_test_profile()->get_download_size() + 128))
 		{
 			pts_client::$display->test_install_error("There is not enough space at " . TEST_ENV_DIR . " for the test files.");
 		}
-		else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < (pts_estimated_environment_size($identifier) + 64))
+		else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($test_install_request->get_test_profile()->get_environment_size(false) + 128))
 		{
 			pts_client::$display->test_install_error("There is not enough space at " . TEST_ENV_DIR . " for this test.");
 		}
@@ -335,12 +334,11 @@ class pts_test_installer
 			if(is_file($test_resources_location . "install.sh") || is_file($test_resources_location . "install.php"))
 			{
 				pts_module_manager::module_process("__pre_test_install", $identifier);
-				pts_client::$display->test_install_begin($identifier);
+				pts_client::$display->test_install_begin($test_install_request);
 
-				$test_profile = new pts_test_profile($identifier);
-				$pre_install_message = $test_profile->get_pre_install_message();
-				$post_install_message = $test_profile->get_post_install_message();
-				$install_agreement = $test_profile->get_installation_agreement_message();
+				$pre_install_message = $test_install_request->get_test_profile()->get_pre_install_message();
+				$post_install_message = $test_install_request->get_test_profile()->get_post_install_message();
+				$install_agreement = $test_install_request->get_test_profile()->get_installation_agreement_message();
 
 				if(!empty($install_agreement))
 				{

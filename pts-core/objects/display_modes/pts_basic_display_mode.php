@@ -31,18 +31,13 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		return;
 	}
-	public function test_install_begin($identifier)
+	public function test_install_begin($test_install_request)
 	{
 		return;
 	}
-	public function test_install_downloads($identifier, $download_packages)
+	public function test_install_downloads($test_install_request)
 	{
-		$download_append = "";
-		if(($size = pts_estimated_download_size($identifier)) > 0)
-		{
-			$download_append = "\nEstimated Download Size: " . $size . " MB";
-		}
-		echo self::string_header("Downloading Files: " . $identifier . $download_append);
+		echo self::string_header("Downloading Files: " . $test_install_request->get_test_identifier());
 	}
 	public function test_install_download_file($process, &$pts_test_file_download)
 	{
@@ -78,14 +73,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_process($identifier)
 	{
-		$install_header = "Installing Test: " . $identifier;
-
-		if(($size = pts_estimated_environment_size($identifier)) > 0)
-		{
-			$install_header .= "\nEstimated Install Size: " . $size . " MB";
-		}
-
-		echo self::string_header($install_header);
+		echo self::string_header("Installing Test: " . $identifier);
 	}
 	public function test_install_output(&$to_output)
 	{
@@ -111,7 +99,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo "\n" . $message_string . "\n";
 	}
-	public function test_run_start(&$test_result)
+	public function test_run_start(&$test_run_manager, &$test_result)
 	{
 		return;
 	}

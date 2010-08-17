@@ -488,51 +488,6 @@ function pts_suite_name_to_identifier($name)
 
 	return isset($cache[$name]) ? $cache[$name] : false;
 }
-function pts_estimated_download_size($identifier, $divider = 1048576, $include_extensions = true)
-{
-	// Estimate the size of files to be downloaded
-	static $cache;
-
-	if(($id_is_array = is_array($identifier)) || !isset($cache[$identifier][$divider]))
-	{
-		$estimated_size = 0;
-
-		foreach(pts_contained_tests($identifier, $include_extensions) as $test)
-		{
-			// The work for calculating the download size in 1.4.0+
-			foreach(pts_test_install_request::read_download_object_list($test) as $download_object)
-			{
-				$estimated_size += $download_object->get_filesize();
-			}
-		}
-
-		$estimated_size = $estimated_size > 0 ? round($estimated_size / $divider, 2) : 0;
-
-		if(!$id_is_array)
-		{
-			$cache[$identifier][$divider] = $estimated_size;
-		}
-	}
-
-	return $id_is_array ? $estimated_size : $cache[$identifier][$divider];
-}
-function pts_estimated_environment_size($identifier)
-{
-	// Estimate the environment size of a test or suite
-	$estimated_size = 0;
-
-	foreach(pts_contained_tests($identifier, true) as $test)
-	{
-		$this_size = pts_test_read_xml($test, P_TEST_ENVIRONMENTSIZE);
-
-		if(!empty($this_size) && is_numeric($this_size))
-		{
-			$estimated_size += $this_size;
-		}
-	}
-
-	return $estimated_size;
-}
 function pts_estimated_run_time($identifier, $return_total_time = true, $return_on_missing = true)
 {
 	// TODO: to replace with pts_test_run_manager->get_estimated_run_time() or pts_test_profile->get_estimated_run_time()

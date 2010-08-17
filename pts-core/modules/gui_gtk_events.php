@@ -147,7 +147,8 @@ class gui_gtk_events extends pts_module_interface
 
 		if(self::$test_run_count == $test_run_count)
 		{
-			$remaining_length = pts_estimated_run_time(self::$tests_remaining_to_run);
+			$remaining_length = 0;
+			//$remaining_length = pts_estimated_run_time(self::$tests_remaining_to_run);
 			$estimated_length = $test_result->get_test_profile()->get_estimated_run_time();
 
 			if($estimated_length > 1)
