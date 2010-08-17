@@ -183,7 +183,7 @@ class pts_test_run_manager
 
 		foreach($this->tests_to_run as $test_run_request)
 		{
-			array_push($identifiers, $test_run_request->get_identifier());
+			array_push($identifiers, $test_run_request->test_profile->get_identifier());
 		}
 
 		array_unique($identifiers);
@@ -206,7 +206,7 @@ class pts_test_run_manager
 		{
 			for($i = $index; $i < count($this->tests_to_run); $i++)
 			{
-				$identifier = $this->tests_to_run[$i]->get_identifier(); // is a test_run_request
+				$identifier = $this->tests_to_run[$i]->test_profile->get_identifier(); // is a test_run_request
 
 				$test_profile = new pts_test_profile($identifier);
 				$estimated_time += $test_profile->get_estimated_run_time();

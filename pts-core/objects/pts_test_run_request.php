@@ -36,10 +36,6 @@ class pts_test_run_request
 		$this->test_arguments_description = $test_arguments_description;
 		$this->override_options = pts_arrays::to_array($override_test_options);
 	}
-	public function get_identifier()
-	{
-		return $this->test_profile->get_identifier();
-	}
 	public function get_arguments()
 	{
 		return $this->test_arguments;
@@ -54,11 +50,11 @@ class pts_test_run_request
 	}
 	public function __toString()
 	{
-		return $this->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description() . " " . $this->get_override_options();
+		return $this->test_profile->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description() . " " . $this->get_override_options();
 	}
 	public function get_comparison_hash()
 	{
-		return pts_test_profile::generate_comparison_hash($this->get_identifier(), $this->get_arguments());
+		return pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(), $this->get_arguments());
 	}
 }
 

@@ -104,7 +104,7 @@ class gui_gtk_events extends pts_module_interface
 
 		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
 		{
-			array_push(self::$tests_remaining_to_run, $test_run_request->get_identifier());
+			array_push(self::$tests_remaining_to_run, $test_run_request->test_profile->get_identifier());
 		}
 
 		self::$test_run_pos = 0;

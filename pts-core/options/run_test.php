@@ -189,7 +189,7 @@ class run_test implements pts_option_interface
 
 					foreach(pts_read_assignment("RECOVER_RUN_REQUESTS") as $test_run_request)
 					{
-						array_push($test_run, $test_run_request->get_identifier());
+						array_push($test_run, $test_run_request->test_profile->get_identifier());
 						array_push($test_args, $test_run_request->get_arguments());
 						array_push($test_args_description, $test_run_request->get_arguments_description());
 						array_push($test_override_options, $test_run_request->get_override_options());
@@ -358,7 +358,7 @@ class run_test implements pts_option_interface
 				echo "\n\nThe following tests failed to properly run:\n\n";
 				foreach($failed_runs as &$run_request)
 				{
-					echo "\t- " . $run_request->get_identifier() . ($run_request->get_arguments_description() != null ? ": " . $run_request->get_arguments_description() : null) . "\n";
+					echo "\t- " . $run_request->test_profile->get_identifier() . ($run_request->get_arguments_description() != null ? ": " . $run_request->get_arguments_description() : null) . "\n";
 				}
 				echo "\n";
 			}

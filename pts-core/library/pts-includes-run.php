@@ -249,7 +249,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager)
 		}
 
 		// Validate the pts_test_run_request
-		$test_identifier = $test_run_request->get_identifier();
+		$test_identifier = $test_run_request->test_profile->get_identifier();
 
 		if(in_array($test_identifier, $failed_tests))
 		{
@@ -331,12 +331,12 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 
 	$test_run_request = $test_run_manager->get_test_to_run($run_index);
 
-	if(pts_is_test($test_run_request->get_identifier()))
+	if(pts_is_test($test_run_request->test_profile->get_identifier()))
 	{
 		pts_set_assignment("TEST_RUN_POSITION", $run_position);
 		pts_set_assignment("TEST_RUN_COUNT", $run_count);
 
-		if(($run_position != 1 && count(pts_file_io::glob(TEST_ENV_DIR . $test_run_request->get_identifier() . "/cache-share-*.pt2so")) == 0))
+		if(($run_position != 1 && count(pts_file_io::glob(TEST_ENV_DIR . $test_run_request->test_profile->get_identifier() . "/cache-share-*.pt2so")) == 0))
 		{
 			sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 		}
@@ -409,7 +409,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 		$test_successful = true;
 	}
 
-	if($test_successful == false && $test_run_request->get_identifier() != null)
+	if($test_successful == false && $test_run_request->test_profile->get_identifier() != null)
 	{
 		$test_run_manager->add_failed_test_run_request($test_run_request);
 
@@ -479,7 +479,7 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 }
 function pts_run_test(&$test_run_manager, &$test_run_request)
 {
-	$test_identifier = $test_run_request->get_identifier();
+	$test_identifier = $test_run_request->test_profile->get_identifier();
 	$extra_arguments = $test_run_request->get_arguments();
 	$arguments_description = $test_run_request->get_arguments_description();
 
