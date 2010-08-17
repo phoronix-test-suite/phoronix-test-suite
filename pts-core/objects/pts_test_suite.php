@@ -62,7 +62,7 @@ class pts_test_suite
 	}
 	public function get_reference_systems()
 	{
-		return pts_strings::trim_explode(',', $this->xml_parser->getXMLValue(P_SUITE_REFERENCE_SYSTEMS));
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_SUITE_REFERENCE_SYSTEMS));
 	}
 	public function get_description()
 	{

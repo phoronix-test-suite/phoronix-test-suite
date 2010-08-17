@@ -77,7 +77,7 @@ class pts_BarGraph extends pts_Graph
 		$bar_count = count($this->graph_data);
 		$separator_width = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$bar_width = floor(($this->identifier_width - $separator_width - ($bar_count * $separator_width)) / $bar_count);
-		$highlight_bar = PTS_MODE == "CLIENT" ? pts_strings::trim_explode(',', pts_client::read_env("GRAPH_HIGHLIGHT")) : false;
+		$highlight_bar = PTS_MODE == "CLIENT" ? pts_strings::comma_explode(pts_client::read_env("GRAPH_HIGHLIGHT")) : false;
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{

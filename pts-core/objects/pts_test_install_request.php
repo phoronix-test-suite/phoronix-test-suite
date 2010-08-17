@@ -68,7 +68,7 @@ class pts_test_install_request
 			{
 				if(!empty($package_platform[$i]))
 				{
-					$platforms = pts_strings::trim_explode(',', $package_platform[$i]);
+					$platforms = pts_strings::comma_explode($package_platform[$i]);
 
 					if(!in_array(OPERATING_SYSTEM, $platforms) && !(IS_BSD && BSD_LINUX_COMPATIBLE && in_array("Linux", $platforms)))
 					{
@@ -79,7 +79,7 @@ class pts_test_install_request
 
 				if(!empty($package_architecture[$i]))
 				{
-					$architectures = pts_strings::trim_explode(',', $package_architecture[$i]);
+					$architectures = pts_strings::comma_explode($package_architecture[$i]);
 
 					if(phodevi::cpu_arch_compatible($architectures) == false)
 					{

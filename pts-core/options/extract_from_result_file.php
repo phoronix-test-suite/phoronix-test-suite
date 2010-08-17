@@ -41,7 +41,7 @@ class extract_from_result_file implements pts_option_interface
 			return false;
 		}
 
-		$extract_identifiers = explode(',', pts_user_io::prompt_text_menu("Select the test run to extract", $result_file_identifiers, true));
+		$extract_identifiers = pts_strings::comma_explode(pts_user_io::prompt_text_menu("Select the test run to extract", $result_file_identifiers, true));
 		$extract_selects = array();
 
 		foreach($extract_identifiers as $extract_identifier)

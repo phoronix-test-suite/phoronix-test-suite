@@ -170,7 +170,7 @@ class pts_test_option
 	{
 		$return_keys = array();
 
-		foreach(pts_strings::trim_explode(',', $input) as $input_choice)
+		foreach(pts_strings::comma_explode($input) as $input_choice)
 		{
 			if($input_choice == ($this->option_count() + 1) || $input_choice == "Test All Options")
 			{

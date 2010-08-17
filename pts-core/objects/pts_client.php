@@ -86,7 +86,7 @@ class pts_client
 
 		if(!empty($load_modules))
 		{
-			foreach(explode(',', $load_modules) as $module)
+			foreach(pts_strings::comma_explode($load_modules) as $module)
 			{
 				$module_r = pts_strings::trim_explode('=', $module);
 
@@ -105,7 +105,7 @@ class pts_client
 		// Check for modules to load manually in PTS_MODULES
 		if(($load_modules = pts_client::read_env("PTS_MODULES")) !== false)
 		{
-			foreach(pts_strings::trim_explode(',', $load_modules) as $module)
+			foreach(pts_strings::comma_explode($load_modules) as $module)
 			{
 				if(!pts_module_manager::is_module_attached($module))
 				{

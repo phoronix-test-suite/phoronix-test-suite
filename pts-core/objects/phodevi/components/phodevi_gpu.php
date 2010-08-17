@@ -317,7 +317,7 @@ class phodevi_gpu extends phodevi_device_interface
 				// Way to find resolution through NVIDIA's NV-CONTROL extension
 				if(($frontend_res = phodevi_parser::read_nvidia_extension("FrontendResolution")) != false)
 				{
-					$resolution = explode(',', $frontend_res);
+					$resolution = pts_strings::comma_explode($frontend_res);
 				}
 			}
 
@@ -393,7 +393,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if($override_check = (($override_modes = getenv("OVERRIDE_VIDEO_MODES")) != false))
 		{
-			$override_modes = pts_strings::trim_explode(',', $override_modes);
+			$override_modes = pts_strings::comma_explode($override_modes);
 
 			for($i = 0; $i < count($override_modes); $i++)
 			{

@@ -114,7 +114,7 @@ abstract class pts_Graph
 		$this->graph_color_body_text = $this->read_graph_config($graph_config, P_GRAPH_COLOR_BODYTEXT); // Color of graph body text
 		$this->graph_color_body_light = $this->read_graph_config($graph_config, P_GRAPH_COLOR_ALTERNATE); // Color of the border around graph bars (if doing a bar graph)
 		$this->graph_color_alert = $this->read_graph_config($graph_config, P_GRAPH_COLOR_ALERT); // Color for alerts
-		$this->graph_color_paint = array_map("trim", explode(',', $this->read_graph_config($graph_config, P_GRAPH_COLOR_PAINT))); // Colors to use for the bars / lines, one color for each key
+		$this->graph_color_paint = pts_strings::comma_explode($this->read_graph_config($graph_config, P_GRAPH_COLOR_PAINT)); // Colors to use for the bars / lines, one color for each key
 
 		// Text
 		$this->graph_watermark_text = $this->read_graph_config($graph_config, P_GRAPH_WATERMARK); // watermark

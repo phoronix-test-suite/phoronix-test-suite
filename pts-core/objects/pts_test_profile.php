@@ -126,7 +126,7 @@ class pts_test_profile
 	}
 	public function get_dependencies()
 	{
-		return pts_strings::trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_EXDEP));
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_EXDEP));
 	}
 	public function get_pre_install_message()
 	{
@@ -142,7 +142,7 @@ class pts_test_profile
 	}
 	public function is_verified_state()
 	{
-		return !in_array($this->get_status(), array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED"));
+		return !in_array($this->get_status(), pts_types::test_profile_state_types());
 	}
 	public function get_dependency_names()
 	{
@@ -168,7 +168,7 @@ class pts_test_profile
 	}
 	public function get_reference_systems()
 	{
-		return pts_strings::trim_explode(',', $this->xml_parser->getXMLValue(P_TEST_REFERENCE_SYSTEMS));
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_REFERENCE_SYSTEMS));
 	}
 	public function get_default_arguments()
 	{
@@ -188,7 +188,7 @@ class pts_test_profile
 	}
 	public function get_runs_to_ignore()
 	{
-		return pts_strings::trim_explode(",", $this->xml_parser->getXMLValue(P_TEST_IGNORERUNS));
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_IGNORERUNS));
 	}
 	public function get_pre_run_message()
 	{
@@ -266,11 +266,11 @@ class pts_test_profile
 	}
 	public function get_supported_platforms()
 	{
-		return pts_strings::trim_explode(',', $this->xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS));
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS));
 	}
 	public function get_supported_architectures()
 	{
-		return pts_strings::trim_explode(',', $this->xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS));
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS));
 	}
 	public function is_supported()
 	{

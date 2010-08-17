@@ -179,7 +179,7 @@ class pts_external_dependencies
 				if(!empty($generic_package[$i]) && ($key = array_search($generic_package[$i], $required_test_dependencies)) !== false)
 				{
 					$add_dependency = empty($file_check[$i]) || self::file_missing_check($file_check[$i]);
-					$arch_compliant = empty($arch_specific[$i]) || in_array($kernel_architecture, pts_strings::trim_explode(',', $arch_specific[$i]));
+					$arch_compliant = empty($arch_specific[$i]) || in_array($kernel_architecture, pts_strings::comma_explode($arch_specific[$i]));
 
 					if($add_dependency && $arch_compliant)
 					{
@@ -207,7 +207,7 @@ class pts_external_dependencies
 
 		if(!is_array($file_arr))
 		{
-			$file_arr = pts_strings::trim_explode(',', $file_arr);
+			$file_arr = pts_strings::comma_explode($file_arr);
 		}
 
 		foreach($file_arr as $file)

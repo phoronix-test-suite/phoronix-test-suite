@@ -30,6 +30,10 @@ class pts_types
 	{
 		return array("Free", "Non-Free", "Retail", "Restricted");
 	}
+	public static function test_profile_state_types()
+	{
+		return array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED");
+	}
 }
 
 ?>

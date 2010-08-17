@@ -41,6 +41,10 @@ class pts_strings
 	{
 		return empty($to_explode) ? array() : array_map("trim", explode($delimiter, $to_explode));
 	}
+	public static function comma_explode($to_explode)
+	{
+		return self::trim_explode(',', $to_explode);
+	}
 	public static function first_in_string($string, $delimited_by = ' ')
 	{
 		// This function returns the first word/phrase/string on the end of a string that's separated by a space or something else

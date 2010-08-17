@@ -102,11 +102,11 @@ class pts_render
 				//$graph->hideGraphIdentifiers();
 				foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 				{
-					$graph->loadGraphValues(explode(',', $buffer_item->get_result_value()), $buffer_item->get_result_identifier());
+					$graph->loadGraphValues(pts_strings::comma_explode($buffer_item->get_result_value()), $buffer_item->get_result_identifier());
 				}
 
 				$scale_special = $result_object->get_scale_special();
-				if(!empty($scale_special) && count(($ss = explode(',', $scale_special))) > 0)
+				if(!empty($scale_special) && count(($ss = pts_strings::comma_explode($scale_special))) > 0)
 				{
 					$graph->loadGraphIdentifiers($ss);
 				}

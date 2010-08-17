@@ -406,7 +406,7 @@ class pts_result_file
 					foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)
 					{
 						$identifier = $buffer_item->get_result_identifier();
-						$values = explode(',', $buffer_item->get_result_value());
+						$values = pts_strings::comma_explode($buffer_item->get_result_value());
 						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
 
 						if($avg_value > $max_value)
