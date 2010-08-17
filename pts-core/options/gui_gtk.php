@@ -496,7 +496,6 @@ class gui_gtk implements pts_option_interface
 		}
 		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "TEST")
 		{
-			$identifier = pts_test_name_to_identifier($identifier);
 			$test_profile = new pts_test_profile($identifier);
 
 			$info_r["Maintainer"] = $test_profile->get_maintainer();
@@ -518,7 +517,6 @@ class gui_gtk implements pts_option_interface
 		}
 		else if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 		{
-			$identifier = pts_suite_name_to_identifier($identifier);
 			$test_suite = new pts_test_suite($identifier);
 
 			$info_r["Maintainer"] = $test_suite->get_maintainer();
@@ -686,7 +684,7 @@ class gui_gtk implements pts_option_interface
 		if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 		{
 			// Installed Suites
-			$i_s = pts_gui_installed_suites();
+			$i_s = pts_suites::installed_suites();
 
 			if(count($i_s) > 0)
 			{
@@ -1288,8 +1286,6 @@ class gui_gtk implements pts_option_interface
 
 			if(pts_read_assignment("GTK_TEST_OR_SUITE") == "SUITE")
 			{
-				$identifier = pts_suite_name_to_identifier($identifier);
-
 				$label_tests = new GtkLabel("Suite Contains: " . implode(", ", pts_contained_tests($identifier, false, false, true)));
 				$label_tests->set_size_request(420, -1);
 				$label_tests->set_line_wrap(true);
@@ -1297,7 +1293,6 @@ class gui_gtk implements pts_option_interface
 			}
 			else
 			{
-				$identifier = pts_test_name_to_identifier($identifier);
 				$obj = new pts_test_profile($identifier);
 
 				$str = "Software Dependencies: ";
@@ -1355,7 +1350,9 @@ class gui_gtk implements pts_option_interface
 	}
 	public static function notebook_selected_to_identifier()
 	{
-		$identifiers = pts_read_assignment("GTK_SELECTED_ITEMS");
+		return $identifiers = pts_read_assignment("GTK_SELECTED_ITEMS");
+
+/*
 		$selected = array();
 
 		foreach($identifiers as $identifier)
@@ -1375,7 +1372,7 @@ class gui_gtk implements pts_option_interface
 			array_push($selected, $identifier);
 		}
 
-		return $selected;
+		return $selected;*/
 	}
 	public static function update_run_button()
 	{

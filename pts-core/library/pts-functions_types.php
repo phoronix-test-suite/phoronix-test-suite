@@ -396,17 +396,6 @@ function pts_find_result_file($file, $check_global = true)
 
 	return $USE_FILE;
 }
-function pts_rebuild_test_type_cache($identifier)
-{
-	pts_type_handler::pts_identifier_type($identifier, true);
-	pts_tests::test_profile_location($identifier, true);
-	pts_tests::test_resources_location($identifier, true);
-}
-function pts_rebuild_suite_type_cache($identifier)
-{
-	pts_type_handler::pts_identifier_type($identifier, true);
-	pts_location_suite($identifier, true);
-}
 function pts_suite_needs_updated_install($identifier)
 {
 	if(!pts_is_assignment("CACHE_SUITE_INSTALLED_" . strtoupper($identifier)))
@@ -452,42 +441,6 @@ function pts_suite_read_xml_array($identifier, $xml_option)
  	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
 	return $xml_parser->getXMLArrayValues($xml_option);
 }
-function pts_test_name_to_identifier($name)
-{
-	// Convert test name to identifier
-	static $cache = null;
-
-	if($cache == null)
-	{
-		$cache = array();
-
-		foreach(pts_tests::available_tests() as $identifier)
-		{
-			$title = pts_test_read_xml($identifier, P_TEST_TITLE);
-			$cache[$title] = $identifier;
-		}
-	}
-
-	return isset($cache[$name]) ? $cache[$name] : false;
-}
-function pts_suite_name_to_identifier($name)
-{
-	// Convert test name to identifier
-	static $cache = null;
-
-	if($cache == null)
-	{
-		$cache = array();
-
-		foreach(pts_suites::available_suites() as $identifier)
-		{
-			$title = pts_suite_read_xml($identifier, P_SUITE_TITLE);
-			$cache[$title] = $identifier;
-		}
-	}
-
-	return isset($cache[$name]) ? $cache[$name] : false;
-}
 function pts_version_newer($version_a, $version_b)
 {
 	$r_a = explode(".", $version_a);
@@ -501,6 +454,17 @@ function pts_version_newer($version_a, $version_b)
 
 
 /*
+function pts_rebuild_test_type_cache($identifier)
+{
+	pts_type_handler::pts_identifier_type($identifier, true);
+	pts_tests::test_profile_location($identifier, true);
+	pts_tests::test_resources_location($identifier, true);
+}
+function pts_rebuild_suite_type_cache($identifier)
+{
+	pts_type_handler::pts_identifier_type($identifier, true);
+	pts_location_suite($identifier, true);
+}
 function pts_available_base_tests_array()
 {
 	static $cache = null;

@@ -1020,12 +1020,10 @@ class pts_client
 	public static function cache_suite_calls()
 	{
 		pts_suites::supported_suites();
-		pts_suite_name_to_identifier(-1);
 	}
 	public static function cache_test_calls()
 	{
 		pts_tests::supported_tests();
-		pts_test_name_to_identifier(-1);
 	}
 	public static function cache_hardware_calls()
 	{

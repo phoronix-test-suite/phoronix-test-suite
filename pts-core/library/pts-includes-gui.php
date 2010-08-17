@@ -102,7 +102,8 @@ function pts_gui_available_suites($to_show_types, $license_types = null, $depend
 		{
 			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit, $license_types))
 			{
-				array_push($to_show_names, $ts->get_name());
+				// For now show test identifier rather than $ts->get_name()
+				array_push($to_show_names, $name);
 			}
 		}
 	}
@@ -125,7 +126,8 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 
 		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->get_test_title() != "")
 		{
-			array_push($installed_tests, $tp->get_name());
+			// test name is $tp->get_name()
+			array_push($installed_tests, $test);
 		}
 	}
 
@@ -146,7 +148,7 @@ function pts_gui_available_tests($to_show_types, $license_types, $dependency_lim
 		{
 			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit, $license_types))
 			{
-				array_push($test_names, $tp->get_name());
+				array_push($test_names, $name);
 			}
 		}
 	}

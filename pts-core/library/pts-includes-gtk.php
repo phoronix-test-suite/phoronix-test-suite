@@ -303,6 +303,12 @@ function pts_gtk_selected_item($object)
 
 	return $model->get_value($iter, 0);
 }
+function pts_gtk_selected_rows($object)
+{
+	list($model, $rows) = $object->get_selected_rows();
+
+	return is_array($rows) ? $rows : array();
+}
 function pts_gtk_selected_items($object)
 {
 	list($model, $rows) = $object->get_selected_rows();
