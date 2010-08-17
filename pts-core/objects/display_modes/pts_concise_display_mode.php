@@ -121,7 +121,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_downloads($test_install_request)
 	{
-		$identifier = $test_install_request->get_test_identifier();
+		$identifier = $test_install_request->test_profile->get_identifier();
 		$download_packages = $test_install_request->get_download_objects();
 
 		echo $this->tab . $this->tab . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " Needed";

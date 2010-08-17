@@ -73,12 +73,12 @@ class pts_test_installer
 		$failed_installs = array();
 		while(($test_install_request = $test_install_manager->next_in_install_queue()) != false)
 		{
-			pts_client::$display->test_install_start($test_install_request->get_test_identifier());
+			pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
 			$installed = pts_test_installer::install_test_process($test_install_request);
 
 			if($installed == false)
 			{
-				array_push($failed_installs, $test_install_request->get_test_identifier());
+				array_push($failed_installs, $test_install_request->test_profile->get_identifier());
 			}
 		}
 		pts_module_manager::module_process("__post_install_process", $test_install_manager);
@@ -102,7 +102,7 @@ class pts_test_installer
 			return true;
 		}
 
-		$identifier = $test_install_request->get_test_identifier();
+		$identifier = $test_install_request->test_profile->get_identifier();
 		$download_location = TEST_ENV_DIR . $identifier . '/';
 		pts_client::$display->test_install_downloads($test_install_request);
 
@@ -304,7 +304,7 @@ class pts_test_installer
 	protected static function install_test_process(&$test_install_request)
 	{
 		// Install a test
-		$identifier = $test_install_request->get_test_identifier();
+		$identifier = $test_install_request->test_profile->get_identifier();
 		$test_install_directory = TEST_ENV_DIR . $identifier . '/';
 		$installed = false;
 
@@ -478,7 +478,7 @@ class pts_test_installer
 	}
 	protected static function setup_test_install_directory(&$test_install_request, $remove_old_files = false)
 	{
-		$identifier = $test_install_request->get_test_identifier();
+		$identifier = $test_install_request->test_profile->get_identifier();
 		pts_file_io::mkdir(TEST_ENV_DIR . $identifier);
 
 		if($remove_old_files)

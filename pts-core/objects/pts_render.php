@@ -22,7 +22,7 @@
 
 class pts_render
 {
-	static $previous_graph_object = null;
+	private static $previous_graph_object = null;
 
 	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{

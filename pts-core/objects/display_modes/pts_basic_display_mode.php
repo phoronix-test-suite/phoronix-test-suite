@@ -37,7 +37,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_downloads($test_install_request)
 	{
-		echo self::string_header("Downloading Files: " . $test_install_request->get_test_identifier());
+		echo self::string_header("Downloading Files: " . $test_install_request->test_profile->get_identifier());
 	}
 	public function test_install_download_file($process, &$pts_test_file_download)
 	{

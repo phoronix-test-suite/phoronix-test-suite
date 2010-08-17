@@ -38,13 +38,9 @@ class pts_test_install_request
 
 		return $test_install_request->get_download_objects();
 	}
-	public function get_test_identifier()
-	{
-		return $this->test_profile->get_identifier();
-	}
 	public function __toString()
 	{
-		return $this->get_test_identifier();
+		return $this->test_profile->get_identifier();
 	}
 	public function get_download_objects()
 	{
@@ -56,7 +52,7 @@ class pts_test_install_request
 	}
 	public function generate_download_object_list()
 	{
-		if(is_file(($download_xml_file = pts_tests::test_resources_location($this->get_test_identifier()) . "downloads.xml")))
+		if(is_file(($download_xml_file = pts_tests::test_resources_location($this->test_profile->get_identifier()) . "downloads.xml")))
 		{
 			pts_loader::load_definitions("test-profile-downloads.xml");
 
@@ -98,7 +94,7 @@ class pts_test_install_request
 	}
 	public function scan_download_caches($local_download_caches, $remote_files)
 	{
-		$download_location = TEST_ENV_DIR . $this->get_test_identifier() . '/';
+		$download_location = TEST_ENV_DIR . $this->test_profile->get_identifier() . '/';
 
 		foreach($this->test_files as &$download_package)
 		{
