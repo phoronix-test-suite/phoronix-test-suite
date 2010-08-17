@@ -37,7 +37,7 @@ class timed_screenshot extends pts_module_interface
 		$PATH = pts_client::read_env("PATH");
 		$found = false;
 
-		foreach(explode(":", $PATH) as $single_path)
+		foreach(pts_strings::colon_explode($PATH) as $single_path)
 			if(is_file($single_path . "/import"))
 				$found = true;
 

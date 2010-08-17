@@ -43,7 +43,11 @@ class pts_strings
 	}
 	public static function comma_explode($to_explode)
 	{
-		return self::trim_explode(',', $to_explode);
+		return empty($to_explode) ? array() : array_map("trim", explode(',', $to_explode));
+	}
+	public static function colon_explode($to_explode)
+	{
+		return empty($to_explode) ? array() : array_map("trim", explode(':', $to_explode));
 	}
 	public static function first_in_string($string, $delimited_by = ' ')
 	{

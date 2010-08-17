@@ -123,7 +123,7 @@ if(!QUICK_START)
 		define("NETWORK_PROXY_ADDRESS", $proxy_address);
 		define("NETWORK_PROXY_PORT", $proxy_port);
 	}
-	else if(($env_proxy = getenv("http_proxy")) != false && count($env_proxy = explode(':', $env_proxy)) == 2)
+	else if(($env_proxy = getenv("http_proxy")) != false && count($env_proxy = pts_strings::colon_explode($env_proxy)) == 2)
 	{
 		define("NETWORK_PROXY", $env_proxy[0] . ":" . $env_proxy[1]);
 		define("NETWORK_PROXY_ADDRESS", $env_proxy[0]);

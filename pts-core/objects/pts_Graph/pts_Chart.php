@@ -201,7 +201,7 @@ class pts_Chart extends pts_Graph
 
 			foreach($show_keys as $current_col => $system_identifier)
 			{
-				$identifier = array_map("trim", explode(':', $system_identifier));
+				$identifier = pts_strings::colon_explode($system_identifier);
 
 				if($identifier[0] != $last_identifier)
 				{

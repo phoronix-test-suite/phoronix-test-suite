@@ -39,7 +39,7 @@ class pts_CandleStickGraph extends pts_BarGraph
 
 			for($i = 0; $i < count($this->graph_data_raw[$i_o]); $i++)
 			{
-				$run_values_r = explode(":", $this->graph_data_raw[$i_o][$i]);
+				$run_values_r = pts_strings::colon_explode($this->graph_data_raw[$i_o][$i]);
 
 				$start_value = $run_values_r[0];
 				$end_value = $run_values_r[(count($run_values_r) - 1)];

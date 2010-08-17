@@ -36,7 +36,7 @@ class pts_test_install_manager
 		{
 			//pts_client::$display->test_install_error($identifier . " is not supported by this system.");
 		}
-		else if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($identifier, explode(",", $e)))
+		else if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($identifier, pts_strings::comma_explode($e)))
 		{
 			pts_client::$display->test_install_error($identifier . " is being skipped from installation.");
 		}
@@ -156,7 +156,7 @@ class pts_test_install_manager
 			$dir_string = ($dir = pts_client::read_env("PTS_DOWNLOAD_CACHE")) != false ? $dir . ':' : null;
 			$dir_string .= pts_config::read_user_config(P_OPTION_CACHE_DIRECTORY, DEFAULT_DOWNLOAD_CACHE_DIR);
 
-			foreach(pts_strings::trim_explode(':', $dir_string) as $dir_check)
+			foreach(pts_strings::colon_explode($dir_string) as $dir_check)
 			{
 				if($dir_check == null)
 				{

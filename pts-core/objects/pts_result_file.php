@@ -294,7 +294,7 @@ class pts_result_file
 					{
 						$identifier = $buffer_item->get_result_identifier();
 						$value = $buffer_item->get_result_value();
-						$raw_values = explode(':', $buffer_item->get_result_raw());
+						$raw_values = pts_strings::colon_explode($buffer_item->get_result_raw());
 						$percent_std = pts_math::set_precision(pts_math::percent_standard_deviation($raw_values), 2);
 						$std_error = pts_math::set_precision(pts_math::standard_error($raw_values), 2);
 						$delta = 0;
@@ -306,7 +306,7 @@ class pts_result_file
 
 						if(defined("PHOROMATIC_TRACKER"))
 						{
-							$identifier_r = explode(':', $identifier);
+							$identifier_r = pts_strings::colon_explode($identifier);
 
 							if($identifier_r[0] == $prev_identifier_0 && $prev_value != 0)
 							{
@@ -481,7 +481,7 @@ class pts_result_file
 
 			foreach($result_table as $system_identifier => &$identifier_table)
 			{
-				$identifier = array_map("trim", explode(':', $system_identifier));
+				$identifier = pts_strings::colon_explode($system_identifier);
 
 				if(!isset($systems_table[$identifier[0]]))
 				{
@@ -502,7 +502,7 @@ class pts_result_file
 				{
 					$result_table[$identifier] = $table;
 
-					$identifier = array_map("trim", explode(':', $identifier));
+					$identifier = pts_strings::colon_explode($identifier);
 					$show_id = isset($identifier[1]) ? $identifier[1] : $identifier[0];
 
 					if(($le = strlen($show_id)) > $longest_system_identifier_length)

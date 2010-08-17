@@ -934,7 +934,7 @@ class pts_client
 
 		if(!isset($cache[$executable]))
 		{
-			$paths = explode(":", (($path = pts_client::read_env("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
+			$paths = pts_strings::colon_explode((($path = pts_client::read_env("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
 			$executable_path = false;
 
 			foreach($paths as $path)

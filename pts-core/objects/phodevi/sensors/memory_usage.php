@@ -56,11 +56,11 @@ class memory_usage implements phodevi_sensor
 
 			for($i = 0; $i < count($mem); $i++)
 			{
-				$line_parts = explode(":", $mem[$i]);
+				$line_parts = pts_strings::colon_explode($mem[$i]);
 
 				if(count($line_parts) == 2)
 				{
-					$line_type = trim($line_parts[0]);
+					$line_type = $line_parts[0];
 
 					if($TYPE == "MEMORY" && $line_type == "Mem")
 					{

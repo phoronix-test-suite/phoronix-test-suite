@@ -525,7 +525,7 @@ class phodevi_system extends phodevi_device_interface
 
 			for($i = 0; $i < count($kde_lines) && empty($desktop_version); $i++)
 			{
-				$line_segments = explode(":", $kde_lines[$i]);
+				$line_segments = pts_strings::colon_explode($kde_lines[$i]);
 
 				if(in_array($line_segments[0], array("KDE", "KDE Development Platform")) && isset($line_segments[1]))
 				{

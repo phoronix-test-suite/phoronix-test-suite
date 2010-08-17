@@ -98,7 +98,7 @@ class pts_BarGraph extends pts_Graph
 				}
 
 				$title_tooltip = $this->graph_identifiers[$i] . ": " . $value;
-				$run_std_deviation = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_deviation(explode(':', $this->graph_data_raw[$i_o][$i])) : 0;
+				$run_std_deviation = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_deviation(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
 
 				if($run_std_deviation > 0)
 				{

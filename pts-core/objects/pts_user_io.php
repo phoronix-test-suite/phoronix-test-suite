@@ -131,7 +131,7 @@ class pts_user_io
 			$select_choice = pts_user_io::read_user_input();
 
 			// Validate possible multi-select
-			$multi_choice = pts_strings::trim_explode(",", $select_choice);
+			$multi_choice = pts_strings::comma_explode($select_choice);
 			$multi_select_pass = false;
 
 			if($allow_multi_select && count($multi_choice) > 1)

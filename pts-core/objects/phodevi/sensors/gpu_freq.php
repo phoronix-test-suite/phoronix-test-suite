@@ -50,7 +50,7 @@ class gpu_freq implements phodevi_sensor
 		{
 			$nv_freq = phodevi_parser::read_nvidia_extension("GPUCurrentClockFreqs");
 
-			$nv_freq = explode(",", $nv_freq);
+			$nv_freq = pts_strings::comma_explode($nv_freq);
 			$core_freq = $nv_freq[0];
 			$mem_freq = $nv_freq[1];
 		}
@@ -71,7 +71,7 @@ class gpu_freq implements phodevi_sensor
 				// radeon_pm_info should be present with Linux 2.6.34+
 				foreach(pts_strings::trim_explode("\n", pts_file_io::file_get_contents("/sys/kernel/debug/dri/0/radeon_pm_info")) as $pm_line)
 				{
-					list($descriptor, $value) = pts_strings::trim_explode(':', $pm_line);
+					list($descriptor, $value) = pts_strings::colon_explode($pm_line);
 
 					switch($descriptor)
 					{

@@ -145,7 +145,7 @@ class phodevi_linux_parser
 					$found_in_section = false;
 					for($i = 0; $i < count($dmidecode_elements) && $found_in_section == false; $i++)
 					{
-						$dmidecode_r = pts_strings::trim_explode(":", $dmidecode_elements[$i]);
+						$dmidecode_r = pts_strings::colon_explode($dmidecode_elements[$i]);
 
 						if($dmidecode_r[0] == $object && isset($dmidecode_r[1]) && !in_array($dmidecode_r[1], $ignore))
 						{
@@ -276,11 +276,11 @@ class phodevi_linux_parser
 				{
 					foreach(explode("\n", $info) as $line)
 					{
-						$line_r = explode(":", $line);
+						$line_r = pts_strings::colon_explode($line);
 
 						if(count($line_r) == 2)
 						{
-							$od_option = str_replace(" ", "", trim($line_r[0]));
+							$od_option = str_replace(" ", "", $line_r[0]);
 
 							if($od_option == $attribute)
 							{
@@ -347,7 +347,7 @@ class phodevi_linux_parser
 		$last_found_section_count = -1;
 		$this_section_count = 0;
 		$attribute_values = array();
-		$attribute = explode(",", $attribute);
+		$attribute = pts_strings::comma_explode($attribute);
 
 		if(count($attribute) == 2)
 		{

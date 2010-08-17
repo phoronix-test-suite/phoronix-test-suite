@@ -96,7 +96,7 @@ class phodevi_monitor extends phodevi_device_interface
 
 				foreach($amdpcsdb_enabled_monitors as $enabled_monitor)
 				{
-					foreach(explode(",", $enabled_monitor) as $monitor_connection)
+					foreach(pts_strings::comma_explode($enabled_monitor) as $monitor_connection)
 					{
 						$monitor_count++;
 					}

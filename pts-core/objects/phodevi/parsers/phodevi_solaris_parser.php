@@ -45,7 +45,7 @@ class phodevi_solaris_parser
 			$find_objects = pts_arrays::to_array($find_objects);
 			for($i = 0; $i < count($find_objects) && count($values) == 0; $i++)
 			{
-				$objects = explode(",", $find_objects[$i]);
+				$objects = pts_strings::comma_explode($find_objects[$i]);
 				$this_section = "";
 
 				if(count($objects) == 2)
@@ -61,7 +61,7 @@ class phodevi_solaris_parser
 
 				foreach($lines as $line)
 				{
-					$line = pts_strings::trim_explode(":", $line);
+					$line = pts_strings::colon_explode($line);
 					$line_object = str_replace(" ", "", $line[0]);
 					$this_value = (count($line) > 1 ? $line[1] : "");
 
