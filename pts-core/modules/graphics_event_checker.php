@@ -100,7 +100,7 @@ class graphics_event_checker extends pts_module_interface
 			if($current_error_position > self::$error_pointer && is_object($pts_test_result))
 			{
 				// GPU Error(s) Happened During The Test
-				$this_test = $pts_test_result->get_test_profile()->get_identifier();
+				$this_test = $pts_test_result->test_profile->get_identifier();
 				$this_error_count = $current_error_position - self::$error_pointer;
 
 				if(isset(self::$error_analysis[$this_test]))

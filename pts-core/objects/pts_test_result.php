@@ -47,11 +47,6 @@ class pts_test_result
 	{
 		$this->result = $result;
 	}
-
-	public function get_test_profile()
-	{
-		return $this->test_profile;
-	}
 	public function get_used_arguments()
 	{
 		return $this->used_arguments;
@@ -150,7 +145,7 @@ class pts_test_result
 			case "BAR_GRAPH":
 			default:
 				// Result is of a normal numerical type
-				switch($this->get_test_profile()->get_result_quantifier())
+				switch($this->test_profile->get_result_quantifier())
 				{
 					case "MAX":
 						$END_RESULT = max($this->trial_results);

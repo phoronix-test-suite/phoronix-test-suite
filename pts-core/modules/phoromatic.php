@@ -487,7 +487,7 @@ class phoromatic extends pts_module_interface
 
 		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
 
-		phoromatic::update_system_status("Running " . $pts_test_result->get_test_profile()->get_identifier() . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
+		phoromatic::update_system_status("Running " . $pts_test_result->test_profile->get_identifier() . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
 	}
 	public static function __event_user_error($user_error)
 	{

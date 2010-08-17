@@ -22,7 +22,7 @@
 
 class pts_test_install_request
 {
-	private $test_profile;
+	public $test_profile;
 	private $test_files;
 
 	public function __construct($test_identifier)
@@ -37,10 +37,6 @@ class pts_test_install_request
 		$test_install_request->generate_download_object_list();
 
 		return $test_install_request->get_download_objects();
-	}
-	public function get_test_profile()
-	{
-		return $this->test_profile;
 	}
 	public function get_test_identifier()
 	{

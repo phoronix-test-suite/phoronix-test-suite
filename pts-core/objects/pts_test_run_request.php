@@ -24,7 +24,7 @@
 
 class pts_test_run_request
 {
-	private $test_profile;
+	public $test_profile;
 	private $test_arguments;
 	private $test_arguments_description;
 	private $override_options;
@@ -35,10 +35,6 @@ class pts_test_run_request
 		$this->test_arguments = $test_arguments;
 		$this->test_arguments_description = $test_arguments_description;
 		$this->override_options = pts_arrays::to_array($override_test_options);
-	}
-	public function get_test_profile()
-	{
-		return $this->test_profile;
 	}
 	public function get_identifier()
 	{

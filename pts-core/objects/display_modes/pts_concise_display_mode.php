@@ -61,7 +61,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		foreach($test_install_manager->get_test_run_requests() as $test_run_request)
 		{
-			$install_size += $test_run_request->get_test_profile()->get_environment_size();
+			$install_size += $test_run_request->test_profile->get_environment_size();
 
 			foreach($test_run_request->get_download_objects() as $test_file_download)
 			{
@@ -126,7 +126,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		echo $this->tab . $this->tab . count($download_packages) . " File" . (isset($download_packages[1]) ? "s" : "") . " Needed";
 
-		if(($size = $test_install_request->get_test_profile()->get_download_size(false, 1048576)) > 0)
+		if(($size = $test_install_request->test_profile->get_download_size(false, 1048576)) > 0)
 		{
 			echo " [" . $size . " MB";
 
@@ -229,7 +229,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_begin($test_install_request)
 	{
-		if(($size = $test_install_request->get_test_profile()->get_environment_size(false)) > 0)
+		if(($size = $test_install_request->test_profile->get_environment_size(false)) > 0)
 		{
 			echo $this->tab . $this->tab . "Installation Size: " . $size . " MB\n";
 		}
@@ -255,7 +255,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
-		echo "\n\n" . $test_result->get_test_profile()->get_test_title() . ":\n" . $this->tab . $test_result->get_test_profile()->get_identifier();
+		echo "\n\n" . $test_result->test_profile->get_test_title() . ":\n" . $this->tab . $test_result->test_profile->get_identifier();
 
 		if(($test_description = $test_result->get_used_arguments_description()) != false)
 		{
@@ -276,13 +276,13 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			}
 		}
 
-		$estimated_length = $test_result->get_test_profile()->get_estimated_run_time();
+		$estimated_length = $test_result->test_profile->get_estimated_run_time();
 		if($estimated_length > 1 && $estimated_length != $remaining_length)
 		{
 			echo $this->tab . "Estimated Test Run-Time: " . pts_strings::format_time($estimated_length, "SECONDS", true, 60) . "\n";
 		}
 
-		$this->expected_trial_run_count = $test_result->get_test_profile()->get_times_to_run();
+		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
 		echo $this->tab . "Expected Trial Run Count: " . $this->expected_trial_run_count;
 	}
 	public function test_run_message($message_string)
@@ -308,7 +308,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_instance_complete(&$test_result)
 	{
-		if($test_result->get_test_profile()->get_times_to_run() > $this->expected_trial_run_count)
+		if($test_result->test_profile->get_times_to_run() > $this->expected_trial_run_count)
 		{
 			// The run count must have been dynamically increased, so show the standard deviation
 			echo " [Std. Dev: " . pts_math::set_precision(pts_math::percent_standard_deviation($test_result->get_trial_results()), 2) . "%]";
@@ -318,13 +318,13 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo "\n";
 
-		if(in_array($test_result->get_test_profile()->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
+		if(in_array($test_result->test_profile->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
 		{
 			return;
 		}
-		else if(in_array($test_result->get_test_profile()->get_result_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
+		else if(in_array($test_result->test_profile->get_result_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
 		{
-			$end_print .= $this->tab . $this->tab . "Final: " . $test_result->get_result() . " (" . $test_result->get_test_profile()->get_result_scale() . ")\n";
+			$end_print .= $this->tab . $this->tab . "Final: " . $test_result->get_result() . " (" . $test_result->test_profile->get_result_scale() . ")\n";
 		}
 		else
 		{
@@ -335,7 +335,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$end_print .= $this->tab . $this->tab . $result . "\n";
 			}
 
-			$end_print .= "\n" . $this->tab . pts_strings::result_format_to_string($test_result->get_test_profile()->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->get_test_profile()->get_result_scale();
+			$end_print .= "\n" . $this->tab . pts_strings::result_format_to_string($test_result->test_profile->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->test_profile->get_result_scale();
 
 			if($test_result->get_result() == 0)
 			{

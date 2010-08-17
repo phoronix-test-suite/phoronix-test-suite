@@ -48,7 +48,7 @@ class pts_test_installer
 			{
 				if(($test_install_request = $test_install_manager->add_test($test)) != false)
 				{
-					pts_client::$display->generic_sub_heading("To Install: " . $test . " [v" . $test_install_request->get_test_profile()->get_test_profile_version() . "]");
+					pts_client::$display->generic_sub_heading("To Install: " . $test . " [v" . $test_install_request->test_profile->get_test_profile_version() . "]");
 				}
 			}
 			else
@@ -308,11 +308,11 @@ class pts_test_installer
 		$test_install_directory = TEST_ENV_DIR . $identifier . '/';
 		$installed = false;
 
-		if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($test_install_request->get_test_profile()->get_download_size() + 128))
+		if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($test_install_request->test_profile->get_download_size() + 128))
 		{
 			pts_client::$display->test_install_error("There is not enough space at " . TEST_ENV_DIR . " for the test files.");
 		}
-		else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($test_install_request->get_test_profile()->get_environment_size(false) + 128))
+		else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($test_install_request->test_profile->get_environment_size(false) + 128))
 		{
 			pts_client::$display->test_install_error("There is not enough space at " . TEST_ENV_DIR . " for this test.");
 		}
@@ -336,9 +336,9 @@ class pts_test_installer
 				pts_module_manager::module_process("__pre_test_install", $identifier);
 				pts_client::$display->test_install_begin($test_install_request);
 
-				$pre_install_message = $test_install_request->get_test_profile()->get_pre_install_message();
-				$post_install_message = $test_install_request->get_test_profile()->get_post_install_message();
-				$install_agreement = $test_install_request->get_test_profile()->get_installation_agreement_message();
+				$pre_install_message = $test_install_request->test_profile->get_pre_install_message();
+				$post_install_message = $test_install_request->test_profile->get_post_install_message();
+				$install_agreement = $test_install_request->test_profile->get_installation_agreement_message();
 
 				if(!empty($install_agreement))
 				{
