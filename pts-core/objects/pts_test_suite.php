@@ -68,7 +68,7 @@ class pts_test_suite
 	{
 		return $this->xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
 	}
-	public function get_name()
+	public function get_title()
 	{
 		return $this->xml_parser->getXMLValue(P_SUITE_TITLE);
 	}

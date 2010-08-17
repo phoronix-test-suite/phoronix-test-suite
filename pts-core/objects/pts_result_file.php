@@ -247,7 +247,7 @@ class pts_result_file
 
 		foreach($this->get_result_objects($result_object_index) as $result_object)
 		{
-			$result_tests[$result_counter][0] = $result_object->test_result->test_profile->get_test_title();
+			$result_tests[$result_counter][0] = $result_object->test_result->test_profile->get_title();
 			$result_tests[$result_counter][1] = $result_object->test_result->get_used_arguments_description();
 
 			if($result_object_index != -1)
@@ -400,7 +400,7 @@ class pts_result_file
 					}
 					break;
 				case "LINE_GRAPH":
-					$result_tests[$result_counter][0] = $result_object->test_result->test_profile->get_test_title() . " (Avg)";
+					$result_tests[$result_counter][0] = $result_object->test_result->test_profile->get_title() . " (Avg)";
 					$result_tests[$result_counter][1] = null;
 
 					foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)

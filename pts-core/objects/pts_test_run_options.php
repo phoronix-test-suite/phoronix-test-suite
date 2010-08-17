@@ -46,7 +46,7 @@ class pts_test_run_options
 
 			if($i == 0)
 			{
-				pts_client::$display->generic_heading($test_profile->get_name() . " Test Configuration");
+				pts_client::$display->generic_heading($test_profile->get_title() . " Test Configuration");
 			}
 
 			$option_identifier = $o->get_identifier();

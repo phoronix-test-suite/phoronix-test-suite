@@ -30,7 +30,7 @@ class info implements pts_option_interface
 		if(pts_is_suite($to_info))
 		{
 			$suite = new pts_test_suite($to_info);
-			pts_client::$display->generic_heading($suite->get_name());
+			pts_client::$display->generic_heading($suite->get_title());
 			echo "Suite Version: " . $suite->get_version() . "\n";
 			echo "Maintainer: " . $suite->get_maintainer() . "\n";
 			echo "Suite Type: " . $suite->get_suite_type() . "\n";
@@ -67,7 +67,7 @@ class info implements pts_option_interface
 		else if(pts_is_test($to_info))
 		{
 			$test = new pts_test_profile($to_info);
-			$test_title = $test->get_test_title();
+			$test_title = $test->get_title();
 			$test_version = $test->get_version();
 			if(!empty($test_version))
 			{

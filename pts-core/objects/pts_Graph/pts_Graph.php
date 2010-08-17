@@ -133,7 +133,7 @@ abstract class pts_Graph
 		if($result_object != null)
 		{
 			$test_version = $result_object->test_result->test_profile->get_version();
-			$this->graph_title = $result_object->test_result->test_profile->get_test_title() . (isset($test_version[2]) ? " v" . $test_version : null);
+			$this->graph_title = $result_object->test_result->test_profile->get_title() . (isset($test_version[2]) ? " v" . $test_version : null);
 
 			$this->graph_y_title = $result_object->get_scale_formatted();
 			$this->test_identifier = $result_object->test_result->test_profile->get_identifier();

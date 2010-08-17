@@ -32,7 +32,7 @@ class list_installed_tests implements pts_option_interface
 			foreach($installed_tests as $identifier)
 			{
 				$test_profile = new pts_test_profile($identifier);
-				$name = $test_profile->get_name();
+				$name = $test_profile->get_title();
 
 			 	echo $name != false ? sprintf("%-18ls - %-30ls\n", $identifier, $name) : null;
 			}

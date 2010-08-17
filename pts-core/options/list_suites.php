@@ -46,11 +46,11 @@ class list_suites implements pts_option_interface
 
 					if(pts_client::read_env("PTS_DEBUG"))
 					{
-						echo sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $identifier_prefix . " " . $identifier, $suite_info->get_name(), $suite_info->get_version(), $suite_info->get_suite_type());
+						echo sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $identifier_prefix . " " . $identifier, $suite_info->get_title(), $suite_info->get_version(), $suite_info->get_suite_type());
 					}
-					else if($suite_info->get_name() != null)
+					else if($suite_info->get_title() != null)
 					{
-						echo sprintf("%-24ls - %-32ls [Type: %s]\n", $identifier_prefix . " " . $identifier, $suite_info->get_name(), $suite_info->get_suite_type());
+						echo sprintf("%-24ls - %-32ls [Type: %s]\n", $identifier_prefix . " " . $identifier, $suite_info->get_title(), $suite_info->get_suite_type());
 					}
 				}
 			}

@@ -48,14 +48,14 @@ class suite_to_pdf implements pts_option_interface
 
 		$suite = new pts_test_suite($r[0]);
 		$test_layout = pts_test_suite::pts_format_tests_to_array($r[0]);
-		$pdf = new pts_pdf_template($suite->get_name(), $suite->get_name());
+		$pdf = new pts_pdf_template($suite->get_title(), $suite->get_title());
 
 		$pdf->AddPage();
 		$pdf->Image(STATIC_DIR . "images/pts-308x160.png", 69, 85, 73, 38);
 		$pdf->Ln(120);
 		$pdf->WriteStatementCenter("www.phoronix-test-suite.com");
 		$pdf->Ln(15);
-		$pdf->WriteBigHeaderCenter($suite->get_name());
+		$pdf->WriteBigHeaderCenter($suite->get_title());
 		$pdf->WriteText("Maintainer: " . $suite->get_maintainer() . ". Suite Type: " . $suite->get_suite_type());
 		$pdf->WriteText($suite->get_description());
 
@@ -105,7 +105,7 @@ class suite_to_pdf implements pts_option_interface
 
 				$test = new pts_test_profile($item);
 
-				$pdf->WriteText($test->get_test_title() . ":  " . $test->get_description());
+				$pdf->WriteText($test->get_title() . ":  " . $test->get_description());
 
 				if($show_node)
 				{

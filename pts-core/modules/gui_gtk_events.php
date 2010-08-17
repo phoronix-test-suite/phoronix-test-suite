@@ -65,7 +65,7 @@ class gui_gtk_events extends pts_module_interface
 	public static function __pre_test_download($obj)
 	{
 		$test_profile = new pts_test_profile($obj[0]);
-		self::$test_install_current = $test_profile->get_name();
+		self::$test_install_current = $test_profile->get_title();
 		self::$test_download_count = count($obj[1]);
 		self::$progress_window->update_progress_bar(0, "Downloading: " . $obj[1][0]->get_filename() . " (" . round($obj[1][0]->get_filesize() / 1048576, 1) . "MB)", self::$install_overall_percent, "Installing: " . self::$test_install_current);
 	}
@@ -116,17 +116,17 @@ class gui_gtk_events extends pts_module_interface
 	public static function __pre_test_run($pts_test_result)
 	{
 		array_shift(self::$tests_remaining_to_run);
-		self::$progress_window->update_progress_bar(0, "<b>" . $pts_test_result->test_profile->get_test_title() . "</b>" . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(0, "<b>" . $pts_test_result->test_profile->get_title() . "</b>" . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __interim_test_run($pts_test_result)
 	{
-		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->test_profile->get_times_to_run()) * 100, "<b>" . $pts_test_result->test_profile->get_test_title() . "</b>" . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run(), ((self::$test_run_pos + ($pts_test_result->trial_run_count() / $pts_test_result->test_profile->get_times_to_run())) / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->test_profile->get_times_to_run()) * 100, "<b>" . $pts_test_result->test_profile->get_title() . "</b>" . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run(), ((self::$test_run_pos + ($pts_test_result->trial_run_count() / $pts_test_result->test_profile->get_times_to_run())) / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __post_test_run($pts_test_result)
 	{
 		self::$test_run_pos++;
 		self::run_time_remaining($pts_test_result);
-		self::$progress_window->update_progress_bar(100, "<b>" . $pts_test_result->test_profile->get_test_title() . ":</b>" . " Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->test_profile->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(0) . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(100, "<b>" . $pts_test_result->test_profile->get_title() . ":</b>" . " Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->test_profile->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(0) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __post_run_process()
 	{

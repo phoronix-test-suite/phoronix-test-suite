@@ -41,7 +41,7 @@ function pts_cleanup_tests_to_run(&$to_run_identifiers)
 		{
 			$test_profile = new pts_test_profile($lower_identifier);
 
-			if($test_profile->get_test_title() == null)
+			if($test_profile->get_title() == null)
 			{
 				echo "Not A Test: " . $lower_identifier . "\n";
 				continue;
@@ -371,7 +371,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 				$tandem_id = $tandem_xml->request_unique_id();
 				pts_set_assignment("TEST_RAN", true);
 
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->test_profile->get_test_title());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->test_profile->get_title());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->test_profile->get_version());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result->test_profile->get_test_profile_version());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_used_arguments_description());

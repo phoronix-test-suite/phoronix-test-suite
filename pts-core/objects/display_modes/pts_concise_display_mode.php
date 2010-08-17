@@ -255,7 +255,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
-		echo "\n\n" . $test_result->test_profile->get_test_title() . ":\n" . $this->tab . $test_result->test_profile->get_identifier();
+		echo "\n\n" . $test_result->test_profile->get_title() . ":\n" . $this->tab . $test_result->test_profile->get_identifier();
 
 		if(($test_description = $test_result->get_used_arguments_description()) != false)
 		{

@@ -32,7 +32,7 @@ class list_installed_suites implements pts_option_interface
 			foreach($installed_suites as $identifier)
 			{
 				$test_suite = new pts_test_suite($identifier);
-			 	echo "- " . $test_suite->get_name() . "\n";
+			 	echo "- " . $test_suite->get_title() . "\n";
 			}
 			echo "\n";
 		}

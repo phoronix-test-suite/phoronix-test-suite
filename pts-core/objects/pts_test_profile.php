@@ -120,12 +120,7 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_DESCRIPTION);
 	}
-	public function get_test_title()
-	{
-		// TODO: Use ->get_name() instead to be more consistent with the test suite ->get_name()
-		return $this->xml_parser->getXMLValue(P_TEST_TITLE);
-	}
-	public function get_name()
+	public function get_title()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_TITLE);
 	}

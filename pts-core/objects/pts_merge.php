@@ -176,7 +176,7 @@ class pts_merge
 			}
 
 			$use_id = $xml_writer->request_unique_id();
-			$xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->test_result->test_profile->get_test_title());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->test_result->test_profile->get_title());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->test_result->test_profile->get_version());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $use_id, $result_object->test_result->test_profile->get_test_profile_version());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $use_id, $result_object->test_result->get_used_arguments_description());

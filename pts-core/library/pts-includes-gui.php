@@ -28,7 +28,7 @@ function pts_gui_installed_suites()
 	foreach(pts_suites::installed_suites() as $suite)
 	{
 		$test_suite = new pts_test_suite($suite);
-		array_push($installed_suites, $test_suite->get_name());
+		array_push($installed_suites, $test_suite->get_title());
 	}
 
 	sort($installed_suites);
@@ -102,7 +102,7 @@ function pts_gui_available_suites($to_show_types, $license_types = null, $depend
 		{
 			if(pts_gui_process_show_test($name, $dependency_limit, $downloads_limit, $license_types))
 			{
-				// For now show test identifier rather than $ts->get_name()
+				// For now show test identifier rather than $ts->get_title()
 				array_push($to_show_names, $name);
 			}
 		}
@@ -124,9 +124,9 @@ function pts_gui_installed_tests($to_show_types, $license_types)
 		$hw_type = $tp->get_test_hardware_type();
 		$license = $tp->get_license();
 
-		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->get_test_title() != "")
+		if((empty($hw_type) || in_array($hw_type, $to_show_types)) && (empty($license) || in_array($license, $license_types)) && $tp->get_title() != "")
 		{
-			// test name is $tp->get_name()
+			// test name is $tp->get_title()
 			array_push($installed_tests, $test);
 		}
 	}
