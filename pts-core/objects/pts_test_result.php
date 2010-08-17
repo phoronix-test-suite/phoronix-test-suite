@@ -28,7 +28,7 @@ class pts_test_result
 	private $used_arguments;
 	private $used_arguments_description;
 
-	private $test_profile;
+	public $test_profile;
 
 	public function __construct(&$test_profile)
 	{

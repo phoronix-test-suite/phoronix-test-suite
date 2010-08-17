@@ -179,7 +179,7 @@ if(!QUICK_START)
 
 pts_client::run_next($sent_command, $pass_args);
 
-while(($current_option = pts_command_execution_manager::pull_next_in_queue()) != null)
+while(($current_option = pts_client::next_in_run_queue()) != null)
 {
 	pts_client::execute_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
 }

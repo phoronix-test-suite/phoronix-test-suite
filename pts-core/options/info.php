@@ -105,9 +105,9 @@ class info implements pts_option_interface
 				$last_run = $last_run == "0000-00-00" ? "Never" : $last_run;
 
 				$avg_time = $installed_test->get_average_run_time();
-				$avg_time = !empty($avg_time) ? pts_date_time::format_time_string($avg_time, "SECONDS") : "N/A";
+				$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, "SECONDS") : "N/A";
 				$latest_time = $installed_test->get_latest_run_time();
-				$latest_time = !empty($latest_time) ? pts_date_time::format_time_string($latest_time, "SECONDS") : "N/A";
+				$latest_time = !empty($latest_time) ? pts_strings::format_time($latest_time, "SECONDS") : "N/A";
 
 				echo "\nTest Installed: Yes\n";
 				echo "Last Run: " . $last_run . "\n";

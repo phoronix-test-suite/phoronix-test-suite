@@ -3,7 +3,7 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 Phoronix Media
+	Copyright (C) 2009, Phoronix Media
 	Copyright (C) 2009, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify

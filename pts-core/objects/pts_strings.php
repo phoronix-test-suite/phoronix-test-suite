@@ -263,6 +263,60 @@ class pts_strings
 
 		return $user_str;
 	}
+	public static function format_time($time, $input_format = "SECONDS", $standard_version = true, $round_to = 0)
+	{
+		switch($input_format)
+		{
+			case "MINUTES":
+				$time_in_seconds = $time * 60;
+				break;
+			case "SECONDS":
+			default:
+				$time_in_seconds = $time;
+				break;
+		}
+
+		if($round_to > 0)
+		{
+			$time_in_seconds += $round_to - ($time_in_seconds % $round_to);
+		}
+
+		$formatted_time = array();
+
+		if($time_in_seconds > 0)
+		{
+			$time_r = array();
+			$time_r[0] = array(floor($time_in_seconds / 3600), "Hour");
+			$time_r[1] = array(floor(($time_in_seconds % 3600) / 60), "Minute");
+			$time_r[2] = array($time_in_seconds % 60, "Second");
+
+			foreach($time_r as $time_segment)
+			{
+				if($time_segment[0] > 0)
+				{
+					$formatted_part = $time_segment[0];
+
+					if($standard_version)
+					{
+						$formatted_part .= " " . $time_segment[1];
+
+						if($time_segment[0] > 1)
+						{
+							$formatted_part .= "s";
+						}
+					}
+					else
+					{
+						$formatted_part .= strtolower(substr($time_segment[1], 0, 1));
+					}
+
+					array_push($formatted_time, $formatted_part);
+				}
+			}
+		}
+
+		return implode(($standard_version ? ", " : null), $formatted_time);
+	}
 }
 
 ?>

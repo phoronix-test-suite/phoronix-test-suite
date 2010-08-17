@@ -133,7 +133,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0)
 			{
 				$avg_time = ($size * 1048576) / $avg_speed;
-				echo " / " . pts_date_time::format_time_string($avg_time, "SECONDS", true, 60);
+				echo " / " . pts_strings::format_time($avg_time, "SECONDS", true, 60);
 			}
 
 			echo ']';
@@ -172,7 +172,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				break;
 		}
 
-		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_date_time::format_time_string($expected_time, "SECONDS", false, 60) : null;
+		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_strings::format_time($expected_time, "SECONDS", false, 60) : null;
 
 		// TODO: handle if file-name is too long for terminal width
 		$download_string = $this->tab . $this->tab . $process_string . ": " . $pts_test_file_download->get_filename();
@@ -272,14 +272,14 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 			if(($remaining_length = $test_run_manager->get_estimated_run_time_remaining()) > 1)
 			{
-				echo $this->tab . "Estimated Time Remaining: " . pts_date_time::format_time_string($remaining_length, "SECONDS", true, 60) . "\n";
+				echo $this->tab . "Estimated Time Remaining: " . pts_strings::format_time($remaining_length, "SECONDS", true, 60) . "\n";
 			}
 		}
 
 		$estimated_length = $test_result->get_test_profile()->get_estimated_run_time();
 		if($estimated_length > 1 && $estimated_length != $remaining_length)
 		{
-			echo $this->tab . "Estimated Test Run-Time: " . pts_date_time::format_time_string($estimated_length, "SECONDS", true, 60) . "\n";
+			echo $this->tab . "Estimated Test Run-Time: " . pts_strings::format_time($estimated_length, "SECONDS", true, 60) . "\n";
 		}
 
 		$this->expected_trial_run_count = $test_result->get_test_profile()->get_times_to_run();

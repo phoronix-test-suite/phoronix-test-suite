@@ -32,7 +32,7 @@ class pts_render
 			pts_tracker::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
 		}
 
-		$result_format = $result_object->get_format();
+		$result_format = $result_object->test_result->test_profile->get_result_format();
 
 		switch($result_format)
 		{

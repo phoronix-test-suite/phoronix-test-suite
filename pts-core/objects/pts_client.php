@@ -25,6 +25,7 @@ class pts_client
 	public static $display;
 	protected static $command_execution_count = 0;
 	protected static $lock_pointers = null;
+	protected static $commands_to_run = array();
 
 	public static function create_lock($lock_file)
 	{
@@ -41,9 +42,21 @@ class pts_client
 	{
 		return self::$command_execution_count;
 	}
-	public static function run_next($command, $pass_args = null, $set_assignments = "")
+	public static function run_next($command, $pass_args = null, $set_assignments = null)
 	{
-		return pts_command_execution_manager::add_to_queue($command, $pass_args, $set_assignments);
+		return array_push(self::$commands_to_run, new pts_command_run($command, $pass_args, $set_assignments));
+	}
+	public static function next_in_run_queue()
+	{
+		return array_shift(self::$commands_to_run);
+	}
+	public static function add_assignment_to_next_in_run_queue($assignment, $value = true)
+	{
+		if(($next_option = array_shift(self::$commands_to_run)) != null)
+		{
+			$next_option->add_preset_assignment($assignment, $value);
+			array_unshift(self::$commands_to_run, $next_option);
+		}
 	}
 	public static function init()
 	{

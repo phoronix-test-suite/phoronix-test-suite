@@ -23,8 +23,8 @@
 // formerly known as the pts_result_file_merge_test object
 class pts_result_file_result_object
 {
-	private $result_buffer;
-	private $test_result;
+	public $result_buffer;
+	public $test_result;
 
 	// TODO: In process of transitioning this better to use pts_test_result
 	public function __construct($title, $version, $profile_version, $attributes, $scale, $test_identifier, $arguments, $proportion, $format, $result_buffer)
@@ -60,7 +60,7 @@ class pts_result_file_result_object
 	}
 	public function get_name()
 	{
-		return $this->test_result->get_test_profile()->get_test_title();
+		return $this->test_result->test_profile->get_test_title();
 	}
 	public function get_name_formatted()
 	{
@@ -69,11 +69,11 @@ class pts_result_file_result_object
 	}
 	public function get_version()
 	{
-		return $this->test_result->get_test_profile()->get_version();
+		return $this->test_result->test_profile->get_version();
 	}
 	public function get_test_profile_version()
 	{
-		return $this->test_result->get_test_profile()->get_test_profile_version();
+		return $this->test_result->test_profile->get_test_profile_version();
 	}
 	public function get_attributes()
 	{
@@ -81,7 +81,7 @@ class pts_result_file_result_object
 	}
 	public function get_scale()
 	{
-		return $this->test_result->get_test_profile()->get_result_scale();
+		return $this->test_result->test_profile->get_result_scale();
 	}
 	public function get_scale_formatted()
 	{
@@ -95,7 +95,7 @@ class pts_result_file_result_object
 	}
 	public function get_test_name()
 	{
-		return $this->test_result->get_test_profile()->get_identifier();
+		return $this->test_result->test_profile->get_identifier();
 	}
 	public function get_arguments()
 	{
@@ -103,23 +103,7 @@ class pts_result_file_result_object
 	}
 	public function get_proportion()
 	{
-		return $this->test_result->get_test_profile()->get_result_proportion();
-	}
-	public function get_format()
-	{
-		return $this->test_result->get_test_profile()->get_result_format();
-	}
-	public function set_format($format)
-	{
-		$this->test_result->get_test_profile()->set_result_format($format);
-	}
-	public function set_scale($scale)
-	{
-		$this->test_result->get_test_profile()->set_result_scale($scale);
-	}
-	public function set_attributes($attributes)
-	{
-		$this->test_result->set_used_arguments_description($attributes);
+		return $this->test_result->test_profile->get_result_proportion();
 	}
 }
 

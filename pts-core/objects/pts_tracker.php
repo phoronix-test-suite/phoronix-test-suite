@@ -170,8 +170,8 @@ class pts_tracker
 			}
 		}
 
-		$mto->set_scale($mto->get_scale() . ' | ' . implode(',', array_keys($days)));
-		$mto->set_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
+		$mto->test_result->test_profile->set_result_scale($mto->get_scale() . ' | ' . implode(',', array_keys($days)));
+		$mto->test_result->test_profile->set_result_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
 		$mto->flush_result_buffer();
 
 		$day_keys = array_keys($days);

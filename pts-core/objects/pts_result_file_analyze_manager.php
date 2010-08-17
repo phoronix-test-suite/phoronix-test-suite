@@ -72,7 +72,7 @@ class pts_result_file_analyze_manager
 					// Stub, no similar results to analyze
 					array_push($return_results, $this->test_results[$tests_of_same_name_and_version[0][0]]);
 				}
-				else if(in_array($this->test_results[$tests_of_same_name_and_version[0][0]]->get_format(), array("IMAGE_COMPARISON", "LINE_GRAPH")))
+				else if(in_array($this->test_results[$tests_of_same_name_and_version[0][0]]->test_result->test_profile->get_result_format(), array("IMAGE_COMPARISON", "LINE_GRAPH")))
 				{
 					foreach($tests_of_same_name_and_version as $add)
 					{
@@ -169,9 +169,9 @@ class pts_result_file_analyze_manager
 								$do_line_graph = false;
 							}
 
-							$mto->set_format(($do_line_graph ? "LINE_GRAPH" : "BAR_ANALYZE_GRAPH"));
-							$mto->set_attributes($diff_index . " Analysis");
-							$mto->set_scale($mto->get_scale() . " | " . implode(",", $similar_ids_names));
+							$mto->test_result->test_profile->set_result_format(($do_line_graph ? "LINE_GRAPH" : "BAR_ANALYZE_GRAPH"));
+							$mto->test_result->set_used_arguments_description($diff_index . " Analysis");
+							$mto->test_result->test_profile->set_result_scale($mto->get_scale() . " | " . implode(",", $similar_ids_names));
 
 							foreach($results as $identifier => $values)
 							{

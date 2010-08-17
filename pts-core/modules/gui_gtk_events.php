@@ -158,7 +158,7 @@ class gui_gtk_events extends pts_module_interface
 
 			if($remaining_length > 0)
 			{
-				return pts_date_time::format_time_string($remaining_length, "SECONDS", true) . " Remaining";
+				return pts_strings::format_time($remaining_length, "SECONDS", true) . " Remaining";
 				//self::$progress_window->update_secondary_label("Estimated Time Remaining: " . $time_remaining);
 			}
 		}

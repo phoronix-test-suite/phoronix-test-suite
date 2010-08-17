@@ -125,7 +125,7 @@ class pts_OverviewGraph extends pts_Graph
 
 			$this->graph_image->write_text_center($result_object->get_name(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $top_end + 5, $px_bound_right, $top_end + 5, false);
 
-			if($result_object->get_format() == "BAR_GRAPH")
+			if($result_object->test_result->test_profile->get_result_format() == "BAR_GRAPH")
 			{
 				$all_values = $result_object->get_result_buffer()->get_values();
 

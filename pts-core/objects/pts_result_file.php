@@ -263,7 +263,7 @@ class pts_result_file
 				//$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
 			}
 
-			switch($result_object->get_format())
+			switch($result_object->test_result->test_profile->get_result_format())
 			{
 				case "BAR_GRAPH":
 					$best_value = 0;
