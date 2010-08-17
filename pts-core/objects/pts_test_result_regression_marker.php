@@ -31,8 +31,8 @@ class pts_test_result_regression_marker
 
 	public function __construct(&$result_file_merge_test, $base_buffer_item, $regressed_buffer_item, $result_file_index = -1)
 	{
-		$this->test_identifier = $result_file_merge_test->get_test_name();
-		$this->test_proportion = $result_file_merge_test->get_proportion();
+		$this->test_identifier = $result_file_merge_test->test_result->test_profile->get_identifier();
+		$this->test_proportion = $result_file_merge_test->test_result->test_profile->get_result_proportion();
 		$this->base_buffer_item = $base_buffer_item;
 		$this->regressed_buffer_item = $regressed_buffer_item;
 		$this->result_file_index = $result_file_index;

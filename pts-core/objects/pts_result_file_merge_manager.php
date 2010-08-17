@@ -46,7 +46,7 @@ class pts_result_file_merge_manager
 		$select_identifiers = $result_merge_select instanceOf pts_result_merge_select ? $result_merge_select->get_selected_identifiers() : null;
 
 		$merged = false;
-		$mto_test_name = $merge_test_object->get_test_name();
+		$mto_test_name = $merge_test_object->test_result->test_profile->get_identifier();
 
 		if($this->skip_subsystems != null)
 		{
@@ -63,7 +63,7 @@ class pts_result_file_merge_manager
 		{
 			foreach($this->test_results[$mto_test_name] as &$mto_compare)
 			{
-				if(trim($mto_compare->get_arguments()) == trim($merge_test_object->get_arguments()) && $mto_compare->get_attributes() == $merge_test_object->get_attributes() && $mto_compare->get_version() == $merge_test_object->get_version() && $mto_compare->get_scale() == $merge_test_object->get_scale() && pts_strings::version_strings_comparable($mto_compare->get_test_profile_version(), $merge_test_object->get_test_profile_version()))
+				if(trim($mto_compare->test_result->get_used_arguments()) == trim($merge_test_object->test_result->get_used_arguments()) && $mto_compare->test_result->get_used_arguments_description() == $merge_test_object->test_result->get_used_arguments_description() && $mto_compare->test_result->test_profile->get_version() == $merge_test_object->test_result->test_profile->get_version() && $mto_compare->test_result->test_profile->get_result_scale() == $merge_test_object->test_result->test_profile->get_result_scale() && pts_strings::version_strings_comparable($mto_compare->test_result->test_profile->get_test_profile_version(), $merge_test_object->test_result->test_profile->get_test_profile_version()))
 				{
 					foreach($merge_test_object->get_result_buffer()->get_buffer_items() as $buffer_item)
 					{

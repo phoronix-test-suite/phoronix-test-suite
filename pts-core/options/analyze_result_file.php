@@ -49,12 +49,12 @@ class analyze_result_file implements pts_option_interface
 
 			for($i = 0; $i < count($values); $i++)
 			{
-				if($result_object->get_proportion() == "HIB" && $values[$i] > $win_value)
+				if($result_object->test_result->test_profile->get_result_proportion() == "HIB" && $values[$i] > $win_value)
 				{
 					$win = $identifiers[$i];
 					$win_value = $values[$i];
 				}
-				else if($result_object->get_proportion() == "LIB" && ($values[$i] < $win_value || $win_value == -1))
+				else if($result_object->test_result->test_profile->get_result_proportion() == "LIB" && ($values[$i] < $win_value || $win_value == -1))
 				{
 					$win = $identifiers[$i];
 					$win_value = $values[$i];

@@ -56,54 +56,17 @@ class pts_result_file_result_object
 	}
 	public function get_comparison_hash($show_version_and_attributes = true)
 	{
-		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->get_test_name(), $this->get_arguments(), $this->get_attributes(), $this->get_version()) : pts_test_profile::generate_comparison_hash($this->get_test_name(), $this->get_arguments());
-	}
-	public function get_name()
-	{
-		return $this->test_result->test_profile->get_test_title();
-	}
-	public function get_name_formatted()
-	{
-		$version = $this->get_version();
-		return $this->get_name() . (isset($version[2]) ? " v" . $version : null);
-	}
-	public function get_version()
-	{
-		return $this->test_result->test_profile->get_version();
-	}
-	public function get_test_profile_version()
-	{
-		return $this->test_result->test_profile->get_test_profile_version();
-	}
-	public function get_attributes()
-	{
-		return $this->test_result->get_used_arguments_description();
-	}
-	public function get_scale()
-	{
-		return $this->test_result->test_profile->get_result_scale();
+		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->test_result->test_profile->get_identifier(), $this->test_result->get_used_arguments(), $this->test_result->get_used_arguments_description(), $this->test_result->test_profile->get_version()) : pts_test_profile::generate_comparison_hash($this->test_result->test_profile->get_identifier(), $this->test_result->get_used_arguments());
 	}
 	public function get_scale_formatted()
 	{
-		return trim(pts_strings::first_in_string($this->get_scale(), '|'));
+		return trim(pts_strings::first_in_string($this->test_result->test_profile->get_result_scale(), '|'));
 	}
 	public function get_scale_special()
 	{
-		$scale_parts = explode('|', $this->get_scale());
+		$scale_parts = explode('|', $this->test_result->test_profile->get_result_scale());
 
 		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
-	}
-	public function get_test_name()
-	{
-		return $this->test_result->test_profile->get_identifier();
-	}
-	public function get_arguments()
-	{
-		return $this->test_result->get_used_arguments();
-	}
-	public function get_proportion()
-	{
-		return $this->test_result->test_profile->get_result_proportion();
 	}
 }
 

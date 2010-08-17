@@ -247,8 +247,8 @@ class pts_result_file
 
 		foreach($this->get_result_objects($result_object_index) as $result_object)
 		{
-			$result_tests[$result_counter][0] = $result_object->get_name();
-			$result_tests[$result_counter][1] = $result_object->get_attributes();
+			$result_tests[$result_counter][0] = $result_object->test_result->test_profile->get_test_title();
+			$result_tests[$result_counter][1] = $result_object->test_result->get_used_arguments_description();
 
 			if($result_object_index != -1)
 			{
@@ -270,7 +270,7 @@ class pts_result_file
 
 					if(!defined("PHOROMATIC_TRACKER") && count($result_object->get_result_buffer()->get_values()) > 1)
 					{
-						switch($result_object->get_proportion())
+						switch($result_object->test_result->test_profile->get_result_proportion())
 						{
 							case "HIB":
 								$best_value = max($result_object->get_result_buffer()->get_values());
@@ -314,7 +314,7 @@ class pts_result_file
 
 								if($delta > 0.02 && $delta > pts_math::standard_deviation($raw_values))
 								{
-									switch($result_object->get_proportion())
+									switch($result_object->test_result->test_profile->get_result_proportion())
 									{
 										case "HIB":
 											if($value < $prev_value)
@@ -348,7 +348,7 @@ class pts_result_file
 
 								if($index % 2 == 1 && $prev_value != 0)
 								{
-									switch($result_object->get_proportion())
+									switch($result_object->test_result->test_profile->get_result_proportion())
 									{
 										case "HIB":
 											if($value > $prev_value)
@@ -382,7 +382,7 @@ class pts_result_file
 
 							if($min_value_in_buffer != $max_value_in_buffer)
 							{
-								switch($result_object->get_proportion())
+								switch($result_object->test_result->test_profile->get_result_proportion())
 								{
 									case "HIB":
 										$delta = pts_math::set_precision($value / $min_value_in_buffer, 2);
@@ -400,7 +400,7 @@ class pts_result_file
 					}
 					break;
 				case "LINE_GRAPH":
-					$result_tests[$result_counter][0] = $result_object->get_name() . " (Avg)";
+					$result_tests[$result_counter][0] = $result_object->test_result->test_profile->get_test_title() . " (Avg)";
 					$result_tests[$result_counter][1] = null;
 
 					foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)

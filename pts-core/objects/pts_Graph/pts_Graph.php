@@ -132,12 +132,14 @@ abstract class pts_Graph
 		// Reset of setup besides config
 		if($result_object != null)
 		{
-			$this->graph_title = $result_object->get_name_formatted();
+			$test_version = $result_object->test_result->test_profile->get_version();
+			$this->graph_title = $result_object->test_result->test_profile->get_test_title() . (isset($test_version[2]) ? " v" . $test_version : null);
+
 			$this->graph_y_title = $result_object->get_scale_formatted();
-			$this->test_identifier = $result_object->get_test_name();
-			$this->graph_proportion = $result_object->get_proportion();
-			$this->addSubTitle($result_object->get_attributes());
-			$this->addInternalIdentifier("Test", $result_object->get_test_name());
+			$this->test_identifier = $result_object->test_result->test_profile->get_identifier();
+			$this->graph_proportion = $result_object->test_result->test_profile->get_result_proportion();
+			$this->addSubTitle($result_object->test_result->get_used_arguments_description());
+			$this->addInternalIdentifier("Test", $result_object->test_result->test_profile->get_identifier());
 		}
 
 		$this->update_graph_dimensions(-1, -1, true);

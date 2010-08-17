@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ class bisect extends pts_module_interface
 		$system_identifiers = $result_object->get_result_buffer()->get_identifiers();
 		$values = $result_object->get_result_buffer()->get_values();
 
-		$proportion = $result_objects[$selected_index]->get_proportion();
+		$proportion = $result_objects[$selected_index]->test_result->test_profile->get_result_proportion();
 
 		$bad_run = pts_user_io::prompt_text_menu("Select test run that regressed", $system_identifiers);
 		$good_run = pts_user_io::prompt_text_menu("Select test run that is good", $system_identifiers);
@@ -78,9 +78,9 @@ class bisect extends pts_module_interface
 		$options["good_performance_number"] = $values[$good_run_index];
 		$options["regression_fraction"] = $values[$bad_run_index] / $values[$good_run_index];
 		$options["test_proportion"] = $proportion;
-		$options["test_name"] = $result_objects[$selected_index]->get_test_name();
-		$options["test_args"] = $result_objects[$selected_index]->get_arguments();
-		$options["test_attr"] = $result_objects[$selected_index]->get_attributes();
+		$options["test_name"] = $result_objects[$selected_index]->test_result->test_profile->get_identifier();
+		$options["test_args"] = $result_objects[$selected_index]->test_result->get_used_arguments();
+		$options["test_attr"] = $result_objects[$selected_index]->test_result->get_used_arguments_description();
 
 		return $options;
 	}

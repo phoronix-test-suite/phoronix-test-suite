@@ -42,7 +42,7 @@ class pts_result_file_analyze_manager
 		$total_objects = count($this->test_results);
 		$this->test_results[$total_objects] = $mto;
 
-		$attributes = array_reverse(explode(" - ", $mto->get_attributes()));
+		$attributes = array_reverse(explode(" - ", $mto->test_result->get_used_arguments_description()));
 		$attributes_clean = array();
 
 		for($i = 0; $i < count($attributes); $i++)
@@ -51,12 +51,12 @@ class pts_result_file_analyze_manager
 			$attributes_clean[$temp[0]] = $temp[1];
 		}
 
-		if(!isset($this->relations[$mto->get_test_name()][$mto->get_version()]))
+		if(!isset($this->relations[$mto->test_result->test_profile->get_identifier()][$mto->test_result->test_profile->get_version()]))
 		{
-			$this->relations[$mto->get_test_name()][$mto->get_version()] = array();
+			$this->relations[$mto->test_result->test_profile->get_identifier()][$mto->test_result->test_profile->get_version()] = array();
 		}
 
-		array_push($this->relations[$mto->get_test_name()][$mto->get_version()], array($total_objects, $attributes_clean));
+		array_push($this->relations[$mto->test_result->test_profile->get_identifier()][$mto->test_result->test_profile->get_version()], array($total_objects, $attributes_clean));
 	}
 	public function get_results()
 	{
@@ -171,7 +171,7 @@ class pts_result_file_analyze_manager
 
 							$mto->test_result->test_profile->set_result_format(($do_line_graph ? "LINE_GRAPH" : "BAR_ANALYZE_GRAPH"));
 							$mto->test_result->set_used_arguments_description($diff_index . " Analysis");
-							$mto->test_result->test_profile->set_result_scale($mto->get_scale() . " | " . implode(",", $similar_ids_names));
+							$mto->test_result->test_profile->set_result_scale($mto->test_result->test_profile->get_result_scale() . " | " . implode(",", $similar_ids_names));
 
 							foreach($results as $identifier => $values)
 							{

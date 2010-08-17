@@ -56,7 +56,7 @@ class result_file_to_csv implements pts_option_interface
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$result_output .= $result_object->get_name() . " - " . $result_object->get_attributes();
+			$result_output .= $result_object->test_result->test_profile->get_test_title() . " - " . $result_object->test_result->get_used_arguments_description();
 
 			foreach($result_object->get_result_buffer()->get_values() as $value)
 			{
