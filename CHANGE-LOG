@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add lib3ds external dependency for providing AutoDesk 3DS file support
 - pts: Update build-imagemagick test profile due to old download links that failed, now at ImageMagick 6.6.3
 - pts: Add smallpt test profile as a lightweight, multi-threaded path tracing benchmark
+- pts: Add gluxmark test profile for the gluxMark OpenGL 3.2 / OpenCL benchmark
 
 Phoronix Test Suite 2.8 Beta 1
 August 3, 2010
