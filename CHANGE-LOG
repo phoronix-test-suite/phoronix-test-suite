@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: GTK2 GUI regression fixes
 - pts-core: Various core regression fixes
 - pts-core: Clean out parts of the API that are redundant and will be with PTS3
+- pts-core: Automatically increase the test run count if at least one test run successfully ran, but at least one test run failed
 - pts: Update build-imagemagick test profile due to old download links that failed, now at ImageMagick 6.6.3
 - pts: Add smallpt test profile as a lightweight, multi-threaded path tracing benchmark
 

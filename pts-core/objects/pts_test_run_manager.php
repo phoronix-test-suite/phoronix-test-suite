@@ -51,7 +51,7 @@ class pts_test_run_manager
 	{
 		return $this->do_dynamic_run_count;
 	}
-	public function increase_run_count(&$test_results, $test_run_time)
+	public function increase_run_count_check(&$test_results, $test_run_time)
 	{
 		// Determine if results are statistically significant, otherwise up the run count
 		$std_dev = pts_math::percent_standard_deviation($test_results->get_trial_results());

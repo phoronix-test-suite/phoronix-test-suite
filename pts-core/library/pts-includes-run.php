@@ -715,17 +715,35 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			}
 		}
 
-		if($i == ($times_to_run - 1) && $test_results->trial_run_count() > 2 && $test_run_manager->do_dynamic_run_count() && $times_to_run < ($defined_times_to_run * 2))
+		if($i == ($times_to_run - 1))
 		{
-			$do_increase_run_count = $test_run_manager->increase_run_count($test_results, $test_run_time);
+			// Should we increase the run count?
+			$increase_run_count = false;
 
-			if($do_increase_run_count === -1)
+			if($defined_times_to_run == ($i + 1) && $test_results->trial_run_count() > 0 && $test_results->trial_run_count() < $defined_times_to_run)
 			{
-				$abort_testing = true;
+				// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
+				$increase_run_count = $defined_times_to_run - $test_results->trial_run_count();
 			}
-			else if($do_increase_run_count)
+			else if($test_results->trial_run_count() > 2 && $test_run_manager->do_dynamic_run_count() && $times_to_run < ($defined_times_to_run * 2))
 			{
-				$times_to_run++;
+				// Dynamically increase run count if told to do so by external script or standard deviation is too high
+				$increase_run_count = $test_run_manager->increase_run_count_check($test_results, $test_run_time);
+
+				if($increase_run_count === -1)
+				{
+					$abort_testing = true;
+				}
+				else if($increase_run_count == true)
+				{
+					// Just increase the run count one at a time
+					$increase_run_count = 1;
+				}
+			}
+
+			if($increase_run_count > 0)
+			{
+				$times_to_run += $increase_run_count;
 				$test_results->test_profile->set_times_to_run($times_to_run);
 			}
 		}
