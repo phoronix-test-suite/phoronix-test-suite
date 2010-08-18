@@ -142,5 +142,6 @@
 		</Package>
 		<!-- Check on yasm support for OpenSolaris -->
 		<!-- Check on lib3ds support for OpenSolaris -->
+		<!-- Check on libgmp support for OpenSolaris -->
 	</ExternalDependencies>
 </PhoronixTestSuite>

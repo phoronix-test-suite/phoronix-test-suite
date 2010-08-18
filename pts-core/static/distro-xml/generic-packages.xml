@@ -304,5 +304,11 @@
 			<PossibleNames>lib3ds libs3ds-devel</PossibleNames>
 			<FileCheck>/usr/include/lib3ds/atmosphere.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>gmp-library</GenericName>
+			<Title>The GNU Multiple Precision Arithmetic Library</Title>
+			<PossibleNames>libgmp3-dev libgmp3 gmp-devel</PossibleNames>
+			<FileCheck>/usr/include/gmp.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

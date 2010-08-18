@@ -205,6 +205,11 @@
 			<PackageName>yasm</PackageName>
 			<FileCheck>/usr/bin/yasm</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>gmp-library</GenericName>
+			<PackageName>gmp</PackageName>
+			<FileCheck>/usr/include/gmp.h</FileCheck>
+		</Package>
 		<!-- lib3ds support for Zenwalk -->
 	</ExternalDependencies>
 </PhoronixTestSuite>

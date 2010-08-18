@@ -8,7 +8,8 @@
 		<License>FREE</License>
 		<Maintainer>Kenney Phillis</Maintainer>
 		<EnvironmentSize>1.4</EnvironmentSize>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ProjectURL>http://systester.sourceforge.net/</ProjectURL>
+		<ExternalDependencies>build-utilities, qt4-development, gmp-library</ExternalDependencies>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>
