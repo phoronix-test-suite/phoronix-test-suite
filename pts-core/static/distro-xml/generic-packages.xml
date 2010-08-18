@@ -298,5 +298,11 @@
 			<PossibleNames>yasm</PossibleNames>
 			<FileCheck>/usr/bin/yasm OR /usr/local/bin/yasm</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>lib3ds</GenericName>
+			<Title>AutoDesk 3DS File Support</Title>
+			<PossibleNames>lib3ds</PossibleNames>
+			<FileCheck>/usr/include/lib3ds/atmosphere.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
