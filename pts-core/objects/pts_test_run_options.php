@@ -207,7 +207,7 @@ class pts_test_run_options
 			}
 		}
 	}
-	private static function auto_process_test_option($test_identifier, $option_identifier, &$option_names, &$option_values, &$option_messages)
+	public static function auto_process_test_option($test_identifier, $option_identifier, &$option_names, &$option_values, &$option_messages)
 	{
 		// Some test items have options that are dynamically built
 		switch($option_identifier)
