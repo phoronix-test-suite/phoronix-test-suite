@@ -26,4 +26,7 @@
 	<RunTest>
 		<Test>tachyon</Test>
 	</RunTest>
+	<RunTest>
+		<Test>smallpt</Test>
+	</RunTest>
 </PhoronixTestSuite>

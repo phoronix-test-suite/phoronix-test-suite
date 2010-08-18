@@ -630,7 +630,8 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if(IS_NVIDIA_GRAPHICS) // NVIDIA GPU
 		{
-			list($core_freq, $mem_freq) = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension("GPUDefault3DClockFreqs"));
+			// GPUDefault3DClockFreqs is the default and does not show under/over-clocking
+			list($core_freq, $mem_freq) = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension("GPU3DClockFreqs"));
 		}
 		else if(IS_ATI_GRAPHICS && IS_LINUX) // ATI GPU
 		{
