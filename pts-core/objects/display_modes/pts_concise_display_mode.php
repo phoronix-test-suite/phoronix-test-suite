@@ -266,14 +266,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		$test_run_position = pts_read_assignment("TEST_RUN_POSITION");
 		$test_run_count = pts_read_assignment("TEST_RUN_COUNT");
-		if($test_run_count > 1 && $test_run_position <= $test_run_count)
-		{
-			echo $this->tab . "Test Run " . $test_run_position . " of " . $test_run_count . "\n";
+		echo $this->tab . "Test Run " . $test_run_position . " of " . $test_run_count . "\n";
 
-			if(($remaining_length = $test_run_manager->get_estimated_run_time_remaining()) > 1)
-			{
-				echo $this->tab . "Estimated Time Remaining: " . pts_strings::format_time($remaining_length, "SECONDS", true, 60) . "\n";
-			}
+		if(($remaining_length = $test_run_manager->get_estimated_run_time_remaining()) > 1)
+		{
+			echo $this->tab . "Estimated Time Remaining: " . pts_strings::format_time($remaining_length, "SECONDS", true, 60) . "\n";
 		}
 
 		$estimated_length = $test_result->test_profile->get_estimated_run_time();
