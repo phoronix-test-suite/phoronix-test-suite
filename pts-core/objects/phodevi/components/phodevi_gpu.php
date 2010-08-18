@@ -312,15 +312,6 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 
-			if($resolution == false && IS_NVIDIA_GRAPHICS)
-			{
-				// Way to find resolution through NVIDIA's NV-CONTROL extension
-				if(($frontend_res = phodevi_parser::read_nvidia_extension("FrontendResolution")) != false)
-				{
-					$resolution = pts_strings::comma_explode($frontend_res);
-				}
-			}
-
 			if($resolution == false && pts_client::executable_in_path("xrandr"))
 			{
 				// Read resolution from xrandr
@@ -337,6 +328,16 @@ class phodevi_gpu extends phodevi_device_interface
 					{
 						$resolution = array($res[0], $res[1]);
 					}
+				}
+			}
+
+			if($resolution == false && IS_NVIDIA_GRAPHICS)
+			{
+				// Way to find resolution through NVIDIA's NV-CONTROL extension
+				// But rely upon xrandr first since when using NVIDIA TwinView the reported FrontEndResolution may be the smaller of the two
+				if(($frontend_res = phodevi_parser::read_nvidia_extension("FrontendResolution")) != false)
+				{
+					$resolution = pts_strings::comma_explode($frontend_res);
 				}
 			}
 

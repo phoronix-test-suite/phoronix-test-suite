@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Clean out parts of the API that are redundant and will be with PTS3
 - pts-core: Automatically increase the test run count if at least one test run successfully ran, but at least one test run failed
 - pts-core: Add lib3ds external dependency for providing AutoDesk 3DS file support
+- pts-core: Fix for a smaller panel resolution being reported when using NVIDIA's TwinView
 - pts: Update build-imagemagick test profile due to old download links that failed, now at ImageMagick 6.6.3
 - pts: Add smallpt test profile as a lightweight, multi-threaded path tracing benchmark
 - pts: Add gluxmark test profile for the gluxMark OpenGL 3.2 / OpenCL benchmark
