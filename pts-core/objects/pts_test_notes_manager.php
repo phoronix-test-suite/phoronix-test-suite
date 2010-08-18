@@ -61,7 +61,7 @@ class pts_test_notes_manager
 			{
 				$p = explode("=", $p);
 				$p_title = trim($p[0]);
-				$p_names = pts_strings::trim_pts_strings::comma_explode($p[1]);
+				$p_names = pts_strings::comma_explode($p[1]);
 
 				$check_processes[$p_title] = array();
 
