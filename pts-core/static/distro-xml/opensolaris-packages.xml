@@ -140,6 +140,7 @@
 			<PackageName>SUNWPython</PackageName>
 			<FileCheck>/usr/bin/python</FileCheck>
 		</Package>
-		<!-- Check on yasm support for OpenSolaris -->s
+		<!-- Check on yasm support for OpenSolaris -->
+		<!-- Check on lib3ds support for OpenSolaris -->
 	</ExternalDependencies>
 </PhoronixTestSuite>

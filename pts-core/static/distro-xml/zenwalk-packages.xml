@@ -205,5 +205,6 @@
 			<PackageName>yasm</PackageName>
 			<FileCheck>/usr/bin/yasm</FileCheck>
 		</Package>
+		<!-- lib3ds support for Zenwalk -->
 	</ExternalDependencies>
 </PhoronixTestSuite>

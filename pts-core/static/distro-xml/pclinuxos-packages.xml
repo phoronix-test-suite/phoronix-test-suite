@@ -215,5 +215,10 @@
 			<PackageName>yasm</PackageName>
 			<FileCheck>/usr/bin/yasm</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>lib3ds</GenericName>
+			<PackageName>lib3ds-devel</PackageName>
+			<FileCheck>/usr/include/lib3ds/atmosphere.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
