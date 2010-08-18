@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.8 Beta 2
+August 18, 2010
 
 - pts-core: Fix regression in analyze-batch that led to producing unexpected results
 - pts-core: GTK2 GUI regression fixes
