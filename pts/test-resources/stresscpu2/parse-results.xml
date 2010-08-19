@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+	<ResultsParser>
+		<!-- Include Entire File As The Result -->
+		<OutputTemplate>#_RESULT_#</OutputTemplate>
+	</ResultsParser>
+</PhoronixTestSuite>

@@ -669,16 +669,6 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			{
 				$test_result = pts_result_parser::parse_result($test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
 			}
-			else if(is_file($test_log_file))
-			{
-				// TODO: improve this path
-				$test_result = file_get_contents($test_log_file);
-
-				if(strpos($test_result, ' ') !== false)
-				{
-					$test_result = null;
-				}
-			}
 			else
 			{
 				$test_result = null;
@@ -689,10 +679,6 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 				if($run_time > 1)
 				{
 					$test_result = $run_time;
-				}
-				else if($test_result !== false && is_file($test_log_file))
-				{
-					$test_result = pts_file_io::file_get_contents($test_log_file);
 				}
 			}
 

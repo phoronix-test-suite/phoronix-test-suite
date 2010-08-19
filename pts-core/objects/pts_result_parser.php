@@ -222,10 +222,11 @@ class pts_result_parser
 				return false;
 			}
 
-			if($search_key != null || $result_line_before_hint[$i] != null || $result_line_after_hint[$i] != null)
+			$test_results = array();
+
+			if($search_key != null || $result_line_before_hint[$i] != null || $result_line_after_hint[$i] != null || $result_template_r[0] == $result_key[$i])
 			{
 				$is_multi_match = !empty($multi_match[$i]) && $multi_match[$i] != "NONE";
-				$test_results = array();
 
 				do
 				{
@@ -245,13 +246,19 @@ class pts_result_parser
 						$result_line = substr($result_line, strrpos($result_line, "\n", 1) + 1);
 						$result_output = null;
 					}
-					else
+					else if($search_key != null)
 					{
 						pts_test_profile_debug_message("Result Parsing Search Key: " . $search_key);
 						$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
 						$start_of_line = strrpos($result_line, "\n");
 						$result_output = substr($result_line, 0, $start_of_line) . "\n";
 						$result_line = substr($result_line, $start_of_line + 1);
+					}
+					else
+					{
+						// Condition $result_template_r[0] == $result_key[$i], include entire file since there is nothing to search
+						pts_test_profile_debug_message("No Result Parsing Hint, Including Entire Result Output");
+						$result_line = trim($result_output);
 					}
 
 					pts_test_profile_debug_message("Result Line: " . $result_line);
