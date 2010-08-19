@@ -22,6 +22,7 @@
 
 class pts_test_result
 {
+	// Note in most pts-core code the initialized var is called $result_object
 	private $result;
 	private $trial_results;
 	private $attributes;
@@ -29,11 +30,16 @@ class pts_test_result
 	private $used_arguments_description;
 
 	public $test_profile;
+	public $test_result_buffer;
 
 	public function __construct(&$test_profile)
 	{
 		$this->test_profile = $test_profile;
 		$this->trial_results = array();
+	}
+	public function set_test_result_buffer($test_result_buffer)
+	{
+		$this->test_result_buffer = $test_result_buffer;
 	}
 	public function set_used_arguments_description($arguments_description)
 	{
@@ -80,6 +86,10 @@ class pts_test_result
 	public function trial_run_count()
 	{
 		return count($this->trial_results);
+	}
+	public function get_comparison_hash($show_version_and_attributes = true)
+	{
+		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(), $this->get_used_arguments(), $this->get_used_arguments_description(), $this->test_profile->get_version()) : pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(), $this->get_used_arguments());
 	}
 	public function calculate_end_result()
 	{
@@ -187,6 +197,16 @@ class pts_test_result
 		}
 
 		$this->set_result($END_RESULT);
+	}
+	public function get_scale_formatted()
+	{
+		return trim(pts_strings::first_in_string($this-test_profile->get_result_scale(), '|'));
+	}
+	public function get_scale_special()
+	{
+		$scale_parts = explode('|', $this->test_profile->get_result_scale());
+
+		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
 	}
 }
 

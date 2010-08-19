@@ -123,13 +123,13 @@ class pts_OverviewGraph extends pts_Graph
 			$px_bound_left = $this->graph_left_start + ($this->graph_item_width * ($col % $this->graphs_per_row));
 			$px_bound_right = $px_bound_left + $this->graph_item_width;
 
-			$this->graph_image->write_text_center($result_object->test_result->test_profile->get_title(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $top_end + 5, $px_bound_right, $top_end + 5, false);
+			$this->graph_image->write_text_center($result_object->test_profile->get_title(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $top_end + 5, $px_bound_right, $top_end + 5, false);
 
-			if($result_object->test_result->test_profile->get_result_format() == "BAR_GRAPH")
+			if($result_object->test_profile->get_result_format() == "BAR_GRAPH")
 			{
-				$all_values = $result_object->get_result_buffer()->get_values();
+				$all_values = $result_object->test_result_buffer->get_values();
 
-				switch($result_object->test_result->test_profile->get_result_proportion())
+				switch($result_object->test_profile->get_result_proportion())
 				{
 					case "HIB":
 						$divide_value = max($all_values);
@@ -139,11 +139,11 @@ class pts_OverviewGraph extends pts_Graph
 						break;
 				}
 
-				foreach($result_object->get_result_buffer()->get_buffer_items() as $x => $buffer_item)
+				foreach($result_object->test_result_buffer->get_buffer_items() as $x => $buffer_item)
 				{
 					$paint_color = $this->get_paint_color($buffer_item->get_result_identifier());
 
-					switch($result_object->test_result->test_profile->get_result_proportion())
+					switch($result_object->test_profile->get_result_proportion())
 					{
 						case "HIB":
 							$value = $buffer_item->get_result_value() / $divide_value;

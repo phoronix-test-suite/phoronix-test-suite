@@ -48,9 +48,9 @@ class result_file_to_text implements pts_option_interface
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$result_output .= trim($result_object->test_result->test_profile->get_title() . " " . $result_object->test_result->test_profile->get_version() . "\n" . $result_object->test_result->get_used_arguments_description());
+			$result_output .= trim($result_object->test_profile->get_title() . " " . $result_object->test_profile->get_version() . "\n" . $result_object->get_used_arguments_description());
 
-			foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
 				$result_output .= $buffer_item->get_result_identifier() . ": " . $buffer_item->get_result_value() . "\n";
 			}

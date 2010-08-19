@@ -63,10 +63,10 @@ class bisect extends pts_module_interface
 			while(!isset($result_objects[($selected_index--)]));
 		}
 
-		$system_identifiers = $result_object->get_result_buffer()->get_identifiers();
-		$values = $result_object->get_result_buffer()->get_values();
+		$system_identifiers = $result_object->test_result_buffer->get_identifiers();
+		$values = $result_object->test_result_buffer->get_values();
 
-		$proportion = $result_objects[$selected_index]->test_result->test_profile->get_result_proportion();
+		$proportion = $result_objects[$selected_index]->test_profile->get_result_proportion();
 
 		$bad_run = pts_user_io::prompt_text_menu("Select test run that regressed", $system_identifiers);
 		$good_run = pts_user_io::prompt_text_menu("Select test run that is good", $system_identifiers);
@@ -78,9 +78,9 @@ class bisect extends pts_module_interface
 		$options["good_performance_number"] = $values[$good_run_index];
 		$options["regression_fraction"] = $values[$bad_run_index] / $values[$good_run_index];
 		$options["test_proportion"] = $proportion;
-		$options["test_name"] = $result_objects[$selected_index]->test_result->test_profile->get_identifier();
-		$options["test_args"] = $result_objects[$selected_index]->test_result->get_used_arguments();
-		$options["test_attr"] = $result_objects[$selected_index]->test_result->get_used_arguments_description();
+		$options["test_name"] = $result_objects[$selected_index]->test_profile->get_identifier();
+		$options["test_args"] = $result_objects[$selected_index]->get_used_arguments();
+		$options["test_attr"] = $result_objects[$selected_index]->get_used_arguments_description();
 
 		return $options;
 	}

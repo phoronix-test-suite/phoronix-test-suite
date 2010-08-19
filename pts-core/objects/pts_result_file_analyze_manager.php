@@ -42,7 +42,7 @@ class pts_result_file_analyze_manager
 		$total_objects = count($this->test_results);
 		$this->test_results[$total_objects] = $mto;
 
-		$attributes = array_reverse(explode(" - ", $mto->test_result->get_used_arguments_description()));
+		$attributes = array_reverse(explode(" - ", $mto->get_used_arguments_description()));
 		$attributes_clean = array();
 
 		for($i = 0; $i < count($attributes); $i++)
@@ -51,12 +51,12 @@ class pts_result_file_analyze_manager
 			$attributes_clean[$temp[0]] = $temp[1];
 		}
 
-		if(!isset($this->relations[$mto->test_result->test_profile->get_identifier()][$mto->test_result->test_profile->get_version()]))
+		if(!isset($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_version()]))
 		{
-			$this->relations[$mto->test_result->test_profile->get_identifier()][$mto->test_result->test_profile->get_version()] = array();
+			$this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_version()] = array();
 		}
 
-		array_push($this->relations[$mto->test_result->test_profile->get_identifier()][$mto->test_result->test_profile->get_version()], array($total_objects, $attributes_clean));
+		array_push($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_version()], array($total_objects, $attributes_clean));
 	}
 	public function get_results()
 	{
@@ -128,7 +128,7 @@ class pts_result_file_analyze_manager
 							$mto = $this->test_results[$similar_ids[0]];
 							$results = array();
 
-							foreach($mto->get_result_buffer()->get_identifiers() as $identifier)
+							foreach($mto->test_result_buffer->get_identifiers() as $identifier)
 							{
 								$results[$identifier] = array();
 							}
@@ -136,8 +136,8 @@ class pts_result_file_analyze_manager
 							foreach($similar_ids as $id)
 							{
 								$mto_read = $this->test_results[$id];
-								$mto_identifiers = $mto_read->get_result_buffer()->get_identifiers();
-								$mto_values = $mto_read->get_result_buffer()->get_values();
+								$mto_identifiers = $mto_read->test_result_buffer->get_identifiers();
+								$mto_values = $mto_read->test_result_buffer->get_values();
 
 								foreach(array_keys($results) as $key)
 								{
@@ -152,7 +152,7 @@ class pts_result_file_analyze_manager
 								}
 							}
 
-							$mto->flush_result_buffer();
+							$mto->test_result_buffer = new pts_test_result_buffer();
 
 							$do_line_graph = true;
 							foreach($similar_ids_names as $id_name_check)
@@ -169,13 +169,13 @@ class pts_result_file_analyze_manager
 								$do_line_graph = false;
 							}
 
-							$mto->test_result->test_profile->set_result_format(($do_line_graph ? "LINE_GRAPH" : "BAR_ANALYZE_GRAPH"));
-							$mto->test_result->set_used_arguments_description($diff_index . " Analysis");
-							$mto->test_result->test_profile->set_result_scale($mto->test_result->test_profile->get_result_scale() . " | " . implode(",", $similar_ids_names));
+							$mto->test_profile->set_result_format(($do_line_graph ? "LINE_GRAPH" : "BAR_ANALYZE_GRAPH"));
+							$mto->set_used_arguments_description($diff_index . " Analysis");
+							$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . " | " . implode(",", $similar_ids_names));
 
 							foreach($results as $identifier => $values)
 							{
-								$mto->add_result_to_buffer($identifier, implode(",", $values), null);
+								$mto->test_result_buffer->add_test_result($identifier, implode(",", $values), null);
 							}
 
 							array_push($return_results, $mto);

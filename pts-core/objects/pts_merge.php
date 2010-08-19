@@ -168,7 +168,7 @@ class pts_merge
 		$results_added = 0;
 		foreach($result_manager->get_results() as $result_object)
 		{
-			$buffer_items = $result_object->get_result_buffer()->get_buffer_items();
+			$buffer_items = $result_object->test_result_buffer->get_buffer_items();
 
 			if(count($buffer_items) == 0)
 			{
@@ -176,15 +176,15 @@ class pts_merge
 			}
 
 			$use_id = $xml_writer->request_unique_id();
-			$xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->test_result->test_profile->get_title());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->test_result->test_profile->get_version());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $use_id, $result_object->test_result->test_profile->get_test_profile_version());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $use_id, $result_object->test_result->get_used_arguments_description());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $use_id, $result_object->test_result->test_profile->get_result_scale());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $use_id, $result_object->test_result->test_profile->get_result_proportion());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_TESTNAME, $use_id, $result_object->test_result->test_profile->get_identifier());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $use_id, $result_object->test_result->get_used_arguments());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $use_id, $result_object->test_result->test_profile->get_result_format());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->test_profile->get_title());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->test_profile->get_version());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $use_id, $result_object->test_profile->get_test_profile_version());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $use_id, $result_object->get_used_arguments_description());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $use_id, $result_object->test_profile->get_result_scale());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $use_id, $result_object->test_profile->get_result_proportion());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_TESTNAME, $use_id, $result_object->test_profile->get_identifier());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $use_id, $result_object->get_used_arguments());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $use_id, $result_object->test_profile->get_result_format());
 
 			foreach($buffer_items as $i => &$buffer_item)
 			{

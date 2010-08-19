@@ -68,7 +68,16 @@ class pts_tracker
 			$result_buffer->add_test_result($system_key, implode(',', $to_show), null);
 		}
 
-		return new pts_result_file_result_object("Results Overview", null, null, "Phoromatic Tracker: " . $title, $title . " | " . implode(',', $days_keys), null, null, null, "LINE_GRAPH", $result_buffer);
+		$test_profile = new pts_test_profile(null);
+		$test_profile->set_test_title("Results Overview");
+		$test_profile->set_result_scale($title . " | " . implode(',', $days_keys));
+		$test_profile->set_result_format("LINE_GRAPH");
+
+		$test_result = new pts_test_result();
+		$test_result->set_used_arguments_description("Phoromatic Tracker: " . $title);
+		$test_result->set_test_result_buffer($result_buffer);
+
+		return $test_result;
 	}
 	public static function compact_result_file_test_object(&$mto, &$result_table = false, $identifiers_inverted = false)
 	{
@@ -96,7 +105,7 @@ class pts_tracker
 			$date_index = 1;
 		}
 
-		foreach($mto->get_result_buffer()->get_buffer_items() as $buffer_item)
+		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
 			$identifier = pts_strings::trim_explode(": ", $buffer_item->get_result_identifier());
 
@@ -143,7 +152,7 @@ class pts_tracker
 			$days[$day_key] = $systems;
 		}
 
-		foreach($mto->get_result_buffer()->get_buffer_items() as $buffer_item)
+		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
 			$identifier = pts_strings::trim_explode(": ", $buffer_item->get_result_identifier());
 
@@ -170,9 +179,9 @@ class pts_tracker
 			}
 		}
 
-		$mto->test_result->test_profile->set_result_scale($mto->test_result->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-		$mto->test_result->test_profile->set_result_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
-		$mto->flush_result_buffer();
+		$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
+		$mto->test_profile->set_result_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
+		$mto->test_result_buffer = new pts_test_result_buffer();
 
 		$day_keys = array_keys($days);
 
@@ -185,7 +194,7 @@ class pts_tracker
 				array_push($results, $days[$day_key][$system_key]);
 			}
 
-			$mto->add_result_to_buffer($system_key, implode(',', $results), null);
+			$mto->test_result_buffer->add_test_result($system_key, implode(',', $results), null);
 		}
 
 		if($result_table !== false)
@@ -213,7 +222,7 @@ class pts_tracker
 			$prev_buffer_item = null;
 			$this_test_regressions = array();
 
-			foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
 				if(!is_numeric($buffer_item->get_result_value()))
 				{

@@ -247,8 +247,8 @@ class pts_result_file
 
 		foreach($this->get_result_objects($result_object_index) as $result_object)
 		{
-			$result_tests[$result_counter][0] = $result_object->test_result->test_profile->get_title();
-			$result_tests[$result_counter][1] = $result_object->test_result->get_used_arguments_description();
+			$result_tests[$result_counter][0] = $result_object->test_profile->get_title();
+			$result_tests[$result_counter][1] = $result_object->get_used_arguments_description();
 
 			if($result_object_index != -1)
 			{
@@ -263,20 +263,20 @@ class pts_result_file
 				//$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
 			}
 
-			switch($result_object->test_result->test_profile->get_result_format())
+			switch($result_object->test_profile->get_result_format())
 			{
 				case "BAR_GRAPH":
 					$best_value = 0;
 
-					if(!defined("PHOROMATIC_TRACKER") && count($result_object->get_result_buffer()->get_values()) > 1)
+					if(!defined("PHOROMATIC_TRACKER") && count($result_object->test_result_buffer->get_values()) > 1)
 					{
-						switch($result_object->test_result->test_profile->get_result_proportion())
+						switch($result_object->test_profile->get_result_proportion())
 						{
 							case "HIB":
-								$best_value = max($result_object->get_result_buffer()->get_values());
+								$best_value = max($result_object->test_result_buffer->get_values());
 								break;
 							case "LIB":
-								$best_value = min($result_object->get_result_buffer()->get_values());
+								$best_value = min($result_object->test_result_buffer->get_values());
 								break;
 						}
 					}
@@ -285,12 +285,12 @@ class pts_result_file
 					$prev_identifier = null;
 					$prev_identifier_0 = null;
 
-					$values_in_buffer = $result_object->get_result_buffer()->get_values();
+					$values_in_buffer = $result_object->test_result_buffer->get_values();
 					sort($values_in_buffer);
 					$min_value_in_buffer = $values_in_buffer[0];
 					$max_value_in_buffer = $values_in_buffer[(count($values_in_buffer) - 1)];
 
-					foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)
+					foreach($result_object->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 					{
 						$identifier = $buffer_item->get_result_identifier();
 						$value = $buffer_item->get_result_value();
@@ -314,7 +314,7 @@ class pts_result_file
 
 								if($delta > 0.02 && $delta > pts_math::standard_deviation($raw_values))
 								{
-									switch($result_object->test_result->test_profile->get_result_proportion())
+									switch($result_object->test_profile->get_result_proportion())
 									{
 										case "HIB":
 											if($value < $prev_value)
@@ -348,7 +348,7 @@ class pts_result_file
 
 								if($index % 2 == 1 && $prev_value != 0)
 								{
-									switch($result_object->test_result->test_profile->get_result_proportion())
+									switch($result_object->test_profile->get_result_proportion())
 									{
 										case "HIB":
 											if($value > $prev_value)
@@ -382,7 +382,7 @@ class pts_result_file
 
 							if($min_value_in_buffer != $max_value_in_buffer)
 							{
-								switch($result_object->test_result->test_profile->get_result_proportion())
+								switch($result_object->test_profile->get_result_proportion())
 								{
 									case "HIB":
 										$delta = pts_math::set_precision($value / $min_value_in_buffer, 2);
@@ -400,10 +400,10 @@ class pts_result_file
 					}
 					break;
 				case "LINE_GRAPH":
-					$result_tests[$result_counter][0] = $result_object->test_result->test_profile->get_title() . " (Avg)";
+					$result_tests[$result_counter][0] = $result_object->test_profile->get_title() . " (Avg)";
 					$result_tests[$result_counter][1] = null;
 
-					foreach($result_object->get_result_buffer()->get_buffer_items() as $index => $buffer_item)
+					foreach($result_object->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 					{
 						$identifier = $buffer_item->get_result_identifier();
 						$values = pts_strings::comma_explode($buffer_item->get_result_value());
@@ -592,9 +592,20 @@ class pts_result_file
 
 			for($i = 0; $i < count($results_name); $i++)
 			{
-				$test_object = new pts_result_file_result_object($results_name[$i], $results_version[$i], $results_profile_version[$i], $results_attributes[$i], $results_scale[$i], $results_test_name[$i], $results_arguments[$i], $results_proportion[$i], $results_format[$i], $result_buffers[$i]);
+				$test_profile = new pts_test_profile($results_test_name[$i]);
+				$test_profile->set_test_title($results_name[$i]);
+				$test_profile->set_version($results_version[$i]);
+				$test_profile->set_test_profile_version($results_profile_version[$i]);
+				$test_profile->set_result_scale($results_scale[$i]);
+				$test_profile->set_result_proportion($results_proportion[$i]);
+				$test_profile->set_result_format($results_format[$i]);
 
-				array_push($this->result_objects, $test_object);
+				$test_result = new pts_test_result($test_profile);
+				$test_result->set_used_arguments_description($results_attributes[$i]);
+				$test_result->set_used_arguments($results_arguments[$i]);
+				$test_result->set_test_result_buffer($result_buffers[$i]);
+
+				array_push($this->result_objects, $test_result);
 			}
 		}
 

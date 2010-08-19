@@ -48,7 +48,7 @@ class result_file_to_csv implements pts_option_interface
 
 		$test_object = array_pop($result_file->get_result_objects());
 
-		foreach($test_object->get_result_buffer()->get_identifiers() as $identifier)
+		foreach($test_object->test_result_buffer->get_identifiers() as $identifier)
 		{
 			$result_output .= "," . $identifier;
 		}
@@ -56,9 +56,9 @@ class result_file_to_csv implements pts_option_interface
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$result_output .= $result_object->test_result->test_profile->get_title() . " - " . $result_object->test_result->get_used_arguments_description();
+			$result_output .= $result_object->test_profile->get_title() . " - " . $result_object->get_used_arguments_description();
 
-			foreach($result_object->get_result_buffer()->get_values() as $value)
+			foreach($result_object->test_result_buffer->get_values() as $value)
 			{
 				$result_output .= "," . $value;
 			}

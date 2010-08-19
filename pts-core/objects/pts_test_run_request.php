@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// TODO: this can possibly be consolidated with pts_result_file_result_object? 
+// TODO: this can possibly be consolidated with pts_test_result object? 
 
 class pts_test_run_request
 {

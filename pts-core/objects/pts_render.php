@@ -32,7 +32,7 @@ class pts_render
 			pts_tracker::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
 		}
 
-		$result_format = $result_object->test_result->test_profile->get_result_format();
+		$result_format = $result_object->test_profile->get_result_format();
 
 		switch($result_format)
 		{
@@ -100,7 +100,7 @@ class pts_render
 			case "LINE_GRAPH":
 			case "BAR_ANALYZE_GRAPH":
 				//$graph->hideGraphIdentifiers();
-				foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 				{
 					$graph->loadGraphValues(pts_strings::comma_explode($buffer_item->get_result_value()), $buffer_item->get_result_identifier());
 				}
@@ -117,7 +117,7 @@ class pts_render
 				$values = array();
 				$raw_values = array();
 
-				foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 				{
 					array_push($identifiers, $buffer_item->get_result_identifier());
 					array_push($values, $buffer_item->get_result_value());

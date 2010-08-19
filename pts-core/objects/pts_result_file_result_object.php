@@ -42,32 +42,6 @@ class pts_result_file_result_object
 		$this->test_result->set_used_arguments($arguments);
 		$this->result_buffer = $result_buffer;
 	}
-	public function add_result_to_buffer($identifier, $value, $raw_value)
-	{
-		$this->result_buffer->add_test_result($identifier, $value, $raw_value);
-	}
-	public function get_result_buffer()
-	{
-		return $this->result_buffer;
-	}
-	public function flush_result_buffer()
-	{
-		$this->result_buffer = new pts_test_result_buffer();
-	}
-	public function get_comparison_hash($show_version_and_attributes = true)
-	{
-		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->test_result->test_profile->get_identifier(), $this->test_result->get_used_arguments(), $this->test_result->get_used_arguments_description(), $this->test_result->test_profile->get_version()) : pts_test_profile::generate_comparison_hash($this->test_result->test_profile->get_identifier(), $this->test_result->get_used_arguments());
-	}
-	public function get_scale_formatted()
-	{
-		return trim(pts_strings::first_in_string($this->test_result->test_profile->get_result_scale(), '|'));
-	}
-	public function get_scale_special()
-	{
-		$scale_parts = explode('|', $this->test_result->test_profile->get_result_scale());
-
-		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
-	}
 }
 
 ?>

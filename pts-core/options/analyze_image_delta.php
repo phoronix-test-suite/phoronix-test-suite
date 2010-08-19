@@ -65,7 +65,7 @@ class analyze_image_delta implements pts_option_interface
 
 		foreach($compare_file->get_result_objects() as $result_object)
 		{
-			if($result_object->test_result->test_profile->get_result_format() != "IMAGE_COMPARISON")
+			if($result_object->test_profile->get_result_format() != "IMAGE_COMPARISON")
 			{
 				continue;
 			}
@@ -73,7 +73,7 @@ class analyze_image_delta implements pts_option_interface
 			$base_result = null;
 			$compare_result = null;
 
-			foreach($result_object->get_result_buffer()->get_buffer_items() as $buffer_item)
+			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
 				if($buffer_item->get_result_identifier() == $base_identifier && $base_result == null)
 				{
@@ -125,12 +125,12 @@ class analyze_image_delta implements pts_option_interface
 			if($img_changed)
 			{
 				$tandem_id = $tandem_xml->request_unique_id();
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result_object->test_result->test_profile->get_title());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result_object->test_result->test_profile->get_version());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result_object->test_result->test_profile->get_test_profile_version());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result_object->test_result->get_used_arguments_description());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result_object->test_result->test_profile->get_identifier());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result_object->test_result->get_used_arguments());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result_object->test_profile->get_title());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result_object->test_profile->get_version());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result_object->test_profile->get_test_profile_version());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result_object->get_used_arguments_description());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result_object->test_profile->get_identifier());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result_object->get_used_arguments());
 
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, "Image Delta", 5);
 
