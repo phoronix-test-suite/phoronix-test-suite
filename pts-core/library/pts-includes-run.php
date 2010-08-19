@@ -387,7 +387,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $test_run_request->get_used_arguments());
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $test_identifier, 5);
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_run_request->get_result(), 5);
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $test_run_request->get_trial_results_string(), 5);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $test_run_request->test_result_buffer->get_values_as_string(), 5);
 
 				static $xml_write_pos = 1;
 				pts_file_io::mkdir(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
@@ -497,6 +497,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 	$parse_results_xml_file = is_file(($parse_results_xml_file = pts_tests::test_resources_location($test_identifier) . "parse-results.xml")) ? $parse_results_xml_file : false;
 
+	$test_run_request->test_result_buffer = new pts_test_result_buffer();
 	$execute_binary = $test_run_request->test_profile->get_test_executable();
 	$times_to_run = $test_run_request->test_profile->get_times_to_run();
 	$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
@@ -664,7 +665,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 				}
 				else
 				{
-					$test_result = pts_test_result_parser::parse_result($test_run_request->test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
+					$test_result = pts_test_result_parser::parse_result($test_run_request, $parse_results_xml_file, $test_log_file);
 				}
 			}
 			else
@@ -676,7 +677,8 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 			if(!empty($test_result))
 			{
-				$test_run_request->add_trial_run_result($test_result);
+				// TODO: trim() shouldn't be needed?
+				$test_run_request->test_result_buffer->add_test_result(null, trim($test_result), null);
 			}
 			else
 			{
@@ -696,12 +698,12 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			// Should we increase the run count?
 			$increase_run_count = false;
 
-			if($defined_times_to_run == ($i + 1) && $test_run_request->trial_run_count() > 0 && $test_run_request->trial_run_count() < $defined_times_to_run)
+			if($defined_times_to_run == ($i + 1) && $test_run_request->test_result_buffer->get_count() > 0 && $test_run_request->test_result_buffer->get_count() < $defined_times_to_run)
 			{
 				// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
-				$increase_run_count = $defined_times_to_run - $test_run_request->trial_run_count();
+				$increase_run_count = $defined_times_to_run - $test_run_request->test_result_buffer->get_count();
 			}
-			else if($test_run_request->trial_run_count() > 2 && $test_run_manager->do_dynamic_run_count() && $times_to_run < ($defined_times_to_run * 2))
+			else if($test_run_request->test_result_buffer->get_count() > 2 && $test_run_manager->do_dynamic_run_count() && $times_to_run < ($defined_times_to_run * 2))
 			{
 				// Dynamically increase run count if told to do so by external script or standard deviation is too high
 				$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request, $test_run_time);
@@ -894,7 +896,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 	// Result Calculation
 	$test_run_request->set_used_arguments_description($arguments_description);
 	$test_run_request->set_used_arguments($extra_arguments);
-	$test_run_request->calculate_end_result(); // Process results
+	pts_test_result_parser::calculate_end_result($test_run_request); // Process results
 
 	pts_client::$display->test_run_end($test_run_request);
 

@@ -173,12 +173,13 @@ class pts_test_result_parser
 
 		return false;
 	}
-	public static function parse_result(&$test_profile, &$test_run_request, $parse_xml_file, $test_log_file)
+	public static function parse_result(&$test_run_request, $parse_xml_file, $test_log_file)
 	{
 		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$extra_arguments = $test_run_request->get_used_arguments();
-		$pts_test_arguments = $pts_test_arguments = trim($test_profile->get_default_arguments() . " " . str_replace($test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_profile->get_default_post_arguments());
-		switch($test_profile->get_result_format())
+		$pts_test_arguments = $pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . " " . str_replace($test_run_request->test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_run_request->test_profile->get_default_post_arguments());
+
+		switch($test_run_request->test_profile->get_result_format())
 		{
 			case "IMAGE_COMPARISON":
 				$test_result = self::parse_iqc_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
@@ -193,6 +194,115 @@ class pts_test_result_parser
 		}
 
 		return $test_result;
+	}
+	public function calculate_end_result(&$test_result)
+	{
+		$trial_results = $test_result->test_result_buffer->get_values();
+
+		if(count($trial_results) == 0)
+		{
+			$test_result->set_result(0);
+			return false;
+		}
+
+		$END_RESULT = 0;
+
+		switch($test_result->test_profile->get_result_format())
+		{
+			case "NO_RESULT":
+				// Nothing to do, there are no results
+				break;
+			case "LINE_GRAPH":
+			case "TEST_COUNT_PASS":
+				// Just take the first result
+				$END_RESULT = $trial_results[0];
+				break;
+			case "IMAGE_COMPARISON":
+				// Capture the image
+				$iqc_image_png = $trial_results[0];
+
+				if(is_file($iqc_image_png))
+				{
+					$img_file_64 = base64_encode(file_get_contents($iqc_image_png, FILE_BINARY));
+					$END_RESULT = $img_file_64;
+					unlink($iqc_image_png);				
+				}
+				break;
+			case "PASS_FAIL":
+			case "MULTI_PASS_FAIL":
+				// Calculate pass/fail type
+				$END_RESULT = -1;
+
+				if(count($trial_results) == 1)
+				{
+					$END_RESULT = $trial_results[0];
+				}
+				else
+				{
+					foreach($trial_results as $result)
+					{
+						if($result == "FALSE" || $result == "0" || $result == "FAIL")
+						{
+							if($END_RESULT == -1 || $END_RESULT == "PASS")
+							{
+								$END_RESULT = "FAIL";
+							}
+						}
+						else
+						{
+							if($END_RESULT == -1)
+							{
+								$END_RESULT = "PASS";
+							}
+						}
+					}
+				}
+				break;
+			case "BAR_GRAPH":
+			default:
+				// Result is of a normal numerical type
+				switch($test_result->test_profile->get_result_quantifier())
+				{
+					case "MAX":
+						$END_RESULT = max($trial_results);
+						break;
+					case "MIN":
+						$END_RESULT = min($trial_results);
+						break;
+					default:
+						// assume AVG (average)
+						$is_float = false;
+						$TOTAL_RESULT = 0;
+						$TOTAL_COUNT = 0;
+
+						foreach($trial_results as $result)
+						{
+							$result = trim($result);
+
+							if(is_numeric($result))
+							{
+								$TOTAL_RESULT += $result;
+								$TOTAL_COUNT++;
+
+								if(!$is_float && strpos($result, '.') !== false)
+								{
+									$is_float = true;
+								}
+							}
+						}
+
+						$END_RESULT = pts_math::set_precision($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), 2);
+
+						if(!$is_float)
+						{
+							$END_RESULT = round($END_RESULT);
+						}
+						break;
+				}
+				break;
+		}
+
+		$test_result->set_result($END_RESULT);
 	}
 	protected static function parse_iqc_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{

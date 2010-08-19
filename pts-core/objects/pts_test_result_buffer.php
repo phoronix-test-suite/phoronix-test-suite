@@ -40,6 +40,10 @@ class pts_test_result_buffer
 	{
 		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value));
 	}
+	public function get_count()
+	{
+		return count($this->buffer_items);
+	}
 	public function get_identifiers()
 	{
 		$identifiers = array();
@@ -61,6 +65,10 @@ class pts_test_result_buffer
 		}
 
 		return $values;
+	}
+	public function get_values_as_string()
+	{
+		return implode(':', $this->get_values());
 	}
 	public function get_raw_values()
 	{

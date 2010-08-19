@@ -308,7 +308,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		if($test_result->test_profile->get_times_to_run() > $this->expected_trial_run_count)
 		{
 			// The run count must have been dynamically increased, so show the standard deviation
-			echo " [Std. Dev: " . pts_math::set_precision(pts_math::percent_standard_deviation($test_result->get_trial_results()), 2) . "%]";
+			echo " [Std. Dev: " . pts_math::set_precision(pts_math::percent_standard_deviation($test_result->test_result_buffer->get_values()), 2) . "%]";
 		}
 	}
 	public function test_run_end(&$test_result)
@@ -327,7 +327,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		{
 			$end_print = "\n" . $this->tab . "Test Results:\n";
 
-			foreach($test_result->get_trial_results() as $result)
+			foreach($test_result->test_result_buffer->get_values() as $result)
 			{
 				$end_print .= $this->tab . $this->tab . $result . "\n";
 			}

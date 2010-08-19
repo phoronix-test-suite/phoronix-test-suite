@@ -130,7 +130,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		}
 		else
 		{
-			foreach($test_result->get_trial_results() as $result)
+			foreach($test_result->test_result_buffer->get_values() as $result)
 			{
 				$end_print .= $result . " " . $test_result->test_profile->get_result_scale() . "\n";
 			}

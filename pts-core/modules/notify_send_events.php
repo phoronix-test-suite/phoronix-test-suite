@@ -64,7 +64,7 @@ class notify_send_events extends pts_module_interface
 	}
 	public static function __interim_test_run($pts_test_result)
 	{
-		self::notify_send_message("Running " . $pts_test_result->test_profile->get_title() . "\n   (Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run() . ")");
+		self::notify_send_message("Running " . $pts_test_result->test_profile->get_title() . "\n   (Run " . ($pts_test_result->test_result_buffer->get_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run() . ")");
 	}
 }
 

@@ -54,11 +54,11 @@ class pts_test_run_manager
 	public function increase_run_count_check(&$test_results, $test_run_time)
 	{
 		// Determine if results are statistically significant, otherwise up the run count
-		$std_dev = pts_math::percent_standard_deviation($test_results->get_trial_results());
+		$std_dev = pts_math::percent_standard_deviation($test_results->test_result_buffer->get_values());
 
 		if(($ex_file = $this->dynamic_run_count_export_script) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_DIR . $this->dynamic_run_count_export_script)))
 		{
-			$exit_status = trim(shell_exec($ex_file . " " . $test_results->get_trial_results_string() . " > /dev/null 2>&1; echo $?"));
+			$exit_status = trim(shell_exec($ex_file . " " . $test_results->test_result_buffer->get_values_as_string() . " > /dev/null 2>&1; echo $?"));
 
 			switch($exit_status)
 			{

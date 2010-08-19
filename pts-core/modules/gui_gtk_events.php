@@ -116,17 +116,17 @@ class gui_gtk_events extends pts_module_interface
 	public static function __pre_test_run($pts_test_result)
 	{
 		array_shift(self::$tests_remaining_to_run);
-		self::$progress_window->update_progress_bar(0, "<b>" . $pts_test_result->test_profile->get_title() . "</b>" . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(0, "<b>" . $pts_test_result->test_profile->get_title() . "</b>" . ", Run " . ($pts_test_result->test_result_buffer->get_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __interim_test_run($pts_test_result)
 	{
-		self::$progress_window->update_progress_bar(($pts_test_result->trial_run_count() / $pts_test_result->test_profile->get_times_to_run()) * 100, "<b>" . $pts_test_result->test_profile->get_title() . "</b>" . ", Run " . ($pts_test_result->trial_run_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run(), ((self::$test_run_pos + ($pts_test_result->trial_run_count() / $pts_test_result->test_profile->get_times_to_run())) / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(($pts_test_result->test_result_buffer->get_count() / $pts_test_result->test_profile->get_times_to_run()) * 100, "<b>" . $pts_test_result->test_profile->get_title() . "</b>" . ", Run " . ($pts_test_result->test_result_buffer->get_count() + 1) . " of " . $pts_test_result->test_profile->get_times_to_run(), ((self::$test_run_pos + ($pts_test_result->test_result_buffer->get_count() / $pts_test_result->test_profile->get_times_to_run())) / self::$test_run_count) * 100, self::test_run_position(1) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __post_test_run($pts_test_result)
 	{
 		self::$test_run_pos++;
 		self::run_time_remaining($pts_test_result);
-		self::$progress_window->update_progress_bar(100, "<b>" . $pts_test_result->test_profile->get_title() . ":</b>" . " Run " . $pts_test_result->trial_run_count() . " of " . $pts_test_result->test_profile->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(0) . self::run_time_remaining($pts_test_result));
+		self::$progress_window->update_progress_bar(100, "<b>" . $pts_test_result->test_profile->get_title() . ":</b>" . " Run " . $pts_test_result->test_result_buffer->get_count() . " of " . $pts_test_result->test_profile->get_times_to_run(), (self::$test_run_pos / self::$test_run_count) * 100, self::test_run_position(0) . self::run_time_remaining($pts_test_result));
 	}
 	public static function __post_run_process()
 	{
@@ -153,7 +153,7 @@ class gui_gtk_events extends pts_module_interface
 
 			if($estimated_length > 1)
 			{
-				$remaining_length += $estimated_length * (($test_result->test_profile->get_times_to_run() - $test_result->trial_run_count()) / $test_result->test_profile->get_times_to_run());
+				$remaining_length += $estimated_length * (($test_result->test_profile->get_times_to_run() - $test_result->test_result_buffer->get_count()) / $test_result->test_profile->get_times_to_run());
 			}
 
 			if($remaining_length > 0)
