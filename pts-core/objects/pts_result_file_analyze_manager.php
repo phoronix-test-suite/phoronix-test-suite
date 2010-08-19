@@ -48,7 +48,7 @@ class pts_result_file_analyze_manager
 		for($i = 0; $i < count($attributes); $i++)
 		{
 			$temp = pts_strings::colon_explode($attributes[$i]);
-			$attributes_clean[$temp[0]] = $temp[1];
+			$attributes_clean[$temp[0]] = isset($temp[1]) ? $temp[1] : null;
 		}
 
 		if(!isset($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_version()]))

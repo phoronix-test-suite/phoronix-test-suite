@@ -242,13 +242,13 @@ function pts_validate_test_installations_to_run(&$test_run_manager)
 
 	foreach($test_run_manager->get_tests_to_run() as $test_run_request)
 	{
-		if(!($test_run_request instanceOf pts_test_run_request))
+		if(!($test_run_request instanceOf pts_test_result))
 		{
 			array_push($validated_run_requests, $test_run_request);
 			continue;
 		}
 
-		// Validate the pts_test_run_request
+		// Validate the empty pts_test_result
 		$test_identifier = $test_run_request->test_profile->get_identifier();
 
 		if(in_array($test_identifier, $failed_tests))
@@ -264,8 +264,7 @@ function pts_validate_test_installations_to_run(&$test_run_manager)
 			continue;
 		}
 
-		$test_profile = new pts_test_profile($test_identifier, $test_run_request->get_override_options());
-		$test_type = $test_profile->get_test_hardware_type();
+		$test_type = $test_run_request->test_profile->get_test_hardware_type();
 
 		if($test_type == "Graphics")
 		{
@@ -290,21 +289,21 @@ function pts_validate_test_installations_to_run(&$test_run_manager)
 			continue;
 		}
 
-		if($test_profile->is_root_required() && pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
+		if($test_run_request->test_profile->is_root_required() && pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
 		{
 			pts_client::$display->test_run_error("Cannot run " . $test_identifier . " in batch mode as root access is required.");
 			array_push($failed_tests, $test_identifier);
 			continue;
 		}
 
-		if(pts_find_test_executable_dir($test_identifier, $test_profile) == null)
+		if(pts_find_test_executable_dir($test_identifier, $test_run_request->test_profile) == null)
 		{
 			pts_client::$display->test_run_error("The test executable for " . $test_identifier . " could not be found.");
 			array_push($failed_tests, $test_identifier);
 			continue;
 		}
 
-		if($allow_global_uploads && !$test_profile->allow_global_uploads())
+		if($allow_global_uploads && $test_run_request->test_profile->allow_global_uploads() == false)
 		{
 			// One of the contained test profiles does not allow Global uploads, so block it
 			$allow_global_uploads = false;
@@ -341,7 +340,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 			sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 		}
 
-		$result = pts_run_test($test_run_manager, $test_run_request);
+		pts_run_test($test_run_manager, $test_run_request);
 
 		if(pts_file_io::unlink(PTS_USER_DIR . "halt-testing"))
 		{
@@ -357,11 +356,17 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 
 	$test_successful = false;
 
-	if($result instanceof pts_test_result)
-	{
-		$end_result = $result->get_result();
 
-		if(count($result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
+	if($test_run_request->test_profile->get_result_format() == "NO_RESULT")
+	{
+		$test_successful = true;
+	}
+	else if($test_run_request instanceof pts_test_result)
+	{
+		$end_result = $test_run_request->get_result();
+
+		// removed count($result) > 0 in the move to pts_test_result
+		if(count($test_run_request) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
 		{
 			$test_identifier = $test_run_manager->get_results_identifier();
 			$test_successful = true;
@@ -371,18 +376,18 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 				$tandem_id = $tandem_xml->request_unique_id();
 				pts_set_assignment("TEST_RAN", true);
 
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result->test_profile->get_title());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result->test_profile->get_version());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result->test_profile->get_test_profile_version());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result->get_used_arguments_description());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result->test_profile->get_result_scale());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result->test_profile->get_result_proportion());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result->test_profile->get_result_format());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result->test_profile->get_identifier());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result->get_used_arguments());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $test_run_request->test_profile->get_title());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $test_run_request->test_profile->get_version());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $test_run_request->test_profile->get_test_profile_version());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $test_run_request->get_used_arguments_description());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $test_run_request->test_profile->get_result_scale());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $test_run_request->test_profile->get_result_proportion());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $test_run_request->test_profile->get_result_format());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $test_run_request->test_profile->get_identifier());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $test_run_request->get_used_arguments());
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $test_identifier, 5);
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result->get_result(), 5);
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result->get_trial_results_string(), 5);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_run_request->get_result(), 5);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $test_run_request->get_trial_results_string(), 5);
 
 				static $xml_write_pos = 1;
 				pts_file_io::mkdir(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
@@ -403,10 +408,6 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 		}
 
 		pts_file_io::unlink(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/");
-	}
-	else if($result === true)
-	{
-		$test_successful = true;
 	}
 
 	if($test_successful == false && $test_run_request->test_profile->get_identifier() != null)
@@ -476,8 +477,8 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 function pts_run_test(&$test_run_manager, &$test_run_request)
 {
 	$test_identifier = $test_run_request->test_profile->get_identifier();
-	$extra_arguments = $test_run_request->get_arguments();
-	$arguments_description = $test_run_request->get_arguments_description();
+	$extra_arguments = $test_run_request->get_used_arguments();
+	$arguments_description = $test_run_request->get_used_arguments_description();
 
 	// Do the actual test running process
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";
@@ -495,18 +496,17 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 	}
 
 	$parse_results_xml_file = is_file(($parse_results_xml_file = pts_tests::test_resources_location($test_identifier) . "parse-results.xml")) ? $parse_results_xml_file : false;
-	$test_profile = new pts_test_profile($test_identifier, $test_run_request->get_override_options());
-	$test_results = new pts_test_result($test_profile);
-	$execute_binary = $test_profile->get_test_executable();
-	$times_to_run = $test_profile->get_times_to_run();
-	$ignore_runs = $test_profile->get_runs_to_ignore();
-	$result_format = $test_profile->get_result_format();
-	$test_type = $test_profile->get_test_hardware_type();
-	$allow_cache_share = $test_profile->allow_cache_share();
-	$min_length = $test_profile->get_min_length();
-	$max_length = $test_profile->get_max_length();
 
-	if($test_profile->get_environment_testing_size() != -1 && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $test_profile->get_environment_testing_size())
+	$execute_binary = $test_run_request->test_profile->get_test_executable();
+	$times_to_run = $test_run_request->test_profile->get_times_to_run();
+	$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
+	$result_format = $test_run_request->test_profile->get_result_format();
+	$test_type = $test_run_request->test_profile->get_test_hardware_type();
+	$allow_cache_share = $test_run_request->test_profile->allow_cache_share();
+	$min_length = $test_run_request->test_profile->get_min_length();
+	$max_length = $test_run_request->test_profile->get_max_length();
+
+	if($test_run_request->test_profile->get_environment_testing_size() != -1 && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $test_run_request->test_profile->get_environment_testing_size())
 	{
 		// Ensure enough space is available on disk during testing process
 		pts_client::$display->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run.");
@@ -530,31 +530,31 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 		$times_to_run = 1;
 	}
 
-	$to_execute = pts_find_test_executable_dir($test_identifier, $test_profile);
+	$to_execute = pts_find_test_executable_dir($test_identifier, $test_run_request->test_profile);
 
-	$pts_test_arguments = trim($test_profile->get_default_arguments() . " " . str_replace($test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_profile->get_default_post_arguments());
+	$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . " " . str_replace($test_run_request->test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_run_request->test_profile->get_default_post_arguments());
 	$extra_runtime_variables = pts_extra_run_time_vars($test_identifier, $pts_test_arguments, $result_format);
 
 	// Start
 	$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
 	$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
-	$test_results->test_profile->set_times_to_run($times_to_run);
-	$test_results->set_used_arguments_description($arguments_description);
-	pts_module_manager::module_process("__pre_test_run", $test_results);
+	$test_run_request->test_profile->set_times_to_run($times_to_run);
+	$test_run_request->set_used_arguments_description($arguments_description);
+	pts_module_manager::module_process("__pre_test_run", $test_run_request);
 
 	$time_test_start = time();
-	pts_client::$display->test_run_start($test_run_manager, $test_results);
+	pts_client::$display->test_run_start($test_run_manager, $test_run_request);
 
 	if(!$cache_share_present)
 	{
 		pts_tests::call_test_script($test_identifier, "pre", "Running Pre-Test Script", $test_directory, $extra_runtime_variables, true);
 	}
 
-	pts_user_io::display_interrupt_message($test_profile->get_pre_run_message());
+	pts_user_io::display_interrupt_message($test_run_request->test_profile->get_pre_run_message());
 	$runtime_identifier = time();
 	$execute_binary_prepend = "";
 
-	if(!$cache_share_present && $test_profile->is_root_required())
+	if(!$cache_share_present && $test_run_request->test_profile->is_root_required())
 	{
 		$execute_binary_prepend = TEST_LIBRARIES_DIR . "root-access.sh ";
 	}
@@ -577,7 +577,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 	for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 	{
-		pts_client::$display->test_run_instance_header($test_results, ($i + 1), $times_to_run);
+		pts_client::$display->test_run_instance_header($test_run_request, ($i + 1), $times_to_run);
 		$test_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
 
 		$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
@@ -608,7 +608,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 			if($parse_results_xml_file)
 			{
-				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_profile, $parse_results_xml_file, $test_directory);
+				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request->test_profile, $parse_results_xml_file, $test_directory);
 			}
 			$test_run_time_start = time();
 
@@ -624,7 +624,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			}
 
 			$test_run_time = time() - $test_run_time_start;
-			$monitor_result = $parse_results_xml_file && $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_profile, $parse_results_xml_file, $test_directory) : 0;
+			$monitor_result = $parse_results_xml_file && $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request->test_profile, $parse_results_xml_file, $test_directory) : 0;
 		}
 		
 
@@ -664,7 +664,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 				}
 				else
 				{
-					$test_result = pts_test_result_parser::parse_result($test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
+					$test_result = pts_test_result_parser::parse_result($test_run_request->test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
 				}
 			}
 			else
@@ -676,7 +676,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 			if(!empty($test_result))
 			{
-				$test_results->add_trial_run_result($test_result);
+				$test_run_request->add_trial_run_result($test_result);
 			}
 			else
 			{
@@ -696,15 +696,15 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			// Should we increase the run count?
 			$increase_run_count = false;
 
-			if($defined_times_to_run == ($i + 1) && $test_results->trial_run_count() > 0 && $test_results->trial_run_count() < $defined_times_to_run)
+			if($defined_times_to_run == ($i + 1) && $test_run_request->trial_run_count() > 0 && $test_run_request->trial_run_count() < $defined_times_to_run)
 			{
 				// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
-				$increase_run_count = $defined_times_to_run - $test_results->trial_run_count();
+				$increase_run_count = $defined_times_to_run - $test_run_request->trial_run_count();
 			}
-			else if($test_results->trial_run_count() > 2 && $test_run_manager->do_dynamic_run_count() && $times_to_run < ($defined_times_to_run * 2))
+			else if($test_run_request->trial_run_count() > 2 && $test_run_manager->do_dynamic_run_count() && $times_to_run < ($defined_times_to_run * 2))
 			{
 				// Dynamically increase run count if told to do so by external script or standard deviation is too high
-				$increase_run_count = $test_run_manager->increase_run_count_check($test_results, $test_run_time);
+				$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request, $test_run_time);
 
 				if($increase_run_count === -1)
 				{
@@ -720,7 +720,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			if($increase_run_count > 0)
 			{
 				$times_to_run += $increase_run_count;
-				$test_results->test_profile->set_times_to_run($times_to_run);
+				$test_run_request->test_profile->set_times_to_run($times_to_run);
 			}
 		}
 
@@ -732,7 +732,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 				sleep(2); // Rest for a moment between tests
 			}
 
-			pts_module_manager::module_process("__interim_test_run", $test_results);
+			pts_module_manager::module_process("__interim_test_run", $test_run_request);
 		}
 
 		if(is_file($test_log_file))
@@ -754,7 +754,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			return false;
 		}
 
-		pts_client::$display->test_run_instance_complete($test_results);
+		pts_client::$display->test_run_instance_complete($test_run_request);
 	}
 
 	$time_test_end_actual = time();
@@ -821,7 +821,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 	if(empty($arguments_description))
 	{
-		$arguments_description = $test_profile->get_test_subtitle();
+		$arguments_description = $test_run_request->test_profile->get_test_subtitle();
 	}
 
 	$file_var_checks = array(
@@ -845,12 +845,12 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			{
 				if($set_function != null)
 				{
-					eval("\$test_results->test_profile->" . $set_function . "->(\$file_contents);");
+					eval("\$test_run_request->test_profile->" . $set_function . "->(\$file_contents);");
 				}
 				else if($result_set_function != null)
 				{
-					call_user_func(array($test_results, $set_function), $file_contents);
-					//eval("\$test_results->" . $set_function . "->(\$file_contents);");
+					call_user_func(array($test_run_request, $set_function), $file_contents);
+					//eval("\$test_run_request->" . $set_function . "->(\$file_contents);");
 				}
 			}
 		}
@@ -892,27 +892,25 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 	}
 
 	// Result Calculation
-	$test_results->set_used_arguments_description($arguments_description);
-	$test_results->set_used_arguments($extra_arguments);
-	$test_results->calculate_end_result(); // Process results
+	$test_run_request->set_used_arguments_description($arguments_description);
+	$test_run_request->set_used_arguments($extra_arguments);
+	$test_run_request->calculate_end_result(); // Process results
 
-	pts_client::$display->test_run_end($test_results);
+	pts_client::$display->test_run_end($test_run_request);
 
-	pts_user_io::display_interrupt_message($test_profile->get_post_run_message());
-	pts_module_manager::module_process("__post_test_run", $test_results);
-	$report_elapsed_time = !$cache_share_present && $test_results->get_result() != 0;
+	pts_user_io::display_interrupt_message($test_run_request->test_profile->get_post_run_message());
+	pts_module_manager::module_process("__post_test_run", $test_run_request);
+	$report_elapsed_time = !$cache_share_present && $test_run_request->get_result() != 0;
 	pts_tests::update_test_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
 	pts_storage_object::add_in_file(PTS_CORE_STORAGE, "total_testing_time", ($time_test_elapsed / 60));
 
 	if($report_elapsed_time && pts_client::do_anonymous_usage_reporting() && $time_test_elapsed >= 60)
 	{
-		pts_global::upload_usage_data("test_complete", array($test_results, $time_test_elapsed));
+		pts_global::upload_usage_data("test_complete", array($test_run_request, $time_test_elapsed));
 	}
 
 	// Remove lock
 	pts_client::release_lock($lock_file);
-
-	return $result_format == "NO_RESULT" ? true : $test_results;
 }
 function pts_test_profile_debug_message($message)
 {

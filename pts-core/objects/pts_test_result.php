@@ -23,6 +23,7 @@
 class pts_test_result
 {
 	// Note in most pts-core code the initialized var is called $result_object
+	// Note in pts-core code the initialized var is also called $test_run_request
 	private $result;
 	private $trial_results;
 	private $attributes;
@@ -200,13 +201,17 @@ class pts_test_result
 	}
 	public function get_scale_formatted()
 	{
-		return trim(pts_strings::first_in_string($this-test_profile->get_result_scale(), '|'));
+		return trim(pts_strings::first_in_string($this->test_profile->get_result_scale(), '|'));
 	}
 	public function get_scale_special()
 	{
 		$scale_parts = explode('|', $this->test_profile->get_result_scale());
 
 		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
+	}
+	public function __toString()
+	{
+		return $this->test_profile->get_identifier() . " " . $this->get_used_arguments() . " " . $this->get_used_arguments_description() . " " . $this->test_profile->get_override_options();
 	}
 }
 

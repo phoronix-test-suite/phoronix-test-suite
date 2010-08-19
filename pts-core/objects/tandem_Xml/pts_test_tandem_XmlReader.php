@@ -47,6 +47,10 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 			$this->overrideXMLValue($xml_tag, $value);
 		}
 	}
+	public function getOverrideValues()
+	{
+		return $this->override_values;
+	}
 	public function overrideXMLValue($xml_tag, $value)
 	{
 		$this->override_values[$xml_tag] = $value;

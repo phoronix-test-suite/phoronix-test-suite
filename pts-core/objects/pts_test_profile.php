@@ -35,6 +35,10 @@ class pts_test_profile
 			$this->xml_parser->overrideXMLValues($override_values);
 		}
 	}
+	public function get_override_values()
+	{
+		return $this->xml_parser->getOverrideValues();
+	}
 	public function get_identifier()
 	{
 		return $this->identifier;

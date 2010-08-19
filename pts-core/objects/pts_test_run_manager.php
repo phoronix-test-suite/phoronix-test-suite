@@ -84,7 +84,13 @@ class pts_test_run_manager
 	}
 	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "", $override_test_options = null)
 	{
-		pts_arrays::unique_push($this->tests_to_run, new pts_test_run_request($test_identifier, $arguments, $descriptions, $override_test_options));
+		$test_profile = new pts_test_profile($test_identifier, $override_test_options);
+
+		$test_result = new pts_test_result($test_profile);
+		$test_result->set_used_arguments($arguments);
+		$test_result->set_used_arguments_description($descriptions);
+
+		pts_arrays::unique_push($this->tests_to_run, $test_result);
 	}
 	public function add_single_test_run($test_identifier, $arguments, $descriptions, $override_test_options = null)
 	{
@@ -238,7 +244,7 @@ class pts_test_run_manager
 	}
 	public function add_failed_test_run_request($test_run_request)
 	{
-		if($test_run_request instanceOf pts_test_run_request)
+		if($test_run_request instanceOf pts_test_result)
 		{
 			array_push($this->failed_tests_to_run, $test_run_request);
 		}
@@ -335,7 +341,7 @@ class pts_test_run_manager
 
 			foreach($this->tests_to_run as &$run_request)
 			{
-				if($run_request instanceOf pts_test_run_request && in_array($run_request->get_comparison_hash(), $result_objects))
+				if($run_request instanceOf pts_test_result && in_array($run_request->get_comparison_hash(), $result_objects))
 				{
 					$no_repeated_tests = false;
 					break;

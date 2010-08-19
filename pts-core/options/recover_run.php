@@ -92,15 +92,15 @@ class recover_run implements pts_option_interface
 
 		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
 		{
-			if(!($test_run_request instanceOf pts_test_run_request))
+			if(!($test_run_request instanceOf pts_test_result))
 			{
 				continue;
 			}
 
-			$request_hash = $test_run_request->get_comparison_hash();
+			$request_hash = $test_run_request->get_comparison_hash(false);
 			$add_test = false;
 
-			if(($search_key = array_search($test_run_request->get_comparison_hash(), $result_file_hashes)) !== false)
+			if(($search_key = array_search($test_run_request->get_comparison_hash(false), $result_file_hashes)) !== false)
 			{
 				if(!in_array($recovered_identifier, $result_file_objects[$search_key]->test_result_buffer->get_identifiers()))
 				{
@@ -117,7 +117,7 @@ class recover_run implements pts_option_interface
 				if($test_to_run_is_empty)
 				{
 					$test_to_run_is_empty = false;
-							pts_client::$display->generic_heading("Last Test Run: " . $test_run_request->test_profile->get_identifier() . "\nLast Test Parameters: " . $test_run_request->get_arguments_description());
+							pts_client::$display->generic_heading("Last Test Run: " . $test_run_request->test_profile->get_identifier() . "\nLast Test Parameters: " . $test_run_request->get_used_arguments());
 					$skip_this = pts_user_io::prompt_bool_input("Would you like to skip running this test? Enter N to re-try", true);
 
 					if($skip_this)
