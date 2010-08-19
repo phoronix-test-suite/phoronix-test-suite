@@ -62,12 +62,6 @@ class pts_module_manager
 	public static function module_process($process, &$object_pass = null, $select_modules = false)
 	{
 		// Run a module process on all registered modules
-		if(defined("PTS_EXIT"))
-		{
-			// don't do __shutdown if PTS_EXIT is set
-			return;
-		}
-
 		foreach(pts_module_manager::attached_modules($process, $select_modules) as $module)
 		{
 			pts_module_manager::set_current_module($module);

@@ -468,8 +468,6 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 	$vars["LANG"] = "";
 	$vars["PTS_TEST_ARGUMENTS"] = "'" . $pts_test_arguments . "'";
 	$vars["TEST_LIBRARIES_DIR"] = TEST_LIBRARIES_DIR;
-	$vars["TIMER_START"] = TEST_LIBRARIES_DIR . "timer-start.sh";
-	$vars["TIMER_STOP"] = TEST_LIBRARIES_DIR . "timer-stop.sh";
 	$vars["TIMED_KILL"] = TEST_LIBRARIES_DIR . "timed-kill.sh";
 	$vars["PHP_BIN"] = PHP_BIN;
 
@@ -658,17 +656,6 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 		if(!in_array(($i + 1), $ignore_runs) && $exit_status_pass)
 		{
-			if(is_file(TEST_ENV_DIR . $test_identifier . "/pts-timer"))
-			{
-				$run_time = pts_file_io::file_get_contents(TEST_ENV_DIR . $test_identifier . "/pts-timer");
-				unlink(TEST_ENV_DIR . $test_identifier . "/pts-timer");
-
-			}
-			else
-			{
-				$run_time = 0;
-			}
-
 			if($parse_results_xml_file)
 			{
 				if($monitor_result != 0)
@@ -683,14 +670,6 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			else
 			{
 				$test_result = null;
-			}
-
-			if(empty($test_result))
-			{
-				if($run_time > 1)
-				{
-					$test_result = $run_time;
-				}
 			}
 
 			pts_test_profile_debug_message("Test Result Value: " . $test_result);

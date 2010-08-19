@@ -15,7 +15,5 @@ rm -rf gnupg_/share/
 echo pts-1234567890 > passphrase
 
 echo "#!/bin/sh
-\$TIMER_START
-./gnupg_/bin/gpg -c --no-options --passphrase-file passphrase -o /dev/null encryptfile 2>&1
-\$TIMER_STOP" > gnupg
+./gnupg_/bin/gpg -c --no-options --passphrase-file passphrase -o /dev/null encryptfile 2>&1" > gnupg
 chmod +x gnupg

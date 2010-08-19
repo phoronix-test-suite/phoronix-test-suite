@@ -27,9 +27,6 @@ cd ..
 rm -rf nero2d-2.0.2/
 
 echo "#!/bin/sh
-\$TIMER_START
 ./nero2d_/bin/nero2d \$@ > \$LOG_FILE 2>&1
-echo \$? > ~/test-exit-status
-\$TIMER_STOP
-rm -f *.bdf" > nero2d
+echo \$? > ~/test-exit-status" > nero2d
 chmod +x nero2d

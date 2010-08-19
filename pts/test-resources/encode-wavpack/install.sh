@@ -12,8 +12,6 @@ cd ..
 rm -rf wavpack-4.41.0/
 
 echo "#!/bin/sh
-\$TIMER_START
 ./wavpack_/bin/wavpack -q -r -hhx2 -o - \$TEST_EXTENDS/pts-trondheim.wav > /dev/null 2>&1
-echo \$? > ~/test-exit-status
-\$TIMER_STOP" > encode-wavpack
+echo \$? > ~/test-exit-status" > encode-wavpack
 chmod +x encode-wavpack

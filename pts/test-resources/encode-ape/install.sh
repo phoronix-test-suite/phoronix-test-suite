@@ -12,7 +12,5 @@ cd ..
 rm -rf mac-3.99-u4-b5-s6/
 
 echo "#!/bin/sh
-\$TIMER_START
-./ape_/bin/mac \$TEST_EXTENDS/pts-trondheim.wav /dev/null -c4000 > \$LOG_FILE 2>&1
-\$TIMER_STOP" > encode-ape
+./ape_/bin/mac \$TEST_EXTENDS/pts-trondheim.wav /dev/null -c4000 > \$LOG_FILE 2>&1" > encode-ape
 chmod +x encode-ape

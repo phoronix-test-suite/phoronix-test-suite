@@ -33,8 +33,6 @@ cd ..
 
 echo "#!/bin/sh
 cd bwfirt/
-\$TIMER_START
-./bin/bwfirt -s scenes/ulmBox.scene -t \$NUM_CPU_CORES -c scenes/ulmBox.cam -b -p 196 --kernel funky-kd -x 800 -y 600 > \$LOG_FILE 2>&1
-echo \$? > ~/test-exit-status
-\$TIMER_STOP" > bwfirt-benchmark
+./bin/bwfirt -s scenes/ulmBox.scene -t \$NUM_CPU_CORES -c scenes/ulmBox.cam -b -p 196 --kernel funky-kd -x 800 -y 600
+echo \$? > ~/test-exit-status" > bwfirt-benchmark
 chmod +x bwfirt-benchmark

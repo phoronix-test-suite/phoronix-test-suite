@@ -26,8 +26,6 @@ rm -rf flac-1.2.1/
 rm -rf flac_/share/
 
 echo "#!/bin/sh
-\$TIMER_START
 ./flac_/bin/flac -s --best --totally-silent \$TEST_EXTENDS/pts-trondheim.wav -f -o /dev/null 2>&1
-echo \$? > ~/test-exit-status
-\$TIMER_STOP" > flac
+echo \$? > ~/test-exit-status" > flac
 chmod +x flac

@@ -8,7 +8,5 @@ cd ..
 
 echo "#!/bin/sh
 cd trislam/
-\$TIMER_START
-./trislam 2>&1
-\$TIMER_STOP" > trislam-run
+./trislam 2>&1" > trislam-run
 chmod +x trislam-run

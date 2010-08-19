@@ -493,12 +493,9 @@ class pts_client
 	}
 	public static function process_shutdown_tasks()
 	{
-		// Generate Phodevi Smart Cache
-		if(defined("PTS_EXIT"))
-		{
-			return 1;
-		}
+		// TODO: possibly do something like posix_getpid() != pts_client::$startup_pid in case shutdown function is called from a child process
 
+		// Generate Phodevi Smart Cache
 		if(pts_client::read_env("NO_PHODEVI_CACHE") != 1)
 		{
 			if(pts_config::read_bool_config(P_OPTION_PHODEVI_CACHE, "TRUE"))

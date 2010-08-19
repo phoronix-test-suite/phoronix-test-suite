@@ -8,8 +8,5 @@ cd ..
 
 echo "#!/bin/sh
 cd fio/
-\$TIMER_START
-./fio \$@ 2>&1
-\$TIMER_STOP
-rm -f iometer.1.0" > fio-run
+./fio \$@ 2>&1" > fio-run
 chmod +x fio-run

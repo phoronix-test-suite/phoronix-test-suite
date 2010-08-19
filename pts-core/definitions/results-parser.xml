@@ -90,7 +90,7 @@
 		<Define>
 			<Name>P_RESULTS_PARSER_MONITOR_SENSOR</Name>
 			<Value>PhoronixTestSuite/SystemMonitor/Sensor</Value>
-			<Description>If the test profile is to monitor any system sensors during the testing process, the name of the sensor (via the Phodevi name; i.e. cpu.usage) should be supplied.</Description>
+			<Description>If the test profile is to monitor any system sensors during the testing process, the name of the sensor (via the Phodevi name; i.e. cpu.usage) should be supplied. While not a Phodevi sensor, if passing sys.time as the sensor value, the time it takes to execute the test will be recorded.</Description>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_PARSER_MONITOR_FREQUENCY</Name>

@@ -56,6 +56,14 @@ class pts_test_result_parser
 			// TODO: Right now we are looping through SystemMonitor tags, but right now pts-core only supports providing one monitor sensor as the result
 			$sensor = explode('.', $monitor_sensor[$i]);
 
+			if($sensor == array("sys", "time"))
+			{
+				// sys.time is a special case since we are just timing the test length and thus don't need to fork the thread
+				$start_time = microtime(true);
+				array_push(self::$monitoring_sensors, array(0, $sensor, null, $start_time));
+				continue;
+			}
+
 			if(count($sensor) != 2 || !in_array($sensor, self::$supported_sensors))
 			{
 				// Not a sensor or it's not supported
@@ -98,7 +106,6 @@ class pts_test_result_parser
 						usleep($monitor_frequency[$i]);
 					}
 
-					define("PTS_EXIT", 1);
 					exit(0);
 				}
 			}		
@@ -110,38 +117,56 @@ class pts_test_result_parser
 	{
 		foreach(self::$monitoring_sensors as $sensor_r)
 		{
-			// Kill the sensor monitoring thread
-			posix_kill($sensor_r[0], SIGTERM);
-
-			$sensor_values = explode("\n", pts_file_io::file_get_contents($sensor_r[3]));
-			pts_file_io::unlink($sensor_r[3]);
-
-			if(count($sensor_values) == 0)
+			if($sensor_r[1] == array("sys", "time"))
 			{
-				continue;
-			}
+				// sys.time is a special case
+				$end_time = microtime(true);
 
-			switch($sensor_r[2])
-			{
-				case "MAX":
-					$result_value = max($sensor_values);
-					break;
-				case "MIN":
-					$result_value = min($sensor_values);
-					break;
-				case "AVG":
-					$result_value = array_sum($sensor_values) / count($sensor_values);
-					break;
-				case "ALL":
-					$result_value = implode(',', $sensor_values);
-					break;
-				default:
+				// Delta time
+				$result_value = $end_time - $sensor_r[3];
+
+				if($result_value < 3)
+				{
+					// The test ended too fast
 					$result_value = null;
-					break;
+				}
+			}
+			else
+			{
+				// Kill the sensor monitoring thread
+				posix_kill($sensor_r[0], SIGTERM);
+
+				$sensor_values = explode("\n", pts_file_io::file_get_contents($sensor_r[3]));
+				pts_file_io::unlink($sensor_r[3]);
+
+				if(count($sensor_values) == 0)
+				{
+					continue;
+				}
+
+				switch($sensor_r[2])
+				{
+					case "MAX":
+						$result_value = max($sensor_values);
+						break;
+					case "MIN":
+						$result_value = min($sensor_values);
+						break;
+					case "AVG":
+						$result_value = array_sum($sensor_values) / count($sensor_values);
+						break;
+					case "ALL":
+						$result_value = implode(',', $sensor_values);
+						break;
+					default:
+						$result_value = null;
+						break;
+				}
 			}
 
 			if($result_value != null)
 			{
+				// For now it's only possible to return one result per test
 				return $result_value;
 			}
 		}

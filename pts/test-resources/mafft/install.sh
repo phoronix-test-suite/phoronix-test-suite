@@ -28,9 +28,7 @@ chmod +x align
 
 cat>mafft<<EOT
 #!/bin/sh
-\$TIMER_START
 ./align 2>&1
 echo \$? > ~/test-exit-status
-\$TIMER_STOP
 EOT
 chmod +x mafft

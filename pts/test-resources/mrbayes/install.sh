@@ -45,9 +45,7 @@ chmod +x mb
 
 cat>mrbayes<<EOT
 #!/bin/sh
-\$TIMER_START
 ./mb 2>&1
-\$TIMER_STOP
 EOT
 chmod +x mrbayes
 

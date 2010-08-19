@@ -16,8 +16,6 @@ cd ..
 cat > compress-pbzip2 <<EOT
 #!/bin/sh
 cd pbzip2-1.0.5/
-\$TIMER_START
 ./pbzip2 -c -p\$NUM_CPU_CORES -r -5 ../compressfile > /dev/null 2>&1
-\$TIMER_STOP
 EOT
 chmod +x compress-pbzip2

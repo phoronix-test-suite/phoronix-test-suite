@@ -29,8 +29,6 @@ cd ..
 rm -rf vorbis-tools-1.2.0/
 
 echo "#!/bin/sh
-\$TIMER_START
 ./vorbis/bin/oggenc \$TEST_EXTENDS/pts-trondheim.wav -q 10 -o /dev/null > \$LOG_FILE 2>&1
-echo \$? > ~/test-exit-status
-\$TIMER_STOP" > oggenc
+echo \$? > ~/test-exit-status" > oggenc
 chmod +x oggenc

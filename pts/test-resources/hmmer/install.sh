@@ -23,10 +23,8 @@ chmod +x hmmpfam
 
 cat>hmmer<<EOT
 #!/bin/sh
-\$TIMER_START
 ./hmmpfam 2>&1
 echo \$? > ~/test-exit-status
-\$TIMER_STOP
 EOT
 chmod +x hmmer
 

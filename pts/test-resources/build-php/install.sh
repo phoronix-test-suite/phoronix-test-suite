@@ -13,14 +13,7 @@ rm -rf libxml2-2.6.31/
 rm -rf libxml2/share/
 
 echo "#!/bin/sh
-
-rm -rf php-5.2.9/
-tar -xjf php-5.2.9.tar.bz2
 cd php-5.2.9/
-./configure --with-libxml-dir=\$HOME/libxml2 > /dev/null
-sleep 3
-\$TIMER_START
-make -s -j \$NUM_CPU_JOBS 2>&1
-\$TIMER_STOP" > time-compile-php
+make -s -j \$NUM_CPU_JOBS 2>&1" > time-compile-php
 
 chmod +x time-compile-php

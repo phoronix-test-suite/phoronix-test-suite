@@ -41,7 +41,5 @@ cp yafray_/etc/gram.yafray .
 
 echo "#!/bin/sh
 export LD_LIBRARY_PATH=\"$HOME/yafray_/lib/:\$LD_LIBRARY_PATH\"
-\$TIMER_START
-./yafray_/bin/yafray -c \$NUM_CPU_CORES YBtest.xml 2>&1
-\$TIMER_STOP" > yafray-run
+./yafray_/bin/yafray -c \$NUM_CPU_CORES YBtest.xml 2>&1" > yafray-run
 chmod +x yafray-run

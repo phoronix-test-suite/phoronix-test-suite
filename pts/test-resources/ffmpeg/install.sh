@@ -14,8 +14,6 @@ rm -rf ffmpeg_/lib/
 
 echo "#!/bin/sh
 
-\$TIMER_START
 ./ffmpeg_/bin/ffmpeg -i \$TEST_EXTENDS/pts-trondheim.avi -threads \$NUM_CPU_CORES -y -target ntsc-vcd /dev/null 2>&1
-echo \$? > ~/test-exit-status
-\$TIMER_STOP" > ffmpeg
+echo \$? > ~/test-exit-status" > ffmpeg
 chmod +x ffmpeg
