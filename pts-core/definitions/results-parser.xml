@@ -87,5 +87,20 @@
 			<Value>PhoronixTestSuite/ResultsParser/ImageHeight</Value>
 			<Description>If the test profile is for an image quality comparison, the ImageHeight should be the produced image height.</Description>
 		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_MONITOR_SENSOR</Name>
+			<Value>PhoronixTestSuite/SystemMonitor/Sensor</Value>
+			<Description>If the test profile is to monitor any system sensors during the testing process, the name of the sensor (via the Phodevi name; i.e. cpu.usage) should be supplied.</Description>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_MONITOR_FREQUENCY</Name>
+			<Value>PhoronixTestSuite/SystemMonitor/PollingFrequency</Value>
+			<Description>If the test profile is to monitor any system sensors during the testing process, how often the matched sensor is to be polled (in seconds) should be supplied. Floating values are supported.</Description>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_PARSER_MONITOR_REPORT</Name>
+			<Value>PhoronixTestSuite/SystemMonitor/Report</Value>
+			<Description>If the test profile is to monitor any system sensors during the testing process, this tag provides how the monitored results should be reported. Supported values include MAX, MIN, AVG, and ALL.</Description>
+		</Define>
 	</Definitions>
 </PhoronixTestSuite>

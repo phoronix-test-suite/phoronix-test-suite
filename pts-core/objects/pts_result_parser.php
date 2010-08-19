@@ -22,6 +22,132 @@
 
 class pts_result_parser
 {
+	private static $supported_sensors = null;
+	private static $monitoring_sensors = array();
+
+	public static function system_monitor_pre_test(&$test_profile, $parse_xml_file, $test_directory)
+	{
+		self::$monitoring_sensors = array();
+		$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_xml_file);
+		$monitor_sensor = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MONITOR_SENSOR);
+		$monitor_frequency = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MONITOR_FREQUENCY);
+		$monitor_report_as = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MONITOR_REPORT);
+
+		if(count($monitor_sensor) == 0)
+		{
+			// No monitoring to do
+			return false;
+		}
+
+		if(!function_exists("pcntl_fork"))
+		{
+			pts_client::$display->test_run_instance_error("PHP with PCNTL support enabled is required for this test.");
+			return false;
+		}
+
+		if(self::$supported_sensors == null)
+		{
+			// Cache this since this shouldn't change between tests/runs
+			self::$supported_sensors = phodevi::supported_sensors();
+		}
+
+		foreach(array_keys($monitor_sensor) as $i)
+		{
+			// TODO: Right now we are looping through SystemMonitor tags, but right now pts-core only supports providing one monitor sensor as the result
+			$sensor = explode('.', $monitor_sensor[$i]);
+
+			if(count($sensor) != 2 || !in_array($sensor, self::$supported_sensors))
+			{
+				// Not a sensor or it's not supported
+				continue;
+			}
+
+			if(!is_numeric($monitor_frequency[$i]) || $monitor_frequency < 0.5)
+			{
+				// No polling frequency supplied
+				continue;
+			}
+
+			$monitor_frequency[$i] *= 1000000; // Convert from seconds to micro-seconds
+
+			if(!in_array($monitor_report_as[$i], array("ALL", "MAX", "MIN", "AVG")))
+			{
+				// Not a valid reporting type
+				continue;
+			}
+
+			$monitor_file = tempnam($test_directory, ".monitor");
+			$pid = pcntl_fork();
+
+			if($pid != -1)
+			{
+				if($pid)
+				{
+					// Main process still
+					array_push(self::$monitoring_sensors, array($pid, $sensor, $monitor_report_as[$i], $monitor_file));
+					continue;
+				}
+				else
+				{
+					$sensor_values = array();
+
+					while(is_file(PTS_USER_LOCK)) // TODO: or perhaps it may be okay to just do while(true) since posix_kill() is used when needed
+					{
+						array_push($sensor_values, phodevi::read_sensor($sensor));
+						file_put_contents($monitor_file, implode($sensor_values, "\n"));
+						usleep($monitor_frequency[$i]);
+					}
+
+					define("PTS_EXIT", 1);
+					exit(0);
+				}
+			}		
+		}
+
+		return count(self::$monitoring_sensors) > 0;
+	}
+	public static function system_monitor_post_test(&$test_profile, $test_directory)
+	{
+		foreach(self::$monitoring_sensors as $sensor_r)
+		{
+			// Kill the sensor monitoring thread
+			posix_kill($sensor_r[0], SIGTERM);
+
+			$sensor_values = explode("\n", pts_file_io::file_get_contents($sensor_r[3]));
+			pts_file_io::unlink($sensor_r[3]);
+
+			if(count($sensor_values) == 0)
+			{
+				continue;
+			}
+
+			switch($sensor_r[2])
+			{
+				case "MAX":
+					$result_value = max($sensor_values);
+					break;
+				case "MIN":
+					$result_value = min($sensor_values);
+					break;
+				case "AVG":
+					$result_value = array_sum($sensor_values) / count($sensor_values);
+					break;
+				case "ALL":
+					$result_value = implode(',', $sensor_values);
+					break;
+				default:
+					$result_value = null;
+					break;
+			}
+
+			if($result_value != null)
+			{
+				return $result_value;
+			}
+		}
+
+		return false;
+	}
 	public static function parse_result(&$test_profile, &$test_run_request, $parse_xml_file, $test_log_file)
 	{
 		$test_identifier = $test_run_request->test_profile->get_identifier();

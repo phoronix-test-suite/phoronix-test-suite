@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <PhoronixTestSuite>
-	<ResultsParser>
-		<!-- Include Entire File As The Result -->
-		<OutputTemplate>#_RESULT_#</OutputTemplate>
-	</ResultsParser>
+	<SystemMonitor>
+		<Sensor>sys.power</Sensor>
+		<PollingFrequency>1</PollingFrequency>
+		<Report>ALL</Report>
+	</SystemMonitor>
 </PhoronixTestSuite>

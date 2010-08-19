@@ -471,8 +471,6 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 	$vars["TIMER_START"] = TEST_LIBRARIES_DIR . "timer-start.sh";
 	$vars["TIMER_STOP"] = TEST_LIBRARIES_DIR . "timer-stop.sh";
 	$vars["TIMED_KILL"] = TEST_LIBRARIES_DIR . "timed-kill.sh";
-	$vars["SYSTEM_MONITOR_START"] = TEST_LIBRARIES_DIR . "system-monitoring-start.sh";
-	$vars["SYSTEM_MONITOR_STOP"] = TEST_LIBRARIES_DIR . "system-monitoring-stop.sh";
 	$vars["PHP_BIN"] = PHP_BIN;
 
 	return $vars;
@@ -498,6 +496,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 		return false;
 	}
 
+	$parse_results_xml_file = is_file(($parse_results_xml_file = pts_tests::test_resources_location($test_identifier) . "parse-results.xml")) ? $parse_results_xml_file : false;
 	$test_profile = new pts_test_profile($test_identifier, $test_run_request->get_override_options());
 	$test_results = new pts_test_result($test_profile);
 	$execute_binary = $test_profile->get_test_executable();
@@ -609,6 +608,10 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 			pts_test_profile_debug_message("Test Run Command: " . $test_run_command);
 
+			if($parse_results_xml_file)
+			{
+				$is_monitoring = pts_result_parser::system_monitor_pre_test($test_profile, $parse_results_xml_file, $test_directory);
+			}
 			$test_run_time_start = time();
 
 			if(IS_WINDOWS || pts_client::read_env("USE_PHOROSCRIPT_INTERPRETER") != false)
@@ -623,6 +626,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			}
 
 			$test_run_time = time() - $test_run_time_start;
+			$monitor_result = $parse_results_xml_file && $is_monitoring ? pts_result_parser::system_monitor_post_test($test_profile, $parse_results_xml_file, $test_directory) : 0;
 		}
 		
 
@@ -665,9 +669,16 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 				$run_time = 0;
 			}
 
-			if(is_file($parse_results_xml_file = pts_tests::test_resources_location($test_identifier) . "parse-results.xml"))
+			if($parse_results_xml_file)
 			{
-				$test_result = pts_result_parser::parse_result($test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
+				if($monitor_result != 0)
+				{
+					$test_result = $monitor_result;
+				}
+				else
+				{
+					$test_result = pts_result_parser::parse_result($test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
+				}
 			}
 			else
 			{
