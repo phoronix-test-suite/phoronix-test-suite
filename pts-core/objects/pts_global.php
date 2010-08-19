@@ -88,7 +88,8 @@ class pts_global
 	}
 	public static function account_user_name()
 	{
-		return pts_config::read_user_config(P_OPTION_GLOBAL_USERNAME, null);
+		$username = pts_config::read_user_config(P_OPTION_GLOBAL_USERNAME, null);
+		return !empty($username) && $username != "Default User" ? $username : false;
 	}
 	public static function request_gsid()
 	{
