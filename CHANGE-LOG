@@ -4,7 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: When the NVIDIA driver is loaded, better recognize when the GPU is overclocked by the user
 - pts-core: Unless a test is using an integrated timer, it must specify a parse-results.xml file even if the log file is just the result to be parsed
-- pts-core: Provide system monitoring capabilities through the parse-results.xml interface
+- pts-core: Provide clean system monitoring capabilities through the parse-results.xml interface
 
 Phoronix Test Suite 2.8 Beta 2
 August 18, 2010

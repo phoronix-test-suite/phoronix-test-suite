@@ -20,12 +20,12 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_result_parser
+class pts_test_result_parser
 {
 	private static $supported_sensors = null;
 	private static $monitoring_sensors = array();
 
-	public static function system_monitor_pre_test(&$test_profile, $parse_xml_file, $test_directory)
+	public static function system_monitor_task_check(&$test_profile, $parse_xml_file, $test_directory)
 	{
 		self::$monitoring_sensors = array();
 		$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_xml_file);
@@ -106,7 +106,7 @@ class pts_result_parser
 
 		return count(self::$monitoring_sensors) > 0;
 	}
-	public static function system_monitor_post_test(&$test_profile, $test_directory)
+	public static function system_monitor_task_post_test(&$test_profile, $test_directory)
 	{
 		foreach(self::$monitoring_sensors as $sensor_r)
 		{
@@ -156,14 +156,14 @@ class pts_result_parser
 		switch($test_profile->get_result_format())
 		{
 			case "IMAGE_COMPARISON":
-				$test_result = pts_result_parser::parse_iqc_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_result = self::parse_iqc_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case "PASS_FAIL":
 			case "MULTI_PASS_FAIL":
-				$test_result = pts_result_parser::parse_generic_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_result = self::parse_generic_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			default:
-				$test_result = pts_result_parser::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 		}
 

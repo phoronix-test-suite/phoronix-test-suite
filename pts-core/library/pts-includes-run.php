@@ -610,7 +610,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 			if($parse_results_xml_file)
 			{
-				$is_monitoring = pts_result_parser::system_monitor_pre_test($test_profile, $parse_results_xml_file, $test_directory);
+				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_profile, $parse_results_xml_file, $test_directory);
 			}
 			$test_run_time_start = time();
 
@@ -626,7 +626,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			}
 
 			$test_run_time = time() - $test_run_time_start;
-			$monitor_result = $parse_results_xml_file && $is_monitoring ? pts_result_parser::system_monitor_post_test($test_profile, $parse_results_xml_file, $test_directory) : 0;
+			$monitor_result = $parse_results_xml_file && $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_profile, $parse_results_xml_file, $test_directory) : 0;
 		}
 		
 
@@ -677,7 +677,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 				}
 				else
 				{
-					$test_result = pts_result_parser::parse_result($test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
+					$test_result = pts_test_result_parser::parse_result($test_profile, $test_run_request, $parse_results_xml_file, $test_log_file);
 				}
 			}
 			else
