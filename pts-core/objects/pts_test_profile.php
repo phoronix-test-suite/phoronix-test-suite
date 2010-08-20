@@ -212,7 +212,7 @@ class pts_test_profile
 	}
 	public function get_result_scale_offset()
 	{
-		$scale_parts = explode('|', $this->test_profile->get_result_scale());
+		$scale_parts = explode('|', $this->get_result_scale());
 
 		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
 	}
