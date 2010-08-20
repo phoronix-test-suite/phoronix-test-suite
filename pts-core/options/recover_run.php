@@ -117,7 +117,7 @@ class recover_run implements pts_option_interface
 				if($test_to_run_is_empty)
 				{
 					$test_to_run_is_empty = false;
-							pts_client::$display->generic_heading("Last Test Run: " . $test_run_request->test_profile->get_identifier() . "\nLast Test Parameters: " . $test_run_request->get_used_arguments());
+							pts_client::$display->generic_heading("Last Test Run: " . $test_run_request->test_profile->get_identifier() . "\nLast Test Parameters: " . $test_run_request->get_arguments());
 					$skip_this = pts_user_io::prompt_bool_input("Would you like to skip running this test? Enter N to re-try", true);
 
 					if($skip_this)

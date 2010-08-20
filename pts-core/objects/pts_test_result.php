@@ -34,6 +34,7 @@ class pts_test_result
 	public function __construct(&$test_profile)
 	{
 		$this->test_profile = $test_profile;
+		$this->result = 0;
 	}
 	public function set_test_result_buffer($test_result_buffer)
 	{
@@ -47,11 +48,11 @@ class pts_test_result
 	{
 		$this->used_arguments = $used_arguments;
 	}
-	public function get_used_arguments()
+	public function get_arguments()
 	{
 		return $this->used_arguments;
 	}
-	public function get_used_arguments_description()
+	public function get_arguments_description()
 	{
 		return $this->used_arguments_description;
 	}
@@ -65,21 +66,11 @@ class pts_test_result
 	}
 	public function get_comparison_hash($show_version_and_attributes = true)
 	{
-		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(), $this->get_used_arguments(), $this->get_used_arguments_description(), $this->test_profile->get_version()) : pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(), $this->get_used_arguments());
-	}
-	public function get_scale_formatted()
-	{
-		return trim(pts_strings::first_in_string($this->test_profile->get_result_scale(), '|'));
-	}
-	public function get_scale_special()
-	{
-		$scale_parts = explode('|', $this->test_profile->get_result_scale());
-
-		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
+		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(), $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_version()) : pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(), $this->get_arguments());
 	}
 	public function __toString()
 	{
-		return $this->test_profile->get_identifier() . " " . $this->get_used_arguments() . " " . $this->get_used_arguments_description() . " " . $this->test_profile->get_override_options();
+		return $this->test_profile->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description() . " " . $this->test_profile->get_override_options();
 	}
 }
 

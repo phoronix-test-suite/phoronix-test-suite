@@ -105,7 +105,7 @@ class pts_render
 					$graph->loadGraphValues(pts_strings::comma_explode($buffer_item->get_result_value()), $buffer_item->get_result_identifier());
 				}
 
-				$scale_special = $result_object->get_scale_special();
+				$scale_special = $result_object->test_profile->get_result_scale_offset();
 				if(!empty($scale_special) && count(($ss = pts_strings::comma_explode($scale_special))) > 0)
 				{
 					$graph->loadGraphIdentifiers($ss);

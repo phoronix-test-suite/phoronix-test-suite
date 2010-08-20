@@ -63,7 +63,7 @@ class pts_result_file_merge_manager
 		{
 			foreach($this->test_results[$mto_test_name] as &$mto_compare)
 			{
-				if(trim($mto_compare->get_used_arguments()) == trim($merge_test_object->get_used_arguments()) && $mto_compare->get_used_arguments_description() == $merge_test_object->get_used_arguments_description() && $mto_compare->test_profile->get_version() == $merge_test_object->test_profile->get_version() && $mto_compare->test_profile->get_result_scale() == $merge_test_object->test_profile->get_result_scale() && pts_strings::version_strings_comparable($mto_compare->test_profile->get_test_profile_version(), $merge_test_object->test_profile->get_test_profile_version()))
+				if(trim($mto_compare->get_arguments()) == trim($merge_test_object->get_arguments()) && $mto_compare->get_arguments_description() == $merge_test_object->get_arguments_description() && $mto_compare->test_profile->get_version() == $merge_test_object->test_profile->get_version() && $mto_compare->test_profile->get_result_scale() == $merge_test_object->test_profile->get_result_scale() && pts_strings::version_strings_comparable($mto_compare->test_profile->get_test_profile_version(), $merge_test_object->test_profile->get_test_profile_version()))
 				{
 					foreach($merge_test_object->test_result_buffer->get_buffer_items() as $buffer_item)
 					{

@@ -257,7 +257,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo "\n\n" . $test_result->test_profile->get_title() . ":\n" . $this->tab . $test_result->test_profile->get_identifier();
 
-		if(($test_description = $test_result->get_used_arguments_description()) != false)
+		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
 			echo " [" . pts_strings::swap_variables($test_description, array("pts_client", "environmental_variables")) . "]";
 		}

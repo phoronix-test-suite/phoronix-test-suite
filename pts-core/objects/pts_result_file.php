@@ -248,7 +248,7 @@ class pts_result_file
 		foreach($this->get_result_objects($result_object_index) as $result_object)
 		{
 			$result_tests[$result_counter][0] = $result_object->test_profile->get_title();
-			$result_tests[$result_counter][1] = $result_object->get_used_arguments_description();
+			$result_tests[$result_counter][1] = $result_object->get_arguments_description();
 
 			if($result_object_index != -1)
 			{

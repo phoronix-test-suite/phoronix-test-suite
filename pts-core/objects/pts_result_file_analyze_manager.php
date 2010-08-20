@@ -42,7 +42,7 @@ class pts_result_file_analyze_manager
 		$total_objects = count($this->test_results);
 		$this->test_results[$total_objects] = $mto;
 
-		$attributes = array_reverse(explode(" - ", $mto->get_used_arguments_description()));
+		$attributes = array_reverse(explode(" - ", $mto->get_arguments_description()));
 		$attributes_clean = array();
 
 		for($i = 0; $i < count($attributes); $i++)

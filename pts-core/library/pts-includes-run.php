@@ -379,12 +379,12 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $test_run_request->test_profile->get_title());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $test_run_request->test_profile->get_version());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $test_run_request->test_profile->get_test_profile_version());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $test_run_request->get_used_arguments_description());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $test_run_request->get_arguments_description());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $test_run_request->test_profile->get_result_scale());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $test_run_request->test_profile->get_result_proportion());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $test_run_request->test_profile->get_result_format());
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $test_run_request->test_profile->get_identifier());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $test_run_request->get_used_arguments());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $test_run_request->get_arguments());
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $test_identifier, 5);
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_run_request->get_result(), 5);
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $test_run_request->test_result_buffer->get_values_as_string(), 5);
@@ -477,8 +477,8 @@ function pts_extra_run_time_vars($test_identifier, $pts_test_arguments = null, $
 function pts_run_test(&$test_run_manager, &$test_run_request)
 {
 	$test_identifier = $test_run_request->test_profile->get_identifier();
-	$extra_arguments = $test_run_request->get_used_arguments();
-	$arguments_description = $test_run_request->get_used_arguments_description();
+	$extra_arguments = $test_run_request->get_arguments();
+	$arguments_description = $test_run_request->get_arguments_description();
 
 	// Do the actual test running process
 	$test_directory = TEST_ENV_DIR . $test_identifier . "/";

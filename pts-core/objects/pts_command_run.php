@@ -48,7 +48,7 @@ class pts_command_run
 	{
 		return $this->command;
 	}
-	public function get_arguments()
+	public function get_command_arguments()
 	{
 		return $this->arguments;
 	}

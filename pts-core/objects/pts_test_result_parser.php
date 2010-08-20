@@ -176,7 +176,7 @@ class pts_test_result_parser
 	public static function parse_result(&$test_run_request, $parse_xml_file, $test_log_file)
 	{
 		$test_identifier = $test_run_request->test_profile->get_identifier();
-		$extra_arguments = $test_run_request->get_used_arguments();
+		$extra_arguments = $test_run_request->get_arguments();
 		$pts_test_arguments = $pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . " " . str_replace($test_run_request->test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_run_request->test_profile->get_default_post_arguments());
 
 		switch($test_run_request->test_profile->get_result_format())

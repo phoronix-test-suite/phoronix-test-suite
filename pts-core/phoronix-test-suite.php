@@ -181,7 +181,7 @@ pts_client::run_next($sent_command, $pass_args);
 
 while(($current_option = pts_client::next_in_run_queue()) != null)
 {
-	pts_client::execute_command($current_option->get_command(), $current_option->get_arguments(), $current_option->get_preset_assignments()); // Run command
+	pts_client::execute_command($current_option->get_command(), $current_option->get_command_arguments(), $current_option->get_preset_assignments()); // Run command
 }
 
 if(!QUICK_START)

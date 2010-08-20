@@ -135,10 +135,10 @@ abstract class pts_Graph
 			$test_version = $result_object->test_profile->get_version();
 			$this->graph_title = $result_object->test_profile->get_title() . (isset($test_version[2]) ? " v" . $test_version : null);
 
-			$this->graph_y_title = $result_object->get_scale_formatted();
+			$this->graph_y_title = $result_object->test_profile->get_result_scale_formatted();
 			$this->test_identifier = $result_object->test_profile->get_identifier();
 			$this->graph_proportion = $result_object->test_profile->get_result_proportion();
-			$this->addSubTitle($result_object->get_used_arguments_description());
+			$this->addSubTitle($result_object->get_arguments_description());
 			$this->addInternalIdentifier("Test", $result_object->test_profile->get_identifier());
 		}
 

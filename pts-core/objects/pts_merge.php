@@ -179,11 +179,11 @@ class pts_merge
 			$xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->test_profile->get_title());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->test_profile->get_version());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $use_id, $result_object->test_profile->get_test_profile_version());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $use_id, $result_object->get_used_arguments_description());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $use_id, $result_object->get_arguments_description());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $use_id, $result_object->test_profile->get_result_scale());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $use_id, $result_object->test_profile->get_result_proportion());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_TESTNAME, $use_id, $result_object->test_profile->get_identifier());
-			$xml_writer->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $use_id, $result_object->get_used_arguments());
+			$xml_writer->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $use_id, $result_object->get_arguments());
 			$xml_writer->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $use_id, $result_object->test_profile->get_result_format());
 
 			foreach($buffer_items as $i => &$buffer_item)

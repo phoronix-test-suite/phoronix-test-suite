@@ -82,7 +82,7 @@ class pts_tracker
 	public static function compact_result_file_test_object(&$mto, &$result_table = false, $identifiers_inverted = false)
 	{
 		// TODO: this may need to be cleaned up, its logic is rather messy
-		if(count($mto->get_scale_special()) > 0)
+		if(count($mto->test_profile->get_result_scale_offset()) > 0)
 		{
 			// It's already doing something
 			return;

@@ -206,6 +206,16 @@ class pts_test_profile
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_SCALE);
 	}
+	public function get_result_scale_formatted()
+	{
+		return trim(pts_strings::first_in_string($this->get_result_scale(), '|'));
+	}
+	public function get_result_scale_offset()
+	{
+		$scale_parts = explode('|', $this->test_profile->get_result_scale());
+
+		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
+	}
 	public function get_result_proportion()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_PROPORTION);

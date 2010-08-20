@@ -79,8 +79,8 @@ class bisect extends pts_module_interface
 		$options["regression_fraction"] = $values[$bad_run_index] / $values[$good_run_index];
 		$options["test_proportion"] = $proportion;
 		$options["test_name"] = $result_objects[$selected_index]->test_profile->get_identifier();
-		$options["test_args"] = $result_objects[$selected_index]->get_used_arguments();
-		$options["test_attr"] = $result_objects[$selected_index]->get_used_arguments_description();
+		$options["test_args"] = $result_objects[$selected_index]->get_arguments();
+		$options["test_attr"] = $result_objects[$selected_index]->get_arguments_description();
 
 		return $options;
 	}
@@ -284,7 +284,7 @@ class bisect extends pts_module_interface
 	
 	public static function __post_test_run($test_result)
 	{
-		if($test_result->test_profile->get_identifier() == pts_module::read_option("test_name") && $test_result->get_used_arguments() == pts_module::read_option("test_args"))
+		if($test_result->test_profile->get_identifier() == pts_module::read_option("test_name") && $test_result->get_arguments() == pts_module::read_option("test_args"))
 		{
 			$result = $test_result->get_result();
 			pts_module::set_option("current_result", $result);
