@@ -174,7 +174,7 @@ class pts_module_interface
 	}
 	public static function __event_user_error($obj = null)
 	{
-		// Passed is a read-only copy of the pts_user_error object
+		// TODO use __event_user_error
 		return;
 	}
 

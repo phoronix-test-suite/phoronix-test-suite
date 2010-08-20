@@ -106,7 +106,7 @@ class pts_tests
 
 		if(!isset($cache[$identifier]) || $rewrite_cache)
 		{
-			switch(pts_type_handler::pts_identifier_type($identifier))
+			switch(pts_identifier_type($identifier))
 			{
 				case "TYPE_TEST":
 					$location = XML_PROFILE_DIR . $identifier . ".xml";
@@ -133,7 +133,7 @@ class pts_tests
 
 		if(!isset($cache[$identifier]) || $rewrite_cache)
 		{
-			$type = pts_type_handler::pts_identifier_type($identifier);
+			$type = pts_identifier_type($identifier);
 
 			if($type == "TYPE_LOCAL_TEST" && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
 			{

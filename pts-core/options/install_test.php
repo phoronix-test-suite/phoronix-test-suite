@@ -43,25 +43,6 @@ class install_test implements pts_option_interface
 		$satisfied_tests = array(); // Tests with no dependencies or with all dependencies installed
 		$install_passed = pts_external_dependencies::install_dependencies($items_to_install, $satisfied_tests);
 
-		/*
-		if($install_passed == false)
-		{
-			echo "\nInstallation of needed test dependencies failed.\n\n";
-			$user_error = new pts_user_error("Installation of test dependencies for " . implode(", ", array_diff($items_to_install, $satisfied_tests)) . " failed.");
-			pts_module_manager::module_process("__event_user_error", $user_error);
-
-			if(count($satisfied_tests) > 0)
-			{
-				echo "Only installing:\n\n" . implode("\n- ", $satisfied_tests) . "\n";
-				$items_to_install = $satisfied_tests;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		*/
-
 		// Install tests
 		if(!is_writable(TEST_ENV_DIR))
 		{
