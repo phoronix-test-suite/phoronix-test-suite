@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Replace TIMER_START and TIMER_STOP integrated timer functionality by exposing sys.time in the results parsing interface
 - pts-core: Transition pts_result_file_result object to using pts_test_result
 - pts-core: Transition pts_test_run_request to use the pts_test_result object
+- pts-core: Improve external dependency handling on unsupported operating systems / distributions
 - documentation: Add note that PHP PCNTL support is required now for many tests
 
 Phoronix Test Suite 2.8 Beta 2

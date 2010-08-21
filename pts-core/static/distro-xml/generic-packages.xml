@@ -310,5 +310,11 @@
 			<PossibleNames>libgmp3-dev libgmp3 gmp-devel</PossibleNames>
 			<FileCheck>/usr/include/gmp.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>opencl</GenericName>
+			<Title>OpenCL</Title>
+			<PossibleNames>NVIDIA OpenCL ATI Stream SDK</PossibleNames>
+			<FileCheck>/usr/include/CL/cl.h OR /usr/include/OpenCL/cl.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
