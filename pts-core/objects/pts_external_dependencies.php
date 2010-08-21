@@ -100,6 +100,7 @@ class pts_external_dependencies
 			{		
 				pts_user_io::read_user_input();
 			}
+			// TODO: add checks again and then ask if you want to remove tests where the dependencies still are missing
 		}
 
 		// TODO: make better assumption than assume it all worked out since it reached this far

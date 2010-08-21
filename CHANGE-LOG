@@ -9,7 +9,8 @@ Phoronix Test Suite (Git)
 - pts-core: Transition pts_result_file_result object to using pts_test_result
 - pts-core: Transition pts_test_run_request to use the pts_test_result object
 - pts-core: Improve external dependency handling on unsupported operating systems / distributions
-- pts: Add juliagpu as an OpenCL test
+- pts: Add juliagpu OpenCL test
+- pts: Add mandelgpu OpenCL test
 - documentation: Add note that PHP PCNTL support is required now for many tests
 
 Phoronix Test Suite 2.8 Beta 2
@@ -213,7 +214,7 @@ March 9, 2010
 - phoromatic: Report estimated time remaining to test completion to Phoromatic server
 - phoromatic: Add client support for the Phoromatic trigger interface
 - phoromatic: Support for reading the Phoromatic server build/version
-- bilde_renderer: Fix the SVG renderer back-end from battling multiple graph style values contained in a single page
+- bilde_renderer: Fi	x the SVG renderer back-end from battling multiple graph style values contained in a single page
 - pts_Graph: Line graphing improvements for Phoromatic Tracker
 - pts-core: Various fixes and improvements
 - pts: Add adjustable record / block size to iozone test profile
