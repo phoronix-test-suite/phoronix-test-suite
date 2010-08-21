@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts: Add juliagpu OpenCL test
 - pts: Add mandelgpu OpenCL test
 - pts: Add smallpt-gpu OpenCL test
+- pts: Add mandelbulbgpu OpenCL test
 - documentation: Add note that PHP PCNTL support is required now for many tests
 
 Phoronix Test Suite 2.8 Beta 2
