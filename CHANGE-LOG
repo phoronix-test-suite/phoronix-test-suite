@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Improve external dependency handling on unsupported operating systems / distributions
 - pts: Add juliagpu OpenCL test
 - pts: Add mandelgpu OpenCL test
+- pts: Add smallpt-gpu OpenCL test
 - documentation: Add note that PHP PCNTL support is required now for many tests
 
 Phoronix Test Suite 2.8 Beta 2

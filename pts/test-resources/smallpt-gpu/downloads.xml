@@ -1,0 +1,10 @@
+<PhoronixTestSuite>
+	<Downloads>
+		<Package>
+			<URL>http://www.phoronix-test-suite.com/benchmark-files/SmallptGPU-v1.6pts.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/SmallptGPU-v1.6pts.zip</URL>
+			<MD5>885783844742c71d4e6b93478fc4ed2e</MD5>
+			<FileSize>39266</FileSize>
+		</Package>
+	</Downloads>
+</PhoronixTestSuite>
+
