@@ -26,7 +26,7 @@ class pts_external_dependencies
 	{
 		// PTS External Dependencies install on distribution
 
-		if(IS_WINDOWS || pts_client::read_env("SKIP_EXTERNAL_DEPENDENCIES_CHECK"))
+		if(IS_WINDOWS || IS_MACOSX || pts_client::read_env("SKIP_EXTERNAL_DEPENDENCIES_CHECK"))
 		{
 			// Windows doesn't use any external dependencies
 			return true;

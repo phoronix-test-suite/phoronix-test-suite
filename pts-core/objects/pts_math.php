@@ -71,6 +71,12 @@ class pts_math
 	}
 	public static function percent_standard_deviation($values)
 	{
+		if(count($values) == 0)
+		{
+			// No values
+			return 0;
+		}
+
 		$standard_deviation = pts_math::standard_deviation($values);
 		$average_value = array_sum($values) / count($values);
 

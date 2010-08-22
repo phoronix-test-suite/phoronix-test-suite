@@ -137,7 +137,7 @@ class pts_global
 		$tags = base64_encode($tags);
 		$return_stream = "";
 
-		$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags);
+		$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags, "gsid" => PTS_GSID);
 
 		return pts_network::http_upload_via_post("http://www.phoronix-test-suite.com/global/user-upload.php", $upload_data);
 	}

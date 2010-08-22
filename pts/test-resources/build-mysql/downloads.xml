@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/mysql-5.1.30.tar.gz, ftp://ftp.ussg.iu.edu/pub/FreeBSD/ports/distfiles/mysql-5.1.30.tar.gz, ftp://ftp.ntut.edu.tw/MySQL/Downloads/MySQL-5.1/mysql-5.1.30.tar.gz</URL>
+			<URL>ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/mysql-5.1.30.tar.gz, ftp://ftp.ussg.iu.edu/pub/FreeBSD/ports/distfiles/mysql-5.1.30.tar.gz</URL>
 			<MD5>b658e58887a74dce65224ae0fc8ee06a</MD5>
 			<FileSize>29050568</FileSize>
 		</Package>

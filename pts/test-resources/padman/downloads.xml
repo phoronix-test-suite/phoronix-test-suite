@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://thilo.kickchat.com/download/worldofpadman.run, ftp://ftp.snt.utwente.nl/pub/games/worldofpadman/linux/worldofpadman.run, ftp://ftp.pardus.org.tr/pub/pisi/source/2008/worldofpadman.run, ftp://ftp.bm.kernel.org/pub/mirrors/gentoo/source/distfiles/worldofpadman.run</URL>
+			<URL>http://thilo.kickchat.com/download/worldofpadman.run, ftp://ftp.snt.utwente.nl/pub/games/worldofpadman/linux/worldofpadman.run, ftp://ftp.bm.kernel.org/pub/mirrors/gentoo/source/distfiles/worldofpadman.run</URL>
 			<MD5>c7650414d7865ddac26ada6b3f7b8cc9</MD5>
 			<FileSize>576952895</FileSize>
 		</Package>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	bilde_png_renderer: The PNG rendering implementation for bilde_renderer.
 
 	This program is free software; you can redistribute it and/or modify
@@ -28,9 +28,9 @@ class bilde_png_renderer extends bilde_gd_renderer
 	public function render_image($output_file = null, $quality = 100)
 	{
 		$quality = floor(9 - (($quality / 100) * 9)); // calculate compression level
-		if(defined("PNG_IMAGE_INTERLACING"))
+		if(defined("BILDE_IMAGE_INTERLACING"))
 		{
-			imageinterlace($this->image, BILDE_IMAGE_INTERLACING == "YES");
+			imageinterlace($this->image, BILDE_IMAGE_INTERLACING);
 		}
 		return imagepng($this->image, $output_file, $quality);
 	}

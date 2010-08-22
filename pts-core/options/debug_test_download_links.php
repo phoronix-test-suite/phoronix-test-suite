@@ -49,7 +49,7 @@ class debug_test_download_links implements pts_option_interface
 					}
 					else
 					{
-						fclose($file_pointer);
+						@fclose($file_pointer);
 					}
 
 				}

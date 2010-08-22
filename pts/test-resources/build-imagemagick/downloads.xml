@@ -1,7 +1,7 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://ftp.sunet.se/pub/multimedia/graphics/ImageMagick/ImageMagick-6.6.3-4.tar.bz2, http://se.aminet.net/pub/multimedia/graphics/ImageMagick/ImageMagick-6.6.3-4.tar.bz2, http://voxel.dl.sourceforge.net/project/imagemagick/ImageMagick/00-6.6.3/ImageMagick-6.6.3-4.tar.bz2, http://cdnetworks-us-1.dl.sourceforge.net/project/imagemagick/ImageMagick/00-6.6.3/ImageMagick-6.6.3-4.tar.bz2</URL>
+			<URL>http://download.openpkg.org/components/cache/imagemagick/ImageMagick-6.6.3-4.tar.bz2, http://image_magick.veidrodis.com/image_magick/ImageMagick-6.6.3-4.tar.bz2, http://ftp.vim.org/ImageMagick/ImageMagick-6.6.3-4.tar.bz2</URL>
 			<MD5>94b9d2379c870e9d216955e338d214f2</MD5>
 			<FileSize>8681316</FileSize>
 		</Package>

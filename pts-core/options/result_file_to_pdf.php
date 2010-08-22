@@ -41,7 +41,7 @@ class result_file_to_pdf implements pts_option_interface
 		}
 
 		define("BILDE_RENDERER", "PNG"); // Force to PNG renderer
-		define("PNG_IMAGE_INTERLACING", "NO"); // Otherwise FPDF will fail
+		define("BILDE_IMAGE_INTERLACING", false); // Otherwise FPDF will fail
 		pts_render::generate_result_file_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
 		$xml_parser = new pts_results_tandem_XmlReader($r["result_file"]);
