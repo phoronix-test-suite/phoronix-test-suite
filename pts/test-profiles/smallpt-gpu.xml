@@ -19,13 +19,13 @@
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Samples/sec</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>SmallPT GPU is an OpenCL benchmark that's run with a 256 work-group size and multiple rendering scenes are available.</Description>
+		<Description>SmallPT GPU is an OpenCL benchmark that's run with a 128 work-group size and multiple rendering scenes are available.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Option>
 			<DisplayName>OpenCL Device</DisplayName>
 			<Identifier>cl-device</Identifier>
-			<ArgumentPostfix> 256 rendering_kernel.cl</ArgumentPostfix>
+			<ArgumentPostfix> 128 rendering_kernel.cl</ArgumentPostfix>
 			<Menu>
 				<Entry>
 					<Name>CPU</Name>

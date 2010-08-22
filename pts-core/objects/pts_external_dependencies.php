@@ -166,10 +166,6 @@ class pts_external_dependencies
 		$distro_vendor_xml = STATIC_DIR . "distro-xml/" . self::vendor_identifier() . "-packages.xml";
 		$needed_os_packages = array();
 
-		$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
-		$generic_package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-		$generic_file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
-
 		if(is_file($distro_vendor_xml))
 		{
 			$xml_parser = new pts_external_dependencies_tandem_XmlReader($distro_vendor_xml);
@@ -205,19 +201,15 @@ class pts_external_dependencies
 
 					unset($required_test_dependencies[$key]);
 				}
-				else if(($key = array_search($generic_package[$i], $generic_package_name)) !== false)
-				{
-					$file_present = !empty($generic_file_check[$i]) && !self::file_missing_check($generic_file_check[$i]);
-
-					if($file_present)
-					{
-						unset($required_test_dependencies[$key]);
-					}					
-				}
 			}
 		}
-		else
+
+		if(count($required_test_dependencies) > 0)
 		{
+			$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+			$generic_package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+			$generic_file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
+
 			foreach(array_keys($generic_package_name) as $i)
 			{
 				if(empty($generic_package_name[$i]))

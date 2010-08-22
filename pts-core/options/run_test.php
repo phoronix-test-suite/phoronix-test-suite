@@ -192,7 +192,7 @@ class run_test implements pts_option_interface
 						array_push($test_run, $test_run_request->test_profile->get_identifier());
 						array_push($test_args, $test_run_request->get_arguments());
 						array_push($test_args_description, $test_run_request->get_arguments_description());
-						array_push($test_override_options, $test_run_request->test_profile->get_override_options());
+						array_push($test_override_options, $test_run_request->test_profile->get_override_values());
 					}
 				}
 
