@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Transition pts_test_run_request to use the pts_test_result object
 - pts-core: Improve external dependency handling on unsupported operating systems / distributions
 - pts-core: Try to avoid using Konqueror for displaying test results as its bad with XSL
+- pts-core: Drop analyze-result-file command since its capabilities are to be in the PTS Results Viewer itself
 - pts: Add juliagpu OpenCL test
 - pts: Add mandelgpu OpenCL test
 - pts: Add smallpt-gpu OpenCL test
