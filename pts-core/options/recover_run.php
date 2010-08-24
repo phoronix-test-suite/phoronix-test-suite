@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO: Integrate recover-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery
+
 class recover_run implements pts_option_interface
 {
 	public static function argument_checks()

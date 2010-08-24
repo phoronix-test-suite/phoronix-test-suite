@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 2.8 Beta 3
+August 24, 2010
 
 - pts-core: When the NVIDIA driver is loaded, better recognize when the GPU is overclocked by the user
 - pts-core: Unless a test is using an integrated timer, it must specify a parse-results.xml file even if the log file is just the result to be parsed

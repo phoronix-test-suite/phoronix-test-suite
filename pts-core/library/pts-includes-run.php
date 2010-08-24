@@ -601,7 +601,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 			unset($cache_share);
 		}
 
-		if(!$restored_from_cache)
+		if($restored_from_cache == false)
 		{
 			$test_run_command = "cd " . $to_execute . " && " . $execute_binary_prepend . "./" . $execute_binary . " " . $pts_test_arguments . " 2>&1";
 
@@ -677,8 +677,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 
 			if(!empty($test_result))
 			{
-				// TODO: trim() shouldn't be needed?
-				$test_run_request->test_result_buffer->add_test_result(null, trim($test_result), null);
+				$test_run_request->test_result_buffer->add_test_result(null, $test_result, null);
 			}
 			else
 			{
