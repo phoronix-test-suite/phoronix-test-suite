@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -22,6 +22,9 @@
 		<Description>JuliaGPU is an OpenCL benchmark. The test is ran with 2x2 sampling size, fast rendering, and shadow support.</Description>
 	</TestInformation>
 	<TestSettings>
+		<Default>
+			<PostArguments>preprocessed_rendering_kernel.cl 1024 768</PostArguments>
+		</Default>
 		<Option>
 			<DisplayName>OpenCL Device</DisplayName>
 			<Identifier>cl-device</Identifier>
@@ -37,17 +40,6 @@
 				<Entry>
 					<Name>CPU+GPU</Name>
 					<Value>1 1</Value>
-				</Entry>
-			</Menu>
-		</Option>
-		<Option>
-			<DisplayName>Resolution</DisplayName>
-			<Identifier>auto-resolution</Identifier>
-			<ArgumentPrefix>rendering_kernel.cl </ArgumentPrefix>
-			<Menu>
-				<Entry>
-					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
 				</Entry>
 			</Menu>
 		</Option>

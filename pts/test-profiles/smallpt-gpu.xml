@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -25,7 +25,7 @@
 		<Option>
 			<DisplayName>OpenCL Device</DisplayName>
 			<Identifier>cl-device</Identifier>
-			<ArgumentPostfix> 128 rendering_kernel.cl</ArgumentPostfix>
+			<ArgumentPostfix> 128 preprocessed_rendering_kernel.cl 1024 768</ArgumentPostfix>
 			<Menu>
 				<Entry>
 					<Name>CPU</Name>
@@ -34,16 +34,6 @@
 				<Entry>
 					<Name>GPU</Name>
 					<Value>1</Value>
-				</Entry>
-			</Menu>
-		</Option>
-		<Option>
-			<DisplayName>Resolution</DisplayName>
-			<Identifier>auto-resolution</Identifier>
-			<Menu>
-				<Entry>
-					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
 				</Entry>
 			</Menu>
 		</Option>

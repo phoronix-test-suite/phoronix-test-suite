@@ -37,7 +37,14 @@
 		<Test>gnupg</Test>
 	</RunTest>
 	<RunTest>
+		<Test>john-the-ripper</Test>
+		<Mode>BATCH</Mode>
+	</RunTest>
+	<RunTest>
 		<Test>openssl</Test>
+	</RunTest>
+	<RunTest>
+		<Test>himeno</Test>
 	</RunTest>
 	<RunTest>
 		<Test>mafft</Test>
@@ -106,6 +113,9 @@
 	</RunTest>
 	<RunTest>
 		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>smallpt</Test>
 	</RunTest>
 	<RunTest>
 		<Test>povray</Test>

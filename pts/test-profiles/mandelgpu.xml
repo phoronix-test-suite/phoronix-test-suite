@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -22,6 +22,9 @@
 		<Description>MandelGPU is an OpenCL benchmark and this test runs with the OpenCL rendering float4 kernel with a maximum of 4096 iterations.</Description>
 	</TestInformation>
 	<TestSettings>
+		<Default>
+			<PostArguments>rendering_kernel_float4.cl 1024 768 4096</PostArguments>
+		</Default>
 		<Option>
 			<DisplayName>OpenCL Device</DisplayName>
 			<Identifier>cl-device</Identifier>
@@ -37,18 +40,6 @@
 				<Entry>
 					<Name>CPU+GPU</Name>
 					<Value>1 1</Value>
-				</Entry>
-			</Menu>
-		</Option>
-		<Option>
-			<DisplayName>Resolution</DisplayName>
-			<Identifier>auto-resolution</Identifier>
-			<ArgumentPrefix>rendering_kernel_float4.cl </ArgumentPrefix>
-			<ArgumentPostfix> 4096</ArgumentPostfix>
-			<Menu>
-				<Entry>
-					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
 				</Entry>
 			</Menu>
 		</Option>
