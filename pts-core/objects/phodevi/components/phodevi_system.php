@@ -285,43 +285,22 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_compiler()
 	{
 		// Returns version of the compiler (if present)
-		$compiler_info = null;
+		$compilers = null;
+
+		if(pts_client::executable_in_path("gcc"))
+		{
+			// GCC
+			$compilers["gcc"] = "GCC " . trim(shell_exec("gcc -dumpversion 2>&1"));
+		}
 
 		if(pts_client::executable_in_path("clang"))
 		{
 			// Clang
 			$compiler_info = "Clang " . trim(shell_exec("clang -dumpversion 2>&1"));
-
-			if(pts_client::executable_in_path("llvmc"))
-			{
-				// LLVM - Low Level Virtual Machine (llvmc)
-				$info = trim(shell_exec("llvmc -version 2>&1"));
-
-				if(($s = strpos($info, "version")) != false)
-				{
-					$llvm_info = substr($info, $s + 8);
-					$llvm_info = substr($llvm_info, 0, strpos($llvm_info, ' '));
-
-					$compiler_info .= " + LLVM " . $llvm_info;
-				}
-			}
-
-			$compiler_info = trim($compiler_info);
+			$compilers["clang"] = trim($compiler_info);
 		}
-		else if(pts_client::executable_in_path("suncc"))
-		{
-			// Sun Studio / SunCC
-			$info = trim(shell_exec("suncc -V 2>&1"));
 
-			if(($s = strpos($info, "Sun C")) != false)
-			{
-				$info = substr($info, $s);
-				$info = substr($info, 0, strpos($info, "\n"));
-
-				$compiler_info = $info;
-			}
-		}
-		else if(pts_client::executable_in_path("llvmc"))
+		if(pts_client::executable_in_path("llvmc"))
 		{
 			// LLVM - Low Level Virtual Machine (llvmc)
 			$info = trim(shell_exec("llvmc -version 2>&1"));
@@ -331,16 +310,44 @@ class phodevi_system extends phodevi_device_interface
 				$info = substr($info, 0, strpos($info, "\n", $s));
 				$info = substr($info, strrpos($info, "\n"));
 
-				$compiler_info = trim($info);
+				$compilers["llvmc"] = trim($info);
 			}
 		}
-		else if(pts_client::executable_in_path("gcc"))
+
+		if(pts_client::executable_in_path("suncc"))
 		{
-			// GCC
-			$compiler_info = "GCC " . trim(shell_exec("gcc -dumpversion 2>&1"));
+			// Sun Studio / SunCC
+			$info = trim(shell_exec("suncc -V 2>&1"));
+
+			if(($s = strpos($info, "Sun C")) != false)
+			{
+				$info = substr($info, $s);
+				$info = substr($info, 0, strpos($info, "\n"));
+
+				$compilers["suncc"] = $info;
+			}
 		}
 
-		return $compiler_info;
+		// Try to make the compiler that's used by default to appear first
+		if(pts_client::read_env("CC") && isset($compilers[pts_client::read_env("CC")]))
+		{
+			$default_compiler = $compilers[pts_client::read_env("CC")];
+			unset($compilers[pts_client::read_env("CC")]);
+			array_unshift($compilers, $default_compiler);
+		}
+		else if(pts_client::executable_in_path("cc") && is_link(pts_client::executable_in_path("cc")))
+		{
+			$cc_link = basename(readlink(pts_client::executable_in_path("cc")));
+
+			if(isset($compilers[$cc_link]))
+			{
+				$default_compiler = $compilers[$cc_link];
+				unset($compilers[pts_client::read_env("CC")]);
+				array_unshift($compilers, $default_compiler);
+			}
+		}
+
+		return implode(" + ", $compilers);
 	}
 	public static function sw_kernel_string()
 	{
