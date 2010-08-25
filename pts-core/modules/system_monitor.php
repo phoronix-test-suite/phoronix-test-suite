@@ -31,6 +31,10 @@ class system_monitor extends pts_module_interface
 	static $result_identifier = null;
 	static $to_monitor = array();
 
+	static $individual_test_run_request = null;
+	static $individual_test_run_offsets = null;
+	static $individual_monitoring = null;
+
 	public static function module_info()
 	{
 		$info = "";
@@ -61,6 +65,7 @@ class system_monitor extends pts_module_interface
 	public static function __pre_run_process(&$test_run_manager)
 	{
 		self::$result_identifier = $test_run_manager->get_results_identifier();
+		self::$individual_monitoring = pts_module::read_variable("MONITOR_INDIVIDUAL") == '1';
 		self::$to_monitor = array();
 		$to_show = pts_strings::comma_explode(pts_module::read_variable("MONITOR"));
 		$monitor_all = in_array("all", $to_show);
@@ -76,11 +81,53 @@ class system_monitor extends pts_module_interface
 
 		pts_module::pts_timed_function(8, "pts_monitor_update");
 	}
+	public static function __pre_test_run(&$test_run_request)
+	{
+		self::$individual_test_run_request = $test_run_request;
+
+		foreach(self::$to_monitor as $id_point => $sensor)
+		{
+			$log_f = pts_module::read_file("logs/" . phodevi::sensor_identifier($sensor));
+			$offset = count(explode("\n", $log_f));
+			self::$individual_test_run_offsets[$id_point] = $offset;
+		}
+	}
+	public static function __post_test_run_process(&$tandem_xml)
+	{
+		foreach(self::$to_monitor as $id_point => $sensor)
+		{
+			$sensor_results = self::parse_monitor_log("logs/" . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[$id_point]);
+
+			if(count($sensor_results) > 2)
+			{
+				$graph_title = phodevi::sensor_name($sensor) . " Monitor";
+
+				$tandem_id = $tandem_xml->request_unique_id();
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, self::$individual_test_run_request->test_profile->get_title());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, self::$individual_test_run_request->test_profile->get_version());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, null);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, phodevi::sensor_name($sensor) . " Monitor");
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, phodevi::read_sensor_unit($sensor));
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, null);
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, "LINE_GRAPH");
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, self::$individual_test_run_request->test_profile->get_identifier());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, phodevi::sensor_name($sensor) . self::$individual_test_run_request->get_arguments());
+
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, self::$result_identifier, 5, "sys-monitor-" . $id_point);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
+				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
+			}
+		}
+
+		self::$individual_test_run_request = null;
+		self::$individual_test_run_offsets[$id_point] = array();
+	}
 	public static function __event_results_process(&$tandem_xml)
 	{
 		foreach(self::$to_monitor as $id_point => $sensor)
 		{
 			$sensor_results = self::parse_monitor_log("logs/" . phodevi::sensor_identifier($sensor));
+			pts_module::remove_file("logs/" . phodevi::sensor_identifier($sensor));
 
 			if(count($sensor_results) > 2)
 			{
@@ -116,13 +163,17 @@ class system_monitor extends pts_module_interface
 			}
 		}
 	}
-	private static function parse_monitor_log($log_file)
+	private static function parse_monitor_log($log_file, $start_offset = 0)
 	{
 		$log_f = pts_module::read_file($log_file);
-		pts_module::remove_file($log_file);
 		$line_breaks = explode("\n", $log_f);
 		$contains_a_non_zero = false;
 		$results = array();
+
+		for($i = 0; $i < $start_offset && isset($line_breaks[$i]); $i++)
+		{
+			unset($line_breaks[$i]);
+		}
 
 		foreach($line_breaks as $line)
 		{

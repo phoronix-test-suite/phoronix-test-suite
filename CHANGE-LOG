@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Support for detecting multiple compilers
+- pts-core: Allow the system_monitor module to provide independent graphs for each test result
 
 Phoronix Test Suite 2.8 Beta 3
 August 24, 2010

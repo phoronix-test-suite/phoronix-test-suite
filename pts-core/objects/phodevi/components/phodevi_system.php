@@ -285,7 +285,7 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_compiler()
 	{
 		// Returns version of the compiler (if present)
-		$compilers = null;
+		$compilers = array();
 
 		if(pts_client::executable_in_path("gcc"))
 		{

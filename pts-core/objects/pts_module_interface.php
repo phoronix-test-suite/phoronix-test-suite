@@ -147,6 +147,11 @@ class pts_module_interface
 		// Passed is a read-only copy of the current pts_test_result for the given test
 		return;
 	}
+	public static function __post_test_run_process($obj = null)
+	{
+		// Passed is a copy of the tandem_xml object
+		return;
+	}
 	public static function __post_run_process($obj = null)
 	{
 		// Passed is the current pts_test_run_manager, where accessible is an array of pts_test_result objects for all tests scheduled to run

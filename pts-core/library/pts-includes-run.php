@@ -404,6 +404,7 @@ function pts_process_test_run_request(&$test_run_manager, &$tandem_xml, $run_ind
 					rename(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . '/', $test_log_write_dir);
 				}
 				$xml_write_pos++;
+				pts_module_manager::module_process("__post_test_run_process", $tandem_xml);
 			}
 		}
 
