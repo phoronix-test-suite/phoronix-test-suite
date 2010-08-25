@@ -121,7 +121,7 @@ class system_monitor extends pts_module_interface
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, phodevi::read_sensor_unit($sensor));
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, null);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, "LINE_GRAPH");
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, self::$individual_test_run_request->test_profile->get_identifier());
+				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);
 				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, phodevi::sensor_name($sensor) . self::$individual_test_run_request->get_arguments());
 
 				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, self::$result_identifier, 5, "sys-monitor-" . $id_point);
