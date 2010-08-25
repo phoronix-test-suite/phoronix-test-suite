@@ -329,10 +329,11 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		// Try to make the compiler that's used by default to appear first
-		if(pts_client::read_env("CC") && isset($compilers[pts_client::read_env("CC")]))
+		if(pts_client::read_env("CC") && isset($compilers[basename(pts_client::read_env("CC"))]))
 		{
-			$default_compiler = $compilers[pts_client::read_env("CC")];
-			unset($compilers[pts_client::read_env("CC")]);
+			$cc_env = basename(pts_client::read_env("CC"));
+			$default_compiler = $compilers[$cc_env];
+			unset($compilers[$cc_env]);
 			array_unshift($compilers, $default_compiler);
 		}
 		else if(pts_client::executable_in_path("cc") && is_link(pts_client::executable_in_path("cc")))
@@ -355,7 +356,7 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_kernel()
 	{
-		return php_uname("r");
+		return php_uname('r');
 	}
 	public static function sw_kernel_architecture()
 	{

@@ -55,15 +55,15 @@ class phodevi_solaris_parser
 				}
 				else
 				{
-					$section = "";
+					$section = null;
 					$object = $objects[0];
 				}
 
 				foreach($lines as $line)
 				{
 					$line = pts_strings::colon_explode($line);
-					$line_object = str_replace(" ", "", $line[0]);
-					$this_value = (count($line) > 1 ? $line[1] : "");
+					$line_object = isset($line[0]) ? str_replace(" ", "", $line[0]) : null;
+					$this_value = count($line) > 1 ? $line[1] : null;
 
 					if(empty($this_value) && !empty($section))
 					{
