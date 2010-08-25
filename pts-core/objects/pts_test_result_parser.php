@@ -134,6 +134,12 @@ class pts_test_result_parser
 			else
 			{
 				// Kill the sensor monitoring thread
+				if(function_exists("posix_kill") == false)
+				{
+					pts_client::$display->test_run_error("The PHP POSIX extension is required for this test.");
+					return false;
+				}
+
 				posix_kill($sensor_r[0], SIGTERM);
 
 				$sensor_values = explode("\n", pts_file_io::file_get_contents($sensor_r[3]));

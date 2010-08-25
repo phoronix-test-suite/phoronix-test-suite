@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Support for detecting multiple compilers
 - pts-core: Allow the system_monitor module to provide independent graphs for each test result
+- pts-core: Warn the user when PHP POSIX is needed and it's not present
 
 Phoronix Test Suite 2.8 Beta 3
 August 24, 2010
