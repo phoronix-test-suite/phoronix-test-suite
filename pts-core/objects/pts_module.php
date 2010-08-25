@@ -246,9 +246,9 @@ class pts_module
 	}
 	public static function pts_fork_function($function)
 	{
-		self::pts_timed_function(-1, $function);
+		self::pts_timed_function($function, -1);
 	}
-	public static function pts_timed_function($time, $function)
+	public static function pts_timed_function($function, $time)
 	{
 		if(($time < 3 && $time != -1) || $time > 300)
 		{

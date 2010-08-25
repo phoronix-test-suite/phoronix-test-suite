@@ -58,7 +58,7 @@ class timed_screenshot extends pts_module_interface
 
 	public static function __pre_run_process()
 	{
-		pts_module::pts_timed_function(self::$screenshot_interval, "take_screenshot");
+		pts_module::pts_timed_function("take_screenshot", self::$screenshot_interval);
 	}
 	public static function __pre_test_run()
 	{

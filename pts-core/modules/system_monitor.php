@@ -66,6 +66,7 @@ class system_monitor extends pts_module_interface
 	{
 		self::$result_identifier = $test_run_manager->get_results_identifier();
 		self::$individual_monitoring = pts_module::read_variable("MONITOR_INDIVIDUAL") == '1';
+		self::$individual_monitoring = true;
 		self::$to_monitor = array();
 		$to_show = pts_strings::comma_explode(pts_module::read_variable("MONITOR"));
 		$monitor_all = in_array("all", $to_show);
@@ -79,10 +80,15 @@ class system_monitor extends pts_module_interface
 			}
 		}
 
-		pts_module::pts_timed_function(8, "pts_monitor_update");
+		pts_module::pts_timed_function("pts_monitor_update", 3);
 	}
 	public static function __pre_test_run(&$test_run_request)
 	{
+		if(self::$individual_monitoring == false)
+		{
+			return;
+		}
+
 		self::$individual_test_run_request = $test_run_request;
 
 		foreach(self::$to_monitor as $id_point => $sensor)
@@ -94,6 +100,11 @@ class system_monitor extends pts_module_interface
 	}
 	public static function __post_test_run_process(&$tandem_xml)
 	{
+		if(self::$individual_monitoring == false)
+		{
+			return;
+		}
+
 		foreach(self::$to_monitor as $id_point => $sensor)
 		{
 			$sensor_results = self::parse_monitor_log("logs/" . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[$id_point]);
