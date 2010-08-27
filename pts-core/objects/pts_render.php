@@ -28,6 +28,22 @@ class pts_render
 	{
 		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
 		{
+			if($result_file->is_multi_way_comparison() && $result_object->test_profile->get_result_format() == "LINE_GRAPH")
+			{
+				// Turn a multi-way line graph into an averaged bar graph
+				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
+				$result_object->test_result_buffer = new pts_test_result_buffer();
+
+				foreach($buffer_items as $buffer_item)
+				{
+					$values = pts_strings::comma_explode($buffer_item->get_result_value());
+					$avg_value = array_sum($values) / count($values);
+					$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, $avg_value);
+				}
+
+				$result_object->test_profile->set_result_format("BAR_GRAPH");
+			}
+
 			$result_table = false;
 			pts_tracker::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
 		}
@@ -40,6 +56,7 @@ class pts_render
 				$graph_type = "pts_LineGraph";
 				break;
 			case "BAR_ANALYZE_GRAPH":
+			case "BAR_GRAPH":
 				$graph_type = "pts_BarGraph";
 				break;
 			case "PASS_FAIL":

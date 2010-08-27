@@ -348,7 +348,7 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
-		return implode(" + ", $compilers);
+		return implode(" + ", array_unique($compilers));
 	}
 	public static function sw_kernel_string()
 	{
