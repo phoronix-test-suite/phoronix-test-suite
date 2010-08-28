@@ -182,16 +182,24 @@ class phodevi_system extends phodevi_device_interface
 			switch($fs)
 			{
 				case "UNKNOWN (0x9123683e)":
+					// 0x9123683e is the superblock for Btrfs
 					$fs = "Btrfs";
 					break;
 				case "UNKNOWN (0x52345362)":
+					// 0x52345362 is the superblock for Reiser4
 					$fs = "Reiser4";
 					break;
 				case "UNKNOWN (0x3434)":
+					// 0x3434 is the superblock for NILFS2
 					$fs = "NILFS2";
 					break;
 				case "UNKNOWN (0x24051905)":
+					// 0x24051905 is the superblock for UBIFS
 					$fs = "UBIFS";
+					break;
+				case "UNKNOWN (0x65735546)":
+					// 0x65735546 is the superblock for the FUSE module
+					$fs = "FUSE";
 					break;
 				case "ext2/ext3":
 					if(is_readable("/proc/mounts"))
