@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow the system_monitor module to provide independent graphs for each test result
 - pts-core: Warn the user when PHP POSIX is needed and it's not present
 - pts-core: When doing a multi-way comparison with line graphs, average the results and convert to bar graphs
+- pts-core: Fix test result failing to parse when usign LineBeforeHint in pts_test_result_parser
 
 Phoronix Test Suite 2.8 Beta 3
 August 24, 2010

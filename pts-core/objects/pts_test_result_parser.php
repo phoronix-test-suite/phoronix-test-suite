@@ -506,7 +506,7 @@ class pts_test_result_parser
 						$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
 						$result_output = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i]))) . "\n";
 					}
-					if($result_line_after_hint[$i] != null)
+					else if($result_line_after_hint[$i] != null)
 					{
 						pts_test_profile_debug_message("Result Parsing Line After Hint: " . $result_line_after_hint[$i]);
 						$result_line = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
