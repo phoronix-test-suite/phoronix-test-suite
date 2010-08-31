@@ -26,15 +26,15 @@ if(PTS_MODE == "CLIENT")
 	//error_reporting(E_ERROR | E_STRICT);
 }
 
-define("PTS_VERSION", "2.8.0b3");
-define("PTS_CORE_VERSION", 2770);
+define("PTS_VERSION", "2.8.0");
+define("PTS_CORE_VERSION", 2800);
 define("PTS_CODENAME", "TORSKEN");
 
 function pts_codename($full_string = false)
 {
 	$codename = ucwords(strtolower(PTS_CODENAME));
 
-	return ($full_string ? "PhoronixTestSuite/" : "") . $codename;
+	return ($full_string ? "PhoronixTestSuite/" : null) . $codename;
 }
 function pts_title($show_both = false)
 {
