@@ -27,7 +27,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 
 	}
-	public function test_install_start($test_install_manager)
+	public function test_install_process($test_install_manager)
 	{
 		return;
 	}
@@ -71,7 +71,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		return;
 	}
-	public function test_install_process($identifier)
+	public function test_install_start($identifier)
 	{
 		echo self::string_header("Installing Test: " . $identifier);
 	}

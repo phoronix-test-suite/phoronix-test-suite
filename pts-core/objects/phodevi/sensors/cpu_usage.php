@@ -59,7 +59,7 @@ class cpu_usage implements phodevi_sensor
 		{
 			// TODO: Add support for monitoring load on a per-core basis (through mpstat maybe?)
 			$info = explode(' ', pts_strings::trim_spaces(pts_arrays::last_element(explode("\n", trim(shell_exec("sar -u 1 1 2>&1"))))));
-			$percent = $info[1];
+			$percent = $info[1] + $info[2];
 		}
 		else if(IS_MACOSX)
 		{

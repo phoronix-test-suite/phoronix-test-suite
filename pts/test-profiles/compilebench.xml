@@ -15,7 +15,7 @@
 	<TestInformation>
 		<Title>Compile Bench</Title>
 		<Version>0.6</Version>
-		<TimesToRun>1</TimesToRun>
+		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>
 		<Description>Compilebench tries to age a filesystem by simulating some of the disk IO common in creating, compiling, patching, stating and reading kernel trees. It indirectly measures how well filesystems can maintain directory locality as the disk fills up and directories age. This current test is setup to use the makej mode with 10 initial directories</Description>
