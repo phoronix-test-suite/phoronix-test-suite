@@ -317,11 +317,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if(in_array($test_result->test_profile->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
 		{
-			return;
+			$end_print = null;
 		}
 		else if(in_array($test_result->test_profile->get_result_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
 		{
-			$end_print .= $this->tab . $this->tab . "Final: " . $test_result->get_result() . " (" . $test_result->test_profile->get_result_scale() . ")\n";
+			$end_print = $this->tab . $this->tab . "Final: " . $test_result->get_result() . " (" . $test_result->test_profile->get_result_scale() . ")\n";
 		}
 		else
 		{

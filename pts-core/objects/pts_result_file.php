@@ -194,6 +194,7 @@ class pts_result_file
 				$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
 			}
 
+			/*
 			if($is_multi_way)
 			{
 				if(count($systems) < 3 && count($systems) != count($targets))
@@ -201,6 +202,7 @@ class pts_result_file
 					$is_multi_way = false;
 				}
 			}
+			*/
 
 			if($is_multi_way)
 			{
