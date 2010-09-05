@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix a regression that caused alpha-numeric PTS module option values to fail
+- pts-core: During the testing process, set the vblank_mode environmental variable to 0 by default
 
 Phoronix Test Suite 2.8 "Torsken"
 August 31, 2010
