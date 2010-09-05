@@ -266,7 +266,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		$test_run_position = pts_read_assignment("TEST_RUN_POSITION");
 		$test_run_count = pts_read_assignment("TEST_RUN_COUNT");
-		echo $this->tab . "Test Run " . $test_run_position . " of " . $test_run_count . "\n";
+		echo $this->tab . "Test " . $test_run_position . " of " . $test_run_count . "\n";
 
 		if(($remaining_length = $test_run_manager->get_estimated_run_time_remaining()) > 1)
 		{

@@ -188,7 +188,26 @@ class pts_test_profile
 	}
 	public function get_times_to_run()
 	{
-		return intval($this->xml_parser->getXMLValue(P_TEST_RUNCOUNT, 3));
+		$times_to_run = intval($this->xml_parser->getXMLValue(P_TEST_RUNCOUNT, 3));
+
+		if(($force_runs = pts_client::read_env("FORCE_TIMES_TO_RUN")) && is_numeric($force_runs))
+		{
+			$times_to_run = $force_runs;
+		}
+
+		if(($force_runs = pts_client::read_env("FORCE_MIN_TIMES_TO_RUN")) && is_numeric($force_runs) && $force_runs > $times_to_run)
+		{
+			$times_to_run = $force_runs;
+		}
+
+		$result_format = $this->get_result_format();
+		if($times_to_run < 1 || (strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_" || substr($result_format, 0, 6) == "IMAGE_"))
+		{
+			// Currently tests that output multiple results in one run can only be run once
+			$times_to_run = 1;
+		}
+
+		return $times_to_run;
 	}
 	public function get_runs_to_ignore()
 	{

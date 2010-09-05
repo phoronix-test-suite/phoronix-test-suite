@@ -516,22 +516,6 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 		return false;
 	}
 
-	if(($force_runs = pts_client::read_env("FORCE_TIMES_TO_RUN")) && is_numeric($force_runs))
-	{
-		$times_to_run = $force_runs;
-	}
-
-	if(($force_runs = pts_client::read_env("FORCE_MIN_TIMES_TO_RUN")) && is_numeric($force_runs) && $force_runs > $times_to_run)
-	{
-		$times_to_run = $force_runs;
-	}
-
-	if($times_to_run < 1 || (strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_" || substr($result_format, 0, 6) == "IMAGE_"))
-	{
-		// Currently tests that output multiple results in one run can only be run once
-		$times_to_run = 1;
-	}
-
 	$to_execute = pts_find_test_executable_dir($test_identifier, $test_run_request->test_profile);
 
 	$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . " " . str_replace($test_run_request->test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_run_request->test_profile->get_default_post_arguments());
@@ -540,7 +524,6 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 	// Start
 	$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
 	$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
-	$test_run_request->test_profile->set_times_to_run($times_to_run);
 	$test_run_request->set_used_arguments_description($arguments_description);
 	pts_module_manager::module_process("__pre_test_run", $test_run_request);
 
