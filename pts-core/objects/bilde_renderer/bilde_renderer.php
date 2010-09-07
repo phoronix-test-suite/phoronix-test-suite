@@ -48,7 +48,7 @@ abstract class bilde_renderer
 	abstract function draw_polygon($points, $body_color, $border_color = null, $border_width = 0);
 	abstract function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0, $default_hide = false);
 	abstract function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $title = null);
-	abstract function draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null);
+	abstract function draw_arc($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null);
 
 	abstract function png_image_to_type($file);
 	abstract function jpg_image_to_type($file);

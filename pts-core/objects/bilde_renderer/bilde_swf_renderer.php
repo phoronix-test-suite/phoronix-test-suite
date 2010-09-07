@@ -104,7 +104,7 @@ class bilde_swf_renderer extends bilde_renderer
 	{
 		$this->write_swf_text($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text, "LEFT");
 	}
-	public function draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
+	public function draw_arc($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
 	{
 		return false; // TODO: implement
 	}

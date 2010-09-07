@@ -220,7 +220,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$this->image .= "<rect x=\"" . round($x1) . "\" y=\"" . round($y1) . "\" width=\"" . round($width - $x1) . "\" height=\"" . round($height - $y1) . "\" class=\"" . $class . "\" />\n";
 	}
-	public function draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
+	public function draw_arc($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
 	{
 		$deg = ($percent * 360);
 		$offset_deg = ($offset_percent * 360);

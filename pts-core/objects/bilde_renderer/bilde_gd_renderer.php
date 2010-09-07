@@ -114,9 +114,9 @@ abstract class bilde_gd_renderer extends bilde_renderer
 
 		imagettftext($this->image, $font_size, $rotation, $text_x, $text_y, $font_color, $font_type, $text_string);
 	}
-	public function draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
+	public function draw_arc($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
 	{
-		return false; // TODO: implement
+		imagefilledarc($this->image, $center_x, $center_y, ($radius * 2), ($radius * 2), ($offset_percent * 360), ($percent * 360), $body_color, IMG_ARC_PIE);
 	}
 	public function draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length)
 	{

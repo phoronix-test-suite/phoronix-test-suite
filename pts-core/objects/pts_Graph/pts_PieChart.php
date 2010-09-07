@@ -108,7 +108,7 @@ class pts_PieChart extends pts_Graph
 		for($i = 0; $i < $pie_slices; $i++)
 		{
 			$percent = pts_math::set_precision($this->graph_data[0][$i] / $this->pie_sum, 3);
-			$this->graph_image->draw_pie_piece($center_x, $center_y, $radius, $offset_percent, $percent, $this->get_paint_color($i), $this->graph_color_border, 2, $this->graph_identifiers[$i] . ": " . $this->graph_data[0][$i]);
+			$this->graph_image->draw_arc($center_x, $center_y, $radius, $offset_percent, $percent, $this->get_paint_color($i), $this->graph_color_border, 2, $this->graph_identifiers[$i] . ": " . $this->graph_data[0][$i]);
 			$offset_percent += $percent;
 		}
 
