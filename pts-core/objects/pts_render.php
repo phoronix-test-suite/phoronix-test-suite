@@ -45,7 +45,11 @@ class pts_render
 			}
 
 			$result_table = false;
-			pts_tracker::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
+
+			if($result_object->test_profile->get_result_format() != "PIE_CHART")
+			{
+				pts_tracker::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
+			}
 		}
 
 		$result_format = $result_object->test_profile->get_result_format();

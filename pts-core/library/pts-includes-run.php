@@ -644,7 +644,7 @@ function pts_run_test(&$test_run_manager, &$test_run_request)
 		{
 			if($parse_results_xml_file)
 			{
-				if($monitor_result != 0)
+				if(isset($monitor_result) && $monitor_result != 0)
 				{
 					$test_result = $monitor_result;
 				}

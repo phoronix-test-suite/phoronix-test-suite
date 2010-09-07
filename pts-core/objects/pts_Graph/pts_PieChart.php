@@ -43,6 +43,11 @@ class pts_PieChart extends pts_Graph
 			$this->pie_sum += $this->graph_data[0][$i];
 		}
 
+		if($pie_slices > 8)
+		{
+			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + 100);
+		}
+
 	}
 	protected function render_graph_identifiers()
 	{
@@ -51,13 +56,20 @@ class pts_PieChart extends pts_Graph
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
 			$percent = pts_math::set_precision($this->graph_data[0][$i] / $this->pie_sum * 100, 2);
-			array_push($key_strings, '[' . $this->graph_data[0][$i] . ' / ' . $percent . "%]");
+			array_push($key_strings, '[' . $percent . "%]");
+			//array_push($key_strings, '[' . $this->graph_data[0][$i] . ' / ' . $percent . "%]");
 		}
 
 		$key_count = count($key_strings);
 		$key_item_width = 18 + $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_key);
 		$key_item_width_value = 12 + $this->text_string_width($this->find_longest_string($key_strings), $this->graph_font, $this->graph_font_size_key);
 		$keys_per_line = floor(($this->graph_left_end - $this->graph_left_start - 14) / ($key_item_width + $key_item_width_value));
+
+		if($keys_per_line < 1)
+		{
+			$keys_per_line = 1;
+		}
+
 		$key_line_height = 14;
 		$this->graph_top_start += 12;
 		$component_y = $this->graph_top_start - $key_line_height - 5;
@@ -67,7 +79,7 @@ class pts_PieChart extends pts_Graph
 		{
 			$this_color = $this->get_paint_color($i);
 
-			if($i != 0 && $i % $keys_per_line == 1)
+			if($i > 0 && $i % $keys_per_line == 0)
 			{
 				$component_y += $key_line_height;
 				$this->graph_top_start += $key_line_height;
@@ -76,7 +88,7 @@ class pts_PieChart extends pts_Graph
 			$component_x = $this->graph_left_start + 13 + (($key_item_width + $key_item_width_value) * ($i % $keys_per_line));
 			$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
 			$this->graph_image->write_text_left($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
-			$this->graph_image->write_text_left($key_strings[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x + $key_item_width_value, $component_y, $component_x + $key_item_width_value, $component_y);
+			$this->graph_image->write_text_right($key_strings[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x + $key_item_width + 30, $component_y, $component_x + $key_item_width + 30, $component_y);
 		}
 	}
 	public function renderGraph()
