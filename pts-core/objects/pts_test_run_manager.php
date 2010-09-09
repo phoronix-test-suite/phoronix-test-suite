@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -172,13 +172,6 @@ class pts_test_run_manager
 			}
 		}
 	}
-	public function set_tests_to_run($tests_to_run)
-	{
-		if(is_array($tests_to_run))
-		{
-			$this->tests_to_run = $tests_to_run;
-		}
-	}
 	public function get_tests_to_run()
 	{
 		return $this->tests_to_run;
@@ -241,13 +234,6 @@ class pts_test_run_manager
 	public function get_results_identifier()
 	{
 		return $this->results_identifier;
-	}
-	public function add_failed_test_run_request($test_run_request)
-	{
-		if($test_run_request instanceOf pts_test_result)
-		{
-			array_push($this->failed_tests_to_run, $test_run_request);
-		}
 	}
 	public function get_failed_test_run_requests()
 	{
@@ -395,6 +381,406 @@ class pts_test_run_manager
 		}
 
 		$this->results_identifier = $results_identifier;
+	}
+	public function call_test_runs(&$tandem_xml = null)
+	{
+		pts_file_io::unlink(PTS_USER_DIR . "halt-testing");
+		pts_file_io::unlink(PTS_USER_DIR . "skip-test");
+
+		$test_flag = true;
+		$tests_to_run_count = $this->get_test_count();
+		pts_client::$display->test_run_process_start($this);
+
+		if(($total_loop_time_minutes = pts_client::read_env("TOTAL_LOOP_TIME")) && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
+		{
+			$total_loop_time_seconds = $total_loop_time_minutes * 60;
+			$loop_end_time = time() + $total_loop_time_seconds;
+
+			pts_client::$display->generic_heading("Estimated Run-Time: " . pts_strings::format_time($total_loop_time_seconds, "SECONDS", true, 60));
+
+			do
+			{
+				for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
+				{
+					$test_flag = $this->process_test_run_request($tandem_xml, $i);
+				}
+			}
+			while(time() < $loop_end_time && $test_flag);
+		}
+		else if(($total_loop_count = pts_client::read_env("TOTAL_LOOP_COUNT")) && is_numeric($total_loop_count))
+		{
+			if(($estimated_length = $this->get_estimated_run_time()) > 1)
+			{
+				pts_client::$display->generic_heading("Estimated Run-Time: " . pts_strings::format_time(($estimated_length * $total_loop_count), "SECONDS", true, 60));
+			}
+
+			for($loop = 0; $loop < $total_loop_count && $test_flag; $loop++)
+			{
+				for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
+				{
+					$test_flag = $this->process_test_run_request($tandem_xml, $i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
+				}
+			}
+		}
+		else
+		{
+			if(($estimated_length = $this->get_estimated_run_time()) > 1)
+			{
+				pts_client::$display->generic_heading("Estimated Run-Time: " . pts_strings::format_time($estimated_length, "SECONDS", true, 60));
+			}
+
+			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
+			{
+				$test_flag = $this->process_test_run_request($tandem_xml, $i, ($i + 1), $tests_to_run_count);
+			}
+		}
+
+		pts_file_io::unlink(SAVE_RESULTS_DIR . $this->get_file_name() . "/active.xml");
+
+		foreach(pts_file_io::glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
+		{
+			// Process post-cache-share scripts
+			$test_identifier = pts_extract_identifier_from_path($cache_share_file);
+			echo pts_tests::call_test_script($test_identifier, "post-cache-share", null, null, pts_tests::process_extra_test_variables($test_identifier));
+			unlink($cache_share_file);
+		}
+	}
+	private function process_test_run_request(&$tandem_xml, $run_index, $run_position = -1, $run_count = -1)
+	{
+		$result = false;
+
+		if($this->get_file_name() != null)
+		{
+			$tandem_xml->saveXMLFile(SAVE_RESULTS_DIR . $this->get_file_name() . "/active.xml");
+		}
+
+		$test_run_request = $this->get_test_to_run($run_index);
+
+		if(pts_is_test($test_run_request->test_profile->get_identifier()))
+		{
+			pts_set_assignment("TEST_RUN_POSITION", $run_position);
+			pts_set_assignment("TEST_RUN_COUNT", $run_count);
+
+			if(($run_position != 1 && count(pts_file_io::glob(TEST_ENV_DIR . $test_run_request->test_profile->get_identifier() . "/cache-share-*.pt2so")) == 0))
+			{
+				sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
+			}
+
+			pts_test_execution::run_test($this, $test_run_request);
+
+			if(pts_file_io::unlink(PTS_USER_DIR . "halt-testing"))
+			{
+				// Stop the testing process entirely
+				return false;
+			}
+			else if(pts_file_io::unlink(PTS_USER_DIR . "skip-test"))
+			{
+				// Just skip the current test and do not save the results, but continue testing
+				continue;
+			}
+		}
+
+		$test_successful = false;
+
+
+		if($test_run_request->test_profile->get_result_format() == "NO_RESULT")
+		{
+			$test_successful = true;
+		}
+		else if($test_run_request instanceof pts_test_result)
+		{
+			$end_result = $test_run_request->get_result();
+
+			// removed count($result) > 0 in the move to pts_test_result
+			if(count($test_run_request) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
+			{
+				$test_identifier = $this->get_results_identifier();
+				$test_successful = true;
+
+				if(!empty($test_identifier))
+				{
+					$tandem_id = $tandem_xml->request_unique_id();
+					pts_set_assignment("TEST_RAN", true);
+
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $test_run_request->test_profile->get_title());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $test_run_request->test_profile->get_version());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $test_run_request->test_profile->get_test_profile_version());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $test_run_request->get_arguments_description());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $test_run_request->test_profile->get_result_scale());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $test_run_request->test_profile->get_result_proportion());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $test_run_request->test_profile->get_result_format());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $test_run_request->test_profile->get_identifier());
+					$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $test_run_request->get_arguments());
+					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $test_identifier, 5);
+					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_run_request->get_result(), 5);
+					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $test_run_request->test_result_buffer->get_values_as_string(), 5);
+
+					static $xml_write_pos = 1;
+					pts_file_io::mkdir(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
+
+					if(is_dir(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier()))
+					{
+						$test_log_write_dir = SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/" . $xml_write_pos . '/' . $this->get_results_identifier() . '/';
+
+						if(is_dir($test_log_write_dir))
+						{
+							pts_file_io::delete($test_log_write_dir, null, true);
+						}
+
+						rename(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . '/', $test_log_write_dir);
+					}
+					$xml_write_pos++;
+					pts_module_manager::module_process("__post_test_run_process", $tandem_xml);
+				}
+			}
+
+			pts_file_io::unlink(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/");
+		}
+
+		if($test_successful == false && $test_run_request->test_profile->get_identifier() != null)
+		{
+			array_push($this->failed_tests_to_run, $test_run_request);
+
+			// For now delete the failed test log files, but it may be a good idea to keep them
+			pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . "/", null, true);
+		}
+
+		return true;
+	}
+	public static function cleanup_tests_to_run(&$to_run_identifiers)
+	{
+		$skip_tests = ($e = pts_client::read_env("SKIP_TESTS")) ? pts_strings::comma_explode($e) : false;
+
+		$tests_verified = array();
+		$tests_missing = array();
+
+		foreach($to_run_identifiers as &$test_identifier)
+		{
+			$lower_identifier = strtolower($test_identifier);
+
+			if($skip_tests && in_array($lower_identifier, $skip_tests))
+			{
+				echo "Skipping Test: " . $lower_identifier . "\n";
+				continue;
+			}
+			else if(pts_is_test($lower_identifier))
+			{
+				$test_profile = new pts_test_profile($lower_identifier);
+
+				if($test_profile->get_title() == null)
+				{
+					echo "Not A Test: " . $lower_identifier . "\n";
+					continue;
+				}
+				else
+				{
+					if(pts_client::test_support_check($lower_identifier) == false)
+					{
+						continue;
+					}
+				}
+			}
+			else if(pts_is_suite($lower_identifier))
+			{
+				$test_suite = new pts_test_suite($lower_identifier);
+
+				if($test_suite->is_core_version_supported() == false)
+				{
+					echo $lower_identifier . " is a suite not supported by this version of the Phoronix Test Suite.\n";
+					continue;
+				}
+				else if(pts_read_assignment("CONFIGURE_TESTS_IN_SUITE"))
+				{
+					foreach(pts_contained_tests($lower_identifier) as $test)
+					{
+						if(!in_array($test, $to_run_identifiers))
+						{
+							array_push($to_run_identifiers, $test);
+						}
+					}
+					continue;
+				}
+			}
+			else if(pts_is_virtual_suite($lower_identifier))
+			{
+				foreach(pts_virtual_suite_tests($lower_identifier) as $virt_test)
+				{
+					array_push($to_run_identifiers, $virt_test);
+				}
+				continue;
+			}
+			else if(!pts_is_run_object($lower_identifier) && !pts_global::is_valid_global_id_format($lower_identifier) && !pts_is_test_result($lower_identifier))
+			{
+				echo "Not Recognized: " . $lower_identifier . "\n";
+				continue;
+			}
+
+			if(pts_test_run_manager::verify_test_installation($lower_identifier, $tests_missing) == false)
+			{
+				// Eliminate this test, it's not properly installed
+				continue;
+			}
+
+			array_push($tests_verified, $test_identifier);
+		}
+
+		$to_run_identifiers = $tests_verified;
+
+		if(count($tests_missing) > 0)
+		{
+			if(count($tests_missing) == 1)
+			{
+				pts_client::$display->generic_error($tests_missing[0] . " is not installed.\nTo install, run: phoronix-test-suite install " . $tests_missing[0]);
+			}
+			else
+			{
+				$message = "\n\nMultiple tests are not installed:\n\n";
+				$message .= pts_user_io::display_text_list($tests_missing);
+				$message .= "\nTo install, run: phoronix-test-suite install " . implode(' ', $tests_missing) . "\n\n";
+				echo $message;
+			}
+
+			if(!pts_read_assignment("AUTOMATED_MODE") && !pts_read_assignment("IS_BATCH_MODE") && !pts_read_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS"))
+			{
+				$stop_and_install = pts_user_io::prompt_bool_input("Would you like to automatically install these tests now", true);
+
+				if($stop_and_install)
+				{
+					pts_client::run_next("install_test", $tests_missing, pts_assignment_manager::get_all_assignments());
+					pts_client::run_next("run_test", $tests_missing, pts_assignment_manager::get_all_assignments(array("NO_PROMPT_IN_RUN_ON_MISSING_TESTS" => true)));
+					return false;
+				}
+				else
+				{
+					pts_set_assignment("USER_REJECTED_TEST_INSTALL_NOTICE", true);
+				}
+			}
+		}
+
+		return true;
+	}
+	public function validate_tests_to_run()
+	{
+		$failed_tests = array();
+		$validated_run_requests = array();
+		$allow_global_uploads = true;
+		$display_driver = phodevi::read_property("system", "display-driver");
+
+		foreach($this->get_tests_to_run() as $test_run_request)
+		{
+			if(!($test_run_request instanceOf pts_test_result))
+			{
+				array_push($validated_run_requests, $test_run_request);
+				continue;
+			}
+
+			// Validate the empty pts_test_result
+			$test_identifier = $test_run_request->test_profile->get_identifier();
+
+			if(in_array($test_identifier, $failed_tests))
+			{
+				// The test has already been determined to not be installed right or other issue
+				continue;
+			}
+
+			if(!is_dir(TEST_ENV_DIR . $test_identifier))
+			{
+				// The test is not setup
+				array_push($failed_tests, $test_identifier);
+				continue;
+			}
+
+			$test_type = $test_run_request->test_profile->get_test_hardware_type();
+
+			if($test_type == "Graphics")
+			{
+				if(pts_client::read_env("DISPLAY") == false && !IS_WINDOWS)
+				{
+					pts_client::$display->test_run_error("No display server was found, cannot run " . $test_identifier);
+					array_push($failed_tests, $test_identifier);
+					continue;
+				}
+				else if(in_array($display_driver, array("vesa", "nv", "cirrus")))
+				{
+					pts_client::$display->test_run_error("A display driver without 3D acceleration was found, cannot run " . $test_identifier);
+					array_push($failed_tests, $test_identifier);
+					continue;
+				}
+			}
+
+			$skip_tests = pts_client::read_env("SKIP_TESTS");
+			if(pts_client::read_env("NO_" . strtoupper($test_type) . "_TESTS") || ($skip_tests && in_array($test_identifier, pts_strings::comma_explode($skip_tests))) || ($skip_tests && in_array($test_type, pts_strings::comma_explode($skip_tests))))
+			{
+				array_push($failed_tests, $test_identifier);
+				continue;
+			}
+
+			if($test_run_request->test_profile->is_root_required() && pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
+			{
+				pts_client::$display->test_run_error("Cannot run " . $test_identifier . " in batch mode as root access is required.");
+				array_push($failed_tests, $test_identifier);
+				continue;
+			}
+
+			if($test_run_request->test_profile->get_test_executable_dir() == null)
+			{
+				pts_client::$display->test_run_error("The test executable for " . $test_identifier . " could not be found.");
+				array_push($failed_tests, $test_identifier);
+				continue;
+			}
+
+			if($allow_global_uploads && $test_run_request->test_profile->allow_global_uploads() == false)
+			{
+				// One of the contained test profiles does not allow Global uploads, so block it
+				$allow_global_uploads = false;
+			}
+
+			array_push($validated_run_requests, $test_run_request);
+		}
+
+		if(!$allow_global_uploads)
+		{
+			pts_set_assignment("BLOCK_GLOBAL_UPLOADS", true);
+		}
+
+		$this->tests_to_run = $validated_run_requests;
+	}
+	protected static function verify_test_installation($identifiers, &$tests_missing)
+	{
+		// Verify a test is installed
+		$identifiers = pts_arrays::to_array($identifiers);
+		$contains_a_suite = false;
+		$tests_installed = array();
+		$current_tests_missing = array();
+
+		foreach($identifiers as $identifier)
+		{
+			if(!$contains_a_suite && (pts_is_suite($identifier) || pts_is_test_result($identifier)))
+			{
+				$contains_a_suite = true;
+			}
+
+			foreach(pts_contained_tests($identifier) as $test)
+			{
+				if(pts_test_installed($test))
+				{
+					pts_arrays::unique_push($tests_installed, $test);
+				}
+				else
+				{
+					$test_profile = new pts_test_profile($test);
+
+					if($test_profile->is_supported())
+					{
+						pts_arrays::unique_push($current_tests_missing, $test);
+					}
+				}
+			}
+		}
+
+		$tests_missing = array_merge($tests_missing, $current_tests_missing);
+
+		return count($tests_installed) > 0 && (count($current_tests_missing) == 0 || $contains_a_suite);
 	}
 }
 

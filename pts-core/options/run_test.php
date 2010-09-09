@@ -22,10 +22,6 @@
 
 class run_test implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("run");
-	}
 	public static function run($to_run_identifiers)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
@@ -49,7 +45,7 @@ class run_test implements pts_option_interface
 		$test_properties = array();
 
 		// Cleanup tests to run
-		if(pts_cleanup_tests_to_run($to_run_identifiers) == false)
+		if(pts_test_run_manager::cleanup_tests_to_run($to_run_identifiers) == false)
 		{
 			return false;
 		}
@@ -206,7 +202,7 @@ class run_test implements pts_option_interface
 		}
 
 		// Run the test process
-		pts_validate_test_installations_to_run($test_run_manager);
+		$test_run_manager->validate_tests_to_run();
 
 		if($test_run_manager->get_test_count() == 0)
 		{
@@ -340,7 +336,7 @@ class run_test implements pts_option_interface
 
 		// Run the actual tests
 		pts_module_manager::module_process("__pre_run_process", $test_run_manager);
-		pts_call_test_runs($test_run_manager, $xml_results_writer);
+		$test_run_manager->call_test_runs($xml_results_writer);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_manager::module_process("__post_run_process", $test_run_manager);
 
@@ -381,7 +377,7 @@ class run_test implements pts_option_interface
 			}
 
 			pts_module_manager::module_process("__event_results_process", $xml_results_writer);
-			pts_save_test_file($xml_results_writer, $test_run_manager->get_file_name(), $test_run_manager->get_results_identifier());
+			pts_client::save_result_file_xml($xml_results_writer, $test_run_manager->get_file_name(), $test_run_manager->get_results_identifier());
 			pts_module_manager::module_process("__event_results_saved", $test_run_manager);
 			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $test_run_manager->get_file_name());

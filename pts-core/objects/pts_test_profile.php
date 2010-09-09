@@ -240,6 +240,19 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return base64_encode(implode(',', $hash_table));
 	}
+	public function get_test_executable_dir()
+	{
+		$to_execute = null;
+		$test_dir = TEST_ENV_DIR . $this->identifier . '/';
+		$execute_binary = $this->get_test_executable();
+
+		if(is_executable($test_dir . $execute_binary) || (IS_WINDOWS && is_file($test_dir . $execute_binary)))
+		{
+			$to_execute = $test_dir;
+		}
+
+		return $to_execute;
+	}
 
 	//
 	// Set Functions

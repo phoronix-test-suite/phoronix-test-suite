@@ -449,6 +449,32 @@ class pts_client
 
 		exit($exit_status);
 	}
+	public static function save_result_file_xml(&$results, $file_name, $result_identifier = null)
+	{
+		// Save the test file
+		$j = 1;
+		while(is_file(SAVE_RESULTS_DIR . $file_name . "/test-" . $j . ".xml"))
+		{
+			$j++;
+		}
+
+		$real_name = $file_name . "/test-" . $j . ".xml";
+
+		pts_client::save_test_result($real_name, $results->getXML());
+
+		if(!is_file(SAVE_RESULTS_DIR . $file_name . "/composite.xml"))
+		{
+			pts_client::save_test_result($file_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name), true, $result_identifier);
+		}
+		else
+		{
+			// Merge Results
+			$merged_results = pts_merge::merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $file_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
+			pts_client::save_test_result($file_name . "/composite.xml", $merged_results, true, $result_identifier);
+		}
+
+		return $real_name;
+	}
 	public static function current_user()
 	{
 		// Current system user
@@ -480,6 +506,18 @@ class pts_client
 		}
 
 		return $userhome;
+	}
+	public static function test_profile_debug_message($message)
+	{
+		$reported = false;
+
+		if(pts_is_assignment("DEBUG_TEST_PROFILE"))
+		{
+			pts_client::$display->test_run_instance_error($message);
+			$reported = true;
+		}
+
+		return $reported;
 	}
 	public static function parse_home_directory($path)
 	{

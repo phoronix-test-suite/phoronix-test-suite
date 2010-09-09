@@ -201,7 +201,7 @@ class pts_test_result_parser
 
 		return $test_result;
 	}
-	public function calculate_end_result(&$test_result)
+	public static function calculate_end_result(&$test_result)
 	{
 		$trial_results = $test_result->test_result_buffer->get_values();
 
@@ -501,21 +501,21 @@ class pts_test_result_parser
 
 					if($result_line_before_hint[$i] != null)
 					{
-						pts_test_profile_debug_message("Result Parsing Line Before Hint: " . $result_line_before_hint[$i]);
+						pts_client::test_profile_debug_message("Result Parsing Line Before Hint: " . $result_line_before_hint[$i]);
 						$result_line = substr($result_output, strpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
 						$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
 						$result_output = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i]))) . "\n";
 					}
 					else if($result_line_after_hint[$i] != null)
 					{
-						pts_test_profile_debug_message("Result Parsing Line After Hint: " . $result_line_after_hint[$i]);
+						pts_client::test_profile_debug_message("Result Parsing Line After Hint: " . $result_line_after_hint[$i]);
 						$result_line = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
 						$result_line = substr($result_line, strrpos($result_line, "\n", 1) + 1);
 						$result_output = null;
 					}
 					else if($search_key != null)
 					{
-						pts_test_profile_debug_message("Result Parsing Search Key: " . $search_key);
+						pts_client::test_profile_debug_message("Result Parsing Search Key: " . $search_key);
 						$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
 						$start_of_line = strrpos($result_line, "\n");
 						$result_output = substr($result_line, 0, $start_of_line) . "\n";
@@ -524,11 +524,11 @@ class pts_test_result_parser
 					else
 					{
 						// Condition $result_template_r[0] == $result_key[$i], include entire file since there is nothing to search
-						pts_test_profile_debug_message("No Result Parsing Hint, Including Entire Result Output");
+						pts_client::test_profile_debug_message("No Result Parsing Hint, Including Entire Result Output");
 						$result_line = trim($result_output);
 					}
 
-					pts_test_profile_debug_message("Result Line: " . $result_line);
+					pts_client::test_profile_debug_message("Result Line: " . $result_line);
 
 					$result_r = explode(' ', pts_strings::trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
 					$result_r_pos = array_search($result_key[$i], $result_r);
