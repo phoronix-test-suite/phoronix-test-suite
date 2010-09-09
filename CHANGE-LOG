@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Split part of pts_test_profile into pts_test_profile_parser as the lighter-weight profile parsing parent for use where applicable
+- pts-core: Drop option support for required_function_sets as everything is now modularized to objects
 
 Phoronix Test Suite 2.8.1
 September 9, 2010

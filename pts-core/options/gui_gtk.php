@@ -20,12 +20,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+include_once(PTS_LIBRARY_PATH . "pts-includes-gui.php");
+include_once(PTS_LIBRARY_PATH . "pts-includes-gtk.php");
+
 class gui_gtk implements pts_option_interface
 {
-	public static function required_function_sets()
-	{
-		return array("gui", "gtk");
-	}
 	public static function run($r)
 	{
 		if((!extension_loaded("gtk") && !extension_loaded("php-gtk")) || !class_exists("GtkWindow", false))

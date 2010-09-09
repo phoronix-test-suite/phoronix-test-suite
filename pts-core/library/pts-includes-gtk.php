@@ -21,6 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO: integrate to a class
+
 function pts_array_with_key_to_2d($array)
 {
 	$array_2d = array();

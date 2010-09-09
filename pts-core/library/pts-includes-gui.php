@@ -21,6 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO: integrate to a class
+
 function pts_gui_installed_suites()
 {
 	$installed_suites = array();
