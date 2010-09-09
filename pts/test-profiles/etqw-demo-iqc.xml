@@ -5,7 +5,7 @@
 		<Version>1.0.0</Version>
 		<TestType>System</TestType> <!-- By making it of type System instead of Graphics it will be possible to directly compare overridden AA / AF levels -->
 		<Extends>etqw-demo</Extends>
-		<AllowGlobalUploads>FALSE</AllowGlobalUploads>
+		<AllowResultsSharing>FALSE</AllowResultsSharing>
 		<AutoSaveResults>TRUE</AutoSaveResults>
 	</TestProfile>
 	<TestInformation>

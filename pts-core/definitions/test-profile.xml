@@ -204,9 +204,9 @@ PATH environment variable will contain each of the test directories below this t
 			<Required>NO</Required>
 		</Define>
 		<Define>
-			<Name>P_TEST_ALLOW_GLOBAL_UPLOADS</Name>
-			<Value>PhoronixTestSuite/TestProfile/AllowGlobalUploads</Value>
-			<Description>If this test profile emits result formats or data that is not compatible with Phoronix Global or is the test profile is just intended for internal use only, set <em>AllowGlobalUploads</em> to <em>FALSE</em>. If this tag is set to <em>FALSE</em>, the result generated from this test profile will not give the user the ability to upload the results to Phoronix Global after testing has concluded.</Description>
+			<Name>P_TEST_ALLOW_RESULTS_SHARING</Name>
+			<Value>PhoronixTestSuite/TestProfile/AllowResultsSharing</Value>
+			<Description>If this test profile emits result formats or data that is not compatible with Phoronix Global or is the test profile is just intended for internal use only, set <em>AllowResultsSharing</em> to <em>FALSE</em>. If this tag is set to <em>FALSE</em>, the result generated from this test profile will not give the user the ability to upload the results to Phoronix Global or other sharing services after testing has concluded.</Description>
 			<Required>NO</Required>
 		</Define>
 		<Define>

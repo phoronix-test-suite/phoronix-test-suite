@@ -663,7 +663,7 @@ class pts_test_run_manager
 	{
 		$failed_tests = array();
 		$validated_run_requests = array();
-		$allow_global_uploads = true;
+		$allow_results_sharing = true;
 		$display_driver = phodevi::read_property("system", "display-driver");
 
 		foreach($this->get_tests_to_run() as $test_run_request)
@@ -729,16 +729,16 @@ class pts_test_run_manager
 				continue;
 			}
 
-			if($allow_global_uploads && $test_run_request->test_profile->allow_global_uploads() == false)
+			if($allow_results_sharing && $test_run_request->test_profile->allow_results_sharing() == false)
 			{
 				// One of the contained test profiles does not allow Global uploads, so block it
-				$allow_global_uploads = false;
+				$allow_results_sharing = false;
 			}
 
 			array_push($validated_run_requests, $test_run_request);
 		}
 
-		if(!$allow_global_uploads)
+		if($allow_results_sharing == false)
 		{
 			pts_set_assignment("BLOCK_GLOBAL_UPLOADS", true);
 		}

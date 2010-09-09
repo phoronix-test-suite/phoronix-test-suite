@@ -168,9 +168,9 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE) == "TRUE";
 	}
-	public function allow_global_uploads()
+	public function allow_results_sharing()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_ALLOW_GLOBAL_UPLOADS) != "FALSE";
+		return $this->xml_parser->getXMLValue(P_TEST_ALLOW_RESULTS_SHARING) != "FALSE";
 	}
 	public function get_min_length()
 	{

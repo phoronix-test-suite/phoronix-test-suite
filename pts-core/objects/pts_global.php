@@ -105,7 +105,7 @@ class pts_global
 		{
 			$test_profile = new pts_test_profile($result_object->test_profile->get_identifier());
 
-			if($test_profile->allow_global_uploads() == false)
+			if($test_profile->allow_results_sharing() == false)
 			{
 				echo "\n" . $result_object->test_profile->get_identifier() . " does not allow test results to be uploaded to Phoronix Global.\n\n";
 				return false;
