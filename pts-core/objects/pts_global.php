@@ -53,8 +53,8 @@ class pts_global
 
 		if(strlen($gsid) == 9)
 		{
-			if(strlen(pts_strings::keep_in_string(substr($gsid, 0, 6), TYPE_CHAR_LETTER)) == 6 &&
-			strlen(pts_strings::keep_in_string(substr($gsid, 6, 3), TYPE_CHAR_NUMERIC)) == 3)
+			if(strlen(pts_strings::keep_in_string(substr($gsid, 0, 6), pts_strings::CHAR_LETTER)) == 6 &&
+			strlen(pts_strings::keep_in_string(substr($gsid, 6, 3), pts_strings::CHAR_NUMERIC)) == 3)
 			{
 				$gsid_valid = true;
 			}
@@ -176,7 +176,7 @@ class pts_global
 		{
 			$tags_input .= pts_user_io::prompt_user_input("Tags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas)", true);
 
-			$tags_input = pts_strings::keep_in_string($tags_input, TYPE_CHAR_LETTER | TYPE_CHAR_NUMERIC | TYPE_CHAR_DECIMAL | TYPE_CHAR_DASH | TYPE_CHAR_UNDERSCORE | TYPE_CHAR_COLON | TYPE_CHAR_SPACE | TYPE_CHAR_COMMA);
+			$tags_input = pts_strings::keep_in_string($tags_input, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COLON | pts_strings::CHAR_SPACE | pts_strings::CHAR_COMMA);
 			$tags_input = trim($tags_input);
 		}
 

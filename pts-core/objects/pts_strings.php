@@ -22,6 +22,15 @@
 
 class pts_strings
 {
+	const CHAR_LETTER = 1;
+	const CHAR_NUMERIC = 2;
+	const CHAR_DECIMAL = 3;
+	const CHAR_SPACE = 4;
+	const CHAR_DASH = 5;
+	const CHAR_UNDERSCORE = 6;
+	const CHAR_COLON = 7;
+	const CHAR_COMMA = 8;
+
 	public static function is_url($string)
 	{
 		$components = parse_url($string);
@@ -67,35 +76,35 @@ class pts_strings
 	{
 		$i = ord($char);
 
-		if(($attributes & TYPE_CHAR_LETTER) && (($i > 64 && $i < 91) || ($i > 96 && $i < 123)))
+		if(($attributes & self::CHAR_LETTER) && (($i > 64 && $i < 91) || ($i > 96 && $i < 123)))
 		{
 			$is_of_type = true;
 		}
-		else if(($attributes & TYPE_CHAR_NUMERIC) && $i > 47 && $i < 58)
+		else if(($attributes & self::CHAR_NUMERIC) && $i > 47 && $i < 58)
 		{
 			$is_of_type = true;
 		}
-		else if(($attributes & TYPE_CHAR_DECIMAL) && $i == 46)
+		else if(($attributes & self::CHAR_DECIMAL) && $i == 46)
 		{
 			$is_of_type = true;
 		}
-		else if(($attributes & TYPE_CHAR_DASH) && $i == 45)
+		else if(($attributes & self::CHAR_DASH) && $i == 45)
 		{
 			$is_of_type = true;
 		}
-		else if(($attributes & TYPE_CHAR_UNDERSCORE) && $i == 95)
+		else if(($attributes & self::CHAR_UNDERSCORE) && $i == 95)
 		{
 			$is_of_type = true;
 		}
-		else if(($attributes & TYPE_CHAR_COLON) && $i == 58)
+		else if(($attributes & self::CHAR_COLON) && $i == 58)
 		{
 			$is_of_type = true;
 		}
-		else if(($attributes & TYPE_CHAR_SPACE) && $i == 32)
+		else if(($attributes & self::CHAR_SPACE) && $i == 32)
 		{
 			$is_of_type = true;
 		}
-		else if(($attributes & TYPE_CHAR_COMMA) && $i == 44)
+		else if(($attributes & self::CHAR_COMMA) && $i == 44)
 		{
 			$is_of_type = true;
 		}
@@ -191,8 +200,8 @@ class pts_strings
 		// Checks if there's a major version difference between two strings, if so returns false.
 		// If the same or only a minor difference, returns true.
 
-		$old = explode('.', pts_strings::keep_in_string($old, TYPE_CHAR_NUMERIC | TYPE_CHAR_DECIMAL));
-		$new = explode('.', pts_strings::keep_in_string($new, TYPE_CHAR_NUMERIC | TYPE_CHAR_DECIMAL));
+		$old = explode('.', pts_strings::keep_in_string($old, self::CHAR_NUMERIC | self::CHAR_DECIMAL));
+		$new = explode('.', pts_strings::keep_in_string($new, self::CHAR_NUMERIC | self::CHAR_DECIMAL));
 		$compare = true;
 
 		if(count($old) >= 2 && count($new) >= 2)

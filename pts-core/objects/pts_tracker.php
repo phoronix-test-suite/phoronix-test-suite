@@ -136,7 +136,7 @@ class pts_tracker
 			if($is_tracking)
 			{
 				// Check to see if only numeric changes are being made
-				$date = pts_strings::remove_from_string($date, TYPE_CHAR_NUMERIC);
+				$date = pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC);
 
 				if($prev_date != null && $date != $prev_date)
 				{

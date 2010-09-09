@@ -147,7 +147,7 @@ class pts_result_file
 
 			foreach($identifiers as &$identifier)
 			{
-				$identifier = pts_strings::remove_from_string($identifier, TYPE_CHAR_NUMERIC);
+				$identifier = pts_strings::remove_from_string($identifier, pts_strings::CHAR_NUMERIC);
 			}
 
 			$is_tracker = count($identifiers) > 5 && count(array_unique($identifiers)) == 1;
