@@ -222,7 +222,10 @@ class pts_result_file
 					{
 						$this->is_multi_way_inverted = true;
 					}
-
+					else if(count($hardware) == ($targets_count * $systems_count))
+					{
+						$this->is_multi_way_inverted = true;
+					}
 				}
 			}
 
