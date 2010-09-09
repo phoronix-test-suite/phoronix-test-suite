@@ -27,8 +27,8 @@ if(PTS_MODE == "CLIENT")
 }
 
 define("PTS_VERSION", "2.8.1");
-define("PTS_CORE_VERSION", 2810);
-define("PTS_CODENAME", "TORSKEN");
+define("PTS_CORE_VERSION", 2900);
+define("PTS_CODENAME", "IVELAND");
 
 function pts_codename($full_string = false)
 {
