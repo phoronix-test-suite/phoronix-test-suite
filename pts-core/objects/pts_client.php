@@ -285,11 +285,7 @@ class pts_client
 		copy(STATIC_DIR . "xsl/pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
 		copy(STATIC_DIR . "images/pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
 
-		// Load the defintions now since if you run "phoronix-test-suite run TEST It will fail" since test-profile.xml is not
-		// defined when using pts_*_read_xml() the first time
-		pts_loader::load_definitions("test-suite.xml");	
-		pts_loader::load_definitions("test-installation.xml");
-		pts_loader::load_definitions("module-settings.xml");
+		pts_loader::load_definitions("module-settings.xml"); // TODO: make it only load this definition when actually needed
 
 		// Compatibility for importing old module configuration settings from pre PTS 2.6 into new structures
 		if(is_file(PTS_USER_DIR . "modules-config.xml"))

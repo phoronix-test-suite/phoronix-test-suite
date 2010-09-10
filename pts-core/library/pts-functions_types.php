@@ -245,7 +245,9 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 	{
 		if(pts_is_suite($object)) // Object is suite
 		{
-			foreach(array_unique(pts_suite_read_xml_array($object, P_SUITE_TEST_NAME)) as $test)
+			$test_suite = new pts_test_suite($object);
+
+			foreach(array_unique($test_suite->get_test_names()) as $test)
 			{
 				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
 				{
@@ -442,16 +444,6 @@ function pts_test_needs_updated_install($identifier)
 	// Checks if test needs updating
 	// || $installed_test->get_installed_system_identifier() != phodevi::system_id_string()
 	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable($test_profile->get_test_profile_version(), $installed_test->get_installed_version()) || $test_profile->get_installer_checksum() != $installed_test->get_installed_checksum() || pts_is_assignment("PTS_FORCE_INSTALL");
-}
-function pts_suite_read_xml($identifier, $xml_option)
-{
- 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
-	return $xml_parser->getXMLValue($xml_option);
-}
-function pts_suite_read_xml_array($identifier, $xml_option)
-{
- 	$xml_parser = new pts_suite_tandem_XmlReader($identifier);
-	return $xml_parser->getXMLArrayValues($xml_option);
 }
 function pts_version_newer($version_a, $version_b)
 {

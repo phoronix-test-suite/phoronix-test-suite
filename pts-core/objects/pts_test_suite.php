@@ -88,6 +88,10 @@ class pts_test_suite
 	{
 		return $this->xml_parser->getXMLValue(P_SUITE_TYPE);
 	}
+	public function get_test_names()
+	{
+		return $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+	}
 	public function pts_format_contained_tests_string()
 	{
 		$str = null;
