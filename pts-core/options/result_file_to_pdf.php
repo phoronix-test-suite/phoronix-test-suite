@@ -44,29 +44,28 @@ class result_file_to_pdf implements pts_option_interface
 		define("BILDE_IMAGE_INTERLACING", false); // Otherwise FPDF will fail
 		pts_render::generate_result_file_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
-		$xml_parser = new pts_results_tandem_XmlReader($r["result_file"]);
-		$pdf = new pts_pdf_template($xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE), null);
+		$result_file = new pts_result_file($r["result_file"]);
+		$pdf = new pts_pdf_template($result_file->get_title(), null);
 
 		$pdf->AddPage();
 		$pdf->Image(STATIC_DIR . "images/pts-308x160.png", 69, 85, 73, 38);
 		$pdf->Ln(120);
 		$pdf->WriteStatementCenter("www.phoronix-test-suite.com");
 		$pdf->Ln(15);
-		$pdf->WriteBigHeaderCenter($xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE));
-		$pdf->WriteText($xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION));
+		$pdf->WriteBigHeaderCenter($result_file->get_title());
+		$pdf->WriteText($result_file->get_suite_description());
 
 
 		$pdf->AddPage();
 		$pdf->Ln(15);
 
-		$identifiers = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
-		$hardware_r = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);
-		$software_r = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_SOFTWARE);
-		$notes_r = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_NOTES);
-		//$date_r = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_DATE);
-		$tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
+		$identifiers = $result_file->get_system_identifiers();
+		$hardware_r = $result_file->get_system_hardware();
+		$software_r = $result_file->get_system_software();
+		$notes_r = $result_file->get_system_notes();
+		$tests = $result_file->get_test_titles();
 
-		$pdf->SetSubject($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE) . " Benchmarks");
+		$pdf->SetSubject($result_file->get_title() . " Benchmarks");
 		$pdf->SetKeywords(implode(", ", $identifiers));
 
 		$pdf->WriteHeader("Test Systems:");

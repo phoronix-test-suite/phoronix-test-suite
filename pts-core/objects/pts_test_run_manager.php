@@ -786,11 +786,11 @@ class pts_test_run_manager
 			else if(pts_is_suite($to_run))
 			{
 				// Print the $to_run ?
-				$xml_parser = new pts_suite_tandem_XmlReader($to_run);
+				$test_suite = new pts_test_suite($to_run);
 
-				$this->pre_run_message = $xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
-				$this->post_run_message = $xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
-				$suite_run_mode = $xml_parser->getXMLValue(P_SUITE_RUNMODE);
+				$this->pre_run_message = $test_suite->get_pre_run_message();
+				$this->post_run_message = $test_suite->get_post_run_message();
+				$suite_run_mode = $test_suite->get_run_mode();
 
 				if($suite_run_mode == "PCQS")
 				{
@@ -802,13 +802,11 @@ class pts_test_run_manager
 			else if(pts_is_test_result($to_run))
 			{
 				// Print the $to_run ?
-				$xml_parser = new pts_results_tandem_XmlReader($to_run);
-				$this->run_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
-				$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
-				$test_previous_properties = $xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
-				$test_run = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-				$test_args = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
-				$test_args_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+				$result_file = new pts_result_file($to_run);
+				$this->run_description = $result_file->get_suite_description();
+				$test_extensions = $result_file->get_suite_extensions();
+				$test_previous_properties = $result_file->get_suite_properties();
+				$result_objects = $result_file->get_result_objects();
 				$test_override_options = array();
 
 				pts_set_assignment("AUTO_SAVE_NAME", $to_run);
@@ -822,9 +820,6 @@ class pts_test_run_manager
 
 				if(pts_is_assignment("FINISH_INCOMPLETE_RUN"))
 				{
-					$all_test_runs = $test_run;
-					$all_test_args = $test_args;
-					$all_test_args_description = $test_args_description;
 					$test_run = array();
 					$test_args = array();
 					$test_args_description = array();
@@ -833,11 +828,11 @@ class pts_test_run_manager
 
 					foreach($tests_to_complete as $test_pos)
 					{
-						if(!empty($all_test_runs[$test_pos]))
+						if(isset($result_objects[$test_pos]))
 						{
-							array_push($test_run, $all_test_runs[$test_pos]);
-							array_push($test_args, $all_test_args[$test_pos]);
-							array_push($test_args_description, $all_test_args_description[$test_pos]);
+							array_push($test_run, $result_objects[$test_pos]->test_profile->get_identifier());
+							array_push($test_args, $result_objects[$test_pos]->get_arguments());
+							array_push($test_args_description, $result_objects[$test_pos]->get_arguments_description());
 						}
 					}
 				}
@@ -853,6 +848,15 @@ class pts_test_run_manager
 						array_push($test_args, $test_run_request->get_arguments());
 						array_push($test_args_description, $test_run_request->get_arguments_description());
 						array_push($test_override_options, $test_run_request->test_profile->get_override_values());
+					}
+				}
+				else
+				{
+					foreach($result_objects as &$result_object)
+					{
+						array_push($test_run, $result_object->test_profile->get_identifier());
+						array_push($test_args, $result_object->get_arguments());
+						array_push($test_args_description, $result_object->get_arguments_description());
 					}
 				}
 

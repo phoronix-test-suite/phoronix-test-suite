@@ -273,10 +273,12 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 		}
 		else if(pts_is_test_result($object)) // Object is a saved results file
 		{
-			$xml_parser = new pts_results_tandem_XmlReader($object);
+			$result_file = new pts_result_file($object);
 
-			foreach($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME) as $test)
+			foreach($result_file->get_result_objects() as $result_object)
 			{
+				$test = $result_object->test_profile->get_identifier();
+
 				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
 				{
 					array_push($tests, $sub_test);
@@ -285,10 +287,12 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 		}
 		else if(pts_global::is_global_id($object)) // Object is a Phoronix Global file
 		{
-			$xml_parser = new pts_results_tandem_XmlReader(pts_global::download_result_xml($object));
+			$result_file = new pts_result_file(pts_global::download_result_xml($object));
 
-			foreach($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME) as $test)
+			foreach($result_file->get_result_objects() as $result_object)
 			{
+				$test = $result_object->test_profile->get_identifier();
+
 				foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
 				{
 					array_push($tests, $sub_test);
@@ -455,6 +459,8 @@ function pts_version_newer($version_a, $version_b)
 
 	return $r_a > $r_b ? $version_a : $version_b;
 }
+
+// TODO: take care of pts_tests::available_tests() needs similar changes to the other type functions
 
 
 /*

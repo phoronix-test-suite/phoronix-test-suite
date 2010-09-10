@@ -56,6 +56,10 @@ class pts_installed_test
 	{
 		return $this->xml_parser->getXMLValue(P_INSTALL_TEST_LATEST_RUNTIME);
 	}
+	public function get_latest_install_time()
+	{
+		return $this->xml_parser->getXMLValue(P_INSTALL_TEST_INSTALLTIME_LENGTH);
+	}
 	public function get_run_count()
 	{
 		return ($times_run = $this->xml_parser->getXMLValue(P_INSTALL_TEST_TIMESRUN)) != false ? $times_run : 0;

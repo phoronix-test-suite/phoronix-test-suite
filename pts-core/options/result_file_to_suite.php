@@ -46,24 +46,19 @@ class result_file_to_suite implements pts_option_interface
 		$xml_writer->addXmlObject(P_SUITE_MAINTAINER, 0, $suite_maintainer);
 		$xml_writer->addXmlObject(P_SUITE_TYPE, 0, $suite_test_type);
 		$xml_writer->addXmlObject(P_SUITE_DESCRIPTION, 0, $suite_description);
-		$write_position = 1;
 
 		// Read results file
-		$xml_parser = new pts_results_tandem_XmlReader($result_file);
-		$tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-		$arguments = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
-		$attributes = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+		$result_file = new pts_result_file($result_file);
 
-		for($i = 0; $i < count($tests); $i++)
+		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
-			$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $tests[$i]);
+			$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $i, $result_object->test_profile->get_identifier());
 
-			if(!empty($arguments[$i]) && !empty($attributes[$i]))
+			if($result_object->get_arguments() != null && $result_object->get_arguments_description() != null)
 			{
-				$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $write_position, $arguments[$i]);
-				$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $write_position, $attributes[$i]);
+				$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $i, $result_object->get_arguments());
+				$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $i, $result_object->get_arguments_description());
 			}
-			$write_position++;
 		}
 
 		// Finish it off

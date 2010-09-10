@@ -88,6 +88,18 @@ class pts_test_suite
 	{
 		return $this->xml_parser->getXMLValue(P_SUITE_TYPE);
 	}
+	public function get_pre_run_message()
+	{
+		return $this->xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
+	}
+	public function get_post_run_message()
+	{
+		return $this->xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
+	}
+	public function get_run_mode()
+	{
+		return $this->xml_parser->getXMLValue(P_SUITE_RUNMODE);
+	}
 	public function get_test_names()
 	{
 		return $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
