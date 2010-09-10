@@ -35,6 +35,7 @@ class pts_test_run_manager
 	private $prompt_save_results = true;
 	private $post_run_message = null;
 	private $pre_run_message = null;
+	private $allow_sharing_of_results = true;
 
 	private $do_dynamic_run_count = false;
 	private $dynamic_roun_count_on_length_or_less;
@@ -231,6 +232,10 @@ class pts_test_run_manager
 	public function do_save_results()
 	{
 		return $this->file_name != null;
+	}
+	public function allow_results_sharing()
+	{
+		return $this->allow_sharing_of_results;
 	}
 	public function get_file_name()
 	{
@@ -944,7 +949,7 @@ class pts_test_run_manager
 
 		if($allow_results_sharing == false)
 		{
-			pts_set_assignment("BLOCK_GLOBAL_UPLOADS", true);
+			$this->allow_sharing_of_results = false;
 		}
 
 		$this->tests_to_run = $validated_run_requests;

@@ -177,7 +177,15 @@ class pts_tests
 		$extra_vars["HOME"] = TEST_ENV_DIR . $identifier . "/";
 
 		$ctp_extension_string = "";
-		$extends = pts_test_extends_below($identifier);
+
+		$test_profile = new pts_test_profile($identifier);
+		$extends = $test_profile->get_test_extensions_recursive();
+
+		if(isset($extends[0]))
+		{
+			$extra_vars["TEST_EXTENDS"] = TEST_ENV_DIR . $extends[0];
+		}
+
 		foreach(array_merge(array($identifier), $extends) as $extended_test)
 		{
 			if(is_dir(TEST_ENV_DIR . $extended_test . "/"))
@@ -190,11 +198,6 @@ class pts_tests
 		if(!empty($ctp_extension_string))
 		{
 			$extra_vars["PATH"] = $ctp_extension_string . "\$PATH";
-		}
-
-		if(isset($extends[0]))
-		{
-			$extra_vars["TEST_EXTENDS"] = TEST_ENV_DIR . $extends[0];
 		}
 
 		return $extra_vars;

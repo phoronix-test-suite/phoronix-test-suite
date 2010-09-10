@@ -76,6 +76,29 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $estimated_size;
 	}
+	public function get_test_extensions_recursive()
+	{
+		// Process Extensions / Cascading Test Profiles
+		$extensions = array();
+		$extended_test = $this->get_test_extension();
+
+		if(!empty($extended_test))
+		{
+			do
+			{
+				if(!in_array($extended_test, $extensions))
+				{
+					array_push($extensions, $extended_test);
+				}
+
+				$extended_test = new pts_test_profile_parser($extended_test);
+				$extended_test = $extended_test->get_test_extension();
+			}
+			while(!empty($extended_test));
+		}
+
+		return $extensions;
+	}
 	public function get_dependency_names()
 	{
 		$dependency_names = array();

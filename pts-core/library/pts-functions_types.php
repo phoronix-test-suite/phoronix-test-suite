@@ -97,8 +97,11 @@ function pts_validate_local_test_profile($identifier)
 
 		if(is_file(($sp = XML_PROFILE_DIR . $identifier . ".xml")))
 		{
-			$lp_version = pts_test_read_xml($lp, P_TEST_PTSVERSION);
-			$sp_version = pts_test_read_xml($sp, P_TEST_PTSVERSION);
+			$lp_test = new pts_test_profile($lp);
+			$lp_version = $lp_test->get_test_profile_version();
+
+			$sp_test = new pts_test_profile($sp);
+			$sp_version = $sp_test->get_test_profile_version();
 
 			if(pts_version_newer($lp_version, $sp_version) == $sp_version)
 			{
@@ -126,8 +129,11 @@ function pts_validate_local_test_suite($identifier)
 
 		if(is_file(($ss = XML_SUITE_DIR . $identifier . ".xml")))
 		{
-			$ls_version = pts_test_read_xml($ls, P_SUITE_VERSION);
-			$ss_version = pts_test_read_xml($ss, P_SUITE_VERSION);
+			$ls_suite = new pts_test_suite($ls);
+			$ls_version = $ls_suite->get_version();
+
+			$ss_suite = new pts_test_suite($ss);
+			$ss_version = $ss_suite->get_version();
 
 			if(pts_version_newer($ls_version, $ss_version) == $ss_version)
 			{
@@ -229,39 +235,6 @@ function pts_location_virtual_suite($identifier)
 
 	return $cache[$identifier];
 }
-function pts_test_extends_below($object)
-{
-	// Process Extensions / Cascading Test Profiles
-	$extensions = array();
-	$test_extends = $object;
-
-	do
-	{
-		if(pts_is_test($test_extends))
-		{
-			$test_extends = pts_test_read_xml($test_extends, P_TEST_CTPEXTENDS);
-
-			if(!empty($test_extends))
-			{
-				if(!in_array($test_extends, $extensions) && pts_is_test($test_extends))
-				{
-					array_push($extensions, $test_extends);
-				}
-				else
-				{
-					$test_extends = null;
-				}
-			}
-		}
-		else
-		{
-			$test_extends = null;
-		}
-	}
-	while(!empty($test_extends));
-
-	return array_reverse($extensions);
-}
 function pts_contained_tests($objects, $include_extensions = false, $check_extended = true, $remove_duplicates = true)
 {
 	// Provide an array containing the location(s) of all test(s) for the supplied object name
@@ -284,7 +257,9 @@ function pts_contained_tests($objects, $include_extensions = false, $check_exten
 		{
 			if($include_extensions)
 			{
-				foreach(pts_test_extends_below($object) as $extension)
+				$test_profile = new pts_test_profile($object);
+
+				foreach(array_reverse($test_profile->get_test_extensions_recursive()) as $extension)
 				{
 					if(!in_array($extension, $tests))
 					{
@@ -358,8 +333,9 @@ function pts_virtual_suite_tests($object)
 		case "TYPE_VIRT_SUITE_ALL":
 			foreach(pts_tests::supported_tests() as $test)
 			{
-				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
-				$test_license = pts_test_read_xml($test, P_TEST_LICENSE);
+				$test_profile = new pts_test_profile_parser($test);
+				$result_format = $test_profile->get_result_format();
+				$test_license = $test_profile->get_license();
 
 				if(!in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL", "IMAGE_COMPARISON")) && !in_array($test_license, array("RETAIL", "RESTRICTED")))
 				{
@@ -370,8 +346,9 @@ function pts_virtual_suite_tests($object)
 		case "TYPE_VIRT_SUITE_INSTALLED_TESTS":
 			foreach(pts_tests::installed_tests() as $test)
 			{
-				$result_format = pts_test_read_xml($test, P_TEST_RESULTFORMAT);
-				$test_title = pts_test_read_xml($test, P_TEST_TITLE);
+				$test_profile = new pts_test_profile_parser($test);
+				$result_format = $test_profile->get_result_format();
+				$test_title = $test_profile->get_title();
 
 				if(!empty($test_title) && !in_array($result_format, array("NO_RESULT", "PASS_FAIL", "MULTI_PASS_FAIL", "IMAGE_COMPARISON")))
 				{
@@ -382,7 +359,8 @@ function pts_virtual_suite_tests($object)
 		case "TYPE_VIRT_SUITE_FREE":
 			foreach(pts_tests::supported_tests() as $test)
 			{
-				$test_license = pts_test_read_xml($test, P_TEST_LICENSE);
+				$test_profile = new pts_test_profile_parser($test);
+				$test_license = $test_profile->get_license();
 
 				if($test_license == "FREE")
 				{
@@ -464,11 +442,6 @@ function pts_test_needs_updated_install($identifier)
 	// Checks if test needs updating
 	// || $installed_test->get_installed_system_identifier() != phodevi::system_id_string()
 	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable($test_profile->get_test_profile_version(), $installed_test->get_installed_version()) || $test_profile->get_installer_checksum() != $installed_test->get_installed_checksum() || pts_is_assignment("PTS_FORCE_INSTALL");
-}
-function pts_test_read_xml($identifier, $xml_option)
-{
- 	$xml_parser = new pts_test_tandem_XmlReader($identifier);
-	return $xml_parser->getXMLValue($xml_option);
 }
 function pts_suite_read_xml($identifier, $xml_option)
 {

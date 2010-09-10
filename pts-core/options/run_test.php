@@ -180,7 +180,7 @@ class run_test implements pts_option_interface
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $test_run_manager->get_file_name());
 			pts_client::display_web_page(SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/index.html");
 
-			if(!pts_read_assignment("BLOCK_GLOBAL_UPLOADS") && !defined("NO_NETWORK_COMMUNICATION"))
+			if($test_run_manager->allow_results_sharing() && !defined("NO_NETWORK_COMMUNICATION"))
 			{
 				if(pts_is_assignment("AUTOMATED_MODE"))
 				{

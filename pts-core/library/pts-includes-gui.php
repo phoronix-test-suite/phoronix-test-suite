@@ -176,15 +176,9 @@ function pts_test_download_files_locally_available($identifier)
 
 		if(count($test_object_downloads) == 0 && !pts_is_base_test($name) && $test_profile->get_installer_checksum() == null)
 		{
-			$xml_parser = new pts_test_tandem_XmlReader($name);
-			$execute_binary = $xml_parser->getXMLValue(P_TEST_EXECUTABLE);
+			$test_profile = new pts_test_profile($name);
 
-			if(empty($execute_binary))
-			{
-				$execute_binary = $name;
-			}
-
-			if(is_file(TEST_ENV_DIR . $name . "/" . $execute_binary))
+			if($test_profile->get_test_executable_dir() != null)
 			{
 				continue;
 			}
