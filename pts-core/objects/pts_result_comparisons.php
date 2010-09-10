@@ -27,7 +27,8 @@ class pts_result_comparisons
 		static $ref_systems_xml_strings = array();
 
 		$result_file = new pts_result_file($result);
-		$result_test = $result_file->get_suite_name();
+		//$result_test = $result_file->get_suite_name();
+		// TODO: figure out instead of $result_test
 		$result_identifiers = $result_file->get_system_identifiers();
 		$test_result_hashes = $result_file->get_result_object_hashes();
 		$reference_tests = array();

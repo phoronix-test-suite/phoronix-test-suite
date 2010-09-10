@@ -68,17 +68,9 @@ class pts_result_file
 	{
 		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
 	}
-	public function get_suite_name()
-	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_NAME);
-	}
 	public function get_title()
 	{
 		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
-	}
-	public function get_suite_version()
-	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
 	}
 	public function get_suite_description()
 	{
@@ -91,10 +83,6 @@ class pts_result_file
 	public function get_suite_properties()
 	{
 		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
-	}
-	public function get_suite_type()
-	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
 	}
 	public function get_test_titles()
 	{

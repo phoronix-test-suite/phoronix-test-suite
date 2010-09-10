@@ -116,10 +116,7 @@ class pts_merge
 	protected static function result_file_suite_info_to_xml(&$pts_result_file, &$xml_writer)
 	{
 		$xml_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 0, $pts_result_file->get_title());
-		$xml_writer->addXmlObject(P_RESULTS_SUITE_NAME, 0, $pts_result_file->get_suite_name());
-		$xml_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 0, $pts_result_file->get_suite_version());
 		$xml_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 0, $pts_result_file->get_suite_description());
-		$xml_writer->addXmlObject(P_RESULTS_SUITE_TYPE, 0, $pts_result_file->get_suite_type());
 		$xml_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $pts_result_file->get_suite_extensions());
 		$xml_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $pts_result_file->get_suite_properties());
 	}

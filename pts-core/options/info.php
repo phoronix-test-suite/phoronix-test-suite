@@ -148,7 +148,7 @@ class info implements pts_option_interface
 		{
 			$result_file = new pts_result_file($to_info);
 
-			echo "Title: " . $result_file->get_title() . "\nIdentifier: " . $to_info . "\nTest: " . $result_file->get_suite_name() . "\n";
+			echo "Title: " . $result_file->get_title() . "\nIdentifier: " . $to_info . "\n";
 			echo "\nTest Result Identifiers:\n";
 			echo pts_user_io::display_text_list($result_file->get_system_identifiers());
 

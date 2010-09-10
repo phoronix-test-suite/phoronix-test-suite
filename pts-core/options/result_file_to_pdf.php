@@ -45,7 +45,7 @@ class result_file_to_pdf implements pts_option_interface
 		pts_render::generate_result_file_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
 		$xml_parser = new pts_results_tandem_XmlReader($r["result_file"]);
-		$pdf = new pts_pdf_template($xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE), $xml_parser->getXMLValue(P_RESULTS_SUITE_NAME));
+		$pdf = new pts_pdf_template($xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE), null);
 
 		$pdf->AddPage();
 		$pdf->Image(STATIC_DIR . "images/pts-308x160.png", 69, 85, 73, 38);
@@ -66,7 +66,7 @@ class result_file_to_pdf implements pts_option_interface
 		//$date_r = $xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_DATE);
 		$tests = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 
-		$pdf->SetSubject($xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE) . " Benchmarks");
+		$pdf->SetSubject($xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE) . " Benchmarks");
 		$pdf->SetKeywords(implode(", ", $identifiers));
 
 		$pdf->WriteHeader("Test Systems:");

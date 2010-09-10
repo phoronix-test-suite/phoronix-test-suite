@@ -798,11 +798,9 @@ class pts_test_run_manager
 			{
 				// Print the $to_run ?
 				$xml_parser = new pts_results_tandem_XmlReader($to_run);
-				$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
+				$this->run_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
 				$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
 				$test_previous_properties = $xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
-				$test_version = $xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
-				$test_type = $xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
 				$test_run = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
 				$test_args = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
 				$test_args_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);

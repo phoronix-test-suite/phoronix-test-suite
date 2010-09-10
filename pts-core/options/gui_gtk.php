@@ -472,8 +472,6 @@ class gui_gtk implements pts_option_interface
 
 			$info_r["Title"] = $result_file->get_title();
 			$info_r["null1"] = null;
-			$info_r["Test"] = $result_file->get_suite_name();
-			$info_r["null2"] = null;
 
 			$reference_tests = pts_result_comparisons::reference_tests_for_result($identifier);
 			if(count($reference_tests) > 0)

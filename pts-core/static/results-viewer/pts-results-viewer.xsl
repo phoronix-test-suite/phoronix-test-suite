@@ -40,7 +40,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<div id="pts_banner_nav"><a href="#result-overview">Results Table</a> <a href="#test-results">Test Results</a> <a href="installation-logs/">Installation Logs</a> <a href="system-logs/">System Logs</a> <a href="test-logs/">Test Logs</a></div>
 
 		<h1><xsl:value-of select="PhoronixTestSuite/Suite/Title" /></h1>
-		<p><em><strong>Test:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Name" /><br /><em><strong>Test Version:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Version" /><br /><em><strong>Test Type:</strong></em>&#160;<xsl:value-of select="PhoronixTestSuite/Suite/Type" /></p>
 		<p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p>
 
 		<h1>System Information</h1>

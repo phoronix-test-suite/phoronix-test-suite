@@ -166,7 +166,7 @@ abstract class pts_Graph
 		if($result_file != null && $result_file instanceOf pts_result_file)
 		{
 			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison() && $this->graph_type == "BAR_GRAPH";
-			$this->addInternalIdentifier("Identifier", $result_file->get_suite_name());
+			//$this->addInternalIdentifier("Identifier", null); // TODO: result file name
 
 			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
 			if(empty($pts_version))

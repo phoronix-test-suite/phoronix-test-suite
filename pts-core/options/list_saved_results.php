@@ -35,8 +35,7 @@ class list_saved_results implements pts_option_interface
 
 				if(($title = $result_file->get_title()) != null)
 				{
-					echo $title . "\n";
-					echo sprintf("Saved Name: %-18ls Test: %-18ls \n", $saved_results_identifier, $result_file->get_suite_name());
+					echo sprintf("Saved Name: %-18ls Title: %-18ls \n", $saved_results_identifier, $title);
 
 					foreach($result_file->get_system_identifiers() as $id)
 					{

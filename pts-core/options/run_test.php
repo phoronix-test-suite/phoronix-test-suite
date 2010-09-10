@@ -112,10 +112,7 @@ class run_test implements pts_option_interface
 
 				$id = $xml_results_writer->request_unique_id();
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $test_run_manager->get_file_name_title());
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? pts_arrays::first_element($to_run_identifiers) : "custom"));
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 1, $test_version);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_run_manager->get_run_description());
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, 1, $test_type);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 1, pts_module_manager::var_store_string());
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 1, implode(";", $test_properties));
 			}

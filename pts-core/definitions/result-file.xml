@@ -43,18 +43,6 @@
 			<Value>PhoronixTestSuite/Suite/Title</Value>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_SUITE_NAME</Name>
-			<Value>PhoronixTestSuite/Suite/Name</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_SUITE_TYPE</Name>
-			<Value>PhoronixTestSuite/Suite/Type</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_SUITE_VERSION</Name>
-			<Value>PhoronixTestSuite/Suite/Version</Value>
-		</Define>
-		<Define>
 			<Name>P_RESULTS_SUITE_DESCRIPTION</Name>
 			<Value>PhoronixTestSuite/Suite/Description</Value>
 		</Define>
