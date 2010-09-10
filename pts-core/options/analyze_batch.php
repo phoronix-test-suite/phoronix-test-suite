@@ -43,7 +43,6 @@ class analyze_batch implements pts_option_interface
 		// Analyze Results
 		$SAVED_RESULTS = pts_merge::generate_analytical_batch_xml($base_file);
 		pts_client::save_test_result($save_to, $SAVED_RESULTS);
-		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $save_to);
 		echo "Results Saved To: " . SAVE_RESULTS_DIR . $save_to . "\n\n";
 		pts_client::display_web_page(SAVE_RESULTS_DIR . dirname($save_to) . "/index.html");
 	}

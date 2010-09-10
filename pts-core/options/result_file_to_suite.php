@@ -67,7 +67,7 @@ class result_file_to_suite implements pts_option_interface
 		}
 
 		// Finish it off
-		$suite_identifier = pts_test_run_manager::clean_save_name_string(str_replace(" ", "-", strtolower($suite_name)));
+		$suite_identifier = pts_test_run_manager::clean_save_name_string($suite_name);
 
 		if(is_file(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml"))
 		{

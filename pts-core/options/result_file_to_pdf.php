@@ -125,7 +125,6 @@ class result_file_to_pdf implements pts_option_interface
 		}
 
 		$pdf->Output($pdf_file);
-		pts_set_assignment_next("PREV_PDF_FILE", $pdf_file);
 		echo "\nSaved To: " . $pdf_file . "\n\n";
 	}
 }

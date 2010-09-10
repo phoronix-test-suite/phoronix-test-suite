@@ -59,228 +59,33 @@ class run_test implements pts_option_interface
 			return false;
 		}
 
-		$unique_test_count = count(array_unique($to_run_identifiers));
+		// Get our objects ready
 		$test_run_manager = new pts_test_run_manager();
+		$xml_results_writer = new pts_results_tandem_XmlWriter();
 
-		foreach($to_run_identifiers as $to_run)
-		{
-			$to_run = strtolower($to_run);
-
-			if(!pts_is_test_result($to_run) && pts_global::is_global_id($to_run))
-			{
-				pts_global::clone_global_result($to_run);
-			}
-
-			if(pts_is_test($to_run))
-			{
-				if(!pts_is_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE"))
-				{
-					$test_profile = new pts_test_profile($to_run);
-
-					if($test_profile->get_result_format() == "NO_RESULT")
-					{
-						pts_set_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE", true);
-					}
-					if($test_profile->do_auto_save_results())
-					{
-						pts_set_assignment("TEST_PROFILE_REQUESTS_SAVE", true);
-					}
-				}
-
-				if(pts_read_assignment("IS_BATCH_MODE") && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
-				{
-					list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($to_run);
-				}
-				else if(pts_read_assignment("IS_DEFAULTS_MODE"))
-				{
-					list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($to_run);
-				}
-				else
-				{
-					list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($to_run);
-				}
-
-				$test_run_manager->add_single_test_run($to_run, $test_arguments, $test_arguments_description);
-
-				if($unique_test_count == 1)
-				{
-					$test_profile = new pts_test_profile($to_run);
-					$test_description = $test_profile->get_description();
-					$test_version = $test_profile->get_test_profile_version();
-					$test_type = $test_profile->get_test_hardware_type();
-				}
-			}
-			else if(pts_is_suite($to_run))
-			{
-				// Print the $to_run ?
-				$xml_parser = new pts_suite_tandem_XmlReader($to_run);
-
-				if($unique_test_count == 1)
-				{
-					$test_description = $xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
-					$test_version = $xml_parser->getXMLValue(P_SUITE_VERSION);
-					$test_type = $xml_parser->getXMLValue(P_SUITE_TYPE);
-				}
-
-				$pre_run_message = $xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
-				$post_run_message = $xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
-				$suite_run_mode = $xml_parser->getXMLValue(P_SUITE_RUNMODE);
-
-				if($suite_run_mode == "PCQS")
-				{
-					pts_set_assignment_once("IS_PCQS_MODE", true);
-				}
-
-				$test_run_manager->add_suite_run($to_run);
-			}
-			else if(pts_is_test_result($to_run))
-			{
-				// Print the $to_run ?
-				$xml_parser = new pts_results_tandem_XmlReader($to_run);
-				$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
-				$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
-				$test_previous_properties = $xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
-				$test_version = $xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
-				$test_type = $xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
-				$test_run = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-				$test_args = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
-				$test_args_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
-				$test_override_options = array();
-
-				pts_set_assignment("AUTO_SAVE_NAME", $to_run);
-
-				foreach(explode(";", $test_previous_properties) as $test_prop)
-				{
-					pts_arrays::unique_push($test_properties, $test_prop);
-				}
-
-				pts_module_manager::process_extensions_string($test_extensions);
-
-				if(pts_is_assignment("FINISH_INCOMPLETE_RUN"))
-				{
-					$all_test_runs = $test_run;
-					$all_test_args = $test_args;
-					$all_test_args_description = $test_args_description;
-					$test_run = array();
-					$test_args = array();
-					$test_args_description = array();
-
-					$tests_to_complete = pts_read_assignment("TESTS_TO_COMPLETE");
-
-					foreach($tests_to_complete as $test_pos)
-					{
-						if(!empty($all_test_runs[$test_pos]))
-						{
-							array_push($test_run, $all_test_runs[$test_pos]);
-							array_push($test_args, $all_test_args[$test_pos]);
-							array_push($test_args_description, $all_test_args_description[$test_pos]);
-						}
-					}
-				}
-				else if(pts_is_assignment("RECOVER_RUN"))
-				{
-					$test_run = array();
-					$test_args = array();
-					$test_args_description = array();
-
-					foreach(pts_read_assignment("RECOVER_RUN_REQUESTS") as $test_run_request)
-					{
-						array_push($test_run, $test_run_request->test_profile->get_identifier());
-						array_push($test_args, $test_run_request->get_arguments());
-						array_push($test_args_description, $test_run_request->get_arguments_description());
-						array_push($test_override_options, $test_run_request->test_profile->get_override_values());
-					}
-				}
-
-				$test_run_manager->add_multi_test_run($test_run, $test_args, $test_args_description, $test_override_options);
-			}
-			else
-			{
-				pts_client::$display->generic_error($to_run . " is not recognized.");
-				continue;
-			}
-		}
+		// Determine what to run
+		$test_run_manager->determine_tests_to_run($to_run_identifiers);
 
 		// Run the test process
 		$test_run_manager->validate_tests_to_run();
 
+		// Nothing to run
 		if($test_run_manager->get_test_count() == 0)
 		{
 			return false;
 		}
 
-		$xml_results_writer = new pts_results_tandem_XmlWriter();
+		pts_module_manager::module_process("__run_manager_setup", $test_run_manager);
 
-		$save_results = false;
-		if(!pts_read_assignment("RUN_CONTAINS_A_NO_RESULT_TYPE") || $unique_test_count > 1 || pts_read_assignment("FORCE_SAVE_RESULTS"))
-		{
-			if(pts_is_assignment("DO_NOT_SAVE_RESULTS"))
-			{
-				$save_results = false;
-			}
-			else if(pts_read_assignment("TEST_PROFILE_REQUESTS_SAVE") || pts_is_assignment("AUTO_SAVE_NAME") || pts_read_assignment("FORCE_SAVE_RESULTS") || pts_client::read_env("TEST_RESULTS_NAME"))
-			{
-				$save_results = true;
-			}
-			else
-			{
-				$save_results = pts_user_io::prompt_bool_input("Would you like to save these test results", true, "SAVE_RESULTS");
-			}
-
-			if($save_results)
-			{
-				// Prompt Save File Name
-				$test_run_manager->prompt_save_name();
-
-				// Prompt Identifier
-				$test_run_manager->prompt_results_identifier();
-
-				if($unique_test_count > 1 || !isset($test_description))
-				{
-					$unique_tests_r = array_unique($to_run_identifiers);
-					$last = array_pop($unique_tests_r);
-					array_push($unique_tests_r, "and " . $last);
-
-					$test_description = "Running " . implode(($unique_test_count == 2 ? " and " : ", "), $unique_tests_r) . ".";
-				}
-
-				// Prompt Description
-				if(!pts_is_assignment("AUTOMATED_MODE") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
-				{
-					if(empty($test_description))
-					{
-						$test_description = "N/A";
-					}
-
-					pts_client::$display->generic_heading("If you wish, enter a new description below.\nPress ENTER to proceed without changes.");
-					echo "Current Description: " . $test_description . "\n\nNew Description: ";
-					$new_test_description = pts_user_io::read_user_input();
-
-					if(!empty($new_test_description))
-					{
-						$test_description = $new_test_description;
-					}
-				}
-
-				if($unique_test_count > 1)
-				{
-					$test_version = "1.0.0";
-					$test_type = "System";
-				}
-			}
-		}
-
-		if($test_run_manager->get_test_count() == 0)
-		{
-			return false;
-		}
+		// Save results?
+		$test_run_manager->save_results_prompt();
 
 		if(isset($pre_run_message))
 		{
 			pts_user_io::display_interrupt_message($pre_run_message);
 		}
 
-		if($save_results)
+		if($test_run_manager->do_save_results())
 		{
 			$results_directory = pts_client::setup_test_result_directory($test_run_manager->get_file_name()) . '/';
 
@@ -309,7 +114,7 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $test_run_manager->get_file_name_title());
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_NAME, 1, (count($to_run_identifiers) == 1 ? pts_arrays::first_element($to_run_identifiers) : "custom"));
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_VERSION, 1, $test_version);
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_description);
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_run_manager->get_run_description());
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TYPE, 1, $test_type);
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 1, pts_module_manager::var_store_string());
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 1, implode(";", $test_properties));
@@ -340,11 +145,6 @@ class run_test implements pts_option_interface
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_manager::module_process("__post_run_process", $test_run_manager);
 
-		if(isset($post_run_message))
-		{
-			pts_user_io::display_interrupt_message($post_run_message);
-		}
-
 		if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("DEBUG_TEST_PROFILE") || $test_run_manager->get_test_count() > 3)
 		{
 			$failed_runs = $test_run_manager->get_failed_test_run_requests();
@@ -360,9 +160,9 @@ class run_test implements pts_option_interface
 			}
 		}
 
-		if($save_results)
+		if($test_run_manager->do_save_results())
 		{
-			if(!pts_is_assignment("TEST_RAN") && !pts_read_assignment("FORCE_SAVE_RESULTS") && !pts_is_test_result($test_run_manager->get_file_name()) && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
+			if(!pts_is_assignment("TEST_RAN") && !pts_is_test_result($test_run_manager->get_file_name()) && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
 			{
 				pts_file_io::delete(SAVE_RESULTS_DIR . $test_run_manager->get_file_name());
 				return false;

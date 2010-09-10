@@ -127,6 +127,11 @@ class pts_module_interface
 	// Run Functions
 	//
 
+	public static function __run_manager_setup($obj = null)
+	{
+		// Passed is the current pts_test_run_manager
+		return;
+	}
 	public static function __pre_run_process($obj = null)
 	{
 		// Passed is the current pts_test_run_manager, where accessible is an array of pts_test_result objects for all tests scheduled to run

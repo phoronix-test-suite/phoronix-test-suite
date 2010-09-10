@@ -22,12 +22,19 @@
 
 class pts_test_run_manager
 {
-	private $tests_to_run;
-	private $file_name;
-	private $file_name_title;
-	private $results_identifier;
-	private $failed_tests_to_run;
+	private $tests_to_run = array();
+	private $failed_tests_to_run = array();
 	private $last_test_run_index = 0;
+
+	private $file_name = null;
+	private $file_name_title = null;
+	private $results_identifier = null;
+	private $run_description = null;
+
+	private $force_save_results = false;
+	private $prompt_save_results = true;
+	private $post_run_message = null;
+	private $pre_run_message = null;
 
 	private $do_dynamic_run_count = false;
 	private $dynamic_roun_count_on_length_or_less;
@@ -36,12 +43,6 @@ class pts_test_run_manager
 
 	public function __construct()
 	{
-		$this->tests_to_run = array();
-		$this->failed_tests_to_run = array();
-		$this->file_name = null;
-		$this->file_name_title = null;
-		$this->results_identifier = null;
-
 		$this->do_dynamic_run_count = pts_config::read_bool_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE");
 		$this->dynamic_roun_count_on_length_or_less = pts_config::read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, 20);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 3.50);
@@ -223,6 +224,14 @@ class pts_test_run_manager
 	{
 		return count($this->tests_to_run);
 	}
+	public function force_results_save()
+	{
+		$this->force_save_results = true;
+	}
+	public function do_save_results()
+	{
+		return $this->file_name != null;
+	}
 	public function get_file_name()
 	{
 		return $this->file_name;
@@ -239,10 +248,14 @@ class pts_test_run_manager
 	{
 		return $this->failed_tests_to_run;
 	}
+	public function get_run_description()
+	{
+		return $this->run_description;
+	}
 	public static function clean_save_name_string($input)
 	{
 		$input = pts_strings::swap_variables($input, array("pts_client", "user_run_save_variables"));
-		$input = trim(str_replace(array(' ', '/', '&', '?', ':', '~', '\''), null, strtolower($input)));
+		$input = trim(str_replace(array(' ', '/', '&', '?', ':', '$', '~', '\''), null, str_replace(" ", "-", strtolower($input))));
 
 		return $input;
 	}
@@ -384,6 +397,11 @@ class pts_test_run_manager
 	}
 	public function call_test_runs(&$tandem_xml = null)
 	{
+		if($this->pre_run_message != null)
+		{
+			pts_user_io::display_interrupt_message($this->pre_run_message);
+		}
+
 		pts_file_io::unlink(PTS_USER_DIR . "halt-testing");
 		pts_file_io::unlink(PTS_USER_DIR . "skip-test");
 
@@ -443,6 +461,11 @@ class pts_test_run_manager
 			$test_identifier = pts_extract_identifier_from_path($cache_share_file);
 			echo pts_tests::call_test_script($test_identifier, "post-cache-share", null, null, pts_tests::process_extra_test_variables($test_identifier));
 			unlink($cache_share_file);
+		}
+
+		if($this->post_run_message != null)
+		{
+			pts_user_io::display_interrupt_message($this->post_run_message);
 		}
 	}
 	private function process_test_run_request(&$tandem_xml, $run_index, $run_position = -1, $run_count = -1)
@@ -658,6 +681,189 @@ class pts_test_run_manager
 		}
 
 		return true;
+	}
+	public function save_results_prompt()
+	{
+		if($this->prompt_save_results && pts_is_assignment("DO_NOT_SAVE_RESULTS") == false)
+		{
+			if($this->force_save_results || pts_is_assignment("AUTO_SAVE_NAME") || pts_client::read_env("TEST_RESULTS_NAME"))
+			{
+				$save_results = true;
+			}
+			else
+			{
+				$save_results = pts_user_io::prompt_bool_input("Would you like to save these test results", true, "SAVE_RESULTS");
+			}
+
+			if($save_results)
+			{
+				// Prompt Save File Name
+				$this->prompt_save_name();
+
+				// Prompt Identifier
+				$this->prompt_results_identifier();
+				$unique_tests_r = array_unique($this->get_tests_to_run_identifiers());
+
+				if(count($unique_tests_r) > 1 || $this->run_description == null)
+				{
+					$last = array_pop($unique_tests_r);
+					array_push($unique_tests_r, "and " . $last);
+
+					$this->run_description = "Running " . implode((count($unique_tests_r) > 2 ? ' ' : ", "), $unique_tests_r) . ".";
+				}
+
+				// Prompt Description
+				if(!pts_is_assignment("AUTOMATED_MODE") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
+				{
+					if($this->run_description == null)
+					{
+						$this->run_description = "N/A";
+					}
+
+					pts_client::$display->generic_heading("If you wish, enter a new description below.\nPress ENTER to proceed without changes.");
+					echo "Current Description: " . $this->run_description . "\n\nNew Description: ";
+					$new_test_description = pts_user_io::read_user_input();
+
+					if(!empty($new_test_description))
+					{
+						$this->run_description = $new_test_description;
+					}
+				}
+			}
+		}
+	}
+	public function determine_tests_to_run($to_run_identifiers)
+	{
+		$unique_test_count = count(array_unique($to_run_identifiers));
+		$run_contains_a_no_result_type = false;
+		$request_results_save = false;
+
+		foreach($to_run_identifiers as $to_run)
+		{
+			$to_run = strtolower($to_run);
+
+			if(!pts_is_test_result($to_run) && pts_global::is_global_id($to_run))
+			{
+				pts_global::clone_global_result($to_run);
+			}
+
+			if(pts_is_test($to_run))
+			{
+				if($run_contains_a_no_result_type == false)
+				{
+					$test_profile = new pts_test_profile($to_run);
+
+					if($test_profile->get_result_format() == "NO_RESULT")
+					{
+						$run_contains_a_no_result_type = true;
+					}
+					if($test_profile->do_auto_save_results())
+					{
+						$request_results_save = true;
+					}
+				}
+
+				if(pts_read_assignment("IS_BATCH_MODE") && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
+				{
+					list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($to_run);
+				}
+				else if(pts_read_assignment("IS_DEFAULTS_MODE"))
+				{
+					list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($to_run);
+				}
+				else
+				{
+					list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($to_run);
+				}
+
+				$this->add_single_test_run($to_run, $test_arguments, $test_arguments_description);
+			}
+			else if(pts_is_suite($to_run))
+			{
+				// Print the $to_run ?
+				$xml_parser = new pts_suite_tandem_XmlReader($to_run);
+
+				$this->pre_run_message = $xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
+				$this->post_run_message = $xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
+				$suite_run_mode = $xml_parser->getXMLValue(P_SUITE_RUNMODE);
+
+				if($suite_run_mode == "PCQS")
+				{
+					pts_set_assignment_once("IS_PCQS_MODE", true);
+				}
+
+				$this->add_suite_run($to_run);
+			}
+			else if(pts_is_test_result($to_run))
+			{
+				// Print the $to_run ?
+				$xml_parser = new pts_results_tandem_XmlReader($to_run);
+				$test_description = $xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
+				$test_extensions = $xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
+				$test_previous_properties = $xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
+				$test_version = $xml_parser->getXMLValue(P_RESULTS_SUITE_VERSION);
+				$test_type = $xml_parser->getXMLValue(P_RESULTS_SUITE_TYPE);
+				$test_run = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
+				$test_args = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
+				$test_args_description = $xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+				$test_override_options = array();
+
+				pts_set_assignment("AUTO_SAVE_NAME", $to_run);
+
+				foreach(explode(";", $test_previous_properties) as $test_prop)
+				{
+					pts_arrays::unique_push($test_properties, $test_prop);
+				}
+
+				pts_module_manager::process_extensions_string($test_extensions);
+
+				if(pts_is_assignment("FINISH_INCOMPLETE_RUN"))
+				{
+					$all_test_runs = $test_run;
+					$all_test_args = $test_args;
+					$all_test_args_description = $test_args_description;
+					$test_run = array();
+					$test_args = array();
+					$test_args_description = array();
+
+					$tests_to_complete = pts_read_assignment("TESTS_TO_COMPLETE");
+
+					foreach($tests_to_complete as $test_pos)
+					{
+						if(!empty($all_test_runs[$test_pos]))
+						{
+							array_push($test_run, $all_test_runs[$test_pos]);
+							array_push($test_args, $all_test_args[$test_pos]);
+							array_push($test_args_description, $all_test_args_description[$test_pos]);
+						}
+					}
+				}
+				else if(pts_is_assignment("RECOVER_RUN"))
+				{
+					$test_run = array();
+					$test_args = array();
+					$test_args_description = array();
+
+					foreach(pts_read_assignment("RECOVER_RUN_REQUESTS") as $test_run_request)
+					{
+						array_push($test_run, $test_run_request->test_profile->get_identifier());
+						array_push($test_args, $test_run_request->get_arguments());
+						array_push($test_args_description, $test_run_request->get_arguments_description());
+						array_push($test_override_options, $test_run_request->test_profile->get_override_values());
+					}
+				}
+
+				$this->add_multi_test_run($test_run, $test_args, $test_args_description, $test_override_options);
+			}
+			else
+			{
+				pts_client::$display->generic_error($to_run . " is not recognized.");
+				continue;
+			}
+		}
+
+		$this->prompt_save_results = $run_contains_a_no_result_type == false || $unique_test_count > 1;
+		$this->force_save_results = $this->force_save_results || $request_results_save;
 	}
 	public function validate_tests_to_run()
 	{

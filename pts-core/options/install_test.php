@@ -58,7 +58,6 @@ class install_test implements pts_option_interface
 		}
 
 		pts_client::release_lock($lock_path);
-		pts_set_assignment_next("PREV_TEST_IDENTIFIER", $items_to_install);
 	}
 }
 

@@ -116,6 +116,8 @@ class pts_global
 	}
 	public static function upload_test_result($result_file, $tags = "")
 	{
+		return false; // TODO: block Iveland result uploads
+
 		if(pts_global::result_upload_supported($result_file) == false)
 		{
 			return false;

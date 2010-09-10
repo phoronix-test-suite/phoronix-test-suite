@@ -54,12 +54,9 @@ class system_monitor extends pts_module_interface
 	// General Functions
 	//
 
-	public static function __pre_option_process($command)
+	public static function __run_manager_setup(&$test_run_manager)
 	{
-		if($command == "run_test")
-		{
-			pts_set_assignment("FORCE_SAVE_RESULTS", true);
-		}
+		$test_run_manager->force_results_save();
 	}
 
 	public static function __pre_run_process(&$test_run_manager)

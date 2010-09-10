@@ -34,7 +34,6 @@ class clone_global_result implements pts_option_interface
 		$identifier = $args[0];
 		pts_global::clone_global_result($identifier);
 		echo "\nResult Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
-		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $identifier);
 		//pts_client::display_web_page(SAVE_RESULTS_DIR . $ARG_1 . "/index.html");
 	}
 }

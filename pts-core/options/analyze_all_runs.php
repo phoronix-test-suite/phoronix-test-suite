@@ -30,10 +30,7 @@ class analyze_all_runs implements pts_option_interface
 	}
 	public static function run($args)
 	{
-		$identifier = $args[0];
-
-		pts_set_assignment("GRAPH_RENDER_TYPE", "CANDLESTICK");
-		pts_client::regenerate_graphs($identifier, "The " . $identifier . " result file graphs have been re-rendered to show all test runs.");
+		pts_client::regenerate_graphs($args[0], "The " . $args[0] . " result file graphs have been re-rendered to show all test runs.", array("graph_render_type" => "CANDLESTICK"));
 	}
 }
 

@@ -64,22 +64,9 @@ class suite_to_pdf implements pts_option_interface
 
 		self::layout_to_pdf($test_layout, $pdf);
 
-		if(pts_is_assignment("SAVE_TO"))
-		{
-			$pdf_file = pts_read_assignment("SAVE_TO");
-
-			if(substr($pdf_file, -4) != ".pdf")
-			{
-				$pdf_file .= ".pdf";
-			}
-		}
-		else
-		{
-			$pdf_file = pts_client::user_home_directory() . $r[0] . ".pdf";
-		}
+		$pdf_file = pts_client::user_home_directory() . $r[0] . ".pdf";
 
 		$pdf->Output($pdf_file);
-		pts_set_assignment_next("PREV_PDF_FILE", $pdf_file);
 		echo "\nSaved To: " . $pdf_file . "\n\n";
 	}
 	protected static function layout_to_pdf($test_layout, &$pdf)

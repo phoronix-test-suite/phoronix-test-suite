@@ -79,9 +79,9 @@ class pts_render
 				$graph_type = "pts_ImageComparisonGraph";
 				break;
 			default:
-				if(PTS_MODE == "CLIENT" && function_exists("pts_read_assignment") && pts_is_assignment("GRAPH_RENDER_TYPE"))
+				if(isset($extra_attributes["graph_render_type"]))
 				{
-					$requested_graph_type = pts_read_assignment("GRAPH_RENDER_TYPE");
+					$requested_graph_type = $extra_attributes["graph_render_type"];
 				}
 				else if(defined("GRAPH_RENDER_TYPE"))
 				{

@@ -137,8 +137,6 @@ class analyze_image_delta implements pts_option_interface
 		}
 
 		pts_client::save_result_file_xml($tandem_xml, $extract_to);
-
-		//pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $extract_to);
 		pts_client::display_web_page(SAVE_RESULTS_DIR . $extract_to . "/composite.xml");
 	}
 }
