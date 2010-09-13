@@ -24,11 +24,13 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+pts_loader::load_definitions("result-file.xml");
+pts_loader::load_definitions("result-file-legacy.xml");
+
 class pts_results_tandem_XmlReader extends tandem_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		pts_loader::load_definitions("result-file.xml");
 
 		if(!$this->pts_is_file($read_xml) && defined("SAVE_RESULTS_DIR") && is_file(SAVE_RESULTS_DIR . $read_xml . "/composite.xml"))
 		{
@@ -41,6 +43,18 @@ class pts_results_tandem_XmlReader extends tandem_XmlReader
 	{
 		// $file_check could contain the XML markup already, so first check for < as the start of an open tag from say <?xml version
 		return !isset($file_check[1024]) && substr($file_check, 0, 1) != "<" && is_file($file_check);
+	}
+	function handleXmlZeroTagFallback($xml_tag)
+	{
+		$legacy_spec = array(
+
+		);
+
+		return $this->tag_fallback_value;
+	}
+	function handleXmlZeroTagArrayFallback($xml_tag)
+	{
+		return $this->tag_fallback_array_value;
 	}
 }
 ?>

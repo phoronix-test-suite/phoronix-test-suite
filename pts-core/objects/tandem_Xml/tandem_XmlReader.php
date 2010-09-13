@@ -27,6 +27,7 @@ class tandem_XmlReader
 {
 	protected $xml_data = null; // XML contents
 	protected $tag_fallback_value = null; // Fallback value if tag is not present
+	protected $tag_fallback_array_value = array(); // Fallback value if array tag is not present
 
 	function __construct($read_xml)
 	{
@@ -191,9 +192,9 @@ class tandem_XmlReader
 	{
 		return $this->tag_fallback_value;
 	}
-	function getXMLValues($xml_tag)
+	function handleXmlZeroTagArrayFallback($xml_tag)
 	{
-		return $this->getXMLArrayValues($xml_tag);
+		return $this->tag_fallback_array_value;
 	}
 	function getXMLArrayValues($xml_tag)
 	{
@@ -225,6 +226,11 @@ class tandem_XmlReader
 					array_push($return_r, $this_item);
 				//}
 			}
+		}
+
+		if(count($return_r) == 0)
+		{
+			$return_r = $this->handleXmlZeroTagArrayFallback($xml_tag);
 		}
 
 		return $return_r;
