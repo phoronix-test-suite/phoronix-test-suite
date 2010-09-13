@@ -61,7 +61,7 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_environment_size($include_extensions = true)
 	{
-		$estimated_size = $this->xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE);
+		$estimated_size = parent::get_environment_size();
 
 		if($include_extensions)
 		{
@@ -157,7 +157,7 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 		else
 		{
-			$estimated_time = $this->xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME);
+			$estimated_time = parent::get_estimated_run_time();
 		}
 
 		return $estimated_time;
@@ -183,7 +183,7 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		// Check if the test profile's version is compatible with pts-core
 		$supported = true;
-		$requires_core_version = $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION);
+		$requires_core_version = parent::requires_core_version();
 
 		if(!empty($requires_core_version))
 		{
@@ -275,43 +275,6 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 
 		return $to_execute;
-	}
-
-	//
-	// Set Functions
-	//
-
-	public function set_times_to_run($times)
-	{
-		$this->xml_parser->overrideXMLValue(P_TEST_RUNCOUNT, $times);
-	}
-	public function set_result_scale($scale)
-	{
-		$this->xml_parser->overrideXMLValue(P_TEST_SCALE, $scale);
-	}
-	public function set_result_proportion($proportion)
-	{
-		$this->xml_parser->overrideXMLValue(P_TEST_PROPORTION, $proportion);
-	}
-	public function set_result_format($format)
-	{
-		$this->xml_parser->overrideXMLValue(P_TEST_RESULTFORMAT, $format);
-	}
-	public function set_result_quantifier($quantifier)
-	{
-		$this->xml_parser->overrideXMLValue(P_TEST_QUANTIFIER, $quantifier);
-	}
-	public function set_version($version)
-	{
-		$this->xml_parser->overrideXMLValue(P_TEST_VERSION, $version);
-	}
-	public function set_test_title($title)
-	{
-		$this->xml_parser->overrideXMLValue(P_TEST_TITLE, $title);
-	}
-	public function set_test_profile_version($version)
-	{
-		$this->xml_parser->overrideXMLValue(P_TEST_PTSVERSION, $version);
 	}
 }
 

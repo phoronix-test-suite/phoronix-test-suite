@@ -38,12 +38,10 @@ class pts_test_run_options
 			$preset_selections = pts_client::parse_value_string_double_identifier($cli_presets_env);
 		}
 
-		$test_profile = new pts_test_profile_parser($identifier);
+		$test_profile = new pts_test_profile($identifier);
 
 		foreach($test_profile->get_test_option_objects() as $i => $o)
 		{
-			$test_profile = new pts_test_profile_parser($identifier);
-
 			if($i == 0)
 			{
 				pts_client::$display->generic_heading($test_profile->get_title() . " Test Configuration");
@@ -117,7 +115,7 @@ class pts_test_run_options
 		// Defaults mode for single test
 		$all_args_real = array();
 		$all_args_description = array();
-		$test_profile = new pts_test_profile_parser($identifier);
+		$test_profile = new pts_test_profile($identifier);
 
 		foreach($test_profile->get_test_option_objects() as $o)
 		{
@@ -157,7 +155,7 @@ class pts_test_run_options
 		// Batch mode for single test
 		$batch_all_args_real = array();
 		$batch_all_args_description = array();
-		$test_profile = new pts_test_profile_parser($identifier);
+		$test_profile = new pts_test_profile($identifier);
 
 		foreach($test_profile->get_test_option_objects() as $o)
 		{

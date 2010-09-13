@@ -230,4 +230,76 @@ class tandem_XmlReader
 		return $return_r;
 	}
 }
+
+/*
+class tandem_XmlReader
+{
+	protected $xml_tags = null; // XML tags
+	protected $xml_index = null;
+	protected $tag_fallback_value = null; // Fallback value if tag is not present
+
+	public function __construct($read_xml)
+	{
+		if(substr(trim($read_xml), 0, 1) != '<' && (is_readable($read_xml) || (strpos($read_xml, "://") !== false && strpos($read_xml, "://") < strpos($read_xml, "\n"))))
+		{
+			$read_xml = file_get_contents($read_xml);
+		}
+
+		$p = xml_parser_create();
+		xml_parser_set_option($p, XML_OPTION_CASE_FOLDING, 0);
+		xml_parse_into_struct($p, $read_xml, $this->xml_tags, $this->xml_index);
+		xml_parser_free($p);
+	}
+	public function getXMLValue($xml_tag, $fallback_value = false)
+	{
+		$return_values = $this->getXMLArrayValues($xml_tag);
+
+		switch(count($return_values))
+		{
+			case 0:
+				$zero_tag = $this->handleXmlZeroTagFallback($xml_tag);
+				$return_value = empty($zero_tag) ? $fallback_value : $zero_tag;
+				break;
+			default:
+				$return_value = array_pop($return_values);
+		}
+
+		return $return_value;
+	}
+	function handleXmlZeroTagFallback($xml_tag)
+	{
+		return null;
+	}
+	function getXMLArrayValues($xml_tag)
+	{
+		$return_values = array();
+		$steps = explode('/', $xml_tag);
+		$steps_count = count($steps);
+		$last_step = $steps[(count($steps) - 1)];
+
+		if(isset($this->xml_index[$last_step]))
+		{
+			foreach($this->xml_index[$last_step] as $xml_index)
+			{
+				if($this->xml_tags[$xml_index]["level"] != $steps_count)
+				{
+					// Not at the right depth
+					continue;
+				}
+				if($this->xml_tags[$xml_index]["type"] != "complete")
+				{
+					// Not what we are looking for
+					continue;
+				}
+
+				// TODO: this is incomplete as it's not actually doing anything except checking the depth and final tag
+
+				array_push($return_values, trim($this->xml_tags[$xml_index]["value"]));
+			}
+		}
+
+		return $return_values;
+	}
+}
+*/
 ?>

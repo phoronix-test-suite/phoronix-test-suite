@@ -196,6 +196,18 @@ class pts_test_profile_parser
 	{
 		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS));
 	}
+	public function get_environment_size()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE, 0);
+	}
+	public function get_estimated_run_time()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME, 0);
+	}
+	public function requires_core_version()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION);
+	}
 	public function get_test_option_objects()
 	{
 		$settings_name = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
@@ -234,6 +246,43 @@ class pts_test_profile_parser
 		}
 
 		return $test_options;
+	}
+
+	//
+	// Set Functions
+	//
+
+	public function set_times_to_run($times)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_RUNCOUNT, $times);
+	}
+	public function set_result_scale($scale)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_SCALE, $scale);
+	}
+	public function set_result_proportion($proportion)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_PROPORTION, $proportion);
+	}
+	public function set_result_format($format)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_RESULTFORMAT, $format);
+	}
+	public function set_result_quantifier($quantifier)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_QUANTIFIER, $quantifier);
+	}
+	public function set_version($version)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_VERSION, $version);
+	}
+	public function set_test_title($title)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_TITLE, $title);
+	}
+	public function set_test_profile_version($version)
+	{
+		$this->xml_parser->overrideXMLValue(P_TEST_PTSVERSION, $version);
 	}
 }
 
