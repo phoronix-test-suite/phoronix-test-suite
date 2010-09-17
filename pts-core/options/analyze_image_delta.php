@@ -57,7 +57,7 @@ class analyze_image_delta implements pts_option_interface
 		pts_client::save_test_result($extract_to . "/composite.xml", $extract_result);
 
 		$compare_file = new pts_result_file($extract_to);
-		$tandem_xml = new tandem_XmlWriter();
+		$result_file_writer = new pts_result_file_writer();
 
 		foreach($compare_file->get_result_objects() as $result_object)
 		{
@@ -120,23 +120,15 @@ class analyze_image_delta implements pts_option_interface
 
 			if($img_changed)
 			{
-				$tandem_id = $tandem_xml->request_unique_id();
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result_object->test_profile->get_title());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result_object->test_profile->get_version());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result_object->test_profile->get_test_profile_version());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $result_object->get_arguments_description());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $result_object->test_profile->get_identifier());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result_object->get_arguments());
-
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, "Image Delta", 5);
-
+				$result_identifier = "Image Delta";
 				imagepng($delta_img, SAVE_RESULTS_DIR . $extract_to . "/scratch.png");
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, base64_encode(file_get_contents(SAVE_RESULTS_DIR . $extract_to . "/scratch.png", FILE_BINARY)), 5);
+				$result_value = base64_encode(file_get_contents(SAVE_RESULTS_DIR . $extract_to . "/scratch.png", FILE_BINARY));
 				pts_file_io::unlink(SAVE_RESULTS_DIR . $extract_to . "/scratch.png");
+				$result_file_writer->add_result_from_result_object($result_object, $result_identifier, $result_value);
 			}
 		}
 
-		pts_client::save_result_file_xml($tandem_xml, $extract_to);
+		$result_file_writer->save_result_file($extract_to);
 		pts_client::display_web_page(SAVE_RESULTS_DIR . $extract_to . "/composite.xml");
 	}
 }

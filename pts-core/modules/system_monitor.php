@@ -95,7 +95,7 @@ class system_monitor extends pts_module_interface
 			self::$individual_test_run_offsets[$id_point] = $offset;
 		}
 	}
-	public static function __post_test_run_process(&$tandem_xml)
+	public static function __post_test_run_process(&$result_file_writer)
 	{
 		if(self::$individual_monitoring == false)
 		{
@@ -108,29 +108,21 @@ class system_monitor extends pts_module_interface
 
 			if(count($sensor_results) > 2)
 			{
-				$graph_title = phodevi::sensor_name($sensor) . " Monitor";
-
-				$tandem_id = $tandem_xml->request_unique_id();
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, self::$individual_test_run_request->test_profile->get_title());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, self::$individual_test_run_request->test_profile->get_version());
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, null);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, phodevi::sensor_name($sensor) . " Monitor");
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, phodevi::read_sensor_unit($sensor));
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, null);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, "LINE_GRAPH");
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, phodevi::sensor_name($sensor) . self::$individual_test_run_request->get_arguments());
-
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, self::$result_identifier, 5, "sys-monitor-" . $id_point);
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
+				self::$individual_test_run_request->test_profile->set_identifier(null);
+				self::$individual_test_run_request->test_profile->set_test_profile_version(null);
+				self::$individual_test_run_request->test_profile->set_result_proportion(null);
+				self::$individual_test_run_request->test_profile->set_result_format("LINE_GRAPH");
+				self::$individual_test_run_request->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
+				self::$individual_test_run_request->set_used_arguments_description(phodevi::sensor_name($sensor) . " Monitor");
+				self::$individual_test_run_request->set_used_arguments(phodevi::sensor_name($sensor) . self::$individual_test_run_request->get_arguments());
+				$result_file_writer->add_result_from_result_object(self::$individual_test_run_request, self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
 		}
 
 		self::$individual_test_run_request = null;
 		self::$individual_test_run_offsets[$id_point] = array();
 	}
-	public static function __event_results_process(&$tandem_xml)
+	public static function __event_results_process(&$result_file_writer)
 	{
 		foreach(self::$to_monitor as $id_point => $sensor)
 		{
@@ -139,23 +131,19 @@ class system_monitor extends pts_module_interface
 
 			if(count($sensor_results) > 2)
 			{
-				$graph_title = phodevi::sensor_name($sensor) . " Monitor";
-				$sub_title = "System Monitor Module";
+				$test_profile = new pts_test_profile();
+				$test_result = new pts_test_result($test_profile);
 
-				$tandem_id = $tandem_xml->request_unique_id();
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $graph_title);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, null);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, null);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $sub_title);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, phodevi::read_sensor_unit($sensor));
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, null);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, "LINE_GRAPH");
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, null);
-				$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, phodevi::sensor_name($sensor));
-
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, self::$result_identifier, 5, "sys-monitor-" . $id_point);
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
-				$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, implode(",", $sensor_results), 5, "sys-monitor-" . $id_point);
+				$test_result->test_profile->set_test_title(phodevi::sensor_name($sensor) . " Monitor");
+				$test_result->test_profile->set_identifier(null);
+				$test_result->test_profile->set_version(null);
+				$test_result->test_profile->set_test_profile_version(null);
+				$test_result->test_profile->set_result_proportion(null);
+				$test_result->test_profile->set_result_format("LINE_GRAPH");
+				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
+				$test_result->set_used_arguments_description("System Monitor Module");
+				$test_result->set_used_arguments(phodevi::sensor_name($sensor));
+				$result_file_writer->add_result_from_result_object($test_result, self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
 		}
 	}

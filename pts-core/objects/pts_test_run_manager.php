@@ -400,7 +400,7 @@ class pts_test_run_manager
 
 		$this->results_identifier = $results_identifier;
 	}
-	public function call_test_runs(&$tandem_xml = null)
+	public function call_test_runs(&$result_file_writer = null)
 	{
 		if($this->pre_run_message != null)
 		{
@@ -425,7 +425,7 @@ class pts_test_run_manager
 			{
 				for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 				{
-					$test_flag = $this->process_test_run_request($tandem_xml, $i);
+					$test_flag = $this->process_test_run_request($result_file_writer, $i);
 				}
 			}
 			while(time() < $loop_end_time && $test_flag);
@@ -441,7 +441,7 @@ class pts_test_run_manager
 			{
 				for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 				{
-					$test_flag = $this->process_test_run_request($tandem_xml, $i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
+					$test_flag = $this->process_test_run_request($result_file_writer, $i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
 				}
 			}
 		}
@@ -454,7 +454,7 @@ class pts_test_run_manager
 
 			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
-				$test_flag = $this->process_test_run_request($tandem_xml, $i, ($i + 1), $tests_to_run_count);
+				$test_flag = $this->process_test_run_request($result_file_writer, $i, ($i + 1), $tests_to_run_count);
 			}
 		}
 
@@ -473,13 +473,13 @@ class pts_test_run_manager
 			pts_user_io::display_interrupt_message($this->post_run_message);
 		}
 	}
-	private function process_test_run_request(&$tandem_xml, $run_index, $run_position = -1, $run_count = -1)
+	private function process_test_run_request(&$result_file_writer, $run_index, $run_position = -1, $run_count = -1)
 	{
 		$result = false;
 
 		if($this->get_file_name() != null)
 		{
-			$tandem_xml->saveXMLFile(SAVE_RESULTS_DIR . $this->get_file_name() . "/active.xml");
+			$result_file_writer->save_xml(SAVE_RESULTS_DIR . $this->get_file_name() . "/active.xml");
 		}
 
 		$test_run_request = $this->get_test_to_run($run_index);
@@ -527,21 +527,8 @@ class pts_test_run_manager
 
 				if(!empty($test_identifier))
 				{
-					$tandem_id = $tandem_xml->request_unique_id();
+					$result_file_writer->add_result_from_result_object($test_run_request, $test_identifier, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
 					pts_set_assignment("TEST_RAN", true);
-
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $test_run_request->test_profile->get_title());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $test_run_request->test_profile->get_version());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $test_run_request->test_profile->get_test_profile_version());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_ATTRIBUTES, $tandem_id, $test_run_request->get_arguments_description());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $test_run_request->test_profile->get_result_scale());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $test_run_request->test_profile->get_result_proportion());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $test_run_request->test_profile->get_result_format());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_TESTNAME, $tandem_id, $test_run_request->test_profile->get_identifier());
-					$tandem_xml->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $test_run_request->get_arguments());
-					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $test_identifier, 5);
-					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $test_run_request->get_result(), 5);
-					$tandem_xml->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $test_run_request->test_result_buffer->get_values_as_string(), 5);
 
 					static $xml_write_pos = 1;
 					pts_file_io::mkdir(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
@@ -558,7 +545,7 @@ class pts_test_run_manager
 						rename(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . '/', $test_log_write_dir);
 					}
 					$xml_write_pos++;
-					pts_module_manager::module_process("__post_test_run_process", $tandem_xml);
+					pts_module_manager::module_process("__post_test_run_process", $result_file_writer);
 				}
 			}
 
@@ -813,7 +800,8 @@ class pts_test_run_manager
 
 				foreach(explode(";", $test_previous_properties) as $test_prop)
 				{
-					pts_arrays::unique_push($test_properties, $test_prop);
+					// TODO: hook into PTS3 arch
+					//pts_arrays::unique_push($test_properties, $test_prop);
 				}
 
 				pts_module_manager::process_extensions_string($test_extensions);
@@ -852,6 +840,10 @@ class pts_test_run_manager
 				}
 				else
 				{
+					$test_run = array();
+					$test_args = array();
+					$test_args_description = array();
+
 					foreach($result_objects as &$result_object)
 					{
 						array_push($test_run, $result_object->test_profile->get_identifier());

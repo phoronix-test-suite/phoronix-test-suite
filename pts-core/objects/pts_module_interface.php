@@ -154,7 +154,7 @@ class pts_module_interface
 	}
 	public static function __post_test_run_process($obj = null)
 	{
-		// Passed is a copy of the tandem_xml object
+		// Passed is a copy of the pts_result_file_writer
 		return;
 	}
 	public static function __post_run_process($obj = null)
@@ -174,7 +174,7 @@ class pts_module_interface
 	}
 	public static function __event_results_process($obj = null)
 	{
-		// Passed is the pts_tandem_XmlWriter() used for saving the results
+		// Passed is the pts_result_file_writer used for saving the results
 		return;
 	}
 	public static function __event_results_saved($obj = null)

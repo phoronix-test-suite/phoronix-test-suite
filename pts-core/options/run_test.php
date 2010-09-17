@@ -61,7 +61,7 @@ class run_test implements pts_option_interface
 
 		// Get our objects ready
 		$test_run_manager = new pts_test_run_manager();
-		$xml_results_writer = new pts_results_tandem_XmlWriter();
+		$result_file_writer = new pts_result_file_writer();
 
 		// Determine what to run
 		$test_run_manager->determine_tests_to_run($to_run_identifiers);
@@ -100,21 +100,9 @@ class run_test implements pts_option_interface
 
 			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($test_run_manager->get_file_name()) || $test_run_manager->result_already_contains_identifier() == false))
 			{
-				$xml_results_writer->setXslBinding("pts-results-viewer.xsl");
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, 0, phodevi::system_hardware(true));
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, 0, phodevi::system_software(true));
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_AUTHOR, 0, pts_client::current_user());
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, 0, date("Y-m-d H:i:s"));
-				//$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type));
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, 0, PTS_VERSION);
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, 0, $test_run_manager->get_results_identifier());
+				$result_file_writer->add_result_file_meta_data($test_run_manager, $test_properties);
+				$result_file_writer->add_current_system_information($test_run_manager->get_results_identifier());
 				$wrote_system_xml = true;
-
-				$id = $xml_results_writer->request_unique_id();
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $test_run_manager->get_file_name_title());
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_run_manager->get_run_description());
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 1, pts_module_manager::var_store_string());
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 1, implode(';', $test_properties));
 			}
 			else
 			{
@@ -138,7 +126,7 @@ class run_test implements pts_option_interface
 
 		// Run the actual tests
 		pts_module_manager::module_process("__pre_run_process", $test_run_manager);
-		$test_run_manager->call_test_runs($xml_results_writer);
+		$test_run_manager->call_test_runs($result_file_writer);
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_manager::module_process("__post_run_process", $test_run_manager);
 
@@ -170,11 +158,11 @@ class run_test implements pts_option_interface
 
 			if($wrote_system_xml)
 			{
-				$xml_results_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type), 0);
+				$result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($test_type));
 			}
 
-			pts_module_manager::module_process("__event_results_process", $xml_results_writer);
-			pts_client::save_result_file_xml($xml_results_writer, $test_run_manager->get_file_name(), $test_run_manager->get_results_identifier());
+			pts_module_manager::module_process("__event_results_process", $result_file_writer);
+			$result_file_writer->save_result_file($test_run_manager->get_file_name(), $test_run_manager->get_results_identifier());
 			pts_module_manager::module_process("__event_results_saved", $test_run_manager);
 			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $test_run_manager->get_file_name());

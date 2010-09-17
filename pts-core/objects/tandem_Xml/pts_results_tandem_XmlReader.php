@@ -25,7 +25,7 @@
 */
 
 pts_loader::load_definitions("result-file.xml");
-pts_loader::load_definitions("result-file-legacy.xml");
+//pts_loader::load_definitions("result-file-legacy.xml");
 
 class pts_results_tandem_XmlReader extends tandem_XmlReader
 {
