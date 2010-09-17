@@ -46,6 +46,7 @@ class pts_results_tandem_XmlReader extends tandem_XmlReader
 	}
 	function handleXmlZeroTagFallback($xml_tag)
 	{
+		// TODO: implement support for checking the legacy result XML support if needed
 		$legacy_spec = array(
 
 		);
@@ -54,6 +55,11 @@ class pts_results_tandem_XmlReader extends tandem_XmlReader
 	}
 	function handleXmlZeroTagArrayFallback($xml_tag)
 	{
+		// TODO: implement support for checking the legacy result XML support if needed
+		$legacy_spec = array(
+
+		);
+
 		return $this->tag_fallback_array_value;
 	}
 }

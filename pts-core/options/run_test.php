@@ -114,7 +114,7 @@ class run_test implements pts_option_interface
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_TITLE, 1, $test_run_manager->get_file_name_title());
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_DESCRIPTION, 1, $test_run_manager->get_run_description());
 				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 1, pts_module_manager::var_store_string());
-				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 1, implode(";", $test_properties));
+				$xml_results_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 1, implode(';', $test_properties));
 			}
 			else
 			{

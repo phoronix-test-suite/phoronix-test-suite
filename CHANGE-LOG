@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Drop option support for required_function_sets as everything is now modularized to objects
 - pts-core: Rename AllowGlobalUploads tag in the test profile specification to AllowResultsSharing
 - pts-core: Drop P_RESULTS_SUITE_TYPE, P_RESULTS_SUITE_NAME, P_RESULTS_SUITE_VERSION from the results specification
+- pts-core: Fix external dependency installation on OpenSUSE when using Zypper
 
 Phoronix Test Suite 2.8.1
 September 9, 2010
