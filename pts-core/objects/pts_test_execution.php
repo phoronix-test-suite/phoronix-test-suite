@@ -43,7 +43,7 @@ class pts_test_execution
 			return false;
 		}
 
-		$parse_results_xml_file = is_file(($parse_results_xml_file = pts_tests::test_resources_location($test_identifier) . "parse-results.xml")) ? $parse_results_xml_file : false;
+		$parse_results_xml_file = $test_run_request->test_profile->get_file_download_spec();
 
 		$test_run_request->test_result_buffer = new pts_test_result_buffer();
 		$execute_binary = $test_run_request->test_profile->get_test_executable();

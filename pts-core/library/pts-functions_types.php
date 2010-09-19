@@ -428,7 +428,6 @@ function pts_rebuild_test_type_cache($identifier)
 {
 	pts_identifier_type($identifier, true);
 	pts_tests::test_profile_location($identifier, true);
-	pts_tests::test_resources_location($identifier, true);
 }
 function pts_rebuild_suite_type_cache($identifier)
 {

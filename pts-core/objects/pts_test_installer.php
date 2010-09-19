@@ -330,8 +330,7 @@ class pts_test_installer
 				return false;
 			}
 
-			$test_resources_location = pts_tests::test_resources_location($identifier);
-			if(is_file($test_resources_location . "install.sh") || is_file($test_resources_location . "install.php"))
+			if($test_install_request->test_profile->get_file_installer() != false)
 			{
 				pts_module_manager::module_process("__pre_test_install", $identifier);
 				pts_client::$display->test_install_begin($test_install_request);

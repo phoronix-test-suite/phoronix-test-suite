@@ -217,27 +217,6 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $supported;
 	}
-	public function get_installer_checksum()
-	{
-		// Calculate installed checksum
-		$test_resources_location = pts_tests::test_resources_location($this->identifier);
-		$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
-
-		if(is_file($test_resources_location . "install" . $os_postfix . ".sh"))
-		{
-			$md5_checksum = md5_file($test_resources_location . "install" . $os_postfix . ".sh");
-		}
-		else if(is_file($test_resources_location . "install.sh"))
-		{
-			$md5_checksum = md5_file($test_resources_location . "install.sh");
-		}
-		else
-		{
-			$md5_checksum = null;
-		}
-
-		return $md5_checksum;
-	}
 	public function suites_containing_test()
 	{
 		$associated_suites = array();
@@ -275,6 +254,38 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 
 		return $to_execute;
+	}
+	public function get_installer_checksum()
+	{
+		return $this->get_file_installer() != false ? md5_file(get_file_installer()) : false;
+	}
+	public function get_resource_location()
+	{
+		return pts_tests::test_resources_location($this->identifier);
+	}
+	public function get_file_installer()
+	{
+		$test_resources_location = $this->get_resource_location();
+		$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
+
+		if(is_file($test_resources_location . "install" . $os_postfix . ".sh"))
+		{
+			$installer = $test_resources_location . "install" . $os_postfix . ".sh";
+		}
+		else if(is_file($test_resources_location . "install.sh"))
+		{
+			$installer = $test_resources_location . "install.sh";
+		}
+		else
+		{
+			$installer = null;
+		}
+
+		return $installer;
+	}
+	public function get_file_download_spec()
+	{
+		return is_file($this->get_resource_location() . "downloads.xml") ? $this->get_resource_location() . "downloads.xml" : false;
 	}
 }
 

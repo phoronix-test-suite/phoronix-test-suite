@@ -52,7 +52,9 @@ class pts_test_install_request
 	}
 	public function generate_download_object_list()
 	{
-		if(is_file(($download_xml_file = pts_tests::test_resources_location($this->test_profile->get_identifier()) . "downloads.xml")))
+		$download_xml_file = $this->test_profile->get_file_download_spec();
+
+		if($download_xml_file != null)
 		{
 			pts_loader::load_definitions("test-profile-downloads.xml");
 
