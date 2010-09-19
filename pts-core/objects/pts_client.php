@@ -261,8 +261,7 @@ class pts_client
 	private static function extended_init_process()
 	{
 		// Extended Initalization Process
-		$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, XML_SUITE_LOCAL_DIR, 
-		MODULE_LOCAL_DIR, MODULE_DATA_DIR, DEFAULT_DOWNLOAD_CACHE_DIR);
+		$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, MODULE_LOCAL_DIR, MODULE_DATA_DIR, DEFAULT_DOWNLOAD_CACHE_DIR, XML_SUITE_LOCAL_DIR);
 
 		foreach($directory_check as $dir)
 		{

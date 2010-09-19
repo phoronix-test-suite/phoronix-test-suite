@@ -29,17 +29,8 @@ class pts_suites
 		if($cache == null)
 		{
 			$suites = glob(XML_SUITE_DIR . "*.xml");
-			$suites_local = glob(XML_SUITE_LOCAL_DIR . "*.xml");
 
-			if($suites != false && $suites_local != false)
-			{
-				$suites = array_unique(array_merge($suites, $suites_local));
-			}
-			else if($suites_local != false)
-			{
-				$suites = $suites_local;
-			}
-			else if($suites == false)
+			if($suites == false)
 			{
 				$suites = array();
 			}

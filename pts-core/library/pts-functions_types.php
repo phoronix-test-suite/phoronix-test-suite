@@ -32,11 +32,7 @@ function pts_identifier_type($identifier, $rewrite_cache = false)
 
 		if(!empty($identifier))
 		{
-			if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_suite($identifier))
-			{
-				$test_type = "TYPE_LOCAL_TEST_SUITE";
-			}
-			else if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
+			if(is_file(XML_PROFILE_DIR . $identifier . ".xml"))
 			{
 				$test_type = "TYPE_TEST";
 			}
@@ -85,38 +81,6 @@ function pts_is_test_result($identifier)
 {
 	return is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
 }
-function pts_validate_local_test_suite($identifier)
-{
-	if(is_file(($ls = XML_SUITE_LOCAL_DIR . $identifier . ".xml")))
-	{
-		$valid = true;
-
-		if(is_file(($ss = XML_SUITE_DIR . $identifier . ".xml")))
-		{
-			$ls_suite = new pts_test_suite($ls);
-			$ls_version = $ls_suite->get_version();
-
-			$ss_suite = new pts_test_suite($ss);
-			$ss_version = $ss_suite->get_version();
-
-			if(pts_version_newer($ls_version, $ss_version) == $ss_version)
-			{
-				// Standard test suite version newer than the local test suite version
-				$valid = false;
-
-				// Rename test suite since it's out of date
-				rename($ls, XML_SUITE_LOCAL_DIR . $identifier . ".xml.old");
-			}
-			
-		}
-	}
-	else
-	{
-		$valid = false;
-	}
-
-	return $valid;
-}
 function pts_location_suite($identifier, $rewrite_cache = false)
 {
 	static $cache;
@@ -133,9 +97,6 @@ function pts_location_suite($identifier, $rewrite_cache = false)
 			{
 				case "TYPE_TEST_SUITE":
 					$location = XML_SUITE_DIR . $identifier . ".xml";
-					break;
-				case "TYPE_LOCAL_TEST_SUITE":
-					$location = XML_SUITE_LOCAL_DIR . $identifier . ".xml";
 					break;
 			}
 		}

@@ -53,8 +53,7 @@ function pts_define_directories()
 	define("TEST_RESOURCE_DIR", PTS_PATH . "pts/test-resources/");
 	define("TEST_RESOURCE_CTP_BASE_DIR", PTS_PATH . "pts/base-test-resources/");
 	//define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
-	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
-	define("TEST_RESOURCE_LOCAL_DIR", PTS_USER_DIR . "test-resources/");
+	//define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
 }
 function pts_extract_identifier_from_path($path)
 {
