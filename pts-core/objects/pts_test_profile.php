@@ -287,6 +287,10 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		return is_file($this->get_resource_location() . "downloads.xml") ? $this->get_resource_location() . "downloads.xml" : false;
 	}
+	public function get_file_parser_spec()
+	{
+		return is_file($this->get_resource_location() . "parse-results.xml") ? $this->get_resource_location() . "parse-results.xml" : false;
+	}
 }
 
 ?>

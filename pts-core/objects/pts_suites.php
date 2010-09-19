@@ -20,6 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO XXX: Eliminate this class
 class pts_suites
 {
 	public static function available_suites()
