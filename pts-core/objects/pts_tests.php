@@ -29,17 +29,8 @@ class pts_tests
 		if($cache == null)
 		{
 			$tests = glob(XML_PROFILE_DIR . "*.xml");
-			$tests_local = glob(XML_PROFILE_LOCAL_DIR . "*.xml");
 
-			if($tests != false && $tests_local != false)
-			{
-				$tests = array_unique(array_merge($tests, $tests_local));
-			}
-			else if($tests_local != false)
-			{
-				$tests = $tests_local;
-			}
-			else if($tests == false)
+			if($tests == false)
 			{
 				$tests = array();
 			}
@@ -111,9 +102,6 @@ class pts_tests
 				case "TYPE_TEST":
 					$location = XML_PROFILE_DIR . $identifier . ".xml";
 					break;
-				case "TYPE_LOCAL_TEST":
-					$location = XML_PROFILE_LOCAL_DIR . $identifier . ".xml";
-					break;
 				case "TYPE_BASE_TEST":
 					$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
 					break;
@@ -135,11 +123,7 @@ class pts_tests
 		{
 			$type = pts_identifier_type($identifier);
 
-			if($type == "TYPE_LOCAL_TEST" && is_dir(TEST_RESOURCE_LOCAL_DIR . $identifier))
-			{
-				$location = TEST_RESOURCE_LOCAL_DIR . $identifier . "/";
-			}
-			else if($type == "TYPE_BASE_TEST" && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
+			if($type == "TYPE_BASE_TEST" && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
 			{
 				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
 			}

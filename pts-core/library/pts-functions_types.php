@@ -32,11 +32,7 @@ function pts_identifier_type($identifier, $rewrite_cache = false)
 
 		if(!empty($identifier))
 		{
-			if(is_file(XML_PROFILE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_profile($identifier))
-			{
-				$test_type = "TYPE_LOCAL_TEST";
-			}
-			else if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_suite($identifier))
+			if(is_file(XML_SUITE_LOCAL_DIR . $identifier . ".xml") && pts_validate_local_test_suite($identifier))
 			{
 				$test_type = "TYPE_LOCAL_TEST_SUITE";
 			}
@@ -77,7 +73,7 @@ function pts_is_test($object)
 {
 	$type = pts_identifier_type($object);
 
-	return $type == "TYPE_TEST" || $type == "TYPE_LOCAL_TEST" || $type == "TYPE_BASE_TEST";
+	return $type == "TYPE_TEST" || $type == "TYPE_BASE_TEST";
 }
 function pts_is_base_test($object)
 {
@@ -88,38 +84,6 @@ function pts_is_base_test($object)
 function pts_is_test_result($identifier)
 {
 	return is_file(SAVE_RESULTS_DIR . $identifier . "/composite.xml");
-}
-function pts_validate_local_test_profile($identifier)
-{
-	if(is_file(($lp = XML_PROFILE_LOCAL_DIR . $identifier . ".xml")))
-	{
-		$valid = true;
-
-		if(is_file(($sp = XML_PROFILE_DIR . $identifier . ".xml")))
-		{
-			$lp_test = new pts_test_profile($lp);
-			$lp_version = $lp_test->get_test_profile_version();
-
-			$sp_test = new pts_test_profile($sp);
-			$sp_version = $sp_test->get_test_profile_version();
-
-			if(pts_version_newer($lp_version, $sp_version) == $sp_version)
-			{
-				// Standard test profile version newer than the local test profile version
-				$valid = false;
-
-				// Rename test profile since it's out of date
-				rename($lp, XML_PROFILE_LOCAL_DIR . $identifier . ".xml.old");
-			}
-			
-		}
-	}
-	else
-	{
-		$valid = false;
-	}
-
-	return $valid;
 }
 function pts_validate_local_test_suite($identifier)
 {
@@ -464,6 +428,41 @@ function pts_version_newer($version_a, $version_b)
 
 
 /*
+
+
+function pts_validate_local_test_profile($identifier)
+{
+	if(is_file(($lp = XML_PROFILE_LOCAL_DIR . $identifier . ".xml")))
+	{
+		$valid = true;
+
+		if(is_file(($sp = XML_PROFILE_DIR . $identifier . ".xml")))
+		{
+			$lp_test = new pts_test_profile($lp);
+			$lp_version = $lp_test->get_test_profile_version();
+
+			$sp_test = new pts_test_profile($sp);
+			$sp_version = $sp_test->get_test_profile_version();
+
+			if(pts_version_newer($lp_version, $sp_version) == $sp_version)
+			{
+				// Standard test profile version newer than the local test profile version
+				$valid = false;
+
+				// Rename test profile since it's out of date
+				rename($lp, XML_PROFILE_LOCAL_DIR . $identifier . ".xml.old");
+			}
+			
+		}
+	}
+	else
+	{
+		$valid = false;
+	}
+
+	return $valid;
+}
+
 function pts_rebuild_test_type_cache($identifier)
 {
 	pts_identifier_type($identifier, true);
