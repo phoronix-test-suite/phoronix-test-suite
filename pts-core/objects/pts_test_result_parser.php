@@ -25,9 +25,17 @@ class pts_test_result_parser
 	private static $supported_sensors = null;
 	private static $monitoring_sensors = array();
 
-	public static function system_monitor_task_check(&$test_profile, $parse_xml_file, $test_directory)
+	public static function system_monitor_task_check(&$test_profile)
 	{
+		$parse_xml_file = $test_profile->get_file_parser_spec();
+
+		if($parse_xml_file == false)
+		{
+			return false;
+		}
+
 		self::$monitoring_sensors = array();
+		$test_directory = $test_profile->get_install_dir();
 		$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_xml_file);
 		$monitor_sensor = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MONITOR_SENSOR);
 		$monitor_frequency = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MONITOR_FREQUENCY);
@@ -113,8 +121,10 @@ class pts_test_result_parser
 
 		return count(self::$monitoring_sensors) > 0;
 	}
-	public static function system_monitor_task_post_test(&$test_profile, $test_directory)
+	public static function system_monitor_task_post_test(&$test_profile)
 	{
+		$test_directory = $test_profile->get_install_dir();
+
 		foreach(self::$monitoring_sensors as $sensor_r)
 		{
 			if($sensor_r[1] == array("sys", "time"))
@@ -179,8 +189,15 @@ class pts_test_result_parser
 
 		return false;
 	}
-	public static function parse_result(&$test_run_request, $parse_xml_file, $test_log_file)
+	public static function parse_result(&$test_run_request, $test_log_file)
 	{
+		$parse_xml_file = $test_run_request->test_profile->get_file_parser_spec();
+
+		if($parse_xml_file == false)
+		{
+			return null;
+		}
+
 		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$extra_arguments = $test_run_request->get_arguments();
 		$pts_test_arguments = $pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . " " . str_replace($test_run_request->test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_run_request->test_profile->get_default_post_arguments());

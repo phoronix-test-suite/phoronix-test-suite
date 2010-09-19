@@ -245,7 +245,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_test_executable_dir()
 	{
 		$to_execute = null;
-		$test_dir = TEST_ENV_DIR . $this->identifier . '/';
+		$test_dir = $this->get_install_dir();
 		$execute_binary = $this->get_test_executable();
 
 		if(is_executable($test_dir . $execute_binary) || (IS_WINDOWS && is_file($test_dir . $execute_binary)))
@@ -254,6 +254,10 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 
 		return $to_execute;
+	}
+	public function get_install_dir()
+	{
+		return TEST_ENV_DIR . $this->identifier . '/';
 	}
 	public function get_installer_checksum()
 	{

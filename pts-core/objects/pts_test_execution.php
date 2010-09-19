@@ -29,7 +29,7 @@ class pts_test_execution
 		$arguments_description = $test_run_request->get_arguments_description();
 
 		// Do the actual test running process
-		$test_directory = TEST_ENV_DIR . $test_identifier . "/";
+		$test_directory = $test_run_request->test_profile->get_install_dir();
 
 		if(!is_dir($test_directory))
 		{
@@ -43,8 +43,6 @@ class pts_test_execution
 			return false;
 		}
 
-		$parse_results_xml_file = $test_run_request->test_profile->get_file_parser_spec();
-
 		$test_run_request->test_result_buffer = new pts_test_result_buffer();
 		$execute_binary = $test_run_request->test_profile->get_test_executable();
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
@@ -55,10 +53,10 @@ class pts_test_execution
 		$min_length = $test_run_request->test_profile->get_min_length();
 		$max_length = $test_run_request->test_profile->get_max_length();
 
-		if($test_run_request->test_profile->get_environment_testing_size() != -1 && ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < $test_run_request->test_profile->get_environment_testing_size())
+		if($test_run_request->test_profile->get_environment_testing_size() != -1 && ceil(disk_free_space($test_directory) / 1048576) < $test_run_request->test_profile->get_environment_testing_size())
 		{
 			// Ensure enough space is available on disk during testing process
-			pts_client::$display->test_run_error("There is not enough space (at " . TEST_ENV_DIR . ") for this test to run.");
+			pts_client::$display->test_run_error("There is not enough space (at " . $test_directory . ") for this test to run.");
 			pts_client::release_lock($lock_file);
 			return false;
 		}
@@ -137,10 +135,7 @@ class pts_test_execution
 
 				pts_client::test_profile_debug_message("Test Run Command: " . $test_run_command);
 
-				if($parse_results_xml_file)
-				{
-					$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request->test_profile, $parse_results_xml_file, $test_directory);
-				}
+				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request->test_profile);
 				$test_run_time_start = time();
 
 				if(IS_WINDOWS || pts_client::read_env("USE_PHOROSCRIPT_INTERPRETER") != false)
@@ -155,7 +150,7 @@ class pts_test_execution
 				}
 
 				$test_run_time = time() - $test_run_time_start;
-				$monitor_result = $parse_results_xml_file && $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request->test_profile, $parse_results_xml_file, $test_directory) : 0;
+				$monitor_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request->test_profile) : 0;
 			}
 		
 
@@ -172,11 +167,11 @@ class pts_test_execution
 			}
 
 			$exit_status_pass = true;
-			if(is_file(TEST_ENV_DIR . $test_identifier . "/test-exit-status"))
+			if(is_file($test_directory . "test-exit-status"))
 			{
 				// If the test script writes its exit status to ~/test-exit-status, if it's non-zero the test run failed
-				$exit_status = pts_file_io::file_get_contents(TEST_ENV_DIR . $test_identifier . "/test-exit-status");
-				unlink(TEST_ENV_DIR . $test_identifier . "/test-exit-status");
+				$exit_status = pts_file_io::file_get_contents($test_directory . "test-exit-status");
+				unlink($test_directory . "test-exit-status");
 
 				if($exit_status != 0 && !IS_BSD)
 				{
@@ -187,20 +182,13 @@ class pts_test_execution
 
 			if(!in_array(($i + 1), $ignore_runs) && $exit_status_pass)
 			{
-				if($parse_results_xml_file)
+				if(isset($monitor_result) && $monitor_result != 0)
 				{
-					if(isset($monitor_result) && $monitor_result != 0)
-					{
-						$test_result = $monitor_result;
-					}
-					else
-					{
-						$test_result = pts_test_result_parser::parse_result($test_run_request, $parse_results_xml_file, $test_log_file);
-					}
+					$test_result = $monitor_result;
 				}
 				else
 				{
-					$test_result = null;
+					$test_result = pts_test_result_parser::parse_result($test_run_request, $test_log_file);
 				}
 
 				pts_client::test_profile_debug_message("Test Result Value: " . $test_result);
