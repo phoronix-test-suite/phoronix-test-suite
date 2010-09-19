@@ -57,7 +57,7 @@ class analyze_image_delta implements pts_option_interface
 		pts_client::save_test_result($extract_to . "/composite.xml", $extract_result);
 
 		$compare_file = new pts_result_file($extract_to);
-		$result_file_writer = new pts_result_file_writer();
+		$result_file_writer = new pts_result_file_writer("Image Delta");
 
 		foreach($compare_file->get_result_objects() as $result_object)
 		{
@@ -120,11 +120,10 @@ class analyze_image_delta implements pts_option_interface
 
 			if($img_changed)
 			{
-				$result_identifier = "Image Delta";
 				imagepng($delta_img, SAVE_RESULTS_DIR . $extract_to . "/scratch.png");
 				$result_value = base64_encode(file_get_contents(SAVE_RESULTS_DIR . $extract_to . "/scratch.png", FILE_BINARY));
 				pts_file_io::unlink(SAVE_RESULTS_DIR . $extract_to . "/scratch.png");
-				$result_file_writer->add_result_from_result_object($result_object, $result_identifier, $result_value);
+				$result_file_writer->add_result_from_result_object($result_object, $result_value);
 			}
 		}
 

@@ -174,7 +174,7 @@ class pts_module_interface
 	}
 	public static function __event_results_process($obj = null)
 	{
-		// Passed is the pts_result_file_writer used for saving the results
+		// Passed is the pts_test_run_manager
 		return;
 	}
 	public static function __event_results_saved($obj = null)

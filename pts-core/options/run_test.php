@@ -61,7 +61,6 @@ class run_test implements pts_option_interface
 
 		// Get our objects ready
 		$test_run_manager = new pts_test_run_manager();
-		$result_file_writer = new pts_result_file_writer();
 
 		// Determine what to run
 		$test_run_manager->determine_tests_to_run($to_run_identifiers);
@@ -87,6 +86,7 @@ class run_test implements pts_option_interface
 
 		if($test_run_manager->do_save_results())
 		{
+			$test_run_manager->result_file_setup();
 			$results_directory = pts_client::setup_test_result_directory($test_run_manager->get_file_name()) . '/';
 
 			if(pts_read_assignment("IS_BATCH_MODE"))
@@ -100,8 +100,8 @@ class run_test implements pts_option_interface
 
 			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($test_run_manager->get_file_name()) || $test_run_manager->result_already_contains_identifier() == false))
 			{
-				$result_file_writer->add_result_file_meta_data($test_run_manager, $test_properties);
-				$result_file_writer->add_current_system_information($test_run_manager->get_results_identifier());
+				$test_run_manager->result_file_writer->add_result_file_meta_data($test_run_manager, $test_properties);
+				$test_run_manager->result_file_writer->add_current_system_information();
 				$wrote_system_xml = true;
 			}
 			else
@@ -126,7 +126,7 @@ class run_test implements pts_option_interface
 
 		// Run the actual tests
 		pts_module_manager::module_process("__pre_run_process", $test_run_manager);
-		$test_run_manager->call_test_runs($result_file_writer);
+		$test_run_manager->call_test_runs();
 		pts_set_assignment("PTS_TESTING_DONE", 1);
 		pts_module_manager::module_process("__post_run_process", $test_run_manager);
 
@@ -158,11 +158,11 @@ class run_test implements pts_option_interface
 
 			if($wrote_system_xml)
 			{
-				$result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($test_type));
+				$test_run_manager->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($test_type));
 			}
 
-			pts_module_manager::module_process("__event_results_process", $result_file_writer);
-			$result_file_writer->save_result_file($test_run_manager->get_file_name(), $test_run_manager->get_results_identifier());
+			pts_module_manager::module_process("__event_results_process", $test_run_manager);
+			$test_run_manager->result_file_writer->save_result_file($test_run_manager->get_file_name());
 			pts_module_manager::module_process("__event_results_saved", $test_run_manager);
 			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/composite.xml\n";
 			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $test_run_manager->get_file_name());

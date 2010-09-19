@@ -22,6 +22,8 @@
 
 class pts_test_run_manager
 {
+	public $result_file_writer = null;
+
 	private $tests_to_run = array();
 	private $failed_tests_to_run = array();
 	private $last_test_run_index = 0;
@@ -400,7 +402,11 @@ class pts_test_run_manager
 
 		$this->results_identifier = $results_identifier;
 	}
-	public function call_test_runs(&$result_file_writer = null)
+	public function result_file_setup()
+	{
+		$this->result_file_writer = new pts_result_file_writer($this->get_results_identifier());
+	}
+	public function call_test_runs()
 	{
 		if($this->pre_run_message != null)
 		{
@@ -425,7 +431,7 @@ class pts_test_run_manager
 			{
 				for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 				{
-					$test_flag = $this->process_test_run_request($result_file_writer, $i);
+					$test_flag = $this->process_test_run_request($i);
 				}
 			}
 			while(time() < $loop_end_time && $test_flag);
@@ -441,7 +447,7 @@ class pts_test_run_manager
 			{
 				for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 				{
-					$test_flag = $this->process_test_run_request($result_file_writer, $i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
+					$test_flag = $this->process_test_run_request($i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
 				}
 			}
 		}
@@ -454,7 +460,7 @@ class pts_test_run_manager
 
 			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
-				$test_flag = $this->process_test_run_request($result_file_writer, $i, ($i + 1), $tests_to_run_count);
+				$test_flag = $this->process_test_run_request($i, ($i + 1), $tests_to_run_count);
 			}
 		}
 
@@ -473,13 +479,13 @@ class pts_test_run_manager
 			pts_user_io::display_interrupt_message($this->post_run_message);
 		}
 	}
-	private function process_test_run_request(&$result_file_writer, $run_index, $run_position = -1, $run_count = -1)
+	private function process_test_run_request($run_index, $run_position = -1, $run_count = -1)
 	{
 		$result = false;
 
 		if($this->get_file_name() != null)
 		{
-			$result_file_writer->save_xml(SAVE_RESULTS_DIR . $this->get_file_name() . "/active.xml");
+			$this->result_file_writer->save_xml(SAVE_RESULTS_DIR . $this->get_file_name() . "/active.xml");
 		}
 
 		$test_run_request = $this->get_test_to_run($run_index);
@@ -527,7 +533,7 @@ class pts_test_run_manager
 
 				if(!empty($test_identifier))
 				{
-					$result_file_writer->add_result_from_result_object($test_run_request, $test_identifier, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
+					$this->result_file_writer->add_result_from_result_object($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
 					pts_set_assignment("TEST_RAN", true);
 
 					static $xml_write_pos = 1;
@@ -545,7 +551,7 @@ class pts_test_run_manager
 						rename(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . '/', $test_log_write_dir);
 					}
 					$xml_write_pos++;
-					pts_module_manager::module_process("__post_test_run_process", $result_file_writer);
+					pts_module_manager::module_process("__post_test_run_process", $this->result_file_writer);
 				}
 			}
 

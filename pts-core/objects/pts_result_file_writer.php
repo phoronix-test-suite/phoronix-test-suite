@@ -20,13 +20,17 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+pts_loader::load_definitions("result-file.xml");
+
 class pts_result_file_writer
 {
 	private $xml_writer = null;
 	private $added_hashes = null;
+	private $result_identifier = null;
 
-	public function __construct()
+	public function __construct($result_identifier = null)
 	{
+		$this->result_identifier = $result_identifier;
 		$this->added_hashes = array();
 
 		$this->xml_writer = new tandem_XmlWriter();
@@ -46,7 +50,7 @@ class pts_result_file_writer
 	{
 		return $this->xml_writer->getXML();
 	}
-	public function add_result_from_result_object(&$result_object, $result_identifier, $result_value, $result_value_raw = null)
+	public function add_result_from_result_object(&$result_object, $result_value, $result_value_raw = null)
 	{
 		$tandem_id = $this->xml_writer->request_unique_id();
 
@@ -60,7 +64,7 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_RESULTFORMAT, $tandem_id, $result_object->test_profile->get_result_format());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGUMENTS, $tandem_id, $result_object->get_arguments());
 
-		$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $result_identifier, 5);
+		$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $this->result_identifier, 5);
 		$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result_value, 5);
 		$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result_value_raw, 5);
 	}
@@ -116,7 +120,7 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlObject(P_RESULTS_SUITE_EXTENSIONS, 0, $result_file->get_suite_extensions());
 		$this->xml_writer->addXmlObject(P_RESULTS_SUITE_PROPERTIES, 0, $result_file->get_suite_properties());
 	}
-	public function add_current_system_information($result_identifier)
+	public function add_current_system_information()
 	{
 		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, 0, phodevi::system_hardware(true));
 		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, 0, phodevi::system_software(true));
@@ -124,7 +128,7 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, 0, date("Y-m-d H:i:s"));
 		//$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type));
 		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, 0, PTS_VERSION);
-		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, 0, $result_identifier);
+		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, 0, $this->result_identifier);
 	}
 	public function add_system_information_from_result_file(&$result_file, $result_merge_select = null)
 	{
@@ -166,7 +170,7 @@ class pts_result_file_writer
 			}
 		}
 	}
-	public function save_result_file($save_name, $result_identifier = null)
+	public function save_result_file($save_name)
 	{
 		// Save the test file
 		// TODO: clean this up with pts_client::save_test_result
@@ -182,13 +186,13 @@ class pts_result_file_writer
 
 		if(!is_file(SAVE_RESULTS_DIR . $save_name . "/composite.xml"))
 		{
-			pts_client::save_test_result($save_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name), true, $result_identifier);
+			pts_client::save_test_result($save_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name), true, $this->result_identifier);
 		}
 		else
 		{
 			// Merge Results
 			$merged_results = pts_merge::merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $save_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
-			pts_client::save_test_result($save_name . "/composite.xml", $merged_results, true, $result_identifier);
+			pts_client::save_test_result($save_name . "/composite.xml", $merged_results, true, $this->result_identifier);
 		}
 
 		return $real_name;
