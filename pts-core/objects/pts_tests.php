@@ -137,8 +137,6 @@ class pts_tests
 		$extra_vars["LC_MESSAGES"] = "";
 		$extra_vars["LANG"] = "";
 		$extra_vars["vblank_mode"] = '0';
-		$extra_vars["TEST_LIBRARIES_DIR"] = TEST_LIBRARIES_DIR;
-		$extra_vars["TIMED_KILL"] = TEST_LIBRARIES_DIR . "timed-kill.sh";
 		$extra_vars["PHP_BIN"] = PHP_BIN;
 
 		foreach($test_profile->extended_test_profiles() as $i => $this_test_profile)
