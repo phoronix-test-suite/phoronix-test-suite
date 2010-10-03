@@ -158,9 +158,10 @@ class pts_test_installer
 							do
 							{
 								pts_client::$display->test_install_download_file("COPY_FROM_CACHE", $download_package);
-								$context = stream_context_create();
-								stream_context_set_params($context, array("notification" => array("pts_network", "stream_status_callback")));
-								copy($download_cache_file, $download_destination_temp, $context);
+								// $context = stream_context_create();
+								// stream_context_set_params($context, array("notification" => array("pts_network", "stream_status_callback")));
+								// TODO: get the context working correctly for this copy()
+								copy($download_cache_file, $download_destination_temp);
 								pts_client::$display->test_install_progress_completed();
 
 								// Verify that the file was copied fine
