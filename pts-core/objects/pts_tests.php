@@ -112,28 +112,6 @@ class pts_tests
 
 		return $cache[$identifier];
 	}
-	public static function test_resources_location($identifier, $rewrite_cache = false)
-	{
-		static $cache;
-
-		if(!isset($cache[$identifier]) || $rewrite_cache)
-		{
-			$type = pts_identifier_type($identifier);
-
-			if(is_dir(TEST_RESOURCE_DIR . $identifier))
-			{
-				$location = TEST_RESOURCE_DIR . $identifier . "/";
-			}
-			else
-			{
-				$location = false;
-			}
-
-			$cache[$identifier] = $location;
-		}
-
-		return $cache[$identifier];
-	}
 	public static function test_hardware_type($test_identifier)
 	{
 		static $cache;
@@ -179,18 +157,24 @@ class pts_tests
 
 		return $extra_vars;
 	}
-	public static function call_test_script($test_identifier, $script_name, $print_string = null, $pass_argument = null, $extra_vars = null, $use_ctp = true)
+	public static function call_test_script(&$test_profile, $script_name, $print_string = null, $pass_argument = null, $extra_vars = null, $use_ctp = true)
 	{
+		// TODO: call_test_script could be better cleaned up to fit more closely with new pts_test_profile functions
 		$result = null;
-		$test_directory = TEST_ENV_DIR . $test_identifier . '/';
+		$test_directory = $test_profile->get_install_dir();
+		$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
+		$test_profiles = array($test_profile);
 
-		$tests_r = ($use_ctp ? pts_contained_tests($test_identifier, true) : array($test_identifier));
-
-		foreach($tests_r as &$this_test)
+		if($use_ctp)
 		{
-			$test_resources_location = pts_tests::test_resources_location($this_test);
-			$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
+			$test_profiles = array_merge($test_profiles, $test_profile->extended_test_profiles());
+		}
 
+		foreach($test_profiles as &$this_test_profile)
+		{
+			$test_resources_location = $this_test_profile->get_resource_dir();
+
+			// TODO: these checks could be cleaned up since most of the file handling is now done in pts_test_profile
 			if(is_file($test_resources_location . $script_name . $os_postfix . ".php") || is_file($test_resources_location . $script_name . $os_postfix . ".sh"))
 			{
 				$script_name .= $os_postfix;

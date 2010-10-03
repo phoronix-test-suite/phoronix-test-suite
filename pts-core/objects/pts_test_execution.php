@@ -76,7 +76,7 @@ class pts_test_execution
 
 		if(!$cache_share_present)
 		{
-			pts_tests::call_test_script($test_identifier, "pre", "Running Pre-Test Script", $test_directory, $extra_runtime_variables, true);
+			pts_tests::call_test_script($test_run_request->test_profile, "pre", "Running Pre-Test Script", $test_directory, $extra_runtime_variables, true);
 		}
 
 		pts_user_io::display_interrupt_message($test_run_request->test_profile->get_pre_run_message());
@@ -247,7 +247,7 @@ class pts_test_execution
 			{
 				if(!$cache_share_present)
 				{
-					pts_tests::call_test_script($test_identifier, "interim", "Running Interim-Test Script", $test_directory, $extra_runtime_variables, true);
+					pts_tests::call_test_script($test_run_request->test_profile, "interim", "Running Interim-Test Script", $test_directory, $extra_runtime_variables, true);
 					sleep(2); // Rest for a moment between tests
 				}
 
@@ -280,7 +280,7 @@ class pts_test_execution
 
 		if(!$cache_share_present)
 		{
-			pts_tests::call_test_script($test_identifier, "post", "Running Post-Test Script", $test_directory, $extra_runtime_variables, true);
+			pts_tests::call_test_script($test_run_request->test_profile, "post", "Running Post-Test Script", $test_directory, $extra_runtime_variables, true);
 		}
 
 		if($abort_testing)

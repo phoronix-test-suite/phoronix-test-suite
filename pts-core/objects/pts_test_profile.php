@@ -261,15 +261,15 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_installer_checksum()
 	{
-		return $this->get_file_installer() != false ? md5_file(get_file_installer()) : false;
+		return $this->get_file_installer() != false ? md5_file($this->get_file_installer()) : false;
 	}
-	public function get_resource_location()
+	public function get_resource_dir()
 	{
-		return pts_tests::test_resources_location($this->identifier);
+		return TEST_RESOURCE_DIR . $this->identifier . '/';
 	}
 	public function get_file_installer()
 	{
-		$test_resources_location = $this->get_resource_location();
+		$test_resources_location = $this->get_resource_dir();
 		$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
 
 		if(is_file($test_resources_location . "install" . $os_postfix . ".sh"))
@@ -289,11 +289,24 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_file_download_spec()
 	{
-		return is_file($this->get_resource_location() . "downloads.xml") ? $this->get_resource_location() . "downloads.xml" : false;
+		return is_file($this->get_resource_dir() . "downloads.xml") ? $this->get_resource_dir() . "downloads.xml" : false;
 	}
 	public function get_file_parser_spec()
 	{
-		return is_file($this->get_resource_location() . "parse-results.xml") ? $this->get_resource_location() . "parse-results.xml" : false;
+		return is_file($this->get_resource_dir() . "parse-results.xml") ? $this->get_resource_dir() . "parse-results.xml" : false;
+	}
+	public function extended_test_profiles()
+	{
+		// Provide an array containing the location(s) of all test(s) for the supplied object name
+		$test_profiles = array();
+
+		foreach(array_unique(array_reverse($this->get_test_extensions_recursive())) as $extended_test)
+		{
+			$test_profile = new pts_test_profile($extended_test);
+			array_push($test_profiles, $test_profile);
+		}
+
+		return $test_profiles;
 	}
 }
 
