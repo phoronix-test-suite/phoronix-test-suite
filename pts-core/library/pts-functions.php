@@ -41,7 +41,6 @@ function pts_define_directories()
 	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
 	define("MODULE_DATA_DIR", PTS_USER_DIR . "modules-data/");
 	define("DEFAULT_DOWNLOAD_CACHE_DIR", PTS_USER_DIR . "download-cache/");
-	define("TEST_LIBRARIES_DIR", PTS_CORE_PATH . "test-libraries/");
 	define("STATIC_DIR", PTS_CORE_PATH . "static/");
 	define("COMMAND_OPTIONS_DIR", PTS_CORE_PATH . "options/");
 	define("RESULTS_VIEWER_DIR", STATIC_DIR . "results-viewer/");

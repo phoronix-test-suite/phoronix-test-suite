@@ -85,7 +85,7 @@ class pts_test_execution
 
 		if(!$cache_share_present && $test_run_request->test_profile->is_root_required())
 		{
-			$execute_binary_prepend = TEST_LIBRARIES_DIR . "root-access.sh ";
+			$execute_binary_prepend = STATIC_DIR . "scripts/root-access.sh ";
 		}
 
 		if($allow_cache_share && !is_file($cache_share_pt2so))
