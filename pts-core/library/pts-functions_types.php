@@ -21,6 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO: pts_tests is the object to be cleaned up with pts-functions_types
+
 function pts_identifier_type($identifier, $rewrite_cache = false)
 {
 	// Determine type of test based on identifier
@@ -39,10 +41,6 @@ function pts_identifier_type($identifier, $rewrite_cache = false)
 			else if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
 			{
 				$test_type = "TYPE_TEST_SUITE";
-			}
-			else if(is_file(XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml"))
-			{
-				$test_type = "TYPE_BASE_TEST";
 			}
 		}
 
@@ -433,25 +431,6 @@ function pts_rebuild_suite_type_cache($identifier)
 {
 	pts_identifier_type($identifier, true);
 	pts_location_suite($identifier, true);
-}
-function pts_available_base_tests_array()
-{
-	static $cache = null;
-
-	if($cache == null)
-	{
-		$base_tests = pts_file_io::glob(XML_PROFILE_CTP_BASE_DIR . "*.xml");
-		asort($base_tests);
-
-		foreach($base_tests as &$base_test)
-		{
-			$base_test = basename($base_test, ".xml");
-		}
-
-		$cache = $base_tests;
-	}
-
-	return $cache;
 }
 */
 

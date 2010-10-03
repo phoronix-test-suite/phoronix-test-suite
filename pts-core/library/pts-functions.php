@@ -48,10 +48,8 @@ function pts_define_directories()
 
 	// Test & Suite Locations
 	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");
-	define("XML_PROFILE_CTP_BASE_DIR", PTS_PATH . "pts/base-test-profiles/");
 	define("XML_SUITE_DIR", PTS_PATH . "pts/test-suites/");
 	define("TEST_RESOURCE_DIR", PTS_PATH . "pts/test-resources/");
-	define("TEST_RESOURCE_CTP_BASE_DIR", PTS_PATH . "pts/base-test-resources/");
 	//define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
 	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
 }

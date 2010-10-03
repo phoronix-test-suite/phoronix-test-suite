@@ -102,9 +102,6 @@ class pts_tests
 				case "TYPE_TEST":
 					$location = XML_PROFILE_DIR . $identifier . ".xml";
 					break;
-				case "TYPE_BASE_TEST":
-					$location = XML_PROFILE_CTP_BASE_DIR . $identifier . ".xml";
-					break;
 				default:
 					$location = false;
 					break;
@@ -123,11 +120,7 @@ class pts_tests
 		{
 			$type = pts_identifier_type($identifier);
 
-			if($type == "TYPE_BASE_TEST" && is_dir(TEST_RESOURCE_CTP_BASE_DIR . $identifier))
-			{
-				$location = TEST_RESOURCE_CTP_BASE_DIR . $identifier . "/";
-			}
-			else if(is_dir(TEST_RESOURCE_DIR . $identifier))
+			if(is_dir(TEST_RESOURCE_DIR . $identifier))
 			{
 				$location = TEST_RESOURCE_DIR . $identifier . "/";
 			}
