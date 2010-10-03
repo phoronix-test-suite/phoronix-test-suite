@@ -126,39 +126,45 @@ class pts_tests
 
 		return $cache[$test_identifier];
 	}
-	public static function process_extra_test_variables($identifier)
+	public static function extra_environmental_variables(&$test_profile)
 	{
 		$extra_vars = array();
-		$extra_vars["HOME"] = TEST_ENV_DIR . $identifier . "/";
+		$extra_vars["HOME"] = $test_profile->get_install_dir();
+		$extra_vars["PATH"] = "\$PATH";
+		$extra_vars["LC_ALL"] = "";
+		$extra_vars["LC_NUMERIC"] = "";
+		$extra_vars["LC_CTYPE"] = "";
+		$extra_vars["LC_MESSAGES"] = "";
+		$extra_vars["LANG"] = "";
+		$extra_vars["vblank_mode"] = '0';
+		$extra_vars["TEST_LIBRARIES_DIR"] = TEST_LIBRARIES_DIR;
+		$extra_vars["TIMED_KILL"] = TEST_LIBRARIES_DIR . "timed-kill.sh";
+		$extra_vars["PHP_BIN"] = PHP_BIN;
 
-		$ctp_extension_string = "";
-
-		$test_profile = new pts_test_profile($identifier);
-		$extends = $test_profile->get_test_extensions_recursive();
-
-		if(isset($extends[0]))
+		foreach($test_profile->extended_test_profiles() as $i => $this_test_profile)
 		{
-			$extra_vars["TEST_EXTENDS"] = TEST_ENV_DIR . $extends[0];
-		}
-
-		foreach(array_merge(array($identifier), $extends) as $extended_test)
-		{
-			if(is_dir(TEST_ENV_DIR . $extended_test . "/"))
+			if($i == 0)
 			{
-				$ctp_extension_string .= TEST_ENV_DIR . $extended_test . ":";
-				$extra_vars["TEST_" . strtoupper(str_replace("-", "_", $extended_test))] = TEST_ENV_DIR . $extended_test;
+				$extra_vars["TEST_EXTENDS"] = $this_test_profile->get_install_dir();
 			}
-		}
 
-		if(!empty($ctp_extension_string))
-		{
-			$extra_vars["PATH"] = $ctp_extension_string . "\$PATH";
+			if(is_dir($this_test_profile->get_install_dir()))
+			{
+				$extra_vars["PATH"] = $this_test_profile->get_install_dir() . ":" . $extra_vars["PATH"];
+				$extra_vars["TEST_" . strtoupper(str_replace("-", "_", $this_test_profile->get_identifier()))] = $this_test_profile->get_install_dir();
+			}
 		}
 
 		return $extra_vars;
 	}
-	public static function call_test_script(&$test_profile, $script_name, $print_string = null, $pass_argument = null, $extra_vars = null, $use_ctp = true)
+	public static function call_test_script($test_profile, $script_name, $print_string = null, $pass_argument = null, $extra_vars_append = null, $use_ctp = true)
 	{
+		$extra_vars = pts_tests::extra_environmental_variables($test_profile);
+		if(is_array($extra_vars_append))
+		{
+			$extra_vars = array_merge($extra_vars, $extra_vars_append);
+		}
+
 		// TODO: call_test_script could be better cleaned up to fit more closely with new pts_test_profile functions
 		$result = null;
 		$test_directory = $test_profile->get_install_dir();
@@ -173,7 +179,6 @@ class pts_tests
 		foreach($test_profiles as &$this_test_profile)
 		{
 			$test_resources_location = $this_test_profile->get_resource_dir();
-
 			// TODO: these checks could be cleaned up since most of the file handling is now done in pts_test_profile
 			if(is_file($test_resources_location . $script_name . $os_postfix . ".php") || is_file($test_resources_location . $script_name . $os_postfix . ".sh"))
 			{

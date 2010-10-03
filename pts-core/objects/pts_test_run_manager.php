@@ -471,7 +471,7 @@ class pts_test_run_manager
 			// Process post-cache-share scripts
 			$test_identifier = pts_extract_identifier_from_path($cache_share_file);
 			$temp_test_profile = new pts_test_profile($test_identifier);
-			echo pts_tests::call_test_script($temp_test_profile, "post-cache-share", null, null, pts_tests::process_extra_test_variables($test_identifier));
+			echo pts_tests::call_test_script($temp_test_profile, "post-cache-share", null, null, null);
 			unlink($cache_share_file);
 		}
 

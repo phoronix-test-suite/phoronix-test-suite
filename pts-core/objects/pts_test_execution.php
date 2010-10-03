@@ -63,7 +63,7 @@ class pts_test_execution
 
 		$to_execute = $test_run_request->test_profile->get_test_executable_dir();
 		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . " " . str_replace($test_run_request->test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_run_request->test_profile->get_default_post_arguments());
-		$extra_runtime_variables = self::extra_run_time_vars($test_identifier, $pts_test_arguments, $result_format);
+		$extra_runtime_variables = pts_tests::extra_environmental_variables($test_run_request->test_profile);
 
 		// Start
 		$cache_share_pt2so = $test_directory . "cache-share-" . PTS_INIT_TIME . ".pt2so";
@@ -430,22 +430,6 @@ class pts_test_execution
 
 		// Remove lock
 		pts_client::release_lock($lock_file);
-	}
-	private static function extra_run_time_vars($test_identifier, $pts_test_arguments = null, $result_format = null)
-	{
-		$vars = pts_tests::process_extra_test_variables($test_identifier);
-		$vars["LC_ALL"] = "";
-		$vars["LC_NUMERIC"] = "";
-		$vars["LC_CTYPE"] = "";
-		$vars["LC_MESSAGES"] = "";
-		$vars["LANG"] = "";
-		$vars["vblank_mode"] = '0';
-		$vars["PTS_TEST_ARGUMENTS"] = "'" . $pts_test_arguments . "'";
-		$vars["TEST_LIBRARIES_DIR"] = TEST_LIBRARIES_DIR;
-		$vars["TIMED_KILL"] = TEST_LIBRARIES_DIR . "timed-kill.sh";
-		$vars["PHP_BIN"] = PHP_BIN;
-
-		return $vars;
 	}
 }
 

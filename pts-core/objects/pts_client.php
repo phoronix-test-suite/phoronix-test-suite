@@ -924,6 +924,7 @@ class pts_client
 	{
 		// Same as shell_exec() but with the PTS env variables added in
 		// Convert pts_client::environmental_variables() into shell export variable syntax
+
 		$var_string = "";
 		$extra_vars = ($extra_vars == null ? pts_client::environmental_variables() : array_merge(pts_client::environmental_variables(), $extra_vars));
 

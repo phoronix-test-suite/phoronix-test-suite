@@ -17,7 +17,7 @@ cp -a build/lib.linux-x86_64-${PYTHON_V1}.${PYTHON_V2}/pyopencl ../lib
 cd ..
 echo "#/bin/sh
 export PYTHONPATH=`pwd`/lib
-python transpose.py \$PTS_TEST_ARGUMENTS | tail -n 1 > \$LOG_FILE 2>&1
+python transpose.py \$@ | tail -n 1 > \$LOG_FILE 2>&1
 " > pyopencl
 
 chmod +x pyopencl
