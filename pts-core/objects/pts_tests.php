@@ -178,39 +178,22 @@ class pts_tests
 		{
 			$test_resources_location = $this_test_profile->get_resource_dir();
 			// TODO: these checks could be cleaned up since most of the file handling is now done in pts_test_profile
-			if(is_file($test_resources_location . $script_name . $os_postfix . ".php") || is_file($test_resources_location . $script_name . $os_postfix . ".sh"))
-			{
-				$script_name .= $os_postfix;
-			}
 
-			if(is_file(($run_file = $test_resources_location . $script_name . ".php")) || is_file(($run_file = $test_resources_location . $script_name . ".sh")))
+			if(is_file(($run_file = $test_resources_location . $script_name . $os_postfix . ".sh")) is_file(($run_file = $test_resources_location . $script_name . ".sh")))
 			{
-				$file_extension = substr($run_file, (strrpos($run_file, ".") + 1));
-
 				if(!empty($print_string))
 				{
 					pts_client::$display->test_run_message($print_string);
 				}
 
-				if($file_extension == "php")
+				if(IS_WINDOWS || pts_client::read_env("USE_PHOROSCRIPT_INTERPRETER") != false)
 				{
-					$this_result = pts_client::shell_exec("cd " .  $test_directory . " && " . PHP_BIN . " " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
-				}
-				else if($file_extension == "sh")
-				{
-					if(IS_WINDOWS || pts_client::read_env("USE_PHOROSCRIPT_INTERPRETER") != false)
-					{
-						$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
-						$phoroscript->execute_script($pass_argument);
-					}
-					else
-					{
-						$this_result = pts_client::shell_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
-					}
+					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
+					$phoroscript->execute_script($pass_argument);
 				}
 				else
 				{
-					$this_result = null;
+					$this_result = pts_client::shell_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
 				}
 
 				if(trim($this_result) != "")
