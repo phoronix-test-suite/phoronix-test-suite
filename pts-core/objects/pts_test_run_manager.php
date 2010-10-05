@@ -468,10 +468,7 @@ class pts_test_run_manager
 
 		foreach(pts_file_io::glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
 		{
-			// Process post-cache-share scripts
-			$test_identifier = pts_extract_identifier_from_path($cache_share_file);
-			$temp_test_profile = new pts_test_profile($test_identifier);
-			echo pts_tests::call_test_script($temp_test_profile, "post-cache-share", null, null, null);
+			// Remove cache shares
 			unlink($cache_share_file);
 		}
 

@@ -1101,7 +1101,7 @@ class pts_client
 
 		foreach(pts_file_io::glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
 		{
-			$identifier = pts_extract_identifier_from_path($result_file);
+			$identifier = basename(dirname($result_file));
 
 			if(!in_array($identifier, $ignore_ids))
 			{

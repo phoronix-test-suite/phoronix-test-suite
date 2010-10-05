@@ -52,13 +52,6 @@ function pts_define_directories()
 	//define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
 	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
 }
-function pts_extract_identifier_from_path($path)
-{
-	// TODO: this by its usage of trying to extract an identifier one-level from the tip will probably not work in PTS3 design
-	// so once the new architecture is committed, any methods using this function should be re-worked.
-
-	return substr(($d = dirname($path)), strrpos($d, "/") + 1);
-}
 
 if(PTS_MODE == "CLIENT" || defined("PTS_AUTO_LOAD_OBJECTS"))
 {

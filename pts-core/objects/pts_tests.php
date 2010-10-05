@@ -55,7 +55,7 @@ class pts_tests
 
 			foreach(pts_file_io::glob(TEST_ENV_DIR . "*/pts-install.xml") as $test)
 			{
-				$test = pts_extract_identifier_from_path($test);
+				$test = basename(dirname($test));
 
 				if(pts_is_test($test))
 				{
@@ -90,27 +90,6 @@ class pts_tests
 		}
 
 		return $cache;
-	}
-	public static function test_profile_location($identifier, $rewrite_cache = false)
-	{
-		static $cache;
-
-		if(!isset($cache[$identifier]) || $rewrite_cache)
-		{
-			switch(pts_identifier_type($identifier))
-			{
-				case "TYPE_TEST":
-					$location = XML_PROFILE_DIR . $identifier . ".xml";
-					break;
-				default:
-					$location = false;
-					break;
-			}
-
-			$cache[$identifier] = $location;
-		}
-
-		return $cache[$identifier];
 	}
 	public static function test_hardware_type($test_identifier)
 	{
@@ -179,7 +158,7 @@ class pts_tests
 			$test_resources_location = $this_test_profile->get_resource_dir();
 			// TODO: these checks could be cleaned up since most of the file handling is now done in pts_test_profile
 
-			if(is_file(($run_file = $test_resources_location . $script_name . $os_postfix . ".sh")) is_file(($run_file = $test_resources_location . $script_name . ".sh")))
+			if(is_file(($run_file = $test_resources_location . $script_name . $os_postfix . ".sh")) || is_file(($run_file = $test_resources_location . $script_name . ".sh")))
 			{
 				if(!empty($print_string))
 				{
