@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<PhoronixTestSuite>
-	<ResultsParser>
-		<OutputTemplate>Final Results: #_RESULT_#</OutputTemplate>
-	</ResultsParser>
-</PhoronixTestSuite>
