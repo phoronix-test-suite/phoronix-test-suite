@@ -96,7 +96,7 @@ class pts_test_install_request
 	}
 	public function scan_download_caches($local_download_caches, $remote_files)
 	{
-		$download_location = TEST_ENV_DIR . $this->test_profile->get_identifier() . '/';
+		$download_location = $this->test_profile->get_install_dir();
 
 		foreach($this->test_files as &$download_package)
 		{

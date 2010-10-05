@@ -184,10 +184,10 @@ class pts_tests
 
 		return $result;
 	}
-	public static function update_test_install_xml($identifier, $this_duration = 0, $is_install = false)
+	public static function update_test_install_xml(&$test_profile, $this_duration = 0, $is_install = false)
 	{
 		// Refresh/generate an install XML for pts-install.xml
-		$installed_test = new pts_installed_test($identifier);
+		$installed_test = new pts_installed_test($test_profile->get_install_dir() . "pts-install.xml");
 		$xml_writer = new tandem_XmlWriter();
 		$xml_writer->setXslBinding("file://" . PTS_USER_DIR . "xsl/" . "pts-test-installation-viewer.xsl");
 
@@ -200,8 +200,6 @@ class pts_tests
 		{
 			$test_duration = ceil((($test_duration * $installed_test->get_run_count()) + $this_duration) / ($installed_test->get_run_count() + 1));
 		}
-
-		$test_profile = new pts_test_profile($identifier);
 
 		$test_version = $is_install ? $test_profile->get_test_profile_version() : $installed_test->get_installed_version();
 		$test_checksum = $is_install ? $test_profile->get_installer_checksum() : $installed_test->get_installed_checksum();
@@ -227,7 +225,7 @@ class pts_tests
 			$times_run++;
 		}
 
-		$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $identifier);
+		$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $test_profile->get_identifier());
 		$xml_writer->addXmlObject(P_INSTALL_TEST_VERSION, 1, $test_version);
 		$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, $test_checksum);
 		$xml_writer->addXmlObject(P_INSTALL_TEST_SYSIDENTIFY, 1, $sys_identifier);
@@ -238,7 +236,7 @@ class pts_tests
 		$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $test_duration);
 		$xml_writer->addXmlObject(P_INSTALL_TEST_LATEST_RUNTIME, 2, $latest_run_time);
 
-		$xml_writer->saveXMLFile(TEST_ENV_DIR . $identifier . "/pts-install.xml");
+		$xml_writer->saveXMLFile($test_profile->get_install_dir() . "pts-install.xml");
 	}
 }
 

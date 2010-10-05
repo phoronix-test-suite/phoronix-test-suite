@@ -322,11 +322,11 @@ class pts_test_execution
 
 		if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config(P_OPTION_LOG_INSTALLATION, "FALSE") || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
 		{
-			if(is_file(TEST_ENV_DIR . $test_identifier . "/install.log"))
+			if(is_file($test_run_request->test_profile->get_install_dir() . "install.log"))
 			{
 				$backup_log_dir = SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/installation-logs/" . $test_run_manager->get_results_identifier() . "/";
 				pts_file_io::mkdir($backup_log_dir, 0777, true);
-				copy(TEST_ENV_DIR . $test_identifier . "/install.log", $backup_log_dir . $test_identifier . ".log");
+				copy($test_run_request->test_profile->get_install_dir() . "install.log", $backup_log_dir . $test_identifier . ".log");
 			}
 		}
 
@@ -420,7 +420,7 @@ class pts_test_execution
 		pts_user_io::display_interrupt_message($test_run_request->test_profile->get_post_run_message());
 		pts_module_manager::module_process("__post_test_run", $test_run_request);
 		$report_elapsed_time = !$cache_share_present && $test_run_request->get_result() != 0;
-		pts_tests::update_test_install_xml($test_identifier, ($report_elapsed_time ? $time_test_elapsed : 0));
+		pts_tests::update_test_install_xml($test_run_request->test_profile, ($report_elapsed_time ? $time_test_elapsed : 0));
 		pts_storage_object::add_in_file(PTS_CORE_STORAGE, "total_testing_time", ($time_test_elapsed / 60));
 
 		if($report_elapsed_time && pts_client::do_anonymous_usage_reporting() && $time_test_elapsed >= 60)

@@ -205,7 +205,7 @@ class pts_test_result_parser
 		switch($test_run_request->test_profile->get_result_format())
 		{
 			case "IMAGE_COMPARISON":
-				$test_result = self::parse_iqc_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case "PASS_FAIL":
 			case "MULTI_PASS_FAIL":
@@ -327,7 +327,7 @@ class pts_test_result_parser
 
 		$test_result->set_result($END_RESULT);
 	}
-	protected static function parse_iqc_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
+	protected static function parse_iqc_result(&$test_profile, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{
 		$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
@@ -353,9 +353,9 @@ class pts_test_result_parser
 				continue;
 			}
 
-			if(is_file(TEST_ENV_DIR . $test_identifier . '/' . $result_iqc_source_file[$i]))
+			if(is_file($test_profile->get_install_dir() . $result_iqc_source_file[$i]))
 			{
-				$iqc_source_file = TEST_ENV_DIR . $test_identifier . '/' . $result_iqc_source_file[$i];
+				$iqc_source_file = $test_profile->get_install_dir() . $result_iqc_source_file[$i];
 			}
 			else
 			{
@@ -371,7 +371,7 @@ class pts_test_result_parser
 
 			$img_sliced = imagecreatetruecolor($result_iqc_image_width[$i], $result_iqc_image_height[$i]);
 			imagecopyresampled($img_sliced, $img, 0, 0, $result_iqc_image_x[$i], $result_iqc_image_y[$i], $result_iqc_image_width[$i], $result_iqc_image_height[$i], $result_iqc_image_width[$i], $result_iqc_image_height[$i]);
-			$test_result = TEST_ENV_DIR . $test_identifier . "/iqc.png";
+			$test_result = $test_profile->get_install_dir() . "iqc.png";
 			imagepng($img_sliced, $test_result);
 
 			if($test_result != false)

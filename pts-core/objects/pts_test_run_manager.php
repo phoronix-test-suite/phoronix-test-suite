@@ -466,10 +466,13 @@ class pts_test_run_manager
 
 		pts_file_io::unlink(SAVE_RESULTS_DIR . $this->get_file_name() . "/active.xml");
 
-		foreach(pts_file_io::glob(TEST_ENV_DIR . "*/cache-share-*.pt2so") as $cache_share_file)
+		foreach($this->tests_to_run as &$run_request)
 		{
 			// Remove cache shares
-			unlink($cache_share_file);
+			foreach(pts_file_io::glob($run_request->test_profile->get_install_dir() . "cache-share-*.pt2so") as $cache_share_file)
+			{
+				unlink($cache_share_file);
+			}
 		}
 
 		if($this->post_run_message != null)
@@ -493,7 +496,7 @@ class pts_test_run_manager
 			pts_set_assignment("TEST_RUN_POSITION", $run_position);
 			pts_set_assignment("TEST_RUN_COUNT", $run_count);
 
-			if(($run_position != 1 && count(pts_file_io::glob(TEST_ENV_DIR . $test_run_request->test_profile->get_identifier() . "/cache-share-*.pt2so")) == 0))
+			if(($run_position != 1 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . "cache-share-*.pt2so")) == 0))
 			{
 				sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 			}
@@ -892,7 +895,7 @@ class pts_test_run_manager
 				continue;
 			}
 
-			if(!is_dir(TEST_ENV_DIR . $test_identifier))
+			if(!is_dir($test_run_request->test_profile->get_install_dir()))
 			{
 				// The test is not setup
 				array_push($failed_tests, $test_identifier);

@@ -103,7 +103,7 @@ class pts_test_installer
 		}
 
 		$identifier = $test_install_request->test_profile->get_identifier();
-		$download_location = TEST_ENV_DIR . $identifier . '/';
+		$download_location = $test_install_request->test_profile->get_install_dir();
 		pts_client::$display->test_install_downloads($test_install_request);
 
 		$module_pass = array($identifier, $test_install_request->get_download_objects());
@@ -306,16 +306,16 @@ class pts_test_installer
 	{
 		// Install a test
 		$identifier = $test_install_request->test_profile->get_identifier();
-		$test_install_directory = TEST_ENV_DIR . $identifier . '/';
+		$test_install_directory = $test_install_request->test_profile->get_install_dir();
 		$installed = false;
 
-		if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($test_install_request->test_profile->get_download_size() + 128))
+		if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_download_size() + 128))
 		{
-			pts_client::$display->test_install_error("There is not enough space at " . TEST_ENV_DIR . " for the test files.");
+			pts_client::$display->test_install_error("There is not enough space at " . $test_install_directory . " for the test files.");
 		}
-		else if(ceil(disk_free_space(TEST_ENV_DIR) / 1048576) < ($test_install_request->test_profile->get_environment_size(false) + 128))
+		else if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_environment_size(false) + 128))
 		{
-			pts_client::$display->test_install_error("There is not enough space at " . TEST_ENV_DIR . " for this test.");
+			pts_client::$display->test_install_error("There is not enough space at " . $test_install_directory . " for this test.");
 		}
 		else
 		{
@@ -424,7 +424,7 @@ class pts_test_installer
 
 			if($installed)
 			{
-				pts_tests::update_test_install_xml($identifier, $install_time_length, true);
+				pts_tests::update_test_install_xml($test_install_request->test_profile, $install_time_length, true);
 			}
 		}
 
@@ -479,7 +479,7 @@ class pts_test_installer
 	protected static function setup_test_install_directory(&$test_install_request, $remove_old_files = false)
 	{
 		$identifier = $test_install_request->test_profile->get_identifier();
-		pts_file_io::mkdir(TEST_ENV_DIR . $identifier);
+		pts_file_io::mkdir($test_install_request->test_profile->get_install_dir());
 
 		if($remove_old_files)
 		{
@@ -490,10 +490,10 @@ class pts_test_installer
 				array_push($ignore_files, $download_object->get_filename());
 			}
 
-			pts_file_io::delete(TEST_ENV_DIR . $identifier, $ignore_files);
+			pts_file_io::delete($test_install_request->test_profile->get_install_dir(), $ignore_files);
 		}
 
-		pts_file_io::symlink(pts_client::user_home_directory() . ".Xauthority", TEST_ENV_DIR . $identifier . "/.Xauthority");
+		pts_file_io::symlink(pts_client::user_home_directory() . ".Xauthority", $test_install_request->test_profile->get_install_dir() . ".Xauthority");
 	}
 }
 
