@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2010, Phoronix Media
 	Copyright (C) 2010, Michael Larabel
-	pts_parse_results_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite parse-results.xml file
+	pts_parse_results_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite results-definition.xml file
 
 	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
 	A work in progress. This was originally designed for just some select needs in the past. No XML validation is done with this parser, etc.
