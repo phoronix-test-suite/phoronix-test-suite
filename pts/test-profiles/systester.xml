@@ -6,6 +6,7 @@
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
+		<Status>VERIFIED</Status>
 		<Maintainer>Kenney Phillis</Maintainer>
 		<EnvironmentSize>1.4</EnvironmentSize>
 		<ProjectURL>http://systester.sourceforge.net/</ProjectURL>

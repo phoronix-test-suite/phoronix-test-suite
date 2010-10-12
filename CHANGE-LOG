@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix external dependency installation on OpenSUSE when using Zypper
 - pts-core: Eliminate "base-test-[profiles,resources]" but for PTS3 they need to all be integrated to a single location
 - pts-core: No longer support test profile scripts as PHP files but require them to be SH files
+- install-sh: Installer updates
 
 Phoronix Test Suite 2.8.1
 September 9, 2010

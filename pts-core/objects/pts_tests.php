@@ -156,8 +156,7 @@ class pts_tests
 		foreach($test_profiles as &$this_test_profile)
 		{
 			$test_resources_location = $this_test_profile->get_resource_dir();
-			// TODO: these checks could be cleaned up since most of the file handling is now done in pts_test_profile
-
+s
 			if(is_file(($run_file = $test_resources_location . $script_name . $os_postfix . ".sh")) || is_file(($run_file = $test_resources_location . $script_name . ".sh")))
 			{
 				if(!empty($print_string))
