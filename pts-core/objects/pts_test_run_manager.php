@@ -44,12 +44,19 @@ class pts_test_run_manager
 	private $dynamic_run_count_std_deviation_threshold;
 	private $dynamic_run_count_export_script;
 
+	private $results_directory;
+
+	private static $user_rejected_install_notice = false;
+	private static $test_run_process_active = false;
+
 	public function __construct()
 	{
 		$this->do_dynamic_run_count = pts_config::read_bool_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE");
 		$this->dynamic_roun_count_on_length_or_less = pts_config::read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, 20);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 3.50);
 		$this->dynamic_run_count_export_script = pts_config::read_user_config(P_OPTION_STATS_EXPORT_RESULTS_TO, null);
+
+		pts_module_manager::module_process("__run_manager_setup", $this);
 	}
 	public function do_dynamic_run_count()
 	{
@@ -231,13 +238,9 @@ class pts_test_run_manager
 	{
 		$this->force_save_results = true;
 	}
-	public function do_save_results()
+	protected function do_save_results()
 	{
 		return $this->file_name != null;
-	}
-	public function allow_results_sharing()
-	{
-		return $this->allow_sharing_of_results;
 	}
 	public function get_file_name()
 	{
@@ -251,20 +254,9 @@ class pts_test_run_manager
 	{
 		return $this->results_identifier;
 	}
-	public function get_failed_test_run_requests()
-	{
-		return $this->failed_tests_to_run;
-	}
 	public function get_run_description()
 	{
 		return $this->run_description;
-	}
-	public static function clean_save_name_string($input)
-	{
-		$input = pts_strings::swap_variables($input, array("pts_client", "user_run_save_variables"));
-		$input = trim(str_replace(array(' ', '/', '&', '?', ':', '$', '~', '\''), null, str_replace(" ", "-", strtolower($input))));
-
-		return $input;
 	}
 	public function result_already_contains_identifier()
 	{
@@ -408,10 +400,18 @@ class pts_test_run_manager
 	}
 	public function call_test_runs()
 	{
+		// Create a lock
+		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";
+		pts_client::create_lock($lock_path);
+
 		if($this->pre_run_message != null)
 		{
 			pts_user_io::display_interrupt_message($this->pre_run_message);
 		}
+
+		// Hook into the module framework
+		self::$test_run_process_active = true;
+		pts_module_manager::module_process("__pre_run_process", $this);
 
 		pts_file_io::unlink(PTS_USER_DIR . "halt-testing");
 		pts_file_io::unlink(PTS_USER_DIR . "skip-test");
@@ -479,6 +479,28 @@ class pts_test_run_manager
 		{
 			pts_user_io::display_interrupt_message($this->post_run_message);
 		}
+
+		self::$test_run_process_active = -1;
+		pts_module_manager::module_process("__post_run_process", $this);
+		pts_client::release_lock($lock_path);
+
+		// Report any tests that failed to properly run
+		if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("DEBUG_TEST_PROFILE") || $this->get_test_count() > 3)
+		{
+			if(count($this->failed_tests_to_run) > 0)
+			{
+				echo "\n\nThe following tests failed to properly run:\n\n";
+				foreach($this->failed_tests_to_run as &$run_request)
+				{
+					echo "\t- " . $run_request->test_profile->get_identifier() . ($run_request->get_arguments_description() != null ? ": " . $run_request->get_arguments_description() : null) . "\n";
+				}
+				echo "\n";
+			}
+		}
+	}
+	public static function test_run_process_active()
+	{
+		return self::$test_run_process_active = true;
 	}
 	private function process_test_run_request($run_index, $run_position = -1, $run_count = -1)
 	{
@@ -568,6 +590,146 @@ class pts_test_run_manager
 		}
 
 		return true;
+	}
+	public static function clean_save_name_string($input)
+	{
+		$input = pts_strings::swap_variables($input, array("pts_client", "user_run_save_variables"));
+		$input = trim(str_replace(array(' ', '/', '&', '?', ':', '$', '~', '\''), null, str_replace(" ", "-", strtolower($input))));
+
+		return $input;
+	}
+	public static function initial_checks(&$to_run_identifiers)
+	{
+		// Refresh the pts_client::$display in case we need to run in debug mode
+		pts_client::init_display_mode();
+
+		if(pts_read_assignment("IS_BATCH_MODE"))
+		{
+			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == false && !pts_is_assignment("AUTOMATED_MODE"))
+			{
+				pts_client::$display->generic_error("The batch mode must first be configured.\nTo configure, run phoronix-test-suite batch-setup");
+				return false;
+			}
+		}
+
+		if(!is_writable(TEST_ENV_DIR))
+		{
+			pts_client::$display->generic_error("The test installation directory is not writable.\nLocation: " . TEST_ENV_DIR);
+			return false;
+		}
+
+		// Cleanup tests to run
+		if(pts_test_run_manager::cleanup_tests_to_run($to_run_identifiers) == false)
+		{
+			return false;
+		}
+		else if(count($to_run_identifiers) == 0)
+		{
+			if(self::$user_rejected_install_notice == false)
+			{
+				pts_client::$display->generic_error("You must enter at least one test, suite, or result identifier to run.");
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+	public function pre_process()
+	{
+		if($this->do_save_results())
+		{
+			$test_properties = array();
+			$this->result_file_setup();
+			self::$results_directory = pts_client::setup_test_result_directory($this->get_file_name()) . '/';
+
+			if(pts_read_assignment("IS_BATCH_MODE"))
+			{
+				pts_arrays::unique_push($test_properties, "PTS_BATCH_MODE");
+			}
+			else if(pts_read_assignment("IS_DEFAULTS_MODE"))
+			{
+				pts_arrays::unique_push($test_properties, "PTS_DEFAULTS_MODE");
+			}
+
+			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($this->get_file_name()) || $this->result_already_contains_identifier() == false))
+			{
+				$this->result_file_writer->add_result_file_meta_data($this, $test_properties);
+				$this->result_file_writer->add_current_system_information();
+				$wrote_system_xml = true;
+			}
+			else
+			{
+				$wrote_system_xml = false;
+			}
+
+			$pso = new pts_storage_object(true, false);
+			$pso->add_object("test_run_manager", $this);
+			$pso->add_object("batch_mode", pts_read_assignment("IS_BATCH_MODE"));
+			$pso->add_object("system_hardware", phodevi::system_hardware(false));
+			$pso->add_object("system_software", phodevi::system_software(false));
+
+			$pso->save_to_file(self::$results_directory . "objects.pt2so");
+			unset($pso);
+		}
+	}
+	public function finish_process()
+	{
+		if($this->do_save_results())
+		{
+			if(!pts_is_assignment("TEST_RAN") && !pts_is_test_result($this->get_file_name()) && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
+			{
+				pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name());
+				return false;
+			}
+
+			pts_file_io::unlink(self::$results_directory . "objects.pt2so");
+			pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/", null, true);
+
+			if($wrote_system_xml)
+			{
+				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($test_type));
+			}
+
+			pts_module_manager::module_process("__event_results_process", $this);
+			$this->result_file_writer->save_result_file($this->get_file_name());
+			pts_module_manager::module_process("__event_results_saved", $this);
+			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $this->get_file_name() . "/composite.xml\n";
+			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $this->get_file_name());
+			pts_client::display_web_page(SAVE_RESULTS_DIR . $this->get_file_name() . "/index.html");
+
+			if($this->allow_sharing_of_results && !defined("NO_NETWORK_COMMUNICATION"))
+			{
+				if(pts_is_assignment("AUTOMATED_MODE"))
+				{
+					$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL");
+				}
+				else
+				{
+					$upload_results = pts_user_io::prompt_bool_input("Would you like to upload these results to Phoronix Global", true, "UPLOAD_RESULTS");
+				}
+
+				if($upload_results)
+				{
+					$tags_input = pts_global::prompt_user_result_tags($to_run_identifiers);
+					$upload_url = pts_global::upload_test_result(SAVE_RESULTS_DIR . $this->get_file_name() . "/composite.xml", $tags_input);
+
+					if(!empty($upload_url))
+					{
+						echo "\nResults Uploaded To: " . $upload_url . "\n";
+						pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
+						pts_module_manager::module_process("__event_global_upload", $upload_url);
+						pts_client::display_web_page($upload_url, "Do you want to launch Phoronix Global", true);
+					}
+					else
+					{
+						echo "\nResults Failed To Upload.\n";
+					}
+				}
+			}
+		}
+
+		pts_set_assignment_next("PREV_TEST_IDENTIFIER", $this->get_tests_to_run_identifiers());
 	}
 	public static function cleanup_tests_to_run(&$to_run_identifiers)
 	{
@@ -670,11 +832,12 @@ class pts_test_run_manager
 				{
 					pts_client::run_next("install_test", $tests_missing, pts_assignment_manager::get_all_assignments());
 					pts_client::run_next("run_test", $tests_missing, pts_assignment_manager::get_all_assignments(array("NO_PROMPT_IN_RUN_ON_MISSING_TESTS" => true)));
+					self::$user_rejected_install_notice = false;
 					return false;
 				}
 				else
 				{
-					pts_set_assignment("USER_REJECTED_TEST_INSTALL_NOTICE", true);
+					self::$user_rejected_install_notice = true;
 				}
 			}
 		}
@@ -683,7 +846,7 @@ class pts_test_run_manager
 	}
 	public function save_results_prompt()
 	{
-		if($this->prompt_save_results && pts_is_assignment("DO_NOT_SAVE_RESULTS") == false)
+		if($this->prompt_save_results && count($this->tests_to_run) > 0 && pts_is_assignment("DO_NOT_SAVE_RESULTS") == false)
 		{
 			if($this->force_save_results || pts_is_assignment("AUTO_SAVE_NAME") || pts_client::read_env("TEST_RESULTS_NAME"))
 			{
