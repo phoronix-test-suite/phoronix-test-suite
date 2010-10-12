@@ -307,6 +307,7 @@ class pts_test_installer
 		// Install a test
 		$identifier = $test_install_request->test_profile->get_identifier();
 		$test_install_directory = $test_install_request->test_profile->get_install_dir();
+		pts_file_io::mkdir($test_install_directory);
 		$installed = false;
 
 		if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_download_size() + 128))

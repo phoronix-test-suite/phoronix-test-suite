@@ -188,7 +188,7 @@ class pts_test_execution
 				}
 				else
 				{
-					$test_result = pts_test_result_parser::parse_result($test_run_request, $test_log_file);
+					$test_result = pts_test_result_parser::parse_result($test_run_request, $test_extra_runtime_variables["LOG_FILE"]);
 				}
 
 				pts_client::test_profile_debug_message("Test Result Value: " . $test_result);
