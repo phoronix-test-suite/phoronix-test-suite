@@ -196,7 +196,7 @@ class pts_test_installer
 
 						do
 						{
-							if((pts_c::$test_flags ^ pts_c::batch_mode) && !pts_is_assignment("AUTOMATED_MODE") && pts_config::read_bool_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE") && count($package_urls) > 1)
+							if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE") && count($package_urls) > 1)
 							{
 								// Prompt user to select mirror
 								do
@@ -265,7 +265,7 @@ class pts_test_installer
 									}
 									else
 									{
-										if((pts_c::$test_flags & pts_c::batch_mode) || pts_read_assignment("AUTOMATED_MODE"))
+										if((pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode))
 										{
 											$try_again = false;
 										}

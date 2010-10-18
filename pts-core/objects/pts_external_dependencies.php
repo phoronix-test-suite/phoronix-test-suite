@@ -64,7 +64,7 @@ class pts_external_dependencies
 		$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies);
 
 		// If it's automated and can't install without root, return true if there are no dependencies to do otherwise false
-		if(pts_is_assignment("AUTOMATED_MODE") && phodevi::read_property("system", "username") != "root")
+		if((pts_c::$test_flags & pts_c::auto_mode) && phodevi::read_property("system", "username") != "root")
 		{
 			return count($dependencies_to_install) == 0;
 		}
@@ -96,7 +96,7 @@ class pts_external_dependencies
 
 			echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
 
-			if((pts_c::$test_flags ^ pts_c::batch_mode) && !pts_is_assignment("AUTOMATED_MODE"))
+			if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
 			{		
 				pts_user_io::read_user_input();
 			}

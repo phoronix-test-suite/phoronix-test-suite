@@ -39,13 +39,7 @@ class install_test implements pts_option_interface
 		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";
 		pts_client::create_lock($lock_path);
 
-		// Set flags
-		pts_c::$test_flags = 0;
-		if(pts_read_assignment("IS_BATCH_MODE"))
-		{
-			// TODO: don't use IS_BATCH_MODE anymore in pts-core, this is temp fix for such code
-			pts_c::$test_flags |= pts_c::batch_mode;
-		}
+		pts_client::set_test_flags();
 
 		// Any external dependencies?
 		$satisfied_tests = array(); // Tests with no dependencies or with all dependencies installed

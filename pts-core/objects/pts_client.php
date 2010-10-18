@@ -652,6 +652,26 @@ class pts_client
 
 		return $generated;
 	}
+	public static function set_test_flags($test_flags = 0)
+	{
+		if(pts_read_assignment("IS_BATCH_MODE"))
+		{
+			// TODO: don't use IS_BATCH_MODE anymore in pts-core, this is temp fix for such code
+			$test_flags |= pts_c::batch_mode;
+		}
+		if(pts_read_assignment("IS_DEFAULTS_MODE"))
+		{
+			// TODO: don't use IS_DEFAULTS_MODE anymore in pts-core, this is temp fix for such code
+			$test_flags |= pts_c::defaults_mode;
+		}
+		if(pts_read_assignment("AUTOMATED_MODE"))
+		{
+			// TODO: don't use AUTOMATED_MODE anymore in pts-core, this is temp fix for such code
+			$test_flags |= pts_c::auto_mode;
+		}
+
+		pts_c::$test_flags = $test_flags;
+	}
 	public static function execute_command($command, $pass_args = null, $preset_assignments = "")
 	{
 		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && !class_exists($command, false))
@@ -964,7 +984,7 @@ class pts_client
 	}
 	public static function display_web_page($URL, $alt_text = null, $default_open = false, $auto_open = false)
 	{
-		if(pts_read_assignment("AUTOMATED_MODE") || (pts_client::read_env("DISPLAY") == false && !IS_WINDOWS))
+		if((pts_c::$test_flags & pts_c::auto_mode) || (pts_client::read_env("DISPLAY") == false && !IS_WINDOWS))
 		{
 			return;
 		}

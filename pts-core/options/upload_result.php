@@ -37,7 +37,8 @@ class upload_result implements pts_option_interface
 			return false;
 		}
 
-		if(!pts_is_assignment("AUTOMATED_MODE"))
+		pts_client::set_test_flags();
+		if((pts_c::$test_flags ^ pts_c::auto_mode))
 		{
 			$tags_input = pts_global::prompt_user_result_tags();
 			echo "\n";

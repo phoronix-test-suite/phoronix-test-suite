@@ -41,7 +41,8 @@ class reference_comparison implements pts_option_interface
 		}
 
 		$merge_args = array($r[0]);
-		if(pts_is_assignment("AUTOMATED_MODE"))
+		pts_client::set_test_flags();
+		if((pts_c::$test_flags & pts_c::auto_mode))
 		{
 			$reference_comparisons = pts_read_assignment("REFERENCE_COMPARISONS");
 

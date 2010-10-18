@@ -51,8 +51,10 @@ class pts_test_run_manager
 	private static $user_rejected_install_notice = false;
 	private static $test_run_process_active = false;
 
-	public function __construct()
+	public function __construct($test_flags = 0)
 	{
+		pts_client::set_test_flags($test_flags);
+
 		$this->do_dynamic_run_count = pts_config::read_bool_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE");
 		$this->dynamic_roun_count_on_length_or_less = pts_config::read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, 20);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 3.50);
@@ -368,7 +370,7 @@ class pts_test_run_manager
 			do
 			{
 				if($times_tried == 0 && (($env_identifier = pts_client::read_env("TEST_RESULTS_IDENTIFIER")) || 
-				($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")) || pts_read_assignment("AUTOMATED_MODE")))
+				($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")) || (pts_c::$test_flags & pts_c::auto_mode)))
 				{
 					$results_identifier = isset($env_identifier) ? $env_identifier : null;
 					echo "Test Identifier: " . $results_identifier . "\n";
@@ -607,7 +609,7 @@ class pts_test_run_manager
 
 		if((pts_c::$test_flags & pts_c::batch_mode))
 		{
-			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == false && !pts_is_assignment("AUTOMATED_MODE"))
+			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == false && (pts_c::$test_flags ^ pts_c::auto_mode))
 			{
 				pts_client::$display->generic_error("The batch mode must first be configured.\nTo configure, run phoronix-test-suite batch-setup");
 				return false;
@@ -702,7 +704,7 @@ class pts_test_run_manager
 
 			if($this->allow_sharing_of_results && !defined("NO_NETWORK_COMMUNICATION"))
 			{
-				if(pts_is_assignment("AUTOMATED_MODE"))
+				if((pts_c::$test_flags & pts_c::auto_mode))
 				{
 					$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL");
 				}
@@ -826,7 +828,7 @@ class pts_test_run_manager
 				echo $message;
 			}
 
-			if(!pts_read_assignment("AUTOMATED_MODE") && (pts_c::$test_flags ^ pts_c::batch_mode))
+			if((pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::batch_mode))
 			{
 				$stop_and_install = pts_user_io::prompt_bool_input("Would you like to stop and install these tests now", true);
 
@@ -876,7 +878,7 @@ class pts_test_run_manager
 				}
 
 				// Prompt Description
-				if(!pts_is_assignment("AUTOMATED_MODE") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
+				if((pts_c::$test_flags ^ pts_c::auto_mode) && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
 				{
 					if($this->run_description == null)
 					{
