@@ -154,12 +154,12 @@ class pts_test_execution
 			}
 		
 
-			if(!isset($test_result[10240]) || pts_read_assignment("DEBUG_TEST_PROFILE"))
+			if(!isset($test_result[10240]) || (pts_c::$test_flags & pts_c::debug_mode))
 			{
 				pts_client::$display->test_run_instance_output($test_result);
 			}
 
-			if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || pts_is_assignment("DEBUG_TEST_PROFILE")))
+			if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || (pts_c::$test_flags & pts_c::debug_mode)))
 			{
 				$test_log_file_contents = file_get_contents($test_log_file);
 				pts_client::$display->test_run_instance_output($test_log_file_contents);
@@ -320,7 +320,7 @@ class pts_test_execution
 			unset($cache_share);
 		}
 
-		if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config(P_OPTION_LOG_INSTALLATION, "FALSE") || pts_read_assignment("IS_PCQS_MODE") || (pts_c::$test_flags & pts_c::batch_mode)))
+		if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config(P_OPTION_LOG_INSTALLATION, "FALSE") || $test_run_manager->is_pcqs() || (pts_c::$test_flags & pts_c::batch_mode)))
 		{
 			if(is_file($test_run_request->test_profile->get_install_dir() . "install.log"))
 			{

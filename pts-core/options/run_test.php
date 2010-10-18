@@ -41,9 +41,9 @@ class run_test implements pts_option_interface
 		$test_run_manager->save_results_prompt();
 
 		// Run the actual tests
-		$test_run_manager->pre_process();
+		$test_run_manager->pre_execution_process();
 		$test_run_manager->call_test_runs();
-		$test_run_manager->finish_process();
+		$test_run_manager->post_execution_process();
 		echo "\n";
 	}
 }

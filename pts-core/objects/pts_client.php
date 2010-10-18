@@ -479,7 +479,7 @@ class pts_client
 	{
 		$reported = false;
 
-		if(pts_is_assignment("DEBUG_TEST_PROFILE"))
+		if((pts_c::$test_flags & pts_c::debug_mode))
 		{
 			pts_client::$display->test_run_instance_error($message);
 			$reported = true;
@@ -601,7 +601,7 @@ class pts_client
 
 			$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, "TRUE") || pts_read_assignment("IS_PCQS_MODE") || (pts_c::$test_flags & pts_c::batch_mode) || pts_is_assignment("PHOROMATIC_TITLE")))
+			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, "TRUE") || (pts_c::$test_flags & pts_c::batch_mode) || pts_is_assignment("PHOROMATIC_TITLE")))
 			{
 				// Save verbose system information here
 				pts_file_io::mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $result_identifier), 0777, true);
@@ -668,6 +668,11 @@ class pts_client
 		{
 			// TODO: don't use AUTOMATED_MODE anymore in pts-core, this is temp fix for such code
 			$test_flags |= pts_c::auto_mode;
+		}
+		if(pts_read_assignment("DEBUG_TEST_PROFILE"))
+		{
+			// TODO: don't use DEBUG_TEST_PROFILE anymore in pts-core, this is temp fix for such code
+			$test_flags |= pts_c::debug_mode;
 		}
 
 		pts_c::$test_flags = $test_flags;

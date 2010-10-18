@@ -27,6 +27,7 @@ class pts_c
 	const auto_mode = 2;
 	const batch_mode = 4;
 	const defaults_mode = 8;
+	const debug_mode = 16;
 }
 
 ?>

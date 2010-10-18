@@ -27,6 +27,7 @@ class pts_test_run_manager
 	private $tests_to_run = array();
 	private $failed_tests_to_run = array();
 	private $last_test_run_index = 0;
+	private $completed_runs = 0;
 
 	private $file_name = null;
 	private $file_name_title = null;
@@ -38,6 +39,7 @@ class pts_test_run_manager
 	private $post_run_message = null;
 	private $pre_run_message = null;
 	private $allow_sharing_of_results = true;
+	private $is_pcqs = false;
 
 	private $do_dynamic_run_count = false;
 	private $dynamic_roun_count_on_length_or_less;
@@ -61,6 +63,10 @@ class pts_test_run_manager
 		$this->dynamic_run_count_export_script = pts_config::read_user_config(P_OPTION_STATS_EXPORT_RESULTS_TO, null);
 
 		pts_module_manager::module_process("__run_manager_setup", $this);
+	}
+	public function is_pcqs()
+	{
+		return $this->is_pcqs;
 	}
 	public function do_dynamic_run_count()
 	{
@@ -489,7 +495,7 @@ class pts_test_run_manager
 		pts_client::release_lock($lock_path);
 
 		// Report any tests that failed to properly run
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_is_assignment("DEBUG_TEST_PROFILE") || $this->get_test_count() > 3)
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || (pts_c::$test_flags & pts_c::debug_mode) || $this->get_test_count() > 3)
 		{
 			if(count($this->failed_tests_to_run) > 0)
 			{
@@ -561,7 +567,7 @@ class pts_test_run_manager
 				if(!empty($test_identifier))
 				{
 					$this->result_file_writer->add_result_from_result_object($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
-					pts_set_assignment("TEST_RAN", true);
+					$this->completed_runs += 1;
 
 					static $xml_write_pos = 1;
 					pts_file_io::mkdir(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
@@ -639,7 +645,7 @@ class pts_test_run_manager
 
 		return true;
 	}
-	public function pre_process()
+	public function pre_execution_process()
 	{
 		if($this->do_save_results())
 		{
@@ -677,11 +683,11 @@ class pts_test_run_manager
 			unset($pso);
 		}
 	}
-	public function finish_process()
+	public function post_execution_process()
 	{
 		if($this->do_save_results())
 		{
-			if(!pts_is_assignment("TEST_RAN") && !pts_is_test_result($this->get_file_name()) && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
+			if($this->completed_runs == 0 && !pts_is_test_result($this->get_file_name()) && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
 			{
 				pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name());
 				return false;
@@ -965,7 +971,7 @@ class pts_test_run_manager
 
 				if($suite_run_mode == "PCQS")
 				{
-					pts_set_assignment_once("IS_PCQS_MODE", true);
+					$this->is_pcqs = true;
 				}
 
 				$this->add_suite_run($to_run);
