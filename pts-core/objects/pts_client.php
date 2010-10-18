@@ -601,7 +601,7 @@ class pts_client
 
 			$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
 
-			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, "TRUE") || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("PHOROMATIC_TITLE")))
+			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, "TRUE") || pts_read_assignment("IS_PCQS_MODE") || (pts_c::$test_flags & pts_c::batch_mode) || pts_is_assignment("PHOROMATIC_TITLE")))
 			{
 				// Save verbose system information here
 				pts_file_io::mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $result_identifier), 0777, true);

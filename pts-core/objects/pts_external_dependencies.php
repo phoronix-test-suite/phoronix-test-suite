@@ -96,7 +96,7 @@ class pts_external_dependencies
 
 			echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
 
-			if(!pts_read_assignment("IS_BATCH_MODE") && !pts_is_assignment("AUTOMATED_MODE"))
+			if((pts_c::$test_flags ^ pts_c::batch_mode) && !pts_is_assignment("AUTOMATED_MODE"))
 			{		
 				pts_user_io::read_user_input();
 			}

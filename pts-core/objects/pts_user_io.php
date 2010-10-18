@@ -43,7 +43,7 @@ class pts_user_io
 		{
 			echo $message . "\n";
 
-			if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
+			if((pts_c::$test_flags & pts_c::batch_mode) && pts_read_assignment("AUTOMATED_MODE") == false)
 			{
 				echo "\nHit Any Key To Continue...\n";
 				pts_user_io::read_user_input();
@@ -64,7 +64,7 @@ class pts_user_io
 	public static function prompt_bool_input($question, $default = true, $question_id = "UNKNOWN")
 	{
 		// Prompt user for yes/no question
-		if(pts_read_assignment("IS_BATCH_MODE"))
+		if((pts_c::$test_flags & pts_c::batch_mode))
 		{
 			switch($question_id)
 			{

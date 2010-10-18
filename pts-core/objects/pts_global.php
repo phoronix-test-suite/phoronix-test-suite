@@ -174,7 +174,7 @@ class pts_global
 	{
 		$tags_input = null;
 
-		if(pts_read_assignment("IS_BATCH_MODE") == false && pts_read_assignment("AUTOMATED_MODE") == false)
+		if((pts_c::$test_flags ^ pts_c::batch_mode) && pts_read_assignment("AUTOMATED_MODE") == false)
 		{
 			$tags_input .= pts_user_io::prompt_user_input("Tags are optional and used on Phoronix Global for making it easy to share, search, and organize test results. Example tags could be the type of test performed (i.e. WINE tests) or the hardware used (i.e. Dual Core SMP).\n\nEnter the tags you wish to provide (separated by commas)", true);
 

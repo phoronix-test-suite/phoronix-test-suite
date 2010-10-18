@@ -30,16 +30,23 @@ class run_test implements pts_option_interface
 		}
 
 		// Get our objects ready
+		pts_c::$test_flags = 0;
+
+		if(pts_read_assignment("IS_BATCH_MODE"))
+		{
+			// TODO: don't use IS_BATCH_MODE anymore in pts-core, this is temp fix for such code
+			pts_c::$test_flags |= pts_c::batch_mode;
+		}
+		if(pts_read_assignment("IS_DEFAULTS_MODE"))
+		{
+			// TODO: don't use IS_DEFAULTS_MODE anymore in pts-core, this is temp fix for such code
+			pts_c::$test_flags |= pts_c::defaults_mode;
+		}
+
 		$test_run_manager = new pts_test_run_manager();
 
-		// Determine what to run
-		$test_run_manager->determine_tests_to_run($to_run);
-
-		// Run the test process
-		$test_run_manager->validate_tests_to_run();
-
-		// Nothing to run
-		if($test_run_manager->get_test_count() == 0)
+		// Load the tests to run
+		if($test_run_manager->load_tests_to_run($to_run) == false)
 		{
 			return false;
 		}

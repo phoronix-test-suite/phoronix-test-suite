@@ -313,7 +313,7 @@ function pts_virtual_suite_tests($object)
 
 	if(count($contained_tests) > 0)
 	{
-		pts_set_assignment_once("IS_DEFAULTS_MODE", true); // Use the defaults mode for the suite
+		pts_c::$test_flags |= pts_c::defaults_mode; // Use the defaults mode for the suite
 	}
 
 	return $contained_tests;

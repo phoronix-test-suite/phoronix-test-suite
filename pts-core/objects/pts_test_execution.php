@@ -320,7 +320,7 @@ class pts_test_execution
 			unset($cache_share);
 		}
 
-		if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config(P_OPTION_LOG_INSTALLATION, "FALSE") || pts_read_assignment("IS_PCQS_MODE") || pts_read_assignment("IS_BATCH_MODE")))
+		if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config(P_OPTION_LOG_INSTALLATION, "FALSE") || pts_read_assignment("IS_PCQS_MODE") || (pts_c::$test_flags & pts_c::batch_mode)))
 		{
 			if(is_file($test_run_request->test_profile->get_install_dir() . "install.log"))
 			{

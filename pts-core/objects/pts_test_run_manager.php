@@ -44,7 +44,9 @@ class pts_test_run_manager
 	private $dynamic_run_count_std_deviation_threshold;
 	private $dynamic_run_count_export_script;
 
+	// These variables could potentially be cleaned up or eliminated
 	private $results_directory;
+	private $wrote_system_xml;
 
 	private static $user_rejected_install_notice = false;
 	private static $test_run_process_active = false;
@@ -283,7 +285,7 @@ class pts_test_run_manager
 			//echo "Saving Results To: " . $proposed_name . "\n";
 		}
 
-		if(pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"))
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"))
 		{
 			$is_reserved_word = false;
 
@@ -353,7 +355,7 @@ class pts_test_run_manager
 			$current_software = array();
 		}
 
-		if(pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE"))
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE"))
 		{
 			if(count($current_identifiers) > 0)
 			{
@@ -485,7 +487,7 @@ class pts_test_run_manager
 		pts_client::release_lock($lock_path);
 
 		// Report any tests that failed to properly run
-		if(pts_read_assignment("IS_BATCH_MODE") || pts_is_assignment("DEBUG_TEST_PROFILE") || $this->get_test_count() > 3)
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_is_assignment("DEBUG_TEST_PROFILE") || $this->get_test_count() > 3)
 		{
 			if(count($this->failed_tests_to_run) > 0)
 			{
@@ -603,7 +605,7 @@ class pts_test_run_manager
 		// Refresh the pts_client::$display in case we need to run in debug mode
 		pts_client::init_display_mode();
 
-		if(pts_read_assignment("IS_BATCH_MODE"))
+		if((pts_c::$test_flags & pts_c::batch_mode))
 		{
 			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == false && !pts_is_assignment("AUTOMATED_MODE"))
 			{
@@ -641,13 +643,13 @@ class pts_test_run_manager
 		{
 			$test_properties = array();
 			$this->result_file_setup();
-			self::$results_directory = pts_client::setup_test_result_directory($this->get_file_name()) . '/';
+			$this->results_directory = pts_client::setup_test_result_directory($this->get_file_name()) . '/';
 
-			if(pts_read_assignment("IS_BATCH_MODE"))
+			if((pts_c::$test_flags & pts_c::batch_mode))
 			{
 				pts_arrays::unique_push($test_properties, "PTS_BATCH_MODE");
 			}
-			else if(pts_read_assignment("IS_DEFAULTS_MODE"))
+			else if((pts_c::$test_flags & pts_c::defaults_mode))
 			{
 				pts_arrays::unique_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
@@ -656,20 +658,20 @@ class pts_test_run_manager
 			{
 				$this->result_file_writer->add_result_file_meta_data($this, $test_properties);
 				$this->result_file_writer->add_current_system_information();
-				$wrote_system_xml = true;
+				$this->wrote_system_xml = true;
 			}
 			else
 			{
-				$wrote_system_xml = false;
+				$this->wrote_system_xml = false;
 			}
 
 			$pso = new pts_storage_object(true, false);
 			$pso->add_object("test_run_manager", $this);
-			$pso->add_object("batch_mode", pts_read_assignment("IS_BATCH_MODE"));
+			$pso->add_object("batch_mode", (pts_c::$test_flags & pts_c::batch_mode));
 			$pso->add_object("system_hardware", phodevi::system_hardware(false));
 			$pso->add_object("system_software", phodevi::system_software(false));
 
-			$pso->save_to_file(self::$results_directory . "objects.pt2so");
+			$pso->save_to_file($this->results_directory . "objects.pt2so");
 			unset($pso);
 		}
 	}
@@ -683,10 +685,10 @@ class pts_test_run_manager
 				return false;
 			}
 
-			pts_file_io::unlink(self::$results_directory . "objects.pt2so");
+			pts_file_io::unlink($this->results_directory . "objects.pt2so");
 			pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/", null, true);
 
-			if($wrote_system_xml)
+			if($this->wrote_system_xml)
 			{
 				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($test_type));
 			}
@@ -824,14 +826,13 @@ class pts_test_run_manager
 				echo $message;
 			}
 
-			if(!pts_read_assignment("AUTOMATED_MODE") && !pts_read_assignment("IS_BATCH_MODE") && !pts_read_assignment("NO_PROMPT_IN_RUN_ON_MISSING_TESTS"))
+			if(!pts_read_assignment("AUTOMATED_MODE") && (pts_c::$test_flags ^ pts_c::batch_mode))
 			{
-				$stop_and_install = pts_user_io::prompt_bool_input("Would you like to automatically install these tests now", true);
+				$stop_and_install = pts_user_io::prompt_bool_input("Would you like to stop and install these tests now", true);
 
 				if($stop_and_install)
 				{
 					pts_client::run_next("install_test", $tests_missing, pts_assignment_manager::get_all_assignments());
-					pts_client::run_next("run_test", $tests_missing, pts_assignment_manager::get_all_assignments(array("NO_PROMPT_IN_RUN_ON_MISSING_TESTS" => true)));
 					self::$user_rejected_install_notice = false;
 					return false;
 				}
@@ -875,7 +876,7 @@ class pts_test_run_manager
 				}
 
 				// Prompt Description
-				if(!pts_is_assignment("AUTOMATED_MODE") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (pts_read_assignment("IS_BATCH_MODE") == false || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
+				if(!pts_is_assignment("AUTOMATED_MODE") && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
 				{
 					if($this->run_description == null)
 					{
@@ -893,6 +894,17 @@ class pts_test_run_manager
 				}
 			}
 		}
+	}
+	public function load_tests_to_run($to_run_identifiers)
+	{
+		// Determine what to run
+		$this->determine_tests_to_run($to_run_identifiers);
+
+		// Run the test process
+		$this->validate_tests_to_run();
+
+		// Is there something to run?
+		return $this->get_test_count() > 0;
 	}
 	public function determine_tests_to_run($to_run_identifiers)
 	{
@@ -925,11 +937,11 @@ class pts_test_run_manager
 					}
 				}
 
-				if(pts_read_assignment("IS_BATCH_MODE") && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
+				if((pts_c::$test_flags & pts_c::batch_mode) && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
 				{
 					list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($to_run);
 				}
-				else if(pts_read_assignment("IS_DEFAULTS_MODE"))
+				else if((pts_c::$test_flags & pts_c::defaults_mode))
 				{
 					list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($to_run);
 				}
@@ -1090,7 +1102,7 @@ class pts_test_run_manager
 				continue;
 			}
 
-			if($test_run_request->test_profile->is_root_required() && pts_read_assignment("IS_BATCH_MODE") && phodevi::read_property("system", "username") != "root")
+			if($test_run_request->test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::read_property("system", "username") != "root")
 			{
 				pts_client::$display->test_run_error("Cannot run " . $test_identifier . " in batch mode as root access is required.");
 				array_push($failed_tests, $test_identifier);
