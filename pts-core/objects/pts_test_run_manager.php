@@ -705,7 +705,6 @@ class pts_test_run_manager
 			$this->result_file_writer->save_result_file($this->get_file_name());
 			pts_module_manager::module_process("__event_results_saved", $this);
 			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $this->get_file_name() . "/composite.xml\n";
-			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $this->get_file_name());
 			pts_client::display_web_page(SAVE_RESULTS_DIR . $this->get_file_name() . "/index.html");
 
 			if($this->allow_sharing_of_results && !defined("NO_NETWORK_COMMUNICATION"))

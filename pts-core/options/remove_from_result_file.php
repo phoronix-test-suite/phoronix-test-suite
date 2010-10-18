@@ -64,7 +64,6 @@ class remove_from_result_file implements pts_option_interface
 		$extract_result = pts_merge::merge_test_results($extract_select);
 
 		pts_client::save_test_result($r[0] . "/composite.xml", $extract_result);
-		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $r[0]);
 		pts_client::display_web_page(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
 	}
 }

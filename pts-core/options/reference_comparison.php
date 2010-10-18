@@ -73,7 +73,6 @@ class reference_comparison implements pts_option_interface
 		$merged_results = call_user_func_array(array("pts_merge", "pts_merge_test_results_array"), $merge_args);
 
 		pts_client::save_test_result($r[0] . "/composite.xml", $merged_results);
-		pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $r[0]);
 
 		if(($title = pts_read_assignment("PREV_SAVE_NAME_TITLE")) == false)
 		{

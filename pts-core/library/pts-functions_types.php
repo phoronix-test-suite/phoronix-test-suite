@@ -133,12 +133,6 @@ function pts_location_virtual_suite($identifier)
 						$virtual_suite = "TYPE_VIRT_PREV_TEST_IDENTIFIER";
 					}
 					break;
-				case "prev-save-identifier":
-					if(pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER"))
-					{
-						$virtual_suite = "TYPE_VIRT_PREV_SAVE_IDENTIFIER";
-					}
-					break;
 				default:
 					// Check if object is a subsystem test type
 					foreach(pts_types::subsystem_targets() as $type)
@@ -299,12 +293,6 @@ function pts_virtual_suite_tests($object)
 			break;
 		case "TYPE_VIRT_PREV_TEST_IDENTIFIER":
 			foreach(pts_arrays::to_array(pts_read_assignment("PREV_TEST_IDENTIFIER")) as $test)
-			{
-				array_push($contained_tests, $test);
-			}
-			break;
-		case "TYPE_VIRT_PREV_SAVE_IDENTIFIER":
-			foreach(pts_arrays::to_array(pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) as $test)
 			{
 				array_push($contained_tests, $test);
 			}

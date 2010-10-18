@@ -646,7 +646,6 @@ class pts_client
 		if($generated && $full_process_string)
 		{
 			echo "\n" . $full_process_string . "\n";
-			pts_set_assignment_next("PREV_SAVE_RESULTS_IDENTIFIER", $result_file_identifier);
 			pts_client::display_web_page(SAVE_RESULTS_DIR . $result_file_identifier . "/index.html");
 		}
 
