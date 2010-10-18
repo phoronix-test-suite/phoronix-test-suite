@@ -654,25 +654,10 @@ class pts_client
 	}
 	public static function set_test_flags($test_flags = 0)
 	{
-		if(pts_read_assignment("IS_BATCH_MODE"))
-		{
-			// TODO: don't use IS_BATCH_MODE anymore in pts-core, this is temp fix for such code
-			$test_flags |= pts_c::batch_mode;
-		}
-		if(pts_read_assignment("IS_DEFAULTS_MODE"))
-		{
-			// TODO: don't use IS_DEFAULTS_MODE anymore in pts-core, this is temp fix for such code
-			$test_flags |= pts_c::defaults_mode;
-		}
 		if(pts_read_assignment("AUTOMATED_MODE"))
 		{
 			// TODO: don't use AUTOMATED_MODE anymore in pts-core, this is temp fix for such code
 			$test_flags |= pts_c::auto_mode;
-		}
-		if(pts_read_assignment("DEBUG_TEST_PROFILE"))
-		{
-			// TODO: don't use DEBUG_TEST_PROFILE anymore in pts-core, this is temp fix for such code
-			$test_flags |= pts_c::debug_mode;
 		}
 
 		pts_c::$test_flags = $test_flags;

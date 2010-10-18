@@ -24,7 +24,7 @@ class batch_install implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_client::run_next("install_test", $r, array("IS_BATCH_MODE" => true));
+		pts_test_installer::standard_install($r, pts_c::batch_mode);
 	}
 }
 

@@ -351,7 +351,7 @@ function pts_suite_needs_updated_install($identifier)
 		{
 			$installed_test = new pts_installed_test($test);
 
-			if(!pts_test_installed($test) || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || pts_is_assignment("PTS_FORCE_INSTALL"))
+			if(!pts_test_installed($test) || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || (pts_c::$test_flags & pts_c::force_install))
 			{
 				$needs_update = true;
 				break;
@@ -370,7 +370,7 @@ function pts_test_needs_updated_install($identifier)
 
 	// Checks if test needs updating
 	// || $installed_test->get_installed_system_identifier() != phodevi::system_id_string()
-	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable($test_profile->get_test_profile_version(), $installed_test->get_installed_version()) || $test_profile->get_installer_checksum() != $installed_test->get_installed_checksum() || pts_is_assignment("PTS_FORCE_INSTALL");
+	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable($test_profile->get_test_profile_version(), $installed_test->get_installed_version()) || $test_profile->get_installer_checksum() != $installed_test->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
 }
 function pts_version_newer($version_a, $version_b)
 {

@@ -22,6 +22,37 @@
 
 class pts_test_installer
 {
+	public static function standard_install($items_to_install, $test_flags = 0)
+	{
+		// Refresh the pts_client::$display in case we need to run in debug mode
+		pts_client::init_display_mode();
+
+		// Create a lock
+		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";
+		pts_client::create_lock($lock_path);
+
+		pts_client::set_test_flags($test_flags);
+
+		// Any external dependencies?
+		$satisfied_tests = array(); // Tests with no dependencies or with all dependencies installed
+		$install_passed = pts_external_dependencies::install_dependencies($items_to_install, $satisfied_tests);
+
+		// Install tests
+		if(!is_writable(TEST_ENV_DIR))
+		{
+			echo "\nERROR: The test installation directory is not writable.\nLocation: " . TEST_ENV_DIR . "\n";
+			return false;
+		}
+
+		pts_test_installer::start_install($items_to_install);
+
+		if($items_to_install = array("prev-test-identifier"))
+		{
+			$items_to_install = pts_virtual_suite_tests("prev-test-identifier");
+		}
+
+		pts_client::release_lock($lock_path);
+	}
 	public static function start_install($to_install)
 	{
 		// Find all of the tests that need to be installed

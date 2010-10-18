@@ -28,6 +28,8 @@ class pts_c
 	const batch_mode = 4;
 	const defaults_mode = 8;
 	const debug_mode = 16;
+
+	const force_install = 32;
 }
 
 ?>

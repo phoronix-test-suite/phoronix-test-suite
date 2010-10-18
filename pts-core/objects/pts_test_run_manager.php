@@ -1177,6 +1177,30 @@ class pts_test_run_manager
 
 		return count($tests_installed) > 0 && (count($current_tests_missing) == 0 || $contains_a_suite);
 	}
+	public static function standard_run($to_run, $test_flags = 0)
+	{
+		if(pts_test_run_manager::initial_checks($to_run) == false)
+		{
+			return false;
+		}
+
+		$test_run_manager = new pts_test_run_manager($test_flags);
+
+		// Load the tests to run
+		if($test_run_manager->load_tests_to_run($to_run) == false)
+		{
+			return false;
+		}
+
+		// Save results?
+		$test_run_manager->save_results_prompt();
+
+		// Run the actual tests
+		$test_run_manager->pre_execution_process();
+		$test_run_manager->call_test_runs();
+		$test_run_manager->post_execution_process();
+		echo "\n";
+	}
 }
 
 ?>
