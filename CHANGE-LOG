@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Eliminate "base-test-[profiles,resources]" but for PTS3 they need to all be integrated to a single location
 - pts-core: No longer support test profile scripts as PHP files but require them to be SH files
 - pts-core: Rename parse-results.xml to results-definition.xml
+- pts-core: More aggressive checks in determining whether to dynamically increase the run count for statistical accuracy
 - install-sh: Installer updates
 
 Phoronix Test Suite 2.8.1

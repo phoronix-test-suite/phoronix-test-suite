@@ -72,11 +72,53 @@ class pts_test_run_manager
 	{
 		return $this->do_dynamic_run_count;
 	}
-	public function increase_run_count_check(&$test_results, $test_run_time)
+	public function increase_run_count_check(&$test_results, $scheduled_times_to_run, $latest_test_run_time)
 	{
+		// First make sure this test doesn't take too long to run where we don't want dynamic handling
+		if(floor($latest_test_run_time / 60) > $this->dynamic_roun_count_on_length_or_less)
+		{
+			return false;
+		}
+
 		// Determine if results are statistically significant, otherwise up the run count
 		$std_dev = pts_math::percent_standard_deviation($test_results->test_result_buffer->get_values());
+		if($std_dev >= $this->dynamic_run_count_std_deviation_threshold)
+		{
+			static $last_run_count = 128; // just a number that should always cause the first check below to be true
+			static $run_std_devs;
+			$times_already_ran = $test_results->test_result_buffer->get_count();
 
+			if($times_already_ran <= $last_run_count)
+			{
+				// We're now onto a new test so clear out the array
+				$run_std_devs = array();
+			}
+			$last_run_count = $times_already_ran;
+			$run_std_devs[$last_run_count] = $std_dev;
+
+			// If we haven't reached scheduled times to run x 2, increase count straight away
+			if($times_already_ran < ($scheduled_times_to_run * 2))
+			{
+				return true;
+			}
+			else if($times_already_ran < ($scheduled_times_to_run * 3))
+			{
+				// More aggressive determination whether to still keep increasing the run count
+				$first_and_now_diff = pts_arrays::first_element($run_std_devs) - pts_arrays::last_element($run_std_devs);
+
+				// Increasing the run count at least looks to be helping...
+				if($first_and_now_diff > (pts_arrays::first_element($run_std_devs) / 2))
+				{
+					// If we are at least making progress in the right direction, increase the run count some more
+					return true;
+				}
+
+				// TODO: could add more checks and take better advantage of the array of data to better determine if it's still worth increasing
+			}
+
+		}
+
+		// Check to see if there is an external/custom script to export the results to in determining whether results are valid
 		if(($ex_file = $this->dynamic_run_count_export_script) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_DIR . $this->dynamic_run_count_export_script)))
 		{
 			$exit_status = trim(shell_exec($ex_file . " " . $test_results->test_result_buffer->get_values_as_string() . " > /dev/null 2>&1; echo $?"));
@@ -85,23 +127,18 @@ class pts_test_run_manager
 			{
 				case 1:
 					// Run the test again
-					$request_increase = true;
-					break;
+					return true;
 				case 2:
 					// Results are bad, abandon testing and do not record results
 					return -1;
+				case 0:
 				default:
-					// Return was 0, results are valid, or was some other exit status
-					$request_increase = false;
+					// Return was 0 or something else, results are valid, or was some other exit status
 					break;
 			}
 		}
-		else
-		{
-			$request_increase = false;
-		}
 
-		return $request_increase || $std_dev >= $this->dynamic_run_count_std_deviation_threshold && floor($test_run_time / 60) < $this->dynamic_roun_count_on_length_or_less;
+		return false;
 	}
 	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "", $override_test_options = null)
 	{

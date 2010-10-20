@@ -220,10 +220,10 @@ class pts_test_execution
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
 					$increase_run_count = $defined_times_to_run - $test_run_request->test_result_buffer->get_count();
 				}
-				else if($test_run_request->test_result_buffer->get_count() > 2 && $test_run_manager->do_dynamic_run_count() && $times_to_run < ($defined_times_to_run * 2))
+				else if($test_run_request->test_result_buffer->get_count() >= 2 && $test_run_manager->do_dynamic_run_count())
 				{
-					// Dynamically increase run count if told to do so by external script or standard deviation is too high
-					$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request, $test_run_time);
+					// Dynamically increase run count if needed for statistical significance or other reasons
+					$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request, $defined_times_to_run, $test_run_time);
 
 					if($increase_run_count === -1)
 					{
@@ -245,7 +245,7 @@ class pts_test_execution
 
 			if($times_to_run > 1 && $i < ($times_to_run - 1))
 			{
-				if(!$cache_share_present)
+				if($cache_share_present == false)
 				{
 					pts_tests::call_test_script($test_run_request->test_profile, "interim", "Running Interim-Test Script", $test_directory, $extra_runtime_variables, true);
 					sleep(2); // Rest for a moment between tests
