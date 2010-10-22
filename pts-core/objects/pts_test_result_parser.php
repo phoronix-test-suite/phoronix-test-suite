@@ -47,12 +47,6 @@ class pts_test_result_parser
 			return false;
 		}
 
-		if(!function_exists("pcntl_fork"))
-		{
-			pts_client::$display->test_run_instance_error("PHP with PCNTL support enabled is required for this test.");
-			return false;
-		}
-
 		if(self::$supported_sensors == null)
 		{
 			// Cache this since this shouldn't change between tests/runs
@@ -90,6 +84,12 @@ class pts_test_result_parser
 			{
 				// Not a valid reporting type
 				continue;
+			}
+
+			if(!function_exists("pcntl_fork"))
+			{
+				pts_client::$display->test_run_instance_error("PHP with PCNTL support enabled is required for this test.");
+				return false;
 			}
 
 			$monitor_file = tempnam($test_directory, ".monitor");
