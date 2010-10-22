@@ -33,7 +33,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<div id="pts_header_top">
 			<div class="pts_header_center">
 				<div id="pts_header_top_logo"></div>
-				<div class="pts_header_links"><em><strong><xsl:value-of select="PhoronixTestSuite/Generated/Version" /></strong><br /><xsl:if test="PhoronixTestSuite/Generated/TimeStamp != ''"><strong>Generated:</strong>&#160;<xsl:value-of select="PhoronixTestSuite/Generated/TimeStamp" /><br /></xsl:if></em></div>
+				<div class="pts_header_links"><em><strong><xsl:value-of select="PhoronixTestSuite/Generated/TestClientString" /></strong><br /><xsl:if test="PhoronixTestSuite/Generated/TimeStamp != ''"><strong>Generated:</strong>&#160;<xsl:value-of select="PhoronixTestSuite/Generated/TimeStamp" /><br /></xsl:if></em></div>
 			</div>
 		</div>
 		<div id="pts_container">

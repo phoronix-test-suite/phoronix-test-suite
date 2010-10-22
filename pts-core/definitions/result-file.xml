@@ -7,8 +7,8 @@
 			<Value>PhoronixTestSuite/Generated/TimeStamp</Value>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_GENERATED_VERSION</Name>
-			<Value>PhoronixTestSuite/Generated/Version</Value>
+			<Name>P_RESULTS_GENERATED_CLIENT_STRING</Name>
+			<Value>PhoronixTestSuite/Generated/TestClientString</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_SYSTEM_HARDWARE</Name>

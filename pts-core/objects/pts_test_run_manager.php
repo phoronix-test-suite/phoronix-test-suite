@@ -138,6 +138,7 @@ class pts_test_run_manager
 			}
 		}
 
+		// No reason to increase the run count evidently
 		return false;
 	}
 	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "", $override_test_options = null)

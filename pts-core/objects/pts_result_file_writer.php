@@ -39,7 +39,7 @@ class pts_result_file_writer
 		if(PTS_MODE == "CLIENT")
 		{
 			$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_TIMESTAMP, -2, date("Y-m-d H:i:s"));
-			$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_VERSION, -2, pts_title(true));
+			$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_CLIENT_STRING, -2, pts_title(true));
 		}
 	}
 	public function save_xml($to_save)

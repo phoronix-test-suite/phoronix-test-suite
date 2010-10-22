@@ -95,6 +95,7 @@ class pts_test_installer
 		}
 
 		// Let the pts_test_install_manager make some estimations, etc...
+		echo "\n";
 		$test_install_manager->generate_download_file_lists();
 		$test_install_manager->check_download_caches_for_files();
 		pts_client::$display->test_install_process($test_install_manager);

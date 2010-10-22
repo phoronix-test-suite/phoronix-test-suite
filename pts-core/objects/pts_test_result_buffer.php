@@ -66,10 +66,6 @@ class pts_test_result_buffer
 
 		return $values;
 	}
-	public function get_values_as_string()
-	{
-		return implode(':', $this->get_values());
-	}
 	public function get_raw_values()
 	{
 		$raw_values = array();
@@ -80,6 +76,10 @@ class pts_test_result_buffer
 		}
 
 		return $raw_values;
+	}
+	public function get_values_as_string()
+	{
+		return implode(':', $this->get_values());
 	}
 }
 
