@@ -504,12 +504,19 @@ abstract class pts_Graph
 		}
 		else
 		{
-			$longest_identifier_width = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 6;
-			$longest_identifier_max = $this->graph_attr_width * 0.5;
+			if($this->graph_orientation == "HORIZONTAL")
+			{
+				$longest_identifier_width = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 6;
+				$longest_identifier_max = $this->graph_attr_width * 0.5;
 
-			$this->graph_left_start = min($longest_identifier_max, $longest_identifier_width);
-			$this->graph_left_end_opp = 15;
-			$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
+				$this->graph_left_start = min($longest_identifier_max, $longest_identifier_width);
+				$this->graph_left_end_opp = 15;
+				$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
+			}
+			else if($this->graph_value_type == "NUMERICAL")
+			{
+				$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+			}
 
 			// Pad 8px on top and bottom + title bar + sub-headings
 			$this->graph_top_heading_height = 16 + $this->graph_font_size_heading + (count($this->graph_sub_titles) * ($this->graph_font_size_sub_heading + 4));
@@ -523,6 +530,10 @@ abstract class pts_Graph
 				$this->graph_top_end = $this->graph_top_start + ($num_identifiers * 46);
 				// $this->graph_top_end_opp
 				$this->graph_attr_height = $this->graph_top_end + 25 + $bottom_heading;
+			}
+			else
+			{
+				$this->graph_attr_height += $bottom_heading + 4;
 			}
 		}
 
@@ -549,6 +560,8 @@ abstract class pts_Graph
 		}
 
 		$this->render_graph_result();
+		$this->render_graph_post();
+
 		return $this->return_graph_image();
 	}
 	protected function render_graph_pre_init()
@@ -619,10 +632,6 @@ abstract class pts_Graph
 			$pts_logo_height = ($this->graph_top_heading_height - 8);
 			$pts_logo_width = ($pts_logo_height / 200) * 385;		
 			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-385x200-white.png"), $this->graph_left_end - $pts_logo_width, 4, 0, 0, $pts_logo_width, $pts_logo_height);
-
-			$bottom_heading_start = $this->graph_top_end + 25;
-			$this->graph_image->draw_rectangle(0, $bottom_heading_start, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_right("Powered By " . $this->graph_version, $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 6, $this->graph_left_end, $bottom_heading_start + 6, false, "http://www.phoronix-test-suite.com/");
 		}
 		else
 		{
@@ -637,6 +646,15 @@ abstract class pts_Graph
 			{
 				$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9, false, "http://www.phoronix-test-suite.com/");
 			}
+		}
+	}
+	protected function render_graph_post()
+	{
+		if($this->iveland_view)
+		{
+			$bottom_heading_start = $this->graph_top_end + 25;
+			$this->graph_image->draw_rectangle(0, $bottom_heading_start, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_main_headers);
+			$this->graph_image->write_text_right("Powered By " . $this->graph_version, $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 6, $this->graph_left_end, $bottom_heading_start + 6, false, "http://www.phoronix-test-suite.com/");
 		}
 	}
 	protected function render_graph_base($left_start, $top_start, $left_end, $top_end)

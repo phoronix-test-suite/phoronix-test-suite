@@ -32,6 +32,7 @@ class pts_LineGraph extends pts_Graph
 		parent::__construct($result_object, $result_file);
 		$this->graph_show_key = true;
 		$this->graph_background_lines = true;
+		$this->iveland_view = true;
 	}
 	protected function render_graph_pre_init()
 	{
