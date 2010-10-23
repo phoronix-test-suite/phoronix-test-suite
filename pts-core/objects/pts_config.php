@@ -104,6 +104,7 @@ class pts_config
 		$config->addXmlObjectFromReader(P_GRAPH_WATERMARK, 1, $read_config);
 		$config->addXmlObjectFromReader(P_GRAPH_WATERMARK_URL, 1, $read_config);
 		$config->addXmlObjectFromReader(P_GRAPH_BORDER, 1, $read_config);
+		$config->addXmlObjectFromReader(P_GRAPH_BAR_ORIENTATION, 1, $read_config);
 
 		$config->addXmlObjectFromReader(P_GRAPH_COLOR_BACKGROUND, 2, $read_config);
 		$config->addXmlObjectFromReader(P_GRAPH_COLOR_BODY, 2, $read_config);

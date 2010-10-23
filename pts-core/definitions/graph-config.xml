@@ -31,6 +31,10 @@
 			<Value>PhoronixTestSuite/Graphs/General/Border</Value>
 		</Define>
 		<Define>
+			<Name>P_GRAPH_BAR_ORIENTATION</Name>
+			<Value>PhoronixTestSuite/Graphs/General/BarOrientation</Value>
+		</Define>
+		<Define>
 			<Name>P_GRAPH_COLOR_BACKGROUND</Name>
 			<Value>PhoronixTestSuite/Graphs/Colors/Background</Value>
 		</Define>

@@ -54,7 +54,16 @@ class pts_render
 
 		$result_format = $result_object->test_profile->get_result_format();
 
-		$preferred_bar_graph_type = "pts_VerticalBarGraph";
+		switch(pts_Graph::$graph_config->getXmlValue(P_GRAPH_BAR_ORIENTATION))
+		{
+			case "VERTICAL":
+				$preferred_bar_graph_type = "pts_VerticalBarGraph";
+				break;
+			case "HORIZONTAL":
+			default:
+				$preferred_bar_graph_type = "pts_HorizontalBarGraph";
+				break;
+		}
 
 		switch($result_format)
 		{
