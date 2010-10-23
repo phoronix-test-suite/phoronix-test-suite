@@ -29,7 +29,11 @@ class pts_BarGraph extends pts_Graph
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
-		$this->graph_type = "BAR_GRAPH";
+
+		if($result_file != null && $result_file instanceOf pts_result_file)
+		{
+			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
+		}
 	}
 	protected function render_graph_pre_init()
 	{

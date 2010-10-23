@@ -28,7 +28,6 @@ class pts_PieChart extends pts_Graph
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
-		$this->graph_type = "PIE_CHART";
 		$this->graph_value_type = "ABSTRACT";
 		$this->graph_hide_identifiers = false;
 		$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + 100);

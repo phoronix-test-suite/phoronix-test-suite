@@ -26,7 +26,6 @@ class pts_CandleStickGraph extends pts_BarGraph
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
-		$this->graph_type = "CANDLE_STICK_GRAPH";
 	}
 	protected function render_graph_candle_sticks()
 	{

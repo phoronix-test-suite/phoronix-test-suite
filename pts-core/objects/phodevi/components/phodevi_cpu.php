@@ -102,8 +102,8 @@ class phodevi_cpu extends phodevi_device_interface
 			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
 			{
 				$cpu_speeds = phodevi_linux_parser::read_cpuinfo("cpu MHz");
-				$cpu_core = (isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0);
-				$info = $cpu_speeds[$cpu_core] / 1000;
+				$cpu_core = isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0;
+				$info = isset($cpu_speeds[$cpu_core]) ? ($cpu_speeds[$cpu_core] / 1000) : 0;
 			}
 		}
 		else if(IS_WINDOWS)

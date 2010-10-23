@@ -66,7 +66,6 @@ abstract class pts_Graph
 	protected $graph_hide_identifiers = false;
 	protected $graph_show_key = false;
 	protected $graph_background_lines = false;
-	protected $graph_type = "GRAPH";
 	protected $graph_value_type = "NUMERICAL";
 	protected $graph_image;
 	protected $graph_maximum_value;
@@ -165,7 +164,6 @@ abstract class pts_Graph
 
 		if($result_file != null && $result_file instanceOf pts_result_file)
 		{
-			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison() && $this->graph_type == "BAR_GRAPH";
 			//$this->addInternalIdentifier("Identifier", null); // TODO: result file name
 
 			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());

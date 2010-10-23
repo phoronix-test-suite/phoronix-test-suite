@@ -27,7 +27,6 @@ class pts_MultiPassFailGraph extends pts_Graph
 	{
 		$this->graph_y_title_hide = true;
 		parent::__construct($result_object, $result_file);
-		$this->graph_type = "MULTI_PASS_FAIL";
 		$this->graph_value_type = "ABSTRACT";
 		$this->graph_hide_identifiers = true;
 	}

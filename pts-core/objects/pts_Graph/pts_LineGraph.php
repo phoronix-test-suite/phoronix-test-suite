@@ -24,13 +24,12 @@
 class pts_LineGraph extends pts_Graph
 {
 	protected $identifier_width = -1;
-	protected $minimum_identifier_font = 7;
+	protected $minimum_identifier_font = 6.5;
 	protected $show_select_identifiers = null;
 
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
-		$this->graph_type = "LINE_GRAPH";
 		$this->graph_show_key = true;
 		$this->graph_background_lines = true;
 	}
