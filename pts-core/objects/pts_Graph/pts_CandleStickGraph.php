@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_CandleStickGraph extends pts_BarGraph
+class pts_CandleStickGraph extends pts_VerticalBarGraph
 {
 	public function __construct(&$result_object, &$result_file = null)
 	{

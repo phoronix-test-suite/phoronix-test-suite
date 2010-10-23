@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2010, Phoronix Media
 	Copyright (C) 2008 - 2010, Michael Larabel
-	pts_BarGraph.php: The bar graph object that extends pts_Graph.php.
+	pts_VerticalBarGraph.php: The vertical bar graph object that extends pts_Graph.php
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_BarGraph extends pts_Graph
+class pts_VerticalBarGraph extends pts_Graph
 {
 	protected $identifier_width = -1;
 	protected $minimum_identifier_font = 6;
@@ -123,6 +123,7 @@ class pts_BarGraph extends pts_Graph
 				}
 				else if($graph_size > 10)
 				{
+					// Make things more compact
 					$this->graph_image->write_text_center($value, $this->graph_font, ceil($this->graph_font_size_bars * 0.6), $this->graph_color_body_text, $px_bound_left, $value_plot_top  + 1, $px_bound_right, $value_plot_top + 1);
 				}
 			}

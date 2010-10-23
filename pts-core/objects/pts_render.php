@@ -54,6 +54,8 @@ class pts_render
 
 		$result_format = $result_object->test_profile->get_result_format();
 
+		$preferred_bar_graph_type = "pts_VerticalBarGraph";
+
 		switch($result_format)
 		{
 			case "LINE_GRAPH":
@@ -61,7 +63,7 @@ class pts_render
 				break;
 			case "BAR_ANALYZE_GRAPH":
 			case "BAR_GRAPH":
-				$graph_type = "pts_BarGraph";
+				$graph_type = $preferred_bar_graph_type;
 				break;
 			case "PASS_FAIL":
 				$graph_type = "pts_PassFailGraph";
@@ -101,7 +103,7 @@ class pts_render
 						$graph_type = "pts_LineGraph";
 						break;
 					default:
-						$graph_type = "pts_BarGraph";
+						$graph_type = $preferred_bar_graph_type;
 						break;
 				}
 				break;
