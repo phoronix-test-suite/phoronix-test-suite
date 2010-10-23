@@ -114,15 +114,32 @@ abstract class bilde_renderer
 	}
 	public function draw_arrow($tip_x1, $tip_y1, $tail_x1, $tail_y1, $background_color, $border_color = null, $border_width = 0)
 	{
-		// TODO: Allow better support when arrow is running horizontally or on an angle instead of just vertical
-		$arrow_length = sqrt(pow(($tail_x1 - $tip_x1), 2) + pow(($tail_y1 - $tip_y1), 2));
-		$arrow_length_half = $arrow_length / 2;
+		$is_vertical = ($tip_x1 == $tail_x1);
 
-		$arrow_points = array(
-		$tip_x1, $tip_y1,
-		$tail_x1 + $arrow_length_half, $tail_y1,
-		$tail_x1 - $arrow_length_half, $tail_y1
-		);
+		if($is_vertical)
+		{
+			// Vertical arrow
+			$arrow_length = sqrt(pow(($tail_x1 - $tip_x1), 2) + pow(($tail_y1 - $tip_y1), 2));
+			$arrow_length_half = $arrow_length / 2;
+
+			$arrow_points = array(
+			$tip_x1, $tip_y1,
+			$tail_x1 + $arrow_length_half, $tail_y1,
+			$tail_x1 - $arrow_length_half, $tail_y1
+			);
+		}
+		else
+		{
+			// Horizontal arrow
+			$arrow_length = sqrt(pow(($tail_x1 - $tip_x1), 2) + pow(($tail_y1 - $tip_y1), 2));
+			$arrow_length_half = $arrow_length / 2;
+
+			$arrow_points = array(
+			$tip_x1, $tip_y1,
+			$tail_x1, $tail_y1 + $arrow_length_half,
+			$tail_x1, $tail_y1 - $arrow_length_half
+			);
+		}
 
 		$this->draw_polygon($arrow_points, $background_color, $border_color, $border_width);
 	}

@@ -69,6 +69,7 @@ abstract class pts_Graph
 	protected $graph_proportion = null;
 
 	// Not user-friendly changes below this line
+	protected $graph_orientation = "VERTICAL";
 	protected $graph_body_image = false;
 	protected $graph_hide_identifiers = false;
 	protected $graph_show_key = false;
@@ -90,6 +91,7 @@ abstract class pts_Graph
 	protected $graph_y_title_hide = false;
 	protected $graph_top_end;
 	protected $graph_left_end;
+	protected $graph_top_heading_height;
 
 	protected $graph_internal_identifiers = array();
 
@@ -98,6 +100,7 @@ abstract class pts_Graph
 	protected $regression_marker_threshold = 0;
 	protected $is_multi_way_comparison = false;
 	private $test_identifier = null;
+	protected $iveland_view = false;
 
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
@@ -487,14 +490,40 @@ abstract class pts_Graph
 		$this->graph_maximum_value = $this->maximum_graph_value();
 
 		// Make room for tick markings, left hand side
-		if($this->graph_value_type == "NUMERICAL")
+		if($this->iveland_view == false)
 		{
-			$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
-		}
+			if($this->graph_value_type == "NUMERICAL")
+			{
+				$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+			}
 
-		if($this->graph_hide_identifiers)
+			if($this->graph_hide_identifiers)
+			{
+				$this->graph_top_end += $this->graph_top_end_opp / 2;
+			}
+		}
+		else
 		{
-			$this->graph_top_end += $this->graph_top_end_opp / 2;
+			$longest_identifier_width = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 6;
+			$longest_identifier_max = $this->graph_attr_width * 0.5;
+
+			$this->graph_left_start = min($longest_identifier_max, $longest_identifier_width);
+			$this->graph_left_end_opp = 15;
+			$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
+
+			// Pad 8px on top and bottom + title bar + sub-headings
+			$this->graph_top_heading_height = 16 + $this->graph_font_size_heading + (count($this->graph_sub_titles) * ($this->graph_font_size_sub_heading + 4));
+			$this->graph_top_start = $this->graph_top_heading_height + 16; // + spacing before graph starts
+
+			$bottom_heading = 14;
+
+			if($this->graph_orientation == "HORIZONTAL")
+			{
+				$num_identifiers = count($this->graph_identifiers);
+				$this->graph_top_end = $this->graph_top_start + ($num_identifiers * 46);
+				// $this->graph_top_end_opp
+				$this->graph_attr_height = $this->graph_top_end + 25 + $bottom_heading;
+			}
 		}
 
 		if(($key_count = count($this->graph_data_title)) > 8)
@@ -555,7 +584,11 @@ abstract class pts_Graph
 		}
 
 		// Background Color
-		if($this->graph_attr_big_border)
+		if($this->iveland_view)
+		{
+			$this->graph_image->draw_rectangle_with_border(0, 0, ($this->graph_attr_width - 1), ($this->graph_attr_height - 1), $this->graph_color_background, $this->graph_color_main_headers);
+		}
+		else if($this->graph_attr_big_border)
 		{
 			$this->graph_image->draw_rectangle_with_border(0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background, $this->graph_color_border);
 		}
@@ -564,7 +597,7 @@ abstract class pts_Graph
 			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background);
 		}
 
-		if(($sub_title_count = count($this->graph_sub_titles)) > 1)
+		if($this->iveland_view == false && ($sub_title_count = count($this->graph_sub_titles)) > 1)
 		{
 			$this->graph_top_start += (($sub_title_count - 1) * ($this->graph_font_size_sub_heading + 4));
 		}
@@ -572,28 +605,68 @@ abstract class pts_Graph
 	protected function render_graph_heading($with_version = true)
 	{
 		// Default to NORMAL
-		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3, false, "http://global.phoronix-test-suite.com/?k=category&u=" . $this->test_identifier);
-
-		foreach($this->graph_sub_titles as $i => $sub_title)
+		if($this->iveland_view)
 		{
-			$this->graph_image->write_text_center($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (31 + ($i * 18)), $this->graph_left_end, (31 + ($i * 18)), false);
+			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_top_heading_height, $this->graph_color_main_headers);
+			$this->graph_image->write_text_left($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12, false, "http://global.phoronix-test-suite.com/?k=category&u=" . $this->test_identifier);
+
+			foreach($this->graph_sub_titles as $i => $sub_title)
+			{
+				$vertical_offset = 12 + 4 + $this->graph_font_size_heading + ($i * ($this->graph_font_size_sub_heading + 3));
+				$this->graph_image->write_text_left($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_background, 5, $vertical_offset, $this->graph_left_end, $vertical_offset, false);
+			}
+
+			$pts_logo_height = ($this->graph_top_heading_height - 8);
+			$pts_logo_width = ($pts_logo_height / 200) * 385;		
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-385x200-white.png"), $this->graph_left_end - $pts_logo_width, 4, 0, 0, $pts_logo_width, $pts_logo_height);
+
+			$bottom_heading_start = $this->graph_top_end + 25;
+			$this->graph_image->draw_rectangle(0, $bottom_heading_start, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_main_headers);
+			$this->graph_image->write_text_right("Powered By " . $this->graph_version, $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 6, $this->graph_left_end, $bottom_heading_start + 6, false, "http://www.phoronix-test-suite.com/");
 		}
-
-		if($with_version)
+		else
 		{
-			$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9, false, "http://www.phoronix-test-suite.com/");
+			$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3, false, "http://global.phoronix-test-suite.com/?k=category&u=" . $this->test_identifier);
+
+			foreach($this->graph_sub_titles as $i => $sub_title)
+			{
+				$this->graph_image->write_text_center($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (31 + ($i * 18)), $this->graph_left_end, (31 + ($i * 18)), false);
+			}
+
+			if($with_version)
+			{
+				$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9, false, "http://www.phoronix-test-suite.com/");
+			}
 		}
 	}
 	protected function render_graph_base($left_start, $top_start, $left_end, $top_end)
 	{
-		$this->graph_image->draw_rectangle_with_border($left_start, $top_start, $left_end, $top_end, $this->graph_color_body, $this->graph_color_notches);
-
-		if($this->graph_body_image != false)
+		if($this->graph_orientation == "HORIZONTAL")
 		{
-			$this->graph_image->image_copy_merge($this->graph_body_image, $left_start + (($left_end - $left_start) / 2) - imagesx($this->graph_body_image) / 2, $top_start + (($top_end - $top_start) / 2) - imagesy($this->graph_body_image) / 2);
+			$this->graph_image->draw_line($left_start, $top_start, $left_start, $top_end, $this->graph_color_notches, 1);
+			$this->graph_image->draw_line($left_start, $top_end, $left_end, $top_end, $this->graph_color_notches, 1);
+
+			if(!empty($this->graph_watermark_text))
+			{
+				$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 7, $this->graph_color_text, $left_end - 2, $top_start - 7, $left_end - 2, $top_start - 7, false, $this->graph_watermark_url);
+			}
+		}
+		else
+		{
+			$this->graph_image->draw_rectangle_with_border($left_start, $top_start, $left_end, $top_end, $this->graph_color_body, $this->graph_color_notches);
+
+			if($this->graph_body_image != false)
+			{
+				$this->graph_image->image_copy_merge($this->graph_body_image, $left_start + (($left_end - $left_start) / 2) - imagesx($this->graph_body_image) / 2, $top_start + (($top_end - $top_start) / 2) - imagesy($this->graph_body_image) / 2);
+			}
+
+			if(!empty($this->graph_watermark_text))
+			{
+				$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $left_end - 2, $top_start + 8, $left_end - 2, $top_start + 8, false, $this->graph_watermark_url);
+			}
 		}
 
-		if(!empty($this->graph_y_title) && !$this->graph_y_title_hide)
+		if(!empty($this->graph_y_title) && $this->graph_y_title_hide == false)
 		{
 			$str = $this->graph_y_title;
 			$offset = 0;
@@ -605,14 +678,29 @@ abstract class pts_Graph
 				switch($this->graph_proportion)
 				{
 					case "LIB":
-						$proportion = "Fewer Are Better";
+						$proportion = "Less Is Better";
 						$offset += 12;
-						$this->graph_image->draw_arrow($left_start + 5, $top_start - 4, $left_start + 5, $top_start - 11, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+
+						if($this->graph_orientation == "HORIZONTAL")
+						{
+							$this->graph_image->draw_arrow($left_start, $top_start - 7, $left_start + 9, $top_start - 7, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+						}
+						else
+						{
+							$this->graph_image->draw_arrow($left_start + 5, $top_start - 4, $left_start + 5, $top_start - 11, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+						}
 						break;
 					case "HIB":
-						//$proportion = "Higher Is Better";
+						$proportion = "Higher Is Better";
 						$offset += 12;
-						$this->graph_image->draw_arrow($left_start + 5, $top_start - 11, $left_start + 5, $top_start - 4, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+						if($this->graph_orientation == "HORIZONTAL")
+						{
+							$this->graph_image->draw_arrow($left_start + 9, $top_start - 7, $left_start, $top_start - 7, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+						}
+						else
+						{
+							$this->graph_image->draw_arrow($left_start + 5, $top_start - 11, $left_start + 5, $top_start - 4, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+						}
 						break;
 				}
 
@@ -622,49 +710,72 @@ abstract class pts_Graph
 					{
 						$str .= ", ";
 					}
-
 					$str .= $proportion;
 				}
 			}
 
 			$this->graph_image->write_text_left($str, $this->graph_font, 7, $this->graph_color_main_headers, $left_start + $offset, $top_start - 7, $left_start + $offset, $top_start - 7);
 		}
-
-		
-
-		if(!empty($this->graph_watermark_text))
-		{
-			$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $left_end - 2, $top_start + 8, $left_end - 2, $top_start + 8, false, $this->graph_watermark_url);
-		}
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end)
 	{
-		$tick_width = ($top_end - $top_start) / $this->graph_attr_marks;
-		$px_from_left_start = $left_start - 5;
-		$px_from_left_end = $left_start + 5;
+		$increment = round($this->graph_maximum_value / $this->graph_attr_marks, 2);
 
-		$display_value = 0;
-
-		$this->graph_image->draw_dashed_line($left_start, $top_start + $tick_width, $left_start, ($top_end - 1), $this->graph_color_notches, 10, 1, $tick_width);
-
-		for($i = 0; $i < $this->graph_attr_marks; $i++)
+		if($this->graph_orientation == "HORIZONTAL")
 		{
-			$px_from_top = $top_end - ($tick_width * $i);
+			$tick_width = ($left_end - $left_start) / $this->graph_attr_marks;
+			$display_value = 0;
 
-			//$this->graph_image->draw_line($px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
+			$this->graph_image->draw_dashed_line($left_start + $tick_width, $top_end, ($left_end - 1), $top_end, $this->graph_color_notches, 10, 1, ($tick_width - 1));
 
-			if($display_value != 0)
+			for($i = 0; $i < $this->graph_attr_marks; $i++)
 			{
-				$this->graph_image->write_text_right($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2, $px_from_left_start - 1, $px_from_top - 2);
+				$px_from_left = $left_start + ($tick_width * $i);
+
+				if($display_value != 0)
+				{
+					$this->graph_image->write_text_center($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left, ($top_end + 5), $px_from_left, ($top_end + 5));
+				}
+
+				if($i != 0)
+				{
+					$line_width = 6;
+					$this->graph_image->draw_dashed_line($px_from_left, $top_start, $px_from_left, $top_end - 5, $this->graph_color_body, 1, 5, 5);
+				}
+
+				$display_value += $increment;
 			}
 
-			if($i != 0 && $this->graph_background_lines)
-			{
-				$line_width = 6;
-				$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end - 6, $px_from_top, $this->graph_color_body_light, 1, 20, 15);
-			}
+		}
+		else
+		{
+			$tick_width = ($top_end - $top_start) / $this->graph_attr_marks;
+			$px_from_left_start = $left_start - 5;
+			$px_from_left_end = $left_start + 5;
 
-			$display_value += round($this->graph_maximum_value / $this->graph_attr_marks, 2);
+			$display_value = 0;
+
+			$this->graph_image->draw_dashed_line($left_start, $top_start + $tick_width, $left_start, ($top_end - 1), $this->graph_color_notches, 10, 1, $tick_width);
+
+			for($i = 0; $i < $this->graph_attr_marks; $i++)
+			{
+				$px_from_top = $top_end - ($tick_width * $i);
+
+				//$this->graph_image->draw_line($px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
+
+				if($display_value != 0)
+				{
+					$this->graph_image->write_text_right($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 1, $px_from_top - 2, $px_from_left_start - 1, $px_from_top - 2);
+				}
+
+				if($i != 0 && $this->graph_background_lines)
+				{
+					$line_width = 6;
+					$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end - 6, $px_from_top, $this->graph_color_body_light, 1, 20, 15);
+				}
+
+				$display_value += $increment;
+			}
 		}
 	}
 	protected function render_graph_identifiers()

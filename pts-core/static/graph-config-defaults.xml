@@ -12,7 +12,7 @@
 			<BarOrientation>VERTICAL</BarOrientation>
 		</General>
 		<Colors>
-			<Background>#FFFFFF</Background>
+			<Background>#FEFEFE</Background>
 			<GraphBody>#BABABA</GraphBody>
 			<Notches>#454545</Notches>
 			<Border>#454545</Border>
