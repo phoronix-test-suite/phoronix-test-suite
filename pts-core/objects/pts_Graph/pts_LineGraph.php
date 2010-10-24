@@ -126,6 +126,7 @@ class pts_LineGraph extends pts_Graph
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
+				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ' @ ' . $this->graph_identifiers[$i] . ": " . $value : null;
 
 				if($value == 0 && !$has_hit_non_zero)
@@ -169,11 +170,11 @@ class pts_LineGraph extends pts_Graph
 				
 				if($identifiers_empty && $i == 0)
 				{
-					array_push($poly_points, array($this->graph_left_start + 1, $value_plot_top, $data_string));
+					array_push($poly_points, array($this->graph_left_start + 1, $value_plot_top, $data_string, $std_error));
 				}
 				else if($identifiers_empty && $i == ($point_counter - 1))
 				{
-					array_push($poly_points, array($px_from_left, $value_plot_top, $data_string));
+					array_push($poly_points, array($px_from_left, $value_plot_top, $data_string, $std_error));
 					if($varying_lengths && ($point_counter * 1.1) < $point_count)
 					{
 						// This plotting ended prematurely
@@ -187,7 +188,7 @@ class pts_LineGraph extends pts_Graph
 				}
 				else
 				{
-					array_push($poly_points, array($px_from_left, $value_plot_top, $data_string));
+					array_push($poly_points, array($px_from_left, $value_plot_top, $data_string, $std_error));
 				}
 
 				if($this->regression_marker_threshold > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
@@ -213,6 +214,21 @@ class pts_LineGraph extends pts_Graph
 					continue;
 				}
 
+				$plotted_error_bar = false;
+				if($x_y_pair[3] > 0)
+				{
+					$std_error_width = 4;
+					$std_error_rel_size = round(($x_y_pair[3] / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
+
+					if($std_error_rel_size > 3)
+					{
+						$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0], $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
+						$this->graph_image->draw_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] - $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
+						$this->graph_image->draw_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] + $std_error_rel_size, $paint_color, 1);
+						$plotted_error_bar = true;
+					}
+				}
+
 				if(true || !$identifiers_empty) // TODO: determine whether to kill this check
 				{
 					if(isset($regression_plots[$i]) && $i > 0)
@@ -220,7 +236,7 @@ class pts_LineGraph extends pts_Graph
 						$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, $this->graph_color_alert, 4, $regression_plots[$i]);
 					}
 
-					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $paint_color, $paint_color, 1, !($point_counter < 6 || $i == 0 || $i == ($poly_points_count  - 1)), $x_y_pair[2]);
+					$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $paint_color, $paint_color, 1, !($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1)), $x_y_pair[2]);
 				}
 			}
 		}
@@ -277,7 +293,7 @@ class pts_LineGraph extends pts_Graph
 
 		foreach($to_display as $color_key => &$column)
 		{
-			$from_top = $this->graph_top_start + 7 + ($color_key != $this->graph_color_text || $this->graph_image->get_renderer() == "SVG" ? 1 : 0);
+			$from_top = $this->graph_top_start + 4 + ($color_key != $this->graph_color_text || $this->graph_image->get_renderer() == "SVG" ? 1 : 0);
 			$longest_string_width = 0;
 
 			foreach($column as &$write)

@@ -239,6 +239,14 @@ abstract class pts_Graph
 	}
 	public function loadGraphRawValues($data_array)
 	{
+		foreach($data_array as &$data_item)
+		{
+			if(is_float($data_item))
+			{
+				$data_item = round($data_item, 2);
+			}
+		}
+
 		array_push($this->graph_data_raw, $data_array);
 	}
 	public function setGraphBackgroundPNG($file)
@@ -599,7 +607,7 @@ abstract class pts_Graph
 		// Background Color
 		if($this->iveland_view)
 		{
-			$this->graph_image->draw_rectangle_with_border(0, 0, ($this->graph_attr_width - 1), ($this->graph_attr_height - 1), $this->graph_color_background, $this->graph_color_main_headers);
+			$this->graph_image->draw_rectangle_with_border(0, 0, $this->graph_attr_width, ($this->graph_attr_height - 1), $this->graph_color_background, $this->graph_color_border);
 		}
 		else if($this->graph_attr_big_border)
 		{
@@ -659,7 +667,7 @@ abstract class pts_Graph
 	}
 	protected function render_graph_base($left_start, $top_start, $left_end, $top_end)
 	{
-		if($this->graph_orientation == "HORIZONTAL")
+		if($this->graph_orientation == "HORIZONTAL" || $this->iveland_view)
 		{
 			$this->graph_image->draw_line($left_start, $top_start, $left_start, $top_end, $this->graph_color_notches, 1);
 			$this->graph_image->draw_line($left_start, $top_end, $left_end, $top_end, $this->graph_color_notches, 1);
@@ -697,7 +705,7 @@ abstract class pts_Graph
 				{
 					case "LIB":
 						$proportion = "Less Is Better";
-						$offset += 12;
+						$offset += 11;
 
 						if($this->graph_orientation == "HORIZONTAL")
 						{
@@ -705,19 +713,19 @@ abstract class pts_Graph
 						}
 						else
 						{
-							$this->graph_image->draw_arrow($left_start + 5, $top_start - 4, $left_start + 5, $top_start - 11, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+							$this->graph_image->draw_arrow($left_start + 4, $top_start - 4, $left_start + 4, $top_start - 11, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
 						}
 						break;
 					case "HIB":
 						$proportion = "Higher Is Better";
-						$offset += 12;
+						$offset += 11;
 						if($this->graph_orientation == "HORIZONTAL")
 						{
 							$this->graph_image->draw_arrow($left_start + 9, $top_start - 7, $left_start, $top_start - 7, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
 						}
 						else
 						{
-							$this->graph_image->draw_arrow($left_start + 5, $top_start - 11, $left_start + 5, $top_start - 4, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+							$this->graph_image->draw_arrow($left_start + 4, $top_start - 11, $left_start + 4, $top_start - 4, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
 						}
 						break;
 				}
@@ -773,7 +781,7 @@ abstract class pts_Graph
 
 			$display_value = 0;
 
-			$this->graph_image->draw_dashed_line($left_start, $top_start + $tick_width, $left_start, ($top_end - 1), $this->graph_color_notches, 10, 1, $tick_width);
+			$this->graph_image->draw_dashed_line($left_start, $top_start + $tick_width, $left_start, ($top_end - 1), $this->graph_color_notches, 10, 1, ($tick_width - 1));
 
 			for($i = 0; $i < $this->graph_attr_marks; $i++)
 			{
@@ -789,7 +797,7 @@ abstract class pts_Graph
 				if($i != 0 && $this->graph_background_lines)
 				{
 					$line_width = 6;
-					$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end - 6, $px_from_top, $this->graph_color_body_light, 1, 20, 15);
+					$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top, $this->graph_left_end - 6, $px_from_top, $this->graph_color_body_light, 1, 5, 5);
 				}
 
 				$display_value += $increment;

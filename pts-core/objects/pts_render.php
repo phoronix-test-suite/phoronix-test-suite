@@ -139,6 +139,7 @@ class pts_render
 				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 				{
 					$graph->loadGraphValues(pts_strings::comma_explode($buffer_item->get_result_value()), $buffer_item->get_result_identifier());
+					$graph->loadGraphRawValues(pts_strings::comma_explode($buffer_item->get_result_raw()));
 				}
 
 				$scale_special = $result_object->test_profile->get_result_scale_offset();
@@ -247,10 +248,16 @@ class pts_render
 		{
 			$graph = new pts_OverviewGraph($result_file);
 
-			if($graph->skip_graph == false)
+			if($graph->doSkipGraph() == false)
 			{
 				$graph->saveGraphToFile($save_to_dir . "/result-graphs/visualize.BILDE_EXTENSION");
 				$graph->renderGraph();
+
+				// Check to see if skip_graph was realized during the rendering process
+				if($graph->doSkipGraph() == true)
+				{
+					pts_file_io::unlink($save_to_dir . "/result-graphs/visualize.svg");
+				}
 			}
 			unset($graph);
 		}
@@ -425,6 +432,8 @@ class pts_render
 			$days[$day_key] = $systems;
 		}
 
+		$raw_days = $days;
+
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
 			$identifier = pts_strings::trim_explode(": ", $buffer_item->get_result_identifier());
@@ -445,6 +454,7 @@ class pts_render
 			}
 
 			$days[$date][$system] = $buffer_item->get_result_value();
+			$raw_days[$date][$system] = $buffer_item->get_result_raw();
 
 			if(!is_numeric($days[$date][$system]))
 			{
@@ -461,13 +471,15 @@ class pts_render
 		foreach(array_keys($systems) as $system_key)
 		{
 			$results = array();
+			$raw_results = array();
 
 			foreach($day_keys as $day_key)
 			{
 				array_push($results, $days[$day_key][$system_key]);
+				array_push($raw_results, $raw_days[$day_key][$system_key]);
 			}
 
-			$mto->test_result_buffer->add_test_result($system_key, implode(',', $results), null);
+			$mto->test_result_buffer->add_test_result($system_key, implode(',', $results), implode(',', $raw_results));
 		}
 
 		if($result_table !== false)
@@ -481,7 +493,7 @@ class pts_render
 						$result_table[$system_key][$day_key] = array();
 					}
 
-					array_push($result_table[$system_key][$day_key], $days[$day_key][$system_key]);
+					array_push($result_table[$system_key][$day_key], $days[$day_key][$system_key], $raw_days[$day_key][$system_key]);
 				}
 			}
 		}

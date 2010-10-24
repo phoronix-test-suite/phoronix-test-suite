@@ -87,6 +87,10 @@ class pts_OverviewGraph extends pts_Graph
 
 		return true;
 	}
+	public function doSkipGraph()
+	{
+		return $this->skip_graph;
+	}
 	public function renderGraph()
 	{
 		$this->requestRenderer("SVG");
@@ -115,6 +119,7 @@ class pts_OverviewGraph extends pts_Graph
 		$bar_count = count($this->system_identifiers);
 		$inter_width = $this->graph_item_width * 0.1;
 		$bar_width = floor(($this->graph_item_width - ($inter_width * 2)) / $bar_count);
+		$has_graphed_a_bar = false;
 
 		foreach($this->result_file->get_result_objects() as $i => $result_object)
 		{
@@ -161,6 +166,8 @@ class pts_OverviewGraph extends pts_Graph
 
 					$this->graph_image->draw_rectangle_with_border($px_left, $value_plot_top, $px_right, $top_end, $paint_color, $this->graph_color_body_light, null);
 				}
+
+				$has_graphed_a_bar = true;
 			}
 
 			if(($i + 1) % $this->graphs_per_row == 0 && $i != 0)
@@ -171,6 +178,12 @@ class pts_OverviewGraph extends pts_Graph
 				$row++;
 			}
 			$col++;
+		}
+
+		if($has_graphed_a_bar == false)
+		{
+			// Don't show an empty overview graph...
+			$this->skip_graph = true;
 		}
 
 

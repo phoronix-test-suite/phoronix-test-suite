@@ -91,7 +91,7 @@ class bilde_svg_renderer extends bilde_renderer
 			}
 		}
 
-		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\">\n";
+		$svg_image .= "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" viewbox=\"0 0 " . $this->image_width . " " . $this->image_height . "\" width=\"" . $this->image_width . "\" height=\"" . $this->image_height . "\" font-family=\"sans-serif\">\n";
 
 		if($this->image != null)
 		{
@@ -119,18 +119,18 @@ class bilde_svg_renderer extends bilde_renderer
 
 	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null, $title = null, $bold = false)
 	{
-		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
-		$text_width = $text_dimensions[0];
-		$text_height = $text_dimensions[1];
-
 		if($rotate_text == false)
 		{
 			$text_x = $bound_x1;
-			$text_y = $bound_y1 + round($text_height / 2);
+			$text_y = $bound_y1;
 			$rotation = 0;
 		}
 		else
 		{
+			$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
+			$text_width = $text_dimensions[0];
+			$text_height = $text_dimensions[1];
+
 			$text_x = $bound_x1 - round($text_height / 4);
 			$text_y = $bound_y1 + round($text_height / 2);
 			$rotation = 90;
@@ -140,18 +140,7 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null, $title = null, $bold = false)
 	{
-		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
-		$text_width = $text_dimensions[0];
-		$text_height = $text_dimensions[1];
-
-		$bound_x1 -= 2;
-		$bound_x2 -= 2;
-		$rotation = ($rotate_text == false ? 0 : 90);
-
-		$text_x = $bound_x2 - $text_width;
-		$text_y = $bound_y1 + round($text_height / 2) + 1;
-
-		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, "RIGHT", $onclick, $title, $bold);
+		$this->write_svg_text($text_string, $font_type, $font_size, $font_color, $bound_x2, $bound_y2, ($rotate_text == false ? 0 : 90), "RIGHT", $onclick, $title, $bold);
 	}
 	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null, $title = null, $bold = false)
 	{
@@ -323,7 +312,6 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 
 	// Privates
-
 	private function write_svg_text($string, $font_type, $font_size, $font_color, $text_x, $text_y, $rotation, $orientation = "LEFT", $onclick = null, $title = null, $bold = false)
 	{
 		$font_size += 1.5;
@@ -374,7 +362,7 @@ class bilde_svg_renderer extends bilde_renderer
 		*/
 
 		// Implement $font_type through font-family if desired
-		$this->image .= "<text transform=\"translate(" . round($text_x) . " " . round($text_y) . ")" . ($rotation == 0 ? null : " rotate(" . $rotation . " 0 0)") . "\"" . ($text_cache == null ? " font-size=\"" . $font_size . "\"" : null) . " class=\"" . $class . "\"" . ($onclick != null && $close_link == false ? " onclick=\"" . $onclick . "\"" : null) . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . ">" . $string . "</text>";
+		$this->image .= "<text x=\"" . round($text_x) . "\" y=\"" . round($text_y) . "\"" . ($rotation == 0 ? null : " transform=\"rotate(" . $rotation . " $text_x $text_y)\"") . ($text_cache == null ? " font-size=\"" . $font_size . "\"" : null) . " class=\"" . $class . "\"" . ($onclick != null && $close_link == false ? " onclick=\"" . $onclick . "\"" : null) . ($title != null ? " xlink:title=\"" . $title . "\"" : null) . ">" . $string . "</text>";
 
 		if($close_link)
 		{

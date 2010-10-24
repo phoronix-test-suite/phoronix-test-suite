@@ -46,7 +46,7 @@ class pts_math
 	{
 		self::clean_numeric_array($values);
 
-		return empty($values) ? 0 : self::standard_deviation($values) / sqrt(count($values));
+		return empty($values) ? 0 : (self::standard_deviation($values) / sqrt(count($values)));
 	}
 	public static function standard_deviation($values)
 	{
