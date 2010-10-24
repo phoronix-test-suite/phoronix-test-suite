@@ -71,8 +71,6 @@ class pts_LineGraph extends pts_Graph
 		{
 			if(is_array($this->graph_identifiers[$i]))
 			{
-				// || $this->graph_identifiers[$i] == "Array"
-				// TODO: Why is "Array" text getting sent with some line graphs?
 				break;
 			}
 

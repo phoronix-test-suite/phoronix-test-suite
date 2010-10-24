@@ -662,7 +662,7 @@ abstract class pts_Graph
 		{
 			$bottom_heading_start = $this->graph_top_end + 25;
 			$this->graph_image->draw_rectangle(0, $bottom_heading_start, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_right("Powered By " . $this->graph_version, $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 6, $this->graph_left_end, $bottom_heading_start + 6, false, "http://www.phoronix-test-suite.com/");
+			$this->graph_image->write_text_right("Powered By " . $this->graph_version, $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 7, $this->graph_left_end, $bottom_heading_start + 7, false, "http://www.phoronix-test-suite.com/");
 		}
 	}
 	protected function render_graph_base($left_start, $top_start, $left_end, $top_end)
@@ -674,7 +674,7 @@ abstract class pts_Graph
 
 			if(!empty($this->graph_watermark_text))
 			{
-				$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 7, $this->graph_color_text, $left_end - 2, $top_start - 7, $left_end - 2, $top_start - 7, false, $this->graph_watermark_url);
+				$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 7, $this->graph_color_text, $left_end, $top_start - 7, $left_end, $top_start - 7, false, $this->graph_watermark_url);
 			}
 		}
 		else

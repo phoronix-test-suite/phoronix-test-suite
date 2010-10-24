@@ -9,7 +9,7 @@
 			<Watermark>PHORONIX-TEST-SUITE.COM</Watermark>
 			<WatermarkURL>http://www.phoronix-test-suite.com/</WatermarkURL>
 			<Border>FALSE</Border>
-			<BarOrientation>VERTICAL</BarOrientation>
+			<BarOrientation>HORIZONTAL</BarOrientation>
 		</General>
 		<Colors>
 			<Background>#FEFEFE</Background>

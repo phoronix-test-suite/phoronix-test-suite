@@ -286,6 +286,10 @@ class pts_render
 			$height += 50;
 			$width = 600 > $width ? 600 : $width;
 			$height = 400 > $height ? 400 : $height;
+
+			// TODO XXX: see if auto works in all browsers
+			$width = "auto";
+			$height = "auto";
 		}
 
 		$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
