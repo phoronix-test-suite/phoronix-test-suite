@@ -57,5 +57,6 @@ class pts_results_tandem_XmlReader extends tandem_XmlReader
 
 		return $this->tag_fallback_array_value;
 	}
+	*/
 }
 ?>
