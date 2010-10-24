@@ -98,7 +98,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 						$this->graph_image->draw_line(($value_end_left - $std_error_rel_size), $px_bound_top, ($value_end_left + $std_error_rel_size), $px_bound_top, $this->graph_color_notches, 1);
 					}
 
-					$bar_offset_34 = $middle_of_bar + ($bar_height / 5);
+					$bar_offset_34 = $middle_of_bar + ($bar_height / 5) + 1;
 					$this->graph_image->write_text_right("SE +/- " . pts_math::set_precision($std_error, 2), $this->graph_font, $this->graph_font_size_identifiers - 2, $this->graph_color_text, ($this->graph_left_start - 5), $bar_offset_34, ($this->graph_left_start - 5), $bar_offset_34);
 				}
 

@@ -25,28 +25,23 @@
 */
 
 pts_loader::load_definitions("result-file.xml");
-//pts_loader::load_definitions("result-file-legacy.xml");
 
 class pts_results_tandem_XmlReader extends tandem_XmlReader
 {
 	public function __construct($read_xml)
 	{
-
-		if(!$this->pts_is_file($read_xml) && defined("SAVE_RESULTS_DIR") && is_file(SAVE_RESULTS_DIR . $read_xml . "/composite.xml"))
+		$is_file = !isset($file_check[1024]) && substr($file_check, 0, 1) != "<" && is_file($file_check);
+		if($is_file == false && defined("SAVE_RESULTS_DIR") && is_file(SAVE_RESULTS_DIR . $read_xml . "/composite.xml"))
 		{
 			$read_xml = SAVE_RESULTS_DIR . $read_xml . "/composite.xml";
 		}
 
 		parent::__construct($read_xml);
 	}
-	private function pts_is_file(&$file_check)
-	{
-		// $file_check could contain the XML markup already, so first check for < as the start of an open tag from say <?xml version
-		return !isset($file_check[1024]) && substr($file_check, 0, 1) != "<" && is_file($file_check);
-	}
+	/*
 	function handleXmlZeroTagFallback($xml_tag)
 	{
-		// TODO: implement support for checking the legacy result XML support if needed
+		// XXX: implement support for checking the legacy result XML support if needed
 		$legacy_spec = array(
 
 		);
@@ -55,7 +50,7 @@ class pts_results_tandem_XmlReader extends tandem_XmlReader
 	}
 	function handleXmlZeroTagArrayFallback($xml_tag)
 	{
-		// TODO: implement support for checking the legacy result XML support if needed
+		// XXX: implement support for checking the legacy result XML support if needed
 		$legacy_spec = array(
 
 		);
