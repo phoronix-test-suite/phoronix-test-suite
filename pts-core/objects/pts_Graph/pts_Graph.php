@@ -636,10 +636,8 @@ abstract class pts_Graph
 				$vertical_offset = 12 + 4 + $this->graph_font_size_heading + ($i * ($this->graph_font_size_sub_heading + 3));
 				$this->graph_image->write_text_left($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_background, 5, $vertical_offset, $this->graph_left_end, $vertical_offset, false);
 			}
-
-			$pts_logo_height = ($this->graph_top_heading_height - 8);
-			$pts_logo_width = ($pts_logo_height / 200) * 385;		
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-385x200-white.png"), $this->graph_left_end - $pts_logo_width, 4, 0, 0, $pts_logo_width, $pts_logo_height);
+		
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png"), $this->graph_left_end - 77, ($this->graph_top_heading_height / 40 + 2), 0, 0, 77, 40);
 		}
 		else
 		{

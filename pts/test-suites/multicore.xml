@@ -2,21 +2,12 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-suite-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<SuiteInformation>
-		<Version>1.0.2</Version>
+		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<Title>Multi-Core</Title>
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of tests that are able to take advantage of multi-core and/or multi-processor systems. This suite can be used on a single core system, however, it's intended for systems with multiple processing cores. Among the tests in this suite are encoding, compilation, and rendering tests.</Description>
 	</SuiteInformation>
-	<RunTest>
-		<Test>build-apache</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-php</Test>
-	</RunTest>
-	<RunTest>
-		<Test>build-imagemagick</Test>
-	</RunTest>
 	<RunTest>
 		<Test>compress-7zip</Test>
 	</RunTest>
@@ -24,33 +15,89 @@
 		<Test>compress-pbzip2</Test>
 	</RunTest>
 	<RunTest>
+		<Test>x264</Test>
+	</RunTest>
+	<RunTest>
 		<Test>openssl</Test>
 	</RunTest>
 	<RunTest>
-		<Test>ray-tracing</Test>
+		<Test>gcrypt</Test>
 	</RunTest>
 	<RunTest>
-		<Test>ffmpeg</Test>
+		<Test>john-the-ripper</Test>
+		<Arguments>BLOWFISH</Arguments>
+		<Description>Test: Blowfish</Description>
 	</RunTest>
 	<RunTest>
-		<Test>ttsiod-renderer</Test>
+		<Test>graphics-magick</Test>
+		<Arguments>-lat 10x10-5%</Arguments>
+		<Description>Operation: Local Adaptive Thresholding</Description>
+	</RunTest>
+	<RunTest>
+		<Test>graphics-magick</Test>
+		<Arguments>-resize 50%</Arguments>
+		<Description>Operation: Resizing</Description>
+	</RunTest>
+	<RunTest>
+		<Test>himeno</Test>
+	</RunTest>
+	<RunTest>
+		<Test>bullet</Test>
+		<Arguments>1000 convex</Arguments>
+		<Description>Test: 1000 Convex</Description>
+	</RunTest>
+	<RunTest>
+		<Test>c-ray</Test>
+	</RunTest>
+	<RunTest>
+		<Test>povray</Test>
 	</RunTest>
 	<RunTest>
 		<Test>smallpt</Test>
 	</RunTest>
 	<RunTest>
-		<Test>graphics-magick</Test>
-		<Arguments>-colorspace HWB</Arguments>
-		<Description>HWB Color Space</Description>
+		<Test>crafty</Test>
 	</RunTest>
 	<RunTest>
-		<Test>graphics-magick</Test>
-		<Arguments>-lat 10x10-5%</Arguments>
-		<Description>Local Adaptive Thresholding</Description>
+		<Test>hmmer</Test>
 	</RunTest>
 	<RunTest>
-		<Test>vdrift</Test>
-		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
-		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+		<Test>mafft</Test>
+	</RunTest>
+	<RunTest>
+		<Test>minion</Test>
+		<Arguments>benchmarks/Quasigroup/qg-watchelement-7-10.minion</Arguments>
+		<Description>Benchmark: Quasigroup</Description>
+	</RunTest>
+	<RunTest>
+		<Test>minion</Test>
+		<Arguments>benchmarks/solitaire/solitaire_benchmark_8.minion</Arguments>
+		<Description>Benchmark: Solitaire</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>ep.B</Arguments>
+		<Description>Test / Class: EP.B</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>is.C</Arguments>
+		<Description>Test / Class: IS.C</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>lu.A</Arguments>
+		<Description>Test / Class: LU.A</Description>
+	</RunTest>
+	<RunTest>
+		<Test>npb</Test>
+		<Arguments>ua.A</Arguments>
+		<Description>Test / Class: UA.A</Description>
+	</RunTest>
+	<RunTest>
+		<Test>build-apache</Test>
+	</RunTest>
+	<RunTest>
+		<Test>build-php</Test>
 	</RunTest>
 </PhoronixTestSuite>
