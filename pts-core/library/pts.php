@@ -26,7 +26,7 @@ if(PTS_MODE == "CLIENT")
 	error_reporting(E_ALL | E_NOTICE | E_STRICT);
 }
 
-define("PTS_VERSION", "2.9.0");
+define("PTS_VERSION", "2.9.9");
 define("PTS_CORE_VERSION", 2900);
 define("PTS_CODENAME", "IVELAND");
 

@@ -150,7 +150,9 @@ class pts_test_profile_parser
 	}
 	public function get_result_format()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
+		$format = $this->xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
+
+		return $format == null ? "BAR_GRAPH" : $format;
 	}
 	public function do_auto_save_results()
 	{
