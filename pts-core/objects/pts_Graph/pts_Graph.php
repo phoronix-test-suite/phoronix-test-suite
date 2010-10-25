@@ -93,6 +93,10 @@ abstract class pts_Graph
 	protected $graph_left_end;
 	protected $graph_top_heading_height;
 
+	protected $graph_key_line_height = 0;
+	protected $graph_key_item_width;
+	protected $graph_keys_per_line;
+
 	protected $graph_internal_identifiers = array();
 
 	// Internal Switches, Etc
@@ -509,6 +513,8 @@ abstract class pts_Graph
 			{
 				$this->graph_top_end += $this->graph_top_end_opp / 2;
 			}
+
+			$this->graph_top_start += $this->graph_key_height();
 		}
 		else
 		{
@@ -528,7 +534,7 @@ abstract class pts_Graph
 
 			// Pad 8px on top and bottom + title bar + sub-headings
 			$this->graph_top_heading_height = 16 + $this->graph_font_size_heading + (count($this->graph_sub_titles) * ($this->graph_font_size_sub_heading + 4));
-			$this->graph_top_start = $this->graph_top_heading_height + 16; // + spacing before graph starts
+			$this->graph_top_start = $this->graph_top_heading_height + $this->graph_key_height() + 16; // + spacing before graph starts
 
 			$bottom_heading = 14;
 
@@ -545,10 +551,13 @@ abstract class pts_Graph
 			}
 		}
 
+		/*
+		// Not sure this code is needed anymore...
 		if(($key_count = count($this->graph_data_title)) > 8)
 		{
 			$this->update_graph_dimensions(-1, $this->graph_attr_height + (floor(($key_count - 8) / 4) * 14), true);
 		}
+		*/
 
 		// Do the actual work
 		$this->render_graph_pre_init();
@@ -703,11 +712,11 @@ abstract class pts_Graph
 				{
 					case "LIB":
 						$proportion = "Less Is Better";
-						$offset += 11;
+						$offset += 12;
 
 						if($this->graph_orientation == "HORIZONTAL")
 						{
-							$this->graph_image->draw_arrow($left_start, $top_start - 7, $left_start + 9, $top_start - 7, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+							$this->graph_image->draw_arrow($left_start, $top_start - 8, $left_start + 9, $top_start - 8, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
 						}
 						else
 						{
@@ -716,10 +725,10 @@ abstract class pts_Graph
 						break;
 					case "HIB":
 						$proportion = "Higher Is Better";
-						$offset += 11;
+						$offset += 12;
 						if($this->graph_orientation == "HORIZONTAL")
 						{
-							$this->graph_image->draw_arrow($left_start + 9, $top_start - 7, $left_start, $top_start - 7, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+							$this->graph_image->draw_arrow($left_start + 9, $top_start - 8, $left_start, $top_start - 8, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
 						}
 						else
 						{
@@ -810,20 +819,29 @@ abstract class pts_Graph
 	{
 		return;
 	}
-	protected function render_graph_key()
+	protected function graph_key_height()
 	{
 		if(count($this->graph_data_title) < 2 && $this->graph_show_key == false)
+		{
+			return 0;
+		}
+
+		$this->graph_key_line_height = 16;
+		$this->graph_key_item_width = 18 + $this->text_string_width($this->find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
+		$this->graph_keys_per_line = floor(($this->graph_left_end - $this->graph_left_start - 14) / $this->graph_key_item_width);
+
+		return ceil(count($this->graph_data_title) / $this->graph_keys_per_line) * $this->graph_key_line_height;
+	}
+	protected function render_graph_key()
+	{
+		if($this->graph_key_line_height == 0)
 		{
 			return;
 		}
 
-		$key_count = count($this->graph_data_title);
 		$key_pos = 0;
-		$key_item_width = 18 + $this->text_string_width($this->find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
-		$keys_per_line = floor(($this->graph_left_end - $this->graph_left_start - 14) / $key_item_width);
-		$key_line_height = 14;
-		$this->graph_top_start += 12;
-		$component_y = $this->graph_top_start - $key_line_height - 5;
+		$key_count = count($this->graph_data_title);
+		$component_y = $this->graph_top_start - $this->graph_key_line_height - 7;
 		$this->reset_paint_index();
 
 		for($i = 0; $i < $key_count; $i++)
@@ -833,11 +851,10 @@ abstract class pts_Graph
 				$this_color = $this->get_paint_color($this->graph_data_title[$i]);
 				$key_pos++;
 
-				if($i != 0 && $key_pos % $keys_per_line == 1)
+				if($i != 0 && $key_pos % $this->graph_keys_per_line == 1)
 				{
 					$key_pos = 1;
-					$component_y += $key_line_height;
-					$this->graph_top_start += $key_line_height;
+					$component_y += $this->graph_key_line_height;
 				}
 				else if($this->is_multi_way_comparison)
 				{
@@ -846,14 +863,13 @@ abstract class pts_Graph
 					if($i != 0 && $this_key_way != $prev_key_way)
 					{
 						$key_pos = 1;
-						$component_y += $key_line_height;
-						$this->graph_top_start += $key_line_height;
+						$component_y += $this->graph_key_line_height;
 					}
 
 					$prev_key_way = $this_key_way;
 				}
 
-				$component_x = $this->graph_left_start + 13 + ($key_item_width * ($key_pos - 1 % $keys_per_line));
+				$component_x = $this->graph_left_start + 13 + ($this->graph_key_item_width * ($key_pos - 1 % $this->graph_keys_per_line));
 
 				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
