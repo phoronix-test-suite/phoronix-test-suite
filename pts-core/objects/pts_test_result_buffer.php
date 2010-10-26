@@ -72,7 +72,7 @@ class pts_test_result_buffer
 
 		foreach($this->buffer_items as &$buffer_item)
 		{
-			array_push($raw_values, $buffer_item->get_result_raw_value());
+			array_push($raw_values, $buffer_item->get_result_raw_());
 		}
 
 		return $raw_values;
