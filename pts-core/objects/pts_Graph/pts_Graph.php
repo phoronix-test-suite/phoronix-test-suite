@@ -540,8 +540,18 @@ abstract class pts_Graph
 
 			if($this->graph_orientation == "HORIZONTAL")
 			{
+				if(count($this->graph_data_title) > 3)
+				{
+					$per_identifier_height = count($this->graph_data_title) * 14;
+				}
+				else
+				{
+					$per_identifier_height = 46;
+				}
+
+
 				$num_identifiers = count($this->graph_identifiers);
-				$this->graph_top_end = $this->graph_top_start + ($num_identifiers * 46);
+				$this->graph_top_end = $this->graph_top_start + ($num_identifiers * $per_identifier_height);
 				// $this->graph_top_end_opp
 				$this->graph_attr_height = $this->graph_top_end + 25 + $bottom_heading;
 			}
@@ -830,6 +840,8 @@ abstract class pts_Graph
 		$this->graph_key_item_width = 6 + $this->text_string_width($this->find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
 		$this->graph_keys_per_line = floor(($this->graph_left_end - $this->graph_left_start) / $this->graph_key_item_width);
 
+		ceil(count($this->graph_data_title) / $this->graph_keys_per_line) . ' ' . $this->graph_keys_per_line;
+
 		return ceil(count($this->graph_data_title) / $this->graph_keys_per_line) * $this->graph_key_line_height;
 	}
 	protected function render_graph_key()
@@ -841,7 +853,7 @@ abstract class pts_Graph
 
 		$key_pos = 0;
 		$key_count = count($this->graph_data_title);
-		$component_y = $this->graph_top_start - $this->graph_key_line_height - 7;
+		$component_y = $this->graph_top_start - $this->graph_key_height() - 7;
 		$this->reset_paint_index();
 
 		for($i = 0; $i < $key_count; $i++)

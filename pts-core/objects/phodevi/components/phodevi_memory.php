@@ -40,6 +40,7 @@ class phodevi_memory extends phodevi_device_interface
 	public static function memory_string()
 	{
 		$mem_string = null;
+		$mem_prefix = null;
 
 		if(IS_MACOSX)
 		{
