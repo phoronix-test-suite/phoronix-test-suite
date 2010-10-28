@@ -726,11 +726,11 @@ abstract class pts_Graph
 
 						if($this->graph_orientation == "HORIZONTAL")
 						{
-							$this->graph_image->draw_arrow($left_start, $top_start - 8, $left_start + 9, $top_start - 8, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+							$this->graph_image->draw_arrow($left_start, $top_start - 8, $left_start + 9, $top_start - 8, $this->graph_color_text, $this->graph_color_body_light, 1);
 						}
 						else
 						{
-							$this->graph_image->draw_arrow($left_start + 4, $top_start - 4, $left_start + 4, $top_start - 11, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+							$this->graph_image->draw_arrow($left_start + 4, $top_start - 4, $left_start + 4, $top_start - 11, $this->graph_color_text, $this->graph_color_body_light, 1);
 						}
 						break;
 					case "HIB":
@@ -738,11 +738,11 @@ abstract class pts_Graph
 						$offset += 12;
 						if($this->graph_orientation == "HORIZONTAL")
 						{
-							$this->graph_image->draw_arrow($left_start + 9, $top_start - 8, $left_start, $top_start - 8, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+							$this->graph_image->draw_arrow($left_start + 9, $top_start - 8, $left_start, $top_start - 8, $this->graph_color_text, $this->graph_color_body_light, 1);
 						}
 						else
 						{
-							$this->graph_image->draw_arrow($left_start + 4, $top_start - 11, $left_start + 4, $top_start - 4, $this->graph_color_main_headers, $this->graph_color_body_light, 1);
+							$this->graph_image->draw_arrow($left_start + 4, $top_start - 11, $left_start + 4, $top_start - 4, $this->graph_color_text, $this->graph_color_body_light, 1);
 						}
 						break;
 				}
@@ -757,7 +757,7 @@ abstract class pts_Graph
 				}
 			}
 
-			$this->graph_image->write_text_left($str, $this->graph_font, 7, $this->graph_color_main_headers, $left_start + $offset, $top_start - 7, $left_start + $offset, $top_start - 7);
+			$this->graph_image->write_text_left($str, $this->graph_font, 7, $this->graph_color_text, $left_start + $offset, $top_start - 7, $left_start + $offset, $top_start - 7);
 		}
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end)

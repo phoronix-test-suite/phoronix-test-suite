@@ -67,6 +67,9 @@ class pts_external_dependencies
 			}
 		}
 
+		// Make a copy for use to check at end of process to see if all dependencies were actually found
+		$required_test_dependencies_copy = $required_test_dependencies;
+
 		// Find the dependencies that are actually missing from the system
 		$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies);
 
@@ -108,10 +111,54 @@ class pts_external_dependencies
 			{		
 				pts_user_io::read_user_input();
 			}
-			// TODO: add checks again and then ask if you want to remove tests where the dependencies still are missing
 		}
 
-		// TODO: make better assumption than assume it all worked out since it reached this far
+
+		// Find the dependencies that are still missing from the system
+		if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
+		{
+			$generic_packages_needed = array();
+			$required_test_dependencies = $required_test_dependencies_copy;
+			$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies_copy, $generic_packages_needed);
+
+			if(count($generic_packages_needed) > 0)
+			{
+				echo "\nThere are dependencies still missing from the system:\n";
+				echo pts_user_io::display_text_list(self::generic_names_to_titles($generic_packages_needed));
+
+				$actions = array("Ignore missing dependencies and proceed with installation",
+				"Skip installing the tests with missing dependencies.",
+				"Re-attempt to install the missing dependencies.");
+
+				$selected_action = pts_user_io::prompt_text_menu("Missing dependencies action", $actions, false, true);
+
+				switch($selected_action)
+				{
+					case 1:
+						break;
+					case 2:
+						// Unset the tests that have dependencies still missing
+						foreach($generic_packages_needed as $pkg)
+						{
+							if(isset($required_test_dependencies[$pkg]))
+							{
+								foreach($required_test_dependencies[$pkg] as $test_with_this_dependency)
+								{
+									if(($index = array_search($test_with_this_dependency, $identifiers)) !== false)
+									{
+										unset($identifiers[$index]);
+									}
+								}
+							} else echo $pkg;
+						}
+						break;
+					case 3:
+						self::install_packages_on_system($dependencies_to_install);
+						break;
+				}
+			}
+		}
+
 		return true;
 	}
 	public static function all_dependency_names()

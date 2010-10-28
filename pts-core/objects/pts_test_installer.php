@@ -34,8 +34,7 @@ class pts_test_installer
 		pts_client::set_test_flags($test_flags);
 
 		// Any external dependencies?
-		$satisfied_tests = array(); // Tests with no dependencies or with all dependencies installed
-		$install_passed = pts_external_dependencies::install_dependencies($items_to_install, $satisfied_tests);
+		$install_passed = pts_external_dependencies::install_dependencies($items_to_install);
 
 		// Install tests
 		if(!is_writable(TEST_ENV_DIR))
