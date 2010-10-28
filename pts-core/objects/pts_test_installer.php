@@ -79,7 +79,14 @@ class pts_test_installer
 			{
 				if(($test_install_request = $test_install_manager->add_test($test)) != false)
 				{
-					pts_client::$display->generic_sub_heading("To Install: " . $test . " [v" . $test_install_request->test_profile->get_test_profile_version() . "]");
+					$version = $test_install_request->test_profile->get_test_profile_version();
+
+					if(!empty($version))
+					{
+						$version = " [v" . $version . ']';
+					}
+
+					pts_client::$display->generic_sub_heading("To Install: " . $test . $version);
 				}
 			}
 			else

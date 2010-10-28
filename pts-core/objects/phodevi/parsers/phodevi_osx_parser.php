@@ -35,6 +35,12 @@ class phodevi_osx_parser
 			for($i = 0; $i < count($lines) && ($value == false || $multiple_objects); $i++)
 			{
 				$line = pts_strings::colon_explode($lines[$i]);
+
+				if(isset($line[0]) == false)
+				{
+					continue;
+				}
+
 				$line_object = str_replace(" ", "", $line[0]);
 		
 				if(($cut_point = strpos($line_object, "(")) > 0)

@@ -213,7 +213,7 @@
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
-			<PackageName>libboost-all-dev</PackageName>
+			<PackageName>libboost-all-dev libasio-dev</PackageName>
 			<FileCheck>/usr/include/boost/, /usr/include/asio/, /usr/include/boost/date_time/, /usr/include/boost/regex.hpp, /usr/include/boost/iostreams/write.hpp</FileCheck>
 		</Package>
 		<Package>
