@@ -53,10 +53,17 @@ class pts_external_dependencies
 		{
 			foreach(self::required_test_dependencies($identifier) as $test_dependency)
 			{
-				if(!in_array($test_dependency, $required_test_dependencies) && !empty($test_dependency))
+				if(empty($test_dependency))
 				{
-					array_push($required_test_dependencies, $test_dependency);
+					continue;
 				}
+
+				if(isset($required_test_dependencies[$test_dependency]) == false)
+				{
+					$required_test_dependencies[$test_dependency] = array();
+				}
+
+				array_push($required_test_dependencies[$test_dependency], $identifier);
 			}
 		}
 
@@ -85,10 +92,11 @@ class pts_external_dependencies
 			$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 			$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
 			$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
+			$required_test_dependencies_names = array_keys($required_test_dependencies);
 
 			foreach(array_keys($package_name) as $i)
 			{
-				if(in_array($package_name[$i], $required_test_dependencies))
+				if(isset($required_test_dependencies[$package_name[$i]]))
 				{
 					pts_client::$display->generic_heading($title[$i] . "\nPossible Package Names: " . $possible_packages[$i]);
 				}
@@ -129,8 +137,14 @@ class pts_external_dependencies
 	}
 	public static function missing_dependency_names()
 	{
-		$all_test_dependencies = self::all_dependency_names();
+		$all_test_dependencies = array();
 		$all_missing_dependencies = array();
+
+		foreach(self::all_dependency_names() as $name)
+		{
+			$all_test_dependencies[$name] = array();
+		}
+
 		self::check_dependencies_missing_from_system($all_test_dependencies, $all_missing_dependencies);
 		sort($all_missing_dependencies);
 
@@ -182,7 +196,7 @@ class pts_external_dependencies
 					continue;
 				}
 
-				if(($key = array_search($generic_package[$i], $required_test_dependencies)) !== false)
+				if(isset($required_test_dependencies[$generic_package[$i]]))
 				{
 					$add_dependency = empty($file_check[$i]) || self::file_missing_check($file_check[$i]);
 					$arch_compliant = empty($arch_specific[$i]) || in_array($kernel_architecture, pts_strings::comma_explode($arch_specific[$i]));
@@ -199,7 +213,7 @@ class pts_external_dependencies
 						}
 					}
 
-					unset($required_test_dependencies[$key]);
+					unset($required_test_dependencies[$generic_package[$i]]);
 				}
 			}
 		}
@@ -217,13 +231,13 @@ class pts_external_dependencies
 					continue;
 				}
 
-				if(($key = array_search($generic_package_name[$i], $required_test_dependencies)) !== false)
+				if(isset($required_test_dependencies[$generic_package_name[$i]]))
 				{
 					$file_present = !empty($generic_file_check[$i]) && !self::file_missing_check($generic_file_check[$i]);
 
 					if($file_present)
 					{
-						unset($required_test_dependencies[$key]);
+						unset($required_test_dependencies[$generic_package_name[$i]]);
 					}
 				}
 			}
