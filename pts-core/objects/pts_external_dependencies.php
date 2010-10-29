@@ -126,7 +126,7 @@ class pts_external_dependencies
 				echo "\nThere are dependencies still missing from the system:\n";
 				echo pts_user_io::display_text_list(self::generic_names_to_titles($generic_packages_needed));
 
-				$actions = array("Ignore missing dependencies and proceed with installation",
+				$actions = array("Ignore missing dependencies and proceed with installation.",
 				"Skip installing the tests with missing dependencies.",
 				"Re-attempt to install the missing dependencies.");
 

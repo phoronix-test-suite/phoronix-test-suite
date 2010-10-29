@@ -4,7 +4,7 @@
 		<General>
 			<GraphWidth>580</GraphWidth>
 			<GraphHeight>300</GraphHeight>
-			<Renderer>PNG</Renderer>
+			<Renderer></Renderer>
 			<NumberOfMarks>6</NumberOfMarks>
 			<Watermark>PHORONIX-TEST-SUITE.COM</Watermark>
 			<WatermarkURL>http://www.phoronix-test-suite.com/</WatermarkURL>

@@ -79,7 +79,7 @@ abstract class pts_Graph
 	protected $graph_maximum_value;
 
 	protected $graph_output = null;
-	protected $graph_renderer = "PNG";
+	protected $graph_renderer;
 	protected $graph_data = array();
 	protected $graph_data_raw = array();
 	protected $graph_data_title = array();

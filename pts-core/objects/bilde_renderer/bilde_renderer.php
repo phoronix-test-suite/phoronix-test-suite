@@ -158,11 +158,10 @@ abstract class bilde_renderer
 	{
 		bilde_renderer::setup_font_directory();
 		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG");
-		$fallback_renderer = "SVG";
-		$selected_renderer = $fallback_renderer;
+		$selected_renderer = "SVG";
 		$use_renderer = false;
 
-		if(($this_renderer = getenv("BILDE_RENDERER")) != false || defined("BILDE_RENDERER") && ($this_renderer = BILDE_RENDERER) || ($this_renderer = $requested_renderer) != null)
+		if((($this_renderer = getenv("BILDE_RENDERER")) != false || defined("BILDE_RENDERER") && ($this_renderer = BILDE_RENDERER) || ($this_renderer = $requested_renderer) != null) && in_array($this_renderer, $available_renderers))
 		{
 			$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));
 
@@ -174,6 +173,8 @@ abstract class bilde_renderer
 
 		if($use_renderer == false)
 		{
+			// We now default to the SVG renderer which should always be supported so can probably remove this chgeck
+			/*
 			foreach($available_renderers as $this_renderer)
 			{
 				$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));
@@ -184,6 +185,7 @@ abstract class bilde_renderer
 					break;
 				}
 			}
+			*/
 		}
 		else
 		{
