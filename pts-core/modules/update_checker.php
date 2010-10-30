@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 	update_checker.php: This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.
 
 	This program is free software; you can redistribute it and/or modify
@@ -42,13 +42,6 @@ class update_checker extends pts_module_interface
 			{
 				// New version of PTS is available
 				pts_client::$display->generic_heading("An outdated version of the Phoronix Test Suite is installed.\nThe version in use is v" . PTS_VERSION . ", but the latest is v" . $latest_reported_version . ".\nVisit http://www.phoronix-test-suite.com/ to update this software.");
-
-				if(pts_read_assignment("COMMAND") == "gui_gtk")
-				{
-					pts_set_assignment("REPORT_STRING", "Phoronix Test Suite v" . $latest_reported_version . " Available");
-					pts_set_assignment("BROWSER_BUTTON_STRING", "Download Update");
-					pts_set_assignment("BROWSER_BUTTON_URL", "http://www.phoronix-test-suite.com/index.php?k=downloads");
-				}
 			}
 		}
 

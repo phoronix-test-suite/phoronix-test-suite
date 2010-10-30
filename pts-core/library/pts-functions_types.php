@@ -127,12 +127,6 @@ function pts_location_virtual_suite($identifier)
 				case "free":
 					$virtual_suite = "TYPE_VIRT_SUITE_FREE";
 					break;
-				case "prev-test-identifier":
-					if(pts_read_assignment("PREV_TEST_IDENTIFIER"))
-					{
-						$virtual_suite = "TYPE_VIRT_PREV_TEST_IDENTIFIER";
-					}
-					break;
 				default:
 					// Check if object is a subsystem test type
 					foreach(pts_types::subsystem_targets() as $type)
@@ -291,12 +285,6 @@ function pts_virtual_suite_tests($object)
 				}
 			}
 			break;
-		case "TYPE_VIRT_PREV_TEST_IDENTIFIER":
-			foreach(pts_arrays::to_array(pts_read_assignment("PREV_TEST_IDENTIFIER")) as $test)
-			{
-				array_push($contained_tests, $test);
-			}
-			break;
 	}
 
 	if(count($contained_tests) > 0)
@@ -331,25 +319,20 @@ function pts_find_result_file($file, $check_global = true)
 }
 function pts_suite_needs_updated_install($identifier)
 {
-	if(!pts_is_assignment("CACHE_SUITE_INSTALLED_" . strtoupper($identifier)))
+	$needs_update = false;
+
+	foreach(pts_contained_tests($identifier, true, true, true) as $test)
 	{
-		$needs_update = false;
+		$installed_test = new pts_installed_test($test);
 
-		foreach(pts_contained_tests($identifier, true, true, true) as $test)
+		if(!pts_test_installed($test) || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || (pts_c::$test_flags & pts_c::force_install))
 		{
-			$installed_test = new pts_installed_test($test);
-
-			if(!pts_test_installed($test) || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || (pts_c::$test_flags & pts_c::force_install))
-			{
-				$needs_update = true;
-				break;
-			}
+			$needs_update = true;
+			break;
 		}
-
-		pts_set_assignment("CACHE_SUITE_INSTALLED_" . strtoupper($identifier), $needs_update);
 	}
 
-	return pts_read_assignment("CACHE_SUITE_INSTALLED_" . strtoupper($identifier));
+	return $needs_update;
 }
 function pts_test_needs_updated_install($identifier)
 {

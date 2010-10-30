@@ -43,7 +43,7 @@ class pts_user_io
 		{
 			echo $message . "\n";
 
-			if((pts_c::$test_flags & pts_c::batch_mode) && pts_read_assignment("AUTOMATED_MODE") == false)
+			if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
 			{
 				echo "\nHit Any Key To Continue...\n";
 				pts_user_io::read_user_input();

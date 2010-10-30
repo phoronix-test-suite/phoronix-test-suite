@@ -241,9 +241,18 @@ class pts_client
 
 		//define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
 	}
-	public static function init_display_mode()
+	public static function init_display_mode($flags = 0)
 	{
-		switch((($env_mode = pts_read_assignment("DISPLAY_MODE")) != false || ($env_mode = pts_client::read_env("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
+		if(($flags & pts_c::debug_mode))
+		{
+			$env_mode = "BASIC";
+		}
+		else
+		{
+			$env_mode = false;
+		}
+
+		switch(($env_mode != false || ($env_mode = pts_client::read_env("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
 		{
 			case "BASIC":
 				self::$display = new pts_basic_display_mode();
@@ -653,12 +662,6 @@ class pts_client
 	}
 	public static function set_test_flags($test_flags = 0)
 	{
-		if(pts_read_assignment("AUTOMATED_MODE"))
-		{
-			// TODO: don't use AUTOMATED_MODE anymore in pts-core, this is temp fix for such code
-			$test_flags |= pts_c::auto_mode;
-		}
-
 		pts_c::$test_flags = $test_flags;
 	}
 	public static function execute_command($command, $pass_args = null, $preset_assignments = "")
@@ -728,7 +731,6 @@ class pts_client
 
 		pts_assignment_manager::clear_all();
 		self::$command_execution_count += 1;
-		pts_set_assignment("COMMAND", $command);
 
 		if(is_array($preset_assignments))
 		{
@@ -761,12 +763,13 @@ class pts_client
 		}
 
 		pts_module_manager::module_process("__post_option_process", $command);
-		pts_set_assignment_next("PREV_COMMAND", $command);
 		pts_assignment_manager::clear_all();
 	}
 	public static function terminal_width()
 	{
-		if(!pts_is_assignment("TERMINAL_WIDTH"))
+		static $terminal_width = null;
+
+		if($terminal_width == null)
 		{
 			$chars = -1;
 
@@ -785,10 +788,10 @@ class pts_client
 				$chars = 80;
 			}
 
-			pts_set_assignment("TERMINAL_WIDTH", $chars);
+			$terminal_width = $chars;
 		}
 
-		return pts_read_assignment("TERMINAL_WIDTH");
+		return $terminal_width;
 	}
 	public static function user_hardware_software_reporting()
 	{

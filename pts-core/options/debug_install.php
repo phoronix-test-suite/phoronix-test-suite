@@ -24,7 +24,6 @@ class debug_install implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_set_assignment("DISPLAY_MODE", "BASIC");
 		pts_test_installer::standard_install($r, pts_c::debug_mode | pts_c::force_install);
 	}
 }

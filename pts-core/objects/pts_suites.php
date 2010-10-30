@@ -73,22 +73,17 @@ class pts_suites
 	}
 	public static function installed_suites()
 	{
-		if(!pts_is_assignment("CACHE_INSTALLED_SUITES"))
+		$installed_suites = array();
+
+		foreach(pts_suites::available_suites() as $suite)
 		{
-			$installed_suites = array();
-
-			foreach(pts_suites::available_suites() as $suite)
+			if(pts_suite_needs_updated_install($suite) == false)
 			{
-				if(pts_suite_needs_updated_install($suite) == false)
-				{
-					array_push($installed_suites, $suite);
-				}
+				array_push($installed_suites, $suite);
 			}
-
-			pts_set_assignment("CACHE_INSTALLED_SUITES", $installed_suites);
 		}
 
-		return pts_read_assignment("CACHE_INSTALLED_SUITES");
+		return $installed_suites;
 	}
 }
 

@@ -24,7 +24,6 @@ class debug_run implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_set_assignment("DISPLAY_MODE", "BASIC");
 		pts_test_run_manager::standard_run($r, pts_c::debug_mode);
 	}
 }

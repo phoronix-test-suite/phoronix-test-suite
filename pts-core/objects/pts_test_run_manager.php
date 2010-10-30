@@ -333,17 +333,16 @@ class pts_test_run_manager
 	}
 	public function prompt_save_name()
 	{
+		if($this->file_name != null)
+		{
+			return;
+		}
+
 		// Prompt to save a file when running a test
 		$proposed_name = null;
 		$custom_title = null;
 
-		if(($asn = pts_read_assignment("AUTO_SAVE_NAME")))
-		{
-			$custom_title = $asn;
-			$proposed_name = self::clean_save_name_string($asn);
-			//echo "Saving Results To: " . $proposed_name . "\n";
-		}
-		else if(($env = pts_client::read_env("TEST_RESULTS_NAME")))
+		if(($env = pts_client::read_env("TEST_RESULTS_NAME")))
 		{
 			$custom_title = $enc;
 			$proposed_name = self::clean_save_name_string($env);
@@ -377,8 +376,6 @@ class pts_test_run_manager
 		{
 			$custom_title = $proposed_name;
 		}
-
-		pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $custom_title);
 
 		$this->file_name = $proposed_name;
 		$this->file_name_title = $custom_title;
@@ -432,8 +429,7 @@ class pts_test_run_manager
 			$times_tried = 0;
 			do
 			{
-				if($times_tried == 0 && (($env_identifier = pts_client::read_env("TEST_RESULTS_IDENTIFIER")) || 
-				($env_identifier = pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER")) || (pts_c::$test_flags & pts_c::auto_mode)))
+				if($times_tried == 0 && (($env_identifier = pts_client::read_env("TEST_RESULTS_IDENTIFIER")) || (pts_c::$test_flags & pts_c::auto_mode)))
 				{
 					$results_identifier = isset($env_identifier) ? $env_identifier : null;
 					echo "Test Identifier: " . $results_identifier . "\n";
@@ -665,10 +661,10 @@ class pts_test_run_manager
 
 		return $input;
 	}
-	public static function initial_checks(&$to_run_identifiers)
+	public static function initial_checks(&$to_run_identifiers, $test_flags = 0)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
-		pts_client::init_display_mode();
+		pts_client::init_display_mode($test_flags);
 
 		if((pts_c::$test_flags & pts_c::batch_mode))
 		{
@@ -770,10 +766,6 @@ class pts_test_run_manager
 				{
 					$upload_results = true;
 				}
-				else if((pts_c::$test_flags & pts_c::auto_mode))
-				{
-					$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL");
-				}
 				else
 				{
 					$upload_results = pts_user_io::prompt_bool_input("Would you like to upload these results to Phoronix Global", true, "UPLOAD_RESULTS");
@@ -787,7 +779,6 @@ class pts_test_run_manager
 					if(!empty($upload_url))
 					{
 						echo "\nResults Uploaded To: " . $upload_url . "\n";
-						pts_set_assignment_next("PREV_GLOBAL_UPLOAD_URL", $upload_url);
 						pts_module_manager::module_process("__event_global_upload", $upload_url);
 						pts_client::display_web_page($upload_url, "Do you want to launch Phoronix Global", true);
 					}
@@ -798,8 +789,6 @@ class pts_test_run_manager
 				}
 			}
 		}
-
-		pts_set_assignment_next("PREV_TEST_IDENTIFIER", $this->get_tests_to_run_identifiers());
 	}
 	public static function cleanup_tests_to_run(&$to_run_identifiers)
 	{
@@ -910,9 +899,9 @@ class pts_test_run_manager
 	}
 	public function save_results_prompt()
 	{
-		if($this->prompt_save_results && count($this->tests_to_run) > 0 && pts_is_assignment("DO_NOT_SAVE_RESULTS") == false)
+		if($this->prompt_save_results && count($this->tests_to_run) > 0) // or check for DO_NOT_SAVE_RESULTS == false
 		{
-			if($this->force_save_results || pts_is_assignment("AUTO_SAVE_NAME") || pts_client::read_env("TEST_RESULTS_NAME"))
+			if($this->force_save_results || pts_client::read_env("TEST_RESULTS_NAME"))
 			{
 				$save_results = true;
 			}
@@ -1116,7 +1105,7 @@ class pts_test_run_manager
 				$result_objects = $result_file->get_result_objects();
 				$test_override_options = array();
 
-				pts_set_assignment("AUTO_SAVE_NAME", $to_run);
+				$this->set_save_name($to_run);
 
 				foreach(explode(";", $test_previous_properties) as $test_prop)
 				{
@@ -1274,7 +1263,7 @@ class pts_test_run_manager
 	}
 	public static function standard_run($to_run, $test_flags = 0)
 	{
-		if(pts_test_run_manager::initial_checks($to_run) == false)
+		if(pts_test_run_manager::initial_checks($to_run, $test_flags) == false)
 		{
 			return false;
 		}
