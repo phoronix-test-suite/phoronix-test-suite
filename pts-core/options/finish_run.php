@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -66,7 +66,28 @@ class finish_run implements pts_option_interface
 
 		$selected = pts_user_io::prompt_text_menu("Select which incomplete test run you would like to finish", $incomplete_identifiers);
 
-		pts_client::run_next("run_test", $args, array("FINISH_INCOMPLETE_RUN" => true, "TESTS_TO_COMPLETE" => $test_positions[$selected], "AUTO_TEST_RESULTS_IDENTIFIER" => $selected));
+
+		// Now run it
+		if(pts_test_run_manager::initial_checks($args[0]) == false)
+		{
+			return false;
+		}
+
+		$test_run_manager = new pts_test_run_manager(pts_c::is_recovering);
+
+		// Load the tests to run
+		if($test_run_manager->load_result_file_to_run($args[0], $selected, $result_file, $test_positions[$selected]) == false)
+		{
+			return false;
+		}
+
+		// Save results?
+		$test_run_manager->save_results_prompt();
+
+		// Run the actual tests
+		$test_run_manager->pre_execution_process();
+		$test_run_manager->call_test_runs();
+		$test_run_manager->post_execution_process();
 	}
 }
 

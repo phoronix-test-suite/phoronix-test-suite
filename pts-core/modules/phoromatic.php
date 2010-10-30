@@ -324,7 +324,7 @@ class phoromatic extends pts_module_interface
 			switch($response)
 			{
 				case M_PHOROMATIC_RESPONSE_RUN_TEST:
-					$test_flags = pts_c::auto_mode;
+					$test_flags = pts_c::auto_mode | pts_c::recovery_mode;
 
 					do
 					{

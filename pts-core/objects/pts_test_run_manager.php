@@ -420,7 +420,7 @@ class pts_test_run_manager
 			$current_software = array();
 		}
 
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE"))
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") && (pts_c::$test_flags ^ pts_c::auto_mode))
 		{
 			if(count($current_identifiers) > 0)
 			{
@@ -447,7 +447,7 @@ class pts_test_run_manager
 
 				$identifier_pos = (($p = array_search($results_identifier, $current_identifiers)) !== false ? $p : -1);
 			}
-			while((!$no_repeated_tests && $identifier_pos != -1 && !pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN")) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
+			while((!$no_repeated_tests && $identifier_pos != -1 && !pts_is_assignment("RECOVER_RUN")) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
 		}
 
 		if(empty($results_identifier))
@@ -719,7 +719,7 @@ class pts_test_run_manager
 				pts_arrays::unique_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
-			if(!pts_is_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($this->get_file_name()) || $this->result_already_contains_identifier() == false))
+			if((pts_c::$test_flags ^ pts_c::is_recovering) && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($this->get_file_name()) || $this->result_already_contains_identifier() == false))
 			{
 				$this->result_file_writer->add_result_file_meta_data($this, $test_properties);
 				$this->result_file_writer->add_current_system_information();
@@ -744,7 +744,7 @@ class pts_test_run_manager
 	{
 		if($this->do_save_results())
 		{
-			if($this->completed_runs == 0 && !pts_is_test_result($this->get_file_name()) && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_read_assignment("PHOROMATIC_TRIGGER"))
+			if($this->completed_runs == 0 && !pts_is_test_result($this->get_file_name()) && (pts_c::$test_flags ^ pts_c::is_recovering) && (pts_c::$test_flags ^ pts_c::remote_mode))
 			{
 				pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name());
 				return false;
@@ -939,7 +939,7 @@ class pts_test_run_manager
 				}
 
 				// Prompt Description
-				if((pts_c::$test_flags ^ pts_c::auto_mode) && !pts_read_assignment("FINISH_INCOMPLETE_RUN") && !pts_is_assignment("RECOVER_RUN") && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
+				if((pts_c::$test_flags ^ pts_c::auto_mode) && !pts_is_assignment("RECOVER_RUN") && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
 				{
 					if($this->run_description == null)
 					{
@@ -963,6 +963,49 @@ class pts_test_run_manager
 		// Determine what to run
 		$this->determine_tests_to_run($to_run_identifiers);
 
+		// Run the test process
+		$this->validate_tests_to_run();
+
+		// Is there something to run?
+		return $this->get_test_count() > 0;
+	}
+	public function load_result_file_to_run($save_name, $result_identifier, &$result_file, $tests_to_complete = null)
+	{
+		// Determine what to run
+		$this->auto_save_results($save_name, $result_identifier);
+		$this->run_description = $result_file->get_suite_description();
+		$result_objects = $result_file->get_result_objects();
+
+		// Unset result objects that shouldn't be run
+		if(is_array($tests_to_complete))
+		{
+			foreach(array_keys($result_objects) as $i)
+			{
+				if(!in_array($i, $tests_to_complete))
+				{
+					unset($result_objects[$i]);
+				}
+			}
+		}
+
+		if(count($result_objects) == 0)
+		{
+			return false;
+		}
+
+		$test_run = array();
+		$test_args = array();
+		$test_args_description = array();
+
+		foreach($result_objects as &$result_object)
+		{
+			array_push($test_run, $result_object->test_profile->get_identifier());
+			array_push($test_args, $result_object->get_arguments());
+			array_push($test_args_description, $result_object->get_arguments_description());
+		}
+
+		$this->add_multi_test_run($test_run, $test_args, $test_args_description);
+	
 		// Run the test process
 		$this->validate_tests_to_run();
 
@@ -1051,25 +1094,7 @@ class pts_test_run_manager
 
 				pts_module_manager::process_extensions_string($test_extensions);
 
-				if(pts_is_assignment("FINISH_INCOMPLETE_RUN"))
-				{
-					$test_run = array();
-					$test_args = array();
-					$test_args_description = array();
-
-					$tests_to_complete = pts_read_assignment("TESTS_TO_COMPLETE");
-
-					foreach($tests_to_complete as $test_pos)
-					{
-						if(isset($result_objects[$test_pos]))
-						{
-							array_push($test_run, $result_objects[$test_pos]->test_profile->get_identifier());
-							array_push($test_args, $result_objects[$test_pos]->get_arguments());
-							array_push($test_args_description, $result_objects[$test_pos]->get_arguments_description());
-						}
-					}
-				}
-				else if(pts_is_assignment("RECOVER_RUN"))
+				if(pts_is_assignment("RECOVER_RUN"))
 				{
 					$test_run = array();
 					$test_args = array();
