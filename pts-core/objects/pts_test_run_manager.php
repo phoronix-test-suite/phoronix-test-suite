@@ -39,6 +39,7 @@ class pts_test_run_manager
 	private $post_run_message = null;
 	private $pre_run_message = null;
 	private $allow_sharing_of_results = true;
+	private $auto_upload_to_global = false;
 	private $is_pcqs = false;
 
 	private $do_dynamic_run_count = false;
@@ -71,6 +72,10 @@ class pts_test_run_manager
 	public function do_dynamic_run_count()
 	{
 		return $this->do_dynamic_run_count;
+	}
+	public function auto_upload_to_global($do = true)
+	{
+		$this->auto_upload_to_global = ($do == true);
 	}
 	public function increase_run_count_check(&$test_results, $scheduled_times_to_run, $latest_test_run_time)
 	{
@@ -311,6 +316,20 @@ class pts_test_run_manager
 		$result_file = new pts_result_file($this->file_name);
 
 		return in_array($this->results_identifier, $result_file->get_system_identifiers());
+	}
+	public function set_save_name($save_name)
+	{
+		if(empty($save_name))
+		{
+			$save_name = date("Y-m-d-Hi");
+		}
+
+		$this->file_name = self::clean_save_name_string($save_name);
+		$this->file_name_title = $save_name;
+	}
+	public function set_results_identifier($identifier)
+	{
+		$this->results_identifier = $identifier;
 	}
 	public function prompt_save_name()
 	{
@@ -747,7 +766,11 @@ class pts_test_run_manager
 
 			if($this->allow_sharing_of_results && !defined("NO_NETWORK_COMMUNICATION"))
 			{
-				if((pts_c::$test_flags & pts_c::auto_mode))
+				if($this->auto_upload_to_global)
+				{
+					$upload_results = true;
+				}
+				else if((pts_c::$test_flags & pts_c::auto_mode))
 				{
 					$upload_results = pts_read_assignment("AUTO_UPLOAD_TO_GLOBAL");
 				}
@@ -889,6 +912,12 @@ class pts_test_run_manager
 		}
 
 		return true;
+	}
+	public function auto_save_results($save_name, $result_identifier, $description = null)
+	{
+		$this->set_save_name($save_name);
+		$this->set_results_identifier($result_identifier);
+		$this->run_description = $description;
 	}
 	public function save_results_prompt()
 	{

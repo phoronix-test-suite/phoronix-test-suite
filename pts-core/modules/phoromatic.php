@@ -23,7 +23,7 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = "Phoromatic Client";
-	const module_version = "0.6.1";
+	const module_version = "1.0.0";
 	const module_description = "The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/";
 	const module_author = "Phoronix Media";
 
@@ -123,9 +123,6 @@ class phoromatic extends pts_module_interface
 			echo "\nNo test result file was found to upload.\n";
 			return false;
 		}
-
-		pts_set_assignment("PHOROMATIC_UPLOAD_TEST_LOGS", pts_user_io::prompt_bool_input("Would you like to upload the test logs", false));
-		pts_set_assignment("PHOROMATIC_UPLOAD_SYSTEM_LOGS", pts_user_io::prompt_bool_input("Would you like to upload the system logs", false));
 
 		phoromatic::upload_unscheduled_test_results($to_upload[0]);
 	}
@@ -258,55 +255,6 @@ class phoromatic extends pts_module_interface
 	// Core Functions
 	//
 
-	public static function user_system_return($tests)
-	{
-		// Upload result here
-		foreach($tests as $test)
-		{
-			if(is_file(XML_SUITE_LOCAL_DIR . $test . ".xml"))
-			{
-				// Remove old suite files
-				unlink(XML_SUITE_LOCAL_DIR . $test . ".xml");
-			}
-		}
-
-		if(($save_identifier = pts_read_assignment("PREV_SAVE_RESULTS_IDENTIFIER")) != false) // TODO: fix as otherwise Phoromatic will not work
-		{
-			// Upload test results
-
-			if(is_file(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml"))
-			{
-				phoromatic::update_system_status("Uploading Test Results");
-
-				$times_tried = 0;
-				do
-				{
-					if($times_tried > 0)
-					{
-						echo "\nConnection to server failed. Trying again in 60 seconds...\n";
-						sleep(60);
-					}
-
-					$uploaded_test_results = phoromatic::upload_test_results($save_identifier);
-					$times_tried++;
-				}
-				while(!$uploaded_test_results && $times_tried < 5);
-
-				if(!$uploaded_test_results)
-				{
-					echo "Server connection failed. Exiting...\n";
-					return false;
-				}
-
-				if(!pts_read_assignment("PHOROMATIC_ARCHIVE_RESULTS"))
-				{
-					pts_client::remove_saved_result_file($save_identifier);
-				}
-			}
-		}
-
-		phoromatic::user_system_process();
-	}
 	public static function user_system_process()
 	{
 		$last_communication_minute = date("i");
@@ -376,7 +324,7 @@ class phoromatic extends pts_module_interface
 			switch($response)
 			{
 				case M_PHOROMATIC_RESPONSE_RUN_TEST:
-					$test_args = array("AUTOMATED_MODE" => true);
+					$test_flags = pts_c::auto_mode;
 
 					do
 					{
@@ -384,36 +332,80 @@ class phoromatic extends pts_module_interface
 					}
 					while(is_file(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml"));
 
-					$test_args["AUTO_SAVE_NAME"] = date("Y-m-d H:i:s");
-					$test_args["PHOROMATIC_TITLE"] = $xml_parser->getXMLValue(P_SUITE_TITLE);
-					$test_args["PHOROMATIC_SCHEDULE_ID"] = $xml_parser->getXMLValue(M_PHOROMATIC_ID);
-					$test_args["AUTO_TEST_RESULTS_IDENTIFIER"] = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
-					$test_args["PHOROMATIC_UPLOAD_TEST_LOGS"] = pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TEST_LOGS));
-					$test_args["PHOROMATIC_UPLOAD_SYSTEM_LOGS"] = pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_SYSTEM_LOGS));
-					$test_args["PHOROMATIC_TRIGGER"] = $xml_parser->getXMLValue(M_PHOROMATIC_TRIGGER);
-
-					if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, "FALSE")))
-					{
-						$test_args["AUTO_UPLOAD_TO_GLOBAL"] = true;
-					}
-
-					if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY, M_PHOROMATIC_RESPONSE_TRUE)))
-					{
-						$test_args["PHOROMATIC_ARCHIVE_RESULTS"] = true;
-					}
-
 					file_put_contents(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml", $server_response);
+
+					$phoromatic_schedule_id = $xml_parser->getXMLValue(M_PHOROMATIC_ID);
+					$phoromatic_results_identifier = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
+					$phoromatic_trigger = $xml_parser->getXMLValue(M_PHOROMATIC_TRIGGER);
 
 					if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_RUN_INSTALL_COMMAND, M_PHOROMATIC_RESPONSE_TRUE)))
 					{
-						phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_INSTALL), $test_args["PHOROMATIC_TRIGGER"], $test_args["PHOROMATIC_SCHEDULE_ID"], "INSTALL");
-						pts_client::run_next("install_test", $suite_identifier, array("AUTOMATED_MODE" => true));
+						phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_INSTALL), $phoromatic_trigger, $phoromatic_schedule_id, "INSTALL");
+						pts_client::set_test_flags($test_flags);
+						pts_test_installer::standard_install($suite_identifier);
 					}
 
-					phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_RUN), $test_args["PHOROMATIC_TRIGGER"], $test_args["PHOROMATIC_SCHEDULE_ID"], "INSTALL");
-					pts_client::run_next("run_test", $suite_identifier, $test_args);
-					pts_client::run_next("phoromatic.user_system_return", $suite_identifier, $test_args);
-					$exit_loop = true;
+					phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_RUN), $phoromatic_trigger, $phoromatic_schedule_id, "INSTALL");
+
+
+					// Do the actual running
+					if(pts_test_run_manager::initial_checks($suite_identifier))
+					{
+						$test_run_manager = new pts_test_run_manager($test_flags);
+
+						// Load the tests to run
+						if($test_run_manager->load_tests_to_run($suite_identifier))
+						{
+
+							if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, "FALSE")))
+							{
+								$test_run_manager->auto_upload_to_global();
+							}
+
+							// Save results?
+							$test_run_manager->auto_save_results(date("Y-m-d H:i:s"), $phoromatic_results_identifier, "A Phoromatic run.");
+
+							// Run the actual tests
+							$test_run_manager->pre_execution_process();
+							$test_run_manager->call_test_runs();
+							$test_run_manager->post_execution_process();
+
+							// Upload to Phoromatic
+							pts_file_io::unlink(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml");
+
+							// Upload test results
+
+							if(is_file(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml"))
+							{
+								phoromatic::update_system_status("Uploading Test Results");
+
+								$times_tried = 0;
+								do
+								{
+									if($times_tried > 0)
+									{
+										echo "\nConnection to server failed. Trying again in 60 seconds...\n";
+										sleep(60);
+									}
+
+									$uploaded_test_results = phoromatic::upload_test_results($save_identifier, $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger);
+									$times_tried++;
+								}
+								while($uploaded_test_results == false && $times_tried < 5);
+
+								if($uploaded_test_results == false)
+								{
+									echo "Server connection failed. Exiting...\n";
+									return false;
+								}
+
+								if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY, M_PHOROMATIC_RESPONSE_TRUE)) == false)
+								{
+									pts_client::remove_saved_result_file($save_identifier);
+								}
+							}
+						}
+					}
 					break;
 				case M_PHOROMATIC_RESPONSE_EXIT:
 					echo "\nPhoromatic received a remote command to exit.\n";
@@ -464,11 +456,6 @@ class phoromatic extends pts_module_interface
 
 	public static function __pre_test_install($test_identifier)
 	{
-		if(!pts_read_assignment("PHOROMATIC_TITLE"))
-		{
-			return false;
-		}
-
 		static $last_update_time = 0;
 
 		if(time() > ($last_update_time + 600))
@@ -479,14 +466,9 @@ class phoromatic extends pts_module_interface
 	}
 	public static function __pre_test_run($pts_test_result)
 	{
-		if(!pts_read_assignment("PHOROMATIC_TITLE"))
-		{
-			return false;
-		}
-
 		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
-
-		phoromatic::update_system_status("Running " . $pts_test_result->test_profile->get_identifier() . " For " . pts_read_assignment("PHOROMATIC_TITLE"));
+		// TODO: report name of test identifier/run i.e. . " For " . pts_read_assignment("PHOROMATIC_TITLE")
+		phoromatic::update_system_status("Running " . $pts_test_result->test_profile->get_identifier());
 	}
 	public static function __event_user_error($user_error)
 	{
@@ -495,11 +477,8 @@ class phoromatic extends pts_module_interface
 	}
 	public static function __event_results_saved($test_run_manager)
 	{
-		if(pts_module::read_variable("AUTO_UPLOAD_RESULTS_TO_PHOROMATIC") && !pts_read_assignment("PHOROMATIC_TITLE") && pts_module::is_module_setup())
+		if(pts_module::read_variable("AUTO_UPLOAD_RESULTS_TO_PHOROMATIC") && pts_module::is_module_setup())
 		{
-			pts_set_assignment("PHOROMATIC_UPLOAD_TEST_LOGS", true);
-			pts_set_assignment("PHOROMATIC_UPLOAD_SYSTEM_LOGS", true);
-
 			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
 		}
 	}
@@ -576,7 +555,7 @@ class phoromatic extends pts_module_interface
 	{
 		$data = array("system-logs" => null, "test-logs" => null);
 
-		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/system-logs/") && pts_read_assignment("PHOROMATIC_UPLOAD_SYSTEM_LOGS"))
+		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/system-logs/"))
 		{
 			$system_logs_zip = pts_client::create_temporary_file();
 			pts_compression::zip_archive_create($system_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/system-logs/");
@@ -584,7 +563,7 @@ class phoromatic extends pts_module_interface
 			unlink($system_logs_zip);
 		}
 
-		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/test-logs/") && pts_read_assignment("PHOROMATIC_UPLOAD_TEST_LOGS"))
+		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/test-logs/"))
 		{
 			$test_logs_zip = pts_client::create_temporary_file();
 			pts_compression::zip_archive_create($test_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/test-logs/");
@@ -594,7 +573,7 @@ class phoromatic extends pts_module_interface
 
 		return $data;
 	}
-	protected static function upload_test_results($save_identifier)
+	protected static function upload_test_results($save_identifier, $phoromatic_schedule_id, $results_identifier, $phoromatic_trigger)
 	{
 		$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
 
@@ -602,9 +581,9 @@ class phoromatic extends pts_module_interface
 		$server_response = phoromatic::upload_to_remote_server(array(
 			"r" => "upload_test_results",
 			"c" => $composite_xml,
-			"i" => pts_read_assignment("PHOROMATIC_SCHEDULE_ID"),
-			"ti" => pts_read_assignment("AUTO_TEST_RESULTS_IDENTIFIER"),
-			"ts" => pts_read_assignment("PHOROMATIC_TRIGGER"),
+			"i" => $phoromatic_schedule_id,
+			"ti" => $results_identifier,
+			"ts" => $phoromatic_trigger,
 			"sl" => $logs["system-logs"],
 			"tl" => $logs["test-logs"]
 			));
