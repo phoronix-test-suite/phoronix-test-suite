@@ -37,10 +37,7 @@ class test_module implements pts_option_interface
 
 		foreach($processes as $process)
 		{
-			if(pts_is_assignment("DEBUG_MODULE"))
-			{
-				echo "Calling: " . $process . "()\n";
-			}
+			echo "Calling: " . $process . "()\n";
 
 			pts_module_manager::module_process($process);
 			sleep(1);

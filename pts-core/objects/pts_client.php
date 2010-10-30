@@ -42,21 +42,13 @@ class pts_client
 	{
 		return self::$command_execution_count;
 	}
-	public static function run_next($command, $pass_args = null, $set_assignments = null)
+	public static function run_next($command, $pass_args = null)
 	{
-		return array_push(self::$commands_to_run, new pts_command_run($command, $pass_args, $set_assignments));
+		return array_push(self::$commands_to_run, new pts_command_run($command, $pass_args));
 	}
 	public static function next_in_run_queue()
 	{
 		return array_shift(self::$commands_to_run);
-	}
-	public static function add_assignment_to_next_in_run_queue($assignment, $value = true)
-	{
-		if(($next_option = array_shift(self::$commands_to_run)) != null)
-		{
-			$next_option->add_preset_assignment($assignment, $value);
-			array_unshift(self::$commands_to_run, $next_option);
-		}
 	}
 	public static function init()
 	{
@@ -664,7 +656,7 @@ class pts_client
 	{
 		pts_c::$test_flags = $test_flags;
 	}
-	public static function execute_command($command, $pass_args = null, $preset_assignments = "")
+	public static function execute_command($command, $pass_args = null)
 	{
 		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && !class_exists($command, false))
 		{
@@ -729,17 +721,7 @@ class pts_client
 			}
 		}
 
-		pts_assignment_manager::clear_all();
 		self::$command_execution_count += 1;
-
-		if(is_array($preset_assignments))
-		{
-			foreach(array_keys($preset_assignments) as $key)
-			{
-				pts_set_assignment_once($key, $preset_assignments[$key]);
-			}
-		}
-
 		pts_module_manager::module_process("__pre_option_process", $command);
 
 		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php"))
@@ -763,7 +745,6 @@ class pts_client
 		}
 
 		pts_module_manager::module_process("__post_option_process", $command);
-		pts_assignment_manager::clear_all();
 	}
 	public static function terminal_width()
 	{

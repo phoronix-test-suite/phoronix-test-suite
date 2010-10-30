@@ -22,3 +22,4 @@ result_info = info
 change_results_display_order = reorder_result_file
 test = benchmark
 install_all_dependencies = removed_option
+debug_module = test_module

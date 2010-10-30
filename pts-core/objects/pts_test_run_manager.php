@@ -53,7 +53,6 @@ class pts_test_run_manager
 	private $results_directory;
 	private $wrote_system_xml;
 
-	private static $user_rejected_install_notice = false;
 	private static $test_run_process_active = false;
 
 	public function __construct($test_flags = 0)
@@ -703,10 +702,7 @@ class pts_test_run_manager
 		}
 		else if(count($to_run_identifiers) == 0)
 		{
-			if(self::$user_rejected_install_notice == false)
-			{
-				pts_client::$display->generic_error("You must enter at least one test, suite, or result identifier to run.");
-			}
+			pts_client::$display->generic_error("You must enter at least one test, suite, or result identifier to run.");
 
 			return false;
 		}
@@ -893,13 +889,8 @@ class pts_test_run_manager
 
 				if($stop_and_install)
 				{
-					pts_client::run_next("install_test", $tests_missing, pts_assignment_manager::get_all_assignments());
-					self::$user_rejected_install_notice = false;
-					return false;
-				}
-				else
-				{
-					self::$user_rejected_install_notice = true;
+					pts_test_installer::standard_install($tests_missing, pts_c::$test_flags);
+					self::cleanup_tests_to_run($tests_missing);
 				}
 			}
 		}

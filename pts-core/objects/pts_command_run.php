@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009 Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,9 +24,8 @@ class pts_command_run
 {
 	private $command;
 	private $arguments;
-	private $preset_assignments;
 
-	public function __construct($command, $pass_args = null, $set_assignments = "")
+	public function __construct($command, $pass_args = null)
 	{
 		$command = strtolower($command);
 
@@ -35,14 +34,8 @@ class pts_command_run
 			$pass_args = array($pass_args);
 		}
 
-		if(!is_array($set_assignments))
-		{
-			$set_assignments = array();
-		}
-
 		$this->command = $command;
 		$this->arguments = $pass_args;
-		$this->preset_assignments = $set_assignments;
 	}
 	public function get_command()
 	{
@@ -51,14 +44,6 @@ class pts_command_run
 	public function get_command_arguments()
 	{
 		return $this->arguments;
-	}
-	public function get_preset_assignments()
-	{
-		return $this->preset_assignments;
-	}
-	public function add_preset_assignment($name, $value)
-	{
-		$this->preset_assignments[$name] = $value;
 	}
 }
 

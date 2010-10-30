@@ -29,7 +29,7 @@ class list_tests implements pts_option_interface
 		{
 			$test_profile = new pts_test_profile($identifier);
 
-			if((pts_is_assignment("LIST_UNSUPPORTED") xor $test_profile->is_supported()) || pts_is_assignment("LIST_ALL_TESTS"))
+			if($test_profile->is_supported())
 			{
 				array_push($tests_to_display, $identifier);
 			}
@@ -47,7 +47,7 @@ class list_tests implements pts_option_interface
 				{
 					echo sprintf("%-20ls %-6ls %-10ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $identifier, $tp->get_test_profile_version(), $tp->get_version(), $tp->get_status(), $tp->get_license(), $tp->get_download_size(), $tp->get_environment_size(), $tp->get_maintainer());
 				}
-				else if($tp->get_title() != null && (pts_is_assignment("LIST_ALL_TESTS") || $tp->is_verified_state()))
+				else if($tp->get_title() != null && $tp->is_verified_state())
 				{
 					echo sprintf("%-20ls - %-36ls [%s, %10ls]\n", $identifier, $tp->get_title(), $tp->get_status(), $tp->get_license());
 				}

@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow the sys.time monitor command to work on PHP installations where PCNTL is not supported or available
 - pts-core: When installing test dependencies, double check the depdendencies were installed otherwise prompt the user what to do
 - pts-core: Temporarily drop the GTK2 GUI until it's been rewritten to be compliant with the PTS3 architecture
+- pts-core: Drop PTS assignments as everything is now worked into object properties or otherwise factored out
 - pts_Graph: Introduce Iveland horizontal bar graphs
 - pts_Graph: Default to using the SVG bilde_renderer back-end when no other renderer is specified, affects new setups
 - install-sh: Installer updates

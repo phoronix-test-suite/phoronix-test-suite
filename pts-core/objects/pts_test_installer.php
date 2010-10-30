@@ -128,9 +128,6 @@ class pts_test_installer
 			echo pts_user_io::display_text_list($failed_installs, "\t- ");
 			echo "\n";
 		}
-
-
-		//pts_set_assignment_next("PREV_TEST_INSTALLED", $report_install);
 	}
 	protected static function download_test_files(&$test_install_request)
 	{
