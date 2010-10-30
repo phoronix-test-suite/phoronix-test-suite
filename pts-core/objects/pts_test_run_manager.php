@@ -843,17 +843,6 @@ class pts_test_run_manager
 					echo $lower_identifier . " is a suite not supported by this version of the Phoronix Test Suite.\n";
 					continue;
 				}
-				else if(pts_read_assignment("CONFIGURE_TESTS_IN_SUITE"))
-				{
-					foreach(pts_contained_tests($lower_identifier) as $test)
-					{
-						if(!in_array($test, $to_run_identifiers))
-						{
-							array_push($to_run_identifiers, $test);
-						}
-					}
-					continue;
-				}
 			}
 			else if(pts_is_virtual_suite($lower_identifier))
 			{

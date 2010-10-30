@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2010, Phoronix Media
+	Copyright (C) 2008 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@ class benchmark implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_client::run_next("install_test", $r);
-		pts_client::run_next("run_test", $r);
+		pts_test_installer::standard_install($r);
+		pts_test_run_manager::standard_run($r);
 	}
 }
 

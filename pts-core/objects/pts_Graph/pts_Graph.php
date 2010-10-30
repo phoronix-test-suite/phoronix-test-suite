@@ -516,7 +516,7 @@ abstract class pts_Graph
 				$longest_identifier_width = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 6;
 				$longest_identifier_max = $this->graph_attr_width * 0.5;
 
-				$this->graph_left_start = min($longest_identifier_max, $longest_identifier_width);
+				$this->graph_left_start = min($longest_identifier_max, max($longest_identifier_width, 70));
 				$this->graph_left_end_opp = 15;
 				$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
 			}

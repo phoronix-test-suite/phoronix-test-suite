@@ -24,7 +24,17 @@ class run_tests_in_suite implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_client::run_next("run_test", $r, array("CONFIGURE_TESTS_IN_SUITE" => true));
+		$to_run_identifiers = array();
+
+		foreach(pts_contained_tests($r) as $test)
+		{
+			if(!in_array($test, $to_run_identifiers))
+			{
+				array_push($to_run_identifiers, $test);
+			}
+		}
+
+		pts_test_run_manager::standard_run($to_run_identifiers);
 	}
 }
 
