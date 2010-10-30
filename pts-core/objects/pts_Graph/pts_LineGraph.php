@@ -46,7 +46,8 @@ class pts_LineGraph extends pts_Graph
 
 		if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 		{
-			list($text_width, $text_height) = $this->text_string_dimensions($longest_string, $this->graph_font, $this->minimum_identifier_font + 2);
+			list($text_width, $text_height) = $this->text_string_dimensions($longest_string, $this->graph_font, $this->minimum_identifier_font + 0.5);
+			$this->graph_bottom_offset += $text_width;
 			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $text_width);
 
 			if(($text_height + 4) > $this->identifier_width && $graph_identifiers_count > 3)

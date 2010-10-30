@@ -96,6 +96,7 @@ abstract class pts_Graph
 	protected $graph_key_line_height = 0;
 	protected $graph_key_item_width;
 	protected $graph_keys_per_line;
+	protected $graph_bottom_offset = 0;
 
 	protected $graph_internal_identifiers = array();
 
@@ -421,16 +422,8 @@ abstract class pts_Graph
 			}
 			else
 			{
-				$maximum = (floor(round($real_maximum * 1.24) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
-
-				if($real_maximum > 100)
-				{
-					$round_num = 1 . str_repeat('0', strlen($maximum) - 2);
-					if(($maximum / $this->graph_attr_marks) % $round_num != 0)
-					{
-						$maximum += ($round_num - (($maximum / $this->graph_attr_marks) % $round_num)) * $this->graph_attr_marks;
-					}
-				}
+				$maximum = (floor(round($real_maximum * 1.285) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+				$maximum = round(ceil($maximum / $this->graph_attr_marks), (0 - strlen($maximum) + 2)) * $this->graph_attr_marks;
 			}
 		}
 		else
@@ -677,7 +670,7 @@ abstract class pts_Graph
 	{
 		if($this->iveland_view)
 		{
-			$bottom_heading_start = $this->graph_top_end + 25;
+			$bottom_heading_start = $this->graph_top_end + $this->graph_bottom_offset + 25;
 			$this->graph_image->draw_rectangle(0, $bottom_heading_start, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_main_headers);
 			$this->graph_image->write_text_right("Powered By " . $this->graph_version, $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 7, $this->graph_left_end, $bottom_heading_start + 7, false, "http://www.phoronix-test-suite.com/");
 		}
