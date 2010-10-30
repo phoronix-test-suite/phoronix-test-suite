@@ -467,7 +467,7 @@ class phoromatic extends pts_module_interface
 	public static function __pre_test_run($pts_test_result)
 	{
 		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
-		// TODO: report name of test identifier/run i.e. . " For " . pts_read_assignment("PHOROMATIC_TITLE")
+		// TODO: report name of test identifier/run i.e. . " For " . PHOROMATIC_TITLE
 		phoromatic::update_system_status("Running " . $pts_test_result->test_profile->get_identifier());
 	}
 	public static function __event_user_error($user_error)

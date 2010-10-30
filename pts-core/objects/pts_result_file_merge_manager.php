@@ -24,6 +24,7 @@ class pts_result_file_merge_manager
 {
 	private $test_results = null;
 	private $skip_subsystems = null;
+	private $is_reference_comparison;
 
 	public function __construct($pass_attributes = null)
 	{
@@ -33,6 +34,8 @@ class pts_result_file_merge_manager
 		{
 			$this->skip_subsystems = $pass_attributes["subsystem_targets_to_skip"];
 		}
+
+		$this->is_reference_comparison = isset($pass_attributes["is_reference_comparison"]);
 	}
 	public function add_test_result_set($merge_test_objects_array, &$result_merge_select)
 	{
@@ -99,7 +102,7 @@ class pts_result_file_merge_manager
 
 			if($result_merge_select != null || is_array($select_identifiers))
 			{
-				if(PTS_MODE == "CLIENT" && pts_read_assignment("REFERENCE_COMPARISON") && is_array($select_identifiers))
+				if($this->is_reference_comparison && is_array($select_identifiers))
 				{
 					$skip_adding = true;
 				}

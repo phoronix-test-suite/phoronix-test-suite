@@ -40,12 +40,6 @@ class suite_to_pdf implements pts_option_interface
 			return;
 		}
 
-		if(isset($r[1]))
-		{
-			// TODO: Simple hack for now
-			pts_set_assignment("SHOW_NODE", $r[1]);
-		}
-
 		$suite = new pts_test_suite($r[0]);
 		$test_layout = pts_test_suite::pts_format_tests_to_array($r[0]);
 		$pdf = new pts_pdf_template($suite->get_title(), $suite->get_title());
@@ -62,17 +56,15 @@ class suite_to_pdf implements pts_option_interface
 		$pdf->AddPage();
 		$pdf->Ln(15);
 
-		self::layout_to_pdf($test_layout, $pdf);
+		self::layout_to_pdf($test_layout, $pdf, (isset($r[1]) ? $r[1] : false));
 
 		$pdf_file = pts_client::user_home_directory() . $r[0] . ".pdf";
 
 		$pdf->Output($pdf_file);
 		echo "\nSaved To: " . $pdf_file . "\n\n";
 	}
-	protected static function layout_to_pdf($test_layout, &$pdf)
+	protected static function layout_to_pdf($test_layout, &$pdf, $show_node = false)
 	{
-		$show_node = pts_read_assignment("SHOW_NODE");
-
 		foreach($test_layout as $key => $item)
 		{
 			if(is_array($item))
@@ -84,7 +76,7 @@ class suite_to_pdf implements pts_option_interface
 					$suite = new pts_test_suite($key);
 					$pdf->WriteText($suite->get_description());
 				}
-				self::layout_to_pdf($item, &$pdf);
+				self::layout_to_pdf($item, &$pdf, $show_node);
 			}
 			else
 			{

@@ -40,48 +40,21 @@ class reference_comparison implements pts_option_interface
 			return false;
 		}
 
+		$comparable = array();
+		foreach($reference_test_globals as $merge_select_object)
+		{
+			if(count($merge_select_object->get_selected_identifiers()) != 0)
+			{
+				array_push($comparable, array_pop($merge_select_object->get_selected_identifiers()));
+			}
+		}
+
+		$merge_index = pts_user_io::prompt_text_menu("Select a reference system", $comparable, false, true);
 		$merge_args = array($r[0]);
-		pts_client::set_test_flags();
-		if((pts_c::$test_flags & pts_c::auto_mode))
-		{
-			$reference_comparisons = pts_read_assignment("REFERENCE_COMPARISONS");
+		array_push($merge_args, $reference_test_globals[$merge_index]);
 
-			foreach($reference_comparisons as $comparison)
-			{
-				array_push($merge_args, $comparison);
-			}
-		}
-		else
-		{
-			$comparable = array();
-
-			foreach($reference_test_globals as $merge_select_object)
-			{
-				if(count($merge_select_object->get_selected_identifiers()) != 0)
-				{
-					array_push($comparable, array_pop($merge_select_object->get_selected_identifiers()));
-				}
-
-			}
-
-			$merge_index = pts_user_io::prompt_text_menu("Select a reference system", $comparable, false, true);
-
-			array_push($merge_args, $reference_test_globals[$merge_index]);
-		}
-
-		pts_set_assignment("REFERENCE_COMPARISON", true);
-		$merged_results = call_user_func_array(array("pts_merge", "pts_merge_test_results_array"), $merge_args);
-
+		$merged_results = call_user_func(array("pts_merge", "merge_test_results_array"), $merge_args, array("is_reference_comparison" => 1));
 		pts_client::save_test_result($r[0] . "/composite.xml", $merged_results);
-
-		if(($title = pts_read_assignment("PREV_SAVE_NAME_TITLE")) == false)
-		{
-			$result_file = new pts_result_file($r[0]);
-			$title = $result_file->get_title();
-		}
-
-		pts_set_assignment_next("PREV_SAVE_NAME_TITLE", $title . (strpos($title, "Comparison") === false ? " Comparison" : null));
-
 		pts_client::display_web_page(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
 	}
 }

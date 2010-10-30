@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -65,21 +65,19 @@ class result_file_to_csv implements pts_option_interface
 			$result_output .= "\n";
 		}
 
-		if(pts_is_assignment("SAVE_TO"))
-		{
-			$file = pts_read_assignment("SAVE_TO");
+		// To save the result:
+		/*
+		$file = // the path;
 
-			if(substr($file, -4) != ".csv")
-			{
-				$file .= ".csv";
-			}
-
-			file_put_contents($file, $result_output);
-		}
-		else
+		if(substr($file, -4) != ".csv")
 		{
-			echo $result_output;
+			$file .= ".csv";
 		}
+
+		file_put_contents($file, $result_output);
+		*/
+
+		echo $result_output;
 	}
 }
 

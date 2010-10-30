@@ -28,6 +28,8 @@ class pts_test_run_manager
 	private $failed_tests_to_run = array();
 	private $last_test_run_index = 0;
 	private $completed_runs = 0;
+	private $test_run_pos = 0;
+	private $test_run_count = 0;
 
 	private $file_name = null;
 	private $file_name_title = null;
@@ -461,6 +463,14 @@ class pts_test_run_manager
 	{
 		$this->result_file_writer = new pts_result_file_writer($this->get_results_identifier());
 	}
+	public function get_test_run_position()
+	{
+		return $this->test_run_pos + 1;
+	}
+	public function get_test_run_count_reported()
+	{
+		return $this->test_run_count;
+	}
 	public function call_test_runs()
 	{
 		// Create a lock
@@ -489,11 +499,13 @@ class pts_test_run_manager
 			$loop_end_time = time() + $total_loop_time_seconds;
 
 			pts_client::$display->generic_heading("Estimated Run-Time: " . pts_strings::format_time($total_loop_time_seconds, "SECONDS", true, 60));
+			$this->test_run_count = $tests_to_run_count;
 
 			do
 			{
 				for($i = 0; $i < $tests_to_run_count && $test_flag && time() < $loop_end_time; $i++)
 				{
+					$this->test_run_pos = $i;
 					$test_flag = $this->process_test_run_request($i);
 				}
 			}
@@ -506,11 +518,14 @@ class pts_test_run_manager
 				pts_client::$display->generic_heading("Estimated Run-Time: " . pts_strings::format_time(($estimated_length * $total_loop_count), "SECONDS", true, 60));
 			}
 
+			$this->test_run_count = ($total_loop_count * $tests_to_run_count);
+
 			for($loop = 0; $loop < $total_loop_count && $test_flag; $loop++)
 			{
 				for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 				{
-					$test_flag = $this->process_test_run_request($i, ($loop * $tests_to_run_count + $i + 1), ($total_loop_count * $tests_to_run_count));
+					$this->test_run_pos = ($loop * $tests_to_run_count + $i);
+					$test_flag = $this->process_test_run_request($i);
 				}
 			}
 		}
@@ -521,9 +536,12 @@ class pts_test_run_manager
 				pts_client::$display->generic_heading("Estimated Run-Time: " . pts_strings::format_time($estimated_length, "SECONDS", true, 60));
 			}
 
+			$this->test_run_count = $tests_to_run_count;
+
 			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 			{
-				$test_flag = $this->process_test_run_request($i, ($i + 1), $tests_to_run_count);
+				$this->test_run_pos = $i;
+				$test_flag = $this->process_test_run_request($i);
 			}
 		}
 
@@ -565,7 +583,7 @@ class pts_test_run_manager
 	{
 		return self::$test_run_process_active = true;
 	}
-	private function process_test_run_request($run_index, $run_position = -1, $run_count = -1)
+	private function process_test_run_request($run_index)
 	{
 		$result = false;
 
@@ -578,10 +596,7 @@ class pts_test_run_manager
 
 		if(pts_is_test($test_run_request->test_profile->get_identifier()))
 		{
-			pts_set_assignment("TEST_RUN_POSITION", $run_position);
-			pts_set_assignment("TEST_RUN_COUNT", $run_count);
-
-			if(($run_position != 1 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . "cache-share-*.pt2so")) == 0))
+			if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . "cache-share-*.pt2so")) == 0))
 			{
 				sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 			}

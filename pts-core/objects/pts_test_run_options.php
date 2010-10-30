@@ -22,16 +22,13 @@
 
 class pts_test_run_options
 {
-	public static function prompt_user_options($identifier)
+	public static function prompt_user_options($identifier, $preset_selections = null)
 	{
 		$user_args = array();
 		$text_args = array();
 
-		if(pts_is_assignment("AUTO_TEST_OPTION_SELECTIONS"))
-		{
-			$preset_selections = pts_read_assignment("AUTO_TEST_OPTION_SELECTIONS");
-		}
-		else if(($cli_presets_env = pts_client::read_env("PRESET_OPTIONS")) != false)
+		// Rather than using AUTO_TEST_OPTION_SELECTIONS, pass it to the $preset_selections argument
+		if(($cli_presets_env = pts_client::read_env("PRESET_OPTIONS")) != false)
 		{
 			// To specify test options externally from an environment variable
 			// i.e. PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream

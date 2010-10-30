@@ -62,21 +62,18 @@ class result_file_to_text implements pts_option_interface
 			$result_output .= "\n";
 		}
 
-		if(pts_is_assignment("SAVE_TO"))
-		{
-			$file = pts_read_assignment("SAVE_TO");
+		/*
+		$file = "SAVE_TO";
 
-			if(substr($file, -4) != ".txt")
-			{
-				$file .= ".txt";
-			}
-
-			file_put_contents($file, $result_output);
-		}
-		else
+		if(substr($file, -4) != ".txt")
 		{
-			echo $result_output;
+			$file .= ".txt";
 		}
+		file_put_contents($file, $result_output);
+		*/
+
+		echo $result_output;
+
 	}
 }
 
