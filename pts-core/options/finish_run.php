@@ -66,7 +66,6 @@ class finish_run implements pts_option_interface
 
 		$selected = pts_user_io::prompt_text_menu("Select which incomplete test run you would like to finish", $incomplete_identifiers);
 
-
 		// Now run it
 		if(pts_test_run_manager::initial_checks($args[0]) == false)
 		{
@@ -80,9 +79,6 @@ class finish_run implements pts_option_interface
 		{
 			return false;
 		}
-
-		// Save results?
-		$test_run_manager->save_results_prompt();
 
 		// Run the actual tests
 		$test_run_manager->pre_execution_process();

@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// TODO: Integrate recover-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery
+// TODO: Possibly recover-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery
 
 class recover_run implements pts_option_interface
 {
@@ -143,7 +143,31 @@ class recover_run implements pts_option_interface
 			return false;
 		}
 
-		pts_client::run_next("run_test", $r, array("RECOVER_RUN" => true, "RECOVER_RUN_REQUESTS" => $tests_to_run, "AUTO_TEST_RESULTS_IDENTIFIER" => $recovered_identifier, "BATCH_MODE" => $is_batch_mode));
+		// Now run it
+		$test_flags = pts_c::is_recovering;
+
+		if($is_batch_mode)
+		{
+			$test_flags |= pts_c::batch_mode;
+		}
+
+		if(pts_test_run_manager::initial_checks($r[0]) == false)
+		{
+			return false;
+		}
+
+		$test_run_manager = new pts_test_run_manager($test_flags);
+
+		// Load the tests to run
+		if($test_run_manager->load_test_run_requests_to_run($r[0], $recovered_identifier, $result_file, $tests_to_run) == false)
+		{
+			return false;
+		}
+
+		// Run the actual tests
+		$test_run_manager->pre_execution_process();
+		$test_run_manager->call_test_runs();
+		$test_run_manager->post_execution_process();
 	}
 }
 

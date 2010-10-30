@@ -420,7 +420,7 @@ class pts_test_run_manager
 			$current_software = array();
 		}
 
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") && (pts_c::$test_flags ^ pts_c::auto_mode))
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") && (pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::is_recovery))
 		{
 			if(count($current_identifiers) > 0)
 			{
@@ -447,7 +447,7 @@ class pts_test_run_manager
 
 				$identifier_pos = (($p = array_search($results_identifier, $current_identifiers)) !== false ? $p : -1);
 			}
-			while((!$no_repeated_tests && $identifier_pos != -1 && !pts_is_assignment("RECOVER_RUN")) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
+			while((!$no_repeated_tests && $identifier_pos != -1) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
 		}
 
 		if(empty($results_identifier))
@@ -719,7 +719,7 @@ class pts_test_run_manager
 				pts_arrays::unique_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
-			if((pts_c::$test_flags ^ pts_c::is_recovering) && !pts_is_assignment("RECOVER_RUN") && (!pts_is_test_result($this->get_file_name()) || $this->result_already_contains_identifier() == false))
+			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_is_test_result($this->get_file_name()) || $this->result_already_contains_identifier() == false))
 			{
 				$this->result_file_writer->add_result_file_meta_data($this, $test_properties);
 				$this->result_file_writer->add_current_system_information();
@@ -939,7 +939,7 @@ class pts_test_run_manager
 				}
 
 				// Prompt Description
-				if((pts_c::$test_flags ^ pts_c::auto_mode) && !pts_is_assignment("RECOVER_RUN") && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
+				if((pts_c::$test_flags ^ pts_c::auto_mode) && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
 				{
 					if($this->run_description == null)
 					{
@@ -1005,6 +1005,38 @@ class pts_test_run_manager
 		}
 
 		$this->add_multi_test_run($test_run, $test_args, $test_args_description);
+	
+		// Run the test process
+		$this->validate_tests_to_run();
+
+		// Is there something to run?
+		return $this->get_test_count() > 0;
+	}
+	public function load_test_run_requests_to_run($save_name, $result_identifier, &$result_file, &$test_run_requests)
+	{
+		// Determine what to run
+		$this->auto_save_results($save_name, $result_identifier);
+		$this->run_description = $result_file->get_suite_description();
+
+		if(count($test_run_requests) == 0)
+		{
+			return false;
+		}
+
+		$test_run = array();
+		$test_args = array();
+		$test_args_description = array();
+		$test_override_options = array();
+
+		foreach($test_run_requests as &$test_run_request)
+		{
+			array_push($test_run, $test_run_request->test_profile->get_identifier());
+			array_push($test_args, $test_run_request->get_arguments());
+			array_push($test_args_description, $test_run_request->get_arguments_description());
+			array_push($test_override_options, $test_run_request->test_profile->get_override_values());
+		}
+
+		$this->add_multi_test_run($test_run, $test_args, $test_args_description, $test_override_options);
 	
 		// Run the test process
 		$this->validate_tests_to_run();
@@ -1094,32 +1126,15 @@ class pts_test_run_manager
 
 				pts_module_manager::process_extensions_string($test_extensions);
 
-				if(pts_is_assignment("RECOVER_RUN"))
-				{
-					$test_run = array();
-					$test_args = array();
-					$test_args_description = array();
+				$test_run = array();
+				$test_args = array();
+				$test_args_description = array();
 
-					foreach(pts_read_assignment("RECOVER_RUN_REQUESTS") as $test_run_request)
-					{
-						array_push($test_run, $test_run_request->test_profile->get_identifier());
-						array_push($test_args, $test_run_request->get_arguments());
-						array_push($test_args_description, $test_run_request->get_arguments_description());
-						array_push($test_override_options, $test_run_request->test_profile->get_override_values());
-					}
-				}
-				else
+				foreach($result_objects as &$result_object)
 				{
-					$test_run = array();
-					$test_args = array();
-					$test_args_description = array();
-
-					foreach($result_objects as &$result_object)
-					{
-						array_push($test_run, $result_object->test_profile->get_identifier());
-						array_push($test_args, $result_object->get_arguments());
-						array_push($test_args_description, $result_object->get_arguments_description());
-					}
+					array_push($test_run, $result_object->test_profile->get_identifier());
+					array_push($test_args, $result_object->get_arguments());
+					array_push($test_args_description, $result_object->get_arguments_description());
 				}
 
 				$this->add_multi_test_run($test_run, $test_args, $test_args_description, $test_override_options);
