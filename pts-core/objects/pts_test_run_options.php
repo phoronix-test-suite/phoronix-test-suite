@@ -22,7 +22,7 @@
 
 class pts_test_run_options
 {
-	public static function prompt_user_options($identifier, $preset_selections = null)
+	public static function prompt_user_options(&$test_profile, $preset_selections = null)
 	{
 		$user_args = array();
 		$text_args = array();
@@ -35,7 +35,7 @@ class pts_test_run_options
 			$preset_selections = pts_client::parse_value_string_double_identifier($cli_presets_env);
 		}
 
-		$test_profile = new pts_test_profile($identifier);
+		$identifier = $test_profile->get_identifier();
 
 		foreach($test_profile->get_test_option_objects() as $i => $o)
 		{
@@ -107,12 +107,11 @@ class pts_test_run_options
 
 		return array($test_args, $test_args_description);
 	}
-	public static function default_user_options($identifier)
+	public static function default_user_options(&$test_profile)
 	{
 		// Defaults mode for single test
 		$all_args_real = array();
 		$all_args_description = array();
-		$test_profile = new pts_test_profile($identifier);
 
 		foreach($test_profile->get_test_option_objects() as $o)
 		{
@@ -147,12 +146,11 @@ class pts_test_run_options
 
 		return array($test_args, $test_args_description);
 	}
-	public static function batch_user_options($identifier)
+	public static function batch_user_options(&$test_profile)
 	{
 		// Batch mode for single test
 		$batch_all_args_real = array();
 		$batch_all_args_description = array();
-		$test_profile = new pts_test_profile($identifier);
 
 		foreach($test_profile->get_test_option_objects() as $o)
 		{

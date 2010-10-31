@@ -122,6 +122,74 @@ class pts_test_suite
 
 		return $test_profiles;
 	}
+	public function get_contained_test_result_objects()
+	{
+		$test_result_objects = array();
+		$test_names = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+		$sub_modes = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
+		$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
+		$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
+		$override_test_options = $xml_parser->getXMLArrayValues(P_SUITE_TEST_OVERRIDE_OPTIONS);
+
+		for($i = 0; $i < count($test_names); $i++)
+		{
+			$obj = pts_types::identifier_to_object($test_names[$i]);
+
+			if($obj instanceOf pts_test_profile)
+			{
+				// Check for test profile values to override
+				$override_options = array();
+				if(!empty($override_test_options[$i]))
+				{
+					foreach(explode(';', $override_test_options[$i]) as $override_string)
+					{
+						$override_segments = pts_strings::trim_explode('=', $override_string);
+
+						if(count($override_segments) == 2 && !empty($override_segments[0]) && !empty($override_segments[1]))
+						{
+							$override_options[$override_segments[0]] = $override_segments[1];
+						}
+					}
+				}
+
+				switch($sub_modes[$i])
+				{
+					case "BATCH":
+						$option_output = pts_test_run_options::batch_user_options($obj);
+						break;
+					case "DEFAULTS":
+						$option_output = pts_test_run_options::default_user_options($obj);
+						break;
+					default:
+						$option_output = array(array($sub_arguments[$i]), array($sub_arguments_description[$i]));
+						break;
+				}
+
+				foreach(array_keys($option_output[0]) as $i)
+				{
+					if($override_options != null)
+					{
+						$test_profile->set_override_values($override_options);
+					}
+
+					$test_result = new pts_test_result($obj);
+					$test_result->set_used_arguments($option_output[0][$i]);
+					$test_result->set_used_arguments_description($option_output[1][$i]);
+
+					array_push($test_result_objects, $test_result);
+				}
+			}
+			else if($obj instanceOf pts_test_suite)
+			{
+				foreach($obj->get_contained_objects() as $test_result)
+				{
+					array_push($test_result_objects, $test_result);
+				}
+			}
+		}
+
+		return $test_result_objects;
+	}
 	public function pts_format_contained_tests_string()
 	{
 		$str = null;
@@ -153,11 +221,11 @@ class pts_test_suite
 		if(pts_is_suite($object))
 		{
 			$xml_parser = new pts_suite_tandem_XmlReader($object);
-			$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+			$test_names = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 			if($steps > 0)
 			{
-				asort($tests_in_suite);
+				asort($test_names);
 			}
 
 			if($steps == 0)
@@ -169,7 +237,7 @@ class pts_test_suite
 				$write_buffer .= str_repeat("  ", $steps) . "+ " . $object . "\n";
 			}
 
-			foreach($tests_in_suite as $test)
+			foreach($test_names as $test)
 			{
 				$write_buffer .= $this->pts_print_format_tests($test, $write_buffer, $steps);
 			}
@@ -187,10 +255,10 @@ class pts_test_suite
 		if(pts_is_suite($object))
 		{
 			$xml_parser = new pts_suite_tandem_XmlReader($object);
-			$tests_in_suite = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+			$test_names = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 			$contained[$object] = array();
 
-			foreach($tests_in_suite as $test)
+			foreach($test_names as $test)
 			{
 				array_push($contained[$object], self::pts_format_tests_to_array($test));
 			}

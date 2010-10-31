@@ -22,6 +22,7 @@
 
 class pts_result_file
 {
+	private $save_identifier = null;
 	private $result_objects = null;
 	private $xml_parser = null;
 	private $extra_attributes = null;
@@ -29,8 +30,14 @@ class pts_result_file
 
 	public function __construct($result_file)
 	{
+		$this->save_identifier = $result_file;
 		$this->xml_parser = new pts_results_tandem_XmlReader($result_file);
+		
 		$this->extra_attributes = array();
+	}
+	public function get_identifier()
+	{
+		return $this->save_identifier;
 	}
 	public function read_extra_attribute($key)
 	{

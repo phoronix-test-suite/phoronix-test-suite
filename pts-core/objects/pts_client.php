@@ -519,11 +519,6 @@ class pts_client
 	{
 		return pts_config::read_bool_config(P_OPTION_USAGE_REPORTING, 0);
 	}
-	public static function test_support_check($identifier)
-	{
-		$test_profile = new pts_test_profile($identifier);
-		return $test_profile->is_supported();
-	}
 	public static function release_lock($lock_file)
 	{
 		// Remove lock

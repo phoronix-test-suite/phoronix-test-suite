@@ -147,95 +147,9 @@ class pts_test_run_manager
 		// No reason to increase the run count evidently
 		return false;
 	}
-	public function add_individual_test_run($test_identifier, $arguments = "", $descriptions = "", $override_test_options = null)
+	protected function add_test_result_object(&$test_result)
 	{
-		$test_profile = new pts_test_profile($test_identifier, $override_test_options);
-
-		$test_result = new pts_test_result($test_profile);
-		$test_result->set_used_arguments($arguments);
-		$test_result->set_used_arguments_description($descriptions);
-
 		pts_arrays::unique_push($this->tests_to_run, $test_result);
-	}
-	public function add_single_test_run($test_identifier, $arguments, $descriptions, $override_test_options = null)
-	{
-		$arguments = pts_arrays::to_array($arguments);
-		$descriptions = pts_arrays::to_array($descriptions);
-
-		for($i = 0; $i < count($arguments); $i++)
-		{
-			$this->add_individual_test_run($test_identifier, $arguments[$i], $descriptions[$i], $override_test_options);
-		}
-	}
-	public function add_multi_test_run($test_identifier, $arguments, $descriptions, $override_test_options = null)
-	{
-		$test_identifier = pts_arrays::to_array($test_identifier);
-		$arguments = pts_arrays::to_array($arguments);
-		$descriptions = pts_arrays::to_array($descriptions);
-		$override_test_options = pts_arrays::to_array($override_test_options);
-
-		for($i = 0; $i < count($test_identifier); $i++)
-		{
-			if(!empty($test_identifier[$i]))
-			{
-				$this->add_individual_test_run($test_identifier[$i], $arguments[$i], $descriptions[$i], (isset($override_test_options[$i]) ? $override_test_options[$i] : null));
-			}
-		}
-	}
-	protected function parse_override_test_options($override_test_options_string)
-	{
-		$override_options = array();
-
-		if(!empty($override_test_options_string))
-		{
-			foreach(explode(";", $override_test_options_string) as $override_string)
-			{
-				$override_segments = pts_strings::trim_explode("=", $override_string);
-
-				if(count($override_segments) == 2 && !empty($override_segments[0]) && !empty($override_segments[1]))
-				{
-					$override_options[$override_segments[0]] = $override_segments[1];
-				}
-			}
-		}
-
-		return $override_options;
-	}
-	public function add_suite_run($test_suite)
-	{
-		$xml_parser = new pts_suite_tandem_XmlReader($test_suite);
-		$tests_in_suite = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-		$sub_modes = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
-		$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
-		$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
-		$override_test_options = $xml_parser->getXMLArrayValues(P_SUITE_TEST_OVERRIDE_OPTIONS);
-
-		for($i = 0; $i < count($tests_in_suite); $i++)
-		{
-			if(pts_is_test($tests_in_suite[$i]))
-			{
-				$override_options = $this->parse_override_test_options($override_test_options[$i]);
-
-				switch($sub_modes[$i])
-				{
-					case "BATCH":
-						$option_output = pts_test_run_options::batch_user_options($tests_in_suite[$i]);
-						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1], $override_options);
-						break;
-					case "DEFAULTS":
-						$option_output = pts_test_run_options::default_user_options($tests_in_suite[$i]);
-						$this->add_single_test_run($tests_in_suite[$i], $option_output[0], $option_output[1], $override_options);
-						break;
-					default:
-						$this->add_individual_test_run($tests_in_suite[$i], $sub_arguments[$i], $sub_arguments_description[$i], $override_options);
-						break;
-				}
-			}
-			else if(pts_is_suite($tests_in_suite[$i]))
-			{
-				$this->add_suite_run($tests_in_suite[$i]);
-			}
-		}
 	}
 	public function get_tests_to_run()
 	{
@@ -270,10 +184,7 @@ class pts_test_run_manager
 		{
 			for($i = $index; $i < count($this->tests_to_run); $i++)
 			{
-				$identifier = $this->tests_to_run[$i]->test_profile->get_identifier(); // is a test_run_request
-
-				$test_profile = new pts_test_profile($identifier);
-				$estimated_time += $test_profile->get_estimated_run_time();
+				$estimated_time += $this->tests_to_run[$i]->test_profile->get_estimated_run_time();
 			}
 		}
 
@@ -327,6 +238,7 @@ class pts_test_run_manager
 
 		$this->file_name = self::clean_save_name_string($save_name);
 		$this->file_name_title = $save_name;
+		$this->force_save_results = true;
 	}
 	public function set_results_identifier($identifier)
 	{
@@ -675,10 +587,11 @@ class pts_test_run_manager
 
 		return $input;
 	}
-	public static function initial_checks(&$to_run_identifiers, $test_flags = 0)
+	public static function initial_checks(&$to_run, $test_flags = 0)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
 		pts_client::init_display_mode($test_flags);
+		$to_run = pts_types::identifiers_to_objects($to_run);
 
 		if((pts_c::$test_flags & pts_c::batch_mode))
 		{
@@ -696,11 +609,11 @@ class pts_test_run_manager
 		}
 
 		// Cleanup tests to run
-		if(pts_test_run_manager::cleanup_tests_to_run($to_run_identifiers) == false)
+		if(pts_test_run_manager::cleanup_tests_to_run($to_run) == false)
 		{
 			return false;
 		}
-		else if(count($to_run_identifiers) == 0)
+		else if(count($to_run) == 0)
 		{
 			pts_client::$display->generic_error("You must enter at least one test, suite, or result identifier to run.");
 
@@ -801,76 +714,102 @@ class pts_test_run_manager
 			}
 		}
 	}
-	public static function cleanup_tests_to_run(&$to_run_identifiers)
+	public static function cleanup_tests_to_run(&$to_run_objects)
 	{
 		$skip_tests = ($e = pts_client::read_env("SKIP_TESTS")) ? pts_strings::comma_explode($e) : false;
-
 		$tests_verified = array();
 		$tests_missing = array();
 
-		foreach($to_run_identifiers as &$test_identifier)
+		foreach($to_run_objects as &$run_object)
 		{
-			$lower_identifier = strtolower($test_identifier);
-
-			if($skip_tests && in_array($lower_identifier, $skip_tests))
+			if($skip_tests && in_array($run_object->get_identifier(), $skip_tests))
 			{
-				echo "Skipping Test: " . $lower_identifier . "\n";
+				echo "Skipping: " . $run_object->get_identifier() . "\n";
 				continue;
 			}
-			else if(pts_is_test($lower_identifier))
+			else if($run_object instanceOf pts_test_profile)
 			{
-				$test_profile = new pts_test_profile($lower_identifier);
-
-				if($test_profile->get_title() == null)
+				if($run_object->get_title() == null)
 				{
-					echo "Not A Test: " . $lower_identifier . "\n";
+					echo "Not A Test: " . $run_object . "\n";
 					continue;
 				}
 				else
 				{
-					if(pts_client::test_support_check($lower_identifier) == false)
+					if($run_object->is_supported() == false)
 					{
+						continue;
+					}
+
+					if($run_object->is_test_installed() == false)
+					{
+						array_push($test_missing, $run_object);
 						continue;
 					}
 				}
 			}
-			else if(pts_is_suite($lower_identifier))
+			else if($run_object instanceOf pts_result_file)
 			{
-				$test_suite = new pts_test_suite($lower_identifier);
-
-				if($test_suite->is_core_version_supported() == false)
+				$num_installed = 0;
+				foreach($run_object->get_contained_test_profiles() as $test_profile)
 				{
-					echo $lower_identifier . " is a suite not supported by this version of the Phoronix Test Suite.\n";
+					if($test_profile->is_test_installed() == false)
+					{
+						array_push($test_missing, $run_object);
+					}
+					else
+					{
+						$num_installed++;
+					}
+				}
+
+				if($num_installed == 0)
+				{
 					continue;
 				}
 			}
-			else if(pts_is_virtual_suite($lower_identifier))
+			else if($run_object instanceOf pts_test_suite)
 			{
-				foreach(pts_virtual_suite_tests($lower_identifier) as $virt_test)
+				if($run_object->is_core_version_supported() == false)
 				{
-					array_push($to_run_identifiers, $virt_test);
+					echo $run_object->get_title() . " is a suite not supported by this version of the Phoronix Test Suite.\n";
+					continue;
 				}
-				continue;
+
+				$num_installed = 0;
+
+				foreach($run_object->get_contained_test_profiles() as $test_profile)
+				{
+					if($test_profile->is_test_installed() == false)
+					{
+						array_push($test_missing, $run_object);
+					}
+					else
+					{
+						$num_installed++;
+					}
+				}
+
+				if($num_installed == 0)
+				{
+					continue;
+				}
 			}
-			else if(!pts_is_run_object($lower_identifier) && !pts_global::is_valid_global_id_format($lower_identifier) && !pts_is_test_result($lower_identifier))
+			else
 			{
-				echo "Not Recognized: " . $lower_identifier . "\n";
+				echo "Not Recognized: " . $run_object . "\n";
 				continue;
 			}
 
-			if(pts_test_run_manager::verify_test_installation($lower_identifier, $tests_missing) == false)
-			{
-				// Eliminate this test, it's not properly installed
-				continue;
-			}
-
-			array_push($tests_verified, $test_identifier);
+			array_push($tests_verified, $run_object);
 		}
 
-		$to_run_identifiers = $tests_verified;
+		$to_run_objects = $tests_verified;
 
 		if(count($tests_missing) > 0)
 		{
+			$tests_missing = array_unique($tests_missing);
+
 			if(count($tests_missing) == 1)
 			{
 				pts_client::$display->generic_error($tests_missing[0] . " is not installed.\nTo install, run: phoronix-test-suite install " . $tests_missing[0]);
@@ -905,7 +844,7 @@ class pts_test_run_manager
 	}
 	public function save_results_prompt()
 	{
-		if($this->prompt_save_results && count($this->tests_to_run) > 0) // or check for DO_NOT_SAVE_RESULTS == false
+		if(($this->prompt_save_results || $this->force_save_results) && count($this->tests_to_run) > 0) // or check for DO_NOT_SAVE_RESULTS == false
 		{
 			if($this->force_save_results || pts_client::read_env("TEST_RESULTS_NAME"))
 			{
@@ -953,10 +892,10 @@ class pts_test_run_manager
 			}
 		}
 	}
-	public function load_tests_to_run($to_run_identifiers)
+	public function load_tests_to_run(&$to_run_objects)
 	{
 		// Determine what to run
-		$this->determine_tests_to_run($to_run_identifiers);
+		$this->determine_tests_to_run($to_run_objects);
 
 		// Run the test process
 		$this->validate_tests_to_run();
@@ -988,18 +927,14 @@ class pts_test_run_manager
 			return false;
 		}
 
-		$test_run = array();
-		$test_args = array();
-		$test_args_description = array();
 
 		foreach($result_objects as &$result_object)
 		{
-			array_push($test_run, $result_object->test_profile->get_identifier());
-			array_push($test_args, $result_object->get_arguments());
-			array_push($test_args_description, $result_object->get_arguments_description());
+			$test_result = new pts_test_result($result_object->test_profile->get_identifier());
+			$test_result->set_used_arguments($result_object->get_arguments());
+			$test_result->set_used_arguments_description($result_object->get_arguments_description());
+			$this->add_test_result_object($test_result);
 		}
-
-		$this->add_multi_test_run($test_run, $test_args, $test_args_description);
 	
 		// Run the test process
 		$this->validate_tests_to_run();
@@ -1018,20 +953,18 @@ class pts_test_run_manager
 			return false;
 		}
 
-		$test_run = array();
-		$test_args = array();
-		$test_args_description = array();
-		$test_override_options = array();
-
 		foreach($test_run_requests as &$test_run_request)
 		{
-			array_push($test_run, $test_run_request->test_profile->get_identifier());
-			array_push($test_args, $test_run_request->get_arguments());
-			array_push($test_args_description, $test_run_request->get_arguments_description());
-			array_push($test_override_options, $test_run_request->test_profile->get_override_values());
-		}
+			if($test_run_request->test_profile->get_override_values() != null)
+			{
+				$test_run_request->test_profile->set_override_values($test_run_request->test_profile->get_override_values());
+			}
 
-		$this->add_multi_test_run($test_run, $test_args, $test_args_description, $test_override_options);
+			$test_result = new pts_test_result($test_run_request->test_profile);
+			$test_result->set_used_arguments($test_run_request->get_arguments());
+			$test_result->set_used_arguments_description($test_run_request->get_arguments_description());
+			array_push($test_result_objects, $test_result);
+		}
 	
 		// Run the test process
 		$this->validate_tests_to_run();
@@ -1039,79 +972,71 @@ class pts_test_run_manager
 		// Is there something to run?
 		return $this->get_test_count() > 0;
 	}
-	public function determine_tests_to_run($to_run_identifiers)
+	public function determine_tests_to_run(&$to_run_objects)
 	{
-		$unique_test_count = count(array_unique($to_run_identifiers));
+		$unique_test_count = count(array_unique($to_run_objects));
 		$run_contains_a_no_result_type = false;
 		$request_results_save = false;
 
-		foreach($to_run_identifiers as $to_run)
+		foreach($to_run_objects as &$run_object)
 		{
-			$to_run = strtolower($to_run);
-
-			if(!pts_is_test_result($to_run) && pts_global::is_global_id($to_run))
+			// TODO: determine whether to print the titles of what's being run?
+			if($run_object instanceof pts_test_profile)
 			{
-				pts_global::clone_global_result($to_run);
-			}
-
-			if(pts_is_test($to_run))
-			{
-				if($run_contains_a_no_result_type == false)
+				if($run_contains_a_no_result_type == false && $run_object->get_result_format() == "NO_RESULT")
 				{
-					$test_profile = new pts_test_profile($to_run);
-
-					if($test_profile->get_result_format() == "NO_RESULT")
-					{
-						$run_contains_a_no_result_type = true;
-					}
-					if($test_profile->do_auto_save_results())
-					{
-						$request_results_save = true;
-					}
+					$run_contains_a_no_result_type = true;
+				}
+				if($request_results_save == false && $run_object->do_auto_save_results())
+				{
+					$request_results_save = true;
 				}
 
 				if((pts_c::$test_flags & pts_c::batch_mode) && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
 				{
-					list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($to_run);
+					list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($run_object);
 				}
 				else if((pts_c::$test_flags & pts_c::defaults_mode))
 				{
-					list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($to_run);
+					list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($run_object);
 				}
 				else
 				{
-					list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($to_run);
+					list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($run_object);
 				}
 
-				$this->add_single_test_run($to_run, $test_arguments, $test_arguments_description);
+				foreach(array_keys($test_arguments) as $i)
+				{
+					$test_result = new pts_test_result($run_object);
+					$test_result->set_used_arguments($test_arguments[$i]);
+					$test_result->set_used_arguments_description($test_arguments_description[$i]);
+					$this->add_test_result_object($test_result);
+				}
 			}
-			else if(pts_is_suite($to_run))
+			else if($run_object instanceof pts_test_suite)
 			{
-				// Print the $to_run ?
-				$test_suite = new pts_test_suite($to_run);
+				$this->pre_run_message = $run_object->get_pre_run_message();
+				$this->post_run_message = $run_object->get_post_run_message();
 
-				$this->pre_run_message = $test_suite->get_pre_run_message();
-				$this->post_run_message = $test_suite->get_post_run_message();
-				$suite_run_mode = $test_suite->get_run_mode();
-
-				if($suite_run_mode == "PCQS")
+				if($run_object->get_run_mode() == "PCQS")
 				{
 					$this->is_pcqs = true;
 				}
 
-				$this->add_suite_run($to_run);
+				foreach($run_object->get_contained_test_result_objects() as $result_object)
+				{
+					$this->add_test_result_object($result_object);
+				}
 			}
-			else if(pts_is_test_result($to_run))
+			else if($run_object instanceof pts_result_file)
 			{
 				// Print the $to_run ?
-				$result_file = new pts_result_file($to_run);
-				$this->run_description = $result_file->get_suite_description();
-				$test_extensions = $result_file->get_suite_extensions();
-				$test_previous_properties = $result_file->get_suite_properties();
-				$result_objects = $result_file->get_result_objects();
-				$test_override_options = array();
+				$this->run_description = $run_object->get_suite_description();
+				$test_extensions = $run_object->get_suite_extensions();
+				$test_previous_properties = $run_object->get_suite_properties();
+				$result_objects = $run_object->get_result_objects();
 
-				$this->set_save_name($to_run);
+				$this->set_save_name($run_object->get_identifier());
 
 				foreach(explode(";", $test_previous_properties) as $test_prop)
 				{
@@ -1121,18 +1046,13 @@ class pts_test_run_manager
 
 				pts_module_manager::process_extensions_string($test_extensions);
 
-				$test_run = array();
-				$test_args = array();
-				$test_args_description = array();
-
 				foreach($result_objects as &$result_object)
 				{
-					array_push($test_run, $result_object->test_profile->get_identifier());
-					array_push($test_args, $result_object->get_arguments());
-					array_push($test_args_description, $result_object->get_arguments_description());
+					$test_result = new pts_test_result($result_object->test_profile);
+					$test_result->set_used_arguments($result_object->get_arguments());
+					$test_result->set_used_arguments_description($result_object->get_arguments_description());
+					$this->add_test_result_object($test_result);
 				}
-
-				$this->add_multi_test_run($test_run, $test_args, $test_args_description, $test_override_options);
 			}
 			else
 			{
@@ -1153,7 +1073,7 @@ class pts_test_run_manager
 
 		foreach($this->get_tests_to_run() as $test_run_request)
 		{
-			if(!($test_run_request instanceOf pts_test_result))
+			if(!($test_run_request instanceof pts_test_result))
 			{
 				array_push($validated_run_requests, $test_run_request);
 				continue;
@@ -1165,13 +1085,6 @@ class pts_test_run_manager
 			if(in_array($test_identifier, $failed_tests))
 			{
 				// The test has already been determined to not be installed right or other issue
-				continue;
-			}
-
-			if(!is_dir($test_run_request->test_profile->get_install_dir()))
-			{
-				// The test is not setup
-				array_push($failed_tests, $test_identifier);
 				continue;
 			}
 
@@ -1229,43 +1142,6 @@ class pts_test_run_manager
 		}
 
 		$this->tests_to_run = $validated_run_requests;
-	}
-	protected static function verify_test_installation($identifiers, &$tests_missing)
-	{
-		// Verify a test is installed
-		$identifiers = pts_arrays::to_array($identifiers);
-		$contains_a_suite = false;
-		$tests_installed = array();
-		$current_tests_missing = array();
-
-		foreach($identifiers as $identifier)
-		{
-			if(!$contains_a_suite && (pts_is_suite($identifier) || pts_is_test_result($identifier)))
-			{
-				$contains_a_suite = true;
-			}
-
-			foreach(pts_contained_tests($identifier) as $test)
-			{
-				if(pts_test_installed($test))
-				{
-					pts_arrays::unique_push($tests_installed, $test);
-				}
-				else
-				{
-					$test_profile = new pts_test_profile($test);
-
-					if($test_profile->is_supported())
-					{
-						pts_arrays::unique_push($current_tests_missing, $test);
-					}
-				}
-			}
-		}
-
-		$tests_missing = array_merge($tests_missing, $current_tests_missing);
-
-		return count($tests_installed) > 0 && (count($current_tests_missing) == 0 || $contains_a_suite);
 	}
 	public static function standard_run($to_run, $test_flags = 0)
 	{

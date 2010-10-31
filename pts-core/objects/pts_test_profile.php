@@ -39,6 +39,13 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		return $this->xml_parser->getOverrideValues();
 	}
+	public function set_override_values($override_values)
+	{
+		if(is_array($override_values))
+		{
+			$this->xml_parser->overrideXMLValues($override_values);
+		}
+	}
 	public function get_download_size($include_extensions = true, $divider = 1048576)
 	{
 		$estimated_size = 0;
@@ -276,6 +283,10 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 
 		return $to_execute;
+	}
+	public function is_test_installed()
+	{
+		return is_file($this->get_install_dir() . "pts-install.xml");
 	}
 	public function get_install_dir()
 	{

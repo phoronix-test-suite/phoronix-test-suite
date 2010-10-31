@@ -110,7 +110,9 @@ class pts_types
 			}
 			else if(pts_global::is_global_id($identifier_item)) // Object is a Phoronix Global file
 			{
-				array_push($objects, new pts_result_file(pts_global::download_result_xml($identifier_item)));
+				// Clone it locally so it's just handled like a pts_result_file
+				pts_global::clone_global_result($identifier_item);
+				array_push($objects, new pts_result_file($identifier_item));
 			}
 			// TODO XXX: Restore support for virtual suites
 			/*
@@ -127,6 +129,12 @@ class pts_types
 		}
 
 		return $objects;
+	}
+	public static function identifier_to_object($identifier)
+	{
+		$return = pts_types::identifiers_to_objects($identifier);
+
+		return isset($return[0]) ? $return[0] : false;
 	}
 }
 
