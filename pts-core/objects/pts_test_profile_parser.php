@@ -32,7 +32,14 @@ class pts_test_profile_parser
 	}
 	public function __toString()
 	{
-		return $this->get_identifier() . '-' . $this->get_test_profile_version();
+		$version = $this->get_test_profile_version();
+
+		if(!empty($version))
+		{
+			$version = " [v" . $version . ']';
+		}
+
+		return $this->get_identifier() . $version;
 	}
 	public function get_identifier()
 	{

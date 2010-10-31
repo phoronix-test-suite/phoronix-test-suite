@@ -47,13 +47,9 @@ class pts_test_installer
 		}
 
 		pts_test_installer::start_install($test_profiles);
-
-		if($items_to_install = array("prev-test-identifier"))
-		{
-			$items_to_install = pts_virtual_suite_tests("prev-test-identifier");
-		}
-
 		pts_client::release_lock($lock_path);
+
+		return $test_profiles;
 	}
 	public static function start_install(&$test_profiles)
 	{
@@ -71,14 +67,7 @@ class pts_test_installer
 			{
 				if($test_install_manager->add_test_profile($test_profile) != false)
 				{
-					$version = $test_profile->get_test_profile_version();
-
-					if(!empty($version))
-					{
-						$version = " [v" . $version . ']';
-					}
-
-					pts_client::$display->generic_sub_heading("To Install: " . $test_profile->get_identifier() . $version);
+					pts_client::$display->generic_sub_heading("To Install: " . $test_profile);
 				}
 			}
 			else
@@ -102,6 +91,7 @@ class pts_test_installer
 		// Begin the install process
 		pts_module_manager::module_process("__pre_install_process", $test_install_manager);
 		$failed_installs = array();
+		$test_profiles = array();
 		while(($test_install_request = $test_install_manager->next_in_install_queue()) != false)
 		{
 			pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
@@ -109,13 +99,17 @@ class pts_test_installer
 
 			if($installed == false)
 			{
-				array_push($failed_installs, $test_install_request->test_profile->get_identifier());
+				array_push($failed_installs, $test_install_request->test_profile);
+			}
+			else
+			{
+				array_push($test_profiles, $test_install_request->test_profile);
 			}
 		}
 		pts_module_manager::module_process("__post_install_process", $test_install_manager);
 		pts_download_speed_manager::save_data();
 
-		if(count($failed_installs) > 0 && count($test_profiles) > 1)
+		if(count($failed_installs) > 0)
 		{
 			echo "\nThe following tests failed to install:\n\n";
 			echo pts_user_io::display_text_list($failed_installs, "\t- ");
