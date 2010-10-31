@@ -22,7 +22,7 @@
 
 class pts_external_dependencies
 {
-	public static function install_dependencies(&$identifiers)
+	public static function install_dependencies(&$test_profiles)
 	{
 		// PTS External Dependencies install on distribution
 
@@ -34,24 +34,19 @@ class pts_external_dependencies
 
 		// Find all the tests that need to be checked
 		$tests_to_check = array();
-		foreach(pts_arrays::to_array($identifiers) as $identifier)
+		foreach($test_profiles as $test_profile)
 		{
-			foreach(pts_contained_tests($identifier, true) as $test)
+			if(!in_array($test_profile, $tests_to_check) && $test_profile->is_supported())
 			{
-				$test_profile = new pts_test_profile($test);
-
-				if(!in_array($test, $tests_to_check) && $test_profile->is_supported())
-				{
-					array_push($tests_to_check, $test);
-				}
+				array_push($tests_to_check, $test_profile);
 			}
 		}
 
 		// Find all of the POSSIBLE test dependencies
 		$required_test_dependencies = array();
-		foreach($tests_to_check as $identifier)
+		foreach($tests_to_check as &$test_profile)
 		{
-			foreach(self::required_test_dependencies($identifier) as $test_dependency)
+			foreach($test_profile->get_dependencies() as $test_dependency)
 			{
 				if(empty($test_dependency))
 				{
@@ -63,7 +58,7 @@ class pts_external_dependencies
 					$required_test_dependencies[$test_dependency] = array();
 				}
 
-				array_push($required_test_dependencies[$test_dependency], $identifier);
+				array_push($required_test_dependencies[$test_dependency], $test_profile);
 			}
 		}
 
@@ -144,12 +139,12 @@ class pts_external_dependencies
 							{
 								foreach($required_test_dependencies[$pkg] as $test_with_this_dependency)
 								{
-									if(($index = array_search($test_with_this_dependency, $identifiers)) !== false)
+									if(($index = array_search($test_with_this_dependency, $test_profiles)) !== false)
 									{
-										unset($identifiers[$index]);
+										unset($test_profiles[$index]);
 									}
 								}
-							} else echo $pkg;
+							} 
 						}
 						break;
 					case 3:
@@ -166,7 +161,9 @@ class pts_external_dependencies
 		$all_test_dependencies = array();
 		foreach(pts_contained_tests("all", true) as $identifier)
 		{
-			foreach(self::required_test_dependencies($identifier) as $test_dependency)
+			$test_profile = new pts_test_profile($identifier);
+
+			foreach($test_profile->get_dependencies() as $test_dependency)
 			{
 				if(!in_array($test_dependency, $all_test_dependencies))
 				{
@@ -213,14 +210,6 @@ class pts_external_dependencies
 	{
 		$dependency_names = self::installed_dependency_names();
 		return self::generic_names_to_titles($dependency_names);
-	}
-	private static function required_test_dependencies($identifier)
-	{
-		// Install from a list of external dependencies
-		$dependencies_needed = false;
-		$test_profile = new pts_test_profile($identifier);
-
-		return $test_profile->get_dependencies();
 	}
 	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false)
 	{

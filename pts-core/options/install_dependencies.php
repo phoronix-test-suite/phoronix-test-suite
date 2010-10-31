@@ -30,8 +30,8 @@ class install_dependencies implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$r = array_map("strtolower", $r);
-		pts_external_dependencies::install_dependencies($r);
+		$test_profiles = pts_types::identifiers_to_test_profile_objects($r, true, true);
+		pts_external_dependencies::install_dependencies($test_profiles);
 	}
 }
 

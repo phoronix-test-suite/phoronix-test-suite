@@ -33,8 +33,11 @@ class pts_test_installer
 
 		pts_client::set_test_flags($test_flags);
 
+		// Get the test profiles
+		$test_profiles = pts_types::identifiers_to_test_profile_objects($items_to_install, true, true);
+
 		// Any external dependencies?
-		$install_passed = pts_external_dependencies::install_dependencies($items_to_install);
+		pts_external_dependencies::install_dependencies($test_profiles);
 
 		// Install tests
 		if(!is_writable(TEST_ENV_DIR))
@@ -43,7 +46,7 @@ class pts_test_installer
 			return false;
 		}
 
-		pts_test_installer::start_install($items_to_install);
+		pts_test_installer::start_install($test_profiles);
 
 		if($items_to_install = array("prev-test-identifier"))
 		{
@@ -52,12 +55,9 @@ class pts_test_installer
 
 		pts_client::release_lock($lock_path);
 	}
-	public static function start_install($to_install)
+	public static function start_install(&$test_profiles)
 	{
-		// Find all of the tests that need to be installed
-		$tests = pts_types::identifiers_to_test_profile_objects($to_install, true, true);
-
-		if(count($tests) == 0)
+		if(count($test_profiles) == 0)
 		{
 			pts_client::$display->generic_error("No Tests Found For Installation.");
 			return false;
@@ -65,7 +65,7 @@ class pts_test_installer
 
 		// Setup the install manager and add the tests
 		$test_install_manager = new pts_test_install_manager();
-		foreach($tests as $test_profile)
+		foreach($test_profiles as &$test_profile)
 		{
 			if($test_profile->needs_updated_install())
 			{
@@ -115,7 +115,7 @@ class pts_test_installer
 		pts_module_manager::module_process("__post_install_process", $test_install_manager);
 		pts_download_speed_manager::save_data();
 
-		if(count($failed_installs) > 0 && count($tests) > 1)
+		if(count($failed_installs) > 0 && count($test_profiles) > 1)
 		{
 			echo "\nThe following tests failed to install:\n\n";
 			echo pts_user_io::display_text_list($failed_installs, "\t- ");
