@@ -25,6 +25,11 @@ class pts_test_suite
 	private $identifier;
 	private $xml_parser;
 
+
+	public static function is_suite($identifier)
+	{
+		return is_file(XML_SUITE_DIR . $identifier . ".xml");
+	}
 	public function __construct($identifier)
 	{
 		$this->xml_parser = new pts_suite_tandem_XmlReader($identifier);
@@ -103,6 +108,19 @@ class pts_test_suite
 	public function get_test_names()
 	{
 		return $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+	}
+	public function get_contained_test_profiles()
+	{
+		$test_names = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+		$test_versions = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_PROFILE_VERSION);
+		$test_profiles = array();
+
+		foreach(array_keys($test_names) as $i)
+		{
+			array_push($test_profiles, new pts_test_profile($test_names[$i]));
+		}
+
+		return $test_profiles;
 	}
 	public function pts_format_contained_tests_string()
 	{

@@ -30,6 +30,10 @@ class pts_test_profile_parser
 		$this->xml_parser = new pts_test_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
 	}
+	public function __toString()
+	{
+		return $this->get_identifier() . '-' . $this->get_test_profile_version();
+	}
 	public function get_identifier()
 	{
 		return $this->identifier;

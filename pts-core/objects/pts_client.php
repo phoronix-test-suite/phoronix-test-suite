@@ -521,26 +521,8 @@ class pts_client
 	}
 	public static function test_support_check($identifier)
 	{
-		$test_supported = true;
 		$test_profile = new pts_test_profile($identifier);
-
-		if($test_profile->is_test_architecture_supported() == false)
-		{
-			pts_client::$display->test_run_error($identifier . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
-			$test_supported = false;
-		}
-		else if($test_profile->is_test_platform_supported() == false)
-		{
-			pts_client::$display->test_run_error($identifier . " is not supported by this operating system: " . OPERATING_SYSTEM);
-			$test_supported = false;
-		}
-		else if($test_profile->is_core_version_supported() == false)
-		{
-			pts_client::$display->test_run_error($identifier . " is not supported by this version of the Phoronix Test Suite: " . PTS_VERSION);
-			$test_supported = false;
-		}
-
-		return $test_supported;
+		return $test_profile->is_supported();
 	}
 	public static function release_lock($lock_file)
 	{

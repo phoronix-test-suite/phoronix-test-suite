@@ -25,9 +25,17 @@ class pts_test_install_request
 	public $test_profile;
 	private $test_files;
 
-	public function __construct($test_identifier)
+	public function __construct($test)
 	{
-		$this->test_profile = new pts_test_profile($test_identifier);
+		if($test instanceOf pts_test_profile)
+		{
+			$this->test_profile = $test;
+		}
+		else
+		{
+			$this->test_profile = new pts_test_profile($test);
+		}
+
 		$this->test_files = array();
 	}
 	public static function read_download_object_list($test_identifier)

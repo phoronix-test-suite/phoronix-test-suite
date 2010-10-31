@@ -28,27 +28,21 @@ class pts_test_install_manager
 	{
 		$this->tests_to_install = array();
 	}
-	public function add_test($identifier)
+	public function add_test_profile($test_profile)
 	{
 		$added = false;
 
-		if(pts_client::test_support_check($identifier) == false)
+		if($test_profile->is_supported() == false)
 		{
-			//pts_client::$display->test_install_error($identifier . " is not supported by this system.");
+			//pts_client::$display->test_install_error($test_profile->get_identifier() . " is not supported by this system.");
 		}
-		else if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($identifier, pts_strings::comma_explode($e)))
+		else if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($test_profile->get_identifier(), pts_strings::comma_explode($e)))
 		{
-			pts_client::$display->test_install_error($identifier . " is being skipped from installation.");
+			pts_client::$display->test_install_error($test_profile->get_identifier() . " is being skipped from installation.");
 		}
 		else
 		{
-			$test_install_request = new pts_test_install_request($identifier);
-			$added = pts_arrays::unique_push($this->tests_to_install, $test_install_request);
-
-			if($added)
-			{
-				$added = $test_install_request;
-			}
+			$added = pts_arrays::unique_push($this->tests_to_install, new pts_test_install_request($test_profile));
 		}
 
 		return $added;

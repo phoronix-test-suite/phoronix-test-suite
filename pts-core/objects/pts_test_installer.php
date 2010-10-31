@@ -55,16 +55,9 @@ class pts_test_installer
 	public static function start_install($to_install)
 	{
 		// Find all of the tests that need to be installed
-		$tests = array();
-		foreach(pts_arrays::to_array($to_install) as $to_install_test)
-		{
-			foreach(pts_contained_tests($to_install_test, true) as $test)
-			{
-				pts_arrays::unique_push($tests, $test);
-			}
-		}
+		$tests = pts_types::identifiers_to_test_profile_objects($to_install, true, true);
 
-		if(empty($tests))
+		if(count($tests) == 0)
 		{
 			pts_client::$display->generic_error("No Tests Found For Installation.");
 			return false;
@@ -72,26 +65,26 @@ class pts_test_installer
 
 		// Setup the install manager and add the tests
 		$test_install_manager = new pts_test_install_manager();
-		foreach($tests as $test)
+		foreach($tests as $test_profile)
 		{
-			if(pts_test_needs_updated_install($test))
+			if($test_profile->needs_updated_install())
 			{
-				if(($test_install_request = $test_install_manager->add_test($test)) != false)
+				if($test_install_manager->add_test_profile($test_profile) != false)
 				{
-					$version = $test_install_request->test_profile->get_test_profile_version();
+					$version = $test_profile->get_test_profile_version();
 
 					if(!empty($version))
 					{
 						$version = " [v" . $version . ']';
 					}
 
-					pts_client::$display->generic_sub_heading("To Install: " . $test . $version);
+					pts_client::$display->generic_sub_heading("To Install: " . $test_profile->get_identifier() . $version);
 				}
 			}
 			else
 			{
-				$installed_test = new pts_installed_test($test);
-				pts_client::$display->generic_sub_heading("Installed: " . $test . ($installed_test->get_installed_version() != null ? " [v" . $installed_test->get_installed_version() . "]" : null));
+				$installed_test = new pts_installed_test($test_profile->get_identifier());
+				pts_client::$display->generic_sub_heading("Installed: " . $test_profile->get_identifier() . ($installed_test->get_installed_version() != null ? " [v" . $installed_test->get_installed_version() . "]" : null));
 			}
 		}
 

@@ -22,6 +22,10 @@
 
 class pts_test_profile extends pts_test_profile_parser
 {
+	public static function is_test($identifier)
+	{
+		return is_file(XML_PROFILE_DIR . $identifier . ".xml");
+	}
 	public function __construct($identifier, $override_values = null)
 	{
 		parent::__construct($identifier);
@@ -164,7 +168,25 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function is_supported()
 	{
-		return $this->is_test_architecture_supported() && $this->is_test_platform_supported() && $this->is_core_version_supported();
+		$test_supported = true;
+
+		if($this->is_test_architecture_supported() == false)
+		{
+			PTS_IS_CLIENT && pts_client::$display->test_run_error($identifier . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
+			$test_supported = false;
+		}
+		else if($this->is_test_platform_supported() == false)
+		{
+			PTS_IS_CLIENT && pts_client::$display->test_run_error($identifier . " is not supported by this operating system: " . OPERATING_SYSTEM);
+			$test_supported = false;
+		}
+		else if($this->is_core_version_supported() == false)
+		{
+			PTS_IS_CLIENT && pts_client::$display->test_run_error($identifier . " is not supported by this version of the Phoronix Test Suite: " . PTS_VERSION);
+			$test_supported = false;
+		}
+
+		return $test_supported;
 	}
 	public function is_test_architecture_supported()
 	{
@@ -307,6 +329,14 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 
 		return $test_profiles;
+	}
+	public function needs_updated_install()
+	{
+		$installed_test = new pts_installed_test($this->get_identifier());
+
+		// Checks if test needs updating
+		// || $installed_test->get_installed_system_identifier() != phodevi::system_id_string()
+		return !pts_test_installed($this->get_identifier()) || !pts_strings::version_strings_comparable($this->get_test_profile_version(), $installed_test->get_installed_version()) || $this->get_installer_checksum() != $installed_test->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
 	}
 }
 

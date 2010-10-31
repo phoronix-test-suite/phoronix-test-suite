@@ -29,6 +29,7 @@ if(PTS_MODE == "CLIENT")
 define("PTS_VERSION", "2.9.9");
 define("PTS_CORE_VERSION", 2900);
 define("PTS_CODENAME", "IVELAND");
+define("PTS_IS_CLIENT", PTS_MODE == "CLIENT");
 
 function pts_codename($full_string = false)
 {

@@ -34,6 +34,100 @@ class pts_types
 	{
 		return array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED");
 	}
+	public static function identifiers_to_test_profile_objects($identifiers, $include_extensions = false, $remove_duplicates = true)
+	{
+		$test_profiles = array();
+
+		foreach(pts_types::identifiers_to_objects($identifiers) as $object)
+		{
+			if($object instanceOf pts_test_profile)
+			{
+				array_push($test_profiles, $object);
+			}
+			else if($object instanceOf pts_test_suite)
+			{
+				foreach($object->get_contained_test_profiles() as $test_profile)
+				{
+					array_push($test_profiles, $test_profile);
+				}
+			}
+			else if($object instanceOf pts_result_file)
+			{
+				foreach($object->get_contained_test_profiles() as $test_profile)
+				{
+					array_push($test_profiles, $test_profile);
+				}
+			}
+		}
+
+		if($include_extensions)
+		{
+			$extended_test_profiles = array();
+
+			for($i = 0; $i < count($test_profiles); $i++)
+			{
+				foreach(array_reverse($test_profiles[$i]->extended_test_profiles()) as $test_profile)
+				{
+					if(!in_array($test_profile, $extended_test_profiles))
+					{
+						array_push($extended_test_profiles, $test_profile);
+					}
+				}
+
+				array_push($extended_test_profiles, $test_profiles[$i]);
+			}
+
+			// We end up doing this swapping around so the extended test profiles always end up before the tests extending them
+			$test_profiles = $extended_test_profiles;
+			unset($extended_test_profiles);
+		}
+
+		if($remove_duplicates)
+		{
+			$test_profiles = array_unique($test_profiles);
+		}
+
+		return $test_profiles;
+	}
+	public static function identifiers_to_objects($identifiers)
+	{
+		// Provide an array containing the location(s) of all test(s) for the supplied object name
+		$objects = array();
+
+		foreach(pts_arrays::to_array($identifiers) as $identifier_item)
+		{
+			if(pts_test_profile::is_test($identifier_item)) // Object is a test
+			{
+				array_push($objects, new pts_test_profile($identifier_item));
+			}
+			else if(pts_test_suite::is_suite($identifier_item)) // Object is suite
+			{
+				array_push($objects, new pts_test_suite($identifier_item));
+			}
+			else if(pts_is_test_result($identifier_item)) // Object is a saved results file
+			{
+				array_push($objects, new pts_result_file($identifier_item));
+			}
+			else if(pts_global::is_global_id($identifier_item)) // Object is a Phoronix Global file
+			{
+				array_push($objects, new pts_result_file(pts_global::download_result_xml($identifier_item)));
+			}
+			// TODO XXX: Restore support for virtual suites
+			/*
+			else if(pts_is_virtual_suite($identifier_item))
+			{
+				foreach(pts_virtual_suite_tests($object) as $test)
+				{
+					foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
+					{
+						array_push($objects, $sub_test);
+					}
+				}
+			}*/
+		}
+
+		return $objects;
+	}
 }
 
 ?>

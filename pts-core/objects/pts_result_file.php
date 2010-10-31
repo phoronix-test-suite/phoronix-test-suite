@@ -543,6 +543,17 @@ class pts_result_file
 
 		return array($result_tests, $result_systems, $result_table, $max_value, $longest_system_identifier);
 	}
+	public function get_contained_test_profiles()
+	{
+		$test_profiles = array();
+
+		foreach($this->get_result_objects() as $object)
+		{
+			array_push($test_profiles, $object->test_profile);
+		}
+
+		return $test_profiles;
+	}
 	public function get_result_objects($select_indexes = -1)
 	{
 		if($this->result_objects == null)

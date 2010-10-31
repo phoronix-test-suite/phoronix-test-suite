@@ -334,15 +334,6 @@ function pts_suite_needs_updated_install($identifier)
 
 	return $needs_update;
 }
-function pts_test_needs_updated_install($identifier)
-{
-	$installed_test = new pts_installed_test($identifier);
-	$test_profile = new pts_test_profile($identifier);
-
-	// Checks if test needs updating
-	// || $installed_test->get_installed_system_identifier() != phodevi::system_id_string()
-	return !pts_test_installed($identifier) || !pts_strings::version_strings_comparable($test_profile->get_test_profile_version(), $installed_test->get_installed_version()) || $test_profile->get_installer_checksum() != $installed_test->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
-}
 function pts_version_newer($version_a, $version_b)
 {
 	$r_a = explode(".", $version_a);
