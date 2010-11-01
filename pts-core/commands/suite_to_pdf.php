@@ -81,15 +81,12 @@ class suite_to_pdf implements pts_option_interface
 			else
 			{
 				$pdf->WriteMiniHeader($item);
-
 				$test = new pts_test_profile($item);
-
 				$pdf->WriteText($test->get_title() . ":  " . $test->get_description());
 
 				if($show_node)
 				{
-					$test_xml = new pts_test_tandem_XmlReader($item);
-					$pdf->WriteText($test_xml->getXMLValue($show_node));
+					$pdf->WriteText($test->xml_parser->getXMLValue($show_node));
 				}
 			}
 		}

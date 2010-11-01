@@ -20,15 +20,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_test_suite
+class pts_test_suite extends pts_test_suite_parser
 {
-	private $identifier;
-	private $xml_parser;
-
 	public function __construct($identifier)
 	{
-		$this->xml_parser = new pts_suite_tandem_XmlReader($identifier);
-		$this->identifier = $identifier;
+		parent::__construct($identifier);
 	}
 	public static function is_suite($identifier)
 	{
@@ -36,7 +32,7 @@ class pts_test_suite
 	}
 	public function needs_updated_install()
 	{
-		foreach(pts_types::identifiers_to_test_profile_objects($this->identifier, false, true) as $test_profile)
+		foreach(pts_types::identifiers_to_test_profile_objects($this->get_identifier(), false, true) as $test_profile)
 		{
 			$installed_test = new pts_installed_test($test_profile->get_identifier());
 
@@ -75,62 +71,9 @@ class pts_test_suite
 
 		return $return_code;
 	}
-	public function get_reference_systems()
-	{
-		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_SUITE_REFERENCE_SYSTEMS));
-	}
-	public function get_description()
-	{
-		return $this->xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
-	}
-	public function get_title()
-	{
-		return $this->xml_parser->getXMLValue(P_SUITE_TITLE);
-	}
-	public function get_version()
-	{
-		return $this->xml_parser->getXMLValue(P_SUITE_VERSION);
-	}
 	public function get_unique_test_count()
 	{
 		return count(pts_types::identifiers_to_test_profile_objects($this->identifier, false, true));
-	}
-	public function get_maintainer()
-	{
-		return $this->xml_parser->getXMLValue(P_SUITE_MAINTAINER);
-	}
-	public function get_suite_type()
-	{
-		return $this->xml_parser->getXMLValue(P_SUITE_TYPE);
-	}
-	public function get_pre_run_message()
-	{
-		return $this->xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
-	}
-	public function get_post_run_message()
-	{
-		return $this->xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
-	}
-	public function get_run_mode()
-	{
-		return $this->xml_parser->getXMLValue(P_SUITE_RUNMODE);
-	}
-	public function get_test_names()
-	{
-		return $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-	}
-	public function get_contained_test_profiles()
-	{
-		$test_names = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-		$test_versions = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_PROFILE_VERSION);
-		$test_profiles = array();
-
-		foreach(array_keys($test_names) as $i)
-		{
-			array_push($test_profiles, new pts_test_profile($test_names[$i]));
-		}
-
-		return $test_profiles;
 	}
 	public function get_contained_test_result_objects()
 	{
@@ -212,7 +155,7 @@ class pts_test_suite
 		// Check if the test suite's version is compatible with pts-core
 		$supported = true;
 
-		$requires_core_version = $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION);
+		$requires_core_version = $this->get_core_version_requirement();
 
 		if(!empty($requires_core_version))
 		{

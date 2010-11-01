@@ -24,17 +24,17 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+pts_load_xml_definitions("test-suite.xml");
+
 class pts_suite_tandem_XmlReader extends tandem_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		pts_load_xml_definitions("test-suite.xml");
-
 		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
 		{
-			if(is_file(XML_SUITE_DIR . $identifier . ".xml"))
+			if(is_file(XML_SUITE_DIR . $read_xml . ".xml"))
 			{
-				$read_xml = XML_SUITE_DIR . $identifier . ".xml";
+				$read_xml = XML_SUITE_DIR . $read_xml . ".xml";
 			}
 		}
 
