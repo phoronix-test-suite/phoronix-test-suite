@@ -25,7 +25,7 @@ class suite_to_pdf implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "pts_is_suite", null, "No suite found.")
+		new pts_argument_check(0, array("pts_test_suite", "is_suite"), null, "No suite found.")
 		);
 	}
 	public static function run($r)

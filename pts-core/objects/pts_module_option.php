@@ -145,7 +145,7 @@ class pts_module_option
 						$supported = true;
 					}
 				case "VALID_SAVE_NAME":
-					if(!empty($input) && !pts_is_run_object($input))
+					if(!empty($input) && pts_types::identifier_to_object($input) == false)
 					{
 						$supported = true;
 					}

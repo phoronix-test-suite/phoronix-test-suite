@@ -431,10 +431,7 @@ class pts_test_installer
 			}
 			else
 			{
-				if(!pts_is_base_test($identifier))
-				{
-					pts_client::$display->test_install_error("No installation script found.");
-				}
+				pts_client::$display->test_install_error("No installation script found.");
 				$installed = true;
 			}
 

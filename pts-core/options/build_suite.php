@@ -53,21 +53,23 @@ class build_suite implements pts_option_interface
 
 		foreach($r as $test_object)
 		{
-			if(pts_is_test($test_object))
+			$test_object = identifier_to_object($test_object);
+
+			if($test_object instanceof pts_test_profile)
 			{
 				list($args, $description) = pts_test_run_options::prompt_user_options($test_object);
 
 				for($i = 0; $i < count($args); $i++)
 				{
-					$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_object);
+					$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_object->get_identifier());
 					$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $write_position, $args[$i]);
 					$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $write_position, $description[$i]);
 					$write_position++;
 				}
 			}
-			else if(pts_is_suite($test_object))
+			else if($test_object instanceof pts_test_suite)
 			{
-				$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_object);
+				$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $write_position, $test_object->get_identifier());
 				$write_position++;
 			}
 		}
@@ -78,8 +80,9 @@ class build_suite implements pts_option_interface
 			{
 				case "Add Test":
 					$test_to_add = pts_user_io::prompt_text_menu("Enter test name", $possible_tests);
+					$test_profile = new pts_test_profile($test_to_add);
 
-					list($args, $description) = pts_test_run_options::prompt_user_options($test_to_add);
+					list($args, $description) = pts_test_run_options::prompt_user_options($test_profile);
 
 					for($i = 0; $i < count($args); $i++)
 					{

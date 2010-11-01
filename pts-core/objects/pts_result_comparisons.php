@@ -28,19 +28,20 @@ class pts_result_comparisons
 
 		$result_file = new pts_result_file($result);
 		//$result_test = $result_file->get_suite_name();
-		// TODO: figure out instead of $result_test
+		// TODO: fix up this function
 		$result_identifiers = $result_file->get_system_identifiers();
 		$test_result_hashes = $result_file->get_result_object_hashes();
 		$reference_tests = array();
 
-		if(!isset($ref_systems_xml_strings[$result_test]))
+		$ref_systems_xml_strings[$result_test] = array();
+		/*if(!isset($ref_systems_xml_strings[$result_test]))
 		{
-			if(pts_is_suite($result_test))
+			if($result_test instanceof pts_test_suite)
 			{
 				$test_suite = new pts_test_suite($result_test);
 				$ref_systems_xml_strings[$result_test] = $test_suite->get_reference_systems();
 			}
-			else if(pts_is_test($result_test))
+			else if($result_test instanceof pts_test_profile)
 			{
 				$test_profile = new pts_test_profile($result_test);
 				$ref_systems_xml_strings[$result_test] = $test_profile->get_reference_systems();
@@ -49,7 +50,7 @@ class pts_result_comparisons
 			{
 				$ref_systems_xml_strings[$result_test] = array();
 			}
-		}
+		}*/
 
 		pts_result_comparisons::process_reference_comparison_hashes($ref_systems_xml_strings[$result_test], $result_identifiers, $test_result_hashes, $reference_tests);
 		pts_result_comparisons::process_reference_comparison_hashes(pts_client::generic_reference_system_comparison_ids(), $result_identifiers, $test_result_hashes, $reference_tests, true);
@@ -64,7 +65,7 @@ class pts_result_comparisons
 		{
 			if(pts_global::is_global_id($global_id))
 			{
-				if(!pts_is_test_result($global_id))
+				if(pts_result_file::is_test_result_file($global_id) == false)
 				{
 					pts_global::clone_global_result($global_id, false);
 				}

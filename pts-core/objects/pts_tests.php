@@ -55,7 +55,7 @@ class pts_tests
 		{
 			$test = basename(dirname($test));
 
-			if(pts_is_test($test))
+			if(pts_test_profile::is_test_profile($test))
 			{
 				array_push($cleaned_tests, $test);
 			}

@@ -228,7 +228,7 @@ class pts_test_suite
 	{
 		// Print out a text tree that shows the suites and tests within an object
 		$steps++;
-		if(pts_is_suite($object))
+		if(pts_test_suite::is_suite($object))
 		{
 			$xml_parser = new pts_suite_tandem_XmlReader($object);
 			$test_names = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
@@ -262,7 +262,7 @@ class pts_test_suite
 		// Print out a text tree that shows the suites and tests within an object
 		$contained = array();
 
-		if(pts_is_suite($object))
+		if(pts_test_suite::is_suite($object))
 		{
 			$xml_parser = new pts_suite_tandem_XmlReader($object);
 			$test_names = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));

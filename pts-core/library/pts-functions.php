@@ -81,14 +81,5 @@ if(PTS_MODE == "CLIENT" || defined("PTS_AUTO_LOAD_OBJECTS"))
 		}
 	}
 }
-if(PTS_MODE == "LIB")
-{
-	// If a program using PTS as a library wants any of the below functions, they will need to load it manually
-	return;
-}
-
-// Load Main Functions
-require(PTS_LIBRARY_PATH . "pts-functions_types.php");
-
 
 ?>

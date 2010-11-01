@@ -79,7 +79,7 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 
 		$test_extends = $this->getValue(P_TEST_CTPEXTENDS, null, null, true);
 
-		if(!empty($test_extends)) // For now drop && pts_is_test($test_extends)
+		if(!empty($test_extends))
 		{
 			$test_below_parser = new pts_test_tandem_XmlReader($test_extends);
 			$test_below_tag = $test_below_parser->getXMLValue($xml_tag);

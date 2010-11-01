@@ -266,7 +266,7 @@ class pts_test_run_manager
 		{
 			$is_reserved_word = false;
 
-			while(empty($proposed_name) || ($is_reserved_word = pts_is_run_object($proposed_name)))
+			while(empty($proposed_name) || ($is_reserved_word = pts_types::identifier_to_object($proposed_name)))
 			{
 				if($is_reserved_word)
 				{
@@ -300,7 +300,7 @@ class pts_test_run_manager
 		$show_identifiers = array();
 		$no_repeated_tests = true;
 
-		if(pts_is_test_result($this->file_name))
+		if(pts_result_file::is_test_result_file($this->file_name))
 		{
 			$result_file = new pts_result_file($this->file_name);
 			$current_identifiers = $result_file->get_system_identifiers();
@@ -505,30 +505,25 @@ class pts_test_run_manager
 
 		$test_run_request = $this->get_test_to_run($run_index);
 
-		if(pts_is_test($test_run_request->test_profile->get_identifier()))
+		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . "cache-share-*.pt2so")) == 0))
 		{
-			if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . "cache-share-*.pt2so")) == 0))
-			{
-				sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
-			}
+			sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
+		}
 
-			pts_test_execution::run_test($this, $test_run_request);
+		pts_test_execution::run_test($this, $test_run_request);
 
-			if(pts_file_io::unlink(PTS_USER_DIR . "halt-testing"))
-			{
-				// Stop the testing process entirely
-				return false;
-			}
-			else if(pts_file_io::unlink(PTS_USER_DIR . "skip-test"))
-			{
-				// Just skip the current test and do not save the results, but continue testing
-				continue;
-			}
+		if(pts_file_io::unlink(PTS_USER_DIR . "halt-testing"))
+		{
+			// Stop the testing process entirely
+			return false;
+		}
+		else if(pts_file_io::unlink(PTS_USER_DIR . "skip-test"))
+		{
+			// Just skip the current test and do not save the results, but continue testing
+			continue;
 		}
 
 		$test_successful = false;
-
-
 		if($test_run_request->test_profile->get_result_format() == "NO_RESULT")
 		{
 			$test_successful = true;
@@ -639,7 +634,7 @@ class pts_test_run_manager
 				pts_arrays::unique_push($test_properties, "PTS_DEFAULTS_MODE");
 			}
 
-			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_is_test_result($this->get_file_name()) || $this->result_already_contains_identifier() == false))
+			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_result_file::is_test_result_file($this->get_file_name()) || $this->result_already_contains_identifier() == false))
 			{
 				$this->result_file_writer->add_result_file_meta_data($this, $test_properties);
 				$this->result_file_writer->add_current_system_information();
@@ -664,7 +659,7 @@ class pts_test_run_manager
 	{
 		if($this->do_save_results())
 		{
-			if($this->completed_runs == 0 && !pts_is_test_result($this->get_file_name()) && (pts_c::$test_flags ^ pts_c::is_recovering) && (pts_c::$test_flags ^ pts_c::remote_mode))
+			if($this->completed_runs == 0 && !pts_result_file::is_test_result_file($this->get_file_name()) && (pts_c::$test_flags ^ pts_c::is_recovering) && (pts_c::$test_flags ^ pts_c::remote_mode))
 			{
 				pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name());
 				return false;

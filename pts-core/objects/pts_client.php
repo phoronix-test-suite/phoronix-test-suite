@@ -1045,7 +1045,7 @@ class pts_client
 
 		foreach(pts_client::generic_reference_system_comparison_ids() as $comparison_id)
 		{
-			if(!pts_is_test_result($comparison_id))
+			if(pts_result_file::is_test_result_file($comparison_id) == false)
 			{
 				if($reference_cache_dir && is_readable($reference_cache_dir . $comparison_id . ".xml"))
 				{
