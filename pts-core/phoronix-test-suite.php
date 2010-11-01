@@ -53,7 +53,7 @@ if(PTS_MODE == "CLIENT" && ($open_basedir = ini_get("open_basedir")))
 	}
 }
 
-require(PTS_PATH . "pts-core/library/pts-functions.php");
+require(PTS_PATH . "pts-core/pts-core.php");
 
 if(PTS_MODE != "CLIENT")
 {

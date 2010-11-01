@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2010, Phoronix Media
 	Copyright (C) 2008 - 2010, Michael Larabel
-	pts-functions.php: Include functions required for Phoronix Test Suite operation.
+	pts-core.php: To boot-strap the Phoronix Test Suite start-up
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,10 +21,26 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_LIBRARY_PATH", PTS_PATH . "pts-core/library/");
+define("PTS_VERSION", "2.9.9");
+define("PTS_CORE_VERSION", 2900);
+define("PTS_CODENAME", "IVELAND");
+define("PTS_IS_CLIENT", PTS_MODE == "CLIENT");
 
-require(PTS_LIBRARY_PATH . "pts.php");
+if(PTS_MODE == "CLIENT")
+{
+	error_reporting(E_ALL | E_NOTICE | E_STRICT);
+}
 
+function pts_codename($full_string = false)
+{
+	$codename = ucwords(strtolower(PTS_CODENAME));
+
+	return ($full_string ? "PhoronixTestSuite/" : null) . $codename;
+}
+function pts_title($show_both = false)
+{
+	return "Phoronix Test Suite" . (PTS_VERSION != null ? " v" . PTS_VERSION : null) . (PTS_CODENAME != null && (PTS_VERSION == null || $show_both ) ? " (" . ucwords(strtolower(PTS_CODENAME)) . ")" : null);
+}
 function pts_define_directories()
 {
 	// User's home directory for storing results, module files, test installations, etc.
