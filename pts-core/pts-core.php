@@ -60,7 +60,7 @@ function pts_define_directories()
 	define("STATIC_DIR", PTS_CORE_PATH . "static/");
 	define("PTS_COMMAND_DIR", PTS_CORE_PATH . "commands/");
 	define("PTS_EXDEP_DIR", PTS_CORE_PATH . "external-test-dependencies/");
-	define("RESULTS_VIEWER_DIR", PTS_CORE_DIR . "results-viewer/");
+	define("RESULTS_VIEWER_DIR", PTS_CORE_PATH . "results-viewer/");
 
 	// Test & Suite Locations
 	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");
@@ -69,7 +69,7 @@ function pts_define_directories()
 	//define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
 	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
 }
-public static function pts_load_xml_definitions($definition_file)
+function pts_load_xml_definitions($definition_file)
 {
 	static $loaded_definition_files = null;
 
