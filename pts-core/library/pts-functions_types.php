@@ -298,25 +298,6 @@ function pts_test_installed($identifier)
 {
 	return is_file(TEST_ENV_DIR . $identifier . "/pts-install.xml");
 }
-function pts_find_result_file($file, $check_global = true)
-{
-	// PTS Find A Saved File
-	if(pts_is_test_result($file))
-	{
-		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
-	}
-	else if($check_global && pts_global::is_global_id($file))
-	{
-		pts_global::clone_global_result($file, false);
-		$USE_FILE = SAVE_RESULTS_DIR . $file . "/composite.xml";
-	}
-	else
-	{
-		$USE_FILE = false;
-	}
-
-	return $USE_FILE;
-}
 function pts_suite_needs_updated_install($identifier)
 {
 	$needs_update = false;

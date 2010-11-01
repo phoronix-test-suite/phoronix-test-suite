@@ -96,7 +96,11 @@ class pts_types
 
 		foreach(pts_arrays::to_array($identifiers) as $identifier_item)
 		{
-			if(pts_test_profile::is_test($identifier_item)) // Object is a test
+			if($identifier_item instanceof pts_test_profile || $identifier_item instanceof pts_test_suite || $identifier_item instanceof pts_result_file)
+			{
+				array_push($objects, $identifier_item);
+			}
+			else if(pts_test_profile::is_test($identifier_item)) // Object is a test
 			{
 				array_push($objects, new pts_test_profile($identifier_item));
 			}
@@ -135,6 +139,10 @@ class pts_types
 		$return = pts_types::identifiers_to_objects($identifier);
 
 		return isset($return[0]) ? $return[0] : false;
+	}
+	public static function is_result_file($identifier)
+	{
+		return pts_types::identifier_to_object($identifier) instanceof pts_result_file ? true : false;
 	}
 }
 

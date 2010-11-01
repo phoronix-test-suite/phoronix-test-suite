@@ -22,11 +22,11 @@
 
 class pts_validation
 {
-	public static function check_xml_tags(&$tandem_XmlReader, &$tags_to_check, &$append_missing_to)
+	public static function check_xml_tags(&$obj, &$tags_to_check, &$append_missing_to)
 	{
 		foreach($tags_to_check as $tag_check)
 		{
-			$to_check = $tandem_XmlReader->getXMLValue($tag_check[0]);
+			$to_check = $obj->xml_parser->getXMLValue($tag_check[0]);
 
 			if(empty($to_check))
 			{

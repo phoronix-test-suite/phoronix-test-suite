@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ class result_file_to_pdf implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "pts_find_result_file", "result_file", "No result file was found.")
+		new pts_argument_check(0, array("pts_types", "is_result_file"), null, "No result file was found.")
 		);
 	}
 	public static function run($r)
@@ -44,7 +44,7 @@ class result_file_to_pdf implements pts_option_interface
 		define("BILDE_IMAGE_INTERLACING", false); // Otherwise FPDF will fail
 		pts_render::generate_result_file_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
 
-		$result_file = new pts_result_file($r["result_file"]);
+		$result_file = new pts_result_file($r[0]);
 		$pdf = new pts_pdf_template($result_file->get_title(), null);
 
 		$pdf->AddPage();

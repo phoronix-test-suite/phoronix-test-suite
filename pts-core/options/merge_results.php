@@ -24,12 +24,11 @@ class merge_results implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$r = array_map("pts_find_result_file", $r);
 		$result_files_to_merge = array();
 
 		foreach($r as $result_file)
 		{
-			if($result_file != false)
+			if(pts_types::is_result_file($result_file))
 			{
 				array_push($result_files_to_merge, $result_file);
 			}

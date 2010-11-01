@@ -25,12 +25,12 @@ class reference_comparison implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "pts_find_result_file", "result", "No result file was found.")
+		new pts_argument_check(0, array("pts_types", "is_result_file"), null, "No result file was found.")
 		);
 	}
 	public static function run($r)
 	{
-		$result = $r["result"];
+		$result = $r[0];
 
 		$reference_test_globals = pts_result_comparisons::reference_tests_for_result($result);
 

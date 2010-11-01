@@ -24,11 +24,9 @@ class validate_test_suite implements pts_option_interface
 {
 	public static function run($r)
 	{
-		if(pts_is_suite($r[0]))
+		if(($test_suite = pts_types::identifier_to_object($r[0])) != false)
 		{
-			$suite_identifier = $r[0];
-
-			pts_client::$display->generic_heading($suite_identifier);
+			pts_client::$display->generic_heading($r[0]);
 			$validation_errors = array();
 			$validation_warnings = array();
 
@@ -44,14 +42,12 @@ class validate_test_suite implements pts_option_interface
 
 			);
 
-		 	$suite_parser = new pts_suite_tandem_XmlReader($suite_identifier);
-
 			// Checks for missing tag errors and warnings
-			pts_validation::check_xml_tags($suite_parser, $error_empty_tags, $validation_errors);
-			pts_validation::check_xml_tags($suite_parser, $warning_empty_tags, $validation_warnings);
+			pts_validation::check_xml_tags($test_suite, $error_empty_tags, $validation_errors);
+			pts_validation::check_xml_tags($test_suite, $warning_empty_tags, $validation_warnings);
 
 			// Other checks
-			$contained_tests = $suite_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+			$contained_tests = $test_suite->get_test_names();
 
 			if(count($contained_tests) == 0)
 			{
@@ -61,7 +57,7 @@ class validate_test_suite implements pts_option_interface
 			{
 				foreach($contained_tests as $test)
 				{
-					if(!pts_is_run_object($test))
+					if(pts_types::identifier_to_object($test) == false)
 					{
 						array_push($validation_errors, array($test, $test . " is not a recognized test or suite."));
 					}

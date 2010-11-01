@@ -25,17 +25,18 @@ pts_loader::load_definitions("test-suite.xml");
 
 class result_file_to_suite implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, array("pts_types", "is_result_file"), null, "No result file was found.")
+		);
+	}
 	public static function run($r)
 	{
 		$result_file = false;
 		if(count($r) != 0)
 		{
 			$result_file = $r[0];
-		}
-
-		while(($result_file = pts_find_result_file($result_file)) == false)
-		{
-			$result_file = pts_user_io::prompt_user_input("Enter name of result file");
 		}
 
 		$suite_name = pts_user_io::prompt_user_input("Enter name of suite");

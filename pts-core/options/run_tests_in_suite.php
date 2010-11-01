@@ -24,17 +24,14 @@ class run_tests_in_suite implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$to_run_identifiers = array();
+		$to_run = array();
 
-		foreach(pts_contained_tests($r) as $test)
+		foreach(pts_types::identifiers_to_test_profile_objects($r, false, true) as $test_profile)
 		{
-			if(!in_array($test, $to_run_identifiers))
-			{
-				array_push($to_run_identifiers, $test);
-			}
+			pts_arrays::unique_push($to_run, $test_profile);
 		}
 
-		pts_test_run_manager::standard_run($to_run_identifiers);
+		pts_test_run_manager::standard_run($to_run);
 	}
 }
 

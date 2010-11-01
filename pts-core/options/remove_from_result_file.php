@@ -25,12 +25,12 @@ class remove_from_result_file implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "pts_find_result_file", "result", "No result file was found.")
+		new pts_argument_check(0, array("pts_types", "is_result_file"), null, "No result file was found.")
 		);
 	}
 	public static function run($r)
 	{
-		$result = $r["result"];
+		$result = $r[0];
 
 		$result_file = new pts_result_file($result);
 		$result_file_identifiers = $result_file->get_system_identifiers();

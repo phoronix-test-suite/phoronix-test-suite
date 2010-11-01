@@ -27,7 +27,7 @@ class pts_argument_check
 	private $function_return_key;
 	private $error_string;
 
-	public function __construct($index, $function, $return_key, $error_string)
+	public function __construct($index, $function, $return_key = null, $error_string = null)
 	{
 		$this->argument_index = $index;
 		$this->function_check = $function;

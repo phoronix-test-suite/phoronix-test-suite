@@ -22,53 +22,32 @@
 
 class info implements pts_option_interface
 {
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, array("pts_types", "identifier_to_object"), "object", "No test, suite, global upload, or result file was found.")
+		);
+	}
 	public static function run($args)
 	{
-		$to_info = $args[0];
 		echo "\n";
 
-		if(pts_is_suite($to_info))
+		if($args["object"] instanceof pts_test_suite)
 		{
-			$suite = new pts_test_suite($to_info);
-			pts_client::$display->generic_heading($suite->get_title());
-			echo "Suite Version: " . $suite->get_version() . "\n";
-			echo "Maintainer: " . $suite->get_maintainer() . "\n";
-			echo "Suite Type: " . $suite->get_suite_type() . "\n";
-			echo "Unique Tests: " . $suite->get_unique_test_count() . "\n";
-			echo "Suite Description: " . $suite->get_description() . "\n";
+			pts_client::$display->generic_heading($args["object"]->get_title());
+			echo "Suite Version: " . $args["object"]->get_version() . "\n";
+			echo "Maintainer: " . $args["object"]->get_maintainer() . "\n";
+			echo "Suite Type: " . $args["object"]->get_suite_type() . "\n";
+			echo "Unique Tests: " . $args["object"]->get_unique_test_count() . "\n";
+			echo "Suite Description: " . $args["object"]->get_description() . "\n";
 			echo "\n";
-			echo $suite->pts_format_contained_tests_string();
-			echo "\n";
-		}
-		else if(pts_is_virtual_suite($to_info))
-		{
-			pts_client::$display->generic_heading($to_info . " Virtual Suite");
-
-			switch(pts_location_virtual_suite($to_info))
-			{
-				case "TYPE_VIRT_SUITE_ALL":
-					echo "This virtual suite contains all supported Phoronix Test Suite tests.\n";
-					break;
-				case "TYPE_VIRT_SUITE_FREE":
-					echo "This virtual suite contains all supported Phoronix Test Suite tests that are considered free.\n";
-					break;
-				case "TYPE_VIRT_SUITE_SUBSYSTEM":
-					echo "This virtual suite contains all supported Phoronix Test Suite tests for the " . $to_info . " subsystem.\n";
-					break;
-				case "TYPE_VIRT_SUITE_INSTALLED_TESTS":
-					echo "This virtual suite contains all Phoronix Test Suite test suites that are currently installed on this system.\n";
-					break;
-			}
-
-			echo "\nContained Tests:\n\n";
-			echo pts_user_io::display_text_list(pts_virtual_suite_tests($to_info));
+			echo $args["object"]->pts_format_contained_tests_string();
 			echo "\n";
 		}
-		else if(pts_is_test($to_info))
+		else if($args["object"] instanceof pts_test_profile)
 		{
-			$test = new pts_test_profile($to_info);
-			$test_title = $test->get_title();
-			$test_version = $test->get_version();
+			$test_title = $args["object"]->get_title();
+			$test_version = $args["object"]->get_version();
 			if(!empty($test_version))
 			{
 				$test_title .= " " . $test_version;
@@ -76,27 +55,27 @@ class info implements pts_option_interface
 
 			pts_client::$display->generic_heading($test_title);
 
-			echo "Profile Version: " . $test->get_test_profile_version() . "\n";
-			echo "Maintainer: " . $test->get_maintainer() . "\n";
-			echo "Test Type: " . $test->get_test_hardware_type() . "\n";
-			echo "Software Type: " . $test->get_test_software_type() . "\n";
-			echo "License Type: " . $test->get_license() . "\n";
-			echo "Test Status: " . $test->get_status() . "\n";
-			echo "Project Web-Site: " . $test->get_project_url() . "\n";
+			echo "Profile Version: " . $args["object"]->get_test_profile_version() . "\n";
+			echo "Maintainer: " . $args["object"]->get_maintainer() . "\n";
+			echo "Test Type: " . $args["object"]->get_test_hardware_type() . "\n";
+			echo "Software Type: " . $args["object"]->get_test_software_type() . "\n";
+			echo "License Type: " . $args["object"]->get_license() . "\n";
+			echo "Test Status: " . $args["object"]->get_status() . "\n";
+			echo "Project Web-Site: " . $args["object"]->get_project_url() . "\n";
 
-			$download_size = $test->get_download_size();
+			$download_size = $args["object"]->get_download_size();
 			if(!empty($download_size))
 			{
 				echo "Download Size: " . $download_size . " MB\n";
 			}
 
-			$environment_size = $test->get_environment_size();
+			$environment_size = $args["object"]->get_environment_size();
 			if(!empty($environment_size))
 			{
 				echo "Environment Size: " . $environment_size . " MB\n";
 			}
 
-			echo "\nDescription: " . $test->get_description() . "\n";
+			echo "\nDescription: " . $args["object"]->get_description() . "\n";
 
 			if(pts_test_installed($to_info))
 			{
@@ -128,14 +107,14 @@ class info implements pts_option_interface
 				echo "\nTest Installed: No\n";
 			}
 
-			$dependencies = $test->get_dependencies();
+			$dependencies = $args["object"]->get_dependencies();
 			if(!empty($dependencies) && !empty($dependencies[0]))
 			{
 				echo "\nSoftware Dependencies:\n";
-				echo pts_user_io::display_text_list($test->get_dependency_names());
+				echo pts_user_io::display_text_list($args["object"]->get_dependency_names());
 			}
 
-			$associated_suites = $test->suites_containing_test();
+			$associated_suites = $args["object"]->suites_containing_test();
 			if(count($associated_suites) > 0)
 			{
 				asort($associated_suites);
@@ -144,24 +123,18 @@ class info implements pts_option_interface
 			}
 			echo "\n";
 		}
-		else if(pts_find_result_file($to_info) != false)
+		else if($args["object"] instanceof pts_result_file)
 		{
-			$result_file = new pts_result_file($to_info);
-
-			echo "Title: " . $result_file->get_title() . "\nIdentifier: " . $to_info . "\n";
+			echo "Title: " . $args["object"]->get_title() . "\nIdentifier: " . $to_info . "\n";
 			echo "\nTest Result Identifiers:\n";
-			echo pts_user_io::display_text_list($result_file->get_system_identifiers());
+			echo pts_user_io::display_text_list($args["object"]->get_system_identifiers());
 
-			if(count(($tests = $result_file->get_unique_test_titles())) > 1)
+			if(count(($tests = $args["object"]->get_unique_test_titles())) > 1)
 			{
 				echo "\nContained Tests:\n";
 				echo pts_user_io::display_text_list($tests);
 			}
 			echo "\n";
-		}
-		else
-		{
-			echo "\n" . $to_info . " is not recognized.\n";
 		}
 	}
 }

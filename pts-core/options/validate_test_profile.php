@@ -24,20 +24,18 @@ class validate_test_profile implements pts_option_interface
 {
 	public static function run($r)
 	{
-		foreach(pts_contained_tests($r, true, true, true) as $test_identifier)
+		foreach(pts_types::identifiers_to_test_profile_objects($r, true, true) as $test_profile)
 		{
-			pts_client::$display->generic_heading($test_identifier);
+			pts_client::$display->generic_heading($test_profile);
 			$validation_errors = array();
 			$validation_warnings = array();
 
-		 	$test_parser = new pts_test_tandem_XmlReader($test_identifier);
-
 			// Checks for missing tag errors and warnings
-			pts_validation::check_xml_tags($test_parser, pts_validation::required_test_tags(), $validation_errors);
-			pts_validation::check_xml_tags($test_parser, pts_validation::recommended_test_tags(), $validation_warnings);
+			pts_validation::check_xml_tags($test_profile, pts_validation::required_test_tags(), $validation_errors);
+			pts_validation::check_xml_tags($test_profile, pts_validation::recommended_test_tags(), $validation_warnings);
 
 			// Check for other test profile problems
-			foreach(pts_test_install_request::read_download_object_list($test_identifier) as $package_download)
+			foreach(pts_test_install_request::read_download_object_list($test_profile->get_identifier()) as $package_download)
 			{
 				$download_urls = $package_download->get_download_url_array();
 
