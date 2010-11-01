@@ -20,7 +20,7 @@
 		<Define>
 			<Name>P_EXDEP_PACKAGE_GENERIC</Name>
 			<Value>PhoronixTestSuite/ExternalDependencies/Package/GenericName</Value>
-			<Description>The generic name of the PTS external dependency file being referenced within a distro-xml file.</Description>
+			<Description>The generic name of the PTS external dependency file being referenced within an external dependency XML file.</Description>
 		</Define>
 		<Define>
 			<Name>P_EXDEP_PACKAGE_SPECIFIC</Name>

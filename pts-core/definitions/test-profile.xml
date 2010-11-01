@@ -151,7 +151,7 @@ is then displayed prior to the test being installed. Once the text has been show
 		<Define>
 			<Name>P_TEST_EXDEP</Name>
 			<Value>PhoronixTestSuite/TestProfile/ExternalDependencies</Value>
-			<Description>The external dependencies needed for the test. Multiple dependencies can be delimited by a comma. See <em>pts-core/static/distro-xml/generic-packages.xml</em> for a list of currently supported external dependencies.</Description>
+			<Description>The external dependencies needed for the test. Multiple dependencies can be delimited by a comma. See <em>pts-core/external-test-dependencies/xml/generic-packages.xml</em> for a list of currently supported external dependencies.</Description>
 			<Required>NO</Required>
 		</Define>
 		<Define>

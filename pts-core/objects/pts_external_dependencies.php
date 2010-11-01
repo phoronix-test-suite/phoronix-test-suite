@@ -85,7 +85,7 @@ class pts_external_dependencies
 		{
 			echo "\nSome additional dependencies are required, but they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed.\n\n";
 
-			$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+			$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_DIR . "xml/generic-packages.xml");
 			$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 			$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 			$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
@@ -158,7 +158,7 @@ class pts_external_dependencies
 	}
 	public static function all_dependency_names()
 	{
-		$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+		$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_DIR . "xml/generic-packages.xml");
 
 		return $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 	}
@@ -201,7 +201,7 @@ class pts_external_dependencies
 	}
 	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false)
 	{
-		$distro_vendor_xml = STATIC_DIR . "distro-xml/" . self::vendor_identifier() . "-packages.xml";
+		$distro_vendor_xml = PTS_EXDEP_DIR . "xml/" . self::vendor_identifier() . "-packages.xml";
 		$needed_os_packages = array();
 
 		if(is_file($distro_vendor_xml))
@@ -244,7 +244,7 @@ class pts_external_dependencies
 
 		if(count($required_test_dependencies) > 0)
 		{
-			$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+			$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_DIR . "xml/generic-packages.xml");
 			$generic_package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 			$generic_file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 
@@ -301,7 +301,7 @@ class pts_external_dependencies
 	private static function install_packages_on_system($os_packages_to_install)
 	{
 		// Do the actual installing process of packages using the distribution's package management system
-		$vendor_install_file = STATIC_DIR . "distro-scripts/install-" . self::vendor_identifier() . "-packages.sh";
+		$vendor_install_file = PTS_EXDEP_DIR . "scripts/install-" . self::vendor_identifier() . "-packages.sh";
 
 		// Rebuild the array index since some OS package XML tags provide multiple package names in a single string
 		$os_packages_to_install = explode(' ', implode(' ', $os_packages_to_install));
@@ -327,7 +327,7 @@ class pts_external_dependencies
 	{
 		$os_vendor = phodevi::read_property("system", "vendor-identifier");
 
-		if(!is_file(STATIC_DIR . "distro-xml/" . $os_vendor . "-packages.xml") && !is_file(STATIC_DIR . "distro-scripts/install-" . $os_vendor . "-packages.sh"))
+		if(!is_file(PTS_EXDEP_DIR . "xml/" . $os_vendor . "-packages.xml") && !is_file(PTS_EXDEP_DIR . "scripts/install-" . $os_vendor . "-packages.sh"))
 		{
 			$vendors_alias_file = pts_file_io::file_get_contents(STATIC_DIR . "lists/software-vendor-aliases.list");
 			$vendors_r = explode("\n", $vendors_alias_file);
@@ -352,7 +352,7 @@ class pts_external_dependencies
 	private static function generic_names_to_titles($names)
 	{
 		$titles = array();
-		$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
+		$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_DIR . "xml/generic-packages.xml");
 		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 

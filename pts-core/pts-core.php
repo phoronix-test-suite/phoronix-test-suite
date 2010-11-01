@@ -58,8 +58,9 @@ function pts_define_directories()
 	define("MODULE_DATA_DIR", PTS_USER_DIR . "modules-data/");
 	define("DEFAULT_DOWNLOAD_CACHE_DIR", PTS_USER_DIR . "download-cache/");
 	define("STATIC_DIR", PTS_CORE_PATH . "static/");
-	define("PTS_COMMAND_DIR", PTS_CORE_PATH . "options/");
-	define("RESULTS_VIEWER_DIR", STATIC_DIR . "results-viewer/");
+	define("PTS_COMMAND_DIR", PTS_CORE_PATH . "commands/");
+	define("PTS_EXDEP_DIR", PTS_CORE_PATH . "external-test-dependencies/");
+	define("RESULTS_VIEWER_DIR", PTS_CORE_DIR . "results-viewer/");
 
 	// Test & Suite Locations
 	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");
