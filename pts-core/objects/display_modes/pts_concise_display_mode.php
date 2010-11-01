@@ -353,7 +353,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		static $shown_pts = false;
 
-		if($shown_pts == false && pts_client::get_command_exection_count() <= 2)
+		if($shown_pts == false)
 		{
 			$string = pts_title() . "\n" . $string;
 			$shown_pts = true;

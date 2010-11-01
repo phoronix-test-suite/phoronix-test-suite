@@ -24,7 +24,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_loader::load_definitions("result-file.xml");
+pts_load_xml_definitions("result-file.xml");
 
 class pts_results_tandem_XmlReader extends tandem_XmlReader
 {

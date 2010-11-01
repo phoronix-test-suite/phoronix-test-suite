@@ -28,7 +28,7 @@ class pts_external_dependencies_tandem_XmlReader extends tandem_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		pts_loader::load_definitions("external-dependencies.xml");
+		pts_load_xml_definitions("external-dependencies.xml");
 		parent::__construct($read_xml);
 	}
 }

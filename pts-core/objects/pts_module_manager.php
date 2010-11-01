@@ -36,7 +36,7 @@ class pts_module_manager
 		// Load the actual file needed that contains the module
 		if(is_file(PTS_CORE_PATH . "definitions/module-" . $module . ".xml"))
 		{
-			pts_loader::load_definitions("module-" . $module . ".xml");
+			pts_load_xml_definitions("module-" . $module . ".xml");
 		}
 
 		return (is_file(MODULE_DIR . $module . ".php") && include_once(MODULE_DIR . $module . ".php")) || (is_file(MODULE_LOCAL_DIR . $module . ".php") && include_once(MODULE_LOCAL_DIR . $module . ".php"));

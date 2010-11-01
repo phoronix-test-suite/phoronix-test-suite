@@ -23,32 +23,18 @@
 class pts_client
 {
 	public static $display;
-	protected static $command_execution_count = 0;
 	protected static $lock_pointers = null;
-	protected static $commands_to_run = array();
 
 	public static function create_lock($lock_file)
 	{
-		if(isset(self::$lock_pointers[self::$command_execution_count][$lock_file]))
+		if(isset(self::$lock_pointers[$lock_file]))
 		{
 			return false;
 		}
 
-		self::$lock_pointers[self::$command_execution_count][$lock_file] = fopen($lock_file, "w");
+		self::$lock_pointers[$lock_file] = fopen($lock_file, "w");
 		chmod($lock_file, 0644);
-		return self::$lock_pointers[self::$command_execution_count][$lock_file] != false && flock(self::$lock_pointers[self::$command_execution_count][$lock_file], LOCK_EX | LOCK_NB);
-	}
-	public static function get_command_exection_count()
-	{
-		return self::$command_execution_count;
-	}
-	public static function run_next($command, $pass_args = null)
-	{
-		return array_push(self::$commands_to_run, new pts_command_run($command, $pass_args));
-	}
-	public static function next_in_run_queue()
-	{
-		return array_shift(self::$commands_to_run);
+		return self::$lock_pointers[$lock_file] != false && flock(self::$lock_pointers[$lock_file], LOCK_EX | LOCK_NB);
 	}
 	public static function init()
 	{
@@ -285,7 +271,7 @@ class pts_client
 		copy(STATIC_DIR . "xsl/pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
 		copy(STATIC_DIR . "images/pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
 
-		pts_loader::load_definitions("module-settings.xml"); // TODO: make it only load this definition when actually needed
+		pts_load_xml_definitions("module-settings.xml"); // TODO: make it only load this definition when actually needed
 
 		// Compatibility for importing old module configuration settings from pre PTS 2.6 into new structures
 		if(is_file(PTS_USER_DIR . "modules-config.xml"))
@@ -522,28 +508,28 @@ class pts_client
 	public static function release_lock($lock_file)
 	{
 		// Remove lock
-		if(isset(self::$lock_pointers[self::$command_execution_count][$lock_file]) == false)
+		if(isset(self::$lock_pointers[$lock_file]) == false)
 		{
 			return false;
 		}
 
-		if(is_resource(self::$lock_pointers[self::$command_execution_count][$lock_file]))
+		if(is_resource(self::$lock_pointers[$lock_file]))
 		{
-			fclose(self::$lock_pointers[self::$command_execution_count][$lock_file]);
+			fclose(self::$lock_pointers[$lock_file]);
 		}
 
 		pts_file_io::unlink($lock_file);
-		unset(self::$lock_pointers[self::$command_execution_count][$lock_file]);
+		unset(self::$lock_pointers[$lock_file]);
 	}
 	public static function check_command_for_function($option, $check_function)
 	{
 		$in_option = false;
 
-		if(is_file(COMMAND_OPTIONS_DIR . $option . ".php"))
+		if(is_file(PTS_COMMAND_DIR . $option . ".php"))
 		{
-			if(!class_exists($option, false))
+			if(!class_exists($option, false) && is_file(PTS_COMMAND_DIR . $option . ".php"))
 			{
-				pts_loader::load_run_option($option);
+				include(PTS_COMMAND_DIR . $option . ".php");
 			}
 
 			if(method_exists($option, $check_function))
@@ -635,12 +621,12 @@ class pts_client
 	}
 	public static function execute_command($command, $pass_args = null)
 	{
-		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && !class_exists($command, false))
+		if(!class_exists($command, false) && is_file(PTS_COMMAND_DIR . $command . ".php"))
 		{
-			pts_loader::load_run_option($command);
+			include(PTS_COMMAND_DIR . $command . ".php");
 		}
 
-		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php") && method_exists($command, "argument_checks"))
+		if(is_file(PTS_COMMAND_DIR . $command . ".php") && method_exists($command, "argument_checks"))
 		{
 			$argument_checks = call_user_func(array($command, "argument_checks"));
 
@@ -698,10 +684,9 @@ class pts_client
 			}
 		}
 
-		self::$command_execution_count += 1;
 		pts_module_manager::module_process("__pre_option_process", $command);
 
-		if(is_file(COMMAND_OPTIONS_DIR . $command . ".php"))
+		if(is_file(PTS_COMMAND_DIR . $command . ".php"))
 		{
 			if(method_exists($command, "run"))
 			{

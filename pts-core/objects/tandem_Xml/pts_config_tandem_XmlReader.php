@@ -30,7 +30,7 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 
 	public function __construct($new_values = null)
 	{
-		pts_loader::load_definitions("user-config.xml");
+		pts_load_xml_definitions("user-config.xml");
 
 		if(is_file(PTS_USER_DIR . "user-config.xml"))
 		{

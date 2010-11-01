@@ -21,8 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "2.9.9");
-define("PTS_CORE_VERSION", 2900);
+define("PTS_VERSION", "3.0.0a0");
+define("PTS_CORE_VERSION", 2910);
 define("PTS_CODENAME", "IVELAND");
 define("PTS_IS_CLIENT", PTS_MODE == "CLIENT");
 
@@ -58,7 +58,7 @@ function pts_define_directories()
 	define("MODULE_DATA_DIR", PTS_USER_DIR . "modules-data/");
 	define("DEFAULT_DOWNLOAD_CACHE_DIR", PTS_USER_DIR . "download-cache/");
 	define("STATIC_DIR", PTS_CORE_PATH . "static/");
-	define("COMMAND_OPTIONS_DIR", PTS_CORE_PATH . "options/");
+	define("PTS_COMMAND_DIR", PTS_CORE_PATH . "options/");
 	define("RESULTS_VIEWER_DIR", STATIC_DIR . "results-viewer/");
 
 	// Test & Suite Locations
@@ -67,6 +67,34 @@ function pts_define_directories()
 	define("TEST_RESOURCE_DIR", PTS_PATH . "pts/test-resources/");
 	//define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
 	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
+}
+public static function pts_load_xml_definitions($definition_file)
+{
+	static $loaded_definition_files = null;
+
+	if(isset($loaded_definition_files[$definition_file]))
+	{
+		return true;
+	}
+
+	$loaded_definition_files[$definition_file] = true;
+	$definition_file = PTS_CORE_PATH . "definitions/" . $definition_file;
+
+	if(!is_file($definition_file))
+	{
+		return false;
+	}
+
+	$xml_reader = new tandem_XmlReader($definition_file);
+	$definitions_names = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Definitions/Define/Name");
+	$definitions_values = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Definitions/Define/Value");
+
+	for($i = 0; $i < count($definitions_names); $i++)
+	{
+		define($definitions_names[$i], $definitions_values[$i]);
+	}
+
+	return true;
 }
 
 if(PTS_MODE == "CLIENT" || defined("PTS_AUTO_LOAD_OBJECTS"))

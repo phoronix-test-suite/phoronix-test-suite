@@ -21,7 +21,7 @@
 */
 
 // Load compatibility definitions
-pts_loader::load_definitions("compatibility.xml");
+pts_load_xml_definitions("compatibility.xml");
 
 class pts_compatibility
 {

@@ -28,7 +28,7 @@ class pts_installed_test_tandem_XmlReader extends tandem_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		pts_loader::load_definitions("test-installation.xml");
+		pts_load_xml_definitions("test-installation.xml");
 
 		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
 		{

@@ -76,7 +76,7 @@ class pts_test_install_manager
 	}
 	public function remote_files_available_in_download_caches()
 	{
-		pts_loader::load_definitions("download-cache.xml");
+		pts_load_xml_definitions("download-cache.xml");
 		$remote_download_files = array();
 
 		foreach(self::download_cache_locations() as $dc_directory)

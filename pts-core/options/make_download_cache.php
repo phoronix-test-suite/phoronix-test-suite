@@ -26,8 +26,8 @@ class make_download_cache implements pts_option_interface
 	{
 		// Generates a PTS Download Cache
 		$dc_write_directory = null;
-		pts_loader::load_definitions("test-profile-downloads.xml");
-		pts_loader::load_definitions("download-cache.xml");
+		pts_load_xml_definitions("test-profile-downloads.xml");
+		pts_load_xml_definitions("download-cache.xml");
 
 		foreach(pts_test_install_manager::download_cache_locations() as $dc_directory)
 		{

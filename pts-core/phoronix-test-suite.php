@@ -177,12 +177,7 @@ if(!QUICK_START)
 	pts_client::user_hardware_software_reporting();
 }
 
-pts_client::run_next($sent_command, $pass_args);
-
-while(($current_option = pts_client::next_in_run_queue()) != null)
-{
-	pts_client::execute_command($current_option->get_command(), $current_option->get_command_arguments()); // Run command
-}
+pts_client::execute_command($sent_command, $pass_args); // Run command
 
 if(!QUICK_START)
 {

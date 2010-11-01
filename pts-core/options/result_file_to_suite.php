@@ -20,8 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_loader::load_definitions("result-file.xml");
-pts_loader::load_definitions("test-suite.xml");
+pts_load_xml_definitions("result-file.xml");
+pts_load_xml_definitions("test-suite.xml");
 
 class result_file_to_suite implements pts_option_interface
 {

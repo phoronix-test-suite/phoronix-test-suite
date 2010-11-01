@@ -30,7 +30,7 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 
 	public function __construct($read_xml)
 	{
-		pts_loader::load_definitions("test-profile.xml");
+		pts_load_xml_definitions("test-profile.xml");
 
 		if(!is_file($read_xml) && is_file(XML_PROFILE_DIR . $read_xml . ".xml"))
 		{

@@ -64,7 +64,7 @@ class pts_test_install_request
 
 		if($download_xml_file != null)
 		{
-			pts_loader::load_definitions("test-profile-downloads.xml");
+			pts_load_xml_definitions("test-profile-downloads.xml");
 
 			$xml_parser = new tandem_XmlReader($download_xml_file);
 			$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);

@@ -28,7 +28,7 @@ class pts_parse_results_tandem_XmlReader extends tandem_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		pts_loader::load_definitions("results-parser.xml");
+		pts_load_xml_definitions("results-parser.xml");
 		parent::__construct($read_xml);
 	}
 }
