@@ -118,7 +118,7 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		if(!isset($to_upload[0]) || !pts_is_test_result($to_upload[0]))
+		if(!isset($to_upload[0]) || pts_result_file::is_test_result_file($to_upload[0]) == false)
 		{
 			echo "\nNo test result file was found to upload.\n";
 			return false;

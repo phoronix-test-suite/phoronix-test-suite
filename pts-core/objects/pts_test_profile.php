@@ -22,7 +22,7 @@
 
 class pts_test_profile extends pts_test_profile_parser
 {
-	public static function is_test($identifier)
+	public static function is_test_profile($identifier)
 	{
 		return is_file(XML_PROFILE_DIR . $identifier . ".xml");
 	}
@@ -246,20 +246,6 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $supported;
 	}
-	public function suites_containing_test()
-	{
-		$associated_suites = array();
-
-		foreach(pts_suites::available_suites() as $identifier)
-		{
-			if(in_array($this->identifier, pts_contained_tests($identifier)))
-			{
-				array_push($associated_suites, $identifier);
-			}
-		}
-
-		return $associated_suites;
-	}
 	public static function generate_comparison_hash($test_identifier, $arguments, $attributes = null, $version = null)
 	{
 		$hash_table = array(
@@ -347,7 +333,7 @@ class pts_test_profile extends pts_test_profile_parser
 
 		// Checks if test needs updating
 		// || $installed_test->get_installed_system_identifier() != phodevi::system_id_string()
-		return !pts_test_installed($this->get_identifier()) || !pts_strings::version_strings_comparable($this->get_test_profile_version(), $installed_test->get_installed_version()) || $this->get_installer_checksum() != $installed_test->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
+		return $this->is_test_installed() == false || !pts_strings::version_strings_comparable($this->get_test_profile_version(), $installed_test->get_installed_version()) || $this->get_installer_checksum() != $installed_test->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
 	}
 }
 

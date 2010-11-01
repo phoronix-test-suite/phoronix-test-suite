@@ -25,25 +25,35 @@ class pts_test_suite
 	private $identifier;
 	private $xml_parser;
 
-
-	public static function is_suite($identifier)
-	{
-		return is_file(XML_SUITE_DIR . $identifier . ".xml");
-	}
 	public function __construct($identifier)
 	{
 		$this->xml_parser = new pts_suite_tandem_XmlReader($identifier);
 		$this->identifier = $identifier;
 	}
+	public static function is_suite($identifier)
+	{
+		return is_file(XML_SUITE_DIR . $identifier . ".xml");
+	}
+	public function needs_updated_install()
+	{
+		foreach(pts_types::identifiers_to_test_profile_objects($this->identifier, false, true) as $test_profile)
+		{
+			$installed_test = new pts_installed_test($test_profile->get_identifier());
+
+			if($test_profile->is_test_installed() == false || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || (pts_c::$test_flags & pts_c::force_install))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	public function is_supported()
 	{
-		$tests = pts_contained_tests($this->identifier, false, false, true);
 		$supported_size = $original_size = count($tests);
 
-		foreach($tests as &$test)
+		foreach(pts_types::identifiers_to_test_profile_objects($this->identifier, false, true) as $test_profile)
 		{
-			$test_profile = new pts_test_profile($test);
-
 			if($test_profile->is_supported() == false)
 			{
 				$supported_size--;
@@ -83,7 +93,7 @@ class pts_test_suite
 	}
 	public function get_unique_test_count()
 	{
-		return count(pts_contained_tests($this->identifier));
+		return count(pts_types::identifiers_to_test_profile_objects($this->identifier, false, true));
 	}
 	public function get_maintainer()
 	{

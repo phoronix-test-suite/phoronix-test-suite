@@ -42,7 +42,7 @@ class task_cache_reference_comparison_xml implements pts_option_interface
 					$reference_xml = pts_global::download_result_xml($reference_id);
 					file_put_contents("/var/cache/phoronix-test-suite/reference-comparisons/" . $reference_id . ".xml", $reference_xml);
 				}
-				else if(!pts_is_test_result($reference_id))
+				else if(pts_result_file::is_test_result_file($reference_id) == false)
 				{
 					pts_global::clone_global_result($reference_id, false);
 				}

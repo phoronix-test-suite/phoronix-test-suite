@@ -77,7 +77,8 @@ class pts_suites
 
 		foreach(pts_suites::available_suites() as $suite)
 		{
-			if(pts_suite_needs_updated_install($suite) == false)
+			$suite = new pts_test_suite($suite);
+			if($suite->needs_updated_install() == false)
 			{
 				array_push($installed_suites, $suite);
 			}

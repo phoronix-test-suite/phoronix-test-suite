@@ -25,7 +25,6 @@ class clone_global_result implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "!pts_is_test_result", null, "A saved result already exists with the same name."),
 		new pts_argument_check(0, array("pts_global", "is_global_id"), null, "No Phoronix Global result found.")
 		);
 	}

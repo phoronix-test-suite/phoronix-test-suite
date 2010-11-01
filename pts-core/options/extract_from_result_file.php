@@ -54,7 +54,7 @@ class extract_from_result_file implements pts_option_interface
 			echo "\nEnter new result file to extract to: ";
 			$extract_to = pts_user_io::read_user_input();
 		}
-		while(empty($extract_to) || pts_is_test_result($extract_to));
+		while(empty($extract_to) || pts_result_file::is_test_result_file($extract_to));
 
 		$extract_result = call_user_func_array(array("pts_merge", "merge_test_results"), $extract_selects);
 		pts_client::save_test_result($extract_to . "/composite.xml", $extract_result);

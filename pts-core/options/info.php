@@ -77,7 +77,7 @@ class info implements pts_option_interface
 
 			echo "\nDescription: " . $args["object"]->get_description() . "\n";
 
-			if(pts_test_installed($to_info))
+			if($args["object"]->is_test_installed())
 			{
 				$installed_test = new pts_installed_test($to_info);
 				$last_run = $installed_test->get_last_run_date();
@@ -112,14 +112,6 @@ class info implements pts_option_interface
 			{
 				echo "\nSoftware Dependencies:\n";
 				echo pts_user_io::display_text_list($args["object"]->get_dependency_names());
-			}
-
-			$associated_suites = $args["object"]->suites_containing_test();
-			if(count($associated_suites) > 0)
-			{
-				asort($associated_suites);
-				echo "\nSuites Using This Test:\n";
-				echo pts_user_io::display_text_list($associated_suites);
 			}
 			echo "\n";
 		}

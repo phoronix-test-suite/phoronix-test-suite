@@ -100,7 +100,7 @@ class pts_types
 			{
 				array_push($objects, $identifier_item);
 			}
-			else if(pts_test_profile::is_test($identifier_item)) // Object is a test
+			else if(pts_test_profile::is_test_profile($identifier_item)) // Object is a test
 			{
 				array_push($objects, new pts_test_profile($identifier_item));
 			}
@@ -108,7 +108,7 @@ class pts_types
 			{
 				array_push($objects, new pts_test_suite($identifier_item));
 			}
-			else if(pts_is_test_result($identifier_item)) // Object is a saved results file
+			else if(pts_result_file::is_test_result_file($identifier_item)) // Object is a saved results file
 			{
 				array_push($objects, new pts_result_file($identifier_item));
 			}
@@ -118,6 +118,7 @@ class pts_types
 				pts_global::clone_global_result($identifier_item);
 				array_push($objects, new pts_result_file($identifier_item));
 			}
+			// add support for virtual suites: free, all, local, installed-tests
 			// TODO XXX: Restore support for virtual suites
 			/*
 			else if(pts_is_virtual_suite($identifier_item))

@@ -25,12 +25,18 @@ class remove_installed_test implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "pts_test_installed", null, "No installed test found.")
+		new pts_argument_check(0, array("pts_test_profile", "is_test_profile"), null, "No test found.")
 		);
 	}
 	public static function run($r)
 	{
-		$identifier = $r[0];
+		$test_profile = new pts_test_profile($r[0]);
+
+		if($test_profile->is_test_installed() == false)
+		{
+			echo "\nThis test is not installed.\n";
+			return false;
+		}
 
 		if(pts_user_io::prompt_bool_input("Are you sure you wish to remove the test " . $identifier, false))
 		{

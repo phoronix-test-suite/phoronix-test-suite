@@ -158,21 +158,9 @@ class pts_external_dependencies
 	}
 	public static function all_dependency_names()
 	{
-		$all_test_dependencies = array();
-		foreach(pts_contained_tests("all", true) as $identifier)
-		{
-			$test_profile = new pts_test_profile($identifier);
+		$xml_parser = new pts_external_dependencies_tandem_XmlReader(STATIC_DIR . "distro-xml/generic-packages.xml");
 
-			foreach($test_profile->get_dependencies() as $test_dependency)
-			{
-				if(!in_array($test_dependency, $all_test_dependencies))
-				{
-					array_push($all_test_dependencies, $test_dependency);
-				}
-			}
-		}
-
-		return $all_test_dependencies;
+		return $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 	}
 	public static function all_dependency_titles()
 	{
