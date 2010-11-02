@@ -177,16 +177,15 @@ abstract class pts_Graph
 		if($result_file != null && $result_file instanceOf pts_result_file)
 		{
 			//$this->addInternalIdentifier("Identifier", null); // TODO: result file name
-
 			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
-			if(empty($pts_version))
-			{
-				$pts_version = PTS_VERSION;
-			}
-
-			$this->graph_version = "Phoronix Test Suite " . $pts_version;
 		}
 
+		if(!isset($pts_version) || empty($pts_version))
+		{
+			$pts_version = PTS_VERSION;
+		}
+
+		$this->graph_version = "Phoronix Test Suite " . $pts_version;
 		$this->graph_font = $font_type;
 	}
 	public function read_graph_config($xml_path)

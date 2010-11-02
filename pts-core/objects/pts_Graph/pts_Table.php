@@ -27,53 +27,53 @@ class pts_Table extends pts_Graph
 	protected $columns;
 	protected $table_data;
 	protected $longest_column_identifier;
-	protected $result_object_index;
+	protected $longest_row_identifier;
+	protected $result_object_index = -1;
 
-	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
+	public function __construct($rows, $columns, $table_data)
 	{
-		$result_object = null;
-		parent::__construct($result_object, $result_file);
+		parent::__construct();
 		$this->graph_attr_big_border = false;
-		$this->result_object_index = $result_object_index;
+		$this->rows = $rows;
+		$this->columns = $columns;
+		$this->table_data = $table_data;
 
-		list($this->rows, $this->columns, $this->table_data) = $result_file->get_result_table($system_id_keys, $result_object_index);
+		// Do some calculations
 		$this->longest_column_identifier = $this->find_longest_string($this->columns);
+		$this->longest_row_identifier = $this->find_longest_string($this->rows);
 		$this->graph_maximum_value = $this->find_longest_string($this->table_data);
+
+		// where to start the table values
+		$this->longest_row_identifier = null;
+		$longest_row_title_length = 0;
+		foreach($this->rows as $result_test)
+		{
+			if(($len = strlen($result_test[0])) > $longest_row_title_length)
+			{
+				$this->longest_row_identifier = $result_test[0];
+				$longest_row_title_length = $len;
+			}
+		}
+	}
+	public static function CreateFromResultFile(&$result_file, $system_id_keys = null, $result_object_index = -1)
+	{
+		list($rows, $columns, $table_data) = $result_file->get_result_table($system_id_keys, $result_object_index);
+		$table = new pts_Table($rows, $columns, $table_data);
+		$table->result_object_index = $result_object_index;
+		return $table;
 	}
 	public function renderChart($file = null)
 	{
-		// where to start the table values
-		$longest_test_title_length = 0;
-		$longest_test_title = null;
-
-		foreach($this->rows as $result_test)
-		{
-			if(($len = strlen($result_test[0])) > $longest_test_title_length)
-			{
-				$longest_test_title = $result_test[0];
-				$longest_test_title_length = $len;
-			}
-		}
-
-		$this->graph_left_start = $this->text_string_width($longest_test_title, $this->graph_font, $this->graph_font_size_identifiers) + 10;
-		unset($longest_test_title, $longest_test_title_length);
+		// Needs to be at least 170px wide for the PTS logo
+		$this->graph_left_start = max(170, $this->text_string_width($this->longest_row_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 10);
 
 		$identifier_height = $this->text_string_width($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 12;
 
-		// Make room for the PTS logo on Phoromatic
-		if($this->graph_left_start < 170)
-		{
-			$this->graph_left_start = 170;
-		}
-
 		// $this->graph_maximum_value isn't actually correct to use, but it works
 		$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 2;
-		$identifier_height += $extra_heading_height;
 
-		if($identifier_height < 90)
-		{
-			$identifier_height = 90;
-		}
+		// Needs to be at least 90px tall for the PTS logo
+		$identifier_height = max($identifier_height, 90);
 
 		$table_identifier_width = $this->text_string_height($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers);
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
@@ -83,6 +83,8 @@ class pts_Table extends pts_Graph
 		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 8;
 		$table_line_height_half = ($table_line_height / 2);
 		$table_height = $table_line_height * count($this->rows);
+
+		// The identifer_height needs to be at least 90px for the PTS logo
 		$table_proper_height = $table_height + $identifier_height;
 
 		$this->graph_attr_width = $table_width + $this->graph_left_start;
