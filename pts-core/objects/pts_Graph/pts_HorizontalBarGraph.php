@@ -52,17 +52,15 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			$middle_of_vert = $this->graph_top_start + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.6);
+			$middle_of_vert = $this->graph_top_start + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.5);
 
 			if($multi_way)
 			{
-				$start_of_vert = $this->graph_top_start + ($this->identifier_height * count($this->graph_data[$i]) * $i);
 				$font_size = $this->text_size_bounds($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, 4, ($this->identifier_height * count($this->graph_data[$i])));
-				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $font_size, $this->graph_color_headers, 20, $start_of_vert, 20, $start_of_vert + ($this->identifier_height * count($this->graph_data[$i])), true);
+				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $font_size, $this->graph_color_headers, 20, $middle_of_vert, 20, $middle_of_vert, true);
 			}
 			else
 			{
-				$middle_of_vert = $this->graph_top_start + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.6);
 				$this->graph_image->write_text_right($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, ($this->graph_left_start - 5), $middle_of_vert, ($this->graph_left_start - 5), $middle_of_vert);
 			}
 		}

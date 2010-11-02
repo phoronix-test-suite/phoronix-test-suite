@@ -516,7 +516,7 @@ abstract class pts_Graph
 				if($this->is_multi_way_comparison)
 				{
 					// TODO: verify this is good and covered for all scenarios
-					$longest_identifier_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 50;
+					$longest_identifier_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 65;
 				}
 				else
 				{
