@@ -28,7 +28,7 @@ class pts_tests
 
 		if($cache == null)
 		{
-			$tests = glob(XML_PROFILE_DIR . "*.xml");
+			$tests = glob(PTS_TEST_PROFILE_PATH . "*/test-definition.xml");
 
 			if($tests == false)
 			{
@@ -39,7 +39,7 @@ class pts_tests
 
 			foreach($tests as &$test)
 			{
-				$test = basename($test, ".xml");
+				$test = basename(dirname($test));
 			}
 
 			$cache = $tests;

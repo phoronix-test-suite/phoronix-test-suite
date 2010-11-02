@@ -63,9 +63,8 @@ function pts_define_directories()
 	define("RESULTS_VIEWER_DIR", PTS_CORE_PATH . "results-viewer/");
 
 	// Test & Suite Locations
-	define("XML_PROFILE_DIR", PTS_PATH . "pts/test-profiles/");
-	define("XML_SUITE_DIR", PTS_PATH . "pts/test-suites/");
-	define("TEST_RESOURCE_DIR", PTS_PATH . "pts/test-resources/");
+	define("PTS_TEST_PROFILE_PATH", PTS_PATH . "pts/test-profiles/");
+	define("PTS_TEST_SUITE_PATH", PTS_PATH . "pts/test-suites/");
 	//define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
 	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
 }

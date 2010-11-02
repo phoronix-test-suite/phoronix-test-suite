@@ -32,9 +32,9 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 	{
 		pts_load_xml_definitions("test-profile.xml");
 
-		if(!is_file($read_xml) && is_file(XML_PROFILE_DIR . $read_xml . ".xml"))
+		if(!is_file($read_xml) && is_file(PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml"))
 		{
-			$read_xml = XML_PROFILE_DIR . $read_xml . ".xml";
+			$read_xml = PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml";
 		}
 
 		$this->override_values = array();

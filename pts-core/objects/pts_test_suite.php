@@ -28,7 +28,7 @@ class pts_test_suite extends pts_test_suite_parser
 	}
 	public static function is_suite($identifier)
 	{
-		return is_file(XML_SUITE_DIR . $identifier . ".xml");
+		return is_file(PTS_TEST_SUITE_PATH . $identifier . ".xml");
 	}
 	public function needs_updated_install()
 	{

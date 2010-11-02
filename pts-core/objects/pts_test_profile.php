@@ -24,7 +24,7 @@ class pts_test_profile extends pts_test_profile_parser
 {
 	public static function is_test_profile($identifier)
 	{
-		return is_file(XML_PROFILE_DIR . $identifier . ".xml");
+		return is_file(PTS_TEST_PROFILE_PATH . $identifier . "/test-definition.xml");
 	}
 	public function __construct($identifier, $override_values = null)
 	{
@@ -274,7 +274,7 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_resource_dir()
 	{
-		return TEST_RESOURCE_DIR . $this->identifier . '/';
+		return PTS_TEST_PROFILE_PATH . $this->identifier . '/';
 	}
 	public function get_file_installer()
 	{

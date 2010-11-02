@@ -32,9 +32,9 @@ class pts_suite_tandem_XmlReader extends tandem_XmlReader
 	{
 		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
 		{
-			if(is_file(XML_SUITE_DIR . $read_xml . ".xml"))
+			if(is_file(PTS_TEST_SUITE_PATH . $read_xml . ".xml"))
 			{
-				$read_xml = XML_SUITE_DIR . $read_xml . ".xml";
+				$read_xml = PTS_TEST_SUITE_PATH . $read_xml . ".xml";
 			}
 		}
 

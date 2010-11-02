@@ -29,7 +29,7 @@ class pts_suites
 
 		if($cache == null)
 		{
-			$suites = glob(XML_SUITE_DIR . "*.xml");
+			$suites = glob(PTS_TEST_SUITE_PATH . "*.xml");
 
 			if($suites == false)
 			{
