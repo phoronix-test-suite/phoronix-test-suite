@@ -29,6 +29,7 @@ class pts_Table extends pts_Graph
 	protected $longest_column_identifier;
 	protected $longest_row_identifier;
 	protected $result_object_index = -1;
+	protected $column_heading_vertical = true;
 
 	public function __construct($rows, $columns, $table_data)
 	{
@@ -42,24 +43,59 @@ class pts_Table extends pts_Graph
 		$this->longest_column_identifier = $this->find_longest_string($this->columns);
 		$this->longest_row_identifier = $this->find_longest_string($this->rows);
 		$this->graph_maximum_value = $this->find_longest_string($this->table_data);
-
-		// where to start the table values
-		$this->longest_row_identifier = null;
-		$longest_row_title_length = 0;
-		foreach($this->rows as $result_test)
-		{
-			if(($len = strlen($result_test[0])) > $longest_row_title_length)
-			{
-				$this->longest_row_identifier = $result_test[0];
-				$longest_row_title_length = $len;
-			}
-		}
 	}
 	public static function CreateFromResultFile(&$result_file, $system_id_keys = null, $result_object_index = -1)
 	{
 		list($rows, $columns, $table_data) = $result_file->get_result_table($system_id_keys, $result_object_index);
 		$table = new pts_Table($rows, $columns, $table_data);
 		$table->result_object_index = $result_object_index;
+
+		// where to start the table values
+		$table->longest_row_identifier = null;
+		$longest_row_title_length = 0;
+		foreach($table->rows as $result_test)
+		{
+			if(($len = strlen($result_test[0])) > $longest_row_title_length)
+			{
+				$table->longest_row_identifier = $result_test[0];
+				$longest_row_title_length = $len;
+			}
+		}
+
+		return $table;
+	}
+	public static function CreateFromResultFile_Systems(&$result_file)
+	{
+		$columns = $result_file->get_system_identifiers();
+		$rows = array();
+		$table_data = array();
+
+		foreach($result_file->get_system_hardware() as $info_string)
+		{
+			$col = array();
+			foreach(explode(', ', $info_string) as $component)
+			{
+				$c_pos = strpos($component, ': ');
+
+				if($c_pos !== false)
+				{
+					$index = substr($component, 0, $c_pos);
+					$value = substr($component, ($c_pos + 2));
+
+					if(isset($rows[$index]) == false)
+					{
+						$rows[$index] = $index;
+					}
+					array_push($col, $value);				
+				}
+			}
+			array_push($table_data, $col);
+		}
+
+		$table = new pts_Table($rows, $columns, $table_data);
+		$table->graph_font_size_identifiers *= 0.8;
+		$table->column_heading_vertical = false;
+
 		return $table;
 	}
 	public function renderChart($file = null)
@@ -67,7 +103,16 @@ class pts_Table extends pts_Graph
 		// Needs to be at least 170px wide for the PTS logo
 		$this->graph_left_start = max(170, $this->text_string_width($this->longest_row_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 10);
 
-		$identifier_height = $this->text_string_width($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 12;
+		if($this->column_heading_vertical)
+		{
+			$identifier_height = $this->text_string_width($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 12;
+			$table_identifier_width = $this->text_string_height($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers);
+		}
+		else
+		{
+			$identifier_height = $this->text_string_height($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 8;
+			$table_identifier_width = $this->text_string_width($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers);
+		}
 
 		// $this->graph_maximum_value isn't actually correct to use, but it works
 		$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 2;
@@ -75,7 +120,6 @@ class pts_Table extends pts_Graph
 		// Needs to be at least 90px tall for the PTS logo
 		$identifier_height = max($identifier_height, 90);
 
-		$table_identifier_width = $this->text_string_height($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers);
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
 
 		$table_item_width = max($table_max_value_width, $table_identifier_width) + 8;
@@ -118,19 +162,44 @@ class pts_Table extends pts_Graph
 
 		// Write the test names
 		$row = 0;
-		foreach($this->rows as $i => $test)
+		foreach($this->rows as $i => $row_string)
 		{
-			$this->graph_image->write_text_right($test[0], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, false, "#b-" . $row, $test[1], true);
+			if(is_array($row_string))
+			{
+				$hover = $row_string[1];
+				$row_string = $row_string[0];
+			}
+			else
+			{
+				$hover = null;
+			}
+
+			$this->graph_image->write_text_right($row_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, false, "#b-" . $row, $hover, true);
 			$row++;
 		}
 
 		// Write the identifiers
 		$table_identifier_offset = ($table_item_width / 2) + ($table_identifier_width / 2) - 1;
-		foreach($this->columns as $i => $system_identifier)
+		foreach($this->columns as $i => $col_string)
 		{
-			$link = $system_identifier[1] != null ? "?k=system_logs&u=" . $system_identifier[1] . "&ts=" . $system_identifier[0] : null;
+			if(is_array($col_string))
+			{
+				$link = $col_string[1] != null ? "?k=system_logs&u=" . $col_string[1] . "&ts=" . $col_string[0] : null;
+				$col_string = $col_string[0];
+			}
+			else
+			{
+				$link = null;
+			}
 
-			$this->graph_image->write_text_right($system_identifier[0], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, 90, $link, null, true);
+			if($this->column_heading_vertical)
+			{
+				$this->graph_image->write_text_right($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, 90, $link, null, true);
+			}
+			else
+			{
+				$this->graph_image->write_text_center($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width), ($identifier_height / 2), $this->graph_left_start + (($i + 1) * $table_item_width), ($identifier_height / 2), false, $link, null, true);
+			}
 		}
 
 		// Write the values
@@ -138,7 +207,6 @@ class pts_Table extends pts_Graph
 
 		foreach($this->table_data as &$table_values)
 		{
-
 			if(!is_array($table_values))
 			{
 				// TODO: determine why sometimes $table_values is empty or not an array
@@ -152,36 +220,45 @@ class pts_Table extends pts_Graph
 				$text_color = $this->graph_color_text;
 				$bold = false;
 
-				if($result_table_value->get_standard_deviation_percent() > 0)
+				if($result_table_value instanceof pts_table_value)
 				{
-					array_push($hover, "STD Dev: " . $result_table_value->get_standard_deviation_percent() . "%");
-				}
-				if($result_table_value->get_standard_error() != 0)
-				{
-					array_push($hover, " STD Error: " . $result_table_value->get_standard_error());
-				}
-
-				if(defined("PHOROMATIC_TRACKER") && $result_table_value->get_delta() != 0)
-				{
-					$bold = true;
-					if($result_table_value->get_delta() < 0)
+					if($result_table_value->get_standard_deviation_percent() > 0)
 					{
-						$text_color = $this->graph_color_alert;
+						array_push($hover, "STD Dev: " . $result_table_value->get_standard_deviation_percent() . "%");
 					}
-					else
+					if($result_table_value->get_standard_error() != 0)
+					{
+						array_push($hover, " STD Error: " . $result_table_value->get_standard_error());
+					}
+
+					if(defined("PHOROMATIC_TRACKER") && $result_table_value->get_delta() != 0)
+					{
+						$bold = true;
+						if($result_table_value->get_delta() < 0)
+						{
+							$text_color = $this->graph_color_alert;
+						}
+						else
+						{
+							$text_color = $this->graph_color_headers;
+						}
+
+						array_push($hover, " Change: " . pts_math::set_precision(100 * $result_table_value->get_delta(), 2) . "%");
+					}
+					else if($result_table_value->get_highlight() == true)
 					{
 						$text_color = $this->graph_color_headers;
+						$bold = true;
 					}
 
-					array_push($hover, " Change: " . pts_math::set_precision(100 * $result_table_value->get_delta(), 2) . "%");
+					$value = $result_table_value->get_value();
 				}
-				else if($result_table_value->get_highlight() == true)
+				else
 				{
-					$text_color = $this->graph_color_headers;
-					$bold = true;
+					$value = $result_table_value;
 				}
 
-				$this->graph_image->write_text_right($result_table_value->get_value(), $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width) - 3, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width) - 3, $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, implode("; ", $hover), $bold);
+				$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width) - 3, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width) - 3, $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, implode("; ", $hover), $bold);
 				//$row++;
 			}
 			$col++;

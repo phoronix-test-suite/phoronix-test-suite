@@ -203,6 +203,10 @@ class pts_render
 		{
 			$chart = pts_Table::CreateFromResultFile($result_file);
 			$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
+
+			$chart = pts_Table::CreateFromResultFile_Systems($result_file);
+			$chart->renderChart($save_to_dir . "/result-graphs/systems.BILDE_EXTENSION");
+			unset($chart);
 		}
 
 		foreach($result_file->get_result_objects() as $key => $result_object)
@@ -235,6 +239,7 @@ class pts_render
 
 					$chart = pts_Table::CreateFromResultFile($result_file, null, $table_keys);
 					$chart->renderChart($save_to_dir . "/result-graphs/" . ($key + 1) . "_table.BILDE_EXTENSION");
+					unset($chart);
 					$generated_graph_tables = true;
 				}
 			}
