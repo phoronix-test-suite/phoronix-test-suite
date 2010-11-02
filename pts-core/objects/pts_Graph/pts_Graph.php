@@ -22,7 +22,7 @@
 */
 
 // Since the graph_config should be the same for the duration, only create it once rather than creating it everytime a graph is made
-//if(PTS_MODE == "CLIENT" || (defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
+//if(PTS_IS_CLIENT || (defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
 pts_Graph::$graph_config = new pts_graph_config_tandem_XmlReader();
 
 abstract class pts_Graph
@@ -353,7 +353,7 @@ abstract class pts_Graph
 
 		if(!isset($used_paint_colors[$identifier]))
 		{
-			if(PTS_MODE == "CLIENT" && pts_client::read_env("GRAPH_GROUP_SIMILAR"))
+			if(PTS_IS_CLIENT && pts_client::read_env("GRAPH_GROUP_SIMILAR"))
 			{
 				static $groups;
 

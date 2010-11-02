@@ -34,7 +34,7 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 
 		$file = null;
 
-		if(PTS_MODE == "CLIENT")
+		if(PTS_IS_CLIENT)
 		{
 			if(is_file(PTS_USER_DIR . "graph-config.xml"))
 			{
@@ -81,7 +81,7 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 
 			$fallback_value = $fallback_reader->getXMLValue($xml_tag);
 		}
-		else if(PTS_MODE == "CLIENT")
+		else if(PTS_IS_CLIENT)
 		{
 			echo "\nUndefined Graph Config Option: $xml_tag\n";
 		}

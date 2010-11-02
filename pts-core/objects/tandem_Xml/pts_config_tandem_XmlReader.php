@@ -63,7 +63,7 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 
 			$fallback_value = $fallback_reader->getXMLValue($xml_tag);
 		}
-		else if(PTS_MODE == "CLIENT")
+		else if(PTS_IS_CLIENT)
 		{
 			echo "\nUndefined Config Option: $xml_tag\n";
 		}

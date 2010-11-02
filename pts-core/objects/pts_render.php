@@ -172,7 +172,7 @@ class pts_render
 			$graph->saveGraphToFile($save_as);
 		}
 
-		if(PTS_MODE == "CLIENT")
+		if(PTS_IS_CLIENT)
 		{
 			self::$previous_graph_object = $graph;
 		}
@@ -217,7 +217,7 @@ class pts_render
 			{
 				$save_to .= "/result-graphs/" . ($key + 1) . ".BILDE_EXTENSION";
 
-				if(PTS_MODE == "CLIENT")
+				if(PTS_IS_CLIENT)
 				{
 					if($result_file->is_multi_way_comparison() || pts_client::read_env("GRAPH_GROUP_SIMILAR"))
 					{

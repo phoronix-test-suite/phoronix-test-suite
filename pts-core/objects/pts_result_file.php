@@ -339,7 +339,7 @@ class pts_result_file
 						}
 						else
 						{
-							if(false && PTS_MODE == "CLIENT" && $this->is_multi_way_comparison())
+							if(PTS_IS_CLIENT && $this->is_multi_way_comparison())
 							{
 								// TODO: make it work better for highlighting multiple winners in multi-way comparisons
 								$highlight = false;

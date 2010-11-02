@@ -26,7 +26,7 @@ define("PTS_CORE_VERSION", 2920);
 define("PTS_CODENAME", "IVELAND");
 define("PTS_IS_CLIENT", PTS_MODE == "CLIENT");
 
-if(PTS_MODE == "CLIENT")
+if(PTS_IS_CLIENT)
 {
 	error_reporting(E_ALL | E_NOTICE | E_STRICT);
 }
@@ -46,7 +46,7 @@ function pts_define_directories()
 	// User's home directory for storing results, module files, test installations, etc.
 	define("PTS_CORE_PATH", PTS_PATH . "pts-core/");
 
-	if(PTS_MODE == "CLIENT")
+	if(PTS_IS_CLIENT)
 	{
 		define("PTS_USER_DIR", pts_client::user_home_directory() . ".phoronix-test-suite/");
 		define("PTS_CORE_STORAGE", PTS_USER_DIR . "core.pt2so");
@@ -98,7 +98,7 @@ function pts_load_xml_definitions($definition_file)
 	return true;
 }
 
-if(PTS_MODE == "CLIENT" || defined("PTS_AUTO_LOAD_OBJECTS"))
+if(PTS_IS_CLIENT || defined("PTS_AUTO_LOAD_OBJECTS"))
 {
 	function __autoload($to_load)
 	{

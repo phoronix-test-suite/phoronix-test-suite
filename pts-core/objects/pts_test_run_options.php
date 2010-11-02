@@ -209,7 +209,7 @@ class pts_test_run_options
 				// Base options off available screen resolutions
 				if(count($option_names) == 1 && count($option_values) == 1)
 				{
-					$available_video_modes = PTS_MODE == "CLIENT" ? phodevi::read_property("gpu", "available-modes") : null;
+					$available_video_modes = PTS_IS_CLIENT ? phodevi::read_property("gpu", "available-modes") : null;
 
 					if(empty($available_video_modes))
 					{
@@ -239,7 +239,7 @@ class pts_test_run_options
 			case "auto-disk-partitions":
 			case "auto-disk-mount-points":
 				// Base options off available disk partitions
-				if(PTS_MODE != "CLIENT")
+				if(PTS_IS_CLIENT == false)
 				{
 					echo "ERROR: This option is not supported in this configuration.";
 					return;
@@ -303,7 +303,7 @@ class pts_test_run_options
 				break;
 			case "auto-disks":
 				// Base options off attached disks
-				if(PTS_MODE != "CLIENT")
+				if(PTS_IS_CLIENT == false)
 				{
 					echo "ERROR: This option is not supported in this configuration.";
 					return;
@@ -327,7 +327,7 @@ class pts_test_run_options
 				$option_names = $option_values;
 				break;
 			case "auto-removable-media":
-				if(PTS_MODE != "CLIENT")
+				if(PTS_IS_CLIENT == false)
 				{
 					echo "ERROR: This option is not supported in this configuration.";
 					return;
@@ -343,7 +343,7 @@ class pts_test_run_options
 				}
 				break;
 			case "auto-file-select":
-				if(PTS_MODE != "CLIENT")
+				if(PTS_IS_CLIENT == false)
 				{
 					echo "ERROR: This option is not supported in this configuration.";
 					return;
@@ -364,7 +364,7 @@ class pts_test_run_options
 				}
 				break;
 			case "auto-directory-select":
-				if(PTS_MODE != "CLIENT")
+				if(PTS_IS_CLIENT == false)
 				{
 					echo "ERROR: This option is not supported in this configuration.";
 					return;

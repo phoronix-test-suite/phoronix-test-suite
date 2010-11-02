@@ -36,7 +36,7 @@ class pts_result_file_writer
 		$this->xml_writer = new tandem_XmlWriter();
 		$this->xml_writer->setXslBinding("pts-results-viewer.xsl");
 
-		if(PTS_MODE == "CLIENT")
+		if(PTS_IS_CLIENT)
 		{
 			$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_TIMESTAMP, -2, date("Y-m-d H:i:s"));
 			$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_CLIENT_STRING, -2, pts_title(true));
