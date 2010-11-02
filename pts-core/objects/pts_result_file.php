@@ -146,10 +146,10 @@ class pts_result_file
 
 			foreach($identifiers as &$identifier)
 			{
-				$identifier = pts_strings::remove_from_string($identifier, pts_strings::CHAR_NUMERIC);
+				$identifier = pts_strings::remove_from_string($identifier, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL);
 			}
 
-			$is_tracker = count($identifiers) > 5 && count(array_unique($identifiers)) == 1;
+			$is_tracker = count($identifiers) > 5 && count(array_unique($identifiers)) <= 1;
 		}
 
 		return $is_tracker;

@@ -513,7 +513,16 @@ abstract class pts_Graph
 		{
 			if($this->graph_orientation == "HORIZONTAL")
 			{
-				$longest_identifier_width = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 6;
+				if($this->is_multi_way_comparison)
+				{
+					// TODO: verify this is good and covered for all scenarios
+					$longest_identifier_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 50;
+				}
+				else
+				{
+					$longest_identifier_width = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 6;
+				}
+
 				$longest_identifier_max = $this->graph_attr_width * 0.5;
 
 				$this->graph_left_start = min($longest_identifier_max, max($longest_identifier_width, 70));
@@ -533,13 +542,18 @@ abstract class pts_Graph
 
 			if($this->graph_orientation == "HORIZONTAL")
 			{
-				if(count($this->graph_data_title) > 3)
+				if($this->is_multi_way_comparison && count($this->graph_data) > 1)
+				{
+					$per_identifier_height = 22 * count($this->graph_data);
+				}
+				else if(count($this->graph_data_title) > 3)
 				{
 					$per_identifier_height = count($this->graph_data_title) * 14;
 				}
 				else
 				{
-					$per_identifier_height = 46;
+					// If there's too much to plot, reduce the size so each graph doesn't take too much room
+					$per_identifier_height = count($this->graph_data[0]) > 10 ? 36 : 46;
 				}
 
 

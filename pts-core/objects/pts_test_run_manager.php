@@ -738,7 +738,7 @@ class pts_test_run_manager
 
 					if($run_object->is_test_installed() == false)
 					{
-						array_push($test_missing, $run_object);
+						array_push($tests_missing, $run_object);
 						continue;
 					}
 				}
@@ -750,7 +750,7 @@ class pts_test_run_manager
 				{
 					if($test_profile->is_test_installed() == false)
 					{
-						array_push($test_missing, $run_object);
+						array_push($tests_missing, $run_object);
 					}
 					else
 					{
@@ -777,7 +777,7 @@ class pts_test_run_manager
 				{
 					if($test_profile->is_test_installed() == false)
 					{
-						array_push($test_missing, $run_object);
+						array_push($tests_missing, $run_object);
 					}
 					else
 					{

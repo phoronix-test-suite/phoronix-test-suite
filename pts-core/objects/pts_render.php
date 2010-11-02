@@ -420,7 +420,7 @@ class pts_render
 			if($is_tracking)
 			{
 				// Check to see if only numeric changes are being made
-				$date = pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC);
+				$date = pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL);
 
 				if($prev_date != null && $date != $prev_date)
 				{

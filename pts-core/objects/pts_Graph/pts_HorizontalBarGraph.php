@@ -48,11 +48,23 @@ class pts_HorizontalBarGraph extends pts_Graph
 		$px_from_top_end = $this->graph_top_end + 5;
 
 		$this->graph_image->draw_dashed_line($this->graph_left_start, $this->graph_top_start + $this->identifier_height, $this->graph_left_start, $this->graph_top_end - ($this->graph_attr_height % $this->identifier_height), $this->graph_color_notches, 10, 1, $this->identifier_height - 1);
+		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
 			$middle_of_vert = $this->graph_top_start + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.6);
-			$this->graph_image->write_text_right($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, ($this->graph_left_start - 5), $middle_of_vert, ($this->graph_left_start - 5), $middle_of_vert);
+
+			if($multi_way)
+			{
+				$start_of_vert = $this->graph_top_start + ($this->identifier_height * count($this->graph_data[$i]) * $i);
+				$font_size = $this->text_size_bounds($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, 4, ($this->identifier_height * count($this->graph_data[$i])));
+				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $font_size, $this->graph_color_headers, 20, $start_of_vert, 20, $start_of_vert + ($this->identifier_height * count($this->graph_data[$i])), true);
+			}
+			else
+			{
+				$middle_of_vert = $this->graph_top_start + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.6);
+				$this->graph_image->write_text_right($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, ($this->graph_left_start - 5), $middle_of_vert, ($this->graph_left_start - 5), $middle_of_vert);
+			}
 		}
 	}
 	protected function render_graph_bars()
@@ -61,6 +73,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 		$separator_height = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$bar_height = floor(($this->identifier_height - $separator_height - ($bar_count * $separator_height)) / $bar_count);
 		$highlight_bar = PTS_MODE == "CLIENT" ? pts_strings::comma_explode(pts_client::read_env("GRAPH_HIGHLIGHT")) : false;
+		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -98,7 +111,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 						$this->graph_image->draw_line(($value_end_left - $std_error_rel_size), $px_bound_top, ($value_end_left + $std_error_rel_size), $px_bound_top, $this->graph_color_notches, 1);
 					}
 
-					$bar_offset_34 = $middle_of_bar + ($bar_height / 5) + 1;
+					$bar_offset_34 = $middle_of_bar + ($multi_way ? 0 : ($bar_height / 5) + 1);
 					$this->graph_image->write_text_right("SE +/- " . pts_math::set_precision($std_error, 2), $this->graph_font, $this->graph_font_size_identifiers - 2, $this->graph_color_text, ($this->graph_left_start - 5), $bar_offset_34, ($this->graph_left_start - 5), $bar_offset_34);
 				}
 
