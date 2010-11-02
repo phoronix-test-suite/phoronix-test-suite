@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_result_table_value
+class pts_table_value
 {
 	private $value_string;
 	private $std_percent;
@@ -36,7 +36,11 @@ class pts_result_table_value
 		$this->delta = $delta;
 		$this->highlight = $highlight;
 	}
-	public function get_value_string()
+	public function __toString()
+	{
+		return $this->value_string;
+	}
+	public function get_value()
 	{
 		return $this->value_string;
 	}

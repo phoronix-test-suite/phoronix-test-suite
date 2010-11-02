@@ -445,7 +445,7 @@ abstract class pts_Graph
 
 		return $font_size;
 	}
-	protected function find_longest_string($string_r)
+	protected function find_longest_string(&$string_r)
 	{
 		$longest_string = null;
 		$longest_string_length = 0;
@@ -457,6 +457,11 @@ abstract class pts_Graph
 
 		foreach($string_r as $one_string)
 		{
+			if(is_array($one_string))
+			{
+				$one_string = $this->find_longest_string($one_string);
+			}
+
 			if(($new_length = strlen($one_string)) > $longest_string_length)
 			{
 				$longest_string = $one_string;
@@ -544,7 +549,7 @@ abstract class pts_Graph
 			{
 				if($this->is_multi_way_comparison && count($this->graph_data) > 1)
 				{
-					$per_identifier_height = 22 * count($this->graph_data);
+					$per_identifier_height = 18 * count($this->graph_data);
 				}
 				else if(count($this->graph_data_title) > 3)
 				{

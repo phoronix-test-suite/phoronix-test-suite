@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2009 - 2010, Phoronix Media
 	Copyright (C) 2009 - 2010, Michael Larabel
-	pts_Chart.php: A charting object for pts_Graph
+	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_Chart extends pts_Graph
+class pts_Table extends pts_Graph
 {
-	protected $result_tests;
-	protected $result_table;
-	protected $result_systems;
-	protected $longest_system_identifier;
+	protected $rows;
+	protected $columns;
+	protected $table_data;
+	protected $longest_column_identifier;
 	protected $result_object_index;
 
 	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
@@ -36,7 +36,9 @@ class pts_Chart extends pts_Graph
 		$this->graph_attr_big_border = false;
 		$this->result_object_index = $result_object_index;
 
-		list($this->result_tests, $this->result_systems, $this->result_table, $this->graph_maximum_value, $this->longest_system_identifier) = $result_file->get_result_table($system_id_keys, $result_object_index);
+		list($this->rows, $this->columns, $this->table_data) = $result_file->get_result_table($system_id_keys, $result_object_index);
+		$this->longest_column_identifier = $this->find_longest_string($this->columns);
+		$this->graph_maximum_value = $this->find_longest_string($this->table_data);
 	}
 	public function renderChart($file = null)
 	{
@@ -44,7 +46,7 @@ class pts_Chart extends pts_Graph
 		$longest_test_title_length = 0;
 		$longest_test_title = null;
 
-		foreach($this->result_tests as $result_test)
+		foreach($this->rows as $result_test)
 		{
 			if(($len = strlen($result_test[0])) > $longest_test_title_length)
 			{
@@ -56,7 +58,7 @@ class pts_Chart extends pts_Graph
 		$this->graph_left_start = $this->text_string_width($longest_test_title, $this->graph_font, $this->graph_font_size_identifiers) + 10;
 		unset($longest_test_title, $longest_test_title_length);
 
-		$identifier_height = $this->text_string_width($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 12;
+		$identifier_height = $this->text_string_width($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 12;
 
 		// Make room for the PTS logo on Phoromatic
 		if($this->graph_left_start < 170)
@@ -73,14 +75,14 @@ class pts_Chart extends pts_Graph
 			$identifier_height = 90;
 		}
 
-		$table_identifier_width = $this->text_string_height($this->longest_system_identifier, $this->graph_font, $this->graph_font_size_identifiers);
+		$table_identifier_width = $this->text_string_height($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers);
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
 
 		$table_item_width = max($table_max_value_width, $table_identifier_width) + 8;
-		$table_width = $table_item_width * count($this->result_systems);
+		$table_width = $table_item_width * count($this->columns);
 		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 8;
 		$table_line_height_half = ($table_line_height / 2);
-		$table_height = $table_line_height * count($this->result_tests);
+		$table_height = $table_line_height * count($this->rows);
 		$table_proper_height = $table_height + $identifier_height;
 
 		$this->graph_attr_width = $table_width + $this->graph_left_start;
@@ -114,7 +116,7 @@ class pts_Chart extends pts_Graph
 
 		// Write the test names
 		$row = 0;
-		foreach($this->result_tests as $i => $test)
+		foreach($this->rows as $i => $test)
 		{
 			$this->graph_image->write_text_right($test[0], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, false, "#b-" . $row, $test[1], true);
 			$row++;
@@ -122,7 +124,7 @@ class pts_Chart extends pts_Graph
 
 		// Write the identifiers
 		$table_identifier_offset = ($table_item_width / 2) + ($table_identifier_width / 2) - 1;
-		foreach($this->result_systems as $i => $system_identifier)
+		foreach($this->columns as $i => $system_identifier)
 		{
 			$link = $system_identifier[1] != null ? "?k=system_logs&u=" . $system_identifier[1] . "&ts=" . $system_identifier[0] : null;
 
@@ -132,17 +134,16 @@ class pts_Chart extends pts_Graph
 		// Write the values
 		$col = 0;
 
-		foreach($this->result_table as $sys_identifier => &$sys_values)
+		foreach($this->table_data as &$table_values)
 		{
 
-			//$row = 0;
-			if(!is_array($sys_values))
+			if(!is_array($table_values))
 			{
-				// TODO: determine why sometimes $sys_values is empty or not an array
+				// TODO: determine why sometimes $table_values is empty or not an array
 				continue;
 			}
 
-			foreach($sys_values as $i => &$result_table_value)
+			foreach($table_values as $i => &$result_table_value)
 			{
 				$row = $i - 1; // if using $row, the alignment may be off sometimes
 				$hover = array();
@@ -178,7 +179,7 @@ class pts_Chart extends pts_Graph
 					$bold = true;
 				}
 
-				$this->graph_image->write_text_right($result_table_value->get_value_string(), $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width) - 3, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width) - 3, $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, implode("; ", $hover), $bold);
+				$this->graph_image->write_text_right($result_table_value->get_value(), $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width) - 3, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width) - 3, $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, implode("; ", $hover), $bold);
 				//$row++;
 			}
 			$col++;
@@ -196,7 +197,7 @@ class pts_Chart extends pts_Graph
 		{
 			$last_identifier = null;
 			$last_changed_col = 0;
-			$show_keys = array_keys($this->result_table);
+			$show_keys = array_keys($this->table_data);
 			array_push($show_keys, "Temp: Temp");
 
 			foreach($show_keys as $current_col => $system_identifier)
@@ -229,7 +230,6 @@ class pts_Chart extends pts_Graph
 		}
 
 		$this->graph_image->draw_rectangle_border(1, 1, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_border);
-
 		$this->saveGraphToFile($file);
 		return $this->return_graph_image();
 	}

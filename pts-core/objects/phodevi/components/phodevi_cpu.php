@@ -56,7 +56,9 @@ class phodevi_cpu extends phodevi_device_interface
 			$model .= " @ " . $freq . "GHz";
 		}
 
-		return $model . " (Total Cores: " . phodevi::read_property("cpu", "core-count") . ")";
+		$core_count = phodevi::read_property("cpu", "core-count");
+
+		return $model . " (" . $core_count . " Core" . ($core_count > 1 ? 's' : null) . ')';
 	}
 	public static function cpu_core_count()
 	{

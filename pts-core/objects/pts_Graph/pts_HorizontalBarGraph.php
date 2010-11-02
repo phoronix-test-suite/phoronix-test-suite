@@ -117,7 +117,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 				{
 					$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $value_end_left - 6, $middle_of_bar, $value_end_left - 6, $middle_of_bar);
 				}
-				else
+				else if($value > 0)
 				{
 					// Write it in front of the result
 					$this->graph_image->write_text_left($value, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $value_end_left + 6, $middle_of_bar, $value_end_left + 6, $middle_of_bar);

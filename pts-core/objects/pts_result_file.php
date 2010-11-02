@@ -241,7 +241,6 @@ class pts_result_file
 	{
 		$result_table = array();
 		$result_tests = array();
-		$max_value = 0;
 		$result_counter = 0;
 
 		foreach($this->get_system_identifiers() as $sys_identifier)
@@ -302,11 +301,6 @@ class pts_result_file
 						$percent_std = pts_math::set_precision(pts_math::percent_standard_deviation($raw_values), 2);
 						$std_error = pts_math::set_precision(pts_math::standard_error($raw_values), 2);
 						$delta = 0;
-
-						if($value > $max_value)
-						{
-							$max_value = $value;
-						}
 
 						if(defined("PHOROMATIC_TRACKER"))
 						{
@@ -398,7 +392,7 @@ class pts_result_file
 							}
 						}
 
-						$result_table[$identifier][$result_counter] = new pts_result_table_value($value, $percent_std, $std_error, $delta, $highlight);
+						$result_table[$identifier][$result_counter] = new pts_table_value($value, $percent_std, $std_error, $delta, $highlight);
 						$prev_identifier = $identifier;
 						$prev_value = $value;
 					}
@@ -412,13 +406,7 @@ class pts_result_file
 						$identifier = $buffer_item->get_result_identifier();
 						$values = pts_strings::comma_explode($buffer_item->get_result_value());
 						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
-
-						if($avg_value > $max_value)
-						{
-							$max_value = $avg_value;
-						}
-
-						$result_table[$identifier][$result_counter] = new pts_result_table_value($avg_value);
+						$result_table[$identifier][$result_counter] = new pts_table_value($avg_value);
 					}
 					break;
 			}
@@ -446,17 +434,17 @@ class pts_result_file
 
 				if($delta != 0)
 				{
-					array_push($result_table[$identifier], new pts_result_table_value($delta . 'x'));
+					array_push($result_table[$identifier], new pts_table_value($delta . 'x'));
 					$has_written_diff = true;
 				}
 				if($std_error != 0)
 				{
-					array_push($result_table[$identifier], new pts_result_table_value($std_error));
+					array_push($result_table[$identifier], new pts_table_value($std_error));
 					$has_written_error = true;
 				}
 				if($std_percent != 0)
 				{
-					array_push($result_table[$identifier], new pts_result_table_value($std_percent . "%"));
+					array_push($result_table[$identifier], new pts_table_value($std_percent . "%"));
 					$has_written_std = true;
 				}
 			}
@@ -473,8 +461,6 @@ class pts_result_file
 			{
 				array_push($result_tests, array("Standard Deviation", null));
 			}
-
-			$max_value += 100; // to make room for % sign in display
 		}
 
 		if(defined("PHOROMATIC_TRACKER"))
@@ -497,8 +483,6 @@ class pts_result_file
 
 			$result_table = array();
 			$result_systems = array();
-			$longest_system_identifier = null;
-			$longest_system_identifier_length = 0;
 
 			foreach($systems_table as &$group)
 			{
@@ -508,13 +492,6 @@ class pts_result_file
 
 					$identifier = pts_strings::colon_explode($identifier);
 					$show_id = isset($identifier[1]) ? $identifier[1] : $identifier[0];
-
-					if(($le = strlen($show_id)) > $longest_system_identifier_length)
-					{
-						$longest_system_identifier_length = $le;
-						$longest_system_identifier = $show_id;
-					}
-
 
 					if($system_id_keys != null && ($s = array_search($identifier[0], $system_id_keys)) !== false)
 					{
@@ -532,27 +509,14 @@ class pts_result_file
 		else
 		{
 			$result_systems = array();
-			$longest_system_identifier = null;
-			$longest_system_identifier_length = 0;
 
 			foreach(array_keys($result_table) as $id)
 			{
-				if(($le = strlen($id)) > $longest_system_identifier_length)
-				{
-					$longest_system_identifier_length = $le;
-					$longest_system_identifier = $id;
-				}
-
 				array_push($result_systems, array($id, null));
 			}
 		}
 
-		if(is_numeric($max_value))
-		{
-			$max_value += 0.01;
-		}
-
-		return array($result_tests, $result_systems, $result_table, $max_value, $longest_system_identifier);
+		return array($result_tests, $result_systems, $result_table);
 	}
 	public function get_contained_test_profiles()
 	{
