@@ -32,13 +32,13 @@ class recover_run implements pts_option_interface
 	}
 	public static function is_test_result_directory($identifier)
 	{
-		return is_dir(SAVE_RESULTS_DIR . $identifier);
+		return is_dir(PTS_SAVE_RESULTS_PATH . $identifier);
 	}
 	public static function run($r)
 	{
-		if(!is_file(SAVE_RESULTS_DIR . $r[0] . "/objects.pt2so"))
+		if(!is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/objects.pt2so"))
 		{
-			if(is_file(SAVE_RESULTS_DIR . $r[0] . "/composite.xml"))
+			if(is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml"))
 			{
 				echo "\nThe test run is already complete.\n";
 			}
@@ -49,7 +49,7 @@ class recover_run implements pts_option_interface
 			return false;
 		}
 
-		$pt2so_objects = pts_storage_object::recover_from_file(SAVE_RESULTS_DIR . $r[0] . "/objects.pt2so");
+		$pt2so_objects = pts_storage_object::recover_from_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/objects.pt2so");
 
 		if($pt2so_objects == null)
 		{
@@ -67,10 +67,10 @@ class recover_run implements pts_option_interface
 			return false;
 		}
 
-		if(is_file(SAVE_RESULTS_DIR . $r[0] . "/active.xml"))
+		if(is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/active.xml"))
 		{
-			file_put_contents(SAVE_RESULTS_DIR . $r[0] . "/composite.xml", 
-			pts_merge::merge_test_results(SAVE_RESULTS_DIR . $r[0] . "/active.xml", SAVE_RESULTS_DIR . $r[0] . "/composite.xml"));
+			file_put_contents(PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml", 
+			pts_merge::merge_test_results(PTS_SAVE_RESULTS_PATH . $r[0] . "/active.xml", PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml"));
 		}
 
 		// Result file (composite.xml)

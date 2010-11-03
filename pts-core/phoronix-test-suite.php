@@ -83,7 +83,7 @@ if(is_file(PTS_PATH . "pts-core/commands/" . $sent_command . ".php") == false)
 	}
 	else
 	{
-		$alias_file = pts_file_io::file_get_contents(STATIC_DIR . "lists/option-command-aliases.list");
+		$alias_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/option-command-aliases.list");
 
 		foreach(pts_strings::trim_explode("\n", $alias_file) as $alias_line)
 		{
@@ -101,12 +101,12 @@ if(is_file(PTS_PATH . "pts-core/commands/" . $sent_command . ".php") == false)
 	if($replaced == false)
 	{
 		// Show general options, since there are no valid commands
-		echo file_get_contents(STATIC_DIR . "general-options.txt");
+		echo file_get_contents(PTS_CORE_STATIC_PATH . "general-options.txt");
 		exit;
 	}
 }
 
-define("PTS_USER_LOCK", PTS_USER_DIR . "run_lock");
+define("PTS_USER_LOCK", PTS_USER_PATH . "run_lock");
 
 if(!QUICK_START)
 {

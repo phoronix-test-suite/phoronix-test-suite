@@ -40,9 +40,9 @@ class pts_test_installer
 		pts_external_dependencies::install_dependencies($test_profiles);
 
 		// Install tests
-		if(!is_writable(TEST_ENV_DIR))
+		if(!is_writable(PTS_TEST_INSTALL_PATH))
 		{
-			echo "\nERROR: The test installation directory is not writable.\nLocation: " . TEST_ENV_DIR . "\n";
+			echo "\nERROR: The test installation directory is not writable.\nLocation: " . PTS_TEST_INSTALL_PATH . "\n";
 			return false;
 		}
 

@@ -24,10 +24,10 @@ class user_config_reset implements pts_option_interface
 {
 	public static function run($r)
 	{
-		if(is_file(PTS_USER_DIR . "user-config.xml"))
+		if(is_file(PTS_USER_PATH . "user-config.xml"))
 		{
-			copy(PTS_USER_DIR . "user-config.xml", PTS_USER_DIR . "user-config-old.xml");
-			unlink(PTS_USER_DIR . "user-config.xml");
+			copy(PTS_USER_PATH . "user-config.xml", PTS_USER_PATH . "user-config-old.xml");
+			unlink(PTS_USER_PATH . "user-config.xml");
 		}
 		pts_config::user_config_generate();
 	}

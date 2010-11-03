@@ -114,7 +114,7 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		$dependency_names = array();
 
-		$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_DIR . "xml/generic-packages.xml");
+		$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
 		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 
@@ -266,7 +266,7 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_install_dir()
 	{
-		return TEST_ENV_DIR . $this->identifier . '/';
+		return PTS_TEST_INSTALL_PATH . $this->identifier . '/';
 	}
 	public function get_installer_checksum()
 	{

@@ -45,15 +45,15 @@ class merge_results implements pts_option_interface
 			$rand_file = rand(1000, 9999);
 			$merge_to_file = "merge-" . $rand_file . '/';
 		}
-		while(is_dir(SAVE_RESULTS_DIR . $merge_to_file));
+		while(is_dir(PTS_SAVE_RESULTS_PATH . $merge_to_file));
 		$merge_to_file .= "composite.xml";
 
 		// Merge Results
 		$merged_results = call_user_func(array("pts_merge", "merge_test_results_array"), $result_files_to_merge);
 		pts_client::save_test_result($merge_to_file, $merged_results);
 
-		echo "Merged Results Saved To: " . SAVE_RESULTS_DIR . $merge_to_file . "\n\n";
-		pts_client::display_web_page(SAVE_RESULTS_DIR . dirname($merge_to_file) . "/index.html");
+		echo "Merged Results Saved To: " . PTS_SAVE_RESULTS_PATH . $merge_to_file . "\n\n";
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . dirname($merge_to_file) . "/index.html");
 	}
 }
 

@@ -175,7 +175,7 @@ class pts_result_file_writer
 		// Save the test file
 		// TODO: clean this up with pts_client::save_test_result
 		$j = 1;
-		while(is_file(SAVE_RESULTS_DIR . $save_name . "/test-" . $j . ".xml"))
+		while(is_file(PTS_SAVE_RESULTS_PATH . $save_name . "/test-" . $j . ".xml"))
 		{
 			$j++;
 		}
@@ -184,14 +184,14 @@ class pts_result_file_writer
 
 		pts_client::save_test_result($real_name, $this->xml_writer->getXML());
 
-		if(!is_file(SAVE_RESULTS_DIR . $save_name . "/composite.xml"))
+		if(!is_file(PTS_SAVE_RESULTS_PATH . $save_name . "/composite.xml"))
 		{
-			pts_client::save_test_result($save_name . "/composite.xml", file_get_contents(SAVE_RESULTS_DIR . $real_name), true, $this->result_identifier);
+			pts_client::save_test_result($save_name . "/composite.xml", file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name), true, $this->result_identifier);
 		}
 		else
 		{
 			// Merge Results
-			$merged_results = pts_merge::merge_test_results(file_get_contents(SAVE_RESULTS_DIR . $save_name . "/composite.xml"), file_get_contents(SAVE_RESULTS_DIR . $real_name));
+			$merged_results = pts_merge::merge_test_results(file_get_contents(PTS_SAVE_RESULTS_PATH . $save_name . "/composite.xml"), file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name));
 			pts_client::save_test_result($save_name . "/composite.xml", $merged_results, true, $this->result_identifier);
 		}
 

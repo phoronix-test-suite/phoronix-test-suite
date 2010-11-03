@@ -33,12 +33,12 @@ class phodevi_windows_parser
 
 			if($cpuz_log == null)
 			{
-				shell_exec("\"C:\Program Files\CPUID\CPU-Z\cpuz.exe\" -txt=" . PTS_USER_DIR . "cpuz");
+				shell_exec("\"C:\Program Files\CPUID\CPU-Z\cpuz.exe\" -txt=" . PTS_USER_PATH . "cpuz");
 
-				if(is_file(PTS_USER_DIR . "cpuz.txt"))
+				if(is_file(PTS_USER_PATH . "cpuz.txt"))
 				{
-					$cpuz_log = file_get_contents(PTS_USER_DIR . "cpuz.txt");
-					unlink(PTS_USER_DIR . "cpuz.txt");
+					$cpuz_log = file_get_contents(PTS_USER_PATH . "cpuz.txt");
+					unlink(PTS_USER_PATH . "cpuz.txt");
 				}
 			}
 

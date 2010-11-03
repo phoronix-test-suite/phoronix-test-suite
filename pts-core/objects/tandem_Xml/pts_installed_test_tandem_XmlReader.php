@@ -32,7 +32,7 @@ class pts_installed_test_tandem_XmlReader extends tandem_XmlReader
 
 		if(!is_file($read_xml) || substr($read_xml, -3) != "xml")
 		{
-			$read_xml = TEST_ENV_DIR . $read_xml . "/pts-install.xml";
+			$read_xml = PTS_TEST_INSTALL_PATH . $read_xml . "/pts-install.xml";
 		}
 
 		parent::__construct($read_xml);

@@ -36,13 +36,13 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 
 		if(PTS_IS_CLIENT)
 		{
-			if(is_file(PTS_USER_DIR . "graph-config.xml"))
+			if(is_file(PTS_USER_PATH . "graph-config.xml"))
 			{
-				$file = file_get_contents(PTS_USER_DIR . "graph-config.xml");
+				$file = file_get_contents(PTS_USER_PATH . "graph-config.xml");
 			}
-			else if(is_file(RESULTS_VIEWER_DIR . "graph-config-template.xml"))
+			else if(is_file(PTS_RESULTS_VIEWER_PATH . "graph-config-template.xml"))
 			{
-				$file = file_get_contents(RESULTS_VIEWER_DIR . "graph-config-template.xml");
+				$file = file_get_contents(PTS_RESULTS_VIEWER_PATH . "graph-config-template.xml");
 			}
 		}
 		else if(defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML))
@@ -72,11 +72,11 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 		static $fallback_reader = null;
 		$fallback_value = false;
 
-		if($fallback_reader != null || is_file(STATIC_DIR . "graph-config-defaults.xml"))
+		if($fallback_reader != null || is_file(PTS_CORE_STATIC_PATH . "graph-config-defaults.xml"))
 		{
 			if($fallback_reader == null)
 			{
-				$fallback_reader = new tandem_XmlReader(STATIC_DIR . "graph-config-defaults.xml");
+				$fallback_reader = new tandem_XmlReader(PTS_CORE_STATIC_PATH . "graph-config-defaults.xml");
 			}
 
 			$fallback_value = $fallback_reader->getXMLValue($xml_tag);

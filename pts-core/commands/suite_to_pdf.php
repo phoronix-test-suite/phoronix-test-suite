@@ -45,7 +45,7 @@ class suite_to_pdf implements pts_option_interface
 		$pdf = new pts_pdf_template($suite->get_title(), $suite->get_title());
 
 		$pdf->AddPage();
-		$pdf->Image(STATIC_DIR . "images/pts-308x160.png", 69, 85, 73, 38);
+		$pdf->Image(PTS_CORE_STATIC_PATH . "images/pts-308x160.png", 69, 85, 73, 38);
 		$pdf->Ln(120);
 		$pdf->WriteStatementCenter("www.phoronix-test-suite.com");
 		$pdf->Ln(15);

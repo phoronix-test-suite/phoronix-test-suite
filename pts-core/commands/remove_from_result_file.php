@@ -54,9 +54,9 @@ class remove_from_result_file implements pts_option_interface
 
 		foreach(array("benchmark-logs", "system-logs", "installation-logs") as $dir_name)
 		{
-			if(is_dir(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $remove_identifier))
+			if(is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . "/" . $dir_name . "/" . $remove_identifier))
 			{
-				pts_file_io::delete(SAVE_RESULTS_DIR . $r[0] . "/" . $dir_name . "/" . $remove_identifier, null, true);
+				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $r[0] . "/" . $dir_name . "/" . $remove_identifier, null, true);
 			}
 		}
 
@@ -64,7 +64,7 @@ class remove_from_result_file implements pts_option_interface
 		$extract_result = pts_merge::merge_test_results($extract_select);
 
 		pts_client::save_test_result($r[0] . "/composite.xml", $extract_result);
-		pts_client::display_web_page(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml");
 	}
 }
 

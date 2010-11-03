@@ -99,7 +99,7 @@ class phoromatic extends pts_module_interface
 
 	public static function user_start()
 	{
-		if(pts_client::create_lock(PTS_USER_DIR . "phoromatic_lock") == false)
+		if(pts_client::create_lock(PTS_USER_PATH . "phoromatic_lock") == false)
 		{
 			pts_client::$display->generic_error("Phoromatic is already running.");
 			return false;
@@ -149,8 +149,8 @@ class phoromatic extends pts_module_interface
 			case M_PHOROMATIC_RESPONSE_TRUE:
 				$identifier = "phoromatic-clone-" . str_replace(array('_', ':'), null, $to_clone[0]);
 				pts_client::save_test_result($identifier . "/composite.xml", $server_response); // TODO: regenerate the XML so that the Phoromatic response bits are not included
-				echo "\nResult Saved To: " . SAVE_RESULTS_DIR . $identifier . "/composite.xml\n\n";
-				pts_client::display_web_page(SAVE_RESULTS_DIR . $identifier . "/index.html");
+				echo "\nResult Saved To: " . PTS_SAVE_RESULTS_PATH . $identifier . "/composite.xml\n\n";
+				pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $identifier . "/index.html");
 				break;
 			case M_PHOROMATIC_RESPONSE_SETTING_DISABLED:
 				echo "\nYou need to enable this support from your Phoromatic account web interface.\n";
@@ -375,7 +375,7 @@ class phoromatic extends pts_module_interface
 
 							// Upload test results
 
-							if(is_file(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml"))
+							if(is_file(PTS_SAVE_RESULTS_PATH . $save_identifier . "/composite.xml"))
 							{
 								phoromatic::update_system_status("Uploading Test Results");
 
@@ -410,13 +410,13 @@ class phoromatic extends pts_module_interface
 				case M_PHOROMATIC_RESPONSE_EXIT:
 					echo "\nPhoromatic received a remote command to exit.\n";
 					phoromatic::update_system_status("Exiting Phoromatic");
-					pts_client::release_lock(PTS_USER_DIR . "phoromatic_lock");
+					pts_client::release_lock(PTS_USER_PATH . "phoromatic_lock");
 					$exit_loop = true;
 					break;
 				case M_PHOROMATIC_RESPONSE_SERVER_MAINTENANCE:
 					// The Phoromatic server is down for maintenance, so don't bother updating system status and wait longer before checking back
 					echo "\nThe Phoromatic server is currently down for maintenance. Waiting for service to be restored.\n";
-					sleep((15 - (date("i") % 15)) * 60);
+					sleep((15 - (date('i') % 15)) * 60);
 					break;
 				case M_PHOROMATIC_RESPONSE_SHUTDOWN:
 					echo "\nShutting down the system.\n";
@@ -555,18 +555,18 @@ class phoromatic extends pts_module_interface
 	{
 		$data = array("system-logs" => null, "test-logs" => null);
 
-		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/system-logs/"))
+		if(is_dir(PTS_SAVE_RESULTS_PATH . $save_identifier . "/system-logs/"))
 		{
 			$system_logs_zip = pts_client::create_temporary_file();
-			pts_compression::zip_archive_create($system_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/system-logs/");
+			pts_compression::zip_archive_create($system_logs_zip, PTS_SAVE_RESULTS_PATH . $save_identifier . "/system-logs/");
 			$data["system-logs"] = base64_encode(file_get_contents($system_logs_zip));
 			unlink($system_logs_zip);
 		}
 
-		if(is_dir(SAVE_RESULTS_DIR . $save_identifier . "/test-logs/"))
+		if(is_dir(PTS_SAVE_RESULTS_PATH . $save_identifier . "/test-logs/"))
 		{
 			$test_logs_zip = pts_client::create_temporary_file();
-			pts_compression::zip_archive_create($test_logs_zip, SAVE_RESULTS_DIR . $save_identifier . "/test-logs/");
+			pts_compression::zip_archive_create($test_logs_zip, PTS_SAVE_RESULTS_PATH . $save_identifier . "/test-logs/");
 			$data["test-logs"] = base64_encode(file_get_contents($test_logs_zip));
 			unlink($test_logs_zip);
 		}
@@ -575,7 +575,7 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function upload_test_results($save_identifier, $phoromatic_schedule_id, $results_identifier, $phoromatic_trigger)
 	{
-		$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
+		$composite_xml = file_get_contents(PTS_SAVE_RESULTS_PATH . $save_identifier . "/composite.xml");
 
 		$logs = self::capture_test_logs($save_identifier);
 		$server_response = phoromatic::upload_to_remote_server(array(
@@ -592,7 +592,7 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function upload_unscheduled_test_results($save_identifier)
 	{
-		$composite_xml = file_get_contents(SAVE_RESULTS_DIR . $save_identifier . "/composite.xml");
+		$composite_xml = file_get_contents(PTS_SAVE_RESULTS_PATH . $save_identifier . "/composite.xml");
 
 		$logs = self::capture_test_logs($save_identifier);
 		$server_response = phoromatic::upload_to_remote_server(array(

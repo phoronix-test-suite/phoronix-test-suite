@@ -32,13 +32,13 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 	{
 		pts_load_xml_definitions("user-config.xml");
 
-		if(is_file(PTS_USER_DIR . "user-config.xml"))
+		if(is_file(PTS_USER_PATH . "user-config.xml"))
 		{
-			$file = file_get_contents(PTS_USER_DIR . "user-config.xml");
+			$file = file_get_contents(PTS_USER_PATH . "user-config.xml");
 		}
-		else if(is_file(STATIC_DIR . "user-config-template.xml"))
+		else if(is_file(PTS_CORE_STATIC_PATH . "user-config-template.xml"))
 		{
-			$file = file_get_contents(STATIC_DIR . "user-config-template.xml");
+			$file = file_get_contents(PTS_CORE_STATIC_PATH . "user-config-template.xml");
 		}
 		else
 		{
@@ -54,11 +54,11 @@ class pts_config_tandem_XmlReader extends tandem_XmlReader
 		static $fallback_reader = null;
 		$fallback_value = false;
 
-		if($fallback_reader != null || is_file(STATIC_DIR . "user-config-defaults.xml"))
+		if($fallback_reader != null || is_file(PTS_CORE_STATIC_PATH . "user-config-defaults.xml"))
 		{
 			if($fallback_reader == null)
 			{
-				$fallback_reader = new tandem_XmlReader(STATIC_DIR . "user-config-defaults.xml");
+				$fallback_reader = new tandem_XmlReader(PTS_CORE_STATIC_PATH . "user-config-defaults.xml");
 			}
 
 			$fallback_value = $fallback_reader->getXMLValue($xml_tag);

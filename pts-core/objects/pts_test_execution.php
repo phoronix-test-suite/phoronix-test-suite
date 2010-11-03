@@ -85,7 +85,7 @@ class pts_test_execution
 
 		if(!$cache_share_present && $test_run_request->test_profile->is_root_required())
 		{
-			$execute_binary_prepend = STATIC_DIR . "scripts/root-access.sh ";
+			$execute_binary_prepend = PTS_CORE_STATIC_PATH . "scripts/root-access.sh ";
 		}
 
 		if($allow_cache_share && !is_file($cache_share_pt2so))
@@ -95,7 +95,7 @@ class pts_test_execution
 
 		if($test_run_manager->get_results_identifier() != null && $test_run_manager->get_file_name() != null)
 		{
-			$backup_test_log_dir = SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . '/';
+			$backup_test_log_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . '/';
 			pts_file_io::delete($backup_test_log_dir);
 			pts_file_io::mkdir($backup_test_log_dir, 0777, true);
 		}
@@ -267,7 +267,7 @@ class pts_test_execution
 				}
 			}
 
-			if(is_file(PTS_USER_DIR . "halt-testing") || is_file(PTS_USER_DIR . "skip-test"))
+			if(is_file(PTS_USER_PATH . "halt-testing") || is_file(PTS_USER_PATH . "skip-test"))
 			{
 				pts_client::release_lock($lock_file);
 				return false;
@@ -324,7 +324,7 @@ class pts_test_execution
 		{
 			if(is_file($test_run_request->test_profile->get_install_dir() . "install.log"))
 			{
-				$backup_log_dir = SAVE_RESULTS_DIR . $test_run_manager->get_file_name() . "/installation-logs/" . $test_run_manager->get_results_identifier() . "/";
+				$backup_log_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . "/installation-logs/" . $test_run_manager->get_results_identifier() . "/";
 				pts_file_io::mkdir($backup_log_dir, 0777, true);
 				copy($test_run_request->test_profile->get_install_dir() . "install.log", $backup_log_dir . $test_identifier . ".log");
 			}

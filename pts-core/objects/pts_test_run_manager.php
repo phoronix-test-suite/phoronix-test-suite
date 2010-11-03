@@ -125,7 +125,7 @@ class pts_test_run_manager
 		}
 
 		// Check to see if there is an external/custom script to export the results to in determining whether results are valid
-		if(($ex_file = $this->dynamic_run_count_export_script) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_DIR . $this->dynamic_run_count_export_script)))
+		if(($ex_file = $this->dynamic_run_count_export_script) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_PATH . $this->dynamic_run_count_export_script)))
 		{
 			$exit_status = trim(shell_exec($ex_file . " " . $test_results->test_result_buffer->get_values_as_string() . " > /dev/null 2>&1; echo $?"));
 
@@ -397,8 +397,8 @@ class pts_test_run_manager
 		self::$test_run_process_active = true;
 		pts_module_manager::module_process("__pre_run_process", $this);
 
-		pts_file_io::unlink(PTS_USER_DIR . "halt-testing");
-		pts_file_io::unlink(PTS_USER_DIR . "skip-test");
+		pts_file_io::unlink(PTS_USER_PATH . "halt-testing");
+		pts_file_io::unlink(PTS_USER_PATH . "skip-test");
 
 		$test_flag = true;
 		$tests_to_run_count = $this->get_test_count();
@@ -456,7 +456,7 @@ class pts_test_run_manager
 			}
 		}
 
-		pts_file_io::unlink(SAVE_RESULTS_DIR . $this->get_file_name() . "/active.xml");
+		pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/active.xml");
 
 		foreach($this->tests_to_run as &$run_request)
 		{
@@ -500,7 +500,7 @@ class pts_test_run_manager
 
 		if($this->get_file_name() != null)
 		{
-			$this->result_file_writer->save_xml(SAVE_RESULTS_DIR . $this->get_file_name() . "/active.xml");
+			$this->result_file_writer->save_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/active.xml");
 		}
 
 		$test_run_request = $this->get_test_to_run($run_index);
@@ -512,12 +512,12 @@ class pts_test_run_manager
 
 		pts_test_execution::run_test($this, $test_run_request);
 
-		if(pts_file_io::unlink(PTS_USER_DIR . "halt-testing"))
+		if(pts_file_io::unlink(PTS_USER_PATH . "halt-testing"))
 		{
 			// Stop the testing process entirely
 			return false;
 		}
-		else if(pts_file_io::unlink(PTS_USER_DIR . "skip-test"))
+		else if(pts_file_io::unlink(PTS_USER_PATH . "skip-test"))
 		{
 			// Just skip the current test and do not save the results, but continue testing
 			continue;
@@ -544,25 +544,25 @@ class pts_test_run_manager
 					$this->completed_runs += 1;
 
 					static $xml_write_pos = 1;
-					pts_file_io::mkdir(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
+					pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
 
-					if(is_dir(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier()))
+					if(is_dir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier()))
 					{
-						$test_log_write_dir = SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/" . $xml_write_pos . '/' . $this->get_results_identifier() . '/';
+						$test_log_write_dir = PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/" . $xml_write_pos . '/' . $this->get_results_identifier() . '/';
 
 						if(is_dir($test_log_write_dir))
 						{
 							pts_file_io::delete($test_log_write_dir, null, true);
 						}
 
-						rename(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . '/', $test_log_write_dir);
+						rename(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . '/', $test_log_write_dir);
 					}
 					$xml_write_pos++;
 					pts_module_manager::module_process("__post_test_run_process", $this->result_file_writer);
 				}
 			}
 
-			pts_file_io::unlink(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/");
+			pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/");
 		}
 
 		if($test_successful == false && $test_run_request->test_profile->get_identifier() != null)
@@ -570,7 +570,7 @@ class pts_test_run_manager
 			array_push($this->failed_tests_to_run, $test_run_request);
 
 			// For now delete the failed test log files, but it may be a good idea to keep them
-			pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . "/", null, true);
+			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . "/", null, true);
 		}
 
 		return true;
@@ -597,9 +597,9 @@ class pts_test_run_manager
 			}
 		}
 
-		if(!is_writable(TEST_ENV_DIR))
+		if(!is_writable(PTS_TEST_INSTALL_PATH))
 		{
-			pts_client::$display->generic_error("The test installation directory is not writable.\nLocation: " . TEST_ENV_DIR);
+			pts_client::$display->generic_error("The test installation directory is not writable.\nLocation: " . PTS_TEST_INSTALL_PATH);
 			return false;
 		}
 
@@ -661,12 +661,12 @@ class pts_test_run_manager
 		{
 			if($this->completed_runs == 0 && !pts_result_file::is_test_result_file($this->get_file_name()) && (pts_c::$test_flags ^ pts_c::is_recovering) && (pts_c::$test_flags ^ pts_c::remote_mode))
 			{
-				pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name());
+				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name());
 				return false;
 			}
 
 			pts_file_io::unlink($this->results_directory . "objects.pt2so");
-			pts_file_io::delete(SAVE_RESULTS_DIR . $this->get_file_name() . "/test-logs/active/", null, true);
+			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/", null, true);
 
 			if($this->wrote_system_xml)
 			{
@@ -676,8 +676,8 @@ class pts_test_run_manager
 			pts_module_manager::module_process("__event_results_process", $this);
 			$this->result_file_writer->save_result_file($this->get_file_name());
 			pts_module_manager::module_process("__event_results_saved", $this);
-			//echo "\nResults Saved To: " . SAVE_RESULTS_DIR . $this->get_file_name() . "/composite.xml\n";
-			pts_client::display_web_page(SAVE_RESULTS_DIR . $this->get_file_name() . "/index.html");
+			//echo "\nResults Saved To: " . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/composite.xml\n";
+			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/index.html");
 
 			if($this->allow_sharing_of_results && !defined("NO_NETWORK_COMMUNICATION"))
 			{
@@ -693,7 +693,7 @@ class pts_test_run_manager
 				if($upload_results)
 				{
 					$tags_input = pts_global::prompt_user_result_tags($to_run_identifiers);
-					$upload_url = pts_global::upload_test_result(SAVE_RESULTS_DIR . $this->get_file_name() . "/composite.xml", $tags_input);
+					$upload_url = pts_global::upload_test_result(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/composite.xml", $tags_input);
 
 					if(!empty($upload_url))
 					{

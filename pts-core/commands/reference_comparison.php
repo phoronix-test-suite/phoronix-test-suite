@@ -55,7 +55,7 @@ class reference_comparison implements pts_option_interface
 
 		$merged_results = call_user_func(array("pts_merge", "merge_test_results_array"), $merge_args, array("is_reference_comparison" => 1));
 		pts_client::save_test_result($r[0] . "/composite.xml", $merged_results);
-		pts_client::display_web_page(SAVE_RESULTS_DIR . $r[0] . "/composite.xml");
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml");
 	}
 }
 

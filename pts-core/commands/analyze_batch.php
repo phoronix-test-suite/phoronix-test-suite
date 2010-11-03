@@ -37,14 +37,14 @@ class analyze_batch implements pts_option_interface
 			$rand_file = rand(1000, 9999);
 			$save_to = "analyze-" . $rand_file . '/';
 		}
-		while(is_dir(SAVE_RESULTS_DIR . $save_to));
+		while(is_dir(PTS_SAVE_RESULTS_PATH . $save_to));
 		$save_to .= "composite.xml";
 
 		// Analyze Results
 		$SAVED_RESULTS = pts_merge::generate_analytical_batch_xml($base_file);
 		pts_client::save_test_result($save_to, $SAVED_RESULTS);
-		echo "Results Saved To: " . SAVE_RESULTS_DIR . $save_to . "\n\n";
-		pts_client::display_web_page(SAVE_RESULTS_DIR . dirname($save_to) . "/index.html");
+		echo "Results Saved To: " . PTS_SAVE_RESULTS_PATH . $save_to . "\n\n";
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . dirname($save_to) . "/index.html");
 	}
 }
 

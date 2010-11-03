@@ -33,12 +33,12 @@ class pts_compatibility
 			This function writes out any existing data in the old file to the new modules-data location
 		*/
 
-		if(!is_file(PTS_USER_DIR . "modules-config.xml"))
+		if(!is_file(PTS_USER_PATH . "modules-config.xml"))
 		{
 			return false;
 		}
 
-		$module_config_parser = new tandem_XmlReader(PTS_USER_DIR . "modules-config.xml");
+		$module_config_parser = new tandem_XmlReader(PTS_USER_PATH . "modules-config.xml");
 		$option_module = $module_config_parser->getXMLArrayValues(P_COMPAT_MODULE_OPTION_NAME);
 		$option_identifier = $module_config_parser->getXMLArrayValues(P_COMPAT_MODULE_OPTION_IDENTIFIER);
 		$option_value = $module_config_parser->getXMLArrayValues(P_COMPAT_MODULE_OPTION_VALUE);
@@ -54,7 +54,7 @@ class pts_compatibility
 			pts_module::module_config_save($module_name, $module_option_group);
 		}
 
-		pts_file_io::unlink(PTS_USER_DIR . "modules-config.xml");
+		pts_file_io::unlink(PTS_USER_PATH . "modules-config.xml");
 	}
 }
 

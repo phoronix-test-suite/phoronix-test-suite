@@ -48,25 +48,25 @@ function pts_define_directories()
 
 	if(PTS_IS_CLIENT)
 	{
-		define("PTS_USER_DIR", pts_client::user_home_directory() . ".phoronix-test-suite/");
-		define("PTS_CORE_STORAGE", PTS_USER_DIR . "core.pt2so");
+		define("PTS_USER_PATH", pts_client::user_home_directory() . ".phoronix-test-suite/");
+		define("PTS_CORE_STORAGE", PTS_USER_PATH . "core.pt2so");
 	}
 
 	// Misc Locations
-	define("MODULE_DIR", PTS_CORE_PATH . "modules/");
-	define("MODULE_LOCAL_DIR", PTS_USER_DIR . "modules/");
-	define("MODULE_DATA_DIR", PTS_USER_DIR . "modules-data/");
-	define("DEFAULT_DOWNLOAD_CACHE_DIR", PTS_USER_DIR . "download-cache/");
-	define("STATIC_DIR", PTS_CORE_PATH . "static/");
-	define("PTS_COMMAND_DIR", PTS_CORE_PATH . "commands/");
-	define("PTS_EXDEP_DIR", PTS_CORE_PATH . "external-test-dependencies/");
-	define("RESULTS_VIEWER_DIR", PTS_CORE_PATH . "results-viewer/");
+	define("PTS_MODULE_PATH", PTS_CORE_PATH . "modules/");
+	define("PTS_MODULE_LOCAL_PATH", PTS_USER_PATH . "modules/");
+	define("PTS_MODULE_DATA_PATH", PTS_USER_PATH . "modules-data/");
+	define("PTS_DOWNLOAD_CACHE_PATH", PTS_USER_PATH . "download-cache/");
+	define("PTS_CORE_STATIC_PATH", PTS_CORE_PATH . "static/");
+	define("PTS_COMMAND_PATH", PTS_CORE_PATH . "commands/");
+	define("PTS_EXDEP_PATH", PTS_CORE_PATH . "external-test-dependencies/");
+	define("PTS_RESULTS_VIEWER_PATH", PTS_CORE_PATH . "results-viewer/");
 
 	// Test & Suite Locations
 	define("PTS_TEST_PROFILE_PATH", PTS_PATH . "pts/test-profiles/");
 	define("PTS_TEST_SUITE_PATH", PTS_PATH . "pts/test-suites/");
-	//define("XML_PROFILE_LOCAL_DIR", PTS_USER_DIR . "test-profiles/");
-	define("XML_SUITE_LOCAL_DIR", PTS_USER_DIR . "test-suites/");
+	//define("XML_PROFILE_LOCAL_DIR", PTS_USER_PATH . "test-profiles/");
+	define("XML_SUITE_LOCAL_DIR", PTS_USER_PATH . "test-suites/");
 }
 function pts_load_xml_definitions($definition_file)
 {

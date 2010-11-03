@@ -42,13 +42,13 @@ class result_file_to_pdf implements pts_option_interface
 
 		define("BILDE_RENDERER", "PNG"); // Force to PNG renderer
 		define("BILDE_IMAGE_INTERLACING", false); // Otherwise FPDF will fail
-		pts_render::generate_result_file_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
+		pts_render::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . "/");
 
 		$result_file = new pts_result_file($r[0]);
 		$pdf = new pts_pdf_template($result_file->get_title(), null);
 
 		$pdf->AddPage();
-		$pdf->Image(STATIC_DIR . "images/pts-308x160.png", 69, 85, 73, 38);
+		$pdf->Image(PTS_CORE_STATIC_PATH . "images/pts-308x160.png", 69, 85, 73, 38);
 		$pdf->Ln(120);
 		$pdf->WriteStatementCenter("www.phoronix-test-suite.com");
 		$pdf->Ln(15);
@@ -78,11 +78,11 @@ class result_file_to_pdf implements pts_option_interface
 		}
 
 		/*
-		if(count($identifiers) > 1 && is_file(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/overview.jpg"))
+		if(count($identifiers) > 1 && is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/overview.jpg"))
 		{
 			$pdf->AddPage();
 			$pdf->Ln(100);
-			$pdf->Image(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/overview.jpg", 15, 40, 180);
+			$pdf->Image(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/overview.jpg", 15, 40, 180);
 		}
 		*/
 
@@ -91,10 +91,10 @@ class result_file_to_pdf implements pts_option_interface
 		$placement = 1;
 		for($i = 1; $i <= count($tests); $i++)
 		{
-			if(is_file(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/" . $i . ".png"))
+			if(is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/" . $i . ".png"))
 			{
 				$pdf->Ln(100);
-				$pdf->Image(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/" . $i . ".png", 20, 40 + (($placement - 1) * 120), 178);
+				$pdf->Image(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/" . $i . ".png", 20, 40 + (($placement - 1) * 120), 178);
 			}
 
 			if($placement == 2)

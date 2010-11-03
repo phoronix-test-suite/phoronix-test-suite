@@ -32,9 +32,9 @@ class show_result implements pts_option_interface
 	{
 		$URL = $r[0];
 
-		if(!is_dir(SAVE_RESULTS_DIR . $r[0] . "/result-graphs/"))
+		if(!is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/"))
 		{
-			pts_render::generate_result_file_graphs($r[0], SAVE_RESULTS_DIR . $r[0] . "/");
+			pts_render::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . "/");
 		}
 
 		pts_client::display_web_page($URL, null, false, true);

@@ -28,24 +28,24 @@ class pts_module
 
 	public static function save_dir()
 	{
-		$prefix_dir = MODULE_DATA_DIR;
+		$prefix_dir = PTS_MODULE_DATA_PATH;
 		pts_file_io::mkdir($prefix_dir);
 
 		return $prefix_dir . str_replace("_", "-", self::module_name()) . "/";
 	}
 	public static function is_module($name)
 	{
-		return is_file(MODULE_LOCAL_DIR . $name . ".php") || is_file(MODULE_DIR . $name . ".php");
+		return is_file(PTS_MODULE_LOCAL_PATH . $name . ".php") || is_file(PTS_MODULE_PATH . $name . ".php");
 	}
 	public static function module_config_save($module_name, $set_options = null)
 	{
 		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
-		pts_file_io::mkdir(MODULE_DATA_DIR . $module_name);
+		pts_file_io::mkdir(PTS_MODULE_DATA_PATH . $module_name);
 		$settings_to_write = array();
 
-		if(is_file(MODULE_DATA_DIR . $module_name . "/module-settings.xml"))
+		if(is_file(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml"))
 		{
-			$module_config_parser = new tandem_XmlReader(MODULE_DATA_DIR . $module_name . "/module-settings.xml");
+			$module_config_parser = new tandem_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
 			$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
 			$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 
@@ -70,7 +70,7 @@ class pts_module
 			$i++;
 		}
 
-		$config->saveXMLFile(MODULE_DATA_DIR . $module_name . "/module-settings.xml");
+		$config->saveXMLFile(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
 	}
 	public static function is_module_setup()
 	{
@@ -123,7 +123,7 @@ class pts_module
 		$module_name = self::module_name();
 		$value = false;
 
-		$module_config_parser = new tandem_XmlReader(MODULE_DATA_DIR . $module_name . "/module-settings.xml");
+		$module_config_parser = new tandem_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
 		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
 		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 
@@ -156,7 +156,7 @@ class pts_module
 		$module_name = self::module_name();
 		$options = array();
 
-		$module_config_parser = new tandem_XmlReader(MODULE_DATA_DIR . $module_name . "/module-settings.xml");
+		$module_config_parser = new tandem_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
 		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
 		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 

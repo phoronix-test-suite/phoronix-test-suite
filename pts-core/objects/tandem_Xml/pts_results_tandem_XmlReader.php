@@ -31,9 +31,9 @@ class pts_results_tandem_XmlReader extends tandem_XmlReader
 	public function __construct($read_xml)
 	{
 		$is_file = !isset($read_xml[1024]) && substr($read_xml, 0, 1) != "<" && is_file($read_xml);
-		if($is_file == false && defined("SAVE_RESULTS_DIR") && is_file(SAVE_RESULTS_DIR . $read_xml . "/composite.xml"))
+		if($is_file == false && defined("PTS_SAVE_RESULTS_PATH") && is_file(PTS_SAVE_RESULTS_PATH . $read_xml . "/composite.xml"))
 		{
-			$read_xml = SAVE_RESULTS_DIR . $read_xml . "/composite.xml";
+			$read_xml = PTS_SAVE_RESULTS_PATH . $read_xml . "/composite.xml";
 		}
 
 		parent::__construct($read_xml);

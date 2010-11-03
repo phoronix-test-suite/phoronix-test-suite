@@ -51,7 +51,7 @@ class analyze_image_delta implements pts_option_interface
 		{
 			$extract_to = "iqc-analyze-" . rand(100, 999);
 		}
-		while(is_dir(SAVE_RESULTS_DIR . $extract_to));
+		while(is_dir(PTS_SAVE_RESULTS_PATH . $extract_to));
 
 		$extract_result = pts_merge::merge_test_results($base_select, $compare_select);
 		pts_client::save_test_result($extract_to . "/composite.xml", $extract_result);
@@ -120,15 +120,15 @@ class analyze_image_delta implements pts_option_interface
 
 			if($img_changed)
 			{
-				imagepng($delta_img, SAVE_RESULTS_DIR . $extract_to . "/scratch.png");
-				$result_value = base64_encode(file_get_contents(SAVE_RESULTS_DIR . $extract_to . "/scratch.png", FILE_BINARY));
-				pts_file_io::unlink(SAVE_RESULTS_DIR . $extract_to . "/scratch.png");
+				imagepng($delta_img, PTS_SAVE_RESULTS_PATH . $extract_to . "/scratch.png");
+				$result_value = base64_encode(file_get_contents(PTS_SAVE_RESULTS_PATH . $extract_to . "/scratch.png", FILE_BINARY));
+				pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $extract_to . "/scratch.png");
 				$result_file_writer->add_result_from_result_object($result_object, $result_value);
 			}
 		}
 
 		$result_file_writer->save_result_file($extract_to);
-		pts_client::display_web_page(SAVE_RESULTS_DIR . $extract_to . "/composite.xml");
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $extract_to . "/composite.xml");
 	}
 }
 

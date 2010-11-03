@@ -297,7 +297,7 @@ class pts_render
 			$height = "auto";
 		}
 
-		$raw_xsl = file_get_contents(RESULTS_VIEWER_DIR . "pts-results-viewer.xsl");
+		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . "pts-results-viewer.xsl");
 		$graph_string = $graph_object->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
 
 		$raw_xsl = str_replace("<!-- GRAPH TAG -->", $graph_string, $raw_xsl);

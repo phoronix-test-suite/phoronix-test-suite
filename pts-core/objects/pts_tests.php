@@ -51,7 +51,7 @@ class pts_tests
 	{
 		$cleaned_tests = array();
 
-		foreach(pts_file_io::glob(TEST_ENV_DIR . "*/pts-install.xml") as $test)
+		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . "*/pts-install.xml") as $test)
 		{
 			$test = basename(dirname($test));
 
@@ -183,7 +183,7 @@ class pts_tests
 		// Refresh/generate an install XML for pts-install.xml
 		$installed_test = new pts_installed_test($test_profile->get_install_dir() . "pts-install.xml");
 		$xml_writer = new tandem_XmlWriter();
-		$xml_writer->setXslBinding("file://" . PTS_USER_DIR . "xsl/" . "pts-test-installation-viewer.xsl");
+		$xml_writer->setXslBinding("file://" . PTS_USER_PATH . "xsl/" . "pts-test-installation-viewer.xsl");
 
 		$test_duration = $installed_test->get_average_run_time();
 		if(!is_numeric($test_duration) && !$is_install)

@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Temporarily drop the GTK2 GUI until it's been rewritten to be compliant with the PTS3 architecture
 - pts-core: Drop PTS assignments as everything is now worked into object properties or otherwise factored out
 - pts-core: THE FILE STRUCTURE OF ALL TEST PROFILES HAS NOW CHANGED
+- pts-core: Drop make-download-cache command since it will end up not being needed with PTS3
 - pts_Graph: Introduce Iveland horizontal bar graphs
 - pts_Graph: Default to using the SVG bilde_renderer back-end when no other renderer is specified, affects new setups
 - install-sh: Installer updates

@@ -87,7 +87,7 @@ class pts_config
 		$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DEPENDENCIES, 8, $read_config);
 		$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DOWNLOADS, 8, $read_config);
 
-		$config->saveXMLFile(PTS_USER_DIR . "user-config.xml");
+		$config->saveXMLFile(PTS_USER_PATH . "user-config.xml");
 	}
 	public static function graph_config_generate($new_config_values = null)
 	{
@@ -126,7 +126,7 @@ class pts_config
 		$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_IDENTIFIERS, 3, $read_config);
 		$config->addXmlObjectFromReader(P_GRAPH_FONT_SIZE_AXIS, 3, $read_config);
 
-		$config->saveXMLFile(PTS_USER_DIR . "graph-config.xml");
+		$config->saveXMLFile(PTS_USER_PATH . "graph-config.xml");
 	}
 	public static function bool_to_string($bool)
 	{

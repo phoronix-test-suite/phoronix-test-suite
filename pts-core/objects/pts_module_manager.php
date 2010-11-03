@@ -39,7 +39,7 @@ class pts_module_manager
 			pts_load_xml_definitions("module-" . $module . ".xml");
 		}
 
-		return (is_file(MODULE_DIR . $module . ".php") && include_once(MODULE_DIR . $module . ".php")) || (is_file(MODULE_LOCAL_DIR . $module . ".php") && include_once(MODULE_LOCAL_DIR . $module . ".php"));
+		return (is_file(PTS_MODULE_PATH . $module . ".php") && include_once(PTS_MODULE_PATH . $module . ".php")) || (is_file(PTS_MODULE_LOCAL_PATH . $module . ".php") && include_once(PTS_MODULE_LOCAL_PATH . $module . ".php"));
 	}
 	public static function module_call($module, $process, &$object_pass = null)
 	{
@@ -197,7 +197,7 @@ class pts_module_manager
 	}
 	public static function available_modules()
 	{
-		$modules = array_merge(pts_file_io::glob(MODULE_DIR . "*.php"), pts_file_io::glob(MODULE_LOCAL_DIR . "*.php"));
+		$modules = array_merge(pts_file_io::glob(PTS_MODULE_PATH . "*.php"), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . "*.php"));
 		$module_names = array();
 
 		foreach($modules as $module)
@@ -225,7 +225,7 @@ class pts_module_manager
 	public static function detect_modules_to_load()
 	{
 		// Auto detect modules to load
-		foreach(explode("\n", pts_file_io::file_get_contents(STATIC_DIR . "lists/module-variables.list")) as $module_var)
+		foreach(explode("\n", pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/module-variables.list")) as $module_var)
 		{
 			$module_var = pts_strings::trim_explode("=", $module_var);
 

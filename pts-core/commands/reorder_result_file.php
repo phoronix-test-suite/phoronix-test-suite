@@ -64,7 +64,7 @@ class reorder_result_file implements pts_option_interface
 
 		$ordered_result = pts_merge::merge_test_results_array($extract_selects);
 		pts_client::save_test_result($args[0] . "/composite.xml", $ordered_result);
-		pts_client::display_web_page(SAVE_RESULTS_DIR . $args[0] . "/composite.xml");
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $args[0] . "/composite.xml");
 	}
 }
 

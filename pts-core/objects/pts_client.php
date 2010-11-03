@@ -49,8 +49,8 @@ class pts_client
 		self::core_storage_init_process();
 
 		pts_config::init_files();
-		define("TEST_ENV_DIR", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
-		define("SAVE_RESULTS_DIR", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
+		define("PTS_TEST_INSTALL_PATH", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
+		define("PTS_SAVE_RESULTS_PATH", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
 		self::extended_init_process();
 
 		return true;
@@ -209,7 +209,7 @@ class pts_client
 			define("PHP_VERSION_ID", ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
 		}
 
-		$dir_init = array(PTS_USER_DIR);
+		$dir_init = array(PTS_USER_PATH);
 		foreach($dir_init as $dir)
 		{
 			pts_file_io::mkdir($dir);
@@ -248,7 +248,7 @@ class pts_client
 	private static function extended_init_process()
 	{
 		// Extended Initalization Process
-		$directory_check = array(TEST_ENV_DIR, SAVE_RESULTS_DIR, MODULE_LOCAL_DIR, MODULE_DATA_DIR, DEFAULT_DOWNLOAD_CACHE_DIR, XML_SUITE_LOCAL_DIR);
+		$directory_check = array(PTS_TEST_INSTALL_PATH, PTS_SAVE_RESULTS_PATH, PTS_MODULE_LOCAL_PATH, PTS_MODULE_DATA_PATH, PTS_DOWNLOAD_CACHE_PATH, XML_SUITE_LOCAL_DIR);
 
 		foreach($directory_check as $dir)
 		{
@@ -256,25 +256,25 @@ class pts_client
 		}
 
 		// Setup PTS Results Viewer
-		pts_file_io::mkdir(SAVE_RESULTS_DIR . "pts-results-viewer");
+		pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . "pts-results-viewer");
 
-		foreach(pts_file_io::glob(RESULTS_VIEWER_DIR . "*.*") as $result_viewer_file)
+		foreach(pts_file_io::glob(PTS_RESULTS_VIEWER_PATH . "*.*") as $result_viewer_file)
 		{
-			copy($result_viewer_file, SAVE_RESULTS_DIR . "pts-results-viewer/" . basename($result_viewer_file));
+			copy($result_viewer_file, PTS_SAVE_RESULTS_PATH . "pts-results-viewer/" . basename($result_viewer_file));
 		}
 
-		copy(STATIC_DIR . "images/pts-106x55.png", SAVE_RESULTS_DIR . "pts-results-viewer/pts-106x55.png");
+		copy(PTS_CORE_STATIC_PATH . "images/pts-106x55.png", PTS_SAVE_RESULTS_PATH . "pts-results-viewer/pts-106x55.png");
 
 		// Setup ~/.phoronix-test-suite/xsl/
-		pts_file_io::mkdir(PTS_USER_DIR . "xsl/");
-		copy(STATIC_DIR . "xsl/pts-test-installation-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-test-installation-viewer.xsl");
-		copy(STATIC_DIR . "xsl/pts-user-config-viewer.xsl", PTS_USER_DIR . "xsl/" . "pts-user-config-viewer.xsl");
-		copy(STATIC_DIR . "images/pts-308x160.png", PTS_USER_DIR . "xsl/" . "pts-logo.png");
+		pts_file_io::mkdir(PTS_USER_PATH . "xsl/");
+		copy(PTS_CORE_STATIC_PATH . "xsl/pts-test-installation-viewer.xsl", PTS_USER_PATH . "xsl/" . "pts-test-installation-viewer.xsl");
+		copy(PTS_CORE_STATIC_PATH . "xsl/pts-user-config-viewer.xsl", PTS_USER_PATH . "xsl/" . "pts-user-config-viewer.xsl");
+		copy(PTS_CORE_STATIC_PATH . "images/pts-308x160.png", PTS_USER_PATH . "xsl/" . "pts-logo.png");
 
 		pts_load_xml_definitions("module-settings.xml"); // TODO: make it only load this definition when actually needed
 
 		// Compatibility for importing old module configuration settings from pre PTS 2.6 into new structures
-		if(is_file(PTS_USER_DIR . "modules-config.xml"))
+		if(is_file(PTS_USER_PATH . "modules-config.xml"))
 		{
 			pts_compatibility::pts_convert_pre_pts_26_module_settings();
 		}
@@ -326,7 +326,7 @@ class pts_client
 
 		if($phodevi_cache instanceOf phodevi_cache && pts_client::read_env("NO_PHODEVI_CACHE") != 1)
 		{
-			$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_DIR, PTS_CORE_VERSION);
+			$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_PATH, PTS_CORE_VERSION);
 			phodevi::set_device_cache($phodevi_cache);
 		}
 
@@ -398,7 +398,7 @@ class pts_client
 	}
 	public static function setup_test_result_directory($save_to)
 	{
-		$save_to_dir = SAVE_RESULTS_DIR . $save_to;
+		$save_to_dir = PTS_SAVE_RESULTS_PATH . $save_to;
 
 		if(strpos(basename($save_to_dir), '.'))
 		{
@@ -416,7 +416,7 @@ class pts_client
 	}
 	public static function remove_installed_test($identifier)
 	{
-		pts_file_io::delete(TEST_ENV_DIR . $identifier, null, true);
+		pts_file_io::delete(PTS_TEST_INSTALL_PATH . $identifier, null, true);
 	}
 	public static function exit_client($string = null, $exit_status = 0)
 	{
@@ -493,7 +493,7 @@ class pts_client
 		{
 			if(pts_config::read_bool_config(P_OPTION_PHODEVI_CACHE, "TRUE"))
 			{
-				pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", phodevi::get_phodevi_cache_object(PTS_USER_DIR, PTS_CORE_VERSION));
+				pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", phodevi::get_phodevi_cache_object(PTS_USER_PATH, PTS_CORE_VERSION));
 			}
 			else
 			{
@@ -525,11 +525,11 @@ class pts_client
 	{
 		$in_option = false;
 
-		if(is_file(PTS_COMMAND_DIR . $option . ".php"))
+		if(is_file(PTS_COMMAND_PATH . $option . ".php"))
 		{
-			if(!class_exists($option, false) && is_file(PTS_COMMAND_DIR . $option . ".php"))
+			if(!class_exists($option, false) && is_file(PTS_COMMAND_PATH . $option . ".php"))
 			{
-				include(PTS_COMMAND_DIR . $option . ".php");
+				include(PTS_COMMAND_PATH . $option . ".php");
 			}
 
 			if(method_exists($option, $check_function))
@@ -563,7 +563,7 @@ class pts_client
 				pts_render::generate_result_file_graphs($save_results, $save_to_dir);
 			}
 
-			$bool = file_put_contents(SAVE_RESULTS_DIR . $save_to, $save_results);
+			$bool = file_put_contents(PTS_SAVE_RESULTS_PATH . $save_to, $save_results);
 
 			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, "TRUE") || (pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode)))
 			{
@@ -610,7 +610,7 @@ class pts_client
 		if($generated && $full_process_string)
 		{
 			echo "\n" . $full_process_string . "\n";
-			pts_client::display_web_page(SAVE_RESULTS_DIR . $result_file_identifier . "/index.html");
+			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $result_file_identifier . "/index.html");
 		}
 
 		return $generated;
@@ -621,12 +621,12 @@ class pts_client
 	}
 	public static function execute_command($command, $pass_args = null)
 	{
-		if(!class_exists($command, false) && is_file(PTS_COMMAND_DIR . $command . ".php"))
+		if(!class_exists($command, false) && is_file(PTS_COMMAND_PATH . $command . ".php"))
 		{
-			include(PTS_COMMAND_DIR . $command . ".php");
+			include(PTS_COMMAND_PATH . $command . ".php");
 		}
 
-		if(is_file(PTS_COMMAND_DIR . $command . ".php") && method_exists($command, "argument_checks"))
+		if(is_file(PTS_COMMAND_PATH . $command . ".php") && method_exists($command, "argument_checks"))
 		{
 			$argument_checks = call_user_func(array($command, "argument_checks"));
 
@@ -686,7 +686,7 @@ class pts_client
 
 		pts_module_manager::module_process("__pre_option_process", $command);
 
-		if(is_file(PTS_COMMAND_DIR . $command . ".php"))
+		if(is_file(PTS_COMMAND_PATH . $command . ".php"))
 		{
 			if(method_exists($command, "run"))
 			{
@@ -1047,14 +1047,14 @@ class pts_client
 	}
 	public static function remove_saved_result_file($identifier)
 	{
-		pts_file_io::delete(SAVE_RESULTS_DIR . $identifier, null, true);
+		pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $identifier, null, true);
 	}
 	public static function saved_test_results()
 	{
 		$results = array();
 		$ignore_ids = pts_client::generic_reference_system_comparison_ids();
 
-		foreach(pts_file_io::glob(SAVE_RESULTS_DIR . "*/composite.xml") as $result_file)
+		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . "*/composite.xml") as $result_file)
 		{
 			$identifier = basename(dirname($result_file));
 
@@ -1072,7 +1072,7 @@ class pts_client
 
 		if($comparison_ids == null)
 		{
-			$comparison_ids = pts_strings::trim_explode("\n", pts_file_io::file_get_contents(STATIC_DIR . "lists/reference-system-comparisons.list"));
+			$comparison_ids = pts_strings::trim_explode("\n", pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/reference-system-comparisons.list"));
 
 			foreach(explode(' ', pts_config::read_user_config(P_OPTION_EXTRA_REFERENCE_SYSTEMS, null)) as $reference_check)
 			{

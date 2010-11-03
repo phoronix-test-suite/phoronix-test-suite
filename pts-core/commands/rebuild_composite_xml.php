@@ -31,7 +31,7 @@ class rebuild_composite_xml implements pts_option_interface
 	public static function run($r)
 	{
 		$identifier = $r[0];
-		$test_xml_files = pts_file_io::glob(SAVE_RESULTS_DIR . $identifier . "/test-*.xml");
+		$test_xml_files = pts_file_io::glob(PTS_SAVE_RESULTS_PATH . $identifier . "/test-*.xml");
 
 		if(count($test_xml_files) == 0)
 		{
