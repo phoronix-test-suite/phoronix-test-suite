@@ -414,9 +414,9 @@ class pts_client
 
 		return $save_to_dir;
 	}
-	public static function remove_installed_test($identifier)
+	public static function remove_installed_test(&$test_profile)
 	{
-		pts_file_io::delete(PTS_TEST_INSTALL_PATH . $identifier, null, true);
+		pts_file_io::delete($test_profile->get_install_dir(), null, true);
 	}
 	public static function exit_client($string = null, $exit_status = 0)
 	{

@@ -38,18 +38,10 @@ class remove_installed_test implements pts_option_interface
 			return false;
 		}
 
-		if(pts_user_io::prompt_bool_input("Are you sure you wish to remove the test " . $identifier, false))
+		if(pts_user_io::prompt_bool_input("Are you sure you wish to remove the test " . $test_profile, false))
 		{
-			if($identifier == "all")
-			{
-				$identifier = pts_tests::installed_tests();
-			}
-
-			foreach(pts_arrays::to_array($identifier) as $install_identifier)
-			{
-				pts_client::remove_installed_test($install_identifier);
-				echo "\nThe " . $install_identifier . " test has been removed.\n\n";
-			}
+			pts_client::remove_installed_test($test_profile);
+			echo "\n" . $test_profile . " has been removed.\n\n";
 		}
 		else
 		{
