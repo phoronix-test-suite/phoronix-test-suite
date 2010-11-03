@@ -69,23 +69,23 @@ class pts_config
 		$config->addXmlObjectFromReader(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 5, $read_config);
 		$config->addXmlObjectFromReader(P_OPTION_STATS_EXPORT_RESULTS_TO, 5, $read_config);
 
-		$config->addXmlObjectFromReader(P_OPTION_BATCH_SAVERESULTS, 6, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_BATCH_LAUNCHBROWSER, 6, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_BATCH_UPLOADRESULTS, 6, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTIDENTIFIER, 6, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTDESCRIPTION, 6, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTSAVENAME, 6, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_BATCH_TESTALLOPTIONS, 6, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_BATCH_CONFIGURED, 6, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_BATCH_SAVERESULTS, 7, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_BATCH_LAUNCHBROWSER, 7, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_BATCH_UPLOADRESULTS, 7, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTIDENTIFIER, 7, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTDESCRIPTION, 7, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_BATCH_PROMPTSAVENAME, 7, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_BATCH_TESTALLOPTIONS, 7, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_BATCH_CONFIGURED, 7, $read_config);
 
-		$config->addXmlObjectFromReader(P_OPTION_NET_NO_NETWORK, 7, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_NET_TIMEOUT, 7, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_ADDRESS, 7, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_PORT, 7, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_NET_NO_NETWORK, 8, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_NET_TIMEOUT, 8, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_ADDRESS, 8, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_NET_PROXY_PORT, 8, $read_config);
 
-		$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_SUITESORTESTS, 8, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DEPENDENCIES, 8, $read_config);
-		$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DOWNLOADS, 8, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_SUITESORTESTS, 9, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DEPENDENCIES, 9, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_UI_SELECT_DOWNLOADS, 9, $read_config);
 
 		$config->saveXMLFile(PTS_USER_PATH . "user-config.xml");
 	}
