@@ -69,6 +69,10 @@ class pts_config
 		$config->addXmlObjectFromReader(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 5, $read_config);
 		$config->addXmlObjectFromReader(P_OPTION_STATS_EXPORT_RESULTS_TO, 5, $read_config);
 
+		$config->addXmlObjectFromReader(P_OPTION_EXTERNAL_HOOKS_PRE_TESTING, 6, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_EXTERNAL_HOOKS_INTERIM_TESTING, 6, $read_config);
+		$config->addXmlObjectFromReader(P_OPTION_EXTERNAL_HOOKS_POST_TESTING, 6, $read_config);
+
 		$config->addXmlObjectFromReader(P_OPTION_BATCH_SAVERESULTS, 7, $read_config);
 		$config->addXmlObjectFromReader(P_OPTION_BATCH_LAUNCHBROWSER, 7, $read_config);
 		$config->addXmlObjectFromReader(P_OPTION_BATCH_UPLOADRESULTS, 7, $read_config);

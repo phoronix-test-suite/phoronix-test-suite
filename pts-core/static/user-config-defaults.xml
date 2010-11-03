@@ -38,6 +38,11 @@
 			<StandardDeviationThreshold>3.50</StandardDeviationThreshold>
 			<ExportResultsTo></ExportResultsTo>
 		</Statistics>
+		<ExternalHooks>
+			<PreTestProcess></PreTestProcess>
+			<InterimTestProcess></InterimTestProcess>
+			<PostTestProcess></PostTestProcess>
+		</ExternalHooks>
 		<BatchMode>
 			<SaveResults>TRUE</SaveResults>
 			<OpenBrowser>FALSE</OpenBrowser>

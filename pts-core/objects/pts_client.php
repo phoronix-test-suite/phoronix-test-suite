@@ -1085,6 +1085,41 @@ class pts_client
 
 		return $comparison_ids;
 	}
+	public static function process_user_config_external_hook_process($xml_tag, $description_string = null, &$passed_obj = null)
+	{
+		$cmd_value = pts_config::read_user_config($xml_tag, null);
+
+		if(!empty($cmd_value) && (is_executable($cmd_value) || ($cmd_value = pts_client::executable_in_path($cmd_value))))
+		{
+			$descriptor_spec = array(
+				0 => array("pipe", 'r'),
+				1 => array("pipe", 'w'),
+				2 => array("pipe", 'w')
+				);
+
+			$env_vars = array();
+
+			if($pased_obj instanceof pts_test_result)
+			{
+				$env_vars["PTS_EXTERNAL_TEST_IDENTIFIER"] = $pts_test_result->test_profile->get_identifier();
+				$env_vars["PTS_EXTERNAL_TEST_INSTALL_PATH"] = $pts_test_result->test_profile->get_install_dir();
+				$env_vars["PTS_EXTERNAL_TEST_RESULT"] = $pts_test_result->get_result();
+				$env_vars["PTS_EXTERNAL_TEST_STD_DEV_PERCENT"] = pts_math::percent_standard_deviation($pts_test_result->test_result_buffer->get_values());
+			}
+
+			$description_string != null && pts_client::$display->generic_heading($description_string);
+			$proc = proc_open($cmd_value, $descriptor_spec, $pipes, PTS_USER_PATH, $env_vars);
+			$std_output = stream_get_contents($pipes[1]);
+			$return_value = proc_close($proc);
+
+			if($return_value != 0)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
 
 ?>

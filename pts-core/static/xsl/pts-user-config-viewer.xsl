@@ -60,6 +60,14 @@
 			<h3>ExportResultsTo: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Statistics/ExportResultsTo" /></span></h3>
 			<p>This option can specify a file (either the absolute path or relative if contained within <em>~/.phoronix-test-suite/</em> where a set of test results will be passed as the first argument as a string with each of the test results being delimited by a colon. If the executed script returns an exit status of <em>0</em> the results are considered valid, if the script returns an exit status of <em>1</em> the Phoronix Test Suite will request the test be run again.</p>
 
+			<h1>External Hook Options</h1>
+			<h3>PreTestProcess: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/ExternalHooks/PreTestProcess" /></span></h3>
+			<p>This option can specify the absolute path to an executable file or a command found within the <em>PATH</em> environmental variable. If supplied, this process will be executed prior to the start of the testing process in order to set an external context, adjust any environmental settings, etc for the system under test.</p>
+			<h3>InterimTestProcess: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/ExternalHooks/InterimTestProcess" /></span></h3>
+			<p>This option can specify the absolute path to an executable file or a command found within the <em>PATH</em> environmental variable. If supplied, this process will be executed following every individual test run within the test execution queue, in order to adjust an external context, tweak any environmental settings, etc for the system under test.</p>
+			<h3>PostTestProcess: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/ExternalHooks/PostTestProcess" /></span></h3>
+			<p>This option can specify the absolute path to an executable file or a command found within the <em>PATH</em> environmental variable. If supplied, this process will be executed after the testing process has been completed. This can be used for adjusting the context to the system under test, etc.</p>
+
 			<h1>Batch Mode Options</h1>
 			<p>The batch mode options are only used when using either the <em>batch-run</em> or <em>batch-benchmark</em> options with the Phoronix Test Suite. This mode is designed to fully automate the operation of the Phoronix Test Suite except for areas where the user would like to be prompted. To configure the batch mode options, it is recommended to run <em>phoronix-test-suite batch-setup</em> instead of modifying these values by hand.</p>
 			<h3>SaveResults: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/BatchMode/SaveResults" /></span></h3>
