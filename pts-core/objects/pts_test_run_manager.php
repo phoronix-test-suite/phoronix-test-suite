@@ -670,7 +670,7 @@ class pts_test_run_manager
 
 			if($this->wrote_system_xml)
 			{
-				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($test_type));
+				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($this->tests_to_run));
 			}
 
 			pts_module_manager::module_process("__event_results_process", $this);

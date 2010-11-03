@@ -35,6 +35,10 @@ class pts_result_file
 		
 		$this->extra_attributes = array();
 	}
+	public function __toString()
+	{
+		return $this->get_identifier();
+	}
 	public static function is_test_result_file($identifier)
 	{
 		return is_file(PTS_SAVE_RESULTS_PATH . $identifier . "/composite.xml");

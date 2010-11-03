@@ -47,9 +47,15 @@ class pts_test_notes_manager
 			array_push(self::$notes, $note);
 		}
 	}
-	public static function generate_test_notes($test_type)
+	public static function generate_test_notes(&$test_result_objects)
 	{
 		static $check_processes = null;
+
+		$test_types = array();
+		foreach($test_result_objects as $test_result)
+		{
+			pts_arrays::unique_push($test_types, $test_result->test_profile->get_test_hardware_type());
+		}
 
 		if(empty($check_processes))
 		{
@@ -106,7 +112,7 @@ class pts_test_notes_manager
 		self::add_note(phodevi::read_property("motherboard", "power-mode"));
 		self::add_note(phodevi::read_property("system", "virtualized-mode"));
 
-		if($test_type == "Graphics" || $test_type == "System")
+		if(in_array("Graphics", $test_types) || in_array("System", $test_types))
 		{
 			$aa_level = phodevi::read_property("gpu", "aa-level");
 			$af_level = phodevi::read_property("gpu", "af-level");
