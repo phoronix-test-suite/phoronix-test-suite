@@ -1099,12 +1099,12 @@ class pts_client
 
 			$env_vars = array();
 
-			if($pased_obj instanceof pts_test_result)
+			if($passed_obj instanceof pts_test_result)
 			{
-				$env_vars["PTS_EXTERNAL_TEST_IDENTIFIER"] = $pased_obj->test_profile->get_identifier();
-				$env_vars["PTS_EXTERNAL_TEST_INSTALL_PATH"] = $pased_obj->test_profile->get_install_dir();
-				$env_vars["PTS_EXTERNAL_TEST_RESULT"] = $pased_obj->get_result();
-				$env_vars["PTS_EXTERNAL_TEST_STD_DEV_PERCENT"] = pts_math::percent_standard_deviation($pased_obj->test_result_buffer->get_values());
+				$env_vars["PTS_EXTERNAL_TEST_IDENTIFIER"] = $passed_obj->test_profile->get_identifier();
+				$env_vars["PTS_EXTERNAL_TEST_INSTALL_PATH"] = $passed_obj->test_profile->get_install_dir();
+				$env_vars["PTS_EXTERNAL_TEST_RESULT"] = $passed_obj->get_result();
+				$env_vars["PTS_EXTERNAL_TEST_STD_DEV_PERCENT"] = pts_math::percent_standard_deviation($passed_obj->test_result_buffer->get_values());
 			}
 
 			$description_string != null && pts_client::$display->generic_heading($description_string);
