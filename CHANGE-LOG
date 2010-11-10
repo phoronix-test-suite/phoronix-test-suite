@@ -21,6 +21,8 @@ Phoronix Test Suite (Git)
 - pts_Graph: Introduce Iveland horizontal bar graphs
 - pts_Graph: Default to using the SVG bilde_renderer back-end when no other renderer is specified, affects new setups
 - install-sh: Installer updates
+- pts: Restructure test profiles
+- pts: Add nginx test profile as a new NGINX web-server benchmark similar to the apache test profile
 
 Phoronix Test Suite 2.8.1
 September 9, 2010
