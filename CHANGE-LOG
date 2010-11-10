@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts: Add initial support for the Angstrom (OpenEmbedded) Linux distribution with external dependencies
+
 Phoronix Test Suite 3.0 Alpha 1
 November 9, 2010
 

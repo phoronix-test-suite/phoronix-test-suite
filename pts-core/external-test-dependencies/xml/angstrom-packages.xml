@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="xsl/pts-exdep-viewer.xsl" ?>
+<PhoronixTestSuite>
+	<ExternalDependencies>
+		<Information>
+			<Name>Angstrom</Name>
+		</Information>
+		<Package>
+			<GenericName>gtk-development</GenericName>
+			<PackageName>gtk+-dev</PackageName>
+			<FileCheck>/usr/include/gtk-2.0</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>sdl-development</GenericName>
+			<PackageName>libsdl-1.2-dev libsdl-image-1.2-dev libsdl-ttf-dev libsdl-x11-dev libsdl-net-1.2-dev libsdl-gfx-dev</PackageName>
+			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h, /usr/include/SDL/SDL_ttf.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>glut</GenericName>
+			<PackageName>freeglut-dev</PackageName>
+			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>libpng-development</GenericName>
+			<PackageName>libpng-dev</PackageName>
+			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>build-utilities</GenericName>
+			<PackageName>cpp gcc autoconf automake libstdc++-dev</PackageName>
+			<FileCheck>/usr/bin/cpp</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>xorg-development</GenericName>
+			<PackageName>xserver-xorg-dev</PackageName>
+			<FileCheck>/usr/lib/libXmu.so, /usr/lib/libXmuu.so, /usr/lib/libXi.a</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>bison</GenericName>
+			<PackageName>bison</PackageName>
+			<FileCheck>/usr/bin/bison</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>flex</GenericName>
+			<PackageName>flex</PackageName>
+			<FileCheck>/usr/bin/flex</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>imlib2-development</GenericName>
+			<PackageName>libimlib2-dev</PackageName>
+			<FileCheck>/usr/lib/imlib2</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>java</GenericName>
+			<PackageName>openjdk-6-jdk</PackageName>
+			<FileCheck>/usr/bin/java</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>portaudio-development</GenericName>
+			<PackageName>libportaudio-dev</PackageName>
+			<FileCheck>/usr/include/portaudio.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>fortran-compiler</GenericName>
+			<PackageName>gfortran</PackageName>
+			<FileCheck>/usr/bin/gfortran</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>freeimage</GenericName>
+			<PackageName>libfreeimage3</PackageName>
+			<FileCheck>/usr/lib/libfreeimage.so.3, /usr/include/FreeImage.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>scons</GenericName>
+			<PackageName>python-scons</PackageName>
+			<FileCheck>/usr/bin/scons</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>zlib-development</GenericName>
+			<PackageName>python-zlib</PackageName>
+			<FileCheck>/usr/include/zlib.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>jpeg-development</GenericName>
+			<PackageName>libjpeg-dev</PackageName>
+			<FileCheck>/usr/include/jpeglib.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>perl</GenericName>
+			<PackageName>perl sdl-perl</PackageName>
+			<FileCheck>/usr/bin/perl</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>xorg-video</GenericName>
+			<PackageName>libxvmc-dev libxv-dev</PackageName>
+			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>vorbis-development</GenericName>
+			<PackageName>libvorbis-dev</PackageName>
+			<FileCheck>/usr/include/vorbis/vorbisfile.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>qt4-development</GenericName>
+			<PackageName>libqtcore4-dev</PackageName>
+			<FileCheck>/usr/bin/qmake-qt4, /usr/include/qt4/Qt/qgl.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>autoconf</GenericName>
+			<PackageName>autoconf</PackageName>
+			<FileCheck>/usr/bin/autoconf</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>libtool</GenericName>
+			<PackageName>libtool</PackageName>
+			<FileCheck>/usr/bin/libtool</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>ncurses-development</GenericName>
+			<PackageName>ncurses-dev</PackageName>
+			<FileCheck>/usr/include/ncurses.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>popt</GenericName>
+			<PackageName>libpopt-dev</PackageName>
+			<FileCheck>/usr/include/popt.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>curl</GenericName>
+			<PackageName>curl libcurl4 libcurl5</PackageName>
+			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>fftw3-development</GenericName>
+			<PackageName>fftw-dev libfftw</PackageName>
+			<FileCheck>/usr/include/fftw3.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>cmake</GenericName>
+			<PackageName>cmake</PackageName>
+			<FileCheck>/usr/bin/cmake</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>boost-development</GenericName>
+			<PackageName>boost-dev</PackageName>
+			<FileCheck>/usr/include/boost/, /usr/include/asio/, /usr/include/boost/date_time/, /usr/include/boost/regex.hpp, /usr/include/boost/iostreams/write.hpp</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>bzip2-development</GenericName>
+			<PackageName>bzip2-dev</PackageName>
+			<FileCheck>/usr/include/bzlib.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>tcl</GenericName>
+			<PackageName>tcl</PackageName>
+			<FileCheck>/usr/bin/tclsh</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>glibc-development</GenericName>
+			<PackageName>libc6-dev</PackageName>
+			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib/libc.a</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python</GenericName>
+			<PackageName>python</PackageName>
+			<FileCheck>/usr/bin/python</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python-boost-development</GenericName>
+			<PackageName>boost-python libboost-python1.33.1</PackageName>
+			<FileCheck>/usr/include/boost/python.hpp</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>boost-thread-development</GenericName>
+			<PackageName>boost-thread libboost-thread-mt1.33.1</PackageName>
+			<FileCheck>/usr/include/boost/thread.hpp</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>python-numpy</PackageName>
+			<FileCheck>/usr/share/pyshared/numpy/version.py</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>gmp-library</GenericName>
+			<PackageName>libgmp-dev</PackageName>
+			<FileCheck>/usr/include/gmp.h</FileCheck>
+		</Package>
+	</ExternalDependencies>
+</PhoronixTestSuite>
