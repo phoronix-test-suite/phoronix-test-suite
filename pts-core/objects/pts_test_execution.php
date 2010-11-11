@@ -239,7 +239,7 @@ class pts_test_execution
 				if($increase_run_count > 0)
 				{
 					$times_to_run += $increase_run_count;
-					$test_run_request->test_profile->set_times_to_run($times_to_run);
+					//$test_run_request->test_profile->set_times_to_run($times_to_run);
 				}
 			}
 

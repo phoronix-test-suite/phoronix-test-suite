@@ -145,6 +145,11 @@ class pts_types
 	{
 		return pts_types::identifier_to_object($identifier) instanceof pts_result_file ? true : false;
 	}
+	public static function is_test_or_suite($identifier)
+	{
+		$object = identifier_to_object($identifier);
+		return $object instanceof pts_test_profile || $object instanceof pts_test_suite;
+	}
 }
 
 ?>

@@ -266,7 +266,7 @@ class pts_test_run_manager
 		{
 			$is_reserved_word = false;
 
-			while(empty($proposed_name) || ($is_reserved_word = pts_types::identifier_to_object($proposed_name)))
+			while(empty($proposed_name) || ($is_reserved_word = pts_types::is_test_or_suite($proposed_name)))
 			{
 				if($is_reserved_word)
 				{
