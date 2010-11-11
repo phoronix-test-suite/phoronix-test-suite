@@ -590,6 +590,7 @@ class pts_test_run_manager
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
 		pts_client::init_display_mode($test_flags);
+		pts_client::set_test_flags($test_flags);
 		$to_run = pts_types::identifiers_to_objects($to_run);
 
 		if((pts_c::$test_flags & pts_c::batch_mode))
