@@ -147,7 +147,7 @@ class pts_types
 	}
 	public static function is_test_or_suite($identifier)
 	{
-		$object = identifier_to_object($identifier);
+		$object = pts_types::identifier_to_object($identifier);
 		return $object instanceof pts_test_profile || $object instanceof pts_test_suite;
 	}
 }
