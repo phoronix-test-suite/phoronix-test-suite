@@ -9,7 +9,7 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Pekka Panula</Maintainer>
 		<EnvironmentSize>61</EnvironmentSize>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
+		<ExternalDependencies>build-utilities, zlib-development</ExternalDependencies>
 		<ProjectURL>http://nginx.net/</ProjectURL>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>

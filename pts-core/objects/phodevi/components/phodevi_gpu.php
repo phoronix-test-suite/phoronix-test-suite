@@ -628,7 +628,7 @@ class phodevi_gpu extends phodevi_device_interface
 		$core_freq = 0;
 		$mem_freq = 0;
 
-		if(IS_NVIDIA_GRAPHICS) // NVIDIA GPU
+		if(IS_NVIDIA_GRAPHICS && !IS_MACOSX) // NVIDIA GPU
 		{
 			// GPUDefault3DClockFreqs is the default and does not show under/over-clocking
 			list($core_freq, $mem_freq) = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension("GPU3DClockFreqs"));

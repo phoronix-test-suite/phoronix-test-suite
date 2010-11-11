@@ -696,7 +696,7 @@ class pts_test_run_manager
 
 				if($upload_results)
 				{
-					$tags_input = pts_global::prompt_user_result_tags($to_run_identifiers);
+					$tags_input = pts_global::prompt_user_result_tags(array($this->get_results_identifier(), $this->get_file_name_title()));
 					$upload_url = pts_global::upload_test_result(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/composite.xml", $tags_input);
 
 					if(!empty($upload_url))
