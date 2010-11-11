@@ -106,7 +106,7 @@ class pts_test_execution
 
 		for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && !$abort_testing; $i++)
 		{
-			pts_client::$display->test_run_instance_header($test_run_request, ($i + 1), $times_to_run);
+			pts_client::$display->test_run_instance_header($test_run_request);
 			$test_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
 
 			$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(

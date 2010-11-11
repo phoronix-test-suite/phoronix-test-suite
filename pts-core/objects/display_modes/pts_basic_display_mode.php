@@ -23,6 +23,10 @@
 
 class pts_basic_display_mode implements pts_display_mode_interface
 {
+	// Run bits
+	private $expected_trial_run_count = 0;
+	private $trial_run_count_current = 0;
+
 	public function __construct()
 	{
 
@@ -101,11 +105,13 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
-		return;
+		$this->trial_run_count_current = 0;
+		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
 	}
-	public function test_run_instance_header(&$test_result, $current_run, $total_run_count)
+	public function test_run_instance_header(&$test_result)
 	{
-		echo self::string_header($test_result->test_profile->get_title() . " (Run " . $current_run . " of " . $total_run_count . ")");
+		$this->trial_run_count_current++;
+		echo self::string_header($test_result->test_profile->get_title() . " (Run " . $this->trial_run_count_current . " of " . $this->expected_trial_run_count . ")");
 	}
 	public function test_run_instance_output(&$to_output)
 	{
