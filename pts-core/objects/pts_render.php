@@ -204,7 +204,7 @@ class pts_render
 			$chart = new pts_ResultFileTable($result_file);
 			$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
 
-			$chart = pts_Table::CreateFromResultFile_Systems($result_file);
+			$chart = new pts_ResultFileSystemsTable($result_file);
 			$chart->renderChart($save_to_dir . "/result-graphs/systems.BILDE_EXTENSION");
 			unset($chart);
 		}

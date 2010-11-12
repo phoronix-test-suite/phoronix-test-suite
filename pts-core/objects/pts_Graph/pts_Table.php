@@ -44,40 +44,6 @@ class pts_Table extends pts_Graph
 		$this->longest_row_identifier = $this->find_longest_string($this->rows);
 		$this->graph_maximum_value = $this->find_longest_string($this->table_data);
 	}
-	public static function CreateFromResultFile_Systems(&$result_file)
-	{
-		$columns = $result_file->get_system_identifiers();
-		$rows = array();
-		$table_data = array();
-
-		foreach($result_file->get_system_hardware() as $info_string)
-		{
-			$col = array();
-			foreach(explode(', ', $info_string) as $component)
-			{
-				$c_pos = strpos($component, ': ');
-
-				if($c_pos !== false)
-				{
-					$index = substr($component, 0, $c_pos);
-					$value = substr($component, ($c_pos + 2));
-
-					if(isset($rows[$index]) == false)
-					{
-						$rows[$index] = $index;
-					}
-					array_push($col, $value);				
-				}
-			}
-			array_push($table_data, $col);
-		}
-
-		$table = new pts_Table($rows, $columns, $table_data);
-		$table->graph_font_size_identifiers *= 0.8;
-		$table->column_heading_vertical = false;
-
-		return $table;
-	}
 	public function renderChart($file = null)
 	{
 		// Needs to be at least 170px wide for the PTS logo
