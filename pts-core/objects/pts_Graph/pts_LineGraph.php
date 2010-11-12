@@ -289,7 +289,8 @@ class pts_LineGraph extends pts_Graph
 
 		foreach($to_display as $color_key => &$column)
 		{
-			$from_top = $this->graph_top_start + 4 + ($color_key != $this->graph_color_text || $this->graph_image->get_renderer() == "SVG" ? 1 : 0);
+			// removed "|| $this->graph_image->get_renderer() == "SVG"" from line below
+			$from_top = $this->graph_top_start + 4;
 			$longest_string_width = 0;
 
 			foreach($column as &$write)

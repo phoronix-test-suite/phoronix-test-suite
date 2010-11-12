@@ -963,7 +963,7 @@ class pts_test_run_manager
 			$test_result = new pts_test_result($test_run_request->test_profile);
 			$test_result->set_used_arguments($test_run_request->get_arguments());
 			$test_result->set_used_arguments_description($test_run_request->get_arguments_description());
-			array_push($test_result_objects, $test_result);
+			$this->add_test_result_object($test_result);
 		}
 	
 		// Run the test process

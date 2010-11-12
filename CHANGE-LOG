@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts: Add initial support for the Angstrom (OpenEmbedded) Linux distribution with external dependencies
+- pts_Graph: Add SVGZ renderer back-end that Gzip compresses the SVG renderer output
 
 Phoronix Test Suite 3.0 Alpha 1
 November 9, 2010
