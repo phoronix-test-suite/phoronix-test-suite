@@ -44,26 +44,6 @@ class pts_Table extends pts_Graph
 		$this->longest_row_identifier = $this->find_longest_string($this->rows);
 		$this->graph_maximum_value = $this->find_longest_string($this->table_data);
 	}
-	public static function CreateFromResultFile(&$result_file, $system_id_keys = null, $result_object_index = -1)
-	{
-		list($rows, $columns, $table_data) = $result_file->get_result_table($system_id_keys, $result_object_index);
-		$table = new pts_Table($rows, $columns, $table_data);
-		$table->result_object_index = $result_object_index;
-
-		// where to start the table values
-		$table->longest_row_identifier = null;
-		$longest_row_title_length = 0;
-		foreach($table->rows as $result_test)
-		{
-			if(($len = strlen($result_test[0])) > $longest_row_title_length)
-			{
-				$table->longest_row_identifier = $result_test[0];
-				$longest_row_title_length = $len;
-			}
-		}
-
-		return $table;
-	}
 	public static function CreateFromResultFile_Systems(&$result_file)
 	{
 		$columns = $result_file->get_system_identifiers();

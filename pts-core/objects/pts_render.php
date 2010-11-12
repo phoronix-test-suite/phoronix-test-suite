@@ -201,7 +201,7 @@ class pts_render
 		// Render overview chart
 		if($save_to_dir)
 		{
-			$chart = pts_Table::CreateFromResultFile($result_file);
+			$chart = new pts_ResultFileTable($result_file);
 			$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
 
 			$chart = pts_Table::CreateFromResultFile_Systems($result_file);
@@ -237,7 +237,7 @@ class pts_render
 						$table_keys = $key;
 					}
 
-					$chart = pts_Table::CreateFromResultFile($result_file, null, $table_keys);
+					$chart = new pts_ResultFileTable($result_file, null, $table_keys);
 					$chart->renderChart($save_to_dir . "/result-graphs/" . ($key + 1) . "_table.BILDE_EXTENSION");
 					unset($chart);
 					$generated_graph_tables = true;
