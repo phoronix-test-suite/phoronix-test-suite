@@ -78,6 +78,47 @@ class pts_test_result_buffer
 			$this->append_to_test_result("Other", $other_value);
 		}
 	}
+	public function add_composite_result($force = null)
+	{
+		list($is_multi_way, $is_multi_way_inverted) = is_array($force) ? $force : pts_render::multi_way_identifier_check($this->get_identifiers());
+
+		if($is_multi_way)
+		{
+			$group_values = array();
+			$offset_pos = $is_multi_way_inverted ? 0 : 1;
+
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
+
+				if(!isset($group_values[$identifier_r[$offset_pos]]))
+				{
+					$group_values[$identifier_r[$offset_pos]] = 0;
+				}
+
+				$group_values[$identifier_r[$offset_pos]] += $buffer_item->get_result_value();
+			}
+
+			foreach($group_values as $key => $value)
+			{
+				if($offset_pos == 0)
+				{
+					$title = $key . ": Composite";
+				}
+				else
+				{
+					$title = "Composite: " . $key;
+				}
+
+				$this->add_test_result($title, $value);
+			}
+		}
+		else
+		{
+			$total_value = array_sum($this->get_values());
+			$this->add_test_result("Composite", $total_value);
+		}
+	}
 	public function buffer_values_to_percent()
 	{
 		list($is_multi_way, $is_multi_way_inverted) = pts_render::multi_way_identifier_check($this->get_identifiers());

@@ -93,7 +93,7 @@ class pts_global
 	}
 	public static function request_gsid()
 	{
-		$gsid = pts_network::http_get_contents("http://www.phoronix-test-suite.com/global/request-gs-id.php?pts=" . PTS_VERSION . "&os=" . phodevi::read_property("system", "vendor-identifier"));
+		$gsid = pts_network::http_get_contents("http://www.openbenchmarking.org/extern/request-gsid.php?client_version=" . PTS_VERSION . "&client_os=" . phodevi::read_property("system", "vendor-identifier"));
 
 		return pts_global::is_valid_gsid_format($gsid) ? $gsid : false;
 	}

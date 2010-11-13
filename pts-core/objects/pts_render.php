@@ -165,6 +165,10 @@ class pts_render
 		switch($result_format)
 		{
 			case "LINE_GRAPH":
+				if(isset($extra_attributes["no_overview_text"]) && $graph instanceof pts_LineGraph)
+				{
+					$graph->plot_overview_text = false;
+				}
 			case "BAR_ANALYZE_GRAPH":
 				//$graph->hideGraphIdentifiers();
 				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)

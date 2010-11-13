@@ -131,6 +131,27 @@ class pts_strings
 
 		return trim($string);
 	}
+	public static function pts_version_to_codename($version)
+	{
+		$version = substr($version, 0, 3);
+
+		$codenames = array(
+			"1.0" => "Trondheim",
+			"1.2" => "Malvik",
+			"1.4" => "Orkdal",
+			"1.6" => "Tydal",
+			"1.8" => "Selbu",
+			"2.0" => "Sandtorg",
+			"2.2" => "Bardu",
+			"2.4" => "Lenvik",
+			"2.6" => "Lyngen",
+			"2.8" => "Torsken",
+			"2.9" => "Iveland", // early development work
+			"3.0" => "Iveland",
+			);
+
+		return isset($codenames[$version]) ? $codenames[$version] : null;
+	}
 	public static function parse_week_string($week_string, $delimiter = ' ')
 	{
 		$return_array = array();
