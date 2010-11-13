@@ -163,75 +163,8 @@ class pts_result_file
 
 		if($is_multi_way === -1)
 		{
-			$systems = array();
-			$targets = array();
-			$is_multi_way = true;
-			$prev_system = null;
-
-			foreach($this->get_system_identifiers() as $identifier)
-			{
-				if(strpos($identifier, ": ") == false)
-				{
-					$is_multi_way = false;
-					break;
-				}
-
-				$identifier_r = pts_strings::trim_explode(': ', $identifier);
-
-				if(count($identifier_r) != 2)
-				{
-					$is_multi_way = false;
-					break;
-				}
-
-				if($prev_system != null && $prev_system != $identifier_r[0] && isset($systems[$identifier_r[0]]))
-				{
-					// The results aren't ordered
-					$is_multi_way = false;
-					break;
-				}
-				$prev_system = $identifier_r[0];
-
-				$systems[$identifier_r[0]] = !isset($systems[$identifier_r[0]]) ? 1 : $systems[$identifier_r[0]] + 1;
-				$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
-			}
-
-			/*
-			if($is_multi_way)
-			{
-				if(count($systems) < 3 && count($systems) != count($targets))
-				{
-					$is_multi_way = false;
-				}
-			}
-			*/
-
-			if($is_multi_way)
-			{
-				$targets_count = count($targets);
-				$systems_count = count($systems);
-
-				if($targets_count > $systems_count)
-				{
-					$this->is_multi_way_inverted = true;
-				}
-				else
-				{
-					$hardware = array_unique($this->get_system_hardware());
-					//$software = array_unique($this->get_system_software());
-
-					if($targets_count != $systems_count && count($hardware) == $systems_count)
-					{
-						$this->is_multi_way_inverted = true;
-					}
-					else if(count($hardware) == ($targets_count * $systems_count))
-					{
-						$this->is_multi_way_inverted = true;
-					}
-				}
-			}
-
-			// TODO: figure out what else is needed to reasonably determine if the result file is a multi-way comparison
+			$hw = $this->get_system_hardware();
+			list($is_multi_way, $this->is_multi_way_inverted) = pts_render::multi_way_identifier_check($this->get_system_identifiers(), $hw);
 		}
 
 		return $is_multi_way;

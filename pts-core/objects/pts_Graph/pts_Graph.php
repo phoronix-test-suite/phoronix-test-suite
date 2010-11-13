@@ -29,6 +29,7 @@ abstract class pts_Graph
 {
 	// Graph config
 	public static $graph_config = null;
+	public $graph_image;
 
 	// Defaults
 	protected $graph_attr_marks; // Number of marks to make on vertical axis
@@ -75,7 +76,6 @@ abstract class pts_Graph
 	protected $graph_show_key = false;
 	protected $graph_background_lines = false;
 	protected $graph_value_type = "NUMERICAL";
-	protected $graph_image;
 	protected $graph_maximum_value;
 
 	protected $graph_output = null;
@@ -102,6 +102,7 @@ abstract class pts_Graph
 
 	// Internal Switches, Etc
 
+	protected static $used_paint_colors;
 	protected $regression_marker_threshold = 0;
 	protected $is_multi_way_comparison = false;
 	private $test_identifier = null;
@@ -347,11 +348,13 @@ abstract class pts_Graph
 		}
 		return '#' . str_pad(dechex($hex[0]), 2, 0) . str_pad(dechex($hex[1]), 2, 0) . str_pad(dechex($hex[2]), 2, 0);
 	}
+	public static function clear_paint_color_cache()
+	{
+		self::$used_paint_colors = null;
+	}
 	protected function get_paint_color($identifier = 0)
 	{
-		static $used_paint_colors;
-
-		if(!isset($used_paint_colors[$identifier]))
+		if(!isset(self::$used_paint_colors[$identifier]))
 		{
 			if(PTS_IS_CLIENT && pts_client::read_env("GRAPH_GROUP_SIMILAR"))
 			{
@@ -370,7 +373,7 @@ abstract class pts_Graph
 					$groups[$group] = $this->graph_image->convert_hex_to_type($color);
 				}
 
-				$used_paint_colors[$identifier] = $groups[$group];
+				self::$used_paint_colors[$identifier] = $groups[$group];
 			}
 			else
 			{
@@ -382,13 +385,13 @@ abstract class pts_Graph
 					$i++;
 					$next_color = $this->next_paint_color();
 				}
-				while(is_array($used_paint_colors) && in_array($next_color, $used_paint_colors) == true && $i < 10);
+				while(is_array(self::$used_paint_colors) && in_array($next_color, self::$used_paint_colors) == true && $i < 10);
 
-				$used_paint_colors[$identifier] = $next_color;
+				self::$used_paint_colors[$identifier] = $next_color;
 			}
 		}
 
-		return $used_paint_colors[$identifier];
+		return self::$used_paint_colors[$identifier];
 	}
 	protected function reset_paint_index()
 	{
@@ -496,6 +499,11 @@ abstract class pts_Graph
 
 	public function renderGraph()
 	{
+		$this->render_graph_start();
+		$this->render_graph_finish();
+	}
+	public function render_graph_start()
+	{
 		$this->graph_maximum_value = $this->maximum_graph_value();
 
 		// Make room for tick markings, left hand side
@@ -540,7 +548,15 @@ abstract class pts_Graph
 
 			// Pad 8px on top and bottom + title bar + sub-headings
 			$this->graph_top_heading_height = 16 + $this->graph_font_size_heading + (count($this->graph_sub_titles) * ($this->graph_font_size_sub_heading + 4));
-			$this->graph_top_start = $this->graph_top_heading_height + $this->graph_key_height() + 16; // + spacing before graph starts
+
+			$key_height = $this->graph_key_height();
+			if($key_height > ($this->graph_key_line_height * 2))
+			{
+				$this->graph_attr_height += $key_height;
+				$this->graph_top_end += $key_height;
+			}
+
+			$this->graph_top_start = $this->graph_top_heading_height + $key_height + 16; // + spacing before graph starts
 
 			$bottom_heading = 14;
 
@@ -583,6 +599,9 @@ abstract class pts_Graph
 		// Do the actual work
 		$this->render_graph_pre_init();
 		$this->render_graph_init();
+	}
+	public function render_graph_finish()
+	{
 		$this->render_graph_key();
 		$this->render_graph_base($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
 		$this->render_graph_heading();
@@ -848,7 +867,7 @@ abstract class pts_Graph
 		}
 
 		$this->graph_key_line_height = 16;
-		$this->graph_key_item_width = 6 + $this->text_string_width($this->find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
+		$this->graph_key_item_width = 16 + $this->text_string_width($this->find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
 		$this->graph_keys_per_line = floor(($this->graph_left_end - $this->graph_left_start) / $this->graph_key_item_width);
 
 		ceil(count($this->graph_data_title) / $this->graph_keys_per_line) . ' ' . $this->graph_keys_per_line;

@@ -26,6 +26,37 @@ class pts_render
 
 	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
+		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
+		return $graph->renderGraph();
+	}
+	public static function render_graph_inline_embed(&$result_object, &$result_file = null, $extra_attributes = null)
+	{
+		$graph = self::render_graph_process($result_object, $result_file, false, $extra_attributes);
+
+		$graph->render_graph_start();
+		switch($graph->graph_image->get_renderer())
+		{
+			case "PNG":
+			case "JPG":
+				$save_as = tempnam('/tmp', 'pts_gd_render');
+				$graph->saveGraphToFile($save_as);
+				$graph->render_graph_finish();
+				$fp = fopen($save_as, 'rb');
+				$buffer = fread($fp, 10240);
+				fclose($fp);
+				unlink($save_as);
+				$conts = base64_encode($buffer);
+				$graph = "<img src=\"data:image/png;base64,$conts\" />";
+				break;
+			default:
+				$graph = $graph->render_graph_finish();
+				break;
+		}
+
+		return $graph;
+	}
+	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
+	{
 		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
 		{
 			if($result_file->is_multi_way_comparison() && $result_object->test_profile->get_result_format() == "LINE_GRAPH")
@@ -177,7 +208,7 @@ class pts_render
 			self::$previous_graph_object = $graph;
 		}
 
-		return $graph->renderGraph();
+		return $graph;
 	}
 	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false)
 	{
@@ -570,6 +601,81 @@ class pts_render
 		}
 
 		return $regressions;
+	}
+	public static function multi_way_identifier_check($identifiers, &$system_hardware = null)
+	{
+		$systems = array();
+		$targets = array();
+		$is_multi_way = true;
+		$is_multi_way_inverted = false;
+		$prev_system = null;
+
+		foreach($identifiers as $identifier)
+		{
+			if(strpos($identifier, ": ") == false)
+			{
+				$is_multi_way = false;
+				break;
+			}
+
+			$identifier_r = pts_strings::trim_explode(': ', $identifier);
+
+			if(count($identifier_r) != 2)
+			{
+				$is_multi_way = false;
+				break;
+			}
+
+			if($prev_system != null && $prev_system != $identifier_r[0] && isset($systems[$identifier_r[0]]))
+			{
+				// The results aren't ordered
+				$is_multi_way = false;
+				break;
+			}
+			$prev_system = $identifier_r[0];
+
+			$systems[$identifier_r[0]] = !isset($systems[$identifier_r[0]]) ? 1 : $systems[$identifier_r[0]] + 1;
+			$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
+		}
+
+		/*
+		if($is_multi_way)
+		{
+			if(count($systems) < 3 && count($systems) != count($targets))
+			{
+				$is_multi_way = false;
+			}
+		}
+		*/
+
+		if($is_multi_way)
+		{
+			$targets_count = count($targets);
+			$systems_count = count($systems);
+
+			if($targets_count > $systems_count)
+			{
+				$is_multi_way_inverted = true;
+			}
+			else if(is_array($system_hardware))
+			{
+				$hardware = array_unique($system_hardware);
+				//$software = array_unique($system_software);
+
+				if($targets_count != $systems_count && count($hardware) == $systems_count)
+				{
+					$is_multi_way_inverted = true;
+				}
+				else if(count($hardware) == ($targets_count * $systems_count))
+				{
+					$is_multi_way_inverted = true;
+				}
+			}
+		}
+
+		// TODO: figure out what else is needed to reasonably determine if the result file is a multi-way comparison
+
+		return array($is_multi_way, $is_multi_way_inverted);
 	}
 }
 

@@ -177,6 +177,17 @@ abstract class bilde_renderer
 					$selected_renderer = "SVG";
 				}
 			}
+			else if(($p = strpos($browser, "AppleWebKit/")) !== false)
+			{
+				// Safari, Google Chrome, Google Chromium, etc
+				$webkit_ver = substr($browser, ($p + 12));
+				$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
+
+				if($webkit_ver >= 532.0)
+				{
+					$selected_renderer = "SVG";
+				}
+			}
 		}
 
 		if((($this_renderer = getenv("BILDE_RENDERER")) != false || defined("BILDE_RENDERER") && ($this_renderer = BILDE_RENDERER) || ($this_renderer = $requested_renderer) != null) && in_array($this_renderer, $available_renderers))

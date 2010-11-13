@@ -46,7 +46,7 @@ class pts_test_result_buffer
 	}
 	public function append_to_test_result($identifier, $value)
 	{
-		if(($key = array_search($identifier, $this->buffer_items)) !== false)
+		if(($key = array_search(strtolower($identifier), $this->buffer_items)) !== false)
 		{
 			$buffer = $this->buffer_items[$key];
 			unset($this->buffer_items[$key]);
@@ -60,7 +60,7 @@ class pts_test_result_buffer
 
 		array_push($this->buffer_items, $buffer_item);
 	}
-	public function clear_outlier_results($value_below = false)
+	public function clear_outlier_results($add_to_other = true, $value_below = false)
 	{
 		$other_value = 0;
 
@@ -73,9 +73,49 @@ class pts_test_result_buffer
 			}
 		}
 
-		if($other_value > 0)
+		if($add_to_other && $other_value > 0)
 		{
 			$this->append_to_test_result("Other", $other_value);
+		}
+	}
+	public function buffer_values_to_percent()
+	{
+		list($is_multi_way, $is_multi_way_inverted) = pts_render::multi_way_identifier_check($this->get_identifiers());
+
+		if($is_multi_way)
+		{
+			$group_values = array();
+			$offset_pos = $is_multi_way_inverted ? 0 : 1;
+
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
+
+				if(!isset($group_values[$identifier_r[$offset_pos]]))
+				{
+					$group_values[$identifier_r[$offset_pos]] = 0;
+				}
+
+				$group_values[$identifier_r[$offset_pos]] += $buffer_item->get_result_value();
+			}
+
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
+
+				$percent = pts_math::set_precision(($buffer_item->get_result_value() / $group_values[$identifier_r[$offset_pos]] * 100), 3);
+				$buffer_item->reset_result_value($percent);
+			}
+		}
+		else
+		{
+			$total_value = array_sum($this->get_values());
+
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$percent = pts_math::set_precision(($buffer_item->get_result_value() / $total_value * 100), 3);
+				$buffer_item->reset_result_value($percent);
+			}
 		}
 	}
 	public function get_count()
