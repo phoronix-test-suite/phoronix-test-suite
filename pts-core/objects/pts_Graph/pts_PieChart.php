@@ -90,11 +90,8 @@ class pts_PieChart extends pts_Graph
 			$this->graph_image->write_text_right($key_strings[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x + $key_item_width + 30, $component_y, $component_x + $key_item_width + 30, $component_y);
 		}
 	}
-	public function renderGraph()
+	public function render_graph_finish()
 	{
-
-		$this->render_graph_pre_init();
-		$this->render_graph_init();
 		$this->render_graph_identifiers();
 		$this->render_graph_heading(false);
 

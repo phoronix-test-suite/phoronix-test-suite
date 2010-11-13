@@ -149,8 +149,8 @@ class pts_global
 		{
 			case "test_complete":
 				list($test_result, $time_elapsed) = $data;
-				$upload_data = array("test_identifier" => $test_result->test_profile->get_identifier(), "test_version" => $test_result->test_profile->get_version(), "elapsed_time" => $time_elapsed);
-				pts_network::http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/test-completion.php", $upload_data);
+				$upload_data = array("test_identifier" => $test_result->test_profile->get_identifier(), "test_version" => $test_result->test_profile->get_test_profile_version(), "elapsed_time" => $time_elapsed);
+				pts_network::http_upload_via_post("http://www.openbenchmarking.org/extern/statistics/report-test-completion.php", $upload_data);
 				break;
 		}
 	}
