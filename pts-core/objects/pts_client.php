@@ -752,14 +752,19 @@ class pts_client
 
 		if($hw_reporting)
 		{
-			$hw = array(
-			"cpu" => phodevi::read_property("cpu", "model"),
-			"cpu_count" => phodevi::read_property("cpu", "core-count"),
-			"cpu_speed" => phodevi::read_property("cpu", "default-frequency") * 1000,
-			"chipset" => phodevi::read_name("chipset"),
-			"motherboard" => phodevi::read_name("motherboard"),
-			"gpu" => phodevi::read_property("gpu", "model")
-			);
+			$hw = array();
+			foreach(pts_openbenchmarking::stats_hardware_list() as $key => $value)
+			{
+				if(count($value) == 2)
+				{
+					$hw[$key] = phodevi::read_property($value[0], $value[1]);
+				}
+				else
+				{
+					$hw[$key] = phodevi::read_name($value[0]);
+				}
+			}
+
 			$hw_prev = $pso->read_object("global_reported_hw");
 			$pso->add_object("global_reported_hw", $hw); 
 
@@ -770,16 +775,18 @@ class pts_client
 		}
 		if($sw_reporting)
 		{
-			$sw = array(
-			"os" => phodevi::read_property("system", "operating-system"),
-			"os_architecture" => phodevi::read_property("system", "kernel-architecture"),
-			"display_server" => phodevi::read_property("system", "display-server"),
-			"display_driver" => pts_strings::first_in_string(phodevi::read_property("system", "display-driver-string")),
-			"desktop" => pts_strings::first_in_string(phodevi::read_property("system", "desktop-environment")),
-			"compiler" => phodevi::read_property("system", "compiler"),
-			"file_system" => phodevi::read_property("system", "filesystem"),
-			"screen_resolution" => phodevi::read_property("gpu", "screen-resolution-string")
-			);
+			$sw = array();
+			foreach(pts_openbenchmarking::stats_hardware_list() as $key => $value)
+			{
+				if(count($value) == 2)
+				{
+					$sw[$key] = phodevi::read_property($value[0], $value[1]);
+				}
+				else
+				{
+					$sw[$key] = phodevi::read_name($value[0]);
+				}
+			}
 			$sw_prev = $pso->read_object("global_reported_sw");
 			$pso->add_object("global_reported_sw", $sw); 
 

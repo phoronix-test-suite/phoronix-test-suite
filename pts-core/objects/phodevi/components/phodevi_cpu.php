@@ -33,6 +33,9 @@ class phodevi_cpu extends phodevi_device_interface
 			case "model":
 				$property = new phodevi_device_property("cpu_model", PHODEVI_SMART_CACHE);
 				break;
+			case "mhz-default-frequency":
+				$property = new phodevi_device_property("cpu_default_frequency_mhz", PHODEVI_SMART_CACHE);
+				break;
 			case "default-frequency":
 				$property = new phodevi_device_property(array("cpu_default_frequency", 0), PHODEVI_SMART_CACHE);
 				break;
@@ -88,6 +91,10 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return (is_numeric($info) && $info > 0 ? $info : 1);
+	}
+	public static function cpu_default_frequency_mhz()
+	{
+		return self::cpu_default_frequency() * 1000;
 	}
 	public static function cpu_default_frequency($cpu_core = 0)
 	{

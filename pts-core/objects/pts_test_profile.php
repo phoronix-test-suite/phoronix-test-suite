@@ -26,7 +26,7 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		return is_file(PTS_TEST_PROFILE_PATH . $identifier . "/test-definition.xml");
 	}
-	public function __construct($identifier, $override_values = null)
+	public function __construct($identifier = null, $override_values = null)
 	{
 		parent::__construct($identifier);
 

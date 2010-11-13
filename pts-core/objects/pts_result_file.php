@@ -32,7 +32,6 @@ class pts_result_file
 	{
 		$this->save_identifier = $result_file;
 		$this->xml_parser = new pts_results_tandem_XmlReader($result_file);
-		
 		$this->extra_attributes = array();
 	}
 	public function __toString()

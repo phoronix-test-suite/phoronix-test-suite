@@ -168,7 +168,7 @@ class pts_global
 		}
 
 		$upload_data = array("report_hwsw" => implode(';', $to_report), "gsid" => PTS_GSID);
-		pts_network::http_upload_via_post("http://www.phoronix-test-suite.com/global/usage-stats/installed-hardware-software.php", $upload_data);
+		pts_network::http_upload_via_post("http://www.openbenchmarking.org/extern/statistics/report-installed-hardware-software.php", $upload_data);
 	}
 	public static function prompt_user_result_tags($default_tags = null)
 	{

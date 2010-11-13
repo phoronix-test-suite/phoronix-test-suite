@@ -32,13 +32,51 @@ class pts_test_result_buffer
 	{
 		return $this->buffer_items;
 	}
+	public function sort_buffer_items()
+	{
+		sort($this->buffer_items);
+	}
 	public function add_buffer_item($buffer_item)
 	{
 		array_push($this->buffer_items, $buffer_item);
 	}
-	public function add_test_result($identifier, $value, $raw_value)
+	public function add_test_result($identifier, $value, $raw_value = null)
 	{
 		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value));
+	}
+	public function append_to_test_result($identifier, $value)
+	{
+		if(($key = array_search($identifier, $this->buffer_items)) !== false)
+		{
+			$buffer = $this->buffer_items[$key];
+			unset($this->buffer_items[$key]);
+
+			$buffer_item = new pts_test_result_buffer_item($identifier, ($value + $buffer->get_result_value()));
+		}
+		else
+		{
+			$buffer_item = new pts_test_result_buffer_item($identifier, $value, null);
+		}
+
+		array_push($this->buffer_items, $buffer_item);
+	}
+	public function clear_outlier_results($value_below = false)
+	{
+		$other_value = 0;
+
+		foreach($this->buffer_items as $key => &$buffer_item)
+		{
+			if($value_below !== false && $buffer_item->get_result_value() < $value_below)
+			{
+				$other_value += $buffer_item->get_result_value();
+				unset($this->buffer_items[$key]);
+			}
+		}
+
+		if($other_value > 0)
+		{
+			$this->append_to_test_result("Other", $other_value);
+		}
 	}
 	public function get_count()
 	{

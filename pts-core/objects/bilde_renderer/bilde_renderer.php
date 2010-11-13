@@ -161,6 +161,24 @@ abstract class bilde_renderer
 		$selected_renderer = "SVG";
 		$use_renderer = false;
 
+		if(isset($_SERVER['HTTP_USER_AGENT']))
+		{
+			$browser = $_SERVER['HTTP_USER_AGENT'];
+			$selected_renderer = "PNG";
+
+			if(($p = strpos($browser, "Gecko/")) !== false)
+			{
+				// Mozilla Gecko-based browser (Firefox, etc)
+				$gecko_date = substr($browser, ($p + 6));
+				$gecko_date = substr($gecko_date, 0, strpos($gecko_date, ' '));
+
+				if($gecko_date >= 20100825)
+				{
+					$selected_renderer = "SVG";
+				}
+			}
+		}
+
 		if((($this_renderer = getenv("BILDE_RENDERER")) != false || defined("BILDE_RENDERER") && ($this_renderer = BILDE_RENDERER) || ($this_renderer = $requested_renderer) != null) && in_array($this_renderer, $available_renderers))
 		{
 			$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));

@@ -22,14 +22,15 @@
 
 class pts_strings
 {
-	const CHAR_LETTER = 1;
-	const CHAR_NUMERIC = 2;
-	const CHAR_DECIMAL = 3;
-	const CHAR_SPACE = 4;
-	const CHAR_DASH = 5;
-	const CHAR_UNDERSCORE = 6;
-	const CHAR_COLON = 7;
-	const CHAR_COMMA = 8;
+	const CHAR_LETTER = 2;
+	const CHAR_NUMERIC = 4;
+	const CHAR_DECIMAL = 8;
+	const CHAR_SPACE = 16;
+	const CHAR_DASH = 32;
+	const CHAR_UNDERSCORE = 64;
+	const CHAR_COLON = 128;
+	const CHAR_COMMA = 256;
+	const CHAR_SLASH = 512;
 
 	public static function is_url($string)
 	{
@@ -105,6 +106,10 @@ class pts_strings
 			$is_of_type = true;
 		}
 		else if(($attributes & self::CHAR_COMMA) && $i == 44)
+		{
+			$is_of_type = true;
+		}
+		else if(($attributes & self::CHAR_SLASH) && ($i == 47 || $i == 92))
 		{
 			$is_of_type = true;
 		}

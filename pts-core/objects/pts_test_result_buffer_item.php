@@ -44,6 +44,10 @@ class pts_test_result_buffer_item
 	{
 		return $this->result_raw;
 	}
+	public function __toString()
+	{
+		return $this->get_result_identifier();
+	}
 }
 
 ?>

@@ -71,7 +71,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 		$separator_height = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 		$bar_height = floor(($this->identifier_height - ($multi_way ? 20 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
-		$highlight_bar = PTS_IS_CLIENT ? pts_strings::comma_explode(pts_client::read_env("GRAPH_HIGHLIGHT")) : false;
+		$highlight_bar = PTS_IS_CLIENT ? pts_strings::comma_explode(pts_client::read_env("GRAPH_HIGHLIGHT")) : array();
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
