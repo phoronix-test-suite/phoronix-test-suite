@@ -163,31 +163,61 @@ abstract class bilde_renderer
 
 		if(isset($_SERVER['HTTP_USER_AGENT']))
 		{
-			$browser = $_SERVER['HTTP_USER_AGENT'];
-			$selected_renderer = "PNG";
+			static $http_selected_renderer = null;
 
-			if(($p = strpos($browser, "Gecko/")) !== false)
+			if($http_selected_renderer == null)
 			{
-				// Mozilla Gecko-based browser (Firefox, etc)
-				$gecko_date = substr($browser, ($p + 6));
-				$gecko_date = substr($gecko_date, 0, strpos($gecko_date, ' '));
+				$browser = $_SERVER['HTTP_USER_AGENT'] . ' ';
+				$http_selected_renderer = "PNG";
 
-				if($gecko_date >= 20100825)
+				if(($p = strpos($browser, "Gecko/")) !== false)
 				{
-					$selected_renderer = "SVG";
+					// Mozilla Gecko-based browser (Firefox, etc)
+					$gecko_date = substr($browser, ($p + 6));
+					$gecko_date = substr($gecko_date, 0, 6);
+
+					// Around Firefox 3.0 era
+					if($gecko_date >= 200804)
+					{
+						$http_selected_renderer = "SVG";
+					}
+				}
+				else if(($p = strpos($browser, "AppleWebKit/")) !== false)
+				{
+					// Safari, Google Chrome, Google Chromium, etc
+					$webkit_ver = substr($browser, ($p + 12));
+					$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
+
+					if($webkit_ver >= 530)
+					{
+						$http_selected_renderer = "SVG";
+					}
+				}
+				else if(($p = strpos($browser, "Opera/")) !== false)
+				{
+					// Safari, Google Chrome, Google Chromium, etc
+					$ver = substr($browser, ($p + 6));
+					$ver = substr($ver, 0, strpos($ver, ' '));
+
+					if($ver >= 9.80)
+					{
+						$http_selected_renderer = "SVG";
+					}
+				}
+				else if(($p = strpos($browser, "Epiphany/")) !== false)
+				{
+					// Older versions of Epiphany. Newer versions should report their Gecko or WebKit appropriately
+					$ver = substr($browser, ($p + 9));
+					$ver = substr($ver, 0, 4);
+
+					if($ver >= 2.22)
+					{
+						$http_selected_renderer = "SVG";
+					}
 				}
 			}
-			else if(($p = strpos($browser, "AppleWebKit/")) !== false)
-			{
-				// Safari, Google Chrome, Google Chromium, etc
-				$webkit_ver = substr($browser, ($p + 12));
-				$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
 
-				if($webkit_ver >= 530)
-				{
-					$selected_renderer = "SVG";
-				}
-			}
+			$selected_renderer = $http_selected_renderer;
 
 			if(isset($_REQUEST['force_svg']))
 			{
