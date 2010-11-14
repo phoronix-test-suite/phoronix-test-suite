@@ -30,6 +30,18 @@ class pts_global
 		// Checks if a string is a valid Phoronix Global ID
 		return pts_global::is_valid_global_id_format($global_id) && pts_network::http_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id) == "REMOTE_FILE";
 	}
+	public static function openbenchmarking_host()
+	{
+		static $host = null;
+
+		if($host == null)
+		{
+			// Use HTTPS if OpenSSL is available as a check to see if HTTPS can be handled
+			$host = (extension_loaded("openssl") ? "https://" : "http://") . "www.openbenchmarking.org/";
+		}
+
+		return $host;
+	}
 	public static function is_valid_global_id_format($global_id)
 	{
 		// Basic checking to see if the string is possibly a Global ID
@@ -97,7 +109,7 @@ class pts_global
 			"client_version" => PTS_VERSION,
 			"client_os" => phodevi::read_property("system", "vendor-identifier")
 			);
-		$gsid = pts_network::http_upload_via_post("https://www.openbenchmarking.org/extern/request-gsid.php", $upload_data);
+		$gsid = pts_network::http_upload_via_post(self::openbenchmarking_host() . "extern/request-gsid.php", $upload_data);
 
 		return pts_global::is_valid_gsid_format($gsid) ? $gsid : false;
 	}
@@ -154,7 +166,7 @@ class pts_global
 			case "test_complete":
 				list($test_result, $time_elapsed) = $data;
 				$upload_data = array("test_identifier" => $test_result->test_profile->get_identifier(), "test_version" => $test_result->test_profile->get_test_profile_version(), "elapsed_time" => $time_elapsed);
-				pts_network::http_upload_via_post("https://www.openbenchmarking.org/extern/statistics/report-test-completion.php", $upload_data);
+				pts_network::http_upload_via_post(self::openbenchmarking_host() . "extern/statistics/report-test-completion.php", $upload_data);
 				break;
 		}
 	}
@@ -172,7 +184,7 @@ class pts_global
 		}
 
 		$upload_data = array("report_hwsw" => implode(';', $to_report), "gsid" => PTS_GSID);
-		pts_network::http_upload_via_post("https://www.openbenchmarking.org/extern/statistics/report-installed-hardware-software.php", $upload_data);
+		pts_network::http_upload_via_post(self::openbenchmarking_host() . "extern/statistics/report-installed-hardware-software.php", $upload_data);
 	}
 	public static function prompt_user_result_tags($default_tags = null)
 	{
