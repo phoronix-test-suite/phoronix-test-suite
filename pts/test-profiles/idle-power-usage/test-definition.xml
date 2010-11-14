@@ -15,7 +15,7 @@
 		<SubTitle>System Current</SubTitle>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>microAmps</ResultScale>
-		<ResultFormat>LINE_GRAPH</ResultFormat>
+		<DisplayFormat>LINE_GRAPH</DisplayFormat>
 	</TestInformation>
         <TestSettings>
 		<Option>

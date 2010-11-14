@@ -17,7 +17,7 @@
 		<SubTitle>Idle, DPMS Off, Video Playback</SubTitle>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Milliwatts</ResultScale>
-		<ResultFormat>LINE_GRAPH</ResultFormat>
+		<DisplayFormat>LINE_GRAPH</DisplayFormat>
 		<Description>This test is designed for notebooks and netbooks and monitor's the system's battery consumption as it idles for 60 seconds, then turns off the monitor for 60 seconds via DPMS, then turns the display back on and plays back a sample H.264 1080p video file using mplayer with the X-Video output adapter. A line graph showing the power usage is then rendered.</Description>
 	</TestInformation>
 </PhoronixTestSuite>

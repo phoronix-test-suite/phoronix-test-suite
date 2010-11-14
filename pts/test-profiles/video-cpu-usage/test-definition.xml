@@ -18,7 +18,7 @@
 		<ResultScale>Percent</ResultScale>
 		<TimesToRun>1</TimesToRun>
 		<Description>This is a test profile that will record the CPU usage while a 1080p H.264 video sample of Big Buck Bunny is played back for several minutes using MPlayer.</Description>
-		<ResultFormat>LINE_GRAPH</ResultFormat>
+		<DisplayFormat>LINE_GRAPH</DisplayFormat>
 	</TestInformation>
 	<TestSettings>
 		<Default>

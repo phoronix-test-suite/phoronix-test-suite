@@ -161,7 +161,7 @@ class pts_test_profile_parser
 	}
 	public function get_display_format()
 	{
-		$format = $this->xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
+		$format = $this->xml_parser->getXMLValue(P_TEST_DISPLAY_FORMAT);
 
 		return $format == null ? "BAR_GRAPH" : $format;
 	}
@@ -279,7 +279,7 @@ class pts_test_profile_parser
 	}
 	public function set_display_format($format)
 	{
-		$this->xml_parser->overrideXMLValue(P_TEST_RESULTFORMAT, $format);
+		$this->xml_parser->overrideXMLValue(P_TEST_DISPLAY_FORMAT, $format);
 	}
 	public function set_result_quantifier($quantifier)
 	{

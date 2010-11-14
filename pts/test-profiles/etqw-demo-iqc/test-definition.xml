@@ -14,7 +14,7 @@
 		<Executable>etqw-demo-iqc</Executable>
 		<ResultScale>NULL</ResultScale>
 		<Proportion>ABSTRACT</Proportion>
-		<ResultFormat>IMAGE_COMPARISON</ResultFormat>
+		<DisplayFormat>IMAGE_COMPARISON</DisplayFormat>
 	</TestInformation>
 	<TestSettings>
 		<Default>

@@ -14,7 +14,7 @@
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>NULL</ResultScale>
 		<Proportion>ABSTRACT</Proportion>
-		<ResultFormat>IMAGE_COMPARISON</ResultFormat>
+		<DisplayFormat>IMAGE_COMPARISON</DisplayFormat>
 	</TestInformation>
 	<TestSettings>
 		<Default>

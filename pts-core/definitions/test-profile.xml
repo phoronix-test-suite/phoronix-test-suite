@@ -39,8 +39,8 @@
 			<Required>RECOMMENDED</Required>
 		</Define>
 		<Define>
-			<Name>P_TEST_RESULTFORMAT</Name>
-			<Value>PhoronixTestSuite/TestInformation/ResultFormat</Value>
+			<Name>P_TEST_DISPLAY_FORMAT</Name>
+			<Value>PhoronixTestSuite/TestInformation/DisplayFormat</Value>
 			<Description>The type of graph/visual representation to be used when viewing the test results. Supported values include BAR_GRAPH (Bar Graph), LINE_GRAPH (Line Graph), PASS_FAIL (Pass-Fail Graph), NO_RESULT (Nothing Is Produced), MULTI_PASS_FAIL (Multiple Pass-Fail Graph), and IMAGE_COMPARISON (Image Comparison Graph). When no value is supplied, the default BAR_GRAPH is used.</Description>
 			<Required>NO</Required>
 		</Define>

@@ -8,7 +8,7 @@
 	</TestProfile>
 	<TestInformation>
 		<TimesToRun>1</TimesToRun>
-		<ResultFormat>LINE_GRAPH</ResultFormat>
+		<DisplayFormat>LINE_GRAPH</DisplayFormat>
 		<Description>This test plots the frame-rate of VDrift, which is an cross-platform, open-source drift racing game.</Description>
 	</TestInformation>
 	<TestSettings>

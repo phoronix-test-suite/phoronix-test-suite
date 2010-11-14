@@ -19,7 +19,7 @@
 		<TimesToRun>1</TimesToRun>
 		<Executable>launch</Executable>
 		<ResultScale>Stress Test</ResultScale>
-		<ResultFormat>PASS_FAIL</ResultFormat>
+		<DisplayFormat>PASS_FAIL</DisplayFormat>
 		<Description>This test runs a series of GROMACS inner loops hand coded in assembly for speed and efficiency on SSE units. The short run lengths are only useful for heating up your CPU, for a proper test, use the 6 or 12 hour run length. This test will cause unstable hardware to stop responding and require a hard reboot.</Description>
 	</TestInformation>
 	<TestSettings>

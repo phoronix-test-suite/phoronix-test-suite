@@ -16,7 +16,7 @@
 		<Title>Java Graphics Basic Acceptance Test</Title>
 		<Version>2.0</Version>
 		<TimesToRun>1</TimesToRun>
-		<ResultFormat>PASS_FAIL</ResultFormat>
+		<DisplayFormat>PASS_FAIL</DisplayFormat>
 		<Description>This test runs a series of automated performance/quality sub-tests that exercise the OpenGL-based Java 2D pipeline in order to verify the quality of OpenGL drivers.</Description>
 	</TestInformation>
 </PhoronixTestSuite>
