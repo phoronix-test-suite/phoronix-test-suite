@@ -66,7 +66,7 @@ class pts_test_install_request
 		{
 			pts_load_xml_definitions("test-profile-downloads.xml");
 
-			$xml_parser = new tandem_XmlReader($download_xml_file);
+			$xml_parser = new nye_XmlReader($download_xml_file);
 			$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 			$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 			$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
@@ -74,7 +74,7 @@ class pts_test_install_request
 			$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
 			$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
 
-			foreach(array_keys($package_filename) as $i)
+			foreach(array_keys($package_url) as $i)
 			{
 				if(!empty($package_platform[$i]))
 				{

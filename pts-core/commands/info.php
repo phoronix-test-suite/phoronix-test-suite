@@ -121,7 +121,7 @@ class info implements pts_option_interface
 			echo "\nTest Result Identifiers:\n";
 			echo pts_user_io::display_text_list($args["object"]->get_system_identifiers());
 
-			if(count(($tests = $args["object"]->get_unique_test_titles())) > 1)
+			if(count(($tests = $args["object"]->get_unique_test_titles())) > 0)
 			{
 				echo "\nContained Tests:\n";
 				echo pts_user_io::display_text_list($tests);

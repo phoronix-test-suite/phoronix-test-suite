@@ -3,12 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
-	pts_test_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite with optimizations for handling test profiles
-
-	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
-	A work in progress. This was originally designed for just some select needs in the past. No XML validation is done with this parser, etc.
+	Copyright (C) 2010, Phoronix Media
+	Copyright (C) 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_test_tandem_XmlReader extends tandem_XmlReader
+class pts_test_nye_XmlReader extends nye_XmlReader
 {
 	protected $override_values;
 
@@ -32,7 +28,7 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 	{
 		pts_load_xml_definitions("test-profile.xml");
 
-		if(!is_file($read_xml) && is_file(PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml"))
+		if(is_file(PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml"))
 		{
 			$read_xml = PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml";
 		}
@@ -47,15 +43,15 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 			$this->overrideXMLValue($xml_tag, $value);
 		}
 	}
-	public function getOverrideValues()
-	{
-		return $this->override_values;
-	}
 	public function overrideXMLValue($xml_tag, $value)
 	{
 		$this->override_values[$xml_tag] = $value;
 	}
-	function getXMLValue($xml_tag, $fallback_value = false)
+	public function getOverrideValues()
+	{
+		return $this->override_values;
+	}
+	public function getXMLValue($xml_tag, $fallback_value = false)
 	{
 		if(isset($this->override_values[$xml_tag]) && !empty($this->override_values[$xml_tag]))
 		{
@@ -72,16 +68,19 @@ class pts_test_tandem_XmlReader extends tandem_XmlReader
 
 		return parent::getXmlValue($xml_tag, $fallback_value);
 	}
-	function handleXmlZeroTagFallback($xml_tag)
+	public function handleXmlZeroTagFallback($xml_tag, $fallback_value)
 	{
 		// Cascading Test Profiles for finding a tag within an XML file being extended by another XML file
-		$fallback_value = $this->tag_fallback_value;
-
-		$test_extends = $this->getValue(P_TEST_CTPEXTENDS, null, null, true);
+		if($xml_tag == P_TEST_CTPEXTENDS)
+		{
+			// Otherwise we'd have an infinite loop
+			return $fallback_value;
+		}
+		$test_extends = $this->getXmlValue(P_TEST_CTPEXTENDS);
 
 		if(!empty($test_extends))
 		{
-			$test_below_parser = new pts_test_tandem_XmlReader($test_extends);
+			$test_below_parser = new pts_test_nye_XmlReader($test_extends);
 			$test_below_tag = $test_below_parser->getXMLValue($xml_tag);
 
 			if(!empty($test_below_tag))

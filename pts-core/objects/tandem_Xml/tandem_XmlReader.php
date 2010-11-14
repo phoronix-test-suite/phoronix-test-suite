@@ -40,43 +40,9 @@ class tandem_XmlReader
 
 		$this->xml_data = $read_xml;
 	}
-	function getStatement($statement)
-	{
-		return $this->listStatements(true, $statement);
-	}
-	function listStatements($perform_search = false, $search_query = "")
-	{
-		$return_r = array();
-		$comment_statements = $this->parseLineCommentsFromFile();
-
-		foreach($comment_statements as $statement)
-		{
-			$name = substr($statement, 0, strpos($statement, ":"));
-			$name = trim(strstr($name, " "));
-
-			if($perform_search && !empty($search_query))
-			{
-				if($name == $search_query)
-				{
-					$value = trim(substr(strstr($statement, ":"), 1));
-					array_push($return_r, $value);
-				}
-			}
-			else
-			{
-				array_push($return_r, $name);
-			}
-		}
-
-		return $return_r;
-	}
 	function getXMLValue($xml_tag, $fallback_value = false)
 	{
 		return ($v = $this->getValue($xml_tag)) != false ? $v : $fallback_value;
-	}
-	function isDefined($xml_tag)
-	{
-		return $this->getValue($xml_tag) != null;
 	}
 	function getValue($xml_path, $xml_tag = null, $xml_match = null, $is_fallback_call = false)
 	{

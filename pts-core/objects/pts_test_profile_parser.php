@@ -27,7 +27,7 @@ class pts_test_profile_parser
 
 	public function __construct($identifier = null)
 	{
-		$this->xml_parser = new pts_test_tandem_XmlReader($identifier);
+		$this->xml_parser = new pts_test_nye_XmlReader($identifier);
 		$this->identifier = $identifier;
 	}
 	public function __toString()
