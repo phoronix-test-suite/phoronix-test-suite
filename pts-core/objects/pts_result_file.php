@@ -199,30 +199,10 @@ class pts_result_file
 			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS);
 			$results_proportion = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
 			$results_format = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_DISPLAY_FORMAT);
-			$results_raw = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 
-			$result_buffers = array();
-
-			$key_identifier = substr(P_RESULTS_RESULTS_GROUP_IDENTIFIER, strlen(P_RESULTS_RESULTS_GROUP) + 1);
-			$key_value = substr(P_RESULTS_RESULTS_GROUP_VALUE, strlen(P_RESULTS_RESULTS_GROUP) + 1);
-			$key_raw = substr(P_RESULTS_RESULTS_GROUP_RAW, strlen(P_RESULTS_RESULTS_GROUP) + 1);
-
-			foreach(array_keys($results_raw) as $results_raw_key)
-			{
-				$result_buffer = new pts_test_result_buffer();
-				$xml_results = new tandem_XmlReader($results_raw[$results_raw_key]);
-
-				$identifiers = $xml_results->getXMLArrayValues($key_identifier);
-				$values = $xml_results->getXMLArrayValues($key_value);
-				$raw_values = $xml_results->getXMLArrayValues($key_raw);
-
-				for($i = 0; $i < count($identifiers) && $i < count($values); $i++)
-				{
-					$result_buffer->add_test_result($identifiers[$i], $values[$i], $raw_values[$i]);
-				}
-
-				array_push($result_buffers, $result_buffer);
-			}
+			$results_identifiers = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP_IDENTIFIER, 0);
+			$results_values = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP_VALUE, 0);
+			$results_raw = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP_RAW, 0);
 
 			for($i = 0; $i < count($results_name); $i++)
 			{
@@ -237,7 +217,14 @@ class pts_result_file
 				$test_result = new pts_test_result($test_profile);
 				$test_result->set_used_arguments_description($results_attributes[$i]);
 				$test_result->set_used_arguments($results_arguments[$i]);
-				$test_result->set_test_result_buffer($result_buffers[$i]);
+
+				$result_buffer = new pts_test_result_buffer();
+				for($j = 0; $j < count($results_identifiers[$i]); $j++)
+				{
+					$result_buffer->add_test_result($results_identifiers[$i][$j], $results_values[$i][$j], $results_raw[$i][$j]);
+				}
+
+				$test_result->set_test_result_buffer($result_buffer);
 
 				array_push($this->result_objects, $test_result);
 			}

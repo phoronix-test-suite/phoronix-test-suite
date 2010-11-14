@@ -3,12 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
-	pts_graph_config_tandem_XmlReader.php: The XML reading object for the Phoronix Test Suite for the graph config
-
-	Additional Notes: A very simple XML parser with a few extras... Does not currently support attributes on tags, etc.
-	A work in progress. This was originally designed for just some select needs in the past. No XML validation is done with this parser, etc.
+	Copyright (C) 2010, Phoronix Media
+	Copyright (C) 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,25 +20,25 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
+pts_load_xml_definitions("graph-config.xml");
+
+class pts_graph_config_nye_XmlReader extends nye_XmlReader
 {
 	protected $override_values;
 
 	public function __construct($new_values = null)
 	{
-		pts_load_xml_definitions("graph-config.xml");
-
 		$file = null;
 
 		if(PTS_IS_CLIENT)
 		{
 			if(is_file(PTS_USER_PATH . "graph-config.xml"))
 			{
-				$file = file_get_contents(PTS_USER_PATH . "graph-config.xml");
+				$file = PTS_USER_PATH . "graph-config.xml";
 			}
 			else if(is_file(PTS_RESULTS_VIEWER_PATH . "graph-config-template.xml"))
 			{
-				$file = file_get_contents(PTS_RESULTS_VIEWER_PATH . "graph-config-template.xml");
+				$file = PTS_RESULTS_VIEWER_PATH . "graph-config-template.xml";
 			}
 		}
 		else if(defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML))
@@ -54,20 +50,20 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 
 		parent::__construct($file);
 	}
-	function getValue($xml_path, $xml_tag = null, $xml_match = null, $is_fallback_call = false)
+	public function getXMLValue($xml_tag, $fallback_value = false)
 	{
-		if($this->override_values != false && isset($this->override_values[$xml_path]))
+		if($this->override_values != false && isset($this->override_values[$xml_tag]))
 		{
-			$value = $this->override_values[$xml_path];
+			$value = $this->override_values[$xml_tag];
 		}
 		else
 		{
-			$value = parent::getValue($xml_path, $xml_tag, $xml_match, $is_fallback_call);
+			$value = parent::getXMLValue($xml_tag, $fallback_value);
 		}
 
 		return $value;
 	}
-	function handleXmlZeroTagFallback($xml_tag)
+	public function handleXmlZeroTagFallback($xml_tag, $fallback_value)
 	{
 		static $fallback_reader = null;
 		$fallback_value = false;
@@ -76,10 +72,10 @@ class pts_graph_config_tandem_XmlReader extends tandem_XmlReader
 		{
 			if($fallback_reader == null)
 			{
-				$fallback_reader = new tandem_XmlReader(PTS_CORE_STATIC_PATH . "graph-config-defaults.xml");
+				$fallback_reader = new nye_XmlReader(PTS_CORE_STATIC_PATH . "graph-config-defaults.xml");
 			}
 
-			$fallback_value = $fallback_reader->getXMLValue($xml_tag);
+			$fallback_value = $fallback_reader->getXMLValue($xml_tag, $fallback_value);
 		}
 		else if(PTS_IS_CLIENT)
 		{

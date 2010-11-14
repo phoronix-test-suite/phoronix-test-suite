@@ -44,7 +44,7 @@ class pts_results_nye_XmlReader extends nye_XmlReader
 
 		return isset($legacy_spec[$xml_tag]) ? $this->getXMLValue($legacy_spec[$xml_tag], $value) : $value;
 	}	
-	protected function handleXmlZeroTagArrayFallback($xml_tag, $value)
+	protected function handleXmlZeroTagArrayFallback($xml_tag, $value, $break_depth = -1)
 	{
 		$legacy_spec = array(
 			/* New Tag => Old Tag */
@@ -69,7 +69,7 @@ class pts_results_nye_XmlReader extends nye_XmlReader
 			"PhoronixTestSuite/Result/Data/Entry/RawString" =>  "PhoronixTestSuite/Benchmark/Results/Group/Entry/RawString"
 			);
 
-		return isset($legacy_spec[$xml_tag]) ? $this->getXMLArrayValues($legacy_spec[$xml_tag], $value) : $value;
+		return isset($legacy_spec[$xml_tag]) ? $this->getXMLArrayValues($legacy_spec[$xml_tag], $break_depth) : $value;
 	}
 }
 ?>

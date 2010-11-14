@@ -91,10 +91,6 @@
 			<Value>PhoronixTestSuite/Result/DisplayFormat</Value>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_RESULTS_GROUP</Name>
-			<Value>PhoronixTestSuite/Result/Data</Value>
-		</Define>
-		<Define>
 			<Name>P_RESULTS_RESULTS_GROUP_IDENTIFIER</Name>
 			<Value>PhoronixTestSuite/Result/Data/Entry/Identifier</Value>
 		</Define>

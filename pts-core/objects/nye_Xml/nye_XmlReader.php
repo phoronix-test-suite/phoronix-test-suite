@@ -31,7 +31,14 @@ class nye_XmlReader
 	public function __construct($xml_file)
 	{
 		$this->dom = new DOMDocument();
-		$this->dom->load($xml_file);
+		if(is_file($xml_file))
+		{
+			$this->dom->load($xml_file);
+		}
+		else
+		{
+			$this->dom->loadXML($xml_file);
+		}
 	}
 	public function getXMLValue($xml_tag, $fallback_value = -1)
 	{
@@ -50,7 +57,7 @@ class nye_XmlReader
 
 		return $narrow->length == 1 ? $narrow->item(0)->nodeValue : $this->handleXmlZeroTagFallback($xml_tag, ($fallback_value === -1 ? $this->tag_fallback : $fallback_value));
 	}
-	function getXMLArrayValues($xml_tag)
+	public function getXMLArrayValues($xml_tag, $break_depth = -1)
 	{
 		$steps = explode('/', $xml_tag);
 		$narrow = $this->dom->getElementsByTagName(array_shift($steps));
@@ -59,6 +66,48 @@ class nye_XmlReader
 		for($i = 0, $c = count($steps); $i < $c; $i++)
 		{
 
+			if($narrow->length == 0)
+			{
+				break;
+			}
+
+			$narrow = $narrow->item(0)->getElementsByTagName($steps[$i]);
+
+			if($i == $break_depth)
+			{
+				for($j = 0; $j < $narrow->length; $j++)
+				{
+					array_push($values, $this->processXMLArraySteps($steps, $narrow->item($j)->getElementsByTagName($steps[$i + 1]), $i + 2));
+				}
+				break;
+			}
+			else if($i == ($c - 2))
+			{
+				for($j = 0; $j < $narrow->length; $j++)
+				{
+					$extract = $narrow->item($j)->getElementsByTagName($steps[$i + 1]);
+
+					if($extract->length > 0)
+					{
+						array_push($values, $extract->item(0)->nodeValue);
+					}
+					else
+					{
+						array_push($values, null);
+					}
+				}
+				break;
+			}
+		}
+
+		return isset($values[0]) ? $values : $this->handleXmlZeroTagArrayFallback($xml_tag, $values, $break_depth);
+	}
+	protected function processXMLArraySteps($steps, $narrow, $steps_offset = 0)
+	{
+		$values = array();
+
+		for($i = $steps_offset, $c = count($steps); $i < $c; $i++)
+		{
 			if($narrow->length == 0)
 			{
 				break;
@@ -85,13 +134,13 @@ class nye_XmlReader
 			}
 		}
 
-		return isset($values[0]) ? $values : $this->handleXmlZeroTagArrayFallback($xml_tag, $values);
+		return $values;
 	}
 	protected function handleXmlZeroTagFallback($xml_tag, $fallback_value)
 	{
 		return $fallback_value;
 	}
-	protected function handleXmlZeroTagArrayFallback($xml_tag, $fallback_value)
+	protected function handleXmlZeroTagArrayFallback($xml_tag, $fallback_value, $break_depth = -1)
 	{
 		return $fallback_value;
 	}

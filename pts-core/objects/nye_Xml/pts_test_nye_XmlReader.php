@@ -20,14 +20,14 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+pts_load_xml_definitions("test-profile.xml");
+
 class pts_test_nye_XmlReader extends nye_XmlReader
 {
 	protected $override_values;
 
 	public function __construct($read_xml)
 	{
-		pts_load_xml_definitions("test-profile.xml");
-
 		if(is_file(PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml"))
 		{
 			$read_xml = PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml";

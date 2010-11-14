@@ -34,7 +34,7 @@ class pts_config
 	{
 		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
-		$read_config = new pts_config_tandem_XmlReader($new_config_values);
+		$read_config = new pts_config_nye_XmlReader($new_config_values);
 
 		$config = new tandem_XmlWriter();
 		$config->setXslBinding("xsl/pts-user-config-viewer.xsl");
@@ -97,7 +97,7 @@ class pts_config
 	{
 		// Initialize the graph configuration file
 
-		$read_config = new pts_graph_config_tandem_XmlReader($new_config_values);
+		$read_config = new pts_graph_config_nye_XmlReader($new_config_values);
 		$config = new tandem_XmlWriter();
 
 		// General
@@ -147,7 +147,7 @@ class pts_config
 		{
 			if(self::$xml_user_config == null)
 			{
-				self::$xml_user_config = new pts_config_tandem_XmlReader();
+				self::$xml_user_config = new pts_config_nye_XmlReader();
 			}
 
 			$read_value = self::$xml_user_config->getXmlValue($xml_pointer);
@@ -173,13 +173,13 @@ class pts_config
 			/*
 			if(self::$xml_graph_config == null)
 			{
-				self::$xml_graph_config = new pts_graph_config_tandem_XmlReader();
+				self::$xml_graph_config = new pts_graph_config_nye_XmlReader();
 			}
 
 			$temp_value = self::$xml_graph_config->getXmlValue($xml_pointer);
 			*/
 
-			$tandem_temp = new pts_graph_config_tandem_XmlReader();
+			$tandem_temp = new pts_graph_config_nye_XmlReader();
 			$read_value = $tandem_temp->getXmlValue($xml_pointer);
 		}
 
