@@ -68,7 +68,7 @@ class pts_network
 			pts_client::$display->test_install_progress_completed();
 		}
 	}
-	private static function curl_download($download, $download_to)
+	public static function curl_download($download, $download_to)
 	{
 		if(!function_exists("curl_init"))
 		{
@@ -84,8 +84,8 @@ class pts_network
 		curl_setopt($cr, CURLOPT_HEADER, false);
 		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, (defined("NETWORK_TIMEOUT") ? NETWORK_TIMEOUT : 20));
-		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
 		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . "certificates/");
+		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
 		curl_setopt($cr, CURLOPT_USERAGENT, pts_codename(true));
 
 		if(stripos($download, "sourceforge") === false)
@@ -98,7 +98,7 @@ class pts_network
 		{
 			curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, true);
 			curl_setopt($cr, CURLOPT_SSL_VERIFYHOST, 2);
-			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . "certificates/openbenchmarking-org.crt");
+			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . "certificates/openbenchmarking-server.pem");
 		}
 
 		if(PHP_VERSION_ID >= 50300)
@@ -119,7 +119,7 @@ class pts_network
 
 		return true;
 	}
-	private static function stream_download($download, $download_to, $stream_context_parameters = null, $callback_function = array("pts_network", "stream_status_callback"))
+	public static function stream_download($download, $download_to, $stream_context_parameters = null, $callback_function = array("pts_network", "stream_status_callback"))
 	{
 		$stream_context = pts_network::stream_context_create($stream_context_parameters);
 		stream_context_set_params($stream_context, array("notification" => $callback_function));
@@ -127,7 +127,7 @@ class pts_network
 		/*
 		if(strpos($download, "https://www.openbenchmarking.org/") !== false)
 		{
-			stream_context_set_option($stream_context, 'ssl', 'local_cert', PTS_CORE_STATIC_PATH . "certificates/openbenchmarking-org.crt");
+			stream_context_set_option($stream_context, 'ssl', 'local_cert', PTS_CORE_STATIC_PATH . "certificates/openbenchmarking-server.pem");
 		}
 		*/
 
