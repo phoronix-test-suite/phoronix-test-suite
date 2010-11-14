@@ -45,7 +45,7 @@ class pts_module
 
 		if(is_file(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml"))
 		{
-			$module_config_parser = new tandem_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
+			$module_config_parser = new nye_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
 			$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
 			$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 
@@ -123,7 +123,7 @@ class pts_module
 		$module_name = self::module_name();
 		$value = false;
 
-		$module_config_parser = new tandem_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
+		$module_config_parser = new nye_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
 		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
 		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 
@@ -156,7 +156,7 @@ class pts_module
 		$module_name = self::module_name();
 		$options = array();
 
-		$module_config_parser = new tandem_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
+		$module_config_parser = new nye_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
 		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
 		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
 

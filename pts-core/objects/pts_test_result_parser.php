@@ -36,7 +36,7 @@ class pts_test_result_parser
 
 		self::$monitoring_sensors = array();
 		$test_directory = $test_profile->get_install_dir();
-		$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_xml_file);
+		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
 		$monitor_sensor = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MONITOR_SENSOR);
 		$monitor_frequency = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MONITOR_FREQUENCY);
 		$monitor_report_as = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MONITOR_REPORT);
@@ -329,7 +329,7 @@ class pts_test_result_parser
 	}
 	protected static function parse_iqc_result(&$test_profile, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{
-		$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_xml_file);
+		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
 		$result_iqc_source_file = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_SOURCE_IMAGE);
 		$result_iqc_image_x = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_IMAGE_X);
@@ -392,7 +392,7 @@ class pts_test_result_parser
 	}
 	protected static function parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true)
 	{
-		$results_parser_xml = new pts_parse_results_tandem_XmlReader($parse_xml_file);
+		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
 		$result_template = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_TEMPLATE);
 		$result_key = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_RESULT_KEY);

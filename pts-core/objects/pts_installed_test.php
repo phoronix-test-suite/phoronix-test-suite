@@ -26,7 +26,7 @@ class pts_installed_test
 
 	public function __construct($identifier)
 	{
-		$this->xml_parser = new pts_installed_test_tandem_XmlReader($identifier);
+		$this->xml_parser = new pts_installed_test_nye_XmlReader($identifier);
 	}
 	public function get_install_date_time()
 	{

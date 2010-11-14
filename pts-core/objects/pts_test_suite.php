@@ -173,7 +173,7 @@ class pts_test_suite extends pts_test_suite_parser
 		$steps++;
 		if(pts_test_suite::is_suite($object))
 		{
-			$xml_parser = new pts_suite_tandem_XmlReader($object);
+			$xml_parser = new pts_suite_nye_XmlReader($object);
 			$test_names = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 
 			if($steps > 0)
@@ -207,7 +207,7 @@ class pts_test_suite extends pts_test_suite_parser
 
 		if(pts_test_suite::is_suite($object))
 		{
-			$xml_parser = new pts_suite_tandem_XmlReader($object);
+			$xml_parser = new pts_suite_nye_XmlReader($object);
 			$test_names = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
 			$contained[$object] = array();
 

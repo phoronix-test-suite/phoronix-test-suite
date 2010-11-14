@@ -27,6 +27,9 @@ class system_info implements pts_option_interface
 		pts_client::$display->generic_heading("System Information");
 		echo "Hardware:\n" . phodevi::system_hardware(true) . "\n\n";
 		echo "Software:\n" . phodevi::system_software(true) . "\n\n";
+
+		$rf = new pts_test_profile("doom3");
+		print_r($rf->get_test_option_objects());
 	}
 }
 

@@ -228,20 +228,16 @@ class pts_test_profile_parser
 		$settings_argument_postfix = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPOSTFIX);
 		$settings_identifier = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
 		$settings_default = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DEFAULTENTRY);
-		$settings_menu = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP);
-
+		$option_names = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_NAME, 0);
+		$option_messages = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_MESSAGE, 0);
+		$option_values = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_VALUE, 0);
 		$test_options = array();
-
-		$key_name = substr(P_TEST_OPTIONS_MENU_GROUP_NAME, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
-		$key_message = substr(P_TEST_OPTIONS_MENU_GROUP_MESSAGE, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
-		$key_value = substr(P_TEST_OPTIONS_MENU_GROUP_VALUE, strlen(P_TEST_OPTIONS_MENU_GROUP) + 1);
 
 		foreach(array_keys($settings_name) as $option_count)
 		{
-			$xml_parser = new tandem_XmlReader($settings_menu[$option_count]);
-			$option_names = $xml_parser->getXMLArrayValues($key_name);
-			$option_messages = $xml_parser->getXMLArrayValues($key_message);
-			$option_values = $xml_parser->getXMLArrayValues($key_value);
+			$option_names = $option_names[$option_count];
+			$option_messages = $option_messages[$option_count];
+			$option_values = $option_values[$option_count];
 			pts_test_run_options::auto_process_test_option($this->identifier, $settings_identifier[$option_count], $option_names, $option_values, $option_messages);
 
 			$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);

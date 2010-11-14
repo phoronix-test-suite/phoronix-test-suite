@@ -85,7 +85,7 @@ class pts_external_dependencies
 		{
 			echo "\nSome additional dependencies are required, but they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed.\n\n";
 
-			$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+			$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
 			$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 			$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 			$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
@@ -158,7 +158,7 @@ class pts_external_dependencies
 	}
 	public static function all_dependency_names()
 	{
-		$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+		$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
 
 		return $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 	}
@@ -206,7 +206,7 @@ class pts_external_dependencies
 
 		if(is_file($distro_vendor_xml))
 		{
-			$xml_parser = new pts_external_dependencies_tandem_XmlReader($distro_vendor_xml);
+			$xml_parser = new pts_external_dependencies_nye_XmlReader($distro_vendor_xml);
 			$generic_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 			$distro_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_SPECIFIC);
 			$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
@@ -244,7 +244,7 @@ class pts_external_dependencies
 
 		if(count($required_test_dependencies) > 0)
 		{
-			$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+			$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
 			$generic_package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 			$generic_file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 
@@ -352,7 +352,7 @@ class pts_external_dependencies
 	private static function generic_names_to_titles($names)
 	{
 		$titles = array();
-		$xml_parser = new pts_external_dependencies_tandem_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+		$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
 		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 

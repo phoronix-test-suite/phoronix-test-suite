@@ -172,7 +172,7 @@ class phoromatic extends pts_module_interface
 			"r" => "system_schedule"
 			));
 
-		$schedule_xml = new tandem_XmlReader($server_response);
+		$schedule_xml = new nye_XmlReader($server_response);
 		$schedule_titles = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_TITLE);
 		$schedule_description = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION);
 		$schedule_active_on = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON);
@@ -203,7 +203,7 @@ class phoromatic extends pts_module_interface
 			"r" => "system_schedule"
 			));
 
-		$schedule_xml = new tandem_XmlReader($server_response);
+		$schedule_xml = new nye_XmlReader($server_response);
 		$schedule_titles = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_TITLE);
 		$schedule_description = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION);
 		$schedule_active_on = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON);
@@ -307,7 +307,7 @@ class phoromatic extends pts_module_interface
 			{
 				$server_response = phoromatic::upload_to_remote_server(array("r" => "status_check"));
 
-				$xml_parser = new tandem_XmlReader($server_response);
+				$xml_parser = new nye_XmlReader($server_response);
 				$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
 
 				if(date("i") != $last_communication_minute)
@@ -489,7 +489,7 @@ class phoromatic extends pts_module_interface
 
 	protected static function read_xml_value($file, $xml_option)
 	{
-	 	$xml_parser = new tandem_XmlReader($file);
+	 	$xml_parser = new nye_XmlReader($file);
 		return $xml_parser->getXMLValue($xml_option);
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
@@ -604,7 +604,7 @@ class phoromatic extends pts_module_interface
 			"tl" => $logs["test-logs"]
 			));
 
-		$xml_parser = new tandem_XmlReader($server_response);
+		$xml_parser = new nye_XmlReader($server_response);
 
 		switch($xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE))
 		{

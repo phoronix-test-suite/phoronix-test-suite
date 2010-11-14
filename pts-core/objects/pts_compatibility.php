@@ -38,7 +38,7 @@ class pts_compatibility
 			return false;
 		}
 
-		$module_config_parser = new tandem_XmlReader(PTS_USER_PATH . "modules-config.xml");
+		$module_config_parser = new nye_XmlReader(PTS_USER_PATH . "modules-config.xml");
 		$option_module = $module_config_parser->getXMLArrayValues(P_COMPAT_MODULE_OPTION_NAME);
 		$option_identifier = $module_config_parser->getXMLArrayValues(P_COMPAT_MODULE_OPTION_IDENTIFIER);
 		$option_value = $module_config_parser->getXMLArrayValues(P_COMPAT_MODULE_OPTION_VALUE);

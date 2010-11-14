@@ -136,12 +136,12 @@ class pts_config
 	{
 		return $bool ? "TRUE" : "FALSE";
 	}
-	public static function read_user_config($xml_pointer, $predefined_value = false, &$tandem_xml = null)
+	public static function read_user_config($xml_pointer, $predefined_value = false, &$nye_xml = null)
 	{
 		// Generic call for reading a config file
-		if($tandem_xml instanceOf tandem_XmlReader)
+		if($nye_xml instanceof nye_XmlReader)
 		{
-			$read_value = $tandem_xml->getXmlValue($xml_pointer);
+			$read_value = $nye_xml->getXmlValue($xml_pointer);
 		}
 		else
 		{
@@ -155,17 +155,17 @@ class pts_config
 
 		return !empty($read_value) ? $read_value : $predefined_value;
 	}
-	public static function read_bool_config($xml_pointer, $predefined_value = false, &$tandem_xml = null)
+	public static function read_bool_config($xml_pointer, $predefined_value = false, &$nye_xml = null)
 	{
-		$value = self::read_user_config($xml_pointer, $predefined_value, $tandem_xml);
+		$value = self::read_user_config($xml_pointer, $predefined_value, $nye_xml);
 		return pts_strings::string_bool($value);
 	}
-	public static function read_graph_config($xml_pointer, $predefined_value = false, &$tandem_xml = null)
+	public static function read_graph_config($xml_pointer, $predefined_value = false, &$nye_xml = null)
 	{
 		// Generic call for reading a config file
-		if($tandem_xml instanceOf tandem_XmlReader)
+		if($nye_xml instanceof nye_XmlReader)
 		{
-			$read_value = $tandem_xml->getXmlValue($xml_pointer);
+			$read_value = $nye_xml->getXmlValue($xml_pointer);
 		}
 		else
 		{
@@ -179,8 +179,8 @@ class pts_config
 			$temp_value = self::$xml_graph_config->getXmlValue($xml_pointer);
 			*/
 
-			$tandem_temp = new pts_graph_config_nye_XmlReader();
-			$read_value = $tandem_temp->getXmlValue($xml_pointer);
+			$nye_temp = new pts_graph_config_nye_XmlReader();
+			$read_value = $nye_temp->getXmlValue($xml_pointer);
 		}
 
 		return !empty($read_value) ? $read_value : $predefined_value;

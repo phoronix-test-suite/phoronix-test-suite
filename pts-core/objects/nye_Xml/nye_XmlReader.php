@@ -23,14 +23,13 @@
 
 class nye_XmlReader
 {
-	protected $xml_data = null; // XML contents
 	protected $tag_fallback = false; // Fallback value if tag is not present
-
 	protected $dom; // The DOM
 
 	public function __construct($xml_file)
 	{
 		$this->dom = new DOMDocument();
+
 		if(is_file($xml_file))
 		{
 			$this->dom->load($xml_file);
@@ -61,11 +60,16 @@ class nye_XmlReader
 	{
 		$steps = explode('/', $xml_tag);
 		$narrow = $this->dom->getElementsByTagName(array_shift($steps));
+		$values = $this->processXMLArraySteps($steps, $narrow, 0, $break_depth);
+
+		return isset($values[0]) ? $values : $this->handleXmlZeroTagArrayFallback($xml_tag, $values, $break_depth);
+	}
+	protected function processXMLArraySteps($steps, $narrow, $steps_offset = 0, $break_depth = -1)
+	{
 		$values = array();
 
-		for($i = 0, $c = count($steps); $i < $c; $i++)
+		for($i = $steps_offset, $c = count($steps); $i < $c; $i++)
 		{
-
 			if($narrow->length == 0)
 			{
 				break;
@@ -82,40 +86,6 @@ class nye_XmlReader
 				break;
 			}
 			else if($i == ($c - 2))
-			{
-				for($j = 0; $j < $narrow->length; $j++)
-				{
-					$extract = $narrow->item($j)->getElementsByTagName($steps[$i + 1]);
-
-					if($extract->length > 0)
-					{
-						array_push($values, $extract->item(0)->nodeValue);
-					}
-					else
-					{
-						array_push($values, null);
-					}
-				}
-				break;
-			}
-		}
-
-		return isset($values[0]) ? $values : $this->handleXmlZeroTagArrayFallback($xml_tag, $values, $break_depth);
-	}
-	protected function processXMLArraySteps($steps, $narrow, $steps_offset = 0)
-	{
-		$values = array();
-
-		for($i = $steps_offset, $c = count($steps); $i < $c; $i++)
-		{
-			if($narrow->length == 0)
-			{
-				break;
-			}
-
-			$narrow = $narrow->item(0)->getElementsByTagName($steps[$i]);
-
-			if($i == ($c - 2))
 			{
 				for($j = 0; $j < $narrow->length; $j++)
 				{

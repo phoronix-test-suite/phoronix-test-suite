@@ -83,7 +83,7 @@ class pts_test_install_manager
 		{
 			if(pts_strings::is_url($dc_directory) && ($xml_dc_file = pts_network::http_get_contents($dc_directory . "pts-download-cache.xml")) != false)
 			{
-				$xml_dc_parser = new tandem_XmlReader($xml_dc_file);
+				$xml_dc_parser = new nye_XmlReader($xml_dc_file);
 				$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
 				$dc_md5 = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_MD5);
 

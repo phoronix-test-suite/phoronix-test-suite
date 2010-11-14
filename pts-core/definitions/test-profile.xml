@@ -276,12 +276,6 @@ PATH environment variable will contain each of the test directories below this t
 			<Required>NO</Required>
 		</Define>
 		<Define>
-			<Name>P_TEST_OPTIONS_MENU_GROUP</Name>
-			<Value>PhoronixTestSuite/TestSettings/Option/Menu</Value>
-			<Description>The group containing the name and value XML tags.</Description>
-			<Required>NO</Required>
-		</Define>
-		<Define>
 			<Name>P_TEST_OPTIONS_MENU_GROUP_NAME</Name>
 			<Value>PhoronixTestSuite/TestSettings/Option/Menu/Entry/Name</Value>
 			<Description>The string shown to the user to describe one of the available options within the option.</Description>
