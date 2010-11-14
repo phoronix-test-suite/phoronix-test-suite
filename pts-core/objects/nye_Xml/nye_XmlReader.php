@@ -68,13 +68,8 @@ class nye_XmlReader
 	{
 		$values = array();
 
-		for($i = $steps_offset, $c = count($steps); $i < $c; $i++)
+		for($i = $steps_offset, $c = count($steps); $i < $c && $narrow->length > 0; $i++)
 		{
-			if($narrow->length == 0)
-			{
-				break;
-			}
-
 			$narrow = $narrow->item(0)->getElementsByTagName($steps[$i]);
 
 			if($i == $break_depth)

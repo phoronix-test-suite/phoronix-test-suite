@@ -85,7 +85,7 @@ function pts_load_xml_definitions($definition_file)
 		return false;
 	}
 
-	$xml_reader = new tandem_XmlReader($definition_file);
+	$xml_reader = new nye_XmlReader($definition_file);
 	$definitions_names = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Definitions/Define/Name");
 	$definitions_values = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Definitions/Define/Value");
 
