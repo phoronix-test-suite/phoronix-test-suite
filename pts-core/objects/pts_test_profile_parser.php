@@ -69,7 +69,7 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_PTSVERSION);
 	}
-	public function get_version()
+	public function get_app_version()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_VERSION);
 	}

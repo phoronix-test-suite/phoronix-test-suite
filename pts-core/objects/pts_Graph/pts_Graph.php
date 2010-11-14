@@ -144,7 +144,7 @@ abstract class pts_Graph
 		// Reset of setup besides config
 		if($result_object != null)
 		{
-			$test_version = $result_object->test_profile->get_version();
+			$test_version = $result_object->test_profile->get_app_version();
 			$this->graph_title = $result_object->test_profile->get_title() . (isset($test_version[2]) ? " v" . $test_version : null);
 
 			$this->graph_y_title = $result_object->test_profile->get_result_scale_formatted();

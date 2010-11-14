@@ -52,13 +52,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Hardware" /></td></xsl:for-each>
 		</tr>
 		<tr class="pts_column_head"> 
-		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="AssociatedIdentifiers" /></td></xsl:for-each>
+		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Identifier" /></td></xsl:for-each>
 		</tr>
 		<tr> 
 		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Software" /></td></xsl:for-each>
 		</tr>
 		<tr class="pts_column_head"> 
-		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="AssociatedIdentifiers" /></td></xsl:for-each>
+		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Identifier" /></td></xsl:for-each>
 		</tr>
 		<tr>
 		<xsl:for-each select="PhoronixTestSuite/System"><td><strong>Administrator:</strong>&#160;<xsl:value-of select="User" /><br /><strong>Date:</strong>&#160;<xsl:value-of select="TimeStamp" /><br /><strong>PTS Version:</strong>&#160;<xsl:value-of select="TestClientVersion" /><br /><strong>Test Notes:</strong>&#160;<xsl:value-of select="Notes" /></td></xsl:for-each>
@@ -76,7 +76,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 				<div class="pts_benchmark_bar"><div style="float: left;"><a><xsl:attribute name="name">test-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><a><xsl:attribute name="name">b-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><span class="pts_benchmark_bar_header"><xsl:value-of select="Title"/></span> <span class="pts_benchmark_bar_version"><xsl:value-of select="AppVersion"/></span><br /><strong><xsl:value-of select="ArgumentsDescription"/></strong></div><div style="float: right;"><a style="text-decoration: none;"><xsl:attribute name="href">test-logs/<xsl:value-of select="$this_test_pos" />/</xsl:attribute>View Test Logs</a></div></div>
 				<!--
 				<div class="pts_benchmark_text">
-					<xsl:if test="not(contains(ResultFormat,'MULTI_'))">
+					<xsl:if test="not(contains(DisplayFormat,'MULTI_'))">
 						<xsl:for-each select="Results/Group">
 							<div style="padding: 5px 0;">
 								<xsl:for-each select="Entry">

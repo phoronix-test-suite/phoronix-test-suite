@@ -47,7 +47,7 @@ class info implements pts_option_interface
 		else if($args["object"] instanceof pts_test_profile)
 		{
 			$test_title = $args["object"]->get_title();
-			$test_version = $args["object"]->get_version();
+			$test_version = $args["object"]->get_app_version();
 			if(!empty($test_version))
 			{
 				$test_title .= " " . $test_version;

@@ -51,12 +51,12 @@ class pts_result_file_analyze_manager
 			$attributes_clean[$temp[0]] = isset($temp[1]) ? $temp[1] : null;
 		}
 
-		if(!isset($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_version()]))
+		if(!isset($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_app_version()]))
 		{
-			$this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_version()] = array();
+			$this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_app_version()] = array();
 		}
 
-		array_push($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_version()], array($total_objects, $attributes_clean));
+		array_push($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_app_version()], array($total_objects, $attributes_clean));
 	}
 	public function get_results()
 	{

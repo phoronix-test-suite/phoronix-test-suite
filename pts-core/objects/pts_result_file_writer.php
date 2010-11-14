@@ -59,7 +59,7 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result_object->test_profile->get_title());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS, $tandem_id, $result_object->get_arguments());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS_DESCRIPTION, $tandem_id, $result_object->get_arguments_description());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result_object->test_profile->get_version());
+		$this->xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result_object->test_profile->get_app_version());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result_object->test_profile->get_result_scale());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result_object->test_profile->get_result_proportion());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_DISPLAY_FORMAT, $tandem_id, $result_object->test_profile->get_display_format());
@@ -83,7 +83,7 @@ class pts_result_file_writer
 
 			$use_id = $this->xml_writer->request_unique_id();
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->test_profile->get_title());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->test_profile->get_version());
+			$this->xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->test_profile->get_app_version());
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $use_id, $result_object->test_profile->get_test_profile_version());
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS, $use_id, $result_object->get_arguments());
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS_DESCRIPTION, $use_id, $result_object->get_arguments_description());

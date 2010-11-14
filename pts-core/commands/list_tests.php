@@ -45,7 +45,7 @@ class list_tests implements pts_option_interface
 
 				if(pts_client::read_env("PTS_DEBUG"))
 				{
-					echo sprintf("%-20ls %-6ls %-10ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $identifier, $tp->get_test_profile_version(), $tp->get_version(), $tp->get_status(), $tp->get_license(), $tp->get_download_size(), $tp->get_environment_size(), $tp->get_maintainer());
+					echo sprintf("%-20ls %-6ls %-10ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $identifier, $tp->get_test_profile_version(), $tp->get_app_version(), $tp->get_status(), $tp->get_license(), $tp->get_download_size(), $tp->get_environment_size(), $tp->get_maintainer());
 				}
 				else if($tp->get_title() != null && $tp->is_verified_state())
 				{
