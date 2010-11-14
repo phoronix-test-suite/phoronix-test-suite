@@ -93,7 +93,11 @@ class pts_global
 	}
 	public static function request_gsid()
 	{
-		$gsid = pts_network::http_get_contents("http://www.openbenchmarking.org/extern/request-gsid.php?client_version=" . PTS_VERSION . "&client_os=" . phodevi::read_property("system", "vendor-identifier"));
+		$upload_data = array(
+			"client_version" => PTS_VERSION,
+			"client_os" => phodevi::read_property("system", "vendor-identifier")
+			);
+		$gsid = pts_network::http_upload_via_post("https://www.openbenchmarking.org/extern/request-gsid.php", $upload_data);
 
 		return pts_global::is_valid_gsid_format($gsid) ? $gsid : false;
 	}
@@ -150,7 +154,7 @@ class pts_global
 			case "test_complete":
 				list($test_result, $time_elapsed) = $data;
 				$upload_data = array("test_identifier" => $test_result->test_profile->get_identifier(), "test_version" => $test_result->test_profile->get_test_profile_version(), "elapsed_time" => $time_elapsed);
-				pts_network::http_upload_via_post("http://www.openbenchmarking.org/extern/statistics/report-test-completion.php", $upload_data);
+				pts_network::http_upload_via_post("https://www.openbenchmarking.org/extern/statistics/report-test-completion.php", $upload_data);
 				break;
 		}
 	}
@@ -168,7 +172,7 @@ class pts_global
 		}
 
 		$upload_data = array("report_hwsw" => implode(';', $to_report), "gsid" => PTS_GSID);
-		pts_network::http_upload_via_post("http://www.openbenchmarking.org/extern/statistics/report-installed-hardware-software.php", $upload_data);
+		pts_network::http_upload_via_post("https://www.openbenchmarking.org/extern/statistics/report-installed-hardware-software.php", $upload_data);
 	}
 	public static function prompt_user_result_tags($default_tags = null)
 	{
